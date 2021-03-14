@@ -6,6 +6,8 @@
 from typing import Dict, Union, Set, Any, Optional, List
 from enum import Enum, auto
 
+from logHandler import log
+
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
 ROLE_TITLEBAR=2
@@ -648,35 +650,50 @@ class OutputReason(Enum):
 
 	QUICKNAV = auto()
 
-# The following constants are kept for backwards compatibility.
-# In future, OutputReason should be used directly
+
+class IsCurrent(Enum):
+	"""Values to use within NVDA to denote 'current' values.
+	These describe if an item is the current item within a particular kind of selection.
+	EG aria-current
+	"""
+	NO = "false"
+	YES = "true"
+	PAGE = "page"
+	STEP = "step"
+	LOCATION = "location"
+	DATE = "date"
+	TIME = "time"
+
+	@property
+	def displayString(self):
+		"""
+		@return: The translated UI display string that should be used for this value of the IsCurrent enum
+		"""
+		try:
+			return _isCurrentLabels[self]
+		except KeyError:
+			log.debugWarning(f"No translation mapping for: {self}")
+			# there is a value for 'current' but NVDA hasn't learned about it yet,
+			# at least describe in the general sense that this item is 'current'
+			return _isCurrentLabels[IsCurrent.YES]
 
 
-REASON_FOCUS = OutputReason.FOCUS
-REASON_FOCUSENTERED = OutputReason.FOCUSENTERED
-REASON_MOUSE = OutputReason.MOUSE
-REASON_QUERY = OutputReason.QUERY
-REASON_CHANGE = OutputReason.CHANGE
-REASON_MESSAGE = OutputReason.MESSAGE
-REASON_SAYALL = OutputReason.SAYALL
-REASON_CARET = OutputReason.CARET
-REASON_ONLYCACHE = OutputReason.ONLYCACHE
-
-#: Text to use for 'current' values. These describe if an item is the current item 
-#: within a particular kind of selection.
-isCurrentLabels: Dict[Union[bool, str], str] = {
+#: Text to use for 'current' values. These describe if an item is the current item
+#: within a particular kind of selection. EG aria-current
+_isCurrentLabels: Dict[Enum, str] = {
+	IsCurrent.NO: "",  # There is nothing extra to say for items that are not current.
 	# Translators: Presented when an item is marked as current in a collection of items
-	True:_("current"),
+	IsCurrent.YES: _("current"),
 	# Translators: Presented when a page item is marked as current in a collection of page items
-	"page":_("current page"),
+	IsCurrent.PAGE: _("current page"),
 	# Translators: Presented when a step item is marked as current in a collection of step items
-	"step":_("current step"),
+	IsCurrent.STEP: _("current step"),
 	# Translators: Presented when a location item is marked as current in a collection of location items
-	"location":_("current location"),
+	IsCurrent.LOCATION: _("current location"),
 	# Translators: Presented when a date item is marked as current in a collection of date items
-	"date":_("current date"),
+	IsCurrent.DATE: _("current date"),
 	# Translators: Presented when a time item is marked as current in a collection of time items
-	"time":_("current time"),
+	IsCurrent.TIME: _("current time"),
 }
 
 
@@ -687,8 +704,8 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 	@type role: int
 	@param states: The raw states for an object to process.
 	@type states: set
-	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
+	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}.
+	@param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to positive;
 	@type positiveStates: set
 	@return: The processed positive states.
 	@rtype: set
@@ -714,14 +731,14 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 		# or reporting clickable just isn't useful,
 		# or the user has explicitly requested no reporting clickable
 		positiveStates.discard(STATE_CLICKABLE)
-	if reason == REASON_QUERY:
+	if reason == OutputReason.QUERY:
 		return positiveStates
 	positiveStates.discard(STATE_DEFUNCT)
 	positiveStates.discard(STATE_MODAL)
 	positiveStates.discard(STATE_FOCUSED)
 	positiveStates.discard(STATE_OFFSCREEN)
 	positiveStates.discard(STATE_INVISIBLE)
-	if reason != REASON_CHANGE:
+	if reason != OutputReason.CHANGE:
 		positiveStates.discard(STATE_LINKED)
 		if role in (
 			ROLE_LISTITEM,
@@ -751,13 +768,13 @@ def processNegativeStates(role, states, reason: OutputReason, negativeStates=Non
 	@type role: int
 	@param states: The raw states for an object to process.
 	@type states: set
-	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
+	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}.
+	@param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to negative;
 	@type negativeStates: set
 	@return: The processed negative states.
 	@rtype: set
 	"""
-	if reason == REASON_CHANGE and not isinstance(negativeStates, set):
+	if reason == OutputReason.CHANGE and not isinstance(negativeStates, set):
 		raise TypeError("negativeStates must be a set for this reason")
 	speakNegatives = set()
 	# Add the negative selected state if the control is selectable,
@@ -771,7 +788,7 @@ def processNegativeStates(role, states, reason: OutputReason, negativeStates=Non
 		and STATE_FOCUSABLE in states
 		# Only include  if reporting the focus or when states are changing on the focus.
 		# This is to avoid exposing it for things like caret movement in browse mode. 
-		and (reason == REASON_FOCUS or (reason == REASON_CHANGE and STATE_FOCUSED in states))
+		and (reason == OutputReason.FOCUS or (reason == OutputReason.CHANGE and STATE_FOCUSED in states))
 		and role in (
 			ROLE_LISTITEM, 
 			ROLE_TREEVIEWITEM, 
@@ -784,11 +801,15 @@ def processNegativeStates(role, states, reason: OutputReason, negativeStates=Non
 	):
 		speakNegatives.add(STATE_SELECTED)
 	# Restrict "not checked" in a similar way to "not selected".
-	if (role in (ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_CHECKMENUITEM) or STATE_CHECKABLE in states)  and (STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or STATE_FOCUSED in states):
+	if(
+		(role in (ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_CHECKMENUITEM) or STATE_CHECKABLE in states)
+		and (STATE_HALFCHECKED not in states)
+		and (reason != OutputReason.CHANGE or STATE_FOCUSED in states)
+	):
 		speakNegatives.add(STATE_CHECKED)
 	if role == ROLE_TOGGLEBUTTON:
 		speakNegatives.add(STATE_PRESSED)
-	if reason == REASON_CHANGE:
+	if reason == OutputReason.CHANGE:
 		# We want to speak this state only if it is changing to negative.
 		speakNegatives.add(STATE_DROPTARGET)
 		# We were given states which have changed to negative.
@@ -821,9 +842,9 @@ def processAndLabelStates(
 	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
 	@param states: The raw states for an object to process.
-	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
-	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
+	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}.
+	@param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to positive;
+	@param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to negative;
 	@param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive labels as their values.
 	@param negativeStateLabelDict: Dictionary containing state identifiers as keys and associated negative labels as their values.
 	@return: The labels of the relevant positive and negative states.

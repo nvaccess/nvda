@@ -48,11 +48,9 @@ def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
 	_copyPythonLibs(
 		pythonImports=[  # relative to the python path
 			r"robotremoteserver",
-			r"xmlrpc",
 		],
 		libsDest=spyPackageLibsDir
 	)
-
 	# install the global plugin
 	# Despite duplication, specify full paths for clarity.
 	opSys.copy_file(

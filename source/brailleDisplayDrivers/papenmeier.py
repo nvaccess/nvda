@@ -421,12 +421,60 @@ connection could not be established"""
 			"kb:alt": ("br(papenmeier):lt+d3",),
 			"kb:control": ("br(papenmeier):lt+d2",),
 			"kb:escape": ("br(papenmeier):space+d7",),
-			"kb:control+escape": ("br(papenmeier):lt+d1+d2+d3+d4+d5+d6",),
 			"kb:tab": ("br(papenmeier):space+d3+d7",),
 			"kb:upArrow": ("br(papenmeier):space+d2",),
 			"kb:downArrow": ("br(papenmeier):space+d5",),
 			"kb:leftArrow": ("br(papenmeier):space+d1",),
 			"kb:rightArrow": ("br(papenmeier):space+d4",),
+			
+			"kb:control+escape": ("br(papenmeier):space+d1+d2+d3+d4+d5+d6",),
+			"kb:control+alt+delete": ("br(papenmeier):space+d1+d2+d3+d4+d5+d6+d7+d8",),
+			"kb:enter": ("br(papenmeier):space+d8", "br(papenmeier):d8",),
+			"kb:pageup": ("br(papenmeier):space+d3",),
+			"kb:pagedown": ("br(papenmeier):space+d6",),
+			"kb:backspace": ("br(papenmeier):space+d6+d8", "br(papenmeier):d7",),
+			"kb:home": ("br(papenmeier):space+d1+d2",),
+			"kb:end": ("br(papenmeier):space+d4+d5",),
+			"kb:delete": ("br(papenmeier):space+d5+d6",),
+			
+			"kb:f1": ("br(papenmeier):rt+d1",),
+			"kb:f2": ("br(papenmeier):rt+d1+d2",),
+			"kb:f3": ("br(papenmeier):rt+d1+d4",),
+			"kb:f4": ("br(papenmeier):rt+d1+d4+d5",),
+			"kb:f5": ("br(papenmeier):rt+d1+d5",),
+			"kb:f6": ("br(papenmeier):rt+d1+d2+d4",),
+			"kb:f7": ("br(papenmeier):rt+d1+d2+d4+d5",),
+			"kb:f8": ("br(papenmeier):rt+d1+d2+d5",),
+			"kb:f9": ("br(papenmeier):rt+d2+d4",),
+			"kb:f10": ("br(papenmeier):rt+d2+d4+d5",),
+			"kb:f11": ("br(papenmeier):rt+d1+d3",),
+			"kb:f12": ("br(papenmeier):rt+d1+d2+d3",),
+			"kb:control+a": ("br(papenmeier):d1+d7+d8",),
+			"kb:control+p": ("br(papenmeier):d1+d2+d3+d4+d7+d8",),
+			"kb:control+s": ("br(papenmeier):d2+d3+d4+d7+d8",),
+			"kb:control+b": ("br(papenmeier):d1+d2+d7+d8",),
+			"kb:control+c": ("br(papenmeier):d1+d4+d7+d8",),
+			"kb:control+d": ("br(papenmeier):d1+d4+d5+d7+d8",),
+			"kb:control+e": ("br(papenmeier):d1+d5+d7+d8",),
+			"kb:control+f": ("br(papenmeier):d1+d2+d4+d7+d8",),
+			"kb:control+g": ("br(papenmeier):d1+d2+d4+d5+d7+d8",),
+			"kb:control+h": ("br(papenmeier):d1+d2+d5+d7+d8",),
+			"kb:control+i": ("br(papenmeier):d2+d4+d7+d8",),
+			"kb:control+j": ("br(papenmeier):d2+d4+d5+d7+d8",),
+			"kb:control+k": ("br(papenmeier):d1+d3+d7+d8",),
+			"kb:control+l": ("br(papenmeier):d1+d2+d3+d7+d8",),
+			"kb:control+m": ("br(papenmeier):d1+d3+d4+d7+d8",),
+			"kb:control+n": ("br(papenmeier):d1+d3+d4+d5+d7+d8",),
+			"kb:control+o": ("br(papenmeier):d1+d3+d5+d7+d8",),
+			"kb:control+q": ("br(papenmeier):d1+d2+d3+d4+d5+d7+d8",),
+			"kb:control+r": ("br(papenmeier):d1+d2+d3+d5+d7+d8",),
+			"kb:control+t": ("br(papenmeier):d2+d3+d4+d5+d7+d8",),
+			"kb:control+u": ("br(papenmeier):d1+d3+d6+d7+d8",),
+			"kb:control+v": ("br(papenmeier):d1+d2+d3+d6+d7+d8",),
+			"kb:control+w": ("br(papenmeier):d2+d4+d5+d6+d7+d8",),
+			"kb:control+x": ("br(papenmeier):d1+d3+d4+d6+d7+d8",),
+			"kb:control+y": ("br(papenmeier):d1+d3+d4+d5+d6+d7+d8",),
+			"kb:control+z": ("br(papenmeier):d1+d3+d5+d6+d7+d8",),
 		}
 	})
 
@@ -535,7 +583,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			self.id=brl_join_keys(brl_decode_key_names_repeat(driver))
 			return
 
-		if driver._baud != 1 and keys[0] == 'L':
+		if driver._baud != 1 and keys[0] == ord(b'L'):
 			assert isinstance(keys, bytes)
 			if (keys[3] - 48) >> 3:
 				scancode = keys[5] - 48 << 4 | keys[6] - 48

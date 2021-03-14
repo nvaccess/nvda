@@ -1,14 +1,17 @@
-#nvwave.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2021 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Provides a simple Python interface to playing audio using the Windows multimedia waveOut functions, as well as other useful utilities.
 """
 
 import threading
 import typing
+from typing import (
+	Optional,
+	Callable,
+)
 from ctypes import (
 	windll,
 	POINTER,
@@ -27,11 +30,7 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from ctypes import *
-from ctypes.wintypes import *
-import time
 import atexit
-import wx
 import garbageHandler
 import winKernel
 import wave
@@ -122,6 +121,7 @@ for func in (
 def _isDebugForNvWave():
 	return config.conf["debugLog"]["nvwave"]
 
+
 class WavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
@@ -137,6 +137,16 @@ class WavePlayer(garbageHandler.TrackedObject):
 	#: A lock to prevent WaveOut* functions from being called simultaneously,
 	# as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()
+
+	#: A signal handle, used by the winmm device to signal whenever the state of the waveform buffer changes.
+	# Use WaitForSingleObject or WaitForMultipleObjects to wait for the event.
+	# When the event is signaled, you can get the current state of the waveform buffer by checking the
+	# dwFlags member of the WAVEHDR structure.
+	_waveout_event: HANDLE = None
+
+	#: The number of milliseconds that we should wait on the _waveout_event to be signaled. This
+	# is a fallback, when audio is cancelled (via self.stop) the signal is triggered.
+	_waveout_event_wait_ms = 100
 	_audioDucker=None
 	#: Used to allow the device to temporarily be changed and return
 	# to the preferred device when it becomes available
@@ -288,13 +298,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 						CALLBACK_EVENT
 					)
 			except WindowsError:
-				if _isDebugForNvWave():
-					log.debug(
-						f"Error opening"
-						f" outputDeviceName: {self._outputDeviceName}"
-						f" with id: {self._outputDeviceID}"
-					)
-				if self._outputDeviceID != WAVE_MAPPER:
+				lastOutputDeviceID = self._outputDeviceID
+				self._handleWinmmError(message="Error opening")
+				if lastOutputDeviceID != WAVE_MAPPER:
 					if _isDebugForNvWave():
 						log.debug(f"Falling back to WAVE_MAPPER")
 					self._setCurrentDevice(WAVE_MAPPER)
@@ -303,7 +309,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 					log.warning(f"Unable to open WAVE_MAPPER device, there may be no audio devices.")
 					raise  # can't open the default device.
 				return
-			self._waveout = waveout.value
+			self._waveout: typing.Optional[int] = waveout.value
 			self._prev_whdr = None
 
 	def feed(
@@ -362,11 +368,14 @@ class WavePlayer(garbageHandler.TrackedObject):
 		whdr.dwBufferLength = len(data)
 		with self._lock:
 			with self._waveout_lock:
-				self.open()  # required of close on idle see _idleUnbuffered
-				with self._global_waveout_lock:
-					winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-					winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-			self.sync()
+				self.open()  # required if close on idle see _idleUnbuffered
+				if self._prevOnDone is not self.STOPPING:
+					# If we are stopping, waveOutReset has already been called.
+					# Pushing more data confuses the state of nvWave
+					with self._global_waveout_lock:
+						winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+						winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+			self.sync()  # sync must still be called even if stopping, so that waveOutUnprepareHeader can be called
 			self._prev_whdr = whdr
 			# Don't call onDone if stop was called,
 			# as this chunk has been truncated in that case.
@@ -377,19 +386,28 @@ class WavePlayer(garbageHandler.TrackedObject):
 		"""Synchronise with playback.
 		This method blocks until the previously fed chunk of audio has finished playing.
 		It is called automatically by L{feed}, so usually need not be called directly by the user.
+
+		Note: it must be possible to call stop concurrently with sync, sync should be considered to be blocking
+		the synth driver thread most of the time (ie sync waiting for the last pushed block of audio to
+		complete, via the 'winKernal.waitForSingleObject' mechanism)
 		"""
 		with self._lock:
 			if not self._prev_whdr:
 				return
 			assert self._waveout, "waveOut None before wait"
-			while not (self._prev_whdr.dwFlags & WHDR_DONE):
-				winKernel.waitForSingleObject(self._waveout_event, winKernel.INFINITE)
+			while (
+				not (self._prev_whdr.dwFlags & WHDR_DONE)
+				# In case some sound driver can not keep track of the whdr from previous buffers, ensure that
+				# 'waitForSingleObject' can not block for long, and exit this loop if stopping.
+				and self._prevOnDone is not self.STOPPING
+			):
+				winKernel.waitForSingleObject(self._waveout_event, self._waveout_event_wait_ms)
 			with self._waveout_lock:
 				assert self._waveout, "waveOut None after wait"
 				with self._global_waveout_lock:
 					winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
 			self._prev_whdr = None
-			if self._prevOnDone is not None and self._prevOnDone is not self.STOPPING:
+			if self._prevOnDone not in (None, self.STOPPING):
 				try:
 					self._prevOnDone()
 				except:
@@ -409,12 +427,11 @@ class WavePlayer(garbageHandler.TrackedObject):
 		with self._waveout_lock:
 			if not self._waveout:
 				return
-			if switch:
-				with self._global_waveout_lock:
-					winmm.waveOutPause(self._waveout)
-			else:
-				with self._global_waveout_lock:
-					winmm.waveOutRestart(self._waveout)
+			with self._global_waveout_lock:
+				if switch:
+					self._safe_winmm_call(winmm.waveOutPause, "Pause")
+				else:
+					self._safe_winmm_call(winmm.waveOutRestart, "Restart")
 
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
@@ -461,14 +478,15 @@ class WavePlayer(garbageHandler.TrackedObject):
 			if not self._waveout:
 				return
 			self._prevOnDone = self.STOPPING
-			try:
-				with self._global_waveout_lock:
-					# Pausing first seems to make waveOutReset respond faster on some systems.
-					winmm.waveOutPause(self._waveout)
-					winmm.waveOutReset(self._waveout)
-			except WindowsError:
-				# waveOutReset seems to fail randomly on some systems.
-				pass
+			with self._global_waveout_lock:
+				# Pausing first seems to make waveOutReset respond faster on some systems.
+				self._safe_winmm_call(winmm.waveOutPause, "Pause")
+				self._safe_winmm_call(winmm.waveOutReset, "Reset")
+				# Allow fall through to idleUnbuffered if either pause or reset fail.
+
+				# The documentation is not explicit about whether waveOutReset will signal the event,
+				# so trigger it to be sure that sync isn't blocking on 'waitForSingleObject'.
+				windll.kernel32.SetEvent(self._waveout_event)
 		# Unprepare the previous buffer and close the output device if appropriate.
 		self._idleUnbuffered()
 		self._prevOnDone = None
@@ -490,6 +508,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 			if not self._waveout:
 				return
 			try:
+				# don't use '_safe_winmm_call' here, on error it would re-enter _close infinitely
 				winmm.waveOutClose(self._waveout)
 			except WindowsError:
 				log.debug("Error closing the device, it may have been removed.", exc_info=True)
@@ -500,6 +519,30 @@ class WavePlayer(garbageHandler.TrackedObject):
 		winKernel.kernel32.CloseHandle(self._waveout_event)
 		self._waveout_event = None
 		super().__del__()
+
+	def _handleWinmmError(self, message: str):
+		if _isDebugForNvWave():
+			log.debug(
+				f"Winmm Error: {message}"
+				f" outputDeviceName: {self._outputDeviceName}"
+				f" with id: {self._outputDeviceID}",
+				stack_info=True
+			)
+		self._close()
+
+	def _safe_winmm_call(
+			self,
+			winmmCall: Callable[[Optional[int]], None],
+			messageOnFailure: str
+	) -> bool:
+		try:
+			winmmCall(self._waveout)
+			return True
+		except WindowsError:
+			# device will be closed and _waveout set to None,
+			# triggering re-open.
+			self._handleWinmmError(message=messageOnFailure)
+			return False
 
 
 def _getOutputDevices():
