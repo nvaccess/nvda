@@ -18,6 +18,7 @@ Version numbers for dependencies should be used to lock in a version.
 The virtual environment is recreated if it is outdated, either due to:
 - Python version.
 - `pip` requirements.
+- It was originally created at a different location to where it is now.
 
 The user is consulted before modifying / removing a virtual environment that can't be identified
 as having been created by NVDA's build system.
