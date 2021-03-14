@@ -21,6 +21,29 @@ venv_orig_requirements_path: str = os.path.join(venv_path, "_requirements.txt")
 venv_python_version_path: str = os.path.join(venv_path, "python_version")
 
 
+def verifyExistingVenvPath():
+	"""
+	Verifies that the Python virtual environment at c{VENV_PATH} was actually created at that location,
+	and not just copied or moved there.
+	"""
+	# Activate the Python virtual environement and capture the content of the VIRTUAL_ENV environment variable.
+	existingPath = subprocess.check_output(
+		[
+			os.path.join(venv_path, "scripts", "activate.bat"),
+			"&&",
+			"call", "echo", "%VIRTUAL_ENV%",
+		],
+		shell=True,
+	).decode('utf8').rstrip()
+	existingPath = os.path.normpath(existingPath)
+	expectedPath = os.path.normpath(venv_path)
+	if existingPath != expectedPath:
+		print(f"Python virtual environment originally created at {existingPath},")
+		print(f"Then moved or copied to {expectedPath}.")
+		return False
+	return True
+
+
 def askYesNoQuestion(message: str) -> bool:
 	"""
 	Displays the given message to the user and accepts y or n as input.
@@ -101,6 +124,16 @@ def ensureVenvAndRequirements():
 	if not os.path.exists(venv_path):
 		print("Virtual environment does not exist.")
 		return createVenvAndPopulate()
+	if not verifyExistingVenvPath():
+		if askYesNoQuestion(
+			"A Python virtual environement cannot be activated from a different location "
+			"to where it was originally created.\n"
+			"Should the virtual environment be recreated with the updated location?"
+		):
+			return createVenvAndPopulate()
+		else:
+			print("Aborting")
+		sys.exit(1)
 	if (
 		not os.path.exists(venv_python_version_path)
 		or not os.path.exists(venv_orig_requirements_path)
