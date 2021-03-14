@@ -5,10 +5,7 @@
 # Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
 import ctypes
-from ctypes import *
-from ctypes.wintypes import *
 import winreg
-import threading
 import time
 import os
 import tempfile
