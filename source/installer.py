@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
+import ctypes
 from ctypes import *
 from ctypes.wintypes import *
 import winreg
@@ -531,8 +532,8 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		sourceFilePath=u"\\\\?\\"+sourceFilePath
 	if not destFilePath.startswith('\\\\'):
 		destFilePath=u"\\\\?\\"+destFilePath
-	if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
-		errorCode=GetLastError()
+	if ctypes.windll.kernel32.CopyFileW(sourceFilePath, destFilePath, False) == 0:
+		errorCode = ctypes.GetLastError()
 		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
 		if not os.path.exists(destFilePath):
 			raise OSError("error %d copying %s to %s"%(errorCode,sourceFilePath,destFilePath))
@@ -543,8 +544,8 @@ def tryCopyFile(sourceFilePath,destFilePath):
 			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
 		winKernel.moveFileEx(tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
-		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
-			errorCode=GetLastError()
+		if ctypes.windll.kernel32.CopyFileW(sourceFilePath, destFilePath, False) == 0:
+			errorCode = ctypes.GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
 
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
