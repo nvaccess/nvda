@@ -911,7 +911,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		synthLabel = _("&Synthesizer")
 		synthBoxSizer = guiHelper.LTRStaticBoxSizer(wx.HORIZONTAL, self, label=synthLabel)
 		synthGroup = guiHelper.BoxSizerHelper(self, sizer=synthBoxSizer)
-		settingsSizerHelper.addItem(synthGroup)
+		settingsSizerHelper.addItem(synthBoxSizer.GetStaticBox())
 
 		# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
 		# standard readonly TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
@@ -2118,7 +2118,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		fontGroupText = _("Font")
 		fontGroupSizer = guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self, label=fontGroupText)
 		fontGroup = guiHelper.BoxSizerHelper(self, sizer=fontGroupSizer)
-		sHelper.addItem(fontGroup)
+		sHelper.addItem(fontGroupSizer.GetStaticBox())
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2181,7 +2181,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		documentInfoGroupText = _("Document information")
 		docInfoSizer = guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self, label=documentInfoGroupText)
 		docInfoGroup = guiHelper.BoxSizerHelper(self, sizer=docInfoSizer)
-		sHelper.addItem(docInfoGroup)
+		sHelper.addItem(docInfoSizer.GetStaticBox())
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2206,7 +2206,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		pageAndSpaceGroupText = _("Pages and spacing")
 		pageAndSpaceSizer = guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self, label=pageAndSpaceGroupText)
 		pageAndSpaceGroup = guiHelper.BoxSizerHelper(self, sizer=pageAndSpaceSizer)
-		sHelper.addItem(pageAndSpaceGroup)
+		sHelper.addItem(pageAndSpaceSizer.GetStaticBox())
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2265,7 +2265,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		tablesGroupText = _("Table information")
 		tablesGroupSizer = guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self, label=tablesGroupText)
 		tablesGroup = guiHelper.BoxSizerHelper(self, sizer=tablesGroupSizer)
-		sHelper.addItem(tablesGroup)
+		sHelper.addItem(tablesGroupSizer.GetStaticBox())
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2492,7 +2492,7 @@ class AdvancedPanelControls(
 		groupText = _("NVDA Development")
 		devGroupSizer = guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self, label=groupText)
 		devGroup = guiHelper.BoxSizerHelper(self, sizer=devGroupSizer)
-		sHelper.addItem(devGroup)
+		sHelper.addItem(devGroupSizer.GetStaticBox())
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
@@ -2819,8 +2819,8 @@ class AdvancedPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		warningSizer = guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self)
 		warningGroup = guiHelper.BoxSizerHelper(self, sizer=warningSizer)
-		sHelper.addItem(warningGroup)
 		warningBox = warningGroup.sizer.GetStaticBox()  # type: wx.StaticBox
+		sHelper.addItem(warningBox)
 
 		warningText = wx.StaticText(warningBox, label=self.warningHeader)
 		warningText.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))

@@ -307,6 +307,11 @@ class BoxSizerHelper(object):
 		if isinstance(toAdd, (wx.StaticBoxSizer, scrolledpanel.ScrolledPanel)):
 			keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 
+		if isinstance(toAdd, wx.StaticBoxSizer):
+			toAdd = toAdd.GetStaticBox()
+		if isinstance(toAdd, wx.Box):
+			toAdd.SetContainingSizer(None)
+
 		if shouldAddSpacer:
 			self.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		self.sizer.Add(toAdd, **keywordArgs)
@@ -376,4 +381,4 @@ class LTRStaticBoxSizer(wx.StaticBoxSizer):
 	"""
 	def __init__(self, *args, **kw):
 		super().__init__(*args, **kw)
-		self.StaticBox.SetLayoutDirection(wx.Layout_LeftToRight)
+		# self.StaticBox.SetLayoutDirection(wx.Layout_RightToLeft)

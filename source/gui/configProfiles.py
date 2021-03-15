@@ -84,7 +84,7 @@ class ProfilesDialog(
 
 		profilesListGroupContents.Add(buttonHelper.sizer)
 		profilesListGroupSizer.Add(profilesListGroupContents, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
-		sHelper.addItem(profilesListGroupSizer)
+		sHelper.addItem(profilesListGroupSizer.GetStaticBox())
 
 		# Translators: The label of a button to manage triggers
 		# in the Configuration Profiles dialog.
