@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-24 00:10+1000\n"
-"PO-Revision-Date: 2020-07-07 15:56+0100\n"
+"POT-Creation-Date: 2021-01-29 00:01+1000\n"
+"PO-Revision-Date: 2021-02-02 15:22+0300\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -21,7 +21,7 @@ msgstr "نمط إدخال الأحرف المحلية"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 msgid "Alpha numeric input"
-msgstr "Alpha numeric input"
+msgstr "نمط إدخال الأحرف اللاتينية"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 msgid "Full shaped mode"
@@ -388,6 +388,10 @@ msgstr "rgn"
 msgid "fig"
 msgstr "fig"
 
+#. Translators: Displayed in braille for an object which represents marked (highlighted) content
+msgid "mrkd"
+msgstr "mrkd"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "(خ)"
@@ -673,7 +677,12 @@ msgstr "أي نقاط"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Afrikaans grade 1"
-msgstr "أفريكاناس بدون اختصارات"
+msgstr "أفريقاني الدرجة الأولى"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Afrikaans grade 2"
+msgstr "أفريقاني الدرجة الثانية"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -697,6 +706,11 @@ msgstr "إسامية بدون اختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Bashkir grade 1"
+msgstr "باشقوري الدرجة الأولى"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bengali grade 1"
 msgstr "بنغالية بدون اختصارات"
 
@@ -709,6 +723,11 @@ msgstr "بلغاري برايل الحاسوب 8 نقاط"
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "كردي رئيسي بدون اختصارات"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Coptic 8 dot computer braille"
+msgstr "قبطي حاسوبي ذو ثمان نقاط"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -767,8 +786,18 @@ msgstr "ألماني بدون اختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "German grade 0 (detailed)"
+msgstr "ألماني درجة صفر (detailed)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "German grade 1"
 msgstr "ألماني باختصارات"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 1 (detailed)"
+msgstr "ألماني بدون اختصارات (detailed)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1142,8 +1171,13 @@ msgstr "روسي برايل الحاسوب"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
-msgstr "روسي بدون اختصارات"
+msgid "Russian literary braille"
+msgstr "روسي (literary braille)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Russian literary braille (detailed)"
+msgstr "روسي (literary braille (detailed))"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1247,10 +1281,8 @@ msgstr "النمط التفاعلي"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
 msgid "Browse mode"
-msgstr "أوامر نمط التصفح"
+msgstr "نمط التصفح"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
 msgid "Unlabeled"
@@ -1258,11 +1290,11 @@ msgstr "غيرُ مُسمّى"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "الحركة بالأحرف المنفردة تعطيل"
+msgstr "تعطيل الحركة بالأحرف المنفردة"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "الحركة بالأحرف المنفردة تشغيل"
+msgstr "تفعيل الحركة بالأحرف المنفردة"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -1270,7 +1302,7 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"التبديل بين تشغيل وتعطيل الحركة بالأحرف المنفردة. عند التشغيل, ستقفز مفاتيح "
+"التبديل بين تفعيل وتعطيل الحركة بالأحرف المنفردة. عند التفعيل, ستقفز مفاتيح "
 "الأحرف المنفردة في نمط التصفح لأنواع العناصر المختلفة الموجودة بالصفحة. وعند "
 "التعطيل, ستمر هذه المفاتيح للتطبيق"
 
@@ -1826,7 +1858,7 @@ msgstr "الانت&قال ألى"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
-msgstr "لا يوجد وصف تفصيليالإعلام عن &وصف الكائن"
+msgstr "لا يوجد وصف تفصيلي"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
 msgid "Shows the long description at this position if one is found."
@@ -1835,7 +1867,7 @@ msgstr "إظهار الوصف التفصيلي للعنصر إذا وجد"
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
-msgstr "لست بكائن يحتوي على عناصر"
+msgstr "لست ضمن كائن يحتوي على عناصر"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
@@ -2572,7 +2604,7 @@ msgstr "تعبئة الاستمارات"
 
 #. Translators: Identifies a panel control for grouping related options.
 msgid "panel"
-msgstr "لوحة"
+msgstr "شاشة"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 msgid "password edit"
@@ -2695,17 +2727,21 @@ msgstr "منطقة"
 msgid "figure"
 msgstr "شكل"
 
+#. Translators: Identifies marked (highlighted) content
+msgid "marked content"
+msgstr "محتوى مُعَلَّم"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "غير متاح"
 
 #. Translators: This is presented when a control has focus.
 msgid "focused"
-msgstr "نشط"
+msgstr "نَشِط"
 
 #. Translators: This is presented when the control is selected.
 msgid "selected"
-msgstr "محدد"
+msgstr "مُحدَّد"
 
 #. Translators: This is presented when a document is busy.
 msgid "busy"
@@ -2729,11 +2765,11 @@ msgstr "للقراءة فقط"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "مفتوح"
+msgstr "موسَّع"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
-msgstr "مغلق"
+msgstr "مطويّ"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 msgid "invisible"
@@ -2788,11 +2824,11 @@ msgstr "خارج الشاشة"
 
 #. Translators: Presented when the control allows selection such as text fields.
 msgid "selectable"
-msgstr "يمكن تحديده"
+msgstr "قابلٌ للتحديد"
 
 #. Translators: Presented when a control can be moved to using system focus.
 msgid "focusable"
-msgstr "يمكن استعراضه"
+msgstr "قابلٌ للتركيز"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 msgid "clickable"
@@ -2995,10 +3031,6 @@ msgstr "البحث عن الموضع السابق للنص المُدخل سلف
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
 msgstr "لا يوجد تحديد"
-
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "نُسِخَ إلى الحافظة"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -3206,7 +3238,7 @@ msgstr "قراءة النص المحدد بكائنات التحرير والم�
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
-msgstr "بالنقر عليه مرة واحدة, يُعْلِمُك بالوقت. ومرتين, يُعْلِمُك بالتاريخ"
+msgstr "بالضغط عليه مرة واحدة, يُعْلِمُك بالوقت. ومرتين, يُعْلِمُك بالتاريخ"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -3238,7 +3270,7 @@ msgstr "نُطْق الأحرُف المكتوبة تشغيل"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "تشغيل وتعطيل نُطْق الأحرُف المكتوبة على لوحة المفاتيح"
+msgstr "التبديل بين تفعيل وتعطيل نُطْق الأحرُف المكتوبة على لوحة المفاتيح"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -3250,57 +3282,57 @@ msgstr "نُطْق الكلمات المكتوبة تشغيل"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
-msgstr "تشغيل وتعطيل نُطْق الكلمات المكتوبة على لوحة المفاتيح"
+msgstr "التبديل بين تفعيل وتعطيل نُطْق الكلمات المكتوبة على لوحة المفاتيح"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "نُطْق مفاتيح التحكم تعطيل"
+msgstr "تعطيل نُطق مفاتيح الأوامر"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "نُطْق مفاتيح التحكم تشغيل"
+msgstr "تفعيل نُطْق مفاتيح الأوامر"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
-msgstr "تشغيل وتعطيل نُطْق كافة مفاتيح التحكم باستثناء الحروف"
+msgstr "التبديل بين تفعيل وتعطيل نُطْق كافة المفاتيح المضغوطة باستثناء الحروف"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "الإعلان عن نوع الخط تعطيل"
+msgstr "تعطيل الإعلان عن نوع الخط"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "الإعلان عن نوع الخط تشغيل"
+msgstr "تفعيل الإعلان عن نوع الخط"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
-msgstr "التبديل بين تشغيل وتعطيل الإعلان عن تغيير نوع الخط"
+msgstr "التبديل بين تفعيل وتعطيل الإعلان عن تغيير نوع الخط"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "الإعلان عن حجم الخط تعطيل"
+msgstr "تعطيل الإعلان عن حجم الخط"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "الإعلان عن حجم الخط تشغيل"
+msgstr "تفعيل الإعلان عن حجم الخط"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
-msgstr "التبديل بين تشغيل وتعطيل الإعلان عن تغيير حجم الخط"
+msgstr "التبديل بين تفعيل وتعطيل الإعلان عن تغيير حجم الخط"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "الإعلان عن خصائص الخط تعطيل"
+msgstr "تعطيل الإعلان عن خصائص الخط"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "الإعلان عن خصائص الخط تشغيل"
+msgstr "تفعيل الإعلان عن خصائص الخط"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
-msgstr "التبديل بين تشغيل وتعطيل الإعلان عن خصائص الخط"
+msgstr "التبديل بين تفعيل وتعطيل الإعلان عن خصائص الخط"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 msgid "Toggles on and off the reporting of superscripts and subscripts"
@@ -3339,6 +3371,18 @@ msgstr "تفعيل الإعلان عن خصائص إبراز النص"
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "التبديل بين تفعيل وتعطيل الإعلان عن خصائص إبراز النص"
+
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+msgid "Toggles on and off the reporting of marked text"
+msgstr "التبديل بين تفعيل وتعطيل الإعلان عن االنص المميَّز بصريًا"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked on"
+msgstr "تفعيل الإعلان عن االنص المميَّز بصريًا"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked off"
+msgstr "تعطيل الإعلان عن االنص المميَّز بصريًا"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3503,6 +3547,18 @@ msgstr "تفعيل الإعلان عن الروابط"
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
 msgstr "التبديل بين تفعيل وتعطيل الإعلان عن الروابط"
+
+#. Translators: Input help mode message for toggle report graphics command.
+msgid "Toggles on and off the reporting of graphics"
+msgstr "التبديل بين تفعيل وتعطيل الإعلان عن الرسومات"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics off"
+msgstr "تعطيل الإعلان عن الرسومات"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics on"
+msgstr "تفعيل الإعلان عن الرسومات"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
@@ -3685,12 +3741,6 @@ msgstr "التبديل بين تفعيل وتعطيل نمط الاستعراض 
 msgid "No navigator object"
 msgstr "لا يوجد كائن واقع تحت مؤشر NVDA"
 
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "نَسخ %s إلى الحافظة"
-
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
@@ -3712,17 +3762,17 @@ msgstr ""
 "يعلن عن موقع النص أو الكائن الواقع تحت مؤشر الاستعراض. بالضغط عليه مرتين "
 "ربما يزودك بمزيد من المعلومات."
 
-#. Translators: Reported when attempting to move the navigator object to focus.
-msgid "Move to focus"
-msgstr "الانتقال لمؤشر النظام"
-
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"وضع مؤشر NVDA عند مؤشر النظام ووضع مؤشر الاستعراض عند مؤشر التحرير بداخله "
-"إذا كان ذلك ممكن"
+"وضع مؤشّر استعراض الكائن (مؤشّر NVDA)  في موضع مؤشّر النظام الحالي،ووضع مؤشّر "
+"الاستعراض في موضع مؤشّر التحرير إن كان ذلك ممكنًا."
+
+#. Translators: Reported when attempting to move the navigator object to focus.
+msgid "Move to focus"
+msgstr "الانتقال لمؤشر النظام"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3735,6 +3785,7 @@ msgid "Move focus"
 msgstr "نقل مؤشر النظام"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
+#. Translators: Reported when there is no caret.
 msgid "No caret"
 msgstr "لا يوجد مؤشر تحرير"
 
@@ -3793,7 +3844,8 @@ msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"تنفيذ الفعل الافتراضي على مؤشر NVDA (على سبيل المثال: الضغط عليه إذا كان زر)."
+"تنفيذ الإجراء الافتراضي عند مؤشر NVDA (على سبيل المثال: الضغط عليه إذا كان "
+"زرًّا)."
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3985,12 +4037,39 @@ msgid "Formatting"
 msgstr "التنسيق"
 
 #. Translators: Input help mode message for report formatting command.
+msgid "Reports formatting info for the current review cursor position."
+msgstr "الإعلان عن معلومات التنسيق ضمن الموضع الحالي لمؤشّر الاستعراض"
+
+#. Translators: Input help mode message for show formatting at review cursor command.
 msgid ""
-"Reports formatting info for the current review cursor position within a "
-"document. If pressed twice, presents the information in browse mode"
+"Presents, in browse mode, formatting info for the current review cursor "
+"position."
 msgstr ""
-"الإعلان عن التنسيق بالموضع الحالي لمؤشر الاستعراض داخل المستند. بالضغط عليه "
-"مرتين, يقدم المعلومات بطريقة يمكن تصفحها"
+"في نمط التصفُّح، يعرضُ معلومات التنسيق للنص الواقع ضمن موضع مؤشّر الاستعراض."
+
+#. Translators: Input help mode message for report formatting command.
+msgid ""
+"Reports formatting info for the current review cursor position. If pressed "
+"twice, presents the information in browse mode"
+msgstr ""
+"قراءةُ معلومات التنسيق للنص الواقع حاليا ضمن موضع مؤشّر الاستعراض. بالضغط عليه "
+"مرتين؛ سيعرض معلومات التنسيق في نمط التصفُّح."
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid "Reports formatting info for the text under the caret."
+msgstr "الإعلان عن تنسيق النص الواقع تحت مؤشّر التحرير"
+
+#. Translators: Input help mode message for show formatting at caret position command.
+msgid "Presents, in browse mode, formatting info for the text under the caret."
+msgstr "في نمط التصفُّح، يعرضُ معلومات التنسيق للنص الواقع ضمن موضع مؤشّر التحرير."
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid ""
+"Reports formatting info for the text under the caret. If pressed twice, "
+"presents the information in browse mode"
+msgstr ""
+"قراءةُ معلومات التنسيق للنص الواقع حاليا ضمن موضع مؤشّر التحرير. بالضغط عليه "
+"مرتين؛ سيعرض معلومات التنسيق في نمط التصفُّح."
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -4074,6 +4153,40 @@ msgstr ""
 "فحص المعلومات الواردة بها وهو أمر مفيد للمطورين.Logs information about the "
 "current navigator object which is useful to developers and activates the log "
 "viewer so the information can be examined\t."
+
+#. Translators: Input help mode message for a command to delimit then
+#. copy a fragment of the log to clipboard
+msgid ""
+"Mark the current end of the log as the start of the fragment to be copied to "
+"clipboard by pressing again."
+msgstr ""
+"تعيين نهاية السجلّ الحالية كنقطة بداية للجزئية التي ستُنسَخ للحافظة عند ضغطه "
+"مرة أخرى."
+
+#. Translators: Message when marking the start of a fragment of the log file for later copy
+#. to clipboard
+msgid "Log fragment start position marked, press again to copy to clipboard"
+msgstr "تعيين موضع البداية لجزء السجلّ. اضغَطْ مجددا لنسخها للحافظة."
+
+#. Translators: Message when failed to mark the start of a
+#. fragment of the log file for later copy to clipboard
+msgid "Unable to mark log position"
+msgstr "يتعذّر تحديد هذا الموضع من سجلّ الأخطاء كنقطة بداية"
+
+#. Translators: Message when attempting to copy an empty fragment of the log file
+msgid "No new log entry to copy"
+msgstr "لا يوجد مدخلاتٌ جديدة  في السجلّ لنسخها"
+
+#. Translators: Message when a fragment of the log file has been
+#. copied to clipboard
+msgid "Log fragment copied to clipboard"
+msgstr "نُسِخَ جزءٌ من سجلّ تقارير البرنامج للحافظة."
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
+msgid "Unable to copy"
+msgstr "تعذر النسخ"
 
 #. Translators: Input help mode message for Open user configuration directory command.
 msgid "Opens NVDA configuration directory for the current user."
@@ -4428,14 +4541,6 @@ msgstr "لا يوجد نص للنسخ"
 msgid "Can't select text, press twice to copy"
 msgstr "تعذر تحديد النص, اضغط مرتين متتاليتين للنسخ"
 
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "عرض النص المختار الذي تم نسخه"
-
-#. Translators: Presented when unable to copy to the clipboard because of an error.
-msgid "Unable to copy"
-msgstr "تعذر النسخ"
-
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
 "If pressed once, the text from the previously set start marker up to and "
@@ -4548,6 +4653,22 @@ msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
 msgstr "يتحرك للكائن السابق وفقا للترتيب الشجري للكائنات"
+
+#. Translators: Describes a command.
+msgid "Toggles the support of touch interaction"
+msgstr "تبديل خيارات دعم التفاعل باللمس"
+
+#. Translators: Presented when attempting to toggle touch interaction support
+msgid "Touch interaction not supported"
+msgstr "التفاعُل باللمس غير مدعوم"
+
+#. Translators: Presented when support of touch interaction has been enabled
+msgid "Touch interaction enabled"
+msgstr "التفاعل باللمس مُفعَّل"
+
+#. Translators: Presented when support of touch interaction has been disabled
+msgid "Touch interaction disabled"
+msgstr "التفاعل باللمس مُعطَّل"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -4800,7 +4921,7 @@ msgstr "تشغيل أو إيقاف مؤقت"
 
 #. Translators: This is the name of the launch email key found on multimedia keyboards to open an email client.
 msgid "email"
-msgstr "بريد إلكتروني"
+msgstr "البريد الإلكتروني"
 
 #. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
 msgid "media player"
@@ -4816,11 +4937,11 @@ msgstr "مفتاح تخصيص التطبيقات 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
-msgstr "backspace"
+msgstr "تراجُع backspace"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
-msgstr "caps lock"
+msgstr "تثبيت تكبير الأحرف caps lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
@@ -4840,67 +4961,67 @@ msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
-msgstr "enter"
+msgstr "دخول enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
-msgstr "numpad enter"
+msgstr "مفتاح الدخول على اللوحة الرقمية numpad enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
-msgstr "escape"
+msgstr "الهروب escape"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
-msgstr "page up"
+msgstr "صفحة لأعلى page up"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page down"
-msgstr "page down"
+msgstr "صفحة لأسفل page down"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
-msgstr "end"
+msgstr "نهاية end"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "home"
-msgstr "home"
+msgstr "بداية home"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "delete"
-msgstr "delete"
+msgstr "حذف delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "numpad delete"
+msgstr "مفتاح الحذف على اللوحة الرقمية numpad delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
-msgstr "left arrow"
+msgstr "سهم أيسر left arrow"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right arrow"
-msgstr "right arrow"
+msgstr "سهم أيمن right arrow"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "up arrow"
-msgstr "up arrow"
+msgstr "سهم لأعلى up arrow"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "down arrow"
-msgstr "down arrow"
+msgstr "سهم لأسفل down arrow"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "applications"
-msgstr "applications"
+msgstr "التطبيقات applications"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
-msgstr "num lock"
+msgstr "قفل اللوحة الرقمية num lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
-msgstr "print screen"
+msgstr "طباعة الشاشة print screen"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "scroll lock"
@@ -4908,63 +5029,63 @@ msgstr "scroll lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
-msgstr "numpad 4"
+msgstr "رقم 4 على اللوحة الرقمية numpad 4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 6"
-msgstr "numpad 6"
+msgstr "رقم 6 على اللوحة الرقمية numpad 6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 8"
-msgstr "numpad 8"
+msgstr "رقم 8 على اللوحة الرقمية numpad 8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 2"
-msgstr "numpad 2"
+msgstr "رقم 2 على اللوحة الرقمية numpad 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 9"
-msgstr "numpad 9"
+msgstr "رقم 9 على اللوحة الرقمية numpad 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 3"
-msgstr "numpad 3"
+msgstr "رقم 3 على اللوحة الرقمية numpad 3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 1"
-msgstr "numpad 1"
+msgstr "رقم 1 على اللوحة الرقمية numpad 1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 7"
-msgstr "numpad 7"
+msgstr "رقم 7 على اللوحة الرقمية numpad 7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 5"
-msgstr "numpad 5"
+msgstr "رقم 5 على اللوحة الرقمية numpad 5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad divide"
-msgstr "numpad divide"
+msgstr "علامة القسمة على اللوحة الرقمية numpad divide"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad multiply"
-msgstr "numpad multiply"
+msgstr "علامة الضرب على اللوحة الرقمية numpad multiply"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad minus"
-msgstr "numpad minus"
+msgstr "علامة الطرح على اللوحة الرقمية numpad minus"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad plus"
-msgstr "numpad plus"
+msgstr "علامة الجمع على اللوحة الرقمية numpad plus"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad decimal"
-msgstr "numpad decimal"
+msgstr "العلامة العشرية على اللوحة الرقمية numpad decimal"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad insert"
-msgstr "numpad insert"
+msgstr "مفتاح الإدراج على اللوحة الرقمية numpad insert"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
@@ -5008,39 +5129,39 @@ msgstr "numpad 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "insert"
-msgstr "insert"
+msgstr "الإدراج insert"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
-msgstr "left control"
+msgstr "التحكُّم الأيسر left control"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right control"
-msgstr "right control"
+msgstr "التحكُّم الأيمن right control"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left windows"
-msgstr "left windows"
+msgstr "Windows الأيسر left windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left shift"
-msgstr "left shift"
+msgstr "التبديل الأيسر left shift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right shift"
-msgstr "right shift"
+msgstr "التبديل الأيمن right shift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left alt"
-msgstr "left alt"
+msgstr "القوائم الأيسر left alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right alt"
-msgstr "right alt"
+msgstr "القوائم الأيمن right alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right windows"
-msgstr "right windows"
+msgstr "Windows الأيمن right windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "break"
@@ -5049,7 +5170,7 @@ msgstr "break"
 #. Translators: This is the name of a key on the keyboard.
 msgctxt "keyLabel"
 msgid "tab"
-msgstr "tab"
+msgstr "الانتقال tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
@@ -5088,7 +5209,7 @@ msgstr "مفتاح يجري تطبيقه على كل أنماط لوحة الم�
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Aragonese"
-msgstr "الأورجانيزية"
+msgstr "الأورغانية"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -5109,6 +5230,13 @@ msgstr "برمية"
 msgctxt "languageName"
 msgid "Somali"
 msgstr "الصومالية"
+
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc}, {lc}"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -6254,12 +6382,12 @@ msgstr "السرعة"
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
-msgstr "معدل سرعة إضا&في"
+msgstr "زيادة معدّل السرع&ة"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
 msgid "Rate boost"
-msgstr "معدل سرعة إضا&في"
+msgstr "زيادة معدّل السرعة"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
@@ -6373,13 +6501,32 @@ msgstr "استعراض لأعلى"
 msgid "NVDA Message"
 msgstr "رسالة من البرنامج"
 
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d أحرف"
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "نسخُ: {text} للحافظة"
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied: {text}"
+msgstr "نسخُ: {text}"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "عملية التحديث جارية"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 msgid "Checking for update"
-msgstr "جاري البحث عن التحديثات"
+msgstr "البحث عن التحديثات"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
@@ -6389,7 +6536,11 @@ msgstr "خطأ أثناء البحث عن التحديثات"
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of an error message dialog.
+#. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6446,7 +6597,7 @@ msgstr "التأكُّد من توافقية الإضافات البرمجية..
 #. {version} will be replaced with the version; e.g. 2011.3.
 #, python-brace-format
 msgid "&Install NVDA {version}"
-msgstr "&ينتظر تثبيت NVDA {version}"
+msgstr "&تثبيت NVDA {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
 msgid "Re-&download update"
@@ -6469,7 +6620,6 @@ msgstr "ذكرني لا&حقا"
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "إ&غلاق"
 
@@ -6514,7 +6664,7 @@ msgstr "جاري الاتصال"
 
 #. Translators: The progress message indicating that a download is in progress.
 msgid "Downloading"
-msgstr "جاري التحميل"
+msgstr "تحميل"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
@@ -6675,6 +6825,8 @@ msgid "Composition"
 msgstr "الكتابة"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "المقترح"
@@ -6684,7 +6836,7 @@ msgstr "عرض النتائج"
 
 #. Translators: Input help mode message for the 'read documentation script
 msgid "Tries to read documentation for the selected autocompletion item."
-msgstr "تجري محاولة قراءة وثائق المساعدة لعنصر الإكمال التلقائي المحدد"
+msgstr "محاولة قراءة وثائق المساعدة لعنصر الإكمال التلقائي المحدد"
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 msgid "Cann't find the documentation window."
@@ -6694,6 +6846,10 @@ msgstr "لا يمكن العثور على نافذة ملف المساعدة"
 msgid "No track playing"
 msgstr "لا يوجد ملف صوتي يعمل"
 
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr "يتعذر تحديد الوقت المتبقي"
+
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "الإعلان عن الوقت المتبقى من الملف الصوتي الحالي, إن وجد"
@@ -6701,6 +6857,10 @@ msgstr "الإعلان عن الوقت المتبقى من الملف الصوت
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "الإعلان عن الوقت المنقضي من الملف الصوتي الحالي, إن وجد"
+
+#. Translators: Reported if the total time is not available in Foobar2000
+msgid "Total time not available"
+msgstr "الوقتُ الإجمالي غيرُ متوفر"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7198,6 +7358,14 @@ msgstr "تعطيل off [ repeat ]"
 msgid "No emoji"
 msgstr "لا يوجد شكل"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "تفعيل تتبُّع التغييرات"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "تعطيل تتبُّع التغييرات"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "سلسلة الأسطر Optelec ALVA/protocol converter"
@@ -7315,6 +7483,11 @@ msgstr "عارض تقارير الخط البارز Braille  ل NVDA"
 #. whether the braille viewer is shown at startup or not.
 msgid "&Show Braille Viewer on Startup"
 msgstr "ظ&هور عارض الالخط البارز Braille  عند بدء التشغيل"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
+msgstr "&التمرير لتوجيه مؤشّر برايل"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7620,10 +7793,11 @@ msgid ""
 msgstr ""
 "تتطلب معظم أوامر البرنامج الضغط على مفتاح NVDA قبيل الضغط على مفاتيح "
 "الاختصار الأخرى.\n"
-" ويقوم مفتاحي الإدراج سواء الواقع في اللوحة الرقمية أو الممتد بالعمل كمفتاح "
-"NVDA.\n"
-" وكذلك بإمكانك ضبط البرنامج بحيث يستخدم مفتاح تكبير الحروف كمفتاح للبرنامج.\n"
-"وفي أي وقت يمكنك الضغط على مفتاح NVDA زائد حرف (N) لفتح قائمة البرنامج ومن "
+"افتراضيا، يعمل مفتاح الإدراج في اللوحة الرقمية ومفتاح الإدراج في الوحة "
+"الرئيسة كمفتاح NVDA.\n"
+"وكذلك بإمكانك ضبط البرنامج بحيث يستخدم مفتاح تفعيل تكبير الحروف كمفتاح "
+"للبرنامج.\n"
+"وفي أي وقت يمكنك الضغط على مفتاح NVDA زائد حرف\t(N) لفتح قائمة البرنامج ومن "
 "ثم إجراء اية تعديلات تفضيلية أو الحصول على التعليمات الخاصة به أو الوصول "
 "لأية وظائف أخرى في البرنامج."
 
@@ -7649,7 +7823,7 @@ msgstr "نمط &لوحة المفاتيح:"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "استخدام &مفتاح تكبير الحروف كمفتاح مصاحب للبرنامج"
+msgstr "استخدام &مفتاح تفعيل تكبير الحروف كمفتاح مصاحب للبرنامج"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
@@ -7784,7 +7958,6 @@ msgstr "نبذة عن الإض&افة البرمجية..."
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
 msgstr "موافق"
 
@@ -7868,8 +8041,8 @@ msgstr "تعط&يل الإضافة"
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
-#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 msgid "&Remove"
 msgstr "إ&زالة"
 
@@ -7895,8 +8068,12 @@ msgid "NVDA Add-on Package (*.{ext})"
 msgstr "حزمة الإضافة البرمجية (*.{ext})"
 
 #. Translators: Presented when attempting to remove the selected add-on.
-msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "هل ترغب بالفعل في حذف هذه الإضافة من NVDA?"
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr "هل ترغب بالفعل في حذف إضافة {addon} من NVDA? لا يمكن التراجُع عن هذا."
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
@@ -7915,6 +8092,8 @@ msgid "Install"
 msgstr "مُثَبَّتة"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
 msgstr "مُعطَّلة"
 
@@ -8249,6 +8428,90 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "تنشيط يدوي"
 
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+msgid "No help available here."
+msgstr "لا تتوفر مساعدةٌ هنا."
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+msgid "No user guide found."
+msgstr "لم يُعثَر على دليل المستخدم."
+
+#. Translators: Describes a gesture in the Input Gestures dialog.
+#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
+#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
+msgid "{main} ({source})"
+msgstr "{main} ({source})"
+
+#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
+msgid "Enter input gesture:"
+msgstr "ادخل اختصار:"
+
+#. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
+#. will be replaced by the gesture that can be triggered by a mapped gesture.
+#. E.G. Emulate key press: NVDA+b
+#, python-brace-format
+msgid "Emulate key press: {emulateGesture}"
+msgstr "محاكاةُ ضغط مفتاح: {emulateGesture}"
+
+#. Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
+msgid "Enter gesture to emulate:"
+msgstr "ادخل اختصار لمحاكاته:"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} (1 result)"
+msgstr "{category} (عدد النتائج 1)"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} ({nbResults} results)"
+msgstr "{category} (النتائج: {nbResults})"
+
+#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
+msgid "Input Gestures"
+msgstr "تخصيص اختصارات NVDA"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "التص&فية حسب"
+
+#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+msgid "&Add"
+msgstr "إ&ضافة"
+
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr "استرجاع الإعدادات &الافتراضية"
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"هل أنتَ متأكّدٌ من رغبتك في استرجاع القِيَم الافتراضية لكافة اختصارات NVDA??\n"
+"\t\t\t\n"
+"\t\t\tستُفقَدُ جميع الاختصارت التي عرَّفتَها، سواءً تلك التي عرّفتَها سابقًا، أو "
+"أضفتَها للتوّ خلال فتحك لمربّع الحوار حاليا.\n"
+"\t\t\tلا يمكنُ التراجُع عن هذه الخطوة."
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "إعادة ضبط اختصارات NVDA"
+
+#. Translators: An error displayed when saving user defined input gestures fails.
+msgid "Error saving user defined gestures - probably read only file system."
+msgstr ""
+"لا يمكن حفظ الاختصارات التي قمت بتخصيصها - أغلب الظن أن ملف النظام معد "
+"للقراءة فقط"
+
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
 msgstr "تحديث NVDA"
@@ -8401,7 +8664,16 @@ msgstr "بدء النسخة المحمولة الجديدة بعد إنشائه�
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "رجاء قم بتحديد مجلد لإنشاء النسخة المحمولة به"
+msgstr "الرجاء تحديد مجلّد  لإنشاء النسخة المحمولة فيه"
+
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
+msgstr ""
+"الرجاء تحديد المسار الكامل بدقة (بما في ذلك حرفُ محرّك الأقراص) لإنشاء النسخة "
+"المحمولة."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -8431,7 +8703,7 @@ msgstr "فشل في إنشاء النسخة المحمولة: %s"
 #. %s will be replaced with the destination directory.
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "تم إنشاء نسخة محمولة من NVDA بنجاح داخل المجلد %s"
+msgstr "أُنشئت نسخة محمولة من NVDA بنجاح داخل المجلد %s"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -8463,13 +8735,8 @@ msgid "Log is unavailable"
 msgstr "سجلُّ التقارير غير متاح"
 
 #. Translators: A cancel button on a message dialog.
-#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
 msgstr "إلغاء"
-
-#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
-msgid "Apply"
-msgstr "تطبيق"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
@@ -8643,6 +8910,10 @@ msgstr "&آلة النطق:"
 msgid "Audio output  &device:"
 msgstr "&جهاز إخراج الصوت"
 
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Microsoft Sound Mapper"
+
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio d&ucking mode:"
 msgstr "نم&ط خفض الأصوات:"
@@ -8744,7 +9015,7 @@ msgstr "توقُّف النُطق عند ضغط مفتاح الإدخال"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
-msgstr "إتاحة التصفح بمفاتيح الحركة أثناء القراءة المتواصلة"
+msgstr "إتاحةُ التص&فُّح أثناء القراءة المتواصلة"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8969,12 +9240,12 @@ msgstr "شمول ال&جداول التنسيقية"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
-msgstr "التشغيل التلقائي للنمط التفاعلي عند وجود حقول استمارية"
+msgstr "التحوُّل إلى النمط التفاعلي تلقائيا عند مرور مؤشّر النظام بحقول استمارات"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
-msgstr "التشغيل التلقائي للنمط التفاعلي مع حركة مؤشر الحاسوب"
+msgstr "التحوُّل تلقائيا من وإلى النمط التفاعلي وِفقا لحركة مؤشِّر التحرير"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -8985,6 +9256,11 @@ msgstr "الإعلان الصوتي عند التبديل ما بين نمط ا�
 #. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "منع غيرم&فاتيح الحركة السريعة من الوصول للمستند"
+
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "نقل مؤشّر النظام تلقائيا للعناصر القابلة لذلك"
 
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
@@ -9028,6 +9304,11 @@ msgstr "إبراز النص"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "Mar&ked (highlighted text)"
+msgstr "نصّ&ٌ مُعلَّم (مميّزٌ بصريا)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "ال&نمط"
 
@@ -9043,8 +9324,8 @@ msgstr "معلومات المستند"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Co&mments"
-msgstr "الت&عليقات"
+msgid "No&tes and comments"
+msgstr "الم&لاحظات والتعليقات"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9152,6 +9433,11 @@ msgstr "عناصر التصفح"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Graphics"
+msgstr "&الرسومات"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "ال&قوائم السردية"
 
@@ -9197,6 +9483,11 @@ msgstr "التفاعل باللمس"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
+msgid "Enable touch interaction support"
+msgstr "تفعيل دعم التفاعل باللمس"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
 msgid "&Touch typing mode"
 msgstr "نمط الكتابة اللمسية"
 
@@ -9226,6 +9517,14 @@ msgstr "فتح الدليل المتضمن لمسودة المطوِّر"
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Enable &selective registration for UI Automation events and property changes"
+msgstr ""
+"تمكينُ ا&لتسجيل الانتقائي لأحداث أتمتة واجهة المستخدم (UI Automation) وتغيير "
+"الخصائص"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9276,11 +9575,6 @@ msgstr "لا"
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "محاولة إلغاء الإعلان عن الأحداث والمعلومات منتهية الصلاحية:"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Automatically set system &focus to focusable elements"
-msgstr "نقل مؤشّر النظام تلقائيا للعناصر القابلة لذلك"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9381,7 +9675,6 @@ msgid "&Dictionary entries"
 msgstr "مد&خلات المعجم"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "ملاحظة"
 
@@ -9401,12 +9694,6 @@ msgstr "حالة"
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
 msgstr "نوع المطابقة"
-
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
-#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-msgid "&Add"
-msgstr "إ&ضافة"
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 msgid "&Edit"
@@ -9475,13 +9762,24 @@ msgstr "شكلُ المؤشّر للتحديد الحالي"
 msgid "Cursor shape for &review:"
 msgstr "شكلُ المؤشّر لمؤشّر الاستعراض"
 
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "تعيين وقت"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "عرض دائم"
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+msgid "Show messages"
+msgstr "ظهورُ الرسائل"
+
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
-msgstr "زمن ال&رسالة (بالثواني)"
-
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
-msgstr "ظهور الرسائل لمدة غير م&حددة"
+msgstr "مدة ظهور ال&رسالة (بالثواني)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
@@ -9620,54 +9918,6 @@ msgstr "إ&زالة"
 msgid "Symbol \"%s\" is already present."
 msgstr "الرمز \"%s\" موجود بالفعل."
 
-#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
-msgid "Input Gestures"
-msgstr "تخصيص اختصارات NVDA"
-
-#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
-msgctxt "inputGestures"
-msgid "&Filter by:"
-msgstr "التص&فية حسب"
-
-#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
-msgid "Reset to factory &defaults"
-msgstr "استرجاع الإعدادات &الافتراضية"
-
-#. Translators: Describes a gesture in the Input Gestures dialog.
-#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
-#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
-msgid "{main} ({source})"
-msgstr "{main} ({source})"
-
-#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
-msgid "Enter input gesture:"
-msgstr "ادخل اختصار:"
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-msgid ""
-"Are you sure you want to reset all gestures to their factory defaults?\n"
-"\t\t\t\n"
-"\t\t\tAll of your user defined gestures, whether previously set or defined "
-"during this session, will be lost.\n"
-"\t\t\tThis cannot be undone."
-msgstr ""
-"هل أنتَ متأكّدٌ من رغبتك في استرجاع القِيَم الافتراضية لكافة اختصارات NVDA??\n"
-"\t\t\t\n"
-"\t\t\tستُفقَدُ جميع الاختصارت التي عرَّفتَها، سواءً تلك التي عرّفتَها سابقًا، أو "
-"أضفتَها للتوّ خلال فتحك لمربّع الحوار حاليا.\n"
-"\t\t\tلا يمكنُ التراجُع عن هذه الخطوة."
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-msgid "Reset gestures"
-msgstr "إعادة ضبط اختصارات NVDA"
-
-#. Translators: An error displayed when saving user defined input gestures fails.
-msgid "Error saving user defined gestures - probably read only file system."
-msgstr ""
-"لا يمكن حفظ الاختصارات التي قمت بتخصيصها - أغلب الظن أن ملف النظام معد "
-"للقراءة فقط"
-
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr "الخروج من المحتوى الرياضي"
@@ -9705,12 +9955,6 @@ msgstr "%s محدد"
 #, python-format
 msgid "%s selected"
 msgstr "%s محدد"
-
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d أحرف"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -10158,13 +10402,13 @@ msgid "Highlight navigator &object"
 msgstr "تمييز مؤشّر &NVDA (مؤشِّر نمط استعراض الكائن)"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-msgid "Focus Highlight"
-msgstr "تمييز موضع التركيز"
+msgid "Visual Highlight"
+msgstr "التمييز المرئي"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
 msgid "&Enable Highlighting"
-msgstr "&تفعيل التمييز المرئي"
+msgstr "&تفعيل التمييز"
 
 #. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
@@ -11151,8 +11395,8 @@ msgstr "م&خططات"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omments"
-msgstr "ت&عليقات"
+msgid "N&otes"
+msgstr "الملاحظات"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11168,6 +11412,14 @@ msgstr "أو&راق العمل"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} حتى {end}"
+
+#. Translators: the description  for a script for Excel
+msgid "opens a dropdown item at the current cell"
+msgstr "فتح القائمة المنسدلة المتعلقة بالخلية الحالية"
+
+#. Translators: the description  for a script for Excel
+msgid "Sets the current cell as start of column header"
+msgstr "تعيين الخلية الحالية كبداية رأس العمود"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -11196,6 +11448,10 @@ msgid ""
 msgstr ""
 "الضغط مرة واحدة سيجعل هذه الخلية رأس للعمود الأول للخلايا الأسفل منها أو "
 "التي  يمينها في هذا النطاق. والضغط مرتين سيلغي رأس العمود لهذه الخلية. "
+
+#. Translators: the description  for a script for Excel
+msgid "sets the current cell as start of row header"
+msgstr "تعيينُ الخلية الحالية كبداية لرأس الصف"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -11238,22 +11494,32 @@ msgstr "{title}: الرسالة: {message}"
 msgid "Input Message is {message}"
 msgstr "الرسالة هي {message}"
 
-#. Translators: A message in Excel when there is no comment
-msgid "Not on a comment"
-msgstr "لا يوجد تعليق"
+#. Translators: the description  for a script for Excel
+msgid "Reports the note on the current cell"
+msgstr "قراءةُ الملاحظات المرتبطة بالخلية الحالية"
+
+#. Translators: A message in Excel when there is no note
+msgid "Not on a note"
+msgstr "ليست هناك ملاحظة"
 
 #. Translators: the description  for a script for Excel
-msgid "Reports the comment on the current cell"
-msgstr "الإعلان عن التعليقات الموجودة بالخانة الحالية"
+msgid "Opens the note editing dialog"
+msgstr "فتح مربّع حوار تحرير الملاحظة."
 
-#. Translators: Dialog text for
+#. Translators: Dialog text for the note editing dialog
 #, python-brace-format
-msgid "Editing comment for cell {address}"
-msgstr "تحرير تعليق خلية {address}"
+msgid "Editing note for cell {address}"
+msgstr "تحرير الملاحظة المتعلقة بالخلية {address}"
+
+#. Translators: Title for the note editing  dialog
+msgid "Note"
+msgstr "ملاحظة"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
+#. may mix the address and the content when the cell contains a 3-digit number.
 #, python-brace-format
-msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
+msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
 msgstr "{firstAddress} {firstContent} إلى {lastAddress} {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
@@ -11516,10 +11782,11 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr "1.5 أسطر"
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
-msgstr "صحيح"
+msgid "exactly {space:.1f} pt"
+msgstr "بالضبط {space:.1f} pt"
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -11617,14 +11884,6 @@ msgstr "نمط {styleName}, مستوى المخطط التفصيلي {outlineLev
 msgid "{size:g} point font"
 msgstr "{size:g} درجة"
 
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking on"
-msgstr "تفعيل تتبُّع التغييرات"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking off"
-msgstr "تعطيل تتبُّع التغييرات"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr "عرضُ الأحرف غير المطبوعة"
@@ -11675,6 +11934,28 @@ msgstr "تباعد الأسطر بمسافة مزدوجة"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 تباعد السطر"
+
+#~ msgctxt "line spacing value"
+#~ msgid "exact"
+#~ msgstr "صحيح"
+
+#~ msgid "Russian grade 1"
+#~ msgstr "روسي بدون اختصارات"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "نَسخ %s إلى الحافظة"
+
+#~ msgid "Review selection copied to clipboard"
+#~ msgstr "عرض النص المختار الذي تم نسخه"
+
+#~ msgid "Apply"
+#~ msgstr "تطبيق"
+
+#~ msgid "Co&mments"
+#~ msgstr "الت&عليقات"
+
+#~ msgid "C&omments"
+#~ msgstr "ت&عليقات"
 
 #~ msgid "Ukrainian"
 #~ msgstr "أوكراني"

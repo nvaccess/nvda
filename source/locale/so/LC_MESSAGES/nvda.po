@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-4ccb2ab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-24 00:10+1000\n"
+"POT-Creation-Date: 2021-01-12 20:07+1000\n"
 "PO-Revision-Date: 2020-05-02 14:41-0700\n"
 "Last-Translator: Osman H Baiia <othman82@hotmail.com>\n"
 "Language-Team: \n"
@@ -392,6 +392,10 @@ msgstr "gbl"
 msgid "fig"
 msgstr ""
 
+#. Translators: Displayed in braille for an object which represents marked (highlighted) content
+msgid "mrkd"
+msgstr ""
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "door"
@@ -684,6 +688,12 @@ msgstr "Fasalka 1 ee Faarisi"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
+msgid "Afrikaans grade 2"
+msgstr "Fasalka 1 ee Faarisi"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
 msgid "Arabic 8 dot computer braille"
 msgstr "Karwati 8 dhibicda kombiyuutar"
 
@@ -705,6 +715,12 @@ msgstr "Breel Assamese fasalka 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Bashkir grade 1"
+msgstr "fasalka 1 ee Kashmiri "
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bengali grade 1"
 msgstr "Breelka Fasalka 1 ee Bengali"
 
@@ -717,6 +733,12 @@ msgstr "Bulgaari computer oo leh 8 dhibcood"
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Central Kurdish breel fasalka 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Coptic 8 dot computer braille"
+msgstr "Karwati 8 dhibicda kombiyuutar"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -775,7 +797,19 @@ msgstr "Jarmalka fasalka 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "German grade 0 (detailed)"
+msgstr "Jarmalka fasalka 0"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "German grade 1"
+msgstr "Jarmalka fasalka 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "German grade 1 (detailed)"
 msgstr "Jarmalka fasalka 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -1157,8 +1191,15 @@ msgstr "Faarisi 8 dhibicda breelkombuyuutar"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
-msgstr "Fasalka Ruush 1"
+#, fuzzy
+msgid "Russian literary braille"
+msgstr "Faarisi 8 dhibicda breelkombuyuutar"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Russian literary braille (detailed)"
+msgstr "Faarisi 8 dhibicda breelkombuyuutar"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1267,8 +1308,6 @@ msgstr "diiradda mawd"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
 msgid "Browse mode"
 msgstr "qoraalka mawd"
 
@@ -2726,6 +2765,10 @@ msgstr "gobolka"
 msgid "figure"
 msgstr ""
 
+#. Translators: Identifies marked (highlighted) content
+msgid "marked content"
+msgstr ""
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "aan jirin"
@@ -3033,10 +3076,6 @@ msgstr ""
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
 msgstr "xulashada ma leh"
-
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "wa la coobay"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -3391,6 +3430,21 @@ msgstr "ka warbixi xoojinta wuu shidiyyahay"
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "Isku-dhafka iyo ka-warbixinta isbeddelka sheegetaanka ee xoojinta"
 
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+#, fuzzy
+msgid "Toggles on and off the reporting of marked text"
+msgstr "Isku-dhafka iyo ka-warbixinta isbeddelka sheegetaanka ee jadwalayaasha"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+#, fuzzy
+msgid "report marked on"
+msgstr "ka warbixi bogaga wuu shidiyyahay"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+#, fuzzy
+msgid "report marked off"
+msgstr "ka warbixi bogaga wuu dimsiyyahay"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "ka warbixi midabada wuu dimsiyyahay"
@@ -3566,6 +3620,21 @@ msgstr "ka warbixi  iskuxireyasha wuu shidiyyahay"
 msgid "Toggles on and off the reporting of links"
 msgstr ""
 "Isku-dhafka iyo ka-warbixinta isbeddelka sheegetaanka ee iskuxiriiriyaasha"
+
+#. Translators: Input help mode message for toggle report graphics command.
+#, fuzzy
+msgid "Toggles on and off the reporting of graphics"
+msgstr "Isku-dhafka iyo ka-warbixinta isbeddelka sheegetaanka ee bogaga"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+#, fuzzy
+msgid "report graphics off"
+msgstr "ka warbixi bogaga wuu dimsiyyahay"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+#, fuzzy
+msgid "report graphics on"
+msgstr "ka warbixi bogaga wuu shidiyyahay"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
@@ -3763,12 +3832,6 @@ msgstr ""
 msgid "No navigator object"
 msgstr "shayga nafigeeshinka ma jiro"
 
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "%s wa la coobay"
-
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
@@ -3791,17 +3854,18 @@ msgstr ""
 "Wargelinta macluumaadka ku saabsan goobta qoraalka ama sheyga ee calaamada "
 "dib u eegista."
 
-#. Translators: Reported when attempting to move the navigator object to focus.
-msgid "Move to focus"
-msgstr "U dhaqaaqo inaad diirada saarto"
-
 #. Translators: Input help mode message for move navigator object to current focus command.
+#, fuzzy
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
 "Ujeeddooyinka nafigeeshinka wuxuu u jeedinayaa diiradda hadda, iyo calaamada "
 "dib u eegista booska ilaaliyaha gudaha, haddii ay suurtogal tahay."
+
+#. Translators: Reported when attempting to move the navigator object to focus.
+msgid "Move to focus"
+msgstr "U dhaqaaqo inaad diirada saarto"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3814,6 +3878,7 @@ msgid "Move focus"
 msgstr "diiradda dhaqaaji"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
+#. Translators: Reported when there is no caret.
 msgid "No caret"
 msgstr "calaamadda karit ma leh"
 
@@ -4100,9 +4165,42 @@ msgid "Formatting"
 msgstr "xogta qaabaynta "
 
 #. Translators: Input help mode message for report formatting command.
+#, fuzzy
+msgid "Reports formatting info for the current review cursor position."
+msgstr ""
+"waxaad ka heleysaa xaraf qoraal ah oo ka soo jeeda meesha iminka taagan"
+
+#. Translators: Input help mode message for show formatting at review cursor command.
+#, fuzzy
 msgid ""
-"Reports formatting info for the current review cursor position within a "
-"document. If pressed twice, presents the information in browse mode"
+"Presents, in browse mode, formatting info for the current review cursor "
+"position."
+msgstr ""
+"waxaad ka heleysaa xaraf qoraal ah oo ka soo jeeda meesha iminka taagan"
+
+#. Translators: Input help mode message for report formatting command.
+#, fuzzy
+msgid ""
+"Reports formatting info for the current review cursor position. If pressed "
+"twice, presents the information in browse mode"
+msgstr ""
+"ka warbixi Xogta qaabeynta faafaahinta ee dib u eegista hadda meesha "
+"calaamada uu ku yaal dukumeentiga. Haddii laba jeer la cadaadiyo, waxay soo "
+"bandhigaysaa macluumaadka habka booqashada"
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid "Reports formatting info for the text under the caret."
+msgstr ""
+
+#. Translators: Input help mode message for show formatting at caret position command.
+msgid "Presents, in browse mode, formatting info for the text under the caret."
+msgstr ""
+
+#. Translators: Input help mode message for report formatting at caret command.
+#, fuzzy
+msgid ""
+"Reports formatting info for the text under the caret. If pressed twice, "
+"presents the information in browse mode"
 msgstr ""
 "ka warbixi Xogta qaabeynta faafaahinta ee dib u eegista hadda meesha "
 "calaamada uu ku yaal dukumeentiga. Haddii laba jeer la cadaadiyo, waxay soo "
@@ -4194,6 +4292,39 @@ msgstr ""
 "Waxay gashaa macluumaadka ku saabsan sheyga socdaalka ee hadda jira kuwaas "
 "oo faa'iido u leh horumarinta iyo hirgaliya aragtida macaamiilka si "
 "macluumaadka loo baari karo."
+
+#. Translators: Input help mode message for a command to delimit then
+#. copy a fragment of the log to clipboard
+msgid ""
+"Mark the current end of the log as the start of the fragment to be copied to "
+"clipboard by pressing again."
+msgstr ""
+
+#. Translators: Message when marking the start of a fragment of the log file for later copy
+#. to clipboard
+msgid "Log fragment start position marked, press again to copy to clipboard"
+msgstr ""
+
+#. Translators: Message when failed to mark the start of a
+#. fragment of the log file for later copy to clipboard
+msgid "Unable to mark log position"
+msgstr ""
+
+#. Translators: Message when attempting to copy an empty fragment of the log file
+msgid "No new log entry to copy"
+msgstr ""
+
+#. Translators: Message when a fragment of the log file has been
+#. copied to clipboard
+#, fuzzy
+msgid "Log fragment copied to clipboard"
+msgstr "%s wa la coobay"
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
+msgid "Unable to copy"
+msgstr ""
 
 #. Translators: Input help mode message for Open user configuration directory command.
 msgid "Opens NVDA configuration directory for the current user."
@@ -4558,14 +4689,6 @@ msgstr ""
 msgid "Can't select text, press twice to copy"
 msgstr ""
 
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr ""
-
-#. Translators: Presented when unable to copy to the clipboard because of an error.
-msgid "Unable to copy"
-msgstr ""
-
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
 "If pressed once, the text from the previously set start marker up to and "
@@ -4667,6 +4790,26 @@ msgstr ""
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
+msgstr ""
+
+#. Translators: Describes a command.
+#, fuzzy
+msgid "Toggles the support of touch interaction"
+msgstr ""
+"Isku-dhafka iyo ka-warbixinta isbeddelka sheegetaanka ee cutubka "
+"indanteeshinka"
+
+#. Translators: Presented when attempting to toggle touch interaction support
+#, fuzzy
+msgid "Touch interaction not supported"
+msgstr "codka quusitaank ma la tageerin"
+
+#. Translators: Presented when support of touch interaction has been enabled
+msgid "Touch interaction enabled"
+msgstr ""
+
+#. Translators: Presented when support of touch interaction has been disabled
+msgid "Touch interaction disabled"
 msgstr ""
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
@@ -5221,6 +5364,13 @@ msgstr ""
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Somali"
+msgstr ""
+
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
 msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
@@ -6486,6 +6636,25 @@ msgstr ""
 msgid "NVDA Message"
 msgstr ""
 
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr ""
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, fuzzy, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "wa la coobay"
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, fuzzy, python-brace-format
+msgid "Copied: {text}"
+msgstr "qoris: {text}"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr ""
@@ -6502,7 +6671,11 @@ msgstr ""
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of an error message dialog.
+#. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6577,7 +6750,6 @@ msgstr ""
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr ""
 
@@ -6744,6 +6916,8 @@ msgid "Composition"
 msgstr ""
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr ""
@@ -6763,6 +6937,10 @@ msgstr ""
 msgid "No track playing"
 msgstr ""
 
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr ""
+
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
@@ -6770,6 +6948,11 @@ msgstr ""
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr ""
+
+#. Translators: Reported if the total time is not available in Foobar2000
+#, fuzzy
+msgid "Total time not available"
+msgstr "aan jirin"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7264,6 +7447,16 @@ msgstr ""
 msgid "No emoji"
 msgstr ""
 
+#. Translators: a message when toggling change tracking in Microsoft word
+#, fuzzy
+msgid "Change tracking on"
+msgstr "Raadinta jiirka wuu shidiyyahay"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+#, fuzzy
+msgid "Change tracking off"
+msgstr "Raadinta jiirka wuu dimsiyyahay"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr ""
@@ -7381,6 +7574,11 @@ msgstr ""
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether the braille viewer is shown at startup or not.
 msgid "&Show Braille Viewer on Startup"
+msgstr ""
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
 msgstr ""
 
 #. Translators: The title of the document used to present the result of content recognition.
@@ -7823,7 +8021,6 @@ msgstr ""
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
 msgstr ""
 
@@ -7900,8 +8097,8 @@ msgstr ""
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
-#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 msgid "&Remove"
 msgstr ""
 
@@ -7927,7 +8124,11 @@ msgid "NVDA Add-on Package (*.{ext})"
 msgstr ""
 
 #. Translators: Presented when attempting to remove the selected add-on.
-msgid "Are you sure you wish to remove the selected add-on from NVDA?"
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
 msgstr ""
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
@@ -7948,6 +8149,8 @@ msgid "Install"
 msgstr ""
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 #, fuzzy
 msgid "Disabled"
 msgstr "la beddel karo"
@@ -8257,6 +8460,84 @@ msgstr ""
 msgid "Manual Activation"
 msgstr ""
 
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+msgid "No help available here."
+msgstr ""
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+#, fuzzy
+msgid "No user guide found."
+msgstr "Lama helin xariijinta sharciga"
+
+#. Translators: Describes a gesture in the Input Gestures dialog.
+#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
+#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
+msgid "{main} ({source})"
+msgstr ""
+
+#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
+msgid "Enter input gesture:"
+msgstr ""
+
+#. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
+#. will be replaced by the gesture that can be triggered by a mapped gesture.
+#. E.G. Emulate key press: NVDA+b
+#, python-brace-format
+msgid "Emulate key press: {emulateGesture}"
+msgstr ""
+
+#. Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
+msgid "Enter gesture to emulate:"
+msgstr ""
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} (1 result)"
+msgstr ""
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} ({nbResults} results)"
+msgstr ""
+
+#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
+msgid "Input Gestures"
+msgstr ""
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr ""
+
+#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+msgid "&Add"
+msgstr ""
+
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr ""
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr ""
+
+#. Translators: An error displayed when saving user defined input gestures fails.
+msgid "Error saving user defined gestures - probably read only file system."
+msgstr ""
+
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
 msgstr ""
@@ -8402,6 +8683,13 @@ msgstr ""
 msgid "Please specify a directory in which to create the portable copy."
 msgstr ""
 
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
+msgstr ""
+
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
 #, python-format
@@ -8463,12 +8751,7 @@ msgid "Log is unavailable"
 msgstr "aan jirin"
 
 #. Translators: A cancel button on a message dialog.
-#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
-msgstr ""
-
-#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
-msgid "Apply"
 msgstr ""
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
@@ -8636,6 +8919,10 @@ msgstr ""
 #. of an output device are default soundcard, usb
 #. headphones, etc.
 msgid "Audio output  &device:"
+msgstr ""
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
 msgstr ""
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
@@ -8981,6 +9268,11 @@ msgstr ""
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr ""
 
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr ""
+
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr ""
@@ -9024,6 +9316,11 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "Mar&ked (highlighted text)"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr ""
 
@@ -9039,8 +9336,9 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Co&mments"
-msgstr ""
+#, fuzzy
+msgid "No&tes and comments"
+msgstr "fikrad ay leedahay"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9149,6 +9447,12 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+#, fuzzy
+msgid "&Graphics"
+msgstr "sawiro"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr ""
 
@@ -9195,6 +9499,11 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
+msgid "Enable touch interaction support"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
 msgid "&Touch typing mode"
 msgstr ""
 
@@ -9223,6 +9532,12 @@ msgstr ""
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Enable &selective registration for UI Automation events and property changes"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
@@ -9268,11 +9583,6 @@ msgstr ""
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
-msgstr ""
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Automatically set system &focus to focusable elements"
 msgstr ""
 
 #. Translators: This is the label for a group of advanced options in the
@@ -9372,7 +9682,6 @@ msgid "&Dictionary entries"
 msgstr ""
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr ""
 
@@ -9391,12 +9700,6 @@ msgstr ""
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
-msgstr ""
-
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
-#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-msgid "&Add"
 msgstr ""
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
@@ -9466,12 +9769,23 @@ msgstr ""
 msgid "Cursor shape for &review:"
 msgstr ""
 
-#. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-msgid "Message &timeout (sec)"
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
 msgstr ""
 
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr ""
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+msgid "Show messages"
+msgstr ""
+
+#. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
+msgid "Message &timeout (sec)"
 msgstr ""
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
@@ -9611,47 +9925,6 @@ msgstr ""
 msgid "Symbol \"%s\" is already present."
 msgstr ""
 
-#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
-msgid "Input Gestures"
-msgstr ""
-
-#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
-msgctxt "inputGestures"
-msgid "&Filter by:"
-msgstr ""
-
-#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
-msgid "Reset to factory &defaults"
-msgstr ""
-
-#. Translators: Describes a gesture in the Input Gestures dialog.
-#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
-#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
-msgid "{main} ({source})"
-msgstr ""
-
-#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
-msgid "Enter input gesture:"
-msgstr ""
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-msgid ""
-"Are you sure you want to reset all gestures to their factory defaults?\n"
-"\t\t\t\n"
-"\t\t\tAll of your user defined gestures, whether previously set or defined "
-"during this session, will be lost.\n"
-"\t\t\tThis cannot be undone."
-msgstr ""
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-msgid "Reset gestures"
-msgstr ""
-
-#. Translators: An error displayed when saving user defined input gestures fails.
-msgid "Error saving user defined gestures - probably read only file system."
-msgstr ""
-
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr ""
@@ -9688,12 +9961,6 @@ msgstr "la doortay %s"
 #. For example 'hello world selected'
 #, python-format
 msgid "%s selected"
-msgstr ""
-
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
 msgstr ""
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
@@ -10144,7 +10411,7 @@ msgid "Highlight navigator &object"
 msgstr "shayga nafigeeshinka ma jiro"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-msgid "Focus Highlight"
+msgid "Visual Highlight"
 msgstr ""
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
@@ -11116,7 +11383,7 @@ msgstr ""
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omments"
+msgid "N&otes"
 msgstr ""
 
 #. Translators: The label of a radio button to select the type of element
@@ -11132,6 +11399,14 @@ msgstr ""
 #. Translators: Used to express an address range in excel.
 #, python-brace-format
 msgid "{start} through {end}"
+msgstr ""
+
+#. Translators: the description  for a script for Excel
+msgid "opens a dropdown item at the current cell"
+msgstr ""
+
+#. Translators: the description  for a script for Excel
+msgid "Sets the current cell as start of column header"
 msgstr ""
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
@@ -11158,6 +11433,10 @@ msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this region. Pressing twice will forget "
 "the current column header for this cell."
+msgstr ""
+
+#. Translators: the description  for a script for Excel
+msgid "sets the current cell as start of row header"
 msgstr ""
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -11199,22 +11478,33 @@ msgstr ""
 msgid "Input Message is {message}"
 msgstr ""
 
-#. Translators: A message in Excel when there is no comment
-msgid "Not on a comment"
+#. Translators: the description  for a script for Excel
+msgid "Reports the note on the current cell"
 msgstr ""
+
+#. Translators: A message in Excel when there is no note
+#, fuzzy
+msgid "Not on a note"
+msgstr "Aan ku jirin weel"
 
 #. Translators: the description  for a script for Excel
-msgid "Reports the comment on the current cell"
+msgid "Opens the note editing dialog"
 msgstr ""
 
-#. Translators: Dialog text for
+#. Translators: Dialog text for the note editing dialog
 #, python-brace-format
-msgid "Editing comment for cell {address}"
+msgid "Editing note for cell {address}"
+msgstr ""
+
+#. Translators: Title for the note editing  dialog
+msgid "Note"
 msgstr ""
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
+#. may mix the address and the content when the cell contains a 3-digit number.
 #, python-brace-format
-msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
+msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
 msgstr ""
 
 #. Translators: border positions in Microsoft Excel.
@@ -11477,9 +11767,10 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr ""
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
+msgid "exactly {space:.1f} pt"
 msgstr ""
 
 #. Translators: line spacing of at least x point
@@ -11578,16 +11869,6 @@ msgstr ""
 msgid "{size:g} point font"
 msgstr ""
 
-#. Translators: a message when toggling change tracking in Microsoft word
-#, fuzzy
-msgid "Change tracking on"
-msgstr "Raadinta jiirka wuu shidiyyahay"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-#, fuzzy
-msgid "Change tracking off"
-msgstr "Raadinta jiirka wuu dimsiyyahay"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr ""
@@ -11638,6 +11919,12 @@ msgstr ""
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr ""
+
+#~ msgid "Russian grade 1"
+#~ msgstr "Fasalka Ruush 1"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "%s wa la coobay"
 
 #~ msgid "Ukrainian"
 #~ msgstr "Ukriga"

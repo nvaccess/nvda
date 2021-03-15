@@ -72,6 +72,7 @@ Subsequent lines contain a textual identifier used to identify the symbol, a tab
 For example:
 ```
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+dates with .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
 ```
 
 Again, the English symbols are inherited by all other locales, so you need not include any complex symbols already defined for English.
@@ -98,6 +99,8 @@ Certain characters cannot be typed into the file, so the following special seque
  - \f: form feed
  - \#: # character (needed because # at the start of a line denotes a comment)
 - replacement: The text which should be spoken for the symbol.
+If the symbol is a complex symbol, \1, \2, etc. can be used to refer to the groups matches, which will be inlined in the replacement, allowing for simpler rules.
+This also means that to get a \ character in the replacement, one has to type \\.
 - level: The symbol level at which the symbol should be spoken.
 The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
 This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
@@ -132,6 +135,13 @@ This line appears in the French symbols.dic file.
 It means that the ". sentence ending" complex symbol should be spoken as "point".
 Level and preserve are not specified, so they will be taken from English.
 A display name is provided so that French users will know what the symbol represents.
+
+```
+dates with .	\1 point \2 point \3	all	norep	# date avec points
+```
+This line appears in the French symbols.dic file.
+It means that the first, second, and third groups of the match will be included, separated by the word 'point'.
+The effect is thus to replace the dots from the date with the word 'point'.
 
 Please see the file locale\en\symbols.dic for the English definitions which are inherited for all locales.
 This is also a good full example.
@@ -423,9 +433,9 @@ The order for gesture binding lookup is:
 
 +++ Defining script properties +++[DefiningScriptProperties]
 For NVDA 2018.3 and above, the recommended way to set script properties is by means of the so called script decorator.
-In short, a decorator is a function that modifies the behavior of a particular function.
+In short, a decorator is a function that modifies the behavior of a particular function or method.
 The script decorator modifies the script in such a way that it will be properly bound to the desired gestures.
-Furthermore, it ensures that the script is listed  with the description you specify, and that it is categorised under the desired category in the input gestures dialog.
+Furthermore, it ensures that the script is listed with the description you specify, and that it is categorised under the desired category in the input gestures dialog.
 
 In order for you to use the script decorator, you will have to import it from the scriptHandler module.
 ```
@@ -468,13 +478,20 @@ The following keyword arguments can be used when applying the script decorator:
   This option defaults to False.
 - bypassInputHelp: A boolean indicating whether this script should run when input help is active.
   This option defaults to False.
+- allowInSleepMode: A boolean indicating whether this script should run when sleep mode is active.
+  This option defaults to False.
+- resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
+  The constants for say all mode are prefixed with CURSOR_ and specified in the sayAllHandler modules.
+  If resumeSayAllMode is not specified, say all does not resume after this script.
 -
 
 Though the script decorator makes the script definition process a lot easier, there are more ways of binding gestures and setting script properties.
 For example, a special "__gestures" Python dictionary can be defined as a class variable on an App Module, Global Plugin or NVDA Object.
 This dictionary should contain gesture identifier strings pointing to the name of the requested script, without the "script_" prefix.
-You can also specify a description of the script in the function's docstring.
-Furthermore, an alternative way of specifying the script's category is by means of setting a "category" attribute on the script function to a string containing the name of the category.
+You can also specify a description of the script in the method's "__doc__" attribute.
+However, beware not to include an inline docstring at the start of the method if you do not set the "__doc__" attribute, as it would render the description not translatable.
+The script decorator does not suffer from this limitation, so you are encouraged to provide inline docstrings as needed when using it.
+Furthermore, an alternative way of specifying the script's category is by means of setting a "category" attribute on the script method to a string containing the name of the category.
 
 ++ Example 4: A Global Plugin to Find out Window Class and Control ID ++
 The following Global Plugin allows you to press NVDA+leftArrow to have the window class of the current focus announced, and NVDA+rightArrow to have the window control ID of the current focus announced.

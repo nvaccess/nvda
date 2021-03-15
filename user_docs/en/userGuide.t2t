@@ -67,8 +67,8 @@ For details regarding exceptions, access the license document from the NVDA menu
 
 + System Requirements +[SystemRequirements]
 - Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
- - For Windows 7, NVDA requires Service Pack 1 or higher.
- - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
+ - For Windows 7 and Windows Server 2008 R2 NVDA requires Service Pack 1 and the [KB3063858 https://support.microsoft.com/en-us/kb/3063858] update.
+ Both of these should be installed if all available updates are applied.
 - at least 150 MB of storage space.
 -
 
@@ -217,8 +217,6 @@ You can also keep your finger on the screen and move it around to read other con
 When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touchscreen.
 Following are some instructions on how to perform the various touch gestures.
 
-
-
 ==== Taps ====
 Tap the screen quickly with one or more fingers.
 
@@ -309,7 +307,7 @@ For example, if you are typing into an editable text field, the editable text fi
 
 The most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
 As you do this, NVDA will report information about the object with focus, such as its name, type, value, state, description, keyboard shortcut and positional information.
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current system focus is also exposed visually.
+When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the current system focus is also exposed visually.
 
 There are some key commands that are useful when moving with the System focus:
 %kc:beginInclude
@@ -336,7 +334,6 @@ NVDA provides the following key commands in relation to the system caret:
 | Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the caret is currently situated. Pressing twice shows the information in browse mode |
 | Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
 | Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
-
 
 When within a table, the following key commands are also available:
 || Name | Key | Description |
@@ -366,7 +363,7 @@ Similarly, a toolbar contains controls, so you must move inside the toolbar to a
 
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
+When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
 By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
 
 Note: Braille following Object Navigation can be configured via [Braille Tether #BrailleTether].
@@ -509,7 +506,7 @@ Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
 All of NVDA's [system caret #SystemCaret] key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the virtual browse mode caret is also exposed visually.
+When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the virtual browse mode caret is also exposed visually.
 Information such as whether text is a link, heading, etc. is reported along with the text as you move.
 
 Sometimes, you will need to interact directly with controls in these documents.
@@ -654,7 +651,6 @@ When you wish to return to the document, simply press the escape key.
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
 To activate the button or the element containing the formula, press ctrl+enter.
 
-
 + Braille +[Braille]
 If you own a braille display, NVDA can display information in braille.
 If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
@@ -780,8 +776,8 @@ Additional vision enhancement providers can be provided in [NVDA add-ons #Addons
 
 NVDA's vision settings can be changed in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
-++ Focus Highlight ++[VisionFocusHighlight]
-Focus Highlight can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
+++ Visual Highlight ++[VisionFocusHighlight]
+Visual Highlight can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
 These positions are highlighted with a coloured rectangle outline.
 - Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus #ReviewCursorFollowFocus]).
 - Dashed blue highlights just the system focus object.
@@ -789,7 +785,7 @@ These positions are highlighted with a coloured rectangle outline.
 - Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
 -
 
-When Focus Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
+When Visual Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
 
 ++ Screen Curtain ++[VisionScreenCurtain]
 As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
@@ -797,6 +793,8 @@ Furthermore, it might be hard to ensure that there isn't someone looking over yo
 For this situation, NVDA contains a feature called "screen curtain" which can be enabled to make the screen black.
 
 You can enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
+
+When the screen curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
 
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
@@ -818,6 +816,8 @@ NVDA can use this to recognize text from images or inaccessible applications.
 
 You can set the language to use for text recognition in the [Windows 10 OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
 Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
+
+Windows 10 OCR may be partially or fully incompatible with [NVDA vision enhancements #Vision] or other external visual aids. You will need to disable these aids before proceeding to a recognition.
 
 %kc:beginInclude
 To recognize the text in the current navigator object using Windows 10 OCR, press NVDA+r.
@@ -1082,7 +1082,8 @@ The available logging levels are:
  - If you are concerned about privacy, do not set the logging level to this option.
 - Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
  - Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-
+ -
+-
 
 ==== Start NVDA after I sign in ====[GeneralSettingsStartAfterLogOn]
 If this option is enabled, NVDA will start automatically as soon as you sign in to Windows.
@@ -1149,6 +1150,9 @@ If using a third-party synthesizer, you may also be able to change this value if
 ==== Rate ====[SpeechSettingsRate]
 This option allows you to change the rate of your voice.
 This is a slider that goes from 0 to 100 - 0 being the slowest, 100 being the fastest.
+
+==== Rate boost ====[SpeechSettingsRateBoost]
+Enabling this option will significantly increase the speech rate, if supported by the current synthesizer.
 
 ==== Pitch ====[SpeechSettingsPitch]
 This option allows you to change the pitch of the current voice.
@@ -1301,13 +1305,13 @@ The selection indicator is not affected by this option, it is always dots 7 and 
 This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
 The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
+==== Show Messages ====[BrailleSettingsShowMessages]
+This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
+
 ==== Message Timeout (sec) ====[BrailleSettingsMessageTimeout]
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
-Specifying 0 disables displaying of these messages completely.
-The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a coresponding key which triggers the message.
-
-==== Show Messages Indefinitely ====[BrailleSettingsNoMessageTimeout]
-This option allows NVDA messages to be displayed on the braille display indefinitely.
+The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
+This option is shown only if "Show Messages" is set to "Use timeout".
 
 %kc:setting
 ==== Tether Braille ====[BrailleTether]
@@ -1400,10 +1404,10 @@ The Vision category in the NVDA Settings dialog allows you to enable, disable an
 Note that the available options in this category could be extended by [NVDA add-ons #AddonsManager].
 By default, this settings category contains the following options:
 
-==== Focus Highlight ====[VisionSettingsFocusHighlight]
-The check boxes in the Focus Highlight grouping control the behaviour of NVDA's built-in [Focus Highlight #VisionFocusHighlight] facility.
+==== Visual Highlight ====[VisionSettingsFocusHighlight]
+The check boxes in the Visual Highlight grouping control the behaviour of NVDA's built-in [Visual Highlight #VisionFocusHighlight] facility.
 
-- Enable Highlighting: Toggles Focus Highlight on and off.
+- Enable Highlighting: Toggles Visual Highlight on and off.
 - Highlight system focus: toggles whether the [system focus #SystemFocus] will be highlighted.
 - Highlight navigator object: toggles whether the [navigator object #ObjectNavigation] will be highlighted.
 - Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor #BrowseMode] will be highlighted.
@@ -1578,7 +1582,7 @@ Many Windows and controls show a small message (or tooltip) when you move the mo
 This checkbox, when checked, tells NVDA to report help balloons and toast notifications as they appear.
 - Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
 - Toast notifications have been introduced in Windows 10 and appear in the notification centre in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arrived in your inbox, etc.).
-
+-
 
 ==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
 When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
@@ -1836,12 +1840,36 @@ When this option is enabled, NVDA will use a new, work in progress version of it
 ==== Speak passwords in UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
 This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in the Windows Console with UI automation support enabled. For security purposes, this setting should be left disabled. However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting while using NVDA's new experimental console support.
 
+==== Use UIA with Microsoft Edge and other Chromium based browsers when available ====[ChromiumUIA]
+Allows specifying when UIA will be used when it is available in Chromium based browsers such as Microsoft Edge.
+UIA support for Chromium based browsers is early in development and may not provide the same level of access as IA2.
+The combo box has the following options:
+- Default (Only when necessary): The NVDA default, currently this is "Only when necessary". This default may change in the future as the technology matures.
+- Only when necessary: When NVDA is unable to inject into the browser process in order to use IA2 and UIA is available, then NVDA will fall back to using UIA.
+- Yes: If the browser makes UIA available, NVDA will use it.
+- No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
+-
+
 ==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in Windows command consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
-This feature is available and enabled by default on Windows 10 versions 1607and later when UI Automation is unavailable or disabled.
+This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
+
+==== Diff algorithm ====[DiffAlgo]
+This setting controls how NVDA determines the new text to speak in terminals.
+The diff algorithm combo box has three options:
+- Automatic: as of NVDA 2021.1, this option is equivalent to Difflib.
+In a future release, it may be changed to Diff Match Patch pending positive user testing.
+- allow Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character.
+It may improve performance when large volumes of text are written to the console and allow more accurate reporting of changes made in the middle of lines.
+However, it may be incompatible with some applications.
+This feature is supported in Windows Console on Windows 10 versions 1607 and later.
+Additionally, it may be available in other terminals on earlier Windows releases.
+- force Difflib: this option causes NVDA to calculate changes to terminal text by line.
+It is identical to NVDA's behaviour in versions 2020.4 and earlier.
+-
 
 ==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
 This option enables behaviour which attempts to cancel speech for expired focus events.
@@ -1854,7 +1882,7 @@ If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems t
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
-Logging these messages can resort in decreased performance and large log files.
+Logging these messages can result in decreased performance and large log files.
 Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.
 
 ++ miscellaneous Settings ++[MiscSettings]
@@ -1896,7 +1924,6 @@ A regular expression is a pattern containing special symbols that allow you to m
 Regular expressions are not covered in this user guide.
 For an introductory tutorial, please refer to [https://docs.python.org/3.7/howto/regex.html].
 
-
 +++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
 
@@ -1926,6 +1953,9 @@ Then, change the fields for the new symbol as you would for other symbols.
 You can remove a symbol you previously added by pressing the Remove button.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
+
+In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
+Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
 
 +++ Input Gestures +++[InputGestures]
 In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
@@ -2108,6 +2138,14 @@ The braille viewer window contains a check box labelled "Show braille viewer on 
 If this is checked, the braille viewer will open when NVDA is started.
 The braille viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
 
+The braille viewer window contains a check box labeled "Hover for cell routing", the default is unchecked.
+If checked, hovering the mouse over a braille cell will enable trigger the "route to braille cell" command for that cell.
+This is often used to move the caret or trigger the action for a control.
+This can be useful for testing NVDA is able to correctly reverse map a from braille cell.
+To prevent unintentionally routing to cells, the command is delayed.
+The mouse must hover until the cell turns green.
+The cell will start as a light yellow colour, transition to orange, then suddenly become green.
+
 ++ Python Console ++[PythonConsole]
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2243,8 +2281,17 @@ Windows 10 includes new voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
 On Windows 10, NVDA uses Windows OneCore voices by default ([eSpeak NG #eSpeakNG] is used in other releases).
 
-Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+To add new Windows OneCore voices, go to "Speech Settings", within Windows system settings. 
+Use the "Add voices" option and search for the desired language.
+Many languages include multiple variants.
+"United Kingdom" and "Australia" are two of the English variants.
+"France", "Canada" and "Switzerland" are French variants available.
+Search for the broader language (such as English or French), then locate the variant in the list.
+Select any languages desired and use the "add" button to add them.
+Once added, restart NVDA.
 
+
+Please see this Microsoft article for a list of available voices: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
@@ -2510,7 +2557,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Series / BrailleNote Touch  ++[HumanWareBrailliant]
-The Brailliant BI and B series of displays  from [HumanWare https://www.humanware.com/], including the BI 14, BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
+The Brailliant BI and B series of displays  from [HumanWare https://www.humanware.com/], including the BI 14, BI 32, BI 20X, BI 40, BI 40X and B 80, are supported when connected via USB or bluetooth.
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
 
@@ -2519,7 +2566,7 @@ The following extra devices are also supported (and do not require any special d
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -2630,7 +2677,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | escape key | dot1+dot5+space, f4, brailleedge:f1 |
 | delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
-| f3 key | dot1+dot2+dot4+dot8 |
+| f3 key | dot1+dot4+dot8+space |
 | f4 key | dot7+f3 |
 | windows+b key | dot1+dot2+f1 |
 | windows+d key | dot1+dot4+dot5+f1 |
@@ -3130,6 +3177,7 @@ Following are the command line options for NVDA:
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
 | None | --enable-start-on-logon=True|False | When installing, enable NVDA's [Use NVDA during Windows sign-in #StartAtWindowsLogon] |
+| None | --copy-portable-config | When installing, copy the portable configuration from the provided path (--config-path, -c) to the current user account |
 | None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
 | None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
 | None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |

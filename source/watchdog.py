@@ -41,6 +41,7 @@ safeWindowClassSet=set([
 
 isRunning=False
 isAttemptingRecovery = False
+_coreIsAsleep = False
 
 _coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
 _suspended = False
@@ -68,6 +69,8 @@ def getFormattedStacksForAllThreads():
 def alive():
 	"""Inform the watchdog that the core is alive.
 	"""
+	global _coreIsAsleep
+	_coreIsAsleep = False
 	# Stop cancelling calls.
 	windll.kernel32.ResetEvent(_cancelCallEvent)
 	# Set the timer so the watcher will take action in MIN_CORE_ALIVE_TIMEOUT
@@ -79,11 +82,23 @@ def alive():
 def asleep():
 	"""Inform the watchdog that the core is going to sleep.
 	"""
-	# #5189: Reset in case the core was treated as dead.
+	global _coreIsAsleep
+# #5189: Reset in case the core was treated as dead.
 	alive()
 	# CancelWaitableTimer does not reset the signaled state; if it was signaled, it remains signaled.
 	# However, alive() calls SetWaitableTimer, which resets the timer to unsignaled.
 	windll.kernel32.CancelWaitableTimer(_coreDeadTimer)
+	_coreIsAsleep = True
+
+
+def isCoreAsleep():
+	"""
+	Finds out if the core is currently asleep (I.e. not in a core cycle).
+	Note that if the core is actually frozen, this function will return false
+	as it is frozen in a core cycle while awake.
+	"""
+	return _coreIsAsleep
+
 
 def _isAlive():
 	# #5189: If the watchdog has been terminated, treat the core as being alive.
@@ -172,7 +187,7 @@ def _crashHandler(exceptionInfo):
 	ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, None)
 
 	# Write a minidump.
-	dumpPath = os.path.abspath(os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp"))
+	dumpPath = os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp")
 	try:
 		# Though we aren't using pythonic functions to write to the dump file,
 		# open it in binary mode as opening it in text mode (the default) doesn't make sense.

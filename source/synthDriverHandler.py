@@ -62,7 +62,7 @@ class SynthDriver(driverHandler.Driver):
 	e.g. the L{voice} attribute is used for the L{voice} setting.
 	These will usually be properties.
 	L{supportedCommands} should specify what synth commands the synthesizer supports.
-	At a minimum, L{speech.IndexCommand} must be supported.
+	At a minimum, L{IndexCommand} must be supported.
 	L{PitchCommand} must also be supported if you want capital pitch change to work;
 	support for the pitch setting is not sufficient.
 	L{supportedNotifications} should specify what notifications the synthesizer provides.
@@ -93,7 +93,7 @@ class SynthDriver(driverHandler.Driver):
 	#: @type: str
 	description = ""
 	#: The speech commands supported by the synth.
-	#: @type: set of L{speech.SynthCommand} subclasses.
+	#: @type: set of L{SynthCommand} subclasses.
 	supportedCommands = frozenset()
 	#: The notifications provided by the synth.
 	#: @type: set of L{extensionPoints.Action} instances
@@ -488,6 +488,10 @@ def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
 		setSynth(conf["synth"])
 		return
 	_curSynth.loadSettings(onlyChanged=True)
+
+
+def isDebugForSynthDriver():
+	return config.conf["debugLog"]["synthDriver"]
 
 
 #: Notifies when a synthesizer reaches an index during speech.

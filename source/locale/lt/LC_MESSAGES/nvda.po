@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-24 00:10+1000\n"
-"PO-Revision-Date: 2020-05-02 14:42-0700\n"
+"POT-Creation-Date: 2021-01-29 00:01+1000\n"
+"PO-Revision-Date: 2021-02-03 17:27+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "Language: lt\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -83,9 +83,9 @@ msgstr "nežinomas įvesties metodas"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "spelling and grammar: {text}"
-msgstr "rašyba: {text}"
+msgstr "rašyba ir gramatika: {text}"
 
 #. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -97,7 +97,7 @@ msgstr "rašyba: {text}"
 #. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "grammar: {text}"
-msgstr ""
+msgstr "gramatikos klaida: {text}"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -368,33 +368,32 @@ msgid "pwdedt"
 msgstr "pwdedt"
 
 #. Translators: Displayed in braille for an object which is deleted.
-#, fuzzy
 msgid "del"
-msgstr "dlg"
+msgstr "del"
 
 #. Translators: Displayed in braille for an object which is inserted.
-#, fuzzy
 msgid "ins"
-msgstr "&Saitai"
+msgstr "įterp"
 
 #. Translators: Displayed in braille for a landmark.
-#, fuzzy
 msgid "lmk"
-msgstr "sait"
+msgstr "orien"
 
 #. Translators: Displayed in braille for an object which is an article.
-#, fuzzy
 msgid "art"
-msgstr "teksto žymeklis"
+msgstr "str"
 
 #. Translators: Displayed in braille for an object which is a region.
-#, fuzzy
 msgid "rgn"
-msgstr "rgn"
+msgstr "srt"
 
 #. Translators: Displayed in braille for an object which is a figure.
 msgid "fig"
-msgstr ""
+msgstr "fig"
+
+#. Translators: Displayed in braille for an object which represents marked (highlighted) content
+msgid "mrkd"
+msgstr "mrkd"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -514,13 +513,13 @@ msgstr "visi taškai"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr ""
+msgstr "Pildyti eilutę pakeitimais iš konteksto"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 #. This was the pre NVDA 2017.3 default.
 msgid "Always fill display"
-msgstr ""
+msgstr "Visaada pildyti eilutę"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. always shows the object with focus at the very left of the braille display
@@ -534,11 +533,11 @@ msgstr "Automatinis"
 
 #. Translators: String representing the USB port selection for braille displays.
 msgid "USB"
-msgstr ""
+msgstr "USB"
 
 #. Translators: String representing the Bluetooth port selection for braille displays.
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -570,25 +569,25 @@ msgstr "lyg %s"
 #. Occurences of %s are replaced with the corresponding row numbers.
 #, python-brace-format
 msgid "r{rowNumber}-{rowSpan}"
-msgstr ""
+msgstr "r{rowNumber}-{rowSpan}"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
 #, python-brace-format
 msgid "r{rowNumber}"
-msgstr ""
+msgstr "r{rowNumber}"
 
 #. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
 #. Occurences of %s are replaced with the corresponding column numbers.
 #, python-brace-format
 msgid "c{columnNumber}-{columnSpan}"
-msgstr ""
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
 #, python-brace-format
 msgid "c{columnNumber}"
-msgstr ""
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -598,43 +597,37 @@ msgstr "%s pab"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
-#, fuzzy
 msgid "automatically"
-msgstr "automatinis"
+msgstr "automatiškai"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-#, fuzzy
 msgid "to focus"
-msgstr "Židinio nėra"
+msgstr "su židiniu"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-#, fuzzy
 msgid "to review"
-msgstr "Teksto peržiūra"
+msgstr "su peržiūra"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
 msgstr ""
 
 #. Translators: Label for a setting in braille settings dialog.
-#, fuzzy
 msgid "Braille inp&ut"
-msgstr "Brailio &eilutė:"
+msgstr "Brailio įve&stis"
 
 #. Translators: Label for a setting in braille settings dialog.
-#, fuzzy
 msgid "&HID keyboard input simulation"
-msgstr "Išleista „NVDA“ programos {version} versija."
+msgstr "„&HID“ klavietūros įvesties simuliacija"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
-#, fuzzy
 msgid "Unknown braille display"
-msgstr "„Seika“ Brailio eilutės"
+msgstr "Nežinoma Brailio eilutė"
 
 #. Translators: Name of a Bluetooth serial communications port.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
-msgstr "Nuoseklusis – {portName}"
+msgstr "„Bluetooth“ serija – {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -644,17 +637,17 @@ msgstr "Nuoseklusis – {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
-msgstr ""
+msgstr "Įvestis nepalaikoma"
 
 #. Translators: Reported when a braille input modifier is released.
 #, python-brace-format
 msgid "{modifier} released"
-msgstr ""
+msgstr "{modifier} paleistas"
 
 #. Translators: Reported when a braille input modifier is pressed.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{modifier} pressed"
-msgstr "nenuspausta"
+msgstr "{modifier} nuspausta"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -686,15 +679,19 @@ msgstr "bet kurie taškai"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Afrikaans grade 1"
+msgstr "Afrikiečių 1-ojo laipsnio"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Afrikaans grade 2"
 msgstr "Persų 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
 msgid "Arabic 8 dot computer braille"
-msgstr "Kroatų 8 taškų kompiuterinis Brailis"
+msgstr "Arabų 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -703,14 +700,18 @@ msgstr "Arabų 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Arabic grade 2"
-msgstr "Arabų 1-ojo laipsnio"
+msgstr "Arabų 2-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Assamese grade 1"
 msgstr "Asamių 1-ojo laipsnio"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Bashkir grade 1"
+msgstr "Baškirų 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -724,9 +725,13 @@ msgstr "Bulgarų 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Central Kurdish grade 1"
-msgstr "Švedų 1-ojo lygio"
+msgstr "Centrinėė Kurdų 1-ojo laipsnio"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Coptic 8 dot computer braille"
+msgstr "Koptikų 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -740,9 +745,8 @@ msgstr "Valų 2-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Czech 8 dot computer braille"
-msgstr "Ispanų 8 taškų kompiuterinis Brailis"
+msgstr "Čekų 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -786,8 +790,18 @@ msgstr "Vokiečių 0-inio laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "German grade 0 (detailed)"
+msgstr "Vokiečių 0-inio laipsnio (detalus)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "German grade 1"
 msgstr "Vokiečių 1-ojo laipsnio"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 1 (detailed)"
+msgstr "Vokiečių 1-ojo laipsnio (detalus)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -817,7 +831,7 @@ msgstr "Anglų (JK) 2-ojo laipsnio"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English North American Braille Computer Code"
-msgstr ""
+msgstr "Anglų (Šiaurės Amerikos) Brailio kompiuterinis kodas"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -851,9 +865,8 @@ msgstr "Anglų (JAV) 2-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Esperanto grade 1"
-msgstr "Vokiečių 1-ojo laipsnio"
+msgstr "Esperanto 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -867,9 +880,8 @@ msgstr "Ispanų 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Spanish grade 2"
-msgstr "Ispanų 1-ojo laipsnio"
+msgstr "Ispanų 2-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -913,9 +925,8 @@ msgstr "Prancūzų unifikuotas 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "French (unified) grade 2"
-msgstr "Prancūzų unifikuotasis 2-ojo laipsnio"
+msgstr "Prancūzų (unifikuotasis) 2-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -935,7 +946,7 @@ msgstr "Gudžaratų 1-ojo lygio"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Greek international braille"
-msgstr ""
+msgstr "Graikų nacionalinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -944,15 +955,13 @@ msgstr "Hebrajų 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Israeli grade 1"
-msgstr "Airių 1-ojo lygio"
+msgstr "Izraelio 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Israeli 8 dot computer braille"
-msgstr "Italų 8 taškų kompiuterinis Brailis"
+msgstr "Izraelio 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -966,9 +975,8 @@ msgstr "Kroatų 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Croatian grade 1"
-msgstr "Latvių 1-ojo lygio"
+msgstr "Kroatų 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -982,9 +990,8 @@ msgstr "Vengrų 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Hungarian grade 2"
-msgstr "Vengrų 1-ojo lygio"
+msgstr "Vengrų 2-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1033,15 +1040,13 @@ msgstr "Kašmyriečių 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Lithuanian 8 dot"
-msgstr "Lietuvių"
+msgstr "Lietuvių 8 taškų"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Lithuanian 6 dot"
-msgstr "Lietuvių"
+msgstr "Lietuvių 6 taškų"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1060,21 +1065,18 @@ msgstr "Manipurių 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Malay grade 2"
-msgstr "Malajalamų 1-ojo lygio"
+msgstr "Malajalamų 2-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Mongolian grade 1"
-msgstr "Vengrų 1-ojo lygio"
+msgstr "Mongolų 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Mongolian grade 2"
-msgstr "Norvegų 2-ojo lygio"
+msgstr "Mongolų 2-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1083,20 +1085,18 @@ msgstr "Marathi 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Dutch (Belgium) 6 dot"
-msgstr "Olandų (Belgija)"
+msgstr "Olandų (Belgija) 6 taškų"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Dutch (Netherlands) 6 dot"
-msgstr "Olandų (Nyderlandai)"
+msgstr "Olandų (Nyderlandai) 6 taškų"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch 8 dot"
-msgstr ""
+msgstr "Olandų 8 taškų"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1166,18 +1166,22 @@ msgstr "Pandžabų 1-ojo lygio"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Romanian"
-msgstr ""
+msgstr "Romėnų"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian computer braille"
-msgstr "persų 8 taškų kompiuterinis Brailis"
+msgstr "Rusų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
-msgstr "Rusų 1-ojo lygio"
+msgid "Russian literary braille"
+msgstr "Rusų literatūrinis Brailis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Russian literary braille (detailed)"
+msgstr "Rusų literatūrinis Brailis (detalizuotas)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1186,9 +1190,8 @@ msgstr "Sanskritas 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Swedish 8 dot computer braille"
-msgstr "Ispanų 8 taškų kompiuterinis Brailis"
+msgstr "Švedų 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1232,21 +1235,18 @@ msgstr "Turkų 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Ukrainian grade 1"
-msgstr "Latvių 1-ojo lygio"
+msgstr "Ukrainiečių 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Ukrainian computer braille"
-msgstr "persų 8 taškų kompiuterinis Brailis"
+msgstr "Ukrainiečių kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Uzbek grade 1"
-msgstr "Čekų 1-ojo laipsnio"
+msgstr "Uzbekų 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1255,21 +1255,18 @@ msgstr "unikodinis brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Vietnamese grade 1"
-msgstr "Asamių 1-ojo laipsnio"
+msgstr "Vietnamiečių 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Chinese (China, Mandarin) grade 1"
-msgstr "Kinų (Taivanis, mandarinų)"
+msgstr "Kinų (Kinija, mandarinų) 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Chinese (China, Mandarin) grade 2"
-msgstr "Kinų (Taivanis, mandarinų)"
+msgstr "Kinų (Kinija, mandarinų) 2-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1288,15 +1285,12 @@ msgstr "Fokusavimo veiksena"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
 msgid "Browse mode"
 msgstr "Naršymo veiksena"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
-#, fuzzy
 msgid "Unlabeled"
-msgstr "etiketė"
+msgstr "Be etiketės"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1330,9 +1324,8 @@ msgid "Activates the current object in the document"
 msgstr "Aktyvina esamąjį objektą dokumente"
 
 #. Translators: the description for the passThrough script on browseMode documents.
-#, fuzzy
 msgid "Passes gesture through to the application"
-msgstr "Apdoroti kitų &programų siunčiamus klavišų nuspaudimus"
+msgstr "perduoda gestą tiesiai kitai programai"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1783,44 +1776,36 @@ msgid "no previous error"
 msgstr "ankstesnių klaidų nėra"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the next article"
-msgstr "peršoka į tolimesniąją lentelę"
+msgstr "peršoka į tolimesnįjį straipsnį"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no next article"
-msgstr "tolimesnių lentelių nėra"
+msgstr "tolimesnių straipsnių nėra"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the previous article"
-msgstr "peršoka į ankstesniąją lentelę"
+msgstr "peršoka į ankstesnįjį straipsnį"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no previous article"
-msgstr "ankstesnių lentelių nėra"
+msgstr "ankstesnių straipsnių nėra"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the next grouping"
-msgstr "peršoka į tolimesnįjį paveikslą"
+msgstr "peršoka į tolimesniąją grupę"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no next grouping"
-msgstr "tolimesnių paveikslų nėra"
+msgstr "tolimesnių grupių nėra"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the previous grouping"
-msgstr "peršoka į ankstesnįjį paveikslą"
+msgstr "peršoka į ankstesniąją grupę"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no previous grouping"
-msgstr "ankstesnių paveikslų nėra"
+msgstr "ankstesnių grupių nėra"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1843,9 +1828,8 @@ msgstr "&Formų laukai"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Buttons"
-msgstr "mygtukas"
+msgstr "&Mygtukai"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1863,9 +1847,8 @@ msgstr "Tipas:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "Filter b&y:"
-msgstr "&Filtruoti sąrašą:"
+msgstr "Filtruoti p&agal:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -2546,7 +2529,7 @@ msgstr "schema"
 
 #. Translators: Identifies a dial object.
 msgid "dial"
-msgstr ""
+msgstr "dial"
 
 #. Translators: Identifies a drop list.
 msgid "drop list"
@@ -2720,7 +2703,7 @@ msgstr "garso įrašas"
 
 #. Translators: Identifies a chart element.
 msgid "chart element"
-msgstr ""
+msgstr "diagramos elementas"
 
 #. Translators: Identifies deleted content.
 #. Translators: Reported when text is marked as having been deleted
@@ -2733,22 +2716,24 @@ msgid "inserted"
 msgstr "įterptas"
 
 #. Translators: Identifies a landmark.
-#, fuzzy
 msgid "landmark"
-msgstr "orientyras: %s"
+msgstr "orientyras"
 
 #. Translators: Identifies an article.
 msgid "article"
-msgstr ""
+msgstr "straipsnis"
 
 #. Translators: Identifies a region.
-#, fuzzy
 msgid "region"
 msgstr "sritis"
 
 #. Translators: Identifies a figure (commonly seen on some websites).
 msgid "figure"
-msgstr ""
+msgstr "iliustracija"
+
+#. Translators: Identifies marked (highlighted) content
+msgid "marked content"
+msgstr "paženklintas turinys"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2989,23 +2974,22 @@ msgid "Loading NVDA. Please wait..."
 msgstr "Programa „NVDA“ paleidžiama. Luktelėkite…"
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
-#, fuzzy
 msgid "Landscape"
-msgstr "grįžimas"
+msgstr "Gulsčias"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
-msgstr ""
+msgstr "Stačias"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
 msgid "Charging battery. %d percent"
-msgstr ""
+msgstr "Baterija kraunama. %d proc."
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #, python-format
 msgid "Not charging battery. %d percent"
-msgstr ""
+msgstr "Baterija nekraunama. %d proc."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -3055,10 +3039,6 @@ msgstr ""
 msgid "No selection"
 msgstr "Niekas nepažymėta"
 
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "Nukopijuota į iškarpinę"
-
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
@@ -3087,19 +3067,18 @@ msgid "moves to the previous table column"
 msgstr "peršoka į ankstesnįjį lentelės stulpelį"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables off"
-msgstr "pranešimai apie lenteles išjungti"
+msgstr "lentelių išdėstymas išjungtas"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables on"
-msgstr "pranešimai apie lenteles įjungti"
+msgstr "lentelių išdėstymas įjungtas"
 
 #. Translators: Input help mode message for include layout tables command.
-#, fuzzy
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "Įjungia arba išjungia pranešimus apie lenteles"
+msgstr ""
+"Įjungia arba išjungia lentelių išdėstymo įtraukimo funkciją naršymo "
+"veiksenoje"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -3130,7 +3109,6 @@ msgid "Configuration"
 msgstr "Konfigūracija"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Configuration profiles"
 msgstr "Konfigūracijos profiliai"
 
@@ -3141,9 +3119,8 @@ msgstr "Brailio eilutė"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#, fuzzy
 msgid "Vision"
-msgstr "Versija"
+msgstr "Vaizdas"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
@@ -3209,7 +3186,6 @@ msgid "Sleep mode on"
 msgstr "Miego veiksena įjungta"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-#, fuzzy
 msgid "Toggles sleep mode on and off for the active application."
 msgstr "Įjungia arba išjungia miego veikseną aktyviai programai."
 
@@ -3376,20 +3352,19 @@ msgid "Toggles on and off the reporting of font attributes"
 msgstr "Įjungia arba išjungia pranešimus apie šrifto savybių pokyčius"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
-#, fuzzy
 msgid "Toggles on and off the reporting of superscripts and subscripts"
-msgstr "Įjungia arba išjungia pranešimus apie teksto akcentavimą"
+msgstr ""
+"Įjungia arba išjungia pranešimus apie viršutinius ir apatinius indeksus"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
 msgid "report superscripts and subscripts on"
-msgstr ""
+msgstr "Pranešimai apie viršutinius ir apatinius indeksus įjungti"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
-#, fuzzy
 msgid "report superscripts and subscripts off"
-msgstr "pranešimai apie orientyrus išjungti"
+msgstr "pranešimai apie viršutinius ir apatinius indeksus išjungti"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
@@ -3414,6 +3389,18 @@ msgstr "pranešimai apie akcentavimą įjungti"
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "Įjungia arba išjungia pranešimus apie teksto akcentavimą"
+
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+msgid "Toggles on and off the reporting of marked text"
+msgstr "Įjungia arba išjungia pranešimus apie paženklintą tekstą"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked on"
+msgstr "pranešimai apie paženklinimus įjungti"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked off"
+msgstr "pranešimai apie paženklinimus išjungti"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3580,6 +3567,18 @@ msgstr "pranešimai apie saitus įjungti"
 msgid "Toggles on and off the reporting of links"
 msgstr "Įjungia arba išjungia pranešimus apie saitus"
 
+#. Translators: Input help mode message for toggle report graphics command.
+msgid "Toggles on and off the reporting of graphics"
+msgstr "Įjungia arba išjungia pranešimus apie paveikslus"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics off"
+msgstr "pranešimai apie paveikslus išjungti"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics on"
+msgstr "pranešimai apie paveikslus įjungti"
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
 msgstr "pranešimai apie komentarus išjungti"
@@ -3617,19 +3616,16 @@ msgid "Toggles on and off the reporting of headings"
 msgstr "Įjungia arba išjungia pranešimus apie antraštes"
 
 #. Translators: Input help mode message for toggle report groupings command.
-#, fuzzy
 msgid "Toggles on and off the reporting of groupings"
-msgstr "Įjungia arba išjungia pranešimus apie puslapius"
+msgstr "Įjungia arba išjungia pranešimus apie grupes"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report groupings off"
-msgstr "pranešimai apie puslapius išjungti"
+msgstr "pranešimai apie grupes išjungti"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report groupings on"
-msgstr "pranešimai apie puslapius įjungti"
+msgstr "pranešimai apie grupes įjungti"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
@@ -3644,33 +3640,28 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "Įjungia arba išjungia pranešimus apie citatas"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#, fuzzy
 msgid "report landmarks and regions off"
-msgstr "pranešimai apie orientyrus išjungti"
+msgstr "pranešimai apie orientyrus ir sritis išjungti"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#, fuzzy
 msgid "report landmarks and regions on"
-msgstr "pranešimai apie orientyrus įjungti"
+msgstr "pranešimai apie orientyrus ir sritis įjungti"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "Įjungia arba išjungia pranešimus apie orientyrus"
 
 #. Translators: Input help mode message for toggle report articles command.
-#, fuzzy
 msgid "Toggles on and off the reporting of articles"
-msgstr "Įjungia arba išjungia pranešimus apie lenteles"
+msgstr "Įjungia arba išjungia pranešimus apie straipsnius"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
-#, fuzzy
 msgid "report articles off"
-msgstr "pranešimai apie lenteles išjungti"
+msgstr "pranešimai apie straipsnius išjungti"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
-#, fuzzy
 msgid "report articles on"
-msgstr "pranešimai apie lenteles įjungti"
+msgstr "pranešimai apie straipsnius įjungti"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -3770,14 +3761,7 @@ msgstr "Įjungia arba išjungia supaprastintos peržiūros veikseną"
 msgid "No navigator object"
 msgstr "Žvalgomojo objekto nėra"
 
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "Nukopijuota į iškarpinę: %s"
-
 #. Translators: Input help mode message for report current navigator object command.
-#, fuzzy
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
 "information, and pressing three times Copies name and value of this object "
@@ -3798,17 +3782,17 @@ msgstr ""
 "Praneša apie teksto ar objekto, esančio ties peržiūros žymekliu, vietą. "
 "Spustelėjus dukart, pateikiama išsamesnė informacija."
 
-#. Translators: Reported when attempting to move the navigator object to focus.
-msgid "Move to focus"
-msgstr "Perkelti į židinį"
-
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Nustato esamąjį židinį kaip žvalgomąjį objektą ir, jei įmanoma, perkelia "
-"peržiūros žymeklį į teksto žymeklio vietą jo viduje."
+"Nustato žvalgomąjį objektą į einamąjį židinį, o peržiūros žymeklį – į "
+"poziciją, esančią jo žymeklio viduje (jei tai įmanoma)."
+
+#. Translators: Reported when attempting to move the navigator object to focus.
+msgid "Move to focus"
+msgstr "Perkelti į židinį"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3821,6 +3805,7 @@ msgid "Move focus"
 msgstr "Perkelti židinį"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
+#. Translators: Reported when there is no caret.
 msgid "No caret"
 msgstr "Teksto žymeklio nėra"
 
@@ -4007,28 +3992,28 @@ msgstr ""
 "paskutiniuoju simboliu ir jį perskaito"
 
 #. Translators: Input help mode message for Review Current Symbol command.
-#, fuzzy
 msgid ""
 "Reports the symbol where the review cursor is positioned. Pressed twice, "
 "shows the symbol and the text used to speak it in browse mode"
 msgstr ""
-"Praneša duomenis apie pozicijos, kurioje yra peržiūros žymeklis, formatą. "
-"Nuspaudus dukart, šiuos duomenis pateikia naršymo veiksenoje"
+"Perskaito simbolį toje pozicijoje, kur stovi peržiūros žymeklis. Nuspaudus "
+"dukart, naršymo veiksenoje parodo simbolį ir tekstą, naudotą jo tarimui"
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
-#, fuzzy
 msgid "No symbol replacement"
-msgstr "Pakaitalas"
+msgstr "Nėra simbolio pakaitalo"
 
 #. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
 msgid ""
 "Character: {}\n"
 "Replacement: {}"
 msgstr ""
+"Simbolis: {}\n"
+"Pakaitalas: {}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 msgid "Expanded symbol ({})"
-msgstr ""
+msgstr "Išplėstinis simbolis ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -4082,7 +4067,6 @@ msgid "Shows the NVDA menu"
 msgstr "Parodo programos „NVDA“ meniu"
 
 #. Translators: Input help mode message for say all in review cursor command.
-#, fuzzy
 msgid ""
 "Reads from the review cursor up to the end of the current text, moving the "
 "review cursor as it goes"
@@ -4107,12 +4091,43 @@ msgid "Formatting"
 msgstr "Formatas"
 
 #. Translators: Input help mode message for report formatting command.
-msgid ""
-"Reports formatting info for the current review cursor position within a "
-"document. If pressed twice, presents the information in browse mode"
+msgid "Reports formatting info for the current review cursor position."
 msgstr ""
-"Praneša duomenis apie pozicijos, kurioje yra peržiūros žymeklis, formatą. "
+"Praneša informaciją apie pozicijos, kurioje yra peržiūros žymeklis, formatą."
+
+#. Translators: Input help mode message for show formatting at review cursor command.
+msgid ""
+"Presents, in browse mode, formatting info for the current review cursor "
+"position."
+msgstr ""
+"Naršymo veiksenoje pateikia pozicijos, kurioje yra peržiūros žymeklis, "
+"formatavimo informaciją."
+
+#. Translators: Input help mode message for report formatting command.
+msgid ""
+"Reports formatting info for the current review cursor position. If pressed "
+"twice, presents the information in browse mode"
+msgstr ""
+"Praneša informaciją apie pozicijos, kurioje yra peržiūros žymeklis, formatą. "
 "Nuspaudus dukart, šiuos duomenis pateikia naršymo veiksenoje"
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid "Reports formatting info for the text under the caret."
+msgstr "Praneša informaciją apie teksto, esančio po žymekliu, formatą."
+
+#. Translators: Input help mode message for show formatting at caret position command.
+msgid "Presents, in browse mode, formatting info for the text under the caret."
+msgstr ""
+"Naršymo veiksenoje pateikia informaciją apie teksto, esančio po žymekliu, "
+"formatą."
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid ""
+"Reports formatting info for the text under the caret. If pressed twice, "
+"presents the information in browse mode"
+msgstr ""
+"Praneša duomenis apie teksto, po kuriuo yra žymeklis, formatą. Nuspaudus "
+"dukart, šiuos duomenis pateikia naršymo veiksenoje"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -4125,23 +4140,22 @@ msgid "No status line found"
 msgstr "Būsenos juosta nerasta"
 
 #. Translators: Reported when status line exist, but is empty.
-#, fuzzy
 msgid "no status bar information"
-msgstr "Vietos informacijos nėra"
+msgstr "Informacijos būsenos juostoje nėra"
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
 msgid "unable to copy status bar content to clipboard"
-msgstr ""
+msgstr "nepavyko nukopijuoti būsenos juostos turinio į iškarpinę"
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
 msgstr ""
 "Perskaito tekstą esamosios programos būsenos juostoje ir perkelia į ją "
-"navigatorių. Nuspaudus dukart, šią informaciją ištaria paraidžiui"
+"navigatorių. Nuspaudus dukart, šią informaciją ištaria paraidžiui. Nuspaudus "
+"triskart, nukopijuoja informaciją iš būsenos juostos į iškarpinę"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4158,14 +4172,13 @@ msgstr "Įjungia arba išjungia pranešimus, pateikiamus judinant pelę"
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
 #. For example, the full message might be "Mouse text unit resolution character"
-#, fuzzy, python-format
+#, python-format
 msgid "Mouse text unit resolution %s"
-msgstr "Skaitomo teksto &kiekis:"
+msgstr ""
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
-#, fuzzy
 msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "Įjungia arba išjungia pranešimus, pateikiamus judinant pelę"
+msgstr "Perjungia, kiek teksto ištarti, kai juda pelė"
 
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
@@ -4181,15 +4194,16 @@ msgstr ""
 "Nuspaudus triskart, ją nukopijuoja į iškarpinę"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-#, fuzzy
 msgid "Reads all controls in the active window"
-msgstr "Perskaito komentarų lange esančius komentarus"
+msgstr "Perskaito visus valdymo elementus, esančius aktyviame lange"
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
 msgid ""
 "Opens the WX GUI inspection tool. Used to get more information about the "
 "state of GUI components."
 msgstr ""
+"Atveria „WX GUI inspection“ įrankį. Naudojamas norint sužinoti daugiau "
+"informacijos apie grafinės vartotojo sasajos komponentus."
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -4200,10 +4214,45 @@ msgstr ""
 "programuotojams, ir aktyvina žurnalo žiūryklę, kad su šiais duomenimis būtų "
 "galima susipažinti."
 
+#. Translators: Input help mode message for a command to delimit then
+#. copy a fragment of the log to clipboard
+msgid ""
+"Mark the current end of the log as the start of the fragment to be copied to "
+"clipboard by pressing again."
+msgstr ""
+"Paspaudus dar kartą, pažymėkite einamąją žurnalo pabaigą kaip pradžią "
+"fragmento, kurį norite nukopijuoti į iškarpinę."
+
+#. Translators: Message when marking the start of a fragment of the log file for later copy
+#. to clipboard
+msgid "Log fragment start position marked, press again to copy to clipboard"
+msgstr ""
+"Žurnalo fragmento pradžios pozicija pažymėta, paspauskite darkart, jei "
+"norite nukopijuoti į iškarpinę"
+
+#. Translators: Message when failed to mark the start of a
+#. fragment of the log file for later copy to clipboard
+msgid "Unable to mark log position"
+msgstr "Nepavyko pažymėti pozicijos žurnale"
+
+#. Translators: Message when attempting to copy an empty fragment of the log file
+msgid "No new log entry to copy"
+msgstr "Nėra naujo žurnalo įrašo, kurį būtų galima nukopijuoti"
+
+#. Translators: Message when a fragment of the log file has been
+#. copied to clipboard
+msgid "Log fragment copied to clipboard"
+msgstr "Žurnalo fragmentas nukopijuotas į iškarpinę"
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
+msgid "Unable to copy"
+msgstr "Nukopijuoti nepavyko"
+
 #. Translators: Input help mode message for Open user configuration directory command.
-#, fuzzy
 msgid "Opens NVDA configuration directory for the current user."
-msgstr "„NVDA“ konfigūracijos aplankas"
+msgstr "Dabartiniam vartotojui atveria „NVDA“ konfigūracijos aplanką"
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
@@ -4274,21 +4323,22 @@ msgid ""
 msgstr "Įjungia arba išjungia žvalgomojo objekto keitimą, perkeliant židinį."
 
 #. Translators: presented when toggled.
-#, fuzzy
 msgid "Automatically set system focus to focusable elements off"
-msgstr "Automatinė fokusavimo veiksena, perkėlus teksto žymeklį"
+msgstr ""
+"Automatiškai nustatyti sistemos židinį fokusuojamiems elementams išjungta"
 
 #. Translators: presented when toggled.
-#, fuzzy
 msgid "Automatically set system focus to focusable elements on"
-msgstr "Automatinė fokusavimo veiksena, perkėlus teksto žymeklį"
+msgstr ""
+"Automatiškai nustatyti sistemos židinį fokusuojamiems elementams įjungta"
 
 #. Translators: Input help mode message for toggle auto focus focusable elements command.
-#, fuzzy
 msgid ""
 "Toggles on and off automatic movement of the system focus due to browse mode "
 "commands"
-msgstr "Įjungia arba išjungia žvalgomojo objekto keitimą, perkeliant židinį."
+msgstr ""
+"Įjungia arba išjungia sistemos židinio automatinį perkėlimą, priklausomai "
+"nuo komandų naršymo veiksenoje"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4330,14 +4380,14 @@ msgstr ""
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " %s module is loaded. "
-msgstr ""
+msgstr " Paleistas modulis – „%s“."
 
 #. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 #. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
 #, python-format
 msgid " %s is currently running."
-msgstr ""
+msgstr " Šiuo metu veikianti programa – „%s“."
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4348,62 +4398,50 @@ msgstr ""
 "vardą, jei toks naudojamas"
 
 #. Translators: Input help mode message for go to general settings command.
-#, fuzzy
 msgid "Shows NVDA's general settings"
 msgstr "Atveria pagrindinių „NVDA“ parametrų langą"
 
 #. Translators: Input help mode message for go to select synthesizer command.
-#, fuzzy
 msgid "Shows the NVDA synthesizer selection dialog"
-msgstr "Atveria „NVDA“ šnekos sintezės parametrų langą"
+msgstr "Atveria „NVDA“ šnekos sintezės pasirinkimo langą"
 
 #. Translators: Input help mode message for go to speech settings command.
-#, fuzzy
 msgid "Shows NVDA's speech settings"
-msgstr "Atveria „NVDA“ pelės parametrų langą"
+msgstr "Atveria „NVDA“ šnekos parametrų langą"
 
 #. Translators: Input help mode message for go to select braille display command.
-#, fuzzy
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "Atveria „NVDA“ Brailio eilutės parametrų langą"
+msgstr "Atveria „NVDA“ Brailio eilutės pasirinkimo langą"
 
 #. Translators: Input help mode message for go to braille settings command.
-#, fuzzy
 msgid "Shows NVDA's braille settings"
-msgstr "Atveria „NVDA“ Brailio eilutės parametrų langą"
+msgstr "Atveria „NVDA“ Brailio parametrų langą"
 
 #. Translators: Input help mode message for go to keyboard settings command.
-#, fuzzy
 msgid "Shows NVDA's keyboard settings"
 msgstr "Atveria „NVDA“ klaviatūros parametrų langą"
 
 #. Translators: Input help mode message for go to mouse settings command.
-#, fuzzy
 msgid "Shows NVDA's mouse settings"
 msgstr "Atveria „NVDA“ pelės parametrų langą"
 
 #. Translators: Input help mode message for go to review cursor settings command.
-#, fuzzy
 msgid "Shows NVDA's review cursor settings"
 msgstr "Atveria „NVDA“ peržiūros žymeklio parametrų langą"
 
 #. Translators: Input help mode message for go to input composition settings command.
-#, fuzzy
 msgid "Shows NVDA's input composition settings"
 msgstr "Atveria „NVDA“ įvesties komponavimo parametrų langą"
 
 #. Translators: Input help mode message for go to object presentation settings command.
-#, fuzzy
 msgid "Shows NVDA's object presentation settings"
 msgstr "Atveria „NVDA“ objektų pristatymo parametrų langą"
 
 #. Translators: Input help mode message for go to browse mode settings command.
-#, fuzzy
 msgid "Shows NVDA's browse mode settings"
 msgstr "Atveria „NVDA“ naršymo veiksenos parametrų langą"
 
 #. Translators: Input help mode message for go to document formatting settings command.
-#, fuzzy
 msgid "Shows NVDA's document formatting settings"
 msgstr "Atveria „NVDA“ dokumentų formatavimo parametrų langą"
 
@@ -4428,34 +4466,32 @@ msgid "Shows the NVDA input gestures dialog"
 msgstr "Atveria „NVDA“ įvesties gestų langą"
 
 #. Translators: Input help mode message for the report current configuration profile command.
-#, fuzzy
 msgid "Reports the name of the current NVDA configuration profile"
-msgstr "Įrašo esamąją „NVDA“ konfigūraciją"
+msgstr "Praneša einamojo „NVDA“ konfiguracijos profilio pavadinimą"
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
-#, fuzzy
 msgid "normal configuration profile active"
-msgstr "(įprastinė konfigūracija)"
+msgstr "Įprastinės konfigūracijos profilis aktyvus"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{profileName} configuration profile active"
-msgstr "Konfigūracijos profiliai"
+msgstr "Konfiguracijos profilis „{profileName}“ yra aktyvus"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
 msgstr "Įrašo esamąją „NVDA“ konfigūraciją"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
-#, fuzzy
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times resets to factory defaults."
 msgstr ""
-"Nuspaudus vieną kartą, atkuria paskutinį kartą įrašytus parametrus. "
-"Nuspaudus triskart, atkuria numatytuosius gamyklinius parametrus."
+"Nuspaudus vieną kartą, dabartinę konfiguraciją pakeičia atkurtais paskutinį "
+"kartą įrašytais parametrais. Nuspaudus triskart, atkuria numatytuosius "
+"gamyklinius parametrus."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
@@ -4488,9 +4524,9 @@ msgstr ""
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
-#, fuzzy, python-format
+#, python-format
 msgid "Braille tethered %s"
-msgstr "Brailio eilutė susieta su %s."
+msgstr "Brailio eilutė susieta su %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -4561,13 +4597,12 @@ msgstr ""
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
-#, fuzzy
 msgid ""
 "Move the review cursor to the position marked as the start of text to be "
 "selected or copied"
 msgstr ""
-"Nuo esamosios peržiūros žymeklio vietos pradeda teksto atranką žymėjimui "
-"arba kopijavimui."
+"Perkelia peržiūros žymeklį į poziciją, pažymėtą kaip pradžia teksto, kurį "
+"norima atrinkti ar nukopijuoti"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
@@ -4588,14 +4623,6 @@ msgstr "Nėra kopijuotino teksto."
 msgid "Can't select text, press twice to copy"
 msgstr ""
 "Teksto pažymėti negalima. Nuspauskite dukart, kad jis būtų nukopijuotas."
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "Peržiūros metu atrinktas tekstas nukopijuotas į iškarpinę."
-
-#. Translators: Presented when unable to copy to the clipboard because of an error.
-msgid "Unable to copy"
-msgstr "Nukopijuoti nepavyko"
 
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
@@ -4620,9 +4647,8 @@ msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "Nukreipia pelės žymeklį arba aktyvina objektą po šiuo Brailio ženklu"
 
 #. Translators: Input help mode message for Braille report formatting command.
-#, fuzzy
 msgid "Reports formatting info for the text under this braille cell"
-msgstr "Nukreipia pelės žymeklį arba aktyvina objektą po šiuo Brailio ženklu"
+msgstr "Praneša apie teksto formatavimo informaciją po šiuo Brailio langeliu"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -4657,30 +4683,40 @@ msgid ""
 "Virtually toggles the shift key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
+"Virtualiai pajungia klavišą „lyg2“, kad simuliuotų klavietūros šaukinį su "
+"Brailio įvestimi"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the control key to emulate a keyboard shortcut with "
 "braille input"
 msgstr ""
+"Virtualiai pajungia klavišą „vald“, kad simuliuotų klavietūros šaukinį su "
+"Brailio įvestimi"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the alt key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
+"Virtualiai pajungia klavišą „alt“, kad simuliuotų klavietūros šaukinį su "
+"Brailio įvestimi"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the left windows key to emulate a keyboard shortcut with "
 "braille input"
 msgstr ""
+"Virtualiai pajungia klavišą „windows (kairysis)“, kad simuliuotų klavietūros "
+"šaukinį su Brailio įvestimi"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
+"Virtualiai pajungia klavišą „NVDA“, kad simuliuotų klavietūros šaukinį su "
+"Brailio įvestimi"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4706,6 +4742,22 @@ msgid ""
 "hierarchy"
 msgstr "Grįžta prie ankstesnio objekto plokščiame objektų žvalgymo medyje"
 
+#. Translators: Describes a command.
+msgid "Toggles the support of touch interaction"
+msgstr "Perjungia jutiklinio ekrano palaikymą"
+
+#. Translators: Presented when attempting to toggle touch interaction support
+msgid "Touch interaction not supported"
+msgstr "Jutiklinio ekrano sąveika nepalaikoma"
+
+#. Translators: Presented when support of touch interaction has been enabled
+msgid "Touch interaction enabled"
+msgstr "Jutiklinio ekrano sąveika įjungta"
+
+#. Translators: Presented when support of touch interaction has been disabled
+msgid "Touch interaction disabled"
+msgstr "Jutiklinio ekrano sąveika išjungta"
+
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
 msgid "%s mode"
@@ -4728,39 +4780,36 @@ msgstr ""
 "informacija skiriasi nuo ankstesnės"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-#, fuzzy
 msgid "object has no location"
-msgstr "Objektas neturi savo vietos"
+msgstr "objektas neturi savo vietos"
 
 #. Translators: Input help mode message for touch right click command.
-#, fuzzy
 msgid ""
 "Clicks the right mouse button at the current touch position. This is "
 "generally used to activate a context menu."
-msgstr "Spusteli dešinįjį pelės klavišą pelės žymeklio vietoje"
+msgstr ""
+"Spusteli dešinįjį pelės klavišą pelės žymeklio vietoje. Tai dažniausiai "
+"naudojama norint suaktyvinti konteksto meniu."
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Atveria programos „NVDA“ konfigūracijos profilių langą"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
-#, fuzzy
 msgid "Configuration profile triggers disabled"
-msgstr "Konfigūracijos profiliai"
+msgstr "Konfigūracijos profilių aktyvinimo sąlygos išjungtos"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
-#, fuzzy
 msgid "Configuration profile triggers enabled"
-msgstr "Konfigūracijos profiliai"
+msgstr "Konfigūracijos profilių aktyvinimo sąlygos įjungtos"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
-#, fuzzy
 msgid ""
 "Toggles disabling of all configuration profile triggers. Disabling remains "
 "in effect until NVDA is restarted"
 msgstr ""
-"Klaida įrašant konfigūracijos profilio aktyvinimo sąlygas – galbūt failų "
-"sistema pasiekiama tik skaitymui."
+"Išjungia visas konfiguracijos profilių aktyvinimo sąlygas. Išjungimas "
+"galioja iki tol, kol „NVDA“ programa paleidžiama iš naujo"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4781,19 +4830,17 @@ msgid ""
 msgstr "Atpažįsta žvalgomojo objekto turinį naudojant „Windows 10 OCR“"
 
 #. Translators: Input help mode message for toggle report CLDR command.
-#, fuzzy
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
-msgstr "Įjungia arba išjungia pranešimus apie teksto stiliaus pakeitimus"
+msgstr ""
+"Įjungia arba išjungia pranešimus apie „CLDR“ simbolius, pavyzdžiui, jaustukus"
 
 #. Translators: presented when the report CLDR is toggled.
-#, fuzzy
 msgid "report CLDR characters off"
-msgstr "pranešimai apie kadrus išjungti"
+msgstr "pranešimai apie „CLDR“ simbolius išjungti"
 
 #. Translators: presented when the report CLDR is toggled.
-#, fuzzy
 msgid "report CLDR characters on"
-msgstr "pranešimai apie kadrus įjungti"
+msgstr "pranešimai apie „CLDR“ simbolius įjungti"
 
 #. Translators: Describes a command.
 msgid ""
@@ -4802,55 +4849,59 @@ msgid ""
 "enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
 "until you disable it"
 msgstr ""
+"Perjungia ekrano uždangos būseną, įjunkite, norėdami juodai užtamsinti "
+"ekraną arba išjunkite, jei norite matyti, kas pateikiama ekrane. Nusspaudus "
+"kartą, ekrano uždanga įjungiama iki tol, kol iš naujo paleisite „NVDA“. "
+"Nuspaudus dukart, ekrano uždanga įjungiama iki tol, kol ją išjungsite"
 
 #. Translators: Reported when the screen curtain is disabled.
-#, fuzzy
 msgid "Screen curtain disabled"
-msgstr "Brailio &eilutė:"
+msgstr "Ekrano uždanga išjungta"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not disable screen curtain"
-msgstr ""
+msgstr "Nepavyko išjungti ekrano uždangos"
 
 #. Translators: Reported when the screen curtain is not available.
 msgid "Screen curtain not available"
-msgstr ""
+msgstr "Ekrano uždanga neprieinama"
 
 #. Translators: Reported when the screen curtain is enabled.
 msgid "Screen curtain enabled"
-msgstr ""
+msgstr "Ekrano uždanga įjungta"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 msgid "Temporary Screen curtain, enabled until next restart"
-msgstr ""
+msgstr "Laikina ekrano uždanga, įjungta iki sekančio „NVDA“ paleidimo iš naujo"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
-msgstr ""
+msgstr "Nepavvyko įjungti ekrano uždangos"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
+"Negalima pakeisti aktyvaus profilio, kol yra atvertas „NVDA“ dialogo langas"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{profile} profile deactivated"
-msgstr "Konfigūracijos profiliai"
+msgstr "{profile} profilis neaktyvuotas"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{profile} profile activated"
-msgstr "Konfigūracijos profiliai"
+msgstr "{profile} profilis aktyvuotas"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
-msgstr ""
+msgstr "Suaktyvina arba išaktyvina „{profile}“ konfiguracijos profilį"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4893,9 +4944,8 @@ msgid "User Guide"
 msgstr "Naudotojo vadovas"
 
 #. Translators: A label for a shortcut in start menu to open NVDA what's new.
-#, fuzzy
 msgid "What's new"
-msgstr "Programos &naujienos"
+msgstr "Programos naujienos"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -5252,22 +5302,29 @@ msgstr "aragonesų"
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Central Kurdish"
-msgstr ""
+msgstr "Centrinė kurdų"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Northern Kurdish"
-msgstr ""
+msgstr "Šiaurės kurdų"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Burmese"
-msgstr ""
+msgstr "Birmiečių"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Somali"
-msgstr ""
+msgstr "Somalių"
+
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc}, {lc}"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5541,10 +5598,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Double bracket"
-msgstr "dvigubas {action}"
+msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6319,7 +6375,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Back"
-msgstr ""
+msgstr "Atgal"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6343,7 +6399,7 @@ msgstr "Pabaiga"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Next"
-msgstr ""
+msgstr "Pirmyn"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6456,10 +6512,9 @@ msgid "Rate boos&t"
 msgstr "Padidintas grei&tis"
 
 #. Translators: Label for a setting in synth settings ring.
-#, fuzzy
 msgctxt "synth setting"
 msgid "Rate boost"
-msgstr "Padidintas grei&tis"
+msgstr "Padidintas greitis"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
@@ -6573,6 +6628,25 @@ msgstr "braukimas baigtas"
 msgid "NVDA Message"
 msgstr "„NVDA“ pranešimas"
 
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d simb."
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "Nukopijuota į iškarpinę: {text}"
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied: {text}"
+msgstr "Nukopijuota: {text}"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Naujinimų patikra"
@@ -6589,7 +6663,11 @@ msgstr "Klaida tikrinant, ar yra naujinimų."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of an error message dialog.
+#. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6611,6 +6689,7 @@ msgstr "Naujinimų neaptikta."
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr ""
+"„NVDA“ programos versija {version} yra atsiųsta ir laukia, kada bus įdiegtta."
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -6624,30 +6703,34 @@ msgid ""
 "you rely on these add-ons, please review the list to decide whether to "
 "continue with the installation"
 msgstr ""
+"\n"
+"\n"
+"Deja, dabartinėje Jūsų „NVDA“ konfiguracijoje yra papildinių, kurie yra "
+"nesuderinami su šia programos „NVDA“ versija. Po įdiegimo šie papildiniai "
+"bus išjungti. Jei Jums šie papildiniai atrodo reikalingi, prašome peržiūrėti "
+"sąrašą, kad galėtumėte nuspręsti, ar tikrai norite tęsti diegimą"
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
 #. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
 #. available, will be disabled after installation.
 msgid "I understand that these incompatible add-ons will be disabled"
-msgstr ""
+msgstr "Suprantu, kad nesuderinami papildiniai bus išjungti"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
-#, fuzzy
 msgid "&Review add-ons..."
-msgstr "&Gauti papildinių…"
+msgstr "&Peržiūrėti papildinius…"
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "&Install NVDA {version}"
-msgstr "„NVDA“ diegimas"
+msgstr "&Diegti „NVDA“ {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
-#, fuzzy
 msgid "Re-&download update"
-msgstr "&Parsiųsti naujinimą"
+msgstr "Par&siųsti naujinimą iš naujo"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6666,14 +6749,13 @@ msgstr "Priminti &vėliau"
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Užverti"
 
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
-msgstr "Išleista „NVDA“ programos {version} versija."
+msgstr "„NVDA“ versija {version} paruošta diegimui.\n"
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -6684,21 +6766,23 @@ msgid ""
 "you rely on these add-ons, please review the list to decide whether to "
 "continue with the installation"
 msgstr ""
+"\n"
+"Deja, dabartinėje Jūsų „NVDA“ konfiguracijoje yra papildinių, kurie yra "
+"nesuderinami su šia programos „NVDA“ versija. Po įdiegimo šie papildiniai "
+"bus išjungti. Jei Jums šie papildiniai atrodo reikalingi, prašome peržiūrėti "
+"sąrašą, kad galėtumėte nuspręsti, ar tikrai norite tęsti diegimą"
 
 #. Translators: The label of a button to install an NVDA update.
-#, fuzzy
 msgid "&Install update"
-msgstr "Naujinimo diegimas"
+msgstr "&Diegti naujinimą"
 
 #. Translators: The label of a button to postpone an NVDA update.
-#, fuzzy
 msgid "&Postpone update"
-msgstr "&Parsiųsti naujinimą"
+msgstr "&Pavėlinti naujinimą"
 
 #. Translators: The message when a downloaded update file could not be preserved.
-#, fuzzy
 msgid "Unable to postpone update."
-msgstr "Nukopijuoti nepavyko"
+msgstr "Nepavyko pavėlinti naujinimo."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6767,7 +6851,7 @@ msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "© {years} „NVDA“ bendraautoriai"
 
 #. Translators: "About NVDA" dialog box message
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6791,7 +6875,7 @@ msgid ""
 "menu."
 msgstr ""
 "„{longName}“ ({name})\n"
-"{version} versija\n"
+"Versija: {version}\n"
 "Internete: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6874,6 +6958,8 @@ msgid "Composition"
 msgstr "Komponavimas"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "Galimi simboliai"
@@ -6886,27 +6972,32 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr ""
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-#, fuzzy
 msgid "Cann't find the documentation window."
-msgstr "Nepavyko rasti komentarų lango."
+msgstr "Nepavyko rasti dokumentacijos lango."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
 msgstr "Negrojamas joks įrašas"
+
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr "Nepavyko nustatyti likusio laiko"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Praneša likusį atkuriamo įrašo laiką, jeigu šiuo metu grojama"
 
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
-#, fuzzy
 msgid "Reports the elapsed time of the currently playing track, if any"
-msgstr "Praneša likusį atkuriamo įrašo laiką, jeigu šiuo metu grojama"
+msgstr "Praneša praėjusį grojamo takelio laiką (jei jis nurodytas)"
+
+#. Translators: Reported if the total time is not available in Foobar2000
+msgid "Total time not available"
+msgstr "Visas laikas nepasiekiamas"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
-#, fuzzy
 msgid "Reports the length of the currently playing track, if any"
-msgstr "Praneša likusį atkuriamo įrašo laiką, jeigu šiuo metu grojama"
+msgstr "Praneša šiuo metu einančio takelio ilgį (jei yra)"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -6923,9 +7014,8 @@ msgid "Page {pageNumber}"
 msgstr "{pageNumber}-asis puslapis"
 
 #. Translators: Reported when text is highlighted.
-#, fuzzy
 msgid "highlight"
-msgstr "dešininė lygiuotė"
+msgstr "paryškinta"
 
 #. Translators: Reported when text is not highlighted.
 msgid "no highlight"
@@ -7019,22 +7109,19 @@ msgstr "neskaitytas"
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
-msgstr ""
+msgstr "Redaguojamas profilis – „{profile}“"
 
 #. Translators: the last action taken on an Outlook mail message
-#, fuzzy
 msgid "replied"
-msgstr "pakeistas turinys"
+msgstr "atsakyta"
 
 #. Translators: the last action taken on an Outlook mail message
-#, fuzzy
 msgid "replied all"
-msgstr "pakeistas turinys"
+msgstr "atsakyta visiems"
 
 #. Translators: the last action taken on an Outlook mail message
-#, fuzzy
 msgid "forwarded"
-msgstr "pirmyn"
+msgstr "persiųsta"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7070,7 +7157,7 @@ msgstr "Laukiama „Outlook“ programos…"
 #. Translators: a message reporting the date of a all day Outlook calendar entry
 #, python-brace-format
 msgid "{date} (all day)"
-msgstr ""
+msgstr "{date} (visa diena)"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -7416,28 +7503,35 @@ msgstr "išjungta"
 
 #. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
 msgid "No emoji"
-msgstr ""
+msgstr "Nėra jaustuko"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "Pakeitimų sekimas įjungtas"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "Pakeitimų sekimas išjungtas"
 
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
-msgstr ""
+msgstr "„Optelec ALVA 6“ serijos/„protocol converter“"
 
 #. Translators: Message when setting HID keyboard simulation failed.
-#, fuzzy
 msgid "Setting HID keyboard simulation not supported"
-msgstr "Darbas su matematiniu turiniu negalimas."
+msgstr "Parametras „HID“ klavietūros simuliacija nepalaikomas"
 
 #. Translators: Message when HID keyboard simulation is enabled.
 msgid "HID keyboard simulation enabled"
-msgstr ""
+msgstr "„HID“ klavietūros simuliacija įjungta"
 
 #. Translators: Message when HID keyboard simulation is disabled.
 msgid "HID keyboard simulation disabled"
-msgstr ""
+msgstr "„HID“ klavietūros simuliacija išjungta"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggles HID keyboard simulation"
-msgstr ""
+msgstr "Perjungia „HID“ klavietūros simuliaciją"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7448,9 +7542,8 @@ msgid "HumanWare BrailleNote"
 msgstr "„HumanWare BrailleNote“"
 
 #. Translators: The name of a series of braille displays.
-#, fuzzy
 msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
-msgstr "„HumanWare Brailliant BI/B“ serijos"
+msgstr "„HumanWare Brailliant BI/B“ serijos / „BrailleNote Touch“"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7458,17 +7551,15 @@ msgstr "„EcoBraille“ eilutės"
 
 #. Translators: Names of braille displays.
 msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr ""
+msgstr "„Eurobraille Esys/Esytime/Iris“ eilutės"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
-#, fuzzy
 msgid "HID keyboard input simulation is unavailable."
-msgstr "Išleista „NVDA“ programos {version} versija."
+msgstr "„HID“ klavietūros įvesties simuliacija neprieinama."
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
-#, fuzzy
 msgid "Toggle HID keyboard simulation"
-msgstr "Darbas su matematiniu turiniu negalimas."
+msgstr "Perjungia „HID“ klavietūros simuliaciją"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7489,31 +7580,28 @@ msgstr "„Handy Tech“ Brailio eilutės"
 
 #. Translators: message when braille input is enabled
 msgid "Braille input enabled"
-msgstr ""
+msgstr "Brailio įvestis įjungta"
 
 #. Translators: message when braille input is disabled
-#, fuzzy
 msgid "Braille input disabled"
-msgstr "Brailio &eilutė:"
+msgstr "Brailio įvestis išjungta"
 
 #. Translators: description of the script to toggle braille input
-#, fuzzy
 msgid "Toggle braille input"
-msgstr "Interpretuoja brailio įvestį"
+msgstr "Perjungia brailio įvestį"
 
 #. Translators: The name of a series of braille displays.
-#, fuzzy
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
-msgstr "„HIMS Braille Sense“/„Braille EDGE“/„Smart Beetle“ serijos"
+msgstr ""
+"„HIMS Braille Sense“/„Braille EDGE“/„Smart Beetle“/„Sync Braille“ serijos"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
 msgstr "„MDV Lilli“"
 
 #. Translators: Names of braille displays
-#, fuzzy
 msgid "Nattiq nBraille"
-msgstr "Brailio eilutė nenaudojama"
+msgstr "„Nattiq nBraille“"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 msgid "No braille"
@@ -7536,15 +7624,18 @@ msgid "SuperBraille"
 msgstr "„SuperBraille“"
 
 #. Translators: The title of the NVDA Braille Viewer tool window.
-#, fuzzy
 msgid "NVDA Braille Viewer"
-msgstr "„NVDA“ žurnalo žiūryklė"
+msgstr "„NVDA“ Brailio žiūryklė"
 
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether the braille viewer is shown at startup or not.
-#, fuzzy
 msgid "&Show Braille Viewer on Startup"
-msgstr "&Rodyti šnekos stebyklę paleidus programą"
+msgstr "&Rodyti Brailio stebyklę paleidus programą"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
+msgstr ""
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7556,12 +7647,12 @@ msgstr "Jei įmanoma, suaktyvina tekstą, esantį prie žymeklio"
 
 #. Translators: Describes a command.
 msgid "Dismiss the recognition result"
-msgstr ""
+msgstr "Panaikina atpažinimo rezultatą"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
 msgid "Already in a content recognition result"
-msgstr ""
+msgstr "Jau esate atpažinto turinio rezultato lange"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the content is not visible.
@@ -7608,6 +7699,7 @@ msgstr ""
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr ""
+"Parametrų skydelis, kurį bandėte atverti, šioje sistemoje yra neprieinamas."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7634,6 +7726,11 @@ msgid ""
 "make changes to the System registry and therefore requires administrative "
 "access. Are you sure you wish to proceed?"
 msgstr ""
+"Ketinate paleisti „COM Registration“ taisymo įrankį. Šis įrankis pabandys "
+"ištaisyti dažnas sistemos problemas, kurios neleidžia „NVDA“programai "
+"prieiti prie kai kurių programų, tokių kaip „Firefox“ ar „Internet "
+"Explorer“. Šis įrankis privalomai atlieka pakeitimus sistemos registre, "
+"todėl jam veikti būtinos administratoriaus teisės. Ar tikrai norite tęsti?"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -7645,26 +7742,24 @@ msgstr "Įspėjimas"
 #. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
 #. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
 msgid "COM Registration Fixing Tool"
-msgstr ""
+msgstr "„COM Registration“ taisymo įrankis"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
-#, fuzzy
 msgid "Please wait while NVDA tries to fix your system's COM registrations."
-msgstr "Luktelėkite, kol į sistemos profilį bus nukopijuoti parametrai."
+msgstr ""
+"Luktelėkite, kol „NVDA“ bando sutvarkyti Jūsų sistemos „COM registrations“."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
 msgid "COM Registration Fixing tool complete"
-msgstr ""
+msgstr "„COM Registration“ taisymo įrankio darbas baigtas"
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "&Settings..."
-msgstr "&Balso parametrai…"
+msgstr "&Parametrai…"
 
 #. Translators: The description for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "NVDA settings"
-msgstr "Parametrų nėra"
+msgstr "„NVDA“ parametrai"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7722,9 +7817,8 @@ msgid "Speech viewer"
 msgstr "Šnekos stebyklė"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-#, fuzzy
 msgid "Braille viewer"
-msgstr "Brailio eilutė susieta su %s."
+msgstr "Brailio žiūryklė"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -7744,7 +7838,7 @@ msgstr "Į&diegti „NVDA“…"
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr ""
+msgstr "Paleisti „COM Registration“ taisymo įrankį..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7824,13 +7918,12 @@ msgid "Donate"
 msgstr "Aukoti"
 
 #. Translators: The label for the menu item to run a pending update.
-#, fuzzy
 msgid "Install pending &update"
-msgstr "Naujinimo diegimas"
+msgstr "Įdiegti laukiantį &naujinimą"
 
 #. Translators: The description for the menu item to run a pending update.
 msgid "Execute a previously downloaded NVDA update"
-msgstr ""
+msgstr "Paleisti anksčiau atsiųstą „NVDA“ programos naujinį"
 
 msgid "E&xit"
 msgstr "&Baigti darbą"
@@ -7890,7 +7983,7 @@ msgstr "&Naudoti Didžiųjų raidžių klavišą kaip „NVDA“ klavišą"
 #. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 #. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "St&art NVDA after I sign in"
-msgstr ""
+msgstr "P&aleisti „NVDA“ programą po prisijungimo"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -7945,9 +8038,8 @@ msgid "Restart with debug logging enabled"
 msgstr "Paleisti programą iš naujo, įjungus žurnalo derinimo lygmenį"
 
 #. Translators: An option in the combo box to choose exit action.
-#, fuzzy
 msgid "Install pending update"
-msgstr "Naujinimo diegimas"
+msgstr "Įdiegti laukiantį naujinimą"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7955,7 +8047,7 @@ msgstr "Luktelėkite"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
-msgstr ""
+msgstr "„NVDA“ naudojimo duomenų rinkimas"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
 msgid ""
@@ -7971,6 +8063,17 @@ msgid ""
 "Do you wish to allow NV Access to periodically collect this data in order to "
 "improve NVDA?"
 msgstr ""
+"Tam, kad ateityje pagerintų programos „NVDA“ veikimą, „NV Access“ norėtų "
+"rinkti naudojimo duomenis iš veikiančių „NVDA“ kopijų.\n"
+"\n"
+"Į renkamus duomenis įtraukiama operacinės sistemos versija, „NVDA“ versija, "
+"kalba, kilmės šalis, taip pat  dalis „NVDA“ konfiguracijos – dabartinis "
+"sintezatorius, Brailio eilutė ir Brailio lentelė. „NV Access“ niekada "
+"nerenka to, ką „NVDA“ ištaria ar atspausdina Brailio eilutėje. Prašome "
+"pažiūrėti į vartotojo vadovą, kur rasite visų renkamų duomenų sąrašą.\n"
+"\n"
+"Ar norėtumėte leisti „NV Access“ periodiškai rinkti šiuos duomenis „NVDA“ "
+"tobuulinimo tikslais?"
 
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
@@ -7978,7 +8081,7 @@ msgstr ""
 #. Translators: A button in the screen curtain warning dialog which allows the user to
 #. agree to enabling the curtain.
 msgid "&Yes"
-msgstr ""
+msgstr "&Taip"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
@@ -7986,7 +8089,7 @@ msgstr ""
 #. Translators: A button in the screen curtain warning dialog which allows the user to
 #. disagree to enabling the curtain.
 msgid "&No"
-msgstr ""
+msgstr "&Ne"
 
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
@@ -8009,9 +8112,8 @@ msgstr "&Apie papildinį…"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
-msgstr ""
+msgstr "Gerai"
 
 #. Translators: message shown in the Addon Information dialog.
 #, python-brace-format
@@ -8033,12 +8135,11 @@ msgstr "Svetainė: {url}"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgid "Minimum required NVDA version: {}"
-msgstr ""
+msgstr "Būtinai reikalinga „NVDA“ versija: {}"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
-#, fuzzy
 msgid "Last NVDA version tested: {}"
-msgstr "„NVDA“ diegimas"
+msgstr "Paskutinė „NVDA“ versija, su kuria tikrintas papildinys – {}"
 
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
@@ -8049,9 +8150,8 @@ msgid "Add-ons Manager"
 msgstr "Papildinių tvarkytuvė"
 
 #. Translators: The title of the Addons Dialog when add-ons are disabled
-#, fuzzy
 msgid "Add-ons Manager (add-ons disabled)"
-msgstr "Paleisti programą iš naujo, išjungus papildinius"
+msgstr "Papildinių tvarkytuvė (papildiniai išjungti)"
 
 #. Translators: A message in the add-ons manager shown when add-ons are globally disabled.
 msgid ""
@@ -8059,6 +8159,9 @@ msgid ""
 "disabled state, and install or uninstall add-ons. Changes will not take "
 "effect until after NVDA is restarted."
 msgstr ""
+"Programa „NVDA“ buvo paleista išjungus visus papildinius. Jūs galite "
+"pakeisti būseną įjungtas/išjungtas, ir įdiegti arba pašalinti priedus. "
+"Pakeitimai neįsigalios tol, kol „NVDA“ programa nebus paleista iš naujo."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8092,8 +8195,8 @@ msgstr "Iš&jungti papildinį"
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
-#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 msgid "&Remove"
 msgstr "&Šalinti"
 
@@ -8106,9 +8209,8 @@ msgid "&Install..."
 msgstr "&Diegti…"
 
 #. Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
-#, fuzzy
 msgid "&View incompatible add-ons..."
-msgstr "&Gauti papildinių…"
+msgstr "&Peržiūrėti nesuderinamus papildinius…"
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
@@ -8120,8 +8222,14 @@ msgid "NVDA Add-on Package (*.{ext})"
 msgstr "„NVDA“ papildinys (*.{ext})"
 
 #. Translators: Presented when attempting to remove the selected add-on.
-msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Ar tikrai norite iš „NVDA“ pašalinti pasirinktąjį papildinį?"
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"Ar tikrai norite iš „NVDA“ pašalinti {addon} papildinį? Šiss veiksmas negali "
+"būti atstatytas."
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
@@ -8129,34 +8237,33 @@ msgstr "Papildinio šalinimas"
 
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
-msgstr ""
+msgstr "Nesuderinamas"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-#, fuzzy
 msgid "Enabled"
-msgstr "įjungtas"
+msgstr "Įjungtas"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
-#, fuzzy
 msgid "Install"
-msgstr "įdiegtas"
+msgstr "Įdiegtas"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#, fuzzy
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
-msgstr "išjungtas"
+msgstr "Išjungtas"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
-msgstr ""
+msgstr "Pašalintas po programos paleidimo iš naujo"
 
 #. Translators: The status shown for an addon when it requires a restart to become disabled
 msgid "Disabled after restart"
-msgstr ""
+msgstr "Išjungtas po programos paleidimo iš naujo"
 
 #. Translators: The status shown for an addon when it requires a restart to become enabled
 msgid "Enabled after restart"
-msgstr ""
+msgstr "Įjungtas po programos paleidimo iš naujo"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8165,12 +8272,12 @@ msgstr "Į&jungti papildinį"
 #. Translators: The message displayed when the add-on cannot be disabled.
 #, python-brace-format
 msgid "Could not disable the {description} add-on."
-msgstr ""
+msgstr "Nepavyko išjungti „{description}“ papildinio."
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #, python-brace-format
 msgid "Could not enable the {description} add-on."
-msgstr ""
+msgstr "Nepavyko įjungti „{description}“ papildinio."
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -8189,19 +8296,23 @@ msgstr "Papildinio diegimas"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
-msgstr "Šio papildinio versija jau yra įdiegta. Ar norite ją atnaujinti?"
+msgstr ""
+"Jūs norite įdiegti {summary} {newVersion}, tačiau ši versija jau yra "
+"įdiegta. Ar vis tiek norite atnaujinti?"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
-msgstr "Šio papildinio versija jau yra įdiegta. Ar norite ją atnaujinti?"
+msgstr ""
+"Šio papildinio versija jau yra įdiegta. Ar norite atnaujinti {summary} iš "
+"{curVersion} į {newVersion} versiją?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8212,13 +8323,15 @@ msgid "Please wait while the add-on is being installed."
 msgstr "Luktelėkite, kol papildinys bus įdiegtas."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
-#, fuzzy, python-format
+#, python-format
 msgid "Failed to install add-on from %s"
 msgstr "Nepavyko įdiegti papildinio iš failo „%s“"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr ""
+"Papildiniai negali būti įdiegti į programos „NVDA“ versiją, gautą iš "
+"„Windows Store“"
 
 #. Translators: The message displayed when installing an add-on package is prohibited,
 #. because it requires a later version of NVDA than is currently installed.
@@ -8228,11 +8341,13 @@ msgid ""
 "version required for this add-on is {minimumNVDAVersion}, your current NVDA "
 "version is {NVDAVersion}"
 msgstr ""
+"„{summary} {version}“ diegimas blokuojamas. Būtina „NVDA“ versija, kurios "
+"reikalauja šis papildinys, yra {minimumNVDAVersion}, o dabartinė Jūsų „NVDA“ "
+"versija yra {NVDAVersion}"
 
 #. Translators: The title of a dialog presented when an error occurs.
-#, fuzzy
 msgid "Add-on not compatible"
-msgstr "Papildinio duomenys"
+msgstr "Papildinys nesuderinamas"
 
 #. Translators: A message informing the user that this addon can not be installed
 #. because it is not compatible.
@@ -8242,43 +8357,47 @@ msgid ""
 "this add-on is required, the minimum add-on API supported by this version of "
 "NVDA is {backCompatToAPIVersion}"
 msgstr ""
+"„{summary} {version}“ diegimas blokuojamas. Reikalinga atnaujinta šio "
+"papildinio versija, papildiniui veikti būtina sasaja, palaikoma šios „NVDA“ "
+"versijos yra {backCompatToAPIVersion}"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on?\n"
 "Only install add-ons from trusted sources.\n"
 "Addon: {summary} {version}"
 msgstr ""
-"Ar tikrai norite įdiegti šį papildinį? Diekite tik iš patikimų šaltinių "
-"gautus papildinius.\n"
-"Papildinys – {summary} {version}\n"
-"Autorius – {author}"
+"Ar tikrai norite įdiegti šį papildinį?\n"
+"Diekite tik iš patikimų šaltinių gautus papildinius.\n"
+"Papildinys – {summary} {version}"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#, fuzzy
 msgid "Incompatible Add-ons"
-msgstr "Įdiegti papildiniai"
+msgstr "Nesuderinami papildiniai"
 
 #. Translators: The title of the Incompatible Addons Dialog
 msgid ""
 "The following add-ons are incompatible with NVDA version {}. These add-ons "
 "can not be enabled. Please contact the add-on author for further assistance."
 msgstr ""
+"Šie papildiniai yra nesuderinami su „NVDA“ versija {}. Šių papildinių "
+"įjungti negalima. Norėdami sužinoti daugiau informacijos, kreipkitės į "
+"papildinio autorių."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
-#, fuzzy
 msgid "Incompatible add-ons"
-msgstr "Į&jungti papildinį"
+msgstr "Nesuderinami papildiniai"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
 msgid "Incompatible reason"
-msgstr ""
+msgstr "Nesuderinamumo priežastis"
 
 #. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
 #. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
 msgid "An updated version of NVDA is required. NVDA version {} or later."
 msgstr ""
+"Reikalinga atnaujinta programos „NVDA“ versija. „NVDA“ {} arba vėlesnė."
 
 #. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
 #. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
@@ -8286,6 +8405,8 @@ msgid ""
 "An updated version of this add-on is required. The minimum supported API "
 "version is now {}"
 msgstr ""
+"Reikalinga atnaujinta šio papildinio versija. Būtina palaikoma sasajos "
+"versija šiuo metu yra {}"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8371,7 +8492,7 @@ msgstr "Profilio pervardinimas"
 #. Translators: An error displayed when the user attempts to rename a configuration profile
 #. with an empty name.
 msgid "A profile cannot have an empty name."
-msgstr ""
+msgstr "Profilis negali būti su tuščiu pavadinimu."
 
 #. Translators: An error displayed when renaming a configuration profile
 #. and a profile with the new name already exists.
@@ -8448,7 +8569,7 @@ msgstr ""
 #. Translators: An error displayed when the user attempts to create a configuration profile
 #. with an empty name.
 msgid "You must choose a name for this profile."
-msgstr ""
+msgstr "Privalote parinkti pavadinimą šiam profiliui."
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8471,6 +8592,91 @@ msgstr ""
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
 msgid "Manual Activation"
 msgstr "Priverstinis aktyvinimas"
+
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+msgid "No help available here."
+msgstr "Pagalbinės informacijos šioje vietoje neaptikta."
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+msgid "No user guide found."
+msgstr "Vartotojo vadovas nerastas."
+
+#. Translators: Describes a gesture in the Input Gestures dialog.
+#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
+#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
+msgid "{main} ({source})"
+msgstr "{main} ({source})"
+
+#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
+msgid "Enter input gesture:"
+msgstr "Įveskite įvesties gestą:"
+
+#. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
+#. will be replaced by the gesture that can be triggered by a mapped gesture.
+#. E.G. Emulate key press: NVDA+b
+#, python-brace-format
+msgid "Emulate key press: {emulateGesture}"
+msgstr "Simuliuoti klavišo {emulateGesture} paspaudimą"
+
+#. Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
+msgid "Enter gesture to emulate:"
+msgstr "Įveskite gestą, kurį simuliuoti:"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} (1 result)"
+msgstr "„{category}“ (1 rez.)"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} ({nbResults} results)"
+msgstr "„{category}“ ({nbResults} rez.)"
+
+#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
+msgid "Input Gestures"
+msgstr "Įvesties gestai"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "&Filtruoti sąrašą:"
+
+#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+msgid "&Add"
+msgstr "&Pridėti"
+
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr "Atkurti &numatytuosius gamyklinius parametrus"
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"Ar tikrai norite atkurti visus gestus į jų numatytuosius gamyklinius "
+"parametrus?\n"
+"\n"
+"\t\t\tVisi vartotojo nustatyti gestai, nesvarbu, ar nustatyti anksčiau ar "
+"tik šios sesijos metu, bus prarasti.\n"
+"\t\t\tŠis veiksmas yra negražinamas."
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Gestų atkūrimas"
+
+#. Translators: An error displayed when saving user defined input gestures fails.
+msgid "Error saving user defined gestures - probably read only file system."
+msgstr ""
+"Klaida įrašant naudotojo apibrėžtus gestus – galbūt failų sistema pasiekiama "
+"tik skaitymui."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
@@ -8558,7 +8764,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA during sign-in"
-msgstr ""
+msgstr "Naudoti „NVDA“ prisijungimo metu"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -8629,13 +8835,22 @@ msgstr "Kopijuoti esamuosius &naudotojo parametrus"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr ""
+msgstr "&Paleisti naujai sukurtą perkeliamąją programos kopiją po jos sukūrimo"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
 msgstr ""
 "Pasirinkite aplanką, į kurį norite įdiegti perkeliamąją programos kopiją."
+
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
+msgstr ""
+"Pasirinkite tikslų kelią (įskaitant ir disko raidę), kur norite sukurti "
+"perkeliamąją programos kopiją."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -8693,31 +8908,22 @@ msgid "Error saving log: %s"
 msgstr "Klaida įrašant žurnalą: %s"
 
 #. Translators: A message indicating that log cannot be loaded to LogViewer.
-#, fuzzy
 msgid "Log is unavailable"
-msgstr "nepasiekiamas (-a)"
+msgstr "Žurnalas nepasiekiamas"
 
 #. Translators: A cancel button on a message dialog.
-#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
-msgstr ""
-
-#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
-msgid "Apply"
-msgstr ""
+msgstr "Atšaukti"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
-#, fuzzy
 msgid "&Categories:"
-msgstr "Kategorijos"
+msgstr "&Kategorijos:"
 
 #. Translators: This is the label for the general settings panel.
-#, fuzzy
 msgid "General"
-msgstr "Bendrieji parametrai"
+msgstr "Bendrieji"
 
 #. Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
-#, fuzzy
 msgid "disabled"
 msgstr "išjungtas"
 
@@ -8740,15 +8946,13 @@ msgstr "derinimas"
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
 #. will be used).
-#, fuzzy
 msgid "NVDA &Language (requires restart):"
-msgstr "&Kalba (visiškai pasikeičia tik paleidus programą iš naujo):"
+msgstr "„NVDA“ &Kalba (reikia paleisti programą iš naujo):"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA
 #. exits (if it is not checked, user needs to save configuration before quitting NVDA).
-#, fuzzy
 msgid "&Save configuration when exiting NVDA"
-msgstr "Į&rašyti parametrus baigiant programos darbą"
+msgstr "Į&rašyti parametrus baigiant programos „NVDA“ darbą"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
@@ -8768,23 +8972,20 @@ msgstr "Žurnalo pranešimų &lygmuo:"
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
-#, fuzzy
 msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr ""
-"Leisti „NVDA“ programą „Windows“ prisijungimo ekrane (būtinos "
-"administratoriaus teisės)"
+"Leisti „NVDA“ programą prisijungimo metu (būtinos administratoriaus teisės)"
 
 #. Translators: The label for a button in general settings to copy
 #. current user settings to system settings (to allow current
 #. settings to be used in secure screens such as User Account
 #. Control (UAC) dialog).
-#, fuzzy
 msgid ""
 "Use currently saved settings during sign-in and on secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Naudoti šiuo metu įrašytus parametrus prisijungimo ekrane ir kitose "
-"padidinto saugumo lygio aplinkose (būtinos administratoriaus teisės)"
+"Naudoti šiuo metu įrašytus parametrus prisijungimo metu ir kitose padidinto "
+"saugumo lygio aplinkose (būtinos administratoriaus teisės)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -8793,11 +8994,11 @@ msgstr "Automatiškai tikrinti, ar yra „NVDA“ programos &naujinimų"
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
-msgstr ""
+msgstr "Informuoti apie &laukiantį naujinį programos pradžioje"
 
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 msgid "Allow the NVDA project to gather NVDA usage statistics"
-msgstr ""
+msgstr "Leisti rinkti „NVDA“ naudojimo statistiką"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -8851,33 +9052,31 @@ msgstr "Pakeista sąsajos kalba"
 #. Translators: The message displayed after NVDA interface language has been changed.
 msgid "NVDA must be restarted for the new language to take effect."
 msgstr ""
+"Tam, kad įsigaliotų kalbos pakeitimai, programa „NVDA“ turi būti paleista iš "
+"naujo."
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#, fuzzy
 msgid "Restart &now"
-msgstr "Paleisti programą iš naujo"
+msgstr "Paleisti programą iš naujo &dabar"
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
-#, fuzzy
 msgid "Restart &later"
-msgstr "Paleisti programą iš naujo"
+msgstr "Paleisti programą iš naujo &vėliau"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#, fuzzy
 msgid "&Synthesizer"
-msgstr "&Sintezatorius:"
+msgstr "&Sintezatorius"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
 msgid "C&hange..."
-msgstr ""
+msgstr "K&eisti..."
 
 #. Translators: This is the label for the synthesizer selection dialog
-#, fuzzy
 msgid "Select Synthesizer"
-msgstr "Šnekos sintezė"
+msgstr "Pasirinkti sintezatorių"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8888,14 +9087,16 @@ msgstr "&Sintezatorius:"
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
-#, fuzzy
 msgid "Audio output  &device:"
-msgstr "Iš&vesties įrenginys:"
+msgstr "Garso iš&vesties įrenginys:"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "„Microsoft Sound Mapper“"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-#, fuzzy
 msgid "Audio d&ucking mode:"
-msgstr "Garso &tildymas:"
+msgstr "Garso &tildymo rėžimas:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -8908,7 +9109,6 @@ msgid "Synthesizer Error"
 msgstr "Sintezatoriaus klaida"
 
 #. Translators: This is the label for the voice settings panel.
-#, fuzzy
 msgid "Voice"
 msgstr "Balsas"
 
@@ -8937,12 +9137,12 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, data from the unicode CLDR will be used
 #. to speak emoji descriptions).
-#, fuzzy
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
 msgstr ""
-"Pasitikėti automatiniu parinkto balso skyrybos ženklų ir kitų simbolių tarimu"
+"Apdorojant simbolius, Įtraukti „Unicode Consortium“ duomenis (įskaitant "
+"jaustukus)"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change
 #. voice pitch for capital letters; the higher the value, the pitch will be higher).
@@ -8965,15 +9165,13 @@ msgid "Use &spelling functionality if supported"
 msgstr "Tikrinti &rašybą (jei tai palaikoma)"
 
 #. Translators: This is the label for the keyboard settings panel.
-#, fuzzy
 msgid "Keyboard"
-msgstr "%s klaviatūra"
+msgstr "Klaviatūra"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
-#, fuzzy
 msgid "&Select NVDA Modifier Keys"
-msgstr "&Naudoti Didžiųjų raidžių klavišą kaip „NVDA“ klavišą"
+msgstr "&Pasirinkite „NVDA“ klavišus"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8987,15 +9185,13 @@ msgstr "Tarti įvestus &žodžius"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speech &interrupt for typed characters"
-msgstr "Nutraukti šneką, įvedus simbolį"
+msgstr "&Nutraukti šneką įvedus simbolį"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speech i&nterrupt for Enter key"
-msgstr "Nutraukti šneką, spustelėjus klavišą „Įvesti“"
+msgstr "&Nutraukti šneką, spustelėjus klavišą „Įvesti“"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -9004,14 +9200,12 @@ msgstr "Skaitant viską, leisti &greitąjį skaitymą"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "&Beep if typing lowercase letters when caps lock is on"
 msgstr ""
-"Pyptelėti, jei įvedama mažoji raidė esant įjungtoms didžiosioms raidėms"
+"&Pyptelėti, jei įvedama mažoji raidė esant įjungtoms didžiosioms raidėms"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speak c&ommand keys"
 msgstr "Tarti k&omandų klavišus"
 
@@ -9061,14 +9255,12 @@ msgstr "Koordinačių indikavimo garsumas &priklausomas nuo skaisčio"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#, fuzzy
 msgid "Ignore mouse input from other &applications"
-msgstr "Apdoroti kitų &programų siunčiamus klavišų nuspaudimus"
+msgstr "Nekreipti dėmesio į pelės įvesties informaciją iš kitų &programų"
 
 #. Translators: This is the label for the review cursor settings panel.
-#, fuzzy
 msgid "Review Cursor"
-msgstr "Peržiūros &žymeklis…"
+msgstr "Peržiūros žymeklis"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -9087,14 +9279,12 @@ msgstr "Sekti &pelės žymeklį"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#, fuzzy
 msgid "&Simple review mode"
-msgstr "Supaprastintoji peržiūros veiksena"
+msgstr "&Supaprastintoji peržiūros veiksena"
 
 #. Translators: This is the label for the Input Composition settings panel.
-#, fuzzy
 msgid "Input Composition"
-msgstr "Įvesties komponavimo parametrai"
+msgstr "Įvesties komponavimas"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
@@ -9151,9 +9341,8 @@ msgstr "Skaityti iškylančiuosius &patarimus"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Report &notifications"
-msgstr "Skaityti iškylančiuosius &patarimus"
+msgstr "Skaityti &pranešimus"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9167,9 +9356,8 @@ msgstr "Informuoti apie &objektų poziciją"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "&Guess object position information when unavailable"
-msgstr "Nuspėti &objektų poziciją, jei ši informacija neprieinama"
+msgstr "&Nuspėti objektų poziciją, jei ši informacija neprieinama"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9183,9 +9371,8 @@ msgstr "Įgarsinti &eigos juostas:"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Report backg&round progress bars"
-msgstr "Įgarsinti fonines eigos juostas"
+msgstr "Pranešti informaciją apie fo&nines eigos juostas"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9219,7 +9406,7 @@ msgstr "&Vadovautis išdėstymu ekrane (kai galima)"
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
 msgid "&Enable browse mode on page load"
-msgstr ""
+msgstr "Į&jungti naršymo veikseną, kai užkraunamas puslapis"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9251,6 +9438,11 @@ msgstr "Garsu indikuoti fokusavimo ir naršymo veiksenas"
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "&Neperduoti programoms neįprastų komandinių gestų"
 
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "Automatiškai nustatyti sistemos ž&idinį fokusuojamiems elementams"
+
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "Dokumentų formatavimas"
@@ -9280,19 +9472,23 @@ msgstr "Šrifto &dydis"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Font attrib&utes"
 msgstr "Šrifto sa&vybės"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Su&perscripts and subscripts"
-msgstr ""
+msgstr "Vi&ršutiniai ir apatiniai indeksai"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "E&mphasis"
 msgstr "&Akcentavimas"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Mar&ked (highlighted text)"
+msgstr "pažy&mėta (tekstas paryškintas)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9311,8 +9507,8 @@ msgstr "Dokumento savybės"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Co&mments"
-msgstr "&Komentarai"
+msgid "No&tes and comments"
+msgstr "Pa&stabos ir komentarai"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9360,9 +9556,8 @@ msgid "Tones"
 msgstr "tonais"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-#, fuzzy
 msgid "Both Speech and Tones"
-msgstr "balsu ir tonais"
+msgstr "Balsu ir tonais"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -9422,6 +9617,11 @@ msgstr "Elementai"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Graphics"
+msgstr "&Paveikslai"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&Sąrašai"
 
@@ -9432,20 +9632,18 @@ msgstr "&Citatos"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "&Groupings"
-msgstr "grupė"
+msgstr "&Grupės"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Lan&dmarks and regions"
-msgstr "&Orientyrai"
+msgstr "Orien&tyrai ir sritys"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Arti&cles"
-msgstr ""
+msgstr "Stra&ipsniai"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9459,21 +9657,24 @@ msgstr "&Galimi spustelėti elementai"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
-"Pranešti apie formatavimo pakeitimus už žymeklio (gali sulėtinti programos "
+"Pranešti apie formatavimo pakei&timus už žymeklio (gali sulėtinti programos "
 "darbą)"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#, fuzzy
 msgid "Touch Interaction"
-msgstr "Baigti darbą su matematiniu turiniu"
+msgstr "Jutiklinio ekrano sąveika"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "Enable touch interaction support"
+msgstr "Įjungti jutiklinio ekrano sąveikos palaikymą"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
 msgid "&Touch typing mode"
-msgstr ""
+msgstr "&Jutiklinio rašymo rėžimas"
 
 #. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
@@ -9486,20 +9687,26 @@ msgstr "Atpažinimo &kalba:"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "NVDA Development"
-msgstr ""
+msgstr "„NVDA“ kūrimas"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Enable loading custom code from Developer Scratchpad directory"
-msgstr ""
+msgstr "Įjungti galimybę leissti individualų kodą iš kūrimo bloknoto aplanko"
 
 #. Translators: the label for a button in the Advanced settings category
 msgid "Open developer scratchpad directory"
-msgstr ""
+msgstr "Atverti kūrimo bloknoto aplanką"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
+msgstr "„Microsoft UI Automation“"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Enable &selective registration for UI Automation events and property changes"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
@@ -9507,21 +9714,25 @@ msgstr ""
 msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
+"Naudoti „UI Automation“, norint prieiti prie „Microsoft &Word“ dokumento "
+"valdiklių, kai tai įmanoma"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
+"Naudoti „UI Automation“, norint prieiti prie „Windows“ p&ulto, kai tai "
+"įmanoma"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Speak &passwords in UIA consoles (may improve performance)"
-msgstr ""
+msgstr "Tarti &slaptažodžius UIA pultuose (galimai pagerės veikimas)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Terminal programs"
-msgstr ""
+msgstr "Terminalo programos"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9530,61 +9741,51 @@ msgstr ""
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#, fuzzy
 msgid "Default (No)"
-msgstr "numatytoji spalva"
+msgstr "Numatytasis (Ne)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
 msgid "Yes"
-msgstr ""
+msgstr "Taip"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
-msgstr ""
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-#, fuzzy
-msgid "Automatically set system &focus to focusable elements"
-msgstr "Automatinė fokusavimo veiksena, perkėlus teksto žymeklį"
+msgstr "Bandyti nutraukti kalbą pasibaigusiems židinio įvykiams:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Editable Text"
-msgstr "redaguotinas (-a)"
+msgstr "redaguotinas tekstas"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
 msgid "Caret movement timeout (in ms)"
-msgstr ""
+msgstr "Simbolio judėjimo pertrauka (milisek.)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Debug logging"
-msgstr "derinimo įspėjimas"
+msgstr "derinimo pranešimų registravimas žurnale"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
 msgid "Enabled logging categories"
-msgstr ""
+msgstr "Įjungtos registravimo žurnale kategorijos"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
-msgstr ""
+msgstr "Išplėstiniai"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Warning!"
-msgstr "Įspėjimas"
+msgstr "Įspėjimas!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
 msgid ""
@@ -9592,17 +9793,22 @@ msgid ""
 "to function incorrectly. Please only change these if you know what you are "
 "doing or have been specifically instructed by NVDA developers."
 msgstr ""
+"Šie parametrai yra skirti pažengusiems vartotojams. Jų pakeitimai gali "
+"turėti įtakos netinkamam programos „NVDA“ veikimui. Prašome pakeitimus "
+"daryti tik tokiu atveju, jei tikrai žinote, ką darote,  arba jei tokį "
+"nurodymą gavote iš „NVDA“ kūrėjų."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
 msgid ""
 "I understand that changing these settings may cause NVDA to function "
 "incorrectly."
 msgstr ""
+"Suprantu, kad šių parametrų pakeitimai gali turėti įtakos netinkamam "
+"programos „NVDA“ veikimui"
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#, fuzzy
 msgid "Restore defaults"
-msgstr "naudotojo numatytoji"
+msgstr "Atkurti numatytuosius"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -9613,9 +9819,8 @@ msgid "Whole &word"
 msgstr "Visas &žodis"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-#, fuzzy
 msgid "Regular &expression"
-msgstr "&Reguliarusis reiškinys"
+msgstr "Reguliarusis &reiškinys"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -9655,7 +9860,6 @@ msgid "&Dictionary entries"
 msgstr "&Žodyno įrašai"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Komentaras"
 
@@ -9676,12 +9880,6 @@ msgstr "Registras"
 msgid "Type"
 msgstr "Tipas"
 
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
-#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-msgid "&Add"
-msgstr "&Pridėti"
-
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 msgid "&Edit"
 msgstr "&Taisyti"
@@ -9691,14 +9889,12 @@ msgid "Add Dictionary Entry"
 msgstr "Žodyno įrašo pridėjimas"
 
 #. Translators: A label for the braille display on the braille panel.
-#, fuzzy
 msgid "Braille &display"
-msgstr "Brailio &eilutė:"
+msgstr "Brailio &eilutė"
 
 #. Translators: This is the label for the braille display selection dialog.
-#, fuzzy
 msgid "Select Braille Display"
-msgstr "„EcoBraille“ eilutės"
+msgstr "Pasirinkite Brailio eilutę"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -9710,9 +9906,9 @@ msgstr "&Prievadas:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Could not load the {display} display."
-msgstr "Nepavyko susisiekti su Brailio eilute „%s“."
+msgstr "Nepavyko susisiekti su Brailio eilute „{display}“."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
@@ -9753,18 +9949,28 @@ msgstr "Žymeklio &forma:"
 msgid "Cursor shape for &review:"
 msgstr "Žymeklio &forma:"
 
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Naudoti pertrauką"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Rodyti neribotą laiką"
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+msgid "Show messages"
+msgstr "Rodyti pranešimus"
+
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
 msgstr "Pranešimų galiojimo &laikas (sek.)"
 
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
-msgstr "Rodyti &pranešimus neribotą laiką"
-
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#, fuzzy
 msgid "Tether B&raille:"
-msgstr "„SuperBraille“"
+msgstr "B&railio susiejimas:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9775,15 +9981,14 @@ msgid "Avoid splitting &words when possible"
 msgstr "Jeigu įmanoma, &nekelti žodžių"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#, fuzzy
 msgid "Focus context presentation:"
-msgstr "tolimesnių anotacijų nėra"
+msgstr ""
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
-msgstr ""
+msgstr "Nepavyko paleisti „{providerName}“ vizualizacijos pagerinimo tiekėjo"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
@@ -9792,10 +9997,12 @@ msgid ""
 "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
 msgstr ""
+"Nepavyko paleisti šių vizualizacijos pagerinimo tiekėjų:\n"
+"„{providerNames}“"
 
 #. Translators: The title of the vision enhancement provider error message box.
 msgid "Vision Enhancement Provider Error"
-msgstr ""
+msgstr "Vizualizacijos pagerinimo tiekėjo klaida"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
@@ -9803,6 +10010,8 @@ msgstr ""
 msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr ""
+"Nepavyko tvarkingai išjungti „{providerName}“ vizualizacijos pagerinimo "
+"tiekėjo"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
@@ -9811,47 +10020,45 @@ msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
 msgstr ""
+"Nepavyko tvarkingai išjungti šių vizualizacijos pagerinimo tiekėjų:\n"
+"„{providerNames}“"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#, fuzzy
 msgid "Configure visual aids."
-msgstr "Parametrai pritaikyti"
+msgstr "Vizualizacijos konfiguracija."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#, fuzzy
 msgid "Enable"
-msgstr "įjungtas"
+msgstr "Įjungti"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#, fuzzy
 msgid "Options:"
-msgstr "Parametrai"
+msgstr "Parinktys:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
 msgid ""
 "Unable to configure user interface for Vision Enhancement Provider, it can "
 "not be enabled."
 msgstr ""
+"Nepavyko sukonfiguruoti vartotojo sasajos, tinkamos vizualizacijos "
+"pagerinimo tiekėjui, todėl ši funkcija neveikia"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#, fuzzy
 msgid "NVDA Settings"
-msgstr "Parametrų nėra"
+msgstr "„NVDA“ parametrai"
 
 #. Translators: The profile name for normal configuration
-#, fuzzy
 msgid "normal configuration"
-msgstr "(įprastinė konfigūracija)"
+msgstr "įprastinė konfigūracija"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
 msgstr "Simbolio pridėjimas"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#, fuzzy
 msgid "&Symbol:"
-msgstr "Simbolis:"
+msgstr "&Simbolis:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
@@ -9860,10 +10067,9 @@ msgid "Symbol Pronunciation (%s)"
 msgstr "Simbolių tarimas (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#, fuzzy
 msgctxt "speechSymbols"
 msgid "&Filter by:"
-msgstr "&Filtruoti sąrašą:"
+msgstr "&Filtruoti pagal:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
@@ -9903,51 +10109,6 @@ msgstr "&Šalinti"
 msgid "Symbol \"%s\" is already present."
 msgstr "Simbolis „%s“ jau yra įrašytas."
 
-#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
-msgid "Input Gestures"
-msgstr "Įvesties gestai"
-
-#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
-msgctxt "inputGestures"
-msgid "&Filter by:"
-msgstr "&Filtruoti sąrašą:"
-
-#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
-#, fuzzy
-msgid "Reset to factory &defaults"
-msgstr "&Atkurti numatytuosius gamyklinius parametrus"
-
-#. Translators: Describes a gesture in the Input Gestures dialog.
-#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
-#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
-msgid "{main} ({source})"
-msgstr "{main} ({source})"
-
-#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
-msgid "Enter input gesture:"
-msgstr "Įveskite įvesties gestą:"
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-msgid ""
-"Are you sure you want to reset all gestures to their factory defaults?\n"
-"\t\t\t\n"
-"\t\t\tAll of your user defined gestures, whether previously set or defined "
-"during this session, will be lost.\n"
-"\t\t\tThis cannot be undone."
-msgstr ""
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-#, fuzzy
-msgid "Reset gestures"
-msgstr "Įvesties gestai"
-
-#. Translators: An error displayed when saving user defined input gestures fails.
-msgid "Error saving user defined gestures - probably read only file system."
-msgstr ""
-"Klaida įrašant naudotojo apibrėžtus gestus – galbūt failų sistema pasiekiama "
-"tik skaitymui."
-
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr "Baigti darbą su matematiniu turiniu"
@@ -9986,12 +10147,6 @@ msgstr "pažymėta „%s“"
 msgid "%s selected"
 msgstr "pažymėta „%s“"
 
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d simb."
-
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
 msgid "%s unselected"
@@ -10013,9 +10168,9 @@ msgstr "%s-oji eilutė"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, fuzzy, python-format
+#, python-format
 msgid "through %s"
-msgstr "perbrauktas"
+msgstr "iki %s"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -10024,9 +10179,9 @@ msgstr "%s-asis stulpelis"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "iš {rowCount} eilučių ir {columnCount} stulpelių"
+msgstr "iki {row} eil. {column} stulp."
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -10098,9 +10253,8 @@ msgstr "lyginių puslapių sekcijos antraštė"
 msgid "odd pages section break"
 msgstr "nelyginių puslapių sekcijos antraštė"
 
-#, fuzzy
 msgid "column break"
-msgstr "stulpelio antraštė"
+msgstr "stulpelio lūžis"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
@@ -10236,11 +10390,11 @@ msgstr "nepabrauktas"
 
 #. Translators: Reported when text is hidden.
 msgid "hidden"
-msgstr ""
+msgstr "paslėpta"
 
 #. Translators: Reported when text is not hidden.
 msgid "not hidden"
-msgstr ""
+msgstr "nepaslėpta"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
@@ -10352,12 +10506,11 @@ msgstr "rašybos klaidos pabaiga"
 
 #. Translators: Reported when text contains a grammar error.
 msgid "grammar error"
-msgstr ""
+msgstr "gramatikos klaida"
 
 #. Translators: Reported when moving out of text containing a grammar error.
-#, fuzzy
 msgid "out of grammar error"
-msgstr "rašybos klaidos pabaiga"
+msgstr "gramatinės klaidos pabaiga"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -10385,9 +10538,9 @@ msgid "word"
 msgstr "žodis"
 
 #. Translators: the current position's screen coordinates in pixels
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Positioned at {x}, {y}"
-msgstr "pozicija {x}, {y}"
+msgstr "Pozicija {x}, {y}"
 
 #. Translators: current position in a document as a percentage of the document length
 #, python-brace-format
@@ -10429,48 +10582,41 @@ msgstr ""
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
-#, fuzzy
 msgid "Highlight system fo&cus"
-msgstr "Sekti sistemos &židinį"
+msgstr "Paryškinti sistemos ži&dinį"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
-#, fuzzy
 msgid "Highlight browse &mode cursor"
-msgstr "Sekti &pelės žymeklį"
+msgstr "Paryškinti naršymo &veiksenos žymeklį"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
-#, fuzzy
 msgid "Highlight navigator &object"
-msgstr "Žvalgomojo objekto nėra"
+msgstr "Paryškinti žvalgomąjį &objektą"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-#, fuzzy
-msgid "Focus Highlight"
-msgstr "nėra dešininės lygiuotės"
+msgid "Visual Highlight"
+msgstr "Vizualus paryškinimas"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
-#, fuzzy
 msgid "&Enable Highlighting"
-msgstr "nėra dešininės lygiuotės"
+msgstr "&Įjungti paryškinimą"
 
 #. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
-#, fuzzy
 msgid "Screen Curtain"
-msgstr "Ekrano peržiūra"
+msgstr "Ekrano uždanga"
 
 #. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
 msgid "Always &show a warning when loading Screen Curtain"
-msgstr ""
+msgstr "Visada &rodyti perspėjimą, kai paleidžiama ekrano uždanga"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#, fuzzy
 msgid "&Play sound when toggling Screen Curtain"
-msgstr "&Groti garsus pradedant ir baigiant programos „NVDA“ darbą"
+msgstr "&Groti garsą, kai perjungiama ekrano uždanga"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -10481,10 +10627,15 @@ msgid ""
 "\n"
 "Do you wish to continue?"
 msgstr ""
+"Įjungus ekrano uždangą, Jūsų kompiuterio ekranas taps vvisiškai juodas. "
+"Prieš tęsdami Įsitikinkite, kad galėsite valdyti kompiuterį visai "
+"nenaudojant ekrano. \n"
+"\n"
+"Ar norite tęsti?"
 
 #. Translators: option to enable screen curtain in the vision settings panel
 msgid "Make screen black (immediate effect)"
-msgstr ""
+msgstr "Užjuodinti ekraną (staigus efektas)"
 
 msgid "Taskbar"
 msgstr "Užduočių juosta"
@@ -10608,34 +10759,33 @@ msgstr "&Anotacijos"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Errors"
-msgstr "&klaidos"
+msgstr "&Klaidos"
 
 #. Translators: The label shown for an insertion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "insertion: {text}"
-msgstr "rašyba: {text}"
+msgstr "Įterpimas: {text}"
 
 #. Translators: The label shown for a deletion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "deletion: {text}"
-msgstr "rašyba: {text}"
+msgstr "Naikinimas: {text}"
 
 #. Translators: The general label shown for track changes
 #, python-brace-format
 msgid "track change: {text}"
-msgstr ""
+msgstr "Takelio pakeitimas: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
-msgstr "Komentaras: „{text}“, autorius – {author}, data – {date}"
+msgstr "Komentaras: „{comment}“, autorius – {author}, data – {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment} by {author} on {date}"
-msgstr "Komentaras: „{text}“, autorius – {author}, data – {date}"
+msgstr "„{comment}“, autorius – {author}, data – {date}"
 
 msgid "Desktop"
 msgstr "Darbalaukis"
@@ -11121,9 +11271,8 @@ msgid "No Series defined."
 msgstr "Apibrėžtų sekų nėra."
 
 #. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
-#, fuzzy
 msgid "Chart Elements"
-msgstr "Elementai"
+msgstr "Diagramos elementai"
 
 #. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 #. Translators: Details about a series in a chart.
@@ -11133,9 +11282,9 @@ msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "Seka „{seriesName}“ – {seriesIndex} iš {seriesCount}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Slice color: {colorName} "
-msgstr "Sekos spalva – {colorName}"
+msgstr "Sekos spalva – {colorName} "
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
@@ -11197,9 +11346,8 @@ msgid "Primary Category Axis"
 msgstr "Pirminė poraštė"
 
 #. Translators: Indicates Secondary Category Axis
-#, fuzzy
 msgid "Secondary Category Axis"
-msgstr "Kategorija {categoryAxisData} – "
+msgstr ""
 
 #. Translators: Indicates Primary Value Axis
 #, fuzzy
@@ -11222,9 +11370,9 @@ msgid "Secondary Series Axis"
 msgstr "Antrinė"
 
 #. Translators: the title of a chart axis
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid " title: {axisTitle}"
-msgstr "Diagramos pavadinimas – „{chartTitle}“"
+msgstr " Pavadinimas: {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
 msgid "Exponential"
@@ -11252,14 +11400,12 @@ msgid "Power"
 msgstr ""
 
 #. Translators: Substitute superscript two by square for R square value
-#, fuzzy
 msgid " square "
 msgstr " kvadratu "
 
 #. Translators: Substitute - by minus in trendline equations.
-#, fuzzy
 msgid " minus "
-msgstr "minusas (skaitmenų sritis)"
+msgstr " minusas (skaitmenų sritis)"
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
@@ -11317,9 +11463,9 @@ msgstr ""
 "Legendos įrašas sekai „{seriesName}“, Nr. {seriesIndex} iš {seriesCount}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
-msgstr " {segmentType} Nr. {pointIndex} iš {pointCount}"
+msgstr ""
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
@@ -11465,8 +11611,8 @@ msgstr "&Diagramos"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omments"
-msgstr "&Komentarai"
+msgid "N&otes"
+msgstr "P&astabos"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11482,6 +11628,15 @@ msgstr "&Lapai"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "Nuo {start} iki {end}"
+
+#. Translators: the description  for a script for Excel
+#, fuzzy
+msgid "opens a dropdown item at the current cell"
+msgstr "Perskaito einamojo langelio komentarą"
+
+#. Translators: the description  for a script for Excel
+msgid "Sets the current cell as start of column header"
+msgstr "nustato einamąjį langelį kaip stulpelių antraščių pradžią"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -11511,6 +11666,10 @@ msgstr ""
 "Nuspaudus vieną kartą, nustato esamąjį langelį kaip pirmojo stulpelio "
 "antraštę visiems langeliams, šiame regione esantiems žemiau ir dešiniau nei "
 "jis. Nuspaudus dukart, pašalina šį langelį iš stulpelių antraščių aibės."
+
+#. Translators: the description  for a script for Excel
+msgid "sets the current cell as start of row header"
+msgstr "nustato einamąjį langelį kaip eilučių antraščių pradžią"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -11554,23 +11713,33 @@ msgstr "Įvesties pranešimas yra „{title}: {message}“"
 msgid "Input Message is {message}"
 msgstr "Įvesties pranešimas yra „{message}“"
 
-#. Translators: A message in Excel when there is no comment
-msgid "Not on a comment"
-msgstr "Komentaro nėra"
+#. Translators: the description  for a script for Excel
+msgid "Reports the note on the current cell"
+msgstr "Perskaito einamojo langelio pastabą"
+
+#. Translators: A message in Excel when there is no note
+msgid "Not on a note"
+msgstr "Čia ne pastaba"
 
 #. Translators: the description  for a script for Excel
-msgid "Reports the comment on the current cell"
-msgstr "Perskaito einamojo langelio komentarą"
+msgid "Opens the note editing dialog"
+msgstr ""
 
-#. Translators: Dialog text for
+#. Translators: Dialog text for the note editing dialog
 #, python-brace-format
-msgid "Editing comment for cell {address}"
-msgstr "Langelio {address} komentaro taisa"
+msgid "Editing note for cell {address}"
+msgstr "Langelio {address} pastabos taisa"
+
+#. Translators: Title for the note editing  dialog
+msgid "Note"
+msgstr ""
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
+#. may mix the address and the content when the cell contains a 3-digit number.
 #, python-brace-format
-msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
-msgstr "Nuo {firstAddress} {firstContent} iki {lastAddress} {lastContent}"
+msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
+msgstr "Nuo {firstAddress}  {firstContent} iki {lastAddress}  {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "top edge"
@@ -11633,18 +11802,16 @@ msgid "double"
 msgstr "dvi eilutės"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "slanted dash dot"
-msgstr "tarpas su tašku"
+msgstr ""
 
 #. Translators: border styles in Microsoft Excel.
 msgid "hair"
 msgstr ""
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "thin"
-msgstr "Nieko"
+msgstr ""
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium"
@@ -11815,14 +11982,14 @@ msgstr ""
 "{revisionType} {description}: „{text}“, autorius „{author}“, data – {date}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{distance} from left edge of page"
-msgstr "{distance:.3g} punktai nuo skaidrės kairiojo krašto"
+msgstr "{distance} punktai nuo puslapio kairiojo krašto"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{distance} from top edge of page"
-msgstr "{distance:.3g} punktai nuo skaidrės viršutinio krašto"
+msgstr "{distance} punktai nuo puslapio viršutinio krašto"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -11839,10 +12006,11 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr "pusantros eilutės"
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
-msgstr "tikslus"
+msgid "exactly {space:.1f} pt"
+msgstr ""
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -11940,24 +12108,13 @@ msgstr "Stilius „{styleName}“, struktūros lygis – {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "{size:g} punktų šriftas"
 
-#. Translators: a message when toggling change tracking in Microsoft word
-#, fuzzy
-msgid "Change tracking on"
-msgstr "Pelės sekimas įjungtas"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-#, fuzzy
-msgid "Change tracking off"
-msgstr "Pelės sekimas išjungtas"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr ""
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#, fuzzy
 msgid "Hide nonprinting characters"
-msgstr "%d simb."
+msgstr ""
 
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
@@ -12001,6 +12158,25 @@ msgstr "Dviejų eilučių intervalas"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Pusantros eilutės intervalas"
+
+#~ msgctxt "line spacing value"
+#~ msgid "exact"
+#~ msgstr "tikslus"
+
+#~ msgid "Russian grade 1"
+#~ msgstr "Rusų 1-ojo lygio"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "Nukopijuota į iškarpinę: %s"
+
+#~ msgid "Review selection copied to clipboard"
+#~ msgstr "Peržiūros metu atrinktas tekstas nukopijuotas į iškarpinę."
+
+#~ msgid "Co&mments"
+#~ msgstr "&Komentarai"
+
+#~ msgid "C&omments"
+#~ msgstr "&Komentarai"
 
 #~ msgid "Russian braille for computer code"
 #~ msgstr "Rusų Brailis kompiuteriniam kodui"
