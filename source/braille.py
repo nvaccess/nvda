@@ -8,6 +8,7 @@
 import itertools
 import os
 from typing import Iterable, Union, Tuple, List, Optional
+from locale import strxfrm
 
 import driverHandler
 import pkgutil
@@ -36,8 +37,8 @@ import collections
 import extensionPoints
 import hwPortUtils
 import bdDetect
-import brailleViewer
 import queueHandler
+import brailleViewer
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -181,6 +182,8 @@ roleLabels = {
 	controlTypes.ROLE_REGION: _("rgn"),
 	# Translators: Displayed in braille for an object which is a figure.
 	controlTypes.ROLE_FIGURE: _("fig"),
+	# Translators: Displayed in braille for an object which represents marked (highlighted) content
+	controlTypes.ROLE_MARKED_CONTENT: _("mrkd"),
 }
 
 positiveStateLabels = {
@@ -363,7 +366,7 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 				log.debugWarning("Braille display driver %s reports as unavailable, excluding" % name)
 		except:
 			log.error("", exc_info=True)
-	displayList.sort(key=lambda d : d[1].lower())
+	displayList.sort(key=lambda d: strxfrm(d[1]))
 	if lastDisplay:
 		displayList.append(lastDisplay)
 	return displayList
@@ -521,7 +524,15 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(value)
 	if states is not None:
 		textList.extend(
-			controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states, None, positiveStateLabels, negativeStateLabels)
+			controlTypes.processAndLabelStates(
+				role,
+				states,
+				controlTypes.OutputReason.FOCUS,
+				states,
+				None,
+				positiveStateLabels,
+				negativeStateLabels
+			)
 		)
 	if roleText:
 		textList.append(roleText)
@@ -568,13 +579,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 				# %s is replaced with the column number.
 				columnStr = _("c{columnNumber}").format(columnNumber=columnNumber)
 			textList.append(columnStr)
-	current = propertyValues.get('current', False)
-	if current:
-		try:
-			textList.append(controlTypes.isCurrentLabels[current])
-		except KeyError:
-			log.debugWarning("Aria-current value not handled: %s"%current)
-			textList.append(controlTypes.isCurrentLabels[True])
+	isCurrent = propertyValues.get('current', controlTypes.IsCurrent.NO)
+	if isCurrent != controlTypes.IsCurrent.NO:
+		textList.append(isCurrent.displayString)
 	placeholder = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)
@@ -659,17 +666,20 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	states = field.get("states", set())
 	value=field.get('value',None)
-	current=field.get('current', None)
+	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.ROLE_LANDMARK and landmark:
 		roleText = f"{roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabels[landmark]}"
+	content = field.get("content")
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		if current:
 			text.append(getPropertiesBraille(current=current))
+		if role == controlTypes.ROLE_GRAPHIC and content:
+			text.append(content)
 		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
 
 	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER) and field.get("table-id"):
@@ -713,7 +723,6 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		text = getPropertiesBraille(**props)
-		content = field.get("content")
 		if content:
 			if text:
 				text += TEXT_SEPARATOR
@@ -1082,7 +1091,9 @@ class TextInfoRegion(Region):
 			brailleInput.handler.updateDisplay()
 			return
 
-		if braillePos == self.brailleCursorPos:
+		dest = self.getTextInfoForBraillePos(braillePos)
+		cursor = self.getTextInfoForBraillePos(self.brailleCursorPos)
+		if dest.compareEndPoints(cursor, "startToStart") == 0:
 			# The cursor is already at this position,
 			# so activate the position.
 			try:
@@ -1090,7 +1101,6 @@ class TextInfoRegion(Region):
 			except NotImplementedError:
 				pass
 			return
-		dest = self.getTextInfoForBraillePos(braillePos)
 		self._setCursor(dest)
 
 	def nextLine(self):
@@ -1624,6 +1634,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
+
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):

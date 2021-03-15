@@ -1,4 +1,3 @@
-# NVDAObjects/UIA/__init__.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -43,6 +42,7 @@ import locationHelper
 import ui
 import winVersion
 
+
 class UIATextInfo(textInfos.TextInfo):
 
 	_cache_controlFieldNVDAObjectClass=True
@@ -60,6 +60,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_NamePropertyId,
 		UIAHandler.UIA_ToggleToggleStatePropertyId,
 		UIAHandler.UIA_HelpTextPropertyId,
+		UIAHandler.UIA.UIA_FullDescriptionPropertyId,
 		UIAHandler.UIA_AccessKeyPropertyId,
 		UIAHandler.UIA_AcceleratorKeyPropertyId,
 		UIAHandler.UIA_HasKeyboardFocusPropertyId,
@@ -646,21 +647,41 @@ class UIATextInfo(textInfos.TextInfo):
 					if debug:
 						log.debug("NULL childRange. Skipping")
 					continue
-				clippedStart=clippedEnd=False
-				if index==lastChildIndex and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)>=0:
+				clippedStart = False
+				clippedEnd = False
+				if childRange.CompareEndpoints(
+					UIAHandler.TextPatternRangeEndpoint_End,
+					textRange,
+					UIAHandler.TextPatternRangeEndpoint_Start
+				) <= 0:
+					if debug:
+						log.debug("Child completely before textRange. Skipping")
+					continue
+				if childRange.CompareEndpoints(
+					UIAHandler.TextPatternRangeEndpoint_Start,
+					textRange,
+					UIAHandler.TextPatternRangeEndpoint_End
+				) >= 0:
 					if debug:
 						log.debug("Child at or past end of textRange. Breaking")
 					break
-				if index==lastChildIndex:
-					lastChildEndDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-					if lastChildEndDelta>0:
-						if debug:
-							log.debug(
-								"textRange ended part way through the child. "
-								"Crop end of childRange to fit"
-							)
-						childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-						clippedEnd=True
+				lastChildEndDelta = childRange.CompareEndpoints(
+					UIAHandler.TextPatternRangeEndpoint_End,
+					textRange,
+					UIAHandler.TextPatternRangeEndpoint_End
+				)
+				if lastChildEndDelta > 0:
+					if debug:
+						log.debug(
+							"textRange ended part way through the child. "
+							"Crop end of childRange to fit"
+						)
+					childRange.MoveEndpointByRange(
+						UIAHandler.TextPatternRangeEndpoint_End,
+						textRange,
+						UIAHandler.TextPatternRangeEndpoint_End
+					)
+					clippedEnd = True
 				childStartDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 				if childStartDelta>0:
 					# plain text before this child
@@ -842,6 +863,8 @@ class UIA(Window):
 	def findOverlayClasses(self,clsList):
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
+		# #11445: to avoid COM errors, do not fetch cached UIA Automation Id from the underlying element.
+		UIAAutomationId = self.UIAAutomationId
 		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
@@ -849,7 +872,11 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
-		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
+		elif self.TextInfo == UIATextInfo and (
+			UIAClassName == '_WwG'
+			or self.windowClassName == '_WwG'
+			or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
+		):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
 				clsList.append(WordDocument)
@@ -858,7 +885,11 @@ class UIA(Window):
 		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
 		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
 			clsList.append(Toast_win8)
-		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
+		elif (
+			self.windowClassName == "Windows.UI.Core.CoreWindow"
+			and UIAControlType == UIAHandler.UIA_WindowControlTypeId
+			and "ToastView" in UIAAutomationId
+		):  # Windows 10
 			clsList.append(Toast_win10)
 		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips, especially those found in Microsoft Edge and other apps.
 		# Windows 8.x toast, although a form of tool tip, is covered separately.
@@ -869,24 +900,56 @@ class UIA(Window):
 			# But not for Internet Explorer
 			and not self.appModule.appName == 'iexplore'
 		):
-			from . import edge
+			from . import spartanEdge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
-				clsList.append(edge.EdgeHTMLRootContainer)
-			elif (self.UIATextPattern and
-				# #6998: Edge normally gives its root node a controlType of pane, but ARIA role="document"  changes the controlType to document
-				self.role in (controlTypes.ROLE_PANE,controlTypes.ROLE_DOCUMENT) and 
-				self.parent and (isinstance(self.parent,edge.EdgeHTMLRootContainer) or not isinstance(self.parent,edge.EdgeNode))
+				clsList.append(spartanEdge.EdgeHTMLRootContainer)
+			elif (
+				self.UIATextPattern
+				# #6998:
+				# Edge normally gives its root node a controlType of pane, but ARIA role="document"
+				# changes the controlType to document
+				and self.role in (
+					controlTypes.ROLE_PANE,
+					controlTypes.ROLE_DOCUMENT
+				)
+				and self.parent
+				and (
+					isinstance(self.parent, spartanEdge.EdgeHTMLRootContainer)
+					or not isinstance(self.parent, spartanEdge.EdgeNode)
+				)
 			): 
-				clsList.append(edge.EdgeHTMLRoot)
+				clsList.append(spartanEdge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
-				clsList.append(edge.EdgeList)
+				clsList.append(spartanEdge.EdgeList)
 			else:
-				clsList.append(edge.EdgeNode)
-		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
-				# PDFs
-				from . import edge
-				clsList.append(edge.EdgeHTMLRoot)
-		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
+				clsList.append(spartanEdge.EdgeNode)
+		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
+			from . import chromium
+			from . import web
+			if (
+				self.UIATextPattern
+				and self.role == controlTypes.ROLE_DOCUMENT
+				and self.parent
+				and self.parent.role == controlTypes.ROLE_PANE
+			):
+				clsList.append(chromium.ChromiumUIADocument)
+			else:
+				if self.role == controlTypes.ROLE_LIST:
+					clsList.append(web.List)
+				clsList.append(chromium.ChromiumUIA)
+		elif (
+			self.role == controlTypes.ROLE_DOCUMENT
+			and self.UIAElement.cachedAutomationId == "Microsoft.Windows.PDF.DocumentView"
+		):
+			# PDFs
+			from . import spartanEdge
+			clsList.append(spartanEdge.EdgeHTMLRoot)
+		elif (
+			UIAAutomationId == "RichEditControl"
+			and "DevExpress.XtraRichEdit" in self.UIAElement.cachedProviderDescription
+		):
+			clsList.insert(0, DevExpressXtraRichEdit)
+		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
 			clsList.append(ControlPanelLink)
@@ -923,7 +986,7 @@ class UIA(Window):
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
 		try:
-			if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox"):
+			if UIAAutomationId in ("SearchTextBox", "TextBox"):
 				clsList.append(SearchField)
 		except COMError:
 			log.debug("Failed to locate UIA search field", exc_info=True)
@@ -941,6 +1004,10 @@ class UIA(Window):
 				pass
 		except ValueError:
 			pass
+
+		if self.UIAElement.cachedFrameworkID == "WPF" and self.appModule.appName in ("devenv", "ssms"):
+			from . import VisualStudio
+			VisualStudio.findExtraOverlayClasses(self, clsList)
 
 		# Support Windows Console's UIA interface
 		if (
@@ -972,7 +1039,7 @@ class UIA(Window):
 						clsList.remove(x)
 
 	@classmethod
-	def kwargsFromSuper(cls,kwargs,relation=None):
+	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):
 		UIAElement=None
 		windowHandle=kwargs.get('windowHandle')
 		if isinstance(relation,tuple):
@@ -988,11 +1055,21 @@ class UIA(Window):
 			kwargs['windowHandle'] = None
 		elif relation=="focus":
 			try:
-				UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
-				# This object may be in a different window, so we need to recalculate the window handle.
-				kwargs['windowHandle']=None
+				UIAElement = UIAHandler.handler.clientObject.getFocusedElementBuildCache(
+					UIAHandler.handler.baseCacheRequest
+				)
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
+				return False
+			# Ignore this object if it is non native.
+			if ignoreNonNativeElementsWithFocus and not UIAHandler.handler.isNativeUIAElement(UIAElement):
+				if UIAHandler._isDebug():
+					log.debug(
+						"kwargsFromSuper: ignoring non native element with focus"
+					)
+				return False
+			# This object may be in a different window, so we need to recalculate the window handle.
+			kwargs['windowHandle'] = None
 		else:
 			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
 		if not UIAElement:
@@ -1042,6 +1119,14 @@ class UIA(Window):
 			return UIAHandler.handler.clientObject.CompareElements(self.UIAElement,other.UIAElement)
 		except:
 			return False
+
+	def event_gainFocus(self):
+		UIAHandler.handler.addLocalEventHandlerGroupToElement(self.UIAElement, isFocus=True)
+		super().event_gainFocus()
+
+	def event_loseFocus(self):
+		super().event_loseFocus()
+		UIAHandler.handler.removeLocalEventHandlerGroupFromElement(self.UIAElement)
 
 	def _get_shouldAllowUIAFocusEvent(self):
 		try:
@@ -1112,6 +1197,7 @@ class UIA(Window):
 	def _get_devInfo(self):
 		info=super(UIA,self).devInfo
 		info.append("UIAElement: %r"%self.UIAElement)
+		# #11445: allow exceptions to be recorded when presenting Automation Id.
 		try:
 			ret=self.UIAElement.currentAutomationID
 		except Exception as e:
@@ -1154,11 +1240,27 @@ class UIA(Window):
 		info.append("UIA patterns available: %s"%", ".join(patternsAvailable))
 		return info
 
+	def _get_UIAAutomationId(self):
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
+		except COMError:
+			# #11445: due to timing errors, elements will be instantiated with no automation Id present.
+			return ""
+
 	def _get_name(self):
 		try:
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_NamePropertyId)
 		except COMError:
 			return ""
+
+	def _get_liveRegionPoliteness(self):
+		try:
+			return UIAHandler.UIALiveSettingtoNVDAAriaLivePoliteness.get(
+				self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_LiveSettingPropertyId),
+				super().liveRegionPoliteness
+			)
+		except COMError:
+			return super().liveRegionPoliteness
 
 	def _get_role(self):
 		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
@@ -1175,11 +1277,20 @@ class UIA(Window):
 				role=superRole
 		return role
 
-	def _get_description(self):
+	def _get_UIAFullDescription(self):
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
+		except COMError:
+			return ""
+
+	def _get_UIAHelpText(self):
 		try:
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_HelpTextPropertyId) or ""
 		except COMError:
 			return ""
+
+	def _get_description(self):
+		return self.UIAFullDescription or self.UIAHelpText
 
 	def _get_keyboardShortcut(self):
 		# Build the keyboard shortcuts list early for readability.
@@ -1247,12 +1358,10 @@ class UIA(Window):
 			states.add(controlTypes.STATE_INVALID_ENTRY)
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
 			states.add(controlTypes.STATE_REQUIRED)
-		try:
-			isReadOnly=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId,True)
-		except COMError:
-			isReadOnly=UIAHandler.handler.reservedNotSupportedValue
-		if isReadOnly and isReadOnly!=UIAHandler.handler.reservedNotSupportedValue:
+
+		if self._getReadOnlyState():
 			states.add(controlTypes.STATE_READONLY)
+
 		try:
 			s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
 		except COMError:
@@ -1277,6 +1386,26 @@ class UIA(Window):
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
 		return states
+
+	def _getReadOnlyState(self) -> bool:
+		try:
+			isReadOnly = self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId, True)
+		except COMError:
+			isReadOnly = UIAHandler.handler.reservedNotSupportedValue
+		if (
+			isReadOnly == UIAHandler.handler.reservedNotSupportedValue
+			and self.UIATextPattern
+		):
+			# Most UIA text controls don't support the "ValueIsReadOnly" property,
+			# so we need to look at the root document "IsReadOnly" attribute.
+			try:
+				document = self.UIATextPattern.documentRange
+				isReadOnly = document.GetAttributeValue(UIAHandler.UIA_IsReadOnlyAttributeId)
+			except COMError:
+				isReadOnly = UIAHandler.handler.reservedNotSupportedValue
+		if isReadOnly == UIAHandler.handler.reservedNotSupportedValue:
+			return False
+		return isReadOnly
 
 	def _get_presentationType(self):
 		presentationType=super(UIA,self).presentationType
@@ -1348,23 +1477,39 @@ class UIA(Window):
 			return None
 		return self.correctAPIForRelation(UIA(UIAElement=lastChildElement))
 
-	def _get_children(self):
-		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
-		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
+	def _get_UIAChildren(self):
+		childrenCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+		childrenCacheRequest.TreeScope = UIAHandler.TreeScope_Children
 		try:
-			cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+			return self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		except COMError as e:
 			log.debugWarning("Could not fetch cached children from UIA element: %s"%e)
-			return super(UIA,self).children
-		children=[]
-		if not cachedChildren:
-			# GetCachedChildren returns null if there are no children.
+			raise e
+
+	def _get_children(self):
+		try:
+			cachedChildren = self.UIAChildren
+			children = []
+			if not cachedChildren:
+				# GetCachedChildren returns null if there are no children.
+				return children
+			for index in range(cachedChildren.length):
+				e = cachedChildren.getElement(index)
+				windowHandle = self.windowHandle
+				children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle, UIAElement=e)))
 			return children
-		for index in range(cachedChildren.length):
-			e=cachedChildren.getElement(index)
-			windowHandle=self.windowHandle
-			children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle,UIAElement=e)))
-		return children
+		except COMError:
+			return super().children
+
+	def _get_childCount(self):
+		try:
+			cachedChildren = self.UIAChildren
+			if not cachedChildren:
+				# GetCachedChildren returns null if there are no children.
+				return 0
+			return cachedChildren.length
+		except COMError:
+			return len(super().children)
 
 	def _get_rowNumber(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowPropertyId,True)
@@ -1570,7 +1715,7 @@ class UIA(Window):
 		This just reports the element that received the alert in speech and braille, similar to how focus is presented.
 		Skype for business toast notifications being one example.
 		"""
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
@@ -1625,7 +1770,7 @@ class MenuItem(UIA):
 class UIColumnHeader(UIA):
 
 	def _get_description(self):
-		description=super(UIColumnHeader,self).description
+		description = self.UIAHelpText
 		try:
 			itemStatus=self._getUIACacheablePropertyValue(UIAHandler.UIA_ItemStatusPropertyId)
 		except COMError:
@@ -1670,14 +1815,14 @@ class SensitiveSlider(UIA):
 	def event_valueChange(self):
 		focusParent=api.getFocusObject().parent
 		if self==focusParent:
-			speech.speakObjectProperties(self,value=True,reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, value=True, reason=controlTypes.OutputReason.CHANGE)
 		else:
 			super(SensitiveSlider,self).event_valueChange()
 
 class ControlPanelLink(UIA):
 
 	def _get_description(self):
-		desc=super(ControlPanelLink,self).description
+		desc = self.UIAHelpText
 		try:
 			i=desc.find('\n')
 		except:
@@ -1821,3 +1966,15 @@ class PlaceholderNetUITWMenuItem(UIA):
 			if parent.role==controlTypes.ROLE_POPUPMENU:
 				return parent
 			parent=parent.parent
+
+
+class DevExpressXtraRichEdit(UIA):
+	""""At least some versions of the DevExpress Xtra Rich Edit control
+	have a broken implementation of the UIA Text Pattern.
+	Work around this by checking whether the document range is valid.
+	"""
+
+	def _get_TextInfo(self):
+		if self.UIATextPattern and self.UIATextPattern.DocumentRange:
+			return super().TextInfo
+		return super(UIA, self).TextInfo

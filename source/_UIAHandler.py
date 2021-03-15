@@ -6,6 +6,8 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+from enum import Enum
+
 import comtypes.client
 from comtypes.automation import VT_EMPTY
 from comtypes import COMError
@@ -30,6 +32,8 @@ from comtypes.gen import UIAutomationClient as UIA
 from comtypes.gen.UIAutomationClient import *
 import textInfos
 from typing import Dict
+from queue import Queue
+import aria
 
 #Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
@@ -67,9 +71,6 @@ badUIAWindowClassNames=[
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
-	# All Chromium implementations (including Edge) should not be UIA,
-	# As their IA2 implementation is still better at the moment.
-	"Chrome_RenderWidgetHostHWND",
 ]
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
@@ -135,6 +136,12 @@ UIAControlTypesToNVDARoles={
 	UIA_SeparatorControlTypeId:controlTypes.ROLE_SEPARATOR,
 }
 
+UIALiveSettingtoNVDAAriaLivePoliteness: Dict[str, aria.AriaLivePoliteness] = {
+	UIA.Off: aria.AriaLivePoliteness.OFF,
+	UIA.Polite: aria.AriaLivePoliteness.POLITE,
+	UIA.Assertive: aria.AriaLivePoliteness.ASSERTIVE,
+}
+
 UIAPropertyIdsToNVDAEventNames={
 	UIA_NamePropertyId:"nameChange",
 	UIA_HelpTextPropertyId:"descriptionChange",
@@ -146,6 +153,15 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_ControllerForPropertyId:"UIA_controllerFor",
 	UIA_ItemStatusPropertyId:"UIA_itemStatus",
 }
+
+globalEventHandlerGroupUIAPropertyIds = {
+	UIA.UIA_RangeValueValuePropertyId
+}
+
+localEventHandlerGroupUIAPropertyIds = (
+	set(UIAPropertyIdsToNVDAEventNames)
+	- globalEventHandlerGroupUIAPropertyIds
+)
 
 UIALandmarkTypeIdsToLandmarkNames: Dict[int, str] = {
 	UIA.UIA_FormLandmarkTypeId: "form",
@@ -168,18 +184,42 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
+localEventHandlerGroupUIAEventIds = set()
+
 autoSelectDetectionAvailable = False
 if winVersion.isWin10():
 	UIAEventIdsToNVDAEventNames.update({
 		UIA.UIA_Text_TextChangedEventId: "textChange",
-		UIA.UIA_Text_TextSelectionChangedEventId: "caret", })
+		UIA.UIA_Text_TextSelectionChangedEventId: "caret",
+	})
+	localEventHandlerGroupUIAEventIds.update({
+		UIA.UIA_Text_TextChangedEventId,
+		UIA.UIA_Text_TextSelectionChangedEventId,
+	})
 	autoSelectDetectionAvailable = True
+
+globalEventHandlerGroupUIAEventIds = set(UIAEventIdsToNVDAEventNames) - localEventHandlerGroupUIAEventIds
 
 ignoreWinEventsMap = {
 	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
 }
 for id in UIAEventIdsToNVDAEventNames.keys():
 	ignoreWinEventsMap[id] = [0]
+
+
+class AllowUiaInChromium(Enum):
+	_DEFAULT = 0  # maps to 'when necessary'
+	WHEN_NECESSARY = 1  # the current default
+	YES = 2
+	NO = 3
+
+	@staticmethod
+	def getConfig() -> 'AllowUiaInChromium':
+		allow = AllowUiaInChromium(config.conf['UIA']['allowInChromium'])
+		if allow == AllowUiaInChromium._DEFAULT:
+			return AllowUiaInChromium.WHEN_NECESSARY
+		return allow
+
 
 class UIAHandler(COMObject):
 	_com_interfaces_ = [
@@ -191,8 +231,11 @@ class UIAHandler(COMObject):
 
 	def __init__(self):
 		super(UIAHandler,self).__init__()
+		self.globalEventHandlerGroup = None
+		self.localEventHandlerGroup = None
+		self._localEventHandlerGroupElements = set()
 		self.MTAThreadInitEvent=threading.Event()
-		self.MTAThreadStopEvent=threading.Event()
+		self.MTAThreadQueue = Queue()
 		self.MTAThreadInitException=None
 		self.MTAThread = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}.MTAThread",
@@ -206,7 +249,7 @@ class UIAHandler(COMObject):
 
 	def terminate(self):
 		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(winKernel.SYNCHRONIZE,False,self.MTAThread.ident))
-		self.MTAThreadStopEvent.set()
+		self.MTAThreadQueue.put_nowait(None)
 		#Wait for the MTA thread to die (while still message pumping)
 		if windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,200,0)!=0:
 			log.debugWarning("Timeout or error while waiting for UIAHandler MTA thread")
@@ -275,20 +318,129 @@ class UIAHandler(COMObject):
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
-			self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self)
-			# Use a list of keys as AddPropertyChangedEventHandler expects a sequence.
-			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,list(UIAPropertyIdsToNVDAEventNames))
-			for x in UIAEventIdsToNVDAEventNames.keys():
-				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
-			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
-			if isinstance(self.clientObject, IUIAutomation5):
-				self.clientObject.AddNotificationEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
+			if config.conf['UIA']['selectiveEventRegistration']:
+				self._createLocalEventHandlerGroup()
+			self._registerGlobalEventHandlers()
 		except Exception as e:
 			self.MTAThreadInitException=e
 		finally:
 			self.MTAThreadInitEvent.set()
-		self.MTAThreadStopEvent.wait()
+		while True:
+			func = self.MTAThreadQueue.get()
+			if func:
+				try:
+					func()
+				except Exception:
+					log.error("Exception in function queued to UIA MTA thread", exc_info=True)
+			else:
+				break
 		self.clientObject.RemoveAllEventHandlers()
+
+	def _registerGlobalEventHandlers(self):
+		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest, self)
+		if isinstance(self.clientObject, UIA.IUIAutomation6):
+			self.globalEventHandlerGroup = self.clientObject.CreateEventHandlerGroup()
+		else:
+			self.globalEventHandlerGroup = UIAUtils.FakeEventHandlerGroup(self.clientObject)
+		self.globalEventHandlerGroup.AddPropertyChangedEventHandler(
+			UIA.TreeScope_Subtree,
+			self.baseCacheRequest,
+			self,
+			*self.clientObject.IntSafeArrayToNativeArray(
+				globalEventHandlerGroupUIAPropertyIds
+				if config.conf['UIA']['selectiveEventRegistration']
+				else UIAPropertyIdsToNVDAEventNames
+			)
+		)
+		for eventId in (
+			globalEventHandlerGroupUIAEventIds
+			if config.conf['UIA']['selectiveEventRegistration']
+			else UIAEventIdsToNVDAEventNames
+		):
+			self.globalEventHandlerGroup.AddAutomationEventHandler(
+				eventId,
+				UIA.TreeScope_Subtree,
+				self.baseCacheRequest,
+				self
+			)
+		# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
+		if isinstance(self.clientObject, UIA.IUIAutomation5):
+			self.globalEventHandlerGroup.AddNotificationEventHandler(
+				UIA.TreeScope_Subtree,
+				self.baseCacheRequest,
+				self
+			)
+		self.addEventHandlerGroup(self.rootElement, self.globalEventHandlerGroup)
+
+	def _createLocalEventHandlerGroup(self):
+		if isinstance(self.clientObject, UIA.IUIAutomation6):
+			self.localEventHandlerGroup = self.clientObject.CreateEventHandlerGroup()
+		else:
+			self.localEventHandlerGroup = UIAUtils.FakeEventHandlerGroup(self.clientObject)
+		self.localEventHandlerGroup.AddPropertyChangedEventHandler(
+			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
+			self.baseCacheRequest,
+			self,
+			*self.clientObject.IntSafeArrayToNativeArray(localEventHandlerGroupUIAPropertyIds)
+		)
+		for eventId in localEventHandlerGroupUIAEventIds:
+			self.localEventHandlerGroup.AddAutomationEventHandler(
+				eventId,
+				UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
+				self.baseCacheRequest,
+				self
+			)
+
+	def addEventHandlerGroup(self, element, eventHandlerGroup):
+		if isinstance(eventHandlerGroup, UIA.IUIAutomationEventHandlerGroup):
+			self.clientObject.AddEventHandlerGroup(element, eventHandlerGroup)
+		elif isinstance(eventHandlerGroup, UIAUtils.FakeEventHandlerGroup):
+			eventHandlerGroup.registerToClientObject(element)
+		else:
+			raise NotImplementedError
+
+	def removeEventHandlerGroup(self, element, eventHandlerGroup):
+		if isinstance(eventHandlerGroup, UIA.IUIAutomationEventHandlerGroup):
+			self.clientObject.RemoveEventHandlerGroup(element, eventHandlerGroup)
+		elif isinstance(eventHandlerGroup, UIAUtils.FakeEventHandlerGroup):
+			eventHandlerGroup.unregisterFromClientObject(element)
+		else:
+			raise NotImplementedError
+
+	def addLocalEventHandlerGroupToElement(self, element, isFocus=False):
+		if not self.localEventHandlerGroup or element in self._localEventHandlerGroupElements:
+			return
+
+		def func():
+			if isFocus:
+				try:
+					isStillFocus = self.clientObject.CompareElements(self.clientObject.GetFocusedElement(), element)
+				except COMError:
+					isStillFocus = False
+				if not isStillFocus:
+					return
+			try:
+				self.addEventHandlerGroup(element, self.localEventHandlerGroup)
+			except COMError:
+				log.error("Could not register for UIA events for element", exc_info=True)
+			else:
+				self._localEventHandlerGroupElements.add(element)
+		self.MTAThreadQueue.put_nowait(func)
+
+	def removeLocalEventHandlerGroupFromElement(self, element):
+		if not self.localEventHandlerGroup or element not in self._localEventHandlerGroupElements:
+			return
+
+		def func():
+			try:
+				self.removeEventHandlerGroup(element, self.localEventHandlerGroup)
+			except COMError:
+				# The old UIAElement has probably died as the window was closed.
+				# The system should forget the old event registration itself.
+				# Yet, as we don't expect this to happen very often, log a debug warning.
+				log.debugWarning("Could not unregister for UIA events for element", exc_info=True)
+			self._localEventHandlerGroupElements.remove(element)
+		self.MTAThreadQueue.put_nowait(func)
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
 		if not self.MTAThreadInitEvent.isSet():
@@ -417,6 +569,14 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
 			return
+		try:
+			processId = sender.CachedProcessID
+		except COMError:
+			pass
+		else:
+			appMod = appModuleHandler.getAppModuleFromProcessID(processId)
+			if not appMod.shouldProcessUIAPropertyChangedEvent(sender, propertyId):
+				return
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 		if not NVDAEventName:
 			if _isDebug():
@@ -530,6 +690,24 @@ class UIAHandler(COMObject):
 		# allow the appModule for the window to also choose if this window is bad
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
+		if windowClass == "NetUIHWND" and appModule:
+			# NetUIHWND is used for various controls in MS Office.
+			# IAccessible should be used for NetUIHWND in versions older than 2016
+			# Fixes: lack of focus reporting (#4207),
+			# Fixes: strange reporting of context menu items(#9252),
+			# fixes: not being able to report ribbon sections when they starts with an edit  field (#7067)
+			# Note that #7067 is not fixed for Office 2016 and never.
+			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported
+			# when the ribbon is collapsed.
+			# Testing shows that these controls emits proper events but they are ignored by NVDA.
+			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
+			isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			if isOfficeApp and isOffice2013OrOlder:
+				parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
+				while parentHwnd:
+					if winUser.getClassName(parentHwnd) in ("Net UI Tool Window", "MsoCommandBar",):
+						return False
+					parentHwnd = winUser.getAncestor(parentHwnd, winUser.GA_PARENT)
 		# Ask the window if it supports UIA natively
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
@@ -538,13 +716,28 @@ class UIAHandler(COMObject):
 			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
 			# And even current builds of Office 2016 are still missing enough info from UIA that it is still impossible to switch to UIA completely.
 			# Therefore, if we can inject in-process, refuse to use UIA and instead fall back to the MS Word object model.
+			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 			if (
 				# An MS Word document window 
 				windowClass=="_WwG" 
 				# Disabling is only useful if we can inject in-process (and use our older code)
-				and appModule.helperLocalBindingHandle 
+				and canUseOlderInProcessApproach
 				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
+				return False
+			# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
+			# As their IA2 implementation is still better at the moment.
+			elif (
+				windowClass == "Chrome_RenderWidgetHostHWND"
+				and (
+					AllowUiaInChromium.getConfig() == AllowUiaInChromium.NO
+					# Disabling is only useful if we can inject in-process (and use our older code)
+					or (
+						canUseOlderInProcessApproach
+						and AllowUiaInChromium.getConfig() != AllowUiaInChromium.YES  # Users can prefer to use UIA
+					)
+				)
 			):
 				return False
 		return bool(res)

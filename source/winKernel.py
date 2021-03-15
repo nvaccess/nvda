@@ -48,6 +48,9 @@ WAIT_TIMEOUT = 0x00000102
 WAIT_FAILED = 0xffffffff
 # Image file machine constants
 IMAGE_FILE_MACHINE_UNKNOWN = 0
+# LoadLibraryEx constants
+LOAD_WITH_ALTERED_SEARCH_PATH = 0x8
+
 
 def GetStdHandle(handleID):
 	h=kernel32.GetStdHandle(handleID)
@@ -157,18 +160,6 @@ class SYSTEMTIME(ctypes.Structure):
 		("wMilliseconds", WORD)
 	)
 
-def GetDateFormat(Locale,dwFlags,date,lpFormat):
-	"""@Deprecated: use GetDateFormatEx instead."""
-	if date is not None:
-		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
-		lpDate=byref(date)
-	else:
-		lpDate=None
-	bufferLength=kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, None, 0)
-	buf=ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength)
-	return buf.value
-
 def GetDateFormatEx(Locale,dwFlags,date,lpFormat):
 	if date is not None:
 		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
@@ -178,18 +169,6 @@ def GetDateFormatEx(Locale,dwFlags,date,lpFormat):
 	bufferLength=kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, None, 0, None)
 	buf=ctypes.create_unicode_buffer("", bufferLength)
 	kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength, None)
-	return buf.value
-
-def GetTimeFormat(Locale,dwFlags,date,lpFormat):
-	"""@Deprecated: use GetTimeFormatEx instead."""
-	if date is not None:
-		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
-		lpTime=byref(date)
-	else:
-		lpTime=None
-	bufferLength=kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, None, 0)
-	buf=ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)
 	return buf.value
 
 def GetTimeFormatEx(Locale,dwFlags,date,lpFormat):
