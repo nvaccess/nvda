@@ -26,7 +26,7 @@ def verifyExistingVenvPath():
 	Verifies that the Python virtual environment at c{VENV_PATH} was actually created at that location,
 	and not just copied or moved there.
 	"""
-	# Activate the Python virtual environement and capture the content of the VIRTUAL_ENV environment variable.
+	# Activate the Python virtual environment and capture the content of the VIRTUAL_ENV environment variable.
 	existingPath = subprocess.check_output(
 		[
 			os.path.join(venv_path, "scripts", "activate.bat"),
@@ -34,7 +34,7 @@ def verifyExistingVenvPath():
 			"call", "echo", "%VIRTUAL_ENV%",
 		],
 		shell=True,
-	).decode('utf8').rstrip()
+	).decode('oem').rstrip()
 	existingPath = os.path.normpath(existingPath)
 	expectedPath = os.path.normpath(venv_path)
 	if existingPath != expectedPath:
@@ -126,7 +126,7 @@ def ensureVenvAndRequirements():
 		return createVenvAndPopulate()
 	if not verifyExistingVenvPath():
 		if askYesNoQuestion(
-			"A Python virtual environement cannot be activated from a different location "
+			"A Python virtual environment cannot be activated from a different location "
 			"to where it was originally created.\n"
 			"Should the virtual environment be recreated with the updated location?"
 		):
