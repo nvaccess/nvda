@@ -17,8 +17,8 @@ import re
 import glob
 from SCons.Tool.MSCommon.vc import find_vc_pdir
 import typing
-from include.scons.SCons.Environment import Environment
-from include.scons.SCons.Environment import Base
+from SCons.Environment import Environment
+from SCons.Environment import Base
 
 Import([
 	"thirdPartyEnv",
