@@ -68,9 +68,7 @@ class NVDASpyLib:
 
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
-		# Queue the setting of the completion variable,
-		# To ensure that NvDA's core loop has started running, and it has processed initial focus.
-		queueHandler.queueFunction(queueHandler.eventQueue, lambda: setattr(self, '_isNvdaStartupComplete', True))
+		self._isNvdaStartupComplete = True
 
 	def _onNvdaSpeech(self, speechSequence=None):
 		if not speechSequence:
