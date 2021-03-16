@@ -38,6 +38,11 @@ What's New in NVDA
  - To perform system tests: execute ``runsystemtests.bat [<extra robot options>] ``
  - To perform linting, execute ``runlint.bat <base branch>``
  - Please refer to readme.md for more details.
+- The following Python dependencies have also been upgraded:
+ - comtypes updated to 1.1.8.
+ - pySerial updated to 3.5.
+ - wxPython updated to 4.1.1.
+ - Py2exe updated to 0.10.1.0.
 - `LiveText._getTextLines` has been removed. (#11639)
   - Instead, override `_getText` which returns a string of all text in the object.
 - `LiveText` objects can now calculate diffs by character. (#11639)
@@ -62,6 +67,8 @@ What's New in NVDA
 - `winKernel.GetDateFormat` has been removed - use `winKernel.GetDateFormatEx` instead (#12139)
 - `gui.DriverSettingsMixin` has been removed - use `gui.AutoSettingsMixin` (#12144)
 - `speech.getSpeechForSpelling` has been removed - use `speech.getSpellingSpeech` (#12145)
+- Commands cannot be directly imported from speech as `import speech; speech.ExampleCommand()` or `import speech.manager; speech.manager.ExampleCommand()` - use  `from speech.commands import ExampleCommand` instead (#12126)
+- `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `sayAllhandler` does this manually now. (#12150)
 
 
 = 2020.4 =

@@ -561,7 +561,10 @@ def main():
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
-	postNvdaStartup.notify()
+	# Queue the firing of the postNVDAStartup notification.
+	# This is queued so that it will run from within the core loop,
+	# and initial focus has been reported.
+	queueHandler.queueFunction(queueHandler.eventQueue, postNvdaStartup.notify)
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
