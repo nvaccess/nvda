@@ -34,25 +34,7 @@ from .commands import (
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
-from .commands import (  # noqa: F401
-	# F401 imported but unused:
-	# The following are imported here because other files that speech.py
-	# previously relied on "import * from .commands"
-	# New commands added to commands.py should be directly imported only where needed.
-	# Usage of these imports is deprecated and will be removed in 2021.1
-	SynthCommand,
-	IndexCommand,
-	SynthParamCommand,
-	BreakCommand,
-	BaseProsodyCommand,
-	VolumeCommand,
-	RateCommand,
-	PhonemeCommand,
-	BaseCallbackCommand,
-	CallbackCommand,
-	WaveFileCommand,
-	ConfigProfileTriggerCommand,
-)
+
 from . import types
 from .types import (
 	SpeechSequence,
@@ -1064,14 +1046,6 @@ def speakTextInfo(
 		onlyInitialFields,
 		suppressBlanks
 	)
-
-	if reason == OutputReason.SAYALL:
-		log.error(
-			"Deprecation warning: In 2021.1 speakTextInfo will no longer  send speech through "
-			"speakWithoutPauses if reason is sayAll, as sayAllhandler does this manually now."
-		)
-		flatSpeechGen = list(_flattenNestedSequences(speechGen))
-		return _speakWithoutPauses.speakWithoutPauses(flatSpeechGen)
 
 	speechGen = GeneratorWithReturn(speechGen)
 	for seq in speechGen:
