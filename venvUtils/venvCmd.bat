@@ -23,5 +23,4 @@ if ERRORLEVEL 1 goto :EOF
 echo call %*
 call %*
 echo Deactivating NVDA Python virtual environment
-call "%~dp0\..\.venv\scripts\deactivate.bat"
 endlocal
