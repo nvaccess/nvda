@@ -68,7 +68,8 @@ class NVDASpyLib:
 
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
-		self._isNvdaStartupComplete = True
+		queueHandler.queueFunction(queueHandler.eventQueue, lambda: setattr(self, '_isNvdaStartupComplete', True))
+		#self._isNvdaStartupComplete = True
 
 	def _onNvdaSpeech(self, speechSequence=None):
 		if not speechSequence:
