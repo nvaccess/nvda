@@ -23,6 +23,18 @@ import nvwave
 from logHandler import log
 import weakref
 
+from speech.commands import (
+	IndexCommand,
+	CharacterModeCommand,
+	LangChangeCommand,
+	BreakCommand,
+	PitchCommand,
+	RateCommand,
+	VolumeCommand,
+	PhonemeCommand,
+	SpeechCommand,
+)
+
 # SPAudioState enumeration
 SPAS_CLOSED=0
 SPAS_STOP=1
@@ -124,14 +136,14 @@ class SapiSink(object):
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
 	supportedCommands = {
-		speech.IndexCommand,
-		speech.CharacterModeCommand,
-		speech.LangChangeCommand,
-		speech.BreakCommand,
-		speech.PitchCommand,
-		speech.RateCommand,
-		speech.VolumeCommand,
-		speech.PhonemeCommand,
+		IndexCommand,
+		CharacterModeCommand,
+		LangChangeCommand,
+		BreakCommand,
+		PitchCommand,
+		RateCommand,
+		VolumeCommand,
+		PhonemeCommand,
 	}
 	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
 
@@ -312,9 +324,9 @@ class SynthDriver(SynthDriver):
 			if isinstance(item, str):
 				outputTags()
 				textList.append(item.replace("<", "&lt;"))
-			elif isinstance(item, speech.IndexCommand):
+			elif isinstance(item, IndexCommand):
 				textList.append('<Bookmark Mark="%d" />' % item.index)
-			elif isinstance(item, speech.CharacterModeCommand):
+			elif isinstance(item, CharacterModeCommand):
 				if item.state:
 					tags["spell"] = {}
 				else:
@@ -323,12 +335,12 @@ class SynthDriver(SynthDriver):
 					except KeyError:
 						pass
 				tagsChanged[0] = True
-			elif isinstance(item, speech.BreakCommand):
+			elif isinstance(item, BreakCommand):
 				textList.append('<silence msec="%d" />' % item.time)
-			elif isinstance(item, speech.PitchCommand):
+			elif isinstance(item, PitchCommand):
 				tags["pitch"] = {"absmiddle": self._percentToPitch(int(pitch * item.multiplier))}
 				tagsChanged[0] = True
-			elif isinstance(item, speech.VolumeCommand):
+			elif isinstance(item, VolumeCommand):
 				if item.multiplier == 1:
 					try:
 						del tags["volume"]
@@ -337,7 +349,7 @@ class SynthDriver(SynthDriver):
 				else:
 					tags["volume"] = {"level": int(volume * item.multiplier)}
 				tagsChanged[0] = True
-			elif isinstance(item, speech.RateCommand):
+			elif isinstance(item, RateCommand):
 				if item.multiplier == 1:
 					try:
 						del tags["rate"]
@@ -346,7 +358,7 @@ class SynthDriver(SynthDriver):
 				else:
 					tags["rate"] = {"absspeed": self._percentToRate(int(rate * item.multiplier))}
 				tagsChanged[0] = True
-			elif isinstance(item, speech.PhonemeCommand):
+			elif isinstance(item, PhonemeCommand):
 				try:
 					textList.append(u'<pron sym="%s">%s</pron>'
 						% (self._convertPhoneme(item.ipa), item.text or u""))
@@ -354,7 +366,7 @@ class SynthDriver(SynthDriver):
 					log.debugWarning("Couldn't convert character in IPA string: %s" % item.ipa)
 					if item.text:
 						textList.append(item.text)
-			elif isinstance(item, speech.SpeechCommand):
+			elif isinstance(item, SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s" % item)
 			else:
 				log.error("Unknown speech: %s" % item)
