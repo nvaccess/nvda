@@ -207,6 +207,21 @@ def _setInitialFocus():
 	except:
 		log.exception("Error retrieving initial focus")
 
+def getWxLang(lang):
+	import wx
+	locale = wx.Locale()
+	wxLang = locale.FindLanguageInfo(lang)
+	if not wxLang and '_' in lang:
+		wxLang = locale.FindLanguageInfo(lang.split('_')[0])
+	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
+	# If we try to initialize this language, wx will show a warning dialog.
+	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
+	# In this case, wxLang is already set to None.
+	# Therefore treat these situations like wx not knowing the language at all.
+	if wxLang and not locale.IsAvailable(wxLang.Language):
+		wxLang = None
+	return wxLang
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -419,18 +434,9 @@ def main():
 	# initialize wxpython localization support
 	locale = wx.Locale()
 	lang=languageHandler.getLanguage()
-	wxLang=locale.FindLanguageInfo(lang)
-	if not wxLang and '_' in lang:
-		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
+	wxLang = getWxLang(lang)
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
-	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
-	# If we try to initialize this language, wx will show a warning dialog.
-	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
-	# In this case, wxLang is already set to None.
-	# Therefore treat these situations like wx not knowing the language at all.
-	if wxLang and not locale.IsAvailable(wxLang.Language):
-		wxLang=None
 	if wxLang:
 		try:
 			locale.Init(wxLang.Language)
