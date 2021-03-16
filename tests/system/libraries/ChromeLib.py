@@ -111,7 +111,7 @@ class ChromeLib:
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
 			builtIn.fail(
-				"Unable to  locate 'before sample' marker."
+				"Unable to locate 'before sample' marker."
 				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
 				" See NVDA log for full speech."
 			)
