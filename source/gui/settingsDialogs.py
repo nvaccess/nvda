@@ -2206,7 +2206,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		spellingErrorText = _("Spelling e&rrors")
-		self.spellingErrorsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox,label=spellingErrorText))
+		self.spellingErrorsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=spellingErrorText))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
 
 		# Translators: This is the label for a group of document formatting options in the 
@@ -2561,7 +2561,7 @@ class AdvancedPanelControls(
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
 		label = _("Use UI Automation to access Microsoft &Word document controls when available")
-		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
+		self.UIAInMSWordCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
 		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
 		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
@@ -3120,8 +3120,8 @@ class BrailleSettingsPanel(SettingsPanel):
 		displayGroup = guiHelper.BoxSizerHelper(self, sizer=displaySizer)
 		settingsSizerHelper.addItem(displayGroup)
 		self.displayNameCtrl = ExpandoTextCtrl(
-			displayBox, 
-			size=(self.scaleSize(250), -1), 
+			displayBox,
+			size=(self.scaleSize(250), -1),
 			style=wx.TE_READONLY
 		)
 		self.bindHelpEvent("BrailleSettingsChange", self.displayNameCtrl)
@@ -4108,7 +4108,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSymbolText = _("Change selected symbol")
 		changeSymbolSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=changeSymbolText)
-		changeSymbolBox = changeSymbolSizer.GetStaticBox()
 		changeSymbolGroup = guiHelper.BoxSizerHelper(self, sizer=changeSymbolSizer)
 		changeSymbolHelper = sHelper.addItem(changeSymbolGroup)
 

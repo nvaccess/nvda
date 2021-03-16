@@ -48,8 +48,10 @@ class ProfilesDialog(
 
 		#contains the profile list and activation button in vertical arrangement.
 		changeProfilesSizer = wx.BoxSizer(wx.VERTICAL)
-		item = self.profileList = wx.ListBox(profilesListBox,
-			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames])
+		item = self.profileList = wx.ListBox(
+			profilesListBox,
+			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames]
+		)
 		self.bindHelpEvent("ProfilesBasicManagement", self.profileList)
 		item.Bind(wx.EVT_LISTBOX, self.onProfileListChoice)
 		item.Selection = self.profileNames.index(config.conf.profiles[-1].name)
