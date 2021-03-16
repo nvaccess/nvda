@@ -608,7 +608,7 @@ class InputGesturesDialog(SettingsDialog):
 		bHelper.sizer.AddStretchSpacer()
 		# Translators: The label of a button to reset all gestures in the Input Gestures dialog.
 		resetButton = wx.Button(self, label=_("Reset to factory &defaults"))
-		bHelper.sizer.Add(resetButton, flag=wx.ALIGN_RIGHT)
+		bHelper.sizer.Add(resetButton)
 		resetButton.Bind(wx.EVT_BUTTON, self.onReset)
 
 		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
