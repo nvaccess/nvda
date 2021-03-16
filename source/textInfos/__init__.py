@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -51,7 +51,7 @@ class ControlField(Field):
 			self,
 			ancestors,
 			formatConfig,
-			reason=controlTypes.REASON_CARET,
+			reason=OutputReason.CARET,
 			extraDetail=False
 	):
 		role = self.get("role", controlTypes.ROLE_UNKNOWN)
@@ -77,7 +77,7 @@ class ControlField(Field):
 
 		name = self.get("name")
 		landmark = self.get("landmark")
-		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
+		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
 			or (role == controlTypes.ROLE_GRAPHIC and not formatConfig["reportGraphics"])
 			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
@@ -503,13 +503,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
 		return convertToCrlf(self.text)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify=False):
 		"""Copy the content of this instance to the clipboard.
 		@return: C{True} if successful, C{False} otherwise.
 		@rtype: bool
+		@param notify: whether to emit a confirmation message
+		@type notify: boolean
 		"""
 		import api
-		return api.copyToClip(self.clipboardText)
+		return api.copyToClip(self.clipboardText, notify)
 
 	def getTextInChunks(self, unit):
 		"""Retrieve the text of this instance in chunks of a given unit.

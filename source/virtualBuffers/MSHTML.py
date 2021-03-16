@@ -1,8 +1,8 @@
-#virtualBuffers/MSHTML.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
+# virtualBuffers/MSHTML.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 from comtypes import COMError
 import eventHandler
@@ -46,11 +46,27 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs['language']=languageHandler.normalizeLanguage(language)
 		return attrs
 
-	def _normalizeControlField(self,attrs):
-		level=None
-		ariaCurrent = attrs.get('HTMLAttrib::aria-current', None)
-		if ariaCurrent not in (None, "false"):
-			attrs['current']=ariaCurrent
+	def _getIsCurrentAttribute(self, attrs: dict) -> controlTypes.IsCurrent:
+		defaultAriaCurrentStringVal = "false"
+		ariaCurrentValue = attrs.get('HTMLAttrib::aria-current', defaultAriaCurrentStringVal)
+		# key 'HTMLAttrib::aria-current' may be in attrs with a value of None
+		ariaCurrentValue = defaultAriaCurrentStringVal if ariaCurrentValue is None else ariaCurrentValue
+		try:
+			ariaCurrent = controlTypes.IsCurrent(ariaCurrentValue)
+		except ValueError:
+			log.debugWarning(f"Unknown aria-current value: {ariaCurrentValue}")
+			ariaCurrent = controlTypes.IsCurrent.NO
+		return ariaCurrent
+
+	# C901 'MSHTMLTextInfo._normalizeControlField' is too complex (42)
+	# Look for opportunities to simplify this function.
+	def _normalizeControlField(self, attrs: dict):  # noqa: C901
+		level = None
+
+		isCurrent = self._getIsCurrentAttribute(attrs)
+		if isCurrent != controlTypes.IsCurrent.NO:
+			attrs['current'] = isCurrent
+
 		placeholder = self._getPlaceholderAttribute(attrs, 'HTMLAttrib::aria-placeholder')
 		if placeholder:
 			attrs['placeholder']=placeholder
@@ -244,14 +260,29 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs=[
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_OUTLINE],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]},
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_CHECKBUTTON,
+						oleacc.ROLE_SYSTEM_OUTLINE,
+						oleacc.ROLE_SYSTEM_PUSHBUTTON,
+						oleacc.ROLE_SYSTEM_PAGETAB,
+						oleacc.ROLE_SYSTEM_RADIOBUTTON,
+					],
+					f"IAccessible::state_{oleacc.STATE_SYSTEM_READONLY}": [None],
+				},
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_COMBOBOX]},
 				# Focusable edit fields (input type=text, including readonly ones)
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]},
+				{
+					"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
+					f"IAccessible::state_{oleacc.STATE_SYSTEM_FOCUSABLE}": [1],
+				},
 				# Any top-most content editable element (E.g. an editable div for rhich text editing) 
-				{"IHTMLElement::isContentEditable":[1],"parent::IHTMLElement::isContentEditable":[0,None]},
-				{"IHTMLDOMNode::nodeName":["SELECT"]},
-				{"HTMLAttrib::role":["listbox"]},
+				{
+					"IHTMLElement::isContentEditable": [1],
+					"parent::IHTMLElement::isContentEditable": [0, None],
+				},
+				{"IHTMLDOMNode::nodeName": ["SELECT"]},
+				{"HTMLAttrib::role": ["listbox"]},
 			]
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}

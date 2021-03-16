@@ -48,8 +48,9 @@ class NVDASpyLib:
 		self._nvdaSpeech_requiresLock = [  # requires thread locking before read/write
 			[""],  # initialise with an empty string, this allows for access via [-1]. This is equiv to no speech.
 		]
-		self._speechOccurred_requiresLock = False  # requires thread locking before read/write
 		self._lastSpeechTime_requiresLock = _timer()
+		#: Lock to protect members written in _onNvdaSpeech.
+		self._speechLock = threading.RLock()
 		self._isNvdaStartupComplete = False
 		self._allSpeechStartIndex = self.get_last_speech_index()
 		self._maxKeywordDuration = 30
@@ -72,21 +73,9 @@ class NVDASpyLib:
 	def _onNvdaSpeech(self, speechSequence=None):
 		if not speechSequence:
 			return
-		with threading.Lock():
-			self._speechOccurred_requiresLock = True
+		with self._speechLock:
 			self._lastSpeechTime_requiresLock = _timer()
 			self._nvdaSpeech_requiresLock.append(speechSequence)
-
-	@staticmethod
-	def _flattenCommandsSeparatingWithNewline(commandArray):
-		"""
-		Flatten many collections of speech sequences into a single speech sequence. Each original speech sequence
-		is separated by a newline string.
-		@param commandArray: is a collection of speechSequences
-		@return: speechSequence
-		"""
-		f = [c for commands in commandArray for newlineJoined in [commands, [u"\n"]] for c in newlineJoined]
-		return f
 
 	@staticmethod
 	def _getJoinedBaseStringsFromCommands(speechCommandArray) -> str:
@@ -94,7 +83,7 @@ class NVDASpyLib:
 		return ''.join(baseStrings).strip()
 
 	def _getSpeechAtIndex(self, speechIndex):
-		with threading.Lock():
+		with self._speechLock:
 			return self._getJoinedBaseStringsFromCommands(self._nvdaSpeech_requiresLock[speechIndex])
 
 	def get_speech_at_index_until_now(self, speechIndex: int) -> str:
@@ -102,15 +91,14 @@ class NVDASpyLib:
 		@param speechIndex:
 		@return: The speech joined together, see L{_getJoinedBaseStringsFromCommands}
 		"""
-		with threading.Lock():
-			speechCommands = self._flattenCommandsSeparatingWithNewline(
-				self._nvdaSpeech_requiresLock[speechIndex:]
-			)
-			joined = self._getJoinedBaseStringsFromCommands(speechCommands)
-			return joined
+		with self._speechLock:
+			speechCommands = [
+				self._getJoinedBaseStringsFromCommands(x) for x in self._nvdaSpeech_requiresLock[speechIndex:]
+			]
+			return "\n".join(x for x in speechCommands if x and not x.isspace())
 
 	def get_last_speech_index(self) -> int:
-		with threading.Lock():
+		with self._speechLock:
 			return len(self._nvdaSpeech_requiresLock) - 1
 
 	def _getIndexOfSpeech(self, speech, searchAfterIndex: Optional[int] = None):
@@ -118,7 +106,7 @@ class NVDASpyLib:
 			firstIndexToCheck = 0
 		else:
 			firstIndexToCheck = 1 + searchAfterIndex
-		with threading.Lock():
+		with self._speechLock:
 			for index, commands in enumerate(self._nvdaSpeech_requiresLock[firstIndexToCheck:]):
 				index = index + firstIndexToCheck
 				baseStrings = [c.strip() for c in commands if isinstance(c, str)]
@@ -126,9 +114,11 @@ class NVDASpyLib:
 					return index
 			return -1
 
-	def _hasSpeechFinished(self):
-		with threading.Lock():
-			return self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
+	def _hasSpeechFinished(self, speechStartedIndex: Optional[int] = None):
+		with self._speechLock:
+			started = speechStartedIndex is None or speechStartedIndex < self.get_next_speech_index()
+			finished = self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
+			return started and finished
 
 	def _devInfoToLog(self):
 		import api
@@ -140,7 +130,7 @@ class NVDASpyLib:
 
 	def dump_speech_to_log(self):
 		log.debug("dump_speech_to_log.")
-		with threading.Lock():
+		with self._speechLock:
 			try:
 				self._devInfoToLog()
 			except Exception:
@@ -214,9 +204,13 @@ class NVDASpyLib:
 			)
 		return speechIndex
 
-	def wait_for_speech_to_finish(self, maxWaitSeconds=5.0):
+	def wait_for_speech_to_finish(
+			self,
+			maxWaitSeconds=5.0,
+			speechStartedIndex: Optional[int] = None
+	):
 		_blockUntilConditionMet(
-			getValue=self._hasSpeechFinished,
+			getValue=lambda: self._hasSpeechFinished(speechStartedIndex=speechStartedIndex),
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			errorMessage="Speech did not finish before timeout"
 		)
@@ -275,7 +269,7 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 			serve=False  # we want to start this serving on another thread so as not to block.
 		)
 		log.debug("Server address: {}".format(server.server_address))
-		server_thread = threading.Thread(target=server.serve)
+		server_thread = threading.Thread(target=server.serve, name="RF Test Spy Thread")
 		server_thread.start()
 
 	def terminate(self):

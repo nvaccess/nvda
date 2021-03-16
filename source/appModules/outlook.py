@@ -11,6 +11,7 @@ import comtypes.automation
 import ctypes
 from hwPortUtils import SYSTEMTIME
 import scriptHandler
+from scriptHandler import script
 import winKernel
 import comHelper
 import NVDAHelper
@@ -29,6 +30,7 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
+from NVDAObjects.window.winword import WordDocument as BaseWordDocument
 from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
@@ -363,9 +365,31 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
-				startLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
-				endLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
-				query=u'[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
+				startDate = winKernel.GetDateFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.DATE_LONGDATE,
+					selectedStartTime,
+					None
+				)
+				startTime = winKernel.GetTimeFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.TIME_NOSECONDS,
+					selectedStartTime,
+					None
+				)
+				endDate = winKernel.GetDateFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.DATE_LONGDATE,
+					selectedEndTime,
+					None
+				)
+				endTime = winKernel.GetTimeFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.TIME_NOSECONDS,
+					selectedEndTime,
+					None
+				)
+				query = f'[Start] < "{endDate} {endTime}" And [End] > "{startDate} {startTime}"'
 				i=e.currentFolder.items
 				i.sort('[Start]')
 				i.IncludeRecurrences =True
@@ -544,7 +568,7 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 			info.expand(textInfos.UNIT_CELL)
 			isCollapsed=False
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 
 	__gestures={
@@ -552,7 +576,20 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 		"kb:shift+tab":"tab",
 	}
 
-class OutlookWordDocument(WordDocument):
+
+class BaseOutlookWordDocument(BaseWordDocument):
+
+	@script(gestures=["kb:tab", "kb:shift+tab"])
+	def script_tab(self, gesture):
+		bookmark = self.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
+		gesture.send()
+		info, caretMoved = self._hasCaretMoved(bookmark)
+		if not caretMoved:
+			return
+		self.reportTab()
+
+
+class OutlookWordDocument(WordDocument, BaseOutlookWordDocument):
 
 	def _get_isReadonlyViewer(self):
 		# #2975: The only way we know an email is read-only is if the underlying email has been sent.
@@ -575,7 +612,8 @@ class OutlookWordDocument(WordDocument):
 	ignoreEditorRevisions=True
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
 
-class OutlookUIAWordDocument(UIAWordDocument):
+
+class OutlookUIAWordDocument(UIAWordDocument, BaseOutlookWordDocument):
 	""" Forces browse mode to be used on the UI Automation Outlook message viewer if the message is being read)."""
 
 	def _get_isReadonlyViewer(self):

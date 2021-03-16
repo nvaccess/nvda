@@ -1,9 +1,7 @@
-# -*- coding: UTF-8 -*-
-#NVDAObjects/IAccessible/sysListView32.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import time
 from ctypes import *
@@ -359,6 +357,21 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
 
 	def _getColumnContentRaw(self, index):
+		item = self.IAccessibleChildID - 1
+		subItem = index
+		text = AutoFreeBSTR()
+		if watchdog.cancellableExecute(
+			NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getColumnContent,
+			self.appModule.helperLocalBindingHandle,
+			self.windowHandle,
+			item,
+			subItem,
+			ctypes.byref(text)
+		) != 0:
+			return None
+		return text.value
+
+	def _getColumnContentRawOutProc(self, index):
 		buffer=None
 		processHandle=self.processHandle
 		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -379,7 +392,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return buffer.value if buffer else None
 
 	def _getColumnContent(self, column):
-		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
+		index = self.parent._columnOrderArray[column - 1]
+		if not self.appModule.helperLocalBindingHandle:
+			return self._getColumnContentRawOutProc(index)
+		return self._getColumnContentRaw(index)
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle

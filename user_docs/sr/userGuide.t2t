@@ -307,7 +307,7 @@ Na primer, ako pišete u polju za unos teksta, polje za unos teksta ima fokus.
 
 Najčešći način navigacije kroz Windows sa programom NVDA je pomeranje sistemskog fokusa standardnim komandama sa tastature, kao što je pritiskanje tastera tab ili šift+tab da se krećete napred i nazad kroz kontrole, pritiskanje tastera alt da uđete u traku menija a zatim korišćenje strelica za kretanje kroz meni, i korišćenje kombinacije alt+tab da se krećete kroz otvorene programe.
 Dok to radite, NVDA će prijavljivati informacije o objektima, kao što su njegovo ime, tip, vrednost, stanje, opis, tasterska prečica i informacije o poziciji.
-Kada je [označavanje fokusa #VisionFocusHighlight] omogućeno, lokacija sistemskog fokusa je takođe vizuelno označena.
+Kada je [Vizuelno označavanje  #VisionFocusHighlight] omogućeno, lokacija sistemskog fokusa je takođe vizuelno označena.
 
 Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim fokusom:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Slično, alatna traka sadrži kontrole, pa morate ući u alatnu traku da pristup
 
 Objekat koji se trenutno pregleda se zove navigacioni objekat.
 Kada stignete do nekog objekta, možete pregledati njegov sadržaj koristeći[komande za pregled teksta#ReviewingText] dok ste u[režimu pregleda objekata#ObjectReview].
-Kada je [označavanje fokusa #VisionFocusHighlight] omogućeno, lokacija trenutnog navigacionog objekta je takođe vizuelno označena.
+Kada je [Vizuelno označavanje  #VisionFocusHighlight] omogućeno, lokacija trenutnog navigacionog objekta je takođe vizuelno označena.
 Po podrazumevanim podešavanjima, navigacioni objekat se pomera zajedno sa sistemskim fokusom, ali ovo se može promeniti.
 
 Napomena: Praćenje objektne navigacije brajevim redom može se podesiti korišćenjem [vezivanja brajevog reda #BrailleTether].
@@ -506,7 +506,7 @@ Režim pretraživanja je takođe dostupan u Microsoft Word dokumentima.
 
 U režimu pretraživanja, tekst je predstavljen jednostavnije tako da možete da se krećete standardnim komandama kursora kao da koristite standardan tekstualni dokument.
 Sve komande programa NVDA[za sistemski kursor #SystemCaret] će raditi u ovom režimu; na primer izgovori sve, prijavi formatiranje, komande za kretanje kroz tabelu, i tako dalje.
-Kada je [označavanje fokusa #VisionFocusHighlight] omogućeno, lokacija virtuelnog kursora režima pretraživnja je takođe vizuelno označena.
+Kada je [Vizuelno označavanje  #VisionFocusHighlight] omogućeno, lokacija virtuelnog kursora režima pretraživnja je takođe vizuelno označena.
 Informacije o tome da li je tekst link, naslov, i tako dalje. Se prijavljuju zajedno sa tekstom u toku kretanja.
 
 Ponekad, moraćete da koristite određene komande direktno u dokumentu.
@@ -776,8 +776,8 @@ Dodatne usluge se mogu uključiti u [NVDA dodacima #AddonsManager].
 
 NVDA podešavanja vida se mogu promeniti u [kategoriji vid #VisionSettings]  dijaloga [NVDA podešavanja#NVDASettings].
 
-++ Označavanje fokusa ++[VisionFocusHighlight]
-Označavanje fokusa može pomoći da pronađete pozicije [sistemskog fokusa #SystemFocus], [navigacionog objekta #ObjectNavigation] i [režima pretraživanja #BrowseMode].
+++ Vizuelno označavanje  ++[VisionFocusHighlight]
+Vizuelno označavanje može pomoći da pronađete pozicije [sistemskog fokusa #SystemFocus], [navigacionog objekta #ObjectNavigation] i [režima pretraživanja #BrowseMode].
 Ove pozicije su označene obojenim pravougaonikom.
 - Čista plava boja označava kombinovano lokaciju sistemskog fokusa i navigacionog objekta (na primer zato što [navigacioni objekat prati sistemski fokus #ReviewCursorFollowFocus]).
 - Tamno plava boja označava objekat sistemskog fokusa.
@@ -785,7 +785,7 @@ Ove pozicije su označene obojenim pravougaonikom.
 - Žuta boja označava poziciju virtuelnog kursora u režimu pretraživanja (gde nema fizičkog kursora na primer u Web pretraživačima).
 -
 
-Kada je označavanje fokusa omogućeno u [kategoriji vid #VisionSettings] dijaloga [NVDA podešavanja #NVDASettings], možete podesiti [da li treba označiti fokus, navigacioni objekat ili kursor režima pretraživanja #VisionSettingsFocusHighlight].
+Kada je Vizuelno označavanje omogućeno u [kategoriji vid #VisionSettings] dijaloga [NVDA podešavanja #NVDASettings], možete podesiti [da li treba označiti fokus, navigacioni objekat ili kursor režima pretraživanja #VisionSettingsFocusHighlight].
 
 ++ Zatamnjivanje ekrana ++[VisionScreenCurtain]
 Kao slep ili slabovid korisnik, često nije moguće ili potrebno da vidite sadržaj ekrana.
@@ -1147,6 +1147,9 @@ Ako koristite neki drugi sintetizator, možda ćete takođe moći da promenite o
 Ova opcija vam dozvoljava da promenite brzinu glasa.
 Ovo je klizač koji ide od 0 do 100 - 0 naj sporije, a 100 je naj brže.
 
+==== Povećanje brzine ====[SpeechSettingsRateBoost]
+Kada je ova opcija omogućena značajno će povećati brzinu glasa, ako je podržana od strane trenutnog sintetizatora.
+
 ==== Visina ====[SpeechSettingsPitch]
 Ova opcija vam dozvoljava da promenite visinu trenutnog glasa.
 To je klizač koji ide od 0 do 100 - 0 naj niža visina a 100 je naj viša.
@@ -1298,13 +1301,13 @@ Ova opcija ne utiče na pokazivač izbora, uvek izbor pokazuju tačke 7 i 8 bez 
 Ova opcija vam dozvoljava da izaberete oblik(raspored tačaka) brajevog kursora kada brajev red prati pregled.
 Ova opcija ne utiče na pokazivač izbora, uvek izbor pokazuju tačke 7 i 8 bez treperenja.
 
+==== Prikaži poruke ====[BrailleSettingsShowMessages]
+Ovo je izborni okvir koji vam omogućava da odredite da li će NVDA prikazivati brajeve poruke i kada će one nestati.
+
 ==== Vreme isteka poruke (u sekundama) ====[BrailleSettingsMessageTimeout]
 Ova opcija je brojčano polje koje bira koliko dugo se poruke zadržavaju na brajevom redu.
-Upisivanje broja 0 isključuje ovakve poruke.
 NVDA poruka se odbacuje kada se pritisne dugme na brajevom redu koje prebacuje kursor, ali se ponovo pojavljuje kada se pritisne odgovarajući taster koji prikazuje poruku ponovo.
-
-==== Beskonačno prikaži poruke====[BrailleSettingsNoMessageTimeout]
-Ova opcija dozvoljava da NVDA poruke budu beskonačno prikazane na brajevom redu.
+Ova opcija se prikazuje samo ako je opcija "Prikaži poruke" podešena na "Koristi  vreme isteka".
 
 %kc:setting
 ==== Veži brajev red za ====[BrailleTether]
@@ -1397,10 +1400,10 @@ Kategorija vid u NVDA podešavanjima vam dozvoljava da omogućite, onemogućite 
 Napomena da se dostupne opcije u ovom dijalogu mogu proširiti [NVDA dodacima #AddonsManager].
 Podrazumevano, ova kategorija podešavanja sadrži sledeće opcije:
 
-==== Označavanje fokusa ====[VisionSettingsFocusHighlight]
-Izborna polja označavanja fokusa kontrolišu ponašanje ugrađene funkcije [označavanje fokusa #VisionFocusHighlight].
+==== Vizuelno označavanje ====[VisionSettingsFocusHighlight]
+Izborna polja vizuelnog označavanja kontrolišu ponašanje ugrađene funkcije [vizuelno označavanje #VisionFocusHighlight].
 
-- Omogući označavanje: Uključuje i isključuje označavanje fokusa.
+- Omogući označavanje: Uključuje i isključuje vizuelno označavanje.
 - Označi sistemski fokus: Bira da li će [sistemski fokus #SystemFocus] biti označen.
 - Označi navigacioni objekat: Bira da li će [navigacioni objekat #ObjectNavigation] biti označen.
 - Označi kursor režima pretraživanja: Bira da li će [virtuelni kursor režima pretraživanja #BrowseMode] biti označen.
@@ -1575,6 +1578,7 @@ Puno prozora i kontrola prikazuju male poruke(ili opise alata) Kada pomerite mi�
 Ova opcija, kada je označena, govori programu NVDA da prijavljuje balone za pomoć i obaveštenja kada se pojave.
 - Baloni za pomoć su kao opisi alata, ali su obično veći, i obaveštavaju o sistemskim događajima kao što su isključivanje mrežnog kabla, ili da vas upozore o Windows sigurnosnim problemima.
 - Obaveštenja se pojavljuju od Windowsa 10 i nalaze se u centru za obaveštenja na sistemskoj traci, informišu nas o određenim događajima (na primer da je ažuriranje preuzeto, novi mail je stigao u naše sanduče, i slično).
+-
 
 ==== Prijavi prečice sa tastature za objekte ====[ObjectPresentationShortcutKeys]
 Kada je ovo izborno polje označeno, NVDA će uključiti prečicu koju neka kontrola poseduje kada čita tu kontrolu.
@@ -1922,6 +1926,9 @@ Možete ukloniti znak koji ste prethodno dodali koristeći dugme ukloni.
 
 Kada završite, pritisnite dugme u redu da sačuvate vaše promene ili otkaži da ih odbacite.
 
+U slučaju kompleksnih simbola, polje za zamenu će možda morati  da sadrži određene grupne reference ka tekstu. Na primer, za unos koji se odnosi na ceo datum, \1, \2, i \3 će morati da se pojave u polju, kako bi se zamenili odgovarajućim delovima datuma.
+Zato će standardne obrnute kose crte u polju zamene morati da se dupliraju, na primer  "a\\b" treba da se unese kako bi dobili "a\b" zamenu.
+
 +++ Ulazne komande +++[InputGestures]
 U ovom dijalogu, možete prilagoditi ulazne komande(tastere na tastaturi, tastere na brajevom реду, итд.) За НВДА команде.
 
@@ -2103,6 +2110,14 @@ Preglednik brajevog reda sadrži opciju "Prikaži preglednik brajevog reda pri p
 Ako je označena, preglednik brajevog reda će se otvoriti kada se NVDA pokrene.
 Prozor preglednika brajevog reda će uvek pokušati da se otvori na istoj lokaciji i sa istim dimenzijama kao kada je poslednji put bio zatvoren.
 
+Prozor brajevog preglednika sadrži izborno polje "prevlačenje za prebacivanje na brajevu ćeliju", po podrazumevanim podešavanjima nije označeno.
+Ako je označeno, pomeranje miša po brajevim ćelijama će aktivirati komandu "prebaci na brajevu ćeliju " za tu ćeliju.
+Ovo se često koristi za pomeranje kursora ili aktiviranje radnje vezane za kontrolu.
+Ovo može biti korisno kako bi se testiralo da NVDA ispravno mapira brajeve ćelije.
+Kako bi se sprečilo slučajno prebacivanje na  ćelije, komanda ima malo kašnjenje.
+Miš se mora prevlačiti dok ne promeni boju u zelenu.
+Ćelija će početi kao svetlo žuta, prebaciti se u narandžastu, a zatim postati zelena.
+
 ++ Python konzola ++[PythonConsole]
 NVDA python konzola, koja se nalazi u alatima u NVDA meniju, je alat za programere koji je koristan za otklanjanje grešaka, opšti pristup programu NVDA ili pristup elementima pristupačnosti neke aplikacije.
 Za više informacija, pročitajte uputstvo za programere dostupno u[delu za programere NVDA Web stranice https://community.nvda-project.org/wiki/Development].
@@ -2238,7 +2253,17 @@ Windows 10 uključuje nove glasove poznati i kao "OneCore" ili  "Mobilni" glasov
 Glasovi su ponuđeni za puno jezika, i oni su brži od Microsoft glasova dostupni korišćenjem opcije Microsoft Speech API verzija  5.
 Na Windowsu 10, NVDA koristi Windows OneCore glasove po podrazumevanim podešavanjima ([eSpeak NG #eSpeakNG] se koristi na drugim verzijama).
 
-Molimo pročitajte ovaj Microsoft članak za listu dostupnih glasova i uputstva za instalaciju: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+Da biste dodali nove Windows OneCore glasove, posetite "podešavanja govora", u Windows podešavanjima sistema. 
+Koristite opciju "Dodaj glasove" i pretražite željene jezike.
+Puno jezika uključuje više varijanti.
+"Velika britanija" i "Australija" su dve varijante Engleskog.
+"Francuska", "Kanada" i "Švajcarska" su dostupne varijante Francuskog.
+Pretražite konkretan jezik (kao što su Engleski ili Francuski), a zatim pronađite varijantu u listi.
+Izaberite željene jezike i koristite dugme "dodaj" da ih dodate.
+Nakon što ih dodate, ponovo pokrenite NVDA.
+
+
+Molimo pogledajte ovaj Microsoft članak za listu dostupnih glasova: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Podržani brajevi redovi+[SupportedBrailleDisplays]
 Ovaj deo sadrži informacije o brajevim redovima koje NVDA podržava.
@@ -2504,7 +2529,7 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda kako biste saznali raspored
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B serije / BrailleNote Touch  ++[HumanWareBrailliant]
-Brailliant BI i  B serije  brajevih redova firme [HumanWare https://www.humanware.com/], uključujući   BI 14, BI 32, BI 40 i  B 80, su podržani putem USB ili  bluetooth veze.
+Brailliant BI i  B serije  brajevih redova firme [HumanWare https://www.humanware.com/], uključujući   BI 14, BI 32, BI 20X, BI 40, BI 40X i B 80, su podržani putem USB ili  bluetooth veze.
 Ako brajev red povezujete putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB drajvere koje je napravio proizvođač.
 USB drajveri nisu potrebni ako  je protokol postavljen na OpenBraille.
 
@@ -2624,7 +2649,7 @@ Molimo pogledajte uputstva za upotrebu brajevih redova kako biste saznali raspor
 | escape taster | tačka1+tačka5+razmak, f4, brailleedge:f1 |
 | Taster za brisanje | tačka1+tačka3+tačka5+razmak, tačka1+tačka4+tačka5+razmak |
 | f1 | Tačka1+tačka2+tačka5+razmak |
-| f3 | Tačka1+tačka2+tačka4+tačka8 |
+| f3 taster | Tačka1+tačka4+tačka8+razmak |
 | f4 taster | tačka7+f3 |
 | windows+b taster | tačka1+tačka2+f1 |
 | windows+d taster | tačka1+tačka4+tačka5+f1 |
@@ -3124,6 +3149,7 @@ Slede opcije komandne linije za NVDA:
 | Nema | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
 | Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
 | Nema | --enable-start-on-logon=True|False | U toku instalacije, omogući podešavanje [pokreni NVDA na Windows ekranu za prijavljivanje #StartAtWindowsLogon] |
+| Nema | --copy-portable-config | Kada instalirate, kopira podešavanja iz označene adrese  (--config-path, -c) u trenutni korisnički nalog |
 | Nema | --create-portable | Pravi prenosnu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
 | Nema | --create-portable-silent | Pravi prenosnu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
 | Nema | --portable-path=AdresaKopije | Adresa na kojoj će portabilna kopija biti napravljena|
