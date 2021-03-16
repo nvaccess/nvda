@@ -62,6 +62,7 @@ class ChromeLib:
 	_testCaseTitle = "NVDA Browser Test Case"
 	_beforeMarker = "Before Test Case Marker"
 	_afterMarker = "After Test Case Marker"
+	_loadCompleteString = "Test page load complete"
 
 	@staticmethod
 	def _writeTestFile(testCase) -> str:
@@ -76,8 +77,9 @@ class ChromeLib:
 			<head>
 				<title>{ChromeLib._testCaseTitle}</title>
 			</head>
-			<body>
+			<body onload="document.getElementById('loadStatus').innerHTML='{ChromeLib._loadCompleteString}'">
 				<p>{ChromeLib._beforeMarker}</p>
+				<p id="loadStatus">Loading...</p>
 				{testCase}
 				<p>{ChromeLib._afterMarker}</p>
 			</body>
@@ -109,7 +111,7 @@ class ChromeLib:
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
 			builtIn.fail(
-				"Unable to tab to 'before sample' marker."
+				"Unable to locate 'before sample' marker."
 				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
 				" See NVDA log for full speech."
 			)
@@ -136,7 +138,19 @@ class ChromeLib:
 		applicationTitle = f"{self._testCaseTitle}"
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
 		self._waitForStartMarker(spy, appTitleIndex)
-
+		# Move to the loading status line, and wait fore it to become complete
+		# the page has fully loaded.
+		spy.emulateKeyPress('downArrow')
+		for x in range(10):
+			builtIn.sleep("0.1 seconds")
+			actualSpeech = ChromeLib.getSpeechAfterKey('NVDA+UpArrow')
+			if actualSpeech == self._loadCompleteString:
+				break
+		else:  # Exceeded the number of tries
+			spy.dump_speech_to_log()
+			builtIn.fail(
+				"Failed to wait for Test page load complete."
+			)
 
 	@staticmethod
 	def getSpeechAfterKey(key) -> str:
