@@ -5,8 +5,6 @@
 # See the file COPYING for more details.
 
 from typing import Optional
-import wx
-import languageHandler
 
 """NVDA core"""
 
@@ -147,6 +145,7 @@ def resetConfiguration(factoryDefaults=False):
 	import brailleInput
 	import speech
 	import vision
+	import languageHandler
 	import inputCore
 	import tones
 	log.debug("Terminating vision")
@@ -208,6 +207,7 @@ def _setInitialFocus():
 
 
 def getWxLangOrNone() -> Optional[wx.LanguageInfo]:
+	import languageHandler
 	lang = languageHandler.getLanguage()
 	locale = wx.Locale()
 	wxLang = locale.FindLanguageInfo(lang)
@@ -266,6 +266,7 @@ def main():
 	logHandler.setLogLevelFromConfig()
 	try:
 		lang = config.conf["general"]["language"]
+		import languageHandler
 		log.debug("setting language to %s"%lang)
 		languageHandler.setLanguage(lang)
 	except:
@@ -301,6 +302,7 @@ def main():
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
+	import wx
 	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
 	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
 	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
@@ -658,6 +660,7 @@ def requestPump():
 		return
 	# This isn't the main thread. wx timers cannot be run outside the main thread.
 	# Therefore, Have wx start it in the main thread with a CallAfter.
+	import wx
 	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
 
 def callLater(delay, callable, *args, **kwargs):
@@ -666,6 +669,7 @@ def callLater(delay, callable, *args, **kwargs):
 	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
 	This function can be safely called from any thread.
 	"""
+	import wx
 	if threading.get_ident() == mainThreadId:
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
