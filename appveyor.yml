@@ -11,7 +11,7 @@ branches:
   - /release-.*/
   
 environment:
- PY_PYTHON: 3.7-32
+ PY_PYTHON: 3.8-32
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
  mozillaSymsAuthToken:
@@ -95,12 +95,15 @@ build_script:
      Set-AppveyorBuildVariable "sconsOutTargets" $sconsOutTargets
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
  - 'echo scons args: %sconsArgs%'
- - py scons.py source %sconsArgs%
+ - scons source %sconsArgs%
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
- - py scons.py checkPot %sconsArgs%
+ - scons checkPot %sconsArgs%
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
- - py scons.py %sconsOutTargets% %sconsArgs%
+ - scons %sconsOutTargets% %sconsArgs%
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # Build symbol store.
  - ps: |
      foreach ($syms in
@@ -115,12 +118,10 @@ build_script:
      }
  - cd symbols
  - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  - cd ..
 
 before_test:
- # install required packages
- - py -m pip install --upgrade pip
- - py -m pip install -r tests/system/requirements.txt -r tests/lint/lintInstall/requirements.txt
  - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
@@ -153,7 +154,7 @@ test_script:
      $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
-     py -m nose -sv --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
+     .\rununittests.bat --with-xunit --xunit-file="$unitTestsXml"
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "Unit test failure"
@@ -168,12 +169,14 @@ test_script:
     if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
       $lintSource = (Resolve-Path .\tests\lint\)
-      git fetch -q origin $env:APPVEYOR_REPO_BRANCH
-      $prDiff = "$lintOutput\prDiff.patch"
-      git diff -U0 FETCH_HEAD...HEAD > $prDiff
-      $flake8Config = "$lintSource\flake8.ini"
-      $flake8Output = "$lintOutput\PR-Flake8.txt"
-      type "$prDiff" | py -Xutf8 -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
+      # When Appveyor runs for a pr,
+      # the build is made from a new temporary commit,
+      # resulting from the pr branch being merged into its base branch.
+      # Therefore to create a diff for linting, we must fetch the head of the base branch.
+      # In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
+     git fetch -q origin $env:APPVEYOR_REPO_BRANCH
+     $flake8Output = "$lintOutput\PR-Flake8.txt"
+      .\runlint.bat FETCH_HEAD "$flake8Output" 
       if($LastExitCode -ne 0) {
        $errorCode=$LastExitCode
        Add-AppveyorMessage "PR introduces Flake8 errors"
@@ -191,19 +194,14 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-     $testSource = ".\tests\system\robot"
-
-     $robotArgs = '--argumentfile', '.\tests\system\robotArgs.robot'
-     # useInstalledNVDA must come after args file to override the whichNVDA value
-     $useInstalledNVDA = '--variable', 'whichNVDA:installed'
-
-     py -m robot $robotArgs $useInstalledNVDA $testSource
-     Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
-     Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
+    
+     .\runsystemtests.bat --variable whichNVDA:installed
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "System test failure"
      }
+     Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
+     Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
@@ -273,6 +271,9 @@ deploy_script:
 on_finish:
   # add a message to point to the NVDA build, to make testing PR's easier.
   - ps: |
+      # Save an exact list of the actual Python packages and their versions that got installed, to aide in reproducing a build
+      .\venvUtils\exportPackageList.bat installed_python_packages.txt
+      Push-AppveyorArtifact installed_python_packages.txt
       $appVeyorUrl = "https://ci.appveyor.com"
       $exe = Get-ChildItem -Name output\*.exe
       if($?){

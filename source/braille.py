@@ -39,6 +39,8 @@ import hwPortUtils
 import bdDetect
 import queueHandler
 import brailleViewer
+from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -2233,19 +2235,23 @@ def terminate():
 
 class BrailleDisplayDriver(driverHandler.Driver):
 	"""Abstract base braille display driver.
-	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
+	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory
+	containing a BrailleDisplayDriver class which inherits from this base class.
 
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 	To display braille, L{numCells} and L{display} must be implemented.
 
-	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
-	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
+	Drivers should dispatch input such as presses of buttons, wheels or other controls
+	using the L{inputCore} framework.
+	They should subclass L{BrailleDisplayGesture}
+	and execute instances of those gestures using L{inputCore.manager.executeGesture}.
 	These gestures can be mapped in L{gestureMap}.
 	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
 
 	@see: L{hwIo} for raw serial and HID I/O.
 
-	There are factory functions to create L{driverHandler.DriverSetting} instances for common display specific settings; e.g. L{DotFirmnessSetting}.
+	There are factory functions to create L{autoSettingsUtils.driverSetting.DriverSetting} instances
+	for common display specific settings; e.g. L{DotFirmnessSetting}.
 	"""
 	_configSection = "braille"
 	# Most braille display drivers don't have settings yet.
@@ -2463,7 +2469,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal,useConfig=False):
 		"""Factory function for creating dot firmness setting."""
-		return driverHandler.NumericDriverSetting(
+		return NumericDriverSetting(
 			"dotFirmness",
 			# Translators: Label for a setting in braille settings dialog.
 			_("Dot firm&ness"),
@@ -2476,7 +2482,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def BrailleInputSetting(cls, useConfig=True):
 		"""Factory function for creating braille input setting."""
-		return driverHandler.BooleanDriverSetting(
+		return BooleanDriverSetting(
 			"brailleInput",
 			# Translators: Label for a setting in braille settings dialog.
 			_("Braille inp&ut"),
@@ -2486,7 +2492,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def HIDInputSetting(cls, useConfig):
 		"""Factory function for creating HID input setting."""
-		return driverHandler.BooleanDriverSetting(
+		return BooleanDriverSetting(
 			"hidKeyboardInput",
 			# Translators: Label for a setting in braille settings dialog.
 			_("&HID keyboard input simulation"),

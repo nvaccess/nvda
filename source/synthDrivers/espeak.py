@@ -13,7 +13,17 @@ import languageHandler
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import speech
 from logHandler import log
-from driverHandler import BooleanDriverSetting
+
+from speech.commands import (
+	IndexCommand,
+	CharacterModeCommand,
+	LangChangeCommand,
+	BreakCommand,
+	PitchCommand,
+	RateCommand,
+	VolumeCommand,
+	PhonemeCommand,
+)
 
 class SynthDriver(SynthDriver):
 	name = "espeak"
@@ -29,14 +39,14 @@ class SynthDriver(SynthDriver):
 		SynthDriver.VolumeSetting(),
 	)
 	supportedCommands = {
-		speech.IndexCommand,
-		speech.CharacterModeCommand,
-		speech.LangChangeCommand,
-		speech.BreakCommand,
-		speech.PitchCommand,
-		speech.RateCommand,
-		speech.VolumeCommand,
-		speech.PhonemeCommand,
+		IndexCommand,
+		CharacterModeCommand,
+		LangChangeCommand,
+		BreakCommand,
+		PitchCommand,
+		RateCommand,
+		VolumeCommand,
+		PhonemeCommand,
 	}
 	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
 
@@ -60,9 +70,9 @@ class SynthDriver(SynthDriver):
 		return self._language
 
 	PROSODY_ATTRS = {
-		speech.PitchCommand: "pitch",
-		speech.VolumeCommand: "volume",
-		speech.RateCommand: "rate",
+		PitchCommand: "pitch",
+		VolumeCommand: "volume",
+		RateCommand: "rate",
 	}
 
 	IPA_TO_ESPEAK = {
@@ -91,16 +101,16 @@ class SynthDriver(SynthDriver):
 		for item in speechSequence:
 			if isinstance(item,str):
 				textList.append(self._processText(item))
-			elif isinstance(item,speech.IndexCommand):
+			elif isinstance(item, IndexCommand):
 				textList.append("<mark name=\"%d\" />"%item.index)
-			elif isinstance(item,speech.CharacterModeCommand):
+			elif isinstance(item, CharacterModeCommand):
 				textList.append("<say-as interpret-as=\"characters\">" if item.state else "</say-as>")
-			elif isinstance(item,speech.LangChangeCommand):
+			elif isinstance(item, LangChangeCommand):
 				if langChanged:
 					textList.append("</voice>")
 				textList.append("<voice xml:lang=\"%s\">"%(item.lang if item.lang else defaultLanguage).replace('_','-'))
 				langChanged=True
-			elif isinstance(item,speech.BreakCommand):
+			elif isinstance(item, BreakCommand):
 				textList.append('<break time="%dms" />' % item.time)
 			elif type(item) in self.PROSODY_ATTRS:
 				if prosody:
@@ -121,7 +131,7 @@ class SynthDriver(SynthDriver):
 				for attr,val in prosody.items():
 					textList.append(' %s="%d%%"'%(attr,val))
 				textList.append(">")
-			elif isinstance(item,speech.PhonemeCommand):
+			elif isinstance(item, PhonemeCommand):
 				# We can't use str.translate because we want to reject unknown characters.
 				try:
 					phonemes="".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
