@@ -596,7 +596,7 @@ def initialize():
 	if mainFrame:
 		raise RuntimeError("GUI already initialized")
 	mainFrame = MainFrame()
-	wxLang = core.getWxLangOrNone(languageHandler.getLanguage())
+	wxLang = core.getWxLangOrNone()
 	if wxLang:
 		# otherwise the system default will be used
 		mainFrame.SetLayoutDirection(wxLang.LayoutDirection)

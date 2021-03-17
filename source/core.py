@@ -6,6 +6,7 @@
 
 from typing import Optional
 import wx
+import languageHandler
 
 """NVDA core"""
 
@@ -146,7 +147,6 @@ def resetConfiguration(factoryDefaults=False):
 	import brailleInput
 	import speech
 	import vision
-	import languageHandler
 	import inputCore
 	import tones
 	log.debug("Terminating vision")
@@ -207,7 +207,8 @@ def _setInitialFocus():
 		log.exception("Error retrieving initial focus")
 
 
-def getWxLangOrNone(lang: str) -> Optional[wx.LanguageInfo]:
+def getWxLangOrNone() -> Optional[wx.LanguageInfo]:
+	lang = languageHandler.getLanguage()
 	locale = wx.Locale()
 	wxLang = locale.FindLanguageInfo(lang)
 	if not wxLang and '_' in lang:
@@ -265,7 +266,6 @@ def main():
 	logHandler.setLogLevelFromConfig()
 	try:
 		lang = config.conf["general"]["language"]
-		import languageHandler
 		log.debug("setting language to %s"%lang)
 		languageHandler.setLanguage(lang)
 	except:
@@ -434,7 +434,7 @@ def main():
 
 	# initialize wxpython localization support
 	locale = wx.Locale()
-	wxLang = getWxLangOrNone(languageHandler.getLanguage())
+	wxLang = getWxLangOrNone()
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
