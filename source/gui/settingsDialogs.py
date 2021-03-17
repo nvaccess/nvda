@@ -6,8 +6,9 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 import copy
+import os
 
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
@@ -17,8 +18,7 @@ import wx.lib.newevent
 import winUser
 import logHandler
 import installer
-from synthDriverHandler import *
-from synthDriverHandler import SynthDriver, getSynth
+from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
 import languageHandler
 import speech
