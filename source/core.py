@@ -4,7 +4,9 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
+if TYPE_CHECKING:
+    import wx
 
 """NVDA core"""
 
@@ -206,8 +208,9 @@ def _setInitialFocus():
 		log.exception("Error retrieving initial focus")
 
 
-def getWxLangOrNone() -> Optional[wx.LanguageInfo]:
+def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 	import languageHandler
+	import wx
 	lang = languageHandler.getLanguage()
 	locale = wx.Locale()
 	wxLang = locale.FindLanguageInfo(lang)
