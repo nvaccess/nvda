@@ -100,7 +100,8 @@ _compointer_base._oldCpbDel = _compointer_base.__del__
 def newCpbDel(self):
 	# __del__ may be called while Python is exiting.
 	# In this state, global symbols may be set to None
-	# Therefore avoid calling into garbageHandler.
+	# Therefore avoid calling into garbageHandler or log,
+	# unless isFinalizing is checked first to ensure they are still available
 	# Using local variables or calling other methods on this class is still okay.
 	isFinalizing = getattr(sys, 'is_finalizing', lambda: True)()
 	if hasattr(self, "_deleted"):
