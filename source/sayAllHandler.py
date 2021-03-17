@@ -6,7 +6,6 @@
 import weakref
 import garbageHandler
 import speech
-import synthDriverHandler
 from logHandler import log
 import config
 import controlTypes

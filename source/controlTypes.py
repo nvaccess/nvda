@@ -1,8 +1,8 @@
-#controlTypes.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
+
 from typing import Dict, Union, Set, Any, Optional, List
 from enum import Enum, auto
 
@@ -111,7 +111,6 @@ ROLE_SPLITBUTTON=101
 ROLE_MENUBUTTON=102
 ROLE_DROPDOWNBUTTONGRID=103
 ROLE_MATH=104
-ROLE_EQUATION=ROLE_MATH # Deprecated; for backwards compatibility.
 ROLE_GRIP=105
 ROLE_HOTKEYFIELD=106
 ROLE_INDICATOR=107

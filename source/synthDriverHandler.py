@@ -1,19 +1,15 @@
-# -*- coding: UTF-8 -*-
-# synthDriverHandler.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
-import os
 import pkgutil
 import importlib
 from typing import Optional
 from locale import strxfrm
 
 import config
-import baseObject
 import winVersion
 import globalVars
 from logHandler import log
@@ -25,6 +21,7 @@ import synthDrivers
 import driverHandler
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting, NumericDriverSetting
 from autoSettingsUtils.utils import StringParameterInfo
+
 from abc import abstractmethod
 
 
