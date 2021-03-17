@@ -7,18 +7,6 @@
 """Handler for driver functionality that is global to synthesizers and braille displays."""
 from autoSettingsUtils.autoSettings import AutoSettings
 
-# F401: the following imports, while unused in this file, are provided for backwards compatibility.
-from autoSettingsUtils.driverSetting import (  # noqa: F401
-	DriverSetting,
-	BooleanDriverSetting,
-	NumericDriverSetting,
-	AutoPropertyObject,
-)
-from autoSettingsUtils.utils import (  # noqa: F401
-	UnsupportedConfigParameterError,
-	StringParameterInfo,
-)
-
 
 class Driver(AutoSettings):
 	"""
