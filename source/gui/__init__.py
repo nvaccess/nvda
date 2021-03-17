@@ -596,8 +596,10 @@ def initialize():
 	if mainFrame:
 		raise RuntimeError("GUI already initialized")
 	mainFrame = MainFrame()
-	wxLang = core.getWxLang(languageHandler.getLanguage())
-	mainFrame.SetLayoutDirection(wxLang.LayoutDirection)
+	wxLang = core.getWxLangOrNone(languageHandler.getLanguage())
+	if wxLang:
+		# otherwise the system default will be used
+		mainFrame.SetLayoutDirection(wxLang.LayoutDirection)
 	wx.GetApp().SetTopWindow(mainFrame)
 	# In wxPython >= 4.1,
 	# wx.CallAfter no longer executes callbacks while NVDA's main thread is within apopup menu or message box.
