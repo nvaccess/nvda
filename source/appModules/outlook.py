@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager,
+# Copyright (C) 2006-2021 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager,
 # Babbage B.V., Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -36,6 +36,8 @@ from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
+import languageHandler
+from gettext import ngettext
 
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
@@ -339,12 +341,20 @@ class CalendarView(IAccessible):
 		categories = appointment.Categories
 		if not categories:
 			return None
-		# Translators: Part of a message reported when on a calendar appointment with categories
+		bufLength = 4
+		separatorBuf = ctypes.create_unicode_buffer(bufLength)
+		if ctypes.windll.kernel32.GetLocaleInfoW(
+			languageHandler.LOCALE_USER_DEFAULT,
+			languageHandler.LOCALE_SLIST,
+			separatorBuf,
+			bufLength
+		) == 0:
+			raise ctypes.WinError()
+		categoriesCount = len(categories.split(f"{separatorBuf.value} "))
+		# Translators: Part of a message reported when on a calendar appointment with one or more categories
 		# in Microsoft Outlook.
-		# {categories} is replaced by the list of one or more categories.
-		return _("categories {categories}").format(
-			categories=categories
-		)
+		categoriesText = ngettext("category", "categories", categoriesCount)
+		return f"{categoriesText} {categories}"
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
