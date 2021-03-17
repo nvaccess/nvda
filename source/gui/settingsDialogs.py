@@ -2648,7 +2648,7 @@ class AdvancedPanelControls(
 		expiredFocusSpeechChoices = [
 			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
 			# in the Advanced settings panel.
-			_("Default (No)"),
+			_("Default (Yes)"),
 			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
 			# in the Advanced settings panel.
 			_("Yes"),
