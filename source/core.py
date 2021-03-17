@@ -434,8 +434,7 @@ def main():
 
 	# initialize wxpython localization support
 	locale = wx.Locale()
-	lang=languageHandler.getLanguage()
-	wxLang = getWxLangOrNone(lang)
+	wxLang = getWxLangOrNone(languageHandler.getLanguage())
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
