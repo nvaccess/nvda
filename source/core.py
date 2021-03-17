@@ -88,6 +88,7 @@ def doStartupDialogs():
 		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
+		import wx
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
@@ -99,6 +100,7 @@ def doStartupDialogs():
 		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
 			# a callback to save config after the usage stats question dialog has been answered.
 			def onResult(ID):
+				import wx
 				if ID in (wx.ID_YES,wx.ID_NO):
 					try:
 						config.conf.save()
@@ -110,6 +112,7 @@ def doStartupDialogs():
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
+		import wx
 		globalVars.exitCode=3
 		wx.GetApp().ExitMainLoop()
 		return
@@ -208,7 +211,7 @@ def _setInitialFocus():
 		log.exception("Error retrieving initial focus")
 
 
-def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
+def getWxLangOrNone() -> Optional[wx.LanguageInfo]:
 	import languageHandler
 	import wx
 	lang = languageHandler.getLanguage()
