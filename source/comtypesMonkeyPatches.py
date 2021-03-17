@@ -103,7 +103,8 @@ def newCpbDel(self):
 	# Therefore avoid calling into garbageHandler or log,
 	# unless isFinalizing is checked first to ensure they are still available
 	# Using local variables or calling other methods on this class is still okay.
-	isFinalizing = getattr(sys, 'is_finalizing', lambda: True)()
+	isFinalizingFunc = getattr(sys, 'is_finalizing', lambda: True)
+	isFinalizing = isFinalizingFunc()
 	if hasattr(self, "_deleted"):
 		# Don't allow this to be called more than once.
 		if not isFinalizing:
