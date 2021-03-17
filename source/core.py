@@ -1,9 +1,11 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
+from typing import Optional
+import wx
 
 """NVDA core"""
 
@@ -85,7 +87,6 @@ def doStartupDialogs():
 		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
-		import wx
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
@@ -97,7 +98,6 @@ def doStartupDialogs():
 		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
 			# a callback to save config after the usage stats question dialog has been answered.
 			def onResult(ID):
-				import wx
 				if ID in (wx.ID_YES,wx.ID_NO):
 					try:
 						config.conf.save()
@@ -109,7 +109,6 @@ def doStartupDialogs():
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
-		import wx
 		globalVars.exitCode=3
 		wx.GetApp().ExitMainLoop()
 		return
@@ -208,8 +207,7 @@ def _setInitialFocus():
 		log.exception("Error retrieving initial focus")
 
 
-def getWxLang(lang):
-	import wx
+def getWxLangOrNone(lang: str) -> Optional[wx.LanguageInfo]:
 	locale = wx.Locale()
 	wxLang = locale.FindLanguageInfo(lang)
 	if not wxLang and '_' in lang:
@@ -221,6 +219,8 @@ def getWxLang(lang):
 	# Therefore treat these situations like wx not knowing the language at all.
 	if wxLang and not locale.IsAvailable(wxLang.Language):
 		wxLang = None
+	if not wxLang:
+		log.debugWarning("wx does not support language %s" % lang)
 	return wxLang
 
 
@@ -301,7 +301,6 @@ def main():
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
-	import wx
 	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
 	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
 	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
@@ -436,7 +435,7 @@ def main():
 	# initialize wxpython localization support
 	locale = wx.Locale()
 	lang=languageHandler.getLanguage()
-	wxLang = getWxLang(lang)
+	wxLang = getWxLangOrNone(lang)
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
@@ -444,8 +443,6 @@ def main():
 			locale.Init(wxLang.Language)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
-	else:
-		log.debugWarning("wx does not support language %s" % lang)
 
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
@@ -662,7 +659,6 @@ def requestPump():
 		return
 	# This isn't the main thread. wx timers cannot be run outside the main thread.
 	# Therefore, Have wx start it in the main thread with a CallAfter.
-	import wx
 	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
 
 def callLater(delay, callable, *args, **kwargs):
@@ -671,7 +667,6 @@ def callLater(delay, callable, *args, **kwargs):
 	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
 	This function can be safely called from any thread.
 	"""
-	import wx
 	if threading.get_ident() == mainThreadId:
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
