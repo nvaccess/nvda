@@ -207,6 +207,7 @@ def _setInitialFocus():
 	except:
 		log.exception("Error retrieving initial focus")
 
+
 def getWxLang(lang):
 	import wx
 	locale = wx.Locale()
@@ -221,6 +222,7 @@ def getWxLang(lang):
 	if wxLang and not locale.IsAvailable(wxLang.Language):
 		wxLang = None
 	return wxLang
+
 
 def main():
 	"""NVDA's core main loop.
