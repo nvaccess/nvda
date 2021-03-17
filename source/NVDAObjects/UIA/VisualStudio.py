@@ -85,7 +85,7 @@ class CompletionToolTip(ToolTip):
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAAutomationId in _INTELLISENSE_LIST_AUTOMATION_IDS:
 		clsList.insert(0, IntelliSenseList)
-	elif isinstance(obj.parent, IntelliSenseList) and obj.UIAElement.cachedClassName == "IntellisenseMenuItem":
+	elif obj.UIAElement.cachedClassName == "IntellisenseMenuItem" and isinstance(obj.parent, IntelliSenseList):
 		clsList.insert(0, IntelliSenseItem)
 	elif (
 		obj.UIAElement.cachedClassName == "LiveTextBlock"

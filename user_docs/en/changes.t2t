@@ -26,6 +26,7 @@ What's New in NVDA
 - In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
 - Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
 - It is now possible to read comments in MS Word with UIA enabled. (#9285)
+- Performance when interacting with Visual Studio has been improved. (#12171)
 
 
 == Changes for Developers ==
@@ -69,6 +70,11 @@ What's New in NVDA
 - `speech.getSpeechForSpelling` has been removed - use `speech.getSpellingSpeech` (#12145)
 - Commands cannot be directly imported from speech as `import speech; speech.ExampleCommand()` or `import speech.manager; speech.manager.ExampleCommand()` - use  `from speech.commands import ExampleCommand` instead (#12126)
 - `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `sayAllhandler` does this manually now. (#12150)
+- The `synthDriverHandler` module is no longer star imported into `globalCommands` and `gui.settingsDialogs` - use `from synthDriverHandler import synthFunctionExample` instead. (#12172)
+- `ROLE_EQUATION` has been removed from controlTypes - use `ROLE_MATH`` instead. (#12164)
+- `autoSettingsUtils.driverSetting` classes are removed from `driverHandler` - please use them from `autoSettingUtils.driverSetting`. (#12168)
+- `autoSettingsUtils.utils` classes are removed from `driverHandler` - please use them from `autoSettingUtils.utils`. (#12168)
+- Support of `TextInfo`s that do not inherit from `contentRecog.BaseContentRecogTextInfo` is removed. (#12157)
 
 
 = 2020.4 =
