@@ -4,9 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Optional, TYPE_CHECKING
-if TYPE_CHECKING:
-    import wx
+from typing import Optional
 
 """NVDA core"""
 
