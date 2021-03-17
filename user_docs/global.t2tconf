@@ -18,5 +18,7 @@
 % Therefore, strip the BOM from the title.
 %!PostProc(html): \<(TITLE|H1)\>\xef\xbb\xbf <\1>
 
+%!Options: --style styles.css
+
 % This provides the macros NVDA_VERSION, NVDA_URL and NVDA_COPYRIGHT_YEARS.
 %!includeconf: build.t2tconf

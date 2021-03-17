@@ -85,10 +85,11 @@ def normalizeIA2TextFormatField(formatField):
 	except KeyError:
 		invalid=None
 	if invalid:
-		invalid=invalid.lower()
-		if invalid=="spelling":
+		# aria-invalid can contain multiple values separated by a comma.
+		invalidList = [x.lower().strip() for x in invalid.split(',')]
+		if "spelling" in invalidList:
 			formatField["invalid-spelling"]=True
-		elif invalid=="grammar":
+		if "grammar" in invalidList:
 			formatField["invalid-grammar"]=True
 	color=formatField.get('color')
 	if color:
@@ -692,6 +693,13 @@ the NVDAObject for IAccessible
 			testObj = parent
 		else:
 			return False
+		return True
+
+	def _get_shouldAllowIAccessibleMenuStartEvent(self) -> bool:
+		"""Determine whether an IAccessible menu start or menu popup start event should be allowed
+		for this object.
+		@return: C{True} if the event should be allowed.
+		"""
 		return True
 
 	def _get_TextInfo(self):
@@ -1463,10 +1471,10 @@ the NVDAObject for IAccessible
 			api.processPendingEvents()
 		if self in api.getFocusAncestors():
 			return
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS, priority=speech.Spri.NOW)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
 		for child in self.recursiveDescendants:
 			if controlTypes.STATE_FOCUSABLE in child.states:
-				speech.speakObject(child, reason=controlTypes.REASON_FOCUS, priority=speech.Spri.NOW)
+				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
 
 	def event_caret(self):
 		focus = api.getFocusObject()
@@ -1948,11 +1956,11 @@ class IENotificationBar(Dialog,IAccessible):
 
 	def event_alert(self):
 		speech.cancelSpeech()
-		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		child=self.simpleFirstChild
 		while child:
 			if child.role!=controlTypes.ROLE_STATICTEXT:
-				speech.speakObject(child,reason=controlTypes.REASON_FOCUS)
+				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS)
 			child=child.simpleNext
 
 

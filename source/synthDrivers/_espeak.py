@@ -1,14 +1,14 @@
 # -*- coding: UTF-8 -*-
-#synthDrivers/_espeak.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2020 NV Access Limited, Peter Vágner
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import time
 import nvwave
 import threading
 import queue
+from ctypes import cdll
 from ctypes import *
 import config
 import globalVars
@@ -321,7 +321,7 @@ def initialize(indexCallback=None):
 		the number of the index or C{None} when speech stops.
 	"""
 	global espeakDLL, bgThread, bgQueue, player, onIndexReached
-	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
+	espeakDLL = cdll.LoadLibrary(os.path.join(globalVars.appDir, "synthDrivers", "espeak.dll"))
 	espeakDLL.espeak_Info.restype=c_char_p
 	espeakDLL.espeak_Synth.errcheck=espeak_errcheck
 	espeakDLL.espeak_SetVoiceByName.errcheck=espeak_errcheck
@@ -331,7 +331,7 @@ def initialize(indexCallback=None):
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
 	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)
-	eSpeakPath=os.path.abspath("synthDrivers")
+	eSpeakPath = os.path.join(globalVars.appDir, "synthDrivers")
 	sampleRate = espeakDLL.espeak_Initialize(
 		AUDIO_OUTPUT_SYNCHRONOUS, 300,
 		os.fsencode(eSpeakPath),
@@ -368,10 +368,11 @@ def terminate():
 	onIndexReached = None
 
 def info():
-	return espeakDLL.espeak_Info()
+	# Python 3.8: a path string must be specified, a NULL is fine when what we need is version string.
+	return espeakDLL.espeak_Info(None).decode()
 
 def getVariantDict():
-	dir='synthDrivers\\espeak-ng-data\\voices\\!v'
+	dir = os.path.join(globalVars.appDir, "synthDrivers", "espeak-ng-data", "voices", "!v")
 	# Translators: name of the default espeak varient.
 	variantDict={"none": pgettext("espeakVarient", "none")}
 	for fileName in os.listdir(dir):

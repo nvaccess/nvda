@@ -39,6 +39,11 @@ class ChromeLib:
 	def _getTestCasePath(filename):
 		return _pJoin(ChromeLib._testFileStagingPath, filename)
 
+	def exit_chrome(self):
+		spy = _NvdaLib.getSpyLib()
+		spy.emulateKeyPress('control+w')
+		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="continue")
+
 	def start_chrome(self, filePath):
 		builtIn.log(f"starting chrome: {filePath}")
 		self.chromeHandle = process.start_process(
@@ -46,6 +51,7 @@ class ChromeLib:
 			" --force-renderer-accessibility"
 			" --suppress-message-center-popups"
 			" --disable-notifications"
+			" -kiosk"
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeAlias',
@@ -56,6 +62,7 @@ class ChromeLib:
 	_testCaseTitle = "NVDA Browser Test Case"
 	_beforeMarker = "Before Test Case Marker"
 	_afterMarker = "After Test Case Marker"
+	_loadCompleteString = "Test page load complete"
 
 	@staticmethod
 	def _writeTestFile(testCase) -> str:
@@ -70,15 +77,44 @@ class ChromeLib:
 			<head>
 				<title>{ChromeLib._testCaseTitle}</title>
 			</head>
-			<body>
-				<button>{ChromeLib._beforeMarker}</button>
+			<body onload="document.getElementById('loadStatus').innerHTML='{ChromeLib._loadCompleteString}'">
+				<p>{ChromeLib._beforeMarker}</p>
+				<p id="loadStatus">Loading...</p>
 				{testCase}
-				<button>{ChromeLib._afterMarker}</button>
+				<p>{ChromeLib._afterMarker}</p>
 			</body>
 		""")
 		with open(file=filePath, mode='w', encoding='UTF-8') as f:
 			f.write(fileContents)
 		return filePath
+
+	def _wasStartMarkerSpoken(self, speech: str):
+		if "document" not in speech:
+			return False
+		documentIndex = speech.index("document")
+		marker = ChromeLib._beforeMarker
+		return marker in speech and documentIndex < speech.index(marker)
+
+	def _waitForStartMarker(self, spy, lastSpeechIndex):
+		""" Wait until the page loads and NVDA reads the start marker.
+		@param spy:
+		@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
+		@return: None
+		"""
+		for i in range(10):  # set a limit on the number of tries.
+			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
+			spy.wait_for_speech_to_finish()
+			actualSpeech = spy.get_speech_at_index_until_now(lastSpeechIndex)
+			if self._wasStartMarkerSpoken(actualSpeech):
+				break
+			lastSpeechIndex = spy.get_last_speech_index()
+		else:  # Exceeded the number of tries
+			spy.dump_speech_to_log()
+			builtIn.fail(
+				"Unable to locate 'before sample' marker."
+				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
+				" See NVDA log for full speech."
+			)
 
 	def prepareChrome(self, testCase: str) -> None:
 		"""
@@ -87,6 +123,9 @@ class ChromeLib:
 		"""
 		spy = _NvdaLib.getSpyLib()
 		path = self._writeTestFile(testCase)
+
+		spy.wait_for_speech_to_finish()
+		lastSpeechIndex = spy.get_last_speech_index()
 		self.start_chrome(path)
 		# Ensure chrome started
 		# Different versions of chrome have variations in how the title is presented
@@ -97,23 +136,20 @@ class ChromeLib:
 		# If this continues to be unreliable we could use solenium or similar to start chrome and inform us when
 		# it is ready.
 		applicationTitle = f"{self._testCaseTitle}"
-		spy.wait_for_specific_speech(applicationTitle)
-		# Read all is configured, but just test interacting with the sample.
-		spy.wait_for_speech_to_finish()
-
-		# move to start marker
-		for i in range(10):  # set a limit on the number of tries.
-			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
-			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
-			actualSpeech = self.getSpeechAfterKey('f6')
-			if ChromeLib._beforeMarker in actualSpeech:
+		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
+		self._waitForStartMarker(spy, appTitleIndex)
+		# Move to the loading status line, and wait fore it to become complete
+		# the page has fully loaded.
+		spy.emulateKeyPress('downArrow')
+		for x in range(10):
+			builtIn.sleep("0.1 seconds")
+			actualSpeech = ChromeLib.getSpeechAfterKey('NVDA+UpArrow')
+			if actualSpeech == self._loadCompleteString:
 				break
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
 			builtIn.fail(
-				"Unable to tab to 'before sample' marker."
-				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
-				" See NVDA log for full speech."
+				"Failed to wait for Test page load complete."
 			)
 
 	@staticmethod
@@ -125,6 +161,7 @@ class ChromeLib:
 		spy.wait_for_speech_to_finish()
 		nextSpeechIndex = spy.get_next_speech_index()
 		spy.emulateKeyPress(key)
+		spy.wait_for_speech_to_finish(speechStartedIndex=nextSpeechIndex)
 		speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
 		return speech
 

@@ -37,8 +37,10 @@ import collections
 import extensionPoints
 import hwPortUtils
 import bdDetect
-import brailleViewer
 import queueHandler
+import brailleViewer
+from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -524,7 +526,15 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(value)
 	if states is not None:
 		textList.extend(
-			controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states, None, positiveStateLabels, negativeStateLabels)
+			controlTypes.processAndLabelStates(
+				role,
+				states,
+				controlTypes.OutputReason.FOCUS,
+				states,
+				None,
+				positiveStateLabels,
+				negativeStateLabels
+			)
 		)
 	if roleText:
 		textList.append(roleText)
@@ -571,13 +581,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 				# %s is replaced with the column number.
 				columnStr = _("c{columnNumber}").format(columnNumber=columnNumber)
 			textList.append(columnStr)
-	current = propertyValues.get('current', False)
-	if current:
-		try:
-			textList.append(controlTypes.isCurrentLabels[current])
-		except KeyError:
-			log.debugWarning("Aria-current value not handled: %s"%current)
-			textList.append(controlTypes.isCurrentLabels[True])
+	isCurrent = propertyValues.get('current', controlTypes.IsCurrent.NO)
+	if isCurrent != controlTypes.IsCurrent.NO:
+		textList.append(isCurrent.displayString)
 	placeholder = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)
@@ -662,7 +668,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	states = field.get("states", set())
 	value=field.get('value',None)
-	current=field.get('current', None)
+	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
@@ -1087,7 +1093,9 @@ class TextInfoRegion(Region):
 			brailleInput.handler.updateDisplay()
 			return
 
-		if braillePos == self.brailleCursorPos:
+		dest = self.getTextInfoForBraillePos(braillePos)
+		cursor = self.getTextInfoForBraillePos(self.brailleCursorPos)
+		if dest.compareEndPoints(cursor, "startToStart") == 0:
 			# The cursor is already at this position,
 			# so activate the position.
 			try:
@@ -1095,7 +1103,6 @@ class TextInfoRegion(Region):
 			except NotImplementedError:
 				pass
 			return
-		dest = self.getTextInfoForBraillePos(braillePos)
 		self._setCursor(dest)
 
 	def nextLine(self):
@@ -1629,6 +1636,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
+
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
@@ -2227,19 +2235,23 @@ def terminate():
 
 class BrailleDisplayDriver(driverHandler.Driver):
 	"""Abstract base braille display driver.
-	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
+	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory
+	containing a BrailleDisplayDriver class which inherits from this base class.
 
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 	To display braille, L{numCells} and L{display} must be implemented.
 
-	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
-	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
+	Drivers should dispatch input such as presses of buttons, wheels or other controls
+	using the L{inputCore} framework.
+	They should subclass L{BrailleDisplayGesture}
+	and execute instances of those gestures using L{inputCore.manager.executeGesture}.
 	These gestures can be mapped in L{gestureMap}.
 	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
 
 	@see: L{hwIo} for raw serial and HID I/O.
 
-	There are factory functions to create L{driverHandler.DriverSetting} instances for common display specific settings; e.g. L{DotFirmnessSetting}.
+	There are factory functions to create L{autoSettingsUtils.driverSetting.DriverSetting} instances
+	for common display specific settings; e.g. L{DotFirmnessSetting}.
 	"""
 	_configSection = "braille"
 	# Most braille display drivers don't have settings yet.
@@ -2457,7 +2469,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal,useConfig=False):
 		"""Factory function for creating dot firmness setting."""
-		return driverHandler.NumericDriverSetting(
+		return NumericDriverSetting(
 			"dotFirmness",
 			# Translators: Label for a setting in braille settings dialog.
 			_("Dot firm&ness"),
@@ -2470,7 +2482,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def BrailleInputSetting(cls, useConfig=True):
 		"""Factory function for creating braille input setting."""
-		return driverHandler.BooleanDriverSetting(
+		return BooleanDriverSetting(
 			"brailleInput",
 			# Translators: Label for a setting in braille settings dialog.
 			_("Braille inp&ut"),
@@ -2480,7 +2492,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def HIDInputSetting(cls, useConfig):
 		"""Factory function for creating HID input setting."""
-		return driverHandler.BooleanDriverSetting(
+		return BooleanDriverSetting(
 			"hidKeyboardInput",
 			# Translators: Label for a setting in braille settings dialog.
 			_("&HID keyboard input simulation"),

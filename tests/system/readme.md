@@ -2,45 +2,28 @@
 
 ### Dependencies
 
-To install all required packages move to the root directory of this repo and execute:
-
-`python -m pip install -r tests/system/requirements.txt`
-
+This build system uses the Robot test framework to execute the system tests.
+Dependencies such as Robot are automatically installed for you when NVDA's build system Python virtual environment is set up, when running any of the high-level commands such as runsystemtests.bat, thus a developer should usually not have to worry about dependencies.
+ 
 ### Running the tests
 
-You can run the tests with `scons` or manually
-
-#### Scons (easier)
-`scons systemTests`
-
-To run only specific system tests,
- specify them using the `filter` variable on the command line.
-This filter accepts wildcard characters.
-
-```
-scons systemTests filter="Read welcome dialog"
-```
-
-#### Manually (faster)
-
-SCons takes quite a long time to initialize and actually start running the tests,
-if you are running the tests repeatedly consider running them manually.
-These tests should be run from the windows command prompt (cmd.exe) from the root directory
- of your NVDA repository.
-
-```
-python -m robot --argumentfile ./tests/system/robotArgs.robot ./tests/system/robot
-```
-Note that the path to the tests directory is required and must be the final argument.
+You can run the tests with `runsystemtests.bat`.
+Running this script with no arguments will run all system tests found in tests\system\robot, against the current source copy of NVDA.
+Any extra arguments provided to this script are forwarded on to Robot.
 
 To run a single test, add the `--test` argument (wildcards accepted).
 
 ```
-python -m robot --test "starts" ...
+runsystemtests --test "starts" ...
+```
+
+To run all tests with a particular tag use `-i`:
+```
+runsystemtests -i "chrome" ...
 ```
 
 Other options exit for specifying tests to run (e.g. by suite, tag, etc).
-Consult `python -m robot --help`
+Consult `runsystemtests --help`
 
 ### Getting the results
 
@@ -60,11 +43,11 @@ checkbox labelled by inner element
 	checkbox_labelled_by_inner_element
 ```
 
-When the tests are run, the option `--exclude excluded_from_build` is given to Robot.
+When the tests are run, the option `--exclude excluded_from_build` is given to Robot internally.
 See [description of test args](#test-args)
 
 ### Test args
-Common arguments (for both `scons` and AppVeyor) are kept in the `tests\system\robotArgs.robot` file.
+Common arguments are kept in the `tests\system\robotArgs.robot` file.
 
 The `whichNVDA` argument allows the tests to be run against an installed copy
 of NVDA (first ensure it is compatible with the tests). Note valid values are:
