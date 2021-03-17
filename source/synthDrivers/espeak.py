@@ -13,7 +13,6 @@ import languageHandler
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import speech
 from logHandler import log
-from driverHandler import BooleanDriverSetting
 
 from speech.commands import (
 	IndexCommand,

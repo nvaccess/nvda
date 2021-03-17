@@ -72,6 +72,8 @@ What's New in NVDA
 - `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `sayAllhandler` does this manually now. (#12150)
 - The `synthDriverHandler` module is no longer star imported into `globalCommands` and `gui.settingsDialogs` - use `from synthDriverHandler import synthFunctionExample` instead. (#12172)
 - `ROLE_EQUATION` has been removed from controlTypes - use `ROLE_MATH`` instead. (#12164)
+- `autoSettingsUtils.driverSetting` classes are removed from `driverHandler` - please use them from `autoSettingUtils.driverSetting`. (#12168)
+- `autoSettingsUtils.utils` classes are removed from `driverHandler` - please use them from `autoSettingUtils.utils`. (#12168)
 
 
 = 2020.4 =
