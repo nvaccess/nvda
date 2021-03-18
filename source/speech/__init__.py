@@ -2540,8 +2540,6 @@ _speakWithoutPauses = SpeechWithoutPauses(speakFunc=speak)
 
 #: Alias for class SpeakWithoutPauses.speakWithoutPauses. Kept for backwards compatibility
 speakWithoutPauses = _speakWithoutPauses.speakWithoutPauses
-#: Kept for backwards compatibility.
-re_last_pause = _speakWithoutPauses.re_last_pause
 
 #: The singleton _SpeechManager instance used for speech functions.
 #: @type: L{manager.SpeechManager}
