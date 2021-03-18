@@ -147,7 +147,9 @@ before_test:
      }
      Push-AppveyorArtifact $installerLogFilePath
      $crashDump = "$outputDir\nvda_crash.dmp"
-     Push-AppveyorArtifact $crashDump
+     if (Test-Path -Path $crashDump){
+      Push-AppveyorArtifact $crashDump
+     }
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 test_script:
