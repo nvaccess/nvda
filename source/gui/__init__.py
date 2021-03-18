@@ -788,6 +788,7 @@ class WelcomeDialog(
 		mainFrame.prePopup()
 		d = cls(mainFrame)
 		d.ShowModal()
+		d.Destroy()
 		mainFrame.postPopup()
 
 
