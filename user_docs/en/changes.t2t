@@ -30,6 +30,9 @@ What's New in NVDA
 - Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
 - It is now possible to read comments in MS Word with UIA enabled. (#9285)
 - Performance when interacting with Visual Studio has been improved. (#12171)
+- Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
+- Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
+   - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
 
 
 == Changes for Developers ==
