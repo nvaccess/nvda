@@ -45,7 +45,7 @@ from contextlib import contextmanager
 import wx
 from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
-from logHandler import log
+# from logHandler import log
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
@@ -364,16 +364,17 @@ class BoxSizerHelper(object):
 
 
 def safeAppExit():
-	def ensureMainLoopExited():
-		if wx.GetApp().GetMainLoop():
-			wx.GetApp().ExitMainLoop()
+	wx.GetApp().ExitMainLoop()
+	# def ensureMainLoopExited():
+	# 	if wx.GetApp().GetMainLoop():
+	# 		wx.GetApp().ExitMainLoop()
 
-	if not wx.GetApp().GetMainLoop():
-		log.warning("app trying to exit after already exited")
-		return
-	if not wx.GetApp().GetTopWindow().IsBeingDeleted():
-		return wx.CallAfter(wx.GetApp().GetTopWindow().Destroy)
-	wx.CallAfter(ensureMainLoopExited)
+	# if not wx.GetApp().GetMainLoop():
+	# 	log.warning("app trying to exit after already exited")
+	# 	return
+	# if not wx.GetApp().GetTopWindow().IsBeingDeleted():
+	# 	return wx.CallAfter(wx.GetApp().GetTopWindow().Destroy)
+	# wx.CallAfter(ensureMainLoopExited)
 
 
 class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
