@@ -149,6 +149,8 @@ before_test:
      $crashDump = "$outputDir\nvda_crash.dmp"
      if (Test-Path -Path $crashDump){
       Push-AppveyorArtifact $crashDump
+      Add-AppveyorMessage "Install process crashed"
+      $errorCode=1
      }
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
