@@ -52,14 +52,10 @@ class WelcomeDialog(
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
 		mainSizer.Add(welcomeTextDetail, border=20, flag=wx.EXPAND | wx.LEFT | wx.RIGHT)
 
-		optionsSizer = wx.StaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA welcome dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
-		)
+		# Translators: The label for a group box containing the NVDA welcome dialog options.
+		optionsLabel = _("Options")
+		optionsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel)
+		optionsBox = optionsSizer.GetStaticBox()
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
@@ -74,19 +70,18 @@ class WelcomeDialog(
 			log.error("Could not set Keyboard layout list to current layout", exc_info=True)
 		# Translators: The label of a checkbox in the Welcome dialog.
 		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
-		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=capsAsNVDAModifierText))
+		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=capsAsNVDAModifierText))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 		# Translators: The label of a checkbox in the Welcome dialog.
 		startAfterLogonText = _("St&art NVDA after I sign in")
-		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
+		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
 		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		# Translators: The label of a checkbox in the Welcome dialog.
 		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")
-		self.showWelcomeDialogAtStartupCheckBox = sHelper.addItem(
-			wx.CheckBox(self, label=showWelcomeDialogAtStartupText)
-		)
+		_showWelcomeDialogAtStartupCheckBox = wx.CheckBox(optionsBox, label=showWelcomeDialogAtStartupText)
+		self.showWelcomeDialogAtStartupCheckBox = sHelper.addItem(_showWelcomeDialogAtStartupCheckBox)
 		self.showWelcomeDialogAtStartupCheckBox.SetValue(config.conf["general"]["showWelcomeDialogAtStartup"])
 		mainSizer.Add(optionsSizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Add(
@@ -143,7 +138,8 @@ class LauncherDialog(
 
 		# Translators: The label of the license text which will be shown when NVDA installation program starts.
 		groupLabel = _("License Agreement")
-		sizer = sHelper.addItem(wx.StaticBoxSizer(wx.StaticBox(self, label=groupLabel), wx.VERTICAL))
+		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
+		sHelper.addItem(sizer)
 		licenseTextCtrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
 		licenseTextCtrl.Value = open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
 		sizer.Add(licenseTextCtrl)
