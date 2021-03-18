@@ -788,7 +788,8 @@ class WelcomeDialog(
 		mainFrame.prePopup()
 		d = cls(mainFrame)
 		d.ShowModal()
-		d.Destroy()
+		if d and not d.IsBeingDeleted():
+			wx.CallAfter(d.Destroy)
 		mainFrame.postPopup()
 
 
