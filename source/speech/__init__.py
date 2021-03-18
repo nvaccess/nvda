@@ -51,7 +51,6 @@ from typing import (
 	Generator,
 	Union,
 	Callable,
-	Iterator,
 	Tuple,
 )
 from logHandler import log
@@ -466,7 +465,6 @@ def getObjectSpeech(  # noqa: C901
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 ):
-	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
 	import browseMode
