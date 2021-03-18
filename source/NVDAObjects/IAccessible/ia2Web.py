@@ -34,11 +34,13 @@ class Ia2Web(IAccessible):
 				info['level']=level
 		return info
 
-	def _get_isCurrent(self):
-		current = self.IA2Attributes.get("current", None)
-		if current == "false":
-			current = None
-		return current
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
+		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
+		try:
+			return controlTypes.IsCurrent(ia2attrCurrent)
+		except ValueError:
+			log.debugWarning(f"Unknown 'current' IA2Attribute value: {ia2attrCurrent}")
+			return controlTypes.IsCurrent.NO
 
 	def _get_placeholder(self):
 		placeholder = self.IA2Attributes.get('placeholder', None)
@@ -87,16 +89,20 @@ class Ia2Web(IAccessible):
 		if self is api.getFocusObject():
 			# Report aria-current if it changed.
 			speech.speakObjectProperties(
-				self, current=True, reason=controlTypes.REASON_CHANGE)
+				self,
+				current=True,
+				reason=controlTypes.OutputReason.CHANGE
+			)
 		# super calls event_stateChange which updates braille, so no need to
 		# update braille here.
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
 		politeness = self.IA2Attributes.get('live', "off")
-		return next(
-			(v for v in aria.AriaLivePoliteness if v._name_.lower() == politeness.lower()),
-			aria.AriaLivePoliteness.OFF
-		)
+		try:
+			return aria.AriaLivePoliteness(politeness.lower())
+		except ValueError:
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
+			super().liveRegionPoliteness
 
 
 class Document(Ia2Web):

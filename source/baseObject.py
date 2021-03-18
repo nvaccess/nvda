@@ -21,7 +21,7 @@ class Getter(object):
 	def __get__(self,instance,owner):
 		if isinstance(self.fget, classmethod):
 			return self.fget.__get__(instance, owner)()
-		elif not instance:
+		elif instance is None:
 			return self
 		return self.fget(instance)
 
@@ -37,7 +37,7 @@ class CachingGetter(Getter):
 		if isinstance(self.fget, classmethod):
 			log.warning("Class properties do not support caching")
 			return self.fget.__get__(instance, owner)()
-		elif not instance:
+		elif instance is None:
 			return self
 		return instance._getPropertyViaCache(self.fget)
 

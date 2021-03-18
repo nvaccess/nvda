@@ -44,7 +44,6 @@ import braille
 import locationHelper
 import ui
 import winVersion
-import aria
 
 
 class UIATextInfo(textInfos.TextInfo):
@@ -651,21 +650,41 @@ class UIATextInfo(textInfos.TextInfo):
 					if debug:
 						log.debug("NULL childRange. Skipping")
 					continue
-				clippedStart=clippedEnd=False
-				if index==lastChildIndex and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)>=0:
+				clippedStart = False
+				clippedEnd = False
+				if childRange.CompareEndpoints(
+					UIAHandler.TextPatternRangeEndpoint_End,
+					textRange,
+					UIAHandler.TextPatternRangeEndpoint_Start
+				) <= 0:
+					if debug:
+						log.debug("Child completely before textRange. Skipping")
+					continue
+				if childRange.CompareEndpoints(
+					UIAHandler.TextPatternRangeEndpoint_Start,
+					textRange,
+					UIAHandler.TextPatternRangeEndpoint_End
+				) >= 0:
 					if debug:
 						log.debug("Child at or past end of textRange. Breaking")
 					break
-				if index==lastChildIndex:
-					lastChildEndDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-					if lastChildEndDelta>0:
-						if debug:
-							log.debug(
-								"textRange ended part way through the child. "
-								"Crop end of childRange to fit"
-							)
-						childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-						clippedEnd=True
+				lastChildEndDelta = childRange.CompareEndpoints(
+					UIAHandler.TextPatternRangeEndpoint_End,
+					textRange,
+					UIAHandler.TextPatternRangeEndpoint_End
+				)
+				if lastChildEndDelta > 0:
+					if debug:
+						log.debug(
+							"textRange ended part way through the child. "
+							"Crop end of childRange to fit"
+						)
+					childRange.MoveEndpointByRange(
+						UIAHandler.TextPatternRangeEndpoint_End,
+						textRange,
+						UIAHandler.TextPatternRangeEndpoint_End
+					)
+					clippedEnd = True
 				childStartDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 				if childStartDelta>0:
 					# plain text before this child
@@ -906,23 +925,50 @@ class UIA(Window):
 			# But not for Internet Explorer
 			and not self.appModule.appName == 'iexplore'
 		):
-			from . import edge
+			from . import spartanEdge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
-				clsList.append(edge.EdgeHTMLRootContainer)
-			elif (self.UIATextPattern and
-				# #6998: Edge normally gives its root node a controlType of pane, but ARIA role="document"  changes the controlType to document
-				self.role in (controlTypes.ROLE_PANE,controlTypes.ROLE_DOCUMENT) and 
-				self.parent and (isinstance(self.parent,edge.EdgeHTMLRootContainer) or not isinstance(self.parent,edge.EdgeNode))
+				clsList.append(spartanEdge.EdgeHTMLRootContainer)
+			elif (
+				self.UIATextPattern
+				# #6998:
+				# Edge normally gives its root node a controlType of pane, but ARIA role="document"
+				# changes the controlType to document
+				and self.role in (
+					controlTypes.ROLE_PANE,
+					controlTypes.ROLE_DOCUMENT
+				)
+				and self.parent
+				and (
+					isinstance(self.parent, spartanEdge.EdgeHTMLRootContainer)
+					or not isinstance(self.parent, spartanEdge.EdgeNode)
+				)
 			): 
-				clsList.append(edge.EdgeHTMLRoot)
+				clsList.append(spartanEdge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
-				clsList.append(edge.EdgeList)
+				clsList.append(spartanEdge.EdgeList)
 			else:
-				clsList.append(edge.EdgeNode)
-		elif self.role == controlTypes.ROLE_DOCUMENT and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView":
+				clsList.append(spartanEdge.EdgeNode)
+		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
+			from . import chromium
+			from . import web
+			if (
+				self.UIATextPattern
+				and self.role == controlTypes.ROLE_DOCUMENT
+				and self.parent
+				and self.parent.role == controlTypes.ROLE_PANE
+			):
+				clsList.append(chromium.ChromiumUIADocument)
+			else:
+				if self.role == controlTypes.ROLE_LIST:
+					clsList.append(web.List)
+				clsList.append(chromium.ChromiumUIA)
+		elif (
+			self.role == controlTypes.ROLE_DOCUMENT
+			and self.UIAElement.cachedAutomationId == "Microsoft.Windows.PDF.DocumentView"
+		):
 			# PDFs
-			from . import edge
-			clsList.append(edge.EdgeHTMLRoot)
+			from . import spartanEdge
+			clsList.append(spartanEdge.EdgeHTMLRoot)
 		elif (
 			UIAAutomationId == "RichEditControl"
 			and "DevExpress.XtraRichEdit" in self.UIAElement.cachedProviderDescription
@@ -1018,7 +1064,7 @@ class UIA(Window):
 						clsList.remove(x)
 
 	@classmethod
-	def kwargsFromSuper(cls,kwargs,relation=None):
+	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):
 		UIAElement=None
 		windowHandle=kwargs.get('windowHandle')
 		if isinstance(relation,tuple):
@@ -1041,7 +1087,7 @@ class UIA(Window):
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 				return False
 			# Ignore this object if it is non native.
-			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
+			if ignoreNonNativeElementsWithFocus and not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
 					log.debug(
 						"kwargsFromSuper: ignoring non native element with focus"
@@ -1233,10 +1279,10 @@ class UIA(Window):
 			return ""
 
 	def _get_liveRegionPoliteness(self):
-		# Live setting enumeration values allign with aria.AriaLivePoliteness.
 		try:
-			return aria.AriaLivePoliteness(
-				self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_LiveSettingPropertyId)
+			return UIAHandler.UIALiveSettingtoNVDAAriaLivePoliteness.get(
+				self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_LiveSettingPropertyId),
+				super().liveRegionPoliteness
 			)
 		except COMError:
 			return super().liveRegionPoliteness
@@ -1694,7 +1740,7 @@ class UIA(Window):
 		This just reports the element that received the alert in speech and braille, similar to how focus is presented.
 		Skype for business toast notifications being one example.
 		"""
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
@@ -1794,7 +1840,7 @@ class SensitiveSlider(UIA):
 	def event_valueChange(self):
 		focusParent=api.getFocusObject().parent
 		if self==focusParent:
-			speech.speakObjectProperties(self,value=True,reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, value=True, reason=controlTypes.OutputReason.CHANGE)
 		else:
 			super(SensitiveSlider,self).event_valueChange()
 

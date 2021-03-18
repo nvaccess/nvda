@@ -3,7 +3,93 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.1 =
+
+== New Features ==
+- Early support for UIA with Chromium based browsers (such as Edge). (#12025)
+
+
+== Changes ==
+- In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
+- NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
+- Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
+- Added more mathematical symbols to the symbols dictionary. (#11467)
+- The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
+- "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
+- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default.
+  - This behaviour can be disabled by default with by setting this option to "No".
+  - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly. (#10885)
+
+
+== Bug Fixes ==
+- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
+  - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
+- Fixed access to edit fields in MCS Electronics IDE's. (#11966) 
+- In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
+- In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
+- Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
+- It is now possible to read comments in MS Word with UIA enabled. (#9285)
+- Performance when interacting with Visual Studio has been improved. (#12171)
+- Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
+- Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
+   - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
+
+
+== Changes for Developers ==
+- Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+- NVDA now requires Python 3.8. (#12075)
+- NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
+ - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons``  is no longer supported, and ``scons.py`` has also been removed. 
+ - To run NVDA from source, rather than executing ``source/nvda.pyw`` directly, the developer should now use ``runnvda.bat`` in the root of the repository. If you do try to execute ``source/nvda.pyw``, a message box will alert you this is no longer supported.
+ - To perform unit tests, execute ``rununittests.bat [<extra unittest discover options>]``
+ - To perform system tests: execute ``runsystemtests.bat [<extra robot options>] ``
+ - To perform linting, execute ``runlint.bat <base branch>``
+ - Please refer to readme.md for more details.
+- The following Python dependencies have also been upgraded:
+ - comtypes updated to 1.1.8.
+ - pySerial updated to 3.5.
+ - wxPython updated to 4.1.1.
+ - Py2exe updated to 0.10.1.0.
+- `LiveText._getTextLines` has been removed. (#11639)
+  - Instead, override `_getText` which returns a string of all text in the object.
+- `LiveText` objects can now calculate diffs by character. (#11639)
+  - To alter the diff behaviour for some object, override the `diffAlgo` property (see the docstring for details).
+- When defining a script with the script decorator, the 'allowInSleepMode' boolean argument can be specified to control  if a script is available in sleep mode or not. (#11979)
+- The following functions are removed from the config module:
+ - canStartOnSecureScreens - use config.isInstalledCopy instead.
+ - hasUiAccess and execElevated - use them from the systemUtils module.
+ - getConfigDirs - use globalVars.appArgs.configPath instead
+- Module level REASON_* constants are removed from controlTypes - please use controlTypes.OutputReason instead. (#11969)
+- REASON_QUICKNAV has been removed from browseMode - use controlTypes.OutputReason.QUICKNAV instead. (#11969)
+- 'NVDAObject' (and derivatives) property 'isCurrent' now strictly returns Enum class 'controlTypes.IsCurrent'. (#11782)
+  - 'isCurrent' is no longer Optional, and thus will not return None.
+  - When an object is not current 'controlTypes.IsCurrent.NO' is returned.
+- The 'controlTypes.isCurrentLabels' mapping has been removed. (#11782)
+  - Instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. EG 'controlTypes.IsCurrent.YES.displayString'
+- 'NVDAObject' (and derivatives) property 'isCurrent' now strictly returns 'controlTypes.IsCurrent'. (#11782)
+  - 'isCurrent' is no longer Optional, and thus will not return None, when an object is not current 'controlTypes.IsCurrent.NO' is returned.
+- The 'controlTypes.isCurrentLabels' has been removed, instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. (#11782)
+  - EG 'controlTypes.IsCurrent.YES.displayString'
+- `winKernel.GetTimeFormat` has been removed - use `winKernel.GetTimeFormatEx` instead (#12139)
+- `winKernel.GetDateFormat` has been removed - use `winKernel.GetDateFormatEx` instead (#12139)
+- `gui.DriverSettingsMixin` has been removed - use `gui.AutoSettingsMixin` (#12144)
+- `speech.getSpeechForSpelling` has been removed - use `speech.getSpellingSpeech` (#12145)
+- Commands cannot be directly imported from speech as `import speech; speech.ExampleCommand()` or `import speech.manager; speech.manager.ExampleCommand()` - use  `from speech.commands import ExampleCommand` instead (#12126)
+- `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `sayAllhandler` does this manually now. (#12150)
+- The `synthDriverHandler` module is no longer star imported into `globalCommands` and `gui.settingsDialogs` - use `from synthDriverHandler import synthFunctionExample` instead. (#12172)
+- `ROLE_EQUATION` has been removed from controlTypes - use `ROLE_MATH`` instead. (#12164)
+- `autoSettingsUtils.driverSetting` classes are removed from `driverHandler` - please use them from `autoSettingUtils.driverSetting`. (#12168)
+- `autoSettingsUtils.utils` classes are removed from `driverHandler` - please use them from `autoSettingUtils.utils`. (#12168)
+- Support of `TextInfo`s that do not inherit from `contentRecog.BaseContentRecogTextInfo` is removed. (#12157)
+
+
 = 2020.4 =
+This release includes new Chinese Input methods, an update to Liblouis and the elements list (NVDA+f7) now works in focus mode.
+Context sensitive help is now available when pressing F1 in NVDA dialogs.
+Improvements to symbol pronunciation rules, speech dictionary, Braille message and skim reading.
+Bug fixes and improvements to Mail, Outlook, Teams, Visual Studio, Azure Data Studio, Foobar2000.
+On the web, there are improvements to Google Docs, and greater support for ARIA.
+Plus many other important bug fixes and improvements.
 
 == New Features ==
 - Pressing F1 inside NVDA dialogs will now open the help file to most relevant section. (#7757)
@@ -13,13 +99,30 @@ What's New in NVDA
   - Specifically grouping errors are now detected.
 - Added support for the new chinese Traditional Quick and Pinyin Input methods in Windows 10. (#11562)
 - Tab headers are now considered form fields with quick navigation f key. (#10432)
+- Added a command to toggle reporting of marked (highlighted) text; There is no default associated gesture. (#11807)
+- Added the --copy-portable-config command line parameter that allows you to automatically copy the provided configuration to the user account when silently installing NVDA. (#9676)
+- Braille routing is now supported with the Braille Viewer for mouse users, hover to route to a braille cell. (#11804)
+- NVDA will now automatically detect the Humanware Brailliant BI 40X and 20X devices via both USB and Bluetooth. (#11819)
 
 
 == Changes ==
-- Updated liblouis braille translator to version 3.15.0
+- Updated liblouis braille translator to version 3.16.1:
+ - Addresses multiple crashes
+ - Adds Bashkir grade 1 Braille table
+ - Adds Coptic 8 dot computer braille table
+ - Adds Russian literary braille and Russian literary braille (detailed) tables
+ - Adds Added Afrikaans grade 2 braille table
+ - Removes the Russian grade 1 Braille table
 - When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
 - For HIMS braille displays F3 has been remapped to Space + dots 148. (#11710)
 - Improvements to the UX of the "braille message timeout" and "Show messages indefinitely" options. (#11602)
+- In web browsers and other applications that support browse mode, the Elements List dialog (NVDA+F7) can now be invoked when in focus mode. (#10453)
+- Updates to ARIA live regions are now suppressed when reporting of dynamic content changes is disabled. (#9077)
+- NVDA will now report "Copied to clipboard" before the copied text. (#6757)
+- Presentation of graphical view table in disk management has been improved. (#10048)
+- Labels for controls are now disabled (greyed out) when the control is disabled. (#11809)
+- Updated CLDR emoji annotation to version 38. (#11817)
+- The inbuilt "Focus Highlight" feature has been renamed "Vision Highlight". (#11700)
 
 
 == Bug Fixes ==
@@ -33,7 +136,7 @@ What's New in NVDA
 - When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
 - NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
 - It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
-- When using the SAPI5 Ivona voices from harposoftware.com, NvDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
+- When using the SAPI5 Ivona voices from harposoftware.com, NVDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
 - It is now possible to enter number 6 in computer braille from a braille keyboard on HIMS displays. (#11710)
 - Major performance improvements in Azure Data Studio. (#11533, #11715)
 - With "Attempt to Cancel speech for expired focus events" enabled the title of the NVDA Find dialog is announced again. (#11632)
@@ -41,12 +144,25 @@ What's New in NVDA
 - It is no longer necessary to press tab or move focus after closing a context menu in MS Edge for browse mode to be functional again. (#11202)
 - NVDA no longer fails to read items in list views within a 64-bit application such as Tortoise SVN. (#8175)
 - ARIA treegrids are now exposed as normal tables in browse mode in both Firefox and Chrome. (#9715)
+- A reverse search can now be initiated with 'find previous' via NVDA+shift+F3 (#11770)
+- An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 
+- Strong and emphasis tags in Internet Explorer can again be suppressed from being reported by turning off Report Emphasis in NVDA's Document Formatting settings. (#11808)
+- A freeze of several seconds experienced by a small amount of users when arrowing between cells in Excel should no longer occur. (#11818)
+- In Microsoft Teams builds with version numbers like 1.3.00.28xxx, NVDA no longer fails reading messages in chats or Teams channels due to an incorrectly focused menu. (#11821)
+- Text marked both as being a spelling and grammar error at the same time in Google Chrome will be appropriately announced as both a spelling and grammar error by NVDA. (#11787)
+- When using Outlook (French locale), the shortcut for 'Reply all' (control+shift+R) works again. (#11196)
+- In Visual Studio, IntelliSense tool tips that provide additional details about the currently selected IntelliSense item are now only reported once. (#11611)
+- In Windows 10 Calculator, NVDA will not announce progress of calculations if speak typed characters is disabled. (#9428)
+- NVDA no longer crashes when using English US grade 2 and expand to computer Braille at the cursor is on, when displaying certain content such as a URL in Braille. (#11754)
+- It is again possible to report formatting information for the focused Excel cell using NVDA+F. (#11914)
+- QWERTY input on Papenmeier braille displays that support it again works and no longer causes NVDA to randomly freeze. (#11944)
 
 
 == Changes for Developers ==
 - System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
 - NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
 - The aria live politeness setting for live regions can now be found on NVDA Objects using the liveRegionPoliteness property. (#11596)
+- It is now possible to define separate gestures for Outlook and Word document. (#11196)
 
 
 = 2020.3 =
@@ -3039,4 +3155,3 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 - If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 - When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
-

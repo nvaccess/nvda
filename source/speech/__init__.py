@@ -34,25 +34,7 @@ from .commands import (
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
-from .commands import (  # noqa: F401
-	# F401 imported but unused:
-	# The following are imported here because other files that speech.py
-	# previously relied on "import * from .commands"
-	# New commands added to commands.py should be directly imported only where needed.
-	# Usage of these imports is deprecated and will be removed in 2021.1
-	SynthCommand,
-	IndexCommand,
-	SynthParamCommand,
-	BreakCommand,
-	BaseProsodyCommand,
-	VolumeCommand,
-	RateCommand,
-	PhonemeCommand,
-	BaseCallbackCommand,
-	CallbackCommand,
-	WaveFileCommand,
-	ConfigProfileTriggerCommand,
-)
+
 from . import types
 from .types import (
 	SpeechSequence,
@@ -293,13 +275,6 @@ def getSpellingSpeech(  # noqa: C901
 			yield PitchCommand()
 		yield EndUtteranceCommand()
 
-
-# 'getSpeechForSpelling' should be considered deprecated, use getSpellingSpeech instead.
-# The name 'getSpeechForSpelling' was introduced during the 2019.3 release.
-# The decision was made to rename it to be consistent with the other functions (get*Speech) which create
-# speech sequences.
-getSpeechForSpelling = getSpellingSpeech
-
 def getCharDescListFromText(text,locale):
 	"""This method prepares a list, which contains character and its description for all characters the text is made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale for all possible combination of consecutive characters in the text.
 	This is done to take care of conjunct characters present in several languages such as Hindi, Urdu, etc.
@@ -326,7 +301,7 @@ def getCharDescListFromText(text,locale):
 
 def speakObjectProperties(  # noqa: C901
 		obj,
-		reason: OutputReason = controlTypes.REASON_QUERY,
+		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		priority: Optional[Spri] = None,
 		**allowedProperties
@@ -346,7 +321,7 @@ def speakObjectProperties(  # noqa: C901
 # and move logic out into smaller helper functions.
 def getObjectPropertiesSpeech(  # noqa: C901
 		obj,
-		reason: OutputReason = controlTypes.REASON_QUERY,
+		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		**allowedProperties
 ) -> SpeechSequence:
@@ -362,7 +337,7 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				positionInfo=obj.positionInfo
 		elif value and name == "current":
 			# getPropertiesSpeech names this "current", but the NVDAObject property is
-			# named "isCurrent".
+			# named "isCurrent", it's type should always be controltypes.IsCurrent
 			newPropertyValues['current'] = obj.isCurrent
 		elif value:
 			# Certain properties such as row and column numbers have presentational versions, which should be used for speech if they are available.
@@ -395,10 +370,10 @@ def getObjectPropertiesSpeech(  # noqa: C901
 	cachedPropertyValues.update(newPropertyValues)
 	obj._speakObjectPropertiesCache=cachedPropertyValues
 	#If we should only cache we can stop here
-	if reason==controlTypes.REASON_ONLYCACHE:
+	if reason == OutputReason.ONLYCACHE:
 		return []
 	#If only speaking change, then filter out all values that havn't changed
-	if reason==controlTypes.REASON_CHANGE:
+	if reason == OutputReason.CHANGE:
 		for name in set(newPropertyValues)&set(oldCachedPropertyValues):
 			if newPropertyValues[name]==oldCachedPropertyValues[name]:
 				del newPropertyValues[name]
@@ -423,7 +398,7 @@ def getObjectPropertiesSpeech(  # noqa: C901
 	# This is because that one item will be the focused object, and saying selected is redundant.
 	# Rather, 'unselected' will be spoken for an unselected object if 1 or more items are selected. 
 	states=newPropertyValues.get('states')
-	if states is not None and reason==controlTypes.REASON_FOCUS:
+	if states is not None and reason == OutputReason.FOCUS:
 		if (
 			controlTypes.STATE_SELECTABLE in states 
 			and controlTypes.STATE_FOCUSABLE in states
@@ -468,7 +443,7 @@ def _getPlaceholderSpeechIfTextEmpty(
 
 def speakObject(
 		obj,
-		reason: OutputReason = controlTypes.REASON_QUERY,
+		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		priority: Optional[Spri] = None
 ):
@@ -488,7 +463,7 @@ def speakObject(
 # and move logic out into smaller helper functions.
 def getObjectSpeech(  # noqa: C901
 		obj,
-		reason: OutputReason = controlTypes.REASON_QUERY,
+		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 ):
 	from NVDAObjects import NVDAObjectTextInfo
@@ -497,18 +472,23 @@ def getObjectSpeech(  # noqa: C901
 	import browseMode
 	shouldReportTextContent=not (
 		# focusEntered should never present text content
-		(reason==controlTypes.REASON_FOCUSENTERED) or
-		# The rootNVDAObject of a browseMode document in browse mode (not passThrough) should never present text content
-		(isinstance(obj.treeInterceptor,browseMode.BrowseModeDocumentTreeInterceptor) and not obj.treeInterceptor.passThrough and obj==obj.treeInterceptor.rootNVDAObject) or
+		(reason == OutputReason.FOCUSENTERED)
+		# The rootNVDAObject of a browseMode document in browse mode (not passThrough)
+		# should never present text content
+		or (
+			isinstance(obj.treeInterceptor, browseMode.BrowseModeDocumentTreeInterceptor)
+			and not obj.treeInterceptor.passThrough
+			and obj == obj.treeInterceptor.rootNVDAObject
+		)
 		# objects that do not report as having navigableText should not report their text content either
-		not obj._hasNavigableText
+		or not obj._hasNavigableText
 	)
 
 	allowProperties = _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent)
 
-	if reason == controlTypes.REASON_FOCUSENTERED:
+	if reason == OutputReason.FOCUSENTERED:
 		# Aside from excluding some properties, focus entered should be spoken like focus.
-		reason = controlTypes.REASON_FOCUS
+		reason = OutputReason.FOCUS
 
 	sequence = getObjectPropertiesSpeech(
 		obj,
@@ -516,36 +496,28 @@ def getObjectSpeech(  # noqa: C901
 		_prefixSpeechCommand=_prefixSpeechCommand,
 		**allowProperties
 	)
-	if reason == controlTypes.REASON_ONLYCACHE:
+	if reason == OutputReason.ONLYCACHE:
 		return sequence
 	if shouldReportTextContent:
 		try:
 			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
-			if not info.isCollapsed:
-				# if there is selected text, then there is a value and we do not report placeholder
-				sequence.extend(getPreselectedTextSpeech(info.text))
-			else:
-				info.expand(textInfos.UNIT_LINE)
-				textEmpty, placeholderSeq = _getPlaceholderSpeechIfTextEmpty(obj, reason)
-				sequence.extend(placeholderSeq)
-				speechGen = getTextInfoSpeech(
-					info,
-					unit=textInfos.UNIT_LINE,
-					reason=controlTypes.REASON_CARET
-				)
-				sequence.extend(_flattenNestedSequences(speechGen))
-		except:  # noqa E722 legacy bare except. Unknown what exceptions may be raised.
-			newInfo = obj.makeTextInfo(textInfos.POSITION_ALL)
+		except NotImplementedError:
+			info = None
+		if info and not info.isCollapsed:
+			# if there is selected text, then there is a value and we do not report placeholder
+			sequence.extend(getPreselectedTextSpeech(info.text))
+		else:
+			if not info:
+				info = obj.makeTextInfo(textInfos.POSITION_FIRST)
+			info.expand(textInfos.UNIT_LINE)
 			textEmpty, placeholderSeq = _getPlaceholderSpeechIfTextEmpty(obj, reason)
-			if textEmpty:
-				sequence.extend(placeholderSeq)
-			else:
-				speechGen = getTextInfoSpeech(
-					newInfo,
-					unit=textInfos.UNIT_PARAGRAPH,
-					reason=controlTypes.REASON_CARET,
-				)
-				sequence.extend(_flattenNestedSequences(speechGen))
+			sequence.extend(placeholderSeq)
+			speechGen = getTextInfoSpeech(
+				info,
+				unit=textInfos.UNIT_LINE,
+				reason=OutputReason.CARET,
+			)
+			sequence.extend(_flattenNestedSequences(speechGen))
 	elif role == controlTypes.ROLE_MATH:
 		import mathPres
 		mathPres.ensureInit()
@@ -583,7 +555,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		"columnSpan": True,
 		"current": True
 	}
-	if reason == controlTypes.REASON_FOCUSENTERED:
+	if reason == OutputReason.FOCUSENTERED:
 		allowProperties["value"] = False
 		allowProperties["keyboardShortcut"] = False
 		allowProperties["positionInfo_level"] = False
@@ -595,7 +567,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		allowProperties["positionInfo_level"] = False
 		allowProperties["positionInfo_indexInGroup"] = False
 		allowProperties["positionInfo_similarItemsInGroup"] = False
-	if reason != controlTypes.REASON_QUERY:
+	if reason != OutputReason.QUERY:
 		allowProperties["rowCount"] = False
 		allowProperties["columnCount"] = False
 	formatConf = config.conf["documentFormatting"]
@@ -625,7 +597,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 
 def speakText(
 		text: str,
-		reason: OutputReason = controlTypes.REASON_MESSAGE,
+		reason: OutputReason = OutputReason.MESSAGE,
 		symbolLevel: Optional[int] = None,
 		priority: Optional[Spri] = None
 ):
@@ -1058,7 +1030,7 @@ def speakTextInfo(
 		useCache: Union[bool, SpeakTextInfoState] = True,
 		formatConfig: Dict[str, bool] = None,
 		unit: Optional[str] = None,
-		reason: OutputReason = controlTypes.REASON_QUERY,
+		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		onlyInitialFields: bool = False,
 		suppressBlanks: bool = False,
@@ -1075,14 +1047,6 @@ def speakTextInfo(
 		suppressBlanks
 	)
 
-	if reason == controlTypes.REASON_SAYALL:
-		log.error(
-			"Deprecation warning: In 2021.1 speakTextInfo will no longer  send speech through "
-			"speakWithoutPauses if reason is sayAll, as sayAllhandler does this manually now."
-		)
-		flatSpeechGen = list(_flattenNestedSequences(speechGen))
-		return _speakWithoutPauses.speakWithoutPauses(flatSpeechGen)
-
 	speechGen = GeneratorWithReturn(speechGen)
 	for seq in speechGen:
 		speak(seq, priority=priority)
@@ -1097,12 +1061,12 @@ def getTextInfoSpeech(  # noqa: C901
 		useCache: Union[bool, SpeakTextInfoState] = True,
 		formatConfig: Dict[str, bool] = None,
 		unit: Optional[str] = None,
-		reason: OutputReason = controlTypes.REASON_QUERY,
+		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		onlyInitialFields: bool = False,
 		suppressBlanks: bool = False
 ) -> Generator[SpeechSequence, None, bool]:
-	onlyCache=reason==controlTypes.REASON_ONLYCACHE
+	onlyCache = reason == OutputReason.ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
@@ -1118,7 +1082,7 @@ def getTextInfoSpeech(  # noqa: C901
 		formatConfig['extraDetail']=True
 	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
 	# For performance reasons, when navigating by paragraph or table cell, spelling errors will not be announced.
-	if unit in (textInfos.UNIT_PARAGRAPH,textInfos.UNIT_CELL) and reason is controlTypes.REASON_CARET:
+	if unit in (textInfos.UNIT_PARAGRAPH, textInfos.UNIT_CELL) and reason == OutputReason.CARET:
 		formatConfig['reportSpellingErrors']=False
 
 	#Fetch the last controlFieldStack, or make a blank one
@@ -1182,7 +1146,7 @@ def getTextInfoSpeech(  # noqa: C901
 	speechSequence: SpeechSequence = []
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
 	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
-	if reason!=controlTypes.REASON_FOCUS:
+	if reason != OutputReason.FOCUS:
 		endingBlock=False
 		for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
 			fieldSequence = info.getControlFieldSpeech(
@@ -1195,7 +1159,7 @@ def getTextInfoSpeech(  # noqa: C901
 			)
 			if fieldSequence:
 				speechSequence.extend(fieldSequence)
-			if not endingBlock and reason==controlTypes.REASON_SAYALL:
+			if not endingBlock and reason == OutputReason.SAYALL:
 				endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
 		if endingBlock:
 			speechSequence.append(EndUtteranceCommand())
@@ -1440,7 +1404,7 @@ def getTextInfoSpeech(  # noqa: C901
 
 	# If there is nothing that should cause the TextInfo to be considered
 	# non-blank, blank should be reported, unless we are doing a say all.
-	if not suppressBlanks and reason != controlTypes.REASON_SAYALL and shouldConsiderTextInfoBlank:
+	if not suppressBlanks and reason != OutputReason.SAYALL and shouldConsiderTextInfoBlank:
 		# Translators: This is spoken when the line is considered blank.
 		speechSequence.append(_("blank"))
 
@@ -1451,7 +1415,7 @@ def getTextInfoSpeech(  # noqa: C901
 		if not isinstance(useCache,SpeakTextInfoState):
 			speakTextInfoState.updateObj()
 
-	if reason == controlTypes.REASON_ONLYCACHE or not speechSequence:
+	if reason == OutputReason.ONLYCACHE or not speechSequence:
 		return False
 
 	yield speechSequence
@@ -1462,7 +1426,7 @@ def getTextInfoSpeech(  # noqa: C901
 # Note: when working on getPropertiesSpeech, look for opportunities to simplify
 # and move logic out into smaller helper functions.
 def getPropertiesSpeech(  # noqa: C901
-		reason: OutputReason = controlTypes.REASON_QUERY,
+		reason: OutputReason = OutputReason.QUERY,
 		**propertyValues
 ) -> SpeechSequence:
 	global oldTreeLevel, oldTableID, oldRowNumber, oldRowSpan, oldColumnNumber, oldColumnSpan
@@ -1493,9 +1457,9 @@ def getPropertiesSpeech(  # noqa: C901
 		and (
 			roleText
 			or reason not in (
-				controlTypes.REASON_SAYALL,
-				controlTypes.REASON_CARET,
-				controlTypes.REASON_FOCUS
+				OutputReason.SAYALL,
+				OutputReason.CARET,
+				OutputReason.FOCUS
 			)
 			or not (
 				name
@@ -1509,8 +1473,8 @@ def getPropertiesSpeech(  # noqa: C901
 		and (
 			role != controlTypes.ROLE_MATH
 			or reason not in (
-				controlTypes.REASON_CARET,
-				controlTypes.REASON_SAYALL
+				OutputReason.CARET,
+				OutputReason.SAYALL
 			)
 	)):
 		textList.append(roleText if roleText else controlTypes.roleLabels[role])
@@ -1606,15 +1570,12 @@ def getPropertiesSpeech(  # noqa: C901
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
-	ariaCurrent = propertyValues.get('current', False)
-	if ariaCurrent:
-		try:
-			ariaCurrentLabel = controlTypes.isCurrentLabels[ariaCurrent]
-			textList.append(ariaCurrentLabel)
-		except KeyError:
-			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
-			ariaCurrentLabel = controlTypes.isCurrentLabels[True]
-			textList.append(ariaCurrentLabel)
+
+	# speak isCurrent property EG aria-current
+	isCurrent = propertyValues.get('current', controlTypes.IsCurrent.NO)
+	if isCurrent != controlTypes.IsCurrent.NO:
+		textList.append(isCurrent.displayString)
+
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)
@@ -1669,7 +1630,7 @@ def getControlFieldSpeech(  # noqa: C901
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	role = attrs.get('role', controlTypes.ROLE_UNKNOWN)
 	if (
-		reason == controlTypes.REASON_FOCUS
+		reason == OutputReason.FOCUS
 		or attrs.get('alwaysReportName', False)
 	):
 		name = attrs.get('name', "")
@@ -1677,10 +1638,10 @@ def getControlFieldSpeech(  # noqa: C901
 		name = ""
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
-	ariaCurrent=attrs.get('current', None)
+	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
-	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportDescription',False):
+	if reason == OutputReason.FOCUS or attrs.get('alwaysReportDescription', False):
 		description=attrs.get('description',"")
 	else:
 		description=""
@@ -1707,7 +1668,7 @@ def getControlFieldSpeech(  # noqa: C901
 		keyboardShortcutSequence = getPropertiesSpeech(
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
-	ariaCurrentSequence = getPropertiesSpeech(reason=reason, current=ariaCurrent)
+	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
 	valueSequence = getPropertiesSpeech(reason=reason, value=value)
@@ -1741,7 +1702,7 @@ def getControlFieldSpeech(  # noqa: C901
 	# Determine the order of speech.
 	# speakContentFirst: Speak the content before the control field info.
 	speakContentFirst = (
-		reason == controlTypes.REASON_FOCUS
+		reason == OutputReason.FOCUS
 		and presCat != attrs.PRESCAT_CONTAINER
 		and role not in (
 			controlTypes.ROLE_EDITABLETEXT,
@@ -1791,7 +1752,7 @@ def getControlFieldSpeech(  # noqa: C901
 		return tableSeq
 	elif (
 		nameSequence
-		and reason == controlTypes.REASON_FOCUS
+		and reason == OutputReason.FOCUS
 		and fieldType == "start_addedToControlFieldStack"
 		and role in (controlTypes.ROLE_GROUPING, controlTypes.ROLE_PROPERTYPAGE)
 	):
@@ -1824,7 +1785,7 @@ def getControlFieldSpeech(  # noqa: C901
 			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
 		tableCellSequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellSequence.extend(stateTextSequence)
-		tableCellSequence.extend(ariaCurrentSequence)
+		tableCellSequence.extend(isCurrentSequence)
 		types.logBadSequenceTypes(tableCellSequence)
 		return tableCellSequence
 
@@ -1873,7 +1834,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out.extend(stateTextSequence if speakStatesFirst else roleTextSequence)
 		out.extend(roleTextSequence if speakStatesFirst else stateTextSequence)
 		out.append(containerContainsText)
-		out.extend(ariaCurrentSequence)
+		out.extend(isCurrentSequence)
 		out.extend(valueSequence)
 		out.extend(descriptionSequence)
 		out.extend(levelSequence)
@@ -1908,8 +1869,8 @@ def getControlFieldSpeech(  # noqa: C901
 	# Special cases
 	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
 		out = []
-		if ariaCurrent:
-			out.extend(ariaCurrentSequence)
+		if isCurrent != controlTypes.IsCurrent.NO:
+			out.extend(isCurrentSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
 		if role == controlTypes.ROLE_TREEVIEWITEM:
 			if controlTypes.STATE_EXPANDED in states:
@@ -2016,7 +1977,14 @@ def getFormatFieldSpeech(  # noqa: C901
 		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None
 		# headings should be spoken not only if they change, but also when beginning to speak lines or paragraphs
 		# Ensuring a similar experience to if a heading was a controlField
-		if headingLevel and (initialFormat and (reason==controlTypes.REASON_FOCUS or unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH)) or headingLevel!=oldHeadingLevel):
+		if(
+			headingLevel
+			and (
+				initialFormat
+				and (reason == OutputReason.FOCUS or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH))
+				or headingLevel != oldHeadingLevel
+			)
+		):
 			# Translators: Speaks the heading level (example output: heading level 2).
 			text=_("heading level %d")%headingLevel
 			textList.append(text)
@@ -2139,6 +2107,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text is no longer marked
 				else _("not marked"))
 			textList.append(text)
+	if formatConfig["reportEmphasis"]:
 		# strong text
 		strong=attrs.get("strong")
 		oldStrong=attrsCache.get("strong") if attrsCache is not None else None

@@ -1,9 +1,10 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
+from typing import Optional
 
 """NVDA core"""
 
@@ -116,29 +117,28 @@ def restart(disableAddons=False, debugLogging=False):
 	import subprocess
 	import winUser
 	import shellapi
-	options=[]
-	try:
-		sys.argv.remove('--disable-addons')
-	except ValueError:
-		pass
-	try:
-		sys.argv.remove('--debug-logging')
-	except ValueError:
-		pass
+	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
+		try:
+			sys.argv.remove(paramToRemove)
+		except ValueError:
+			pass
+	options = []
+	if not hasattr(sys, "frozen"):
+		options.append(os.path.basename(sys.argv[0]))
 	if disableAddons:
 		options.append('--disable-addons')
 	if debugLogging:
 		options.append('--debug-logging')
-	try:
-		sys.argv.remove("--ease-of-access")
-	except ValueError:
-		pass
-	shellapi.ShellExecute(None, None,
-		sys.executable,
-		subprocess.list2cmdline(sys.argv + options),
-		None,
+	shellapi.ShellExecute(
+		hwnd=None,
+		operation=None,
+		file=sys.executable,
+		parameters=subprocess.list2cmdline(options + sys.argv[1:]),
+		directory=globalVars.appDir,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-		winUser.SW_SHOWNORMAL)
+		showCmd=winUser.SW_SHOWNORMAL
+	)
+
 
 def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
@@ -208,6 +208,27 @@ def _setInitialFocus():
 	except:
 		log.exception("Error retrieving initial focus")
 
+
+def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
+	import languageHandler
+	import wx
+	lang = languageHandler.getLanguage()
+	locale = wx.Locale()
+	wxLang = locale.FindLanguageInfo(lang)
+	if not wxLang and '_' in lang:
+		wxLang = locale.FindLanguageInfo(lang.split('_')[0])
+	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
+	# If we try to initialize this language, wx will show a warning dialog.
+	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
+	# In this case, wxLang is already set to None.
+	# Therefore treat these situations like wx not knowing the language at all.
+	if wxLang and not locale.IsAvailable(wxLang.Language):
+		wxLang = None
+	if not wxLang:
+		log.debugWarning("wx does not support language %s" % lang)
+	return wxLang
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -228,6 +249,17 @@ def main():
 	log.debug("loading config")
 	import config
 	config.initialize()
+	if globalVars.appArgs.configPath == config.getUserDefaultConfigPath(useInstalledPathIfExists=True):
+		# Make sure not to offer the ability to copy the current configuration to the user account.
+		# This case always applies to the launcher when configPath is not overridden by the user,
+		# which is the default.
+		# However, if a user wants to run the launcher with a custom configPath,
+		# it is likely that he wants to copy that configuration when installing.
+		# This check also applies to cases where a portable copy is run using the installed configuration,
+		# in which case we want to avoid copying a configuration to itself.
+		# We set the value to C{None} in order for the gui to determine
+		# when to disable the checkbox for this feature.
+		globalVars.appArgs.copyPortableConfig = None
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
@@ -408,26 +440,14 @@ def main():
 
 	# initialize wxpython localization support
 	locale = wx.Locale()
-	lang=languageHandler.getLanguage()
-	wxLang=locale.FindLanguageInfo(lang)
-	if not wxLang and '_' in lang:
-		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
+	wxLang = getWxLangOrNone()
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
-	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
-	# If we try to initialize this language, wx will show a warning dialog.
-	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
-	# In this case, wxLang is already set to None.
-	# Therefore treat these situations like wx not knowing the language at all.
-	if wxLang and not locale.IsAvailable(wxLang.Language):
-		wxLang=None
 	if wxLang:
 		try:
 			locale.Init(wxLang.Language)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
-	else:
-		log.debugWarning("wx does not support language %s" % lang)
 
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
@@ -483,7 +503,11 @@ def main():
 	globalPluginHandler.initialize()
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
-		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
+		wx.CallAfter(
+			gui.installerGui.doSilentInstall,
+			copyPortableConfig=globalVars.appArgs.copyPortableConfig,
+			startAfterInstall=not globalVars.appArgs.installSilent
+		)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
@@ -547,7 +571,10 @@ def main():
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
-	postNvdaStartup.notify()
+	# Queue the firing of the postNVDAStartup notification.
+	# This is queued so that it will run from within the core loop,
+	# and initial focus has been reported.
+	queueHandler.queueFunction(queueHandler.eventQueue, postNvdaStartup.notify)
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
@@ -591,6 +618,14 @@ def main():
 	_terminate(speech)
 	_terminate(addonHandler)
 	_terminate(garbageHandler)
+	# DMP is only started if needed.
+	# Terminate manually (and let it write to the log if necessary)
+	# as core._terminate always writes an entry.
+	try:
+		import diffHandler
+		diffHandler._dmp._terminate()
+	except Exception:
+		log.exception("Exception while terminating DMP")
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:

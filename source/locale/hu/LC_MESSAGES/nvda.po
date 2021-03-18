@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 01:31+1000\n"
-"PO-Revision-Date: 2020-09-28 09:53+0100\n"
+"POT-Creation-Date: 2021-01-12 20:07+1000\n"
+"PO-Revision-Date: 2020-12-20 01:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -680,6 +680,12 @@ msgstr "Afrikansz, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Afrikaans grade 2"
+msgstr "Afrikansz, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
 msgstr "Arab 8 pontos számítógépes braille"
 
@@ -700,6 +706,12 @@ msgstr "Asszámi, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Bashkir grade 1"
+msgstr "kasmíri, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bengali grade 1"
 msgstr "Bengáli, rövidítési fokozat 1"
 
@@ -712,6 +724,12 @@ msgstr "Bolgár 8 pontos számítógépes braille"
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Közép-kurd, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Coptic 8 dot computer braille"
+msgstr "Horvát 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1155,8 +1173,15 @@ msgstr "Orosz számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
-msgstr "Orosz, rövidítési fokozat 1"
+#, fuzzy
+msgid "Russian literary braille"
+msgstr "Orosz számítógépes braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Russian literary braille (detailed)"
+msgstr "Orosz számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1956,12 +1981,12 @@ msgstr "narancsvörös"
 #. Translators: The color orange (HSV hue 30 degrees)
 msgctxt "color hue"
 msgid "orange"
-msgstr "narancs"
+msgstr "narancssárga"
 
 #. Translators: The color between  orange and yellow (HSV hue 45 degrees)
 msgctxt "color hue"
 msgid "orange-yellow"
-msgstr "narancssárga"
+msgstr "sárgás narancssárga"
 
 #. Translators: The color yellow (HSV hue 60 degrees)
 msgctxt "color hue"
@@ -2709,7 +2734,6 @@ msgid "figure"
 msgstr "Alakzat"
 
 #. Translators: Identifies marked (highlighted) content
-#, fuzzy
 msgid "marked content"
 msgstr "Kiemelt"
 
@@ -3016,10 +3040,6 @@ msgstr ""
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
 msgstr "nincs kijelölés"
-
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "A vágólapra másolva."
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -3371,6 +3391,18 @@ msgstr "Kiemelés jelzése bekapcsolva"
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "Kiemelés jelzésének be és kikapcsolása"
+
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+msgid "Toggles on and off the reporting of marked text"
+msgstr "Megjelölt tartalom bemondásának be és kikapcsolása"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked on"
+msgstr "Megjelölt tartalom bemondása bekapcsolva"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked off"
+msgstr "Megjelölt tartalom bemondása kikapcsolva"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3731,12 +3763,6 @@ msgstr "Egyszerű áttekintőmód be- és kikapcsolása."
 #. but there is no current navigator object.
 msgid "No navigator object"
 msgstr "Nincs elem a navigátor kurzornál"
-
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "%s. A vágólapra másolva."
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -4220,6 +4246,8 @@ msgid "Log fragment copied to clipboard"
 msgstr "Naplórészlet a vágólapra másolva."
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
 msgid "Unable to copy"
 msgstr "Nem lehet másolni"
 
@@ -4588,10 +4616,6 @@ msgstr "Nincs másolható szöveg"
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
 msgstr "Nem lehet kijelölni a szöveget, nyomja meg kétszer a másoláshoz"
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "A kijelölt szöveg a vágólapra másolva."
 
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
@@ -6558,6 +6582,25 @@ msgstr "felderítés vége"
 msgid "NVDA Message"
 msgstr "NVDA üzenet"
 
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d karakter"
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "A vágólapra másolva: {text}"
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied: {text}"
+msgstr "Másolva: {text}"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Frissítés ellenőrzése"
@@ -6576,6 +6619,9 @@ msgstr "Hiba történt a frissítés keresésekor"
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6882,6 +6928,8 @@ msgid "Composition"
 msgstr "Szerkesztés"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "Javaslat"
@@ -6901,6 +6949,10 @@ msgstr "Nem található a súgó ablak."
 msgid "No track playing"
 msgstr "Nincs lejátszás alatt lévő szám"
 
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr "Nem lehet lekérdezni a hátralévő időt"
+
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Bemondja a lejátszás alatt lévő szám hátralévő idejét"
@@ -6908,6 +6960,10 @@ msgstr "Bemondja a lejátszás alatt lévő szám hátralévő idejét"
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Bemondja a lejátszás alatt lévő szám eltelt idejét"
+
+#. Translators: Reported if the total time is not available in Foobar2000
+msgid "Total time not available"
+msgstr "Nem lehet lekérdezni a teljes időtartamot"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7404,6 +7460,14 @@ msgstr "kikapcsolva"
 msgid "No emoji"
 msgstr "Nincs emodzsi"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "Szerkesztői változások követése bekapcsolva"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "Szerkesztői változások követése kikapcsolva"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 series/protocol converter"
@@ -7521,6 +7585,11 @@ msgstr "NVDA braille-néző"
 #. whether the braille viewer is shown at startup or not.
 msgid "&Show Braille Viewer on Startup"
 msgstr "A braille-néző &mutatása a program indulásakor"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
+msgstr "cellák görgetése az egérhelyzet alapján"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8132,6 +8201,8 @@ msgid "Install"
 msgstr "Telepítés"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
 msgstr "Letiltva"
 
@@ -8469,6 +8540,15 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "Kézi aktiválás"
 
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+msgid "No help available here."
+msgstr "Az elemhez nem tartozik súgó"
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+msgid "No user guide found."
+msgstr "nem található felhasználói útmutató"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8699,6 +8779,15 @@ msgstr "&Hordozható változat indítása a telepítést követően"
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Kérem, adjon meg egy mappát a hordozható verzió számára"
+
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
+msgstr ""
+"Kérem, adjon meg egy mappát a meghajtó betűjelét is tartalmazó teljes "
+"elérési úttal a hordozható verzió számára"
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -9324,15 +9413,13 @@ msgstr "Felső és alsó &index"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "E&mphasis"
 msgstr "&Hangsúlyozás"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
-msgid "Marked (highlighted text)"
-msgstr "Kiemelés"
+msgid "Mar&ked (highlighted text)"
+msgstr "Megjelölt Kiemelés"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9794,13 +9881,24 @@ msgstr "A rendszerkurzor &alakja"
 msgid "Cursor shape for &review:"
 msgstr "Az áttekintőkurzor &alakja"
 
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Korlátozott ideig"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Időkorlát nélkül"
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+msgid "Show messages"
+msgstr "üzenetek megjelenítése"
+
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
 msgstr "&Üzenet megjelenésének időtartama(másodperc)"
-
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
-msgstr "Üzenetek megjelenítése idő&korlát nélkül"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
@@ -9978,12 +10076,6 @@ msgstr "%s Kijelölve"
 #, python-format
 msgid "%s selected"
 msgstr "%s kijelölve"
-
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d karakter"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -10171,32 +10263,26 @@ msgid "no revised %s"
 msgstr "Nincs változás %s"
 
 #. Translators: Reported when text is marked
-#, fuzzy
 msgid "marked"
 msgstr "Megjelölt"
 
 #. Translators: Reported when text is no longer marked
-#, fuzzy
 msgid "not marked"
 msgstr "Nincs megjelölve"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
-#, fuzzy
 msgid "strong"
-msgstr "Erősen hangsúlyos"
+msgstr "Fontos szöveg"
 
 #. Translators: Reported when text is no longer marked as strong (e.g. bold)
-#, fuzzy
 msgid "not strong"
-msgstr "Nem erősen hangsúlyos"
+msgstr "Fontos szöveg vége"
 
 #. Translators: Reported when text is marked as emphasised
-#, fuzzy
 msgid "emphasised"
 msgstr "Hangsúlyos"
 
 #. Translators: Reported when text is no longer marked as emphasised
-#, fuzzy
 msgid "not emphasised"
 msgstr "Nem hangsúlyos"
 
@@ -10439,7 +10525,8 @@ msgid "Highlight navigator &object"
 msgstr "&Navigátor kurzor kiemelése"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-msgid "Focus Highlight"
+#, fuzzy
+msgid "Visual Highlight"
 msgstr "Fókuszkiemelő"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
@@ -11833,10 +11920,11 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr "1,5 sor"
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
-msgstr "pontosan"
+msgid "exactly {space:.1f} pt"
+msgstr "pontosan {space:.1f} pont"
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -11934,14 +12022,6 @@ msgstr "{styleName} stílus, behúzási szint {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "{size:g} pont betűtipus"
 
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking on"
-msgstr "Szerkesztői változások követése bekapcsolva"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking off"
-msgstr "Szerkesztői változások követése kikapcsolva"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr "Nem nyomtatható karakterek megjelenítése"
@@ -11992,6 +12072,19 @@ msgstr "dupla sorköz"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5-es sorköz"
+
+#~ msgctxt "line spacing value"
+#~ msgid "exact"
+#~ msgstr "pontosan"
+
+#~ msgid "Russian grade 1"
+#~ msgstr "Orosz, rövidítési fokozat 1"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "%s. A vágólapra másolva."
+
+#~ msgid "Review selection copied to clipboard"
+#~ msgstr "A kijelölt szöveg a vágólapra másolva."
 
 #~ msgid "Apply"
 #~ msgstr "Alkalmaz"

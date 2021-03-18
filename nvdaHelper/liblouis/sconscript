@@ -16,11 +16,17 @@ import os
 import re
 import glob
 from SCons.Tool.MSCommon.vc import find_vc_pdir
+import typing
+from SCons.Environment import Environment
+from SCons.Environment import Base
 
 Import([
-	"env",
+	"thirdPartyEnv",
 	"sourceDir",
 ])
+sourceDir:Base = sourceDir
+thirdPartyEnv: Environment = thirdPartyEnv
+env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
 
 louisRootDir = env.Dir("#include/liblouis")
 louisSourceDir = louisRootDir.Dir("liblouis")
@@ -36,8 +42,6 @@ def getLouisVersion():
 			if m:
 				return m.group("version")
 	return "unknown"
-
-env = env.Clone()
 
 # Liblouis is build with Clang, as Microsoft Visual C++ is unable to build C99 code.
 clangDirs = glob.glob(os.path.join(

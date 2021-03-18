@@ -6,6 +6,8 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+from enum import Enum
+
 import comtypes.client
 from comtypes.automation import VT_EMPTY
 from comtypes import COMError
@@ -31,7 +33,7 @@ from comtypes.gen.UIAutomationClient import *
 import textInfos
 from typing import Dict
 from queue import Queue
-
+import aria
 
 #Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
@@ -69,9 +71,6 @@ badUIAWindowClassNames=[
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
-	# All Chromium implementations (including Edge) should not be UIA,
-	# As their IA2 implementation is still better at the moment.
-	"Chrome_RenderWidgetHostHWND",
 ]
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
@@ -137,6 +136,11 @@ UIAControlTypesToNVDARoles={
 	UIA_SeparatorControlTypeId:controlTypes.ROLE_SEPARATOR,
 }
 
+UIALiveSettingtoNVDAAriaLivePoliteness: Dict[str, aria.AriaLivePoliteness] = {
+	UIA.Off: aria.AriaLivePoliteness.OFF,
+	UIA.Polite: aria.AriaLivePoliteness.POLITE,
+	UIA.Assertive: aria.AriaLivePoliteness.ASSERTIVE,
+}
 
 UIAPropertyIdsToNVDAEventNames={
 	UIA_NamePropertyId:"nameChange",
@@ -201,6 +205,21 @@ ignoreWinEventsMap = {
 }
 for id in UIAEventIdsToNVDAEventNames.keys():
 	ignoreWinEventsMap[id] = [0]
+
+
+class AllowUiaInChromium(Enum):
+	_DEFAULT = 0  # maps to 'when necessary'
+	WHEN_NECESSARY = 1  # the current default
+	YES = 2
+	NO = 3
+
+	@staticmethod
+	def getConfig() -> 'AllowUiaInChromium':
+		allow = AllowUiaInChromium(config.conf['UIA']['allowInChromium'])
+		if allow == AllowUiaInChromium._DEFAULT:
+			return AllowUiaInChromium.WHEN_NECESSARY
+		return allow
+
 
 class UIAHandler(COMObject):
 	_com_interfaces_ = [
@@ -699,13 +718,28 @@ class UIAHandler(COMObject):
 			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
 			# And even current builds of Office 2016 are still missing enough info from UIA that it is still impossible to switch to UIA completely.
 			# Therefore, if we can inject in-process, refuse to use UIA and instead fall back to the MS Word object model.
+			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 			if (
 				# An MS Word document window 
 				windowClass=="_WwG" 
 				# Disabling is only useful if we can inject in-process (and use our older code)
-				and appModule.helperLocalBindingHandle 
+				and canUseOlderInProcessApproach
 				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
+				return False
+			# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
+			# As their IA2 implementation is still better at the moment.
+			elif (
+				windowClass == "Chrome_RenderWidgetHostHWND"
+				and (
+					AllowUiaInChromium.getConfig() == AllowUiaInChromium.NO
+					# Disabling is only useful if we can inject in-process (and use our older code)
+					or (
+						canUseOlderInProcessApproach
+						and AllowUiaInChromium.getConfig() != AllowUiaInChromium.YES  # Users can prefer to use UIA
+					)
+				)
 			):
 				return False
 		return bool(res)

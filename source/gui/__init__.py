@@ -1,9 +1,15 @@
 # -*- coding: UTF-8 -*-
-#gui/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+from .contextHelp import (
+	# several other submodules depend on ContextHelpMixin
+	# ensure early that it can be imported successfully.
+	ContextHelpMixin as _ContextHelpMixin,  # don't expose from gui, import submodule directly.
+)
 
 import time
 import os
@@ -25,7 +31,6 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
-from .contextHelp import ContextHelpMixin
 from .settingsDialogs import *
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
@@ -591,7 +596,26 @@ def initialize():
 	if mainFrame:
 		raise RuntimeError("GUI already initialized")
 	mainFrame = MainFrame()
+	wxLang = core.getWxLangOrNone()
+	if wxLang:
+		# otherwise the system default will be used
+		mainFrame.SetLayoutDirection(wxLang.LayoutDirection)
 	wx.GetApp().SetTopWindow(mainFrame)
+	# In wxPython >= 4.1,
+	# wx.CallAfter no longer executes callbacks while NVDA's main thread is within apopup menu or message box.
+	# To work around this,
+	# Monkeypatch wx.CallAfter to
+	# post a WM_NULL message to our top-level window after calling the original CallAfter,
+	# which causes wx's event loop to wake up enough to execute the callback.
+	old_wx_CallAfter = wx.CallAfter
+
+	def wx_CallAfter_wrapper(func, *args, **kwargs):
+		old_wx_CallAfter(func, *args, **kwargs)
+		# mainFrame may be None as NVDA could be terminating.
+		topHandle = mainFrame.Handle if mainFrame else None
+		if topHandle:
+			winUser.PostMessage(topHandle, winUser.WM_NULL, 0, 0)
+	wx.CallAfter = wx_CallAfter_wrapper
 
 def terminate():
 	import brailleViewer
@@ -671,7 +695,7 @@ def runScriptModalDialog(dialog, callback=None):
 
 
 class WelcomeDialog(
-		ContextHelpMixin,
+		_ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The NVDA welcome dialog.
@@ -705,14 +729,10 @@ class WelcomeDialog(
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
 		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
 
-		optionsSizer = wx.StaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA welcome dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
-		)
+		# Translators: The label for a group box containing the NVDA welcome dialog options.
+		optionsLabel = _("Options")
+		optionsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel)
+		optionsBox = optionsSizer.GetStaticBox()
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
@@ -727,17 +747,18 @@ class WelcomeDialog(
 			log.error("Could not set Keyboard layout list to current layout",exc_info=True) 
 		# Translators: The label of a checkbox in the Welcome dialog.
 		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
-		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=capsAsNVDAModifierText))
+		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=capsAsNVDAModifierText))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 		# Translators: The label of a checkbox in the Welcome dialog.
 		startAfterLogonText = _("St&art NVDA after I sign in")
-		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
+		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
 		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		# Translators: The label of a checkbox in the Welcome dialog.
 		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")
-		self.showWelcomeDialogAtStartupCheckBox = sHelper.addItem(wx.CheckBox(self, label=showWelcomeDialogAtStartupText))
+		_showWelcomeDialogAtStartupCheckBox = wx.CheckBox(optionsBox, label=showWelcomeDialogAtStartupText)
+		self.showWelcomeDialogAtStartupCheckBox = sHelper.addItem(_showWelcomeDialogAtStartupCheckBox)
 		self.showWelcomeDialogAtStartupCheckBox.SetValue(config.conf["general"]["showWelcomeDialogAtStartup"])
 		mainSizer.Add(optionsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Add(self.CreateButtonSizer(wx.OK), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL|wx.ALIGN_RIGHT)
@@ -774,7 +795,7 @@ class WelcomeDialog(
 
 
 class LauncherDialog(
-		ContextHelpMixin,
+		_ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The dialog that is displayed when NVDA is started from the launcher.
@@ -790,7 +811,8 @@ class LauncherDialog(
 
 		# Translators: The label of the license text which will be shown when NVDA installation program starts.
 		groupLabel = _("License Agreement")
-		sizer = sHelper.addItem(wx.StaticBoxSizer(wx.StaticBox(self, label=groupLabel), wx.VERTICAL))
+		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
+		sHelper.addItem(sizer)
 		licenseTextCtrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
 		licenseTextCtrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
 		sizer.Add(licenseTextCtrl)
@@ -1066,12 +1088,18 @@ class NonReEntrantTimer(wx.Timer):
 def _isDebug():
 	return config.conf["debugLog"]["gui"]
 
-class AskAllowUsageStatsDialog(wx.Dialog):
+
+class AskAllowUsageStatsDialog(
+		_ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
+	
+	helpId = "UsageStatsDialog"
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog asking if usage data can be collected 
-		super(AskAllowUsageStatsDialog, self).__init__(parent, title=_("NVDA  Usage Data Collection"))
+		super().__init__(parent, title=_("NVDA  Usage Data Collection"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 

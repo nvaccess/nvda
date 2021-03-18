@@ -543,11 +543,24 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
 
-	def _get_isCurrent(self):
-		isCurrent = self.HTMLAttributes["aria-current"]
-		if isCurrent == "false":
-			isCurrent = None
-		return isCurrent
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
+		try:
+			isCurrent = self.HTMLAttributes["aria-current"]
+		except LookupError:
+			return controlTypes.IsCurrent.NO
+
+		# key may be in HTMLAttributes with a value of None
+		if isCurrent is None:
+			return controlTypes.IsCurrent.NO
+
+		try:
+			return controlTypes.IsCurrent(isCurrent)
+		except ValueError:
+			log.debugWarning(f"Unknown aria-current value: {isCurrent}")
+			return controlTypes.IsCurrent.NO
+
+	#: Typing for autoproperty _get_HTMLAttributes
+	HTMLAttributes: HTMLAttribCache
 
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
@@ -1039,10 +1052,11 @@ class MSHTML(IAccessible):
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
 		politeness = self.HTMLAttributes["aria-live"] or "off"
-		return next(
-			(v for v in aria.AriaLivePoliteness if v._name_.lower() == politeness.lower()),
-			aria.AriaLivePoliteness.OFF
-		)
+		try:
+			return aria.AriaLivePoliteness(politeness.lower())
+		except ValueError:
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
+			super().liveRegionPoliteness
 
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process

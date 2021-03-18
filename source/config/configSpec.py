@@ -126,6 +126,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [brailleViewer]
 	showBrailleViewerAtStartup = boolean(default=false)
+	shouldHoverRouteToCell = boolean(default=false)
+	secondsOfHoverToActivate = float(min=0.0, default=1.0)
+	# Devices with 40 cells are quite common.
+	defaultCellCount = integer(min=20, max=160, default=40)
 	autoPositionWindow = boolean(default=True)
 	# Values for positioning the window.
 	# Defaults are not used.
@@ -217,10 +221,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	useInMSWordWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
 	selectiveEventRegistration = boolean(default=false)
+	# 0:default, 1:Only when necessary, 2:yes, 3:no
+	allowInChromium = integer(0, 3, default=0)
 
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
+	diffAlgo = option("auto", "dmp", "difflib", default="auto")
 
 [update]
 	autoCheck = boolean(default=true)
@@ -246,6 +253,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	vision = boolean(default=false)
 	speech = boolean(default=false)
 	speechManager = boolean(default=false)
+	synthDriver = boolean(default=false)
 	nvwave = boolean(default=false)
 
 [uwpOcr]

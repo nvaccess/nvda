@@ -219,6 +219,8 @@ class ScreenCurtainGuiPanel(
 
 	_enabledCheckbox: wx.CheckBox
 	_enableCheckSizer: wx.BoxSizer
+	
+	helpId = "VisionSettingsScreenCurtain"
 
 	from gui.settingsDialogs import VisionProviderStateControl
 
