@@ -40,7 +40,6 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
-from . import guiHelper
 import winVersion
 
 try:
@@ -247,7 +246,7 @@ class MainFrame(wx.Frame):
 			d.Show()
 			self.postPopup()
 		else:
-			wx.GetApp().ExitMainLoop()
+			guiHelper.safeAppExit()
 
 	def onNVDASettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog)
@@ -863,7 +862,7 @@ class LauncherDialog(
 		core.doStartupDialogs()
 
 	def onExit(self, evt):
-		wx.GetApp().ExitMainLoop()
+		guiHelper.safeAppExit()
 
 	@classmethod
 	def run(cls):
@@ -940,7 +939,7 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
-			wx.GetApp().ExitMainLoop()
+			guiHelper.safeAppExit()
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:

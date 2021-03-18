@@ -1,9 +1,7 @@
-# -*- coding: UTF-8 -*-
-#guiHelper.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 
 """ Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
@@ -47,6 +45,7 @@ from contextlib import contextmanager
 import wx
 from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
+from logHandler import log
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
@@ -363,7 +362,20 @@ class BoxSizerHelper(object):
 		self.dialogDismissButtonsAdded = True
 		return buttons
 
+
+def safeAppExit():
+	def ensureMainLoopExited():
+		if wx.GetApp().GetMainLoop():
+			wx.GetApp().ExitMainLoop()
+
+	if not wx.GetApp().GetMainLoop():
+		log.warning("app trying to exit after already exited")
+		return
+	if not wx.GetApp().GetTopWindow().IsBeingDeleted():
+		return wx.CallAfter(wx.GetApp().GetTopWindow().Destroy)
+	wx.CallAfter(ensureMainLoopExited)
+
+
 class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 	pass
-
