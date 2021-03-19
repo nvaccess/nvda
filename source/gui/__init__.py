@@ -804,7 +804,7 @@ class LauncherDialog(
 	helpId = "InstallingNVDA"
 
 	def __init__(self, parent):
-		super(LauncherDialog, self).__init__(parent, title=versionInfo.name)
+		super(LauncherDialog, self).__init__(parent, title=f"{versionInfo.name} {_('Launcher')}")
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
