@@ -220,12 +220,12 @@ class InstallerDialog(
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		if shouldAskAboutAddons:
 			# Translators: The label of a button to launch the add-on compatibility review dialog.
-			reviewAddonButton = bHelper.addButton(optionsBox, label=_("&Review add-ons..."))
+			reviewAddonButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			self.bindHelpEvent("InstallWithIncompatibleAddons", reviewAddonButton)
 			reviewAddonButton.Bind(wx.EVT_BUTTON, self.onReviewAddons)
 
 		# Translators: The label of a button to continue with the operation.
-		continueButton = bHelper.addButton(optionsBox, label=_("&Continue"), id=wx.ID_OK)
+		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
 		continueButton.Bind(wx.EVT_BUTTON, self.onInstall)
 		if shouldAskAboutAddons:
@@ -235,7 +235,7 @@ class InstallerDialog(
 			)
 			continueButton.Enable(False)
 
-		bHelper.addButton(optionsBox, id=wx.ID_CANCEL)
+		bHelper.addButton(self, id=wx.ID_CANCEL)
 		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		
@@ -376,11 +376,11 @@ class PortableCreaterDialog(
 
 		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
 		
-		continueButton = bHelper.addButton(groupBox, label=_("&Continue"), id=wx.ID_OK)
+		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
 		continueButton.Bind(wx.EVT_BUTTON, self.onCreatePortable)
 		
-		bHelper.addButton(groupBox, id=wx.ID_CANCEL)
+		bHelper.addButton(self, id=wx.ID_CANCEL)
 		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		
