@@ -11,6 +11,10 @@
 #This license can be found at:
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
+from typing import List
+import fileinput
+import re
+from SCons.Node.FS import File
 
 Import(
 	'env',
@@ -26,13 +30,57 @@ def new_my_import(fullname):
 	return old_my_import(fullname)
 comtypes.client._generate._my_import = new_my_import
 
-def interfaceAction(target,source,env):
-	clsid=env.get('clsid')
+def makeIDEFriendly(path:str) -> None:
+	"""
+	Add a local import of * so that tools and IDE's can find definitions.
+	Prefer to import from comtypes.gen, at runtime behavior will not have changed.
+	Make code like:
+	``` python
+	from comtypes.gen import _C523F390_9C83_11D3_9094_00104BD0D535_0_3_0
+	globals().update(_C523F390_9C83_11D3_9094_00104BD0D535_0_3_0.__dict__)
+	__name__ = 'comtypes.gen.AcrobatAccessLib'
+	```
+	Become:
+	``` python
+	try:
+		from comtypes.gen import _C523F390_9C83_11D3_9094_00104BD0D535_0_3_0
+	except ModuleNotFoundError:
+		from _C523F390_9C83_11D3_9094_00104BD0D535_0_3_0 import *
+	globals().update(_C523F390_9C83_11D3_9094_00104BD0D535_0_3_0.__dict__)
+	__name__ = 'comtypes.gen.AcrobatAccessLib'
+	```
+	@param path: Path to the friendly name comInterfaces module.
+	"""
+	importTemplate = (
+"""try:
+	from comtypes.gen import {libIdentifier}
+except ModuleNotFoundError:
+	import {libIdentifier}
+	from {libIdentifier} import *
+""")
+
+	importPattern = re.compile(r"from comtypes\.gen import ([\w]+)\n")
+	for line in fileinput.input(path, inplace=True):
+		match = importPattern.match(line)
+		if match:
+			libId = match.group(1)
+			print(importTemplate.format(libIdentifier=libId), end='')
+		else:
+			print(line, end='')
+
+def interfaceAction(target:List[File], source, env):
+	clsid = env.get('clsid')
 	if clsid:
-		source=(clsid,env['majorVersion'],env['minorVersion'])
+		source=(clsid, env['majorVersion'], env['minorVersion'])
 	else:
 		source=str(source[0])
 	comtypes.client.GetModule(source)
+	# re-write the the "friendlyNameFile" so that tools/IDEs can find the
+	# definitions
+	for t in target:
+		path: str = t.abspath
+		if path.endswith(".py"):
+			makeIDEFriendly(path)
 
 interfaceBuilder=env.Builder(
 	action=env.Action(interfaceAction),
