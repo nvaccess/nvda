@@ -1378,6 +1378,7 @@ class UIA(Window):
 		UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,
 		UIAHandler.UIA_IsOffscreenPropertyId,
+		UIAHandler.UIA_AnnotationTypesPropertyId,
 	}
 
 	def _get_states(self):
@@ -1443,6 +1444,10 @@ class UIA(Window):
 				states.add(controlTypes.STATE_CHECKABLE)
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
+		annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
+		if annotationTypes:
+			if UIAHandler.AnnotationType_Comment in annotationTypes:
+				states.add(controlTypes.STATE_HASCOMMENT)
 		return states
 
 	def _getReadOnlyState(self) -> bool:
