@@ -76,6 +76,12 @@ class ExcelCustomProperties:
 			uiaType=UIAutomationType.Bool,
 		)
 
+		self.commentReplyCount = CustomPropertyInfo(
+			guid=GUID("{312F7536-259A-47C7-B192-AA16352522C4}"),
+			programmaticName="CommentReplyCount",
+			uiaType=UIAutomationType.Int,
+		)
+
 		self.areGridLinesVisible = CustomPropertyInfo(
 			guid=GUID("{4BB56516-F354-44CF-A5AA-96B52E968CFD}"),
 			programmaticName="AreGridlinesVisible",
@@ -388,6 +394,32 @@ class ExcelCell(ExcelObject):
 		name = name.replace('"', '')
 		return name
 
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("Reports the note or comment thread on the current cell"),
+		gesture="kb:NVDA+alt+c")
+	def script_reportComment(self,gesture):
+		commentsElement = self.UIAAnnotationObjects.get(UIAHandler.AnnotationType_Comment)
+		if commentsElement:
+			comment = commentsElement.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
+			author = commentsElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
+			numReplies = commentsElement.GetCurrentPropertyValue(self._UIAExcelCustomProps.commentReplyCount.id)
+			if numReplies == 0:
+				# Translators: a comment on a cell in Microsoft excel.
+				text = _("{comment}  by {author}").format(
+					comment=comment,
+					author=author
+				)
+			else:
+				text = _("{comment}  by {author} with {numReplies} replies").format(
+					comment=comment,
+					author=author,
+					numReplies=numReplies
+				)
+			ui.message(text)
+		else:
+			# Translators: A message in Excel when there is no note
+			ui.message(_("No note or comment thread on this cell"))
 
 class ExcelWorksheet(ExcelObject):
 	role = controlTypes.ROLE_TABLE
