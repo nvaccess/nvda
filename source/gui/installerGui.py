@@ -177,13 +177,13 @@ class InstallerDialog(
 
 		# Translators: The label for a group box containing the NVDA installation dialog options.
 		optionsLabel = _("Options")
-		optionsHelper = sHelper.addItem(wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel))
-		optionsSizer = guiHelper.BoxSizerHelper(self, sizer=optionsHelper)
+		optionsSizer = sHelper.addItem(wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel))
+		optionsHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		optionsBox = optionsSizer.GetStaticBox()
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA during sign-in")
-		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(optionsBox, label=startOnLogonText))
+		self.startOnLogonCheckbox = optionsHelper.addItem(wx.CheckBox(optionsBox, label=startOnLogonText))
 		self.bindHelpEvent("StartAtWindowsLogon", self.startOnLogonCheckbox)
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
@@ -195,21 +195,21 @@ class InstallerDialog(
 			# Translators: The label of a checkbox option in the Install NVDA dialog.
 			keepShortCutText = _("&Keep existing desktop shortcut")
 			keepShortCutBox = wx.CheckBox(optionsBox, label=keepShortCutText)
-			self.createDesktopShortcutCheckbox = optionsSizer.addItem(keepShortCutBox)
+			self.createDesktopShortcutCheckbox = optionsHelper.addItem(keepShortCutBox)
 		else:
 			# Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 			# If the shortcut key has been changed for this locale,
 			# this change must also be reflected here.
 			createShortcutText = _("Create &desktop icon and shortcut key (control+alt+n)")
 			createShortcutBox = wx.CheckBox(optionsBox, label=createShortcutText)
-			self.createDesktopShortcutCheckbox = optionsSizer.addItem(createShortcutBox)
+			self.createDesktopShortcutCheckbox = optionsHelper.addItem(createShortcutBox)
 		self.bindHelpEvent("CreateDesktopShortcut", self.createDesktopShortcutCheckbox)
 		self.createDesktopShortcutCheckbox.Value = shortcutIsPrevInstalled if self.isUpdate else True 
 		
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		createPortableText = _("Copy &portable configuration to current user account")
 		createPortableBox = wx.CheckBox(optionsBox, label=createPortableText)
-		self.copyPortableConfigCheckbox = optionsSizer.addItem(createPortableBox)
+		self.copyPortableConfigCheckbox = optionsHelper.addItem(createPortableBox)
 		self.bindHelpEvent("CopyPortableConfigurationToCurrentUserAccount", self.copyPortableConfigCheckbox)
 		self.copyPortableConfigCheckbox.Value = bool(globalVars.appArgs.copyPortableConfig)
 		if globalVars.appArgs.copyPortableConfig is None:
