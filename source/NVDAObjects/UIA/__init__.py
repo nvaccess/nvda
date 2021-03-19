@@ -1219,6 +1219,21 @@ class UIA(Window):
 			return obj
 		return None
 
+	def _get_UIAAnnotationObjects(self):
+		"""
+		Returns this UIAElement's annotation objects,
+		in a dict keyed by their annotation type ID.
+		"""
+		objsByTypeID = {}
+		objs = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationObjectsPropertyId)
+		if objs:
+			objs = objs.QueryInterface(UIAHandler.IUIAutomationElementArray)
+			for index in range(objs.length):
+				obj = objs.getElement(index)
+				typeID = obj.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
+				objsByTypeID[typeID] = obj
+		return objsByTypeID
+
 	def _get_UIATextPattern(self):
 		self.UIATextPattern = self._getUIAPattern(
 			UIAHandler.UIA_TextPatternId,

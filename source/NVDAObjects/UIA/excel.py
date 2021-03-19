@@ -284,12 +284,30 @@ class ExcelCell(ExcelObject):
 			return
 		return super().value
 
+	def _get_errorText(self):
+		errorList = []
+		for typeId, element in self.UIAAnnotationObjects.items():
+			if typeId in {
+				UIAHandler.AnnotationType_DataValidationError,
+				UIAHandler.AnnotationType_FormulaError,
+				UIAHandler.AnnotationType_CircularReferenceError,
+			}:
+				return element.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
+
 	def _get_description(self):
 		"""
-		@note Previously this used 'self.UIAElement.currentItemStatus', however this include text like
-		'has formula' which we then can't translate.
+		Prepends any error text to the description.
 		"""
-		return super()._get_description()
+		descriptionList = []
+		if self.errorText:
+			# Translators: an error message on a cell in Microsoft Excel
+			descriptionList.append(
+				_("Error: {errorText}").format(errorText=self.errorText)
+			)
+		baseDescription = super().description
+		if baseDescription:
+			descriptionList.append(baseDescription)
+		return ", ".join(descriptionList)
 
 	#: Typing information for auto-property: _get__isContentTooLargeForCell
 	_isContentTooLargeForCell: bool
