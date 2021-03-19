@@ -195,7 +195,8 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-         .\runsystemtests.bat --variable whichNVDA:installed --variable installDir:nvdaLauncherFile --include installer
+         .\runsystemtests.bat --variable whichNVDA:installed
+         .\runsystemtests.bat --variable whichNVDA:installer --variable installDir:nvdaLauncherFile --include installer
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "System test failure"

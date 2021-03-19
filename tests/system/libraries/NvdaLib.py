@@ -55,6 +55,9 @@ class _NvdaLocationData:
 		elif self.whichNVDA == "installed":
 			self._runNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'nvda', 'nvda.exe')
 			self.baseNVDACommandline = f'"{str(self._runNVDAFilePath)}"'
+		elif self.whichNVDA == "installer":
+			self._runNVDAFilePath = builtIn.get_variable_value("${installDir}", "source")
+			self.baseNVDACommandline = f'"{str(self._runNVDAFilePath)}"'
 		else:
 			raise AssertionError("RobotFramework should be run with argument: '-v whichNVDA [source|installed]'")
 

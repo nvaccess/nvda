@@ -38,9 +38,13 @@ Read welcome dialog
 Read install dialog
 	[Tags]	installer
 	[Documentation]	Ensure that the install dialog can be read in full
-	Run Keyword If	not r'${installDir}'	Skip
-	Log	'running ${installDir}'
-	Run	"${installDir}"
-	Log	'running test'
+	Pass Execution If	'${whichNVDA}' != "installer"	"skipping due to not running on installer"
+	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 	read_install_dialog	# run test
-	read_portable_copy_dialog # run test
+
+Read install dialog portable copy
+	[Tags]	installer
+	[Documentation]	Ensure that the portable copy install dialog can be read in full
+	Pass Execution If	'${whichNVDA}' != "installer"	"skipping due to not running on installer"
+	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
+	read_portable_copy_dialog	# run test
