@@ -365,13 +365,13 @@ class PortableCreaterDialog(
 
 		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 		copyConfText = _("Copy current &user configuration")
-		self.copyUserConfigCheckbox = sHelper.addItem(wx.CheckBox(groupBox, label=copyConfText))
+		self.copyUserConfigCheckbox = sHelper.addItem(wx.CheckBox(self, label=copyConfText))
 		self.copyUserConfigCheckbox.Value = False
 		if globalVars.appArgs.launcher:
 			self.copyUserConfigCheckbox.Disable()
 		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 		startAfterCreateText = _("&Start the new portable copy after creation")
-		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(groupBox, label=startAfterCreateText))
+		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(self, label=startAfterCreateText))
 		self.startAfterCreateCheckbox.Value = False
 
 		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
