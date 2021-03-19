@@ -29,7 +29,8 @@ import eventHandler
 from logHandler import log
 import UIAUtils
 from comInterfaces import UIAutomationClient as UIA
-from comInterfaces .UIAutomationClient import *
+# F403: unable to detect undefined names
+from comInterfaces .UIAutomationClient import *  # noqa:  F403
 import textInfos
 from typing import Dict
 from queue import Queue
