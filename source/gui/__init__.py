@@ -596,7 +596,26 @@ def initialize():
 	if mainFrame:
 		raise RuntimeError("GUI already initialized")
 	mainFrame = MainFrame()
+	wxLang = core.getWxLangOrNone()
+	if wxLang:
+		# otherwise the system default will be used
+		mainFrame.SetLayoutDirection(wxLang.LayoutDirection)
 	wx.GetApp().SetTopWindow(mainFrame)
+	# In wxPython >= 4.1,
+	# wx.CallAfter no longer executes callbacks while NVDA's main thread is within apopup menu or message box.
+	# To work around this,
+	# Monkeypatch wx.CallAfter to
+	# post a WM_NULL message to our top-level window after calling the original CallAfter,
+	# which causes wx's event loop to wake up enough to execute the callback.
+	old_wx_CallAfter = wx.CallAfter
+
+	def wx_CallAfter_wrapper(func, *args, **kwargs):
+		old_wx_CallAfter(func, *args, **kwargs)
+		# mainFrame may be None as NVDA could be terminating.
+		topHandle = mainFrame.Handle if mainFrame else None
+		if topHandle:
+			winUser.PostMessage(topHandle, winUser.WM_NULL, 0, 0)
+	wx.CallAfter = wx_CallAfter_wrapper
 
 def terminate():
 	import brailleViewer
@@ -710,14 +729,10 @@ class WelcomeDialog(
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
 		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
 
-		optionsSizer = wx.StaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA welcome dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
-		)
+		# Translators: The label for a group box containing the NVDA welcome dialog options.
+		optionsLabel = _("Options")
+		optionsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel)
+		optionsBox = optionsSizer.GetStaticBox()
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
@@ -732,17 +747,18 @@ class WelcomeDialog(
 			log.error("Could not set Keyboard layout list to current layout",exc_info=True) 
 		# Translators: The label of a checkbox in the Welcome dialog.
 		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
-		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=capsAsNVDAModifierText))
+		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=capsAsNVDAModifierText))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 		# Translators: The label of a checkbox in the Welcome dialog.
 		startAfterLogonText = _("St&art NVDA after I sign in")
-		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
+		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
 		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		# Translators: The label of a checkbox in the Welcome dialog.
 		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")
-		self.showWelcomeDialogAtStartupCheckBox = sHelper.addItem(wx.CheckBox(self, label=showWelcomeDialogAtStartupText))
+		_showWelcomeDialogAtStartupCheckBox = wx.CheckBox(optionsBox, label=showWelcomeDialogAtStartupText)
+		self.showWelcomeDialogAtStartupCheckBox = sHelper.addItem(_showWelcomeDialogAtStartupCheckBox)
 		self.showWelcomeDialogAtStartupCheckBox.SetValue(config.conf["general"]["showWelcomeDialogAtStartup"])
 		mainSizer.Add(optionsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Add(self.CreateButtonSizer(wx.OK), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL|wx.ALIGN_RIGHT)
@@ -795,7 +811,8 @@ class LauncherDialog(
 
 		# Translators: The label of the license text which will be shown when NVDA installation program starts.
 		groupLabel = _("License Agreement")
-		sizer = sHelper.addItem(wx.StaticBoxSizer(wx.StaticBox(self, label=groupLabel), wx.VERTICAL))
+		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
+		sHelper.addItem(sizer)
 		licenseTextCtrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
 		licenseTextCtrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
 		sizer.Add(licenseTextCtrl)
