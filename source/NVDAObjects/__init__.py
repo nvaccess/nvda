@@ -417,10 +417,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return ""
 
-	def _get_role(self):
+	#: Type definition for auto prop '_get_role'
+	role: int
+
+	def _get_role(self) -> int:
 		"""The role or type of control this object represents (example: button, list, dialog).
 		@return: a ROLE_* constant from L{controlTypes}
-		@rtype: int
 		"""  
 		return controlTypes.ROLE_UNKNOWN
 
@@ -975,12 +977,13 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	def _get_isCurrent(self):
+	isCurrent: controlTypes.IsCurrent  #: type info for auto property _get_isCurrent
+
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		"""Gets the value that indicates whether this object is the current element in a set of related 
-		elements. This maps to aria-current. Normally returns None. If this object is current
-		it will return one of the following values: "true", "page", "step", "location", "date", "time"
+		elements. This maps to aria-current.
 		"""
-		return None
+		return controlTypes.IsCurrent.NO
 
 	def _get_shouldAcceptShowHideCaretEvent(self):
 		"""Some objects/applications send show/hide caret events when we don't expect it, such as when the cursor is blinking.

@@ -579,13 +579,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 				# %s is replaced with the column number.
 				columnStr = _("c{columnNumber}").format(columnNumber=columnNumber)
 			textList.append(columnStr)
-	current = propertyValues.get('current', False)
-	if current:
-		try:
-			textList.append(controlTypes.isCurrentLabels[current])
-		except KeyError:
-			log.debugWarning("Aria-current value not handled: %s"%current)
-			textList.append(controlTypes.isCurrentLabels[True])
+	isCurrent = propertyValues.get('current', controlTypes.IsCurrent.NO)
+	if isCurrent != controlTypes.IsCurrent.NO:
+		textList.append(isCurrent.displayString)
 	placeholder = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)
@@ -670,7 +666,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	states = field.get("states", set())
 	value=field.get('value',None)
-	current=field.get('current', None)
+	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")

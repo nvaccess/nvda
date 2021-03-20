@@ -23,7 +23,7 @@ import queueHandler
 import gui
 import ui
 import cursorManager
-from scriptHandler import isScriptWaiting, willSayAllResume
+from scriptHandler import script, isScriptWaiting, willSayAllResume
 import aria
 import controlTypes
 from controlTypes import OutputReason
@@ -1277,7 +1277,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 		if not self.passThrough:
 			if doSayAll:
-				speech.speakObjectProperties(self.rootNVDAObject, name=True, states=True, reason=OutputReason.Focus)
+				speech.speakObjectProperties(self.rootNVDAObject, name=True, states=True, reason=OutputReason.FOCUS)
 				sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 			else:
 				# Speak it like we would speak focus on any other document object.
@@ -1860,3 +1860,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		"kb:shift+,": "moveToStartOfContainer",
 		"kb:,": "movePastEndOfContainer",
 	}
+
+	@script(
+		description=_(
+			# Translators: the description for the toggleScreenLayout script.
+			"Toggles on and off if the screen layout is preserved while rendering the document content"
+		),
+		gesture="kb:NVDA+v",
+	)
+	def script_toggleScreenLayout(self, gesture):
+		# Translators: The message reported for not supported toggling of screen layout
+		ui.message(_("Not supported in this document."))

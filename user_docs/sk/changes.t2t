@@ -3,6 +3,81 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.4 =
+Pridaná podpora pre nové Čínske metódy vstupu, aktualizovanú prekladovú tabuľku Liblouis a pridanú možnosť aktivovať zoznam prvkov (nvda+F7) v režime fokusu.
+V dialógoch NVDA je možné získať pomoc k funkciám po stlačení skratky F1.
+Vylepšené čítanie symbolov, úpravy v slovníkoch reči, zobrazovanie správ na braillovskom riadku a rýchla navigácia počas plynulého čítania.
+Vylepšená podpora pre Poštu, Outlook, Teams, Visual Studio, Azure Data Studio, Foobar2000.
+Vylepšenia pre Google dokumenty a podporu ARIA.
+A mnohé ďalšie opravy a vylepšenia.
+
+== Nové vlastnosti ==
+- V dialógoch NVDA je odteraz možné Skratkou F1 otvoriť pomocníka, pričom kurzor bude nastavený do príslušnej sekcie. (#7757)
+- Pridaná podpora pre automatické dokončovanie (známe aj ako (IntelliSense) v aplikáciách Microsoft SQL Server Management Studio plus Visual Studio od verzie 2017 (#7504)
+- Pri tvorbe symbolov je teraz možné definovať komplexné symboli s využívaním pamäte (napríklad \\1 \\2) (#11107)
+- NVDA odteraz upozorní, ak sa pokúsite uložiť v rečovom slovníku zadanie, ktoré obsahuje chybu. (#11407)
+  - KOnkrétne je teraz oznamované aj hlásenie chýb súvisiacich s pamäťou.
+- Pridaná podpora pre Čínske metódy vstupu Pinyin a Quick dostupné v systéme Windows 10. (#11562)
+- Záložky sú odteraz považované za prvky formulára a preto je možné presunúť sa na ne aj pomocou rýchlej navigácie skratkou F. (#10432)
+- Odteraz je možné definovať skratku na zapnutie a vypnutie oznamovania označeného textu. Predvolene nie je definovaná žiadna skratka. (#11807)
+- Pri inštalácii NVDA je možné z príkazového riadka parametrom --copy-portable-config určiť cestu prenosnej verzie, z ktorej sa nastavenia presunú do inštalovanej verzie NVDA. (#9676)
+- V zobrazovači Braillu je možné testovať aj funkciu presunúť na znak. Na znak je potrebné presunúť kurzor myši. (#11804)
+- Pridaná podpora pre riadky Humanware Brailliant BI 40X a 20X pripojené cez USB a Bluetooth. (#11819)
+
+
+== Zmeny ==
+- Prekladová tabuľka liblouis aktualizovaná na verziu 3.16.1:
+ - Opravené viaceré pády
+ - Pridaná prekladová tabuľka baškirčina plnopis
+ -Pridaný Koptský počítačový 8 bodový brail
+ - Aktualizované tabuľky pre Ruský plnopis
+ - Pridaná tabuľka Afrikánčina skratkopis
+ - Odstránená pôvodná tabuľka Ruština plnopis
+- Ak je v režime prehliadania aktivované plynulé čítanie, funkcie na vyhľadanie predchádzajúceho a nasledujúceho výskytu hľadaného reťazca neprerušia plynulé čítanie. (#11563)
+- Na braillovských riadkoch Hims bola zmenená kombinácia bodov pre simuláciu klávesu f3, nová kombinácia je medzera plus body 148. (#11710)
+- Upravené nastavenie pre zobrazovanie správ na braillovskom riadku. (#11602)
+- Vo webových prehliadačoch a aplikáciách, v ktorých je možné použiť režim prehliadania funguje skratka nvda+F7 na vyvolanie zoznamu prvkov aj vtedy, ak je aktivovaný režim fokusu. (#10453)
+- Ak je vypnuté oznamovanie dynamicky meneného obsahu, NVDA neoznamuje ani zmeny odosielané cez ARIA live regions. (#9077)
+- NVDA pred textom skopírovaným do schránky oznámi aj správu skopírované do schránky. (#6757)
+- Vylepšená práca v grafickom zobrazení v správe diskov. (#10048)
+- V dialógoch NVDA sú sivou farbou označené a naozaj aj vypnuté prvky, ktoré sú nedostupné. (#11809)
+- Tabuľka CLDR emoji aktualizovaná na verziu 38. (#11817)
+- Zvýraznenie fokusu bolo premenované na zvýraznenie na obrazovke. (#11700)
+
+
+== Opravy ==
+- NVDA opäť správne pracuje v editačných poliach aplikácie Fast Log Entry. (#8996)
+- Opravené oznamovanie času v aplikácii Foobar 2000 aj v prípadoch, ak nevieme zistiť zostávajúci čas (napríklad pri prehrávaní živého vysielania). (#11337)
+- NVDA odteraz zvažuje atribút aria-roledescription v prvkoch s editovateľným obsahom. (#11607)
+- NVDA viac neoznamuje zoznam pri každej položke zoznamu v Google dokumentoch resp. v editovateľných prvkoch v prehliadači Google Chrome. (#7562)
+- Ak sa pri navigácii po znakoch alebo slovách dostanete z jedného zoznamu do druhého v editovateľných prvkoch v prehliadači Google Chrome, NVDA prechod medzi zoznamami oznámi. (#11569)
+- NVDA oznamuje správny riadok, ak presuniete kurzor na posledný znak odkazu v zozname v editovateľnom prvku v prehliadači Google chrome. (#11606)
+- V systéme Windows 7 sa po otvorení a zatvorení ponuky štart z pracovnej plochy správne vráti fokus na pôvodné miesto. (#10567)
+- Ak je zapnuté "Prerušiť reč po vypršaní zameranej udalosti", potom NVDA oznamuje názov záložiek pri prepínaní záložiek v prehliadači *Mozilla Firefox. (#11397)
+- NVDA opäť správne oznamuje položku v zozname, po napísaní textu do zoznamu a súčasnom používaní Sapi5 hlasov Ivona. (#11651)
+- Opäť je možné používať režim prehliadania pri čítaní správ v aplikácii pošta od verzie 16005.13110. (#11439)
+- Ak používate Sapi5 hlasový výstup Ivona od harposoftware.com, NVDA viac nemá problém uložiť nastavenia, zmeniť hlasový výstup a po reštarte neostáva ticho. (#11650)
+- Na braillovských riadkoch Hims je opäť možné v počítačovom kóde zadať číslicu 6. (#11710)
+- Zrýchlená odozva v Azure Data Studio. (#11533, #11715)
+Ak je zapnuté "prerušiť reč po vypršaní zameranej udalosti", NVDA stále správne oznamuje názov okna hľadania. (#11632)
+- NVDA viac nezamrzne po prebudení systému z režimu spánku, ak bol fokus v okne MS Edge. (#11576)
+- Odteraz nie je potrebné po opustení kontextovej ponuky v MS Edge stlačiť kláves tab, prípadne inak zmeniť fokus, aby opäť fungoval režim prehliadania. (#11202)
+- NVDA dokáže odteraz čítať položky v zoznamoch v 64-bitových aplikáciách, ako napríklad Tortoise SVN. (#8175)
+- Prvok ARIA treegrids je spracovaný a prezentovaný ako tabuľka v režime prehliadania v prehliadačoch Firefox aj Chrome. (#9715)
+- Skratkou nvda+shift+F3 je možné odteraz hľadať nahor. (#11770)
+- NVDA skripty sa odteraz nespracúvajú ako opakované, ak medzi nimi stlačíte iný kláves. (#11388)
+- Ak vypnete oznamovanie zvýraznenia, NVDA toto rešpektuje aj v prehliadači Internet explorer. (#11808)
+- NVDA viac nemrzne pri pohybe medzi bunkami v MS Excely. (#11818)
+- NVDA správne číta správy v aplikácii Microsoft Teams v zostavách od verzie 1.3.00.28xxx, opravený problém spôsobený nesprávnym fokusom v menu. (#11821)
+- Ak je text označený ako pravopisná a súčasne gramatická chyba v prehliadači Chrome, aj NVDA ho označí ako gramatickú a pravopisnú chybu. (#11787)
+- Ak používate Outlook vo Francúzštine, opäť funguje skratka odpovedať všetkým ctrl+shift+r. (#11196)
+- V aplikácii Visual Studio sú správy IntelliSense oznamované vždy len raz. (#11611)
+- Ak používate Kalkulačku v systéme Windows 10 a súčasne máte vypnuté oznamovanie napísaných znakov, potom NVDA neoznamuje ani priebeh výpočtu. (#9428)
+- NVDA viac nespadne, ak máte nastavenú braillovskú tabuľku Angličtina skratkopis, prepnete na počítačový kód a súčasne máte kurzor na konkrétnom obsahu, napríklad na url adrese. (#11754)
+- Opäť funguje Oznamovanie formátovania bunky v tabuľkách excelu skratkou nvda+f. (#11914)
+- Písanie na QWERTY klávesnici braillovských riadkov Papenmeier funguje správne a nespôsobuje mrznutie NVDA. (#11944)
+
+
 = 2020.3 =
 Prednosti tejto verzie zahŕňajú zrýchlenie odozvy v aplikáciách Microsoft Office. Tiež boli pridané možnosti zapnúť a vypnúť oznamovanie grafiky a zapnúť a vypnúť dotykové gestá.
 Pridali sme tiež nové nemecké braillovské tabuľky a oznamovanie označeného textu vo webových prehliadačoch.

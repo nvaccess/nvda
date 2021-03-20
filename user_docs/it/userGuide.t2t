@@ -214,9 +214,8 @@ Per fare questo, posizionare un dito in un punto qualsiasi di quest'ultimo.
 è anche possibile mantenere il dito sullo schermo e iniziare a spostarsi, mentre lo screen reader leggerà gli oggetti o il testo che si incontrerà man mano.
 
 +++ Gesti touch +++[TouchGestures]
-Nella descrizione dei comandi che si incontrerà più avanti in questo manuale, può essere compreso anche un gesto a tocco che può venir utilizzato per attivare quel comando sul touch screen.
+Nella descrizione dei comandi che si incontrerà più avanti in questo manuale, si parlerà anche di gesti a tocco che possono venir utilizzati per attivare quel comando sul touch screen.
 Di seguito vengono riportate alcune istruzioni di massima per utilizzare correttamente i comandi a tocco.
-
 
 ==== Tap ====
 Toccare lo schermo velocemente con uno o più dita.
@@ -225,7 +224,7 @@ Il gesto di toccare una volta con un dito viene comunemente chiamato tocco, in i
 Il gesto di toccare una volta con due dita viene chiamato tocco con due dita, e così via.
 
 Se un tap viene eseguito in rapida successione, NVDA lo interpreterà come un gesto multitocco.
-Toccare velocemente per due volte viene chiamato doppio tap.
+Toccare velocemente per due volte viene chiamato doppio tap e così via.
 Toccare velocemente per tre volte viene chiamato triplo tap, e così via.
 Naturalmente, nei gesti multi-tocco viene riconosciuto anche il numero di dita che si utilizza, per cui possiamo avere gesti del tipo "triplo tocco con due dita", tap con quattro dita, etc.
 
@@ -233,6 +232,7 @@ Naturalmente, nei gesti multi-tocco viene riconosciuto anche il numero di dita c
 Scorrere velocemente il dito sullo schermo, in inglese flick.
 
 Vi sono quattro gesti di scorrimento che dipendono dalla direzione: scorrimento a destra, scorrimento a sinistra, scorrimento in alto e scorrimento in basso.
+
 Esattamente come nei tap, il gesto può essere eseguito con più di un dito.
 Per cui, risulta possibile compiere gesti come lo scorrimento in alto con due dita o lo scorrimento a sinistra con quattro dita.
 
@@ -1537,7 +1537,6 @@ Se abilitata, è possibile servirsi delle dita per navigare e interagire con gli
 Se disabilitata, il supporto del touchscreen verrà disattivato come se NVDA non fosse in esecuzione.
 Questa impostazione può anche essere attivata / disattivata utilizzando NVDA + control + alt + t.
 
-
 ==== Modalità di digitazione a tocco ====[TouchTypingMode]
 Questa casella di controllo permette di specificare il metodo da usare quando si desidera inserire del testo tramite una tastiera a tocco, o tastiera virtuale.
 Se la casella è attivata, allora sarà sufficiente rilasciare il dito dalla posizione corrente per inserire la lettera appena individuata.
@@ -1721,7 +1720,6 @@ Lasciando l'impostazione disattiva, si farà in modo che questi elementi non sar
 Ciò potrebbe comportare un'esperienza di navigazione più rapida e una migliore reattività in modalità di navigazione.
 Il focus verrà ancora aggiornato sull'elemento quando si interagisce con esso (ad esempio premendo un pulsante, selezionando una casella di controllo).
 L'abilitazione di questa opzione può migliorare il supporto per alcuni siti Web a scapito delle prestazioni e della stabilità.
-
 
 +++ Formato documento (NVDA+Control+d) +++[documentFormattingSettings]
 la maggior parte delle caselle di controllo in questa categoria servono a configurare quali informazioni inerente la formattazione NVDA dovrà pronunciare quando si scorre un documento con le frecce. 
@@ -1928,7 +1926,7 @@ Sarà sempre possibile eliminare un simbolo aggiunto in precedenza tramite il pu
 
 Una volta terminate le modifiche, premere il pulsante OK per salvare i cambiamenti oppure il bottone Annulla per annullare l'operazione.
 
-Nel caso di simboli complessi, il campo voce in sostituzione potrebbe dover includere alcuni riferimenti al testo corrspondente. Per esempio, per uno schema che comprende una data intera, \1, \2, e \3 dovrebbero apparire nel campo, per essere sostituiti dalle parti corrispondenti della data.
+Nel caso di simboli complessi, il campo voce in sostituzione potrebbe dover includere alcuni riferimenti al testo presente nel campo simbolo. Per esempio, per uno schema che comprende una data intera, \1, \2, e \3 dovrebbero apparire nel campo, per essere sostituiti dalle parti corrispondenti della data.
 I normali simboli di backslash nel campo voce in sostituzione devono quindi essere raddoppiati, ad esempio bisogna digitare "a\\b" in modo da ottenere "a\b".
 
 +++ Tasti e gesti di immissione +++[InputGestures]
@@ -1957,9 +1955,11 @@ Dopodiché, il tasto sarà disponibile nella categoria emulazione tasti di siste
 
 Nota:
  - Ai tasti simulati deve essere assegnato un gesto , altrimenti andranno persi nella finestra di salvataggio/chiusura.
- - Potrebbe non essere possibile mappare un gesto di immissione con tasto modificatore ad un tasto emulato senza modificatore. Per esempio, se vogliamo mappare al tasto "a" la combinazione emulata "ctrl-m", il risultato finale potrebbe essere "ctrl-a".
+ - Potrebbe non essere possibile mappare un gesto di immissione con tasto modificatore ad un tasto emulato senza modificatore. 
+ Per esempio, se vogliamo mappare al tasto "a" la combinazione emulata "ctrl-m", 
+ il risultato finale potrebbe essere "ctrl-a".
  -
- 
+
 Al termine delle modifiche, premere il pulsante OK per salvarle, o il tasto Annulla per non modificare alcunché.
 
 ++ Salvare e caricare la configurazione ++[SavingAndReloading]
@@ -1967,13 +1967,13 @@ NVDA salva automaticamente le impostazioni correnti all'uscita.
 Si noti che comunque è possibile modificare questo comportamento tramite l'opzione presente nelle impostazioni generali del menu preferenze.
 Per salvare le impostazioni manualmente, scegliere la voce salva Configurazione dal menu di NVDA.
 
-Se si è fatto un errore nelle impostazioni e si desidera tornare indietro alle impostazioni salvate in precedenza, scegliere la voce "torna alla configurazione salvata dal menu NVDA.
+Se è stato commesso un errore nelle impostazioni e si desidera tornare indietro a quelle salvate in precedenza, scegliere la voce "torna alla configurazione salvata dal menu NVDA.
 è anche possibile resettare le impostazioni ai valori predefiniti, scegliendo la voce "Ripristina la configurazione ai valori di fabbrica", presente sul menu principale di NVDA.
 
 I seguenti tasti rapidi risultano molto utili:
 %kc:beginInclude
 || Nome | Tasto Desktop | Tasto Laptop | Descrizione |
-| Salva Configurazione | NVDA+Control+c | NVDA+Control+c | Salva la configurazione attuale in modo che non verrà persa all'uscita da NVDA |
+| Salva Configurazione | NVDA+Control+c | NVDA+Control+c | Salva la configurazione attuale in modo che non venga persa all'uscita da NVDA |
 | Torna alla configurazione salvata | NVDA+Control+r | NVDA+Control+r | Ripristina la configurazione di NVDA risalente all'ultima volta che essa è stata salvata. Premere tre volte in rapida successione per ripristinare le impostazioni di configurazione predefinite |
 %kc:endInclude
 
@@ -2180,6 +2180,32 @@ Tutti i componenti vengono presentati in un elenco con le seguenti colonne:
 Inoltre, il gestore componenti aggiuntivi non compatibili dispone di un pulsante "informazioni su".
 Come è semplice immaginare, verranno mostrate le informazioni sull'addon con la possibilità di contattare lo sviluppatore.
 
+++ Crea copia portable ++[CreatePortableCopy]
+Verrà visualizzata una finestra di dialogo che consente di creare una copia portable di NVDA a partire dalla versione installata.
+Di contro, quando si esegue una copia portable di NVDA, nel sottomenu strumenti la voce di menu sarà chiamata "installa NVDA su questo PC" invece di "crea copia portable).
+
+In questa finestra, verrà chiesto  di selezionare la cartella in cui lo screen reader dovrà essere copiato o installato.
+
+Inoltre è possibile attivare o disattivare le seguenti opzioni:
+- Copia la configurazione utente corrente (ciò comprende i file presenti in %appdata%\roaming\NVDA, o quelli della configurazione utente della copia portable, oltre a componenti aggiuntivi e altri moduli)
+- Avvia la nuova copia portable dopo la creazione o avvia NVDA dopo l'installazione, le due funzioni si spiegano da sé.)
+-
+
+++ Esegui Utility risoluzione registrazioni Com di sistema... ++[RunCOMRegistrationFixingTool]
+L'installazione e la disinstallazione di programmi su un computer può, in alcuni casi, causare l'annullamento della registrazione dei file DLL COM.
+Dato che le interfacce Com, come Iaccessible, dipendono dalla corretta registrazione delle dll, si possono verificare problemi nel caso in cui tale registrazione sia stata persa o non sia stata effettuata correttamente..
+
+Ciò può accadere, ad esempio, dopo aver installato e disinstallato Adobe Reader, Math Player e altri programmi.
+
+La mancata registrazione può causare problemi a browser, app desktop, barra delle applicazioni e altre interfacce.
+
+In particolare, i seguenti problemi possono essere risolti eseguendo questo strumento:
+- NVDA dice "sconosciuto" durante la navigazione in browser come Firefox, Thunderbird ecc.
+- NVDA non riesce a passare dalla modalità focus alla modalità navigazione
+- NVDA è molto lento nei browser quando si cerca di navigare
+- E probabilmente altri problemi.
+-
+
 ++ Ricarica componenti aggiuntivi ++[ReloadPlugins]
 Questa voce, una volta attivata, ricarica tutti i plugin e i moduli specifici per le applicazioni senza riavviare NVDA. Risulta utile per gli sviluppatori.
 
@@ -2227,8 +2253,18 @@ In Windows10 sono presenti nuove voci conosciute come "OneCore", oppure come "mo
 Tali voci sono disponibili in diverse lingue e risultano più reattive rispetto alle classiche Sapi5.
 In Windows10 NVDA utilizza queste voci come sintesi vocale predefinita, mentre [[eSpeak NG #eSpeakNG] viene usata in altre versioni di Windows.
 
-Per installare voci in lingue aggiuntive, si veda questo articolo Microsoft: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+Per aggiungere nuove voci Windows OneCore, andare in "Impostazioni sintesi vocale", dalle impostazioni di sistema di Windows. 
+Servirsi dell'opzione "Aggiungi voci" e cercare la lingua desiderata.
+Molte lingue includono più varianti.
+"Regno Unito" e "Australia" sono due delle varianti inglesi.
+"Francia", "Canada" e "Svizzera" sono varianti francesi disponibili.
+Cercare la lingua più conosciuta (come l'inglese o il francese), quindi individuare la variante nell'elenco.
+Selezionare le lingue desiderate e utilizzare il pulsante "aggiungi".
+Una volta aggiunte, riavviare NVDA.
 
+
+Consultare questo articolo di Microsoft per un elenco delle voci disponibili: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
+ 
 + Display braille supportati +[SupportedBrailleDisplays]
 Questa sezione contiene informazioni sulle barre braille supportate da NVDA.
 
