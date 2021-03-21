@@ -291,7 +291,6 @@ class ExcelCell(ExcelObject):
 		return super().value
 
 	def _get_errorText(self):
-		errorList = []
 		for typeId, element in self.UIAAnnotationObjects.items():
 			if typeId in {
 				UIAHandler.AnnotationType_DataValidationError,
@@ -407,7 +406,7 @@ class ExcelCell(ExcelObject):
 		# Translators: the description  for a script for Excel
 		description=_("Reports the note or comment thread on the current cell"),
 		gesture="kb:NVDA+alt+c")
-	def script_reportComment(self,gesture):
+	def script_reportComment(self, gesture):
 		commentsElement = self.UIAAnnotationObjects.get(UIAHandler.AnnotationType_Comment)
 		if commentsElement:
 			comment = commentsElement.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
@@ -429,6 +428,7 @@ class ExcelCell(ExcelObject):
 		else:
 			# Translators: A message in Excel when there is no note
 			ui.message(_("No note or comment thread on this cell"))
+
 
 class ExcelWorksheet(ExcelObject):
 	role = controlTypes.ROLE_TABLE
