@@ -11,6 +11,7 @@ from ctypes import c_short
 from comtypes import COMError, BSTR
 import oleacc
 import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
@@ -75,7 +76,7 @@ class Ia2Web(IAccessible):
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if (
 			landmark
-			and self.IAccessibleRole != IAccessibleHandler.IA2_ROLE_LANDMARK
+			and self.IAccessibleRole != IA2.IA2_ROLE_LANDMARK
 			and landmark != xmlRoles[0]
 		):
 			# Ignore the landmark role
@@ -150,10 +151,12 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			# We support either IAccessibleTable or IAccessibleTable2 interfaces for locating table cells. 
 			# We will be able to get at least one of these.  
 			try:
-				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IA2.IAccessible2)
 			except AttributeError:
 				# No IAccessibleTable2, try IAccessibleTable instead.
-				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+				cell = table.IAccessibleTableObject.accessibleAt(
+					destRow - 1, destCol - 1
+				).QueryInterface(IA2.IAccessible2)
 			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
 			if cell.IA2Attributes.get('hidden'):
@@ -225,12 +228,12 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""
 	if not documentClass:
 		raise ValueError("documentClass cannot be None")
-	if not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
+	if not isinstance(obj.IAccessibleObject, IA2.IAccessible2):
 		return
 
 	iaRole = obj.IAccessibleRole
 	xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
-	if iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
+	if iaRole == IA2.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
 		clsList.append(BlockQuote)
 	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINE and "treegrid" in xmlRoles:
 		clsList.append(Treegrid)
@@ -264,7 +267,7 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	):
 		clsList.append(documentClass)
 
-	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE:
+	if obj.IA2States & IA2.IA2_STATE_EDITABLE:
 		if obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
 			clsList.append(Editor)
 		else:

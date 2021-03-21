@@ -13,6 +13,7 @@ import winUser
 import textInfos
 import controlTypes
 import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
 import api
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
@@ -50,7 +51,7 @@ def _getEmbedded(obj, offset):
 		hi = ht.hyperlinkIndex(offset)
 		if hi != -1:
 			hl = ht.hyperlink(hi)
-			return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
+			return IAccessible(IAccessibleObject=hl.QueryInterface(IA2.IAccessible2), IAccessibleChildID=0)
 	except COMError:
 		pass
 	return None
@@ -194,7 +195,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			info._endOffset = info._startOffset + 1
 			return info
 		try:
-			hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
+			hl = obj.IAccessibleObject.QueryInterface(IA2.IAccessibleHyperlink)
 			hlOffset = hl.startIndex
 			info._startOffset = hlOffset
 			info._endOffset = hlOffset + 1
