@@ -275,6 +275,21 @@ class NvdaLib:
 			# remove the spy so that if nvda is run manually against this config it does not interfere.
 			self.teardown_nvda_profile()
 
+	def quit_NVDAInstaller(self):
+		builtIn.log("Stopping nvdaSpy server: {}".format(self._spyServerURI))
+		self.nvdaSpy.emulateKeyPress("insert+q")
+		self.nvdaSpy.wait_for_specific_speech("Exit NVDA")
+		self.nvdaSpy.emulateKeyPress("enter", blockUntilProcessed=False)
+		try:
+			_stopRemoteServer(self._spyServerURI, log=False)
+		except Exception:
+			raise
+		finally:
+			self.save_NVDA_log()
+			# remove the spy so that if nvda is run manually against this config it does not interfere.
+			self.teardown_nvda_profile()
+
+
 
 def getSpyLib():
 	""" Gets the spy library instance. This has been augmented with methods for all supported keywords.
