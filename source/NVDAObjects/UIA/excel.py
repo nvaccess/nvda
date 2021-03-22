@@ -307,6 +307,7 @@ class ExcelCell(ExcelObject):
 		if self.errorText:
 			# Translators: an error message on a cell in Microsoft Excel
 			descriptionList.append(
+				# Translators:  an error message on a cell in Microsoft Excel.
 				_("Error: {errorText}").format(errorText=self.errorText)
 			)
 		presence = self.UIAAnnotationObjects.get(UIAHandler.AnnotationType_Author)
@@ -419,6 +420,7 @@ class ExcelCell(ExcelObject):
 					author=author
 				)
 			else:
+				# Translators: a comment on a cell in Microsoft excel.
 				text = _("{comment}  by {author} with {numReplies} replies").format(
 					comment=comment,
 					author=author,
