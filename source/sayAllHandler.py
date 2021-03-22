@@ -6,7 +6,6 @@
 import weakref
 import garbageHandler
 import speech
-import synthDriverHandler
 from logHandler import log
 import config
 import controlTypes
@@ -14,6 +13,12 @@ import api
 import textInfos
 import queueHandler
 import winKernel
+
+from speech.commands import CallbackCommand, EndUtteranceCommand
+
+
+speakWithoutPauses = speech.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses
+
 
 CURSOR_CARET = 0
 CURSOR_REVIEW = 1
@@ -69,7 +74,7 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 		if not obj:
 			return
 		# Call this method again when we start speaking this object.
-		callbackCommand = speech.CallbackCommand(self.next, name="say-all:next")
+		callbackCommand = CallbackCommand(self.next, name="say-all:next")
 		speech.speakObject(obj, reason=controlTypes.OutputReason.SAYALL, _prefixSpeechCommand=callbackCommand)
 
 	def stop(self):
@@ -148,8 +153,8 @@ class _TextReader(garbageHandler.TrackedObject):
 			# No more text.
 			if isinstance(self.reader.obj, textInfos.DocumentWithPageTurns):
 				# Once the last line finishes reading, try turning the page.
-				cb = speech.CallbackCommand(self.turnPage, name="say-all:turnPage")
-				speech.speakWithoutPauses([cb, speech.EndUtteranceCommand()])
+				cb = CallbackCommand(self.turnPage, name="say-all:turnPage")
+				speakWithoutPauses([cb, EndUtteranceCommand()])
 			else:
 				self.finish()
 			return
@@ -163,7 +168,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		def _onLineReached(obj=self.reader.obj, state=state):
 			self.lineReached(obj, bookmark, state)
 
-		cb = speech.CallbackCommand(
+		cb = CallbackCommand(
 			_onLineReached,
 			name="say-all:lineReached"
 		)
@@ -181,7 +186,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		seq = list(speech._flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
 		# Speak the speech sequence.
-		spoke = speech.speakWithoutPauses(seq)
+		spoke = speakWithoutPauses(seq)
 		# Update the textInfo state ready for when speaking the next line.
 		self.speakTextInfoState = state.copy()
 
@@ -203,7 +208,7 @@ class _TextReader(garbageHandler.TrackedObject):
 			else:
 				# We don't want to buffer too much.
 				# Force speech. lineReached will resume things when speech catches up.
-				speech.speakWithoutPauses(None)
+				speakWithoutPauses(None)
 				# The first buffered line has now started speaking.
 				self.numBufferedLines -= 1
 
@@ -239,11 +244,11 @@ class _TextReader(garbageHandler.TrackedObject):
 		# Otherwise, if a different synth is being used for say all,
 		# we might switch synths too early and truncate the final speech.
 		# We do this by putting a CallbackCommand at the start of a new utterance.
-		cb = speech.CallbackCommand(self.stop, name="say-all:stop")
-		speech.speakWithoutPauses([
-			speech.EndUtteranceCommand(),
+		cb = CallbackCommand(self.stop, name="say-all:stop")
+		speakWithoutPauses([
+			EndUtteranceCommand(),
 			cb,
-			speech.EndUtteranceCommand()
+			EndUtteranceCommand()
 		])
 
 	def stop(self):

@@ -16,6 +16,10 @@ What's New in NVDA
 - Added more mathematical symbols to the symbols dictionary. (#11467)
 - The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
 - "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
+- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default.
+  - This behaviour can be disabled by default with by setting this option to "No".
+  - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly. (#10885)
+- Espeak-ng has been updated to 1.51-dev commit 53915bf0a7cd48f90c4a38ac52fff697723d9f4d. (#12202)
 
 
 == Bug Fixes ==
@@ -26,6 +30,10 @@ What's New in NVDA
 - In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
 - Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
 - It is now possible to read comments in MS Word with UIA enabled. (#9285)
+- Performance when interacting with Visual Studio has been improved. (#12171)
+- Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
+- Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
+   - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
 
 
 == Changes for Developers ==
@@ -38,6 +46,11 @@ What's New in NVDA
  - To perform system tests: execute ``runsystemtests.bat [<extra robot options>] ``
  - To perform linting, execute ``runlint.bat <base branch>``
  - Please refer to readme.md for more details.
+- The following Python dependencies have also been upgraded:
+ - comtypes updated to 1.1.8.
+ - pySerial updated to 3.5.
+ - wxPython updated to 4.1.1.
+ - Py2exe updated to 0.10.1.0.
 - `LiveText._getTextLines` has been removed. (#11639)
   - Instead, override `_getText` which returns a string of all text in the object.
 - `LiveText` objects can now calculate diffs by character. (#11639)
@@ -62,6 +75,15 @@ What's New in NVDA
 - `winKernel.GetDateFormat` has been removed - use `winKernel.GetDateFormatEx` instead (#12139)
 - `gui.DriverSettingsMixin` has been removed - use `gui.AutoSettingsMixin` (#12144)
 - `speech.getSpeechForSpelling` has been removed - use `speech.getSpellingSpeech` (#12145)
+- Commands cannot be directly imported from speech as `import speech; speech.ExampleCommand()` or `import speech.manager; speech.manager.ExampleCommand()` - use  `from speech.commands import ExampleCommand` instead (#12126)
+- `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `sayAllhandler` does this manually now. (#12150)
+- The `synthDriverHandler` module is no longer star imported into `globalCommands` and `gui.settingsDialogs` - use `from synthDriverHandler import synthFunctionExample` instead. (#12172)
+- `ROLE_EQUATION` has been removed from controlTypes - use `ROLE_MATH`` instead. (#12164)
+- `autoSettingsUtils.driverSetting` classes are removed from `driverHandler` - please use them from `autoSettingUtils.driverSetting`. (#12168)
+- `autoSettingsUtils.utils` classes are removed from `driverHandler` - please use them from `autoSettingUtils.utils`. (#12168)
+- Support of `TextInfo`s that do not inherit from `contentRecog.BaseContentRecogTextInfo` is removed. (#12157)
+- `speech.speakWithoutPauses` has been removed - please use `speech.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses` instead. (#12195)
+- `speech.re_last_pause` has been removed - please use `speech.SpeechWithoutPauses.re_last_pause` instead. (#12195)
 
 
 = 2020.4 =
