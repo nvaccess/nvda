@@ -49,15 +49,16 @@ class _NvdaLocationData:
 		opSys.directory_should_exist(self.stagingDir)
 
 		self.whichNVDA = builtIn.get_variable_value("${whichNVDA}", "source")
+		self._installFilePath = builtIn.get_variable_value("${installDir}", None)
+		self.NVDAInstallerCommandline = None
 		if self.whichNVDA == "source":
 			self._runNVDAFilePath = _pJoin(self.repoRoot, "runnvda.bat")
 			self.baseNVDACommandline = self._runNVDAFilePath
 		elif self.whichNVDA == "installed":
 			self._runNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'nvda', 'nvda.exe')
 			self.baseNVDACommandline = f'"{str(self._runNVDAFilePath)}"'
-		elif self.whichNVDA == "installer":
-			self._runNVDAFilePath = builtIn.get_variable_value("${installDir}", "source")
-			self.baseNVDACommandline = f'"{str(self._runNVDAFilePath)}"'
+			if self._installFilePath is not None:
+				self.NVDAInstallerCommandline = f'"{str(self._installFilePath)}"'
 		else:
 			raise AssertionError("RobotFramework should be run with argument: '-v whichNVDA [source|installed]'")
 
@@ -68,7 +69,12 @@ class _NvdaLocationData:
 			"nvdaTestRunLogs"
 		)
 
-	def ensurePathsExist(self):
+	def ensureInstallerPathsExist(self):
+		opSys.file_should_exist(self._installFilePath, "Unable to start NVDA installer unless path exists.")
+		opSys.create_directory(self.profileDir)
+		opSys.create_directory(self.preservedLogsDir)
+
+	def ensurePathsExist(self, installer=False):
 		opSys.file_should_exist(self._runNVDAFilePath, "Unable to start NVDA unless path exists.")
 		opSys.create_directory(self.profileDir)
 		opSys.create_directory(self.preservedLogsDir)
@@ -133,7 +139,28 @@ class NvdaLib:
 		)
 		return handle
 
-	def _connectToRemoteServer(self):
+	def _startNVDAInstallerProcess(self):
+		"""Start NVDA Installer.
+		Use debug logging, replacing any current instance, using the system test profile directory
+		"""
+		_locations.ensureInstallerPathsExist()
+		command = (
+			f"{_locations.NVDAInstallerCommandline}"
+			f" --debug-logging"
+			f" -r"
+			f" -c \"{_locations.profileDir}\""
+			f" --log-file \"{_locations.logPath}\""
+		)
+		self.nvdaHandle = handle = process.start_process(
+			command,
+			shell=True,
+			alias=self.nvdaProcessAlias,
+			stdout=_pJoin(_locations.preservedLogsDir, self._createTestIdFileName("stdout.txt")),
+			stderr=_pJoin(_locations.preservedLogsDir, self._createTestIdFileName("stderr.txt")),
+		)
+		return handle
+
+	def _connectToRemoteServer(self, connectionTimeoutSecs=10):
 		"""Connects to the nvdaSpyServer
 		Because we do not know how far through the startup NVDA is, we have to poll
 		to check that the server is available. Importing the library immediately seems
@@ -149,7 +176,7 @@ class NvdaLib:
 		# therefore we use '_testRemoteServer' to ensure that we can in fact connect before proceeding.
 		_blockUntilConditionMet(
 			getValue=lambda: _testRemoteServer(self._spyServerURI, log=False),
-			giveUpAfterSeconds=10,
+			giveUpAfterSeconds=connectionTimeoutSecs,
 			errorMessage=f"Unable to connect to {self._spyAlias}",
 		)
 		builtIn.log(f"Connecting to {self._spyAlias}", level='DEBUG')
@@ -195,6 +222,15 @@ class NvdaLib:
 				_makeKeywordCaller(remoteLib, name)
 			)
 		return remoteLib
+
+	def start_NVDAInstaller(self, settingsFileName):
+		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
+		self.setup_nvda_profile(settingsFileName)
+		nvdaProcessHandle = self._startNVDAInstallerProcess()
+		process.process_should_be_running(nvdaProcessHandle)
+		self._connectToRemoteServer(connectionTimeoutSecs=30)
+		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
+		return nvdaProcessHandle
 
 	def start_NVDA(self, settingsFileName):
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")

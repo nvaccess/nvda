@@ -81,38 +81,3 @@ def read_welcome_dialog():
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
 	spy.emulateKeyPress("enter")
-
-
-def read_install_dialog():
-	spy = _nvdaLib.getSpyLib()
-	launchDialog = spy.wait_for_specific_speech("NVDA Launcher")  # ensure the dialog is present.
-	spy.wait_for_speech_to_finish()
-	spy.get_speech_at_index_until_now(launchDialog)
-
-	_builtIn.sleep(1)  # the dialog is not always receiving keypresses, wait a little longer for it
-	# agree to the License Agreement
-	spy.emulateKeyPress("alt+a")
-	
-	# start install
-	spy.emulateKeyPress("alt+i")
-
-	spy.wait_for_specific_speech("To install NVDA to your hard drive, please press the Continue button.")
-
-	spy.emulateKeyPress("esc")
-	return
-
-
-def read_portable_copy_dialog():
-	spy = _nvdaLib.getSpyLib()
-	launchDialog = spy.wait_for_specific_speech("NVDA Launcher")  # ensure the dialog is present.
-	spy.wait_for_speech_to_finish()
-	spy.get_speech_at_index_until_now(launchDialog)
-
-	_builtIn.sleep(1)  # the dialog is not always receiving keypresses, wait a little longer for it
-	# agree to the License Agreement
-	spy.emulateKeyPress("alt+a")
-
-	# start portable copy
-	spy.emulateKeyPress("alt+i")
-
-	# TODO exercise portable copy process more
