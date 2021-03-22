@@ -51,7 +51,6 @@ from typing import (
 	Generator,
 	Union,
 	Callable,
-	Iterator,
 	Tuple,
 )
 from logHandler import log
@@ -466,7 +465,6 @@ def getObjectSpeech(  # noqa: C901
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 ):
-	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
 	import browseMode
@@ -2538,10 +2536,6 @@ class SpeechWithoutPauses:
 
 _speakWithoutPauses = SpeechWithoutPauses(speakFunc=speak)
 
-#: Alias for class SpeakWithoutPauses.speakWithoutPauses. Kept for backwards compatibility
-speakWithoutPauses = _speakWithoutPauses.speakWithoutPauses
-#: Kept for backwards compatibility.
-re_last_pause = _speakWithoutPauses.re_last_pause
 
 #: The singleton _SpeechManager instance used for speech functions.
 #: @type: L{manager.SpeechManager}
