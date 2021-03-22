@@ -364,7 +364,25 @@ class BoxSizerHelper(object):
 
 
 def safeAppExit():
-	wx.GetApp().ExitMainLoop()
+	"""
+	Ensures the app is exited by the top window being destroyed
+	and that the main loop finally exits as part of that process
+	"""
+
+	if not wx.GetApp().GetMainLoop():
+		log.warning("app trying to exit after already exited")
+		return
+	if not wx.GetApp().GetTopWindow().IsBeingDeleted():
+		# it is important for the wxApp exit process to be triggered by destroying the top window
+		# ensure that this is executed on NVDA's main (GUI) thread
+		return wx.CallAfter(wx.GetApp().GetTopWindow().Destroy)
+
+	def ensureMainLoopExited():
+		if wx.GetApp().GetMainLoop():
+			wx.GetApp().ExitMainLoop()
+
+	# ensure that this is executed on NVDA's main (GUI) thread
+	wx.CallAfter(ensureMainLoopExited)
 
 
 class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
