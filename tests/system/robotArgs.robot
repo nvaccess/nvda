@@ -4,4 +4,4 @@
 --pythonpath .\tests\system\libraries
 --exclude excluded_from_build
 --variable whichNVDA:source
---variable installDir:""
+--variable installDir:
