@@ -148,7 +148,8 @@ before_test:
      Push-AppveyorArtifact $installerLogFilePath
      $crashDump = "$outputDir\nvda_crash.dmp"
      if (Test-Path -Path $crashDump){
-      Push-AppveyorArtifact $crashDump
+      Rename-Item -Path $crashDump -NewName "nvda_install_crash.dmp"
+      Push-AppveyorArtifact "$outputDir\nvda_install_crash.dmp"
       Add-AppveyorMessage "Install process crashed"
       $errorCode=1
      }
