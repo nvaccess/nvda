@@ -88,7 +88,6 @@ For reference, the following run time dependencies are included in Git submodule
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 38.1
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
-* Adobe FlashAccessibility interface typelib
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
 * brlapi Python bindings, version 0.8 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
 * lilli.dll, version 2.1.0.0
