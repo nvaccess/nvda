@@ -9,6 +9,7 @@ import typing
 
 import wx
 from logHandler import log
+import documentationUtils
 
 
 def writeRedirect(helpId: str, helpFilePath: str, contextHelpPath: str):
@@ -34,7 +35,6 @@ def showHelp(helpId: str):
 		noHelpMessage = _("No help available here.")
 		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
 		return
-	import documentationUtils
 	helpFile = documentationUtils.getDocFilePath("userGuide.html")
 	if helpFile is None:
 		# Translators: Message shown when trying to display context sensitive help,
