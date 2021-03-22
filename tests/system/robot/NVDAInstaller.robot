@@ -33,12 +33,10 @@ default pass execution
 
 Read install dialog
 	default exit if no installDir
-	[Tags]	installer
 	[Documentation]	Ensure that the install dialog can be read in full
 	read_install_dialog	# run test
 
 Read install dialog portable copy
 	default exit if no installDir
-	[Tags]	installer
 	[Documentation]	Ensure that the portable copy install dialog can be read in full
 	read_portable_copy_dialog	# run test

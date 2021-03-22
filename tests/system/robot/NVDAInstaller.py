@@ -33,7 +33,7 @@ def read_install_dialog():
 	spy.wait_for_speech_to_finish()
 	spy.get_speech_at_index_until_now(launchDialog)
 
-	_builtIn.sleep(2)  # the dialog is not always receiving keypresses, wait a little longer for it
+	_builtIn.sleep(5)  # the dialog is not always receiving keypresses, wait a little longer for it
 	# agree to the License Agreement
 	spy.emulateKeyPress("alt+a")
 	
@@ -44,7 +44,7 @@ def read_install_dialog():
 
 	# exit NVDA Installer
 	spy.emulateKeyPress("escape")
-	_builtIn.sleep(2)  # wait for the exit process to finish
+	_builtIn.sleep(5)  # wait for the exit process to finish
 
 
 def read_portable_copy_dialog():
@@ -53,7 +53,7 @@ def read_portable_copy_dialog():
 	spy.wait_for_speech_to_finish()
 	spy.get_speech_at_index_until_now(launchDialog)
 
-	_builtIn.sleep(2)  # the dialog is not always receiving keypresses, wait a little longer for it
+	_builtIn.sleep(5)  # the dialog is not always receiving keypresses, wait a little longer for it
 	# agree to the License Agreement
 	spy.emulateKeyPress("alt+a")
 
@@ -62,7 +62,8 @@ def read_portable_copy_dialog():
 
 	spy.wait_for_specific_speech(
 		"To create a portable copy of NVDA, please select the path and other options and then press Continue")
+	spy.wait_for_speech_to_finish()
 	
 	# exit NVDA Installer
 	spy.emulateKeyPress("escape")
-	_builtIn.sleep(2)  # wait for the exit process to finish
+	_builtIn.sleep(5)  # wait for the exit process to finish
