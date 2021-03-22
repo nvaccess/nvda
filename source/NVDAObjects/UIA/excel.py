@@ -302,13 +302,22 @@ class ExcelCell(ExcelObject):
 
 	def _get_description(self):
 		"""
-		Prepends any error text to the description.
+		Prepends error messages and collaborator presence to any existing description.
 		"""
 		descriptionList = []
 		if self.errorText:
 			# Translators: an error message on a cell in Microsoft Excel
 			descriptionList.append(
 				_("Error: {errorText}").format(errorText=self.errorText)
+			)
+		presence = self.UIAAnnotationObjects.get(UIAHandler.AnnotationType_Author)
+		if presence:
+			author = presence.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
+			descriptionList.append(
+				# Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
+				_("{author} is editing").format(
+					author=author
+				)
 			)
 		baseDescription = super().description
 		if baseDescription:
