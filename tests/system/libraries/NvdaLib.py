@@ -230,6 +230,7 @@ class NvdaLib:
 		self.setup_nvda_profile(settingsFileName)
 		nvdaProcessHandle = self._startNVDAInstallerProcess()
 		process.process_should_be_running(nvdaProcessHandle)
+		# Timeout is increased due to the installer load time and start up splash sound
 		self._connectToRemoteServer(connectionTimeoutSecs=30)
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle

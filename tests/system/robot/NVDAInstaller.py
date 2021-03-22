@@ -28,6 +28,8 @@ _asserts: _AssertsLib = _getLib("AssertsLib")
 
 
 def read_install_dialog():
+	"Smoke test the launcher dialogs used to install NVDA"
+	
 	spy = _nvdaLib.getSpyLib()
 	launchDialog = spy.wait_for_specific_speech("NVDA Launcher")  # ensure the dialog is present.
 	spy.wait_for_speech_to_finish()
@@ -47,6 +49,8 @@ def read_install_dialog():
 
 
 def read_portable_copy_dialog():
+	"Smoke test the launcher dialogs used to create a portable copy of NVDA"
+
 	spy = _nvdaLib.getSpyLib()
 	launchDialog = spy.wait_for_specific_speech("NVDA Launcher")  # ensure the dialog is present.
 	spy.wait_for_speech_to_finish()
