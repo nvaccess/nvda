@@ -70,12 +70,14 @@ class _NvdaLocationData:
 		)
 
 	def ensureInstallerPathsExist(self):
-		opSys.file_should_exist(self._installFilePath, "Unable to start NVDA installer unless path exists.")
+		fileWarnMsg = f"Unable to run NVDA installer unless path exists. Path given: {self._installFilePath}"
+		opSys.file_should_exist(self._installFilePath, fileWarnMsg)
 		opSys.create_directory(self.profileDir)
 		opSys.create_directory(self.preservedLogsDir)
 
-	def ensurePathsExist(self, installer=False):
-		opSys.file_should_exist(self._runNVDAFilePath, "Unable to start NVDA unless path exists.")
+	def ensurePathsExist(self):
+		fileWarnMsg = f"Unable to run NVDA installer unless path exists. Path given: {self._runNVDAFilePath}"
+		opSys.file_should_exist(self._runNVDAFilePath, fileWarnMsg)
 		opSys.create_directory(self.profileDir)
 		opSys.create_directory(self.preservedLogsDir)
 
