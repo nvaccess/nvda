@@ -1853,7 +1853,7 @@ The combo box has the following options:
 ==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[AdvancedSettingsUseUiaForExcel]
 When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
 This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
-Examples being NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet. 
+For instance, NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet features are not available.
 However, for basic spreadsheet navigating / editing, this option may provide a vast performance improvement.
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Microsoft Excel  build 16.0.13522.10000 or higher to test this feature and provide feedback.
 Microsoft Excel's UI automation implementation is ever changing, and  versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
