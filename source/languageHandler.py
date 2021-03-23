@@ -151,6 +151,7 @@ def setLanguage(lang):
 	try:
 		if lang=="Windows":
 			localeName=getWindowsLanguage()
+			locale.setlocale(locale.LC_ALL, localeName)
 			trans=gettext.translation('nvda',localedir='locale',languages=[localeName])
 			curLang=localeName
 		else:
