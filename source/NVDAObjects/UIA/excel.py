@@ -449,6 +449,9 @@ class ExcelWorksheet(ExcelObject):
 		parent = super().parent
 		# We want to present the parent (sheet) in the focus ancestry
 		# As that is what has the sheet name.
+		# Making this change in an overlay class was considered, however
+		# the parent (sheet) has no useful properties (such as className) to be easily identified,
+		# and identifying it by one of its children would be more costly than the current approach.
 		parent.isPresentableFocusAncestor = True
 		# However, the selection state on the sheet is not useful, so remove it.
 		parent.states.discard(controlTypes.STATE_SELECTED)
