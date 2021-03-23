@@ -71,7 +71,11 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(_("No track playing"))
 		return elapsedAndTotalTime
 
-	def script_reportRemainingTime(self,gesture):
+	def script_reportRemainingTime(self ,gesture):
+		import config
+		from languageHandler import setLanguage
+		lang = config.conf["general"]["language"]
+		setLanguage(lang)
 		elapsedTime, totalTime = self.getElapsedAndTotalIfPlaying()
 		if elapsedTime is None or totalTime is None:
 			# Translators: Reported if the remaining time can not be calculated in Foobar2000
