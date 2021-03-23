@@ -441,7 +441,7 @@ class ExcelWorksheet(ExcelObject):
 	role = controlTypes.ROLE_TABLE
 
 	# The grid UIAElement dies each time the sheet is scrolled.
-	# therefore this grid would be announced in the focus ancestory each time which is bad.
+	# Therefore this grid would be announced in the focus ancestory each time which is bad.
 	# Suppress this.
 	isPresentableFocusAncestor = False
 
