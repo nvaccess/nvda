@@ -86,6 +86,8 @@ What's New in NVDA
 - Support of `TextInfo`s that do not inherit from `contentRecog.BaseContentRecogTextInfo` is removed. (#12157)
 - `speech.speakWithoutPauses` has been removed - please use `speech.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses` instead. (#12195)
 - `speech.re_last_pause` has been removed - please use `speech.SpeechWithoutPauses.re_last_pause` instead. (#12195)
+- `WelcomeDialog`, `LauncherDialog` and `AskAllowUsageStatsDialog` are moved to the `gui.startupDialogs`. (#12105)
+- `getDocFilePath` has been moved from `gui` to the `documentationUtils` module. (#12105)
 
 
 = 2020.4 =
