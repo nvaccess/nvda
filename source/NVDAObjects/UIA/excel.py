@@ -460,4 +460,12 @@ class CellEdit(ExcelObject):
 
 
 class BadExcelFormulaEdit(ExcelObject):
+	"""
+	Suppresses focus events on the old formula bar, which does not have a usable UIA implementation.
+	Excel used to focus the EXCEL6 window with the formula bar when editing a cell.
+	However, now focus is moved to an edit control within the actual cell being edited,
+	in the EXCEL7 window.
+	Sometimes however focus (probably proxied from MSAA) still gets occasionally fired.
+	"""
+
 	shouldAllowUIAFocusEvent = False
