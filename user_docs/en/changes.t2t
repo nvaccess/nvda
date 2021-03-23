@@ -19,6 +19,9 @@ What's New in NVDA
 - 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default.
   - This behaviour can be disabled by default with by setting this option to "No".
   - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly. (#10885)
+- Espeak-ng has been updated to 1.51-dev commit 53915bf0a7cd48f90c4a38ac52fff697723d9f4d. (#12202)
+- Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
 
 
 == Bug Fixes ==
@@ -30,6 +33,9 @@ What's New in NVDA
 - Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
 - It is now possible to read comments in MS Word with UIA enabled. (#9285)
 - Performance when interacting with Visual Studio has been improved. (#12171)
+- Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
+- Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
+   - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
 
 
 == Changes for Developers ==
@@ -78,6 +84,8 @@ What's New in NVDA
 - `autoSettingsUtils.driverSetting` classes are removed from `driverHandler` - please use them from `autoSettingUtils.driverSetting`. (#12168)
 - `autoSettingsUtils.utils` classes are removed from `driverHandler` - please use them from `autoSettingUtils.utils`. (#12168)
 - Support of `TextInfo`s that do not inherit from `contentRecog.BaseContentRecogTextInfo` is removed. (#12157)
+- `speech.speakWithoutPauses` has been removed - please use `speech.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses` instead. (#12195)
+- `speech.re_last_pause` has been removed - please use `speech.SpeechWithoutPauses.re_last_pause` instead. (#12195)
 
 
 = 2020.4 =

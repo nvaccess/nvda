@@ -323,7 +323,10 @@ class BoxSizerHelper(object):
 			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
 			limitations from there.
 		"""
-		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
+		parent = self._parent
+		if isinstance(self.sizer, wx.StaticBoxSizer):
+			parent = self.sizer.GetStaticBox()
+		labeledControl = LabeledControlHelper(parent, labelText, wxCtrlClass, **kwargs)
 		if(isinstance(labeledControl.control, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl))):
 			self.addItem(labeledControl.sizer, flag=wx.EXPAND, proportion=1)
 		else:
@@ -344,6 +347,9 @@ class BoxSizerHelper(object):
 		  Should be set to L{False} for message or single input dialogs, L{True} otherwise.
 		@type separated: L{bool}
 		"""
+		parent = self._parent
+		if isinstance(self.sizer, wx.StaticBoxSizer):
+			parent = self.sizer.GetStaticBox()
 		if self.sizer.GetOrientation() != wx.VERTICAL:
 			raise NotImplementedError(
 				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented."
@@ -353,11 +359,11 @@ class BoxSizerHelper(object):
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
 		elif isinstance(buttons, int):
-			toAdd = self._parent.CreateButtonSizer(buttons)
+			toAdd = parent.CreateButtonSizer(buttons)
 		else:
 			raise NotImplementedError("Unknown type: {}".format(buttons))
 		if separated:
-			self.addItem(wx.StaticLine(self._parent), flag=wx.EXPAND)
+			self.addItem(wx.StaticLine(parent), flag=wx.EXPAND)
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons
