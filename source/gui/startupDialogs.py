@@ -194,7 +194,7 @@ class LauncherDialog(
 		core.doStartupDialogs()
 
 	def onExit(self, evt):
-		gui.guiHelper.safeAppExit()
+		gui.mainFrame.safeAppExit()
 
 	@classmethod
 	def run(cls):
