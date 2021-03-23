@@ -5,6 +5,7 @@
 *** Settings ***
 Documentation	Smoke test the installation process
 Force Tags	smoke test	installer
+Suite Setup	Run Keyword If	not r'${installDir}'	Fail	"--installDir not supplied"
 
 # for start & quit in Test Setup and Test Teardown
 Library	NvdaLib.py
