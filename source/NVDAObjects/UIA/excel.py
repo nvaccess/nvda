@@ -19,6 +19,7 @@ from _UIACustomProps import (
 from comtypes import GUID
 from scriptHandler import script
 import ui
+from logHandler import log
 from . import UIA
 
 
@@ -112,9 +113,13 @@ class ExcelCell(ExcelObject):
 		parent = self.parent
 		# There will be at least one grid element between the cell and the sheet.
 		# There could be multiple as there might be a data table defined on the sheet.
-		while parent.role == controlTypes.ROLE_TABLE:
+		while parent and parent.role == controlTypes.ROLE_TABLE:
 			parent = parent.parent
-		return parent._getUIACacheablePropertyValue(self._UIAExcelCustomProps.areGridLinesVisible.id)
+		if parent:
+			return parent._getUIACacheablePropertyValue(self._UIAExcelCustomProps.areGridLinesVisible.id)
+		else:
+			log.debugWarning("Could not locate worksheet element.")
+			return False
 
 	#: Typing information for auto-property: _get_outlineColor
 	outlineColor: Optional[Tuple[colors.RGB]]
