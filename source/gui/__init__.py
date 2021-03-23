@@ -32,6 +32,7 @@ import queueHandler
 import core
 from . import guiHelper
 from .settingsDialogs import *
+from .settingsDialogs import DictionaryDialog
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
 import languageHandler
@@ -203,25 +204,18 @@ class MainFrame(wx.Frame):
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
-		# linting is complaining about from .settingsDialogs import * names
-		# too risky to change it all, so we will specify what we want on a method based aproach
-		from .settingsDialogs import DictionaryDialog
 		dic = speechDictHandler.getDictionary("default")
 		# Translators: Title for default speech dictionary dialog.
 		self._popupSettingsDialog(DictionaryDialog, _("Default dictionary"), dic)
 
 	def onVoiceDictionaryCommand(self,evt):
-		# linting is complaining about from .settingsDialogs import * names
-		# too risky to change it all, so we will specify what we want on a method based aproach
-		from .settingsDialogs import DictionaryDialog
 		dic = speechDictHandler.getDictionary("voice")
-		# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-		self._popupSettingsDialog(DictionaryDialog, _("Voice dictionary (%s)") % dic.fileName, dic)
+		self._popupSettingsDialog(DictionaryDialog, "{voiceDictionary} ({dictFileName})".format(
+			# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+			voiceDictionary=_("Voice dictionary"),
+			dictFileName=dic.fileName), dic)
 
 	def onTemporaryDictionaryCommand(self,evt):
-		# linting is complaining about from .settingsDialogs import * names
-		# too risky to change it all, so we will specify what we want on a method based aproach
-		from .settingsDialogs import DictionaryDialog
 		# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 

@@ -24,7 +24,6 @@ import languageHandler
 import speech
 import gui
 import gui.contextHelp
-import os
 import globalVars
 from logHandler import log
 import nvwave
@@ -3061,9 +3060,11 @@ class DictionaryDialog(SettingsDialog):
 	def postInit(self):
 		self.dictList.SetFocus()
 
-	def hasEntry(self, pattern):
+	# Verifies whether a given pattern (text that should have a replacement)
+	# entry is already present on this dictionary
+	def hasPatternEntry(self, patternColText):
 		for row in range(self.dictList.GetItemCount()):
-			if self.dictList.GetItem(row, self.PATTERN_COL).GetText() == pattern:
+			if self.dictList.GetItem(row, self.PATTERN_COL).GetText() == patternColText:
 				return True
 		return False
 
@@ -3093,7 +3094,7 @@ class DictionaryDialog(SettingsDialog):
 		source.load(sourceFileName)
 		self.tempSpeechDict.syncFrom(source)
 		for entry in self.tempSpeechDict:
-			if not self.hasEntry(entry.pattern):
+			if not self.hasPatternEntry(entry.pattern):
 				self.dictList.Append((
 					entry.comment,
 					entry.pattern,

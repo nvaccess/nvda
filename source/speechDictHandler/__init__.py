@@ -54,7 +54,7 @@ class SpeechDict(list):
 
 	def create(self, fileName):
 		if os.path.exists(fileName):
-			raise f"can not create dictionary backed by file {fileName}"
+			raise FileExistsError(f"can not create dictionary backed by file {fileName}")
 		self.fileName = fileName
 		log.debug("creating dictionary with file '%s'." % fileName)
 	

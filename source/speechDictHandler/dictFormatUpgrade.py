@@ -34,9 +34,6 @@ def getProfileVoiceDictsPath():
 	return os.path.join(speechDictsPath, profile.name or "", r"voiceDicts.v1")
 
 
-def getProfileVoiceDictsBackupPath():
-	profile = conf.getActiveProfile()
-	return os.path.join(speechDictsPath, profile.name or "", r"voiceDictsBackup.v0")
 
 def doAnyUpgrades(synth):
 	""" Do any upgrades required for the synth passed in.
