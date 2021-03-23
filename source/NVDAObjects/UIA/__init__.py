@@ -1219,6 +1219,9 @@ class UIA(Window):
 			return obj
 		return None
 
+	#: typing for auto-property: UIAAnnotationObjects
+	UIAAnnotationObjects: typing.Dict[int, UIAHandler.IUIAutomationElement]
+
 	def _get_UIAAnnotationObjects(self):
 		"""
 		Returns this UIAElement's annotation objects,
