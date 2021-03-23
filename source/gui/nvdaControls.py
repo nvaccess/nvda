@@ -90,12 +90,12 @@ class ListCtrlAccessible(wx.Accessible):
 	"""WX Accessible implementation for checkable lists which aren't fully accessible."""
 
 	def GetRole(self, childId):
-		if childId == 0:
+		if childId == winUser.CHILDID_SELF:
 			return super().GetState(childId)
 		return (wx.ACC_OK, wx.ROLE_SYSTEM_CHECKBUTTON)
 
 	def GetState(self, childId):
-		if childId == 0:
+		if childId == winUser.CHILDID_SELF:
 			return super().GetState(childId)
 		states = wx.ACC_STATE_SYSTEM_SELECTABLE | wx.ACC_STATE_SYSTEM_FOCUSABLE
 		if self.Window.IsChecked(childId - 1):
