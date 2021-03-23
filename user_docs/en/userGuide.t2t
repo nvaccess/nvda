@@ -1924,6 +1924,38 @@ A regular expression is a pattern containing special symbols that allow you to m
 Regular expressions are not covered in this user guide.
 For an introductory tutorial, please refer to [https://docs.python.org/3.7/howto/regex.html].
 
+++++ Profiles and dictionaries ++++
+
+Dictionaries are bound to profiles.
+
+This means that you can have different dictionaries for different profiles if desired.
+
+In general, the following rules apply:
+
+- If dictionaries (default or voice specific) exist for the current profile, they are used.
+- If they don't exist, the dictionaries for default profile are used. This is consistent to the way NVDA behaves, in the sense that when a new profile is created, the settings not specified on that profile are taken from the default one.
+- The dictionary dialog, when opened, always shows on its title what profile that dictionary relates to.
+- The active profile will determine which dictionary is opened for editing when the default or voice dictionary menus are activated.
+- If a given dictionary does not exist on an active profile and the dictionary dialog is opened, a new dictionary for that profile will be created. It will show no entries, as it is new. However, it won't be saved until you close that dialog clicking on "ok". If you click on "cancel", the new dictionary is not saved.
+- Whenever a profile changes, the specific dictionaries (default and voice) become active immediately. If these dictionaries do not exist, the default profile one's are used.
+- Builtin and temp dictionaries aren't affected, they are not dependent on profiles, the latter because it is temporary, the former because it is built in.
+-
+
+++++ Syncing dictionaries ++++
+
+Because dictionaries are bound to profiles, entries added to the default profile dictionary won't be immediately reflected on profiles for which you decided to create specific dictionaries.
+
+Although this is usually what you want, sometimes it makes sense to have some entries which were first added to the dictionary for the default profile also reflected on dictionaries for other profiles.
+
+To help in these cases, a new button, called "import entries from default dictionary profile", is created in the dictionary dialog.
+
+This button appears only when a profile specific dictionary is being edited. On activation, it behaves the following way:
+
+- The entries from default dictionary (or voice specific dictionary) from the default profile are read.
+- Entries that are not found on the dictionary being edited are added to it.
+- If an entry from the default (or voice) dictionary is found on the dictionary being edited, it does not overwrite the current entry.
+- The import does not save the new entries on disc. It just adds imported entries in the entries list in the dictionary dialog. Focus is placed on the list so that you have the oportunity to review the new list of entries, as if you have typed them by hand.
+
 +++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
 

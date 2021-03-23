@@ -180,7 +180,7 @@ def getDictionary(type):
 	profile = config.conf.getActiveProfile()
 	if(type == "voice"):
 		return _getVoiceDictionary(profile)
-	# if we are om default profile or the specific dictionary profile is already loaded
+	# if we are on default profile or the specific dictionary profile is already loaded
 	if not profile.name or _hasDictionaryProfile(profile.name, f"{type}.dic"):
 		# we are with the correct dictionary loaded. Just return it.
 		log.debug(f"{type} dictionary, backed by {dictionaries[type].fileName} was requested")
