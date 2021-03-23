@@ -199,7 +199,7 @@ class MainFrame(wx.Frame):
 			d.Show()
 			self.postPopup()
 		else:
-			self.safeAppExit()
+			wx.CallAfter(self.Destroy)
 
 	def onNVDASettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog)
@@ -359,28 +359,6 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
-	def safeAppExit(self):
-		"""
-		Ensures the app is exited by the top window being destroyed
-		and that the main loop finally exits as part of that process
-		"""
-
-		if not wx.GetApp().GetMainLoop():
-			log.warning("app trying to exit after already exited")
-			return
-		if not self.IsBeingDeleted():
-			log.warning("correct exit behaviour")
-			# it is important for the wxApp exit process to be triggered by destroying the top window
-			# ensure that this is executed on NVDA's main (GUI) thread
-			return wx.CallAfter(self.Destroy)
-
-		def ensureMainLoopExited():
-			if wx.GetApp().GetMainLoop():
-				wx.GetApp().ExitMainLoop()
-		
-		log.warning("app trying to exit after already exited")
-		# ensure that this is executed on NVDA's main (GUI) thread
-		wx.CallAfter(ensureMainLoopExited)
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
@@ -735,7 +713,7 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
-			mainFrame.safeAppExit()
+			wx.CallAfter(mainFrame.Destroy)
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:

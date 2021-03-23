@@ -194,7 +194,7 @@ class LauncherDialog(
 		core.doStartupDialogs()
 
 	def onExit(self, evt):
-		gui.mainFrame.safeAppExit()
+		wx.CallAfter(gui.mainFrame.Destroy)
 
 	@classmethod
 	def run(cls):

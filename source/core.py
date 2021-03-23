@@ -113,7 +113,7 @@ def restart(disableAddons=False, debugLogging=False):
 	if globalVars.appArgs.launcher:
 		import gui
 		globalVars.exitCode=3
-		gui.mainFrame.safeAppExit()
+		wx.CallAfter(gui.mainFrame.Destroy)
 		return
 	import subprocess
 	import winUser
