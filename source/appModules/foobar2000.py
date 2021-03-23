@@ -71,7 +71,7 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(_("No track playing"))
 		return elapsedAndTotalTime
 
-	def script_reportRemainingTime(self ,gesture):
+	def script_reportRemainingTime(self, gesture):
 		import config
 		from languageHandler import setLanguage
 		lang = config.conf["general"]["language"]
