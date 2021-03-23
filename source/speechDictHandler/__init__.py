@@ -157,14 +157,14 @@ def _getVoiceDictionary(profile):
 	from synthDriverHandler import getSynth
 	synth = getSynth()
 	dictionaryFilename = _getVoiceDictionaryFileName(synth)
-	# if we are om default profile or the specific dictionary profile is already loaded
+	# if we are on default profile or the specific dictionary profile is already loaded
 	if not profile.name or _hasVoiceDictionaryProfile(profile.name, synth.name, dictionaryFilename):
 		# we are with the correct dictionary loaded. Just return it.
 		log.debug(f"Voice dictionary, backed by {dictionaries['voice'].fileName} was requested")
 		return dictionaries["voice"]
 	# we are on a user profile for which there is no dictionary created for the current voice.
 	# The current loaded dictionary is the default profile one.
-	# As we have beem called to get the profile dictionary for the current voice and it still does not exist,
+	# As we have been called to get the profile dictionary for the current voice and it still does not exist,
 	# We will create it now and pass the new, empty dictionary to the caller, but won't save it.
 	# This is a task the caller should do when and if they wish
 	dic = SpeechDict()
@@ -187,7 +187,7 @@ def getDictionary(type):
 		return dictionaries[type]
 	# we are on a user profile for which there is no dictionary created.
 	# The current loaded dictionary is the default profile one.
-	# As we have beem called to get the current profile dictionary and it still does not exist,
+	# As we have been called to get the current profile dictionary and it still does not exist,
 	# We will create it now and pass the new, empty dictionary to the caller, but won't save it.
 	# This is a task the caller should do when and if they wish
 	dic = SpeechDict()
