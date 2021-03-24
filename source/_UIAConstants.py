@@ -7,24 +7,24 @@ import enum
 
 
 class FillType(enum.IntEnum):
-	none = 0
-	color = 1
-	gradient = 2
-	picture = 3
-	pattern = 4
+	NONE = 0
+	COLOR = 1
+	GRADIENT = 2
+	PICTURE = 3
+	PATTERN = 4
 
 
 FillTypeLabels = {
 	# Translators: a style of fill type (to color the inside of a control or text)
-	FillType.none: pgettext("UIAHandler.FillType", "none"),
+	FillType.NONE: pgettext("UIAHandler.FillType", "none"),
 	# Translators: a style of fill type (to color the inside of a control or text)
-	FillType.color: pgettext("UIAHandler.FillType", "color"),
+	FillType.COLOR: pgettext("UIAHandler.FillType", "color"),
 	# Translators: a style of fill type (to color the inside of a control or text)
-	FillType.gradient: pgettext("UIAHandler.FillType", "gradient"),
+	FillType.GRADIENT: pgettext("UIAHandler.FillType", "gradient"),
 	# Translators: a style of fill type (to color the inside of a control or text)
-	FillType.picture: pgettext("UIAHandler.FillType", "picture"),
+	FillType.PICTURE: pgettext("UIAHandler.FillType", "picture"),
 	# Translators: a style of fill type (to color the inside of a control or text)
-	FillType.pattern: pgettext("UIAHandler.FillType", "pattern"),
+	FillType.PATTERN: pgettext("UIAHandler.FillType", "pattern"),
 }
 
 
