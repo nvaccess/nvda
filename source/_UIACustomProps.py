@@ -80,11 +80,11 @@ class CustomPropertiesCommon:
 		self.itemIndex = CustomPropertyInfo(
 			guid=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}"),
 			programmaticName="ItemIndex",
-			uiaType=UIAutomationType.Int,
+			uiaType=UIAutomationType.INT,
 		)
 
 		self.itemCount = CustomPropertyInfo(
 			guid=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}"),
 			programmaticName="ItemCount",
-			uiaType=UIAutomationType.Int,
+			uiaType=UIAutomationType.INT,
 		)

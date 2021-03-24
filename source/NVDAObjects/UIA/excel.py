@@ -44,49 +44,49 @@ class ExcelCustomProperties:
 		self.cellFormula = CustomPropertyInfo(
 			guid=GUID("{E244641A-2785-41E9-A4A7-5BE5FE531507}"),
 			programmaticName="CellFormula",
-			uiaType=UIAutomationType.String,
+			uiaType=UIAutomationType.STRING,
 		)
 
 		self.cellNumberFormat = CustomPropertyInfo(
 			guid=GUID("{626CF4A0-A5AE-448B-A157-5EA4D1D057D7}"),
 			programmaticName="CellNumberFormat",
-			uiaType=UIAutomationType.String,
+			uiaType=UIAutomationType.STRING,
 		)
 
 		self.hasDataValidation = CustomPropertyInfo(
 			guid=GUID("{29F2E049-5DE9-4444-8338-6784C5D18ADF}"),
 			programmaticName="HasDataValidation",
-			uiaType=UIAutomationType.Bool,
+			uiaType=UIAutomationType.BOOL,
 		)
 
 		self.hasDataValidationDropdown = CustomPropertyInfo(
 			guid=GUID("{1B93A5CD-0956-46ED-9BBF-016C1B9FD75F}"),
 			programmaticName="HasDataValidationDropdown",
-			uiaType=UIAutomationType.Bool,
+			uiaType=UIAutomationType.BOOL,
 		)
 
 		self.dataValidationPrompt = CustomPropertyInfo(
 			guid=GUID("{7AAEE221-E14D-4DA4-83FE-842AAF06A9B7}"),
 			programmaticName="DataValidationPrompt",
-			uiaType=UIAutomationType.String,
+			uiaType=UIAutomationType.STRING,
 		)
 
 		self.hasConditionalFormatting = CustomPropertyInfo(
 			guid=GUID("{DFEF6BBD-7A50-41BD-971F-B5D741569A2B}"),
 			programmaticName="HasConditionalFormatting",
-			uiaType=UIAutomationType.Bool,
+			uiaType=UIAutomationType.BOOL,
 		)
 
 		self.commentReplyCount = CustomPropertyInfo(
 			guid=GUID("{312F7536-259A-47C7-B192-AA16352522C4}"),
 			programmaticName="CommentReplyCount",
-			uiaType=UIAutomationType.Int,
+			uiaType=UIAutomationType.INT,
 		)
 
 		self.areGridLinesVisible = CustomPropertyInfo(
 			guid=GUID("{4BB56516-F354-44CF-A5AA-96B52E968CFD}"),
 			programmaticName="AreGridlinesVisible",
-			uiaType=UIAutomationType.Bool,
+			uiaType=UIAutomationType.BOOL,
 		)
 
 
