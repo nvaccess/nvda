@@ -13,6 +13,7 @@ import ctypes
 import locale
 import gettext
 import globalVars
+from logging import log
 
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2
@@ -151,31 +152,44 @@ def setLanguage(lang):
 	try:
 		if lang=="Windows":
 			localeName=getWindowsLanguage()
-			locale.setlocale(locale.LC_ALL, localeName)
 			trans=gettext.translation('nvda',localedir='locale',languages=[localeName])
 			curLang=localeName
 		else:
 			trans=gettext.translation("nvda", localedir="locale", languages=[lang])
 			curLang=lang
-			localeChanged=False
-			#Try setting Python's locale to lang
-			try:
-				locale.setlocale(locale.LC_ALL,lang)
-				localeChanged=True
-			except:
-				pass
-			if not localeChanged and '_' in lang:
-				#Python couldn'tsupport the language_country locale, just try language.
-				try:
-					locale.setlocale(locale.LC_ALL,lang.split('_')[0])
-				except:
-					pass
 			#Set the windows locale for this thread (NVDA core) to this locale.
 			LCID=localeNameToWindowsLCID(lang)
 			ctypes.windll.kernel32.SetThreadLocale(LCID)
 	except IOError:
 		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
+	
+	# Try setting Python's locale to lang
+	localeChanged = False
+	localeName = curLang
+	try:
+		locale.setlocale(locale.LC_ALL, localeName)
+		localeChanged = True
+	except locale.Error:
+		pass
+	if not localeChanged:
+		# Python couldn't support the language-country locale, try language_country.
+		try:
+			localeName = localeName.replace('-', '_')
+			locale.setlocale(locale.LC_ALL, localeName)
+			localeChanged = True
+		except locale.Error:
+			pass
+	if not localeChanged:
+		# Python couldn't support the language_country locale, just try language.
+		try:
+			localeName = localeName.split('_')[0]
+			locale.setlocale(locale.LC_ALL, localeName)
+			localeChanged = True
+		except locale.Error:
+			pass
+	if not localeChanged:
+		log.warning("python locale could not be set")
 	# #9207: Python 3.8 adds gettext.pgettext, so add it to the built-in namespace.
 	trans.install(names=["pgettext"])
 
