@@ -2570,6 +2570,7 @@ class AdvancedPanelControls(
 		#  Advanced settings panel.
 		label = _("Use UI Automation to access Microsoft &Excel spreadsheet controls when available")
 		self.UIAInMSExcelCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("UseUiaForExcel", self.UIAInMSExcelCheckBox)
 		self.UIAInMSExcelCheckBox.SetValue(config.conf["UIA"]["useInMSExcelWhenAvailable"])
 		self.UIAInMSExcelCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSExcelWhenAvailable"])
 
