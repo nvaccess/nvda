@@ -150,7 +150,7 @@ def reloadDictionaries():
 	synth = getSynth()
 	loadProfileDict()
 	loadVoiceDict(synth)
-	log.debug(f"loaded dictionaries for profile {config.conf.getActiveProfile().name or 'default'}")
+	log.debug(f"loaded dictionaries for profile {config.conf.getMostRecentProfile().name or 'default'}")
 
 
 def _getVoiceDictionary(profile):
@@ -177,7 +177,7 @@ def _getVoiceDictionary(profile):
 
 
 def getDictionary(type):
-	profile = config.conf.getActiveProfile()
+	profile = config.conf.getMostRecentProfile()
 	if(type == "voice"):
 		return _getVoiceDictionary(profile)
 	# if we are on default profile or the specific dictionary profile is already loaded
@@ -200,7 +200,7 @@ def getDictionary(type):
 
 
 def loadProfileDict():
-	profile = config.conf.getActiveProfile()
+	profile = config.conf.getMostRecentProfile()
 	if _hasDictionaryProfile(profile.name, "default.dic"):
 		_loadProfileDictionary(dictionaries["default"], profile.name, "default.dic")
 	else:
@@ -213,7 +213,7 @@ def loadVoiceDict(synth):
 It handles case when the synthesizer doesn't support voice setting.
 """
 	dictionaryFileName = _getVoiceDictionaryFileName(synth)
-	profile = config.conf.getActiveProfile()
+	profile = config.conf.getMostRecentProfile()
 	if(_hasVoiceDictionaryProfile(profile.name, synth.name, dictionaryFileName)):
 		_loadProfileVoiceDictionary(dictionaries["voice"], synth.name, dictionaryFileName)
 	else:

@@ -2988,7 +2988,7 @@ class DictionaryDialog(SettingsDialog):
 	PATTERN_COL = 1
 
 	def __init__(self,parent,title,speechDict):
-		self._profile = config.conf.getActiveProfile()
+		self._profile = config.conf.getMostRecentProfile()
 		self.title = self._makeTitle(title)
 		self.speechDict = speechDict
 		self.tempSpeechDict=speechDictHandler.SpeechDict()
@@ -4042,7 +4042,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
-		NvdaSettingsDialogActiveConfigProfile = config.conf.getActiveProfile().name
+		NvdaSettingsDialogActiveConfigProfile = config.conf.getMostRecentProfile().name
 		if not NvdaSettingsDialogActiveConfigProfile or isinstance(self.currentCategory, GeneralSettingsPanel):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")

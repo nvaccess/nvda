@@ -630,9 +630,8 @@ class ConfigManager(object):
 				if trigger._profile == delProfile:
 					del self._suspendedTriggers[trigger]
 
-	# Returns the currently active profile
-	# If no custom profile is active (default profile is in use), returns None
-	def getActiveProfile(self):
+	# Returns the most recent currently active profile
+	def getMostRecentProfile(self):
 		return self.profiles[-1]
 	
 	def renameProfile(self, oldName, newName):

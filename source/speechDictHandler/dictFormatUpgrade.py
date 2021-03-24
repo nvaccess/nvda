@@ -30,7 +30,7 @@ def createVoiceDictFileName(synthName, voiceName):
 
 
 def getProfileVoiceDictsPath():
-	profile = conf.getActiveProfile()
+	profile = conf.getMostRecentProfile()
 	return os.path.join(speechDictsPath, profile.name or "", r"voiceDicts.v1")
 
 
