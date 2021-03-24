@@ -485,20 +485,6 @@ the NVDAObject for IAccessible
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from .mozilla import GeckoPluginWindowRoot
 			clsList.append(GeckoPluginWindowRoot)
-		maybeFlash = False
-		if ((windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2))
-				or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen", "GeckoFPSandboxChildWindow")):
-			maybeFlash = True
-		elif windowClassName == "Internet Explorer_Server" and self.event_objectID is not None and self.event_objectID > 0:
-			# #2454: In Windows 8 IE, Flash is exposed in the same HWND as web content.
-			from .MSHTML import MSHTML
-			# This is only possibly Flash if it isn't MSHTML.
-			if not isinstance(self, MSHTML):
-				maybeFlash = True
-		if maybeFlash:
-			# This is possibly a Flash object.
-			from . import adobeFlash
-			adobeFlash.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith('Mozilla'):
 			from . import mozilla
 			mozilla.findExtraOverlayClasses(self, clsList)
