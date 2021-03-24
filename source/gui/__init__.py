@@ -365,9 +365,10 @@ def safeAppExit():
 		if isinstance(window, wx.Dialog):
 			if window.IsModal():
 				wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
-			else:
-				wx.CallAfter(window.Close)
-		wx.CallAfter(window.Destroy)
+		if not isinstance(window, MainFrame):
+			wx.CallAfter(window.Close)
+		else:
+			wx.CallAfter(window.Destroy)
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
