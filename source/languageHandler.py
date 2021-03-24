@@ -163,10 +163,17 @@ def setLanguage(lang):
 	except IOError:
 		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
-	
+	# #9207: Python 3.8 adds gettext.pgettext, so add it to the built-in namespace.
+	trans.install(names=["pgettext"])
+	setLocale(curLang)
+
+
+def setLocale(localeName):
+	'''
+	set python's locale using a localeName set by setLanguage
+	'''
 	# Try setting Python's locale to lang
 	localeChanged = False
-	localeName = curLang
 	try:
 		locale.setlocale(locale.LC_ALL, localeName)
 		localeChanged = True
@@ -190,8 +197,6 @@ def setLanguage(lang):
 			pass
 	if not localeChanged:
 		log.warning("python locale could not be set")
-	# #9207: Python 3.8 adds gettext.pgettext, so add it to the built-in namespace.
-	trans.install(names=["pgettext"])
 
 
 def getLanguage() -> str:
