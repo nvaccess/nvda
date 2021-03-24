@@ -10,3 +10,7 @@ runtime logic is used to expose symbols.
 To remedy this, the file is then processed by `comInterfaces_sconscript` to extract the module
 name and replace the import statement with a more elaborate approach which includes a fallback
 for the purposes of IDEs and tools.
+
+Only UIAutomation.py is not generated, UIA has historically been updated regularly and the version on
+Appveyor build servers could not be guaranteed.
+
