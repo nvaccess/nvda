@@ -3052,7 +3052,7 @@ class DictionaryDialog(SettingsDialog):
 			bHelper.addButton(
 				parent=self,
 				# Translators: The label for the import entries from default profile dictionary
-				label=_("&import entries from default profile dictionary")
+				label=_("&Import entries from default profile dictionary")
 			).Bind(wx.EVT_BUTTON, self.onImportEntriesClick)
 
 		sHelper.addItem(bHelper)
