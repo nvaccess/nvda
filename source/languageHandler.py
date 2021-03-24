@@ -170,30 +170,55 @@ def setLanguage(lang):
 
 def setLocale(localeName):
 	'''
-	set python's locale using a localeName set by setLanguage
+	Set python's locale using a `localeName` set by `setLanguage`.
+	Python 3.8's locale system allows you to set locales that you cannot get
+	so we must test for both ValueErrors and locale.Errors
+	'''
+	
+	'''
+	>>> import locale
+	>>> locale.setlocale(locale.LC_ALL, 'foobar') 
+	Traceback (most recent call last):
+	File "<stdin>", line 1, in <module>
+	File "Python38-32\lib\locale.py", line 608, in setlocale
+		return _setlocale(category, locale)
+	locale.Error: unsupported locale setting
+	>>> locale.setlocale(locale.LC_ALL, 'en-GB') 
+	'en-GB'
+	>>> locale.getlocale()        
+	Traceback (most recent call last):
+	File "<stdin>", line 1, in <module>
+	File "Python38-32\lib\locale.py", line 591, in getlocale
+		return _parse_localename(localename)
+	File "Python38-32\lib\locale.py", line 499, in _parse_localename
+		raise ValueError('unknown locale: %s' % localename)
+	ValueError: unknown locale: en-GB
 	'''
 	# Try setting Python's locale to lang
 	localeChanged = False
 	try:
 		locale.setlocale(locale.LC_ALL, localeName)
+		locale.getlocale()
 		localeChanged = True
-	except locale.Error:
+	except (locale.Error, ValueError):
 		pass
-	if not localeChanged:
+	if not localeChanged and '-' in localeName:
 		# Python couldn't support the language-country locale, try language_country.
 		try:
 			localeName = localeName.replace('-', '_')
 			locale.setlocale(locale.LC_ALL, localeName)
+			locale.getlocale()
 			localeChanged = True
-		except locale.Error:
+		except (locale.Error, ValueError):
 			pass
-	if not localeChanged:
+	if not localeChanged and '_' in localeName:
 		# Python couldn't support the language_country locale, just try language.
 		try:
 			localeName = localeName.split('_')[0]
 			locale.setlocale(locale.LC_ALL, localeName)
+			locale.getlocale()
 			localeChanged = True
-		except locale.Error:
+		except (locale.Error, ValueError):
 			pass
 	if not localeChanged:
 		log.warning("python locale could not be set")
