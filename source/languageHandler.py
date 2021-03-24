@@ -174,18 +174,18 @@ def setLocale(localeName):
 	Python 3.8's locale system allows you to set locales that you cannot get
 	so we must test for both ValueErrors and locale.Errors
 	'''
-	
-	'''
+
+	r'''
 	>>> import locale
-	>>> locale.setlocale(locale.LC_ALL, 'foobar') 
+	>>> locale.setlocale(locale.LC_ALL, 'foobar')
 	Traceback (most recent call last):
 	File "<stdin>", line 1, in <module>
 	File "Python38-32\lib\locale.py", line 608, in setlocale
 		return _setlocale(category, locale)
 	locale.Error: unsupported locale setting
-	>>> locale.setlocale(locale.LC_ALL, 'en-GB') 
+	>>> locale.setlocale(locale.LC_ALL, 'en-GB')
 	'en-GB'
-	>>> locale.getlocale()        
+	>>> locale.getlocale()
 	Traceback (most recent call last):
 	File "<stdin>", line 1, in <module>
 	File "Python38-32\lib\locale.py", line 591, in getlocale
