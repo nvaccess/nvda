@@ -1850,7 +1850,7 @@ The combo box has the following options:
 - No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
 -
 
-==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[AdvancedSettingsUseUiaForExcel]
+==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]
 When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
 This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
 For instance, NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet features are not available.
