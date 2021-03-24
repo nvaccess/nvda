@@ -34,21 +34,6 @@ def makeIDEFriendly(path:str) -> None:
 	"""
 	Add a local import of * so that tools and IDE's can find definitions.
 	Prefer to import from comtypes.gen, at runtime behavior will not have changed.
-	Make code like:
-	``` python
-	from comtypes.gen import _C523F390_9C83_11D3_9094_00104BD0D535_0_3_0
-	globals().update(_C523F390_9C83_11D3_9094_00104BD0D535_0_3_0.__dict__)
-	__name__ = 'comtypes.gen.AcrobatAccessLib'
-	```
-	Become:
-	``` python
-	try:
-		from comtypes.gen import _C523F390_9C83_11D3_9094_00104BD0D535_0_3_0
-	except ModuleNotFoundError:
-		from _C523F390_9C83_11D3_9094_00104BD0D535_0_3_0 import *
-	globals().update(_C523F390_9C83_11D3_9094_00104BD0D535_0_3_0.__dict__)
-	__name__ = 'comtypes.gen.AcrobatAccessLib'
-	```
 	@param path: Path to the friendly name comInterfaces module.
 	"""
 	importTemplate = (
@@ -61,6 +46,8 @@ except ModuleNotFoundError:
 
 	importPattern = re.compile(r"from comtypes\.gen import ([\w]+)\n")
 	for line in fileinput.input(path, inplace=True):
+		# Note: The fileinput module temporarily redirects stdout to the file.
+		# So print is used to write the file.
 		match = importPattern.match(line)
 		if match:
 			libId = match.group(1)
@@ -100,7 +87,11 @@ COM_INTERFACES = {
 	"SpeechLib.py": ('{C866CA3A-32F7-11D2-9602-00C04F8EE628}',5,0),
 	"AcrobatAccessLib.py": "typelibs/AcrobatAccess.tlb",
 	"FlashAccessibility.py": "typelibs/FlashAccessibility.tlb",
-	"UIAutomationClient.py": ('{944DE083-8FB8-45CF-BCB7-C477ACB2F897}', 1, 0),
+	# We don't generate UIAutomationClient (and _944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py)
+	# because we don't know what version is available on Appveyor.
+	# Instead we locally generate the file and include it in the repository.
+	# Ensuring that adjustments performed by 'makeIDEFriendly' are incorporated.
+	# "UIAutomationClient.py": ('{944DE083-8FB8-45CF-BCB7-C477ACB2F897}', 1, 0),
 }
 
 for k,v in COM_INTERFACES.items():
