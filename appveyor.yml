@@ -133,6 +133,7 @@ before_test:
       $nvdaLauncherFile+="_snapshot"
      }
      $nvdaLauncherFile+="_${env:version}.exe"
+     Set-AppveyorBuildVariable "nvdaLauncherFile" $nvdaLauncherFile
      echo NVDALauncherFile: $NVDALauncherFile
      $outputDir=$(resolve-path .\testOutput)
      $installerLogFilePath="$outputDir\nvda_install.log"
@@ -200,8 +201,7 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-    
-     .\runsystemtests.bat --variable whichNVDA:installed
+     .\runsystemtests.bat --variable whichNVDA:installed --variable installDir:"${env:nvdaLauncherFile}" --include installer
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "System test failure"
