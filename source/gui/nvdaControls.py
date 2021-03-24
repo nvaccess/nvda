@@ -91,7 +91,7 @@ class ListCtrlAccessible(wx.Accessible):
 
 	def GetRole(self, childId):
 		if childId == winUser.CHILDID_SELF:
-			return super().GetState(childId)
+			return super().GetRole(childId)
 		return (wx.ACC_OK, wx.ROLE_SYSTEM_CHECKBUTTON)
 
 	def GetState(self, childId):
