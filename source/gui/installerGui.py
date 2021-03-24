@@ -102,7 +102,7 @@ def doInstall(
 			winUser.SW_SHOWNORMAL
 		)
 	else:
-		wx.CallAfter(gui.mainFrame.Destroy)
+		gui.safeAppExit()
 
 
 def doSilentInstall(
@@ -450,7 +450,7 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 		return
 	d.done()
 	if silent:
-		wx.CallAfter(gui.mainFrame.Destroy)
+		gui.safeAppExit()
 	else:
 		# Translators: The message displayed when a portable copy of NVDA has been successfully created.
 		# %s will be replaced with the destination directory.

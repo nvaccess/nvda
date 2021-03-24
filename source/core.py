@@ -112,9 +112,8 @@ def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
 		import gui
-		import wx
 		globalVars.exitCode=3
-		wx.CallAfter(gui.mainFrame.Destroy)
+		gui.safeAppExit()
 		return
 	import subprocess
 	import winUser

@@ -117,8 +117,7 @@ class WelcomeDialog(
 		gui.mainFrame.prePopup()
 		d = cls(gui.mainFrame)
 		d.ShowModal()
-		if d and not d.IsBeingDeleted():
-			wx.CallAfter(d.Destroy)
+		wx.CallAfter(d.Destroy)
 		gui.mainFrame.postPopup()
 
 
@@ -194,7 +193,7 @@ class LauncherDialog(
 		core.doStartupDialogs()
 
 	def onExit(self, evt):
-		wx.CallAfter(gui.mainFrame.Destroy)
+		gui.safeAppExit()
 
 	@classmethod
 	def run(cls):

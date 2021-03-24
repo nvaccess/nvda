@@ -75,10 +75,6 @@ class MainFrame(wx.Frame):
 				self.Show()
 				self.Hide()
 
-	def Destroy(self):
-		self.sysTrayIcon.Destroy()
-		super().Destroy()
-
 	def prePopup(self):
 		"""Prepare for a popup.
 		This should be called before any dialog or menu which should pop up for the user.
@@ -199,7 +195,7 @@ class MainFrame(wx.Frame):
 			d.Show()
 			self.postPopup()
 		else:
-			wx.CallAfter(self.Destroy)
+			safeAppExit()
 
 	def onNVDASettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog)
@@ -358,6 +354,20 @@ class MainFrame(wx.Frame):
 		from .configProfiles import ProfilesDialog
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
+
+
+def safeAppExit():
+	"""
+	Ensures the app is exited by all the top windows being destroyed
+	"""
+
+	for window in wx.GetTopLevelWindows():
+		if isinstance(window, wx.Dialog):
+			if window.IsModal():
+				wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
+			else:
+				wx.CallAfter(window.Close)
+		wx.CallAfter(window.Destroy)
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
@@ -527,10 +537,6 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
-	def Destroy(self):
-		self.menu.Destroy()
-		super(SysTrayIcon, self).Destroy()
-
 	def onActivate(self, evt):
 		mainFrame.prePopup()
 		import appModules.nvda
@@ -585,7 +591,7 @@ def terminate():
 	# This is called after the main loop exits because WM_QUIT exits the main loop
 	# without destroying all objects correctly and we need to support WM_QUIT.
 	# Therefore, any request to exit should exit the main loop.
-	wx.CallAfter(mainFrame.Destroy)
+	safeAppExit()
 	# #4460: We need another iteration of the main loop
 	# so that everything (especially the TaskBarIcon) is cleaned up properly.
 	# ProcessPendingEvents doesn't seem to work, but MainLoop does.
@@ -712,7 +718,7 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
-			wx.CallAfter(mainFrame.Destroy)
+			safeAppExit()
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:
