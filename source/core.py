@@ -451,7 +451,7 @@ def main():
 			languageHandler.setLocale(languageHandler.curLang)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
-	
+
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
 
