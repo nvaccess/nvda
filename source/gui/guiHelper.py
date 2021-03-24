@@ -1,7 +1,9 @@
-# A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2021 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# -*- coding: UTF-8 -*-
+#guiHelper.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2016 NV Access Limited
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
 
 
 """ Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
@@ -366,9 +368,6 @@ class BoxSizerHelper(object):
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons
-
-
-
 
 class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""

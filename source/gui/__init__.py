@@ -359,7 +359,6 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
-
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
 	def __init__(self, frame):
