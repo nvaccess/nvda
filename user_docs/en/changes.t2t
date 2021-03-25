@@ -90,6 +90,7 @@ What's New in NVDA
 - `speech.re_last_pause` has been removed - please use `speech.SpeechWithoutPauses.re_last_pause` instead. (#12195)
 - `WelcomeDialog`, `LauncherDialog` and `AskAllowUsageStatsDialog` are moved to the `gui.startupDialogs`. (#12105)
 - `getDocFilePath` has been moved from `gui` to the `documentationUtils` module. (#12105)
+- Files in `source/comInterfaces/` are now more easily consumable by developer tools such as IDEs. (#12201)
 
 
 = 2020.4 =
