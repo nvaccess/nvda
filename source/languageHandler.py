@@ -147,7 +147,8 @@ def getWindowsLanguage():
 			localeName="en"
 	return localeName
 
-def setLanguage(lang):
+
+def setLanguage(lang: str) -> None:
 	'''
 	Sets the following using `lang`
 	 - languageHandler.curLang
@@ -156,28 +157,35 @@ def setLanguage(lang):
 	 - the python locale for the thread (match the translation service, fallback to python default)
 	'''
 	global curLang
+	if lang == "Windows":
+		localeName = getWindowsLanguage()
+	else:
+		localeName = lang
 	try:
-		if lang=="Windows":
-			localeName=getWindowsLanguage()
-			trans=gettext.translation('nvda',localedir='locale',languages=[localeName])
-			curLang=localeName
-		else:
-			trans=gettext.translation("nvda", localedir="locale", languages=[lang])
-			curLang=lang
-			#Set the windows locale for this thread (NVDA core) to this locale.
-			LCID=localeNameToWindowsLCID(lang)
-			ctypes.windll.kernel32.SetThreadLocale(LCID)
+		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
+		curLang = localeName
 	except IOError:
-		trans=gettext.translation("nvda",fallback=True)
-		curLang="en"
+		log.debugWarning(f"couldn't set the translation service locale to {localeName}")
+		trans = gettext.translation("nvda", fallback=True)
+		curLang = "en"
+
+	# Set the windows locale for this thread (NVDA core) to this locale.
+	if lang != "Windows":
+		try:
+			LCID = localeNameToWindowsLCID(localeName)
+			ctypes.windll.kernel32.SetThreadLocale(LCID)
+		except IOError:
+			log.debugWarning(f"couldn't set windows thread locale to {lang}")
+
 	# #9207: Python 3.8 adds gettext.pgettext, so add it to the built-in namespace.
 	trans.install(names=["pgettext"])
 	setLocale(curLang)
 
 
-def setLocale(localeName):
+def setLocale(localeName: str) -> None:
 	'''
 	Set python's locale using a `localeName` set by `setLanguage`.
+	Will fallback on `curLang` if it cannot be set and finally fallback to the system locale.
 	Python 3.8's locale system allows you to set locales that you cannot get
 	so we must test for both ValueErrors and locale.Errors
 	'''
@@ -201,37 +209,47 @@ def setLocale(localeName):
 		raise ValueError('unknown locale: %s' % localename)
 	ValueError: unknown locale: en-GB
 	'''
-	# Try setting Python's locale to lang
-	localeChanged = False
+	originalLocaleName = localeName
+	# Try setting Python's locale to localeName
 	try:
 		locale.setlocale(locale.LC_ALL, localeName)
 		locale.getlocale()
-		localeChanged = True
+		return
 	except (locale.Error, ValueError):
 		pass
-	if not localeChanged and '-' in localeName:
+	if '-' in localeName:
 		# Python couldn't support the language-country locale, try language_country.
 		try:
 			localeName = localeName.replace('-', '_')
 			locale.setlocale(locale.LC_ALL, localeName)
 			locale.getlocale()
-			localeChanged = True
+			return
 		except (locale.Error, ValueError):
 			pass
-	if not localeChanged and '_' in localeName:
+	if '_' in localeName:
 		# Python couldn't support the language_country locale, just try language.
 		try:
 			localeName = localeName.split('_')[0]
 			locale.setlocale(locale.LC_ALL, localeName)
 			locale.getlocale()
-			localeChanged = True
+			return
 		except (locale.Error, ValueError):
 			pass
-	if not localeChanged:
-		log.debugWarning(f"python locale {localeName} could not be set")
-		# as the locale may have been set to something that getlocale() couldn't retrieve
+
+	log.debugWarning(f"python locale {localeName} could not be set")
+	try:
+		locale.getlocale()
+	except ValueError:
+		# as the locale may have been changed to something that getlocale() couldn't retrieve
 		# reset to default locale
-		locale.setlocale(locale.LC_ALL, "")
+		if originalLocaleName == curLang:
+			log.debugWarning(f"setting python locale to system default")
+			# reset to system locale default if we can't set the current lang's locale
+			locale.setlocale(locale.LC_ALL, "")
+		else:
+			log.debugWarning(f"setting python locale to {curLang}")
+			# fallback and try to reset the locale to the current lang
+			setLocale(curLang)
 
 
 def getLanguage() -> str:
@@ -369,5 +387,9 @@ windowsPrimaryLCIDsToLocaleNames={
 	134:'qut',
 	135:'rw',
 	136:'wo',
-	140:'gbz'
+	140: 'gbz',
+	1170: 'ckb',
+	1109: 'my',
+	1143: 'so',
+	9242: 'sr',
 }
