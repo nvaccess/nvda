@@ -96,13 +96,6 @@ IAccessibleObjectIdentifierType = Tuple[
 ]
 
 from . import internalWinEventHandler
-# Imported for backwards compat
-from .internalWinEventHandler import (  # noqa: F401
-	winEventHookIDs,
-	winEventLimiter,
-	winEventIDsToNVDAEventNames,
-	_shouldGetEvents,
-)
 
 from logHandler import log
 import JABHandler
@@ -520,7 +513,7 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 			f"Creating NVDA event from winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}, "
 			f"use cache {useCache}"
 		)
-	NVDAEventName = winEventIDsToNVDAEventNames.get(eventID, None)
+	NVDAEventName = internalWinEventHandler.winEventIDsToNVDAEventNames.get(eventID, None)
 	if not NVDAEventName:
 		log.debugWarning(f"No NVDA event name for {getWinEventName(eventID)}")
 		return None
@@ -969,7 +962,7 @@ def initialize():
 
 # C901 'pumpAll' is too complex
 def pumpAll():  # noqa: C901
-	if not _shouldGetEvents():
+	if not internalWinEventHandler._shouldGetEvents():
 		return
 	focusWinEvents = []
 	validFocus = False
@@ -983,7 +976,7 @@ def pumpAll():  # noqa: C901
 		alwaysAllowedObjects.append((focus.event_windowHandle, focus.event_objectID, focus.event_childID))
 
 	# Receive all the winEvents from the limiter for this cycle
-	winEvents = winEventLimiter.flushEvents(alwaysAllowedObjects)
+	winEvents = internalWinEventHandler.winEventLimiter.flushEvents(alwaysAllowedObjects)
 
 	for winEvent in winEvents:
 		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET
@@ -999,7 +992,7 @@ def pumpAll():  # noqa: C901
 			if not focus.shouldAcceptShowHideCaretEvent:
 				continue
 		elif not eventHandler.shouldAcceptEvent(
-			winEventIDsToNVDAEventNames[winEvent[0]],
+			internalWinEventHandler.winEventIDsToNVDAEventNames[winEvent[0]],
 			windowHandle=winEvent[1]
 		):
 			continue
