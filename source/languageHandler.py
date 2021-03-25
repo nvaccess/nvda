@@ -13,7 +13,7 @@ import ctypes
 import locale
 import gettext
 import globalVars
-from logging import log
+from logHandler import log
 
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2
@@ -148,6 +148,13 @@ def getWindowsLanguage():
 	return localeName
 
 def setLanguage(lang):
+	'''
+	Sets the following using `lang`
+	 - languageHandler.curLang
+	 - the translation service (fallback to English)
+	 - the windows locale for the thread (fallback to system locale)
+	 - the python locale for the thread (match the translation service, fallback to python default)
+	'''
 	global curLang
 	try:
 		if lang=="Windows":
@@ -221,7 +228,10 @@ def setLocale(localeName):
 		except (locale.Error, ValueError):
 			pass
 	if not localeChanged:
-		log.warning("python locale could not be set")
+		log.debugWarning(f"python locale {localeName} could not be set")
+		# as the locale may have been set to something that getlocale() couldn't retrieve
+		# reset to default locale
+		locale.setlocale(locale.LC_ALL, "")
 
 
 def getLanguage() -> str:
