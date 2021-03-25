@@ -12,7 +12,6 @@ from comtypes import COMError
 import winUser
 import textInfos
 import controlTypes
-import IAccessibleHandler
 from comInterfaces import IAccessible2Lib as IA2
 import api
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo

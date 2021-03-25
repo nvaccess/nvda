@@ -10,7 +10,6 @@
 from ctypes import c_short
 from comtypes import COMError, BSTR
 import oleacc
-import IAccessibleHandler
 from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log

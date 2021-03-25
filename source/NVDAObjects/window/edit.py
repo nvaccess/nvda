@@ -24,7 +24,6 @@ import winUser
 import textInfos.offsets
 from keyboardHandler import KeyboardInputGesture
 from scriptHandler import isScriptWaiting
-import IAccessibleHandler
 import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
