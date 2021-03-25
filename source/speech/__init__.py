@@ -230,7 +230,7 @@ def speakSpelling(
 	speak(seq, priority=priority)
 
 
-def getSpellingSpeechAddCharMode(
+def _getSpellingSpeechAddCharMode(
 		seq: Generator[SequenceItemT, None, None],
 ) -> Generator[SequenceItemT, None, None]:
 	"""Inserts CharacterMode commands in a speech sequence generator to ensure any single character
@@ -252,7 +252,7 @@ def getSpellingSpeechAddCharMode(
 		yield item
 
 
-def getSpellingCharWithCaseInfo(
+def _getSpellingCharWithCaseInfo(
 		speakCharAs: str,
 		uppercase: bool,
 		isPitchSupported: bool,
@@ -287,7 +287,7 @@ def getSpellingCharWithCaseInfo(
 		yield PitchCommand()
 
 
-def getSpellingSpeechWithoutCharMode(
+def _getSpellingSpeechWithoutCharMode(
 		text: str,
 		locale: Optional[str] = None,
 		useCharacterDescriptions: bool = False
@@ -328,7 +328,7 @@ def getSpellingSpeechWithoutCharMode(
 			speakCharAs=characterProcessing.processSpeechSymbol(locale,speakCharAs)
 		if config.conf['speech']['autoLanguageSwitching']:
 			yield LangChangeCommand(locale)
-		yield from getSpellingCharWithCaseInfo(speakCharAs, uppercase, isPitchSupported)
+		yield from _getSpellingCharWithCaseInfo(speakCharAs, uppercase, isPitchSupported)
 		yield EndUtteranceCommand()
 
 
@@ -337,8 +337,8 @@ def getSpellingSpeech(
 		locale: Optional[str] = None,
 		useCharacterDescriptions: bool = False
 ) -> Generator[SequenceItemT, None, None]:
-	gen = getSpellingSpeechWithoutCharMode(text, locale, useCharacterDescriptions)
-	yield from getSpellingSpeechAddCharMode(gen)
+	gen = _getSpellingSpeechWithoutCharMode(text, locale, useCharacterDescriptions)
+	yield from _getSpellingSpeechAddCharMode(gen)
 
 
 def getCharDescListFromText(text,locale):
