@@ -111,9 +111,9 @@ def doStartupDialogs():
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
-		import wx
+		import gui
 		globalVars.exitCode=3
-		wx.GetApp().ExitMainLoop()
+		gui.safeAppExit()
 		return
 	import subprocess
 	import winUser
