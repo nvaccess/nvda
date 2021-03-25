@@ -1,4 +1,3 @@
-# App module for Composable Shell (CShell) input panel
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2017-2021 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
