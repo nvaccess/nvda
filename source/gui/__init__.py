@@ -362,13 +362,17 @@ def safeAppExit():
 	"""
 
 	for window in wx.GetTopLevelWindows():
-		if isinstance(window, wx.Dialog):
-			if window.IsModal():
-				wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
-		if not isinstance(window, MainFrame):
-			wx.CallAfter(window.Close)
-		else:
+		if isinstance(window, wx.Dialog) and window.IsModal():
+			log.info(f"ending modal {window} during exit process")
+			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
+		if isinstance(window, MainFrame):
+			log.info(f"destroying main frame during exit process")
+			# the MainFrame has EVT_CLOSE bound to the ExitDialog
+			# which calls this function on exit, so destroy this window
 			wx.CallAfter(window.Destroy)
+		else:
+			log.info(f"closing window {window} during exit process")
+			wx.CallAfter(window.Close)
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
