@@ -219,6 +219,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [UIA]
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
+	useInMSExcelWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
 	selectiveEventRegistration = boolean(default=false)
 	# 0:default, 1:Only when necessary, 2:yes, 3:no

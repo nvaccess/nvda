@@ -7,6 +7,7 @@ What's New in NVDA
 
 == New Features ==
 - Early support for UIA with Chromium based browsers (such as Edge). (#12025)
+- Optional experimental support for Microsoft Excel via UI Automation. Only recommended for Microsoft Excel build 16.0.13522.10000 or higher. (#12210)
 
 
 == Changes ==
@@ -89,6 +90,8 @@ What's New in NVDA
 - `speech.re_last_pause` has been removed - please use `speech.SpeechWithoutPauses.re_last_pause` instead. (#12195)
 - `WelcomeDialog`, `LauncherDialog` and `AskAllowUsageStatsDialog` are moved to the `gui.startupDialogs`. (#12105)
 - `getDocFilePath` has been moved from `gui` to the `documentationUtils` module. (#12105)
+- The gui.accPropServer module as well as the AccPropertyOverride and ListCtrlAccPropServer classes from the gui.nvdaControls module have been removed in favor of WX' native support for overriding accessibility properties. When enhancing accessibility of WX controls, implement wx.Accessible instead. (#12215)
+- Files in `source/comInterfaces/` are now more easily consumable by developer tools such as IDEs. (#12201)
 
 
 = 2020.4 =
