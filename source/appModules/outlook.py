@@ -341,6 +341,9 @@ class CalendarView(IAccessible):
 		categories = appointment.Categories
 		if not categories:
 			return None
+		# Categories is a delimited string of category names that have been assigned to an Outlook item.
+		# This property uses the user locale's list separator to separate entries.
+		# See also https://docs.microsoft.com/en-us/office/vba/api/outlook.appointmentitem.categories
 		bufLength = 4
 		separatorBuf = ctypes.create_unicode_buffer(bufLength)
 		if ctypes.windll.kernel32.GetLocaleInfoW(
@@ -351,6 +354,7 @@ class CalendarView(IAccessible):
 		) == 0:
 			raise ctypes.WinError()
 		categoriesCount = len(categories.split(f"{separatorBuf.value} "))
+
 		# Translators: Part of a message reported when on a calendar appointment with one or more categories
 		# in Microsoft Outlook.
 		categoriesText = ngettext("category", "categories", categoriesCount)
