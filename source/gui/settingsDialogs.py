@@ -357,6 +357,22 @@ class SettingsPanel(
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
 
+
+class SettingsPanelAccessible(wx.Accessible):
+	"""
+	WX Accessible implementation to set the role of a settings panel to property page,
+	as well as to set the accessible description based on the panel's description.
+	"""
+
+	Window: SettingsPanel
+
+	def GetRole(self, childId):
+		return (wx.ACC_OK, wx.ROLE_SYSTEM_PROPERTYPAGE)
+
+	def GetDescription(self, childId):
+		return (wx.ACC_OK, self.Window.panelDescription)
+
+
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
 	A multi category settings dialog consists of a list view with settings categories on the left side, 
@@ -524,14 +540,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					).format(cls, panel.Size[0])
 				)
 			panel.SetLabel(panel.title)
-			import oleacc
-			panel.server = nvdaControls.AccPropertyOverride(
-				panel,
-				propertyAnnotations={
-					oleacc.PROPID_ACC_ROLE: oleacc.ROLE_SYSTEM_PROPERTYPAGE,  # change the role from pane to property page
-					oleacc.PROPID_ACC_DESCRIPTION: panel.panelDescription,  # set a description
-				}
-			)
+			panel.SetAccessible(SettingsPanelAccessible(panel))
 		return panel
 
 	def postInit(self):
