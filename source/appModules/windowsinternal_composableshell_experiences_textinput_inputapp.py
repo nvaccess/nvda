@@ -177,7 +177,7 @@ class AppModule(appModuleHandler.AppModule):
 		# This event is properly raised in build 17134.
 		emojiPanelWindowOpenEvent = winVersion.WIN10_1803
 		if (
-			winVersion.getWinVer() in (emojiPanelInitial, emojiPanelWindowOpenEvent)
+			emojiPanelInitial <= winVersion.getWinVer() <= emojiPanelWindowOpenEvent
 			and childAutomationID in (
 				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
 				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
