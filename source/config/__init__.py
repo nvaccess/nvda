@@ -190,8 +190,10 @@ def initConfigPath(configPath=None):
 RUN_REGKEY = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():
-	if (easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch
-			and easeOfAccess.willAutoStart(winreg.HKEY_CURRENT_USER)):
+	if (
+		easeOfAccess.canConfigTerminateOnDesktopSwitch
+		and easeOfAccess.willAutoStart(winreg.HKEY_CURRENT_USER)
+	):
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY)
@@ -203,7 +205,7 @@ def getStartAfterLogon():
 def setStartAfterLogon(enable):
 	if getStartAfterLogon() == enable:
 		return
-	if easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch:
+	if easeOfAccess.canConfigTerminateOnDesktopSwitch:
 		easeOfAccess.setAutoStart(winreg.HKEY_CURRENT_USER, enable)
 		if enable:
 			return
@@ -230,7 +232,7 @@ SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
 NVDA_REGKEY = r"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
-	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
+	if easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
