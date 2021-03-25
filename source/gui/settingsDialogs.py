@@ -2578,7 +2578,7 @@ class AdvancedPanelControls(
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
 		label = _("Use UI Automation to access Microsoft &Excel spreadsheet controls when available")
-		self.UIAInMSExcelCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.UIAInMSExcelCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
 		self.bindHelpEvent("UseUiaForExcel", self.UIAInMSExcelCheckBox)
 		self.UIAInMSExcelCheckBox.SetValue(config.conf["UIA"]["useInMSExcelWhenAvailable"])
 		self.UIAInMSExcelCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSExcelWhenAvailable"])
