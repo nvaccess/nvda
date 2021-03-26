@@ -214,7 +214,7 @@ def setLocale(localeName: str) -> None:
 	try:
 		locale.setlocale(locale.LC_ALL, localeName)
 		locale.getlocale()
-		log.debug(f"setting python locale to {localeName}")
+		log.debug(f"set python locale to {localeName}")
 		return
 	except locale.Error:
 		log.debugWarning(f"python locale {localeName} could not be set")
@@ -227,7 +227,7 @@ def setLocale(localeName: str) -> None:
 			localeName = localeName.replace('-', '_')
 			locale.setlocale(locale.LC_ALL, localeName)
 			locale.getlocale()
-			log.debug(f"setting python locale to {localeName}")
+			log.debug(f"set python locale to {localeName}")
 			return
 		except locale.Error:
 			log.debugWarning(f"python locale {localeName} could not be set")
@@ -240,7 +240,7 @@ def setLocale(localeName: str) -> None:
 			localeName = localeName.split('_')[0]
 			locale.setlocale(locale.LC_ALL, localeName)
 			locale.getlocale()
-			log.debug(f"setting python locale to {localeName}")
+			log.debug(f"set python locale to {localeName}")
 			return
 		except locale.Error:
 			log.debugWarning(f"python locale {localeName} could not be set")
@@ -253,9 +253,9 @@ def setLocale(localeName: str) -> None:
 		# as the locale may have been changed to something that getlocale() couldn't retrieve
 		# reset to default locale
 		if originalLocaleName == curLang:
-			log.debugWarning(f"setting python locale to system default")
 			# reset to system locale default if we can't set the current lang's locale
 			locale.setlocale(locale.LC_ALL, "")
+			log.debugWarning(f"set python locale to system default")
 		else:
 			log.debugWarning(f"setting python locale to the current language {curLang}")
 			# fallback and try to reset the locale to the current lang
