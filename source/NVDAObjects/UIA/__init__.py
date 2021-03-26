@@ -1193,10 +1193,14 @@ class UIA(Window):
 		return self.UIASelectionPattern
 
 	def _get_UIASelectionPattern2(self):
-		self.UIASelectionPattern2 = self._getUIAPattern(
-			UIAHandler.UIA_SelectionPattern2Id,
-			UIAHandler.IUIAutomationSelectionPattern2
-		)
+		# SelectionPattern2 is not available on older Operating Systems such as Windows 7
+		try:
+			self.UIASelectionPattern2 = self._getUIAPattern(
+				UIAHandler.UIA_SelectionPattern2Id,
+				UIAHandler.IUIAutomationSelectionPattern2
+			)
+		except COMError:
+			self.UIASelectionPattern2 = None
 		return self.UIASelectionPattern2
 
 	def getSelectedItemsCount(self, maxItems=None):
