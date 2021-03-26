@@ -151,9 +151,9 @@ def getWindowsLanguage():
 def setLanguage(lang: str) -> None:
 	'''
 	Sets the following using `lang` such as "en", "ru_RU", or "es-ES". Use "Windows" to use the system locale
+	 - the windows locale for the thread (fallback to system locale)
 	 - the translation service (fallback to English)
 	 - languageHandler.curLang (match the translation service)
-	 - the windows locale for the thread (fallback to system locale)
 	 - the python locale for the thread (match the translation service, fallback to system default)
 	'''
 	global curLang
@@ -161,6 +161,13 @@ def setLanguage(lang: str) -> None:
 		localeName = getWindowsLanguage()
 	else:
 		localeName = lang
+		# Set the windows locale for this thread (NVDA core) to this locale.
+		try:
+			LCID = localeNameToWindowsLCID(lang)
+			ctypes.windll.kernel32.SetThreadLocale(LCID)
+		except IOError:
+			log.debugWarning(f"couldn't set windows thread locale to {lang}")
+
 	try:
 		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
 		curLang = localeName
@@ -168,14 +175,6 @@ def setLanguage(lang: str) -> None:
 		log.debugWarning(f"couldn't set the translation service locale to {localeName}")
 		trans = gettext.translation("nvda", fallback=True)
 		curLang = "en"
-
-	# Set the windows locale for this thread (NVDA core) to this locale.
-	if lang != "Windows":
-		try:
-			LCID = localeNameToWindowsLCID(localeName)
-			ctypes.windll.kernel32.SetThreadLocale(LCID)
-		except IOError:
-			log.debugWarning(f"couldn't set windows thread locale to {localeName}")
 
 	# #9207: Python 3.8 adds gettext.pgettext, so add it to the built-in namespace.
 	trans.install(names=["pgettext"])
