@@ -179,11 +179,13 @@ class TestSetLanguage(unittest.TestCase):
 				# check that the python locale is set
 				python_locale = locale.getlocale()
 				if localeName in UNSUPPORTED_PYTHON_LOCALES:
+					# our translatable locale isn't supported by python
+					# check that the system locale is unchanged
 					self.assertEqual(self._defaultPythonLocale, python_locale)
 				elif localeName == "uk":
 					self.assertEqual(python_locale[0], "English_United Kingdom")
 				else:
-					# checks that the language codes part of the locales are correct
+					# check that the language codes are correctly set for python
 					pythonLang = python_locale[0].split("_")[0]
 					self.assertEqual(
 						langOnly, pythonLang, f"full values: {localeName} {python_locale}"
