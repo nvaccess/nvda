@@ -1193,13 +1193,13 @@ class UIA(Window):
 		return self.UIASelectionPattern
 
 	def _get_UIASelectionPattern2(self):
-		# SelectionPattern2 is not available on older Operating Systems such as Windows 7
 		try:
 			self.UIASelectionPattern2 = self._getUIAPattern(
 				UIAHandler.UIA_SelectionPattern2Id,
 				UIAHandler.IUIAutomationSelectionPattern2
 			)
 		except COMError:
+			# SelectionPattern2 is not available on older Operating Systems such as Windows 7
 			self.UIASelectionPattern2 = None
 		return self.UIASelectionPattern2
 
@@ -1466,10 +1466,10 @@ class UIA(Window):
 				states.add(controlTypes.STATE_CHECKABLE)
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
-		# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
 		try:
 			annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
 		except COMError:
+			# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
 			annotationTypes = None
 		if annotationTypes:
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
