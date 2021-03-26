@@ -98,6 +98,7 @@ What's New in NVDA
   - class winVersion.WinVersion is a comparable and order-able type encapsulating Windows version information.
   - Function winVersion.getWinVer has been added to get a winVersion.WinVersion representing the currently running OS.
   - Convenience constants have been added for known Windows releases, see winVersion.WIN* constants.
+- IAccessibleHandler no longer star imports everything from IAccessible and IA2 COM interfaces - please use them directly. (#12232)
 
 
 = 2020.4 =
