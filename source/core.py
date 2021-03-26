@@ -447,10 +447,10 @@ def main():
 	if wxLang:
 		try:
 			locale.Init(wxLang.Language)
-			# Revert wx's changes to the python locale
-			languageHandler.setLocale(languageHandler.curLang)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
+		# Revert wx's changes to the python locale
+		languageHandler.setLocale(languageHandler.curLang)
 
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
