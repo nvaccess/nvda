@@ -147,6 +147,12 @@ before_test:
       Add-AppveyorMessage "Unable to install NVDA prior to tests."
      }
      Push-AppveyorArtifact $installerLogFilePath
+     $crashDump = "$outputDir\nvda_crash.dmp"
+     if (Test-Path -Path $crashDump){
+      Push-AppveyorArtifact $crashDump -FileName "nvda_install_crash.dmp"
+      Add-AppveyorMessage "Install process crashed"
+      $errorCode=1
+     }
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 test_script:

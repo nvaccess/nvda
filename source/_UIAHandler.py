@@ -195,7 +195,7 @@ UIAEventIdsToNVDAEventNames={
 localEventHandlerGroupUIAEventIds = set()
 
 autoSelectDetectionAvailable = False
-if winVersion.isWin10():
+if winVersion.getWinVer() >= winVersion.WIN10:
 	UIAEventIdsToNVDAEventNames.update({
 		UIA.UIA_Text_TextChangedEventId: "textChange",
 		UIA.UIA_Text_TextSelectionChangedEventId: "caret",
