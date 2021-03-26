@@ -9,6 +9,7 @@ Google Chrome with a HTML sample and assert NVDA interacts with it in the expect
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from os.path import join as _pJoin
+import os
 import tempfile as _tempfile
 from typing import Optional as _Optional
 from SystemTestSpy import (
@@ -33,6 +34,7 @@ class ChromeLib:
 	_testFileStagingPath = _tempfile.mkdtemp()
 
 	def __init__(self):
+		self._original_chrome_log = os.environ.get('CHROME_LOG_FILE', '')
 		self.chromeHandle: _Optional[int] = None
 
 	@staticmethod
@@ -43,15 +45,18 @@ class ChromeLib:
 		spy = _NvdaLib.getSpyLib()
 		spy.emulateKeyPress('control+w')
 		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="continue")
+		os.environ['CHROME_LOG_FILE'] = self._original_chrome_log
 
 	def start_chrome(self, filePath):
 		builtIn.log(f"starting chrome: {filePath}")
+		os.environ['CHROME_LOG_FILE'] = _NvdaLib.NvdaLib.createLogsFullTestIdPath("chrome.log")
 		self.chromeHandle = process.start_process(
 			"start chrome"
 			" --force-renderer-accessibility"
 			" --suppress-message-center-popups"
 			" --disable-notifications"
 			" -kiosk"
+			f' --enable-logging --v=1'
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeAlias',

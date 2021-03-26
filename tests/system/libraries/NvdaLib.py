@@ -102,6 +102,10 @@ class NvdaLib:
 		return outputFileName
 
 	@staticmethod
+	def createLogsFullTestIdPath(name):
+		return _pJoin(_locations.preservedLogsDir, NvdaLib._createTestIdFileName(name))
+
+	@staticmethod
 	def setup_nvda_profile(configFileName):
 		configManager.setupProfile(
 			_locations.repoRoot,
@@ -136,8 +140,8 @@ class NvdaLib:
 			command,
 			shell=True,
 			alias=self.nvdaProcessAlias,
-			stdout=_pJoin(_locations.preservedLogsDir, self._createTestIdFileName("stdout.txt")),
-			stderr=_pJoin(_locations.preservedLogsDir, self._createTestIdFileName("stderr.txt")),
+			stdout=self.createLogsFullTestIdPath("stdout.txt"),
+			stderr=self.createLogsFullTestIdPath("stderr.txt"),
 		)
 		return handle
 
@@ -157,8 +161,8 @@ class NvdaLib:
 			command,
 			shell=True,
 			alias=self.nvdaProcessAlias,
-			stdout=_pJoin(_locations.preservedLogsDir, self._createTestIdFileName("stdout.txt")),
-			stderr=_pJoin(_locations.preservedLogsDir, self._createTestIdFileName("stderr.txt")),
+			stdout=self.createLogsFullTestIdPath("stdout.txt"),
+			stderr=self.createLogsFullTestIdPath("stderr.txt"),
 		)
 		return handle
 
