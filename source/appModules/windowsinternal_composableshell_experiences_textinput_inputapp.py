@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2020 NV Access Limited, Joseph Lee
+# Copyright (C) 2017-2021 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -174,11 +174,16 @@ class AppModule(appModuleHandler.AppModule):
 		# However this event is raised when the input panel closes.
 		if firstChild is None:
 			return
-		# #9104: different aspects of modern input panel are represented by automation iD's.
+		# #9104: different aspects of modern input panel are represented by Automation Id's.
 		childAutomationId = firstChild.UIAAutomationId
-		# Emoji panel for build 16299 and 17134.
+		# Emoji panel for 1709 (build 16299) and 1803 (17134).
+		emojiPanelInitial = winVersion.WIN10_1709
 		# This event is properly raised in build 17134.
-		if not winVersion.isWin10(version=1809) and childAutomationId in self._classicEmojiPanelAutomationIds:
+		emojiPanelWindowOpenEvent = winVersion.WIN10_1803
+		if (
+			emojiPanelInitial <= winVersion.getWinVer() <= emojiPanelWindowOpenEvent
+			and childAutomationId in self._classicEmojiPanelAutomationIds
+		):
 			eventHandler.queueEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
@@ -242,8 +247,9 @@ class AppModule(appModuleHandler.AppModule):
 		or (self._recentlySelected is not None and self._recentlySelected in obj.name)):
 			return
 		# The word "blank" is kept announced, so suppress this on build 17666 and later.
-		if winVersion.winVersion.build > 17134:
-			# In build 17672 and later, return immediatley when element selected event on clipboard item was fired just prior to this.
+		if winVersion.getWinVer().build > 17134:
+			# In build 17672 and later,
+			# return immediately when element selected event on clipboard item was fired just prior to this.
 			# In some cases, parent will be None, as seen when emoji panel is closed in build 18267.
 			try:
 				if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemIndex" or obj.parent.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList": return

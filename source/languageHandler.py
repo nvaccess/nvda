@@ -16,7 +16,9 @@ import globalVars
 
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2
+LOCALE_SLIST = 0xC
 LOCALE_SLANGDISPLAYNAME=0x6f
+LOCALE_USER_DEFAULT = 0x400
 LOCALE_CUSTOM_UNSPECIFIED = 0x1000
 #: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
 #: This might be because Windows doesn't know about the locale (e.g. "an"),
@@ -178,7 +180,8 @@ def setLanguage(lang):
 	# #9207: Python 3.8 adds gettext.pgettext, so add it to the built-in namespace.
 	trans.install(names=["pgettext"])
 
-def getLanguage():
+
+def getLanguage() -> str:
 	return curLang
 
 def normalizeLanguage(lang):

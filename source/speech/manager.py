@@ -34,8 +34,8 @@ from typing import (
 
 
 def _shouldCancelExpiredFocusEvents():
-	# 0: default (no), 1: yes, 2: no
-	return config.conf["featureFlag"]["cancelExpiredFocusSpeech"] == 1
+	# 0: default (yes), 1: yes, 2: no
+	return config.conf["featureFlag"]["cancelExpiredFocusSpeech"] != 2
 
 
 def _shouldDoSpeechManagerLogging():

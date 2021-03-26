@@ -1,19 +1,15 @@
-# -*- coding: UTF-8 -*-
-# synthDriverHandler.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
-import os
 import pkgutil
 import importlib
 from typing import Optional
 from locale import strxfrm
 
 import config
-import baseObject
 import winVersion
 import globalVars
 from logHandler import log
@@ -23,11 +19,13 @@ import speechDictHandler
 import extensionPoints
 import synthDrivers
 import driverHandler
-from driverHandler import StringParameterInfo  # noqa: F401 # Backwards compatibility
+from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting, NumericDriverSetting
+from autoSettingsUtils.utils import StringParameterInfo
+
 from abc import abstractmethod
 
 
-class LanguageInfo(driverHandler.StringParameterInfo):
+class LanguageInfo(StringParameterInfo):
 	"""Holds information for a particular language"""
 
 	def __init__(self, id):
@@ -36,7 +34,7 @@ class LanguageInfo(driverHandler.StringParameterInfo):
 		super(LanguageInfo, self).__init__(id, displayName)
 
 
-class VoiceInfo(driverHandler.StringParameterInfo):
+class VoiceInfo(StringParameterInfo):
 	"""Provides information about a single synthesizer voice.
 	"""
 
@@ -51,13 +49,18 @@ class VoiceInfo(driverHandler.StringParameterInfo):
 
 
 class SynthDriver(driverHandler.Driver):
-	"""Abstract base synthesizer driver.
-	Each synthesizer driver should be a separate Python module in the root synthDrivers directory containing a SynthDriver class which inherits from this base class.
+	"""
+	Abstract base synthesizer driver.
+	Each synthesizer driver should be a separate Python module in the root synthDrivers directory
+	containing a SynthDriver class
+	which inherits from this base class.
 	
 	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
 	The methods L{speak}, L{cancel} and L{pause} should be overridden as appropriate.
 	L{supportedSettings} should be set as appropriate for the settings supported by the synthesiser.
-	There are factory functions to create L{driverHandler.DriverSetting} instances for common settings; e.g. L{VoiceSetting} and L{RateSetting}.
+	There are factory functions to create L{autoSettingsUtils.driverSetting.DriverSetting} instances
+	for common settings;
+	e.g. L{VoiceSetting} and L{RateSetting}.
 	Each setting is retrieved and set using attributes named after the setting;
 	e.g. the L{voice} attribute is used for the L{voice} setting.
 	These will usually be properties.
@@ -103,7 +106,7 @@ class SynthDriver(driverHandler.Driver):
 	@classmethod
 	def LanguageSetting(cls):
 		"""Factory function for creating a language setting."""
-		return driverHandler.DriverSetting(
+		return DriverSetting(
 			"language",
 			# Translators: Label for a setting in voice settings dialog.
 			_("&Language"),
@@ -115,7 +118,7 @@ class SynthDriver(driverHandler.Driver):
 	@classmethod
 	def VoiceSetting(cls):
 		"""Factory function for creating voice setting."""
-		return driverHandler.DriverSetting(
+		return DriverSetting(
 			"voice",
 			# Translators: Label for a setting in voice settings dialog.
 			_("&Voice"),
@@ -127,7 +130,7 @@ class SynthDriver(driverHandler.Driver):
 	@classmethod
 	def VariantSetting(cls):
 		"""Factory function for creating variant setting."""
-		return driverHandler.DriverSetting(
+		return DriverSetting(
 			"variant",
 			# Translators: Label for a setting in voice settings dialog.
 			_("V&ariant"),
@@ -139,7 +142,7 @@ class SynthDriver(driverHandler.Driver):
 	@classmethod
 	def RateSetting(cls, minStep=1):
 		"""Factory function for creating rate setting."""
-		return driverHandler.NumericDriverSetting(
+		return NumericDriverSetting(
 			"rate",
 			# Translators: Label for a setting in voice settings dialog.
 			_("&Rate"),
@@ -152,7 +155,7 @@ class SynthDriver(driverHandler.Driver):
 	@classmethod
 	def RateBoostSetting(cls):
 		"""Factory function for creating rate boost setting."""
-		return driverHandler.BooleanDriverSetting(
+		return BooleanDriverSetting(
 			"rateBoost",
 			# Translators: This is the name of the rate boost voice toggle
 			# which further increases the speaking rate when enabled.
@@ -165,7 +168,7 @@ class SynthDriver(driverHandler.Driver):
 	@classmethod
 	def VolumeSetting(cls, minStep=1):
 		"""Factory function for creating volume setting."""
-		return driverHandler.NumericDriverSetting(
+		return NumericDriverSetting(
 			"volume",
 			# Translators: Label for a setting in voice settings dialog.
 			_("V&olume"),
@@ -179,7 +182,7 @@ class SynthDriver(driverHandler.Driver):
 	@classmethod
 	def PitchSetting(cls, minStep=1):
 		"""Factory function for creating pitch setting."""
-		return driverHandler.NumericDriverSetting(
+		return NumericDriverSetting(
 			"pitch",
 			# Translators: Label for a setting in voice settings dialog.
 			_("&Pitch"),
@@ -192,7 +195,7 @@ class SynthDriver(driverHandler.Driver):
 	@classmethod
 	def InflectionSetting(cls, minStep=1):
 		"""Factory function for creating inflection setting."""
-		return driverHandler.NumericDriverSetting(
+		return NumericDriverSetting(
 			"inflection",
 			# Translators: Label for a setting in voice settings dialog.
 			_("&Inflection"),
@@ -424,7 +427,7 @@ def getSynthInstance(name):
 # The synthDrivers that should be used by default.
 # The first that successfully initializes will be used when config is set to auto (I.e. new installs of NVDA).
 defaultSynthPriorityList = ['espeak', 'silence']
-if winVersion.winVersion.major >= 10:
+if winVersion.getWinVer() >= winVersion.WIN10:
 	# Default to OneCore on Windows 10 and above
 	defaultSynthPriorityList.insert(0, 'oneCore')
 
