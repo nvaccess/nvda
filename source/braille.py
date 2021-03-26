@@ -407,8 +407,7 @@ class Region(object):
 		#: @type: [int, ...]
 		self.brailleToRawPos = []
 		#: The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region.
-		#: @type: int
-		self.brailleCursorPos = None
+		self.brailleCursorPos: Optional[int] = None
 		#: The position of the selection start in L{brailleCells}, C{None} if there is no selection in this region.
 		#: @type: int
 		self.brailleSelectionStart = None
@@ -1094,15 +1093,20 @@ class TextInfoRegion(Region):
 			return
 
 		dest = self.getTextInfoForBraillePos(braillePos)
-		cursor = self.getTextInfoForBraillePos(self.brailleCursorPos)
-		if dest.compareEndPoints(cursor, "startToStart") == 0:
-			# The cursor is already at this position,
-			# so activate the position.
-			try:
-				self._getSelection().activate()
-			except NotImplementedError:
-				pass
-			return
+		# When there is a selection, brailleCursorPos will be None
+		# Don't activate, but move the cursor to the new cell (dropping the
+		# selection). An alternative behavior may be to activate on the selection.
+		# Moving the cursor was considered more intuitive.
+		if self.brailleCursorPos is not None:
+			cursor = self.getTextInfoForBraillePos(self.brailleCursorPos)
+			if dest.compareEndPoints(cursor, "startToStart") == 0:
+				# The cursor is already at this position,
+				# so activate the position.
+				try:
+					self._getSelection().activate()
+				except NotImplementedError:
+					pass
+				return
 		self._setCursor(dest)
 
 	def nextLine(self):
