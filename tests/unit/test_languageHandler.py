@@ -45,10 +45,8 @@ class TestLocaleNameToWindowsLCID(unittest.TestCase):
 		self.assertEqual(lcid, LCID_NONE)
 
 
-class TestSetLocale(unittest.TestCase):
-	"""
-	Tests setting the python locale for possible locales set by NVDA user preferences or the System.
-	"""
+class Test_languageHandler_setLocale(unittest.TestCase):
+	"""Tests for the function languageHandler.setLocale"""
 
 	SUPPORTED_LOCALES = [("en", "en_US"), ("fa-IR", "fa_IR"), ("an-ES", "an_ES")]
 
@@ -67,7 +65,7 @@ class TestSetLocale(unittest.TestCase):
 		"""
 		languageHandler.setLanguage(languageHandler.curLang)
 
-	def test_SetLocale_SupportedLocale_LocaleIsSet(self):
+	def test_SupportedLocale_LocaleIsSet(self):
 		"""
 		Tests several locale formats that should result in an expected python locale being set.
 		"""
@@ -76,7 +74,7 @@ class TestSetLocale(unittest.TestCase):
 				languageHandler.setLocale(localeName[0])
 				self.assertEqual(locale.getlocale()[0], localeName[1])
 
-	def test_SetLocale_PythonUnsupportedLocale_LocaleUnchanged(self):
+	def test_PythonUnsupportedLocale_LocaleUnchanged(self):
 		"""
 		Tests several locale formats that python doesn't support which will result in a return to the
 		current locale
@@ -87,7 +85,7 @@ class TestSetLocale(unittest.TestCase):
 				languageHandler.setLocale(localeName)
 				self.assertEqual(locale.getlocale(), original_locale)
 
-	def test_SetLocale_NVDASupportedAndPythonSupportedLocale_LanguageCodeMatches(self):
+	def test_NVDASupportedAndPythonSupportedLocale_LanguageCodeMatches(self):
 		"""
 	 	Tests all the translatable languages that NVDA shows in the user preferences
 		excludes the locales that python doesn't support, as the expected behaviour is different.
@@ -108,7 +106,7 @@ class TestSetLocale(unittest.TestCase):
 						f"full values: {localeName} {current_locale[0]}",
 					)
 
-	def test_SetLocale_WindowsLang_LocaleCanBeRetrieved(self):
+	def test_WindowsLang_LocaleCanBeRetrieved(self):
 		"""
 		We don't know whether python supports a specific windows locale so just ensure locale isn't
 		broken after testing these values.
@@ -119,10 +117,9 @@ class TestSetLocale(unittest.TestCase):
 				locale.getlocale()
 
 
-class TestSetLanguage(unittest.TestCase):
-	"""
-	Tests setting the NVDA language set by NVDA user preferences or the System.
-	"""
+class Test_LanguageHandler_SetLanguage(unittest.TestCase):
+	"""Tests for the function languageHandler.setLanguage"""
+
 	UNSUPPORTED_WIN_LANGUAGES = ["an", "kmr"]
 
 	def tearDown(self):
@@ -146,7 +143,7 @@ class TestSetLanguage(unittest.TestCase):
 		languageHandler.setLanguage(self._prevLang)
 		super().__init__(*args, **kwargs)
 
-	def test_SetLanguage_NVDASupportedLanguages_LanguageIsSetCorrectly(self):
+	def test_NVDASupportedLanguages_LanguageIsSetCorrectly(self):
 		"""
 		Tests languageHandler.setLanguage, using all NVDA supported languages, which should do the following:
 		- set the translation service and languageHandler.curLang
@@ -191,7 +188,7 @@ class TestSetLanguage(unittest.TestCase):
 						langOnly, pythonLang, f"full values: {localeName} {python_locale}"
 					)
 
-	def test_SetLanguage_WindowsLanguages_NoErrorsThrown(self):
+	def test_WindowsLanguages_NoErrorsThrown(self):
 		"""
 		We don't know whether python or our translator system supports a specific windows locale
 		so just ensure the setLanguage process doesn't fail.
