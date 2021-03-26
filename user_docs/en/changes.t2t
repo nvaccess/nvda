@@ -39,6 +39,7 @@ What's New in NVDA
 - Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
 - Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
    - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
+- The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
 
 
 == Changes for Developers ==
