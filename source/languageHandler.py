@@ -186,11 +186,12 @@ def setLocale(localeName: str) -> None:
 	'''
 	Set python's locale using a `localeName` set by `setLanguage`.
 	Will fallback on `curLang` if it cannot be set and finally fallback to the system locale.
-	Python 3.8's locale system allows you to set locales that you cannot get
-	so we must test for both ValueErrors and locale.Errors
 	'''
 
 	r'''
+	Python 3.8's locale system allows you to set locales that you cannot get
+	so we must test for both ValueErrors and locale.Errors
+
 	>>> import locale
 	>>> locale.setlocale(locale.LC_ALL, 'foobar')
 	Traceback (most recent call last):
