@@ -55,6 +55,7 @@ init:
      if ($versionType) {
       Set-AppveyorBuildVariable "versionType" $versionType
      }
+     Get-ComputerInfo >> systemInfo.txt
 
 clone_depth: 1
 
@@ -216,6 +217,7 @@ test_script:
 artifacts:
   - path: output\*
   - path: output\*\*
+  - path: systemInfo.txt
 
 # Still upload artifacts on failure, they are useful for testing PR builds despite the build perhaps
 # failing for a minor reason (eg linting)
