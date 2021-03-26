@@ -214,8 +214,8 @@ class Gecko_ia2(VirtualBuffer):
 			yield accId
 
 	def __contains__(self,obj):
-		if not (
-			(
+		if (
+			not (
 				isinstance(obj, NVDAObjects.IAccessible.IAccessible)
 				and isinstance(obj.IAccessibleObject, IA2.IAccessible2)
 			)
