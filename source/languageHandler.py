@@ -150,7 +150,7 @@ def getWindowsLanguage():
 
 def setLanguage(lang: str) -> None:
 	'''
-	Sets the following using `lang`
+	Sets the following using `lang` such as "en", "ru_RU", or "es-ES". Use "Windows" to use the system locale
 	 - languageHandler.curLang
 	 - the translation service (fallback to English)
 	 - the windows locale for the thread (fallback to system locale)
@@ -184,7 +184,7 @@ def setLanguage(lang: str) -> None:
 
 def setLocale(localeName: str) -> None:
 	'''
-	Set python's locale using a `localeName` set by `setLanguage`.
+	Set python's locale using a `localeName` such as "en", "ru_RU", or "es-ES".
 	Will fallback on `curLang` if it cannot be set and finally fallback to the system locale.
 	'''
 
@@ -216,8 +216,11 @@ def setLocale(localeName: str) -> None:
 		locale.setlocale(locale.LC_ALL, localeName)
 		locale.getlocale()
 		return
-	except (locale.Error, ValueError):
-		pass
+	except locale.Error:
+		log.debugWarning(f"python locale {localeName} could not be set")
+	except ValueError:
+		log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
+
 	if '-' in localeName:
 		# Python couldn't support the language-country locale, try language_country.
 		try:
@@ -225,8 +228,11 @@ def setLocale(localeName: str) -> None:
 			locale.setlocale(locale.LC_ALL, localeName)
 			locale.getlocale()
 			return
-		except (locale.Error, ValueError):
-			pass
+		except locale.Error:
+			log.debugWarning(f"python locale {localeName} could not be set")
+		except ValueError:
+			log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
+
 	if '_' in localeName:
 		# Python couldn't support the language_country locale, just try language.
 		try:
@@ -234,10 +240,11 @@ def setLocale(localeName: str) -> None:
 			locale.setlocale(locale.LC_ALL, localeName)
 			locale.getlocale()
 			return
-		except (locale.Error, ValueError):
-			pass
+		except locale.Error:
+			log.debugWarning(f"python locale {localeName} could not be set")
+		except ValueError:
+			log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
 
-	log.debugWarning(f"python locale {localeName} could not be set")
 	try:
 		locale.getlocale()
 	except ValueError:
@@ -248,7 +255,7 @@ def setLocale(localeName: str) -> None:
 			# reset to system locale default if we can't set the current lang's locale
 			locale.setlocale(locale.LC_ALL, "")
 		else:
-			log.debugWarning(f"setting python locale to {curLang}")
+			log.debugWarning(f"setting python locale to the current language {curLang}")
 			# fallback and try to reset the locale to the current lang
 			setLocale(curLang)
 
