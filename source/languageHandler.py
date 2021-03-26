@@ -214,6 +214,7 @@ def setLocale(localeName: str) -> None:
 	try:
 		locale.setlocale(locale.LC_ALL, localeName)
 		locale.getlocale()
+		log.debug(f"setting python locale to {localeName}")
 		return
 	except locale.Error:
 		log.debugWarning(f"python locale {localeName} could not be set")
@@ -226,6 +227,7 @@ def setLocale(localeName: str) -> None:
 			localeName = localeName.replace('-', '_')
 			locale.setlocale(locale.LC_ALL, localeName)
 			locale.getlocale()
+			log.debug(f"setting python locale to {localeName}")
 			return
 		except locale.Error:
 			log.debugWarning(f"python locale {localeName} could not be set")
@@ -238,6 +240,7 @@ def setLocale(localeName: str) -> None:
 			localeName = localeName.split('_')[0]
 			locale.setlocale(locale.LC_ALL, localeName)
 			locale.getlocale()
+			log.debug(f"setting python locale to {localeName}")
 			return
 		except locale.Error:
 			log.debugWarning(f"python locale {localeName} could not be set")
