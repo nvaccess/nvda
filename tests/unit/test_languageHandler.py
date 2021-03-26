@@ -77,8 +77,7 @@ UNSUPPORTED_PYTHON_LOCALES = {
 	"yo",
 }
 TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}
-WINDOWS_LANGS = set(locale.windows_locale.values())
-WINDOWS_LANGS.update(windowsPrimaryLCIDsToLocaleNames.values())
+WINDOWS_LANGS = set(locale.windows_locale.values()).union(windowsPrimaryLCIDsToLocaleNames.values())
 
 
 class TestLocaleNameToWindowsLCID(unittest.TestCase):
@@ -102,7 +101,7 @@ class TestLocaleNameToWindowsLCID(unittest.TestCase):
 
 class TestSetLocale(unittest.TestCase):
 	"""
-	tests setting the python locale for all possible locales set by NVDA or the System
+	Tests setting the python locale for possible locales set by NVDA user preferences or the System.
 	"""
 
 	SUPPORTED_LOCALES = [("en", "en_US"), ("fa-IR", "fa_IR"), ("an-ES", "an_ES")]
@@ -116,19 +115,20 @@ class TestSetLocale(unittest.TestCase):
 
 	def testSupportedLocales(self):
 		for localeName in self.SUPPORTED_LOCALES:
-			languageHandler.setLocale(localeName[0])
-			self.assertEqual(locale.getlocale()[0], localeName[1])
+			with self.subTest(localeName=localeName):
+				languageHandler.setLocale(localeName[0])
+				self.assertEqual(locale.getlocale()[0], localeName[1])
 
 	def testUnsupportedLocales(self):
 		original_locale = locale.getlocale()
 		for localeName in UNSUPPORTED_PYTHON_LOCALES:
-			with self.subTest():
+			with self.subTest(localeName=localeName):
 				languageHandler.setLocale(localeName)
 				self.assertEqual(locale.getlocale(), original_locale)
 
 	def testAllSupportedLangs(self):
 		for localeName in TRANSLATABLE_LANGS - UNSUPPORTED_PYTHON_LOCALES:
-			with self.subTest():
+			with self.subTest(localeName=localeName):
 				languageHandler.setLocale(localeName)
 				current_locale = locale.getlocale()
 
@@ -145,18 +145,18 @@ class TestSetLocale(unittest.TestCase):
 
 	def smokeTestAllWindowsLangs(self):
 		'''
-		we don't know whether python supports a specific windows locale
-		so just ensure locale isn't broken after testing these values
+		We don't know whether python supports a specific windows locale so just ensure locale isn't
+		broken after testing these values.
 		'''
 		for localeName in WINDOWS_LANGS:
-			with self.subTest():
+			with self.subTest(localeName=localeName):
 				languageHandler.setLocale(localeName)
 				locale.getlocale()
 
 
 class TestSetLanguage(unittest.TestCase):
 	"""
-	tests setting the NVDA language for all possible locales set by NVDA
+	Tests setting the NVDA language set by NVDA user preferences or the System.
 	"""
 	UNSUPPORTED_WIN_LANGUAGES = ["an", "kmr"]
 
@@ -179,45 +179,44 @@ class TestSetLanguage(unittest.TestCase):
 		super().__init__(*args, **kwargs)
 
 	def testTranslatableLanguages(self):
-		for lang in TRANSLATABLE_LANGS:
-			langOnly = lang.split("_")[0]
-			with self.subTest():
-				languageHandler.setLanguage(lang)
+		for localeName in TRANSLATABLE_LANGS:
+			with self.subTest(localeName=localeName):
+				langOnly = localeName.split("_")[0]
+				languageHandler.setLanguage(localeName)
 				# check curLang/translation service is set
-				self.assertEqual(languageHandler.curLang, lang)
+				self.assertEqual(languageHandler.curLang, localeName)
 
 				# check Windows thread is set
 				threadLocale = ctypes.windll.kernel32.GetThreadLocale()
 				threadLocaleName = languageHandler.windowsLCIDToLocaleName(threadLocale)
 				threadLocaleLang = threadLocaleName.split("_")[0]
-				if lang in self.UNSUPPORTED_WIN_LANGUAGES:
+				if localeName in self.UNSUPPORTED_WIN_LANGUAGES:
 					self.assertEqual(self._defaultThreadLocaleName, threadLocaleName)
 				else:
 					# check that the language codes are correctly set
 					self.assertEqual(
 						langOnly,
 						threadLocaleLang,
-						f"full values: {lang} {threadLocaleName}",
+						f"full values: {localeName} {threadLocaleName}",
 					)
 
 				# check that the python locale is set
 				python_locale = locale.getlocale()
-				if lang in UNSUPPORTED_PYTHON_LOCALES:
+				if localeName in UNSUPPORTED_PYTHON_LOCALES:
 					self.assertEqual(self._defaultPythonLocale, python_locale)
-				elif lang == "uk":
+				elif localeName == "uk":
 					self.assertEqual(python_locale[0], "English_United Kingdom")
 				else:
 					pythonLang = python_locale[0].split("_")[0]
 					self.assertEqual(
-						langOnly, pythonLang, f"full values: {lang} {python_locale}"
+						langOnly, pythonLang, f"full values: {localeName} {python_locale}"
 					)
 
 	def smokeTestAllWindowsLangs(self):
 		'''
-		we don't know whether python or our translator system
-		supports a specific windows locale
-		so just ensure the setLanguage process doesn't fail
+		We don't know whether python or our translator system supports a specific windows locale
+		so just ensure the setLanguage process doesn't fail.
 		'''
 		for localeName in WINDOWS_LANGS:
-			with self.subTest():
+			with self.subTest(localeName=localeName):
 				languageHandler.setLanguage(localeName)
