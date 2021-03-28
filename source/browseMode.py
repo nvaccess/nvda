@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Union
 import os
 import itertools
 import collections
@@ -1633,14 +1634,15 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	event_gainFocus.ignoreIsReady=True
 
-	def _handleScrollTo(self, obj):
+	def _handleScrollTo(
+			self,
+			obj: Union[NVDAObject, textInfos.TextInfo],
+	) -> bool:
 		"""Handle scrolling the browseMode document to a given object in response to an event.
 		Subclasses should call this from an event which indicates that the document has scrolled.
 		@postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
 		@param obj: The object to which the document should scroll.
-		@type obj: L{NVDAObjects.NVDAObject}
 		@return: C{True} if the document was scrolled, C{False} if not.
-		@rtype: bool
 		@note: If C{False} is returned, calling events should probably call their nextHandler.
 		"""
 		if self.programmaticScrollMayFireEvent and self._lastProgrammaticScrollTime and time.time() - self._lastProgrammaticScrollTime < 0.4:
@@ -1649,10 +1651,15 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			# However, pretend we handled it, as we don't want it to be passed on to the object either.
 			return True
 
-		try:
-			scrollInfo = self.makeTextInfo(obj)
-		except:
-			return False
+		if isinstance(obj, NVDAObject):
+			try:
+				scrollInfo = self.makeTextInfo(obj)
+			except (NotImplementedError, RuntimeError):
+				return False
+		elif isinstance(obj, textInfos.TextInfo):
+			scrollInfo = obj.copy()
+		else:
+			raise ValueError(f"{obj} is not a supported type")
 
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
