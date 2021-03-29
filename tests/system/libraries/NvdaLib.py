@@ -282,6 +282,9 @@ class NvdaLib:
 
 	def quit_NVDAInstaller(self):
 		builtIn.log("Stopping nvdaSpy server: {}".format(self._spyServerURI))
+		self.nvdaSpy.emulateKeyPress("insert+q")
+		self.nvdaSpy.wait_for_specific_speech("Exit NVDA")
+		self.nvdaSpy.emulateKeyPress("enter", blockUntilProcessed=False)
 		try:
 			_stopRemoteServer(self._spyServerURI, log=False)
 			process.terminate_process(self.nvdaProcessAlias)
