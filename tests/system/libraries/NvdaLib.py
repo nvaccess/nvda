@@ -285,7 +285,8 @@ class NvdaLib:
 		self.nvdaSpy.emulateKeyPress("insert+q")
 		self.nvdaSpy.wait_for_specific_speech("Exit NVDA")
 		self.nvdaSpy.emulateKeyPress("enter", blockUntilProcessed=False)
-		builtIn.sleep(1)
+		process.wait_for_process(self.nvdaProcessAlias, timeout="10 sec", on_timeout="terminate")
+		process.process_should_be_stopped(self.nvdaProcessAlias)
 		try:
 			_stopRemoteServer(self._spyServerURI, log=False)
 		except Exception:
