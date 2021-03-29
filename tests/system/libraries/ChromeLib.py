@@ -44,9 +44,8 @@ class ChromeLib:
 		return _pJoin(ChromeLib._testFileStagingPath, filename)
 
 	def exit_chrome(self, isMainChromeProcess: bool = False):
-		if not isMainChromeProcess:
-			spy = _NvdaLib.getSpyLib()
-			spy.emulateKeyPress('control+w')
+		spy = _NvdaLib.getSpyLib()
+		spy.emulateKeyPress('control+w')
 		chromeAlias = self._mainChromeAlias if isMainChromeProcess else self.chromeAlias
 		process.wait_for_process(chromeAlias, timeout="1 minute", on_timeout="terminate")
 		process.process_should_be_stopped(chromeAlias)

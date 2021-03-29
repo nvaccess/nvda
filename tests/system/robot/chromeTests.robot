@@ -6,7 +6,7 @@
 Documentation	HTML test cases in Chrome
 Force Tags	NVDA	smoke test	browser	chrome
 Suite Setup	start chrome
-Suite Teardown	exit chrome	True
+Suite Teardown	default suite teardown
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py
@@ -22,6 +22,11 @@ default teardown
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	exit chrome
+	quit NVDA
+
+default suite teardown
+	start NVDA	standard-dontShowWelcomeDialog.ini
+	exit chrome	True
 	quit NVDA
 
 *** Test Cases ***
