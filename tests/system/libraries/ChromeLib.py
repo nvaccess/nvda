@@ -63,7 +63,6 @@ class ChromeLib:
 			" --force-renderer-accessibility"
 			" --suppress-message-center-popups"
 			" --disable-notifications"
-			" --keep-alive-for-test"
 			" -kiosk"
 			f' --enable-logging --v=1'
 			f' {f"{filePath}" if filePath is not None else ""}',
