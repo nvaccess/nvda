@@ -5,6 +5,8 @@
 *** Settings ***
 Documentation	HTML test cases in Chrome
 Force Tags	NVDA	smoke test	browser	chrome
+Suite Setup	start chrome
+Suite Teardown	exit chrome	True
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py

@@ -31,27 +31,33 @@ assertsLib: _AssertsLib = _getLib('AssertsLib')
 
 # In Robot libraries, class name must match the name of the module. Use caps for both.
 class ChromeLib:
+	_mainChromeAlias = 'mainChromeWindow'
 	_testFileStagingPath = _tempfile.mkdtemp()
 
 	def __init__(self):
 		self._original_chrome_log = os.environ.get('CHROME_LOG_FILE', None)
 		self.chromeHandle: _Optional[int] = None
+		self.chromeAlias: _Optional[str] = None
 
 	@staticmethod
 	def _getTestCasePath(filename):
 		return _pJoin(ChromeLib._testFileStagingPath, filename)
 
-	def exit_chrome(self):
-		spy = _NvdaLib.getSpyLib()
-		spy.emulateKeyPress('control+w')
-		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="terminate")
+	def exit_chrome(self, isMainChromeProcess: bool = False):
+		if not isMainChromeProcess:
+			spy = _NvdaLib.getSpyLib()
+			spy.emulateKeyPress('control+w')
+		chromeAlias = self._mainChromeAlias if isMainChromeProcess else self.chromeAlias
+		process.wait_for_process(chromeAlias, timeout="1 minute", on_timeout="terminate")
+		process.process_should_be_stopped(chromeAlias)
 		if self._original_chrome_log is not None:
 			os.environ['CHROME_LOG_FILE'] = self._original_chrome_log
 		else:
 			del os.environ['CHROME_LOG_FILE']
 
-	def start_chrome(self, filePath):
-		builtIn.log(f"starting chrome: {filePath}")
+	def start_chrome(self, filePath: _Optional[str] = None):
+		self.chromeAlias = self._mainChromeAlias if filePath is None else filePath
+		builtIn.log(f"starting chrome: {self.chromeAlias}")
 		os.environ['CHROME_LOG_FILE'] = _NvdaLib.NvdaLib.createLogsFullTestIdPath("chrome.log")
 		self.chromeHandle = process.start_process(
 			"start chrome"
@@ -61,9 +67,9 @@ class ChromeLib:
 			" --keep-alive-for-test"
 			" -kiosk"
 			f' --enable-logging --v=1'
-			f' "{filePath}"',
+			f' {f"{filePath}" if filePath is not None else ""}',
 			shell=True,
-			alias='chromeAlias',
+			alias=self.chromeAlias,
 		)
 		process.process_should_be_running(self.chromeHandle)
 		return self.chromeHandle
