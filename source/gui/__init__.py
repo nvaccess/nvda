@@ -75,6 +75,11 @@ class MainFrame(wx.Frame):
 				self.Show()
 				self.Hide()
 
+	def Destroy(self):
+		log.debug(f"destroying systray icon")
+		self.sysTrayIcon.Destroy()
+		super().Destroy()
+
 	def prePopup(self):
 		"""Prepare for a popup.
 		This should be called before any dialog or menu which should pop up for the user.
@@ -363,15 +368,15 @@ def safeAppExit():
 
 	for window in wx.GetTopLevelWindows():
 		if isinstance(window, wx.Dialog) and window.IsModal():
-			log.info(f"ending modal {window} during exit process")
+			log.debug(f"ending modal {window} during exit process")
 			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
 		if isinstance(window, MainFrame):
-			log.info(f"destroying main frame during exit process")
+			log.debug(f"destroying main frame during exit process")
 			# the MainFrame has EVT_CLOSE bound to the ExitDialog
 			# which calls this function on exit, so destroy this window
 			wx.CallAfter(window.Destroy)
 		else:
-			log.info(f"closing window {window} during exit process")
+			log.debug(f"closing window {window} during exit process")
 			wx.CallAfter(window.Close)
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
@@ -541,6 +546,11 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
+
+	def Destroy(self):
+		log.debug(f"destroying systray menu during exit process")
+		self.menu.Destroy()
+		super().Destroy()
 
 	def onActivate(self, evt):
 		mainFrame.prePopup()
