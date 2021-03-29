@@ -7,6 +7,7 @@ What's New in NVDA
 
 == New Features ==
 - Early support for UIA with Chromium based browsers (such as Edge). (#12025)
+- Optional experimental support for Microsoft Excel via UI Automation. Only recommended for Microsoft Excel build 16.0.13522.10000 or higher. (#12210)
 
 
 == Changes ==
@@ -23,6 +24,7 @@ What's New in NVDA
 - Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
 - Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
+- NVDA will exit even with windows still open, the exit process now closes all NVDA windows and dialogs (#1740)
 
 
 == Bug Fixes ==
@@ -37,6 +39,7 @@ What's New in NVDA
 - Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
 - Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
    - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
+- The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
 
 
 == Changes for Developers ==
@@ -89,6 +92,14 @@ What's New in NVDA
 - `speech.re_last_pause` has been removed - please use `speech.SpeechWithoutPauses.re_last_pause` instead. (#12195)
 - `WelcomeDialog`, `LauncherDialog` and `AskAllowUsageStatsDialog` are moved to the `gui.startupDialogs`. (#12105)
 - `getDocFilePath` has been moved from `gui` to the `documentationUtils` module. (#12105)
+- The gui.accPropServer module as well as the AccPropertyOverride and ListCtrlAccPropServer classes from the gui.nvdaControls module have been removed in favor of WX' native support for overriding accessibility properties. When enhancing accessibility of WX controls, implement wx.Accessible instead. (#12215)
+- Files in `source/comInterfaces/` are now more easily consumable by developer tools such as IDEs. (#12201)
+- Convenience methods and types have been added to the winVersion module for getting and comparing Windows versions. (#11909)
+  - isWin10 function found in winVersion module has been removed.
+  - class winVersion.WinVersion is a comparable and order-able type encapsulating Windows version information.
+  - Function winVersion.getWinVer has been added to get a winVersion.WinVersion representing the currently running OS.
+  - Convenience constants have been added for known Windows releases, see winVersion.WIN* constants.
+- IAccessibleHandler no longer star imports everything from IAccessible and IA2 COM interfaces - please use them directly. (#12232)
 
 
 = 2020.4 =
@@ -111,6 +122,7 @@ Plus many other important bug fixes and improvements.
 - Added the --copy-portable-config command line parameter that allows you to automatically copy the provided configuration to the user account when silently installing NVDA. (#9676)
 - Braille routing is now supported with the Braille Viewer for mouse users, hover to route to a braille cell. (#11804)
 - NVDA will now automatically detect the Humanware Brailliant BI 40X and 20X devices via both USB and Bluetooth. (#11819)
+- NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
 
 
 == Changes ==
