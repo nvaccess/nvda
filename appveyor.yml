@@ -132,7 +132,6 @@ before_test:
      if(!$env:release) {
       $nvdaLauncherFile+="_snapshot"
      }
-     Get-ComputerInfo >> ".\output\systemInfo.txt"
      $nvdaLauncherFile+="_${env:version}.exe"
      Set-AppveyorBuildVariable "nvdaLauncherFile" $nvdaLauncherFile
      echo NVDALauncherFile: $NVDALauncherFile
