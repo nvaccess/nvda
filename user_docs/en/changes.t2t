@@ -39,6 +39,7 @@ What's New in NVDA
 - Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
 - Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
    - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
+- The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
 
 
 == Changes for Developers ==
@@ -121,6 +122,7 @@ Plus many other important bug fixes and improvements.
 - Added the --copy-portable-config command line parameter that allows you to automatically copy the provided configuration to the user account when silently installing NVDA. (#9676)
 - Braille routing is now supported with the Braille Viewer for mouse users, hover to route to a braille cell. (#11804)
 - NVDA will now automatically detect the Humanware Brailliant BI 40X and 20X devices via both USB and Bluetooth. (#11819)
+- NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
 
 
 == Changes ==
