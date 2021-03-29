@@ -76,6 +76,8 @@ class MainFrame(wx.Frame):
 				self.Hide()
 
 	def Destroy(self):
+		# wx destroys child Windows automatically but `wx.adv.TaskBarIcon` is not a window
+		# so it must be manually destroyed when destroying our main window (#12243)
 		log.debug(f"destroying systray icon")
 		self.sysTrayIcon.Destroy()
 		super().Destroy()
@@ -548,6 +550,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
 	def Destroy(self):
+		# wx.Window destroys child Windows automatically but `wx.Menu` and `self` doesn't inherit from
+		# wx.Window so the menu must be manually destroyed when destroying our system tray icon (#12243)
 		log.debug(f"destroying systray menu during exit process")
 		self.menu.Destroy()
 		super().Destroy()
