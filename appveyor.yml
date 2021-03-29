@@ -207,6 +207,7 @@ test_script:
       $errorCode=$LastExitCode
       Add-AppveyorMessage "System test failure"
      }
+     Stop-Process -Name chrome
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
      $wc = New-Object 'System.Net.WebClient'

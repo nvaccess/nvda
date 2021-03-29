@@ -34,7 +34,7 @@ class ChromeLib:
 	_testFileStagingPath = _tempfile.mkdtemp()
 
 	def __init__(self):
-		self._original_chrome_log = os.environ.get('CHROME_LOG_FILE', '')
+		self._original_chrome_log = os.environ.get('CHROME_LOG_FILE', None)
 		self.chromeHandle: _Optional[int] = None
 
 	@staticmethod
@@ -44,8 +44,11 @@ class ChromeLib:
 	def exit_chrome(self):
 		spy = _NvdaLib.getSpyLib()
 		spy.emulateKeyPress('control+w')
-		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="continue")
-		os.environ['CHROME_LOG_FILE'] = self._original_chrome_log
+		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="terminate")
+		if self._original_chrome_log is not None:
+			os.environ['CHROME_LOG_FILE'] = self._original_chrome_log
+		else:
+			del os.environ['CHROME_LOG_FILE']
 
 	def start_chrome(self, filePath):
 		builtIn.log(f"starting chrome: {filePath}")
