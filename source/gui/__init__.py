@@ -53,6 +53,8 @@ class MainFrame(wx.Frame):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
 		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
+
+		# Ensure that this icon is destroyed when this is destroyed as wx doesn't track it (#12243)
 		self.sysTrayIcon = SysTrayIcon(self)
 		#: The focus before the last popup or C{None} if unknown.
 		#: This is only valid before L{prePopup} is called,
@@ -388,7 +390,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon, versionInfo.name)
 
-		self.menu=wx.Menu()
+		# Ensure that the menu is destroyed when this icon is destroyed as wx doesn't track either (#12243)
+		self.menu = wx.Menu()
 		menu_preferences=self.preferencesMenu=wx.Menu()
 		item = menu_preferences.Append(wx.ID_ANY,
 			# Translators: The label for the menu item to open NVDA Settings dialog.
