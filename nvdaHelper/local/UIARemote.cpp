@@ -4,6 +4,7 @@
 #include <atlcomcli.h>
 #include <UIAutomation.h>
 #include <UiaOperationAbstraction/UiaOperationAbstraction.h>
+#include <UiaOperationAbstraction/SafeArrayUtil.h>
 #include <common/log.h>
 
 using namespace UiaOperationAbstraction;
@@ -368,8 +369,8 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 
 extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(IUIAutomationElement* rootElementArg, IUIAutomationTextRange* textRangeArg, SAFEARRAY* pPropIDsArg, SAFEARRAY* pAttribIDsArg) {
 	// Unpack the requested property ID and attribute ID safeArrays into vectors.
-	auto propIDs=SafeArrayToVector<VT_I4>(pPropIDsArg);
-	auto attribIDs=SafeArrayToVector<VT_I4>(pAttribIDsArg);
+	auto propIDs=SafeArrayUtil::SafeArrayToVector<VT_I4>(pPropIDsArg);
+	auto attribIDs=SafeArrayUtil::SafeArrayToVector<VT_I4>(pAttribIDsArg);
 	// Start a new remote ops scope.
 	auto scope=UiaOperationScope::StartNew();
 	// Everything from here on is remoted

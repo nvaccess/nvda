@@ -32,6 +32,10 @@ MSUIA_wrapper_libs = env.Command(
 		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.pdb'),
 		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.lib'),
 		MSUIA_lib_outDir.File('winmd/Microsoft.UI.UIAutomation.winmd'),
+		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/microsoft.ui.uiautomation.h'),
+		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.0.h'),
+		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.1.h'),
+		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.2.h'),
 	],
 	MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation.vcxproj'),
 	"msbuild $SOURCE /p:Configuration=Release,Platform=x86,OutDir={outDir}".format(outDir=MSUIA_lib_outDir.abspath),
@@ -72,6 +76,7 @@ MSUIA_abstraction_headers = env.Install(
 		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaOperationAbstraction.h'),
 		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaTypeAbstractionEnums.g.h'),
 		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaTypeAbstraction.g.h'),
+		MSUIA_sourceDir.File('UiaOperationAbstraction/SafeArrayUtil.h'),
 	]
 )
 
