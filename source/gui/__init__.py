@@ -81,7 +81,6 @@ class MainFrame(wx.Frame):
 				self.Hide()
 
 	def _onDestroy(self, evt):
-		evt.Skip()  # Allow other handlers to process this event.
 		# wx destroys child Windows automatically but `wx.adv.TaskBarIcon` is not a window
 		# so it must be set to be destroyed when destroying our main frame window (#12243)
 		log.debug(f"destroying systray icon")
