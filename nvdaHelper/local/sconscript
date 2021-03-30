@@ -14,13 +14,10 @@
 
 Import([
 	'env',
-	'MSUIA_lib_outDir',
-	'MSUIA_include_outDir',
 ])
 
 env = env.Clone()
 env.Append(CPPPATH=Dir('#include/wil/include'))
-env.Append(CPPPATH=MSUIA_include_outDir)
 
 winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
 
@@ -92,7 +89,6 @@ localLib=env.SharedLibrary(
 		"nvdaHelperLocal.def",
 		"textUtils.cpp",
 		"UIAUtils.cpp",
-		"UIARemote.cpp",
 		"mixer.cpp",
 		"oleUtils.cpp",
 	],
@@ -104,7 +100,6 @@ localLib=env.SharedLibrary(
 		"oleaut32",
 		"rpcrt4",
 		"shlwapi",
-		MSUIA_lib_outDir.File('UiaOperationAbstraction.lib'),
 	],
 )
 
