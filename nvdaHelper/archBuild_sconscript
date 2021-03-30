@@ -188,6 +188,11 @@ if TARGET_ARCH=='x86':
 	env.Install(sourceTypelibDir,mathPlayerRPCStubs[0]) #typelib
 
 if TARGET_ARCH=='x86':
+	MSUIA_lib_outDir,MSUIA_include_outDir = thirdPartyEnv.SConscript('microsoft-ui-uiautomation/sconscript')
+	Export('MSUIA_lib_outDir')
+	Export('MSUIA_include_outDir')
+
+if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
 	if signExec:
@@ -226,3 +231,4 @@ if TARGET_ARCH in ('x86_64', 'arm64'):
 if TARGET_ARCH=='x86':
 	thirdPartyEnv.SConscript('espeak/sconscript')
 	thirdPartyEnv.SConscript('liblouis/sconscript')
+

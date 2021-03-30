@@ -1,0 +1,80 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvaccess.org/
+#Copyright 2021 NV Access Limited
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+import os
+import glob
+
+Import(
+	'env',
+	'sourceDir',
+	'sourceLibDir',
+)
+
+MSUIA_sourceDir = Dir('#include/microsoft-ui-uiautomation/src/uiAutomation')
+MSUIA_lib_outDir = Dir('lib')
+MSUIA_include_outDir = Dir('include')
+
+MSUIA_wrapper_libs = env.Command(
+	[
+		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.dll'),
+		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.exp'),
+		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.pdb'),
+		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.lib'),
+		MSUIA_lib_outDir.File('winmd/Microsoft.UI.UIAutomation.winmd'),
+	],
+	MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation.vcxproj'),
+	"msbuild $SOURCE /p:Configuration=Release,Platform=x86,OutDir={outDir}".format(outDir=MSUIA_lib_outDir.abspath),
+)
+
+env.Install(sourceLibDir,MSUIA_wrapper_libs[0])
+
+MSUIA_abstraction_libs = env.Command(
+	[
+		MSUIA_lib_outDir.File('UiaOperationAbstraction.lib'),
+	],
+	MSUIA_sourceDir.File('UiaOperationAbstraction/UiaOperationAbstraction.vcxproj'),
+	"msbuild $SOURCE /p:Configuration=Release,Platform=x86,OutDir={outDir}".format(outDir=MSUIA_lib_outDir.abspath),
+)
+
+env.Depends(MSUIA_abstraction_libs,MSUIA_wrapper_libs)
+
+MSUIA_wrapper_header = env.Install(
+	MSUIA_include_outDir.Dir('winrt'),
+	MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/microsoft.ui.uiautomation.h'),
+)
+env.Depends(MSUIA_wrapper_header,MSUIA_wrapper_libs)
+
+MSUIA_wrapper_impl = env.Install(
+	MSUIA_include_outDir.Dir('winrt/impl'),
+	[
+		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.0.h'),
+		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.1.h'),
+		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.2.h'),
+	]
+)
+env.Depends(MSUIA_wrapper_impl,MSUIA_wrapper_libs)
+
+
+MSUIA_abstraction_headers = env.Install(
+	MSUIA_include_outDir.Dir('UiaOperationAbstraction'),
+	[
+		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaOperationAbstraction.h'),
+		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaTypeAbstractionEnums.g.h'),
+		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaTypeAbstraction.g.h'),
+	]
+)
+
+env.Depends(MSUIA_abstraction_headers,[MSUIA_wrapper_header,MSUIA_wrapper_impl])
+
+Return(['MSUIA_lib_outDir','MSUIA_include_outDir'])
