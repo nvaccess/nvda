@@ -371,7 +371,8 @@ class MainFrame(wx.Frame):
 
 def safeAppExit():
 	"""
-	Ensures the app is exited by all the top windows being destroyed
+	Ensures the app is exited by all the top windows being destroyed.
+	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
 	"""
 
 	for window in wx.GetTopLevelWindows():
