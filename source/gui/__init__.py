@@ -54,8 +54,11 @@ class MainFrame(wx.Frame):
 		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
 
-		# Ensure that this icon is destroyed when this is destroyed as wx doesn't track it (#12243)
 		self.sysTrayIcon = SysTrayIcon(self)
+		# wx destroys child Windows automatically but `wx.adv.TaskBarIcon` is not a window
+		# so it must be set to be destroyed when destroying our main frame window (#12243)
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, source=self)
+
 		#: The focus before the last popup or C{None} if unknown.
 		#: This is only valid before L{prePopup} is called,
 		#: so it should be used as early as possible in any popup that needs it.
@@ -77,12 +80,12 @@ class MainFrame(wx.Frame):
 				self.Show()
 				self.Hide()
 
-	def Destroy(self):
+	def _onDestroy(self, evt):
+		evt.Skip()  # Allow other handlers to process this event.
 		# wx destroys child Windows automatically but `wx.adv.TaskBarIcon` is not a window
-		# so it must be manually destroyed when destroying our main window (#12243)
+		# so it must be set to be destroyed when destroying our main frame window (#12243)
 		log.debug(f"destroying systray icon")
 		self.sysTrayIcon.Destroy()
-		super().Destroy()
 
 	def prePopup(self):
 		"""Prepare for a popup.
@@ -390,8 +393,10 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon, versionInfo.name)
 
-		# Ensure that the menu is destroyed when this icon is destroyed as wx doesn't track either (#12243)
+		# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from
+		# wx.Window. The menu must be manually destroyed when destroying our system tray icon (#12243)
 		self.menu = wx.Menu()
+
 		menu_preferences=self.preferencesMenu=wx.Menu()
 		item = menu_preferences.Append(wx.ID_ANY,
 			# Translators: The label for the menu item to open NVDA Settings dialog.
@@ -553,11 +558,11 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
 	def Destroy(self):
-		# wx.Window destroys child Windows automatically but `wx.Menu` and `self` doesn't inherit from
-		# wx.Window so the menu must be manually destroyed when destroying our system tray icon (#12243)
+		# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from
+		# wx.Window. The menu must be manually destroyed when destroying our system tray icon (#12243)
 		log.debug(f"destroying systray menu during exit process")
 		self.menu.Destroy()
-		super().Destroy()
+		return super().Destroy()
 
 	def onActivate(self, evt):
 		mainFrame.prePopup()
