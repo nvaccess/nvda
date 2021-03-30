@@ -159,7 +159,7 @@ class ChromeLib:
 			actualSpeech = ChromeLib.getSpeechAfterKey('NVDA+UpArrow')
 			if actualSpeech == self._loadCompleteString:
 				break
-			spy.emulateKeyPress('alt+shift+esc')  # switches to the previous open window
+			spy.emulateKeyPress('alt+shift+escape')  # switches to the previous open window
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
 			builtIn.fail(
