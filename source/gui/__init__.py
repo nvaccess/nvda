@@ -80,11 +80,13 @@ class MainFrame(wx.Frame):
 				self.Show()
 				self.Hide()
 
-	def _onDestroy(self, evt):
+	def _onDestroy(self, evt: wx.EVT_WINDOW_DESTROY):
+		propagationLevel = evt.StopPropagation()
 		# wx destroys child Windows automatically but `wx.adv.TaskBarIcon` is not a window
 		# so it must be set to be destroyed when destroying our main frame window (#12243)
 		log.debug(f"destroying systray icon")
 		self.sysTrayIcon.Destroy()
+		evt.ResumePropagation(propagationLevel)
 
 	def prePopup(self):
 		"""Prepare for a popup.
