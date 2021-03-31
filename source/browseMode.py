@@ -1552,6 +1552,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			return 
 		if not self.passThrough and self._shouldIgnoreFocus(obj):
 			return
+
+		# If the previous focus object was removed, we might hit a false positive for overlap detection.
+		# Track the previous focus target so that we can account for this scenario. 
+		previousFocusObjIsDefunct=False
+		if self._lastFocusObj and controlTypes.STATE_DEFUNCT in self._lastFocusObj.states:
+			previousFocusObjIsDefunct=True
+
 		self._lastFocusObj=obj
 
 		try:
@@ -1569,7 +1576,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
+		isOverlapping = focusInfo.isOverlapping(caretInfo)
+		if not self._hadFirstGainFocus or not isOverlapping or (isOverlapping and previousFocusObjIsDefunct):
 			# The virtual caret is not within the focus node.
 			oldPassThrough=self.passThrough
 			passThrough = self.shouldPassThrough(obj, reason=OutputReason.FOCUS)
