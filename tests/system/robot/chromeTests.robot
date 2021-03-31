@@ -47,3 +47,6 @@ ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
 	[Tags]	aria-at
 	test_ariaCheckbox_browseMode
+i12147
+	[Documentation]	New focus target should be announced if the triggering element is removed when activated
+	test_i12147
