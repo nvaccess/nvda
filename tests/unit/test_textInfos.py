@@ -60,7 +60,6 @@ class TestCharacterOffsets(unittest.TestCase):
 		obj = BasicTextProvider(text=u"\U0001f926\U0001f60a\U0001f44d") # 🤦😊👍
 		ti = obj.makeTextInfo(Offsets(5, 5))
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at 👍
-		self.assertEqual(ti.offsets, (4, 6)) # Two offsets
 		ti.move(textInfos.UNIT_CHARACTER, -1)
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at 😊
 		self.assertEqual(ti.offsets, (2, 4)) # Two offsets
@@ -131,3 +130,102 @@ class TestCharacterOffsets(unittest.TestCase):
 		ti.move(textInfos.UNIT_CHARACTER, -1)
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at a
 		self.assertEqual(ti.offsets, (0, 1)) # One offset
+
+class TestEndpoints(unittest.TestCase):
+
+	def test_lessThan(self):
+		obj = BasicTextProvider(text="abcdef")
+		wholeTi = obj.makeTextInfo(Offsets(0, 2))
+		subTi1 = obj.makeTextInfo(Offsets(0, 3))
+		subTi2 = obj.makeTextInfo(Offsets(2, 5))
+		self.assertTrue(wholeTi.start < wholeTi.end)
+		self.assertFalse(wholeTi.end < wholeTi.start)
+		self.assertFalse(wholeTi.start < wholeTi.start)
+		self.assertFalse(wholeTi.end < wholeTi.end)
+		self.assertFalse(wholeTi.start < subTi1.start)
+		self.assertTrue(subTi1.start < subTi2.start)
+		self.assertTrue(subTi2.start < subTi1.end)
+		self.assertFalse(subTi2.end < wholeTi.end)
+
+	def test_lessThanOrEqualTo(self):
+		obj = BasicTextProvider(text="abcdef")
+		wholeTi = obj.makeTextInfo(Offsets(0, 5))
+		subTi1 = obj.makeTextInfo(Offsets(0, 3))
+		subTi2 = obj.makeTextInfo(Offsets(2, 5))
+		self.assertTrue(wholeTi.start <= wholeTi.end)
+		self.assertFalse(wholeTi.end <= wholeTi.start)
+		self.assertTrue(wholeTi.start <= wholeTi.start)
+		self.assertTrue(wholeTi.end <= wholeTi.end)
+		self.assertTrue(wholeTi.start <= subTi1.start)
+		self.assertTrue(subTi1.start <= subTi2.start)
+		self.assertTrue(subTi2.start <= subTi1.end)
+		self.assertTrue(subTi2.end <= wholeTi.end)
+
+	def test_greaterThanOrEqualTo(self):
+		obj = BasicTextProvider(text="abcdef")
+		wholeTi = obj.makeTextInfo(Offsets(0, 5))
+		subTi1 = obj.makeTextInfo(Offsets(0, 3))
+		subTi2 = obj.makeTextInfo(Offsets(2, 5))
+		self.assertFalse(wholeTi.start >= wholeTi.end)
+		self.assertTrue(wholeTi.end >= wholeTi.start)
+		self.assertTrue(wholeTi.start >= wholeTi.start)
+		self.assertTrue(wholeTi.end >= wholeTi.end)
+		self.assertTrue(wholeTi.start >= subTi1.start)
+		self.assertFalse(subTi1.start >= subTi2.start)
+		self.assertFalse(subTi2.start >= subTi1.end)
+		self.assertTrue(subTi2.end >= wholeTi.end)
+
+	def test_greaterThan(self):
+		obj = BasicTextProvider(text="abcdef")
+		wholeTi = obj.makeTextInfo(Offsets(0, 5))
+		subTi1 = obj.makeTextInfo(Offsets(0, 3))
+		subTi2 = obj.makeTextInfo(Offsets(2, 5))
+		self.assertFalse(wholeTi.start > wholeTi.end)
+		self.assertTrue(wholeTi.end > wholeTi.start)
+		self.assertFalse(wholeTi.start > wholeTi.start)
+		self.assertFalse(wholeTi.end > wholeTi.end)
+		self.assertFalse(wholeTi.start > subTi1.start)
+		self.assertFalse(subTi1.start > subTi2.start)
+		self.assertFalse(subTi2.start > subTi1.end)
+		self.assertFalse(subTi2.end > wholeTi.end)
+
+	def test_equal(self):
+		obj = BasicTextProvider(text="abcdef")
+		wholeTi = obj.makeTextInfo(Offsets(0, 5))
+		subTi1 = obj.makeTextInfo(Offsets(0, 3))
+		subTi2 = obj.makeTextInfo(Offsets(2, 5))
+		self.assertFalse(wholeTi.start == wholeTi.end)
+		self.assertFalse(wholeTi.end == wholeTi.start)
+		self.assertTrue(wholeTi.start == wholeTi.start)
+		self.assertTrue(wholeTi.end == wholeTi.end)
+		self.assertTrue(wholeTi.start == subTi1.start)
+		self.assertFalse(subTi1.start == subTi2.start)
+		self.assertFalse(subTi2.start == subTi1.end)
+		self.assertTrue(subTi2.end == wholeTi.end)
+
+	def test_notEqual(self):
+		obj = BasicTextProvider(text="abcdef")
+		wholeTi = obj.makeTextInfo(Offsets(0, 5))
+		subTi1 = obj.makeTextInfo(Offsets(0, 3))
+		subTi2 = obj.makeTextInfo(Offsets(2, 5))
+		self.assertTrue(wholeTi.start != wholeTi.end)
+		self.assertTrue(wholeTi.end != wholeTi.start)
+		self.assertFalse(wholeTi.start != wholeTi.start)
+		self.assertFalse(wholeTi.end != wholeTi.end)
+		self.assertFalse(wholeTi.start != subTi1.start)
+		self.assertTrue(subTi1.start != subTi2.start)
+		self.assertTrue(subTi2.start != subTi1.end)
+		self.assertFalse(subTi2.end != wholeTi.end)
+
+	def test_setStart(self):
+		obj = BasicTextProvider(text="abcdef")
+		ti1 = obj.makeTextInfo(Offsets(0, 2))
+		ti2 = obj.makeTextInfo(Offsets(3, 5))
+		ti1.end = ti2.end
+		self.assertEqual((ti1._startOffset, ti1._endOffset), (0, 5))
+		ti1.start = ti2.start
+		self.assertEqual((ti1._startOffset, ti1._endOffset), (3, 5))
+		ti1.end = ti2.start
+		self.assertEqual((ti1._startOffset, ti1._endOffset), (3, 3))
+		ti1.start = ti2.end
+		self.assertEqual((ti1._startOffset, ti1._endOffset), (5, 5))
