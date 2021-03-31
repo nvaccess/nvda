@@ -131,6 +131,7 @@ class TestCharacterOffsets(unittest.TestCase):
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at a
 		self.assertEqual(ti.offsets, (0, 1)) # One offset
 
+
 class TestEndpoints(unittest.TestCase):
 
 	def test_lessThan(self):
@@ -217,7 +218,7 @@ class TestEndpoints(unittest.TestCase):
 		self.assertTrue(subTi2.start != subTi1.end)
 		self.assertFalse(subTi2.end != wholeTi.end)
 
-	def test_setStart(self):
+	def test_setEndpoint(self):
 		obj = BasicTextProvider(text="abcdef")
 		ti1 = obj.makeTextInfo(Offsets(0, 2))
 		ti2 = obj.makeTextInfo(Offsets(3, 5))

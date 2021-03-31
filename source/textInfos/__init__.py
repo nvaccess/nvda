@@ -26,6 +26,7 @@ import config
 import controlTypes
 from controlTypes import OutputReason
 import locationHelper
+from logHandler import log
 
 
 SpeechSequence = List[Union[Any, str]]
@@ -315,7 +316,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		self.basePosition=position
 
 	def _get_start(self) -> "TextInfoEndpoint":
-		return TextInfoEndpoint(self,True)
+		return TextInfoEndpoint(self, True)
 
 	def _set_start(self, otherEndpoint: "TextInfoEndpoint"):
 		self.start.moveTo(otherEndpoint)
@@ -539,16 +540,19 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@rtype: generator of str
 		"""
 		unitInfo=self.copy()
-		unitInfo.collapse()
-		while unitInfo.compareEndPoints(self,"startToEnd")<0:
+		unitInfo.end = unitInfo.start
+		while unitInfo.start < self.end:
 			unitInfo.expand(unit)
 			chunkInfo=unitInfo.copy()
-			if chunkInfo.compareEndPoints(self,"startToStart")<0:
-				chunkInfo.setEndPoint(self,"startToStart")
-			if chunkInfo.compareEndPoints(self,"endToEnd")>0:
-				chunkInfo.setEndPoint(self,"endToEnd")
+			if chunkInfo.start < self.start:
+				chunkInfo.start = self.start
+			if chunkInfo.end > self.end:
+				chunkInfo.end = self.end
 			yield chunkInfo.text
-			unitInfo.collapse(end=True)
+			unitInfo.start = unitInfo.end
+			if unitInfo.start < chunkInfo.end:
+				log.debugWarning("Could not move TextInfo completely to end, breaking")
+				break
 
 	def getControlFieldSpeech(
 			self,
@@ -644,6 +648,7 @@ class DocumentWithPageTurns(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+
 class TextInfoEndpoint:
 	"""
 	Represents one end of a TextInfo instance.
@@ -666,7 +671,7 @@ class TextInfoEndpoint:
 		"""
 		if (
 			not isinstance(other, TextInfoEndpoint)
-			or type(self.textInfo) != type(other.textInfo)
+			or not isinstance(other.textInfo, type(self.textInfo))
 		):
 			raise ValueError(f"Cannot compare endpoint with different type: {other}")
 		return self.textInfo.compareEndPoints(other.textInfo, self._whichMap[self.isStart, other.isStart])
@@ -683,22 +688,22 @@ class TextInfoEndpoint:
 		self.textInfo = textInfo
 		self.isStart = isStart
 
-	def __lt__(self,other):
+	def __lt__(self, other):
 		return self._cmp(other) < 0
 
-	def __le__(self,other):
+	def __le__(self, other):
 		return self._cmp(other) <= 0
 
-	def __eq__(self,other):
+	def __eq__(self, other):
 		return self._cmp(other) == 0
 
-	def __ne__(self,other):
+	def __ne__(self, other):
 		return self._cmp(other) != 0
 
-	def __ge__(self,other):
+	def __ge__(self, other):
 		return self._cmp(other) >= 0
 
-	def __gt__(self,other):
+	def __gt__(self, other):
 		return self._cmp(other) > 0
 
 	def moveTo(self, other: "TextInfoEndpoint") -> None:
@@ -707,7 +712,7 @@ class TextInfoEndpoint:
 		"""
 		if (
 			not isinstance(other, TextInfoEndpoint)
-			or type(self.textInfo) != type(other.textInfo)
+			or not isinstance(other.textInfo, type(self.textInfo))
 		):
 			raise ValueError(f"Cannot move endpoint to different type: {other}")
 		self.textInfo.setEndPoint(other.textInfo, self._whichMap[(self.isStart, other.isStart)])
