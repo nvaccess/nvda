@@ -1554,10 +1554,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			return
 
 		# If the previous focus object was removed, we might hit a false positive for overlap detection.
-		# Track the previous focus target so that we can account for this scenario. 
-		previousFocusObjIsDefunct=False
+		# Track the previous focus target so that we can account for this scenario.
+		previousFocusObjIsDefunct = False
 		if self._lastFocusObj and controlTypes.STATE_DEFUNCT in self._lastFocusObj.states:
-			previousFocusObjIsDefunct=True
+			previousFocusObjIsDefunct = True
 
 		self._lastFocusObj=obj
 
