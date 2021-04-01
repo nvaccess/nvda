@@ -1,6 +1,7 @@
 import time
+import os
 import numbers
-from ctypes import POINTER, c_int
+from ctypes import POINTER, c_int, windll
 from comtypes import BSTR
 from comtypes.safearray import _midlSAFEARRAY as SAFEARRAY
 from comtypes.automation import VARIANT
@@ -16,7 +17,7 @@ from UIAUtils import splitUIAElementAttribs
 import textInfos
 import NVDAObjects.UIA
 
-_dll=NVDAHelper.getHelperLocalWin10Dll()
+_dll=windll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
 initialize=_dll.uiaRemote_initialize
 _getTextContent=_dll.uiaRemote_getTextContent
 _getTextContent.restype=SAFEARRAY(VARIANT)

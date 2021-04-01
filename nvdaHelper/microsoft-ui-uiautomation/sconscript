@@ -42,6 +42,7 @@ MSUIA_wrapper_libs = env.Command(
 )
 
 env.Install(sourceLibDir,MSUIA_wrapper_libs[0])
+env.Install(sourceLibDir, "Microsoft.UI.UIAutomation.dll.manifest")
 
 MSUIA_abstraction_libs = env.Command(
 	[

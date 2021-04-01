@@ -2,12 +2,17 @@
 #include <windows.h>
 #include <atlsafe.h>
 #include <atlcomcli.h>
+#include <roapi.h>
+#include <winstring.h>
 #include <UIAutomation.h>
 #include <UiaOperationAbstraction/UiaOperationAbstraction.h>
 #include <UiaOperationAbstraction/SafeArrayUtil.h>
 #include <common/log.h>
+#include <winrt/microsoft.ui.uiautomation.h>
 
 using namespace UiaOperationAbstraction;
+
+wchar_t dllDirectory[MAX_PATH];
 
 #define  localLog(logLevel,content) if(!UiaOperationAbstraction::ShouldUseRemoteApi()) {\
 			LOG_##logLevel(content);\
@@ -372,14 +377,20 @@ extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(I
 	auto propIDs=SafeArrayUtil::SafeArrayToVector<VT_I4>(pPropIDsArg);
 	auto attribIDs=SafeArrayUtil::SafeArrayToVector<VT_I4>(pAttribIDsArg);
 	// Start a new remote ops scope.
+	LOG_INFO(L"about to call scope.start_new");
 	auto scope=UiaOperationScope::StartNew();
+	LOG_INFO(L"Called scope.start_new");
 	// Everything from here on is remoted
 	UiaTextRange textRange{textRangeArg};
 	UiaElement rootElement{rootElementArg};
+	LOG_INFO(L"Calling _remotable_getTextContent");
 	auto textContent=_remoteable_getTextContent(scope,rootElement,textRange,propIDs,attribIDs);
+	LOG_INFO(L"Calling scope.bindResult");
 	scope.BindResult(textContent);
 	// Actually execute the remote call
+	LOG_INFO(L"Calling scope.Resolve");
 	scope.Resolve();
+	LOG_INFO(L"Called resolve");
 	// We aare back to local again 
 	// Pack the textContent array we got from the remote call into a new safeArray for returning
 	size_t numItems=textContent.Size();
@@ -391,6 +402,40 @@ extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(I
 	return safeArray.Detach();
 }
 
-extern "C" __declspec(dllexport) void __stdcall uiaRemote_initialize(bool doRemote, IUIAutomation* client) {
+extern "C" __declspec(dllexport) bool __stdcall uiaRemote_initialize(bool doRemote, IUIAutomation* client) {
+	std::wstring manifestPath = dllDirectory;
+	manifestPath += L"\\Microsoft.UI.UIAutomation.dll.manifest";
+	ACTCTX actCtx={0};
+	actCtx.cbSize=sizeof(actCtx);
+	actCtx.lpSource = L"Microsoft.UI.UIAutomation.dll.manifest";
+	actCtx.lpAssemblyDirectory = dllDirectory;
+	actCtx.dwFlags = ACTCTX_FLAG_ASSEMBLY_DIRECTORY_VALID;
+	HANDLE hActCtx=CreateActCtx(&actCtx);
+	if(hActCtx==NULL) {
+		LOG_ERROR(L"Could not create activation context for "<<manifestPath);
+		return false;
+	}
+	ULONG_PTR actCtxCookie;
+	if(!ActivateActCtx(hActCtx,&actCtxCookie)) {
+		LOG_ERROR(L"Error activating activation context for "<<manifestPath);
+		ReleaseActCtx(hActCtx);
+		return false;
+	}
+	LOG_INFO(L"Registered "<<manifestPath);
+	auto MSUIA_activationFactory = winrt::get_activation_factory<winrt::Microsoft::UI::UIAutomation::AutomationRemoteOperation>();
+	if(!MSUIA_activationFactory) {
+		LOG_ERROR(L"Unable to get Microsoft.UI.UIAutomation activation factory");
+		return false;
+	}
 	UiaOperationAbstraction::Initialize(doRemote,client);
+	LOG_INFO(L"UIAOperationAbstraction::initialize");
+	return true;
+}
+
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+	if(reason==DLL_PROCESS_ATTACH) {
+		GetModuleFileName(hModule,dllDirectory,MAX_PATH);
+		PathRemoveFileSpec(dllDirectory);
+	}
+	return true;
 }
