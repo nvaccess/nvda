@@ -1,7 +1,6 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
-# Joseph Lee, Babbage B.V., Łukasz Golonka
+# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -17,6 +16,7 @@ import ctypes
 import ctypes.wintypes
 import os
 import sys
+import errno
 import itertools
 import contextlib
 from copy import deepcopy
@@ -33,7 +33,7 @@ from fileUtils import FaultTolerantFile
 import extensionPoints
 from . import profileUpgrader
 from .configSpec import confspec
-from typing import Optional, List
+from typing import Any, Dict, List, Optional, Set
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
@@ -82,7 +82,7 @@ def isInstalledCopy():
 		return False
 	winreg.CloseKey(k)
 	try:
-		return os.stat(instDir)==os.stat(os.getcwd()) 
+		return os.stat(instDir) == os.stat(globalVars.appDir)
 	except WindowsError:
 		return False
 
@@ -124,7 +124,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 			# Therefore add a suffix to the directory to make it specific to Windows Store application versions.
 			installedUserConfigPath+='_appx'
 		return installedUserConfigPath
-	return u'.\\userConfig\\'
+	return os.path.join(globalVars.appDir, 'userConfig')
 
 def getSystemConfigPath():
 	if isInstalledCopy():
@@ -166,6 +166,19 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
+	else:
+		OLD_CODE_DIRS = ("appModules", "brailleDisplayDrivers", "globalPlugins", "synthDrivers")
+		# #10014: Since #9238 code from these directories is no longer loaded.
+		# However they still exist in config for older installations. Remove them if empty to minimize confusion.
+		for dir in OLD_CODE_DIRS:
+			dir = os.path.join(configPath, dir)
+			if os.path.isdir(dir):
+				try:
+					os.rmdir(dir)
+					log.info("Removed old plugins dir: %s", dir)
+				except OSError as ex:
+					if ex.errno == errno.ENOTEMPTY:
+						log.info("Failed to remove old plugins dir: %s. Directory not empty.", dir)
 	subdirs=["speechDicts","profiles"]
 	if not isAppX:
 		subdirs.append("addons")
@@ -208,12 +221,9 @@ def setStartAfterLogon(enable):
 		except WindowsError:
 			pass
 
-def canStartOnSecureScreens():
-	# No more need to check for the NVDA service nor presence of Ease of Access, as only Windows 7 SP1 and higher is supported.
-	# This function will be transformed into a flag in a future release.
-	return isInstalledCopy()
 
-SLAVE_FILENAME = u"nvda_slave.exe"
+
+SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
 
 #: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 #: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
@@ -238,7 +248,7 @@ def _setStartOnLogonScreen(enable):
 		winreg.SetValueEx(k, u"startOnLogonScreen", None, winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
-	fromPath=os.path.abspath(globalVars.appArgs.configPath)
+	fromPath = globalVars.appArgs.configPath
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
@@ -295,18 +305,6 @@ def setStartOnLogonScreen(enable):
 		) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
-def getConfigDirs(subpath=None):
-	"""Retrieve all directories that should be used when searching for configuration.
-	IF C{subpath} is provided, it will be added to each directory returned.
-	@param subpath: The path to be added to each directory, C{None} for none.
-	@type subpath: str
-	@return: The configuration directories in the order in which they should be searched.
-	@rtype: list of str
-	"""
-	log.warning("getConfigDirs is deprecated. Use globalVars.appArgs.configPath instead")
-	return [os.path.join(dir, subpath) if subpath else dir
-		for dir in (globalVars.appArgs.configPath,)
-	]
 
 def addConfigDirsToPythonPackagePath(module, subdir=None):
 	"""Add the configuration directories to the module search path (__path__) of a Python package.
@@ -571,6 +569,8 @@ class ConfigManager(object):
 		"""
 		if globalVars.appArgs.secure:
 			return
+		if not name:
+			raise ValueError("Missing name.")
 		fn = self._getProfileFn(name)
 		if os.path.isfile(fn):
 			raise ValueError("A profile with the same name already exists: %s" % name)
@@ -641,6 +641,8 @@ class ConfigManager(object):
 			return
 		if newName == oldName:
 			return
+		if not newName:
+			raise ValueError("Missing newName")
 		oldFn = self._getProfileFn(oldName)
 		newFn = self._getProfileFn(newName)
 		if not os.path.isfile(oldFn):
@@ -1160,16 +1162,3 @@ class ProfileTrigger(object):
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
 
-# The below functions are moved to systemUtils module.
-# They are kept here for backwards compatibility.
-# They would be removed from the config module in NVDA 2021.1.
-
-
-def execElevated(*args, **kwargs):
-	import systemUtils
-	systemUtils.execElevated(*args, **kwargs)
-
-
-def hasUiAccess(*args, **kwargs):
-	import systemUtils
-	systemUtils.hasUiAccess(*args, **kwargs)

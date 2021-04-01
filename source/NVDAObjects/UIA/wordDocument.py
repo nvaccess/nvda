@@ -1,7 +1,7 @@
-# A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
+# A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2020 NV Access Limited, Joseph Lee
+# Copyright (C) 2016-2021 NV Access Limited, Joseph Lee, Jakub Lukowicz
 
 from comtypes import COMError
 from collections import defaultdict
@@ -18,6 +18,8 @@ from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation,
 from UIAUtils import *
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase
+from scriptHandler import script
+
 
 """Support for Microsoft Word via UI Automation."""
 
@@ -67,15 +69,40 @@ def getCommentInfoFromPosition(position):
 	for index in range(UIAElementArray.length):
 		UIAElement=UIAElementArray.getElement(index)
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-		obj=UIA(UIAElement=UIAElement)
-		if not obj.parent or obj.parent.name!='Comment':
-			continue
-		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
-		dateObj=obj.previous
-		date=dateObj.name
-		authorObj=dateObj.previous
-		author=authorObj.name
-		return dict(comment=comment,author=author,date=date)
+		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
+		# Use Annotation Type Comment if available
+		if typeID == UIAHandler.AnnotationType_Comment:
+			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
+			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
+			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
+			return dict(comment=comment, author=author, date=date)
+		else:
+			obj = UIA(UIAElement=UIAElement)
+			if (
+				not obj.parent
+				# Because the name of this object is language sensetive check if it has UIA Annotation Pattern
+				or not obj.parent.UIAElement.getCurrentPropertyValue(
+					UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId
+				)
+			):
+				continue
+			comment = obj.makeTextInfo(textInfos.POSITION_ALL).text
+			tempObj = obj.previous.previous
+			authorObj = tempObj or obj.previous
+			author = authorObj.name
+			if not tempObj:
+				return dict(comment=comment, author=author)
+			dateObj = obj.previous
+			date = dateObj.name
+			return dict(comment=comment, author=author, date=date)
+
+
+def getPresentableCommentInfoFromPosition(commentInfo):
+	if "date" not in commentInfo:
+		# Translators: The message reported for a comment in Microsoft Word
+		return _("Comment: {comment} by {author}").format(**commentInfo)
+	# Translators: The message reported for a comment in Microsoft Word
+	return _("Comment: {comment} by {author} on {date}").format(**commentInfo)
 
 class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
@@ -84,8 +111,7 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	@property
 	def label(self):
 		commentInfo=getCommentInfoFromPosition(self.textInfo)
-		# Translators: The message reported for a comment in Microsoft Word
-		return _("Comment: {comment} by {author} on {date}").format(**commentInfo)
+		return getPresentableCommentInfoFromPosition(commentInfo)
 
 class WordDocumentTextInfo(UIATextInfo):
 
@@ -137,7 +163,12 @@ class WordDocumentTextInfo(UIATextInfo):
 				field['role']=controlTypes.ROLE_EDITABLETEXT
 		if obj.role==controlTypes.ROLE_GRAPHIC:
 			# Label graphics with a description before name as name seems to be auto-generated (E.g. "rectangle")
-			field['value']=field.pop('description',None) or obj.description or field.pop('name',None) or obj.name
+			field['content'] = (
+				field.pop('description', None)
+				or obj.description
+				or field.pop('name', None)
+				or obj.name
+			)
 		return field
 
 	def _getTextFromUIARange(self, textRange):
@@ -267,8 +298,13 @@ class WordDocumentTextInfo(UIATextInfo):
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 
-	def _get_isAlive(self):
-		return True
+	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
+	disableAutoPassThrough = True
+
+	def __init__(self, rootNVDAObject):
+		super(WordBrowseModeDocument, self).__init__(rootNVDAObject)
+		self.passThrough = True
+		browseMode.reportPassThrough.last = True
 
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
@@ -290,7 +326,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 			return
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if not info.isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 	script_shiftTab=script_tab
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
@@ -313,8 +349,8 @@ class WordDocumentNode(UIA):
 		return role
 
 class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentBase):
-	treeInterceptorClass=WordBrowseModeDocument
-	shouldCreateTreeInterceptor=False
+	treeInterceptorClass = WordBrowseModeDocument
+	shouldCreateTreeInterceptor = True
 	announceEntireNewLine=True
 
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
@@ -327,31 +363,17 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 
+	@script(
+		gesture="kb:NVDA+alt+c",
+		# Translators: a description for a script that reports the comment at the caret.
+		description=_("Reports the text of the comment where the System caret is located.")
+	)
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		val=caretInfo._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
-		if not val:
-			return
-		try:
-			UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
-		except COMError:
-			return
-		for index in range(UIAElementArray.length):
-			UIAElement=UIAElementArray.getElement(index)
-			UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-			obj=UIA(UIAElement=UIAElement)
-			if not obj.parent or obj.parent.name!='Comment':
-				continue
-			comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
-			dateObj=obj.previous
-			date=dateObj.name
-			authorObj=dateObj.previous
-			author=authorObj.name
-			# Translators: The message reported for a comment in Microsoft Word
-			ui.message(_("{comment} by {author} on {date}").format(comment=comment,date=date,author=author))
-			return
-
-	__gestures={
-		"kb:NVDA+alt+c":"reportCurrentComment",
-	}
+		commentInfo = getCommentInfoFromPosition(caretInfo)
+		if commentInfo is not None:
+			ui.message(getPresentableCommentInfoFromPosition(commentInfo))
+		else:
+			# Translators: a message when there is no comment to report in Microsoft Word
+			ui.message(_("No comments"))
+		return

@@ -139,6 +139,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 			return None
 		field = textInfos.ControlField()
 		field["role"] = role
+		field['roleText'] = obj.roleText
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.STATE_EDITABLE)
 		states.discard(controlTypes.STATE_MULTILINE)
@@ -448,7 +449,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 		return eventHandler.lastQueuedFocusObject
 
 	def event_treeInterceptor_gainFocus(self):
-		speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self.rootNVDAObject, reason=controlTypes.OutputReason.FOCUS)
 		try:
 			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except RuntimeError:
@@ -456,7 +457,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 		else:
 			if info.isCollapsed:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 			else:
 				speech.speakPreselectedText(info.text)
 			braille.handler.handleGainFocus(self)

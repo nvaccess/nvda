@@ -11,7 +11,7 @@ branches:
   - /release-.*/
   
 environment:
- PY_PYTHON: 3.7-32
+ PY_PYTHON: 3.8-32
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
  mozillaSymsAuthToken:
@@ -95,12 +95,15 @@ build_script:
      Set-AppveyorBuildVariable "sconsOutTargets" $sconsOutTargets
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
  - 'echo scons args: %sconsArgs%'
- - py scons.py source %sconsArgs%
+ - scons source %sconsArgs%
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
- - py scons.py checkPot %sconsArgs%
+ - scons checkPot %sconsArgs%
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
- - py scons.py %sconsOutTargets% %sconsArgs%
+ - scons %sconsOutTargets% %sconsArgs%
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # Build symbol store.
  - ps: |
      foreach ($syms in
@@ -115,12 +118,10 @@ build_script:
      }
  - cd symbols
  - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  - cd ..
 
 before_test:
- # install required packages
- - py -m pip install --upgrade pip
- - py -m pip install -r tests/system/requirements.txt -r tests/lint/lintInstall/requirements.txt
  - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
@@ -132,6 +133,7 @@ before_test:
       $nvdaLauncherFile+="_snapshot"
      }
      $nvdaLauncherFile+="_${env:version}.exe"
+     Set-AppveyorBuildVariable "nvdaLauncherFile" $nvdaLauncherFile
      echo NVDALauncherFile: $NVDALauncherFile
      $outputDir=$(resolve-path .\testOutput)
      $installerLogFilePath="$outputDir\nvda_install.log"
@@ -140,11 +142,17 @@ before_test:
       $installerProcess | wait-process -Timeout 180
       $errorCode=$installerProcess.ExitCode
      } catch {
-      echo NVDA installer process timed out
+      echo "NVDA installer process timed out"
       $errorCode=1
       Add-AppveyorMessage "Unable to install NVDA prior to tests."
      }
      Push-AppveyorArtifact $installerLogFilePath
+     $crashDump = "$outputDir\nvda_crash.dmp"
+     if (Test-Path -Path $crashDump){
+      Push-AppveyorArtifact $crashDump -FileName "nvda_install_crash.dmp"
+      Add-AppveyorMessage "Install process crashed"
+      $errorCode=1
+     }
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 test_script:
@@ -153,7 +161,7 @@ test_script:
      $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
-     py -m nose -sv --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
+     .\rununittests.bat --with-xunit --xunit-file="$unitTestsXml"
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "Unit test failure"
@@ -168,12 +176,14 @@ test_script:
     if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
       $lintSource = (Resolve-Path .\tests\lint\)
-      git fetch -q origin $env:APPVEYOR_REPO_BRANCH
-      $prDiff = "$lintOutput\prDiff.patch"
-      git diff -U0 FETCH_HEAD...HEAD > $prDiff
-      $flake8Config = "$lintSource\flake8.ini"
-      $flake8Output = "$lintOutput\PR-Flake8.txt"
-      type "$prDiff" | py -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
+      # When Appveyor runs for a pr,
+      # the build is made from a new temporary commit,
+      # resulting from the pr branch being merged into its base branch.
+      # Therefore to create a diff for linting, we must fetch the head of the base branch.
+      # In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
+     git fetch -q origin $env:APPVEYOR_REPO_BRANCH
+     $flake8Output = "$lintOutput\PR-Flake8.txt"
+      .\runlint.bat FETCH_HEAD "$flake8Output" 
       if($LastExitCode -ne 0) {
        $errorCode=$LastExitCode
        Add-AppveyorMessage "PR introduces Flake8 errors"
@@ -191,14 +201,13 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-     $testSource = "./tests/system"
-     py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
-     Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
-     Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
+     .\runsystemtests.bat --variable whichNVDA:installed --variable installDir:"${env:nvdaLauncherFile}" --include installer
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "System test failure"
      }
+     Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
+     Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
@@ -247,15 +256,30 @@ deploy_script:
        exe=$exe; hash=$hash;
        artifacts=$artifacts
       }
-      ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+      ConvertTo-Json -InputObject $data -Compress | Out-File -FilePath deploy.json
+      Push-AppveyorArtifact deploy.json
+      # Execute the deploy script on the NV Access server via ssh.
+      # Warning: if the server address is changed, 
+      # The new address must be also included in appveyor\ssh_known_hosts in this repo
+      # Otherwise ssh will freeze on input!
+      cat deploy.json | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
+
       # Upload symbols to Mozilla.
       py -m pip install --no-warn-script-location requests
-       py appveyor\mozillaSyms.py
+      py appveyor\mozillaSyms.py
+      if($LastExitCode -ne 0) {
+        $errorCode=$LastExitCode
+        echo "Unable to upload symbols to Mozilla"
+        Add-AppveyorMessage "Unable to upload symbols to Mozilla"
+      }
      }
 
 on_finish:
   # add a message to point to the NVDA build, to make testing PR's easier.
   - ps: |
+      # Save an exact list of the actual Python packages and their versions that got installed, to aide in reproducing a build
+      .\venvUtils\exportPackageList.bat installed_python_packages.txt
+      Push-AppveyorArtifact installed_python_packages.txt
       $appVeyorUrl = "https://ci.appveyor.com"
       $exe = Get-ChildItem -Name output\*.exe
       if($?){
