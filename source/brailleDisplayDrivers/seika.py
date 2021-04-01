@@ -22,6 +22,7 @@ from logHandler import log
 TIMEOUT = 0.2
 BAUDRATE = 9600
 READ_INTERVAL = 50
+BUF_START = b"\xFF\xFF"
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "seika"
@@ -48,7 +49,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				continue
 			log.debug("serial port open {port}".format(port=port))
 			# get the version infos
-			self._ser.write(b"\xFF\xFF\x1C")
+			self._ser.write(BUF_START + b"\x1C")
 			self._ser.flush()
 			# Read out the input buffer
 			versionS = self._ser.read(13)
@@ -57,28 +58,28 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.info("Found Seika80 connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 80
 				# data header for seika 80
-				self.sendHeader = b"\xff\xff\x73\x38\x30\x00\x00\x00"
+				self.sendHeader = (BUF_START + b"s80").ljust(8, b"\x00")
 				break
 			if versionS.startswith(b"seika3"):
 				log.info("Found Seika3/5 connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 40
 				# data header for v3, v5
-				self.sendHeader = b"\xFF\xFF\x73\x65\x69\x6B\x61\x00"
+				self.sendHeader = (BUF_START + b"seika").ljust(8, b"\x00")
 				break
 			# is it a old Seika3?
 			log.debug("test if it is a old Seika3")
-			self._ser.write(b"\xFF\xFF\x0A")
+			self._ser.write(BUF_START + b"\x0A")
 			self._ser.flush()
 			# Read out the input buffer
 			versionS = self._ser.read(12)
 			log.debug("receive {p}".format(p=versionS))
-			if versionS.startswith((
-				b"\x00\x05\x28\x08\x76\x35\x2E\x30\x01\x01\x01\x01",
-				b"\x00\x05\x28\x08\x73\x65\x69\x6b\x61\x00"
+			if versionS.startswith(prefix=(
+				b'\x00\x05(\x08v5.0\x01\x01\x01\x01',
+				b'\x00\x05(\x08seika\x00'
 			)):
 				log.info("Found Seika3 old Version connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 40
-				self.sendHeader = b"\xFF\xFF\x04\x00\x63\x00\x50\x00"
+				self.sendHeader = BUF_START + b"\x04\x00\x63\x00\x50\x00"
 				break
 			self._ser.close()
 		else:
@@ -95,17 +96,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._ser.close()
 
 	def display(self, cells: List[int]):
-		# add padding so total length is 1 + numberOfStatusCells + numberOfRegularCells
-		cellPadding: bytes = bytes(self.numCells - len(cells))
-		writeBytes: List[bytes] = [self.sendHeader, ]
-		# every transmitted line consists of the preamble SEIKA_SENDHEADER and the Cells
-		if self.numCells==80:
-			lineBytes: bytes = self.sendHeader + bytes(cells) + cellPadding
+		# every transmitted line consists of the preamble 'sendHeader' and the Cells
+		if 80 == self.numCells:
+			lineBytes: bytes = self.sendHeader + bytes(cells)
+		elif 40 == self.numCells:
+			cellData = (b"\x00" + intToByte(cell) for cell in cells)
+			lineBytes = self.sendHeader + b"".join(cellData)
 		else:
-			for cell in cells:
-				writeBytes.append(b"\x00")
-				writeBytes.append(intToByte(cell))
-			lineBytes = b"".join(writeBytes) + cellPadding
+			log.error("Unsupported cell count")
+			return
 		self._ser.write(lineBytes)
 
 	def handleResponses(self):
