@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2020 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
+# Copyright (C) 2012-2021 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,28 +33,42 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def check(cls):
 		return True
+
 	def __init__(self):
 		super(BrailleDisplayDriver, self).__init__()
 		for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
 			port = portInfo["port"]
 			hwID = portInfo["hardwareID"]
-			
-			if not hwID.upper().startswith(r"USB\VID_10C4&PID_EA60"): # Seika USB to Serial, in XP it is lowercase, in Win7 uppercase
+
+			# Seika USB to Serial, in XP it is lowercase, in Win7 uppercase
+			if not hwID.upper().startswith(r"USB\VID_10C4&PID_EA60"):
 				continue
+
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			try:
-				self._ser = serial.Serial(port, baudrate=BAUDRATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, parity=serial.PARITY_ODD, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE)
+				self._ser = serial.Serial(
+					port,
+					baudrate=BAUDRATE,
+					timeout=TIMEOUT,
+					writeTimeout=TIMEOUT,
+					parity=serial.PARITY_ODD,
+					bytesize=serial.EIGHTBITS,
+					stopbits=serial.STOPBITS_ONE
+				)
 			except serial.SerialException:
 				continue
 
 			log.debug(f"serial port open {port}")
+
 			# get the version infos
 			self._ser.write(BUF_START + b"\x1C")
 			self._ser.flush()
+
 			# Read out the input buffer
 			versionS = self._ser.read(13)
 			log.debug(f"receive {versionS}")
+
 			if versionS.startswith(b"seika80"):
 				log.info(f"Found Seika80 connected via {port} Version {versionS}")
 				self.numCells = 80
@@ -62,6 +76,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# data header for seika 80
 				self.sendHeader = (BUF_START + b"s80").ljust(8, b"\x00")
 				break
+
 			if versionS.startswith(b"seika3"):
 				log.info(f"Found Seika3/5 connected via {port} Version {versionS}")
 				self.numCells = 40
@@ -69,10 +84,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# data header for v3, v5
 				self.sendHeader = (BUF_START + b"seika").ljust(8, b"\x00")
 				break
+
 			# is it a old Seika3?
 			log.debug("test if it is a old Seika3")
 			self._ser.write(BUF_START + b"\x0A")
 			self._ser.flush()
+
 			# Read out the input buffer
 			versionS = self._ser.read(12)
 			log.debug(f"receive {versionS}")
@@ -184,15 +201,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		},
 	})
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
 
+class InputGestureKeys(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
+
 	def __init__(self, keys):
 		super(InputGestureKeys, self).__init__()
 		self.id = keys
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
 
+class InputGestureRouting(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):
