@@ -171,11 +171,11 @@ def test_i7562():
 		actualSpeech,
 		"bullet  birds"
 	)
-	# DownArrow out of the list. 'out of list' should be announced.
+	# DownArrow out of the list. 'list end' should be announced.
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"out of list  after",
+		"list end  after",
 	)
 
 
@@ -211,7 +211,7 @@ def test_pr11606():
 	_asserts.strings_match(
 		actualSpeech,
 		"\n".join([
-			"out of link",
+			"link end",
 			"space"
 		])
 	)
