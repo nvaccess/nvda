@@ -309,7 +309,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 				# %s is replaced with the number of people who have highlighted this text.
 				_("%s highlighted") % popular if popular else
 				# Translators: Reported when moving out of a popular highlight.
-				_("out of popular highlight")
+				_("popular highlight end")
 			)
 			out.append(translation)
 
