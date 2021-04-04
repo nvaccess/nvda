@@ -26,7 +26,7 @@ MSUIA_lib_outDir = Dir('lib')
 MSUIA_include_outDir = Dir('include')
 
 MSUIA_wrapper_libs = env.Command(
-	[
+	target = [
 		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.dll'),
 		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.exp'),
 		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.pdb'),
@@ -37,19 +37,27 @@ MSUIA_wrapper_libs = env.Command(
 		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.1.h'),
 		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.2.h'),
 	],
-	MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation.vcxproj'),
-	"msbuild $SOURCE /p:Configuration=Release,Platform=x86,OutDir={outDir}".format(outDir=MSUIA_lib_outDir.abspath),
+	source = [
+		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation.vcxproj'),
+		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'microsoft.ui.uiautomation', '*.cpp')),
+		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'microsoft.ui.uiautomation', '*.h')),
+	],
+	action = "msbuild $SOURCE /p:Configuration=Release,Platform=x86,OutDir={outDir}".format(outDir=MSUIA_lib_outDir.abspath),
 )
 
 env.Install(sourceLibDir,MSUIA_wrapper_libs[0])
 env.Install(sourceLibDir, "Microsoft.UI.UIAutomation.dll.manifest")
 
 MSUIA_abstraction_libs = env.Command(
-	[
+	target = [
 		MSUIA_lib_outDir.File('UiaOperationAbstraction.lib'),
 	],
-	MSUIA_sourceDir.File('UiaOperationAbstraction/UiaOperationAbstraction.vcxproj'),
-	"msbuild $SOURCE /p:Configuration=Release,Platform=x86,OutDir={outDir}".format(outDir=MSUIA_lib_outDir.abspath),
+	source = [
+		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaOperationAbstraction.vcxproj'),
+		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'UiaOperationAbstraction', '*.cpp')),
+		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'UiaOperationAbstraction', '*.h')),
+	],
+	action = "msbuild $SOURCE /p:Configuration=Release,Platform=x86,OutDir={outDir}".format(outDir=MSUIA_lib_outDir.abspath),
 )
 
 env.Depends(MSUIA_abstraction_libs,MSUIA_wrapper_libs)
