@@ -1709,6 +1709,7 @@ def getControlFieldSpeech(  # noqa: C901
 			controlTypes.ROLE_LIST,
 			controlTypes.ROLE_LANDMARK,
 			controlTypes.ROLE_REGION,
+			controlTypes.ROLE_ARTICLE,
 		)
 		and not tableID
 		and controlTypes.STATE_EDITABLE not in states
