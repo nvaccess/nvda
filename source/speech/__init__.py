@@ -1703,13 +1703,13 @@ def getControlFieldSpeech(  # noqa: C901
 		reason == OutputReason.FOCUS
 		and presCat != attrs.PRESCAT_CONTAINER
 		and role not in (
+			controlTypes.ROLE_ARTICLE,
 			controlTypes.ROLE_EDITABLETEXT,
 			controlTypes.ROLE_COMBOBOX,
 			controlTypes.ROLE_TREEVIEW,
 			controlTypes.ROLE_LIST,
 			controlTypes.ROLE_LANDMARK,
 			controlTypes.ROLE_REGION,
-			controlTypes.ROLE_ARTICLE,
 		)
 		and not tableID
 		and controlTypes.STATE_EDITABLE not in states
