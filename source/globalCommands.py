@@ -6,11 +6,9 @@
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt
 
-import time
 import itertools
 from typing import Optional
 
-import tones
 import audioDucking
 import touchHandler
 import keyboardHandler
@@ -25,7 +23,6 @@ import sayAllHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
-from synthDriverHandler import *
 import gui
 import wx
 import config
@@ -34,13 +31,13 @@ import appModuleHandler
 import winKernel
 import treeInterceptorHandler
 import browseMode
+import languageHandler
 import scriptHandler
 from scriptHandler import script
 import ui
 import braille
 import brailleInput
 import inputCore
-import virtualBuffers
 import characterProcessing
 from baseObject import ScriptableObject
 import core
