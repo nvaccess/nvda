@@ -44,6 +44,10 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		language=attrs.get('language')
 		if language:
 			attrs['language']=languageHandler.normalizeLanguage(language)
+		textPosition = attrs.get('textPosition')
+		if textPosition and textPosition not in ['super', 'sub']:
+			del attrs['text-position']
+		log.debug(f'{attrs}')
 		return attrs
 
 	def _getIsCurrentAttribute(self, attrs: dict) -> controlTypes.IsCurrent:
