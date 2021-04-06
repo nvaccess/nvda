@@ -99,12 +99,9 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		try:
 			escapement = int(formatField["CharEscapement"])
 			if escapement < 0:
-				textPos = "sub"
+				formatField["text-position"] = "sub"
 			elif escapement > 0:
-				textPos = "super"
-			else:
-				textPos = "baseline"
-			formatField["text-position"] = textPos
+				formatField["text-position"] = "super"
 		except KeyError:
 			pass
 		try:

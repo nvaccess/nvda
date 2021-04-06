@@ -218,8 +218,6 @@ class UIATextInfo(textInfos.TextInfo):
 				val=fetcher.getValue(UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 				if val!=UIAHandler.handler.reservedNotSupportedValue and val:
 					textPosition="sub"
-				else:
-					textPosition="baseline"
 			if textPosition:
 				formatField['text-position']=textPosition
 		if formatConfig['reportStyle']:
