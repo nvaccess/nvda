@@ -40,6 +40,7 @@ What's New in NVDA
 - Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
    - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
 - The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
+- - TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
 
 
 == Changes for Developers ==
@@ -100,6 +101,12 @@ What's New in NVDA
   - Function winVersion.getWinVer has been added to get a winVersion.WinVersion representing the currently running OS.
   - Convenience constants have been added for known Windows releases, see winVersion.WIN* constants.
 - IAccessibleHandler no longer star imports everything from IAccessible and IA2 COM interfaces - please use them directly. (#12232)
+- TextInfo objects now have start and end properties which can be compared mathematically with operators such as < <= == != >= >. (#11613)
+ - E.g. ti1.start <= ti2.end 
+  - This usage is now prefered instead of ti1.compareEndPoints(ti2,"startToEnd") <= 0
+- TextInfo start and end properties can also be set to each other.
+ - E.g. ti1.start = ti2.end
+ - This usage is prefered instead of ti1.SetEndPoint(ti2,"startToEnd")
 
 
 = 2020.4 =
