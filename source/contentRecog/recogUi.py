@@ -52,28 +52,7 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 			ti.collapse()
 		else:
 			ti = self.result.makeTextInfo(self, position)
-		if not isinstance(ti, BaseContentRecogTextInfo):
-			# Support of TextInfos that do not inherit from BaseContentRecogTextInfo is deprecated
-			# and will be removed in NVDA 2020.1.
-			log.warning(
-				f"Deprecation: {type(ti)} must inherit from {BaseContentRecogTextInfo} to avoid reference cycles."
-			)
-			ti = self._patchTextInfo(ti)
 		return ti
-
-	def _patchTextInfo(self, info):
-		# Patch TextInfos so that updateSelection/Caret updates our fake selection.
-		info.updateCaret = lambda: self._setSelection(info, True)
-		info.updateSelection = lambda: self._setSelection(info, False)
-		# Ensure any copies get patched too.
-		oldCopy = info.copy
-		info.copy = lambda: self._patchTextInfo(oldCopy())
-		return info
-
-	def _setSelection(self, textInfo, collapse):
-		self._selection = textInfo.copy()
-		if collapse:
-			self._selection.collapse()
 
 	def setFocus(self):
 		ti = self.parent.treeInterceptor

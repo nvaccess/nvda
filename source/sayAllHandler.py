@@ -3,10 +3,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from typing import Optional
 import weakref
 import garbageHandler
 import speech
-import synthDriverHandler
 from logHandler import log
 import config
 import controlTypes
@@ -15,6 +15,9 @@ import textInfos
 import queueHandler
 import winKernel
 
+from speech.commands import CallbackCommand, EndUtteranceCommand
+
+
 CURSOR_CARET = 0
 CURSOR_REVIEW = 1
 
@@ -22,6 +25,18 @@ lastSayAllMode = None
 #: The active say all manager.
 #: This is a weakref because the manager should be allowed to die once say all is complete.
 _activeSayAll = lambda: None # Return None when called like a dead weakref.
+
+
+def getSpeechWithoutPauses() -> "speech.SpeechWithoutPauses":
+	"""Returns an instance of `speech.SpeechWithoutPauses` which should be used for say all
+	creating it if necessary."""
+	if getSpeechWithoutPauses.speechWithoutPausesInstance is None:
+		getSpeechWithoutPauses.speechWithoutPausesInstance = speech.SpeechWithoutPauses(speakFunc=speech.speak)
+	return getSpeechWithoutPauses.speechWithoutPausesInstance
+
+
+getSpeechWithoutPauses.speechWithoutPausesInstance: Optional["speech.SpeechWithoutPauses"] = None
+
 
 def stop():
 	active = _activeSayAll()
@@ -69,8 +84,8 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 		if not obj:
 			return
 		# Call this method again when we start speaking this object.
-		callbackCommand = speech.CallbackCommand(self.next, name="say-all:next")
-		speech.speakObject(obj, reason=controlTypes.REASON_SAYALL, _prefixSpeechCommand=callbackCommand)
+		callbackCommand = CallbackCommand(self.next, name="say-all:next")
+		speech.speakObject(obj, reason=controlTypes.OutputReason.SAYALL, _prefixSpeechCommand=callbackCommand)
 
 	def stop(self):
 		self.walker = None
@@ -148,8 +163,8 @@ class _TextReader(garbageHandler.TrackedObject):
 			# No more text.
 			if isinstance(self.reader.obj, textInfos.DocumentWithPageTurns):
 				# Once the last line finishes reading, try turning the page.
-				cb = speech.CallbackCommand(self.turnPage, name="say-all:turnPage")
-				speech.speakWithoutPauses([cb, speech.EndUtteranceCommand()])
+				cb = CallbackCommand(self.turnPage, name="say-all:turnPage")
+				getSpeechWithoutPauses().speakWithoutPauses([cb, EndUtteranceCommand()])
 			else:
 				self.finish()
 			return
@@ -163,7 +178,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		def _onLineReached(obj=self.reader.obj, state=state):
 			self.lineReached(obj, bookmark, state)
 
-		cb = speech.CallbackCommand(
+		cb = CallbackCommand(
 			_onLineReached,
 			name="say-all:lineReached"
 		)
@@ -175,13 +190,13 @@ class _TextReader(garbageHandler.TrackedObject):
 		speechGen = speech.getTextInfoSpeech(
 			self.reader,
 			unit=textInfos.UNIT_READINGCHUNK,
-			reason=controlTypes.REASON_SAYALL,
+			reason=controlTypes.OutputReason.SAYALL,
 			useCache=state
 		)
 		seq = list(speech._flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
 		# Speak the speech sequence.
-		spoke = speech.speakWithoutPauses(seq)
+		spoke = getSpeechWithoutPauses().speakWithoutPauses(seq)
 		# Update the textInfo state ready for when speaking the next line.
 		self.speakTextInfoState = state.copy()
 
@@ -203,7 +218,7 @@ class _TextReader(garbageHandler.TrackedObject):
 			else:
 				# We don't want to buffer too much.
 				# Force speech. lineReached will resume things when speech catches up.
-				speech.speakWithoutPauses(None)
+				getSpeechWithoutPauses().speakWithoutPauses(None)
 				# The first buffered line has now started speaking.
 				self.numBufferedLines -= 1
 
@@ -239,11 +254,11 @@ class _TextReader(garbageHandler.TrackedObject):
 		# Otherwise, if a different synth is being used for say all,
 		# we might switch synths too early and truncate the final speech.
 		# We do this by putting a CallbackCommand at the start of a new utterance.
-		cb = speech.CallbackCommand(self.stop, name="say-all:stop")
-		speech.speakWithoutPauses([
-			speech.EndUtteranceCommand(),
+		cb = CallbackCommand(self.stop, name="say-all:stop")
+		getSpeechWithoutPauses().speakWithoutPauses([
+			EndUtteranceCommand(),
 			cb,
-			speech.EndUtteranceCommand()
+			EndUtteranceCommand()
 		])
 
 	def stop(self):

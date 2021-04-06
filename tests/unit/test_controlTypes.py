@@ -42,7 +42,7 @@ class TestProcessStates(unittest.TestCase):
 			controlTypes.processPositiveStates(
 				self.obj.role,
 				self.obj.states,
-				controlTypes.REASON_FOCUS,
+				controlTypes.OutputReason.FOCUS,
 				self.obj.states
 			),
 			{controlTypes.STATE_INVALID_ENTRY, controlTypes.STATE_REQUIRED}
@@ -53,7 +53,7 @@ class TestProcessStates(unittest.TestCase):
 			controlTypes.processNegativeStates(
 				self.obj.role,
 				self.obj.states,
-				controlTypes.REASON_FOCUS,
+				controlTypes.OutputReason.FOCUS,
 				None
 			),
 			{controlTypes.STATE_CHECKED}
@@ -75,7 +75,7 @@ class TestStateOrder(unittest.TestCase):
 			controlTypes.processAndLabelStates(
 				obj.role,
 				obj.states,
-				controlTypes.REASON_FOCUS,
+				controlTypes.OutputReason.FOCUS,
 				obj.states,
 				None
 			),
@@ -95,7 +95,7 @@ class TestStateOrder(unittest.TestCase):
 			controlTypes.processAndLabelStates(
 				obj.role,
 				obj.states,
-				controlTypes.REASON_FOCUS,
+				controlTypes.OutputReason.FOCUS,
 				obj.states,
 				None
 			),

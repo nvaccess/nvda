@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 01:31+1000\n"
-"PO-Revision-Date: 2020-10-05 09:07+0100\n"
+"POT-Creation-Date: 2021-01-29 00:01+1000\n"
+"PO-Revision-Date: 2021-01-30 15:03+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <https://nvda.venik.org>\n"
 "Language: sk\n"
@@ -680,6 +680,11 @@ msgstr "Afrikánčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Afrikaans grade 2"
+msgstr "Afrikánčina skratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
 msgstr "Arabský počítačový 8 bodový brail"
 
@@ -700,6 +705,11 @@ msgstr "Ásamčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Bashkir grade 1"
+msgstr "baškirčina plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bengali grade 1"
 msgstr "Bengálčina plnopis"
 
@@ -712,6 +722,11 @@ msgstr "Bulharský počítačový 8 bodový brail"
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Stredná Kurdčina plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Coptic 8 dot computer braille"
+msgstr "Koptský počítačový 8 bodový brail"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1155,8 +1170,13 @@ msgstr "Ruský počítačový 8 bodový brail"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
+msgid "Russian literary braille"
 msgstr "Ruština plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Russian literary braille (detailed)"
+msgstr "Ruština plnopis (detailný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3017,10 +3037,6 @@ msgstr ""
 msgid "No selection"
 msgstr "Nič nie je vybraté"
 
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "Okopírované do schránky"
-
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
@@ -3365,6 +3381,18 @@ msgstr "oznamovať zvýraznenie"
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "Zapína alebo vypína oznamovanie zvýraznenia"
+
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+msgid "Toggles on and off the reporting of marked text"
+msgstr "Zapína alebo vypína oznamovanie označeného textu"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked on"
+msgstr "oznamovať označený text"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked off"
+msgstr "Neoznamovať vyznačený text"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3726,12 +3754,6 @@ msgstr "zapína a vypína jednoduchý režim objektovej navigácie"
 #. but there is no current navigator object.
 msgid "No navigator object"
 msgstr "Žiadny navigačný objekt"
-
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "\"%s\" okopírované do schránky."
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -4217,6 +4239,8 @@ msgid "Log fragment copied to clipboard"
 msgstr "Záznam skopírovaný do schránky"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
 msgid "Unable to copy"
 msgstr "nemôžem skopírovať"
 
@@ -4593,10 +4617,6 @@ msgid "Can't select text, press twice to copy"
 msgstr ""
 "nemôžem označiť text. Ak chcete text kopírovať, stlačte skratku dvakrát "
 "rýchlo za sebou."
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "Výber prezeracieho kurzora skopírovaný do schránky"
 
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
@@ -6549,6 +6569,25 @@ msgstr "pustenie"
 msgid "NVDA Message"
 msgstr "Oznam NVDA"
 
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d znakov"
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "Okopírované do schránky: {text}"
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied: {text}"
+msgstr "Skopírované: {text}"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Kontrola Aktualizácií"
@@ -6567,6 +6606,9 @@ msgstr "Nastala chyba pri kontrole aktualizácií"
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6854,6 +6896,8 @@ msgid "Composition"
 msgstr "vstup zložených znakov"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "Návrh"
@@ -6873,6 +6917,10 @@ msgstr "Nie je možné nájsť okno zobrazujúce dokumentáciu."
 msgid "No track playing"
 msgstr "Nie je prehrávaná žiadna skladba"
 
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr "Nie je možné zisťiť zostávajúci čas"
+
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "oznámi zostávajúci čas práve prehrávanej skladby"
@@ -6880,6 +6928,10 @@ msgstr "oznámi zostávajúci čas práve prehrávanej skladby"
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Oznámi uplynutý čas práve prehrávanej skladby"
+
+#. Translators: Reported if the total time is not available in Foobar2000
+msgid "Total time not available"
+msgstr "Nie je možné zistiť celkový čas"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7376,6 +7428,14 @@ msgstr "vypnuté"
 msgid "No emoji"
 msgstr "Žiadne emoji"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "Sledovať zmeny"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "Nesledovať zmeny"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 series/protocol converter"
@@ -7493,6 +7553,11 @@ msgstr "Zobrazovač braillu NVDA"
 #. whether the braille viewer is shown at startup or not.
 msgid "&Show Braille Viewer on Startup"
 msgstr "spustiť pri štarte zobrazovač &Braillu"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
+msgstr "&Pridržanie myši simuluje presunutie na znak"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8101,6 +8166,8 @@ msgid "Install"
 msgstr "Nainštalovaný"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
 msgstr "Zakázaný"
 
@@ -8437,6 +8504,15 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "Ručná aktivácia"
 
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+msgid "No help available here."
+msgstr "Pomoc pre prvok nie je dostupná."
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+msgid "No user guide found."
+msgstr "Nepodarilo sa nájsť používateľskú príručku."
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8674,6 +8750,15 @@ msgstr "Po dokončení &Spustiť prenosnú verziu"
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Prosím zadajte cestu do priečinka, kde sa vytvorí prenosná verzia."
+
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
+msgstr ""
+"Prosím zadajte cestu priečinka (vrátane písmena jednotky), kde sa vytvorí "
+"prenosná verzia."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -9304,8 +9389,8 @@ msgstr "Zv&ýraznenie"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Marked (highlighted text)"
-msgstr "Označený text"
+msgid "Mar&ked (highlighted text)"
+msgstr "Označený te&xt"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9757,13 +9842,24 @@ msgstr "Tv&ar kurzora fokusu:"
 msgid "Cursor shape for &review:"
 msgstr "Tva&r prezeracieho kurzora:"
 
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "po určenú dobu"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "stále"
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+msgid "Show messages"
+msgstr "Zobrazovať správy"
+
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
 msgstr "Zobrazovať &správy (sek)"
-
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
-msgstr "Zobraz&iť správy bez obmedzenia"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
@@ -9941,12 +10037,6 @@ msgstr "vybrané %s"
 #, python-format
 msgid "%s selected"
 msgstr "%s vybraté"
-
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d znakov"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -10394,8 +10484,8 @@ msgid "Highlight navigator &object"
 msgstr "Zvýrazniť &navigačný objekt"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-msgid "Focus Highlight"
-msgstr "Zvýraznenie fokusu"
+msgid "Visual Highlight"
+msgstr "Zvýraznenie na obrazovke"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
@@ -11789,10 +11879,11 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr "1,5 riadka"
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
-msgstr "presne"
+msgid "exactly {space:.1f} pt"
+msgstr "presne {space:.1f} bodov"
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -11890,14 +11981,6 @@ msgstr "Štýl {styleName}, úroveň {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "{size:g} bodov písma"
 
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking on"
-msgstr "Sledovať zmeny"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking off"
-msgstr "Nesledovať zmeny"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr "Zobraziť netlačiteľné znaky"
@@ -11948,6 +12031,19 @@ msgstr "dvojité riadkovanie"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 riadka"
+
+#~ msgctxt "line spacing value"
+#~ msgid "exact"
+#~ msgstr "presne"
+
+#~ msgid "Russian grade 1"
+#~ msgstr "Ruština plnopis"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "\"%s\" okopírované do schránky."
+
+#~ msgid "Review selection copied to clipboard"
+#~ msgstr "Výber prezeracieho kurzora skopírovaný do schránky"
 
 #~ msgid "Apply"
 #~ msgstr "Použiť"

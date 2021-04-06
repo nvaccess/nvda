@@ -672,7 +672,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self.updateCaret()
 			tiCopy = self.copy()
 			tiCopy.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 			return
 
@@ -843,8 +843,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				# Translators:  line spacing of 1.5 lines
 				field['line-spacing']=pgettext('line spacing value',"1.5 lines")
 			elif lineSpacingRule==wdLineSpaceExactly:
-				# Translators: exact (minimum) line spacing
-				field['line-spacing']=pgettext('line spacing value',"exact")
+				field['line-spacing'] = pgettext(
+					'line spacing value',
+					# Translators: line spacing of exactly x point
+					"exactly {space:.1f} pt"
+				).format(space=float(lineSpacingVal))
 			elif lineSpacingRule==wdLineSpaceAtLeast:
 				# Translators: line spacing of at least x point
 				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
@@ -1065,6 +1068,14 @@ class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeI
 		return self.obj.rootNVDAObject
 
 class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
+
+	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
+	disableAutoPassThrough = True
+
+	def __init__(self, rootNVDAObject):
+		super(WordDocumentTreeInterceptor, self).__init__(rootNVDAObject)
+		self.passThrough = True
+		browseMode.reportPassThrough.last = True
 
 	TextInfo=BrowseModeWordDocumentTextInfo
 
@@ -1399,6 +1410,9 @@ class WordDocument(Window):
 		* If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
 		"""
 		gesture.send()
+		self.reportTab()
+
+	def reportTab(self):
 		selectionObj=self.WinwordSelectionObject
 		inTable=selectionObj.tables.count>0 if selectionObj else False
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -1407,7 +1421,7 @@ class WordDocument(Window):
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			isCollapsed=info.isCollapsed
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 		if selectionObj and isCollapsed:
 			offset=selectionObj.information(wdHorizontalPositionRelativeToPage)
@@ -1415,7 +1429,7 @@ class WordDocument(Window):
 			ui.message(msg)
 			if selectionObj.paragraphs[1].range.start==selectionObj.start:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	def getLocalizedMeasurementTextForPointSize(self,offset):
 		options=self.WinwordApplicationObject.options
