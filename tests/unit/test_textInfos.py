@@ -60,6 +60,7 @@ class TestCharacterOffsets(unittest.TestCase):
 		obj = BasicTextProvider(text=u"\U0001f926\U0001f60a\U0001f44d") # 🤦😊👍
 		ti = obj.makeTextInfo(Offsets(5, 5))
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at 👍
+		self.assertEqual(ti.offsets, (4, 6)) # Two offsets
 		ti.move(textInfos.UNIT_CHARACTER, -1)
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at 😊
 		self.assertEqual(ti.offsets, (2, 4)) # Two offsets
