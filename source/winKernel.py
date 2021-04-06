@@ -1,15 +1,15 @@
-#winKernel.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner, Mozilla Corporation, Babbage B.V., Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner,
+# Mozilla Corporation, Babbage B.V., Joseph Lee, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
 
 import contextlib
 import ctypes
 import ctypes.wintypes
-from ctypes import WinError
+from ctypes import byref, Structure, WinError
 from ctypes import *
 from ctypes.wintypes import *
 
@@ -159,6 +159,40 @@ class SYSTEMTIME(ctypes.Structure):
 		("wSecond", WORD),
 		("wMilliseconds", WORD)
 	)
+
+
+class FILETIME(Structure):
+	_fields_ = (
+		("dwLowDateTime", DWORD),
+		("dwHighDateTime", DWORD)
+	)
+
+
+def time_tToFileTime(time_tToConvert: float) -> FILETIME:
+	"""Converts time_t as returned from `time.time` to a FILETIME structure.
+	Based on a code snipped from:
+	https://docs.microsoft.com/en-us/windows/win32/sysinfo/converting-a-time-t-value-to-a-file-time
+	"""
+	timeAsFileTime = FILETIME()
+	res = (int(time_tToConvert) * 10000000) + 116444736000000000
+	timeAsFileTime.dwLowDateTime = res
+	timeAsFileTime.dwHighDateTime = res >> 32
+	return timeAsFileTime
+
+
+def FileTimeToSystemTime(lpFileTime: FILETIME, lpSystemTime: SYSTEMTIME) -> None:
+	if kernel32.FileTimeToSystemTime(byref(lpFileTime), byref(lpSystemTime)) == 0:
+		raise WinError()
+
+
+def SystemTimeToTzSpecificLocalTime(lpTimeZoneInformation, lpUniversalTime, lpLocalTime):
+	if lpTimeZoneInformation  is not None:
+		lpTimeZoneInformation = byref(lpTimeZoneInformation)
+	if kernel32.SystemTimeToTzSpecificLocalTime(
+		lpTimeZoneInformation, byref(lpUniversalTime), byref(lpLocalTime)
+	) == 0:
+		raise WinError()
+
 
 def GetDateFormatEx(Locale,dwFlags,date,lpFormat):
 	if date is not None:
