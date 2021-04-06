@@ -10,13 +10,13 @@ import os
 import ctypes
 import sys
 import warnings
-from encodings import utf_8
 import logging
 import inspect
 import winsound
 import traceback
-from types import MethodType, FunctionType
+from types import FunctionType
 import globalVars
+import winKernel
 import buildVersion
 from typing import Optional
 
@@ -292,7 +292,6 @@ class Formatter(logging.Formatter):
 		"""Custom implementation of `formatTime` which avoids `time.localtime`
 		since it causes a crash under some versions of Universal CRT ( #12160, Python issue 36792)
 		"""
-		import winKernel
 		timeAsFileTime = winKernel.time_tToFileTime(record.created)
 		timeAsSystemTime = winKernel.SYSTEMTIME()
 		winKernel.FileTimeToSystemTime(timeAsFileTime, timeAsSystemTime)
