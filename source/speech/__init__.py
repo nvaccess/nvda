@@ -2178,7 +2178,8 @@ def getFormatFieldSpeech(  # noqa: C901
 		textPosition=attrs.get("text-position")
 		if textPosition:
 			textPosition = textPosition.lower()
-		if textPosition not in ['super', 'sub']:
+		if textPosition is not None and textPosition not in ['super', 'sub']:
+			log.warning(f'Unsupported text-position: {textPosition}')
 			textPosition = None
 		attrs["text-position"] = textPosition
 		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
