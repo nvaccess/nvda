@@ -9,9 +9,8 @@
 import contextlib
 import ctypes
 import ctypes.wintypes
-from ctypes import byref, Structure, WinError
-from ctypes import *
-from ctypes.wintypes import *
+from ctypes import byref, c_byte, POINTER, sizeof, Structure, windll, WinError
+from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LPWSTR, LPVOID, WORD
 
 kernel32=ctypes.windll.kernel32
 advapi32 = windll.advapi32
@@ -186,7 +185,7 @@ def FileTimeToSystemTime(lpFileTime: FILETIME, lpSystemTime: SYSTEMTIME) -> None
 
 
 def SystemTimeToTzSpecificLocalTime(lpTimeZoneInformation, lpUniversalTime, lpLocalTime):
-	if lpTimeZoneInformation  is not None:
+	if lpTimeZoneInformation is not None:
 		lpTimeZoneInformation = byref(lpTimeZoneInformation)
 	if kernel32.SystemTimeToTzSpecificLocalTime(
 		lpTimeZoneInformation, byref(lpUniversalTime), byref(lpLocalTime)
@@ -216,8 +215,6 @@ def GetTimeFormatEx(Locale,dwFlags,date,lpFormat):
 	kernel32.GetTimeFormatEx(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)
 	return buf.value
 
-def openProcess(*args):
-	return kernel32.OpenProcess(*args)
 
 def virtualAllocEx(*args):
 	res = kernel32.VirtualAllocEx(*args)
