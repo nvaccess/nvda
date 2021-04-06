@@ -315,11 +315,17 @@ class TextInfo(baseObject.AutoPropertyObject):
 		#: The position with which this instance was constructed.
 		self.basePosition=position
 
+	#: Typing information for auto-property: start
+	start: "TextInfoEndpoint"
+
 	def _get_start(self) -> "TextInfoEndpoint":
 		return TextInfoEndpoint(self, True)
 
 	def _set_start(self, otherEndpoint: "TextInfoEndpoint"):
 		self.start.moveTo(otherEndpoint)
+
+	#: Typing information for auto-property: end
+	end: "TextInfoEndpoint"
 
 	def _get_end(self) -> "TextInfoEndpoint":
 		return TextInfoEndpoint(self, False)
@@ -540,7 +546,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@rtype: generator of str
 		"""
 		unitInfo=self.copy()
-		unitInfo.end = unitInfo.start
+		unitInfo.collapse()
 		while unitInfo.start < self.end:
 			unitInfo.expand(unit)
 			chunkInfo=unitInfo.copy()
@@ -549,7 +555,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			if chunkInfo.end > self.end:
 				chunkInfo.end = self.end
 			yield chunkInfo.text
-			unitInfo.start = unitInfo.end
+			unitInfo.collapse(end=True)
 			if unitInfo.start < chunkInfo.end:
 				log.debugWarning("Could not move TextInfo completely to end, breaking")
 				break
@@ -664,7 +670,7 @@ class TextInfoEndpoint:
 		(False, False): "endToEnd",
 	}
 
-	def _cmp(self, other: "TextInfoEndpoint"):
+	def _cmp(self, other: "TextInfoEndpoint") -> int:
 		"""
 		A standard cmp function returning:
 		-1 for less than, 0 for equal and 1 for greater than.
@@ -688,22 +694,22 @@ class TextInfoEndpoint:
 		self.textInfo = textInfo
 		self.isStart = isStart
 
-	def __lt__(self, other):
+	def __lt__(self, other) -> bool:
 		return self._cmp(other) < 0
 
-	def __le__(self, other):
+	def __le__(self, other) -> bool:
 		return self._cmp(other) <= 0
 
-	def __eq__(self, other):
+	def __eq__(self, other) -> bool:
 		return self._cmp(other) == 0
 
-	def __ne__(self, other):
+	def __ne__(self, other) -> bool:
 		return self._cmp(other) != 0
 
-	def __ge__(self, other):
+	def __ge__(self, other) -> bool:
 		return self._cmp(other) >= 0
 
-	def __gt__(self, other):
+	def __gt__(self, other) -> bool:
 		return self._cmp(other) > 0
 
 	def moveTo(self, other: "TextInfoEndpoint") -> None:
