@@ -195,15 +195,10 @@ void _remoteable_calculateAncestorsExitedAndEntered(UiaOperationScope& scope, Ui
 	});
 }
 
-void _remoteable_appendElementStartInfo(UiaOperationScope& scope, UiaElement& element, std::vector<int>& propIDs, UiaArray<UiaVariant>& outArray) {
+void _remoteable_appendElementStartInfo(UiaOperationScope& scope, UiaElement& element, UiaOperationAbstraction::UiaCacheRequest& cacheRequest, UiaArray<UiaVariant>& outArray) {
 	// Record an elementStart command
 	outArray.Append(UiaVariant(textContentCommand_elementStart));
-	// For each of the requested property IDs:
-	// Look up and record the property value for this element.
-	for(auto propID: propIDs) {
-		auto propValue=element.GetPropertyValue(UiaPropertyId(propID),false,false);
-		outArray.Append(propValue);
-	}
+	outArray.Append(UiaVariant(element.GetUpdatedCacheElement(cacheRequest)));
 }
 
 void _remoteable_appendElementEndInfo(UiaOperationScope& scope, UiaElement& element, UiaArray<UiaVariant>& outArray) {
@@ -284,7 +279,7 @@ void _remoteable_visitChildRangesAndGaps(UiaOperationScope& scope, UiaTextPatter
 	});
 }
 
-UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaElement& rootElement, UiaTextRange& textRange, std::vector<int>& propIDs, const std::vector<int>& attribIDs) {
+UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaElement& rootElement, UiaTextRange& textRange, UiaOperationAbstraction::UiaCacheRequest& cacheRequest, const std::vector<int>& attribIDs) {
 	UiaArray<UiaVariant> content;
 	localLog(INFO,L"getTextcontent start");
 	localLog(INFO,L"Full text: "<<(textRange.GetText(256).get()));
@@ -318,7 +313,7 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 		// Record all of their properties in the generated textContent.
 		scope.ForEach(elementsEntered,[&](auto element) {
 			localLog(INFO,L"Entered element: "<<(element.GetName(false).get())<<L" "<<(element.GetLocalizedControlType(false).get()));
-			_remoteable_appendElementStartInfo(scope,element,propIDs,content);
+			_remoteable_appendElementStartInfo(scope,element,cacheRequest,content);
 		});
 		// Splitting the format range into ranges for each embedded child,
 		// and the gaps between the children,
@@ -328,7 +323,7 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 			// If this range is for a embedded child, record its element start, including properties.
 			scope.If(!child.IsNull(),[&]() {
 				localLog(INFO,L"child start: "<<(child.GetName(false).get())<<L" "<<(child.GetLocalizedControlType(false).get()));
-				_remoteable_appendElementStartInfo(scope,child,propIDs,content);
+				_remoteable_appendElementStartInfo(scope,child,cacheRequest,content);
 			});
 			// Record the text attributes and text for this subrange.
 			// If one of the attribute values is Mixed (I.e. resolution is not fine enough),
@@ -373,7 +368,7 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 }
 
 extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(IUIAutomationElement* rootElementArg, IUIAutomationTextRange* textRangeArg, SAFEARRAY* pPropIDsArg, SAFEARRAY* pAttribIDsArg) {
-	// Unpack the requested property ID and attribute ID safeArrays into vectors.
+	// Unpack the requested  property and attribute ID safeArrays into vectors.
 	auto propIDs=SafeArrayUtil::SafeArrayToVector<VT_I4>(pPropIDsArg);
 	auto attribIDs=SafeArrayUtil::SafeArrayToVector<VT_I4>(pAttribIDsArg);
 	// Start a new remote ops scope.
@@ -383,8 +378,13 @@ extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(I
 	// Everything from here on is remoted
 	UiaTextRange textRange{textRangeArg};
 	UiaElement rootElement{rootElementArg};
+	// Create a new cache request, and add all the requested properties to it.
+	UiaOperationAbstraction::UiaCacheRequest cacheRequest;
+	for(auto propID: propIDs) {
+		cacheRequest.AddProperty(UiaPropertyId(propID));
+	}
 	LOG_INFO(L"Calling _remotable_getTextContent");
-	auto textContent=_remoteable_getTextContent(scope,rootElement,textRange,propIDs,attribIDs);
+	auto textContent=_remoteable_getTextContent(scope,rootElement,textRange,cacheRequest,attribIDs);
 	LOG_INFO(L"Calling scope.bindResult");
 	scope.BindResult(textContent);
 	// Actually execute the remote call

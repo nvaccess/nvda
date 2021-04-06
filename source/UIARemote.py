@@ -362,9 +362,12 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 		index+=1
 		if cmd==textContentCommand_elementStart:
 			controlFieldJustEnded = False
-			endIndex=index+propCount
-			propValues=content[index:endIndex]
-			props={propIDs[x]:propValues[x] for x in range(propCount)}
+			endIndex=index+1
+			element = content[index].QueryInterface(UIAHandler.IUIAutomationElement) 
+			props = {}
+			for propID in propIDs:
+				propValue = element.GetCachedPropertyValue(propID)
+				props[propID] = propValue
 			controlField = textInfos.ControlField()
 			controlField['_UIAProperties'] = props
 			controlField['embedded'] = True
