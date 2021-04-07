@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
 # This file is covered by the GNU General Public License.
@@ -156,7 +157,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [virtualBuffers]
 	maxLineLength = integer(default=100)
 	linesPerPage = integer(default=25)
-	useScreenLayout = boolean(default=False)
+	useScreenLayout = boolean(default=True)
 	autoPassThroughOnFocusChange = boolean(default=true)
 	autoPassThroughOnCaretMove = boolean(default=false)
 	passThroughAudioIndication = boolean(default=true)
