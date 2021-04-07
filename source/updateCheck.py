@@ -22,7 +22,7 @@ import addonAPIVersion
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
 import gui.contextHelp  # noqa: E402
 from gui.dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit  # noqa: E402
-import winVersion
+import sys  # noqa: E402
 import os
 import inspect
 import threading
@@ -105,12 +105,21 @@ def checkForUpdate(auto=False):
 	@raise RuntimeError: If there is an error checking for an update.
 	"""
 	allowUsageStats=config.conf["update"]['allowUsageStats']
+	# #11837: build version string, service pack, and product type manually
+	# because winVersion.getWinVer adds Windows release name.
+	winVersion = sys.getwindowsversion()
+	winVersionText = "{v.major}.{v.minor}.{v.build}".format(v=winVersion)
+	if winVersion.service_pack_major != 0:
+		winVersionText += " service pack %d" % winVersion.service_pack_major
+		if winVersion.service_pack_minor != 0:
+			winVersionText += ".%d" % winVersion.service_pack_minor
+	winVersionText += " %s" % ("workstation", "domain controller", "server")[winVersion.product_type - 1]
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats":allowUsageStats,
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
-		"osVersion": winVersion.winVersionText,
+		"osVersion": winVersionText,
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 	}
 	if auto and allowUsageStats:

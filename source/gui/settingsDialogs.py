@@ -357,6 +357,22 @@ class SettingsPanel(
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
 
+
+class SettingsPanelAccessible(wx.Accessible):
+	"""
+	WX Accessible implementation to set the role of a settings panel to property page,
+	as well as to set the accessible description based on the panel's description.
+	"""
+
+	Window: SettingsPanel
+
+	def GetRole(self, childId):
+		return (wx.ACC_OK, wx.ROLE_SYSTEM_PROPERTYPAGE)
+
+	def GetDescription(self, childId):
+		return (wx.ACC_OK, self.Window.panelDescription)
+
+
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
 	A multi category settings dialog consists of a list view with settings categories on the left side, 
@@ -524,14 +540,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					).format(cls, panel.Size[0])
 				)
 			panel.SetLabel(panel.title)
-			import oleacc
-			panel.server = nvdaControls.AccPropertyOverride(
-				panel,
-				propertyAnnotations={
-					oleacc.PROPID_ACC_ROLE: oleacc.ROLE_SYSTEM_PROPERTYPAGE,  # change the role from pane to property page
-					oleacc.PROPID_ACC_DESCRIPTION: panel.panelDescription,  # set a description
-				}
-			)
+			panel.SetAccessible(SettingsPanelAccessible(panel))
 		return panel
 
 	def postInit(self):
@@ -2568,6 +2577,14 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
+		label = _("Use UI Automation to access Microsoft &Excel spreadsheet controls when available")
+		self.UIAInMSExcelCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
+		self.bindHelpEvent("UseUiaForExcel", self.UIAInMSExcelCheckBox)
+		self.UIAInMSExcelCheckBox.SetValue(config.conf["UIA"]["useInMSExcelWhenAvailable"])
+		self.UIAInMSExcelCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSExcelWhenAvailable"])
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
 		label = _("Use UI Automation to access the Windows C&onsole when available")
 		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
 		self.ConsoleUIACheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
@@ -2619,7 +2636,7 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("AdvancedSettingsKeyboardSupportInLegacy", self.keyboardSupportInLegacyCheckBox)
 		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
 		self.keyboardSupportInLegacyCheckBox.defaultValue = self._getDefaultValue(["terminals", "keyboardSupportInLegacy"])
-		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.isWin10(1607))
+		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.getWinVer() >= winVersion.WIN10_1607)
 
 		# Translators: This is the label for a combo box for selecting a
 		# method of detecting changed content in terminals in the advanced
@@ -2768,6 +2785,7 @@ class AdvancedPanelControls(
 				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
 			)
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
+			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
@@ -2783,6 +2801,7 @@ class AdvancedPanelControls(
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
+		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
@@ -2798,6 +2817,7 @@ class AdvancedPanelControls(
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
+		config.conf["UIA"]["useInMSExcelWhenAvailable"] = self.UIAInMSExcelCheckBox.IsChecked()
 		if self.ConsoleUIACheckBox.IsChecked():
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
 		else:

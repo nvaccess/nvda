@@ -60,7 +60,8 @@ def fixCOMRegistrations():
 	Registers most common COM proxies, in case they had accidentally been unregistered or overwritten by 3rd party software installs/uninstalls.
 	"""
 	is64bit=os.environ.get("PROCESSOR_ARCHITEW6432","").endswith('64')
-	OSMajorMinor=winVersion.winVersion[:2]
+	winVer = winVersion.getWinVer()
+	OSMajorMinor = (winVer.major, winVer.minor)
 	log.debug("Fixing COM registration for Windows %s.%s, %s"%(OSMajorMinor[0],OSMajorMinor[1],"64 bit" if is64bit else "32 bit"))  
 	# Commands taken from NVDA issue #2807 comment https://github.com/nvaccess/nvda/issues/2807#issuecomment-320149243
 	# OLEACC (MSAA) proxies
