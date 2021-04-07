@@ -443,6 +443,10 @@ def unregisterInstallation(keepDesktopShortcut=False):
 	except WindowsError:
 		pass
 	unregisterAddonFileAssociation()
+	# disable java access bridge
+	import JABHandler
+	if (JABHandler.isBridgeEnabled()):
+		JABHandler.disableBridge()
 
 def registerAddonFileAssociation(slaveExe):
 	try:

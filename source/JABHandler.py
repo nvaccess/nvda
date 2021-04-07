@@ -46,9 +46,14 @@ import globalVars
 #: to enable JAB.
 A11Y_PROPS_PATH = os.path.expanduser(r"~\.accessibility.properties")
 #: The content of ".accessibility.properties" when JAB is enabled.
-A11Y_PROPS_CONTENT = (
+A11Y_PROPS_CONTENT_ENABLED = (
 	"assistive_technologies=com.sun.java.accessibility.AccessBridge\n"
 	"screen_magnifier_present=true\n"
+)
+#: The content of ".accessibility.properties" when JAB is disabled.
+A11Y_PROPS_CONTENT_DISABLED = (
+	"#assistive_technologies=com.sun.java.accessibility.AccessBridge\n"
+	"#screen_magnifier_present=true\n"
 )
 
 #Some utility functions to help with function defines
@@ -773,13 +778,24 @@ def isBridgeEnabled():
 
 
 def enableBridge():
+	"""enables the java access bridge by modifing the .accessibility.properties file in the users path"""
 	try:
 		props = open(A11Y_PROPS_PATH, "wt")
-		props.write(A11Y_PROPS_CONTENT)
+		props.write(A11Y_PROPS_CONTENT_ENABLED)
 		log.info("Enabled Java Access Bridge for user")
 	except OSError:
 		log.warning("Couldn't enable Java Access Bridge for user", exc_info=True)
 
+
+def disableBridge():
+	"""disables the java access bridge by modifing the .accessibility.properties file in the users path
+	This is needed in case of uninstallation, see issue#12159"""
+	try:
+		props = open(A11Y_PROPS_PATH, "wt")
+		props.write(A11Y_PROPS_CONTENT_DISABLED)
+		log.info("disabled Java Access Bridge for user")
+	except OSError:
+		log.warning("Couldn't disable Java Access Bridge for user", exc_info=True)
 
 def initialize():
 	global bridgeDll, isRunning
