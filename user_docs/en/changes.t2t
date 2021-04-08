@@ -41,6 +41,7 @@ What's New in NVDA
    - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
 - The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
 - - TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
+- It is once again possible to use NVDA in a languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
 
 
 == Changes for Developers ==
