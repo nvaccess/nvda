@@ -99,6 +99,10 @@ build_script:
  - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
  - scons checkPot %sconsArgs%
+ - ps: |
+     if ($LastExitCode -ne 0) {
+      Add-AppveyorMessage "Translator comments are missing or unexpectedly included"
+     }
  - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
