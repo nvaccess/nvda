@@ -98,9 +98,13 @@ build_script:
  - scons source %sconsArgs%
  - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
- - scons checkPot %sconsArgs%
- - if ERRORLEVEL 1 echo "scons checkpot failed"
- - if ERRORLEVEL 1 exit %ERRORLEVEL%
+ -ps: |
+     scons checkPot $sconsArgs
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "Translation comment error"
+     }
+     if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
  - scons %sconsOutTargets% %sconsArgs%
