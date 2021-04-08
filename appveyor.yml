@@ -98,7 +98,7 @@ build_script:
  - scons source %sconsArgs%
  - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
- -ps: |
+ - ps: |
      scons checkPot $sconsArgs
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
