@@ -102,7 +102,7 @@ build_script:
      cmd.exe /c "scons checkPot $sconsArgs"
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
-      Add-AppveyorMessage "Translation comment error"
+      Add-AppveyorMessage "Translation comments missing or unexpectedly included."
      }
      if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  # The pot gets built by tests, but we don't actually need it as a build artifact.
