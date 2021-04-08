@@ -288,7 +288,7 @@ class Formatter(logging.Formatter):
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
 
-	def formatTime(self, record, datefmt=None):
+	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
 		"""Custom implementation of `formatTime` which avoids `time.localtime`
 		since it causes a crash under some versions of Universal CRT ( #12160, Python issue 36792)
 		"""

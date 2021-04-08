@@ -6,6 +6,7 @@
 
 """Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
 
+from typing import Union
 import contextlib
 import ctypes
 import ctypes.wintypes
@@ -167,6 +168,18 @@ class FILETIME(Structure):
 	)
 
 
+class TIME_ZONE_INFORMATION(Structure):
+	_fields_ = (
+		("Bias", ctypes.wintypes.LONG),
+		("StandardName", ctypes.wintypes.WCHAR * 32),
+		("StandardDate", SYSTEMTIME),
+		("StandardBias", ctypes.wintypes.LONG),
+		("DaylightName", ctypes.wintypes.WCHAR * 32),
+		("DaylightDate", SYSTEMTIME),
+		("DaylightBias", ctypes.wintypes.LONG)
+	)
+
+
 def time_tToFileTime(time_tToConvert: float) -> FILETIME:
 	"""Converts time_t as returned from `time.time` to a FILETIME structure.
 	Based on a code snipped from:
@@ -184,7 +197,18 @@ def FileTimeToSystemTime(lpFileTime: FILETIME, lpSystemTime: SYSTEMTIME) -> None
 		raise WinError()
 
 
-def SystemTimeToTzSpecificLocalTime(lpTimeZoneInformation, lpUniversalTime, lpLocalTime):
+def SystemTimeToTzSpecificLocalTime(
+		lpTimeZoneInformation: Union[TIME_ZONE_INFORMATION, None],
+		lpUniversalTime: SYSTEMTIME,
+		lpLocalTime: SYSTEMTIME
+) -> None:
+	"""Wrapper for `SystemTimeToTzSpecificLocalTime` from kernel32.
+	:param lpTimeZoneInformation: Either TIME_ZONE_INFORMATION containing info about the desired time zone
+	or `None` when the current time zone as configured in Windows settings should be used.
+	:param lpUniversalTime: SYSTEMTIME structure containing time in UTC wwhich you wish to convert.
+	: param lpLocalTime: A SYSTEMTIME structure in which time converted to the desired time zone would be placed.
+	:raises WinError
+	"""
 	if lpTimeZoneInformation is not None:
 		lpTimeZoneInformation = byref(lpTimeZoneInformation)
 	if kernel32.SystemTimeToTzSpecificLocalTime(
