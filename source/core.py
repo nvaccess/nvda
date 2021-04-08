@@ -79,7 +79,8 @@ def doStartupDialogs():
 			_("Configuration File Error"),
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
-		gui.WelcomeDialog.run()
+		from gui.startupDialogs import WelcomeDialog
+		WelcomeDialog.run()
 	if config.conf["brailleViewer"]["showBrailleViewerAtStartup"]:
 		gui.mainFrame.onToggleBrailleViewerCommand(evt=None)
 	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
@@ -105,14 +106,14 @@ def doStartupDialogs():
 					except:
 						pass
 			# Ask the user if usage stats can be collected.
-			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
+			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
-		import wx
+		import gui
 		globalVars.exitCode=3
-		wx.GetApp().ExitMainLoop()
+		gui.safeAppExit()
 		return
 	import subprocess
 	import winUser
@@ -275,7 +276,7 @@ def main():
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
-	log.info("Using Windows version %s" % winVersion.winVersionText)
+	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
 	import configobj
@@ -448,6 +449,9 @@ def main():
 			locale.Init(wxLang.Language)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
+		finally:
+			# Revert wx's changes to the python locale
+			languageHandler.setLocale(languageHandler.curLang)
 
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
@@ -519,7 +523,8 @@ def main():
 		except:
 			log.error("", exc_info=True)
 		if globalVars.appArgs.launcher:
-			gui.LauncherDialog.run()
+			from gui.startupDialogs import LauncherDialog
+			LauncherDialog.run()
 			# LauncherDialog will call doStartupDialogs() afterwards if required.
 		else:
 			wx.CallAfter(doStartupDialogs)

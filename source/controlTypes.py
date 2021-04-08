@@ -335,7 +335,7 @@ roleLabels: Dict[int, str] = {
 	ROLE_ICON:_("icon"),
 	# Translators: Identifies a directory pane.
 	ROLE_DIRECTORYPANE:_("directory pane"),
-	# Translators: Identifies an embedded object such as flash content on webpages.
+	# Translators: Identifies an object that is embedded in a document.
 	ROLE_EMBEDDEDOBJECT:_("embedded object"),
 	# Translators: Identifies an end note.
 	ROLE_ENDNOTE:_("end note"),
