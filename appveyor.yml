@@ -99,7 +99,7 @@ build_script:
  - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
  - ps: |
-     scons checkPot $sconsArgs
+     cmd.exe /c "scons checkPot $sconsArgs"
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "Translation comment error"
