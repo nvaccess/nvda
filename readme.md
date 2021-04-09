@@ -81,7 +81,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 53915bf0a
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit cad1c8e8
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
 * [liblouis](http://www.liblouis.org/), version 3.17.0
