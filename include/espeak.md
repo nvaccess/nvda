@@ -1,9 +1,13 @@
+# Espeak-ng submodule
+
+The submodule contained in the espeak directory is a cross platform open source speech synthesizer.
+
 ### Background
 The main authority on build requirements should be `<nvda repo root>/include/espeak/Makefile.am`.
 The `*.vcxproj` files in `<nvda repo root>/include/espeak/src/windows/` can also be considered,
 however these are not always kept up to date.
 
-We dont use the auto make files or the visual studio files, we maintain our own method of building espeak.
+We don't use the auto make files or the visual studio files, we maintain our own method of building espeak.
 Modifications will need to be made in `<nvda repo root>/nvdaHelper/espeak`
 * `sconscript` for the build process.
 * `config.h` to set the eSpeak-ng version that NVDA outputs to the log file.
@@ -43,3 +47,4 @@ any changes in our `sconscript` file.
 Due to problems with emoji support (causing crashes), emoji dictionary files are being excluded
 from the build, they are deleted prior to compiling the dictionaries in the
 `<nvda repo root>/nvdaHelper/espeak/sconscript` file.
+
