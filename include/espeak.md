@@ -24,6 +24,11 @@ Modifications will need to be made in `<nvda repo root>/nvdaHelper/espeak`
    1. Change to the `include/espeak/` directory
    1. Do `git fetch` to get the latest from the espeak-ng repo
    1. Do `git checkout origin/master` or whichever espeak-ng ref you wish.
+1. Look at changes in `Makefile.am` and update our build.
+   1. Diff `Makefile.am` with the previously used commit of espeak.
+   1. Some modules are intentionally excluded from the build.
+      If unsure, err on the side of including it and raise it as a question when submitting a PR.
+   1. Modify the `<nvda repo root>/nvdaHelper/espeak/config.h` file as required.
 1. Update our record of the version number and build.
    1. Change back to the NVDA repo root
    1. Update the package version in `<nvda repo root>/nvdaHelper/espeak/config.h`
