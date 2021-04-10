@@ -98,11 +98,11 @@ UiaBool _remoteable_appendAttributesAndTextForRange(UiaOperationScope& scope,Uia
 	for(auto attribID: attribIDs) {
 		scope.If(!foundMixed,[&]() {
 			auto attribValue=textRange.GetAttributeValue(UiaTextAttributeId(attribID));
-			scope.If(attribValue.IsMixedAttribute(nullptr),[&]() {
+			scope.If(attribValue.IsMixedAttribute(),[&]() {
 				attribValues.Append(UiaVariant(0));
 				foundMixed=!ignoreMixedAttributes;
 			},[&]() {
-				scope.If(attribValue.IsNotSupported(nullptr),[&]() {
+				scope.If(attribValue.IsNotSupported(),[&]() {
 					attribValues.Append(UiaVariant(0));
 				},[&]() {
 					attribValues.Append(attribValue);
