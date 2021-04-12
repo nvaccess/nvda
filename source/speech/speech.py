@@ -1,4 +1,3 @@
-#  -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -7,6 +6,7 @@
 
 """High-level functions to speak information.
 """ 
+# flake8: noqa ignore lint for mass refactor in (#12251), to be fixed with follow up PR
 
 import itertools
 import weakref
@@ -17,8 +17,7 @@ import api
 import controlTypes
 from controlTypes import OutputReason
 import tones
-import synthDriverHandler
-from synthDriverHandler import getSynth, setSynth
+from synthDriverHandler import getSynth
 import re
 import textInfos
 import speechDictHandler
@@ -50,13 +49,13 @@ from typing import (
 	Any,
 	Generator,
 	Union,
-	Callable,
 	Tuple,
 )
 from logHandler import log
 import config
 import aria
 from .priorities import Spri
+
 
 speechMode_off=0
 speechMode_beeps=1
@@ -83,15 +82,6 @@ oldRowSpan=None
 oldColumnNumber=None
 oldColumnSpan=None
 
-def initialize():
-	"""Loads and sets the synth driver configured in nvda.ini."""
-	synthDriverHandler.initialize()
-	setSynth(config.conf["speech"]["synth"])
-
-def terminate():
-	synthDriverHandler.setSynth(None)
-	speechViewerObj=None
-
 #: If a chunk of text contains only these characters, it will be considered blank.
 BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", u"\xa0"))
 def isBlank(text):
@@ -115,9 +105,8 @@ def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
 	global beenCanceled, isPaused
 	# Import only for this function to avoid circular import.
-	import sayAllHandler
-	sayAllHandler.stop()
-	sayAllHandler.getSpeechWithoutPauses().reset()
+	from speech import sayAll
+	sayAll.SayAllHandler.stop()
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:
