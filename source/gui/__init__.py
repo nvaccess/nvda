@@ -358,21 +358,35 @@ class MainFrame(wx.Frame):
 
 def safeAppExit():
 	"""
-	Ensures the app is exited by all the top windows being destroyed
+	Ensures the app is exited by all the top windows being destroyed.
+	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
 	"""
+
+	import brailleViewer
+	brailleViewer.destroyBrailleViewer()
+
+	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
+	# They must be manually destroyed when exiting the app.
+	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12238) 
+	log.debug(f"destroying system tray icon and menu")
+	if mainFrame.sysTrayIcon.menu:
+		mainFrame.sysTrayIcon.menu.Destroy()
+	if mainFrame.sysTrayIcon:
+		mainFrame.sysTrayIcon.Destroy()
 
 	for window in wx.GetTopLevelWindows():
 		if isinstance(window, wx.Dialog) and window.IsModal():
-			log.info(f"ending modal {window} during exit process")
+			log.debug(f"ending modal {window} during exit process")
 			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
 		if isinstance(window, MainFrame):
-			log.info(f"destroying main frame during exit process")
+			log.debug(f"destroying main frame during exit process")
 			# the MainFrame has EVT_CLOSE bound to the ExitDialog
 			# which calls this function on exit, so destroy this window
 			wx.CallAfter(window.Destroy)
 		else:
-			log.info(f"closing window {window} during exit process")
+			log.debug(f"closing window {window} during exit process")
 			wx.CallAfter(window.Close)
+
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
@@ -582,27 +596,7 @@ def initialize():
 	wx.CallAfter = wx_CallAfter_wrapper
 
 def terminate():
-	import brailleViewer
-	brailleViewer.destroyBrailleViewer()
-
-	for instance, state in gui.SettingsDialog._instances.items():
-		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
-			log.error(
-				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
-			)
-		else:
-			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
 	global mainFrame
-	# This is called after the main loop exits because WM_QUIT exits the main loop
-	# without destroying all objects correctly and we need to support WM_QUIT.
-	# Therefore, any request to exit should exit the main loop.
-	safeAppExit()
-	# #4460: We need another iteration of the main loop
-	# so that everything (especially the TaskBarIcon) is cleaned up properly.
-	# ProcessPendingEvents doesn't seem to work, but MainLoop does.
-	# Because the top window gets destroyed,
-	# MainLoop thankfully returns pretty quickly.
-	wx.GetApp().MainLoop()
 	mainFrame = None
 
 def showGui():
