@@ -368,7 +368,7 @@ def safeAppExit():
 	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
 	# They must be manually destroyed when exiting the app.
 	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12286, #12238)
-	log.debug(f"destroying system tray icon and menu")
+	log.debug("destroying system tray icon and menu")
 
 	mainFrame.sysTrayIcon.menu.Destroy()
 	mainFrame.sysTrayIcon.RemoveIcon()
@@ -379,7 +379,7 @@ def safeAppExit():
 			log.debug(f"ending modal {window} during exit process")
 			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
 		if isinstance(window, MainFrame):
-			log.debug(f"destroying main frame during exit process")
+			log.debug("destroying main frame during exit process")
 			# the MainFrame has EVT_CLOSE bound to the ExitDialog
 			# which calls this function on exit, so destroy this window
 			wx.CallAfter(window.Destroy)

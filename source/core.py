@@ -403,7 +403,7 @@ def main():
 			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
 			elif msg == winUser.WM_EXIT_NVDA:
-				log.debug("NVDA Instance being closed from another instance")
+				log.debug("NVDA instance being closed from another instance")
 				gui.safeAppExit()
 
 		def handleScreenOrientationChange(self, lParam):
