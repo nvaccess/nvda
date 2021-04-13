@@ -369,10 +369,10 @@ def safeAppExit():
 	# They must be manually destroyed when exiting the app.
 	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12286, #12238)
 	log.debug(f"destroying system tray icon and menu")
-	if mainFrame.sysTrayIcon.menu:
-		mainFrame.sysTrayIcon.menu.Destroy()
-	if mainFrame.sysTrayIcon:
-		mainFrame.sysTrayIcon.Destroy()
+
+	mainFrame.sysTrayIcon.menu.Destroy()
+	mainFrame.sysTrayIcon.RemoveIcon()
+	mainFrame.sysTrayIcon.Destroy()
 
 	for window in wx.GetTopLevelWindows():
 		if isinstance(window, wx.Dialog) and window.IsModal():
