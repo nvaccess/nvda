@@ -586,7 +586,7 @@ def terminate():
 	brailleViewer.destroyBrailleViewer()
 
 	for instance, state in gui.SettingsDialog._instances.items():
-		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
+		if state is gui.SettingsDialog.DialogState.DESTROYED:
 			log.error(
 				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
 			)
