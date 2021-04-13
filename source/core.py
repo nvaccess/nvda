@@ -391,6 +391,10 @@ def main():
 			self.orientationStateCache = self.ORIENTATION_NOT_INITIALIZED
 			self.orientationCoordsCache = (0,0)
 			self.handlePowerStatusChange()
+			# Accept WM_EXIT_NVDA from other NVDA instances
+			import winUser
+			if not winUser.user32.ChangeWindowMessageFilterEx(self.handle, winUser.WM_EXIT_NVDA, 1, None):
+				raise winUser.WinError()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
@@ -398,6 +402,9 @@ def main():
 				self.handlePowerStatusChange()
 			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
+			elif msg == winUser.WM_EXIT_NVDA:
+				log.debug("NVDA Instance being closed from another instance")
+				gui.safeAppExit()
 
 		def handleScreenOrientationChange(self, lParam):
 			import ui

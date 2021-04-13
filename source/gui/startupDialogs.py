@@ -117,7 +117,7 @@ class WelcomeDialog(
 		gui.mainFrame.prePopup()
 		d = cls(gui.mainFrame)
 		d.ShowModal()
-		d.Destroy()
+		wx.CallAfter(d.Destroy)
 		gui.mainFrame.postPopup()
 
 

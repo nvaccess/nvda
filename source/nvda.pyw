@@ -162,13 +162,18 @@ for name in pathAppArgs:
 
 def terminateRunningNVDA(window):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
-	winUser.PostMessage(window,winUser.WM_QUIT,0,0)
+	try:
+		winUser.PostSafeQuitMessage(window)
+	except PermissionError:
+		# allow for updating between NVDA versions, deprecated in 2022.1
+		# in 2022.1 just call winUser.PostSafeQuitMessage(window) without the try/except
+		winUser.PostMessage(window, winUser.WM_QUIT, 0, 0)
 	h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 	if not h:
 		# The process is already dead.
 		return
 	try:
-		res=winKernel.waitForSingleObject(h,4000)
+		res = winKernel.waitForSingleObject(h, 5000)
 		if res==0:
 			# The process terminated within the timeout period.
 			return
@@ -251,9 +256,7 @@ if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
-#Accept wm_quit from other processes, even if running with higher privilages
-if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
-	raise WinError()
+
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 if not isSecureDesktop and not config.isAppX:
