@@ -256,7 +256,11 @@ if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
-
+# Accept wm_quit from other processes, even if running with higher privilages
+# This allows for downgrading between NVDA versions, deprecated in 2022.1
+# in 2022.1 remove the call to ChangeWindowMessageFilter (#12286)
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
+	raise WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 if not isSecureDesktop and not config.isAppX:
