@@ -10,12 +10,12 @@
 import winreg
 import ctypes
 import winUser
-from winVersion import winVersion
+import winVersion
 
 # Windows >= Vista
-isSupported = winVersion.major >= 6
+isSupported = winVersion.getWinVer().major >= 6
 # Windows >= 8
-canConfigTerminateOnDesktopSwitch = isSupported and (winVersion.major, winVersion.minor) >= (6, 2)
+canConfigTerminateOnDesktopSwitch = isSupported and winVersion.getWinVer() >= winVersion.WIN8
 
 ROOT_KEY = r"Software\Microsoft\Windows NT\CurrentVersion\Accessibility"
 APP_KEY_NAME = "nvda_nvda_v1"

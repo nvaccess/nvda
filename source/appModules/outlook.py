@@ -1,8 +1,8 @@
-#appModules/outlook.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager,
+# Babbage B.V., Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from comtypes import COMError
 from comtypes.hresult import S_OK
@@ -36,6 +36,8 @@ from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
+import languageHandler
+from gettext import ngettext
 
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
@@ -334,6 +336,30 @@ class CalendarView(IAccessible):
 		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
 
+	@staticmethod
+	def _generateCategoriesText(appointment):
+		categories = appointment.Categories
+		if not categories:
+			return None
+		# Categories is a delimited string of category names that have been assigned to an Outlook item.
+		# This property uses the user locale's list separator to separate entries.
+		# See also https://docs.microsoft.com/en-us/office/vba/api/outlook.appointmentitem.categories
+		bufLength = 4
+		separatorBuf = ctypes.create_unicode_buffer(bufLength)
+		if ctypes.windll.kernel32.GetLocaleInfoW(
+			languageHandler.LOCALE_USER_DEFAULT,
+			languageHandler.LOCALE_SLIST,
+			separatorBuf,
+			bufLength
+		) == 0:
+			raise ctypes.WinError()
+		categoriesCount = len(categories.split(f"{separatorBuf.value} "))
+
+		# Translators: Part of a message reported when on a calendar appointment with one or more categories
+		# in Microsoft Outlook.
+		categoriesText = ngettext("category", "categories", categoriesCount)
+		return f"{categoriesText} {categories}"
+
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
 
@@ -355,8 +381,15 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				t=self._generateTimeRangeText(start,end)
-				# Translators: A message reported when on a calendar appointment in Microsoft Outlook
-				ui.message(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
+				# Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
+				message = _("Appointment {subject}, {time}").format(subject=p.subject, time=t)
+				try:
+					categoriesText = self._generateCategoriesText(p)
+				except COMError:
+					categoriesText = None
+				if categoriesText is not None:
+					message = f"{message}, {categoriesText}"
+				ui.message(message)
 			else:
 				v=e.currentView
 				try:

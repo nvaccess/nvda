@@ -34,25 +34,7 @@ from .commands import (
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
-from .commands import (  # noqa: F401
-	# F401 imported but unused:
-	# The following are imported here because other files that speech.py
-	# previously relied on "import * from .commands"
-	# New commands added to commands.py should be directly imported only where needed.
-	# Usage of these imports is deprecated and will be removed in 2021.1
-	SynthCommand,
-	IndexCommand,
-	SynthParamCommand,
-	BreakCommand,
-	BaseProsodyCommand,
-	VolumeCommand,
-	RateCommand,
-	PhonemeCommand,
-	BaseCallbackCommand,
-	CallbackCommand,
-	WaveFileCommand,
-	ConfigProfileTriggerCommand,
-)
+
 from . import types
 from .types import (
 	SpeechSequence,
@@ -69,7 +51,6 @@ from typing import (
 	Generator,
 	Union,
 	Callable,
-	Iterator,
 	Tuple,
 )
 from logHandler import log
@@ -136,7 +117,7 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
-	_speakWithoutPauses.reset()
+	sayAllHandler.getSpeechWithoutPauses().reset()
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:
@@ -545,7 +526,6 @@ def getObjectSpeech(  # noqa: C901
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 ):
-	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
 	import browseMode
@@ -1125,14 +1105,6 @@ def speakTextInfo(
 		onlyInitialFields,
 		suppressBlanks
 	)
-
-	if reason == OutputReason.SAYALL:
-		log.error(
-			"Deprecation warning: In 2021.1 speakTextInfo will no longer  send speech through "
-			"speakWithoutPauses if reason is sayAll, as sayAllhandler does this manually now."
-		)
-		flatSpeechGen = list(_flattenNestedSequences(speechGen))
-		return _speakWithoutPauses.speakWithoutPauses(flatSpeechGen)
 
 	speechGen = GeneratorWithReturn(speechGen)
 	for seq in speechGen:
@@ -2622,13 +2594,6 @@ class SpeechWithoutPauses:
 			self._pendingSpeechSequence.extend(pendingSpeechSequence)
 		return finalSpeechSequence
 
-
-_speakWithoutPauses = SpeechWithoutPauses(speakFunc=speak)
-
-#: Alias for class SpeakWithoutPauses.speakWithoutPauses. Kept for backwards compatibility
-speakWithoutPauses = _speakWithoutPauses.speakWithoutPauses
-#: Kept for backwards compatibility.
-re_last_pause = _speakWithoutPauses.re_last_pause
 
 #: The singleton _SpeechManager instance used for speech functions.
 #: @type: L{manager.SpeechManager}

@@ -55,6 +55,9 @@ of NVDA (first ensure it is compatible with the tests). Note valid values are:
 the tests are run from an administrator command prompt.
 * "source"
 
+The `installDir` argument performs a smoke test on the installation process given a path to the installer exe. For example `--variable installDir:".\path\to\nvda_installer.exe"`.
+This should be used with `--variable whichNVDA:installed --include installer`.
+
 ### Overview
 
 Robot Framework loads and parses the test files and their libraries.

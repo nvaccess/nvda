@@ -1,48 +1,56 @@
-# _UIAHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2020 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2011-2021 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes import *
-from ctypes.wintypes import *
-from enum import Enum
+import ctypes
+import ctypes.wintypes
+from ctypes import (
+	oledll,
+	windll,
+)
+from enum import (
+	Enum,
+)
 
 import comtypes.client
 from comtypes.automation import VT_EMPTY
-from comtypes import COMError
-from comtypes import *
-import weakref
+from comtypes import (
+	COMError,
+	COMObject,
+	byref,
+	CLSCTX_INPROC_SERVER,
+	CoCreateInstance,
+)
+
 import threading
 import time
-from collections import namedtuple
 import config
 import api
 import appModuleHandler
-import queueHandler
 import controlTypes
-import NVDAHelper
 import winKernel
 import winUser
 import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
-from comtypes.gen import UIAutomationClient as UIA
-from comtypes.gen.UIAutomationClient import *
+from comInterfaces import UIAutomationClient as UIA
+# F403: unable to detect undefined names
+from comInterfaces .UIAutomationClient import *  # noqa:  F403
 import textInfos
 from typing import Dict
 from queue import Queue
 import aria
 
-#Some newer UIA constants that could be missing
-ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
-ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
+
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
 HorizontalTextAlignment_Justified=3
+
+
 
 # The name of the WDAG (Windows Defender Application Guard) process
 WDAG_PROCESS_NAME=u'hvsirdpclient'
@@ -50,6 +58,7 @@ WDAG_PROCESS_NAME=u'hvsirdpclient'
 goodUIAWindowClassNames=[
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
 	'RAIL_WINDOW',
+	"EXCEL6",
 ]
 
 badUIAWindowClassNames=[
@@ -67,7 +76,6 @@ badUIAWindowClassNames=[
 	"RichEdit20",
 	"RICHEDIT50W",
 	"SysListView32",
-	"EXCEL7",
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
@@ -187,7 +195,7 @@ UIAEventIdsToNVDAEventNames={
 localEventHandlerGroupUIAEventIds = set()
 
 autoSelectDetectionAvailable = False
-if winVersion.isWin10():
+if winVersion.getWinVer() >= winVersion.WIN10:
 	UIAEventIdsToNVDAEventNames.update({
 		UIA.UIA_Text_TextChangedEventId: "textChange",
 		UIA.UIA_Text_TextSelectionChangedEventId: "caret",
@@ -226,7 +234,8 @@ class UIAHandler(COMObject):
 		UIA.IUIAutomationEventHandler,
 		UIA.IUIAutomationFocusChangedEventHandler,
 		UIA.IUIAutomationPropertyChangedEventHandler,
-		UIA.IUIAutomationNotificationEventHandler
+		UIA.IUIAutomationNotificationEventHandler,
+		UIA.IUIAutomationActiveTextPositionChangedEventHandler,
 	]
 
 	def __init__(self):
@@ -248,7 +257,13 @@ class UIAHandler(COMObject):
 			raise self.MTAThreadInitException
 
 	def terminate(self):
-		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(winKernel.SYNCHRONIZE,False,self.MTAThread.ident))
+		MTAThreadHandle = ctypes.wintypes.HANDLE(
+			windll.kernel32.OpenThread(
+				winKernel.SYNCHRONIZE,
+				False,
+				self.MTAThread.ident
+			)
+		)
 		self.MTAThreadQueue.put_nowait(None)
 		#Wait for the MTA thread to die (while still message pumping)
 		if windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,200,0)!=0:
@@ -309,9 +324,6 @@ class UIAHandler(COMObject):
 			self.UIAWindowHandleCache={}
 			self.baseTreeWalker=self.clientObject.RawViewWalker
 			self.baseCacheRequest=self.windowCacheRequest.Clone()
-			import UIAHandler
-			self.ItemIndex_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemIndex_Property_GUID),u"ItemIndex",1)
-			self.ItemCount_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemCount_Property_GUID),u"ItemCount",1)
 			for propertyId in (UIA_FrameworkIdPropertyId,UIA_AutomationIdPropertyId,UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsTextPatternAvailablePropertyId,UIA_IsContentElementPropertyId,UIA_IsControlElementPropertyId):
 				self.baseCacheRequest.addProperty(propertyId)
 			self.baseCacheRequest.addPattern(UIA_TextPatternId)
@@ -366,6 +378,12 @@ class UIAHandler(COMObject):
 		# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 		if isinstance(self.clientObject, UIA.IUIAutomation5):
 			self.globalEventHandlerGroup.AddNotificationEventHandler(
+				UIA.TreeScope_Subtree,
+				self.baseCacheRequest,
+				self
+			)
+		if isinstance(self.clientObject, UIA.IUIAutomation6):
+			self.globalEventHandlerGroup.AddActiveTextPositionChangedEventHandler(
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
 				self
@@ -520,14 +538,15 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA):
-			lastFocus=eventHandler.lastQueuedFocusObject.UIAElement
+			lastFocusObj = eventHandler.lastQueuedFocusObject
 			# Ignore duplicate focus events.
 			# It seems that it is possible for compareElements to return True, even though the objects are different.
 			# Therefore, don't ignore the event if the last focus object has lost its hasKeyboardFocus state.
 			try:
 				if (
-					self.clientObject.compareElements(sender, lastFocus)
-					and lastFocus.currentHasKeyboardFocus
+					not lastFocusObj.shouldAllowDuplicateUIAFocusEvent
+					and self.clientObject.compareElements(sender, lastFocusObj.UIAElement)
+					and lastFocusObj.UIAElement.currentHasKeyboardFocus
 				):
 					if _isDebug():
 						log.debugWarning("HandleFocusChangedEvent: Ignoring duplicate focus event")
@@ -658,6 +677,34 @@ class UIAHandler(COMObject):
 			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
+	def IUIAutomationActiveTextPositionChangedEventHandler_HandleActiveTextPositionChangedEvent(
+			self,
+			sender,
+			textRange
+	):
+		if not self.MTAThreadInitEvent.isSet():
+			# UIAHandler hasn't finished initialising yet, so just ignore this event.
+			if _isDebug():
+				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")
+			return
+		import NVDAObjects.UIA
+		try:
+			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+		except Exception:
+			if _isDebug():
+				log.debugWarning(
+					"HandleActiveTextPositionChangedEvent: Exception while creating object: ",
+					exc_info=True
+				)
+			return
+		if not obj:
+			if _isDebug():
+				log.debug(
+					"HandleActiveTextPositionchangedEvent: Ignoring because no object: "
+				)
+			return
+		eventHandler.queueEvent("UIA_activeTextPositionChanged", obj, textRange=textRange)
+
 	def _isBadUIAWindowClassName(self, windowClass):
 		"Given a windowClassName, returns True if this is a known problematic UIA implementation."
 		# #7497: Windows 10 Fall Creators Update has an incomplete UIA
@@ -711,19 +758,40 @@ class UIAHandler(COMObject):
 		# Ask the window if it supports UIA natively
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
-			# the window does support UIA natively, but
-			# MS Word documents now have a fairly usable UI Automation implementation. However,
-			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
-			# And even current builds of Office 2016 are still missing enough info from UIA that it is still impossible to switch to UIA completely.
-			# Therefore, if we can inject in-process, refuse to use UIA and instead fall back to the MS Word object model.
+			# The window does support UIA natively, but MS Word documents now
+			# have a fairly usable UI Automation implementation.
+			# However, builds of MS Office 2016 before build 9000 or so had bugs which
+			# we cannot work around.
+			# And even current builds of Office 2016 are still missing enough info from
+			# UIA that it is still impossible to switch to UIA completely.
+			# Therefore, if we can inject in-process, refuse to use UIA and instead
+			# fall back to the MS Word object model.
 			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 			if (
 				# An MS Word document window 
 				windowClass=="_WwG" 
 				# Disabling is only useful if we can inject in-process (and use our older code)
 				and canUseOlderInProcessApproach
-				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
+				# Allow the user to explicitly force UIA support for MS Word documents
+				# no matter the Office version
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
+				return False
+			# MS Excel spreadsheets now have a fairly usable UI Automation implementation.
+			# However, builds of MS Office 2016 before build 9000 or so had bugs which we
+			# cannot work around.
+			# And even current builds of Office 2016 are still missing enough info from UIA
+			# that it is still impossible to switch to UIA completely.
+			# Therefore, if we can inject in-process, refuse to use UIA and instead fall
+			# back to the MS Excel object model.
+			elif (
+				# An MS Excel spreadsheet window
+				windowClass == "EXCEL7"
+				# Disabling is only useful if we can inject in-process (and use our older code)
+				and appModule.helperLocalBindingHandle
+				# Allow the user to explicitly force UIA support for MS Excel spreadsheets
+				# no matter the Office version
+				and not config.conf['UIA']['useInMSExcelWhenAvailable']
 			):
 				return False
 			# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,

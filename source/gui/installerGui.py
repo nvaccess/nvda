@@ -102,7 +102,7 @@ def doInstall(
 			winUser.SW_SHOWNORMAL
 		)
 	else:
-		wx.GetApp().ExitMainLoop()
+		gui.safeAppExit()
 
 
 def doSilentInstall(
@@ -175,18 +175,15 @@ class InstallerDialog(
 			self.bindHelpEvent("InstallWithIncompatibleAddons", self.confirmationCheckbox)
 			self.confirmationCheckbox.SetFocus()
 
-		optionsSizer = guiHelper.BoxSizerHelper(self, sizer=sHelper.addItem(wx.StaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA installation dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
-		)))
+		# Translators: The label for a group box containing the NVDA installation dialog options.
+		optionsLabel = _("Options")
+		optionsSizer = sHelper.addItem(wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel))
+		optionsHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
+		optionsBox = optionsSizer.GetStaticBox()
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA during sign-in")
-		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=startOnLogonText))
+		self.startOnLogonCheckbox = optionsHelper.addItem(wx.CheckBox(optionsBox, label=startOnLogonText))
 		self.bindHelpEvent("StartAtWindowsLogon", self.startOnLogonCheckbox)
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
@@ -197,19 +194,22 @@ class InstallerDialog(
 		if self.isUpdate and shortcutIsPrevInstalled:
 			# Translators: The label of a checkbox option in the Install NVDA dialog.
 			keepShortCutText = _("&Keep existing desktop shortcut")
-			self.createDesktopShortcutCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=keepShortCutText))
+			keepShortCutBox = wx.CheckBox(optionsBox, label=keepShortCutText)
+			self.createDesktopShortcutCheckbox = optionsHelper.addItem(keepShortCutBox)
 		else:
 			# Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 			# If the shortcut key has been changed for this locale,
 			# this change must also be reflected here.
 			createShortcutText = _("Create &desktop icon and shortcut key (control+alt+n)")
-			self.createDesktopShortcutCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createShortcutText))
+			createShortcutBox = wx.CheckBox(optionsBox, label=createShortcutText)
+			self.createDesktopShortcutCheckbox = optionsHelper.addItem(createShortcutBox)
 		self.bindHelpEvent("CreateDesktopShortcut", self.createDesktopShortcutCheckbox)
 		self.createDesktopShortcutCheckbox.Value = shortcutIsPrevInstalled if self.isUpdate else True 
 		
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		createPortableText = _("Copy &portable configuration to current user account")
-		self.copyPortableConfigCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createPortableText))
+		createPortableBox = wx.CheckBox(optionsBox, label=createPortableText)
+		self.copyPortableConfigCheckbox = optionsHelper.addItem(createPortableBox)
 		self.bindHelpEvent("CopyPortableConfigurationToCurrentUserAccount", self.copyPortableConfigCheckbox)
 		self.copyPortableConfigCheckbox.Value = bool(globalVars.appArgs.copyPortableConfig)
 		if globalVars.appArgs.copyPortableConfig is None:
@@ -349,13 +349,16 @@ class PortableCreaterDialog(
 		# Translators: The label of a grouping containing controls to select the destination directory
 		# in the Create Portable NVDA dialog.
 		directoryGroupText = _("Portable &directory:")
-		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=directoryGroupText), wx.VERTICAL)))
+		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=directoryGroupText)
+		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
+		groupBox = groupSizer.GetStaticBox()
 		# Translators: The label of a button to browse for a directory.
 		browseText = _("Browse...")
 		# Translators: The title of the dialog presented when browsing for the
 		# destination directory when creating a portable copy of NVDA.
 		dirDialogTitle = _("Select portable  directory")
-		directoryEntryControl = groupHelper.addItem(gui.guiHelper.PathSelectionHelper(self, browseText, dirDialogTitle))
+		directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
+		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 		self.portableDirectoryEdit = directoryEntryControl.pathControl
 		if globalVars.appArgs.portablePath:
 			self.portableDirectoryEdit.Value = globalVars.appArgs.portablePath
@@ -447,7 +450,7 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 		return
 	d.done()
 	if silent:
-		wx.GetApp().ExitMainLoop()
+		gui.safeAppExit()
 	else:
 		# Translators: The message displayed when a portable copy of NVDA has been successfully created.
 		# %s will be replaced with the destination directory.
