@@ -5,6 +5,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import typing
 import time
 import os
 import sys
@@ -24,6 +25,7 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
+from . import settingsDialogs
 from .settingsDialogs import *
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
@@ -587,10 +589,11 @@ def terminate():
 
 	# prevent race condition with object deletion
 	# prevent deletion of the object while we work on it.
-	nonWeak: typing.Dict[SettingsDialog, SettingsDialog.DialogState] = dict(gui.SettingsDialog._instances)
+	_SettingsDialog = settingsDialogs.SettingsDialog
+	nonWeak: typing.Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
 
 	for instance, state in nonWeak.items():
-		if state is gui.SettingsDialog.DialogState.DESTROYED:
+		if state is _SettingsDialog.DialogState.DESTROYED:
 			log.error(
 				"Destroyed but not deleted instance of gui.SettingsDialog exists"
 				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
