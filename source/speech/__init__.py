@@ -270,15 +270,10 @@ def _getSpellingSpeechWithoutCharMode(
 		text: str,
 		locale: str,
 		useCharacterDescriptions: bool,
-		isPitchSupported: bool,
+		sayCapForCapitals: bool,
+		capPitchChange: int,
+		beepForCapitals: bool,
 ) -> Generator[SequenceItemT, None, None]:
-	synth = getSynth()
-	synthConfig = config.conf["speech"][synth.name]
-	
-	if isPitchSupported:
-		capPitchChange = synthConfig["capPitchChange"]
-	else:
-		capPitchChange = 0
 	
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
@@ -315,9 +310,9 @@ def _getSpellingSpeechWithoutCharMode(
 			yield LangChangeCommand(locale)
 		yield from _getSpellingCharAddCapNotification(
 			speakCharAs,
-			uppercase and synthConfig["sayCapForCapitals"],
+			uppercase and sayCapForCapitals,
 			capPitchChange if uppercase else 0,
-			uppercase and synthConfig["beepForCapitals"],
+			uppercase and beepForCapitals,
 		)
 		yield EndUtteranceCommand()
 
@@ -327,9 +322,22 @@ def getSpellingSpeech(
 		locale: Optional[str] = None,
 		useCharacterDescriptions: bool = False
 ) -> Generator[SequenceItemT, None, None]:
+	
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	seq = _getSpellingSpeechWithoutCharMode(text, locale, useCharacterDescriptions, synth.isSupported("pitch"))
+	
+	if synth.isSupported("pitch"):
+		capPitchChange = synthConfig["capPitchChange"]
+	else:
+		capPitchChange = 0
+	seq = _getSpellingSpeechWithoutCharMode(
+		text,
+		locale,
+		useCharacterDescriptions,
+		sayCapForCapitals=synthConfig["sayCapForCapitals"],
+		capPitchChange=capPitchChange,
+		beepForCapitals=synthConfig["beepForCapitals"],
+	)
 	if synthConfig["useSpellingFunctionality"]:
 		seq = _getSpellingSpeechAddCharMode(seq)
 	yield from seq
