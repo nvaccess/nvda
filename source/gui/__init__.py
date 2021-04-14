@@ -585,10 +585,15 @@ def terminate():
 	import brailleViewer
 	brailleViewer.destroyBrailleViewer()
 
-	for instance, state in gui.SettingsDialog._instances.items():
+	# prevent race condition with object deletion
+	# prevent deletion of the object while we work on it.
+	nonWeak: typing.Dict[SettingsDialog, SettingsDialog.DialogState] = dict(gui.SettingsDialog._instances)
+
+	for instance, state in nonWeak.items():
 		if state is gui.SettingsDialog.DialogState.DESTROYED:
 			log.error(
-				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
+				"Destroyed but not deleted instance of gui.SettingsDialog exists"
+				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
 			)
 		else:
 			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))

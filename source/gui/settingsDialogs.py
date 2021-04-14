@@ -87,7 +87,7 @@ class SettingsDialog(
 		DESTROYED = 1
 
 	# holds instances of SettingsDialogs as keys, and state as the value
-	_instances=weakref.WeakKeyDictionary()
+	_instances = weakref.WeakKeyDictionary()
 	title = ""
 	helpId = "NVDASettings"
 	shouldSuspendConfigProfileTriggers = True
