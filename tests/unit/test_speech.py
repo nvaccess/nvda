@@ -225,7 +225,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 			text='A',
 			locale=None,
 			useCharacterDescriptions=False,
-			sayCapForCapitals=False,
+			sayCapForCapitals=True,
 			capPitchChange=30,
 			beepForCapitals=True,
 		)
@@ -249,7 +249,6 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 	def test_blank(self):
 		expected = repr([
 			'blank',
-			EndUtteranceCommand(),
 		])
 		output = _getSpellingSpeechWithoutCharMode(
 			text='',
