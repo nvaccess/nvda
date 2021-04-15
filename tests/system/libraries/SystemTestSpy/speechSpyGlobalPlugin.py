@@ -159,8 +159,9 @@ class NVDASpyLib:
 			giveUpAfterSeconds=self._minTimeout(10),
 			errorMessage="Unable to connect to nvdaSpy",
 		)
-		if self._isNvdaStartupComplete:
+		with self._speechLock:
 			self.reset_all_speech_index()
+			self.wait_for_speech_to_finish()
 
 	def get_last_speech(self) -> str:
 		return self._getSpeechAtIndex(-1)
@@ -197,12 +198,29 @@ class NVDASpyLib:
 			errorMessage=None
 		)
 		if not success:
+			if self._popup_stole_focus():
+				return self.wait_for_specific_speech(speech, afterIndex, maxWaitSeconds)
 			self.dump_speech_to_log()
 			raise AssertionError(
 				"Specific speech did not occur before timeout: {}\n"
 				"See NVDA log for dump of all speech.".format(speech)
 			)
 		return speechIndex
+
+	def _popup_stole_focus(self):
+		KNOWN_POPUPS = [
+			{
+				"speech": "Your feedback is important to us",
+				"process_name": "Docker Desktop.exe"
+			},
+		]
+		for popup in KNOWN_POPUPS:
+			if self.get_last_speech() == popup["speech"]:
+				log.debug(f"{popup['process_name']} stole focus, killing the process")
+				os.system(f'taskkill /im "{popup["process_name"]}"')
+				return True
+		return False
+
 
 	def wait_for_speech_to_finish(
 			self,
