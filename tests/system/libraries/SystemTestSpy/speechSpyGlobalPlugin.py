@@ -221,7 +221,6 @@ class NVDASpyLib:
 				return True
 		return False
 
-
 	def wait_for_speech_to_finish(
 			self,
 			maxWaitSeconds=5.0,
