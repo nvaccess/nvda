@@ -214,8 +214,9 @@ class NVDASpyLib:
 				"process_name": "Docker Desktop.exe"
 			},
 		]
+		last_speech = self.get_last_speech()
 		for popup in KNOWN_POPUPS:
-			if self.get_last_speech() == popup["speech"]:
+			if last_speech == popup["speech"]:
 				log.debug(f"{popup['process_name']} stole focus, killing the process")
 				os.system(f'taskkill /im "{popup["process_name"]}"')
 				return True
