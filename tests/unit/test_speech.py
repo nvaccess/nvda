@@ -110,7 +110,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 	@classmethod
 	def tearDownClass(cls):
 		global _
-		_ = cls.originalTranslationFunction 
+		_ = cls.originalTranslationFunction
 	
 	def test_noNotifications(self):
 		expected = repr([
