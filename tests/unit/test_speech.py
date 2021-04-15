@@ -7,6 +7,7 @@
 """
 
 import unittest
+import typing
 import config
 from speech import (
 	_getSpellingSpeechAddCharMode,
@@ -92,6 +93,25 @@ class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
 
 
 class Test_getSpellingCharAddCapNotification(unittest.TestCase):
+	_translationResults: typing.Dict[str, str] = {}
+	
+	@classmethod
+	def translationFunctionFake(cls, s: str) -> str:
+		if str in cls._translationResults:
+			return cls._translationResults[str]
+		return cls.originalTranslationFunction(s)
+
+	@classmethod
+	def setUpClass(cls):
+		global _
+		cls.originalTranslationFunction = _
+		_ = cls.translationFunctionFake
+
+	@classmethod
+	def tearDownClass(cls):
+		global _
+		_ = cls.originalTranslationFunction 
+	
 	def test_noNotifications(self):
 		expected = repr([
 			'A',
@@ -144,15 +164,9 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 		)
 		self.assertEqual(repr(list(output)), expected)
 
-	@unittest.skip("Need to implement patching of _ function.")
-	def test_capNotificationsWithPlaceHolderAfter(self):
-		global _
-		originalTranslationFunction = _
-		
-		def fakeTranslationFunction(s):
-			if s == 'cap %s':
-				return '%s cap'
-			return s
+	@unittest.skip("Patching of _ function not working.")
+	def test_capNotificationsWithPlaceHolderBefore(self):
+		self._translationResults["cap %s"] = "%s cap"
 		try:
 			expected = repr([
 				'A',
@@ -166,7 +180,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 			)
 			self.assertEqual(repr(list(output)), expected)
 		finally:
-			_ = originalTranslationFunction
+			self._translationResults.clear()
 
 	def test_allNotifications(self):
 		expected = repr([
