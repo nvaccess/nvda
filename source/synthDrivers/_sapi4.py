@@ -5,9 +5,23 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from ctypes import *
-from ctypes.wintypes import *
-from comtypes import *
+from ctypes import (
+	BYTE,
+	cast,
+	c_int,
+	c_uint,
+	c_ulong,
+	c_ulonglong,
+	c_wchar,
+	c_wchar_p,
+	c_void_p,
+	HRESULT,
+	POINTER,
+	sizeof,
+	Structure
+)
+from ctypes.wintypes import DWORD, LPCWSTR, WORD
+from comtypes import GUID, IUnknown, STDMETHOD
 
 import winKernel
 
