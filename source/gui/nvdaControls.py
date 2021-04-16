@@ -359,7 +359,8 @@ class EnhancedInputSlider(wx.Slider):
 class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 	"""
 	This class was created to ensure a ScrolledPanel scrolls to nested children of the panel when navigating
-	with tabs #12224
+	with tabs (#12224). A PR to wxPython implementing this fix can be tracked on
+	https://github.com/wxWidgets/Phoenix/pull/1950
 	"""
 	def GetChildRectRelativeToSelf(self, child: wx.Window) -> wx.Rect:
 		"""
