@@ -1,18 +1,14 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2018 NV Access Limited, Derek Riemer
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 NV Access Limited, Derek Riemer
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-from ctypes.wintypes import BOOL
-from typing import Any, Tuple, Optional
 import wx
 from wx.lib import scrolledpanel
-from comtypes import GUID
 from wx.lib.mixins import listctrl as listmix
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import guiHelper
-import oleacc
 import winUser
 import winsound
 import math
