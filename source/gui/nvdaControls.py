@@ -365,7 +365,7 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 	This class was created to ensure a ScrolledPanel scrolls to nested children of the panel when navigating
 	with tabs #12224
 	"""
-	def GetChildRectRelativeToSelf(self, child: wx.Window):
+	def GetChildRectRelativeToSelf(self, child: wx.Window) -> wx.Rect:
 		"""
 		window.GetRect returns the size of a window, and its position relative to its parent.
 		When calculating ScrollChildIntoView, the position relative to its parent is not relevant unless the
@@ -375,7 +375,7 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 		spr = self.GetScreenPosition()
 		return wx.Rect(cr.x - spr.x, cr.y - spr.y, cr.width, cr.height)
 
-	def ScrollChildIntoView(self, child: wx.Window):
+	def ScrollChildIntoView(self, child: wx.Window) -> None:
 		"""
 		Uses the same logic as super().ScrollChildIntoView(self, child)
 		except cr = self.GetChildRectRelativeToSelf(child) instead of cr = GetRect()
