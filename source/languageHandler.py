@@ -1,8 +1,8 @@
-#languageHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# languageHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2018 NV access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Language and localization support.
 This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
@@ -126,6 +126,7 @@ def getAvailableLanguages(presentational=False):
 	)
 	return langs
 
+
 def makePgettext(translations):
 	"""Obtaina  pgettext function for use with a gettext translations instance.
 	pgettext is used to support message contexts,
@@ -144,7 +145,7 @@ def makePgettext(translations):
 		def pgettext(context, message):
 			return message
 	else:
-		raise ValueError("%s is Not a GNUTranslations or NullTranslations object"%translations)
+		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
 	return pgettext
 
 def getWindowsLanguage():
@@ -204,7 +205,6 @@ def setLanguage(lang: str) -> None:
 	trans.install()
 	setLocale(curLang)
 	# Install our pgettext function.
-	import builtins
 	builtins.pgettext = makePgettext(trans)
 
 def setLocale(localeName: str) -> None:
