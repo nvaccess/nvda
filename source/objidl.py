@@ -235,10 +235,14 @@ IMoniker._methods_ = [
 		( ['in'], POINTER(IBindCtx), 'pbc' ),
 		( ['in'], POINTER(IMoniker), 'pmkToLeft' ),
 		( ['in'], POINTER(IMoniker), 'pmkNewlyRunning' )),
-	COMMETHOD([], HRESULT, 'GetTimeOfLastChange',
+	COMMETHOD(
+		[],
+		HRESULT,
+		'GetTimeOfLastChange',
 		( ['in'], POINTER(IBindCtx), 'pbc' ),
 		( ['in'], POINTER(IMoniker), 'pmkToLeft' ),
-		(['out'], POINTER(winKernel.FILETIME), 'pfiletime')),
+		(['out'], POINTER(winKernel.FILETIME), 'pfiletime')
+	),
 	COMMETHOD([], HRESULT, 'Inverse',
 		( ['out'], POINTER(POINTER(IMoniker)), 'ppmk' )),
 	COMMETHOD([], HRESULT, 'CommonPrefixWith',
@@ -274,12 +278,20 @@ IRunningObjectTable._methods_ = [
 	COMMETHOD([], HRESULT, 'GetObject',
 		( ['in'], POINTER(IMoniker), 'pmkObjectName' ),
 		( ['out'], POINTER(POINTER(IUnknown)), 'ppunkObject' )),
-	COMMETHOD([], HRESULT, 'NoteChangeTime',
+	COMMETHOD(
+		[],
+		HRESULT,
+		'NoteChangeTime',
 		( ['in'], c_ulong, 'dwRegister' ),
-		(['in'], POINTER(winKernel.FILETIME), 'pfiletime')),
-	COMMETHOD([], HRESULT, 'GetTimeOfLastChange',
+		(['in'], POINTER(winKernel.FILETIME), 'pfiletime')
+	),
+	COMMETHOD(
+		[],
+		HRESULT,
+		'GetTimeOfLastChange',
 		( ['in'], POINTER(IMoniker), 'pmkObjectName' ),
-		(['out'], POINTER(winKernel.FILETIME), 'pfiletime')),
+		(['out'], POINTER(winKernel.FILETIME), 'pfiletime')
+	),
 	COMMETHOD([], HRESULT, 'EnumRunning',
 		( ['out'], POINTER(POINTER(IEnumMoniker)), 'ppenumMoniker' )),
 ]
