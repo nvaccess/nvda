@@ -1001,9 +1001,17 @@ class SpeechSettingsPanel(SettingsPanel):
 		super(SpeechSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
+		# Work around wxAssertion error #12220
+		# Manually destroying the ExpandoTextCtrl when the settings dialog is
+		# exited prevents the wxAssertion.
+		self.synthNameCtrl.Destroy()
 		self.voicePanel.onDiscard()
 
 	def onSave(self):
+		# Work around wxAssertion error #12220
+		# Manually destroying the ExpandoTextCtrl when the settings dialog is
+		# exited prevents the wxAssertion.
+		self.synthNameCtrl.Destroy()
 		self.voicePanel.onSave()
 
 class SynthesizerSelectionDialog(SettingsDialog):
@@ -3212,9 +3220,17 @@ class BrailleSettingsPanel(SettingsPanel):
 		super(BrailleSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
+		# Work around wxAssertion error #12220
+		# Manually destroying the ExpandoTextCtrl when the settings dialog is
+		# exited prevents the wxAssertion.
+		self.displayNameCtrl.Destroy()
 		self.brailleSubPanel.onDiscard()
 
 	def onSave(self):
+		# Work around wxAssertion error #12220
+		# Manually destroying the ExpandoTextCtrl when the settings dialog is
+		# exited prevents the wxAssertion.
+		self.displayNameCtrl.Destroy()
 		self.brailleSubPanel.onSave()
 
 
