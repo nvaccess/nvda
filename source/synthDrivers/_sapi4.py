@@ -9,6 +9,8 @@ from ctypes import *
 from ctypes.wintypes import *
 from comtypes import *
 
+import winKernel
+
 S_OK=0
 
 ###comtypes class definitions
@@ -37,8 +39,6 @@ class VOICECHARSET(c_int):
     CHARSET_IPAPHONETIC = 1
     CHARSET_ENGINEPHONETIC = 2
 
-class FILETIME(Structure):
-    _fields_ = [("dwLowDateTime", DWORD), ("dwHighDateTime", DWORD)]
 
 class LANGUAGEW(Structure):
     _fields_ = [("LanguageID", LANGID),
@@ -111,7 +111,7 @@ ITTSCentralW._methods_ = [
     STDMETHOD(HRESULT, "Phoneme", [VOICECHARSET, DWORD, SDATA, POINTER(SDATA)]),
     STDMETHOD(HRESULT, "PosnGet", [POINTER(QWORD)]),
     STDMETHOD(HRESULT, "TextData", [VOICECHARSET, DWORD, SDATA, c_void_p, GUID]),
-    STDMETHOD(HRESULT, "ToFileTime", [POINTER(QWORD), POINTER(FILETIME)]),
+    STDMETHOD(HRESULT, "ToFileTime", [POINTER(QWORD), POINTER(winKernel.FILETIME)]),
     STDMETHOD(HRESULT, "AudioPause"),
     STDMETHOD(HRESULT, "AudioResume"),
     STDMETHOD(HRESULT, "AudioReset"),

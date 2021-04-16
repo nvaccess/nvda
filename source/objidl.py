@@ -7,6 +7,8 @@ from ctypes import *
 from ctypes.wintypes import HWND, BOOL
 from comtypes import HRESULT, GUID, COMMETHOD, IUnknown, tagBIND_OPTS2
 from comtypes.persist import IPersist
+import winKernel
+
 WSTRING = c_wchar_p
 
 class IOleWindow(IUnknown):
@@ -30,20 +32,15 @@ class _ULARGE_INTEGER(Structure):
 		('QuadPart', c_ulonglong),
 	]
 
-class _FILETIME(Structure):
-	_fields_ = [
-		('dwLowDateTime', c_ulong),
-		('dwHighDateTime', c_ulong),
-	]
 
 class tagSTATSTG(Structure):
 	_fields_ = [
 		('pwcsName', WSTRING),
 		('type', c_ulong),
 		('cbSize', _ULARGE_INTEGER),
-		('mtime', _FILETIME),
-		('ctime', _FILETIME),
-		('atime', _FILETIME),
+		('mtime', winKernel.FILETIME),
+		('ctime', winKernel.FILETIME),
+		('atime', winKernel.FILETIME),
 		('grfMode', c_ulong),
 		('grfLocksSupported', c_ulong),
 		('clsid', GUID),
@@ -241,7 +238,7 @@ IMoniker._methods_ = [
 	COMMETHOD([], HRESULT, 'GetTimeOfLastChange',
 		( ['in'], POINTER(IBindCtx), 'pbc' ),
 		( ['in'], POINTER(IMoniker), 'pmkToLeft' ),
-		( ['out'], POINTER(_FILETIME), 'pfiletime' )),
+		(['out'], POINTER(winKernel.FILETIME), 'pfiletime')),
 	COMMETHOD([], HRESULT, 'Inverse',
 		( ['out'], POINTER(POINTER(IMoniker)), 'ppmk' )),
 	COMMETHOD([], HRESULT, 'CommonPrefixWith',
@@ -279,10 +276,10 @@ IRunningObjectTable._methods_ = [
 		( ['out'], POINTER(POINTER(IUnknown)), 'ppunkObject' )),
 	COMMETHOD([], HRESULT, 'NoteChangeTime',
 		( ['in'], c_ulong, 'dwRegister' ),
-		( ['in'], POINTER(_FILETIME), 'pfiletime' )),
+		(['in'], POINTER(winKernel.FILETIME), 'pfiletime')),
 	COMMETHOD([], HRESULT, 'GetTimeOfLastChange',
 		( ['in'], POINTER(IMoniker), 'pmkObjectName' ),
-		( ['out'], POINTER(_FILETIME), 'pfiletime' )),
+		(['out'], POINTER(winKernel.FILETIME), 'pfiletime')),
 	COMMETHOD([], HRESULT, 'EnumRunning',
 		( ['out'], POINTER(POINTER(IEnumMoniker)), 'ppenumMoniker' )),
 ]
