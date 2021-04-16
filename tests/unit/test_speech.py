@@ -205,7 +205,10 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		config.conf['speech']['autoLanguageSwitching'] = False
 
 	def tearDown(self):
-		config.conf['speech']['autoLanguageSwitching'] = True  # Default value
+		# Restore default value
+		config.conf['speech']['autoLanguageSwitching'] = config.conf.getConfigValidation(
+			['speech', 'autoLanguageSwitching']
+		).default
 	
 	def test_simpleSpelling(self):
 		expected = repr([
