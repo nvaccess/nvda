@@ -2421,10 +2421,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		detectFormatAfterCursorText = _("Report formatting chan&ges after the cursor (can cause a lag)")
-		self.detectFormatAfterCursorCheckBox = wx.CheckBox(
-			elementsGroupBox,
-			label=detectFormatAfterCursorText
-		)
+		self.detectFormatAfterCursorCheckBox = wx.CheckBox(self, label=detectFormatAfterCursorText)
 		self.bindHelpEvent(
 			"DocumentFormattingDetectFormatAfterCursor",
 			self.detectFormatAfterCursorCheckBox
