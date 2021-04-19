@@ -308,9 +308,6 @@ def main():
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
-	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
-	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
-	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
 	import six
 	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
