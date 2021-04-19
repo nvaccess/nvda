@@ -5,6 +5,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import typing
 import time
 import os
 import sys
@@ -24,6 +25,7 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
+from . import settingsDialogs
 from .settingsDialogs import *
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
@@ -364,6 +366,20 @@ def safeAppExit():
 
 	import brailleViewer
 	brailleViewer.destroyBrailleViewer()
+
+	# prevent race condition with object deletion
+	# prevent deletion of the object while we work on it.
+	_SettingsDialog = settingsDialogs.SettingsDialog
+	nonWeak: typing.Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
+
+	for instance, state in nonWeak.items():
+		if state is _SettingsDialog.DialogState.DESTROYED:
+			log.error(
+				"Destroyed but not deleted instance of gui.SettingsDialog exists"
+				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
 
 	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
 	# They must be manually destroyed when exiting the app.
