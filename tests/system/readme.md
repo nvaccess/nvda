@@ -116,3 +116,34 @@ The following arguments can be overriden to use with the script. The defaults ca
 - `--variable cacheFolder:[filePath]` *.txt files of each settings panel are generated in `$cacheFolder\$currentVersion`
 - `--variable currentVersion:[nvdaVersion]` where `[nvdaVersion]` is used to name the generated screenshot and cache folder
 - `--variable compareVersion:[nvdaVersion]` using a `$nvdaVersion` that this script has already been run against, run the system tests and fail if there are differences between the read text. This generates a multiline diff. 
+
+### Running system tests against older copies of NVDA
+Running the system tests using 2020.4 will throw an error. To run system tests locally using `--variable:whichNVDA:installed` where NVDA is version 2020.4, apply the following patch to your source code
+
+```diff
+diff --git a/tests/system/libraries/NvdaLib.py b/tests/system/libraries/NvdaLib.py
+index 735ea741c..3ba021076 100644
+--- a/tests/system/libraries/NvdaLib.py
++++ b/tests/system/libraries/NvdaLib.py
+@@ -55,7 +55,7 @@ class _NvdaLocationData:
+ 			self._runNVDAFilePath = _pJoin(self.repoRoot, "runnvda.bat")
+ 			self.baseNVDACommandline = self._runNVDAFilePath
+ 		elif self.whichNVDA == "installed":
+-			self._runNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'nvda', 'nvda.exe')
++			self._runNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'NVDA', 'nvda.exe')
+ 			self.baseNVDACommandline = f'"{str(self._runNVDAFilePath)}"'
+ 			if self._installFilePath is not None:
+ 				self.NVDAInstallerCommandline = f'"{str(self._installFilePath)}"'
+diff --git a/tests/system/libraries/SystemTestSpy/configManager.py b/tests/system/libraries/SystemTestSpy/configManager.py
+index 46b72e13a..55112325c 100644
+--- a/tests/system/libraries/SystemTestSpy/configManager.py
++++ b/tests/system/libraries/SystemTestSpy/configManager.py
+@@ -48,6 +48,7 @@ def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
+ 	_copyPythonLibs(
+ 		pythonImports=[  # relative to the python path
+ 			r"robotremoteserver",
++			"xmlrpc",
+ 		],
+ 		libsDest=spyPackageLibsDir
+ 	)
+```
