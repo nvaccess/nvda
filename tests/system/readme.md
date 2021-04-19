@@ -103,3 +103,16 @@ NVDA is started with the `-c` option to specify this profile directory to be use
 Both Robot Framework and NVDA logs are captured in the `testOutput` directory in the repo root.
 NVDA logs (NVDA log, stdOut, and stdErr for each test) are under the `nvdaTestRunLogs` directory. 
 The log files are named by suite and test name.
+
+### Comparing changes to NVDA Settings
+To check for unreleased changes to the settings dialogs, one can run system tests against two copies of NVDA. 
+
+`.\runsettingsdiff.bat` can be used to compare the settings dialog by reading text and generating screenshots for comparison. 
+
+The following arguments can be overriden to use with the script. The defaults can be seen in `.\tests\system\guiDiff.robot`
+
+- `--outputdir [filePath]` is where the logs and screenshots are outputted to
+- `--variable whichNVDA:[installed|source]` to decide where to run NVDA from
+- `--variable cacheFolder:[filePath]` *.txt files of each settings panel are generated in `$cacheFolder\$currentVersion`
+- `--variable currentVersion:[nvdaVersion]` where `[nvdaVersion]` is used to name the generated screenshot and cache folder
+- `--variable compareVersion:[nvdaVersion]` using a `$nvdaVersion` that this script has already been run against, run the system tests and fail if there are differences between the read text. This generates a multiline diff. 
