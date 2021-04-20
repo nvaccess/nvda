@@ -117,7 +117,7 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
-	_speakWithoutPauses.reset()
+	sayAllHandler.getSpeechWithoutPauses().reset()
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:
@@ -2532,9 +2532,6 @@ class SpeechWithoutPauses:
 			pendingSpeechSequence.reverse()
 			self._pendingSpeechSequence.extend(pendingSpeechSequence)
 		return finalSpeechSequence
-
-
-_speakWithoutPauses = SpeechWithoutPauses(speakFunc=speak)
 
 
 #: The singleton _SpeechManager instance used for speech functions.

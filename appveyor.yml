@@ -98,8 +98,13 @@ build_script:
  - scons source %sconsArgs%
  - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
- - scons checkPot %sconsArgs%
- - if ERRORLEVEL 1 exit %ERRORLEVEL%
+ - ps: |
+     cmd.exe /c "scons checkPot $sconsArgs"
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "Translation comments missing or unexpectedly included."
+     }
+     if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
  - scons %sconsOutTargets% %sconsArgs%
@@ -133,6 +138,7 @@ before_test:
       $nvdaLauncherFile+="_snapshot"
      }
      $nvdaLauncherFile+="_${env:version}.exe"
+     Set-AppveyorBuildVariable "nvdaLauncherFile" $nvdaLauncherFile
      echo NVDALauncherFile: $NVDALauncherFile
      $outputDir=$(resolve-path .\testOutput)
      $installerLogFilePath="$outputDir\nvda_install.log"
@@ -146,6 +152,12 @@ before_test:
       Add-AppveyorMessage "Unable to install NVDA prior to tests."
      }
      Push-AppveyorArtifact $installerLogFilePath
+     $crashDump = "$outputDir\nvda_crash.dmp"
+     if (Test-Path -Path $crashDump){
+      Push-AppveyorArtifact $crashDump -FileName "nvda_install_crash.dmp"
+      Add-AppveyorMessage "Install process crashed"
+      $errorCode=1
+     }
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 test_script:
@@ -194,8 +206,7 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-    
-     .\runsystemtests.bat --variable whichNVDA:installed
+     .\runsystemtests.bat --variable whichNVDA:installed --variable installDir:"${env:nvdaLauncherFile}" --include installer
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "System test failure"
