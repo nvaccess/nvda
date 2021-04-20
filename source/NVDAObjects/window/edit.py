@@ -507,6 +507,9 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			formatField["italic"]=bool(fontObj.italic)
 			formatField["underline"]=bool(fontObj.underline)
 			formatField["strikethrough"]=bool(fontObj.StrikeThrough)
+		if formatConfig["reportSuperscriptsAndSubscripts"]:
+			if not fontObj:
+				fontObj = textRange.font
 			if fontObj.superscript:
 				formatField["text-position"]="super"
 			elif fontObj.subscript:
