@@ -394,6 +394,8 @@ def main():
 			# Accept WM_EXIT_NVDA from other NVDA instances
 			import winUser
 			if not winUser.user32.ChangeWindowMessageFilterEx(self.handle, winUser.WM_EXIT_NVDA, 1, None):
+				log.error(
+					f"Unable to set the thread {self.handle} to receive WM_EXIT_NVDA from other processes")
 				raise winUser.WinError()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):

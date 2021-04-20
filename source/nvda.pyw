@@ -165,15 +165,18 @@ def terminateRunningNVDA(window):
 	try:
 		winUser.PostSafeQuitMessage(window)
 	except PermissionError:
-		# allow for updating between NVDA versions, deprecated in 2022.1
-		# in 2022.1 just call winUser.PostSafeQuitMessage(window) without the try/except
+		# allow for updating between NVDA versions, as NVDA <= 2020.4 does not accept WM_EXIT_NVDA messages
+		log.debugWarning("Failed to post a safe quit message across NVDA instances, sending WM_QUIT")
 		winUser.PostMessage(window, winUser.WM_QUIT, 0, 0)
+	except OSError as winErr:
+		log.error("Failed to post a quit message across NVDA instances")
+		raise winErr
 	h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 	if not h:
 		# The process is already dead.
 		return
 	try:
-		res = winKernel.waitForSingleObject(h, 5000)
+		res = winKernel.waitForSingleObject(h, 6000)  # give time to exit NVDA safely
 		if res==0:
 			# The process terminated within the timeout period.
 			return
@@ -256,11 +259,14 @@ if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
-# Accept wm_quit from other processes, even if running with higher privilages
-# This allows for downgrading between NVDA versions, deprecated in 2022.1
-# in 2022.1 remove the call to ChangeWindowMessageFilter (#12286)
-if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
-	raise WinError()
+
+# Accept WM_QUIT from other processes, even if running with higher privilages
+# 2020.4 and earlier versions sent a WM_QUIT message when asking NVDA to exit.
+# Some users may run several different versions of NVDA, so we continue to support this.
+# WM_QUIT does not allow NVDA to shutdown cleanly, now WM_EXIT_NVDA is used instead
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT_ALLOW):
+	log.error("Unable to set the NVDA process to receive WM_QUIT messages from other processes")
+	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 if not isSecureDesktop and not config.isAppX:
