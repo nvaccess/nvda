@@ -3,7 +3,7 @@ import heapq
 import itertools
 
 import winUser
-from . import IAccessibleObjectIdentifierType
+from .types import IAccessibleObjectIdentifierType
 from logHandler import log
 from .utils import getWinEventLogInfo, isMSAADebugLoggingEnabled
 

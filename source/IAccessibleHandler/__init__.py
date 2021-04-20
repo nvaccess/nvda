@@ -45,12 +45,6 @@ from . import internalWinEventHandler
 from .orderedWinEventLimiter import MENU_EVENTIDS
 from .utils import getWinEventLogInfo, getWinEventName, isMSAADebugLoggingEnabled
 
-IAccessibleObjectIdentifierType = Tuple[
-	int,  # windowHandle
-	int,  # objectID
-	int,  # childID
-]
-
 
 # Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABEL_FOR = 0x1002
