@@ -47,7 +47,6 @@ What's New in NVDA
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
-- NVDA now requires Python 3.8. (#12075)
 - NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
  - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons``  is no longer supported, and ``scons.py`` has also been removed. 
  - To run NVDA from source, rather than executing ``source/nvda.pyw`` directly, the developer should now use ``runnvda.bat`` in the root of the repository. If you do try to execute ``source/nvda.pyw``, a message box will alert you this is no longer supported.
