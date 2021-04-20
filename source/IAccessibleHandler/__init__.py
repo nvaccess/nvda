@@ -43,13 +43,7 @@ import winUser
 
 from . import internalWinEventHandler
 from .orderedWinEventLimiter import MENU_EVENTIDS
-from .utils import getWinEventLogInfo, getWinEventName
-
-
-def isMSAADebugLoggingEnabled():
-	""" Whether the user has configured NVDA to log extra information about MSAA events. """
-	return config.conf["debugLog"]["MSAA"]
-
+from .utils import getWinEventLogInfo, getWinEventName, isMSAADebugLoggingEnabled
 
 IAccessibleObjectIdentifierType = Tuple[
 	int,  # windowHandle

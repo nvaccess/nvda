@@ -10,6 +10,7 @@ Kept here so they can be re-used without having to worry about circular imports.
 
 import appModuleHandler
 from comInterfaces import IAccessible2Lib as IA2
+import config
 import winUser
 
 
@@ -66,3 +67,8 @@ def getWinEventLogInfo(window, objectID, childID, eventID=None, threadID=None):
 	if threadID is not None:
 		messageList.append(f"thread {threadID}")
 	return ", ".join(messageList)
+
+
+def isMSAADebugLoggingEnabled():
+	""" Whether the user has configured NVDA to log extra information about MSAA events. """
+	return config.conf["debugLog"]["MSAA"]
