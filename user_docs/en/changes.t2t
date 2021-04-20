@@ -111,6 +111,7 @@ What's New in NVDA
 - TextInfo start and end properties can also be set to each other.
  - E.g. ti1.start = ti2.end
  - This usage is prefered instead of ti1.SetEndPoint(ti2,"startToEnd")
+- `wx.CENTRE_ON_SCREEN` and `wx.CENTER_ON_SCREEN` are removed, use `self.CentreOnScreen()` instead. (#12309)
 
 
 = 2020.4 =
