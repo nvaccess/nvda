@@ -43,6 +43,7 @@ What's New in NVDA
 - - TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
 - It is once again possible to use NVDA in a languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
 - In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
+- NVDA no longer fails to announce the newly focused content on a web page if the old focus disappears and is replaced by the new focus in the same position. (#12147)
 
 
 == Changes for Developers ==
