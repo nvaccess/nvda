@@ -588,11 +588,12 @@ def main():
 	# Queue the firing of the postNVDAStartup notification.
 	# This is queued so that it will run from within the core loop,
 	# and initial focus has been reported.
-	def _postNvdaStartupLogMessage():
-		log.debug("postNvdaStartup event fired")
+	def _doPostNvdaStartupAction():
+		log.debug("Notify of postNvdaStartup action")
+		postNvdaStartup.notify()
 
-	postNvdaStartup.register(_postNvdaStartupLogMessage)
-	queueHandler.queueFunction(queueHandler.eventQueue, postNvdaStartup.notify)
+	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
+
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
