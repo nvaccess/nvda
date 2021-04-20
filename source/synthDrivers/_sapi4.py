@@ -6,7 +6,6 @@
 #See the file COPYING for more details.
 
 from ctypes import (
-	BYTE,
 	cast,
 	c_int,
 	c_uint,
@@ -20,7 +19,7 @@ from ctypes import (
 	sizeof,
 	Structure
 )
-from ctypes.wintypes import DWORD, LPCWSTR, WORD
+from ctypes.wintypes import BYTE, DWORD, LPCWSTR, WORD
 from comtypes import GUID, IUnknown, STDMETHOD
 
 import winKernel
