@@ -368,49 +368,23 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 		When calculating ScrollChildIntoView, the position relative to its parent is not relevant unless the
 		parent is the ScrolledPanel itself. Instead, calculate the position relative to scrolledPanel
 		"""
-		cr = child.GetScreenRect()
-		spr = self.GetScreenPosition()
-		return wx.Rect(cr.x - spr.x, cr.y - spr.y, cr.width, cr.height)
+		childRectRelativeToScreen = child.GetScreenRect()
+		scrolledPanelScreenPosition = self.GetScreenPosition()
+		return wx.Rect(
+			childRectRelativeToScreen.x - scrolledPanelScreenPosition.x,
+			childRectRelativeToScreen.y - scrolledPanelScreenPosition.y,
+			childRectRelativeToScreen.width,
+			childRectRelativeToScreen.height
+		)
 
 	def ScrollChildIntoView(self, child: wx.Window) -> None:
 		"""
-		Uses the same logic as super().ScrollChildIntoView(self, child)
-		except cr = self.GetChildRectRelativeToSelf(child) instead of cr = GetRect()
+		Overrides child.GetRect with `GetChildRectRelativeToSelf` before calling
+		`super().ScrollChildIntoView`. `super().ScrollChildIntoView` incorrectly uses child.GetRect to
+		navigate scrolling, which is relative to the parent, where it should instead be relative to this
+		ScrolledPanel.
 		"""
-		sppu_x, sppu_y = self.GetScrollPixelsPerUnit()
-		vs_x, vs_y = self.GetViewStart()
-		cr = self.GetChildRectRelativeToSelf(child)
-		clntsz = self.GetClientSize()
-		new_vs_x, new_vs_y = -1, -1
-
-		# is it before the left edge?
-		if cr.x < 0 and sppu_x > 0:
-			new_vs_x = vs_x + (cr.x / sppu_x)
-
-		# is it above the top?
-		if cr.y < 0 and sppu_y > 0:
-			new_vs_y = vs_y + (cr.y / sppu_y)
-
-		# For the right and bottom edges, scroll enough to show the
-		# whole control if possible, but if not just scroll such that
-		# the top/left edges are still visible
-
-		# is it past the right edge ?
-		if cr.right > clntsz.width and sppu_x > 0:
-			diff = math.ceil(1.0 * (cr.right - clntsz.width + 1) / sppu_x)
-			if cr.x - diff * sppu_x > 0:
-				new_vs_x = vs_x + diff
-			else:
-				new_vs_x = vs_x + (cr.x / sppu_x)
-
-		# is it below the bottom ?
-		if cr.bottom > clntsz.height and sppu_y > 0:
-			diff = math.ceil(1.0 * (cr.bottom - clntsz.height + 1) / sppu_y)
-			if cr.y - diff * sppu_y > 0:
-				new_vs_y = vs_y + diff
-			else:
-				new_vs_y = vs_y + (cr.y / sppu_y)
-
-		# if we need to adjust
-		if new_vs_x != -1 or new_vs_y != -1:
-			self.Scroll(new_vs_x, new_vs_y)
+		oldChildGetRectFunction = child.GetRect
+		child.GetRect = lambda: self.GetChildRectRelativeToSelf(child)
+		super().ScrollChildIntoView(child)
+		child.GetRect = oldChildGetRectFunction
