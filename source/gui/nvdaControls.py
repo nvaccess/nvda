@@ -386,5 +386,8 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 		"""
 		oldChildGetRectFunction = child.GetRect
 		child.GetRect = lambda: self.GetChildRectRelativeToSelf(child)
-		super().ScrollChildIntoView(child)
-		child.GetRect = oldChildGetRectFunction
+		try:
+			super().ScrollChildIntoView(child)
+		finally:
+			# ensure child.GetRect is reset properly even if super().ScrollChildIntoView throws an exception
+			child.GetRect = oldChildGetRectFunction
