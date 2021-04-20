@@ -13,7 +13,7 @@ from typing import Dict, Callable
 
 import core
 import winUser
-from . import getWinEventLogInfo
+from .utils  import getWinEventLogInfo
 from . import isMSAADebugLoggingEnabled
 
 from comInterfaces import IAccessible2Lib as IA2

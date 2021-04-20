@@ -5,7 +5,8 @@ import itertools
 import winUser
 from . import IAccessibleObjectIdentifierType
 from logHandler import log
-from . import isMSAADebugLoggingEnabled, getWinEventLogInfo
+from .utils import getWinEventLogInfo
+from . import isMSAADebugLoggingEnabled
 
 
 MAX_WINEVENTS_PER_THREAD = 10
