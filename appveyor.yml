@@ -11,7 +11,7 @@ branches:
   - /release-.*/
   
 environment:
- PY_PYTHON: 3.8-32
+ PY_PYTHON: 3.7-32
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
  mozillaSymsAuthToken:
@@ -98,8 +98,13 @@ build_script:
  - scons source %sconsArgs%
  - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
- - scons checkPot %sconsArgs%
- - if ERRORLEVEL 1 exit %ERRORLEVEL%
+ - ps: |
+     cmd.exe /c "scons checkPot $sconsArgs"
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "Translation comments missing or unexpectedly included."
+     }
+     if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
  - scons %sconsOutTargets% %sconsArgs%
