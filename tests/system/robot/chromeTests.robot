@@ -12,7 +12,7 @@ Library	NvdaLib.py
 Library	chromeTests.py
 Library	ScreenCapLibrary
 
-Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
+Test Setup	default setup
 Test Teardown	default teardown
 
 *** Keywords ***
@@ -21,6 +21,10 @@ default teardown
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	exit chrome
 	quit NVDA
+
+default setup
+	start NVDA	standard-dontShowWelcomeDialog.ini
+	Sleep	2s
 
 *** Test Cases ***
 
