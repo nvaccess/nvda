@@ -20,7 +20,7 @@ What's New in NVDA
 - 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default.
   - This behaviour can be disabled by default with by setting this option to "No".
   - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly. (#10885)
-- Espeak-ng has been updated to 1.51-dev commit 53915bf0a7cd48f90c4a38ac52fff697723d9f4d. (#12202)
+- Espeak-ng has been updated to 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
 - Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
 - Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
@@ -39,11 +39,14 @@ What's New in NVDA
 - Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
 - Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
    - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
+- The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
+- - TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
+- It is once again possible to use NVDA in a languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
+- In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
 
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
-- NVDA now requires Python 3.8. (#12075)
 - NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
  - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons``  is no longer supported, and ``scons.py`` has also been removed. 
  - To run NVDA from source, rather than executing ``source/nvda.pyw`` directly, the developer should now use ``runnvda.bat`` in the root of the repository. If you do try to execute ``source/nvda.pyw``, a message box will alert you this is no longer supported.
@@ -84,8 +87,8 @@ What's New in NVDA
 - `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `sayAllhandler` does this manually now. (#12150)
 - The `synthDriverHandler` module is no longer star imported into `globalCommands` and `gui.settingsDialogs` - use `from synthDriverHandler import synthFunctionExample` instead. (#12172)
 - `ROLE_EQUATION` has been removed from controlTypes - use `ROLE_MATH`` instead. (#12164)
-- `autoSettingsUtils.driverSetting` classes are removed from `driverHandler` - please use them from `autoSettingUtils.driverSetting`. (#12168)
-- `autoSettingsUtils.utils` classes are removed from `driverHandler` - please use them from `autoSettingUtils.utils`. (#12168)
+- `autoSettingsUtils.driverSetting` classes are removed from `driverHandler` - please use them from `autoSettingsUtils.driverSetting`. (#12168)
+- `autoSettingsUtils.utils` classes are removed from `driverHandler` - please use them from `autoSettingsUtils.utils`. (#12168)
 - Support of `TextInfo`s that do not inherit from `contentRecog.BaseContentRecogTextInfo` is removed. (#12157)
 - `speech.speakWithoutPauses` has been removed - please use `speech.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses` instead. (#12195)
 - `speech.re_last_pause` has been removed - please use `speech.SpeechWithoutPauses.re_last_pause` instead. (#12195)
@@ -99,6 +102,12 @@ What's New in NVDA
   - Function winVersion.getWinVer has been added to get a winVersion.WinVersion representing the currently running OS.
   - Convenience constants have been added for known Windows releases, see winVersion.WIN* constants.
 - IAccessibleHandler no longer star imports everything from IAccessible and IA2 COM interfaces - please use them directly. (#12232)
+- TextInfo objects now have start and end properties which can be compared mathematically with operators such as < <= == != >= >. (#11613)
+ - E.g. ti1.start <= ti2.end 
+  - This usage is now prefered instead of ti1.compareEndPoints(ti2,"startToEnd") <= 0
+- TextInfo start and end properties can also be set to each other.
+ - E.g. ti1.start = ti2.end
+ - This usage is prefered instead of ti1.SetEndPoint(ti2,"startToEnd")
 
 
 = 2020.4 =
