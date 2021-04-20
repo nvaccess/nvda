@@ -11,9 +11,9 @@ from .dpiScalingHelper import DpiScalingHelperMixin
 from . import guiHelper
 import winUser
 import winsound
-import math
 
 from collections.abc import Callable
+
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
