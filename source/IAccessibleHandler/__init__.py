@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 from typing import Tuple
+import re
 import struct
 import weakref
 from ctypes import (
@@ -21,12 +22,27 @@ from ctypes.wintypes import HANDLE
 from comtypes import IUnknown, IServiceProvider, COMError
 import comtypes.client
 import oleacc
+import JABHandler
 import UIAHandler
 
 from comInterfaces import Accessibility as IA
 
 from comInterfaces import IAccessible2Lib as IA2
+import api
+import appModuleHandler
 import config
+import controlTypes
+import core
+import eventHandler
+import keyboardHandler
+from logHandler import log
+import mouseHandler
+import NVDAObjects.IAccessible
+import NVDAObjects.window
+import winUser
+
+from . import internalWinEventHandler
+from .orderedWinEventLimiter import MENU_EVENTIDS
 
 
 _winEventNameCache = {}
@@ -95,23 +111,6 @@ IAccessibleObjectIdentifierType = Tuple[
 	int,  # childID
 ]
 
-from . import internalWinEventHandler
-
-from logHandler import log
-import JABHandler
-import eventHandler
-import winUser
-import api
-import NVDAObjects.IAccessible
-import NVDAObjects.window
-import appModuleHandler
-import mouseHandler
-import controlTypes
-import keyboardHandler
-import core
-import re
-
-from .orderedWinEventLimiter import MENU_EVENTIDS
 
 # Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABEL_FOR = 0x1002
