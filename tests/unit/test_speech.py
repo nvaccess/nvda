@@ -5,8 +5,8 @@
 
 """Unit tests for the speech module.
 """
-
 import unittest
+import gettext
 import typing
 import config
 from speech import (
@@ -92,25 +92,33 @@ class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 
+class Translation_Fake(gettext.NullTranslations):
+	originalTranslationFunction: gettext.NullTranslations
+	translationResults: typing.Dict[str, str]
+
+	def __init__(self, originalTranslationFunction: gettext.NullTranslations):
+		self.originalTranslationFunction = originalTranslationFunction
+		self.translationResults = {}
+		super().__init__()
+
+	def gettext(self, msg: str) -> str:
+		if msg in self.translationResults:
+			return self.translationResults[msg]
+		return self.originalTranslationFunction.gettext(msg)
+
+
 class Test_getSpellingCharAddCapNotification(unittest.TestCase):
-	_translationResults: typing.Dict[str, str] = {}
-	
-	@classmethod
-	def translationFunctionFake(cls, s: str) -> str:
-		if str in cls._translationResults:
-			return cls._translationResults[str]
-		return cls.originalTranslationFunction(s)
+	translationsFake: Translation_Fake
 
 	@classmethod
 	def setUpClass(cls):
-		global _
-		cls.originalTranslationFunction = _
-		_ = cls.translationFunctionFake
+		from . import translations as originalTranslationClass
+		cls.translationsFake = Translation_Fake(originalTranslationClass)
+		cls.translationsFake.install()
 
 	@classmethod
 	def tearDownClass(cls):
-		global _
-		_ = cls.originalTranslationFunction
+		cls.translationsFake.originalTranslationFunction.install()
 	
 	def test_noNotifications(self):
 		expected = repr([
@@ -164,9 +172,8 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 		)
 		self.assertEqual(repr(list(output)), expected)
 
-	@unittest.skip("Patching of _ function not working.")
 	def test_capNotificationsWithPlaceHolderBefore(self):
-		self._translationResults["cap %s"] = "%s cap"
+		self.translationsFake.translationResults["cap %s"] = "%s cap"
 		try:
 			expected = repr([
 				'A',
@@ -180,7 +187,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 			)
 			self.assertEqual(repr(list(output)), expected)
 		finally:
-			self._translationResults.clear()
+			self.translationsFake.translationResults.clear()
 
 	def test_allNotifications(self):
 		expected = repr([
