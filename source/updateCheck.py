@@ -610,6 +610,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 			# and waits for the user to press the Close button.
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
+		self._progressDialog.CentreOnScreen()
 		self._progressDialog.Raise()
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.start.__qualname__}",

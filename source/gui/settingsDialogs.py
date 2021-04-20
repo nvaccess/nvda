@@ -9,7 +9,9 @@ import logging
 from abc import ABCMeta, abstractmethod
 import copy
 import os
+from enum import IntEnum
 
+import typing
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib import scrolledpanel
@@ -80,10 +82,12 @@ class SettingsDialog(
 
 	class MultiInstanceError(RuntimeError): pass
 
-	_DIALOG_CREATED_STATE = 0
-	_DIALOG_DESTROYED_STATE = 1
+	class DialogState(IntEnum):
+		CREATED = 0
+		DESTROYED = 1
+
 	# holds instances of SettingsDialogs as keys, and state as the value
-	_instances=weakref.WeakKeyDictionary()
+	_instances = weakref.WeakKeyDictionary()
 	title = ""
 	helpId = "NVDASettings"
 	shouldSuspendConfigProfileTriggers = True
@@ -102,25 +106,39 @@ class SettingsDialog(
 				"Creating new settings dialog (multiInstanceAllowed:{}). "
 				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
 			)
-		if state is cls._DIALOG_CREATED_STATE and not multiInstanceAllowed:
+		if state is cls.DialogState.CREATED and not multiInstanceAllowed:
 			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
-		if state is cls._DIALOG_DESTROYED_STATE and not multiInstanceAllowed:
+		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
 			# keeping it alive.
 			log.error("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
 		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
-		SettingsDialog._instances[obj] = cls._DIALOG_CREATED_STATE
+		SettingsDialog._instances[obj] = cls.DialogState.CREATED
 		return obj
 
 	def _setInstanceDestroyedState(self):
-		if log.isEnabledFor(log.DEBUG):
-			instancesState = dict(SettingsDialog._instances)
-			log.debug(
-				"Setting state to destroyed for instance: {!r}\n"
-				"Current _instances {!r}".format(self, instancesState)
-			)
-		if self in SettingsDialog._instances:
-			SettingsDialog._instances[self] = self._DIALOG_DESTROYED_STATE
+		# prevent race condition with object deletion
+		# prevent deletion of the object while we work on it.
+		nonWeak: typing.Dict[SettingsDialog, SettingsDialog.DialogState] = dict(SettingsDialog._instances)
+
+		if (
+			self in SettingsDialog._instances
+			# Because destroy handlers are use evt.skip, _setInstanceDestroyedState may be called many times
+			# prevent noisy logging.
+			and self.DialogState.DESTROYED != SettingsDialog._instances[self]
+		):
+			if log.isEnabledFor(log.DEBUG):
+				instanceStatesGen = (
+					f"{instance.title} - {state.name}"
+					for instance, state in nonWeak.items()
+				)
+				instancesList = list(instanceStatesGen)
+				log.debug(
+					f"Setting state to destroyed for instance: {self.title} - {self.__class__.__qualname__} - {self}\n"
+					f"Current _instances {instancesList}"
+				)
+			SettingsDialog._instances[self] = self.DialogState.DESTROYED
+
 
 	def __init__(
 			self, parent,
@@ -983,9 +1001,17 @@ class SpeechSettingsPanel(SettingsPanel):
 		super(SpeechSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
+		# Work around wxAssertion error #12220
+		# Manually destroying the ExpandoTextCtrl when the settings dialog is
+		# exited prevents the wxAssertion.
+		self.synthNameCtrl.Destroy()
 		self.voicePanel.onDiscard()
 
 	def onSave(self):
+		# Work around wxAssertion error #12220
+		# Manually destroying the ExpandoTextCtrl when the settings dialog is
+		# exited prevents the wxAssertion.
+		self.synthNameCtrl.Destroy()
 		self.voicePanel.onSave()
 
 class SynthesizerSelectionDialog(SettingsDialog):
@@ -2789,7 +2815,7 @@ class AdvancedPanelControls(
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
-			and self.UIAInChromiumCombo.selection == self.UIAInChromiumCombo.defaultValue
+			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
@@ -3194,9 +3220,17 @@ class BrailleSettingsPanel(SettingsPanel):
 		super(BrailleSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
+		# Work around wxAssertion error #12220
+		# Manually destroying the ExpandoTextCtrl when the settings dialog is
+		# exited prevents the wxAssertion.
+		self.displayNameCtrl.Destroy()
 		self.brailleSubPanel.onDiscard()
 
 	def onSave(self):
+		# Work around wxAssertion error #12220
+		# Manually destroying the ExpandoTextCtrl when the settings dialog is
+		# exited prevents the wxAssertion.
+		self.displayNameCtrl.Destroy()
 		self.brailleSubPanel.onSave()
 
 
