@@ -3,7 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Tuple
 import re
 import struct
 import weakref
@@ -30,7 +29,6 @@ from comInterfaces import Accessibility as IA
 from comInterfaces import IAccessible2Lib as IA2
 import api
 import appModuleHandler
-import config
 import controlTypes
 import core
 import eventHandler
