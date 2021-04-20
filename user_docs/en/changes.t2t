@@ -28,6 +28,7 @@ What's New in NVDA
 
 
 == Bug Fixes ==
+- The list of messages in Outlook 2010 is once again readable. (12241)
 - In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
   - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
 - Fixed access to edit fields in MCS Electronics IDE's. (#11966) 
@@ -44,6 +45,7 @@ What's New in NVDA
 - It is once again possible to use NVDA in a languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
 - In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
 - NVDA no longer fails to announce the newly focused content on a web page if the old focus disappears and is replaced by the new focus in the same position. (#12147)
+- Strikethrough, superscript and subscript formatting for entire Excel cells are now reported if the corresponding option is enabled. (#12264)
 
 
 == Changes for Developers ==
