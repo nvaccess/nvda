@@ -864,7 +864,7 @@ A remote Python console is available in source builds of NVDA, for situations wh
 It is similar to the [local Python console #PythonConsole] discussed above, but is accessed via TCP.
 
 Please be aware that this is a huge security risk.
-You should only enable it if you are connected to trusted networks, and it is not available in binary builds distributed by NV Access.
+It is not available in binary builds distributed by NV Access, and You should only enable it if you are connected to trusted networks.
 
 ++ Usage ++
 To enable the remote Python console, use the local Python console to import remotePythonConsole and call remotePythonConsole.initialize().
