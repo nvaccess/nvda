@@ -3,6 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from typing import Optional
 import weakref
 import garbageHandler
 import speech
@@ -17,9 +18,6 @@ import winKernel
 from speech.commands import CallbackCommand, EndUtteranceCommand
 
 
-speakWithoutPauses = speech.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses
-
-
 CURSOR_CARET = 0
 CURSOR_REVIEW = 1
 
@@ -27,6 +25,18 @@ lastSayAllMode = None
 #: The active say all manager.
 #: This is a weakref because the manager should be allowed to die once say all is complete.
 _activeSayAll = lambda: None # Return None when called like a dead weakref.
+
+
+def getSpeechWithoutPauses() -> "speech.SpeechWithoutPauses":
+	"""Returns an instance of `speech.SpeechWithoutPauses` which should be used for say all
+	creating it if necessary."""
+	if getSpeechWithoutPauses.speechWithoutPausesInstance is None:
+		getSpeechWithoutPauses.speechWithoutPausesInstance = speech.SpeechWithoutPauses(speakFunc=speech.speak)
+	return getSpeechWithoutPauses.speechWithoutPausesInstance
+
+
+getSpeechWithoutPauses.speechWithoutPausesInstance: Optional["speech.SpeechWithoutPauses"] = None
+
 
 def stop():
 	active = _activeSayAll()
@@ -154,7 +164,7 @@ class _TextReader(garbageHandler.TrackedObject):
 			if isinstance(self.reader.obj, textInfos.DocumentWithPageTurns):
 				# Once the last line finishes reading, try turning the page.
 				cb = CallbackCommand(self.turnPage, name="say-all:turnPage")
-				speakWithoutPauses([cb, EndUtteranceCommand()])
+				getSpeechWithoutPauses().speakWithoutPauses([cb, EndUtteranceCommand()])
 			else:
 				self.finish()
 			return
@@ -186,7 +196,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		seq = list(speech._flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
 		# Speak the speech sequence.
-		spoke = speakWithoutPauses(seq)
+		spoke = getSpeechWithoutPauses().speakWithoutPauses(seq)
 		# Update the textInfo state ready for when speaking the next line.
 		self.speakTextInfoState = state.copy()
 
@@ -208,7 +218,7 @@ class _TextReader(garbageHandler.TrackedObject):
 			else:
 				# We don't want to buffer too much.
 				# Force speech. lineReached will resume things when speech catches up.
-				speakWithoutPauses(None)
+				getSpeechWithoutPauses().speakWithoutPauses(None)
 				# The first buffered line has now started speaking.
 				self.numBufferedLines -= 1
 
@@ -245,7 +255,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		# we might switch synths too early and truncate the final speech.
 		# We do this by putting a CallbackCommand at the start of a new utterance.
 		cb = CallbackCommand(self.stop, name="say-all:stop")
-		speakWithoutPauses([
+		getSpeechWithoutPauses().speakWithoutPauses([
 			EndUtteranceCommand(),
 			cb,
 			EndUtteranceCommand()
