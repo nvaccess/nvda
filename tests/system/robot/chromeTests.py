@@ -345,3 +345,37 @@ def test_ariaCheckbox_browseMode():
 		actualSpeech,
 		"Sandwich Condiments  grouping  list  with 4 items  Lettuce  check box  not checked"
 	)
+
+
+def test_i12147():
+	"""
+	New focus target should be announced if the triggering element is removed when activated.
+	"""
+	_chrome.prepareChrome(
+		f"""
+			<div>
+			  <button id='trigger0'>trigger 0</button>
+			  <h4 id='target0' tabindex='-1'>target 0</h4>
+			</div>
+			<script>
+				let trigger0 = document.querySelector('#trigger0');
+				trigger0.addEventListener('click', e => {{
+				  let focusTarget = document.querySelector('#target0');
+				  trigger0.remove();
+				  focusTarget.focus();
+				}})
+			</script>
+		"""
+	)
+	# Jump to the first button (the trigger)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"trigger 0  button"
+	)
+	# Activate the button, we should hear the new focus target.
+	actualSpeech = _chrome.getSpeechAfterKey("enter")
+	_asserts.strings_match(
+		actualSpeech,
+		"target 0  heading  level 4"
+	)
