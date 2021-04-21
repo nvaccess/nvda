@@ -377,15 +377,17 @@ SM_CXVIRTUALSCREEN = 78
 # The height of the virtual screen, in pixels.
 SM_CYVIRTUALSCREEN = 79
 
-# Actions associated with ChangeWindowMessageFilterEx
-# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-changewindowmessagefilterex
-# Adds the message to the filter. This has the effect of allowing the message to be received.
-MSGFLT_ALLOW = 1
-# Removes the message from the filter. This has the effect of blocking the message.
-MSGFLT_DISALLOW = 2
-# Resets the window message filter to the default.
-# Any message allowed globally or process-wide will get through.
-MSGFLT_RESET = 0
+class MSGFLT(enum.IntEnum):
+	# Actions associated with ChangeWindowMessageFilterEx
+	# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-changewindowmessagefilterex
+	# Adds the message to the filter. This has the effect of allowing the message to be received.
+	ALLOW = 1
+	# Removes the message from the filter. This has the effect of blocking the message.
+	DISALLOW = 2
+	# Resets the window message filter to the default.
+	# Any message allowed globally or process-wide will get through.
+	RESET = 0
+
 
 # Registers an application wide Window Message so that NVDA can be exited across instances
 WM_EXIT_NVDA = user32.RegisterWindowMessageW("WM_EXIT_NVDA")
