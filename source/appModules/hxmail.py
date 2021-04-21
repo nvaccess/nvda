@@ -13,12 +13,26 @@ from NVDAObjects.UIA.wordDocument import WordDocument
 class MailWordDocumentTreeInterceptor(WordDocument.treeInterceptorClass):
 
 	def _get_isAlive(self):
-		return super(MailWordDocumentTreeInterceptor,self).isAlive and self.rootNVDAObject.shouldCreateTreeInterceptor
+		return super().isAlive and self.rootNVDAObject.isInReadingPane
+
+	def __init__(self, rootNVDAObject: "MailWordDocument"):
+		super().__init__(rootNVDAObject)
+		if rootNVDAObject.isInReadingPane:
+			# The base WordDocument TreeInterceptorClass forces focus mode by default
+			# As a TreeInterceptor is created for all word documents
+			# so that the NVDA elements list is available.
+			# However, Windows 10 Mail's reading pane should start in browse mode.
+			self.disableAutoPassThrough = False
+			self.passThrough = False
 
 class MailWordDocument(WordDocument):
 
 	treeInterceptorClass=MailWordDocumentTreeInterceptor
-	def _get_shouldCreateTreeInterceptor(self):
+
+	# typing information for isInReadingPane property
+	isInReadingPane: bool
+
+	def _get_isInReadingPane(self) -> bool:
 		# Locate the Reading pane in the ancestors
 		condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ClassNamePropertyId,"ReadingPaneModern")
 		walker=UIAHandler.handler.clientObject.createTreeWalker(condition)
