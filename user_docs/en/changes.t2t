@@ -46,6 +46,7 @@ What's New in NVDA
 - In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
 - NVDA no longer fails to announce the newly focused content on a web page if the old focus disappears and is replaced by the new focus in the same position. (#12147)
 - Strikethrough, superscript and subscript formatting for entire Excel cells are now reported if the corresponding option is enabled. (#12264)
+- Fixed copying config during installation from a portable copy when default destination config directory is empty. (#12071, #12205)
 
 
 == Changes for Developers ==
