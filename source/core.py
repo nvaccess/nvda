@@ -308,9 +308,6 @@ def main():
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
-	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
-	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
-	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
 	import six
 	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
@@ -593,10 +590,16 @@ def main():
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
+
 	# Queue the firing of the postNVDAStartup notification.
 	# This is queued so that it will run from within the core loop,
 	# and initial focus has been reported.
-	queueHandler.queueFunction(queueHandler.eventQueue, postNvdaStartup.notify)
+	def _doPostNvdaStartupAction():
+		log.debug("Notify of postNvdaStartup action")
+		postNvdaStartup.notify()
+
+	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
+
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
