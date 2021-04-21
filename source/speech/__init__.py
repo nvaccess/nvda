@@ -568,7 +568,7 @@ def getObjectSpeech(  # noqa: C901
 	if shouldReportTextContent:
 		try:
 			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
-		except NotImplementedError:
+		except (NotImplementedError, RuntimeError):
 			info = None
 		if info and not info.isCollapsed:
 			# if there is selected text, then there is a value and we do not report placeholder
