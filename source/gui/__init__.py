@@ -47,7 +47,7 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 ### Globals
 mainFrame = None
 isInMessageBox = False
-
+hasAppExited = False
 
 class MainFrame(wx.Frame):
 
@@ -403,6 +403,9 @@ def safeAppExit():
 			log.debug(f"closing window {window} during exit process")
 			wx.CallAfter(window.Close)
 
+	global hasAppExited
+	hasAppExited = True
+
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
@@ -613,6 +616,12 @@ def initialize():
 
 def terminate():
 	global mainFrame
+
+	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
+	# safeAppExit has not been called yet
+	if not hasAppExited:
+		safeAppExit()
+
 	mainFrame = None
 
 def showGui():
