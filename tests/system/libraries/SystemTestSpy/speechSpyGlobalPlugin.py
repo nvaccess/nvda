@@ -159,8 +159,7 @@ class NVDASpyLib:
 			giveUpAfterSeconds=self._minTimeout(10),
 			errorMessage="Unable to connect to nvdaSpy",
 		)
-		if self._isNvdaStartupComplete:
-			self.reset_all_speech_index()
+		self.reset_all_speech_index()
 
 	def get_last_speech(self) -> str:
 		return self._getSpeechAtIndex(-1)

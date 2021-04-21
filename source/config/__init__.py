@@ -241,8 +241,6 @@ def getStartOnLogonScreen():
 		return False
 
 def _setStartOnLogonScreen(enable):
-	# The installer will have migrated service config to EoA if appropriate,
-	# so we only need to deal with EoA here.
 	easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, enable)
 
 def setSystemConfigToCurrentConfig():
