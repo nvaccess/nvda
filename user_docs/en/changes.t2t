@@ -112,6 +112,7 @@ What's New in NVDA
  - E.g. ti1.start = ti2.end
  - This usage is prefered instead of ti1.SetEndPoint(ti2,"startToEnd")
 - `wx.CENTRE_ON_SCREEN` and `wx.CENTER_ON_SCREEN` are removed, use `self.CentreOnScreen()` instead. (#12309)
+- `easeOfAccess.isSupported` has been removed, NVDA only supports versions of Windows where this evaluates to `True`. (#12222)
 
 
 = 2020.4 =
