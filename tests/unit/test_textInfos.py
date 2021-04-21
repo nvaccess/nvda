@@ -131,3 +131,45 @@ class TestCharacterOffsets(unittest.TestCase):
 		ti.move(textInfos.UNIT_CHARACTER, -1)
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at a
 		self.assertEqual(ti.offsets, (0, 1)) # One offset
+
+
+class TestEndpoints(unittest.TestCase):
+
+	def test_TextInfoEndpoint_largerAndSmaller(self):
+		obj = BasicTextProvider(text="abcdef")
+		ti = obj.makeTextInfo(Offsets(0, 2))
+		smaller = ti.start
+		larger = ti.end
+		self.assertTrue(smaller < larger)
+		self.assertFalse(larger < smaller)
+		self.assertTrue(smaller <= larger)
+		self.assertFalse(larger <= smaller)
+		self.assertFalse(smaller >= larger)
+		self.assertTrue(larger >= smaller)
+		self.assertFalse(smaller > larger)
+		self.assertTrue(larger > smaller)
+		self.assertTrue(smaller != larger)
+		self.assertTrue(larger != smaller)
+
+	def test_TextInfoEndpoint_equal(self):
+		obj = BasicTextProvider(text="abcdef")
+		ti = obj.makeTextInfo(Offsets(1, 1))
+		self.assertTrue(ti.start == ti.end)
+		self.assertFalse(ti.start != ti.end)
+		self.assertFalse(ti.start < ti.end)
+		self.assertTrue(ti.start <= ti.end)
+		self.assertTrue(ti.start >= ti.end)
+		self.assertFalse(ti.start > ti.end)
+
+	def test_setEndpoint(self):
+		obj = BasicTextProvider(text="abcdef")
+		ti1 = obj.makeTextInfo(Offsets(0, 2))
+		ti2 = obj.makeTextInfo(Offsets(3, 5))
+		ti1.end = ti2.end
+		self.assertEqual((ti1._startOffset, ti1._endOffset), (0, 5))
+		ti1.start = ti2.start
+		self.assertEqual((ti1._startOffset, ti1._endOffset), (3, 5))
+		ti1.end = ti2.start
+		self.assertEqual((ti1._startOffset, ti1._endOffset), (3, 3))
+		ti1.start = ti2.end
+		self.assertEqual((ti1._startOffset, ti1._endOffset), (5, 5))

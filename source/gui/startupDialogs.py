@@ -257,7 +257,7 @@ class AskAllowUsageStatsDialog(
 		mainSizer.Add(sHelper.sizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onYesButton(self, evt):
 		log.debug("Usage stats gathering has been allowed")
