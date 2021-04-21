@@ -1,20 +1,19 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2018 NV Access Limited, Derek Riemer
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 NV Access Limited, Derek Riemer
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-from ctypes.wintypes import BOOL
-from typing import Any, Tuple, Optional
 import wx
-from comtypes import GUID
+from wx.lib import scrolledpanel
 from wx.lib.mixins import listctrl as listmix
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import guiHelper
-import oleacc
 import winUser
 import winsound
+
 from collections.abc import Callable
+
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
@@ -355,3 +354,40 @@ class EnhancedInputSlider(wx.Slider):
 			evt.Skip()
 			return
 		self.SetValue(newValue)
+
+
+class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
+	"""
+	This class was created to ensure a ScrolledPanel scrolls to nested children of the panel when navigating
+	with tabs (#12224). A PR to wxPython implementing this fix can be tracked on
+	https://github.com/wxWidgets/Phoenix/pull/1950
+	"""
+	def GetChildRectRelativeToSelf(self, child: wx.Window) -> wx.Rect:
+		"""
+		window.GetRect returns the size of a window, and its position relative to its parent.
+		When calculating ScrollChildIntoView, the position relative to its parent is not relevant unless the
+		parent is the ScrolledPanel itself. Instead, calculate the position relative to scrolledPanel
+		"""
+		childRectRelativeToScreen = child.GetScreenRect()
+		scrolledPanelScreenPosition = self.GetScreenPosition()
+		return wx.Rect(
+			childRectRelativeToScreen.x - scrolledPanelScreenPosition.x,
+			childRectRelativeToScreen.y - scrolledPanelScreenPosition.y,
+			childRectRelativeToScreen.width,
+			childRectRelativeToScreen.height
+		)
+
+	def ScrollChildIntoView(self, child: wx.Window) -> None:
+		"""
+		Overrides child.GetRect with `GetChildRectRelativeToSelf` before calling
+		`super().ScrollChildIntoView`. `super().ScrollChildIntoView` incorrectly uses child.GetRect to
+		navigate scrolling, which is relative to the parent, where it should instead be relative to this
+		ScrolledPanel.
+		"""
+		oldChildGetRectFunction = child.GetRect
+		child.GetRect = lambda: self.GetChildRectRelativeToSelf(child)
+		try:
+			super().ScrollChildIntoView(child)
+		finally:
+			# ensure child.GetRect is reset properly even if super().ScrollChildIntoView throws an exception
+			child.GetRect = oldChildGetRectFunction
