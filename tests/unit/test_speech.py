@@ -119,6 +119,9 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 	@classmethod
 	def tearDownClass(cls):
 		cls.translationsFake.originalTranslationFunction.install()
+
+	def tearDown(self) -> None:
+		self.translationsFake.translationResults.clear()
 	
 	def test_noNotifications(self):
 		expected = repr([
@@ -174,20 +177,14 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	def test_capNotificationsWithPlaceHolderBefore(self):
 		self.translationsFake.translationResults["cap %s"] = "%s cap"
-		try:
-			expected = repr([
-				'A',
-				' cap',
-			])
-			output = _getSpellingCharAddCapNotification(
-				speakCharAs='A',
-				sayCapForCapitals=True,
-				capPitchChange=0,
-				beepForCapitals=False,
-			)
-			self.assertEqual(repr(list(output)), expected)
-		finally:
-			self.translationsFake.translationResults.clear()
+		expected = repr(['A', ' cap', ])  # for English this would be "cap A"
+		output = _getSpellingCharAddCapNotification(
+			speakCharAs='A',
+			sayCapForCapitals=True,
+			capPitchChange=0,
+			beepForCapitals=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
 
 	def test_allNotifications(self):
 		expected = repr([
