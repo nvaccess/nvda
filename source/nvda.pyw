@@ -264,7 +264,7 @@ if globalVars.appArgs.changeScreenReaderFlag:
 # 2020.4 and earlier versions sent a WM_QUIT message when asking NVDA to exit.
 # Some users may run several different versions of NVDA, so we continue to support this.
 # WM_QUIT does not allow NVDA to shutdown cleanly, now WM_EXIT_NVDA is used instead
-if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT_ALLOW):
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT.ALLOW):
 	log.error("Unable to set the NVDA process to receive WM_QUIT messages from other processes")
 	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.

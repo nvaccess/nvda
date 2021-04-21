@@ -13,6 +13,7 @@ from ctypes.wintypes import *
 from ctypes.wintypes import HWND, RECT, DWORD
 import winKernel
 from textUtils import WCHAR_ENCODING
+import enum
 
 #dll handles
 user32=windll.user32
@@ -376,6 +377,7 @@ SM_YVIRTUALSCREEN = 77
 SM_CXVIRTUALSCREEN = 78
 # The height of the virtual screen, in pixels.
 SM_CYVIRTUALSCREEN = 79
+
 
 class MSGFLT(enum.IntEnum):
 	# Actions associated with ChangeWindowMessageFilterEx
