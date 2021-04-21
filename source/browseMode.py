@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
-# Thomas Stivers
+# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
+# Thomas Stivers, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -252,7 +252,15 @@ class TextInfoQuickNavItem(QuickNavItem):
 			realStates = labelPropertyGetter("states")
 			labeledStates = " ".join(controlTypes.processAndLabelStates(role, realStates, OutputReason.FOCUS))
 			if self.itemType == "formField":
-				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
+				if role in (
+					controlTypes.ROLE_BUTTON,
+					controlTypes.ROLE_DROPDOWNBUTTON,
+					controlTypes.ROLE_TOGGLEBUTTON,
+					controlTypes.ROLE_SPLITBUTTON,
+					controlTypes.ROLE_MENUBUTTON,
+					controlTypes.ROLE_DROPDOWNBUTTONGRID,
+					controlTypes.ROLE_TREEVIEWBUTTON
+				):
 					# Example output: Mute; toggle button; pressed
 					labelParts = (content or name or unlabeled, roleText, labeledStates)
 				else:
