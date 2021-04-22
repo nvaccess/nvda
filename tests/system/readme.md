@@ -105,14 +105,27 @@ NVDA logs (NVDA log, stdOut, and stdErr for each test) are under the `nvdaTestRu
 The log files are named by suite and test name.
 
 ### Comparing changes to NVDA Settings
-To check for unreleased changes to the settings dialogs, one can run system tests against two copies of NVDA. 
+`.\runsettingsdiff.bat` is a tool used to compare the settings dialog by reading text and generating screenshots for comparison.  The default behaviour is to run using the source code and output to `.\tests\system\settingsCache\source`. 
 
-`.\runsettingsdiff.bat` can be used to compare the settings dialog by reading text and generating screenshots for comparison. 
 
-The following arguments can be overriden to use with the script. The defaults can be seen in `.\tests\system\guiDiff.robot`
+#### Usage
+To check for unreleased changes to the settings dialogs, one can use this tool to compare against two copies of NVDA. 
 
-- `--outputdir [filePath]` is where the logs and screenshots are outputted to
+The following arguments should be used with the script.
+
+Default arguments used are stored  in `.\tests\system\guiDiff.robot`
+
 - `--variable whichNVDA:[installed|source]` to decide where to run NVDA from
-- `--variable cacheFolder:[filePath]` *.txt files of each settings panel are generated in `$cacheFolder\$currentVersion`
+- `--variable cacheFolder:[filePath]` screenshots and text files of each settings panel are generated in `$cacheFolder\$currentVersion`
 - `--variable currentVersion:[nvdaVersion]` where `[nvdaVersion]` is used to name the generated screenshot and cache folder
 - `--variable compareVersion:[nvdaVersion]` using a `$nvdaVersion` that this script has already been run against, run the system tests and fail if there are differences between the read text. This generates a multiline diff. 
+
+#### Example usage to compare settings between NVDA 2020.4 and the current source
+
+1. Install NVDA 2020.4
+1. Run `.\runsettingsdiff.bat -v whichNVDA:installed -v currentVersion:2020.4`
+1. Run `.\runsettingsdiff.bat -v whichNVDA:source -v currentVersion:source -v compareVersion:2020.4`
+   - The test will fail and display a diff of any read changes
+1. Use a diff tool to compare folders:
+   - `diff ./tests/system/settingsCache/2020.4 ./tests/system/settingsCache/source`
+   - [ImageMagick Compare](https://imagemagick.org/script/compare.php) can be used to compare images

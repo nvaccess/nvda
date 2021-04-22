@@ -39,9 +39,8 @@ uninstaller/UAC.nsh
 *.pyo
 *.dmp
 tests/unit/nvda.ini
-tests/system/settingsLogCache
-tests/system/settingsTextCache/*
-!tests/system/settingsTextCache/2020.4/
+tests/system/settingsCache/*
+!tests/system/settingsCache/2020.4/*.txt
 source/locale/*/cldr.dic
 .vscode
 .vs

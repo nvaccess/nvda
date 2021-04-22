@@ -1,9 +1,8 @@
 --loglevel DEBUG
---outputdir .\tests\system\settingsLogCache
+--outputdir .\testOutput\system
 --xunit systemTests.xml
 --pythonpath .\tests\system\libraries
 --suite NVDASettings
 --variable whichNVDA:source
 --variable currentVersion:source
---variable compareVersion:2020.4
---variable cacheFolder:.\tests\system\settingsTextCache
+--variable cacheFolder:.\tests\system\settingsCache
