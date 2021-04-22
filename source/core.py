@@ -250,17 +250,6 @@ def main():
 	log.debug("loading config")
 	import config
 	config.initialize()
-	if globalVars.appArgs.configPath == config.getUserDefaultConfigPath(useInstalledPathIfExists=True):
-		# Make sure not to offer the ability to copy the current configuration to the user account.
-		# This case always applies to the launcher when configPath is not overridden by the user,
-		# which is the default.
-		# However, if a user wants to run the launcher with a custom configPath,
-		# it is likely that he wants to copy that configuration when installing.
-		# This check also applies to cases where a portable copy is run using the installed configuration,
-		# in which case we want to avoid copying a configuration to itself.
-		# We set the value to C{None} in order for the gui to determine
-		# when to disable the checkbox for this feature.
-		globalVars.appArgs.copyPortableConfig = None
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
@@ -388,6 +377,12 @@ def main():
 			self.orientationStateCache = self.ORIENTATION_NOT_INITIALIZED
 			self.orientationCoordsCache = (0,0)
 			self.handlePowerStatusChange()
+			# Accept WM_EXIT_NVDA from other NVDA instances
+			import winUser
+			if not winUser.user32.ChangeWindowMessageFilterEx(self.handle, winUser.WM_EXIT_NVDA, 1, None):
+				log.error(
+					f"Unable to set the thread {self.handle} to receive WM_EXIT_NVDA from other processes")
+				raise winUser.WinError()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
@@ -395,6 +390,9 @@ def main():
 				self.handlePowerStatusChange()
 			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
+			elif msg == winUser.WM_EXIT_NVDA:
+				log.debug("NVDA instance being closed from another instance")
+				gui.safeAppExit()
 
 		def handleScreenOrientationChange(self, lParam):
 			import ui
@@ -581,10 +579,16 @@ def main():
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
+
 	# Queue the firing of the postNVDAStartup notification.
 	# This is queued so that it will run from within the core loop,
 	# and initial focus has been reported.
-	queueHandler.queueFunction(queueHandler.eventQueue, postNvdaStartup.notify)
+	def _doPostNvdaStartupAction():
+		log.debug("Notify of postNvdaStartup action")
+		postNvdaStartup.notify()
+
+	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
+
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()

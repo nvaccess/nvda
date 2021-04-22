@@ -14,7 +14,6 @@ from enum import IntEnum
 import typing
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
-from wx.lib import scrolledpanel
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
 import winUser
@@ -483,7 +482,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0,categoriesLabelText)
 
-		self.container = scrolledpanel.ScrolledPanel(
+		self.container = nvdaControls.TabbableScrolledPanel(
 			parent = self,
 			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME,
 			size=containerDim
@@ -2421,10 +2420,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		detectFormatAfterCursorText = _("Report formatting chan&ges after the cursor (can cause a lag)")
-		self.detectFormatAfterCursorCheckBox = wx.CheckBox(
-			elementsGroupBox,
-			label=detectFormatAfterCursorText
-		)
+		self.detectFormatAfterCursorCheckBox = wx.CheckBox(self, label=detectFormatAfterCursorText)
 		self.bindHelpEvent(
 			"DocumentFormattingDetectFormatAfterCursor",
 			self.detectFormatAfterCursorCheckBox

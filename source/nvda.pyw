@@ -160,16 +160,26 @@ for name in pathAppArgs:
 		newVal = os.path.abspath(origVal)
 		setattr(globalVars.appArgs, name, newVal)
 
-def terminateRunningNVDA(window):
+
+def safelyTerminateRunningNVDA(window: winUser.HWND):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
-	winUser.PostMessage(window,winUser.WM_QUIT,0,0)
+	winUser.PostSafeQuitMessage(window)
 	h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 	if not h:
 		# The process is already dead.
 		return
 	try:
-		res=winKernel.waitForSingleObject(h,4000)
+		res = winKernel.waitForSingleObject(h, 6000)  # give time to exit NVDA safely
 		if res==0:
+			# The process terminated within the timeout period.
+			return
+		else:
+			raise OSError("Failed to terminate with WM_EXIT_NVDA")
+	except OSError:
+		# allow for updating between NVDA versions, as NVDA <= 2020.4 does not accept WM_EXIT_NVDA messages
+		print("Failed to post a safe quit message across NVDA instances, sending WM_QUIT", file=sys.stderr)
+		res = _terminateRunningLegacyNVDA(window)
+		if res == 0:
 			# The process terminated within the timeout period.
 			return
 	finally:
@@ -185,6 +195,20 @@ def terminateRunningNVDA(window):
 	finally:
 		winKernel.closeHandle(h)
 
+
+def _terminateRunningLegacyNVDA(window: winUser.HWND) -> int:
+	'''
+	Returns 0 on success, raises an OSError based WinErr if the process isn't killed
+	'''
+	processID, _threadID = winUser.getWindowThreadProcessID(window)
+	winUser.PostMessage(window, winUser.WM_QUIT, 0, 0)
+	h = winKernel.openProcess(winKernel.SYNCHRONIZE, False, processID)
+	if not h:
+		# The process is already dead.
+		return 0
+	return winKernel.waitForSingleObject(h, 4000)
+
+
 #Handle running multiple instances of NVDA
 try:
 	oldAppWindowHandle=winUser.FindWindow(u'wxWindowClassNR',u'NVDA')
@@ -197,8 +221,9 @@ if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 		# NVDA is running.
 		sys.exit(0)
 	try:
-		terminateRunningNVDA(oldAppWindowHandle)
-	except:
+		safelyTerminateRunningNVDA(oldAppWindowHandle)
+	except Exception as e:
+		print(f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}", file=sys.stderr)
 		sys.exit(1)
 if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	sys.exit(0)
@@ -251,9 +276,14 @@ if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
-#Accept wm_quit from other processes, even if running with higher privilages
-if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
-	raise WinError()
+
+# Accept WM_QUIT from other processes, even if running with higher privilages
+# 2020.4 and earlier versions sent a WM_QUIT message when asking NVDA to exit.
+# Some users may run several different versions of NVDA, so we continue to support this.
+# WM_QUIT does not allow NVDA to shutdown cleanly, now WM_EXIT_NVDA is used instead
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT.ALLOW):
+	log.error("Unable to set the NVDA process to receive WM_QUIT messages from other processes")
+	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 if not isSecureDesktop and not config.isAppX:
