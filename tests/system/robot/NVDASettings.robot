@@ -9,7 +9,7 @@ Force Tags	NVDA	smoke test	excluded_from_build
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py
 Library	NVDASettings.py
-Library	ScreenCapLibrary
+Library	ScreenCapLibrary	 ${cacheFolder}/${currentVersion}
 
 Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
 Test Teardown	default teardown
@@ -18,14 +18,11 @@ Test Teardown	default teardown
 default run read test
 	[Arguments]	${settingsName}
 	navigate to settings	${settingsName}
-	Take Screenshot	${settingsName}-${currentVersion}.png
+	Take Screenshot	${settingsName}.png
 	read settings	${settingsName}	${cacheFolder}	${currentVersion}	${compareVersion}
-	Take Screenshot	${settingsName}-${currentVersion}-end.png
-
+	Take Screenshot	${settingsName}-end.png
 
 default teardown
-	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
-	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	quit NVDA
 
 *** Test Cases ***
