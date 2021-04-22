@@ -58,7 +58,6 @@ WDAG_PROCESS_NAME=u'hvsirdpclient'
 goodUIAWindowClassNames=[
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
 	'RAIL_WINDOW',
-	"EXCEL6",
 ]
 
 badUIAWindowClassNames=[
