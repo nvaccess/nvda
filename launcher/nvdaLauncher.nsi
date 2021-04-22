@@ -72,7 +72,10 @@ Banner::show /nounload
 BringToFront
 
 setOutPath "$PLUGINSDIR"
-;Play NVDA logo sound
+;Play NVDA logo sound, unless started with the --minimal command line parameter
+${GetParameters} $0
+${GetOptions} $0 "--minimal" $1
+IfErrors 0 +3
 File "..\miscDeps\launcher\nvda_logo.wav"
 Push "$PLUGINSDIR\nvda_logo.wav"
 Call PlaySound
