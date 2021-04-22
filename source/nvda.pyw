@@ -160,17 +160,10 @@ for name in pathAppArgs:
 		newVal = os.path.abspath(origVal)
 		setattr(globalVars.appArgs, name, newVal)
 
-def terminateRunningNVDA(window):
+
+def safelyTerminateRunningNVDA(window: winUser.HWND):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
-	try:
-		winUser.PostSafeQuitMessage(window)
-	except PermissionError:
-		# allow for updating between NVDA versions, as NVDA <= 2020.4 does not accept WM_EXIT_NVDA messages
-		log.debugWarning("Failed to post a safe quit message across NVDA instances, sending WM_QUIT")
-		winUser.PostMessage(window, winUser.WM_QUIT, 0, 0)
-	except OSError as winErr:
-		log.error("Failed to post a quit message across NVDA instances")
-		raise winErr
+	winUser.PostSafeQuitMessage(window)
 	h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 	if not h:
 		# The process is already dead.
@@ -178,6 +171,15 @@ def terminateRunningNVDA(window):
 	try:
 		res = winKernel.waitForSingleObject(h, 6000)  # give time to exit NVDA safely
 		if res==0:
+			# The process terminated within the timeout period.
+			return
+		else:
+			raise OSError("Failed to terminate with WM_EXIT_NVDA")
+	except OSError:
+		# allow for updating between NVDA versions, as NVDA <= 2020.4 does not accept WM_EXIT_NVDA messages
+		print("Failed to post a safe quit message across NVDA instances, sending WM_QUIT", file=sys.stderr)
+		res = _terminateRunningLegacyNVDA(window)
+		if res == 0:
 			# The process terminated within the timeout period.
 			return
 	finally:
@@ -193,6 +195,20 @@ def terminateRunningNVDA(window):
 	finally:
 		winKernel.closeHandle(h)
 
+
+def _terminateRunningLegacyNVDA(window: winUser.HWND) -> int:
+	'''
+	Returns 0 on success, raises an OSError based WinErr if the process isn't killed
+	'''
+	processID, _threadID = winUser.getWindowThreadProcessID(window)
+	winUser.PostMessage(window, winUser.WM_QUIT, 0, 0)
+	h = winKernel.openProcess(winKernel.SYNCHRONIZE, False, processID)
+	if not h:
+		# The process is already dead.
+		return 0
+	return winKernel.waitForSingleObject(h, 4000)
+
+
 #Handle running multiple instances of NVDA
 try:
 	oldAppWindowHandle=winUser.FindWindow(u'wxWindowClassNR',u'NVDA')
@@ -205,8 +221,9 @@ if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 		# NVDA is running.
 		sys.exit(0)
 	try:
-		terminateRunningNVDA(oldAppWindowHandle)
-	except:
+		safelyTerminateRunningNVDA(oldAppWindowHandle)
+	except Exception as e:
+		print(f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}", file=sys.stderr)
 		sys.exit(1)
 if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	sys.exit(0)
