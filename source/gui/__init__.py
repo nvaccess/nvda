@@ -367,6 +367,8 @@ def safeAppExit():
 	import brailleViewer
 	brailleViewer.destroyBrailleViewer()
 
+	app = wx.GetApp()
+
 	# prevent race condition with object deletion
 	# prevent deletion of the object while we work on it.
 	_SettingsDialog = settingsDialogs.SettingsDialog
@@ -385,10 +387,9 @@ def safeAppExit():
 	# They must be manually destroyed when exiting the app.
 	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12286, #12238)
 	log.debug("destroying system tray icon and menu")
-
-	mainFrame.sysTrayIcon.menu.Destroy()
+	app.ScheduleForDestruction(mainFrame.sysTrayIcon.menu)
 	mainFrame.sysTrayIcon.RemoveIcon()
-	mainFrame.sysTrayIcon.Destroy()
+	app.ScheduleForDestruction(mainFrame.sysTrayIcon)
 
 	for window in wx.GetTopLevelWindows():
 		if isinstance(window, wx.Dialog) and window.IsModal():
@@ -398,7 +399,7 @@ def safeAppExit():
 			log.debug("destroying main frame during exit process")
 			# the MainFrame has EVT_CLOSE bound to the ExitDialog
 			# which calls this function on exit, so destroy this window
-			wx.CallAfter(window.Destroy)
+			app.ScheduleForDestruction(window)
 		else:
 			log.debug(f"closing window {window} during exit process")
 			wx.CallAfter(window.Close)
