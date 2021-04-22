@@ -7,12 +7,33 @@
 import locale
 from collections import OrderedDict
 import winreg
-from comtypes import COMObject, COMError
-from ctypes import *
+from comtypes import CoCreateInstance, COMObject, COMError, GUID
+from ctypes import byref, c_ulong, POINTER
+from ctypes.wintypes import DWORD, WORD
 from synthDriverHandler import SynthDriver,VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
-import speech
-from ._sapi4 import *
+from ._sapi4 import (
+	CLSID_MMAudioDest,
+	CLSID_TTSEnumerator,
+	IAudioMultiMediaDevice,
+	ITTSAttributes,
+	ITTSBufNotifySink,
+	ITTSCentralW,
+	ITTSEnumW,
+	TextSDATA,
+	TTSATTR_MAXPITCH,
+	TTSATTR_MAXSPEED,
+	TTSATTR_MAXVOLUME,
+	TTSATTR_MINPITCH,
+	TTSATTR_MINSPEED,
+	TTSATTR_MINVOLUME,
+	TTSDATAFLAG_TAGGED,
+	TTSFEATURE_PITCH,
+	TTSFEATURE_SPEED,
+	TTSFEATURE_VOLUME,
+	TTSMODEINFO,
+	VOICECHARSET
+)
 import config
 import nvwave
 import weakref

@@ -1,8 +1,7 @@
-#easeOfAccess.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2014 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2014-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Utilities for working with the Windows Ease of Access Center.
 """
@@ -12,10 +11,8 @@ import ctypes
 import winUser
 import winVersion
 
-# Windows >= Vista
-isSupported = winVersion.getWinVer().major >= 6
 # Windows >= 8
-canConfigTerminateOnDesktopSwitch = isSupported and winVersion.getWinVer() >= winVersion.WIN8
+canConfigTerminateOnDesktopSwitch: bool = winVersion.getWinVer() >= winVersion.WIN8
 
 ROOT_KEY = r"Software\Microsoft\Windows NT\CurrentVersion\Accessibility"
 APP_KEY_NAME = "nvda_nvda_v1"

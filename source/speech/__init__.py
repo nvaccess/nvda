@@ -211,14 +211,70 @@ def speakSpelling(
 	speak(seq, priority=priority)
 
 
-# C901 'getSpellingSpeech' is too complex
-# Note: when working on getSpellingSpeech, look for opportunities to simplify
-# and move logic out into smaller helper functions.
-def getSpellingSpeech(  # noqa: C901
-		text: str,
-		locale: Optional[str] = None,
-		useCharacterDescriptions: bool = False
+def _getSpellingSpeechAddCharMode(
+		seq: Generator[SequenceItemT, None, None],
 ) -> Generator[SequenceItemT, None, None]:
+	"""Inserts CharacterMode commands in a speech sequence generator to ensure any single character
+	is spelt by the synthesizer.
+	@param seq: The speech sequence to be spelt.
+	"""
+	charMode = False
+	for item in seq:
+		if isinstance(item, str):
+			if len(item) == 1:
+				if not charMode:
+					yield CharacterModeCommand(True)
+					charMode = True
+			elif charMode:
+				yield CharacterModeCommand(False)
+				charMode = False
+		yield item
+
+
+def _getSpellingCharAddCapNotification(
+		speakCharAs: str,
+		sayCapForCapitals: bool,
+		capPitchChange: int,
+		beepForCapitals: bool,
+) -> Generator[SequenceItemT, None, None]:
+	"""This function produces a speech sequence containing a character to be spelt as well as commands
+	to indicate that this character is uppercase if applicable.
+	@param speakCharAs: The character as it will be spoken by the synthesizer.
+	@param sayCapForCapitals: indicates if 'cap' should be reported along with the currently spelt character.
+	@param capPitchChange: pitch offset to apply while spelling the currently spelt character.
+	@param beepForCapitals: indicates if a cap notification beep should be produced while spelling the currently
+	spellt character.
+	"""
+	if sayCapForCapitals:
+		# Translators: cap will be spoken before the given letter when it is capitalized.
+		capMsg = _("cap %s")
+		(capMsgBefore, capMsgAfter) = capMsg.split('%s')
+	else:
+		capMsgBefore = ''
+		capMsgAfter = ''
+	
+	if capPitchChange:
+		yield PitchCommand(offset=capPitchChange)
+	if beepForCapitals:
+		yield BeepCommand(2000, 50)
+	if capMsgBefore:
+		yield capMsgBefore
+	yield speakCharAs
+	if capMsgAfter:
+		yield capMsgAfter
+	if capPitchChange:
+		yield PitchCommand()
+
+
+def _getSpellingSpeechWithoutCharMode(
+		text: str,
+		locale: str,
+		useCharacterDescriptions: bool,
+		sayCapForCapitals: bool,
+		capPitchChange: int,
+		beepForCapitals: bool,
+) -> Generator[SequenceItemT, None, None]:
+	
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
 		locale=defaultLanguage
@@ -230,9 +286,6 @@ def getSpellingSpeech(  # noqa: C901
 	if not text.isspace():
 		text=text.rstrip()
 
-	synth = getSynth()
-	synthConfig=config.conf["speech"][synth.name]
-	charMode = False
 	textLength=len(text)
 	count = 0
 	localeHasConjuncts = True if locale.split('_',1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
@@ -253,26 +306,42 @@ def getSpellingSpeech(  # noqa: C901
 			speakCharAs=charDesc[0] if textLength>1 else IDEOGRAPHIC_COMMA.join(charDesc)
 		else:
 			speakCharAs=characterProcessing.processSpeechSymbol(locale,speakCharAs)
-		if uppercase and synthConfig["sayCapForCapitals"]:
-			# Translators: cap will be spoken before the given letter when it is capitalized.
-			speakCharAs=_("cap %s")%speakCharAs
-		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
-			yield PitchCommand(offset=synthConfig["capPitchChange"])
 		if config.conf['speech']['autoLanguageSwitching']:
 			yield LangChangeCommand(locale)
-		if len(speakCharAs) == 1 and synthConfig["useSpellingFunctionality"]:
-			if not charMode:
-				yield CharacterModeCommand(True)
-				charMode = True
-		elif charMode:
-			yield CharacterModeCommand(False)
-			charMode = False
-		if uppercase and  synthConfig["beepForCapitals"]:
-			yield BeepCommand(2000, 50)
-		yield speakCharAs
-		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
-			yield PitchCommand()
+		yield from _getSpellingCharAddCapNotification(
+			speakCharAs,
+			uppercase and sayCapForCapitals,
+			capPitchChange if uppercase else 0,
+			uppercase and beepForCapitals,
+		)
 		yield EndUtteranceCommand()
+
+
+def getSpellingSpeech(
+		text: str,
+		locale: Optional[str] = None,
+		useCharacterDescriptions: bool = False
+) -> Generator[SequenceItemT, None, None]:
+	
+	synth = getSynth()
+	synthConfig = config.conf["speech"][synth.name]
+	
+	if synth.isSupported("pitch"):
+		capPitchChange = synthConfig["capPitchChange"]
+	else:
+		capPitchChange = 0
+	seq = _getSpellingSpeechWithoutCharMode(
+		text,
+		locale,
+		useCharacterDescriptions,
+		sayCapForCapitals=synthConfig["sayCapForCapitals"],
+		capPitchChange=capPitchChange,
+		beepForCapitals=synthConfig["beepForCapitals"],
+	)
+	if synthConfig["useSpellingFunctionality"]:
+		seq = _getSpellingSpeechAddCharMode(seq)
+	yield from seq
+
 
 def getCharDescListFromText(text,locale):
 	"""This method prepares a list, which contains character and its description for all characters the text is made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale for all possible combination of consecutive characters in the text.
@@ -499,7 +568,7 @@ def getObjectSpeech(  # noqa: C901
 	if shouldReportTextContent:
 		try:
 			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
-		except NotImplementedError:
+		except (NotImplementedError, RuntimeError):
 			info = None
 		if info and not info.isCollapsed:
 			# if there is selected text, then there is a value and we do not report placeholder
