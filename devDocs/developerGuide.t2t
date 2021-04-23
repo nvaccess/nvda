@@ -738,6 +738,7 @@ The lastTestedNVDAVersion field in particular is used to ensure that users can b
 It allows the add-on author to make an assurance that the add-on will not cause instability, or break the users system.
 When this is not provided, or is less than the current version of NVDA (ignoring minor point updates EG 2018.3.1) then the user will be warned not to install the add-on.
 
+
 +++ An Example Manifest File +++
 ```
 --- start ---
@@ -751,7 +752,7 @@ docFileName = "readme.html"
 minimumNVDAVersion = "2018.1.0"
 lastTestedNVDAVersion = "2019.1.0"
 --- end ---
-``` 
+```
 
 ++ Plugins and Drivers ++
 The following plugins and drivers can be included in an add-on:
