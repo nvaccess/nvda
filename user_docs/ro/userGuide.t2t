@@ -54,10 +54,13 @@ NVDA suportă coduri braille pentru multe limbi, inclusiv coduri abreviate, neab
 ++ Licență și Drept de Autor ++[LicentaSiAutor]
 NVDA este cu drept de autor NVDA_COPYRIGHT_YEARS pentru colaboratorii NVDA.
 
-NVDA este acoperit de Licența GNU General Public License (Versiune 2).
+NVDA este acoperit de Licența GNU General Public License (Versiunea 2), cu două excepții speciale.
+Aceste excepții sunt menționate în documentul licenței, la secțiunile „Non-GPL Components in Plugins and Drivers” și „Microsoft Distributable Code”.
+De asemenea, NVDA include și utilizează componente care sunt disponibile sub diferite licențe gratuite și open-source.
 Sunteți liberi să distribuiți sau să schimbați acest program în orice mod doriți atâta timp cât distribuiți și licența alături de program și puneți codul sursă la dispoziția oricui îl dorește. 
 Acest lucru se aplică atât originalului cât și copiilor modificate ale programului, plus oricărui alt program care folosește codul extras din acest program.
 Pentru alte detalii, puteți [vedea licența online. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html] (în engleză)
+Pentru detaliile cu privire la excepții, accesați documentul licenței din meniul NVDA, secțiunea „Ajutor”.
 
 + Cerințe de sistem +[CerinteSistem]
 - Sisteme de operare: toate versiunile Windows 7, Windows 8, Windows 8.1 și Windows 10 pe 32 biți și 64 biți, precum și versiunile Server ale lor pornind de la Windows Server 2008 R2.
@@ -1654,6 +1657,7 @@ Puteți configura anunțarea pentru:
  - Nume font
  - Dimensiune font
  - Atribute font
+ - Superscripturi și subscripturi
  - Accentuare
  - Stil
  - Culori
@@ -1756,12 +1760,12 @@ Această setare controlează dacă caracterele sunt pronunțate prin [pronunțar
 Din motive de securitate, această setare ar trebui să fie lăsată dezactivată.
 Totuși, s-ar putea să vreți să o activați dacă întâmpinați probleme de performanță sau de instabilitate cu raportarea caracterului și/sau cuvântului tastat în console sau lucrați într-un mediu de încredere și preferați anunțarea parolei.
 
-==== Utilizează suportul nou pentru caracterele tastate în consolele Windows tradiționale dacă este disponibil ====[AdvancedSettingsKeyboardSupportInLegacy]
-Această opțiune activează o metodă alternativă pentru detectarea caracterelor tastate în consolele Windows tradiționale.
+==== Utilizează suportul nou pentru caracterele tastate în Consola Windows dacă este disponibil ====[AdvancedSettingsKeyboardSupportInLegacy]
+Această opțiune activează o metodă alternativă pentru detectarea caracterelor tastate în consolele de comandă Windows.
 Cât timp îmbunătățește performanța și împiedică niște ieșiri de consolă să fie silabisite, poate fi incompatibilă cu unele programe terminale.
-Această caracteristică este disponibilă și activă în mod implicit în următoarele versiuni de windows 10: 1607, 1703, 1709 și 1803, dar și în versiunile mai noi de Windows atunci când UI Automation nu este disponibil sau este inactiv.
+Această caracteristică este disponibilă și activă în mod implicit în versiunea 1607  și în versiunile mai noi de Windows 10 atunci când UI Automation nu este disponibil sau este inactiv.
 Atenție! Cu această opțiune activă, caracterele tastate care nu apar pe ecran precum parolele nu vor fi suprimate.
-Într-un mediu de neîncredere, puteți dezactiva temporar [pronunțarea caracterelor tastate #KeyboardSettingsSpeakTypedWords] la tastarea de parole.
+Într-un mediu de neîncredere, puteți dezactiva temporar [pronunțarea caracterelor tastate #KeyboardSettingsSpeakTypedCharacters] și a [cuvintelor tastate #KeyboardSettingsSpeakTypedWords] la tastarea de parole.
 
 ==== Setează automat focalizarea sistemului la elementele focalizabile din modul de navigare ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tastă: NVDA+8
@@ -2155,6 +2159,7 @@ Următoarele afișaje braille suportă această funcționalitate de detectare au
 - Seriile Optelec ALVA 6
 - Seriile HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Afișajele Eurobraille Esys/Esytime/Iris
+- Afișajele Nattiq nBraille
 -
 
 ++ Freedom Scientific gamele Focus/PAC Mate ++[FreedomScientificFocus]
@@ -2944,6 +2949,22 @@ Vă rugăm să citiți documentația afișajului pentru descrierile locului în 
 | alt | punct8+spațiu, punct1+punct8+spațiu, punct4+punct8+spațiu, l6 |
 | Comută la alt | punct1+punct8+spațiu, punct4+punct8+spațiu |
 | Activează sau dezactivează intrarea simulării tastaturii HID | esytime):l1+joystick1Jos, esytime):l8+joystick1Jos |
+%kc:endInclude
+
+++ Nattiq nBraille Displays ++[NattiqTechnologies]
+NVDA suportă afișajele de la [Nattiq Technologies https://www.nattiq.com/] atunci când sunt conectate prin USB.
+Windows 10 detectează afișajele braille după conectare, însă poate fi necesară instalarea unor drivere USB dacă utilizați versiuni mai vechi decât Windows 10.
+Le puteți descărca de pe site-ul producătorului.
+
+În tabelul de mai jos sunt listate combinațiile de taste atribuite afișajelor Nattiq Technologies pentru NVDA.
+Vă rugăm să consultați și documentația acestor afișaje.
+%kc:beginInclude
+|| Nume | Tastă |
+| derulează afișajul braille înapoi | sus |
+| Derulează afișajul braille înainte | jos |
+| Mută afișajul braille la rândul precedent | stânga |
+| Mută afișajul braille la rândul următor | dreapta |
+| Mută la celula braille | mutare |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

@@ -389,9 +389,7 @@ class AppModule(baseObject.ScriptableObject):
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
 		# No need to worry about immersive (hosted) apps and friends until Windows 8.
-		# Python 3.7 introduces platform_version to sys.getwindowsversion tuple,
-		# which returns major, minor, build.
-		if winVersion.winVersion.platform_version >= (6, 2, 9200):
+		if winVersion.getWinVer() >= winVersion.WIN8:
 			# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
 			# Therefore resort to file version info behavior because it is not a hosted app.
 			# Others such as Store version of Office are not truly hosted apps,
@@ -501,7 +499,7 @@ class AppModule(baseObject.ScriptableObject):
 		e.g. File Explorer reports itself as immersive when it is not.
 		@rtype: bool
 		"""
-		if winVersion.winVersion.platform_version < (6, 2, 9200):
+		if winVersion.getWinVer() < winVersion.WIN8:
 			# Windows Store/UWP apps were introduced in Windows 8.
 			self.isWindowsStoreApp = False
 			return False

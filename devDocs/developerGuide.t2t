@@ -478,6 +478,8 @@ The following keyword arguments can be used when applying the script decorator:
   This option defaults to False.
 - bypassInputHelp: A boolean indicating whether this script should run when input help is active.
   This option defaults to False.
+- allowInSleepMode: A boolean indicating whether this script should run when sleep mode is active.
+  This option defaults to False.
 - resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
   The constants for say all mode are prefixed with CURSOR_ and specified in the sayAllHandler modules.
   If resumeSayAllMode is not specified, say all does not resume after this script.
@@ -858,11 +860,11 @@ If the input is "nav._", attribute names with a single leading underscore are pr
 Similarly, if the input is "nav.__", attribute names with two leading underscores are proposed.
 
 + Remote Python Console +
-A remote Python console is available for situations where remote debugging of NVDA is useful.
+A remote Python console is available in source builds of NVDA, for situations where remote debugging of NVDA is useful.
 It is similar to the [local Python console #PythonConsole] discussed above, but is accessed via TCP.
 
 Please be aware that this is a huge security risk.
-You should only enable it if you are connected to trusted networks.
+It is not available in binary builds distributed by NV Access, and You should only enable it if you are connected to trusted networks.
 
 ++ Usage ++
 To enable the remote Python console, use the local Python console to import remotePythonConsole and call remotePythonConsole.initialize().

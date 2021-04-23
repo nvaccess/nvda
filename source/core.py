@@ -1,9 +1,10 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
+from typing import Optional
 
 """NVDA core"""
 
@@ -78,7 +79,8 @@ def doStartupDialogs():
 			_("Configuration File Error"),
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
-		gui.WelcomeDialog.run()
+		from gui.startupDialogs import WelcomeDialog
+		WelcomeDialog.run()
 	if config.conf["brailleViewer"]["showBrailleViewerAtStartup"]:
 		gui.mainFrame.onToggleBrailleViewerCommand(evt=None)
 	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
@@ -104,14 +106,14 @@ def doStartupDialogs():
 					except:
 						pass
 			# Ask the user if usage stats can be collected.
-			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
+			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
-		import wx
+		import gui
 		globalVars.exitCode=3
-		wx.GetApp().ExitMainLoop()
+		gui.safeAppExit()
 		return
 	import subprocess
 	import winUser
@@ -207,6 +209,27 @@ def _setInitialFocus():
 	except:
 		log.exception("Error retrieving initial focus")
 
+
+def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
+	import languageHandler
+	import wx
+	lang = languageHandler.getLanguage()
+	locale = wx.Locale()
+	wxLang = locale.FindLanguageInfo(lang)
+	if not wxLang and '_' in lang:
+		wxLang = locale.FindLanguageInfo(lang.split('_')[0])
+	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
+	# If we try to initialize this language, wx will show a warning dialog.
+	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
+	# In this case, wxLang is already set to None.
+	# Therefore treat these situations like wx not knowing the language at all.
+	if wxLang and not locale.IsAvailable(wxLang.Language):
+		wxLang = None
+	if not wxLang:
+		log.debugWarning("wx does not support language %s" % lang)
+	return wxLang
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -227,17 +250,6 @@ def main():
 	log.debug("loading config")
 	import config
 	config.initialize()
-	if globalVars.appArgs.configPath == config.getUserDefaultConfigPath(useInstalledPathIfExists=True):
-		# Make sure not to offer the ability to copy the current configuration to the user account.
-		# This case always applies to the launcher when configPath is not overridden by the user,
-		# which is the default.
-		# However, if a user wants to run the launcher with a custom configPath,
-		# it is likely that he wants to copy that configuration when installing.
-		# This check also applies to cases where a portable copy is run using the installed configuration,
-		# in which case we want to avoid copying a configuration to itself.
-		# We set the value to C{None} in order for the gui to determine
-		# when to disable the checkbox for this feature.
-		globalVars.appArgs.copyPortableConfig = None
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
@@ -253,7 +265,7 @@ def main():
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
-	log.info("Using Windows version %s" % winVersion.winVersionText)
+	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
 	import configobj
@@ -285,15 +297,20 @@ def main():
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
-	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
-	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
-	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
 	import six
 	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
 			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
+
+		def InitLocale(self):
+			# Backport of `InitLocale` from wx Python 4.1.2 as the current version tries to set a Python
+			# locale to an nonexistent one when creating an instance of `wx.App`.
+			# This causes a crash when running under a particular version of Universal CRT (#12160)
+			import locale
+			locale.setlocale(locale.LC_ALL, "C")
+
 	app = App(redirect=False)
 	# We support queryEndSession events, but in general don't do anything for them.
 	# However, when running as a Windows Store application, we do want to request to be restarted for updates
@@ -360,6 +377,12 @@ def main():
 			self.orientationStateCache = self.ORIENTATION_NOT_INITIALIZED
 			self.orientationCoordsCache = (0,0)
 			self.handlePowerStatusChange()
+			# Accept WM_EXIT_NVDA from other NVDA instances
+			import winUser
+			if not winUser.user32.ChangeWindowMessageFilterEx(self.handle, winUser.WM_EXIT_NVDA, 1, None):
+				log.error(
+					f"Unable to set the thread {self.handle} to receive WM_EXIT_NVDA from other processes")
+				raise winUser.WinError()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
@@ -367,6 +390,9 @@ def main():
 				self.handlePowerStatusChange()
 			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
+			elif msg == winUser.WM_EXIT_NVDA:
+				log.debug("NVDA instance being closed from another instance")
+				gui.safeAppExit()
 
 		def handleScreenOrientationChange(self, lParam):
 			import ui
@@ -418,26 +444,17 @@ def main():
 
 	# initialize wxpython localization support
 	locale = wx.Locale()
-	lang=languageHandler.getLanguage()
-	wxLang=locale.FindLanguageInfo(lang)
-	if not wxLang and '_' in lang:
-		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
+	wxLang = getWxLangOrNone()
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
-	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
-	# If we try to initialize this language, wx will show a warning dialog.
-	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
-	# In this case, wxLang is already set to None.
-	# Therefore treat these situations like wx not knowing the language at all.
-	if wxLang and not locale.IsAvailable(wxLang.Language):
-		wxLang=None
 	if wxLang:
 		try:
 			locale.Init(wxLang.Language)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
-	else:
-		log.debugWarning("wx does not support language %s" % lang)
+		finally:
+			# Revert wx's changes to the python locale
+			languageHandler.setLocale(languageHandler.curLang)
 
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
@@ -509,7 +526,8 @@ def main():
 		except:
 			log.error("", exc_info=True)
 		if globalVars.appArgs.launcher:
-			gui.LauncherDialog.run()
+			from gui.startupDialogs import LauncherDialog
+			LauncherDialog.run()
 			# LauncherDialog will call doStartupDialogs() afterwards if required.
 		else:
 			wx.CallAfter(doStartupDialogs)
@@ -561,7 +579,16 @@ def main():
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
-	postNvdaStartup.notify()
+
+	# Queue the firing of the postNVDAStartup notification.
+	# This is queued so that it will run from within the core loop,
+	# and initial focus has been reported.
+	def _doPostNvdaStartupAction():
+		log.debug("Notify of postNvdaStartup action")
+		postNvdaStartup.notify()
+
+	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
+
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
@@ -605,6 +632,14 @@ def main():
 	_terminate(speech)
 	_terminate(addonHandler)
 	_terminate(garbageHandler)
+	# DMP is only started if needed.
+	# Terminate manually (and let it write to the log if necessary)
+	# as core._terminate always writes an entry.
+	try:
+		import diffHandler
+		diffHandler._dmp._terminate()
+	except Exception:
+		log.exception("Exception while terminating DMP")
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:

@@ -1,14 +1,17 @@
-#nvwave.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2021 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Provides a simple Python interface to playing audio using the Windows multimedia waveOut functions, as well as other useful utilities.
 """
 
 import threading
 import typing
+from typing import (
+	Optional,
+	Callable,
+)
 from ctypes import (
 	windll,
 	POINTER,
@@ -27,11 +30,7 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from ctypes import *
-from ctypes.wintypes import *
-import time
 import atexit
-import wx
 import garbageHandler
 import winKernel
 import wave
@@ -122,18 +121,6 @@ for func in (
 def _isDebugForNvWave():
 	return config.conf["debugLog"]["nvwave"]
 
-
-def safe_winmm_waveOutReset(_waveout) -> bool:
-	""" Wrap waveOutReset in try block and log exceptions,
-	it seems to fail randomly on some systems.
-	@return True on success.
-	"""
-	try:
-		winmm.waveOutReset(_waveout)
-		return True
-	except WindowsError:
-		log.debug("Exception while resetting wave out device.", exc_info=True)
-		return False
 
 class WavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio.
@@ -311,13 +298,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 						CALLBACK_EVENT
 					)
 			except WindowsError:
-				if _isDebugForNvWave():
-					log.debug(
-						f"Error opening"
-						f" outputDeviceName: {self._outputDeviceName}"
-						f" with id: {self._outputDeviceID}"
-					)
-				if self._outputDeviceID != WAVE_MAPPER:
+				lastOutputDeviceID = self._outputDeviceID
+				self._handleWinmmError(message="Error opening")
+				if lastOutputDeviceID != WAVE_MAPPER:
 					if _isDebugForNvWave():
 						log.debug(f"Falling back to WAVE_MAPPER")
 					self._setCurrentDevice(WAVE_MAPPER)
@@ -326,7 +309,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 					log.warning(f"Unable to open WAVE_MAPPER device, there may be no audio devices.")
 					raise  # can't open the default device.
 				return
-			self._waveout = waveout.value
+			self._waveout: typing.Optional[int] = waveout.value
 			self._prev_whdr = None
 
 	def feed(
@@ -444,12 +427,11 @@ class WavePlayer(garbageHandler.TrackedObject):
 		with self._waveout_lock:
 			if not self._waveout:
 				return
-			if switch:
-				with self._global_waveout_lock:
-					winmm.waveOutPause(self._waveout)
-			else:
-				with self._global_waveout_lock:
-					winmm.waveOutRestart(self._waveout)
+			with self._global_waveout_lock:
+				if switch:
+					self._safe_winmm_call(winmm.waveOutPause, "Pause")
+				else:
+					self._safe_winmm_call(winmm.waveOutRestart, "Restart")
 
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
@@ -498,8 +480,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 			self._prevOnDone = self.STOPPING
 			with self._global_waveout_lock:
 				# Pausing first seems to make waveOutReset respond faster on some systems.
-				winmm.waveOutPause(self._waveout)
-				safe_winmm_waveOutReset(self._waveout)
+				self._safe_winmm_call(winmm.waveOutPause, "Pause")
+				self._safe_winmm_call(winmm.waveOutReset, "Reset")
+				# Allow fall through to idleUnbuffered if either pause or reset fail.
+
 				# The documentation is not explicit about whether waveOutReset will signal the event,
 				# so trigger it to be sure that sync isn't blocking on 'waitForSingleObject'.
 				windll.kernel32.SetEvent(self._waveout_event)
@@ -524,6 +508,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 			if not self._waveout:
 				return
 			try:
+				# don't use '_safe_winmm_call' here, on error it would re-enter _close infinitely
 				winmm.waveOutClose(self._waveout)
 			except WindowsError:
 				log.debug("Error closing the device, it may have been removed.", exc_info=True)
@@ -534,6 +519,30 @@ class WavePlayer(garbageHandler.TrackedObject):
 		winKernel.kernel32.CloseHandle(self._waveout_event)
 		self._waveout_event = None
 		super().__del__()
+
+	def _handleWinmmError(self, message: str):
+		if _isDebugForNvWave():
+			log.debug(
+				f"Winmm Error: {message}"
+				f" outputDeviceName: {self._outputDeviceName}"
+				f" with id: {self._outputDeviceID}",
+				stack_info=True
+			)
+		self._close()
+
+	def _safe_winmm_call(
+			self,
+			winmmCall: Callable[[Optional[int]], None],
+			messageOnFailure: str
+	) -> bool:
+		try:
+			winmmCall(self._waveout)
+			return True
+		except WindowsError:
+			# device will be closed and _waveout set to None,
+			# triggering re-open.
+			self._handleWinmmError(message=messageOnFailure)
+			return False
 
 
 def _getOutputDevices():
