@@ -78,7 +78,7 @@ class CharacterDescriptions(object):
 		@type locale: string
 		"""
 		self._entries = {}
-		fileName=os.path.join('locale',locale,'characterDescriptions.dic')
+		fileName = os.path.join(globalVars.appDir, 'locale', locale, 'characterDescriptions.dic')
 		if not os.path.isfile(fileName): 
 			raise LookupError(fileName)
 		f = codecs.open(fileName,"r","utf_8_sig",errors="replace")
@@ -367,12 +367,14 @@ def _getSpeechSymbolsForLocale(locale):
 		# Load the data before loading other symbols,
 		# in order to allow translators to override them.
 		try:
-			builtin.load(os.path.join("locale", locale, "cldr.dic"),
-				allowComplexSymbols=False)
+			builtin.load(
+				os.path.join(globalVars.appDir, "locale", locale, "cldr.dic"),
+				allowComplexSymbols=False
+			)
 		except IOError:
 			log.debugWarning("No CLDR data for locale %s" % locale)
 	try:
-		builtin.load(os.path.join("locale", locale, "symbols.dic"))
+		builtin.load(os.path.join(globalVars.appDir, "locale", locale, "symbols.dic"))
 	except IOError:
 		_noSymbolLocalesCache.add(locale)
 		raise LookupError("No symbol information for locale %s" % locale)
@@ -519,6 +521,35 @@ class SpeechSymbolProcessor(object):
 			log.error("Invalid complex symbol regular expression in locale %s: %s" % (locale, e))
 			raise LookupError
 
+	def _replaceGroups(self, m: re.Match, string: str) -> str:
+		"""Replace matching group references (\\1, \\2, ...) with the corresponding matched groups.
+		Also replace \\\\ with \\ and reject other escapes, for escaping coherency.
+		@param m: The currently-matched group
+		@param string: The match replacement string which may contain group references
+		"""
+		result = ''
+
+		in_escape = False
+		for char in string:
+			if not in_escape:
+				if char == '\\':
+					in_escape = True
+				else:
+					result += char
+			else:
+				if char == '\\':
+					result += '\\'
+				elif char >= '0' and char <= '9':
+					result += m.group(m.lastindex + ord(char) - ord('0'))
+				else:
+					log.error("Invalid reference \\%string" % char)
+					raise LookupError
+				in_escape = False
+		if in_escape:
+			log.error("Unterminated backslash")
+			raise LookupError
+		return result
+
 	def _regexpRepl(self, m):
 		group = m.lastgroup
 
@@ -540,16 +571,19 @@ class SpeechSymbolProcessor(object):
 			if group == "simple":
 				# Simple symbol.
 				symbol = self.computedSymbols[text]
+				replacement = symbol.replacement
 			else:
 				# Complex symbol.
 				index = int(group[1:])
 				symbol = self._computedComplexSymbolsList[index]
+				replacement = self._replaceGroups(m, symbol.replacement)
+
 			if symbol.preserve == SYMPRES_ALWAYS or (symbol.preserve == SYMPRES_NOREP and self._level < symbol.level):
 				suffix = text
 			else:
 				suffix = " "
-			if self._level >= symbol.level and symbol.replacement:
-				return u" {repl}{suffix}".format(repl=symbol.replacement, suffix=suffix)
+			if self._level >= symbol.level and replacement:
+				return u" {repl}{suffix}".format(repl=replacement, suffix=suffix)
 			else:
 				return suffix
 

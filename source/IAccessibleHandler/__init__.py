@@ -1,13 +1,11 @@
-# IAccessibleHandler.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Tuple
 import struct
 import weakref
-# Kept for backwards compatibility
-from ctypes import *  # noqa: F401, F403
 from ctypes import (
 	wintypes,
 	windll,
@@ -25,89 +23,80 @@ import comtypes.client
 import oleacc
 import UIAHandler
 
-# Kept for backwards compatibility
-from comInterfaces.Accessibility import *  # noqa: F401, F403
-# Specific imports for items we know we use, hopefully in the future we can remove the import for this module.
-from comInterfaces.Accessibility import (
-	IAccessible,
-	IAccIdentity,
-	CAccPropServices,
-)
-# Kept for backwards compatibility
-from comInterfaces.IAccessible2Lib import *  # noqa: F401, F403
-# Specific imports for items we know we use, hopefully in the future we can remove the import for this module.
-from comInterfaces.IAccessible2Lib import (
-	IAccessibleText,
-	IAccessibleHypertext,
-	IAccessible2,
-	IA2_STATE_REQUIRED,
-	IA2_STATE_INVALID_ENTRY,
-	IA2_STATE_MODAL,
-	IA2_STATE_DEFUNCT,
-	IA2_STATE_SUPPORTS_AUTOCOMPLETION,
-	IA2_STATE_MULTI_LINE,
-	IA2_STATE_ICONIFIED,
-	IA2_STATE_EDITABLE,
-	IA2_STATE_PINNED,
-	IA2_ROLE_UNKNOWN,
-	IA2_ROLE_CANVAS,
-	IA2_ROLE_CAPTION,
-	IA2_ROLE_CHECK_MENU_ITEM,
-	IA2_ROLE_COLOR_CHOOSER,
-	IA2_ROLE_DATE_EDITOR,
-	IA2_ROLE_DIRECTORY_PANE,
-	IA2_ROLE_DESKTOP_PANE,
-	IA2_ROLE_EDITBAR,
-	IA2_ROLE_EMBEDDED_OBJECT,
-	IA2_ROLE_ENDNOTE,
-	IA2_ROLE_FILE_CHOOSER,
-	IA2_ROLE_FONT_CHOOSER,
-	IA2_ROLE_FRAME,
-	IA2_ROLE_FOOTNOTE,
-	IA2_ROLE_FORM,
-	IA2_ROLE_GLASS_PANE,
-	IA2_ROLE_HEADER,
-	IA2_ROLE_HEADING,
-	IA2_ROLE_ICON,
-	IA2_ROLE_IMAGE_MAP,
-	IA2_ROLE_INPUT_METHOD_WINDOW,
-	IA2_ROLE_INTERNAL_FRAME,
-	IA2_ROLE_LABEL,
-	IA2_ROLE_LAYERED_PANE,
-	IA2_ROLE_NOTE,
-	IA2_ROLE_OPTION_PANE,
-	IA2_ROLE_PAGE,
-	IA2_ROLE_PARAGRAPH,
-	IA2_ROLE_RADIO_MENU_ITEM,
-	IA2_ROLE_REDUNDANT_OBJECT,
-	IA2_ROLE_ROOT_PANE,
-	IA2_ROLE_RULER,
-	IA2_ROLE_SCROLL_PANE,
-	IA2_ROLE_SECTION,
-	IA2_ROLE_SHAPE,
-	IA2_ROLE_SPLIT_PANE,
-	IA2_ROLE_TEAR_OFF_MENU,
-	IA2_ROLE_TERMINAL,
-	IA2_ROLE_TEXT_FRAME,
-	IA2_ROLE_TOGGLE_BUTTON,
-	IA2_ROLE_VIEW_PORT,
-	IA2_ROLE_CONTENT_DELETION,
-	IA2_ROLE_CONTENT_INSERTION,
-	IA2_ROLE_BLOCK_QUOTE,
-	IA2_ROLE_DESKTOP_ICON,
-	IA2_ROLE_FOOTER,
-)
-
-from . import internalWinEventHandler
-# Imported for backwards compat
-from .internalWinEventHandler import (  # noqa: F401
-	winEventHookIDs,
-	winEventLimiter,
-	winEventIDsToNVDAEventNames,
-	_shouldGetEvents,
-)
+from comInterfaces import Accessibility as IA
 
 from comInterfaces import IAccessible2Lib as IA2
+import config
+
+
+_winEventNameCache = {}
+
+
+def getWinEventName(eventID):
+	""" Looks up the name of an EVENT_* winEvent constant. """
+	global _winEventNameCache
+	if not _winEventNameCache:
+		_winEventNameCache = {y: x for x, y in vars(winUser).items() if x.startswith('EVENT_')}
+		_winEventNameCache.update({y: x for x, y in vars(IA2).items() if x.startswith('IA2_EVENT_')})
+	name = _winEventNameCache.get(eventID)
+	if not name:
+		name = "unknown event ({eventID})"
+	return name
+
+
+_objectIDNameCache = {}
+
+
+def getObjectIDName(objectID):
+	""" Looks up the name of an OBJID_* winEvent constant. """
+	global _objectIDNameCache
+	if not _objectIDNameCache:
+		_objectIDNameCache = {y: x for x, y in vars(winUser).items() if x.startswith('OBJID_')}
+	name = _objectIDNameCache.get(objectID)
+	if not name:
+		name = str(objectID)
+	return name
+
+
+def getWinEventLogInfo(window, objectID, childID, eventID=None, threadID=None):
+	"""
+	Formats the given winEvent parameters into a printable string.
+	window, objectID and childID are mandatory,
+	but eventID and threadID are optional.
+	"""
+	windowClassName = winUser.getClassName(window) or "unknown"
+	objectIDName = getObjectIDName(objectID)
+	processID = winUser.getWindowThreadProcessID(window)[0]
+	if processID:
+		processName = appModuleHandler.getAppModuleFromProcessID(processID).appName
+	else:
+		processName = "unknown application"
+	messageList = []
+	if eventID is not None:
+		eventName = getWinEventName(eventID)
+		messageList.append(f"{eventName}")
+	messageList.append(
+		f"window {window} ({windowClassName}), objectID {objectIDName}, childID {childID}, "
+		f"process {processID} ({processName})"
+	)
+	if threadID is not None:
+		messageList.append(f"thread {threadID}")
+	return ", ".join(messageList)
+
+
+def isMSAADebugLoggingEnabled():
+	""" Whether the user has configured NVDA to log extra information about MSAA events. """
+	return config.conf["debugLog"]["MSAA"]
+
+
+IAccessibleObjectIdentifierType = Tuple[
+	int,  # windowHandle
+	int,  # objectID
+	int,  # childID
+]
+
+from . import internalWinEventHandler
+
 from logHandler import log
 import JABHandler
 import eventHandler
@@ -123,8 +112,6 @@ import core
 import re
 
 from .orderedWinEventLimiter import MENU_EVENTIDS
-
-MAX_WINEVENTS = 500
 
 # Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABEL_FOR = 0x1002
@@ -207,54 +194,55 @@ IAccessibleRolesToNVDARoles = {
 	oleacc.ROLE_SYSTEM_OUTLINEBUTTON: controlTypes.ROLE_TREEVIEWBUTTON,
 	oleacc.ROLE_SYSTEM_CLOCK: controlTypes.ROLE_CLOCK,
 	# IAccessible2 roles
-	IA2_ROLE_UNKNOWN: controlTypes.ROLE_UNKNOWN,
-	IA2_ROLE_CANVAS: controlTypes.ROLE_CANVAS,
-	IA2_ROLE_CAPTION: controlTypes.ROLE_CAPTION,
-	IA2_ROLE_CHECK_MENU_ITEM: controlTypes.ROLE_CHECKMENUITEM,
-	IA2_ROLE_COLOR_CHOOSER: controlTypes.ROLE_COLORCHOOSER,
-	IA2_ROLE_DATE_EDITOR: controlTypes.ROLE_DATEEDITOR,
-	IA2_ROLE_DESKTOP_ICON: controlTypes.ROLE_DESKTOPICON,
-	IA2_ROLE_DESKTOP_PANE: controlTypes.ROLE_DESKTOPPANE,
-	IA2_ROLE_DIRECTORY_PANE: controlTypes.ROLE_DIRECTORYPANE,
-	IA2_ROLE_EDITBAR: controlTypes.ROLE_EDITBAR,
-	IA2_ROLE_EMBEDDED_OBJECT: controlTypes.ROLE_EMBEDDEDOBJECT,
-	IA2_ROLE_ENDNOTE: controlTypes.ROLE_ENDNOTE,
-	IA2_ROLE_FILE_CHOOSER: controlTypes.ROLE_FILECHOOSER,
-	IA2_ROLE_FONT_CHOOSER: controlTypes.ROLE_FONTCHOOSER,
-	IA2_ROLE_FOOTER: controlTypes.ROLE_FOOTER,
-	IA2_ROLE_FOOTNOTE: controlTypes.ROLE_FOOTNOTE,
-	IA2_ROLE_FORM: controlTypes.ROLE_FORM,
-	IA2_ROLE_FRAME: controlTypes.ROLE_FRAME,
-	IA2_ROLE_GLASS_PANE: controlTypes.ROLE_GLASSPANE,
-	IA2_ROLE_HEADER: controlTypes.ROLE_HEADER,
-	IA2_ROLE_HEADING: controlTypes.ROLE_HEADING,
-	IA2_ROLE_ICON: controlTypes.ROLE_ICON,
-	IA2_ROLE_IMAGE_MAP: controlTypes.ROLE_IMAGEMAP,
-	IA2_ROLE_INPUT_METHOD_WINDOW: controlTypes.ROLE_INPUTWINDOW,
-	IA2_ROLE_INTERNAL_FRAME: controlTypes.ROLE_INTERNALFRAME,
-	IA2_ROLE_LABEL: controlTypes.ROLE_LABEL,
-	IA2_ROLE_LAYERED_PANE: controlTypes.ROLE_LAYEREDPANE,
-	IA2_ROLE_NOTE: controlTypes.ROLE_NOTE,
-	IA2_ROLE_OPTION_PANE: controlTypes.ROLE_OPTIONPANE,
-	IA2_ROLE_PAGE: controlTypes.ROLE_PAGE,
-	IA2_ROLE_PARAGRAPH: controlTypes.ROLE_PARAGRAPH,
-	IA2_ROLE_RADIO_MENU_ITEM: controlTypes.ROLE_RADIOMENUITEM,
-	IA2_ROLE_REDUNDANT_OBJECT: controlTypes.ROLE_REDUNDANTOBJECT,
-	IA2_ROLE_ROOT_PANE: controlTypes.ROLE_ROOTPANE,
-	IA2_ROLE_RULER: controlTypes.ROLE_RULER,
-	IA2_ROLE_SCROLL_PANE: controlTypes.ROLE_SCROLLPANE,
-	IA2_ROLE_SECTION: controlTypes.ROLE_SECTION,
-	IA2_ROLE_SHAPE: controlTypes.ROLE_SHAPE,
-	IA2_ROLE_SPLIT_PANE: controlTypes.ROLE_SPLITPANE,
-	IA2_ROLE_TEAR_OFF_MENU: controlTypes.ROLE_TEAROFFMENU,
-	IA2_ROLE_TERMINAL: controlTypes.ROLE_TERMINAL,
-	IA2_ROLE_TEXT_FRAME: controlTypes.ROLE_TEXTFRAME,
-	IA2_ROLE_TOGGLE_BUTTON: controlTypes.ROLE_TOGGLEBUTTON,
-	IA2_ROLE_VIEW_PORT: controlTypes.ROLE_VIEWPORT,
-	IA2_ROLE_CONTENT_DELETION: controlTypes.ROLE_DELETED_CONTENT,
-	IA2_ROLE_CONTENT_INSERTION: controlTypes.ROLE_INSERTED_CONTENT,
-	IA2_ROLE_BLOCK_QUOTE: controlTypes.ROLE_BLOCKQUOTE,
+	IA2.IA2_ROLE_UNKNOWN: controlTypes.ROLE_UNKNOWN,
+	IA2.IA2_ROLE_CANVAS: controlTypes.ROLE_CANVAS,
+	IA2.IA2_ROLE_CAPTION: controlTypes.ROLE_CAPTION,
+	IA2.IA2_ROLE_CHECK_MENU_ITEM: controlTypes.ROLE_CHECKMENUITEM,
+	IA2.IA2_ROLE_COLOR_CHOOSER: controlTypes.ROLE_COLORCHOOSER,
+	IA2.IA2_ROLE_DATE_EDITOR: controlTypes.ROLE_DATEEDITOR,
+	IA2.IA2_ROLE_DESKTOP_ICON: controlTypes.ROLE_DESKTOPICON,
+	IA2.IA2_ROLE_DESKTOP_PANE: controlTypes.ROLE_DESKTOPPANE,
+	IA2.IA2_ROLE_DIRECTORY_PANE: controlTypes.ROLE_DIRECTORYPANE,
+	IA2.IA2_ROLE_EDITBAR: controlTypes.ROLE_EDITBAR,
+	IA2.IA2_ROLE_EMBEDDED_OBJECT: controlTypes.ROLE_EMBEDDEDOBJECT,
+	IA2.IA2_ROLE_ENDNOTE: controlTypes.ROLE_ENDNOTE,
+	IA2.IA2_ROLE_FILE_CHOOSER: controlTypes.ROLE_FILECHOOSER,
+	IA2.IA2_ROLE_FONT_CHOOSER: controlTypes.ROLE_FONTCHOOSER,
+	IA2.IA2_ROLE_FOOTER: controlTypes.ROLE_FOOTER,
+	IA2.IA2_ROLE_FOOTNOTE: controlTypes.ROLE_FOOTNOTE,
+	IA2.IA2_ROLE_FORM: controlTypes.ROLE_FORM,
+	IA2.IA2_ROLE_FRAME: controlTypes.ROLE_FRAME,
+	IA2.IA2_ROLE_GLASS_PANE: controlTypes.ROLE_GLASSPANE,
+	IA2.IA2_ROLE_HEADER: controlTypes.ROLE_HEADER,
+	IA2.IA2_ROLE_HEADING: controlTypes.ROLE_HEADING,
+	IA2.IA2_ROLE_ICON: controlTypes.ROLE_ICON,
+	IA2.IA2_ROLE_IMAGE_MAP: controlTypes.ROLE_IMAGEMAP,
+	IA2.IA2_ROLE_INPUT_METHOD_WINDOW: controlTypes.ROLE_INPUTWINDOW,
+	IA2.IA2_ROLE_INTERNAL_FRAME: controlTypes.ROLE_INTERNALFRAME,
+	IA2.IA2_ROLE_LABEL: controlTypes.ROLE_LABEL,
+	IA2.IA2_ROLE_LAYERED_PANE: controlTypes.ROLE_LAYEREDPANE,
+	IA2.IA2_ROLE_NOTE: controlTypes.ROLE_NOTE,
+	IA2.IA2_ROLE_OPTION_PANE: controlTypes.ROLE_OPTIONPANE,
+	IA2.IA2_ROLE_PAGE: controlTypes.ROLE_PAGE,
+	IA2.IA2_ROLE_PARAGRAPH: controlTypes.ROLE_PARAGRAPH,
+	IA2.IA2_ROLE_RADIO_MENU_ITEM: controlTypes.ROLE_RADIOMENUITEM,
+	IA2.IA2_ROLE_REDUNDANT_OBJECT: controlTypes.ROLE_REDUNDANTOBJECT,
+	IA2.IA2_ROLE_ROOT_PANE: controlTypes.ROLE_ROOTPANE,
+	IA2.IA2_ROLE_RULER: controlTypes.ROLE_RULER,
+	IA2.IA2_ROLE_SCROLL_PANE: controlTypes.ROLE_SCROLLPANE,
+	IA2.IA2_ROLE_SECTION: controlTypes.ROLE_SECTION,
+	IA2.IA2_ROLE_SHAPE: controlTypes.ROLE_SHAPE,
+	IA2.IA2_ROLE_SPLIT_PANE: controlTypes.ROLE_SPLITPANE,
+	IA2.IA2_ROLE_TEAR_OFF_MENU: controlTypes.ROLE_TEAROFFMENU,
+	IA2.IA2_ROLE_TERMINAL: controlTypes.ROLE_TERMINAL,
+	IA2.IA2_ROLE_TEXT_FRAME: controlTypes.ROLE_TEXTFRAME,
+	IA2.IA2_ROLE_TOGGLE_BUTTON: controlTypes.ROLE_TOGGLEBUTTON,
+	IA2.IA2_ROLE_VIEW_PORT: controlTypes.ROLE_VIEWPORT,
+	IA2.IA2_ROLE_CONTENT_DELETION: controlTypes.ROLE_DELETED_CONTENT,
+	IA2.IA2_ROLE_CONTENT_INSERTION: controlTypes.ROLE_INSERTED_CONTENT,
+	IA2.IA2_ROLE_BLOCK_QUOTE: controlTypes.ROLE_BLOCKQUOTE,
 	IA2.IA2_ROLE_LANDMARK: controlTypes.ROLE_LANDMARK,
+	IA2.IA2_ROLE_MARK: controlTypes.ROLE_MARKED_CONTENT,
 	# some common string roles
 	"frame": controlTypes.ROLE_FRAME,
 	"iframe": controlTypes.ROLE_INTERNALFRAME,
@@ -301,31 +289,32 @@ IAccessibleStatesToNVDAStates = {
 }
 
 IAccessible2StatesToNVDAStates = {
-	IA2_STATE_REQUIRED: controlTypes.STATE_REQUIRED,
-	IA2_STATE_DEFUNCT: controlTypes.STATE_DEFUNCT,
-	# IA2_STATE_STALE:controlTypes.STATE_DEFUNCT,
-	IA2_STATE_INVALID_ENTRY: controlTypes.STATE_INVALID_ENTRY,
-	IA2_STATE_MODAL: controlTypes.STATE_MODAL,
-	IA2_STATE_SUPPORTS_AUTOCOMPLETION: controlTypes.STATE_AUTOCOMPLETE,
-	IA2_STATE_MULTI_LINE: controlTypes.STATE_MULTILINE,
-	IA2_STATE_ICONIFIED: controlTypes.STATE_ICONIFIED,
-	IA2_STATE_EDITABLE: controlTypes.STATE_EDITABLE,
-	IA2_STATE_PINNED: controlTypes.STATE_PINNED,
+	IA2.IA2_STATE_REQUIRED: controlTypes.STATE_REQUIRED,
+	IA2.IA2_STATE_DEFUNCT: controlTypes.STATE_DEFUNCT,
+	# IA2.IA2_STATE_STALE:controlTypes.STATE_DEFUNCT,
+	IA2.IA2_STATE_INVALID_ENTRY: controlTypes.STATE_INVALID_ENTRY,
+	IA2.IA2_STATE_MODAL: controlTypes.STATE_MODAL,
+	IA2.IA2_STATE_SUPPORTS_AUTOCOMPLETION: controlTypes.STATE_AUTOCOMPLETE,
+	IA2.IA2_STATE_MULTI_LINE: controlTypes.STATE_MULTILINE,
+	IA2.IA2_STATE_ICONIFIED: controlTypes.STATE_ICONIFIED,
+	IA2.IA2_STATE_EDITABLE: controlTypes.STATE_EDITABLE,
+	IA2.IA2_STATE_PINNED: controlTypes.STATE_PINNED,
+	IA2.IA2_STATE_CHECKABLE: controlTypes.STATE_CHECKABLE,
 }
 
 
 def normalizeIAccessible(pacc, childID=0):
-	if not isinstance(pacc, IAccessible):
+	if not isinstance(pacc, IA.IAccessible):
 		try:
-			pacc = pacc.QueryInterface(IAccessible)
+			pacc = pacc.QueryInterface(IA.IAccessible)
 		except COMError:
 			raise RuntimeError("%s Not an IAccessible" % pacc)
 	# #2558: IAccessible2 doesn't support simple children.
 	# Therefore, it doesn't make sense to use IA2 if the child ID is non-0.
-	if childID == 0 and not isinstance(pacc, IAccessible2):
+	if childID == 0 and not isinstance(pacc, IA2.IAccessible2):
 		try:
 			s = pacc.QueryInterface(IServiceProvider)
-			pacc2 = s.QueryService(IAccessible._iid_, IAccessible2)
+			pacc2 = s.QueryService(IA.IAccessible._iid_, IA2.IAccessible2)
 			if not pacc2:
 				# QueryService should fail if IA2 is not supported, but some applications such as AIM 7 misbehave
 				# and return a null COM pointer. Treat this as if QueryService failed.
@@ -340,10 +329,11 @@ def accessibleObjectFromEvent(window, objectID, childID):
 	try:
 		pacc, childID = oleacc.AccessibleObjectFromEvent(window, objectID, childID)
 	except Exception as e:
-		log.debug(
-			f"oleacc.AccessibleObjectFromEvent with"
-			f" window {window}, objectID {objectID} and childID {childID}: {e}"
-		)
+		if isMSAADebugLoggingEnabled():
+			log.debugWarning(
+				f"oleacc.AccessibleObjectFromEvent failed with {e}."
+				f" WinEvent: {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return None
 	return normalizeIAccessible(pacc, childID), childID
 
@@ -518,27 +508,57 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 	@returns: the NVDA event name and the NVDAObject the event is for
 	@rtype: tuple of string and L{NVDAObjects.IAccessible.IAccessible}
 	"""
-	NVDAEventName = winEventIDsToNVDAEventNames.get(eventID, None)
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Creating NVDA event from winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}, "
+			f"use cache {useCache}"
+		)
+	NVDAEventName = internalWinEventHandler.winEventIDsToNVDAEventNames.get(eventID, None)
 	if not NVDAEventName:
+		log.debugWarning(f"No NVDA event name for {getWinEventName(eventID)}")
 		return None
+	if isMSAADebugLoggingEnabled():
+		log.debug(f"winEvent mapped to NVDA event: {NVDAEventName}")
 	# Ignore any events with invalid window handles
 	if not window or not winUser.isWindow(window):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Invalid window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		return None
 	# Make sure this window does not have a ghost window if possible
 	if NVDAObjects.window.GhostWindowFromHungWindow and NVDAObjects.window.GhostWindowFromHungWindow(window):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Ghosted hung window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		return None
 	# We do not support MSAA object proxied from native UIA
 	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Native UIA window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		return None
 	obj = None
 	if useCache:
 		# See if we already know an object by this win event info
 		obj = liveNVDAObjectTable.get((window, objectID, childID), None)
+		if isMSAADebugLoggingEnabled() and obj:
+			log.debug(
+				f"Fetched existing NVDAObject {obj} from liveNVDAObjectTable"
+				f" for winEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 	# If we don't yet have the object, then actually instanciate it.
 	if not obj:
 		obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(window, objectID, childID)
 	# At this point if we don't have an object then we can't do any more
 	if not obj:
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				"Could not instantiate an NVDAObject for winEvent: "
+				f"{getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		return None
 	# SDM MSAA objects sometimes don't contain enough information to be useful Sometimes there is a real
 	# window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as
@@ -547,6 +567,11 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 		SDMChild = getattr(obj, 'SDMChild', None)
 		if SDMChild:
 			obj = SDMChild
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Successfully created NVDA event {NVDAEventName} for {obj} "
+			f"from winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+		)
 	return (NVDAEventName, obj)
 
 
@@ -565,6 +590,10 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 	@returns: True if the event was processed, False otherwise.
 	@rtype: boolean
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing generic winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}"
+		)
 	# Notify appModuleHandler of this new window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	# Handle particular events for the special MSAA caret object just as if they were for the focus object
@@ -573,15 +602,23 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 		winUser.EVENT_OBJECT_LOCATIONCHANGE,
 		winUser.EVENT_OBJECT_SHOW
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug("handling winEvent as caret event on focus")
 		NVDAEvent = ("caret", focus)
 	else:
 		NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
 		if not NVDAEvent:
 			return False
 	if NVDAEvent[0] == "nameChange" and objectID == winUser.OBJID_CURSOR:
+		if isMSAADebugLoggingEnabled():
+			log.debug("Handling winEvent as mouse shape change")
 		mouseHandler.updateMouseShape(NVDAEvent[1].name)
 		return
 	if NVDAEvent[1] == focus:
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Directing winEvent to focus object {focus}. WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		NVDAEvent = (NVDAEvent[0], focus)
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
@@ -601,6 +638,11 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 	@returns: True if the focus is valid and was handled, False otherwise.
 	@rtype: boolean
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing focus winEvent: {getWinEventLogInfo(window, objectID, childID)}, "
+			f"force {force}"
+		)
 	windowClassName = winUser.getClassName(window)
 	# Generally, we must ignore focus on child windows of SDM windows as we only want the SDM MSAA events.
 	# However, we don't want to ignore focus if the child ID isn't 0,
@@ -610,6 +652,11 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 		and not windowClassName.startswith('bosa_sdm')
 		and winUser.getClassName(winUser.getAncestor(window, winUser.GA_PARENT)).startswith('bosa_sdm')
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Focus event for child window of MS Office SDM window. "
+				f"Dropping winEvent {getWinEventLogInfo(window, objectID, childID)}, "
+			)
 		return False
 	# Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
@@ -620,6 +667,10 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 		and JABHandler.isRunning
 		and JABHandler.isJavaWindow(window)
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Redirecting focus to Java window. WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		JABHandler.event_enterJavaWindow(window)
 		return True
 	# Convert the win event to an NVDA event
@@ -662,8 +713,12 @@ def processFocusNVDAEvent(obj, force=False):
 	if not force and isinstance(obj, NVDAObjects.IAccessible.IAccessible):
 		focus = eventHandler.lastQueuedFocusObject
 		if isinstance(focus, NVDAObjects.IAccessible.IAccessible) and focus.isDuplicateIAccessibleEvent(obj):
+			if isMSAADebugLoggingEnabled():
+				log.debug(f"Dropping duplicate IAccessible focus event for {obj}")
 			return True
 		if not obj.shouldAllowIAccessibleFocusEvent:
+			if isMSAADebugLoggingEnabled():
+				log.debug(f"IAccessible focus event not allowed by {obj}")
 			return False
 	eventHandler.queueEvent('gainFocus', obj)
 	return True
@@ -689,6 +744,10 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 
 
 def processDesktopSwitchWinEvent(window, objectID, childID):
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	hDesk = windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk != 0:
 		windll.user32.CloseDesktop(hDesk)
@@ -720,8 +779,17 @@ def processForegroundWinEvent(window, objectID, childID):
 	@returns: True if the foreground was processed, False otherwise.
 	@rtype: boolean
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing foreground winEvent: {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	# Ignore foreground events on windows that aren't the current foreground window
 	if window != winUser.getForegroundWindow():
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Dropping foreground winEvent as it does not match GetForegroundWindow. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return False
 	# If there is a pending gainFocus, it will handle the foreground object.
 	oldFocus = eventHandler.lastQueuedFocusObject
@@ -730,6 +798,11 @@ def processForegroundWinEvent(window, objectID, childID):
 		isinstance(oldFocus, NVDAObjects.window.Window)
 		and winUser.isDescendantWindow(window, oldFocus.windowHandle)
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Dropping foreground winEvent as focus is already on a descendant. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return False
 	# If the existing focus has the same win event params as these, then ignore this event
 	if (
@@ -738,22 +811,41 @@ def processForegroundWinEvent(window, objectID, childID):
 		and objectID == oldFocus.event_objectID
 		and childID == oldFocus.event_childID
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Dropping foreground winEvent as it is duplicate to existing focus. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return False
 	# Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	# If Java access bridge is running, and this is a java window, then pass it to java and forget about it
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Redirecting foreground winEvent to Java window. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return True
 	# Convert the win event to an NVDA event
 	NVDAEvent = winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND, window, objectID, childID, useCache=False)
 	if not NVDAEvent:
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Could not convert foreground winEvent to an NVDA event. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return False
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
 
 def processShowWinEvent(window, objectID, childID):
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing show winEvent: {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	# eventHandler.shouldAcceptEvent only accepts show events for a few specific cases.
 	# Narrow this further to only accept events for clients or custom objects.
 	if objectID == winUser.OBJID_CLIENT or objectID > 0:
@@ -767,6 +859,10 @@ def processDestroyWinEvent(window, objectID, childID):
 	This removes the object associated with the event parameters from L{liveNVDAObjectTable} if
 	such an object exists.
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing destroy winEvent: {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	try:
 		del liveNVDAObjectTable[(window, objectID, childID)]
 	except KeyError:
@@ -792,6 +888,11 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	"""Process a menuStart win event.
 	@postcondition: Focus will be directed to the menu if appropriate.
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing menuStart winEvent: {getWinEventLogInfo(window, objectID, childID)}, "
+			f"validFocus {validFocus}"
+		)
 	if validFocus:
 		lastFocus = eventHandler.lastQueuedFocusObject
 		if (
@@ -807,6 +908,13 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	if obj.IAccessibleRole != oleacc.ROLE_SYSTEM_MENUPOPUP:
 		# menuStart on anything other than a menu is silly.
 		return
+	elif not obj.shouldAllowIAccessibleMenuStartEvent:
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Ignoring menuStart winEvent: {getWinEventLogInfo(window, objectID, childID)}, "
+				f"shouldAllowIAccessibleMenuStartEvent {obj.shouldAllowIAccessibleMenuStartEvent}"
+			)
+		return
 	processFocusNVDAEvent(obj, force=True)
 
 
@@ -818,6 +926,10 @@ def processFakeFocusWinEvent(eventID, window, objectID, childID):
 	# find the focus and fake it.
 	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if
 	# the focus hasn't changed yet.
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing fake focus winEvent {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	core.callLater(50, _fakeFocus, api.getFocusObject())
 
 
@@ -828,6 +940,10 @@ def _fakeFocus(oldFocus):
 	focus = api.getDesktopObject().objectWithFocus()
 	if not focus:
 		return
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Faking focus on {focus}"
+		)
 	processFocusNVDAEvent(focus)
 
 
@@ -838,7 +954,7 @@ accPropServices = None
 def initialize():
 	global accPropServices
 	try:
-		accPropServices = comtypes.client.CreateObject(CAccPropServices)
+		accPropServices = comtypes.client.CreateObject(IA.CAccPropServices)
 	except (WindowsError, COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s" % e)
 	internalWinEventHandler.initialize(processDestroyWinEvent)
@@ -846,16 +962,21 @@ def initialize():
 
 # C901 'pumpAll' is too complex
 def pumpAll():  # noqa: C901
-	if not _shouldGetEvents():
+	if not internalWinEventHandler._shouldGetEvents():
 		return
 	focusWinEvents = []
 	validFocus = False
 	fakeFocusEvent = None
 	focus = eventHandler.lastQueuedFocusObject
 
+	alwaysAllowedObjects = []
+	# winEvents for the currently focused object are special,
+	# and should be never filtered out.
+	if isinstance(focus, NVDAObjects.IAccessible.IAccessible) and focus.event_objectID is not None:
+		alwaysAllowedObjects.append((focus.event_windowHandle, focus.event_objectID, focus.event_childID))
+
 	# Receive all the winEvents from the limiter for this cycle
-	winEvents = winEventLimiter.flushEvents()
-	winEvents = winEvents[0 - MAX_WINEVENTS:]
+	winEvents = internalWinEventHandler.winEventLimiter.flushEvents(alwaysAllowedObjects)
 
 	for winEvent in winEvents:
 		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET
@@ -871,7 +992,7 @@ def pumpAll():  # noqa: C901
 			if not focus.shouldAcceptShowHideCaretEvent:
 				continue
 		elif not eventHandler.shouldAcceptEvent(
-			winEventIDsToNVDAEventNames[winEvent[0]],
+			internalWinEventHandler.winEventIDsToNVDAEventNames[winEvent[0]],
 			windowHandle=winEvent[1]
 		):
 			continue
@@ -925,7 +1046,7 @@ def terminate():
 
 
 def getIAccIdentity(pacc, childID):
-	IAccIdentityObject = pacc.QueryInterface(IAccIdentity)
+	IAccIdentityObject = pacc.QueryInterface(IA.IAccIdentity)
 	stringPtr, stringSize = IAccIdentityObject.getIdentityString(childID)
 	try:
 		if accPropServices:
@@ -983,16 +1104,16 @@ def findGroupboxObject(obj):
 
 # C901 'getRecursiveTextFromIAccessibleTextObject'
 def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):  # noqa: C901
-	if not isinstance(obj, IAccessibleText):
+	if not isinstance(obj, IA2.IAccessibleText):
 		try:
-			textObject = obj.QueryInterface(IAccessibleText)
+			textObject = obj.QueryInterface(IA2.IAccessibleText)
 		except:  # noqa: E722 Bare except
 			textObject = None
 	else:
 		textObject = obj
-	if not isinstance(obj, IAccessible):
+	if not isinstance(obj, IA.IAccessible):
 		try:
-			accObject = obj.QueryInterface(IAccessible)
+			accObject = obj.QueryInterface(IA.IAccessible)
 		except:  # noqa: E722 Bare except
 			return ""
 	else:
@@ -1016,7 +1137,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):
 			description = None
 		return " ".join([x for x in [name, value, description] if x and not x.isspace()])
 	try:
-		hypertextObject = accObject.QueryInterface(IAccessibleHypertext)
+		hypertextObject = accObject.QueryInterface(IA2.IAccessibleHypertext)
 	except:  # noqa: E722 Bare except
 		return text
 	textList = []
@@ -1024,7 +1145,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):
 		if ord(t) == 0xFFFC:
 			try:
 				index = hypertextObject.hyperlinkIndex(i + startOffset)
-				childTextObject = hypertextObject.hyperlink(index).QueryInterface(IAccessible)
+				childTextObject = hypertextObject.hyperlink(index).QueryInterface(IA.IAccessible)
 				t = " %s " % getRecursiveTextFromIAccessibleTextObject(childTextObject)
 			except:  # noqa: E722 Bare except
 				pass
@@ -1119,7 +1240,7 @@ def isMarshalledIAccessible(IAccessibleObject):
 	"""Looks at the location of the first function in the IAccessible object's vtable (IUnknown::AddRef) to
 	see if it was implemented in oleacc.dll (its local) or ole32.dll (its marshalled).
 	"""
-	if not isinstance(IAccessibleObject, IAccessible):
+	if not isinstance(IAccessibleObject, IA.IAccessible):
 		raise TypeError("object should be of type IAccessible, not %s" % IAccessibleObject)
 	buf = create_unicode_buffer(1024)
 	addr = POINTER(c_void_p).from_address(

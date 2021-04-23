@@ -28,6 +28,7 @@ import api
 import gui
 from logHandler import log
 import braille
+import gui.contextHelp
 
 class HelpCommand(object):
 	"""
@@ -217,12 +218,18 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 				pass
 		self._namespaceSnapshotVars = None
 
-class ConsoleUI(wx.Frame):
+
+class ConsoleUI(
+		gui.contextHelp.ContextHelpMixin,
+		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""The NVDA Python console GUI.
 	"""
+	
+	helpId = "PythonConsole"
 
 	def __init__(self, parent):
-		super(ConsoleUI, self).__init__(parent, wx.ID_ANY, _("NVDA Python Console"))
+		super().__init__(parent, wx.ID_ANY, _("NVDA Python Console"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -309,9 +316,11 @@ class ConsoleUI(wx.Frame):
 		return True
 
 	RE_COMPLETE_UNIT = re.compile(r"[\w.]*$")
+
 	def complete(self):
+		textBeforeCursor = self.inputCtrl.GetRange(0, self.inputCtrl.GetSelection()[0])
 		try:
-			original = self.RE_COMPLETE_UNIT.search(self.inputCtrl.GetValue()).group(0)
+			original = self.RE_COMPLETE_UNIT.search(textBeforeCursor).group(0)
 		except AttributeError:
 			return False
 
@@ -376,16 +385,20 @@ class ConsoleUI(wx.Frame):
 		insert = completed[len(original):]
 		if not insert:
 			return
-		self.inputCtrl.SetValue(self.inputCtrl.GetValue() + insert)
+		inputCtrl = self.inputCtrl
+		selStartPos, selEndPos = inputCtrl.GetSelection()
+		prefix = inputCtrl.GetRange(0, selStartPos)
+		suffix = inputCtrl.GetRange(selEndPos, inputCtrl.GetLastPosition())
+		inputCtrl.SetValue(prefix + insert + suffix)
 		queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
-		self.inputCtrl.SetInsertionPointEnd()
+		inputCtrl.SetInsertionPoint(selStartPos + len(insert))
 
 	def onInputChar(self, evt):
 		key = evt.GetKeyCode()
 
 		if key == wx.WXK_TAB:
-			line = self.inputCtrl.GetValue()
-			if line and not line.isspace():
+			textBeforeCursor = self.inputCtrl.GetRange(0, self.inputCtrl.GetSelection()[0])
+			if textBeforeCursor and not textBeforeCursor.isspace():
 				if not self.complete():
 					wx.Bell()
 				return

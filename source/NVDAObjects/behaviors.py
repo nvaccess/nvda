@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-# NVDAObjects/behaviors.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -12,7 +11,6 @@ Behaviors described in this mix-in include providing table navigation commands f
 import os
 import time
 import threading
-import difflib
 import tones
 import queueHandler
 import eventHandler
@@ -29,6 +27,10 @@ import api
 import ui
 import braille
 import nvwave
+import globalVars
+from typing import List
+import diffHandler
+
 
 class ProgressBar(NVDAObject):
 
@@ -182,8 +184,12 @@ class EditableTextWithAutoSelectDetection(EditableText):
 	"""
 
 	def event_gainFocus(self):
-		super(EditableText, self).event_gainFocus()
+		super().event_gainFocus()
 		self.initAutoSelectDetection()
+
+	def event_loseFocus(self):
+		self.terminateAutoSelectDetection()
+		super().event_loseFocus()
 
 	def event_caret(self):
 		super(EditableText, self).event_caret()
@@ -259,15 +265,31 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _getTextLines(self):
-		"""Retrieve the text of this object in lines.
+	def _get_diffAlgo(self):
+		"""
+			This property controls which diffing algorithm should be used by
+			this object. Most subclasses should simply use the base
+			implementation, which returns DMP (character-based diffing).
+			
+			@Note: DMP is experimental, and can be disallowed via user
+			preference. In this case, the prior stable implementation, Difflib
+			(line-based diffing), will be used.
+		"""
+		return diffHandler.get_dmp_algo()
+
+	def _get_devInfo(self):
+		info = super().devInfo
+		info.append(f"diffing algorithm: {self.diffAlgo}")
+		return info
+
+	def _getText(self) -> str:
+		"""Retrieve the text of this object.
 		This will be used to determine the new text to speak.
 		The base implementation uses the L{TextInfo}.
 		However, subclasses should override this if there is a better way to retrieve the text.
-		@return: The current lines of text.
-		@rtype: list of str
 		"""
-		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
+		ti = self.makeTextInfo(textInfos.POSITION_ALL)
+		return self.diffAlgo._getText(ti)
 
 	def _reportNewLines(self, lines):
 		"""
@@ -285,10 +307,10 @@ class LiveText(NVDAObject):
 
 	def _monitor(self):
 		try:
-			oldLines = self._getTextLines()
+			oldText = self._getText()
 		except:
-			log.exception("Error getting initial lines")
-			oldLines = []
+			log.exception("Error getting initial text")
+			oldText = ""
 
 		while self._keepMonitoring:
 			self._event.wait()
@@ -303,9 +325,9 @@ class LiveText(NVDAObject):
 			self._event.clear()
 
 			try:
-				newLines = self._getTextLines()
+				newText = self._getText()
 				if config.conf["presentation"]["reportDynamicContentChanges"]:
-					outLines = self._calculateNewText(newLines, oldLines)
+					outLines = self._calculateNewText(newText, oldText)
 					if len(outLines) == 1 and len(outLines[0].strip()) == 1:
 						# This is only a single character,
 						# which probably means it is just a typed character,
@@ -313,61 +335,13 @@ class LiveText(NVDAObject):
 						del outLines[0]
 					if outLines:
 						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
-				oldLines = newLines
+				oldText = newText
 			except:
-				log.exception("Error getting lines or calculating new text")
+				log.exception("Error getting or calculating new text")
 
-	def _calculateNewText(self, newLines, oldLines):
-		outLines = []
+	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
+		return self.diffAlgo.diff(newText, oldText)
 
-		prevLine = None
-		for line in difflib.ndiff(oldLines, newLines):
-			if line[0] == "?":
-				# We're never interested in these.
-				continue
-			if line[0] != "+":
-				# We're only interested in new lines.
-				prevLine = line
-				continue
-			text = line[2:]
-			if not text or text.isspace():
-				prevLine = line
-				continue
-
-			if prevLine and prevLine[0] == "-" and len(prevLine) > 2:
-				# It's possible that only a few characters have changed in this line.
-				# If so, we want to speak just the changed section, rather than the entire line.
-				prevText = prevLine[2:]
-				textLen = len(text)
-				prevTextLen = len(prevText)
-				# Find the first character that differs between the two lines.
-				for pos in range(min(textLen, prevTextLen)):
-					if text[pos] != prevText[pos]:
-						start = pos
-						break
-				else:
-					# We haven't found a differing character so far and we've hit the end of one of the lines.
-					# This means that the differing text starts here.
-					start = pos + 1
-				# Find the end of the differing text.
-				if textLen != prevTextLen:
-					# The lines are different lengths, so assume the rest of the line changed.
-					end = textLen
-				else:
-					for pos in range(textLen - 1, start - 1, -1):
-						if text[pos] != prevText[pos]:
-							end = pos + 1
-							break
-
-				if end - start < 15:
-					# Less than 15 characters have changed, so only speak the changed chunk.
-					text = text[start:end]
-
-			if text and not text.isspace():
-				outLines.append(text)
-			prevLine = line
-
-		return outLines
 
 class Terminal(LiveText, EditableText):
 	"""An object which both accepts text input and outputs text which should be reported automatically.
@@ -560,7 +534,7 @@ class RowWithFakeNavigation(NVDAObject):
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.
 			obj.parent = self
 		api.setNavigatorObject(obj)
-		speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
 
 	def _moveToColumnNumber(self, column):
 		child = column - 1
@@ -733,7 +707,9 @@ class _FakeTableCell(NVDAObject):
 		states = self.parent.states.copy()
 		if self.location and self.location.width == 0:
 			states.add(controlTypes.STATE_INVISIBLE)
+		states.discard(controlTypes.STATE_CHECKED)
 		return states
+
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.
@@ -756,7 +732,7 @@ class ToolTip(NVDAObject):
 	def event_show(self):
 		if not config.conf["presentation"]["reportTooltips"]:
 			return
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
@@ -769,7 +745,7 @@ class Notification(NVDAObject):
 	def event_alert(self):
 		if not config.conf["presentation"]["reportHelpBalloons"]:
 			return
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
@@ -790,7 +766,7 @@ class EditableTextWithSuggestions(NVDAObject):
 		# Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 		braille.handler.message(_("Suggestions"))
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(r"waves\suggestionsOpened.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
 
 	def event_suggestionsClosed(self):
 		"""Called when suggestions list or container is closed.
@@ -798,7 +774,7 @@ class EditableTextWithSuggestions(NVDAObject):
 		By default NVDA will announce this via speech, braille or via a sound.
 		"""
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
 
 class WebDialog(NVDAObject):
 	"""

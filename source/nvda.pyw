@@ -9,23 +9,47 @@
 
 import sys
 import os
+import globalVars
+import ctypes
 
+customVenvDetected = False
 if getattr(sys, "frozen", None):
 	# We are running as an executable.
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
-	os.chdir(sys.prefix)
+	appDir = sys.prefix
 else:
+	# we are running from source
+	# Ensure we are inside the NVDA build system's Python virtual environment.
+	nvdaVenv = os.getenv("NVDA_VENV")
+	virtualEnv = os.getenv("VIRTUAL_ENV")
+	if not virtualEnv or not os.path.isdir(virtualEnv):
+		ctypes.windll.user32.MessageBoxW(
+			0,
+			"NVDA cannot  detect the Python virtual environment. "
+			"To run NVDA from source, please use runnvda.bat in the root of this repository.",
+			"Error",
+			0,
+		)
+		sys.exit(1)
+	customVenvDetected = nvdaVenv != virtualEnv
 	import sourceEnv
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
-	os.chdir(os.path.normpath(os.path.dirname(__file__)))
+	appDir = os.path.normpath(os.path.dirname(__file__))
+appDir = os.path.abspath(appDir)
+os.chdir(appDir)
+globalVars.appDir = appDir
 
-import ctypes
+
 import locale
 import gettext
 
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
+	gettext.translation(
+		'nvda',
+		localedir=os.path.join(globalVars.appDir, 'locale'),
+		languages=[locale.getdefaultlocale()[0]]
+	).install(True)
 except:
 	gettext.install('nvda')
 
@@ -81,6 +105,7 @@ def stringToBool(string):
 	except ValidateError as e:
 		raise argparse.ArgumentTypeError(e.message)
 
+
 #Process option arguments
 parser=NoConsoleOptionParser()
 quitGroup = parser.add_mutually_exclusive_group()
@@ -104,6 +129,16 @@ parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,
 	help="When installing, enable NVDA's start on the logon screen")
+parser.add_argument(
+	'--copy-portable-config',
+	action="store_true",
+	dest='copyPortableConfig',
+	default=False,
+	help=(
+		"When installing, copy the portable configuration "
+		"from the provided path (--config-path, -c) to the current user account"
+	)
+)
 # This option is passed by Ease of Access so that if someone downgrades without uninstalling
 # (despite our discouragement), the downgraded copy won't be started in non-secure mode on secure desktops.
 # (Older versions always required the --secure option to start in secure mode.)
@@ -112,17 +147,39 @@ parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringTo
 # If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
+# Make any app args path values absolute
+# So as to not be affected by the current directory changing during process lifetime.
+pathAppArgs = [
+	"configPath",
+	"logFileName",
+	"portablePath",
+]
+for name in pathAppArgs:
+	origVal = getattr(globalVars.appArgs, name)
+	if isinstance(origVal, str):
+		newVal = os.path.abspath(origVal)
+		setattr(globalVars.appArgs, name, newVal)
 
-def terminateRunningNVDA(window):
+
+def safelyTerminateRunningNVDA(window: winUser.HWND):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
-	winUser.PostMessage(window,winUser.WM_QUIT,0,0)
+	winUser.PostSafeQuitMessage(window)
 	h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 	if not h:
 		# The process is already dead.
 		return
 	try:
-		res=winKernel.waitForSingleObject(h,4000)
+		res = winKernel.waitForSingleObject(h, 6000)  # give time to exit NVDA safely
 		if res==0:
+			# The process terminated within the timeout period.
+			return
+		else:
+			raise OSError("Failed to terminate with WM_EXIT_NVDA")
+	except OSError:
+		# allow for updating between NVDA versions, as NVDA <= 2020.4 does not accept WM_EXIT_NVDA messages
+		print("Failed to post a safe quit message across NVDA instances, sending WM_QUIT", file=sys.stderr)
+		res = _terminateRunningLegacyNVDA(window)
+		if res == 0:
 			# The process terminated within the timeout period.
 			return
 	finally:
@@ -138,6 +195,20 @@ def terminateRunningNVDA(window):
 	finally:
 		winKernel.closeHandle(h)
 
+
+def _terminateRunningLegacyNVDA(window: winUser.HWND) -> int:
+	'''
+	Returns 0 on success, raises an OSError based WinErr if the process isn't killed
+	'''
+	processID, _threadID = winUser.getWindowThreadProcessID(window)
+	winUser.PostMessage(window, winUser.WM_QUIT, 0, 0)
+	h = winKernel.openProcess(winKernel.SYNCHRONIZE, False, processID)
+	if not h:
+		# The process is already dead.
+		return 0
+	return winKernel.waitForSingleObject(h, 4000)
+
+
 #Handle running multiple instances of NVDA
 try:
 	oldAppWindowHandle=winUser.FindWindow(u'wxWindowClassNR',u'NVDA')
@@ -150,8 +221,9 @@ if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 		# NVDA is running.
 		sys.exit(0)
 	try:
-		terminateRunningNVDA(oldAppWindowHandle)
-	except:
+		safelyTerminateRunningNVDA(oldAppWindowHandle)
+	except Exception as e:
+		print(f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}", file=sys.stderr)
 		sys.exit(1)
 if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	sys.exit(0)
@@ -200,11 +272,18 @@ if logHandler.log.getEffectiveLevel() is log.DEBUG:
 import buildVersion
 log.info("Starting NVDA version %s" % buildVersion.version)
 log.debug("Debug level logging enabled")
+if customVenvDetected:
+	log.warning("NVDA launched using a custom Python virtual environment.")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
-#Accept wm_quit from other processes, even if running with higher privilages
-if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
-	raise WinError()
+
+# Accept WM_QUIT from other processes, even if running with higher privilages
+# 2020.4 and earlier versions sent a WM_QUIT message when asking NVDA to exit.
+# Some users may run several different versions of NVDA, so we continue to support this.
+# WM_QUIT does not allow NVDA to shutdown cleanly, now WM_EXIT_NVDA is used instead
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT.ALLOW):
+	log.error("Unable to set the NVDA process to receive WM_QUIT messages from other processes")
+	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 if not isSecureDesktop and not config.isAppX:

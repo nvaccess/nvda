@@ -9,6 +9,7 @@ EXPORTS
 	nvdaInProcUtils_registerNVDAProcess
 	nvdaInProcUtils_unregisterNVDAProcess
 	nvdaInProcUtils_sysListView32_getGroupInfo
+	nvdaInProcUtils_sysListView32_getColumnContent
 	nvdaInProcUtils_dumpOnCrash
 	nvdaInProcUtils_IA2Text_findContentDescendant
 	nvdaInProcUtils_getActiveObject
@@ -59,3 +60,4 @@ EXPORTS
 	audioDucking_shouldDelay
 	logMessage
 	getOleClipboardText
+	_nvdaControllerInternal_reportLiveRegion

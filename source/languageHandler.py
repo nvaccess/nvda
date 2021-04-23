@@ -1,8 +1,8 @@
-#languageHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# languageHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2018 NV access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Language and localization support.
 This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
@@ -14,10 +14,14 @@ import sys
 import ctypes
 import locale
 import gettext
+import globalVars
+from logHandler import log
 
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2
+LOCALE_SLIST = 0xC
 LOCALE_SLANGDISPLAYNAME=0x6f
+LOCALE_USER_DEFAULT = 0x400
 LOCALE_CUSTOM_UNSPECIFIED = 0x1000
 #: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
 #: This might be because Windows doesn't know about the locale (e.g. "an"),
@@ -95,8 +99,10 @@ def getAvailableLanguages(presentational=False):
 	@rtype: list of tuples
 	"""
 	#Make a list of all the locales found in NVDA's locale dir
-	locales = [x for x in os.listdir('locale') if not x.startswith('.')]
-	locales = [x for x in locales if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
+	localesDir = os.path.join(globalVars.appDir, 'locale')
+	locales = [
+		x for x in os.listdir(localesDir) if os.path.isfile(os.path.join(localesDir, x, 'LC_MESSAGES', 'nvda.mo'))
+	]
 	#Make sure that en (english) is in the list as it may not have any locale files, but is default
 	if 'en' not in locales:
 		locales.append('en')
@@ -120,6 +126,7 @@ def getAvailableLanguages(presentational=False):
 	)
 	return langs
 
+
 def makePgettext(translations):
 	"""Obtaina  pgettext function for use with a gettext translations instance.
 	pgettext is used to support message contexts,
@@ -138,7 +145,7 @@ def makePgettext(translations):
 		def pgettext(context, message):
 			return message
 	else:
-		raise ValueError("%s is Not a GNUTranslations or NullTranslations object"%translations)
+		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
 	return pgettext
 
 def getWindowsLanguage():
@@ -166,41 +173,122 @@ def getWindowsLanguage():
 			localeName="en"
 	return localeName
 
-def setLanguage(lang):
+
+def setLanguage(lang: str) -> None:
+	'''
+	Sets the following using `lang` such as "en", "ru_RU", or "es-ES". Use "Windows" to use the system locale
+	 - the windows locale for the thread (fallback to system locale)
+	 - the translation service (fallback to English)
+	 - languageHandler.curLang (match the translation service)
+	 - the python locale for the thread (match the translation service, fallback to system default)
+	'''
 	global curLang
-	try:
-		if lang=="Windows":
-			localeName=getWindowsLanguage()
-			trans=gettext.translation('nvda',localedir='locale',languages=[localeName])
-			curLang=localeName
-		else:
-			trans=gettext.translation("nvda", localedir="locale", languages=[lang])
-			curLang=lang
-			localeChanged=False
-			#Try setting Python's locale to lang
-			try:
-				locale.setlocale(locale.LC_ALL,lang)
-				localeChanged=True
-			except:
-				pass
-			if not localeChanged and '_' in lang:
-				#Python couldn'tsupport the language_country locale, just try language.
-				try:
-					locale.setlocale(locale.LC_ALL,lang.split('_')[0])
-				except:
-					pass
-			#Set the windows locale for this thread (NVDA core) to this locale.
-			LCID=localeNameToWindowsLCID(lang)
+	if lang == "Windows":
+		localeName = getWindowsLanguage()
+	else:
+		localeName = lang
+		# Set the windows locale for this thread (NVDA core) to this locale.
+		try:
+			LCID = localeNameToWindowsLCID(lang)
 			ctypes.windll.kernel32.SetThreadLocale(LCID)
+		except IOError:
+			log.debugWarning(f"couldn't set windows thread locale to {lang}")
+
+	try:
+		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
+		curLang = localeName
 	except IOError:
-		trans=gettext.translation("nvda",fallback=True)
-		curLang="en"
+		log.debugWarning(f"couldn't set the translation service locale to {localeName}")
+		trans = gettext.translation("nvda", fallback=True)
+		curLang = "en"
+
 	trans.install()
+	setLocale(curLang)
 	# Install our pgettext function.
-	import builtins
 	builtins.pgettext = makePgettext(trans)
 
-def getLanguage():
+def setLocale(localeName: str) -> None:
+	'''
+	Set python's locale using a `localeName` such as "en", "ru_RU", or "es-ES".
+	Will fallback on `curLang` if it cannot be set and finally fallback to the system locale.
+	'''
+
+	r'''
+	Python 3.8's locale system allows you to set locales that you cannot get
+	so we must test for both ValueErrors and locale.Errors
+
+	>>> import locale
+	>>> locale.setlocale(locale.LC_ALL, 'foobar')
+	Traceback (most recent call last):
+	File "<stdin>", line 1, in <module>
+	File "Python38-32\lib\locale.py", line 608, in setlocale
+		return _setlocale(category, locale)
+	locale.Error: unsupported locale setting
+	>>> locale.setlocale(locale.LC_ALL, 'en-GB')
+	'en-GB'
+	>>> locale.getlocale()
+	Traceback (most recent call last):
+	File "<stdin>", line 1, in <module>
+	File "Python38-32\lib\locale.py", line 591, in getlocale
+		return _parse_localename(localename)
+	File "Python38-32\lib\locale.py", line 499, in _parse_localename
+		raise ValueError('unknown locale: %s' % localename)
+	ValueError: unknown locale: en-GB
+	'''
+	originalLocaleName = localeName
+	# Try setting Python's locale to localeName
+	try:
+		locale.setlocale(locale.LC_ALL, localeName)
+		locale.getlocale()
+		log.debug(f"set python locale to {localeName}")
+		return
+	except locale.Error:
+		log.debugWarning(f"python locale {localeName} could not be set")
+	except ValueError:
+		log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
+
+	if '-' in localeName:
+		# Python couldn't support the language-country locale, try language_country.
+		try:
+			localeName = localeName.replace('-', '_')
+			locale.setlocale(locale.LC_ALL, localeName)
+			locale.getlocale()
+			log.debug(f"set python locale to {localeName}")
+			return
+		except locale.Error:
+			log.debugWarning(f"python locale {localeName} could not be set")
+		except ValueError:
+			log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
+
+	if '_' in localeName:
+		# Python couldn't support the language_country locale, just try language.
+		try:
+			localeName = localeName.split('_')[0]
+			locale.setlocale(locale.LC_ALL, localeName)
+			locale.getlocale()
+			log.debug(f"set python locale to {localeName}")
+			return
+		except locale.Error:
+			log.debugWarning(f"python locale {localeName} could not be set")
+		except ValueError:
+			log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
+
+	try:
+		locale.getlocale()
+	except ValueError:
+		# as the locale may have been changed to something that getlocale() couldn't retrieve
+		# reset to default locale
+		if originalLocaleName == curLang:
+			# reset to system locale default if we can't set the current lang's locale
+			locale.setlocale(locale.LC_ALL, "")
+			log.debugWarning(f"set python locale to system default")
+		else:
+			log.debugWarning(f"setting python locale to the current language {curLang}")
+			# fallback and try to reset the locale to the current lang
+			setLocale(curLang)
+
+
+def getLanguage() -> str:
 	return curLang
 
 def normalizeLanguage(lang):
@@ -335,5 +423,9 @@ windowsPrimaryLCIDsToLocaleNames={
 	134:'qut',
 	135:'rw',
 	136:'wo',
-	140:'gbz'
+	140: 'gbz',
+	1170: 'ckb',
+	1109: 'my',
+	1143: 'so',
+	9242: 'sr',
 }

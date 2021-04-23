@@ -107,7 +107,7 @@ def shouldUseToUnicodeEx(focus=None):
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 	return (
 		# This is only possible in Windows 10 1607 and above
-		winVersion.isWin10(1607)
+		winVersion.getWinVer() >= winVersion.WIN10_1607
 		and (  # Either of
 			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.
@@ -199,13 +199,6 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			inputCore.manager.executeGesture(gesture)
 			gestureExecuted=True
 			trappedKeys.add(keyCode)
-			if canModifiersPerformAction(gesture.generalizedModifiers):
-				# #3472: These modifiers can perform an action if pressed alone
-				# and we've just consumed the main key.
-				# Send special reserved vkcode (0xff) to at least notify the app's key state that something happendd.
-				# This allows alt and windows to be bound to scripts and
-				# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
-				KeyboardInputGesture((),0xff,0,False).send()
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
@@ -329,7 +322,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	"""A key pressed on the traditional system keyboard.
 	"""
 
-	#: All normal modifier keys, where modifier vk codes are mapped to a more general modifier vk code or C{None} if not applicable.
+#: All normal modifier keys, where modifier vk codes are mapped to a more general modifier vk code
+# or C{None} if not applicable.
 	#: @type: dict
 	NORMAL_MODIFIER_KEYS = {
 		winUser.VK_LCONTROL: winUser.VK_CONTROL,
@@ -504,6 +498,23 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			key=localizedKeyLabels.get(key.lower(), key),
 			state=_("on") if toggleState else _("off")))
 
+	def executeScript(self, script):
+		if canModifiersPerformAction(self.generalizedModifiers):
+			# #3472: These modifiers can perform an action if pressed alone
+			# and we've just totally consumed the main key.
+			# Send special reserved vkcode VK_NONE (0xff)
+			# to at least notify the app's key state that something happened.
+			# This allows alt and windows to be bound to scripts and
+			# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
+			# This must be done before executing the script,
+			# As if the script takes a long time and the user releases these modifier keys before the script finishes,
+			# it is already too late.
+			with ignoreInjection():
+				winUser.keybd_event(winUser.VK_NONE, 0, 0, 0)
+				winUser.keybd_event(winUser.VK_NONE, 0, winUser.KEYEVENTF_KEYUP, 0)
+		# Now actually execute the script.
+		super().executeScript(script)
+
 	def send(self):
 		keys = []
 		for vk, ext in self.generalizedModifiers:
@@ -616,7 +627,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else:
 				# The main key must be last, so handle that outside the loop.
 				main = label
-		names.append(main)
+		if main is not None:
+			# If there is no main key, this gesture identifier only contains modifiers.
+			names.append(main)
 		return dispSource, "+".join(names)
 
 inputCore.registerGestureSource("kb", KeyboardInputGesture)
@@ -638,16 +651,9 @@ def injectRawKeyboardInput(isPress, code, isExtended):
 		# Change what we pass to MapVirtualKeyEx, but don't change what NVDA gets.
 		mapScan |= 0xE000
 	vkCode = winUser.user32.MapVirtualKeyExW(mapScan, winUser.MAPVK_VSC_TO_VK_EX, getInputHkl())
-	if isPress:
-		shouldSend = internal_keyDownEvent(vkCode, code, isExtended, False)
-	else:
-		shouldSend = internal_keyUpEvent(vkCode, code, isExtended, False)
-	if shouldSend:
-		flags = 0
-		if not isPress:
-			flags |= 2
-		if isExtended:
-			flags |= 1
-		with ignoreInjection():
-			winUser.keybd_event(vkCode, code, flags, None)
-			wx.Yield()
+	flags = 0
+	if not isPress:
+		flags |= 2
+	if isExtended:
+		flags |= 1
+	winUser.keybd_event(vkCode, code, flags, None)

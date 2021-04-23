@@ -1,8 +1,8 @@
-#virtualBuffers/gecko_ia2.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation
+# virtualBuffers/gecko_ia2.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
 import weakref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
@@ -17,6 +17,7 @@ import oleacc
 from logHandler import log
 import textInfos
 from comtypes.gen.IAccessible2Lib import IAccessible2
+from comInterfaces import IAccessible2Lib as IA2
 from comtypes import COMError
 import aria
 import config
@@ -52,9 +53,14 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if attrVal is not None:
 				attrs[attr]=int(attrVal)
 
-		current = attrs.get("IAccessible2::attribute_current")
-		if current not in (None, 'false'):
-			attrs['current']= current
+		valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
+		try:
+			isCurrent = controlTypes.IsCurrent(valForCurrent)
+		except ValueError:
+			log.debugWarning(f"Unknown isCurrent value: {valForCurrent}")
+			isCurrent = controlTypes.IsCurrent.NO
+		if isCurrent != controlTypes.IsCurrent.NO:
+			attrs['current'] = isCurrent
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
 			attrs['placeholder']= placeholder
@@ -94,8 +100,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
-
-		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
+		xmlRoles = attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
 			# Ignore the landmark role
@@ -142,14 +147,6 @@ class Gecko_ia2(VirtualBuffer):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
 		self._initialScrollObj = None
 
-	def _get_shouldPrepare(self):
-		if not super(Gecko_ia2, self).shouldPrepare:
-			return False
-		if isinstance(self.rootNVDAObject, NVDAObjects.IAccessible.mozilla.Gecko1_9) and controlTypes.STATE_BUSY in self.rootNVDAObject.states:
-			# If the document is busy in Gecko 1.9, it isn't safe to create a buffer yet.
-			return False
-		return True
-
 	@staticmethod
 	def _getEmbedderFrame(acc):
 		"""Get the iframe/frame (if any) which contains the given object.
@@ -157,19 +154,19 @@ class Gecko_ia2(VirtualBuffer):
 		"""
 		try:
 			# 1. Get the containing document.
-			if not isinstance(acc, IAccessibleHandler.IAccessible2_2):
+			if not isinstance(acc, IA2.IAccessible2_2):
 				# IAccessible NVDAObjects currently fetch IA2, but we need IA2_2 for relationTargetsOfType.
 				# (Out-of-process, for a single relation, this is cheaper than IA2::relations.)
-				acc = acc.QueryInterface(IAccessibleHandler.IAccessible2_2)
+				acc = acc.QueryInterface(IA2.IAccessible2_2)
 			targets, count = acc.relationTargetsOfType(IA2_RELATION_CONTAINING_DOCUMENT, 1)
 			if count == 0:
 				return None
-			doc = targets[0].QueryInterface(IAccessibleHandler.IAccessible2_2)
+			doc = targets[0].QueryInterface(IA2.IAccessible2_2)
 			# 2. Get its parent (the embedder); e.g. iframe.
 			embedder = doc.accParent
 			if not embedder:
 				return None
-			embedder = embedder.QueryInterface(IAccessibleHandler.IAccessible2_2)
+			embedder = embedder.QueryInterface(IA2.IAccessible2_2)
 			# 3. Make sure this is an iframe/frame.
 			attribs = embedder.attributes
 			if "tag:browser;" in attribs:
@@ -217,7 +214,14 @@ class Gecko_ia2(VirtualBuffer):
 			yield accId
 
 	def __contains__(self,obj):
-		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
+		if (
+			not (
+				isinstance(obj, NVDAObjects.IAccessible.IAccessible)
+				and isinstance(obj.IAccessibleObject, IA2.IAccessible2)
+			)
+			or not obj.windowClassName.startswith('Mozilla')
+			or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
+		):
 			return False
 		for accId in self._iterIdsToTryWithAccChild(obj):
 			if accId == self.rootID:
@@ -250,7 +254,7 @@ class Gecko_ia2(VirtualBuffer):
 			# stops responding; e.g. it froze, crashed or is being debugged.
 			return True
 		try:
-			isDefunct=bool(root.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_DEFUNCT)
+			isDefunct = bool(root.IAccessibleObject.states & IA2.IA2_STATE_DEFUNCT)
 		except COMError:
 			# If IAccessible2 states can not be fetched at all, defunct should be assumed as the object has clearly been disconnected or is dead
 			isDefunct=True
@@ -316,11 +320,13 @@ class Gecko_ia2(VirtualBuffer):
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType.startswith('heading') and nodeType[7:].isdigit():
-			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING],"IAccessible2::attribute_level":[nodeType[7:]]}
+			attrs = {"IAccessible::role": [IA2.IA2_ROLE_HEADING], "IAccessible2::attribute_level": [nodeType[7:]]}
 		elif nodeType == "annotation":
-			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_CONTENT_DELETION,IAccessibleHandler.IA2_ROLE_CONTENT_INSERTION]}
+			attrs = {
+				"IAccessible::role": [IA2.IA2_ROLE_CONTENT_DELETION, IA2.IA2_ROLE_CONTENT_INSERTION]
+			}
 		elif nodeType=="heading":
-			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
+			attrs = {"IAccessible::role": [IA2.IA2_ROLE_HEADING]}
 		elif nodeType=="table":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TABLE]}
 			if not config.conf["documentFormatting"]["includeLayoutTables"]:
@@ -333,23 +339,57 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs=[
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]},
-				{"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1],"parent::IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[None]},
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_BUTTONMENU,
+						oleacc.ROLE_SYSTEM_CHECKBUTTON,
+						oleacc.ROLE_SYSTEM_COMBOBOX,
+						oleacc.ROLE_SYSTEM_LIST,
+						oleacc.ROLE_SYSTEM_OUTLINE,
+						oleacc.ROLE_SYSTEM_PUSHBUTTON,
+						oleacc.ROLE_SYSTEM_RADIOBUTTON,
+						oleacc.ROLE_SYSTEM_PAGETAB,
+						IA2.IA2_ROLE_TOGGLE_BUTTON,
+					],
+					f"IAccessible::state_{oleacc.STATE_SYSTEM_READONLY}": [None],
+				},
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_COMBOBOX,
+						oleacc.ROLE_SYSTEM_TEXT
+					],
+					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [1],
+				},
+				{
+					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [1],
+					f"parent::IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [None],
+				},
 			]
 		elif nodeType=="list":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
 		elif nodeType=="listItem":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LISTITEM]}
 		elif nodeType=="button":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON]}
+			attrs = {
+				"IAccessible::role": [
+					oleacc.ROLE_SYSTEM_PUSHBUTTON,
+					oleacc.ROLE_SYSTEM_BUTTONMENU,
+					IA2.IA2_ROLE_TOGGLE_BUTTON
+				]
+			}
 		elif nodeType=="edit":
 			attrs=[
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]},
-				{"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1],"parent::IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[None]},
+				{
+					"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
+					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}":[1]
+				},
+				{
+					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [1],
+					f"parent::IAccessible2::state_{IA2.IA2_STATE_EDITABLE}":[None]
+				},
 			]
 		elif nodeType=="frame":
-			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_INTERNAL_FRAME]}
+			attrs = {"IAccessible::role": [IA2.IA2_ROLE_INTERNAL_FRAME]}
 		elif nodeType=="separator":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_SEPARATOR]}
 		elif nodeType=="radioButton":
@@ -368,13 +408,13 @@ class Gecko_ia2(VirtualBuffer):
 				# Search for a tag of blockquote for older implementations before the blockquote IAccessible2 role existed.
 				{"IAccessible2::attribute_tag":self._searchableTagValues(["blockquote"])},
 				# Also support the new blockquote IAccessible2 role
-				{"IAccessible::role":[IAccessibleHandler.IA2_ROLE_BLOCK_QUOTE]},
+				{"IAccessible::role": [IA2.IA2_ROLE_BLOCK_QUOTE]},
 			]
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
 			attrs = [
-				{"IAccessible::role": [IAccessibleHandler.IA2_ROLE_LANDMARK]},
+				{"IAccessible::role": [IA2.IA2_ROLE_LANDMARK]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
 					"name": [VBufStorage_findMatch_notEmpty]}
@@ -451,9 +491,3 @@ class Gecko_ia2(VirtualBuffer):
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj
-
-class Gecko_ia2Pre14(Gecko_ia2):
-
-	def _searchableTagValues(self, values):
-		# #2287: In Gecko < 14, tag values are upper case.
-		return [val.upper() for val in values]

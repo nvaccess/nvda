@@ -1,16 +1,15 @@
 # -*- coding: UTF-8 -*-
-# gui/__init__.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import typing
 import time
 import os
 import sys
 import threading
-import codecs
 import ctypes
 import weakref
 import wx
@@ -18,24 +17,22 @@ import wx.adv
 import globalVars
 import tones
 import ui
+from documentationUtils import getDocFilePath
 from logHandler import log
 import config
 import versionInfo
-import addonAPIVersion
 import speech
 import queueHandler
 import core
 from . import guiHelper
+from . import settingsDialogs
 from .settingsDialogs import *
+from .inputGestures import InputGesturesDialog
 import speechDictHandler
-import languageHandler
-import keyboardHandler
 from . import logViewer
 import speechViewer
 import winUser
 import api
-from . import guiHelper
-import winVersion
 
 try:
 	import updateCheck
@@ -43,51 +40,14 @@ except RuntimeError:
 	updateCheck = None
 
 ### Constants
-NVDA_PATH = os.getcwd()
+NVDA_PATH = globalVars.appDir
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 
 ### Globals
 mainFrame = None
 isInMessageBox = False
-
-def getDocFilePath(fileName, localized=True):
-	if not getDocFilePath.rootPath:
-		if hasattr(sys, "frozen"):
-			getDocFilePath.rootPath = os.path.join(NVDA_PATH, "documentation")
-		else:
-			getDocFilePath.rootPath = os.path.abspath(os.path.join("..", "user_docs"))
-
-	if localized:
-		lang = languageHandler.getLanguage()
-		tryLangs = [lang]
-		if "_" in lang:
-			# This locale has a sub-locale, but documentation might not exist for the sub-locale, so try stripping it.
-			tryLangs.append(lang.split("_")[0])
-		# If all else fails, use English.
-		tryLangs.append("en")
-
-		fileName, fileExt = os.path.splitext(fileName)
-		for tryLang in tryLangs:
-			tryDir = os.path.join(getDocFilePath.rootPath, tryLang)
-			if not os.path.isdir(tryDir):
-				continue
-
-			# Some out of date translations might include .txt files which are now .html files in newer translations.
-			# Therefore, ignore the extension and try both .html and .txt.
-			for tryExt in ("html", "txt"):
-				tryPath = os.path.join(tryDir, "%s.%s" % (fileName, tryExt))
-				if os.path.isfile(tryPath):
-					return tryPath
-
-	else:
-		# Not localized.
-		if not hasattr(sys, "frozen") and fileName in ("copying.txt", "contributors.txt"):
-			# If running from source, these two files are in the root dir.
-			return os.path.join(NVDA_PATH, "..", fileName)
-		else:
-			return os.path.join(getDocFilePath.rootPath, fileName)
-getDocFilePath.rootPath = None
+hasAppExited = False
 
 class MainFrame(wx.Frame):
 
@@ -116,10 +76,6 @@ class MainFrame(wx.Frame):
 				# This seems to happen if the call takes too long.
 				self.Show()
 				self.Hide()
-
-	def Destroy(self):
-		self.sysTrayIcon.Destroy()
-		super(MainFrame, self).Destroy()
 
 	def prePopup(self):
 		"""Prepare for a popup.
@@ -241,7 +197,7 @@ class MainFrame(wx.Frame):
 			d.Show()
 			self.postPopup()
 		else:
-			wx.GetApp().ExitMainLoop()
+			safeAppExit()
 
 	def onNVDASettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog)
@@ -401,6 +357,57 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
+
+def safeAppExit():
+	"""
+	Ensures the app is exited by all the top windows being destroyed.
+	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
+	"""
+
+	import brailleViewer
+	brailleViewer.destroyBrailleViewer()
+
+	app = wx.GetApp()
+
+	# prevent race condition with object deletion
+	# prevent deletion of the object while we work on it.
+	_SettingsDialog = settingsDialogs.SettingsDialog
+	nonWeak: typing.Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
+
+	for instance, state in nonWeak.items():
+		if state is _SettingsDialog.DialogState.DESTROYED:
+			log.error(
+				"Destroyed but not deleted instance of gui.SettingsDialog exists"
+				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
+
+	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
+	# They must be manually destroyed when exiting the app.
+	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12286, #12238)
+	log.debug("destroying system tray icon and menu")
+	app.ScheduleForDestruction(mainFrame.sysTrayIcon.menu)
+	mainFrame.sysTrayIcon.RemoveIcon()
+	app.ScheduleForDestruction(mainFrame.sysTrayIcon)
+
+	for window in wx.GetTopLevelWindows():
+		if isinstance(window, wx.Dialog) and window.IsModal():
+			log.debug(f"ending modal {window} during exit process")
+			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
+		if isinstance(window, MainFrame):
+			log.debug("destroying main frame during exit process")
+			# the MainFrame has EVT_CLOSE bound to the ExitDialog
+			# which calls this function on exit, so destroy this window
+			app.ScheduleForDestruction(window)
+		else:
+			log.debug(f"closing window {window} during exit process")
+			wx.CallAfter(window.Close)
+
+	global hasAppExited
+	hasAppExited = True
+
+
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -524,6 +531,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
 			# Translators: The label for the menu item to open NVDA Welcome Dialog.
 			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
+			from .startupDialogs import WelcomeDialog
 			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
 			menu_help.AppendSeparator()
 		if updateCheck:
@@ -568,10 +576,6 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
-	def Destroy(self):
-		self.menu.Destroy()
-		super(SysTrayIcon, self).Destroy()
-
 	def onActivate(self, evt):
 		mainFrame.prePopup()
 		import appModules.nvda
@@ -590,30 +594,35 @@ def initialize():
 	if mainFrame:
 		raise RuntimeError("GUI already initialized")
 	mainFrame = MainFrame()
+	wxLang = core.getWxLangOrNone()
+	if wxLang:
+		# otherwise the system default will be used
+		mainFrame.SetLayoutDirection(wxLang.LayoutDirection)
 	wx.GetApp().SetTopWindow(mainFrame)
+	# In wxPython >= 4.1,
+	# wx.CallAfter no longer executes callbacks while NVDA's main thread is within apopup menu or message box.
+	# To work around this,
+	# Monkeypatch wx.CallAfter to
+	# post a WM_NULL message to our top-level window after calling the original CallAfter,
+	# which causes wx's event loop to wake up enough to execute the callback.
+	old_wx_CallAfter = wx.CallAfter
+
+	def wx_CallAfter_wrapper(func, *args, **kwargs):
+		old_wx_CallAfter(func, *args, **kwargs)
+		# mainFrame may be None as NVDA could be terminating.
+		topHandle = mainFrame.Handle if mainFrame else None
+		if topHandle:
+			winUser.PostMessage(topHandle, winUser.WM_NULL, 0, 0)
+	wx.CallAfter = wx_CallAfter_wrapper
 
 def terminate():
-	import brailleViewer
-	brailleViewer.destroyBrailleViewer()
-
-	for instance, state in gui.SettingsDialog._instances.items():
-		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
-			log.error(
-				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
-			)
-		else:
-			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
 	global mainFrame
-	# This is called after the main loop exits because WM_QUIT exits the main loop
-	# without destroying all objects correctly and we need to support WM_QUIT.
-	# Therefore, any request to exit should exit the main loop.
-	wx.CallAfter(mainFrame.Destroy)
-	# #4460: We need another iteration of the main loop
-	# so that everything (especially the TaskBarIcon) is cleaned up properly.
-	# ProcessPendingEvents doesn't seem to work, but MainLoop does.
-	# Because the top window gets destroyed,
-	# MainLoop thankfully returns pretty quickly.
-	wx.GetApp().MainLoop()
+
+	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
+	# safeAppExit has not been called yet
+	if not hasAppExited:
+		safeAppExit()
+
 	mainFrame = None
 
 def showGui():
@@ -668,180 +677,6 @@ def runScriptModalDialog(dialog, callback=None):
 		dialog.Destroy()
 	wx.CallAfter(run)
 
-class WelcomeDialog(wx.Dialog):
-	"""The NVDA welcome dialog.
-	This provides essential information for new users, such as a description of the NVDA key and instructions on how to activate the NVDA menu.
-	It also provides quick access to some important configuration options.
-	This dialog is displayed the first time NVDA is started with a new configuration.
-	"""
-
-	WELCOME_MESSAGE_DETAIL = _(
-		# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
-		"Most commands for controlling NVDA require you to hold down"
-		" the NVDA key while pressing other keys.\n"
-		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
-		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-		"Press NVDA+n at any time to activate the NVDA menu.\n"
-		"From this menu, you can configure NVDA, get help and access other NVDA functions."
-	)
-
-	def __init__(self, parent):
-		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
-		super(WelcomeDialog, self).__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		# Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
-		# bold lettering 
-		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
-		welcomeTextHeader.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
-		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
-		mainSizer.Add(welcomeTextHeader,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
-		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
-		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
-		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
-
-		optionsSizer = wx.StaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA welcome dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
-		)
-		sHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
-		# Translators: The label of a combobox in the Welcome dialog.
-		kbdLabelText = _("&Keyboard layout:")
-		layouts = keyboardHandler.KeyboardInputGesture.LAYOUTS
-		self.kbdNames = sorted(layouts)
-		kbdChoices = [layouts[layout] for layout in self.kbdNames]
-		self.kbdList = sHelper.addLabeledControl(kbdLabelText, wx.Choice, choices=kbdChoices)
-		try:
-			index = self.kbdNames.index(config.conf["keyboard"]["keyboardLayout"])
-			self.kbdList.SetSelection(index)
-		except:
-			log.error("Could not set Keyboard layout list to current layout",exc_info=True) 
-		# Translators: The label of a checkbox in the Welcome dialog.
-		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
-		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=capsAsNVDAModifierText))
-		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
-		# Translators: The label of a checkbox in the Welcome dialog.
-		startAfterLogonText = _("St&art NVDA after I sign in")
-		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
-		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
-		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
-			self.startAfterLogonCheckBox.Disable()
-		# Translators: The label of a checkbox in the Welcome dialog.
-		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")
-		self.showWelcomeDialogAtStartupCheckBox = sHelper.addItem(wx.CheckBox(self, label=showWelcomeDialogAtStartupText))
-		self.showWelcomeDialogAtStartupCheckBox.SetValue(config.conf["general"]["showWelcomeDialogAtStartup"])
-		mainSizer.Add(optionsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
-		mainSizer.Add(self.CreateButtonSizer(wx.OK), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL|wx.ALIGN_RIGHT)
-		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
-
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.kbdList.SetFocus()
-		self.CentreOnScreen()
-
-	def onOk(self, evt):
-		layout = self.kbdNames[self.kbdList.GetSelection()]
-		config.conf["keyboard"]["keyboardLayout"] = layout
-		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.capsAsNVDAModifierCheckBox.IsChecked()
-		if self.startAfterLogonCheckBox.Enabled:
-			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
-		config.conf["general"]["showWelcomeDialogAtStartup"] = self.showWelcomeDialogAtStartupCheckBox.IsChecked()
-		try:
-			config.conf.save()
-		except:
-			log.debugWarning("Could not save",exc_info=True)
-		self.EndModal(wx.ID_OK)
-
-	@classmethod
-	def run(cls):
-		"""Prepare and display an instance of this dialog.
-		This does not require the dialog to be instantiated.
-		"""
-		mainFrame.prePopup()
-		d = cls(mainFrame)
-		d.ShowModal()
-		d.Destroy()
-		mainFrame.postPopup()
-
-class LauncherDialog(wx.Dialog):
-	"""The dialog that is displayed when NVDA is started from the launcher.
-	This displays the license and allows the user to install or create a portable copy of NVDA.
-	"""
-
-	def __init__(self, parent):
-		super(LauncherDialog, self).__init__(parent, title=versionInfo.name)
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-
-		# Translators: The label of the license text which will be shown when NVDA installation program starts.
-		groupLabel = _("License Agreement")
-		sizer = sHelper.addItem(wx.StaticBoxSizer(wx.StaticBox(self, label=groupLabel), wx.VERTICAL))
-		licenseTextCtrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
-		licenseTextCtrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
-		sizer.Add(licenseTextCtrl)
-
-		# Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-		agreeText = _("I &agree")
-		self.licenseAgreeCheckbox = sHelper.addItem(wx.CheckBox(self, label=agreeText))
-		self.licenseAgreeCheckbox.Value = False
-		self.licenseAgreeCheckbox.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
-
-		sizer = sHelper.addItem(wx.GridSizer(2, 2, 0, 0))
-		self.actionButtons = []
-		# Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
-		ctrl = wx.Button(self, label=_("&Install NVDA on this computer"))
-		sizer.Add(ctrl)
-		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, mainFrame.onInstallCommand))
-		self.actionButtons.append(ctrl)
-		# Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
-		ctrl = wx.Button(self, label=_("Create &portable copy"))
-		sizer.Add(ctrl)
-		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, mainFrame.onCreatePortableCopyCommand))
-		self.actionButtons.append(ctrl)
-		# Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
-		ctrl = wx.Button(self, label=_("&Continue running"))
-		sizer.Add(ctrl)
-		ctrl.Bind(wx.EVT_BUTTON, self.onContinueRunning)
-		self.actionButtons.append(ctrl)
-		sizer.Add(wx.Button(self, label=_("E&xit"), id=wx.ID_CANCEL))
-		# If we bind this on the button, it fails to trigger when the dialog is closed.
-		self.Bind(wx.EVT_BUTTON, self.onExit, id=wx.ID_CANCEL)
-
-		for ctrl in self.actionButtons:
-			ctrl.Disable()
-
-		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
-		self.Sizer = mainSizer
-		mainSizer.Fit(self)
-		self.CentreOnScreen()
-
-	def onLicenseAgree(self, evt):
-		for ctrl in self.actionButtons:
-			ctrl.Enable(evt.IsChecked())
-
-	def onAction(self, evt, func):
-		self.Destroy()
-		func(evt)
-
-	def onContinueRunning(self, evt):
-		self.Destroy()
-		core.doStartupDialogs()
-
-	def onExit(self, evt):
-		wx.GetApp().ExitMainLoop()
-
-	@classmethod
-	def run(cls):
-		"""Prepare and display an instance of this dialog.
-		This does not require the dialog to be instantiated.
-		"""
-		mainFrame.prePopup()
-		d = cls(mainFrame)
-		d.Show()
-		mainFrame.postPopup()
 
 class ExitDialog(wx.Dialog):
 	_instance = None
@@ -908,7 +743,7 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
-			wx.GetApp().ExitMainLoop()
+			safeAppExit()
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:
@@ -1053,61 +888,3 @@ class NonReEntrantTimer(wx.Timer):
 
 def _isDebug():
 	return config.conf["debugLog"]["gui"]
-
-class AskAllowUsageStatsDialog(wx.Dialog):
-	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
-
-	def __init__(self, parent):
-		# Translators: The title of the dialog asking if usage data can be collected 
-		super(AskAllowUsageStatsDialog, self).__init__(parent, title=_("NVDA  Usage Data Collection"))
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-
-		# Translators: A message asking the user if they want to allow usage stats gathering
-		message=_("In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA.\n\n"
-			"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display and braille table. " 
-			"No spoken or braille content will be ever sent to NV Access.  Please refer to the User Guide for a current list of all data collected.\n\n"
-			"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?")
-		sText=sHelper.addItem(wx.StaticText(self, label=message))
-		# the wx.Window must be constructed before we can get the handle.
-		import windowUtils
-		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
-		sText.Wrap(self.scaleFactor*600) # 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
-
-		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
-
-		# Translators: The label of a Yes button in a dialog 
-		yesButton = bHelper.addButton(self, wx.ID_YES, label=_("&Yes"))
-		yesButton.Bind(wx.EVT_BUTTON, self.onYesButton)
-
-		# Translators: The label of a No button in a dialog 
-		noButton = bHelper.addButton(self, wx.ID_NO, label=_("&No"))
-		noButton.Bind(wx.EVT_BUTTON, self.onNoButton)
-
-		# Translators: The label of a button to remind the user later about performing some action.
-		remindMeButton = bHelper.addButton(self, wx.ID_CANCEL, label=_("Remind me &later"))
-		remindMeButton.Bind(wx.EVT_BUTTON, self.onLaterButton)
-		remindMeButton.SetFocus()
-
-		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
-		self.Sizer = mainSizer
-		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
-
-	def onYesButton(self,evt):
-		log.debug("Usage stats gathering has been allowed")
-		config.conf['update']['askedAllowUsageStats']=True
-		config.conf['update']['allowUsageStats']=True
-		self.EndModal(wx.ID_YES)
-
-	def onNoButton(self,evt):
-		log.debug("Usage stats gathering has been disallowed")
-		config.conf['update']['askedAllowUsageStats']=True
-		config.conf['update']['allowUsageStats']=False
-		self.EndModal(wx.ID_NO)
-
-	def onLaterButton(self,evt):
-		log.debug("Usage stats gathering question has been deferred")
-		# evt.Skip() is called since wx.ID_CANCEL is used as the ID for the Ask Later button, 
-		# wx automatically ends the modal itself.
-		evt.Skip()
