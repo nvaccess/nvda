@@ -8,6 +8,12 @@
 Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
+import sys
+import os
+import globalVars
+import winKernel
+
+
 # Initialise comtypes.client.gen_dir and the comtypes.gen search path 
 # and Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes
@@ -16,23 +22,34 @@ import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
+
+if hasattr(sys, "frozen"):
+	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
+	sys.stderr = sys.stdout
+	globalVars.appDir = sys.prefix
+else:
+	globalVars.appDir = os.path.abspath(os.path.dirname(__file__))
+
+# #2391: some functions may still require the current directory to be set to NVDA's app dir
+os.chdir(globalVars.appDir)
+
+
 import gettext
 import locale
 #Localization settings
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install()
+	gettext.translation(
+		'nvda',
+		localedir=os.path.join(globalVars.appDir, 'locale'),
+		languages=[locale.getdefaultlocale()[0]]
+	).install()
 except:
 	gettext.install('nvda')
 
-import sys
-import os
+
 import versionInfo
 import logHandler
-if hasattr(sys, "frozen"):
-	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
-	sys.stderr = sys.stdout
-	#Many functions expect  the current directory to be where slave is located (#2391) 
-	os.chdir(sys.prefix)
+
 
 def main():
 	import installer
@@ -76,7 +93,14 @@ def main():
 				raise ValueError("Addon path was not provided.")
 			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 			import ctypes
-			h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(u"lib",versionInfo.version,u"nvdaHelperRemote.dll")),0,0x8)
+			h = ctypes.windll.kernel32.LoadLibraryExW(
+				os.path.join(globalVars.appDir, "lib", versionInfo.version, "nvdaHelperRemote.dll"),
+				0,
+				# Using an altered search path is necessary here
+				# As NVDAHelperRemote needs to locate dependent dlls in the same directory
+				# such as minhook.dll.
+				winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
+			)
 			remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
 			ret = remoteLib.nvdaControllerInternal_installAddonPackageFromPath(addonPath)
 			if ret != 0:

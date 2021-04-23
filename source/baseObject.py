@@ -7,6 +7,7 @@
 """
 
 import weakref
+import garbageHandler
 from logHandler import log
 from abc import ABCMeta, abstractproperty
 
@@ -20,7 +21,7 @@ class Getter(object):
 	def __get__(self,instance,owner):
 		if isinstance(self.fget, classmethod):
 			return self.fget.__get__(instance, owner)()
-		elif not instance:
+		elif instance is None:
 			return self
 		return self.fget(instance)
 
@@ -36,7 +37,7 @@ class CachingGetter(Getter):
 		if isinstance(self.fget, classmethod):
 			log.warning("Class properties do not support caching")
 			return self.fget.__get__(instance, owner)()
-		elif not instance:
+		elif instance is None:
 			return self
 		return instance._getPropertyViaCache(self.fget)
 
@@ -98,7 +99,8 @@ class AutoPropertyType(ABCMeta):
 			# The __abstractmethods__ set is frozen, therefore we ought to override it.
 			self.__abstractmethods__=(self.__abstractmethods__|newAbstractProps)-oldAbstractProps
 
-class AutoPropertyObject(object, metaclass=AutoPropertyType):
+
+class AutoPropertyObject(garbageHandler.TrackedObject, metaclass=AutoPropertyType):
 	"""A class that dynamically supports properties, by looking up _get_*, _set_*, and _del_* methods at runtime.
 	_get_x will make property x with a getter (you can get its value).
 	_set_x will make a property x with a setter (you can set its value).

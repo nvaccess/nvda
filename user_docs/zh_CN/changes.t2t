@@ -3,6 +3,216 @@ NVDA更新日志
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.4 =
+
+此版本的新特性包括对新版中文输入法的改进，对 Liblouis 的更新，支持在焦点模式下使用 NVDA + F7 的元素列表对话框，增加了在 NVDA 设置对话框内按 F1 调用对应选项上下文帮助的功能。
+本版还改进了标点符号读音规则，语音词典，盲文消息和全文朗读功能。
+另外，针对 Windows Mail, Outlook, Teams, Visual Studio, Azure Data Studio以及 Foobar2000 等应用程序也进行了众多改进和 Bug 修复。
+在网页方面，我们针对 Google Docs 进行了优化，对更多的 ARIA 属性提供了支持。
+还有一些比较重要的改进和错误修复，见以下详细日志。
+
+
+== 新特性 ==
+- 在 NVDA 对话框中按 F1 键会打开帮助文档并跳转到相应章节。 (#7757)
+- 在 Microsoft SQL Server Management Studio 和 Visual Studio 2017及更高版本中支持自动完成建议（IntelliSense）。 (#7504)
+- 符号发音：复杂的正则表达式符号定义支持分组匹配，并在替换规则中支持引用组，从而使表达式更简洁，功能更强大。 (#11107)
+- 在用户创建语音词典条目时，若使用了无效的正则表达式会给出提示。 (#11407)
+  - 可以检测到具体的分组错误。
+- 增加了对 Windows 10 新版繁体中文速成输入法的支持。 (#11562)
+- Tab选项卡被归于表单字段，可用单键导航的 F 键定位。 (#10432)
+- 增加了一个用于切换是否读出“标记（高亮）”的命令，默认没有分配首饰。 (#11807)
+- 增加了 --copy-portable-config 命令行参数，使用该参数，可以在静默安装便携版 NVDA 时将配置自动复制到用户帐户目录。 (#9676)
+- 盲文查看器支持跟踪盲文位置，适用于鼠标用户，将鼠标停留以定位到盲文单元格。 (#11804)
+- 支持通过 USB 和蓝牙自动检测 Humanware Brailliant BI 40X和20X 设备。 (#11819)
+
+
+== 改进 ==
+- 将 liblouis 盲文翻译器更新到 3.16.1 版：
+ - 解决了频繁崩溃的问题。
+ - 增加了巴什基尔1级盲文表
+ - 增加了科普特8点计算机盲文表
+ - 增加了俄罗斯盲文和俄罗斯盲文（详细）表
+ - 增加了南非荷兰语2级盲文表
+ - 删除了俄罗斯1级盲文表
+- 在浏览模式中使用全文朗读时，，若启用了“在全文朗读模式下启用快捷键导航”选项，“查找下一个”和“查找上一个”命令不再打断朗读，而是从查找结果处继续向下执行全文朗读。 (#11563)
+- 针对 HIMS 点显器，重新把 F3  映射为 Space + 148 点。 (#11710)
+- 改进了盲文中“消息显示时间”和“无限期显示消息”选项的用户体验。 (#11602)
+- 在 Web 浏览器以及其他支持浏览模式的应用程序中，可以在焦点模式下使用“元素列表”对话框（NVDA + F7）。 (#10453)
+- 当设置为不读动态内容更新时，也不会读出带有 aria-live 的内容变化信息。 (#9077)
+- 在复制文本时 NVDA 会读出“已复制 XXX 到剪贴板”。 (#6757)
+- 改进了磁盘管理中图形视图列表的呈现方式。 (#10048)
+- 当 NVDA 设置面板中的控件被禁用时，其对应的文字标签也会被同时禁用（变灰）。 (#11809)
+- 将 CLDR 表情符号解释库更新到 38 版。 (#11817)
+- 将设置面板中“视觉辅助”下的“焦点高亮显示”功能重命名为“高亮显示”。 (#11700)
+
+
+== 错误修复 ==
+- 重新支持 Fast Log Entry软件 编辑区的朗读。 (#8996)
+- 在 Foobar2000 播放过程中即使没有总时间（比如，播放流媒体直播时），也可以听取已经过时间，并会给出总时间和剩余时间不可用的提示。 (#11337)
+- 支持了网页中可编辑元素的 aria-roledescription 属性。 (#11607)
+- 现在不会在 Google Docs中 列表的每一行或 Google Chrome 中其他的富文本编辑区域中反复读“列表”了。 (#7562)
+- 当我们按字符或单词在Web 中的可编辑内容列表中导航时，从一个列表项移动到另一个列表项现在会给出提示。 (#11569)
+- 将输入光标停留在 Google Docs 中的链接末尾或 Web 中其他的可编辑内容列表末尾时， NVDA 可以读取正确的行。 (#11606)
+- 在 Windows 7 上，从桌面打开/关闭开始菜单现在可以正确停留焦点。 (#10567)
+- 修复了启用“尝试为过期的焦点事件取消语音”后，在 Firefox 中切换选项卡时，不读选项卡标题的Bug。 (#11397)
+- 使用 SAPI5 的 Ivona 语音，在列表中键入字符后， NVDA可以读出列表项。 (#11651)
+- 恢复了在 Windows 10 邮件 16005.13110 及更高版本中阅读电子邮件正文的浏览模式支持。 (#11439)
+- 修复了使用 SAPI5 合成器的 Ivona语音时，NVDA 无法保存配置、切换合成器以及重启后无声的问题。 (#11650)
+- 现在可以在 HIMS 点显器的盲文键盘上输入计算机盲文的数字 6。 (#11710)
+- 大大提升了NVDA在 Azure Data Studio 中的性能。 (#11533, #11715)
+- 修复了启用“尝试为过期的焦点事件取消语音”后，无法读出 NVDA 查找对话框标题的 Bug。 (#11632)
+- 修复了从睡眠状态唤醒计算机并聚焦到 Microsoft Edge 文档时， NVDA无声的 Bug。 (#11576)
+- 关闭 Microsoft Edge 中的上下文菜单后，无需按 Tab键切换焦点即可使用浏览模式。 (#11202)
+- 支持了某些64位应用程序（例如 Tortoise SVN）中列表视图项目的朗读。 (#8175)
+- 在 Firefox 和 Chrome浏览器 中，使用了 ARIA treegrids 技术的表可以在浏览模式下以普通表形式导航。 (#9715)
+    - 译者注： 焦点模式下可以对树视图执行展开/折叠。
+- 在文档末尾使用 NVDA + shift + F3的“反向查找”可以正确查找到文档中的最后一个结果。 (#11770)
+- 忽略在执行多次重复手势之间的无关按键操作。 (#11388)
+- 若关闭了 NVDA “文档格式”设置中的“强调”，则不会在错误的读出 Internet Explorer 中的“强调”和“高亮”标记。 (#11808)
+- 修复了某些情况下在 Excel 中的单元格之间使用光标键导航时，NVDA 会短暂无声的 Bug。 (#11818)
+- 修复了 Microsoft Teams 1.3.00.28xxx的版本中， NVDA 无法朗读聊天或 Teams 频道中消息的 Bug。 (#11821)
+- NVDA 能够提示既是拼写错误又是语法错误的文本。 (#11787)
+    - 译者注： 在以前版本中只能单独提示“拼写错误”或“语法错误”。
+- 修复了在法语环境下使用 Outlook时， “全部答复”（control + shift + R）快捷键无效的Bug。 (#11196)
+- 在Visual Studio中，不再重复朗读当前所选项目的 IntelliSense 工具提示信息。 (#11611)
+- 修复了在 Windows 10 计算器中，启用了“读出输入字符”选项后重复朗读所键入字符的Bug。 (#9428)
+- 修复了使用“美式英语二级点字”输出表并且开启“将光标所在单词转换为电脑点字”时，使用盲文显示 URL 或某些内容而引发 NVDA 崩溃的Bug。 (#11754)
+- 重新支持在Excel中使用 NVDA + F  朗读所聚焦单元格的格式信息。 (#11914)
+- 修复了使用 Papenmeier 点显器上的 QWERTY 键盘输入时 NVDA 偶发性卡死的Bug。 (11944)
+
+
+== 插件以及NVDA核心开发者需要了解的变动 ==
+- System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
+- NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
+- The aria live politeness setting for live regions can now be found on NVDA Objects using the liveRegionPoliteness property. (#11596)
+- It is now possible to define separate gestures for Outlook and Word document. (#11196)
+
+
+= 2020.3 =
+
+本版在稳定性和性能方面进行了多项重大改进，尤其是在 Microsoft Office 应用程序中。此外还增加了切换触摸屏支持和图形朗读的设置。
+在浏览器中支持朗读标记（高亮文本）等内容，还增加了新的德语盲文表。
+
+== 新特性 ==
+- 您可以从 NVDA 的“文档格式设置”中切换图形朗读选项。请注意，关闭此选项仍会朗读图形的替代文本。 (#4837)
+- 您可以切换 NVDA 的触摸屏支持。在 NVDA 的“输入首饰”的“触摸屏”分类下添加了一个选项。默认热键为 NVDA + control + alt + t。 (#9682)
+- 添加了新版德语盲文表。 (#11268)
+- NVDA 能够检测到 UIA 文本控件中的止读状态。 (#10494)
+- 在所有浏览器中，语音或盲文都可以报告存在的标记（高亮文本）等内容。 (#11436)
+- 可在 NVDA 的“文档格式”设置中打开或关闭该选项。
+ - 可以从 NVDA 的“输入首饰”对话框中添加新的模拟系统按键。 (#6060)
+- 使用方法是定位到“模拟系统按键”类别，然后按下“添加”按钮。
+- 支持了带有操纵杆的 Handy Tech Active 盲文点显器。 (#11655)
+- “输入焦点移动时的自动焦点模式支持”和“将焦点自动跳转到可聚焦元素”互相兼容。 (#11663)
+
+
+== 改进 ==
+- 将朗读文本格式信息的热键（NVDA + F）进行了改进，目前该热键是朗读系统输入焦点（而不是浏览光标）下的文本格式信息。如果要听取浏览光标下的文本格式信息，请使用 NVDA + Shift + F。 (#9505)
+- NVDA 在浏览模式下默认不再自动将系统焦点设置到可聚焦元素，从而提高了性能和稳定性。 (#11190)
+- 将 CLDR 从 36.1 版更新到 37 版。 (#11303)
+- 将 eSpeak-NG更新到 1.51-dev， commit 1fb68ffffea4
+- 您可以使用 NVDA 的表格导航，在具有多列的可选择列表框中移动。 (#8857)
+- 在“插件管理器”中，当系统询问您确认删除插件时，默认聚焦在“否”按钮上。 (#10015)
+- 在 Microsoft Excel 中，“元素列表”对话框以本地化语言显示公式。 (#9144)
+- NVDA现在可读出MS Excel中notes的正确术语。 (#11311)
+- 在浏览模式下使用“将浏览光标移动到系统焦点”时，浏览光标现在会被设置在虚拟输入光标的位置。 (#9622)
+- 在浏览模式下显示的信息窗口，例如连按两次 NVDA + F 的格式化信息，现在将其显示在屏幕中心的位置，且将窗口调整的更大一些。 (#9910)
+
+
+== 错误修复 ==
+- 通过单词导航，移动到任何单个符号且后面紧跟一个空格的情况，无论符号级别设置如何，始终会读出该符号。 (#5133)
+- 在使用 QT 5.11或更高版本的应用程序中，重新支持了朗读对象描述。 (#8604)
+- 使用 Control + Delete 删除单词时，NVDA不再完全无声，而是读出已被删除单词右边的单词。 (#3298, #11029)
+- 在NVDA 设置“常规”分类下语言列表中的项目现在按英文缩写进行正确排列。 (#10348)
+- 在“输入首饰”对话框中，显著提高了查找的性能。 (#10307)
+- 可以通过盲文点显器输入超过 U+FFFF 的 Unicode字符。 (#10796)
+- 在 Windows 10的 2020年5月版更新中能读出打开方式对话框中的内容。 (#11335)
+- 高级设置中的实验性选项（为UI Automation接口属性更改启用选择性注册），若启用该选项，可大幅改善Microsoft Visual Studio和其他基于UIAutomation应用程序的性能。 (#11077, #11209)
+- 对于可选择列表框中的列表项，不再读出冗余选择状态，在适当的情况下，会朗读未选择的状态。 (#8554)
+- 在 Windows 10的 2020年5月版更新中，从合成器对话框查看输出设备时，显示为 Microsoft声音映射器。 (#11349)
+- 在 Internet Explorer 中，如果有序列表的列表编号不是从 1 开始，则可正确声明有序列表编号。 (#8438)
+- 在 Google chrome 中，对于当前未选中的所有可选择性控件（不仅仅是复选框），NVDA会读出其未选中状态。 (#11377)
+- 当 NVDA 的语言设置为阿拉贡语时，重新支持了在各种控件中导航。 (#11384)
+- 在Microsoft Word中快速按上下方向键或在使用盲文点显器键入文字时，NVDA不再停止响应。 (#11431, #11425, #11414)
+- 将当前导航对象的名称和值复制到剪贴板时，不会在末尾追加多余的空格。 (#11438)
+- 如果没有可朗读的内容，使用NVDA + A（朗读全部）时则不会激活所有配置文件。 (#10899, #9947)
+- 通过将音频设备设置为打开状态，从而改善了某些声卡的性能。 (#5172, #10721)
+- 在Microsoft Word中按住control + shift + 下方向键时，NVDA不再退出或无响应。 (#9463)
+- NVDA 能够读出 drive.google.com 上导航树视图中目录的展开/折叠状态。 (#11520)
+- NVDA可通过蓝牙自动检测 NLS eReader Humanware 盲文点显器。 (#11561)
+- 在 Visual Studio Code 中的重大性能改进。 (#11533)
+
+
+== 插件以及NVDA核心开发者需要了解的变动 ==
+- The GUI Helper's BoxSizerHelper.addDialogDismissButtons supports a new "separated" keyword argument, for adding a standard horizontal separator to dialogs (other than messages and single input dialogs). (#6468)
+- Additional properties were added to app modules, including path for the executable (appPath), is a Windows Store app (isWindowsStoreApp), and machine architecture for the app (appArchitecture). (#7894)
+- It is now possible to create app modules for apps hosted inside wwahost.exe on Windows 8 and later. (#4569)
+- A fragment of the log can now be delimited and then copied to clipboard using NVDA+control+shift+F1. (#9280)
+- NVDA-specific objects that are found by Python's cyclic garbage collector are now logged when being deleted by the collector to aide in removing reference cycles from NVDA. (#11499)
+ - The majority of NVDA's classes are tracked including NVDAObjects, appModules, GlobalPlugins, SynthDrivers, and TreeInterceptors.
+ - A class that needs to be tracked should inherit from garbageHandler.TrackedObject.
+- Significant debug logging for MSAA events can be now enabled in NVDA's Advanced settings. (#11521)
+- MSAA winEvents for the currently focused object are no longer filtered out along with other events if the event count for a given thread is exceeded. (#11520)
+
+
+= 2020.2 =
+此版本的新特性包括
+对Nattiq盲文点显器的支持；对ESET杀毒软件GUI的支持；对Windows Terminal的支持；改进了1Password和Windows OneCore合成器的性能问题，以及其他诸多重要的错误修复。
+
+== 新特性 ==
+- 新的盲文点显器：
+- Nattiq nBraille (#10778)
+- 新增打开NVDA配置目录手势，注意（没有默认手势）。 (#2214)
+- 更好的支持ESET杀毒软件。 (#10894)
+- 新增对Windows Terminal的支持。 (#10305)
+- 新增朗读活动配置文件的手势。 (#9325)
+- 新增切换朗读上下标的手势。 (#10985)
+- 快速移动焦点时，Web应用程序（如 Gmail）不会再朗读过时无效的信息。 (#10885)
+  - 必须手动将“选项”中的“高级” > “尝试为过期的焦点事件取消语音”设为“启用”，从而启用这项实验性功能。
+- 新增对更多符号的朗读支持。 (#11105)
+
+
+== 改进 ==
+- 将liblouis盲文翻译器从3.12.0更新到[3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]。 (#10832, #11221)
+- 上下标朗读与字体属性的朗读可以分开设置。 (#10919)
+- 由于在VS Code中进行了更改，默认情况下，NVDA不再禁用Code中的浏览模式。 (#10888)
+- 将浏览光标移动到当前导航对象的第一行或最后一行时，删除了“顶部”和“底部”的提示。 (#9551)
+- 将刷新光标移动到当前导航器对象的行的第一个或最后一个字符时，删除了“左”和“右”消息。 (#9551)
+
+
+== 错误修复 ==
+- 即使创建日志文件失败，NVDA也可以正常运行。 (#6330)
+- 在最新版本的Microsoft Word 365中编辑文档时，按Control + Backspace不再朗读"delete back word"，而是直接读出所删除的单词。 (#10851)
+- 在Winamp中，支持朗读随机播放和重复播放的切换状态。 (#10945)
+- 在1Password中的列表项目之间切换时不再有明显的卡顿感。 (#10508)
+- Windows OneCore语音合成器不再有延迟。 (#10721)
+- 在系统通知区域中打开1Password的上下文菜单时，NVDA不会再卡住。 (#11017)
+- 在Office 2013及更早版本中：
+  - 当焦点首次移动到功能区时，将读出功能区。 (#4207)
+  - 可以正确朗读上下文菜单项。 (#9252)
+  - 使用Control +光标导航时，会始终提示所处功能区。 (#7067)
+- 在Mozilla Firefox和Google Chrome的浏览模式下，当Web内容使用CSS显示时，文本不再错误地显示在另外一行: inline-flex。 (#11075)
+- 在"自动将系统焦点设置为禁用可聚焦元素"的浏览模式下，现在可以激活不可对焦的元素。
+- 在"自动将系统焦点设置为禁用可聚焦元素"的浏览模式下，现在可以通过按Tab激活已到达的元素。 (#8528)
+- 在"自动将系统焦点设置为禁用可聚焦元素"的浏览模式下，激活某些元素不再在错误的位置单击。 (#9886)
+- 访问DevExpress文本控件时，NVDA不在发出错误声音。 (#10918)
+- 在系统托盘中，使用键盘导航时如果图标的工具提示与其名称相同，为避免重复朗读，则不会朗读工具提示。 (#6656)
+- 在"自动将系统焦点设置为禁用可聚焦元素"的浏览模式下，切换到具有NVDA +空格的聚焦模式现在可以将元素聚焦在插入符号下。 (#11206)
+- 在新安装的系统上也可以检查NVDA更新。 (#11253)
+- 当选择在未聚焦的树、表或列表中更改时，不在更改 Java 应用程序中的焦点。 (#5989)
+
+
+== NVDA核心开发者需要了解的变动 ==
+- execElevated and hasUiAccess have moved from config module to systemUtils module. Usage via config module is deprecated. (#10493)
+- Updated configobj to 5.1.0dev commit f9a265c4. (#10939)
+- Automated testing of NVDA with Chrome and a HTML sample is now possible. (#10553)
+- IAccessibleHandler has been converted into a package, OrderedWinEventLimiter has been extracted to a module and unit tests added (#10934)
+- Updated BrlApi to version 0.8 (BRLTTY 6.1). (#11065)
+- Status bar retrieval may now be customized by an AppModule. (#2125, #4640)
+- NVDA no longer listens for IAccessible EVENT_OBJECT_REORDER. (#11076)
+- A broken ScriptableObject (such as a GlobalPlugin missing a call to its base class' __init__ method) no longer breaks NVDA's script handling. (#5446)
+
+
 = 2020.1 =
 
 == 新特性 ==
@@ -28,6 +238,8 @@ NVDA更新日志
 - NVDA现在可以再次读取Microsoft Word中的数学方程式并与之交互。 (#10803)
 - 如果在选择文本时按下光标键，NVDA将再次读出在浏览模式下未选择的文本。 (#10731).
 - 当前如果初始化eSpeak时出错，则NVDA不再退出。 (#10607)
+- 快捷方式翻译中的unicode所引起的错误不再停止安装，这可以通过退回到英文文本来解决。 (#5166, #6326)
+- 在启用了略读功能的情况下，在sayAll中的列表和表格上现在箭头移开和移出不再继续朗读退出列表或表格。 (#10706)}+
 
 
 == NVDA核心开发者需要了解的变动 ==
@@ -46,6 +258,7 @@ NVDA更新日志
   - Module level 'REASON_*' constants are deprecated.
 - Compiling NVDA dependencies now requires Visual Studio 2019 (16.2 or newer). (#10169)
 - Updated SCons to version 3.1.1. (#10169)
+- Again allow behaviors._FakeTableCell to have no location defined (#10864)
 
 
 = 2019.3 =

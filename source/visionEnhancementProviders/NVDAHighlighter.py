@@ -1,4 +1,3 @@
-# visionEnhancementProviders/NVDAHighlighter.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -8,6 +7,7 @@
 from typing import Optional, Tuple
 
 from autoSettingsUtils.autoSettings import SupportedSettingType
+from autoSettingsUtils.driverSetting import BooleanDriverSetting
 import vision
 from vision.constants import Context
 from vision.util import getContextRect
@@ -29,7 +29,6 @@ import winGDI
 import weakref
 from colors import RGB
 import core
-import driverHandler
 
 
 class HighlightStyle(
@@ -225,11 +224,11 @@ class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 	@classmethod
 	def getDisplayName(cls) -> str:
 		# Translators: Description for NVDA's built-in screen highlighter.
-		return _("Focus Highlight")
+		return _("Visual Highlight")
 
 	def _get_supportedSettings(self) -> SupportedSettingType:
 		return [
-			driverHandler.BooleanDriverSetting(
+			BooleanDriverSetting(
 				'highlight%s' % (context[0].upper() + context[1:]),
 				_contextOptionLabelsWithAccelerators[context],
 				defaultVal=True
@@ -242,8 +241,11 @@ class NVDAHighlighterGuiPanel(
 		gui.AutoSettingsMixin,
 		gui.SettingsPanel
 ):
+	
 	_enableCheckSizer: wx.BoxSizer
 	_enabledCheckbox: wx.CheckBox
+	
+	helpId = "VisionSettingsFocusHighlight"
 
 	from gui.settingsDialogs import VisionProviderStateControl
 

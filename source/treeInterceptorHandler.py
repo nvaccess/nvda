@@ -1,8 +1,9 @@
-#treeInterceptorHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# treeInterceptorHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Davy Kager, Accessolutions, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 from typing import Optional, Dict
 
 from logHandler import log
@@ -188,8 +189,8 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_locationText(self):
 		return self.innerTextInfo.locationText
 
-	def copyToClipboard(self):
-		return self.innerTextInfo.copyToClipboard()
+	def copyToClipboard(self, notify=False):
+		return self.innerTextInfo.copyToClipboard(notify)
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		return self.innerTextInfo.find(text,caseSensitive,reverse)

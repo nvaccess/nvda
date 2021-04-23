@@ -1,8 +1,7 @@
-#NVDAObjects/window.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Bill Dengler
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import re
 import ctypes
@@ -16,7 +15,7 @@ import config
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
-from NVDAObjects.behaviors import EditableText, LiveText
+from NVDAObjects.behaviors import EditableText, EditableTextWithoutAutoSelectDetection, LiveText
 import watchdog
 from locationHelper import RectLTWH
 
@@ -136,7 +135,7 @@ An NVDAObject for a window
 		if not any(issubclass(cls,EditableText) for cls in clsList):
 			gi=winUser.getGUIThreadInfo(self.windowThreadID)
 			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
-				if self.windowTextLineCount:
+				if self.windowTextLineCount and self.windowText:
 					from .edit import UnidentifiedEdit
 					clsList.append(UnidentifiedEdit)
 				else:
@@ -390,7 +389,8 @@ class Desktop(Window):
 	def _get_name(self):
 		return _("Desktop")
 
-class DisplayModelEditableText(EditableText, Window):
+
+class DisplayModelEditableText(EditableTextWithoutAutoSelectDetection, Window):
 
 	role=controlTypes.ROLE_EDITABLETEXT
 	TextInfo = displayModel.EditableTextDisplayModelTextInfo

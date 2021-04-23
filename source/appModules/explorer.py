@@ -242,11 +242,31 @@ class MetadataEditField(RichEdit50):
 	but to avoid Windows Explorer crashes we need to use EditTextInfo here. """
 	@classmethod
 	def _get_TextInfo(cls):
-		if ((winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1)):
+		if winVersion.getWinVer() <= winVersion.WIN7_SP1:
 			cls.TextInfo = EditTextInfo
 		else:
 			cls.TextInfo = super().TextInfo
 		return cls.TextInfo
+
+
+class WorkerW(IAccessible):
+	def event_gainFocus(self):
+		# #6671: Normally we do not allow WorkerW thread to send gain focus event,
+		# as it causes 'pane" to be announced when minimizing windows or moving to desktop.
+		# However when closing Windows 7 Start Menu in some  cases
+		# focus lands  on it instead of the focused desktop item.
+		# Simply ignore the event if running on anything other than Win 7.
+		if winVersion.getWinVer() > winVersion.WIN7_SP1:
+			return
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		if self.simpleFirstChild:
+			# If focus is not going to be moved autotically
+			# we need to forcefully move it to the focused desktop item.
+			# As we are interested in the first focusable object below the pane use simpleFirstChild.
+			self.simpleFirstChild.setFocus()
+			return
+		super().event_gainFocus()
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -303,6 +323,10 @@ class AppModule(appModuleHandler.AppModule):
 
 		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
 			clsList.insert(0, MetadataEditField)
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
+
+		if windowClass == "WorkerW" and role == controlTypes.ROLE_PANE and obj.name is None:
+			clsList.insert(0, WorkerW)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
@@ -388,15 +412,14 @@ class AppModule(appModuleHandler.AppModule):
 			# #8137: also seen when opening quick link menu (Windows+X) on Windows 8 and later.
 			return
 
-		if wClass == "WorkerW" and obj.role == controlTypes.ROLE_PANE and obj.name is None:
-			# #6671: Never allow WorkerW thread to send gain focus event, as it causes 'pane" to be announced when minimizing windows or moving to desktop.
-			return
-
 		nextHandler()
 
 	def isGoodUIAWindow(self, hwnd):
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
-		if winVersion.isWin10(version=1903) and winUser.getClassName(hwnd) == "ApplicationFrameWindow":
+		if (
+			winVersion.getWinVer() >= winVersion.WIN10_1903
+			and winUser.getClassName(hwnd) == "ApplicationFrameWindow"
+		):
 			return True
 		return False
 

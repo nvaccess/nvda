@@ -21,7 +21,8 @@ import locale
 import gettext
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
-gettext.install('nvda')
+translations = gettext.NullTranslations()
+translations.install()
 
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -35,8 +36,13 @@ sys.path.insert(1, SOURCE_DIR)
 # as this module is imported to expand the system path.
 import sourceEnv  # noqa: F401
 
-# Set options normally taken from the command line.
 import globalVars
+
+
+# Tell NvDA where its application directory is
+globalVars.appDir = SOURCE_DIR
+
+# Set options normally taken from the command line.
 class AppArgs:
 	# The path from which to load a configuration file.
 	# Ideally, this would be an in-memory, default configuration.

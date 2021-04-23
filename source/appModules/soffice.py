@@ -5,6 +5,7 @@
 #Copyright (C) 2006-2019 NV Access Limited, Bill Dengler
 
 from comtypes import COMError
+from comInterfaces import IAccessible2Lib as IA2
 import IAccessibleHandler
 import appModuleHandler
 import controlTypes
@@ -150,7 +151,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
-			if obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset) != -1:
+			if obj.IAccessibleTextObject.QueryInterface(IA2.IAccessibleHypertext).hyperlinkIndex(offset) != -1:
 				formatField["link"] = True
 		except COMError:
 			pass

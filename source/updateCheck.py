@@ -7,8 +7,10 @@
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
+import garbageHandler
 import globalVars
 import config
+
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -17,8 +19,10 @@ import versionInfo
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 import addonAPIVersion
-
-import winVersion
+# Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
+import gui.contextHelp  # noqa: E402
+from gui.dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit  # noqa: E402
+import sys  # noqa: E402
 import os
 import inspect
 import threading
@@ -45,7 +49,6 @@ import shellapi
 import winUser
 import winKernel
 import fileUtils
-from gui.dpiScalingHelper import DpiScalingHelperMixin
 
 #: The URL to use for update checks.
 CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
@@ -102,12 +105,21 @@ def checkForUpdate(auto=False):
 	@raise RuntimeError: If there is an error checking for an update.
 	"""
 	allowUsageStats=config.conf["update"]['allowUsageStats']
+	# #11837: build version string, service pack, and product type manually
+	# because winVersion.getWinVer adds Windows release name.
+	winVersion = sys.getwindowsversion()
+	winVersionText = "{v.major}.{v.minor}.{v.build}".format(v=winVersion)
+	if winVersion.service_pack_major != 0:
+		winVersionText += " service pack %d" % winVersion.service_pack_major
+		if winVersion.service_pack_minor != 0:
+			winVersionText += ".%d" % winVersion.service_pack_minor
+	winVersionText += " %s" % ("workstation", "domain controller", "server")[winVersion.product_type - 1]
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats":allowUsageStats,
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
-		"osVersion": winVersion.winVersionText,
+		"osVersion": winVersionText,
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 	}
 	if auto and allowUsageStats:
@@ -201,11 +213,11 @@ def _executeUpdate(destPath):
 	if config.isInstalledCopy():
 		executeParams = u"--install -m"
 	else:
-		portablePath = os.getcwd()
+		portablePath = globalVars.appDir
 		if os.access(portablePath, os.W_OK):
 			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
-				configPath=os.path.abspath(globalVars.appArgs.configPath)
+				configPath=globalVars.appArgs.configPath
 			)
 		else:
 			executeParams = u"--launcher"
@@ -215,7 +227,8 @@ def _executeUpdate(destPath):
 		executeParams,
 		None, winUser.SW_SHOWNORMAL)
 
-class UpdateChecker(object):
+
+class UpdateChecker(garbageHandler.TrackedObject):
 	"""Check for an updated version of NVDA, presenting appropriate user interface.
 	The check is performed in the background.
 	This class is for manual update checks.
@@ -313,12 +326,17 @@ class AutoUpdateChecker(UpdateChecker):
 			return
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
-class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
+
+class UpdateResultDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.contextHelp.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "GeneralSettingsCheckForUpdates"
 
 	def __init__(self, parent, updateInfo, auto):
 		# Translators: The title of the dialog informing the user about an NVDA update.
-		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+		super().__init__(parent, title=_("NVDA Update"))
 
 		self.updateInfo = updateInfo
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -440,7 +458,14 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 		)
 		incompatibleAddons.ShowModal()
 
-class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
+
+class UpdateAskInstallDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.contextHelp.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+
+	helpId = "GeneralSettingsCheckForUpdates"
 
 	def __init__(self, parent, destPath, version, apiVersion, backCompatTo):
 		self.destPath = destPath
@@ -449,8 +474,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.backCompatTo = backCompatTo
 		self.storeUpdatesDirWritable = os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
-		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+		super().__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
@@ -550,7 +574,8 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		saveState()
 		self.EndModal(wx.ID_CLOSE)
 
-class UpdateDownloader(object):
+
+class UpdateDownloader(garbageHandler.TrackedObject):
 	"""Download and start installation of an updated version of NVDA, presenting appropriate user interface.
 	To use, call L{start} on an instance.
 	"""
@@ -585,6 +610,7 @@ class UpdateDownloader(object):
 			# and waits for the user to press the Close button.
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
+		self._progressDialog.CentreOnScreen()
 		self._progressDialog.Raise()
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.start.__qualname__}",

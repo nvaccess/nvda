@@ -1,8 +1,7 @@
-#NVDAObjects/IAccessible/sysTreeView32.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2020 NV Access Limited
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -222,10 +221,10 @@ class BrokenCommctrl5Item(IAccessible):
 			if parent and parent.hasFocus:
 				try:
 					kwargs = {}
-					UIA.kwargsFromSuper(kwargs, relation="focus")
+					UIA.kwargsFromSuper(kwargs, relation="focus", ignoreNonNativeElementsWithFocus=False)
 					self._uiaObj = UIA(**kwargs)
-				except:
-					log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+				except Exception:
+					log.error("Retrieving UIA focus failed", exc_info=True)
 
 	def _get_role(self):
 		return self._uiaObj.role if self._uiaObj else controlTypes.ROLE_UNKNOWN
