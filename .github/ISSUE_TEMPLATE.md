@@ -38,4 +38,4 @@ Each one of the questions and sections below start with a set of hashmarks (#). 
 
 #### If add-ons are disabled, is your problem still occurring?
 
-#### Did you try to run the COM registry fixing tool in NVDA menu / tools?
+#### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
