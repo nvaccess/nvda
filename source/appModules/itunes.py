@@ -52,6 +52,16 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, WebKitDocument)
 		elif windowClassName=="iTunes" and obj.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.insert(0, TopLevelClient)
+			
+		############## BEGINNING ##############
+		# #12331: See documentation at the end of this file for more details. 
+		# Menu text is not announced to the user, class created below should
+		# allow functionality for this.
+		# not entirely sure if this is properly checking whether a windowClassName resides as being apart of a menu slider
+		elif windowClassName in ('iTunesList') and role in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM):
+			# inserting title into clsList of the correct menu heading
+			clsList.insert(0,AccessMenuTitles)
+		################# END #################
 
 class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 	"""Retreaves position information encoded in the accDescription"""
@@ -110,3 +120,34 @@ class TopLevelClient(NVDAObjects.IAccessible.IAccessible):
 		if self.IAccessibleIdentity == other.IAccessibleIdentity:
 			return True
 		return super(TopLevelClient, self)._isEqual(other)
+	
+############## BEGINNING ##############
+# #12331: NVDA does not announce the names of the menus when walking with left and right
+# arrows in iTunes. This can potentially be fixed by adding a class which helps accesses the text 
+# inside of an iTunes menu box. The function added below will attempt to provide that functionality. 
+# Further additions are above which add an object of this class to the clsList in chooseNVDAObjectOverlayClasses.
+# A comment was not made on the bug report due to the issue unaffecting the user experience in any way and tight scheduling.
+# Considering I have not contributed to NVDA before, this implementation may be going off the rails. However, I think I have 
+# provided a decent foundation in solving this issue. 
+class AccessMenuTitles(NVDAObjects.IAccessible.IAccessible):
+	# function that attempts to grab title of focused object
+	def _get_name(self):
+		try:
+			title=self.title.text
+		except comtypes.COMError:
+			title=None
+		# Translators: the label for a menu in iTunes.
+		name=_("Menu Label")
+		if title:
+			name+=" (%s)"%title
+		return name
+
+	# copied from iTunesItem class
+	# ensures the title allows for an interface event
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# These items can fire spurious focus events; e.g. when tabbing out of the Music list.
+		# The list reports that it's focused even when it isn't.
+		# Thankfully, the list items don't.
+		return self.hasFocus
+
+################# END #################
