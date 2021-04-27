@@ -176,20 +176,30 @@ test_script:
 
 # Flake8 Linting
  - ps: |
-    if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
       $lintSource = (Resolve-Path .\tests\lint\)
+      $flake8Output = "$lintOutput\Flake8.txt"
       # When Appveyor runs for a pr,
       # the build is made from a new temporary commit,
       # resulting from the pr branch being merged into its base branch.
       # Therefore to create a diff for linting, we must fetch the head of the base branch.
       # In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
-     git fetch -q --recurse-submodules=on-demand origin $env:APPVEYOR_REPO_BRANCH
-     $flake8Output = "$lintOutput\PR-Flake8.txt"
-      .\runlint.bat FETCH_HEAD "$flake8Output" 
-      if($LastExitCode -ne 0) {
-       $errorCode=$LastExitCode
-       Add-AppveyorMessage "PR introduces Flake8 errors"
+      # Additionally, we can not use a clone_depth of 1, but must use an unlimited clone.
+      if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+        git fetch -q --recurse-submodules=on-demand origin $env:APPVEYOR_REPO_BRANCH
+        .\runlint.bat FETCH_HEAD "$flake8Output" 
+        if($LastExitCode -ne 0) {
+        $errorCode=$LastExitCode
+        Add-AppveyorMessage "PR introduces Flake8 errors"
+        }
+      } else {
+        # However in a pushed branch, we must fetch master.
+        git fetch -q --recurse-submodules=on-demand origin master:master
+        .\runlint.bat FETCH_HEAD $flake8Output
+        if($LastExitCode -ne 0) {
+        $errorCode=$LastExitCode
+        Add-AppveyorMessage "Branch introduces Flake8 errors"
+        }
       }
       Push-AppveyorArtifact $flake8Output
       $junitXML = "$lintOutput\PR-Flake8.xml"
@@ -198,7 +208,6 @@ test_script:
       $wc = New-Object 'System.Net.WebClient'
       $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $junitXML)
       if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
-    }
 
 # System tests
  - ps: |
