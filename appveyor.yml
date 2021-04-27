@@ -189,16 +189,16 @@ test_script:
         git fetch -q --recurse-submodules origin $env:APPVEYOR_REPO_BRANCH
         .\runlint.bat FETCH_HEAD "$flake8Output" 
         if($LastExitCode -ne 0) {
-        $errorCode=$LastExitCode
-        Add-AppveyorMessage "PR introduces Flake8 errors"
+          $errorCode=$LastExitCode
+          Add-AppveyorMessage "PR introduces Flake8 errors"
         }
       } else {
         # However in a pushed branch, we must fetch master.
         git fetch -q --recurse-submodules origin master:master
         .\runlint.bat FETCH_HEAD $flake8Output
         if($LastExitCode -ne 0) {
-        $errorCode=$LastExitCode
-        Add-AppveyorMessage "Branch introduces Flake8 errors"
+          $errorCode=$LastExitCode
+          Add-AppveyorMessage "Branch introduces Flake8 errors"
         }
       }
       Push-AppveyorArtifact $flake8Output
