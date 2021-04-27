@@ -186,7 +186,7 @@ test_script:
       # In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
       # Additionally, we can not use a clone_depth of 1, but must use an unlimited clone.
       if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
-        git fetch -q --recurse-submodules=on-demand origin $env:APPVEYOR_REPO_BRANCH
+        git fetch -q --recurse-submodules origin $env:APPVEYOR_REPO_BRANCH
         .\runlint.bat FETCH_HEAD "$flake8Output" 
         if($LastExitCode -ne 0) {
         $errorCode=$LastExitCode
@@ -194,7 +194,7 @@ test_script:
         }
       } else {
         # However in a pushed branch, we must fetch master.
-        git fetch -q --recurse-submodules=on-demand origin master:master
+        git fetch -q --recurse-submodules origin master:master
         .\runlint.bat FETCH_HEAD $flake8Output
         if($LastExitCode -ne 0) {
         $errorCode=$LastExitCode
