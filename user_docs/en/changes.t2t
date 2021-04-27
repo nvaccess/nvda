@@ -115,7 +115,6 @@ What's New in NVDA
  - This usage is prefered instead of ti1.SetEndPoint(ti2,"startToEnd")
 - `wx.CENTRE_ON_SCREEN` and `wx.CENTER_ON_SCREEN` are removed, use `self.CentreOnScreen()` instead. (#12309)
 - `easeOfAccess.isSupported` has been removed, NVDA only supports versions of Windows where this evaluates to `True`. (#12222)
-- Do not exit NVDA by sending a `WM_QUIT` message to the process. Instead send `winUser.WM_EXIT_NVDA` to the window handle (found by `winUser.FindWindow('wxWindowClassNR', 'NVDA')`). (#12286)
 
 
 = 2020.4 =
