@@ -724,12 +724,14 @@ Otherwise, the add-on will not install.
   - e.g "2019.1.1"
   - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
-  - Must be less than or equal to `lastTestedNVDAVersion`
+  - Must be less than or equal to ``lastTestedNVDAVersion``
+  -
 - lastTestedNVDAVersion (string): The last version of NVDA this add-on has been tested with.
   - e.g "2019.1.0"
   - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
-  - Must be greater than or equal to `minimumNVDAVersion`
+  - Must be greater than or equal to ``minimumNVDAVersion``
+  -
 -
 
 All string values must be enclosed in quotes as shown in the example below.
@@ -737,7 +739,6 @@ All string values must be enclosed in quotes as shown in the example below.
 The lastTestedNVDAVersion field in particular is used to ensure that users can be confident about installing an add-on.
 It allows the add-on author to make an assurance that the add-on will not cause instability, or break the users system.
 When this is not provided, or is less than the current version of NVDA (ignoring minor point updates EG 2018.3.1) then the user will be warned not to install the add-on.
-
 
 +++ An Example Manifest File +++
 ```
