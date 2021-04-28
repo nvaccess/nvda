@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Copyright (C) 2006-2023 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
 # Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -975,6 +975,78 @@ class ExcelWorksheet(ExcelBase):
 			if oldSelection.parent==newSelection.parent:
 				newSelection.parent=oldSelection.parent
 			eventHandler.executeEvent('gainFocus',newSelection)
+
+	def toggleBooleanAttribute(self, gesture, getStateFun, msgOff, msgOn):
+		gesture.send()
+		sel = self._getSelection()
+		if isinstance(sel, ExcelCell):
+			selObj = sel.excelCellObject
+		elif isinstance(sel, ExcelSelection):
+			selObj = sel.excelRangeObject
+		else:
+			return
+		enabled = getStateFun(selObj)
+		if enabled:
+			ui.message(msgOn)
+		else:
+			ui.message(msgOff)
+
+	@script(
+		gestures=["kb:control+b", "kb:control+shift+2"],
+		canPropagate=True,
+	)
+	def script_toggleBold(self, gesture):
+		self.toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.bold,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Bold off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Bold on'),
+		)
+
+	@script(
+		gestures=["kb:control+i", "kb:control+shift+3"],
+		canPropagate=True,
+	)
+	def script_toggleItalic(self, gesture):
+		self.toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.italic,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Italic off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Italic on'),
+		)
+
+	@script(
+		gestures=["kb:control+u", "kb:control+shift+4"],
+		canPropagate=True,
+	)
+	def script_toggleUnderline(self, gesture):
+		self.toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.underline != xlUnderlineStyleNone,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Underline off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Underline on'),
+		)
+
+	@script(
+		gesture="kb:control+shift+5",
+		canPropagate=True,
+	)
+	def script_toggleStrikethrough(self, gesture):
+		self.toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.strikethrough,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Strikethrough off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Strikethrough on'),
+		)
+
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
