@@ -97,7 +97,7 @@ class SpeechViewerFrame(
 			self.shouldShowOnStartupCheckBox.SetFocus()
 
 	def onClose(self, evt):
-		assert isActive
+		assert isActive, "Cannot close Speech Viewer as it is already inactive"
 		deactivate()
 
 	def onShouldShowOnStartupChanged(self, evt):
