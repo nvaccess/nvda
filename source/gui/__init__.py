@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
-# Thomas Stivers, Babbage B.V.
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -47,7 +47,7 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 ### Globals
 mainFrame = None
 isInMessageBox = False
-hasAppExited = False
+
 
 class MainFrame(wx.Frame):
 
@@ -360,53 +360,21 @@ class MainFrame(wx.Frame):
 
 def safeAppExit():
 	"""
-	Ensures the app is exited by all the top windows being destroyed.
-	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
+	Ensures the app is exited by all the top windows being destroyed
 	"""
-
-	import brailleViewer
-	brailleViewer.destroyBrailleViewer()
-
-	app = wx.GetApp()
-
-	# prevent race condition with object deletion
-	# prevent deletion of the object while we work on it.
-	_SettingsDialog = settingsDialogs.SettingsDialog
-	nonWeak: typing.Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
-
-	for instance, state in nonWeak.items():
-		if state is _SettingsDialog.DialogState.DESTROYED:
-			log.error(
-				"Destroyed but not deleted instance of gui.SettingsDialog exists"
-				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
-			)
-		else:
-			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
-
-	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
-	# They must be manually destroyed when exiting the app.
-	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12286, #12238)
-	log.debug("destroying system tray icon and menu")
-	app.ScheduleForDestruction(mainFrame.sysTrayIcon.menu)
-	mainFrame.sysTrayIcon.RemoveIcon()
-	app.ScheduleForDestruction(mainFrame.sysTrayIcon)
 
 	for window in wx.GetTopLevelWindows():
 		if isinstance(window, wx.Dialog) and window.IsModal():
-			log.debug(f"ending modal {window} during exit process")
+			log.info(f"ending modal {window} during exit process")
 			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
 		if isinstance(window, MainFrame):
-			log.debug("destroying main frame during exit process")
+			log.info(f"destroying main frame during exit process")
 			# the MainFrame has EVT_CLOSE bound to the ExitDialog
 			# which calls this function on exit, so destroy this window
-			app.ScheduleForDestruction(window)
+			wx.CallAfter(window.Destroy)
 		else:
-			log.debug(f"closing window {window} during exit process")
+			log.info(f"closing window {window} during exit process")
 			wx.CallAfter(window.Close)
-
-	global hasAppExited
-	hasAppExited = True
-
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
@@ -471,7 +439,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			item = menu_tools.Append(wx.ID_ANY, _("View log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
 		# Translators: The label for the menu item to toggle Speech Viewer.
-		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		item.Check(speechViewer.isActive)
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 
 		self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
@@ -616,13 +585,33 @@ def initialize():
 	wx.CallAfter = wx_CallAfter_wrapper
 
 def terminate():
+	import brailleViewer
+	brailleViewer.destroyBrailleViewer()
+
+	# prevent race condition with object deletion
+	# prevent deletion of the object while we work on it.
+	_SettingsDialog = settingsDialogs.SettingsDialog
+	nonWeak: typing.Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
+
+	for instance, state in nonWeak.items():
+		if state is _SettingsDialog.DialogState.DESTROYED:
+			log.error(
+				"Destroyed but not deleted instance of gui.SettingsDialog exists"
+				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
 	global mainFrame
-
-	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
-	# safeAppExit has not been called yet
-	if not hasAppExited:
-		safeAppExit()
-
+	# This is called after the main loop exits because WM_QUIT exits the main loop
+	# without destroying all objects correctly and we need to support WM_QUIT.
+	# Therefore, any request to exit should exit the main loop.
+	safeAppExit()
+	# #4460: We need another iteration of the main loop
+	# so that everything (especially the TaskBarIcon) is cleaned up properly.
+	# ProcessPendingEvents doesn't seem to work, but MainLoop does.
+	# Because the top window gets destroyed,
+	# MainLoop thankfully returns pretty quickly.
+	wx.GetApp().MainLoop()
 	mainFrame = None
 
 def showGui():
