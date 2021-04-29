@@ -35,10 +35,10 @@ from ._sapi4 import (
 	VOICECHARSET
 )
 import config
-import speech
 import nvwave
 import weakref
 
+from speech.commands import PitchCommand
 from speech.commands import IndexCommand, SpeechCommand, CharacterModeCommand
 
 class SynthDriverBufSink(COMObject):
@@ -68,7 +68,7 @@ class SynthDriverBufSink(COMObject):
 class SynthDriver(SynthDriver):
 
 	name="sapi4"
-	description="NewSpeech 4"
+	description="Microsoft Speech API version 4"
 	supportedSettings=[SynthDriver.VoiceSetting()]
 	supportedNotifications={synthIndexReached,synthDoneSpeaking}
 
@@ -129,7 +129,7 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, CharacterModeCommand):
 				textList.append("\\RmS=1\\" if item.state else "\\RmS=0\\")
 				charMode=item.state
-			elif isinstance(item, speech.PitchCommand):
+			elif isinstance(item, PitchCommand):
 				offset=int(config.conf["speech"]['sapi4']["capPitchChange"])
 				offset=int((self._maxPitch-self._minPitch)*offset/100)
 				val=oldPitch+offset
