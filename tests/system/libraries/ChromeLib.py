@@ -127,9 +127,9 @@ class ChromeLib:
 		""" Ensure chrome started and is focused.
 		Different versions of chrome have variations in how the title is presented.
 		This may mean that there is a separator between document name and application name.
-		E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no applcation name at all.
+		E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no application name at all.
 		Rather than try to get this right, just use the doc title.
-		If this continues to be unreliable we could use solenium or similar to start chrome and inform us
+		If this continues to be unreliable we could use Selenium or similar to start chrome and inform us
 		when it is ready.
 		"""
 		startsWithTestCaseTitle = re.compile(f"^{self._testCaseTitle}")
