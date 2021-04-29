@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2020-2021 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,8 +12,15 @@ from os.path import join as _pJoin
 import tempfile as _tempfile
 from typing import Optional as _Optional
 from SystemTestSpy import (
+	_blockUntilConditionMet,
 	_getLib,
 )
+from SystemTestSpy.windows import (
+	GetForegroundWindowTitle,
+	GetActiveWindowTitles,
+	SetForegroundWindow,
+)
+import re
 from robot.libraries.BuiltIn import BuiltIn
 
 # Imported for type information
@@ -116,6 +123,34 @@ class ChromeLib:
 				" See NVDA log for full speech."
 			)
 
+	def _focusChrome(self):
+		""" Ensure chrome started and is focused.
+		Different versions of chrome have variations in how the title is presented.
+		This may mean that there is a separator between document name and application name.
+		E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no applcation name at all.
+		Rather than try to get this right, just use the doc title.
+		If this continues to be unreliable we could use solenium or similar to start chrome and inform us
+		when it is ready.
+		"""
+		startsWithTestCaseTitle = re.compile(f"^{self._testCaseTitle}")
+		success, _success = _blockUntilConditionMet(
+			getValue=lambda: SetForegroundWindow(startsWithTestCaseTitle),
+			giveUpAfterSeconds=3,
+			intervalBetweenSeconds=0.5
+		)
+		if success:
+			return
+		windowInformation = ""
+		try:
+			windowInformation = f"Foreground Window: {GetForegroundWindowTitle()}.\n"
+			windowInformation += f"Open Windows: {GetActiveWindowTitles()}"
+		except OSError as e:
+			builtIn.log(f"Couldn't retrieve active window information.\nException: {e}")
+		raise AssertionError(
+			"Unable to focus Chrome.\n"
+			f"{windowInformation}"
+		)
+
 	def prepareChrome(self, testCase: str) -> None:
 		"""
 		Starts Chrome opening a file containing the HTML sample
@@ -127,14 +162,7 @@ class ChromeLib:
 		spy.wait_for_speech_to_finish()
 		lastSpeechIndex = spy.get_last_speech_index()
 		self.start_chrome(path)
-		# Ensure chrome started
-		# Different versions of chrome have variations in how the title is presented
-		# This may mean that there is a separator between document name and
-		# application name. E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no applcation
-		# name at all.
-		# Rather than try to get this right, just wait for the doc title.
-		# If this continues to be unreliable we could use solenium or similar to start chrome and inform us when
-		# it is ready.
+		self._focusChrome()
 		applicationTitle = f"{self._testCaseTitle}"
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
 		self._waitForStartMarker(spy, appTitleIndex)
