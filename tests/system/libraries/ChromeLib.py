@@ -72,6 +72,14 @@ class ChromeLib:
 	_loadCompleteString = "Test page load complete"
 
 	@staticmethod
+	def getUniqueTestCaseTitle(testCase: str) -> str:
+		return f"{ChromeLib._testCaseTitle} ({hash(testCase)})"
+
+	@staticmethod
+	def getUniqueTestCaseTitleRegex(testCase: str) -> re.Pattern:
+		return re.compile(f"{ChromeLib._testCaseTitle} \\({hash(testCase)}\\)")
+
+	@staticmethod
 	def _writeTestFile(testCase) -> str:
 		"""
 		Creates a file for a HTML test case. The sample is written with a button before and after so that NVDA
@@ -82,7 +90,7 @@ class ChromeLib:
 		filePath = ChromeLib._getTestCasePath("test.html")
 		fileContents = (f"""
 			<head>
-				<title>{ChromeLib._testCaseTitle}</title>
+				<title>{ChromeLib.getUniqueTestCaseTitle(testCase)}</title>
 			</head>
 			<body onload="document.getElementById('loadStatus').innerHTML='{ChromeLib._loadCompleteString}'">
 				<p>{ChromeLib._beforeMarker}</p>
@@ -123,7 +131,7 @@ class ChromeLib:
 				" See NVDA log for full speech."
 			)
 
-	def _focusChrome(self):
+	def _focusChrome(self, startsWithTestCaseTitle: re.Pattern):
 		""" Ensure chrome started and is focused.
 		Different versions of chrome have variations in how the title is presented.
 		This may mean that there is a separator between document name and application name.
@@ -132,7 +140,6 @@ class ChromeLib:
 		If this continues to be unreliable we could use Selenium or similar to start chrome and inform us
 		when it is ready.
 		"""
-		startsWithTestCaseTitle = re.compile(f"^{self._testCaseTitle}")
 		success, _success = _blockUntilConditionMet(
 			getValue=lambda: SetForegroundWindow(startsWithTestCaseTitle),
 			giveUpAfterSeconds=3,
@@ -162,8 +169,8 @@ class ChromeLib:
 		spy.wait_for_speech_to_finish()
 		lastSpeechIndex = spy.get_last_speech_index()
 		self.start_chrome(path)
-		self._focusChrome()
-		applicationTitle = f"{self._testCaseTitle}"
+		self._focusChrome(ChromeLib.getUniqueTestCaseTitleRegex(testCase))
+		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
 		self._waitForStartMarker(spy, appTitleIndex)
 		# Move to the loading status line, and wait fore it to become complete
