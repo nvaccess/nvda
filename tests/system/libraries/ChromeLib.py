@@ -77,7 +77,7 @@ class ChromeLib:
 
 	@staticmethod
 	def getUniqueTestCaseTitleRegex(testCase: str) -> re.Pattern:
-		return re.compile(f"{ChromeLib._testCaseTitle} \\({hash(testCase)}\\)")
+		return re.compile(f"^{ChromeLib._testCaseTitle} \\({hash(testCase)}\\)")
 
 	@staticmethod
 	def _writeTestFile(testCase) -> str:
