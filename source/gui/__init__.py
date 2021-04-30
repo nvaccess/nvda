@@ -85,6 +85,11 @@ class MainFrame(wx.Frame):
 		"""
 		nvdaPid = os.getpid()
 		focus = api.getFocusObject()
+		# Do not set prevFocus if the focus is on a control rendered by NVDA itself, such as the NVDA menu.
+		# This allows to refer to the control that had focus before opening the menu while still using NVDA
+		# on its own controls. The L{nvdaPid} check can be bypassed by setting the optional attribute
+		# L{isPrevFocusOnNvdaPopup} to L{True} when a NVDA dialog offers customizable bound gestures,
+		# eg. the NVDA Python Console.
 		if focus.processID != nvdaPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
 			self.prevFocus = focus
 			self.prevFocusAncestors = api.getFocusAncestors()
