@@ -73,6 +73,9 @@ BringToFront
 
 setOutPath "$PLUGINSDIR"
 ;Play NVDA logo sound, unless started with the --minimal command line parameter
+; Get the full param string and puts it in register $0.
+; So $0 may then contain eg. "--minimal --install"
+; Reference: https://nsis.sourceforge.io/Docs/AppendixE.html#getparameters
 ${GetParameters} $0
 ${GetOptions} $0 "--minimal" $1
 IfErrors 0 +3
