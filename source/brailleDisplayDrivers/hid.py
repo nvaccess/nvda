@@ -4,9 +4,6 @@
 #See the file COPYING for more details.
 #Copyright (C) 2012-2017 NV Access Limited, Babbage B.V.
 
-myPath1='\\\\?\\hid#vid_1c71&pid_c141&mi_01#8&a44cef0&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}'
-myPath2='\\\\?\\hid#vid_1c71&pid_c141&mi_00#8&2e1c0cb2&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}'
-
 from dataclasses import dataclass
 import ctypes
 import time
@@ -90,7 +87,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				continue
 			# Try talking to the display.
 			try:
-				self._dev = hwIo.Hid(myPath1, onReceive=self._hidOnReceive)
+				self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue # Couldn't connect.
