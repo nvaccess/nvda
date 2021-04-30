@@ -61,7 +61,7 @@ SCRCAT_PYTHON_CONSOLE = _("Python Console")
 
 class NvdaPythonConsoleUIOutputClear(ScriptableObject):
 
-	# Allow the bound gestures to be edited through the Input Gestures dialog (see L{gui.prePopup}) 
+	# Allow the bound gestures to be edited through the Input Gestures dialog (see L{gui.prePopup})
 	isPrevFocusOnNvdaPopup = True
 
 	@script(
@@ -77,7 +77,7 @@ class NvdaPythonConsoleUIOutputClear(ScriptableObject):
 
 class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 
-	# Allow the bound gestures to be edited through the Input Gestures dialog (see L{gui.prePopup}) 
+	# Allow the bound gestures to be edited through the Input Gestures dialog (see L{gui.prePopup})
 	isPrevFocusOnNvdaPopup = True
 
 	@script(
