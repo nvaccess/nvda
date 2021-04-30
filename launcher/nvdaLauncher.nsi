@@ -77,6 +77,9 @@ setOutPath "$PLUGINSDIR"
 ; So $0 may then contain eg. "--minimal --install"
 ; Reference: https://nsis.sourceforge.io/Docs/AppendixE.html#getparameters
 ${GetParameters} $0
+; From the params string, looks for option "--minimal", tries to get it's (unused) value and stores in $1.
+; Sets the error flag if the option is missing.
+; Reference: https://nsis.sourceforge.io/Docs/AppendixE.html#getoptions
 ${GetOptions} $0 "--minimal" $1
 IfErrors 0 +3
 File "..\miscDeps\launcher\nvda_logo.wav"
