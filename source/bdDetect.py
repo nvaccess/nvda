@@ -1,3 +1,4 @@
+"hid"
 #bdDetect.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -123,7 +124,11 @@ def getDriversForConnectedUsbDevices():
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
+		# check for the Braille HID protocol before any other device matching. 
 		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+			# Skip over broken Brailliant BI 20X interface 0
+			if match.deviceInfo['vendorID'] == 0x1C71 and match.deviceInfo['productID'] == 0xC141 and 'mi_00' in match.port:
+				continue
 			yield ("hid", match)
 		for driver, devs in _driverDevices.items():
 			for type, ids in devs.items():
@@ -143,6 +148,7 @@ def getDriversForPossibleBluetoothDevices():
 			for port in deviceInfoFetcher.hidDevices if port["provider"]=="bluetooth"),
 	)
 	for match in btDevs:
+		# check for the Braille HID protocol before any other device matching. 
 		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
 			yield ("hid", match)
 		for driver, devs in _driverDevices.items():
@@ -332,7 +338,6 @@ def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	@return: Device information for each device.
 	@raise LookupError: If there is no detection data for this driver.
 	"""
-	devs = _driverDevices[driver]
 	usbDevs = itertools.chain(
 		(DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.usbDevices),
@@ -342,9 +347,18 @@ def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		for type, ids in devs.items():
-			if match.type==type and match.id in ids:
+		# check for the Braille HID protocol before any other device matching. 
+		if driver == "hid":
+			if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+				# Skip over broken Brailliant BI 20X interface 0
+				if match.deviceInfo['vendorID'] == 0x1C71 and match.deviceInfo['productID'] == 0xC141 and 'mi_00' in match.port:
+					continue
 				yield match
+		else:
+			devs = _driverDevices[driver]
+			for type, ids in devs.items():
+				if match.type==type and match.id in ids:
+					yield match
 
 def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	"""Get any possible Bluetooth devices associated with a particular driver.
@@ -353,9 +367,14 @@ def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	@return: Port information for each port.
 	@raise LookupError: If there is no detection data for this driver.
 	"""
-	matchFunc = _driverDevices[driver][KEY_BLUETOOTH]
-	if not callable(matchFunc):
-		return
+	if driver == "hid":
+		# check for the Braille HID protocol before any other device matching. 
+		def matchFunc(match):
+			return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
+	else:
+		matchFunc = _driverDevices[driver][KEY_BLUETOOTH]
+		if not callable(matchFunc):
+			return
 	btDevs = itertools.chain(
 		(DeviceMatch(KEY_SERIAL, port["bluetoothName"], port["port"], port)
 			for port in deviceInfoFetcher.comPorts
