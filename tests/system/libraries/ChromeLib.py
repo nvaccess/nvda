@@ -17,7 +17,7 @@ from SystemTestSpy import (
 )
 from SystemTestSpy.windows import (
 	GetForegroundWindowTitle,
-	GetActiveWindowTitles,
+	GetVisibleWindowTitles,
 	SetForegroundWindow,
 )
 import re
@@ -73,11 +73,11 @@ class ChromeLib:
 
 	@staticmethod
 	def getUniqueTestCaseTitle(testCase: str) -> str:
-		return f"{ChromeLib._testCaseTitle} ({hash(testCase)})"
+		return f"{ChromeLib._testCaseTitle} ({abs(hash(testCase))})"
 
 	@staticmethod
 	def getUniqueTestCaseTitleRegex(testCase: str) -> re.Pattern:
-		return re.compile(f"^{ChromeLib._testCaseTitle} \\({hash(testCase)}\\)")
+		return re.compile(f"^{ChromeLib._testCaseTitle} \\({abs(hash(testCase))}\\)")
 
 	@staticmethod
 	def _writeTestFile(testCase) -> str:
@@ -150,7 +150,7 @@ class ChromeLib:
 		windowInformation = ""
 		try:
 			windowInformation = f"Foreground Window: {GetForegroundWindowTitle()}.\n"
-			windowInformation += f"Open Windows: {GetActiveWindowTitles()}"
+			windowInformation += f"Open Windows: {GetVisibleWindowTitles()}"
 		except OSError as e:
 			builtIn.log(f"Couldn't retrieve active window information.\nException: {e}")
 		raise AssertionError(

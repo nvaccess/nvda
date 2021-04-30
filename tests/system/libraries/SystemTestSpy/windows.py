@@ -9,7 +9,12 @@
 from ctypes.wintypes import HWND, LPARAM
 from ctypes import c_bool, c_int, create_unicode_buffer, POINTER, WINFUNCTYPE, windll, WinError
 import re
-from typing import List, Tuple
+from typing import Callable, List, NamedTuple
+
+
+class Window(NamedTuple):
+    hwnd: HWND
+    title: str
 
 
 def _GetWindowTitle(hwnd: HWND) -> str:
@@ -22,15 +27,16 @@ def _GetWindowTitle(hwnd: HWND) -> str:
 	return str(buff.value)
 
 
-def _GetActiveWindows() -> List[Tuple[HWND, str]]:
-	windows: List[Tuple[HWND, str]] = []
+def _GetWindows(
+		filterUsingWindow: Callable[[Window], bool] = lambda _: True,
+) -> List[Window]:
+	windows: List[Window] = []
 	EnumWindowsProc = WINFUNCTYPE(c_bool, POINTER(c_int), POINTER(c_int))
 
 	def _append_title(hwnd: HWND, _lParam: LPARAM) -> bool:
-		if windll.user32.IsWindowVisible(hwnd):
-			title = _GetWindowTitle(hwnd)
-			if title:
-				windows.append((hwnd, title))
+		window = Window(hwnd, _GetWindowTitle(hwnd))
+		if filterUsingWindow(window):
+			windows.append(window)
 		return True
 
 	if not windll.user32.EnumWindows(EnumWindowsProc(_append_title), 0):
@@ -38,19 +44,26 @@ def _GetActiveWindows() -> List[Tuple[HWND, str]]:
 	return windows
 
 
+def _GetVisibleWindows() -> List[Window]:
+	return _GetWindows(
+		filterUsingWindow=lambda window: windll.user32.IsWindowVisible(window.hwnd) and bool(window.title)
+	)
+
+
 def SetForegroundWindow(targetTitle: re.Pattern) -> bool:
 	if re.match(targetTitle, GetForegroundWindowTitle()):
 		return True
-	windows = _GetActiveWindows()
-	for hwnd, title in windows:
-		if re.match(targetTitle, title):
-			return windll.user32.SetForegroundWindow(hwnd)
+	windows = _GetWindows(
+		filterUsingWindow=lambda window: re.match(targetTitle, window.title)
+	)
+	for window in windows:
+		return windll.user32.SetForegroundWindow(window.hwnd)
 	return False
 
 
-def GetActiveWindowTitles() -> List[str]:
-	windows = _GetActiveWindows()
-	return [w[1] for w in windows]
+def GetVisibleWindowTitles() -> List[str]:
+	windows = _GetVisibleWindows()
+	return [w.title for w in windows]
 
 
 def GetForegroundWindowTitle() -> str:
