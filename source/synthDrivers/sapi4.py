@@ -116,10 +116,10 @@ class SynthDriver(SynthDriver):
 		textList=[]
 		charMode=False
 		item=None
-		isPitchCommand=False
-		pitch=WORD()
+		isPitchCommand = False
+		pitch = WORD()
 		self._ttsAttrs.PitchGet(byref(pitch))
-		oldPitch=pitch.value
+		oldPitch = pitch.value
 
 		for item in speechSequence:
 			if isinstance(item,str):
@@ -130,15 +130,15 @@ class SynthDriver(SynthDriver):
 				textList.append("\\RmS=1\\" if item.state else "\\RmS=0\\")
 				charMode=item.state
 			elif isinstance(item, PitchCommand):
-				offset=int(config.conf["speech"]['sapi4']["capPitchChange"])
-				offset=int((self._maxPitch-self._minPitch)*offset/100)
-				val=oldPitch+offset
-				if val>self._maxPitch:
-					val=self._maxPitch
-				if val<self._minPitch:
-					val=self._minPitch
+				offset = int(config.conf["speech"]['sapi4']["capPitchChange"])
+				offset = int((self._maxPitch - self._minPitch)*offset / 100)
+				val = oldPitch + offset
+				if val > self._maxPitch:
+					val = self._maxPitch
+				if val < self._minPitch:
+					val = self._minPitch
 				self._ttsAttrs.PitchSet(val)
-				isPitchCommand=True
+				isPitchCommand = True
 			elif isinstance(item, SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
@@ -156,11 +156,23 @@ class SynthDriver(SynthDriver):
 		text="".join(textList)
 		flags=TTSDATAFLAG_TAGGED
 		if isPitchCommand:
-			self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)
+			self._ttsCentral.TextData(
+				VOICECHARSET.CHARSET_TEXT,
+				flags,
+				TextSDATA(text),
+				self._bufSinkPtr,
+				ITTSBufNotifySink._iid_
+			)
 			self._ttsAttrs.PitchSet(oldPitch)
-			isPitchCommand=False
+			isPitchCommand = False
 		else:
-			self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)
+			self._ttsCentral.TextData(
+				VOICECHARSET.CHARSET_TEXT,
+				flags,
+				TextSDATA(text),
+				self._bufSinkPtr,
+				ITTSBufNotifySink._iid_
+				)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()
