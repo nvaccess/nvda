@@ -13,8 +13,8 @@ from typing import Callable, List, NamedTuple
 
 
 class Window(NamedTuple):
-    hwnd: HWND
-    title: str
+	hwnd: HWND
+	title: str
 
 
 def _GetWindowTitle(hwnd: HWND) -> str:
