@@ -1,4 +1,5 @@
 !include "fileFunc.nsh"
+!include "LogicLib.nsh"
 !include "mui2.nsh"
 
 !define launcher_appExe "nvdaLauncher.exe"
@@ -72,7 +73,6 @@ Banner::show /nounload
 BringToFront
 
 setOutPath "$PLUGINSDIR"
-;Play NVDA logo sound, unless started with the --minimal command line parameter
 ; Get the full param string and puts it in register $0.
 ; So $0 may then contain eg. "--minimal --install"
 ; Reference: https://nsis.sourceforge.io/Docs/AppendixE.html#getparameters
@@ -81,10 +81,9 @@ ${GetParameters} $0
 ; Sets the error flag if the option is missing.
 ; Reference: https://nsis.sourceforge.io/Docs/AppendixE.html#getoptions
 ${GetOptions} $0 "--minimal" $1
-IfErrors 0 +3
-File "..\miscDeps\launcher\nvda_logo.wav"
-Push "$PLUGINSDIR\nvda_logo.wav"
-Call PlaySound
+${If} ${Errors}
+	Call PlayLogoSound
+${EndIf}
 CreateDirectory "$PLUGINSDIR\app"
 setOutPath "$PLUGINSDIR\app"
 file /R "${NVDADistDir}\"
@@ -96,6 +95,11 @@ execWait "$PLUGINSDIR\app\nvda_noUIAccess.exe $0 -r --launcher" $1
 intcmp $1 3 exec +1
 SectionEnd
 
+Function PlayLogoSound
+File "..\miscDeps\launcher\nvda_logo.wav"
+Push "$PLUGINSDIR\nvda_logo.wav"
+Call PlaySound	
+FunctionEnd
 
 Function PlaySound
 ; Retrieve the file to play
