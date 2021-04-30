@@ -18,7 +18,8 @@ import hidpi
 import hwIo
 from hwIo import intToByte, boolToByte
 
-HID_USAGE_PAGE_BRAILLE = 0x41
+from bdDetect import HID_USAGE_PAGE_BRAILLE
+
 
 class BraillePageUsageID(enum.IntEnum):
 	UNDEFINED = 0

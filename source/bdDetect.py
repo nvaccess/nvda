@@ -32,6 +32,10 @@ import appModuleHandler
 from baseObject import AutoPropertyObject
 import re
 
+
+HID_USAGE_PAGE_BRAILLE = 0x41
+
+
 DBT_DEVNODES_CHANGED=7
 
 _driverDevices = OrderedDict()
@@ -119,6 +123,8 @@ def getDriversForConnectedUsbDevices():
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
+		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+			yield ("hid", match)
 		for driver, devs in _driverDevices.items():
 			for type, ids in devs.items():
 				if match.type==type and match.id in ids:
@@ -137,6 +143,8 @@ def getDriversForPossibleBluetoothDevices():
 			for port in deviceInfoFetcher.hidDevices if port["provider"]=="bluetooth"),
 	)
 	for match in btDevs:
+		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+			yield ("hid", match)
 		for driver, devs in _driverDevices.items():
 			matchFunc = devs[KEY_BLUETOOTH]
 			if not callable(matchFunc):
