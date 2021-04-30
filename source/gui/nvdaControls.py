@@ -69,31 +69,6 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		self.ProcessEvent(evt)
 
 
-class _SelectOnFocusControl(object):
-	"""
-	A control that automatically selects the value when the control gains focus.
-	This makes editing the values quicker.
-	"""
-	def __init__(self, parent, **kwargs):
-		""" initialiser - Takes the same parameters as a wx.SpinCtrl.
-		"""
-		super().__init__(parent, **kwargs)
-		self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
-
-	def OnSetFocus(self, evt):
-		numChars = len(str(self.GetValue()))
-		self.SetSelection(0, numChars)
-		evt.Skip()
-
-
-class SelectOnFocusSpinCtrl(_SelectOnFocusControl, wx.SpinCtrl):
-	pass
-
-
-class SelectOnFocusSpinCtrlDouble(_SelectOnFocusControl, wx.SpinCtrlDouble):
-	pass
-
-
 class ListCtrlAccessible(wx.Accessible):
 	"""WX Accessible implementation for checkable lists which aren't fully accessible."""
 
