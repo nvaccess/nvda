@@ -131,7 +131,7 @@ class SynthDriver(SynthDriver):
 				charMode=item.state
 			elif isinstance(item, PitchCommand):
 				offset = int(config.conf["speech"]['sapi4']["capPitchChange"])
-				offset = int((self._maxPitch - self._minPitch)*offset / 100)
+				offset = int((self._maxPitch - self._minPitch) * offset / 100)
 				val = oldPitch + offset
 				if val > self._maxPitch:
 					val = self._maxPitch
@@ -172,7 +172,7 @@ class SynthDriver(SynthDriver):
 				TextSDATA(text),
 				self._bufSinkPtr,
 				ITTSBufNotifySink._iid_
-				)
+			)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()
