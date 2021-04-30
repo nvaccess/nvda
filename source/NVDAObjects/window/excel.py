@@ -994,6 +994,12 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['italic']=fontObj.italic
 			underline=fontObj.underline
 			formatField['underline']=False if underline is None or underline==xlUnderlineStyleNone else True
+			formatField['strikethrough'] = fontObj.strikethrough
+		if formatConfig['reportSuperscriptsAndSubscripts']:
+			if fontObj.superscript:
+				formatField['text-position'] = 'super'
+			elif fontObj.subscript:
+				formatField['text-position'] = 'sub'
 		if formatConfig['reportStyle']:
 			try:
 				styleName=self.obj.excelCellObject.style.nameLocal
@@ -1471,7 +1477,7 @@ class ExcelCell(ExcelBase):
 				formatField.update(field.field)
 		if not hasattr(self.parent,'_formatFieldSpeechCache'):
 			self.parent._formatFieldSpeechCache = textInfos.Field()
-		if formatField:
+		if formatField or self.parent._formatFieldSpeechCache:
 			sequence = speech.getFormatFieldSpeech(
 				formatField,
 				attrsCache=self.parent._formatFieldSpeechCache,

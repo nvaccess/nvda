@@ -12,13 +12,21 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 from abc import abstractmethod
 import weakref
 import re
-from typing import Any, Union, List, Optional, Dict
+from typing import (
+	Any,
+	Union,
+	List,
+	Optional,
+	Dict,
+	Tuple,
+)
 
 import baseObject
 import config
 import controlTypes
 from controlTypes import OutputReason
 import locationHelper
+from logHandler import log
 
 
 SpeechSequence = List[Union[Any, str]]
@@ -307,6 +315,24 @@ class TextInfo(baseObject.AutoPropertyObject):
 		#: The position with which this instance was constructed.
 		self.basePosition=position
 
+	#: Typing information for auto-property: start
+	start: "TextInfoEndpoint"
+
+	def _get_start(self) -> "TextInfoEndpoint":
+		return TextInfoEndpoint(self, True)
+
+	def _set_start(self, otherEndpoint: "TextInfoEndpoint"):
+		self.start.moveTo(otherEndpoint)
+
+	#: Typing information for auto-property: end
+	end: "TextInfoEndpoint"
+
+	def _get_end(self) -> "TextInfoEndpoint":
+		return TextInfoEndpoint(self, False)
+
+	def _set_end(self, otherEndpoint: "TextInfoEndpoint"):
+		self.end.moveTo(otherEndpoint)
+
 	def _get_obj(self):
 		"""The object containing the range of text being represented."""
 		return self._obj()
@@ -521,15 +547,18 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		unitInfo=self.copy()
 		unitInfo.collapse()
-		while unitInfo.compareEndPoints(self,"startToEnd")<0:
+		while unitInfo.start < self.end:
 			unitInfo.expand(unit)
 			chunkInfo=unitInfo.copy()
-			if chunkInfo.compareEndPoints(self,"startToStart")<0:
-				chunkInfo.setEndPoint(self,"startToStart")
-			if chunkInfo.compareEndPoints(self,"endToEnd")>0:
-				chunkInfo.setEndPoint(self,"endToEnd")
+			if chunkInfo.start < self.start:
+				chunkInfo.start = self.start
+			if chunkInfo.end > self.end:
+				chunkInfo.end = self.end
 			yield chunkInfo.text
 			unitInfo.collapse(end=True)
+			if unitInfo.start < chunkInfo.end:
+				log.debugWarning("Could not move TextInfo completely to end, breaking")
+				break
 
 	def getControlFieldSpeech(
 			self,
@@ -624,3 +653,76 @@ class DocumentWithPageTurns(baseObject.ScriptableObject):
 		@raise RuntimeError: If there are no further pages.
 		"""
 		raise NotImplementedError
+
+
+class TextInfoEndpoint:
+	"""
+	Represents one end of a TextInfo instance.
+	This object can be compared with another end from the same or a different TextInfo instance,
+	Using the standard math comparison operators:
+	< <= == != >= >
+	"""
+
+	_whichMap: Dict[Tuple[bool, bool], str] = {
+		(True, True): "startToStart",
+		(True, False): "startToEnd",
+		(False, True): "endToStart",
+		(False, False): "endToEnd",
+	}
+
+	def _cmp(self, other: "TextInfoEndpoint") -> int:
+		"""
+		A standard cmp function returning:
+		-1 for less than, 0 for equal and 1 for greater than.
+		"""
+		if (
+			not isinstance(other, TextInfoEndpoint)
+			or not isinstance(other.textInfo, type(self.textInfo))
+		):
+			raise ValueError(f"Cannot compare endpoint with different type: {other}")
+		return self.textInfo.compareEndPoints(other.textInfo, self._whichMap[self.isStart, other.isStart])
+
+	def __init__(
+			self,
+			textInfo: TextInfo,
+			isStart: bool
+	):
+		"""
+		@param textInfo: the TextInfo instance you wish to represent an endpoint of.
+		@param isStart: true to represent the start, false for the end.
+		"""
+		self.textInfo = textInfo
+		self.isStart = isStart
+
+	def __lt__(self, other) -> bool:
+		return self._cmp(other) < 0
+
+	def __le__(self, other) -> bool:
+		return self._cmp(other) <= 0
+
+	def __eq__(self, other) -> bool:
+		return self._cmp(other) == 0
+
+	def __ne__(self, other) -> bool:
+		return self._cmp(other) != 0
+
+	def __ge__(self, other) -> bool:
+		return self._cmp(other) >= 0
+
+	def __gt__(self, other) -> bool:
+		return self._cmp(other) > 0
+
+	def moveTo(self, other: "TextInfoEndpoint") -> None:
+		"""
+		Moves the end of the TextInfo this endpoint represents to the position of the given endpoint.
+		"""
+		if (
+			not isinstance(other, TextInfoEndpoint)
+			or not isinstance(other.textInfo, type(self.textInfo))
+		):
+			raise ValueError(f"Cannot move endpoint to different type: {other}")
+		self.textInfo.setEndPoint(other.textInfo, self._whichMap[(self.isStart, other.isStart)])
+
+	def __repr__(self):
+		endpointLabel = "start" if self.isStart else "end"
+		return f"{endpointLabel} endpoint of {self.textInfo}"

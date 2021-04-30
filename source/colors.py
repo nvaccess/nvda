@@ -14,7 +14,7 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 	"""Represents a color as an RGB (red green blue) value"""
 
 	@classmethod
-	def fromCOLORREF(cls,c):
+	def fromCOLORREF(cls, c) -> "RGB":
 		"""factory method to create an RGB from a COLORREF ctypes instance"""
 		if isinstance(c,COLORREF):
 			c=c.value

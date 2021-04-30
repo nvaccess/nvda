@@ -107,7 +107,7 @@ def shouldUseToUnicodeEx(focus=None):
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 	return (
 		# This is only possible in Windows 10 1607 and above
-		winVersion.isWin10(1607)
+		winVersion.getWinVer() >= winVersion.WIN10_1607
 		and (  # Either of
 			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.

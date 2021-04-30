@@ -11,6 +11,10 @@
 #This license can be found at:
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
+from typing import List
+import fileinput
+import re
+from SCons.Node.FS import File
 
 Import(
 	'env',
@@ -26,18 +30,49 @@ def new_my_import(fullname):
 	return old_my_import(fullname)
 comtypes.client._generate._my_import = new_my_import
 
-def interfaceAction(target,source,env):
-	clsid=env.get('clsid')
+def makeIDEFriendly(path:str) -> None:
+	"""
+	Add a local import of * so that tools and IDE's can find definitions.
+	Prefer to import from comtypes.gen, at runtime behavior will not have changed.
+	@param path: Path to the friendly name comInterfaces module.
+	"""
+	importTemplate = (
+"""try:
+	from comtypes.gen import {libIdentifier}
+except ModuleNotFoundError:
+	import {libIdentifier}
+	from {libIdentifier} import *
+""")
+
+	importPattern = re.compile(r"from comtypes\.gen import ([\w]+)\n")
+	for line in fileinput.input(path, inplace=True):
+		# Note: The fileinput module temporarily redirects stdout to the file.
+		# So print is used to write the file.
+		match = importPattern.match(line)
+		if match:
+			libId = match.group(1)
+			print(importTemplate.format(libIdentifier=libId), end='')
+		else:
+			print(line, end='')
+
+def interfaceAction(target:List[File], source, env):
+	clsid = env.get('clsid')
 	if clsid:
-		source=(clsid,env['majorVersion'],env['minorVersion'])
+		source=(clsid, env['majorVersion'], env['minorVersion'])
 	else:
 		source=str(source[0])
 	comtypes.client.GetModule(source)
+	# re-write the the "friendlyNameFile" so that tools/IDEs can find the
+	# definitions
+	for t in target:
+		path: str = t.abspath
+		if path.endswith(".py"):
+			makeIDEFriendly(path)
 
 interfaceBuilder=env.Builder(
 	action=env.Action(interfaceAction),
 )
-env['BUILDERS']['comtypesInterface']=interfaceBuilder
+env['BUILDERS']['comtypesInterface'] = interfaceBuilder
 
 # Force comtypes generated interfaces in to our directory
 import comtypes.client
@@ -46,23 +81,41 @@ comtypes.client.gen_dir=Dir('comInterfaces').abspath
 COM_INTERFACES = {
 	"IAccessible2Lib.py": "typelibs/ia2.tlb",
 	"ISimpleDOM.py": "typelibs/ISimpleDOMNode.tlb",
-	"mathPlayer.py": "typelibs/mathPlayerDLL.tlb",
-	#"Accessibility.py": ('{1EA4DBF0-3C3B-11CF-810C-00AA00389B71}',1,0),
+	"MathPlayer.py": "typelibs/mathPlayerDLL.tlb",
+	"Accessibility.py": ('{1EA4DBF0-3C3B-11CF-810C-00AA00389B71}',1,0),
 	"tom.py": ('{8CC497C9-A1DF-11CE-8098-00AA0047BE5D}',1,0),
 	"SpeechLib.py": ('{C866CA3A-32F7-11D2-9602-00C04F8EE628}',5,0),
 	"AcrobatAccessLib.py": "typelibs/AcrobatAccess.tlb",
-	"FlashAccessibility.py": "typelibs/FlashAccessibility.tlb",
+	# We don't generate UIAutomationClient (and _944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py)
+	# because we don't know what version is available on Appveyor.
+	# Instead we locally generate the file and include it in the repository.
+	# Ensuring that adjustments performed by 'makeIDEFriendly' are incorporated.
+	# "UIAutomationClient.py": ('{944DE083-8FB8-45CF-BCB7-C477ACB2F897}', 1, 0),
 }
 
 for k,v in COM_INTERFACES.items():
-	targets=[Dir('comInterfaces').File(k),
-		# This buillds a .pyc file as well.
-		Dir('comInterfaces').File(importlib.util.cache_from_source(k))]
-	source=clsid=majorVersion=None
+	targets=[
+		Dir('comInterfaces').File(k),
+		# This builds a .pyc file as well.
+		Dir('comInterfaces').File(importlib.util.cache_from_source(k))
+		]
+	source = clsid = majorVersion = None
 	if isinstance(v, str):
-		env.comtypesInterface(targets,v)
+		env.comtypesInterface(targets, v)
 	else:
-		env.comtypesInterface(targets,Dir('comInterfaces').File('__init__.py'),clsid=v[0],majorVersion=v[1],minorVersion=v[2])
+		env.comtypesInterface(
+			targets,
+			Dir('comInterfaces').File('__init__.py'),
+			clsid=v[0],
+			majorVersion=v[1],
+			minorVersion=v[2]
+		)
 
-#When cleaning comInterfaces get rid of everything except for things starting with __ (e.g. __init__.py)
-env.Clean(Dir('comInterfaces'),Glob('comInterfaces/[!_]*')+Glob('comInterfaces/_[!_]*'))
+
+
+# When cleaning comInterfaces get rid of everything
+# except for things starting with __ (e.g. __init__.py)
+env.Clean(
+	Dir('comInterfaces'),
+	Glob('comInterfaces/[!_]*') + Glob('comInterfaces/_[!_]*')
+)

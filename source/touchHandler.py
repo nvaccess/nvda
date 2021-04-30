@@ -302,7 +302,7 @@ def touchSupported(debugLog: bool = False):
 		if debugLog:
 			log.debugWarning("Touch only supported on installed copies")
 		return False
-	if winVersion.winVersion.platform_version < (6, 2, 9200):
+	if winVersion.getWinVer() < winVersion.WIN8:
 		if debugLog:
 			log.debugWarning("Touch only supported on Windows 8 and higher")
 		return False

@@ -5,7 +5,6 @@
 # See the file COPYING for more details.
 
 import ctypes
-import IAccessibleHandler
 import speech
 import textInfos.offsets
 import winKernel

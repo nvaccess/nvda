@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
+# addonHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2021 NV Access Limited, Rui Batista, Noelia Ruiz Martínez,
+# Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
 # Joseph Lee, Babbage B.V., Arnold Loubriat
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -539,8 +540,8 @@ def initTranslation():
 	try:
 		callerFrame = inspect.currentframe().f_back
 		callerFrame.f_globals['_'] = translations.gettext
-		# Install pgettext function.
-		callerFrame.f_globals['pgettext'] = translations.pgettext
+		# Install our pgettext function.
+		callerFrame.f_globals['pgettext'] = languageHandler.makePgettext(translations)
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 

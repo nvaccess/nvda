@@ -724,12 +724,14 @@ Otherwise, the add-on will not install.
   - e.g "2019.1.1"
   - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
-  - Must be less than or equal to `lastTestedNVDAVersion`
+  - Must be less than or equal to ``lastTestedNVDAVersion``
+  -
 - lastTestedNVDAVersion (string): The last version of NVDA this add-on has been tested with.
   - e.g "2019.1.0"
   - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
-  - Must be greater than or equal to `minimumNVDAVersion`
+  - Must be greater than or equal to ``minimumNVDAVersion``
+  -
 -
 
 All string values must be enclosed in quotes as shown in the example below.
@@ -751,7 +753,7 @@ docFileName = "readme.html"
 minimumNVDAVersion = "2018.1.0"
 lastTestedNVDAVersion = "2019.1.0"
 --- end ---
-``` 
+```
 
 ++ Plugins and Drivers ++
 The following plugins and drivers can be included in an add-on:
@@ -860,11 +862,11 @@ If the input is "nav._", attribute names with a single leading underscore are pr
 Similarly, if the input is "nav.__", attribute names with two leading underscores are proposed.
 
 + Remote Python Console +
-A remote Python console is available for situations where remote debugging of NVDA is useful.
+A remote Python console is available in source builds of NVDA, for situations where remote debugging of NVDA is useful.
 It is similar to the [local Python console #PythonConsole] discussed above, but is accessed via TCP.
 
 Please be aware that this is a huge security risk.
-You should only enable it if you are connected to trusted networks.
+It is not available in binary builds distributed by NV Access, and You should only enable it if you are connected to trusted networks.
 
 ++ Usage ++
 To enable the remote Python console, use the local Python console to import remotePythonConsole and call remotePythonConsole.initialize().

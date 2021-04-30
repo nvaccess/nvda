@@ -4,7 +4,7 @@ rem and then activates it.
 rem This is an internal script and should not be used directly.
 
 rem Ensure the environment is created and up to date
-py -3.8-32 "%~dp0\ensureVenv.py"
+py -3.7-32 "%~dp0\ensureVenv.py"
 if ERRORLEVEL 1 goto :EOF
 
 rem Set the necessary environment variables to have Python use this virtual environment.

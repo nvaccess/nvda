@@ -11,6 +11,7 @@ as well as the associated TextInfo class."""
 import os
 import time
 import re
+import typing
 import weakref
 from logHandler import log
 import review
@@ -446,15 +447,20 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			return f"{braille.roleLabels[controlTypes.ROLE_LANDMARK]} {braille.landmarkLabels[self.landmark]}"
 		return self.roleText
 
-	def _get_value(self):
-		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
-		@rtype: str
+	#: Typing information for auto property _get_value
+	value: str
+
+	def _get_value(self) -> str:
+		"""The value of this object
+		(example: the current percentage of a scrollbar, the selected option in a combo box).
 		"""   
 		return ""
 
-	def _get_description(self):
+	#: Typing information for auto property _get_description
+	description: str
+
+	def _get_description(self) -> str:
 		"""The description or help text of this object.
-		@rtype: str
 		"""
 		return ""
 
@@ -499,12 +505,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		raise NotImplementedError
 
 	# Type info for auto property:
-	states: set
+	states: typing.Set[int]
 
-	def _get_states(self):
+	def _get_states(self) -> typing.Set[int]:
 		"""Retrieves the current states of this object (example: selected, focused).
 		@return: a set of  STATE_* constants from L{controlTypes}.
-		@rtype: set of int
 		"""
 		return set()
 
@@ -640,13 +645,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		raise NotImplementedError
 
-	def _get_cellCoordsText(self):
+	#: Typing information for auto-property: _get_cellCoordsText
+	cellCoordsText: typing.Optional[str]
+
+	def _get_cellCoordsText(self) -> typing.Optional[str]:
 		"""
 		An alternative text representation of cell coordinates e.g. "a1". Will override presentation of rowNumber and columnNumber.
 		Only implement if the representation is really different.
 		"""
 		return None
-		
 
 	def _get_rowCount(self):
 		"""Retrieves the number of rows this object contains if its a table.

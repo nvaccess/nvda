@@ -7,16 +7,38 @@
 import locale
 from collections import OrderedDict
 import winreg
-from comtypes import COMObject, COMError
-from ctypes import *
+from comtypes import CoCreateInstance, COMObject, COMError, GUID
+from ctypes import byref, c_ulong, POINTER
+from ctypes.wintypes import DWORD, WORD
 from synthDriverHandler import SynthDriver,VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
-import speech
-from ._sapi4 import *
+from ._sapi4 import (
+	CLSID_MMAudioDest,
+	CLSID_TTSEnumerator,
+	IAudioMultiMediaDevice,
+	ITTSAttributes,
+	ITTSBufNotifySink,
+	ITTSCentralW,
+	ITTSEnumW,
+	TextSDATA,
+	TTSATTR_MAXPITCH,
+	TTSATTR_MAXSPEED,
+	TTSATTR_MAXVOLUME,
+	TTSATTR_MINPITCH,
+	TTSATTR_MINSPEED,
+	TTSATTR_MINVOLUME,
+	TTSDATAFLAG_TAGGED,
+	TTSFEATURE_PITCH,
+	TTSFEATURE_SPEED,
+	TTSFEATURE_VOLUME,
+	TTSMODEINFO,
+	VOICECHARSET
+)
 import config
 import nvwave
 import weakref
 
+from speech.commands import PitchCommand
 from speech.commands import IndexCommand, SpeechCommand, CharacterModeCommand
 
 class SynthDriverBufSink(COMObject):
@@ -94,6 +116,11 @@ class SynthDriver(SynthDriver):
 		textList=[]
 		charMode=False
 		item=None
+		isPitchCommand = False
+		pitch = WORD()
+		self._ttsAttrs.PitchGet(byref(pitch))
+		oldPitch = pitch.value
+
 		for item in speechSequence:
 			if isinstance(item,str):
 				textList.append(item.replace('\\','\\\\'))
@@ -102,6 +129,16 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, CharacterModeCommand):
 				textList.append("\\RmS=1\\" if item.state else "\\RmS=0\\")
 				charMode=item.state
+			elif isinstance(item, PitchCommand):
+				offset = int(config.conf["speech"]['sapi4']["capPitchChange"])
+				offset = int((self._maxPitch - self._minPitch) * offset / 100)
+				val = oldPitch + offset
+				if val > self._maxPitch:
+					val = self._maxPitch
+				if val < self._minPitch:
+					val = self._minPitch
+				self._ttsAttrs.PitchSet(val)
+				isPitchCommand = True
 			elif isinstance(item, SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
@@ -118,7 +155,24 @@ class SynthDriver(SynthDriver):
 		textList.append("\\PAU=1\\")
 		text="".join(textList)
 		flags=TTSDATAFLAG_TAGGED
-		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)
+		if isPitchCommand:
+			self._ttsCentral.TextData(
+				VOICECHARSET.CHARSET_TEXT,
+				flags,
+				TextSDATA(text),
+				self._bufSinkPtr,
+				ITTSBufNotifySink._iid_
+			)
+			self._ttsAttrs.PitchSet(oldPitch)
+			isPitchCommand = False
+		else:
+			self._ttsCentral.TextData(
+				VOICECHARSET.CHARSET_TEXT,
+				flags,
+				TextSDATA(text),
+				self._bufSinkPtr,
+				ITTSBufNotifySink._iid_
+			)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()

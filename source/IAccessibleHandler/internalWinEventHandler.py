@@ -16,13 +16,8 @@ import winUser
 from . import getWinEventLogInfo
 from . import isMSAADebugLoggingEnabled
 
+from comInterfaces import IAccessible2Lib as IA2
 
-from comInterfaces.IAccessible2Lib import (
-	IA2_EVENT_TEXT_CARET_MOVED,
-	IA2_EVENT_DOCUMENT_LOAD_COMPLETE,
-	IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED,
-	IA2_EVENT_PAGE_CHANGED,
-)
 
 from .orderedWinEventLimiter import OrderedWinEventLimiter, MENU_EVENTIDS
 from logHandler import log
@@ -61,10 +56,10 @@ winEventIDsToNVDAEventNames = {
 	winUser.EVENT_OBJECT_STATECHANGE: "stateChange",
 	winUser.EVENT_OBJECT_VALUECHANGE: "valueChange",
 	winUser.EVENT_OBJECT_LIVEREGIONCHANGED: "liveRegionChange",
-	IA2_EVENT_TEXT_CARET_MOVED: "caret",
-	IA2_EVENT_DOCUMENT_LOAD_COMPLETE: "documentLoadComplete",
-	IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED: "IA2AttributeChange",
-	IA2_EVENT_PAGE_CHANGED: "pageChange",
+	IA2.IA2_EVENT_TEXT_CARET_MOVED: "caret",
+	IA2.IA2_EVENT_DOCUMENT_LOAD_COMPLETE: "documentLoadComplete",
+	IA2.IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED: "IA2AttributeChange",
+	IA2.IA2_EVENT_PAGE_CHANGED: "pageChange",
 }
 
 _processDestroyWinEvent = None
