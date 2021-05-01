@@ -1215,6 +1215,10 @@ class UIA(Window):
 		if not p:
 			return None
 		e = p.currentSelectionContainer
+		if not e:
+			# Some implementations of SelectionItemPattern, such as the Outlook attachment list
+			# give back a NULL selectionContainer
+			return None
 		e = e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		obj = UIA(UIAElement=e)
 		if obj.UIASelectionPattern2:

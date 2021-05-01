@@ -250,17 +250,6 @@ def main():
 	log.debug("loading config")
 	import config
 	config.initialize()
-	if globalVars.appArgs.configPath == config.getUserDefaultConfigPath(useInstalledPathIfExists=True):
-		# Make sure not to offer the ability to copy the current configuration to the user account.
-		# This case always applies to the launcher when configPath is not overridden by the user,
-		# which is the default.
-		# However, if a user wants to run the launcher with a custom configPath,
-		# it is likely that he wants to copy that configuration when installing.
-		# This check also applies to cases where a portable copy is run using the installed configuration,
-		# in which case we want to avoid copying a configuration to itself.
-		# We set the value to C{None} in order for the gui to determine
-		# when to disable the checkbox for this feature.
-		globalVars.appArgs.copyPortableConfig = None
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
@@ -308,15 +297,20 @@ def main():
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
-	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
-	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
-	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
 	import six
 	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
 			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
+
+		def InitLocale(self):
+			# Backport of `InitLocale` from wx Python 4.1.2 as the current version tries to set a Python
+			# locale to an nonexistent one when creating an instance of `wx.App`.
+			# This causes a crash when running under a particular version of Universal CRT (#12160)
+			import locale
+			locale.setlocale(locale.LC_ALL, "C")
+
 	app = App(redirect=False)
 	# We support queryEndSession events, but in general don't do anything for them.
 	# However, when running as a Windows Store application, we do want to request to be restarted for updates
@@ -576,10 +570,16 @@ def main():
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
+
 	# Queue the firing of the postNVDAStartup notification.
 	# This is queued so that it will run from within the core loop,
 	# and initial focus has been reported.
-	queueHandler.queueFunction(queueHandler.eventQueue, postNvdaStartup.notify)
+	def _doPostNvdaStartupAction():
+		log.debug("Notify of postNvdaStartup action")
+		postNvdaStartup.notify()
+
+	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
+
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
