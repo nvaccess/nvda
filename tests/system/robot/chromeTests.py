@@ -387,7 +387,7 @@ def test_tableInStyleDisplayTable():
 	When a HTML style table is positioned in such a node, NVDA was previously unable to announce
 	table row and column count as well as provide table navigation for the inner table.
 	"""
-		_chrome.prepareChrome(
+	_chrome.prepareChrome(
 		"""
 			<p>Paragraph</p>
 			<div style="display:table">
@@ -412,9 +412,9 @@ def test_tableInStyleDisplayTable():
 	actualSpeech = _chrome.getSpeechAfterKey("t")
 	_asserts.strings_match(
 		actualSpeech,
-		"table  with 2 rows and 2 columns  row 1  Heading 1  column 1  First heading"
+		"table  with 2 rows and 2 columns  row 1  First heading  column 1  First heading"
 	)
-	nextActualSpeech = _chrome.getSpeechAfterKey("ctrl+alt+downArrow")
+	nextActualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
 	_asserts.strings_match(
 		nextActualSpeech,
 		"row 2  First content cell"
