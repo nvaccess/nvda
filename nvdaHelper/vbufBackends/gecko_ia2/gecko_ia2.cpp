@@ -105,21 +105,6 @@ static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	return pacc2;
 }
 
-inline void fillTableCounts(VBufStorage_controlFieldNode_t* node, IAccessible2* pacc, IAccessibleTable2* paccTable2) {
-	wostringstream s;
-	long count = 0;
-	// Fetch row and column counts and add them as attributes on this vbuf node.
-	if (paccTable2->get_nRows(&count) == S_OK) {
-		s << count;
-		node->addAttribute(L"table-rowcount", s.str());
-		s.str(L"");
-	}
-	if (paccTable2->get_nColumns(&count) == S_OK) {
-		s << count;
-		node->addAttribute(L"table-columncount", s.str());
-	}
-}
-
 inline int getTableIDFromCell(IAccessibleTableCell* tableCell) {
 	IUnknown* unk = NULL;
 	if (tableCell->get_table(&unk) != S_OK || !unk)
@@ -758,14 +743,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 	// Handle table information.
 	// Don't release the table unless it was created in this call.
-	bool releaseTable = false;
+	IAccessibleTable2* curNodePaccTable2 = nullptr;
 	// If paccTable2 is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
 	if (!paccTable2) {
 		// Try to get table information.
-		pacc->QueryInterface(IID_IAccessibleTable2,(void**)&paccTable2);
-		if (paccTable2) {
-			// We did the QueryInterface for paccTable2, so we must release it after all calls that use it are done.
-			releaseTable = true;
+		pacc->QueryInterface(IID_IAccessibleTable2,(void**)&curNodePaccTable2);
+		if (curNodePaccTable2) {
 			// This is a table, so add its information as attributes.
 			if((IA2AttribsMapIt = IA2AttribsMap.find(L"layout-guess")) != IA2AttribsMap.end()) {
 				parentNode->addAttribute(L"table-layout",L"1");
@@ -774,7 +757,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			s << ID;
 			parentNode->addAttribute(L"table-id", s.str());
 			s.str(L"");
-			fillTableCounts(parentNode, pacc, paccTable2);
+			// Fetch row and column counts and add them as attributes on the vbuf node.
+			long rowCount = 0;
+			if (curNodePaccTable2->get_nRows(&rowCount) == S_OK) {
+				s << rowCount;
+				parentNode->addAttribute(L"table-rowcount", s.str());
+				s.str(L"");
+			}
+			long colCount = 0;
+			if (curNodePaccTable2->get_nColumns(&colCount) == S_OK) {
+				s << colCount;
+				parentNode->addAttribute(L"table-columncount", s.str());
+				s.str(L"");
+			}
+			if (rowCount > 0 || colCount > 0) {
+				// This table has rows and columns.
+				// Maintain curNodePaccTable2 for child rendering until any table cells are found.
+				paccTable2 = curNodePaccTable2;
+			}
 			// Add the table summary if one is present and the table is visible.
 			if (isVisible &&
 				(!description.empty() && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, description))) ||
@@ -1090,8 +1090,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		SysFreeString(IA2Text);
 	if(paccText)
 		paccText->Release();
-	if (releaseTable) {
-		paccTable2->Release();
+	if (curNodePaccTable2) {
+		curNodePaccTable2->Release();
+		curNodePaccTable2 = nullptr;
 	}
 	return parentNode;
 }
