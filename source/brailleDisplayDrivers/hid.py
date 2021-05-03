@@ -154,7 +154,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		report = hwIo.HidInputReport(self._dev, data)
 		keys = []
 		for dataItem in report.getDataItems():
-			keys.append(dataItem.DataIndex)
+			if dataItem.DataIndex in self._inputButtonCapsByDataIndex and dataItem.u1.On:
+				keys.append(dataItem.DataIndex)
 		if len(keys) > len(self._keysDown):
 			# Press. This begins a new key combination.
 			self._ignoreKeyReleases = False
