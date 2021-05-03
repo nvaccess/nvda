@@ -419,4 +419,3 @@ def test_tableInStyleDisplayTable():
 		nextActualSpeech,
 		"row 2  First content cell"
 	)
-
