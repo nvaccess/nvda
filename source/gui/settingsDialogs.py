@@ -237,8 +237,7 @@ class SettingsDialog(
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
 		"""
-		self.DestroyChildren()
-		self.Destroy()
+		self.DestroyLater()
 		self.SetReturnCode(wx.ID_OK)
 
 	def onCancel(self, evt):
@@ -246,8 +245,7 @@ class SettingsDialog(
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
 		"""
-		self.DestroyChildren()
-		self.Destroy()
+		self.DestroyLater()
 		self.SetReturnCode(wx.ID_CANCEL)
 
 	def onApply(self, evt):
@@ -404,7 +402,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title=""
-	categoryClasses=[]
+	categoryClasses:typing.List[typing.Type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError): pass
 
@@ -428,8 +426,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.initialCategory = initialCategory
 		self.currentCategory = None
 		self.setPostInitFocus = None
-		# dictionary key is index of category in self.catList, value is the instance. Partially filled, check for KeyError
-		self.catIdToInstanceMap = {}
+		# dictionary key is index of category in self.catList, value is the instance.
+		# Partially filled, check for KeyError
+		self.catIdToInstanceMap:typing.Dict[int, SettingsPanel] = {}
 
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
@@ -635,37 +634,42 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		else:
 			evt.Skip()
 
-	def _doSave(self):
+	def _validateAllPanels(self):
+		"""Check if all panels are valid, and can be saved
+		@note: raises ValueError if a panel is not valid. See c{SettingsPanel.isValid}
+		"""
 		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
 				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
+
+	def _saveAllPanels(self):
 		for panel in self.catIdToInstanceMap.values():
 			panel.onSave()
+
+	def _notifyAllPanelsSaveOccurred(self):
 		for panel in self.catIdToInstanceMap.values():
 			panel.postSave()
 
-	def onOk(self,evt):
+	def _doSave(self):
 		try:
-			self._doSave()
+			self._validateAllPanels()
+			self._saveAllPanels()
+			self._notifyAllPanelsSaveOccurred()
 		except ValueError:
-			log.debugWarning("", exc_info=True)
+			log.debugWarning("Error while saving settings:", exc_info=True)
 			return
-		for panel in self.catIdToInstanceMap.values():
-			panel.Destroy()
+
+	def onOk(self,evt):
+		self._doSave()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
 		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
-			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		try:
-			self._doSave()
-		except ValueError:
-			log.debugWarning("", exc_info=True)
-			return
+		self._doSave()
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
 
@@ -1000,17 +1004,9 @@ class SpeechSettingsPanel(SettingsPanel):
 		super(SpeechSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
-		# Work around wxAssertion error #12220
-		# Manually destroying the ExpandoTextCtrl when the settings dialog is
-		# exited prevents the wxAssertion.
-		self.synthNameCtrl.Destroy()
 		self.voicePanel.onDiscard()
 
 	def onSave(self):
-		# Work around wxAssertion error #12220
-		# Manually destroying the ExpandoTextCtrl when the settings dialog is
-		# exited prevents the wxAssertion.
-		self.synthNameCtrl.Destroy()
 		self.voicePanel.onSave()
 
 class SynthesizerSelectionDialog(SettingsDialog):
@@ -3216,17 +3212,9 @@ class BrailleSettingsPanel(SettingsPanel):
 		super(BrailleSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
-		# Work around wxAssertion error #12220
-		# Manually destroying the ExpandoTextCtrl when the settings dialog is
-		# exited prevents the wxAssertion.
-		self.displayNameCtrl.Destroy()
 		self.brailleSubPanel.onDiscard()
 
 	def onSave(self):
-		# Work around wxAssertion error #12220
-		# Manually destroying the ExpandoTextCtrl when the settings dialog is
-		# exited prevents the wxAssertion.
-		self.displayNameCtrl.Destroy()
 		self.brailleSubPanel.onSave()
 
 
