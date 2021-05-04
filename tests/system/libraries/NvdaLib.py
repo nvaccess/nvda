@@ -114,11 +114,12 @@ class NvdaLib:
 		return outputFileName
 
 	@staticmethod
-	def setup_nvda_profile(configFileName):
+	def setup_nvda_profile(configFileName, gesturesFileName: Optional[str] = None):
 		configManager.setupProfile(
 			_locations.repoRoot,
 			configFileName,
-			_locations.stagingDir
+			_locations.stagingDir,
+			gesturesFileName,
 		)
 
 	@staticmethod
@@ -247,9 +248,9 @@ class NvdaLib:
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
 
-	def start_NVDA(self, settingsFileName):
+	def start_NVDA(self, settingsFileName: str, gesturesFileName: Optional[str] = None):
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
-		self.setup_nvda_profile(settingsFileName)
+		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()

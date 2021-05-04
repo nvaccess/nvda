@@ -23,7 +23,7 @@ default teardown
 	quit NVDA
 
 default setup
-	start NVDA	standard-dontShowWelcomeDialog.ini
+	start NVDA	standard-dontShowWelcomeDialog.ini	chrome-gestures.ini
 
 *** Test Cases ***
 
