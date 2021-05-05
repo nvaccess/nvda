@@ -15,7 +15,7 @@ from logHandler import log
 import brailleInput
 import bdDetect
 import hidpi
-import hwIo
+import hwIo.hid
 from hwIo import intToByte, boolToByte
 
 from bdDetect import HID_USAGE_PAGE_BRAILLE
@@ -73,7 +73,7 @@ class ButtonCapsInfo:
 	relativeIndexInCollection: int = 0
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
-	_dev: hwIo.Hid
+	_dev: hwIo.hid.Hid
 	name = "hid"
 	# Translators: The name of a series of braille displays.
 	description = _("Standard HID Braille Display")
@@ -88,7 +88,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				continue
 			# Try talking to the display.
 			try:
-				self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
+				self._dev = hwIo.hid.Hid(port, onReceive=self._hidOnReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue # Couldn't connect.
@@ -151,7 +151,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._dev.close()
 
 	def _hidOnReceive(self, data: bytes):
-		report = hwIo.HidInputReport(self._dev, data)
+		report = hwIo.hid.HidInputReport(self._dev, data)
 		keys = []
 		for dataItem in report.getDataItems():
 			if dataItem.DataIndex in self._inputButtonCapsByDataIndex and dataItem.u1.On:
@@ -178,7 +178,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
 		cellBytes = b"".join(intToByte(cell) for cell in cells)
-		report = hwIo.HidOutputReport(self._dev, reportID=self._cellValueCaps.ReportID)
+		report = hwIo.hid.HidOutputReport(self._dev, reportID=self._cellValueCaps.ReportID)
 		report.setUsageValueArray(HID_USAGE_PAGE_BRAILLE, self._cellValueCaps.LinkCollection, self._cellValueCaps.u1.NotRange.Usage, cellBytes)
 		self._dev.write(report.data)
 
