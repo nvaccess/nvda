@@ -1732,7 +1732,7 @@ class GlobalCommands(ScriptableObject):
 				formatField.update(field.field)
 
 		if not browseable:
-			if formatField:
+			if formatField:  # In which case is this dict expected to be empty?
 				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
 				textList.extend(sequence)
 
@@ -1743,7 +1743,9 @@ class GlobalCommands(ScriptableObject):
 				
 			ui.message(" ".join(textList))
 		else:
-			if formatField:
+			if formatField:  # In which case is this dict expected to be empty?
+				if browseable == "technical":
+					formatConfig["technical"] = True
 				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
 				textList.extend(sequence)
 
@@ -1798,6 +1800,18 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_showFormattingAtReview(self, gesture):
 		self._reportFormattingHelper(api.getReviewPosition(), True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for show technical formatting at review cursor command.
+			"Presents, in browse mode, technical formatting info "
+			"for the current review cursor position."
+		),
+		gesture="kb:NVDA+alt+shift+f",
+		category=SCRCAT_TEXTREVIEW
+	)
+	def script_showTechnicalFormattingAtReview(self, gesture):
+		self._reportFormattingHelper(api.getReviewPosition(), browseable="technical")
 
 	@script(
 		description=_(

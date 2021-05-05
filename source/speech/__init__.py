@@ -1958,6 +1958,21 @@ def getControlFieldSpeech(  # noqa: C901
 		return []
 
 
+def _getColorName(color, withRGB=False):
+	"""Helper function that will return the appropriate string presentation of a color,
+	based on whether the user wants the RGB value reported or not.
+	"""
+	if not isinstance(color, colors.RGB):
+		return str(color)
+	if withRGB:
+		return (
+			f"{color.name}"
+			f" (RGB: {color.red}, {color.green}, {color.blue}"
+			f" / #{color.red:02x}{color.green:02x}{color.blue:02x})"
+		)
+	return color.name
+
+
 # C901 'getFormatFieldSpeech' is too complex
 # Note: when working on getFormatFieldSpeech, look for opportunities to simplify
 # and move logic out into smaller helper functions.
@@ -1973,6 +1988,7 @@ def getFormatFieldSpeech(  # noqa: C901
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	textList=[]
+	technical = formatConfig.get("technical", False)
 	if formatConfig["reportTables"]:
 		tableInfo=attrs.get("table-info")
 		oldTableInfo=attrsCache.get("table-info") if attrsCache is not None else None
@@ -2095,35 +2111,34 @@ def getFormatFieldSpeech(  # noqa: C901
 			textList.append(fontSize)
 	if  formatConfig["reportColor"]:
 		color=attrs.get("color")
+		colorName = _getColorName(color, withRGB=technical)
 		oldColor=attrsCache.get("color") if attrsCache is not None else None
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
 		backgroundColor2=attrs.get("background-color2")
 		oldBackgroundColor2=attrsCache.get("background-color2") if attrsCache is not None else None
 		bgColorChanged=backgroundColor!=oldBackgroundColor or backgroundColor2!=oldBackgroundColor2
-		bgColorText=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else backgroundColor
+		bgColorName = _getColorName(backgroundColor, withRGB=technical)
 		if backgroundColor2:
-			bg2Name=backgroundColor2.name if isinstance(backgroundColor2,colors.RGB) else backgroundColor2
+			bgColor2Name = _getColorName(backgroundColor2, withRGB=technical)
 			# Translators: Reported when there are two background colors.
 			# This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 			# {color1} will be replaced with the first background color.
 			# {color2} will be replaced with the second background color.
-			bgColorText=_("{color1} to {color2}").format(color1=bgColorText,color2=bg2Name)
+			bgColorName = _("{color1} to {color2}").format(color1=bgColorName, color2=bgColor2Name)
 		if color and backgroundColor and color!=oldColor and bgColorChanged:
 			# Translators: Reported when both the text and background colors change.
 			# {color} will be replaced with the text color.
 			# {backgroundColor} will be replaced with the background color.
-			textList.append(_("{color} on {backgroundColor}").format(
-				color=color.name if isinstance(color,colors.RGB) else color,
-				backgroundColor=bgColorText))
+			textList.append(_("{color} on {backgroundColor}").format(color=colorName, backgroundColor=bgColorName))
 		elif color and color!=oldColor:
 			# Translators: Reported when the text color changes (but not the background color).
 			# {color} will be replaced with the text color.
-			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else color))
+			textList.append(_("{color}").format(colorName))
 		elif backgroundColor and bgColorChanged:
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.
-			textList.append(_("{backgroundColor} background").format(backgroundColor=bgColorText))
+			textList.append(_("{backgroundColor} background").format(backgroundColor=bgColorName))
 		backgroundPattern=attrs.get("background-pattern")
 		oldBackgroundPattern=attrsCache.get("background-pattern") if attrsCache is not None else None
 		if backgroundPattern and backgroundPattern!=oldBackgroundPattern:
