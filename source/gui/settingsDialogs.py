@@ -402,7 +402,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title=""
-	categoryClasses:typing.List[typing.Type[SettingsPanel]] = []
+	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError): pass
 
@@ -428,7 +428,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.setPostInitFocus = None
 		# dictionary key is index of category in self.catList, value is the instance.
 		# Partially filled, check for KeyError
-		self.catIdToInstanceMap:typing.Dict[int, SettingsPanel] = {}
+		self.catIdToInstanceMap: typing.Dict[int, SettingsPanel] = {}
 
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
@@ -659,7 +659,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			log.debugWarning("Error while saving settings:", exc_info=True)
 			return
 
-	def onOk(self,evt):
+	def onOk(self, evt):
 		self._doSave()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
