@@ -203,6 +203,7 @@ STATE_OBSCURED=0x4000000000
 STATE_CROPPED=0x8000000000
 STATE_OVERFLOWING=0x10000000000
 STATE_UNLOCKED=0x20000000000
+STATE_HAS_ARIA_DETAILS = 0x40000000000
 
 roleLabels: Dict[int, str] = {
 	# Translators: The word for an unknown control type.
@@ -573,6 +574,8 @@ stateLabels: Dict[int, str] = {
 	STATE_SORTED_DESCENDING:_("sorted descending"),
 	# Translators: a state that denotes that an object (usually a graphic) has a long description.
 	STATE_HASLONGDESC:_("has long description"),
+	# Translators: a state that denotes that an object has additional details (such as a comment section).
+	STATE_HAS_ARIA_DETAILS: _("has details"),
 	# Translators: a state that denotes that an object is pinned in its current location
 	STATE_PINNED:_("pinned"),
 	# Translators: a state that denotes the existance of a formula on a spreadsheet cell
