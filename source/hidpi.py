@@ -3,6 +3,11 @@
 #See the file COPYING for more details.
 #Copyright (C) 2015-2021 NV Access Limited, Babbage B.V.
 
+"""
+Required types and defines from Windows SDK's hidpi.h
+(Public Interface to the Windows HID parsing library).
+"""
+
 import enum
 from ctypes import windll, byref, Structure, Union, c_byte
 from ctypes.wintypes import DWORD, USHORT, BOOLEAN, ULONG, LONG
