@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2021 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -353,6 +353,76 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0, UIProperty)
+
+	def _get_statusBar(self):
+		foreground = api.getForegroundObject()
+		if not isinstance(foreground, UIA) or not foreground.windowClassName == "CabinetWClass":
+			# This is not the file explorer window. Resort to standard behavior.
+			raise NotImplementedError
+		import UIAHandler
+		clientObject = UIAHandler.handler.clientObject
+		condition = clientObject.createPropertyCondition(
+			UIAHandler.UIA_ControlTypePropertyId,
+			UIAHandler.UIA_StatusBarControlTypeId
+		)
+		walker = clientObject.createTreeWalker(condition)
+		try:
+			element = walker.getFirstChildElement(foreground.UIAElement)
+		except COMError:
+			# We could not find the expected object. Resort to standard behavior.
+			raise NotImplementedError()
+		element = element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		statusBar = UIA(UIAElement=element)
+		return statusBar
+
+	def getStatusBarText(self, obj) -> str:
+		if not isinstance(obj, UIA) or obj.UIAElement.cachedClassname != "StatusBarModuleInner":
+			# This is not the file explorer status bar. Resort to standard behavior.
+			raise not NotImplementedError()
+		# The expected status bar, as of Windows 10 20H2 at least, contains:
+		#  - A grouping with a single static text child presenting the total number of elements
+		#  - Optionally, a grouping with a single static text child presenting the number of
+		#    selected elements and their total size, missing if no element is selected.
+		#  - A grouping with two radio buttons to control the display mode.
+		parts = []
+		for index, child in enumerate(obj.children):
+			if (
+				child.role == controlTypes.ROLE_GROUPING
+				and child.childCount == 1
+				and child.firstChild.role == controlTypes.ROLE_STATICTEXT
+			):
+				parts.append(child.firstChild.name)
+			elif (
+				False and child.role == controlTypes.ROLE_GROUPING
+				and child.childCount > 1
+				and not any(
+					grandChild for grandChild in child.children
+					if grandChild.role != controlTypes.ROLE_RADIOBUTTON
+				)
+			):
+				if index == 1:
+					# Translators: Reported when there is not indication of the number of
+					# selected files in the Windows explorer's status bar.
+					parts.append(_("No file selected"))
+				selected = next(iter(
+					grandChild for grandChild in child.children
+					if controlTypes.STATE_CHECKED in grandChild.states
+				), None)
+				parts.append(" ".join(
+					[child.name]
+					+ ([selected.name] if selected is not None else [])
+				))
+			else:
+				# Unexpected child, try to retrieve something useful.
+				parts.append(" ".join(
+					chunk
+					for chunk in (child.name, child.value)
+					if chunk and isinstance(chunk, str) and not chunk.isspace()
+				))
+		if not parts:
+			# We couldn't retrieve anything. Resort to standard behavior.
+			raise NotImplementedError
+		return ", ".join(parts)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
