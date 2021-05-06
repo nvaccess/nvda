@@ -393,7 +393,7 @@ class AppModule(appModuleHandler.AppModule):
 			):
 				parts.append(child.firstChild.name)
 			elif (
-				False and child.role == controlTypes.ROLE_GROUPING
+				child.role == controlTypes.ROLE_GROUPING
 				and child.childCount > 1
 				and not any(
 					grandChild for grandChild in child.children
