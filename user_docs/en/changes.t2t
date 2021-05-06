@@ -48,6 +48,7 @@ What's New in NVDA
 - Strikethrough, superscript and subscript formatting for entire Excel cells are now reported if the corresponding option is enabled. (#12264)
 - Fixed copying config during installation from a portable copy when default destination config directory is empty. (#12071, #12205)
 - Fixed incorrect announcement of some letters with accents or diacritic when 'Say cap before capitals' option is checked. (#11948)
+- The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
 
 
 == Changes for Developers ==
