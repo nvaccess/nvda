@@ -126,10 +126,12 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		vision.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
-		oldInfo=self.makeTextInfo(posConstant)
-		# #5549 - Make sure oldInfo is not collapsed when going to top/bottom of page so that the deselection is announced.
-		oldSelection=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		if not oldSelection.isCollapsed and (posConstant == textInfos.POSITION_FIRST or posConstant == textInfos.POSITION_LAST):
+		oldInfo = self.makeTextInfo(posConstant)
+		# #5549 - Make sure oldInfo is not collapsed when going to top/bottom
+		# of page so that the deselection is announced.
+		oldSelection = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		isJumpToTopOrBottom = posConstant == textInfos.POSITION_FIRST or posConstant == textInfos.POSITION_LAST
+		if not oldSelection.isCollapsed and isJumpToTopOrBottom:
 			oldInfo.isCollapsed = False
 
 		info=oldInfo.copy()
