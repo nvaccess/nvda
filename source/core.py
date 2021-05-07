@@ -239,9 +239,10 @@ def triggerNVDAExit():
 		preNVDAExit.unregister(handler)
 
 
-def closeAllWindows():
+def _closeAllWindows():
 	"""
-	Ensures the app is exited by all the top windows being destroyed.
+	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit.
+	Ensures the wx mainloop is exited by all the top windows being destroyed.
 	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
 	"""
 	import gui
@@ -655,7 +656,7 @@ def main():
 		brailleViewer.destroyBrailleViewer()
 	
 	preNVDAExit.register(handleNVDAModuleCleanupBeforeGUIExit)
-	preNVDAExit.register(closeAllWindows)
+	preNVDAExit.register(_closeAllWindows)
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
