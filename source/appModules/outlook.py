@@ -246,10 +246,10 @@ class SuperGridClient2010(IAccessible):
 			return super(SuperGridClient2010,self).event_gainFocus()
 		try:
 			kwargs = {}
-			UIA.kwargsFromSuper(kwargs, relation="focus")
-			obj=UIA(**kwargs)
-		except:
-			log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+			UIA.kwargsFromSuper(kwargs, relation="focus", ignoreNonNativeElementsWithFocus=False)
+			obj = UIA(**kwargs)
+		except Exception:
+			log.error("Retrieving UIA focus failed", exc_info=True)
 			return super(SuperGridClient2010,self).event_gainFocus()
 		if not isinstance(obj,UIAGridRow):
 			return super(SuperGridClient2010,self).event_gainFocus()

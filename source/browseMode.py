@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
-# Thomas Stivers
+# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
+# Thomas Stivers, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Union
 import os
 import itertools
 import collections
@@ -251,7 +252,15 @@ class TextInfoQuickNavItem(QuickNavItem):
 			realStates = labelPropertyGetter("states")
 			labeledStates = " ".join(controlTypes.processAndLabelStates(role, realStates, OutputReason.FOCUS))
 			if self.itemType == "formField":
-				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
+				if role in (
+					controlTypes.ROLE_BUTTON,
+					controlTypes.ROLE_DROPDOWNBUTTON,
+					controlTypes.ROLE_TOGGLEBUTTON,
+					controlTypes.ROLE_SPLITBUTTON,
+					controlTypes.ROLE_MENUBUTTON,
+					controlTypes.ROLE_DROPDOWNBUTTONGRID,
+					controlTypes.ROLE_TREEVIEWBUTTON
+				):
 					# Example output: Mute; toggle button; pressed
 					labelParts = (content or name or unlabeled, roleText, labeledStates)
 				else:
@@ -1552,6 +1561,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			return 
 		if not self.passThrough and self._shouldIgnoreFocus(obj):
 			return
+
+		# If the previous focus object was removed, we might hit a false positive for overlap detection.
+		# Track the previous focus target so that we can account for this scenario.
+		previousFocusObjIsDefunct = False
+		if self._lastFocusObj and controlTypes.STATE_DEFUNCT in self._lastFocusObj.states:
+			previousFocusObjIsDefunct = True
+
 		self._lastFocusObj=obj
 
 		try:
@@ -1569,7 +1585,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
+		isOverlapping = focusInfo.isOverlapping(caretInfo)
+		if not self._hadFirstGainFocus or not isOverlapping or (isOverlapping and previousFocusObjIsDefunct):
 			# The virtual caret is not within the focus node.
 			oldPassThrough=self.passThrough
 			passThrough = self.shouldPassThrough(obj, reason=OutputReason.FOCUS)
@@ -1633,14 +1650,15 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	event_gainFocus.ignoreIsReady=True
 
-	def _handleScrollTo(self, obj):
+	def _handleScrollTo(
+			self,
+			obj: Union[NVDAObject, textInfos.TextInfo],
+	) -> bool:
 		"""Handle scrolling the browseMode document to a given object in response to an event.
 		Subclasses should call this from an event which indicates that the document has scrolled.
 		@postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
 		@param obj: The object to which the document should scroll.
-		@type obj: L{NVDAObjects.NVDAObject}
 		@return: C{True} if the document was scrolled, C{False} if not.
-		@rtype: bool
 		@note: If C{False} is returned, calling events should probably call their nextHandler.
 		"""
 		if self.programmaticScrollMayFireEvent and self._lastProgrammaticScrollTime and time.time() - self._lastProgrammaticScrollTime < 0.4:
@@ -1649,10 +1667,15 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			# However, pretend we handled it, as we don't want it to be passed on to the object either.
 			return True
 
-		try:
-			scrollInfo = self.makeTextInfo(obj)
-		except:
-			return False
+		if isinstance(obj, NVDAObject):
+			try:
+				scrollInfo = self.makeTextInfo(obj)
+			except (NotImplementedError, RuntimeError):
+				return False
+		elif isinstance(obj, textInfos.TextInfo):
+			scrollInfo = obj.copy()
+		else:
+			raise ValueError(f"{obj} is not a supported type")
 
 		#We only want to update the caret and speak the field if we're not in the same one as before
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)

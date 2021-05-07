@@ -37,7 +37,7 @@ from logHandler import log
 import UIAUtils
 from comInterfaces import UIAutomationClient as UIA
 # F403: unable to detect undefined names
-from comInterfaces .UIAutomationClient import *  # noqa:  F403
+from comInterfaces.UIAutomationClient import *  # noqa:  F403
 import textInfos
 from typing import Dict
 from queue import Queue
@@ -58,7 +58,6 @@ WDAG_PROCESS_NAME=u'hvsirdpclient'
 goodUIAWindowClassNames=[
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
 	'RAIL_WINDOW',
-	"EXCEL6",
 ]
 
 badUIAWindowClassNames=[
@@ -234,7 +233,8 @@ class UIAHandler(COMObject):
 		UIA.IUIAutomationEventHandler,
 		UIA.IUIAutomationFocusChangedEventHandler,
 		UIA.IUIAutomationPropertyChangedEventHandler,
-		UIA.IUIAutomationNotificationEventHandler
+		UIA.IUIAutomationNotificationEventHandler,
+		UIA.IUIAutomationActiveTextPositionChangedEventHandler,
 	]
 
 	def __init__(self):
@@ -377,6 +377,12 @@ class UIAHandler(COMObject):
 		# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 		if isinstance(self.clientObject, UIA.IUIAutomation5):
 			self.globalEventHandlerGroup.AddNotificationEventHandler(
+				UIA.TreeScope_Subtree,
+				self.baseCacheRequest,
+				self
+			)
+		if isinstance(self.clientObject, UIA.IUIAutomation6):
+			self.globalEventHandlerGroup.AddActiveTextPositionChangedEventHandler(
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
 				self
@@ -669,6 +675,34 @@ class UIAHandler(COMObject):
 				)
 			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
+
+	def IUIAutomationActiveTextPositionChangedEventHandler_HandleActiveTextPositionChangedEvent(
+			self,
+			sender,
+			textRange
+	):
+		if not self.MTAThreadInitEvent.isSet():
+			# UIAHandler hasn't finished initialising yet, so just ignore this event.
+			if _isDebug():
+				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")
+			return
+		import NVDAObjects.UIA
+		try:
+			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+		except Exception:
+			if _isDebug():
+				log.debugWarning(
+					"HandleActiveTextPositionChangedEvent: Exception while creating object: ",
+					exc_info=True
+				)
+			return
+		if not obj:
+			if _isDebug():
+				log.debug(
+					"HandleActiveTextPositionchangedEvent: Ignoring because no object: "
+				)
+			return
+		eventHandler.queueEvent("UIA_activeTextPositionChanged", obj, textRange=textRange)
 
 	def _isBadUIAWindowClassName(self, windowClass):
 		"Given a windowClassName, returns True if this is a known problematic UIA implementation."

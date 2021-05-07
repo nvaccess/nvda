@@ -21,14 +21,11 @@ from displayModel import EditableTextDisplayModelTextInfo
 from NVDAObjects.window import DisplayModelEditableText
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from NVDAObjects.window.winword import *
-from NVDAObjects.window.winword import WordDocumentTreeInterceptor
-
 
 class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocument):
  
-	treeInterceptorClass = WordDocumentTreeInterceptor
-	shouldCreateTreeInterceptor = True
-
+	treeInterceptorClass=WordDocumentTreeInterceptor
+	shouldCreateTreeInterceptor=False
 	TextInfo=WordDocumentTextInfo
 
 	def _get_ignoreEditorRevisions(self):

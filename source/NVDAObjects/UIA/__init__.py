@@ -1193,10 +1193,14 @@ class UIA(Window):
 		return self.UIASelectionPattern
 
 	def _get_UIASelectionPattern2(self):
-		self.UIASelectionPattern2 = self._getUIAPattern(
-			UIAHandler.UIA_SelectionPattern2Id,
-			UIAHandler.IUIAutomationSelectionPattern2
-		)
+		try:
+			self.UIASelectionPattern2 = self._getUIAPattern(
+				UIAHandler.UIA_SelectionPattern2Id,
+				UIAHandler.IUIAutomationSelectionPattern2
+			)
+		except COMError:
+			# SelectionPattern2 is not available on older Operating Systems such as Windows 7
+			self.UIASelectionPattern2 = None
 		return self.UIASelectionPattern2
 
 	def getSelectedItemsCount(self, maxItems=None):
@@ -1213,6 +1217,10 @@ class UIA(Window):
 		if not p:
 			return None
 		e = p.currentSelectionContainer
+		if not e:
+			# Some implementations of SelectionItemPattern, such as the Outlook attachment list
+			# give back a NULL selectionContainer
+			return None
 		e = e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		obj = UIA(UIAElement=e)
 		if obj.UIASelectionPattern2:
@@ -1462,7 +1470,11 @@ class UIA(Window):
 				states.add(controlTypes.STATE_CHECKABLE)
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
-		annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
+		try:
+			annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
+		except COMError:
+			# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
+			annotationTypes = None
 		if annotationTypes:
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
 				states.add(controlTypes.STATE_HASCOMMENT)

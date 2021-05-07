@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Thomas Stivers
+# Copyright (C) 2006-2021 NV Access Limited, Thomas Stivers, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -38,7 +38,7 @@ class SpeechViewerFrame(
 			title=_("NVDA Speech Viewer"),
 			size=dialogSize,
 			pos=dialogPos,
-			style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP
+			style=wx.CAPTION | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP
 		)
 		self._isDestroyed = False
 		self.onDestroyCallBack = onDestroyCallBack
@@ -97,10 +97,8 @@ class SpeechViewerFrame(
 			self.shouldShowOnStartupCheckBox.SetFocus()
 
 	def onClose(self, evt):
-		if not evt.CanVeto():
-			deactivate()
-			return
-		evt.Veto()
+		assert isActive, "Cannot close Speech Viewer as it is already inactive"
+		deactivate()
 
 	def onShouldShowOnStartupChanged(self, evt):
 		config.conf["speechViewer"]["showSpeechViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
@@ -185,4 +183,3 @@ def deactivate():
 	# #7077: If the window is destroyed, text control will be gone, so save speech viewer position before destroying the window.
 	_guiFrame.savePositionInformation()
 	_guiFrame.Destroy()
-	isActive = False

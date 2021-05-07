@@ -9,10 +9,11 @@ import logging
 from abc import ABCMeta, abstractmethod
 import copy
 import os
+from enum import IntEnum
 
+import typing
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
-from wx.lib import scrolledpanel
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
 import winUser
@@ -80,10 +81,12 @@ class SettingsDialog(
 
 	class MultiInstanceError(RuntimeError): pass
 
-	_DIALOG_CREATED_STATE = 0
-	_DIALOG_DESTROYED_STATE = 1
+	class DialogState(IntEnum):
+		CREATED = 0
+		DESTROYED = 1
+
 	# holds instances of SettingsDialogs as keys, and state as the value
-	_instances=weakref.WeakKeyDictionary()
+	_instances = weakref.WeakKeyDictionary()
 	title = ""
 	helpId = "NVDASettings"
 	shouldSuspendConfigProfileTriggers = True
@@ -102,25 +105,39 @@ class SettingsDialog(
 				"Creating new settings dialog (multiInstanceAllowed:{}). "
 				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
 			)
-		if state is cls._DIALOG_CREATED_STATE and not multiInstanceAllowed:
+		if state is cls.DialogState.CREATED and not multiInstanceAllowed:
 			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
-		if state is cls._DIALOG_DESTROYED_STATE and not multiInstanceAllowed:
+		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
 			# keeping it alive.
 			log.error("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
 		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
-		SettingsDialog._instances[obj] = cls._DIALOG_CREATED_STATE
+		SettingsDialog._instances[obj] = cls.DialogState.CREATED
 		return obj
 
 	def _setInstanceDestroyedState(self):
-		if log.isEnabledFor(log.DEBUG):
-			instancesState = dict(SettingsDialog._instances)
-			log.debug(
-				"Setting state to destroyed for instance: {!r}\n"
-				"Current _instances {!r}".format(self, instancesState)
-			)
-		if self in SettingsDialog._instances:
-			SettingsDialog._instances[self] = self._DIALOG_DESTROYED_STATE
+		# prevent race condition with object deletion
+		# prevent deletion of the object while we work on it.
+		nonWeak: typing.Dict[SettingsDialog, SettingsDialog.DialogState] = dict(SettingsDialog._instances)
+
+		if (
+			self in SettingsDialog._instances
+			# Because destroy handlers are use evt.skip, _setInstanceDestroyedState may be called many times
+			# prevent noisy logging.
+			and self.DialogState.DESTROYED != SettingsDialog._instances[self]
+		):
+			if log.isEnabledFor(log.DEBUG):
+				instanceStatesGen = (
+					f"{instance.title} - {state.name}"
+					for instance, state in nonWeak.items()
+				)
+				instancesList = list(instanceStatesGen)
+				log.debug(
+					f"Setting state to destroyed for instance: {self.title} - {self.__class__.__qualname__} - {self}\n"
+					f"Current _instances {instancesList}"
+				)
+			SettingsDialog._instances[self] = self.DialogState.DESTROYED
+
 
 	def __init__(
 			self, parent,
@@ -220,8 +237,7 @@ class SettingsDialog(
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
 		"""
-		self.DestroyChildren()
-		self.Destroy()
+		self.DestroyLater()
 		self.SetReturnCode(wx.ID_OK)
 
 	def onCancel(self, evt):
@@ -229,8 +245,7 @@ class SettingsDialog(
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
 		"""
-		self.DestroyChildren()
-		self.Destroy()
+		self.DestroyLater()
 		self.SetReturnCode(wx.ID_CANCEL)
 
 	def onApply(self, evt):
@@ -387,7 +402,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title=""
-	categoryClasses=[]
+	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError): pass
 
@@ -411,8 +426,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.initialCategory = initialCategory
 		self.currentCategory = None
 		self.setPostInitFocus = None
-		# dictionary key is index of category in self.catList, value is the instance. Partially filled, check for KeyError
-		self.catIdToInstanceMap = {}
+		# dictionary key is index of category in self.catList, value is the instance.
+		# Partially filled, check for KeyError
+		self.catIdToInstanceMap: typing.Dict[int, SettingsPanel] = {}
 
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
@@ -465,7 +481,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0,categoriesLabelText)
 
-		self.container = scrolledpanel.ScrolledPanel(
+		self.container = nvdaControls.TabbableScrolledPanel(
 			parent = self,
 			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME,
 			size=containerDim
@@ -618,37 +634,42 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		else:
 			evt.Skip()
 
-	def _doSave(self):
+	def _validateAllPanels(self):
+		"""Check if all panels are valid, and can be saved
+		@note: raises ValueError if a panel is not valid. See c{SettingsPanel.isValid}
+		"""
 		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
 				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
+
+	def _saveAllPanels(self):
 		for panel in self.catIdToInstanceMap.values():
 			panel.onSave()
+
+	def _notifyAllPanelsSaveOccurred(self):
 		for panel in self.catIdToInstanceMap.values():
 			panel.postSave()
 
-	def onOk(self,evt):
+	def _doSave(self):
 		try:
-			self._doSave()
+			self._validateAllPanels()
+			self._saveAllPanels()
+			self._notifyAllPanelsSaveOccurred()
 		except ValueError:
-			log.debugWarning("", exc_info=True)
+			log.debugWarning("Error while saving settings:", exc_info=True)
 			return
-		for panel in self.catIdToInstanceMap.values():
-			panel.Destroy()
+
+	def onOk(self, evt):
+		self._doSave()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
 		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
-			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		try:
-			self._doSave()
-		except ValueError:
-			log.debugWarning("", exc_info=True)
-			return
+		self._doSave()
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
 
@@ -2395,10 +2416,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		detectFormatAfterCursorText = _("Report formatting chan&ges after the cursor (can cause a lag)")
-		self.detectFormatAfterCursorCheckBox = wx.CheckBox(
-			elementsGroupBox,
-			label=detectFormatAfterCursorText
-		)
+		self.detectFormatAfterCursorCheckBox = wx.CheckBox(self, label=detectFormatAfterCursorText)
 		self.bindHelpEvent(
 			"DocumentFormattingDetectFormatAfterCursor",
 			self.detectFormatAfterCursorCheckBox
@@ -2789,7 +2807,7 @@ class AdvancedPanelControls(
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
-			and self.UIAInChromiumCombo.selection == self.UIAInChromiumCombo.defaultValue
+			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
