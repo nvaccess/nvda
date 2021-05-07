@@ -96,6 +96,7 @@ WIN10_1903 = WinVersion(major=10, minor=0, build=18362)
 WIN10_1909 = WinVersion(major=10, minor=0, build=18363)
 WIN10_2004 = WinVersion(major=10, minor=0, build=19041)
 WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
+WIN10_21H1 = WinVersion(major=10, minor=0, build=19043)
 
 
 def getWinVer():
@@ -135,6 +136,7 @@ WIN10_RELEASE_NAME_TO_BUILDS = {
 	"1909": 18363,
 	"2004": 19041,
 	"20H2": 19042,
+	"21H1": 19043,
 }
 
 

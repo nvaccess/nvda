@@ -724,12 +724,14 @@ Otherwise, the add-on will not install.
   - e.g "2019.1.1"
   - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
-  - Must be less than or equal to `lastTestedNVDAVersion`
+  - Must be less than or equal to ``lastTestedNVDAVersion``
+  -
 - lastTestedNVDAVersion (string): The last version of NVDA this add-on has been tested with.
   - e.g "2019.1.0"
   - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
-  - Must be greater than or equal to `minimumNVDAVersion`
+  - Must be greater than or equal to ``minimumNVDAVersion``
+  -
 -
 
 All string values must be enclosed in quotes as shown in the example below.
@@ -751,7 +753,7 @@ docFileName = "readme.html"
 minimumNVDAVersion = "2018.1.0"
 lastTestedNVDAVersion = "2019.1.0"
 --- end ---
-``` 
+```
 
 ++ Plugins and Drivers ++
 The following plugins and drivers can be included in an add-on:
@@ -822,6 +824,8 @@ You can navigate through the history of previously entered lines using the up an
 
 Output (responses from the interpreter) will be spoken when enter is pressed.
 The f6 key toggles between the input and output controls.
+When on the output control, alt+up/down jumps to the previous/next result (add shift for selecting).
+Pressing control+l clears the output.
 
 The result of the last executed command is stored in the "_" global variable.
 This shadows the gettext function which is stored as a built-in with the same name.

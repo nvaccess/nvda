@@ -10,6 +10,7 @@ import shellapi
 import winUser
 import wx
 import config
+import core
 import globalVars
 import installer
 from logHandler import log
@@ -119,7 +120,7 @@ def doInstall(
 			winUser.SW_SHOWNORMAL
 		)
 	else:
-		gui.safeAppExit()
+		core.triggerNVDAExit()
 
 
 def doSilentInstall(
@@ -466,7 +467,7 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 		return
 	d.done()
 	if silent:
-		gui.safeAppExit()
+		core.triggerNVDAExit()
 	else:
 		# Translators: The message displayed when a portable copy of NVDA has been successfully created.
 		# %s will be replaced with the destination directory.

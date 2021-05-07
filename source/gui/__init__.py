@@ -1,11 +1,10 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
-# Thomas Stivers, Babbage B.V.
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import typing
 import time
 import os
 import sys
@@ -25,7 +24,7 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
-from . import settingsDialogs
+from .settingsDialogs import SettingsDialog
 from .settingsDialogs import *
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
@@ -47,7 +46,7 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 ### Globals
 mainFrame = None
 isInMessageBox = False
-hasAppExited = False
+
 
 class MainFrame(wx.Frame):
 
@@ -85,7 +84,12 @@ class MainFrame(wx.Frame):
 		"""
 		nvdaPid = os.getpid()
 		focus = api.getFocusObject()
-		if focus.processID != nvdaPid:
+		# Do not set prevFocus if the focus is on a control rendered by NVDA itself, such as the NVDA menu.
+		# This allows to refer to the control that had focus before opening the menu while still using NVDA
+		# on its own controls. The L{nvdaPid} check can be bypassed by setting the optional attribute
+		# L{isPrevFocusOnNvdaPopup} to L{True} when a NVDA dialog offers customizable bound gestures,
+		# eg. the NVDA Python Console.
+		if focus.processID != nvdaPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
 			self.prevFocus = focus
 			self.prevFocusAncestors = api.getFocusAncestors()
 		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != nvdaPid:
@@ -197,7 +201,7 @@ class MainFrame(wx.Frame):
 			d.Show()
 			self.postPopup()
 		else:
-			safeAppExit()
+			core.triggerNVDAExit()
 
 	def onNVDASettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog)
@@ -357,57 +361,6 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
-
-def safeAppExit():
-	"""
-	Ensures the app is exited by all the top windows being destroyed.
-	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
-	"""
-
-	import brailleViewer
-	brailleViewer.destroyBrailleViewer()
-
-	app = wx.GetApp()
-
-	# prevent race condition with object deletion
-	# prevent deletion of the object while we work on it.
-	_SettingsDialog = settingsDialogs.SettingsDialog
-	nonWeak: typing.Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
-
-	for instance, state in nonWeak.items():
-		if state is _SettingsDialog.DialogState.DESTROYED:
-			log.error(
-				"Destroyed but not deleted instance of gui.SettingsDialog exists"
-				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
-			)
-		else:
-			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
-
-	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
-	# They must be manually destroyed when exiting the app.
-	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12286, #12238)
-	log.debug("destroying system tray icon and menu")
-	app.ScheduleForDestruction(mainFrame.sysTrayIcon.menu)
-	mainFrame.sysTrayIcon.RemoveIcon()
-	app.ScheduleForDestruction(mainFrame.sysTrayIcon)
-
-	for window in wx.GetTopLevelWindows():
-		if isinstance(window, wx.Dialog) and window.IsModal():
-			log.debug(f"ending modal {window} during exit process")
-			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
-		if isinstance(window, MainFrame):
-			log.debug("destroying main frame during exit process")
-			# the MainFrame has EVT_CLOSE bound to the ExitDialog
-			# which calls this function on exit, so destroy this window
-			app.ScheduleForDestruction(window)
-		else:
-			log.debug(f"closing window {window} during exit process")
-			wx.CallAfter(window.Close)
-
-	global hasAppExited
-	hasAppExited = True
-
-
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -471,7 +424,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			item = menu_tools.Append(wx.ID_ANY, _("View log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
 		# Translators: The label for the menu item to toggle Speech Viewer.
-		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		item.Check(speechViewer.isActive)
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 
 		self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
@@ -589,6 +543,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			appModules.nvda.nvdaMenuIaIdentity = None
 		mainFrame.postPopup()
 
+
 def initialize():
 	global mainFrame
 	if mainFrame:
@@ -615,14 +570,9 @@ def initialize():
 			winUser.PostMessage(topHandle, winUser.WM_NULL, 0, 0)
 	wx.CallAfter = wx_CallAfter_wrapper
 
+
 def terminate():
 	global mainFrame
-
-	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
-	# safeAppExit has not been called yet
-	if not hasAppExited:
-		safeAppExit()
-
 	mainFrame = None
 
 def showGui():
@@ -743,7 +693,7 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
-			safeAppExit()
+			core.triggerNVDAExit()
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:
@@ -765,7 +715,7 @@ class ExitDialog(wx.Dialog):
 					confirmUpdateDialog.ShowModal()
 				else:
 					updateCheck.executePendingUpdate()
-		self.Destroy()
+		wx.CallAfter(self.Destroy)
 
 	def onCancel(self, evt):
 		self.Destroy()

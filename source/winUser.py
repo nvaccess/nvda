@@ -386,14 +386,6 @@ class MSGFLT(enum.IntEnum):
 	RESET = 0
 
 
-# Registers an application wide Window Message so that NVDA can be exited across instances
-WM_EXIT_NVDA = user32.RegisterWindowMessageW("WM_EXIT_NVDA")
-if not WM_EXIT_NVDA:
-	winErr = WinError()
-	# provides additional information to the OSError based WinError
-	winErr.filename = "Failed to register Windows application message WM_EXIT_NVDA"
-	raise winErr
-
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
 
@@ -616,15 +608,6 @@ def MessageBox(hwnd, text, caption, type):
 
 def PostMessage(hwnd, msg, wParam, lParam):
 	if not user32.PostMessageW(hwnd, msg, wParam, lParam):
-		raise WinError()
-
-
-def PostSafeQuitMessage(hwnd: HWND):
-	"""
-	Posts a WM_EXIT_NVDA quit message across windows to exit NVDA safely from another instance
-	@param hwnd: Target NVDA window id
-	"""
-	if not user32.PostMessageW(hwnd, WM_EXIT_NVDA, None, None):
 		raise WinError()
 
 user32.VkKeyScanExW.restype = SHORT

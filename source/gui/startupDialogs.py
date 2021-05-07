@@ -193,7 +193,7 @@ class LauncherDialog(
 		core.doStartupDialogs()
 
 	def onExit(self, evt):
-		gui.safeAppExit()
+		core.triggerNVDAExit()
 
 	@classmethod
 	def run(cls):
