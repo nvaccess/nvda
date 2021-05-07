@@ -198,8 +198,8 @@ if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 		sys.exit(0)
 	try:
 		terminateRunningNVDA(oldAppWindowHandle)
-	except:
-		sys.exit(1)
+	except Exception as e:
+		parser.error(f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}")
 if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
@@ -251,9 +251,11 @@ if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
-#Accept wm_quit from other processes, even if running with higher privilages
-if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
-	raise WinError()
+
+# Accept WM_QUIT from other processes, even if running with higher privileges
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT.ALLOW):
+	log.error("Unable to set the NVDA process to receive WM_QUIT messages from other processes")
+	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 if not isSecureDesktop and not config.isAppX:

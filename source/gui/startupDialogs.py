@@ -117,7 +117,7 @@ class WelcomeDialog(
 		gui.mainFrame.prePopup()
 		d = cls(gui.mainFrame)
 		d.ShowModal()
-		d.Destroy()
+		wx.CallAfter(d.Destroy)
 		gui.mainFrame.postPopup()
 
 
@@ -193,7 +193,7 @@ class LauncherDialog(
 		core.doStartupDialogs()
 
 	def onExit(self, evt):
-		gui.safeAppExit()
+		core.triggerNVDAExit()
 
 	@classmethod
 	def run(cls):
