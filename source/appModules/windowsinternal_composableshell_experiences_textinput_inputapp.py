@@ -181,8 +181,8 @@ class AppModule(appModuleHandler.AppModule):
 		# This event is properly raised in build 17134.
 		emojiPanelWindowOpenEvent = winVersion.WIN10_1803
 		if (
-			emojiPanelInitial <= winVersion.getWinVer() <= emojiPanelWindowOpenEvent
-			and childAutomationId in self._classicEmojiPanelAutomationIds
+			childAutomationId in self._classicEmojiPanelAutomationIds
+			and emojiPanelInitial <= winVersion.getWinVer() <= emojiPanelWindowOpenEvent
 		):
 			eventHandler.queueEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
