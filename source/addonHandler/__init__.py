@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 # addonHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
-# Joseph Lee, Babbage B.V., Arnold Loubriat
+# Copyright (C) 2012-2021 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
+# Joseph Lee, Babbage B.V., Arnold Loubriat, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -677,6 +677,15 @@ url= string(default=None)
 # Name of default documentation file for the add-on.
 docFileName = string(default=None)
 
+# Custom braille tables
+[brailleTables]
+	# The key is the table file name (not the full path)
+	[[__many__]]
+		displayName = string()
+		contracted = boolean(default=false)
+		input = boolean(default=true)
+		output = boolean(default=true)
+
 # NOTE: apiVersion:
 # EG: 2019.1.0 or 0.0.0
 # Must have 3 integers separated by dots.
@@ -711,6 +720,10 @@ docFileName = string(default=None)
 				val=self._translatedConfig.get(k)
 				if val:
 					self[k]=val
+			for fileName, tableConfig in self._translatedConfig.get("brailleTables", {}).items():
+				value = tableConfig.get("displayName")
+				if value:
+					self["brailleTables"][fileName]["displayName"] = value
 
 	@property
 	def errors(self):

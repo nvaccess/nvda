@@ -9,9 +9,7 @@
 import os
 import collections
 from configobj import ConfigObj
-from io import StringIO
 from locale import strxfrm
-from typing import BinaryIO, Generator
 
 import config
 import globalVars
@@ -37,6 +35,7 @@ BrailleTable = collections.namedtuple("BrailleTable", ("fileName", "displayName"
 #: The first map will be loaded when calling L{initialize} with the custom tables,
 #: and cleared when calling L{terminate}.
 _tables = collections.ChainMap()
+
 
 def addTable(fileName, displayName, contracted=False, output=True, input=True):
 	"""Register a braille translation table.
@@ -488,27 +487,38 @@ def initialize():
 	# Now, add the custom tables to the first map.
 	import os
 	from logHandler import log
-	customDirs = _getCustomTablesDirs()
-	# Insert the custom directories before the default one.
-	tablesDirs[:0] = customDirs
-	# Reversing the order ensures that user defined configuration takes
-	# precedence over addons.
-	for dir_ in reversed(customDirs):
+
+	import addonHandler
+	for addon in addonHandler.getRunningAddons():
+		dir_ = os.path.join(addon.path, "brailleTables")
+		if os.path.isdir(dir_):
+			tablesDirs.append(dir_)
 		try:
+			for fileName, tableConfig in addon.manifest.get("brailleTables", {}).items():
+				addTable(fileName, **tableConfig)
+		except Exception:
+			log.exception(f"Error while applying custom braille tables config from addon \"{addon.name}\"")
+
+	# Load the custom tables from the scratchpad last so it takes precedence over add-ons
+	if (
+		not globalVars.appArgs.secure
+		and config.conf['development']['enableScratchpadDir']
+	):
+		dir_ = os.path.join(config.getScratchpadDir(), "brailleTables")
+		if os.path.isdir(dir_):
+			tablesDirs.append(dir_)
+			configspec = {"brailleTables": addonHandler.AddonManifest.configspec["brailleTables"].dict()}
 			dirList = os.listdir(dir_)
-		# Redundant check, in case an add-on added an external directory to the list.
-		except FileNotFoundError:
-			log.error(f"Directory not found: {dir_}")
-			continue
-		for fileName in dirList:
-			path = os.path.join(dir_, fileName)
-			if os.path.isfile(path) and fileName.endswith(".ini"):
-				try:
-					with open(path, "rb") as file_:
-						manifest = CustomTablesManifest(file_)
-						loadCustomTablesConfig(manifest.dict())
-				except Exception:
-					log.exception(f"Error while applying custom braille tables config: {path}")
+			for fileName in dirList:
+				path = os.path.join(dir_, fileName)
+				if os.path.isfile(path) and fileName.endswith(".ini"):
+					try:
+						with open(path, "rb") as file_:
+							manifest = ConfigObj(file_, configspec=configspec)
+							for fileName, tableConfig in manifest["brailleTables"].items():
+								addTable(fileName, **tableConfig)
+					except Exception:
+						log.exception(f"Error while applying custom braille tables config: {path}")
 
 
 def terminate():
@@ -517,114 +527,3 @@ def terminate():
 	tablesDirs[:] = [TABLES_DIR]
 	# Clear all the custom tables, preserving only the builtin ones.
 	_tables.clear()
-
-
-def _getCustomTablesDirs() -> Generator[str, None, None]:
-	"""Retrieve the custom braille tables directories.
-	
-	These are "brailleTables" sub-directories searched after in order in:
-	 - The scratchpad directory, if enabled.
-	 - Every running addon.
-	"""
-	import os
-
-	def candidates() -> Generator[str, None, None]:
-		import config
-		import globalVars
-		if (
-			not globalVars.appArgs.secure
-			and config.conf['development']['enableScratchpadDir']
-		):
-			yield os.path.join(config.getScratchpadDir(), "brailleTables")
-		import addonHandler
-		for addon in addonHandler.getRunningAddons():
-			yield os.path.join(addon.path, "brailleTables")
-
-	return [dir_ for dir_ in candidates() if os.path.isdir(dir_)]
-
-
-class CustomTablesManifest(ConfigObj):
-	"""Information regarding one or more custom braille tables.
-	"""
-	configspec = ConfigObj(StringIO(
-		"""# NVDA Custom Braille Tables Manifest ConfigObj specification
-# Table file name (not the full path)
-[__many__]
-	contracted = boolean(default=false)
-	input = boolean(default=true)
-	output = boolean(default=true)
-	[[displayName]]
-		# The key is a locale code (eg. "de", "pt_BR", ...).
-		# The value is the displayName for that locale.
-		__many__ = string()"""
-	))
-
-	def __init__(self, file_: BinaryIO):
-		""" Initializes an L{CustomTablesManifest} instance from a file.
-		@param file_: The manifest file-like object, opened in binary mode.
-		"""
-		super(CustomTablesManifest, self).__init__(
-			file_,
-			configspec=self.configspec,
-			encoding='utf-8',
-			default_encoding='utf-8'
-		)
-
-
-def loadCustomTablesConfig(data: dict):
-	"""Load the configuration data for custom tables.
-	
-	The expected data is a dictionary, typically loaded from a ConfigObj .ini file, of the form:
-	{
-		"filename1.utb": <TABLE_CONFIGURATION>,
-		"filename2.utb": <TABLE_CONFIGURATION>,
-		...
-	}
-	
-	Expected TABLE_CONFIGURATION is of the form:
-	{
-		"contracted": <bool>,  # Optional, defaults to False
-		"output": <bool>,      # Optional, defaults to True
-		"input": <bool>,       # Optional, defaults to True
-		"displayName": <DISPLAY_NAME>
-	}
-	
-	DISPLAY_NAME, if specified, can either be a string literal or a dictionary
-	mapping language or country codes to string literals.
-	If omitted, the display name will be the file name.
-	"""
-	for fileName, tableCfg in data.items():
-		addTable(
-			fileName,
-			displayName=_getCustomTableDisplayName(fileName, tableCfg),
-			contracted=tableCfg.get("contracted", False),
-			output=tableCfg.get("output", True),
-			input=tableCfg.get("input", True)
-		)
-
-
-def _getCustomTableDisplayName(fileName: str, tableCfg: dict) -> str:
-	"""Retrieve the appropriate display name for the given custom braille table configuration.
-	"""
-	try:
-		value = tableCfg.get("displayName")
-	except KeyError:
-		return fileName
-	if isinstance(value, str):
-		return _(value)
-	if not isinstance(value, dict):
-		raise ValueError(
-			f"Unexpected displayName value for custom braille table {fileName}: {value}"
-		)
-	import languageHandler
-	lang = languageHandler.getLanguage()
-	displayName = value.get(lang)
-	if not displayName:
-		displayName = value.get(lang.split("_")[0])
-	if not displayName:
-		displayName = value.get("en_US")
-	if not displayName:
-		displayName = value.get("en")
-	if not displayName:
-		displayName = fileName
-	return displayName
