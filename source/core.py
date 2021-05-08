@@ -43,6 +43,8 @@ import garbageHandler  # noqa: E402
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
+# inform those who want to know that NVDA has begun to exit.
+preNVDAExit = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
 
@@ -111,9 +113,8 @@ def doStartupDialogs():
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
-		import gui
 		globalVars.exitCode=3
-		gui.safeAppExit()
+		triggerNVDAExit()
 		return
 	import subprocess
 	import winUser
@@ -233,6 +234,64 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 	if not wxLang:
 		log.debugWarning("wx does not support language %s" % lang)
 	return wxLang
+
+
+def triggerNVDAExit():
+	preNVDAExit.notify()
+	# ensure NVDA only runs exit procedures once
+	handlers = list(preNVDAExit.handlers)  # don't mutate .handlers directly with unregister while iterating
+	for handler in handlers:
+		preNVDAExit.unregister(handler)
+
+
+def _closeAllWindows():
+	"""
+	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit.
+	Ensures the wx mainloop is exited by all the top windows being destroyed.
+	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
+	"""
+	import gui
+	from gui.settingsDialogs import SettingsDialog
+	from typing import Dict
+	import wx
+
+	app = wx.GetApp()
+
+	# prevent race condition with object deletion
+	# prevent deletion of the object while we work on it.
+	_SettingsDialog = SettingsDialog
+	nonWeak: Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
+
+	for instance, state in nonWeak.items():
+		if state is _SettingsDialog.DialogState.DESTROYED:
+			log.error(
+				"Destroyed but not deleted instance of gui.SettingsDialog exists"
+				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
+
+	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
+	# They must be manually destroyed when exiting the app.
+	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12286, #12238)
+	log.debug("destroying system tray icon and menu")
+	app.ScheduleForDestruction(gui.mainFrame.sysTrayIcon.menu)
+	gui.mainFrame.sysTrayIcon.RemoveIcon()
+	app.ScheduleForDestruction(gui.mainFrame.sysTrayIcon)
+
+	for window in wx.GetTopLevelWindows():
+		if isinstance(window, wx.Dialog) and window.IsModal():
+			log.debug(f"ending modal {window} during exit process")
+			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
+		elif not isinstance(window, gui.MainFrame):
+			log.debug(f"closing window {window} during exit process")
+			wx.CallAfter(window.Close)
+
+	wx.Yield()  # creates a temporary event loop and uses it instead to process pending messages
+	log.debug("destroying main frame during exit process")
+	# the MainFrame has EVT_CLOSE bound to the ExitDialog
+	# which calls this function on exit, so destroy this window
+	app.ScheduleForDestruction(gui.mainFrame)
 
 
 def main():
@@ -588,16 +647,32 @@ def main():
 
 	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
 
+	def handleNVDAModuleCleanupBeforeGUIExit():
+		""" Terminates various modules that rely on the GUI. This should be used before closing all windows
+		and terminating the GUI
+		"""
+		import brailleViewer
+		# before the GUI is terminated we must terminate the update checker
+		if updateCheck:
+			_terminate(updateCheck)
+
+		# The core is expected to terminate, so we should not treat this as a crash
+		_terminate(watchdog)
+		# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
+		_terminate(globalPluginHandler)
+		# the brailleViewer should be destroyed safely before closing the window
+		brailleViewer.destroyBrailleViewer()
+	
+	preNVDAExit.register(handleNVDAModuleCleanupBeforeGUIExit)
+	preNVDAExit.register(_closeAllWindows)
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
 
 	log.info("Exiting")
-	if updateCheck:
-		_terminate(updateCheck)
-
-	_terminate(watchdog)
-	_terminate(globalPluginHandler, name="global plugin handler")
+	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
+	# triggerNVDAExit has not been called yet
+	triggerNVDAExit()
 	_terminate(gui)
 	config.saveOnExit()
 
