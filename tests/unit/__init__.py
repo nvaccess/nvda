@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2020 NV Access Limited, Babbage B.V., Julien Cochuyt
+# Copyright (C) 2017-2021 NV Access Limited, Babbage B.V., Julien Cochuyt
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
