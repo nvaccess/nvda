@@ -156,15 +156,18 @@ class MainFrame(wx.Frame):
 
 		self.postPopup()
 
-	def onDefaultDictionaryCommand(self,evt):
+	def onDefaultDictionaryCommand(self, evt):
+		from .speechDict import DictionaryDialog
 		# Translators: Title for default speech dictionary dialog.
 		self._popupSettingsDialog(DictionaryDialog,_("Default dictionary"),speechDictHandler.dictionaries["default"])
 
-	def onVoiceDictionaryCommand(self,evt):
+	def onVoiceDictionaryCommand(self, evt):
+		from .speechDict import DictionaryDialog
 		# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 		self._popupSettingsDialog(DictionaryDialog,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
 
-	def onTemporaryDictionaryCommand(self,evt):
+	def onTemporaryDictionaryCommand(self, evt):
+		from .speechDict import DictionaryDialog
 		# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
