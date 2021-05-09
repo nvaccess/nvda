@@ -189,7 +189,15 @@ class DictionaryDialog(SettingsDialog):
 			label=_("&Remove")
 		).Bind(wx.EVT_BUTTON, self.onRemoveClick)
 
-		sHelper.addItem(bHelper)
+		bHelper.sizer.AddStretchSpacer()
+
+		bHelper.addButton(
+			parent=self,
+			# Translators: The label for a button on the Speech Dictionary dialog.
+			label=_("Remove all")
+		).Bind(wx.EVT_BUTTON, self.onRemoveAll)
+
+		sHelper.addItem(bHelper, flag=wx.EXPAND)
 
 	def postInit(self):
 		self.dictList.SetFocus()
@@ -256,4 +264,20 @@ class DictionaryDialog(SettingsDialog):
 			self.dictList.DeleteItem(index)
 			del self.tempSpeechDict[index]
 			index = self.dictList.GetNextSelected(index)
+		self.dictList.SetFocus()
+
+	def onRemoveAll(self, evt):
+		if gui.messageBox(
+			# Translators: A prompt for confirmation on the Speech Dictionary dialog.
+			_("Are you sure you want to remove all the entries in this dictionary?"),
+			# Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
+			_("Remove all"),
+			style=wx.YES | wx.NO | wx.NO_DEFAULT
+		) != wx.YES:
+			return
+		# Looping instead of clearing here in order to avoid recreation of the columns
+		# eventually loosing their manually changed widths.
+		while self.tempSpeechDict:
+			self.dictList.DeleteItem(0)
+			del self.tempSpeechDict[0]
 		self.dictList.SetFocus()
