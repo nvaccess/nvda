@@ -32,34 +32,39 @@ class DictionaryEntryDialog(
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression")
 	}
-	TYPE_LABELS_ORDERING = (speechDictHandler.ENTRY_TYPE_ANYWHERE, speechDictHandler.ENTRY_TYPE_WORD, speechDictHandler.ENTRY_TYPE_REGEXP)
+	TYPE_LABELS_ORDERING = (
+		speechDictHandler.ENTRY_TYPE_ANYWHERE,
+		speechDictHandler.ENTRY_TYPE_WORD,
+		speechDictHandler.ENTRY_TYPE_REGEXP
+	)
 
 	# Translators: This is the label for the edit dictionary entry dialog.
 	def __init__(self, parent, title=_("Edit Dictionary Entry")):
-		super(DictionaryEntryDialog,self).__init__(parent,title=title)
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		super(DictionaryEntryDialog, self).__init__(parent, title=title)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		# Translators: This is a label for an edit field in add dictionary entry dialog.
 		patternLabelText = _("&Pattern")
-		self.patternTextCtrl=sHelper.addLabeledControl(patternLabelText, wx.TextCtrl)
+		self.patternTextCtrl = sHelper.addLabeledControl(patternLabelText, wx.TextCtrl)
 
-		# Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+		# Translators: This is a label for an edit field in add dictionary entry dialog
+		# and in punctuation/symbol pronunciation dialog.
 		replacementLabelText = _("&Replacement")
-		self.replacementTextCtrl=sHelper.addLabeledControl(replacementLabelText, wx.TextCtrl)
+		self.replacementTextCtrl = sHelper.addLabeledControl(replacementLabelText, wx.TextCtrl)
 
 		# Translators: This is a label for an edit field in add dictionary entry dialog.
 		commentLabelText = _("&Comment")
-		self.commentTextCtrl=sHelper.addLabeledControl(commentLabelText, wx.TextCtrl)
+		self.commentTextCtrl = sHelper.addLabeledControl(commentLabelText, wx.TextCtrl)
 
 		# Translators: This is a label for a checkbox in add dictionary entry dialog.
 		caseSensitiveText = _("Case &sensitive")
-		self.caseSensitiveCheckBox=sHelper.addItem(wx.CheckBox(self,label=caseSensitiveText))
+		self.caseSensitiveCheckBox = sHelper.addItem(wx.CheckBox(self, label=caseSensitiveText))
 
 		# Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 		typeText = _("&Type")
 		typeChoices = [DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING]
-		self.typeRadioBox=sHelper.addItem(wx.RadioBox(self,label=typeText, choices=typeChoices))
+		self.typeRadioBox = sHelper.addItem(wx.RadioBox(self, label=typeText, choices=typeChoices))
 
 		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
 
@@ -68,7 +73,7 @@ class DictionaryEntryDialog(
 		self.SetSizer(mainSizer)
 		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
 		self.patternTextCtrl.SetFocus()
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
 	def getType(self):
 		typeRadioValue = self.typeRadioBox.GetSelection()
@@ -76,10 +81,17 @@ class DictionaryEntryDialog(
 			return speechDictHandler.ENTRY_TYPE_ANYWHERE
 		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
 
-	def onOk(self,evt):
+	def onOk(self, evt):
 		if not self.patternTextCtrl.GetValue():
-			# Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
-			gui.messageBox(_("A pattern is required."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+			gui.messageBox(
+				# Translators: This is an error message to let the user know that the pattern field
+				# in the dictionary entry is not valid.
+				_("A pattern is required."),
+				# Translators: The title of an error message raised by the Dictionary Entry dialog
+				_("Dictionary Entry Error"),
+				wx.OK | wx.ICON_WARNING,
+				self
+			)
 			self.patternTextCtrl.SetFocus()
 			return
 		try:
@@ -93,8 +105,14 @@ class DictionaryEntryDialog(
 			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
 		except Exception as e:
 			log.debugWarning("Could not add dictionary entry due to (regex error) : %s" % e)
-			# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-			gui.messageBox(_("Regular Expression error: \"%s\".")%e, _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+			gui.messageBox(
+				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
+				_("Regular Expression error: \"%s\".") % e,
+				# Translators: The title of an error message raised by the Dictionary Entry dialog
+				_("Dictionary Entry Error"),
+				wx.OK | wx.ICON_WARNING,
+				self
+			)
 			return
 		evt.Skip()
 
@@ -106,12 +124,12 @@ class DictionaryDialog(SettingsDialog):
 	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
 	helpId = "SpeechDictionaries"
 
-	def __init__(self,parent,title,speechDict):
+	def __init__(self, parent, title, speechDict):
 		self.title = title
 		self.speechDict = speechDict
-		self.tempSpeechDict=speechDictHandler.SpeechDict()
+		self.tempSpeechDict = speechDictHandler.SpeechDict()
 		self.tempSpeechDict.extend(self.speechDict)
-		globalVars.speechDictionaryProcessing=False
+		globalVars.speechDictionaryProcessing = False
 		super().__init__(parent, resizeable=True)
 		# Historical initial size, result of L{self.dictList} being (550,350) as of #6287.
 		# Setting an initial size on L{self.dictList} by passing a L{size} argument when
@@ -122,104 +140,120 @@ class DictionaryDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for the list box of dictionary entries in speech dictionary dialog.
-		entriesLabelText=_("&Dictionary entries")
+		entriesLabelText = _("&Dictionary entries")
 		self.dictList = sHelper.addLabeledControl(
 			entriesLabelText,
 			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
 		)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-		self.dictList.InsertColumn(0,_("Comment"),width=150)
-		# Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
-		self.dictList.InsertColumn(1,_("Pattern"),width=150)
-		# Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-		self.dictList.InsertColumn(2,_("Replacement"),width=150)
-		# Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
-		self.dictList.InsertColumn(3,_("case"),width=50)
-		# Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
-		self.dictList.InsertColumn(4,_("Type"),width=50)
-		self.offOn = (_("off"),_("on"))
+		self.dictList.InsertColumn(0, _("Comment"), width=150)
+		# Translators: The label for a column in dictionary entries list used to identify pattern
+		# (original word or a pattern).
+		self.dictList.InsertColumn(1, _("Pattern"), width=150)
+		# Translators: The label for a column in dictionary entries list and in a list of symbols
+		# from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
+		self.dictList.InsertColumn(2, _("Replacement"), width=150)
+		# Translators: The label for a column in dictionary entries list used to identify
+		# whether the entry is case sensitive or not.
+		self.dictList.InsertColumn(3, _("case"), width=50)
+		# Translators: The label for a column in dictionary entries list used to identify
+		# whether the entry is a regular expression, matches whole words, or matches anywhere.
+		self.dictList.InsertColumn(4, _("Type"), width=50)
+		self.offOn = (_("off"), _("on"))
 		for entry in self.tempSpeechDict:
-			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
-		self.editingIndex=-1
+			self.dictList.Append((
+				entry.comment,
+				entry.pattern,
+				entry.replacement,
+				self.offOn[int(entry.caseSensitive)],
+				DictionaryDialog.TYPE_LABELS[entry.type]
+			))
+		self.editingIndex = -1
 
 		bHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button in speech dictionaries dialog to add new entries.
 			label=_("&Add")
-		).Bind(wx.EVT_BUTTON, self.OnAddClick)
+		).Bind(wx.EVT_BUTTON, self.onAddClick)
 
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 			label=_("&Edit")
-		).Bind(wx.EVT_BUTTON, self.OnEditClick)
+		).Bind(wx.EVT_BUTTON, self.onEditClick)
 
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 			label=_("&Remove")
-		).Bind(wx.EVT_BUTTON, self.OnRemoveClick)
+		).Bind(wx.EVT_BUTTON, self.onRemoveClick)
 
 		sHelper.addItem(bHelper)
 
 	def postInit(self):
 		self.dictList.SetFocus()
 
-	def onCancel(self,evt):
-		globalVars.speechDictionaryProcessing=True
+	def onCancel(self, evt):
+		globalVars.speechDictionaryProcessing = True
 		super(DictionaryDialog, self).onCancel(evt)
 
-	def onOk(self,evt):
-		globalVars.speechDictionaryProcessing=True
-		if self.tempSpeechDict!=self.speechDict:
+	def onOk(self, evt):
+		globalVars.speechDictionaryProcessing = True
+		if self.tempSpeechDict != self.speechDict:
 			del self.speechDict[:]
 			self.speechDict.extend(self.tempSpeechDict)
 			self.speechDict.save()
 		super(DictionaryDialog, self).onOk(evt)
 
-	def OnAddClick(self,evt):
+	def onAddClick(self, evt):
 		# Translators: This is the label for the add dictionary entry dialog.
-		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
-		if entryDialog.ShowModal()==wx.ID_OK:
+		entryDialog = DictionaryEntryDialog(self, title=_("Add Dictionary Entry"))
+		if entryDialog.ShowModal() == wx.ID_OK:
 			self.tempSpeechDict.append(entryDialog.dictEntry)
-			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],DictionaryDialog.TYPE_LABELS[entryDialog.getType()]))
-			index=self.dictList.GetFirstSelected()
-			while index>=0:
-				self.dictList.Select(index,on=0)
-				index=self.dictList.GetNextSelected(index)
-			addedIndex=self.dictList.GetItemCount()-1
+			self.dictList.Append((
+				entryDialog.commentTextCtrl.GetValue(),
+				entryDialog.patternTextCtrl.GetValue(),
+				entryDialog.replacementTextCtrl.GetValue(),
+				self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],
+				DictionaryDialog.TYPE_LABELS[entryDialog.getType()]
+			))
+			index = self.dictList.GetFirstSelected()
+			while index >= 0:
+				self.dictList.Select(index, on=0)
+				index = self.dictList.GetNextSelected(index)
+			addedIndex = self.dictList.GetItemCount() - 1
 			self.dictList.Select(addedIndex)
 			self.dictList.Focus(addedIndex)
 			self.dictList.SetFocus()
 		entryDialog.Destroy()
 
-	def OnEditClick(self,evt):
-		if self.dictList.GetSelectedItemCount()!=1:
+	def onEditClick(self, evt):
+		if self.dictList.GetSelectedItemCount() != 1:
 			return
-		editIndex=self.dictList.GetFirstSelected()
-		if editIndex<0:
+		editIndex = self.dictList.GetFirstSelected()
+		if editIndex < 0:
 			return
-		entryDialog=DictionaryEntryDialog(self)
+		entryDialog = DictionaryEntryDialog(self)
 		entryDialog.patternTextCtrl.SetValue(self.tempSpeechDict[editIndex].pattern)
 		entryDialog.replacementTextCtrl.SetValue(self.tempSpeechDict[editIndex].replacement)
 		entryDialog.commentTextCtrl.SetValue(self.tempSpeechDict[editIndex].comment)
 		entryDialog.caseSensitiveCheckBox.SetValue(self.tempSpeechDict[editIndex].caseSensitive)
 		entryDialog.setType(self.tempSpeechDict[editIndex].type)
-		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict[editIndex]=entryDialog.dictEntry
-			self.dictList.SetItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
-			self.dictList.SetItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
-			self.dictList.SetItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
-			self.dictList.SetItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
-			self.dictList.SetItem(editIndex,4,DictionaryDialog.TYPE_LABELS[entryDialog.getType()])
+		if entryDialog.ShowModal() == wx.ID_OK:
+			self.tempSpeechDict[editIndex] = entryDialog.dictEntry
+			self.dictList.SetItem(editIndex, 0, entryDialog.commentTextCtrl.GetValue())
+			self.dictList.SetItem(editIndex, 1, entryDialog.patternTextCtrl.GetValue())
+			self.dictList.SetItem(editIndex, 2, entryDialog.replacementTextCtrl.GetValue())
+			self.dictList.SetItem(editIndex, 3, self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
+			self.dictList.SetItem(editIndex, 4, DictionaryDialog.TYPE_LABELS[entryDialog.getType()])
 			self.dictList.SetFocus()
 		entryDialog.Destroy()
 
-	def OnRemoveClick(self,evt):
-		index=self.dictList.GetFirstSelected()
-		while index>=0:
+	def onRemoveClick(self, evt):
+		index = self.dictList.GetFirstSelected()
+		while index >= 0:
 			self.dictList.DeleteItem(index)
 			del self.tempSpeechDict[index]
-			index=self.dictList.GetNextSelected(index)
+			index = self.dictList.GetNextSelected(index)
 		self.dictList.SetFocus()
