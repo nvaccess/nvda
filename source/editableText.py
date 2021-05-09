@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Davy Kager, Julien Cochuyt
+# Copyright (C) 2006-2021 NV Access Limited, Davy Kager, Julien Cochuyt
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -260,7 +260,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 		caretMoved,newInfo=self._hasCaretMoved(oldBookmark)
 		if not caretMoved:
 			return
-		if len(delChunk)>1:
+		delChunk = delChunk.replace("\r\n", "\n")  # Occurs with at least with Scintilla
+		if len(delChunk) > 1:
 			speech.speakMessage(delChunk)
 		else:
 			speech.speakSpelling(delChunk)
