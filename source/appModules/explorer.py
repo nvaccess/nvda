@@ -378,7 +378,7 @@ class AppModule(appModuleHandler.AppModule):
 	def getStatusBarText(self, obj) -> str:
 		if not isinstance(obj, UIA) or obj.UIAElement.cachedClassname != "StatusBarModuleInner":
 			# This is not the file explorer status bar. Resort to standard behavior.
-			raise not NotImplementedError()
+			raise NotImplementedError
 		# The expected status bar, as of Windows 10 20H2 at least, contains:
 		#  - A grouping with a single static text child presenting the total number of elements
 		#  - Optionally, a grouping with a single static text child presenting the number of
