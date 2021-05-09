@@ -972,9 +972,10 @@ class ElementsListDialog(
 		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
 		bHelper = gui.guiHelper.ButtonHelper(wx.HORIZONTAL)
-		# Translators: The label of a button to activate an element
-		# in the browse mode Elements List dialog.
-		self.activateButton = bHelper.addButton(self, label=_("&Activate"))
+		# Translators: The label of a button to activate an element in the browse mode Elements List dialog.
+		# Beware not to set an accelerator that would collide with other controls in this dialog, such as an
+		# element type radio label.
+		self.activateButton = bHelper.addButton(self, label=_("Activate"))
 		self.activateButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(True))
 		
 		# Translators: The label of a button to move to an element
