@@ -176,6 +176,7 @@ test_script:
 
 # Flake8 Linting
  - ps: |
+    if ($env:APPVEYOR_PULL_REQUEST_NUMBER -or $env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
       $lintSource = (Resolve-Path .\tests\lint\)
       $flake8Output = "$lintOutput\Flake8.txt"
@@ -205,6 +206,7 @@ test_script:
       $wc = New-Object 'System.Net.WebClient'
       $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $junitXML)
       if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+    }
 
 # System tests
  - ps: |

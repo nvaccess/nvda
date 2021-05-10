@@ -30,6 +30,7 @@ What's New in NVDA
 - NVDA will exit even with windows still open, the exit process now closes all NVDA windows and dialogs (#1740)
 - The Speech Viewer can now be closed with `alt+F4` and has a standard close button for easier interaction with users of pointing devices. (#12330)
 - The Braille Viewer now has a standard close button for easier interaction with users of pointing devices. (#12328)
+- In the Elements List dialog, the accelerator key on the "Activate" button has been removed in some locales to avoid collision with an element type radio button label. When available, the button is still the default of the dialog and as such can still be invoked by simply pressing enter from the elements list itself. (#6167)
 
 
 == Bug Fixes ==
