@@ -1832,6 +1832,14 @@ class UIA(Window):
 				speech.cancelSpeech()
 			ui.message(displayString)
 
+	def event_UIA_dragComplete(self):
+		"""
+		Raised by an element when a drag operation on it is completed.
+		A prominent example is rearranging Start screen tiles on Windows 8 and later.
+		"""
+		# #12271: speech does not report new location but braille does.
+		self.reportFocus()
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
