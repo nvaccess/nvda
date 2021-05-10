@@ -97,14 +97,14 @@ What's New in NVDA
 - `gui.DriverSettingsMixin` has been removed - use `gui.AutoSettingsMixin` (#12144)
 - `speech.getSpeechForSpelling` has been removed - use `speech.getSpellingSpeech` (#12145)
 - Commands cannot be directly imported from speech as `import speech; speech.ExampleCommand()` or `import speech.manager; speech.manager.ExampleCommand()` - use  `from speech.commands import ExampleCommand` instead (#12126)
-- `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `sayAllhandler` does this manually now. (#12150)
+- `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `SayAllHandler` does this manually now. (#12150)
 - The `synthDriverHandler` module is no longer star imported into `globalCommands` and `gui.settingsDialogs` - use `from synthDriverHandler import synthFunctionExample` instead. (#12172)
 - `ROLE_EQUATION` has been removed from controlTypes - use `ROLE_MATH`` instead. (#12164)
 - `autoSettingsUtils.driverSetting` classes are removed from `driverHandler` - please use them from `autoSettingsUtils.driverSetting`. (#12168)
 - `autoSettingsUtils.utils` classes are removed from `driverHandler` - please use them from `autoSettingsUtils.utils`. (#12168)
 - Support of `TextInfo`s that do not inherit from `contentRecog.BaseContentRecogTextInfo` is removed. (#12157)
-- `speech.speakWithoutPauses` has been removed - please use `speech.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses` instead. (#12195)
-- `speech.re_last_pause` has been removed - please use `speech.SpeechWithoutPauses.re_last_pause` instead. (#12195)
+- `speech.speakWithoutPauses` has been removed - please use `speech.speechWithoutPauses.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses` instead. (#12195, #12251)
+- `speech.re_last_pause` has been removed - please use `speech.speechWithoutPauses.SpeechWithoutPauses.re_last_pause` instead. (#12195, #12251)
 - `WelcomeDialog`, `LauncherDialog` and `AskAllowUsageStatsDialog` are moved to the `gui.startupDialogs`. (#12105)
 - `getDocFilePath` has been moved from `gui` to the `documentationUtils` module. (#12105)
 - The gui.accPropServer module as well as the AccPropertyOverride and ListCtrlAccPropServer classes from the gui.nvdaControls module have been removed in favor of WX' native support for overriding accessibility properties. When enhancing accessibility of WX controls, implement wx.Accessible instead. (#12215)
@@ -123,6 +123,11 @@ What's New in NVDA
  - This usage is prefered instead of ti1.SetEndPoint(ti2,"startToEnd")
 - `wx.CENTRE_ON_SCREEN` and `wx.CENTER_ON_SCREEN` are removed, use `self.CentreOnScreen()` instead. (#12309)
 - `easeOfAccess.isSupported` has been removed, NVDA only supports versions of Windows where this evaluates to `True`. (#12222)
+- `sayAllHandler` has been moved to `speech.sayAll` (#12251):
+  - `speech.sayAll.SayAllHandler` exposes the functions `stop`, `isRunning`, `readObjects`, `readText`, `lastSayAllMode`.
+  - `SayAllHandler.stop` also resets the `SayAllHandler` `SpeechWithoutPauses` instance.
+  - `CURSOR_REVIEW` and `CURSOR_CARET` has been replaced with `CURSOR.REVIEW` and `CURSOR.CARET`.
+- `speech.SpeechWithoutPauses` has been moved to `speech.speechWithoutPauses.SpeechWithoutPauses`. (#12251)
 
 
 = 2020.4 =
