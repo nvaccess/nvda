@@ -18,7 +18,7 @@ import time
 from typing import Dict, Any, Tuple, List, Union
 
 import configobj
-from speech import sayAll
+import sayAllHandler
 import baseObject
 import scriptHandler
 import queueHandler
@@ -455,12 +455,12 @@ class InputManager(baseObject.AutoPropertyObject):
 		wasInSayAll=False
 		if gesture.isModifier:
 			if not self.lastModifierWasInSayAll:
-				wasInSayAll = self.lastModifierWasInSayAll = sayAll.SayAllHandler.isRunning()
+				wasInSayAll=self.lastModifierWasInSayAll=sayAllHandler.isRunning()
 		elif self.lastModifierWasInSayAll:
 			wasInSayAll=True
 			self.lastModifierWasInSayAll=False
 		else:
-			wasInSayAll = sayAll.SayAllHandler.isRunning()
+			wasInSayAll=sayAllHandler.isRunning()
 		if wasInSayAll:
 			gesture.wasInSayAll=True
 

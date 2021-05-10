@@ -12,7 +12,7 @@ import speech
 import braille
 import ui
 import api
-from speech import sayAll
+import sayAllHandler
 import eventHandler
 import keyboardHandler
 from scriptHandler import script
@@ -98,7 +98,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 			if documentObj.role == controlTypes.ROLE_DOCUMENT:
 				api.setNavigatorObject(documentObj)
 				braille.handler.handleReviewMove()
-				sayAll.SayAllHandler.readText(sayAll.CURSOR.REVIEW)
+				sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
 
 			elif documentObj.role == controlTypes.ROLE_EDITABLETEXT:
 				ui.message(documentObj.value)

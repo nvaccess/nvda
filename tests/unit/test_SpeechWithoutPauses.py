@@ -1,16 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2021 NV Access Limited
+# Copyright (C) 2019 NV Access Limited
 
-"""Unit tests for SpeechWithoutPauses"""
+"""Unit tests for speechWithoutPauses"""
 
 import unittest
 from typing import List
 
 from speech.types import SpeechSequence
 from speech.commands import EndUtteranceCommand, LangChangeCommand, CallbackCommand
-from speech.speechWithoutPauses import SpeechWithoutPauses
+from speech import SpeechWithoutPauses
 from logHandler import log
 
 

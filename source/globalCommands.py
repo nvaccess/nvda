@@ -19,7 +19,7 @@ import controlTypes
 import api
 import textInfos
 import speech
-from speech import sayAll
+import sayAllHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -1253,7 +1253,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for move review cursor to previous line command.
 		description=_("Moves the review cursor to the previous line of the current navigator object and speaks it"),
-		resumeSayAllMode=sayAll.CURSOR.REVIEW,
+		resumeSayAllMode=sayAllHandler.CURSOR_REVIEW,
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad7", "kb(laptop):NVDA+upArrow", "ts(text):flickUp")
 	)
@@ -1294,7 +1294,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for move review cursor to next line command.
 		description=_("Moves the review cursor to the next line of the current navigator object and speaks it"),
-		resumeSayAllMode=sayAll.CURSOR.REVIEW,
+		resumeSayAllMode=sayAllHandler.CURSOR_REVIEW,
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad9", "kb(laptop):NVDA+downArrow", "ts(text):flickDown")
 	)
@@ -1675,7 +1675,7 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:numpadPlus", "kb(laptop):NVDA+shift+a", "ts(text):3finger_flickDown")
 	)
 	def script_review_sayAll(self,gesture):
-		sayAll.SayAllHandler.readText(sayAll.CURSOR.REVIEW)
+		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
 
 	@script(
 		# Translators: Input help mode message for say all with system caret command.
@@ -1684,7 +1684,7 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb(desktop):NVDA+downArrow", "kb(laptop):NVDA+a")
 	)
 	def script_sayAll(self,gesture):
-		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
+		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 
 	def _reportFormattingHelper(self, info, browseable=False):
 		# Report all formatting-related changes regardless of user settings
@@ -1991,7 +1991,7 @@ class GlobalCommands(ScriptableObject):
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
 		if obj:
-			sayAll.SayAllHandler.readObjects(obj)
+			sayAllHandler.readObjects(obj)
 
 	@script(
 		gesture="kb(desktop):NVDA+control+f2"

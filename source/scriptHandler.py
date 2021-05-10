@@ -10,7 +10,7 @@ import inspect
 import types
 import config
 import speech
-from speech import sayAll
+import sayAllHandler
 import appModuleHandler
 import api
 import queueHandler
@@ -175,11 +175,7 @@ def queueScript(script,gesture):
 	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,gesture)
 
 def willSayAllResume(gesture):
-	return (
-		config.conf['keyboard']['allowSkimReadingInSayAll']
-		and gesture.wasInSayAll
-		and getattr(gesture.script, 'resumeSayAllMode', None) == sayAll.SayAllHandler.lastSayAllMode
-	)
+	return config.conf['keyboard']['allowSkimReadingInSayAll']and gesture.wasInSayAll and getattr(gesture.script,'resumeSayAllMode',None)==sayAllHandler.lastSayAllMode
 
 def executeScript(script,gesture):
 	"""Executes a given script (function) passing it the given gesture.
@@ -199,7 +195,7 @@ def executeScript(script,gesture):
 	_isScriptRunning=True
 	resumeSayAllMode=None
 	if willSayAllResume(gesture):
-		resumeSayAllMode = sayAll.SayAllHandler.lastSayAllMode
+		resumeSayAllMode=sayAllHandler.lastSayAllMode
 	try:
 		scriptTime=time.time()
 		scriptRef=weakref.ref(scriptFunc)
@@ -215,7 +211,7 @@ def executeScript(script,gesture):
 	finally:
 		_isScriptRunning=False
 		if resumeSayAllMode is not None:
-			sayAll.SayAllHandler.readText(resumeSayAllMode)
+			sayAllHandler.readText(resumeSayAllMode)
 
 def getLastScriptRepeatCount():
 	"""The count of how many times the most recent script has been executed.
@@ -265,7 +261,7 @@ def script(
 	@param bypassInputHelp: Whether this script should run when input help is active.
 	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
 	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
-	One of the C{sayAll.CURSOR_*} constants.
+	One of the C{sayAllHandler.CURSOR_*} constants.
 	"""
 	if gestures is None:
 		gestures = []

@@ -21,9 +21,6 @@ from displayModel import EditableTextDisplayModelTextInfo
 from NVDAObjects.window import DisplayModelEditableText
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from NVDAObjects.window.winword import *
-from NVDAObjects.window.winword import WordDocumentTreeInterceptor
-from speech import sayAll
-
 
 class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocument):
  
@@ -365,7 +362,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		info._rangeObj.move(wdParagraph,1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
-	script_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+	script_nextParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_previousParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -373,7 +370,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		info._rangeObj.move(wdParagraph,-1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
-	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start
@@ -465,3 +462,4 @@ class ProtectedDocumentPane(IAccessible):
 			ctypes.windll.user32.AttachThreadInput(curThreadID,document.windowThreadID,False)
 			if not document.WinwordWindowObject.active:
 				document.WinwordWindowObject.activate()
+				
