@@ -176,7 +176,7 @@ test_script:
 
 # Flake8 Linting
  - ps: |
-    if ($env:APPVEYOR_REPO_BRANCH -ne "master") {
+    if ($env:APPVEYOR_PULL_REQUEST_NUMBER -or $env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
       $lintSource = (Resolve-Path .\tests\lint\)
       $flake8Output = "$lintOutput\Flake8.txt"
