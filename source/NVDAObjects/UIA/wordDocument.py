@@ -298,14 +298,6 @@ class WordDocumentTextInfo(UIATextInfo):
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 
-	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
-	disableAutoPassThrough = True
-
-	def __init__(self, rootNVDAObject):
-		super(WordBrowseModeDocument, self).__init__(rootNVDAObject)
-		self.passThrough = True
-		browseMode.reportPassThrough.last = True
-
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
@@ -349,8 +341,8 @@ class WordDocumentNode(UIA):
 		return role
 
 class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentBase):
-	treeInterceptorClass = WordBrowseModeDocument
-	shouldCreateTreeInterceptor = True
+	treeInterceptorClass=WordBrowseModeDocument
+	shouldCreateTreeInterceptor=False
 	announceEntireNewLine=True
 
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.

@@ -67,8 +67,8 @@ For details regarding exceptions, access the license document from the NVDA menu
 
 + System Requirements +[SystemRequirements]
 - Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
- - For Windows 7 and Windows Server 2008 R2 NVDA requires Service Pack 1 and the [KB3063858 https://support.microsoft.com/en-us/kb/3063858] update.
- Both of these should be installed if all available updates are applied.
+ - For Windows 7, NVDA requires Service Pack 1 or higher.
+ - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
 - at least 150 MB of storage space.
 -
 
@@ -498,7 +498,6 @@ This includes documents in the following applications:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - Supported books in Amazon Kindle for PC
 -
 
@@ -596,7 +595,7 @@ Use the following keys for performing searches:
 %kc:endInclude
 
 ++ Embedded Objects ++[ImbeddedObjects]
-Pages can include rich content using technologies such as Adobe Flash, Oracle Java and HTML5, as well as applications and dialogs.
+Pages can include rich content using technologies such as Oracle Java and HTML5, as well as applications and dialogs.
 Where these are encountered in browse mode, NVDA will report "embedded object", "application" or "dialog", respectively.
 You can quickly move to them using the o and shift+o embedded object single letter navigation keys.
 To interact with these objects, you can press enter on them.
@@ -1747,7 +1746,7 @@ You can configure reporting of:
 - Pages and spacing
  - Page numbers
  - Line numbers
- - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #lineIndentationOptions]
+ - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #DocumentFormattingSettingsLineIndentation]
  - Paragraph indentation (e.g. hanging indent, first line indent)
  - Line spacing (single, double, etc.)
  - Alignment
@@ -1755,7 +1754,7 @@ You can configure reporting of:
  - Tables
  - Row/column headers
  - Cell coordinates
- - Cell borders [(Off, Styles, Both Colours and Styles)
+ - Cell borders (Off, Styles, Both Colours and Styles)
 - Elements
  - Headings
  - Links
@@ -1849,6 +1848,14 @@ The combo box has the following options:
 - Yes: If the browser makes UIA available, NVDA will use it.
 - No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
 -
+
+==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]
+When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
+This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
+For instance, NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet features are not available.
+However, for basic spreadsheet navigating / editing, this option may provide a vast performance improvement.
+We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Microsoft Excel  build 16.0.13522.10000 or higher to test this feature and provide feedback.
+Microsoft Excel's UI automation implementation is ever changing, and  versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
 
 ==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in Windows command consoles.

@@ -11,7 +11,7 @@ branches:
   - /release-.*/
   
 environment:
- PY_PYTHON: 3.8-32
+ PY_PYTHON: 3.7-32
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
  mozillaSymsAuthToken:
@@ -56,8 +56,6 @@ init:
       Set-AppveyorBuildVariable "versionType" $versionType
      }
 
-clone_depth: 1
-
 install:
  - cd appveyor
  # Decrypt files.
@@ -98,8 +96,13 @@ build_script:
  - scons source %sconsArgs%
  - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
- - scons checkPot %sconsArgs%
- - if ERRORLEVEL 1 exit %ERRORLEVEL%
+ - ps: |
+     cmd.exe /c "scons checkPot $sconsArgs"
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "Translation comments missing or unexpectedly included."
+     }
+     if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
  - scons %sconsOutTargets% %sconsArgs%
@@ -133,6 +136,7 @@ before_test:
       $nvdaLauncherFile+="_snapshot"
      }
      $nvdaLauncherFile+="_${env:version}.exe"
+     Set-AppveyorBuildVariable "nvdaLauncherFile" $nvdaLauncherFile
      echo NVDALauncherFile: $NVDALauncherFile
      $outputDir=$(resolve-path .\testOutput)
      $installerLogFilePath="$outputDir\nvda_install.log"
@@ -146,6 +150,12 @@ before_test:
       Add-AppveyorMessage "Unable to install NVDA prior to tests."
      }
      Push-AppveyorArtifact $installerLogFilePath
+     $crashDump = "$outputDir\nvda_crash.dmp"
+     if (Test-Path -Path $crashDump){
+      Push-AppveyorArtifact $crashDump -FileName "nvda_install_crash.dmp"
+      Add-AppveyorMessage "Install process crashed"
+      $errorCode=1
+     }
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 test_script:
@@ -166,20 +176,28 @@ test_script:
 
 # Flake8 Linting
  - ps: |
-    if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+    if ($env:APPVEYOR_PULL_REQUEST_NUMBER -or $env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
       $lintSource = (Resolve-Path .\tests\lint\)
+      $flake8Output = "$lintOutput\Flake8.txt"
       # When Appveyor runs for a pr,
       # the build is made from a new temporary commit,
       # resulting from the pr branch being merged into its base branch.
       # Therefore to create a diff for linting, we must fetch the head of the base branch.
       # In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
-     git fetch -q origin $env:APPVEYOR_REPO_BRANCH
-     $flake8Output = "$lintOutput\PR-Flake8.txt"
+      # Additionally, we can not use a clone_depth of 1, but must use an unlimited clone.
+      if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+        git fetch -q origin $env:APPVEYOR_REPO_BRANCH
+        $msgBaseLabel = "PR"
+      } else {
+        # However in a pushed branch, we must fetch master.
+        git fetch -q origin master:master
+        $msgBaseLabel = "Branch"
+      }
       .\runlint.bat FETCH_HEAD "$flake8Output" 
       if($LastExitCode -ne 0) {
-       $errorCode=$LastExitCode
-       Add-AppveyorMessage "PR introduces Flake8 errors"
+        $errorCode=$LastExitCode
+        Add-AppveyorMessage "$msgBaseLabel introduces Flake8 errors"
       }
       Push-AppveyorArtifact $flake8Output
       $junitXML = "$lintOutput\PR-Flake8.xml"
@@ -194,8 +212,7 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-    
-     .\runsystemtests.bat --variable whichNVDA:installed
+     .\runsystemtests.bat --variable whichNVDA:installed --variable installDir:"${env:nvdaLauncherFile}" --include installer
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "System test failure"

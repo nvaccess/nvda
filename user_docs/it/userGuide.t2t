@@ -1926,8 +1926,8 @@ Sarà sempre possibile eliminare un simbolo aggiunto in precedenza tramite il pu
 
 Una volta terminate le modifiche, premere il pulsante OK per salvare i cambiamenti oppure il bottone Annulla per annullare l'operazione.
 
-Nel caso di simboli complessi, il campo voce in sostituzione potrebbe dover includere alcuni riferimenti al testo presente nel campo simbolo. Per esempio, per uno schema che comprende una data intera, \1, \2, e \3 dovrebbero apparire nel campo, per essere sostituiti dalle parti corrispondenti della data.
-I normali simboli di backslash nel campo voce in sostituzione devono quindi essere raddoppiati, ad esempio bisogna digitare "a\\b" in modo da ottenere "a\b".
+Nel caso di simboli complessi, potrebbe essere necessario includere dei segnaposti nel campo In Sostituzione. Ad esempio, per una data, potremmo avere \1, \2 o \3, che poi saranno i vari componenti della data.
+In ragione di questo, se appaiono delle vere barre inverse nel simbolo, dovranno necessariamente essere raddoppiate. Ad esempio, se vogliamo scrivere "a\b", dovremo raddoppiare la controbarra, scrivendo "a\\b".
 
 +++ Tasti e gesti di immissione +++[InputGestures]
 In questa finestra di dialogo, è possibile personalizzare i gesti di immissione quali tasti della tastiera, pulsanti di un display braille, etc, per i comandi di NVDA.
@@ -2288,7 +2288,7 @@ Segue l'elenco di tutti i display braille che supportano il rilevamento automati
 ++ Freedom Scientific Serie Focus/PAC Mate ++[FreedomScientificFocus]
 Sono supportati Tutti i Display Braille Focus e Pac Mate prodotti da [Freedom Scientific https://www.freedomscientific.com/], sia USB che Bluetooth.
 per un corretto funzionamento è necessario avere installati nel proprio sistema i driver per display Braille Freedom Scientific.
-Nel caso non si sia in possesso di tali driver, è possibile scaricarli dall'indirizzo https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Nel caso non si sia in possesso di tali driver, è possibile scaricarli dall'indirizzo https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver.
 Sebbene nella pagina sia nominata solo la barra Focus Blue, il driver funzionerà per tutti i modelli Freedom.
 
 Per impostazioni predefinite, NVDA è in grado di individuare e connettersi automaticamente a questi display via USB o Bluetooth.
@@ -2314,7 +2314,7 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Route to braille cell | routing |
 | tasti shift+tab | spazio+punto1+punto2 |
 | tasto tab | spazio+punto4+punto5 |
-| freccia su |spazio+punto1 |
+| freccia su | spazio+punto1 |
 | freccia giù | spazio+punto4 |
 | control+freccia sinistra | spazio+punto2 |
 | control+freccia destra | spazio+punto5 |
@@ -2330,7 +2330,7 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | windows+tab | Spazio+punto2+punto3+punto4 |
 | tasto esc | spazio+punto1+punto5 |
 | tasto windows | spazio+punto2+punto4+punto5+punto6 |
-| spazio |spazio |
+| spazio | spazio |
 | tasto windows+d (riduce a icona tutte le applicazioni) | spazio+punto1+punto2+punto3+punto4+punto5+punto6 |
 | annuncia riga corrente | spazio+punto1+punto4 |
 | NVDA menu | spazio+punto1+punto3+punto4+punto5 |

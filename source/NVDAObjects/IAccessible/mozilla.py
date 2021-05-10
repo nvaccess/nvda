@@ -6,6 +6,7 @@
 #Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
 
 import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
 import oleacc
 import winUser
 import controlTypes
@@ -95,7 +96,7 @@ def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
-	if not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
+	if not isinstance(obj.IAccessibleObject, IA2.IAccessible2):
 		return
 
 	iaRole = obj.IAccessibleRole
@@ -108,7 +109,7 @@ def findExtraOverlayClasses(obj, clsList):
 		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
 		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
 			# This excludes a non-focusable @role="textbox".
-			if not (obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE):
+			if not (obj.IA2States & IA2.IA2_STATE_EDITABLE):
 				cls = TextLeaf
 	if not cls:
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
@@ -135,7 +136,7 @@ def findExtraOverlayClasses(obj, clsList):
 
 #: Maps IAccessible roles to NVDAObject overlay classes.
 _IAccessibleRolesToOverlayClasses = {
-	IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
+	IA2.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
 	"embed": EmbeddedObject,
 	"object": EmbeddedObject,
 }

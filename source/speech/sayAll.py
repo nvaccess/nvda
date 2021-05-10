@@ -1,12 +1,19 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2017 NV Access Limited
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt
 
+from enum import IntEnum
+from typing import TYPE_CHECKING
 import weakref
 import garbageHandler
-import speech
-import synthDriverHandler
+from .speech import (
+	speak,
+	getTextInfoSpeech,
+	SpeakTextInfoState,
+	speakObject,
+)
 from logHandler import log
 import config
 import controlTypes
@@ -15,42 +22,78 @@ import textInfos
 import queueHandler
 import winKernel
 
-from speech.commands import CallbackCommand, EndUtteranceCommand
+from .commands import CallbackCommand, EndUtteranceCommand
+from .speechWithoutPauses import SpeechWithoutPauses
 
-CURSOR_CARET = 0
-CURSOR_REVIEW = 1
+from .types import (
+	_flattenNestedSequences,
+)
 
-lastSayAllMode = None
-#: The active say all manager.
-#: This is a weakref because the manager should be allowed to die once say all is complete.
-_activeSayAll = lambda: None # Return None when called like a dead weakref.
+if TYPE_CHECKING:
+	import NVDAObjects
 
-def stop():
-	active = _activeSayAll()
-	if active:
-		active.stop()
 
-def isRunning():
-	"""Determine whether say all is currently running.
-	@return: C{True} if say all is currently running, C{False} if not.
-	@rtype: bool
-	"""
-	return bool(_activeSayAll())
+class CURSOR(IntEnum):
+	CARET = 0
+	REVIEW = 1
 
-def readObjects(obj):
-	global _activeSayAll
-	reader = _ObjectsReader(obj)
-	_activeSayAll = weakref.ref(reader)
-	reader.next()
+
+SayAllHandler = None
+
+
+def initialize():
+	global SayAllHandler
+	SayAllHandler = _SayAllHandler(SpeechWithoutPauses(speakFunc=speak))
+
+
+class _SayAllHandler:
+	def __init__(self, speechWithoutPausesInstance: SpeechWithoutPauses):
+		self.lastSayAllMode = None
+		self.speechWithoutPausesInstance = speechWithoutPausesInstance
+		#: The active say all manager.
+		#: This is a weakref because the manager should be allowed to die once say all is complete.
+		self._getActiveSayAll = lambda: None  # noqa: Return None when called like a dead weakref.
+
+	def stop(self):
+		'''
+		Stops any active objects reader and resets the SayAllHandler's SpeechWithoutPauses instance
+		'''
+		active = self._getActiveSayAll()
+		if active:
+			active.stop()
+			self.speechWithoutPausesInstance.reset()
+
+	def isRunning(self):
+		"""Determine whether say all is currently running.
+		@return: C{True} if say all is currently running, C{False} if not.
+		@rtype: bool
+		"""
+		return bool(self._getActiveSayAll())
+
+	def readObjects(self, obj: 'NVDAObjects.NVDAObject'):
+		reader = _ObjectsReader(self, obj)
+		self._getActiveSayAll = weakref.ref(reader)
+		reader.next()
+
+	def readText(self, cursor: CURSOR):
+		self.lastSayAllMode = cursor
+		try:
+			reader = _TextReader(self, cursor)
+		except NotImplementedError:
+			log.debugWarning("Unable to make reader", exc_info=True)
+			return
+		self._getActiveSayAll = weakref.ref(reader)
+		reader.nextLine()
 
 
 class _ObjectsReader(garbageHandler.TrackedObject):
 
-	def __init__(self, root):
+	def __init__(self, handler: _SayAllHandler, root: 'NVDAObjects.NVDAObject'):
+		self.handler = handler
 		self.walker = self.walk(root)
 		self.prevObj = None
 
-	def walk(self, obj):
+	def walk(self, obj: 'NVDAObjects.NVDAObject'):
 		yield obj
 		child=obj.simpleFirstChild
 		while child:
@@ -64,7 +107,7 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 			return
 		if self.prevObj:
 			# We just started speaking this object, so move the navigator to it.
-			api.setNavigatorObject(self.prevObj, isFocus=lastSayAllMode==CURSOR_CARET)
+			api.setNavigatorObject(self.prevObj, isFocus=self.handler.lastSayAllMode == CURSOR.CARET)
 			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		# Move onto the next object.
 		self.prevObj = obj = next(self.walker, None)
@@ -72,21 +115,10 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 			return
 		# Call this method again when we start speaking this object.
 		callbackCommand = CallbackCommand(self.next, name="say-all:next")
-		speech.speakObject(obj, reason=controlTypes.OutputReason.SAYALL, _prefixSpeechCommand=callbackCommand)
+		speakObject(obj, reason=controlTypes.OutputReason.SAYALL, _prefixSpeechCommand=callbackCommand)
 
 	def stop(self):
 		self.walker = None
-
-def readText(cursor):
-	global lastSayAllMode, _activeSayAll
-	lastSayAllMode=cursor
-	try:
-		reader = _TextReader(cursor)
-	except NotImplementedError:
-		log.debugWarning("Unable to make reader", exc_info=True)
-		return
-	_activeSayAll = weakref.ref(reader)
-	reader.nextLine()
 
 
 class _TextReader(garbageHandler.TrackedObject):
@@ -111,12 +143,13 @@ class _TextReader(garbageHandler.TrackedObject):
 	"""
 	MAX_BUFFERED_LINES = 10
 
-	def __init__(self, cursor):
+	def __init__(self, handler: _SayAllHandler, cursor: CURSOR):
+		self.handler = handler
 		self.cursor = cursor
 		self.trigger = SayAllProfileTrigger()
 		self.reader = None
 		# Start at the cursor.
-		if cursor == CURSOR_CARET:
+		if cursor == CURSOR.CARET:
 			try:
 				self.reader = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
 			except (NotImplementedError, RuntimeError) as e:
@@ -125,7 +158,7 @@ class _TextReader(garbageHandler.TrackedObject):
 			self.reader = api.getReviewPosition()
 		# #10899: SayAll profile can't be activated earlier because they may not be anything to read
 		self.trigger.enter()
-		self.speakTextInfoState = speech.SpeakTextInfoState(self.reader.obj)
+		self.speakTextInfoState = SpeakTextInfoState(self.reader.obj)
 		self.numBufferedLines = 0
 
 	def nextLine(self):
@@ -151,7 +184,7 @@ class _TextReader(garbageHandler.TrackedObject):
 			if isinstance(self.reader.obj, textInfos.DocumentWithPageTurns):
 				# Once the last line finishes reading, try turning the page.
 				cb = CallbackCommand(self.turnPage, name="say-all:turnPage")
-				speech.speakWithoutPauses([cb, EndUtteranceCommand()])
+				self.handler.speechWithoutPausesInstance.speakWithoutPauses([cb, EndUtteranceCommand()])
 			else:
 				self.finish()
 			return
@@ -174,16 +207,16 @@ class _TextReader(garbageHandler.TrackedObject):
 		# and insert the lineReached callback at the very beginning of the sequence.
 		# _linePrefix on speakTextInfo cannot be used here
 		# As it would be inserted in the sequence after all initial control starts which is too late.
-		speechGen = speech.getTextInfoSpeech(
+		speechGen = getTextInfoSpeech(
 			self.reader,
 			unit=textInfos.UNIT_READINGCHUNK,
 			reason=controlTypes.OutputReason.SAYALL,
 			useCache=state
 		)
-		seq = list(speech._flattenNestedSequences(speechGen))
+		seq = list(_flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
 		# Speak the speech sequence.
-		spoke = speech.speakWithoutPauses(seq)
+		spoke = self.handler.speechWithoutPausesInstance.speakWithoutPauses(seq)
 		# Update the textInfo state ready for when speaking the next line.
 		self.speakTextInfoState = state.copy()
 
@@ -205,7 +238,7 @@ class _TextReader(garbageHandler.TrackedObject):
 			else:
 				# We don't want to buffer too much.
 				# Force speech. lineReached will resume things when speech catches up.
-				speech.speakWithoutPauses(None)
+				self.handler.speechWithoutPausesInstance.speakWithoutPauses(None)
 				# The first buffered line has now started speaking.
 				self.numBufferedLines -= 1
 
@@ -213,10 +246,10 @@ class _TextReader(garbageHandler.TrackedObject):
 		# We've just started speaking this line, so move the cursor there.
 		state.updateObj()
 		updater = obj.makeTextInfo(bookmark)
-		if self.cursor == CURSOR_CARET:
+		if self.cursor == CURSOR.CARET:
 			updater.updateCaret()
-		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
-			api.setReviewPosition(updater, isCaret=self.cursor==CURSOR_CARET)
+		if self.cursor != CURSOR.CARET or config.conf["reviewCursor"]["followCaret"]:
+			api.setReviewPosition(updater, isCaret=self.cursor == CURSOR.CARET)
 		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
@@ -242,7 +275,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		# we might switch synths too early and truncate the final speech.
 		# We do this by putting a CallbackCommand at the start of a new utterance.
 		cb = CallbackCommand(self.stop, name="say-all:stop")
-		speech.speakWithoutPauses([
+		self.handler.speechWithoutPausesInstance.speakWithoutPauses([
 			EndUtteranceCommand(),
 			cb,
 			EndUtteranceCommand()

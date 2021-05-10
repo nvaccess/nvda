@@ -16,12 +16,14 @@ if "%VIRTUAL_ENV%" NEQ "" (
 	goto :EOF
 )
 
+rem call setlocal to make sure that any environment variable changes made by activating the virtual environment
+rem can be completely undone when endlocal is called or this script exits.
 setlocal
 echo Ensuring NVDA Python virtual environment
 call "%~dp0\ensureAndActivate.bat"
 if ERRORLEVEL 1 goto :EOF
 echo call %*
 call %*
+rem the virtual environment will now be deactivated as endlocal will be reached.
 echo Deactivating NVDA Python virtual environment
-call "%~dp0\..\.venv\scripts\deactivate.bat"
 endlocal
