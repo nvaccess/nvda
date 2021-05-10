@@ -9,7 +9,7 @@
 """
 
 import time
-import sayAllHandler
+from speech import sayAll
 import api
 import review
 from baseObject import ScriptableObject
@@ -222,7 +222,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
-	script_caret_moveByLine.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_moveByLine.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_caret_moveByCharacter(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_CHARACTER)
@@ -232,15 +232,15 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	def script_caret_moveByParagraph(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH)
-	script_caret_moveByParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_moveByParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_caret_previousSentence(self,gesture):
 		self._caretMoveBySentenceHelper(gesture, -1)
-	script_caret_previousSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_previousSentence.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_caret_nextSentence(self,gesture):
 		self._caretMoveBySentenceHelper(gesture, 1)
-	script_caret_nextSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_nextSentence.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def _backspaceScriptHelper(self,unit,gesture):
 		try:
