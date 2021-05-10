@@ -189,6 +189,8 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_ToolTipClosedEventId:"hide",
 	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
 	UIA_SystemAlertEventId:"UIA_systemAlert",
+	UIA_Drag_DragCompleteEventId: "UIA_dragComplete",
+	UIA_DropTarget_DroppedEventId: "UIA_droptTargetDropped",
 }
 
 localEventHandlerGroupUIAEventIds = set()
