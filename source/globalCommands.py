@@ -1549,8 +1549,8 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+s"
 	)
 	def script_speechMode(self,gesture):
-		curMode = speech.SpeechState.speechMode
-		speech.SpeechState.speechMode = speech.SpeechMode.talk
+		curMode = speech.getState().speechMode
+		speech.setSpeechMode(speech.SpeechMode.talk)
 		newMode=(curMode+1)%3
 		if newMode == speech.SpeechMode.off:
 			# Translators: A speech mode which disables speech output.
@@ -1563,7 +1563,7 @@ class GlobalCommands(ScriptableObject):
 			name=_("Speech mode talk")
 		speech.cancelSpeech()
 		ui.message(name)
-		speech.SpeechState.speechMode = newMode
+		speech.setSpeechMode(newMode)
 
 	@script(
 		description=_(

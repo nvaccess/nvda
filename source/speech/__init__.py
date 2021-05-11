@@ -30,6 +30,7 @@ from .speech import (
 	getPreselectedTextSpeech,
 	getPropertiesSpeech,
 	getSpellingSpeech,
+	getState,
 	getTableInfoSpeech,
 	getTextInfoSpeech,
 	IDT_BASE_FREQUENCY,
@@ -43,6 +44,7 @@ from .speech import (
 	RE_CONVERT_WHITESPACE,
 	RE_INDENTATION_CONVERT,
 	RE_INDENTATION_SPLIT,
+	setSpeechMode,
 	speak,
 	speakMessage,
 	speakObject,
@@ -56,7 +58,6 @@ from .speech import (
 	speakTextSelected,
 	speakTypedCharacters,
 	SpeechMode,
-	SpeechState,
 	spellTextInfo,
 	splitTextIndentation,
 )
@@ -106,6 +107,7 @@ __all__ = [
 	"getPreselectedTextSpeech",
 	"getPropertiesSpeech",
 	"getSpellingSpeech",
+	"getState",
 	"getTableInfoSpeech",
 	"getTextInfoSpeech",
 	"IDT_BASE_FREQUENCY",
@@ -119,6 +121,7 @@ __all__ = [
 	"RE_CONVERT_WHITESPACE",
 	"RE_INDENTATION_CONVERT",
 	"RE_INDENTATION_SPLIT",
+	"setSpeechMode",
 	"speak",
 	"speakMessage",
 	"speakObject",
@@ -132,19 +135,20 @@ __all__ = [
 	"speakTextSelected",
 	"speakTypedCharacters",
 	"SpeechMode",
-	"SpeechState",
 	"spellTextInfo",
 	"splitTextIndentation",
 ]
 
 import synthDriverHandler
 import config
+from .speech import initialize as speechInitialize
 
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
 	synthDriverHandler.initialize()
 	synthDriverHandler.setSynth(config.conf["speech"]["synth"])
+	speechInitialize()
 
 
 def terminate():
