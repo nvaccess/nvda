@@ -284,8 +284,8 @@ The existence of marked (highlighted) content can be reported in browsers, and t
 - NVDA should no longer sometimes freeze in Microsoft Word when rapidly arrowing up and down or typing characters with Braille enabled. (#11431, #11425, #11414)
 - NVDA no longer appends nonexistent trailing space when copying the current navigator object to the clipboard. (#11438)
 - NVDA no longer activates the Say All profile if there is nothing to read. (#10899, #9947)
-- NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
-- NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
+- NVDA is now able to read the features list in Internet Information Services (IIS) Manager. (#11468)
+- NVDA now keeps the audio device open, improving performance on some sound cards (#5172, #10721)
 - NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
 - The expanded / collapsed state of directories in the navigation treeview on drive.google.com is now always reported by NVDA. (#11520)
 - NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluetooth name is now "NLS eReader Humanware". (#11561)
@@ -884,7 +884,7 @@ Highlights of this release include Support for tables in Kindle for PC, support 
 
 
 == Changes ==
-- The status column in the addons manager has been changed to indicate if the addon is enabled or disabled rather than running or suspended. (#7929)
+- The status column in the add-ons manager has been changed to indicate whether the add-on is enabled or disabled rather than running or suspended. (#7929)
 - Updated liblouis braille translator to 3.5.0. (#7839)
 - The Lithuanian braille table has been renamed to Lithuanian 6 dot to avoid confusion with the new 8 dot table. (#7839)
 - The French (Canada) grade 1 and grade 2 tables have been removed. Instead, the French (unified) 6 dot computer braille and Grade 2 tables will be used respectively. (#7839)
@@ -901,7 +901,7 @@ Highlights of this release include Support for tables in Kindle for PC, support 
 - NVDA will no longer incorrectly announce the final character of a windows 10 sign-in PIN as the machine unlocks. (#7908)
 - Labels of checkboxes and radio buttons in Chrome and Firefox are no longer reported twice when tabbing or using quick navigation in Browse mode. (#7960)
 - aria-current with a value of false will be announced as "false" instead of "true". (#7892).
-- Windows OneCore Voices no longer fails to load if the configured voice has been uninstalled. (#7553)
+- Windows OneCore Voices no longer fail to load if the configured voice has been uninstalled. (#7553)
 - Changing voices in the Windows OneCore Voices is now a lot faster. (#7999)
 - Fixed malformed braille output for several braille tables, including capital signs in 8 dot contracted Danish braille. (#7526, #7693)
 - NVDA can now report more bullet types in Microsoft Word. (#6778)
@@ -968,7 +968,7 @@ Highlights of this release include  support for charts in Microsoft word and Pow
 - In twitter clients such as Chicken Nugget, NVDA will no longer ignore the last 20 characters of 280 character tweets when reading them. (#7828)
 - NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
 - In recent versions of Office 365, it is again possible to navigate Excel charts using the arrow keys. (#7046)
-- In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. (#7076)
+- In speech and braille output, control states will now always be reported in the same order, whether they are positive or negative. (#7076)
 - In apps such as Windows 10 Mail, NVDA will no longer fail to announce deleted characters when pressing backspace. (#7456)
 - All keys on the Hims Braille Sense Polaris displays are now working as expected. (#7865)
 - NVDA no longer fails to start on Windows 7 complaining about an internal api-ms dll, when a particular version of the Visual Studio 2017 redistributables have been installed by another application. (#7975)
@@ -1897,7 +1897,7 @@ Highlights of this release include browse mode for documents in Microsoft Word a
  - Unuseful position information is no longer announced for radio buttons (e.g. 1 of 1). (#3754)
  - Better reporting of JComboBox controls (html no longer reported, better reporting of expanded and collapsed states). (#3755)
  - When reporting the text of dialogs, some text that was previously missing is now included. (#3757)
- - Changes to the name, value or description of the focused control is now reported more accurately. (#3770)
+ - Changes to the name, value or description of the focused control are now reported more accurately. (#3770)
 - Fix a crash in NVDA seen in Windows 8 when focusing on certain RichEdit controls containing large amounts of text (e.g. NVDA's log viewer, windbg). (#3867)
 - On systems with a high DPI display setting (which occurs by default for many modern screens), NVDA no longer routes the mouse to the wrong location in some applications. (#3758, #3703)
 - Fixed an occasional problem when browsing the web where NVDA would stop working correctly until restarted, even though it didn't crash or freeze. (#3804)
@@ -2444,7 +2444,7 @@ Highlights of this release include automatic speech language switching when read
 Highlights of this release include major improvements concerning punctuation and symbols, including configurable levels, custom labelling and character descriptions; no pauses at the end of lines during say all; improved support for ARIA in Internet Explorer; better support for XFA/LiveCycle PDF documents in Adobe Reader; access to text written to the screen in more applications; and access to formatting and color information for text written to the screen.
 
 == New Features ==
-- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictographic languages such as traditional Chinese, one or more example phrases using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions. (#55)
+- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictographic languages such as Traditional Chinese, one or more example phrases using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions. (#55)
 - More text can be seen in flat review for applications such as Mozilla Thunderbird that write their text directly to the display as glyphs.
 - It is now possible to choose from several levels of punctuation and symbol announcement. (#332)
 - When punctuation or other symbols are repeated more than four times, the number of repetitions is now announced instead of speaking the repeated symbols. (#43)
@@ -3196,7 +3196,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - Added Translation for Traditional Chinese, thanks to Coscell Kao.
 - Re-structured an important part of the NVDA code, which should now fix many issues with NVDA's user interface (including settings dialogs).
 - Added Sapi4 support to NVDA. Currently there are two sapi4 drivers, one based on code contributed by Serotek Corporation, and one using the ActiveVoice.ActiveVoice com Interface. Both these drivers have issues, see which one works best for you.
-- Now when trying to run a new copy of NVDA while an older copy is still running will cause the new copy to just exit. This fixes a major problem where running multiple copies of NVDA makes your system very unusable.
+- Now, trying to run a new copy of NVDA while an older copy is still running will cause the new copy to just exit. This fixes a major problem where running multiple copies of NVDA makes your system very unusable.
 - Renamed the title of the NVDA user interface from NVDA Interface to NVDA. 
 - Fixed a bug in Outlook Express where pressing backspace at the start of an editable message would cause an error.
 - Added patch from Rui Batista that adds a script to report the current battery status on laptops (insert+shift+b).
