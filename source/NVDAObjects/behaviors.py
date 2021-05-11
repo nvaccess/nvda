@@ -387,7 +387,7 @@ class EnhancedTermTypedCharSupport(Terminal):
 		if (
 			len(lines) == 1
 			and not self._hasTab
-			and len(lines[0].strip()) < max(len(speech.curWordChars) + 1, 3)
+			and len(lines[0].strip()) < max(len(speech.SpeechState.curWordChars) + 1, 3)
 		):
 			return
 		# Clear the typed word buffer for new text lines.
