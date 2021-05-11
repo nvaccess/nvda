@@ -18,25 +18,7 @@ from .commands import (
 	IndexCommand,
 	_CancellableSpeechCommand,
 )
-from .commands import (  # noqa: F401
-	# F401 imported but unused:
-	# These are imported explicitly to maintain backwards compatibility and will be removed in
-	# 2021.1. Rather than rely on these imports, import directly from the commands module.
-	# New commands added to commands.py should be directly imported only where needed.
-	SpeechCommand,
-	PitchCommand,
-	LangChangeCommand,
-	BeepCommand,
-	CharacterModeCommand,
-	SynthCommand,
-	BreakCommand,
-	BaseProsodyCommand,
-	VolumeCommand,
-	RateCommand,
-	PhonemeCommand,
-	CallbackCommand,
-	WaveFileCommand,
-)
+
 from .priorities import Spri, SPEECH_PRIORITIES
 from logHandler import log
 from synthDriverHandler import getSynth
@@ -52,8 +34,8 @@ from typing import (
 
 
 def _shouldCancelExpiredFocusEvents():
-	# 0: default (no), 1: yes, 2: no
-	return config.conf["featureFlag"]["cancelExpiredFocusSpeech"] == 1
+	# 0: default (yes), 1: yes, 2: no
+	return config.conf["featureFlag"]["cancelExpiredFocusSpeech"] != 2
 
 
 def _shouldDoSpeechManagerLogging():
@@ -466,12 +448,21 @@ class SpeechManager(object):
 			utterance.extend(seq)
 			lastSequenceIndexAddedToUtterance = seqIndex
 		# if any items are cancelled, cancel the whole utterance.
-		if utterance and not self._checkForCancellations(utterance):
-			log.error(f"Checking for cancellations failed, cancelling sequence: {utterance}")
+		try:
+			utteranceValid = len(utterance) == 0 or self._checkForCancellations(utterance)
+		except IndexError:
+			log.error(
+				f"Checking for cancellations failed, cancelling sequence: {utterance}",
+				exc_info=True
+			)
 			# Avoid infinite recursion by removing the problematic sequences:
 			del self._curPriQueue.pendingSequences[:lastSequenceIndexAddedToUtterance + 1]
+			utteranceValid = False
+
+		if utteranceValid:
+			return utterance
+		else:
 			return self._buildNextUtterance()
-		return utterance
 
 	def _checkForCancellations(self, utterance: SpeechSequence) -> bool:
 		"""
@@ -485,8 +476,9 @@ class SpeechManager(object):
 			return True
 		utteranceIndex = self._getUtteranceIndex(utterance)
 		if utteranceIndex is None:
-			log.error("no utterance index, cant save cancellable commands")
-			return False
+			raise IndexError(
+				f"no utterance index({utteranceIndex}, cant save cancellable commands"
+			)
 		cancellableItems = list(
 			item for item in reversed(utterance) if isinstance(item, _CancellableSpeechCommand)
 		)

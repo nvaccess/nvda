@@ -2,16 +2,17 @@ import baseObject
 import config
 import synthDriverHandler
 import queueHandler
-import driverHandler
+from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+
 
 class SynthSetting(baseObject.AutoPropertyObject):
 	"""a numeric synth setting. Has functions to set, get, increase and decrease its value """
 	def __init__(self,synth,setting,min=0,max=100):
 		self.synth = synth
 		self.setting = setting
-		self.min = setting.minVal  if isinstance(setting,driverHandler.NumericDriverSetting) else min
-		self.max = setting.maxVal  if isinstance(setting,driverHandler.NumericDriverSetting) else max
-		self.step = setting.normalStep if isinstance(setting,driverHandler.NumericDriverSetting) else 1
+		self.min = setting.minVal if isinstance(setting, NumericDriverSetting) else min
+		self.max = setting.maxVal if isinstance(setting, NumericDriverSetting) else max
+		self.step = setting.normalStep if isinstance(setting, NumericDriverSetting) else 1
 
 	def increase(self):
 		val = min(self.max,self.value+self.step)
@@ -139,9 +140,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if not s.availableInSettingsRing: continue
 			if prevID == s.id: #restore the last setting
 				self._current=len(list)
-			if isinstance(s,driverHandler.NumericDriverSetting):
+			if isinstance(s, NumericDriverSetting):
 				cls=SynthSetting
-			elif isinstance(s,driverHandler.BooleanDriverSetting):
+			elif isinstance(s, BooleanDriverSetting):
 				cls=BooleanSynthSetting
 			else:
 				cls=StringSynthSetting

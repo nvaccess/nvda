@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 01:31+1000\n"
-"PO-Revision-Date: 2020-10-04 18:19+0200\n"
+"POT-Creation-Date: 2021-01-12 20:07+1000\n"
+"PO-Revision-Date: 2021-01-05 15:13+0100\n"
 "Last-Translator: Karl Eick <hozosch@web.de>\n"
 "Language-Team: sv\n"
 "Language: sv\n"
@@ -683,6 +683,11 @@ msgstr "Afrikaans grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Afrikaans grade 2"
+msgstr "Afrikaans grad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
 msgstr "Arabisk 8-punkters datorpunktskrift"
 
@@ -703,6 +708,11 @@ msgstr "Assamesiska grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Bashkir grade 1"
+msgstr "Bashkir grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bengali grade 1"
 msgstr "Bengali grad 1"
 
@@ -715,6 +725,11 @@ msgstr "Bulgariska, 8-punkters datorpunktskrift"
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Centralkurdiska grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Coptic 8 dot computer braille"
+msgstr "Coptiska 8-punkters datorpunktskrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1158,8 +1173,13 @@ msgstr "Rysk datorpunktskrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
-msgstr "Ryska grad 1"
+msgid "Russian literary braille"
+msgstr "Rysk literär punktskrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Russian literary braille (detailed)"
+msgstr "Rysk literär punktskrift (detaljerad)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2935,7 +2955,7 @@ msgid ""
 msgstr ""
 "Din konfigurationsfil innehåller fel. Din konfiguration har återställts till "
 "fabriksinställningar.\n"
-"För mer information se logg-filen."
+"För mer information se loggfilen."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -2946,7 +2966,7 @@ msgid ""
 "More details about the errors can be found in the log file."
 msgstr ""
 "Din inmatningsgestmappsfil innehåller fel.\n"
-"För mer information se logg-filen."
+"För mer information se loggfilen."
 
 msgid "gesture map File Error"
 msgstr "fel på fil för inmatningsgester"
@@ -3016,10 +3036,6 @@ msgstr "sök föregående"
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
 msgstr "Ingen markering"
-
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "Kopierat till klippbordet"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -3363,6 +3379,18 @@ msgstr "rapportera betoning på"
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "Växlar rapportering av betoning"
+
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+msgid "Toggles on and off the reporting of marked text"
+msgstr "Växlar rapportering av markerad text"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked on"
+msgstr "rapportera markerat på"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked off"
+msgstr "rapportera markerat av"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3719,12 +3747,6 @@ msgstr "Växlar enkelt granskningsläge"
 #. but there is no current navigator object.
 msgid "No navigator object"
 msgstr "Inget navigationsobjekt"
-
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "%s kopierades till klippbordet"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -4204,6 +4226,8 @@ msgid "Log fragment copied to clipboard"
 msgstr "Loggfragment kopierades till klippbordet"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
 msgid "Unable to copy"
 msgstr "Kunde inte kopiera"
 
@@ -4575,10 +4599,6 @@ msgstr "Ingen text att kopiera"
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
 msgstr "Kan inte markera text, dubbelklicka för att kopiera"
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "Granskningsmarkörens markering kopierad till klippbordet"
 
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
@@ -4998,7 +5018,7 @@ msgstr "skift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "windows"
-msgstr "fönster"
+msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
@@ -6547,6 +6567,25 @@ msgstr "långtryck/svep-upp"
 msgid "NVDA Message"
 msgstr "NVDA-meddelande"
 
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d tecken"
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "Kopierat till klippbordet: {text}"
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied: {text}"
+msgstr "Kopierat: {text}"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Söker efter uppdatering"
@@ -6565,6 +6604,9 @@ msgstr "Fel inträffade vid sökning efter uppdatering."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6709,7 +6751,7 @@ msgid ""
 msgstr ""
 "Vi behöver din hjälp för att fortsätta förbättra NVDA.\n"
 "Det här projektet förlitar sig framförallt på donationer och bidrag. Genom "
-"att donera hjälper du till att sponsra fulltidsutveckling.\n"
+"att donera hjälper du till att sponsra heltidsutveckling.\n"
 "Om endast $10 doneras för varje nedladdning kommer vi att kunna täcka alla "
 "omkostnader för projektet.\n"
 "Alla donationer tas emot av NV Access, den icke-vinstdrivande organisationen "
@@ -6849,6 +6891,8 @@ msgid "Composition"
 msgstr "Komposition"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "Kandidat"
@@ -6868,6 +6912,10 @@ msgstr "Kan inte hitta dokumentationsfönstret."
 msgid "No track playing"
 msgstr "Inget spår spelas"
 
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr "Kan inte beräkna återstående tid"
+
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Rapporterar återstående tid för det spår som spelas nu, om något"
@@ -6875,6 +6923,10 @@ msgstr "Rapporterar återstående tid för det spår som spelas nu, om något"
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Rapporterar förfluten tid för det spår som spelas nu, om något"
+
+#. Translators: Reported if the total time is not available in Foobar2000
+msgid "Total time not available"
+msgstr "Total tid inte tillgänglig"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7372,6 +7424,14 @@ msgstr "av"
 msgid "No emoji"
 msgstr "Ingen emoji"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "Ändringsspårning på"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "Ändringsspårning av"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 series/protokollomvandlare"
@@ -7490,6 +7550,11 @@ msgstr "NVDA punktskriftsvisare"
 msgid "&Show Braille Viewer on Startup"
 msgstr "&Visa punktskriftsvisaren vid uppstart"
 
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
+msgstr "&Håll muspekaren för celldirigering"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Resultat"
@@ -7581,7 +7646,7 @@ msgstr ""
 "försöker fixa vanliga problem i systemet som förhindrar NVDA att komma åt "
 "innehåll i många program såsom Firefox och Internet Explorer. Verktyget "
 "behöver göra ändringar i systemregistret och behöver därför "
-"administrationsrättigheter. Är du säker på att du vill fortsätta?"
+"administratörsrättigheter. Är du säker på att du vill fortsätta?"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -8104,6 +8169,8 @@ msgid "Install"
 msgstr "Installera"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
 msgstr "Inaktiverad"
 
@@ -8444,6 +8511,15 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "Manuell aktivering"
 
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+msgid "No help available here."
+msgstr "Ingen användarhandledning hittades."
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+msgid "No user guide found."
+msgstr "Ingen användarhandledning hittades."
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8680,6 +8756,15 @@ msgstr "&Starta den nya portabla kopian efter den skapats"
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Vänligen specificera mappen där det portabla exemplaret ska skapas."
+
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
+msgstr ""
+"Vänligen ange en absolut sökväg (inkluderat enhetsbokstav)  där det portabla "
+"exemplaret ska skapas."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -9314,8 +9399,8 @@ msgstr "B&etoning"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Marked (highlighted text)"
-msgstr "Markerat (vald text)"
+msgid "Mar&ked (highlighted text)"
+msgstr "Mar&kerat (vald text)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9548,7 +9633,7 @@ msgstr ""
 #. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
-"Använd UI Automation för att interagera med Windows kommandotolk när det är "
+"Använd UI Automation för att interagera med Windows k&ommandotolk när det är "
 "möjligt"
 
 #. Translators: This is the label for a checkbox in the
@@ -9775,13 +9860,24 @@ msgstr "Markörform för &fokus:"
 msgid "Cursor shape for &review:"
 msgstr "Markörform för g&ranskning:"
 
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Använd timeout"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Visa för evigt"
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+msgid "Show messages"
+msgstr "Visa meddelanden"
+
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
 msgstr "Meddelande&timeout (sek)"
-
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
-msgstr "Visa &meddelanden för evigt"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
@@ -9960,12 +10056,6 @@ msgstr "markerade %s"
 #, python-format
 msgid "%s selected"
 msgstr "%s markerad"
-
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d tecken"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -10415,8 +10505,8 @@ msgid "Highlight navigator &object"
 msgstr "Markera navigator&objektet"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-msgid "Focus Highlight"
-msgstr "Fokusmarkering"
+msgid "Visual Highlight"
+msgstr "Visuell markering"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
@@ -11041,11 +11131,11 @@ msgstr "Felstaplar"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "X Error Bars"
-msgstr "X Error Bars"
+msgstr "X felstaplar"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Y Error Bars"
-msgstr "Y-fellinjer"
+msgstr "Y-felstaplar"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Shape"
@@ -11388,7 +11478,7 @@ msgstr "diagonal rand"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
 msgid "vertical stripe"
-msgstr "vertikal linje"
+msgstr "lodräta ränder"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -11799,10 +11889,11 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr "1,5 rader"
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
-msgstr "exakt"
+msgid "exactly {space:.1f} pt"
+msgstr "exakt {space:.1f} pt"
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -11900,14 +11991,6 @@ msgstr "format {styleName}, dispositionsnivå {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "{size:g}-punkts teckensnitt"
 
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking on"
-msgstr "Ändringsspårning på"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking off"
-msgstr "Ändringsspårning av"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr "Visa icke skrivbara tecken"
@@ -11958,6 +12041,19 @@ msgstr "Dubbelt radavstånd"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 rader"
+
+#~ msgctxt "line spacing value"
+#~ msgid "exact"
+#~ msgstr "exakt"
+
+#~ msgid "Russian grade 1"
+#~ msgstr "Ryska grad 1"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "%s kopierades till klippbordet"
+
+#~ msgid "Review selection copied to clipboard"
+#~ msgstr "Granskningsmarkörens markering kopierad till klippbordet"
 
 #~ msgid "Apply"
 #~ msgstr "Verkställ"

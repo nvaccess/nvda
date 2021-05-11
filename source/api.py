@@ -318,7 +318,7 @@ def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
 			winUser.emptyClipboard()
 			winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
 		got = getClipData()
-	except ctypes.WinError:
+	except OSError:
 		if notify:
 			ui.reportTextCopiedToClipboard()  # No argument reports a failure.
 		return False

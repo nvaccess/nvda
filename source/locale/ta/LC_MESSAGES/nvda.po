@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-18 00:10+1000\n"
-"PO-Revision-Date: 2020-09-20 12:01+0530\n"
+"POT-Creation-Date: 2021-04-02 00:01+0000\n"
+"PO-Revision-Date: 2021-04-06 18:47+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -617,7 +617,7 @@ msgstr "எச்.ஐ.டி. விசைப் பலகை ஒப்புச
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
-msgstr "தெரியாத பிரெயில் காட்சியமைவு"
+msgstr "அறியப்படாத பிரெயில் காட்சியமைவு"
 
 #. Translators: Name of a Bluetooth serial communications port.
 #, python-brace-format
@@ -679,6 +679,11 @@ msgstr "ஆப்பரிக்கான்ஸ் படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Afrikaans grade 2"
+msgstr "ஆப்பரிக்கான்ஸ் படிநிலை 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
 msgstr "அரபு 8 புள்ளி கணினி பிரெயில்"
 
@@ -699,6 +704,11 @@ msgstr "அசாமி படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Bashkir grade 1"
+msgstr "பாஷ்கிர் படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bengali grade 1"
 msgstr "பெங்காலி படிநிலை 1"
 
@@ -711,6 +721,11 @@ msgstr "பல்கேரிய 8 புள்ளி கணினி பிர�
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "மைய குர்திஷ் படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Coptic 8 dot computer braille"
+msgstr "காப்டிக் 8 புள்ளி கணினி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1154,8 +1169,13 @@ msgstr "ருஷ்ய கணினி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
-msgstr "ருஷிய படிநிலை 1"
+msgid "Russian literary braille"
+msgstr "ருஷ்ய இலக்கிய பிரெயில்"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Russian literary braille (detailed)"
+msgstr "ருஷ்ய இலக்கிய பிரெயில் (விளக்கமானது)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2224,7 +2244,7 @@ msgstr "அட்டவணை"
 
 #. Translators: Identifies a cell in a table.
 msgid "cell"
-msgstr "சிறுகட்டம்"
+msgstr "பணிக்களம்"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
 msgid "column"
@@ -2951,11 +2971,11 @@ msgstr "என்விடிஏ ஏற்றப்படுகிறது. அ
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
-msgstr "கிடைநீள திரைத் தளவமைப்பு"
+msgstr "அகலவாக்கு"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
-msgstr "செங்குத்து திரைத் தளவமைப்பு"
+msgstr "நீளவாக்கு"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
@@ -3015,15 +3035,11 @@ msgstr ""
 msgid "No selection"
 msgstr "தெரிவு ஏதுமில்லை"
 
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது"
-
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
-msgstr "அட்டவணையின் சிறுகட்டத்தில் இல்லை"
+msgstr "அட்டவணையின் பணிக்களத்தில் இல்லை"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
@@ -3374,6 +3390,18 @@ msgstr "வலியுறுத்தல்களை அறிவித்த�
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "வலியுறுத்தல்களை அறிவித்திடும் வசதியை முடுக்குகிறது, அல்லது முடக்குகிறது"
 
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+msgid "Toggles on and off the reporting of marked text"
+msgstr "குறியிடப்பட்ட உரையின் அறிவித்தலை முடுக்குகிறது, அல்லது முடக்குகிறது"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked on"
+msgstr "குறியிடுதல்களை அறிவித்திடும்"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked off"
+msgstr "குறியிடுதல்களை அறிவித்திடாது"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "நிரங்களை அறிவித்திடாது"
@@ -3518,16 +3546,16 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "சிறுகட்டத்தின் சந்தி நிலையை அறிவித்திடாது"
+msgstr "பணிக்களத்தின் சந்தி நிலையை அறிவித்திடாது"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "சிறுகட்டத்தின் சந்தி நிலையை அறிவித்திடும்"
+msgstr "பணிக்களத்தின் சந்தி நிலையை அறிவித்திடும்"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
 msgstr ""
-"சிறுகட்டத்தின் சந்தி நிலையை அறிவித்திடும் வசதியை முடுக்குகிறது, அல்லது முடக்குகிறது"
+"பணிக்களத்தின் சந்தி நிலையை அறிவித்திடும் வசதியை முடுக்குகிறது, அல்லது முடக்குகிறது"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -3736,12 +3764,6 @@ msgstr "எளிய சீராய்வு நிலையை முடுக
 #. but there is no current navigator object.
 msgid "No navigator object"
 msgstr "வழிகாட்டிப் பொருள் ஏதுமில்லை"
-
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "%s பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -4221,6 +4243,8 @@ msgid "Log fragment copied to clipboard"
 msgstr "செயற்குறிப்பேட்டின் நுண்பகுதி பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
 msgid "Unable to copy"
 msgstr "படியெடுக்க இயலவில்லை"
 
@@ -4595,10 +4619,6 @@ msgstr "படியெடுக்க உரை ஏதுமில்லை"
 msgid "Can't select text, press twice to copy"
 msgstr "உரையைத் தெரிவுச் செய்ய இயலவில்லை. படியெடுக்க இரு முறை அழுத்தவும். "
 
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "சீராய்வுத் தெரிவு பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது"
-
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
 "If pressed once, the text from the previously set start marker up to and "
@@ -4620,12 +4640,12 @@ msgstr "பிரெயில் காட்சியமைவை முன்�
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
-"பிரெயில் சிறுகட்டத்திற்குளிருக்கும் பொருளிடம் சுட்டியை நகர்த்திடும், அல்லது அப்பொருளை "
+"பிரெயில் புள்ளிக்களத்திற்குளிருக்கும் பொருளிடம் சுட்டியை நகர்த்திடும், அல்லது அப்பொருளை "
 "இயக்கும்"
 
 #. Translators: Input help mode message for Braille report formatting command.
 msgid "Reports formatting info for the text under this braille cell"
-msgstr "பிரெயில் சிறுகட்டத்தின் கீழிருக்கும் உரையின் வடிவூட்டத்தை அறிவிக்கிறது"
+msgstr "பிரெயில் புள்ளிக்களத்தின் கீழிருக்கும் உரையின் வடிவூட்டத்தை அறிவிக்கிறது"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -4637,7 +4657,7 @@ msgstr "பிரெயில் காட்சியமைவை அடுத�
 
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
-msgstr "பிரெயில் விசைப் பலகை மூலம் புள்ளிகளை உள்ளீடு செய்கிறது"
+msgstr "பிரெயில் விசைப் பலகை வழியே புள்ளிகளை உள்ளீடு செய்கிறது"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the current focus"
@@ -6561,21 +6581,40 @@ msgstr "வலது சுண்டுதல்"
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
 msgctxt "touch action"
 msgid "hover down"
-msgstr "நீடித்த மேவுதல்"
+msgstr "நீடித்தப் பாவுதல்"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr "மேவுதல்"
+msgstr "பாவுதல்"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
 msgid "hover up"
-msgstr "மேவுதல் நீக்கம்"
+msgstr "பாவுதல்ல் விலக்கப்பட்டது"
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
 msgstr "என்விடிஏ தகவல்"
+
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d வரியுருக்கள்"
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது: {text}"
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied: {text}"
+msgstr "படியெடுக்கப்பட்டது: {text}"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -6595,6 +6634,9 @@ msgstr "இற்றாக்கத்திற்குத் துழாவ�
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6881,6 +6923,8 @@ msgid "Composition"
 msgstr "இயற்றல்"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "தேர்வெழுத்து"
@@ -6902,6 +6946,10 @@ msgstr "ஆவணமாக்கல் சாளரம் காணப்பட�
 msgid "No track playing"
 msgstr "எத்தடமும் ஓடவில்லை"
 
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr "எஞ்சியிருக்கும் நேரத்தை தீர்மானிக்க இயலவில்லை"
+
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் நேரத்தில் மீதமிருந்தால், அதை அறிவித்திடும்"
@@ -6909,6 +6957,10 @@ msgstr "ஓடிக் கொண்டிருக்கும் தடத்�
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் கடந்துள்ள நேரத்தை அறிவித்திடும்"
+
+#. Translators: Reported if the total time is not available in Foobar2000
+msgid "Total time not available"
+msgstr "மொத்த நேரம் கிடைப்பிலில்லை"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7420,6 +7472,14 @@ msgstr "மீளியக்க நிறுத்தம்"
 msgid "No emoji"
 msgstr "முகவடி ஏதுமில்லை"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "மாற்றங்களைப் பின்தொடர்க"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "மாற்றங்களைப் பின்தொடராமல் இருந்திடுக"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "ஆப்டிலெக் ஆல்வா 6 தொடர்/நெறிமுறை மாற்றி"
@@ -7537,6 +7597,11 @@ msgstr "என்விடிஏ பிரெயில் தோற்றம்"
 #. whether the braille viewer is shown at startup or not.
 msgid "&Show Braille Viewer on Startup"
 msgstr "துவக்கத்தின்பொழுது பிரெயில் தோற்றத்தைக் காட்டுக (&S)"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
+msgstr "பணிக்களத்திற்கு வழியிட பாவுக"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7729,7 +7794,7 @@ msgstr "கூட்டுக்கூறு மேலாண்மை (&A)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
-msgstr "பெயர்த்தகுப் படியை உருவாக்குக... (&C)"
+msgstr "கொண்டுசெல்லத்தக்கப் படியை உருவாக்குக... (&C)"
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
@@ -7900,7 +7965,7 @@ msgstr "என்விடிஏவை இக்கணினியில் ந�
 
 #. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
 msgid "Create &portable copy"
-msgstr "பெயர்த்தகுப் படியை உருவாக்குக (&P)"
+msgstr "கொண்டுசெல்லத்தக்கப் படியை உருவாக்குக (&P)"
 
 #. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
@@ -8146,6 +8211,8 @@ msgid "Install"
 msgstr "நிறுவுக"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
 msgstr "முடக்கப்பட்டது"
 
@@ -8482,6 +8549,15 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "கைமுறை இயக்கம்"
 
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+msgid "No help available here."
+msgstr "இச்சூழலுக்கு உதவி ஏதுமில்லை"
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+msgid "No user guide found."
+msgstr "பயனர் வழிகாட்டி ஏதும் காணப்படவில்லை"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8654,7 +8730,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
-msgstr "பெயர்த்தகு அமைவடிவத்தை தற்போதைய பயனர் கணக்கிற்குப் படியெடுக்கவும் (&P)"
+msgstr "கொண்டுசெல்லத்தக்க அமைவடிவத்தை தற்போதைய பயனர் கணக்கிற்குப் படியெடுக்கவும் (&P)"
 
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
@@ -8679,20 +8755,20 @@ msgstr "நிறுவுதலைத் தொடருங்கள் (பர
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
-msgstr "பெயர்த்தகு என்விடிஏவை உருவாக்குக"
+msgstr "கொண்டுசெல்லத்தக்க என்விடிஏவை உருவாக்குக"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
 msgstr ""
-"என்விடிஏவின் பெயர்த்தகுப் படியை உருவாக்க, வழிதடத்தையும், பிற விருப்பத் தேர்வுகளையும் "
-"தெரிவுச் செய்த பின்னர், 'தொடர்க' பொத்தானை அழுத்தவும்."
+"என்விடிஏவின் கொண்டுசெல்லத்தக்கப் படியை உருவாக்க, வழிதடத்தையும், பிற விருப்பத் "
+"தேர்வுகளையும் தெரிவுச் செய்த பின்னர், 'தொடர்க' பொத்தானை அழுத்தவும்."
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Portable &directory:"
-msgstr "பெயர்த்தகு அடைவு (&D)"
+msgstr "கொண்டுசெல்லத்தக்க அடைவு (&D)"
 
 #. Translators: The label of a button to browse for a directory.
 msgid "Browse..."
@@ -8701,7 +8777,7 @@ msgstr "உலாவுக..."
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
-msgstr "பெயர்த்தகு அடைவைத் தெரிவுச் செய்க"
+msgstr "கொண்டுசெல்லத்தக்க அடைவைத் தெரிவுச் செய்க"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
@@ -8709,12 +8785,20 @@ msgstr "தற்போதைய பயனர் அமைவடிவத்த�
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr "புதிய பெயர்த்தகு படி உருவாக்கப்பட்டவுடன் அதை இயக்குக (&S)"
+msgstr "புதிய கொண்டுசெல்லத்தக்கப் படி உருவாக்கப்பட்டவுடன் அதை இயக்குக (&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "பெயர்த்தகுப் படியை உருவாக்க வேண்டிய அடைவைக் குறிப்பிடவும்."
+msgstr "கொண்டுசெல்லத்தக்கப் படியை உருவாக்க வேண்டிய அடைவைக் குறிப்பிடவும்."
+
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
+msgstr ""
+"கொண்டுசெல்லத்தக்கப் படி உருவாக்கப்பட வேண்டிய இயக்ககம் உட்பட முழுத் தடத்தையும் குறிப்பிடுக."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -8724,11 +8808,12 @@ msgstr "ஏற்கமுடியாத இயக்ககம்: %s"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 msgid "Creating Portable Copy"
-msgstr "பெயர்த்தகுப் படி உருவாக்கப்படுகிறது"
+msgstr "கொண்டுசெல்லத்தக்கப் படி உருவாக்கப்படுகிறது"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "என்விடிஏவின் பெயர்த்தகுப் படி உருவாக்கப்படுகிறது, அருள்கூர்ந்து காத்திருக்கவும்"
+msgstr ""
+"என்விடிஏவின் கொண்டுசெல்லத்தக்கப் படி உருவாக்கப்படுகிறது, அருள்கூர்ந்து காத்திருக்கவும்"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -8738,13 +8823,14 @@ msgstr "கோப்பினை நீக்கவோ, அழித்தெழ
 #. %s will be replaced with the specific error message.
 #, python-format
 msgid "Failed to create portable copy: %s"
-msgstr "பெயர்த்தகு என்விடிஏ உருவாக்கத்தில் தோல்வி: %s"
+msgstr "கொண்டுசெல்லத்தக்க என்விடிஏ உருவாக்கத்தில் தோல்வி: %s"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "என்விடிஏவின் பெயர்த்தகுப் படி இவ்விடத்தில் வெற்றிகரமாக உருவாக்கப்பட்டுள்ளது: %s"
+msgstr ""
+"என்விடிஏவின் கொண்டுசெல்லத்தக்கப் படி இவ்விடத்தில் வெற்றிகரமாக உருவாக்கப்பட்டுள்ளது: %s"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -9358,8 +9444,8 @@ msgstr "வலியுறுத்தல்கள் (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Marked (highlighted text)"
-msgstr "குறிக்கப்பட்ட (துலக்கமாக்கப்பட்ட) உரை"
+msgid "Mar&ked (highlighted text)"
+msgstr "குறிக்கப்பட்ட (துலக்கமாக்கப்பட்ட உரை) (&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9463,7 +9549,7 @@ msgstr "கிடைவரிசை / நெடுவரிசை தலைப�
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
-msgstr "சிறுகட்டத்தின் சந்தி நிலை (&O)"
+msgstr "பணிக்களத்தின் சந்தி நிலை (&O)"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -9478,7 +9564,7 @@ msgstr "நிறங்களும் பாங்குகளும்"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Cell &borders:"
-msgstr "சிறுகட்டத்தின் எல்லைகள் (&B)"
+msgstr "பணிக்களத்தின் எல்லைகள் (&B)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -9823,13 +9909,24 @@ msgstr "குவிமையத்திற்கான சுட்டிய�
 msgid "Cursor shape for &review:"
 msgstr "சீராய்விற்கான சுட்டியின் வடிவம் (&R)"
 
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "காட்சியளிக்கும் நேரத்தைப் பயன்படுத்திடுக"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "காலவரையறையின்றிக் காட்டிடுக"
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+msgid "Show messages"
+msgstr "தகவல்களைக் காட்டிடுக"
+
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
 msgstr "தகவல் காட்சியளிக்கும் நொடிகள் (&T)"
-
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
-msgstr "காலவரையறையின்றித் தகவல்களைக் காட்டுக (&M)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
@@ -10007,12 +10104,6 @@ msgstr "%s தெரிவாகியது"
 #, python-format
 msgid "%s selected"
 msgstr "%s தெரிவாகியது"
-
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d வரியுருக்கள்"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -10462,8 +10553,8 @@ msgid "Highlight navigator &object"
 msgstr "வழிகாட்டிப் பொருளைத் துலக்கமாக்குக (&O)"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-msgid "Focus Highlight"
-msgstr "குவிமையத் துலக்கம்"
+msgid "Visual Highlight"
+msgstr "பார்வைத் துலக்கம்"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
@@ -10559,9 +10650,9 @@ msgid ""
 "lower and to the right of it within this table. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்குக் கீழும், வலப் புறமாகவும் "
-"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் நெடுவரிசைத் தலைப்புரையாக "
-"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய நெடுவரிசைத் தலைப்புரையை "
+"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய பணிக்களத்திற்குக் கீழும், வலப் புறமாகவும் "
+"காணப்படும் பணிக்களங்களுக்கு தற்போதைய பணிக்களத்தை முதல் நெடுவரிசைத் தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இப்பணிக்களத்திற்கான தற்போதைய நெடுவரிசைத் தலைப்புரையை "
 "மறக்கும். "
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
@@ -10598,9 +10689,9 @@ msgid ""
 "and to the right of it within this table. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்குக் கீழும், வலப் புறமாகவும் "
-"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் கிடைவரிசைத் தலைப்புரையாக "
-"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய கிடைவரிசைத் தலைப்புரையை "
+"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய பணிக்களத்திற்குக் கீழும், வலப் புறமாகவும் "
+"காணப்படும் பணிக்களங்களுக்கு தற்போதைய பணிக்களத்தை முதல் கிடைவரிசைத் தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இப்பணிக்களத்திற்கான தற்போதைய கிடைவரிசைத் தலைப்புரையை "
 "மறக்கும். "
 
 #. Translators: a message when there is no comment to report in Microsoft Word
@@ -11492,11 +11583,11 @@ msgstr "{start} முதல் {end} வரை"
 
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
-msgstr "தற்போதைய சிறுகட்டத்தின் நிலையில் ஒரு கீழ்விடு உருப்படியைத் திறக்கிறது"
+msgstr "தற்போதைய பணிக்களத்தின் நிலையில் ஒரு கீழ்விடு உருப்படியைத் திறக்கிறது"
 
 #. Translators: the description  for a script for Excel
 msgid "Sets the current cell as start of column header"
-msgstr "நெடுவரிசையின் தலைப்புரையின் துவக்கமாக  தற்போதைய சிறுகட்டத்தை அமைக்கிறது"
+msgstr "நெடுவரிசையின் தலைப்புரையின் துவக்கமாக  தற்போதைய பணிக்களத்தை அமைக்கிறது"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -11523,14 +11614,14 @@ msgid ""
 "lower and to the right of it within this region. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"ஒரு முறை அழுத்தினால், மண்டலத்தின் தற்போதைய சிறுகட்டத்திற்குக் கீழும், வலப் புறமாகவும் "
-"காணப்படும் சிறுகட்டங்களுக்குத் தற்போதைய சிறுகட்டத்தை முதல் நெடுவரிசைத் தலைப்புரையாக "
-"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய நெடுவரிசைத் தலைப்புரையை "
+"ஒரு முறை அழுத்தினால், மண்டலத்தின் தற்போதைய பணிக்களத்திற்குக் கீழும், வலப் புறமாகவும் "
+"காணப்படும் பணிக்களங்களுக்குத் தற்போதைய பணிக்களத்தை முதல் நெடுவரிசைத் தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இப்பணிக்களத்திற்கான தற்போதைய நெடுவரிசைத் தலைப்புரையை "
 "மறக்கும். "
 
 #. Translators: the description  for a script for Excel
 msgid "sets the current cell as start of row header"
-msgstr "கிடைவரிசையின் தலைப்புரையின் துவக்கமாக  தற்போதைய சிறுகட்டத்தை அமைக்கிறது"
+msgstr "கிடைவரிசையின் தலைப்புரையின் துவக்கமாக  தற்போதைய பணிக்களத்தை அமைக்கிறது"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -11557,9 +11648,9 @@ msgid ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"ஒரு முறை அழுத்தினால், மண்டலத்தின் தற்போதைய சிறுகட்டத்திற்குக் கீழும், வலப் புறமாகவும் "
-"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் கிடைவரிசைத் தலைப்புரையாக "
-"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய கிடைவரிசைத் தலைப்புரையை "
+"ஒரு முறை அழுத்தினால், மண்டலத்தின் தற்போதைய பணிக்களத்திற்குக் கீழும், வலப் புறமாகவும் "
+"காணப்படும் பணிக்களங்களுக்கு தற்போதைய பணிக்களத்தை முதல் கிடைவரிசைத் தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இப்பணிக்களத்திற்கான தற்போதைய கிடைவரிசைத் தலைப்புரையை "
 "மறக்கும். "
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
@@ -11577,7 +11668,7 @@ msgstr "உள்ளீட்டுத் தகவல்: {message}"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note on the current cell"
-msgstr "தற்போதைய சிறுகட்டத்தின் மீதான கருத்துரையை அறிவிக்கிறது"
+msgstr "தற்போதைய பணிக்களத்தின் மீதான கருத்துரையை அறிவிக்கிறது"
 
 #. Translators: A message in Excel when there is no note
 msgid "Not on a note"
@@ -11590,7 +11681,7 @@ msgstr "குறிப்புகளைத் தொகுக்கும் �
 #. Translators: Dialog text for the note editing dialog
 #, python-brace-format
 msgid "Editing note for cell {address}"
-msgstr "{address} சிறுகட்டத்திற்கான குறிப்பு தொகுக்கப்படுகிறது"
+msgstr "{address} பணிக்களத்திற்கான குறிப்பு தொகுக்கப்படுகிறது"
 
 #. Translators: Title for the note editing  dialog
 msgid "Note"
@@ -11784,15 +11875,15 @@ msgstr "இங்கு நகர்த்தப்பட்டது"
 
 #. Translators: a Microsoft Word revision type (inserted table cell)
 msgid "cell insertion"
-msgstr "சிறுகட்ட செருகுதல்"
+msgstr "பணிக்கள செருகுதல்"
 
 #. Translators: a Microsoft Word revision type (deleted table cell)
 msgid "cell deletion"
-msgstr "சிறுகட்ட அழித்தல்"
+msgstr "பணிக்கள அழித்தல்"
 
 #. Translators: a Microsoft Word revision type (merged table cells)
 msgid "cell merge"
-msgstr "சிறுகட்டங்களை ஒன்றாக்கல்"
+msgstr "பணிக்களங்களை ஒன்றாக்கல்"
 
 msgid "Comments"
 msgstr "கருத்துரைகள்"
@@ -11863,10 +11954,11 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr "ஒன்றரை"
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
-msgstr "துல்லிய"
+msgid "exactly {space:.1f} pt"
+msgstr "துல்லியமாக {space:.1f} புள்ளி"
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -11964,14 +12056,6 @@ msgstr "{styleName} பாங்கு, வெளிவரைவு நிலை
 msgid "{size:g} point font"
 msgstr "{size:g} புள்ளி எழுத்துரு"
 
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking on"
-msgstr "மாற்றங்களைப் பின்தொடர்க"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking off"
-msgstr "மாற்றங்களைப் பின்தொடராமல் இருந்திடுக"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr "அச்சாகாத வரியுருக்களைக் காட்டுக"
@@ -12022,6 +12106,19 @@ msgstr "இரட்டை வரி இடைவெளி"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ஒன்றரை வரி இடைவெளி"
+
+#~ msgctxt "line spacing value"
+#~ msgid "exact"
+#~ msgstr "துல்லிய"
+
+#~ msgid "Russian grade 1"
+#~ msgstr "ருஷிய படிநிலை 1"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "%s பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது"
+
+#~ msgid "Review selection copied to clipboard"
+#~ msgstr "சீராய்வுத் தெரிவு பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது"
 
 #~ msgid "Apply"
 #~ msgstr "இடுக"
