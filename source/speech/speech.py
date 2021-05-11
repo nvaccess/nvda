@@ -6,7 +6,6 @@
 
 """High-level functions to speak information.
 """ 
-# flake8: noqa ignore lint for mass refactor in (#12251), to be fixed with follow up PR
 
 import itertools
 import weakref
@@ -60,7 +59,7 @@ from dataclasses import dataclass
 from copy import copy
 
 
-_SpeechState = None
+_SpeechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
 
 
@@ -82,7 +81,7 @@ class SpeechState:
 	_suppressSpeakTypedCharactersNumber = 0
 	#: The time at which suppressed typed characters were sent.
 	_suppressSpeakTypedCharactersTime: Optional[float] = None
-	# Property values that are kept from getPropertiesSpeech 
+	# Property values that are kept from getPropertiesSpeech
 	oldTreeLevel = None
 	oldTableID = None
 	oldRowNumber = None
@@ -139,7 +138,7 @@ def cancelSpeech():
 	SayAllHandler.stop()
 	if _SpeechState.beenCanceled:
 		return
-	elif _SpeechState.speechMode==SpeechMode.off:
+	elif _SpeechState.speechMode == SpeechMode.off:
 		return
 	elif _SpeechState.speechMode == SpeechMode.beeps:
 		return
@@ -723,7 +722,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	"""
 	speechIndentConfig = formatConfig["reportLineIndentation"]
 	toneIndentConfig = (
-		formatConfig["reportLineIndentationWithTones"] 
+		formatConfig["reportLineIndentationWithTones"]
 		and _SpeechState.speechMode == SpeechMode.talk
 	)
 	indentSequence: SpeechSequence = []
@@ -1039,7 +1038,7 @@ def speakTypedCharacters(ch: str):
 		# delete character produced in some apps with control+backspace
 		return
 	elif len(_curWordChars) > 0:
-		typedWord="".join(_curWordChars)
+		typedWord = "".join(_curWordChars)
 		clearTypedWordBuffer()
 		if log.isEnabledFor(log.IO):
 			log.io("typed word: %s"%typedWord)
@@ -1592,8 +1591,8 @@ def getPropertiesSpeech(  # noqa: C901
 		rowSpan = propertyValues.get("rowSpan") or 1
 		columnSpan = propertyValues.get("columnSpan") or 1
 		if rowNumber and (
-			not sameTable 
-			or rowNumber != _SpeechState.oldRowNumber 
+			not sameTable
+			or rowNumber != _SpeechState.oldRowNumber
 			or rowSpan != _SpeechState.oldRowSpan
 		):
 			rowHeaderText: Optional[str] = propertyValues.get("rowHeaderText")
@@ -1610,8 +1609,8 @@ def getPropertiesSpeech(  # noqa: C901
 			_SpeechState.oldRowNumber = rowNumber
 			_SpeechState.oldRowSpan = rowSpan
 		if columnNumber and (
-			not sameTable 
-			or columnNumber != _SpeechState.oldColumnNumber 
+			not sameTable
+			or columnNumber != _SpeechState.oldColumnNumber
 			or columnSpan != _SpeechState.oldColumnSpan
 		):
 			columnHeaderText: Optional[str] = propertyValues.get("columnHeaderText")
@@ -1682,7 +1681,7 @@ def getPropertiesSpeech(  # noqa: C901
 			# Translators: Speaks the item level in treeviews (example output: level 2).
 			levelTranslation: str = _('level %s') % level
 			if (
-				role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM) 
+				role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM)
 				and level != _SpeechState.oldTreeLevel
 			):
 				textList.insert(0, levelTranslation)
