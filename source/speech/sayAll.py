@@ -46,7 +46,7 @@ def initialize(
 		speakObject: 'speakObject',
 		getTextInfoSpeech: 'getTextInfoSpeech',
 		SpeakTextInfoState: 'SpeakTextInfoState',
-	):
+):
 	global SayAllHandler
 	SayAllHandler = _SayAllHandler(
 		SpeechWithoutPauses(speakFunc=speakFunc),
@@ -63,7 +63,7 @@ class _SayAllHandler:
 			speakObject: 'speakObject',
 			getTextInfoSpeech: 'getTextInfoSpeech',
 			SpeakTextInfoState: 'SpeakTextInfoState',
-		):
+	):
 		self.lastSayAllMode = None
 		self.speechWithoutPausesInstance = speechWithoutPausesInstance
 		#: The active say all manager.
