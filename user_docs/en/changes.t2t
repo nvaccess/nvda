@@ -8,6 +8,10 @@ What's New in NVDA
 == New Features ==
 - Early support for UIA with Chromium based browsers (such as Edge). (#12025)
 - Optional experimental support for Microsoft Excel via UI Automation. Only recommended for Microsoft Excel build 16.0.13522.10000 or higher. (#12210)
+- Easier navigation of output in NVDA Python Console. (#9784)
+  - alt+up/down jumps to the previous/next output result (add shift for selecting).
+  - control+l clears the output pane.
+- NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
 
 
 == Changes ==
@@ -17,9 +21,9 @@ What's New in NVDA
 - Added more mathematical symbols to the symbols dictionary. (#11467)
 - The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
 - "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
-- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default.
+- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
   - This behaviour can be disabled by default with by setting this option to "No".
-  - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly. (#10885)
+  - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly.
 - Espeak-ng has been updated to 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
 - Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
@@ -27,6 +31,7 @@ What's New in NVDA
 - NVDA will exit even with windows still open, the exit process now closes all NVDA windows and dialogs (#1740)
 - The Speech Viewer can now be closed with `alt+F4` and has a standard close button for easier interaction with users of pointing devices. (#12330)
 - The Braille Viewer now has a standard close button for easier interaction with users of pointing devices. (#12328)
+- In the Elements List dialog, the accelerator key on the "Activate" button has been removed in some locales to avoid collision with an element type radio button label. When available, the button is still the default of the dialog and as such can still be invoked by simply pressing enter from the elements list itself. (#6167)
 
 
 == Bug Fixes ==
@@ -51,6 +56,8 @@ What's New in NVDA
 - Fixed copying config during installation from a portable copy when default destination config directory is empty. (#12071, #12205)
 - Fixed incorrect announcement of some letters with accents or diacritic when 'Say cap before capitals' option is checked. (#11948)
 - Fixed the pitch change failure in Sapi4 speech synthesizer. (#12311)
+- The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
+- In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings (#11899).
 
 
 == Changes for Developers ==
@@ -92,14 +99,14 @@ What's New in NVDA
 - `gui.DriverSettingsMixin` has been removed - use `gui.AutoSettingsMixin` (#12144)
 - `speech.getSpeechForSpelling` has been removed - use `speech.getSpellingSpeech` (#12145)
 - Commands cannot be directly imported from speech as `import speech; speech.ExampleCommand()` or `import speech.manager; speech.manager.ExampleCommand()` - use  `from speech.commands import ExampleCommand` instead (#12126)
-- `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `sayAllhandler` does this manually now. (#12150)
+- `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `SayAllHandler` does this manually now. (#12150)
 - The `synthDriverHandler` module is no longer star imported into `globalCommands` and `gui.settingsDialogs` - use `from synthDriverHandler import synthFunctionExample` instead. (#12172)
 - `ROLE_EQUATION` has been removed from controlTypes - use `ROLE_MATH`` instead. (#12164)
 - `autoSettingsUtils.driverSetting` classes are removed from `driverHandler` - please use them from `autoSettingsUtils.driverSetting`. (#12168)
 - `autoSettingsUtils.utils` classes are removed from `driverHandler` - please use them from `autoSettingsUtils.utils`. (#12168)
 - Support of `TextInfo`s that do not inherit from `contentRecog.BaseContentRecogTextInfo` is removed. (#12157)
-- `speech.speakWithoutPauses` has been removed - please use `speech.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses` instead. (#12195)
-- `speech.re_last_pause` has been removed - please use `speech.SpeechWithoutPauses.re_last_pause` instead. (#12195)
+- `speech.speakWithoutPauses` has been removed - please use `speech.speechWithoutPauses.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses` instead. (#12195, #12251)
+- `speech.re_last_pause` has been removed - please use `speech.speechWithoutPauses.SpeechWithoutPauses.re_last_pause` instead. (#12195, #12251)
 - `WelcomeDialog`, `LauncherDialog` and `AskAllowUsageStatsDialog` are moved to the `gui.startupDialogs`. (#12105)
 - `getDocFilePath` has been moved from `gui` to the `documentationUtils` module. (#12105)
 - The gui.accPropServer module as well as the AccPropertyOverride and ListCtrlAccPropServer classes from the gui.nvdaControls module have been removed in favor of WX' native support for overriding accessibility properties. When enhancing accessibility of WX controls, implement wx.Accessible instead. (#12215)
@@ -118,6 +125,22 @@ What's New in NVDA
  - This usage is prefered instead of ti1.SetEndPoint(ti2,"startToEnd")
 - `wx.CENTRE_ON_SCREEN` and `wx.CENTER_ON_SCREEN` are removed, use `self.CentreOnScreen()` instead. (#12309)
 - `easeOfAccess.isSupported` has been removed, NVDA only supports versions of Windows where this evaluates to `True`. (#12222)
+- `sayAllHandler` has been moved to `speech.sayAll` (#12251):
+  - `speech.sayAll.SayAllHandler` exposes the functions `stop`, `isRunning`, `readObjects`, `readText`, `lastSayAllMode`.
+  - `SayAllHandler.stop` also resets the `SayAllHandler` `SpeechWithoutPauses` instance.
+  - `CURSOR_REVIEW` and `CURSOR_CARET` has been replaced with `CURSOR.REVIEW` and `CURSOR.CARET`.
+- `speech.SpeechWithoutPauses` has been moved to `speech.speechWithoutPauses.SpeechWithoutPauses`. (#12251)
+- `speech.curWordChars` has been renamed `speech._curWordChars`. (#12395)
+- the following have been removed from `speech` and can be accessed through `speech.getState()`. These are readonly values now. (#12395)
+   - speechMode
+   - speechMode_beeps_ms
+   - beenCanceled
+   - isPaused
+- to update `speech.speechMode` use `speech.setSpeechMode` (#12395)
+- the following have been moved to `speech.SpeechMode` (#12395)
+   - `speech.speechMode_off` becomes `speech.SpeechMode.off`
+   - `speech.speechMode_beeps` becomes `speech.SpeechMode.beeps`
+   - `speech.speechMode_talk` becomes `speech.SpeechMode.talk`
 
 
 = 2020.4 =
@@ -140,7 +163,6 @@ Plus many other important bug fixes and improvements.
 - Added the --copy-portable-config command line parameter that allows you to automatically copy the provided configuration to the user account when silently installing NVDA. (#9676)
 - Braille routing is now supported with the Braille Viewer for mouse users, hover to route to a braille cell. (#11804)
 - NVDA will now automatically detect the Humanware Brailliant BI 40X and 20X devices via both USB and Bluetooth. (#11819)
-- NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
 
 
 == Changes ==

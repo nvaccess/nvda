@@ -13,6 +13,7 @@ from ctypes.wintypes import *
 from ctypes.wintypes import HWND, RECT, DWORD
 import winKernel
 from textUtils import WCHAR_ENCODING
+import enum
 
 #dll handles
 user32=windll.user32
@@ -114,12 +115,6 @@ LBS_HASSTRINGS=0x0040
 CBS_OWNERDRAWFIXED=0x0010
 CBS_OWNERDRAWVARIABLE=0x0020
 CBS_HASSTRINGS=0x00200
-WM_NULL=0
-WM_QUIT=18
-WM_COPYDATA=74
-WM_NOTIFY=78
-WM_DEVICECHANGE=537
-WM_USER=1024
 #PeekMessage
 PM_REMOVE=1
 PM_NOYIELD=2
@@ -146,6 +141,7 @@ WM_COPYDATA = 74
 WM_NOTIFY = 78
 WM_USER = 1024
 WM_QUIT = 18
+WM_DEVICECHANGE = 537
 WM_DISPLAYCHANGE = 0x7e
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
@@ -376,6 +372,19 @@ SM_YVIRTUALSCREEN = 77
 SM_CXVIRTUALSCREEN = 78
 # The height of the virtual screen, in pixels.
 SM_CYVIRTUALSCREEN = 79
+
+
+class MSGFLT(enum.IntEnum):
+	# Actions associated with ChangeWindowMessageFilterEx
+	# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-changewindowmessagefilterex
+	# Adds the message to the filter. This has the effect of allowing the message to be received.
+	ALLOW = 1
+	# Removes the message from the filter. This has the effect of blocking the message.
+	DISALLOW = 2
+	# Resets the window message filter to the default.
+	# Any message allowed globally or process-wide will get through.
+	RESET = 0
+
 
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
