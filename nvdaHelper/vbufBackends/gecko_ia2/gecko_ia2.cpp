@@ -63,8 +63,9 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getRelationElement(
 		numRelations=0;
 	}
 	// the relation type string *must* be passed correctly as a BSTR otherwise we can see crashes in 32 bit Firefox.
+	BSTR relationAsBSTR = CComBSTR(ia2TargetRelation);
 	HRESULT res = element->get_relationTargetsOfType(
-		CComBSTR(ia2TargetRelation),
+		relationAsBSTR,
 		numRelations,
 		&ppUnk,
 		&nTargets
@@ -79,10 +80,7 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getRelationElement(
 	// we can now free the memory that Gecko  allocated to give us  the IUnknowns
 	CoTaskMemFree(ppUnk);
 	if(nTargets==0) {
-		std::wstring debugMsg = L"relationTargetsOfType for ";
-		debugMsg.append((const wchar_t*) CComBSTR(ia2TargetRelation));
-		debugMsg.append(L" found no targets");
-		LOG_DEBUG(debugMsg);
+		LOG_DEBUG(L"relationTargetsOfType for " << relationAsBSTR.m_str << L" found no targets");
 		return nullptr;
 	}
 	return CComQIPtr<IAccessible2>(ppUnk_smart[0]);
