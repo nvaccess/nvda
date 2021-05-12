@@ -216,6 +216,7 @@ Plus many other important bug fixes and improvements.
 - NVDA no longer crashes when using English US grade 2 and expand to computer Braille at the cursor is on, when displaying certain content such as a URL in Braille. (#11754)
 - It is again possible to report formatting information for the focused Excel cell using NVDA+F. (#11914)
 - QWERTY input on Papenmeier braille displays that support it again works and no longer causes NVDA to randomly freeze. (#11944)
+- In Chromium based browsers, several cases were solved where table navigation didn't work and NVDA didn't report the number of rows/columns of the table. (#12359)
 
 
 == Changes for Developers ==
