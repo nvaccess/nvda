@@ -130,6 +130,17 @@ What's New in NVDA
   - `SayAllHandler.stop` also resets the `SayAllHandler` `SpeechWithoutPauses` instance.
   - `CURSOR_REVIEW` and `CURSOR_CARET` has been replaced with `CURSOR.REVIEW` and `CURSOR.CARET`.
 - `speech.SpeechWithoutPauses` has been moved to `speech.speechWithoutPauses.SpeechWithoutPauses`. (#12251)
+- `speech.curWordChars` has been renamed `speech._curWordChars`. (#12395)
+- the following have been removed from `speech` and can be accessed through `speech.getState()`. These are readonly values now. (#12395)
+   - speechMode
+   - speechMode_beeps_ms
+   - beenCanceled
+   - isPaused
+- to update `speech.speechMode` use `speech.setSpeechMode` (#12395)
+- the following have been moved to `speech.SpeechMode` (#12395)
+   - `speech.speechMode_off` becomes `speech.SpeechMode.off`
+   - `speech.speechMode_beeps` becomes `speech.SpeechMode.beeps`
+   - `speech.speechMode_talk` becomes `speech.SpeechMode.talk`
 
 
 = 2020.4 =
