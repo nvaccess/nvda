@@ -6,7 +6,7 @@ What's New in NVDA
 = 2021.1 =
 This release includes optional experimental support for UIA in Excel and Chromium browsers.
 There are fixes for several languages, and for accessing links in Braille.
-There are updates to Unicode CLDR and maths symbols, eSpeak-NG and LibLouis.
+There are updates to Unicode CLDR and mathematics symbols, eSpeak-NG and LibLouis.
 Many bug fixes and improvements, including in Office, Visual Studio and several languages.
 Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
@@ -52,7 +52,7 @@ This release also drops support for Adobe Flash.
    - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
 - The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
 - - TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
-- It is once again possible to use NVDA in a languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
+- It is once again possible to use NVDA in languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
 - In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
 - NVDA no longer fails to announce the newly focused content on a web page if the old focus disappears and is replaced by the new focus in the same position. (#12147)
 - Strikethrough, superscript and subscript formatting for entire Excel cells are now reported if the corresponding option is enabled. (#12264)
