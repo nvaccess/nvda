@@ -4,7 +4,6 @@
 #See the file COPYING for more details.
 
 from baseObject import AutoPropertyObject, ScriptableObject
-from scriptHandler import isScriptWaiting
 import config
 import textInfos
 import speech
@@ -141,6 +140,10 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		raise LookupError
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
+		# documentBase shouldn't depend on scriptHandler
+		# documentBase is a core module and should not depend on UI classes
+		# this function should be somewhere else or dependency injected
+		from scriptHandler import isScriptWaiting
 		if isScriptWaiting():
 			return
 		formatConfig=config.conf["documentFormatting"].copy()
@@ -205,5 +208,3 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
 	}
-
-
