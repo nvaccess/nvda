@@ -59,7 +59,7 @@ from dataclasses import dataclass
 from copy import copy
 
 
-_SpeechState: Optional['SpeechState'] = None
+_speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
 
 
@@ -91,16 +91,16 @@ class SpeechState:
 
 
 def getState():
-	return copy(_SpeechState)
+	return copy(_speechState)
 
 
 def setSpeechMode(newMode: SpeechMode):
-	_SpeechState.speechMode = newMode
+	_speechState.speechMode = newMode
 
 
 def initialize():
-	global _SpeechState
-	_SpeechState = SpeechState()
+	global _speechState
+	_speechState = SpeechState()
 
 
 #Set containing locale codes for languages supporting conjunct characters
@@ -136,20 +136,20 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	from .sayAll import SayAllHandler
 	SayAllHandler.stop()
-	if _SpeechState.beenCanceled:
+	if _speechState.beenCanceled:
 		return
-	elif _SpeechState.speechMode == SpeechMode.off:
+	elif _speechState.speechMode == SpeechMode.off:
 		return
-	elif _SpeechState.speechMode == SpeechMode.beeps:
+	elif _speechState.speechMode == SpeechMode.beeps:
 		return
 	_manager.cancel()
-	_SpeechState.beenCanceled = True
-	_SpeechState.isPaused = False
+	_speechState.beenCanceled = True
+	_speechState.isPaused = False
 
 def pauseSpeech(switch):
 	getSynth().pause(switch)
-	_SpeechState.isPaused = switch
-	_SpeechState.beenCanceled = False
+	_speechState.isPaused = switch
+	_speechState.beenCanceled = False
 
 
 def _getSpeakMessageSpeech(
@@ -723,7 +723,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	speechIndentConfig = formatConfig["reportLineIndentation"]
 	toneIndentConfig = (
 		formatConfig["reportLineIndentationWithTones"]
-		and _SpeechState.speechMode == SpeechMode.talk
+		and _speechState.speechMode == SpeechMode.talk
 	)
 	indentSequence: SpeechSequence = []
 	if not indentation:
@@ -789,14 +789,14 @@ def speak(  # noqa: C901
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
-	if _SpeechState.speechMode == SpeechMode.off:
+	if _speechState.speechMode == SpeechMode.off:
 		return
-	elif _SpeechState.speechMode == SpeechMode.beeps:
-		tones.beep(config.conf["speech"]["beepSpeechModePitch"], _SpeechState.speechMode_beeps_ms)
+	elif _speechState.speechMode == SpeechMode.beeps:
+		tones.beep(config.conf["speech"]["beepSpeechModePitch"], _speechState.speechMode_beeps_ms)
 		return
-	if _SpeechState.isPaused:
+	if _speechState.isPaused:
 		cancelSpeech()
-	_SpeechState.beenCanceled = False
+	_speechState.beenCanceled = False
 	#Filter out redundant LangChangeCommand objects 
 	#And also fill in default values
 	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']
@@ -1011,8 +1011,8 @@ def _suppressSpeakTypedCharacters(number: int):
 	and those characters should not be spoken individually as if the user were typing them.
 	@param number: The number of characters to suppress.
 	"""
-	_SpeechState._suppressSpeakTypedCharactersNumber += number
-	_SpeechState._suppressSpeakTypedCharactersTime = time.time()
+	_speechState._suppressSpeakTypedCharactersNumber += number
+	_speechState._suppressSpeakTypedCharactersTime = time.time()
 
 
 #: The character to use when masking characters in protected fields.
@@ -1044,15 +1044,15 @@ def speakTypedCharacters(ch: str):
 			log.io("typed word: %s"%typedWord)
 		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
-	if _SpeechState._suppressSpeakTypedCharactersNumber > 0:
+	if _speechState._suppressSpeakTypedCharactersNumber > 0:
 		# We primarily suppress based on character count and still have characters to suppress.
 		# However, we time out after a short while just in case.
-		suppress = time.time() - _SpeechState._suppressSpeakTypedCharactersTime <= 0.1
+		suppress = time.time() - _speechState._suppressSpeakTypedCharactersTime <= 0.1
 		if suppress:
-			_SpeechState._suppressSpeakTypedCharactersNumber -= 1
+			_speechState._suppressSpeakTypedCharactersNumber -= 1
 		else:
-			_SpeechState._suppressSpeakTypedCharactersNumber = 0
-			_SpeechState._suppressSpeakTypedCharactersTime = None
+			_speechState._suppressSpeakTypedCharactersNumber = 0
+			_speechState._suppressSpeakTypedCharactersTime = None
 	else:
 		suppress = False
 	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
@@ -1581,10 +1581,10 @@ def getPropertiesSpeech(  # noqa: C901
 	if cellCoordsText or rowNumber or columnNumber:
 		tableID = propertyValues.get("_tableID")
 		# Always treat the table as different if there is no tableID.
-		sameTable = (tableID and tableID == _SpeechState.oldTableID)
+		sameTable = (tableID and tableID == _speechState.oldTableID)
 		# Don't update the oldTableID if no tableID was given.
 		if tableID and not sameTable:
-			_SpeechState.oldTableID = tableID
+			_speechState.oldTableID = tableID
 		# When fetching row and column span
 		# default the values to 1 to make further checks a lot simpler.
 		# After all, a table cell that has no rowspan implemented is assumed to span one row.
@@ -1592,8 +1592,8 @@ def getPropertiesSpeech(  # noqa: C901
 		columnSpan = propertyValues.get("columnSpan") or 1
 		if rowNumber and (
 			not sameTable
-			or rowNumber != _SpeechState.oldRowNumber
-			or rowSpan != _SpeechState.oldRowSpan
+			or rowNumber != _speechState.oldRowNumber
+			or rowSpan != _speechState.oldRowSpan
 		):
 			rowHeaderText: Optional[str] = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
@@ -1606,12 +1606,12 @@ def getPropertiesSpeech(  # noqa: C901
 					# Translators: Speaks the row span added to the current row number (example output: through 5).
 					rowSpanAddedTranslation: str = _("through %s") % (rowNumber + rowSpan - 1)
 					textList.append(rowSpanAddedTranslation)
-			_SpeechState.oldRowNumber = rowNumber
-			_SpeechState.oldRowSpan = rowSpan
+			_speechState.oldRowNumber = rowNumber
+			_speechState.oldRowSpan = rowSpan
 		if columnNumber and (
 			not sameTable
-			or columnNumber != _SpeechState.oldColumnNumber
-			or columnSpan != _SpeechState.oldColumnSpan
+			or columnNumber != _speechState.oldColumnNumber
+			or columnSpan != _speechState.oldColumnSpan
 		):
 			columnHeaderText: Optional[str] = propertyValues.get("columnHeaderText")
 			if columnHeaderText:
@@ -1624,8 +1624,8 @@ def getPropertiesSpeech(  # noqa: C901
 					# Translators: Speaks the column span added to the current column number (example output: through 5).
 					colSpanAddedTranslation: str = _("through %s") % (columnNumber + columnSpan - 1)
 					textList.append(colSpanAddedTranslation)
-			_SpeechState.oldColumnNumber = columnNumber
-			_SpeechState.oldColumnSpan = columnSpan
+			_speechState.oldColumnNumber = columnNumber
+			_speechState.oldColumnSpan = columnSpan
 		if includeTableCellCoords and not cellCoordsText and rowSpan>1 and columnSpan>1:
 			# Translators: Speaks the row and column span added to the current row and column numbers
 			#			(example output: through row 5 column 3).
@@ -1653,7 +1653,7 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(rowCountTranslation)
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
-		_SpeechState.oldTableID = None
+		_speechState.oldTableID = None
 
 	# speak isCurrent property EG aria-current
 	isCurrent = propertyValues.get('current', controlTypes.IsCurrent.NO)
@@ -1682,10 +1682,10 @@ def getPropertiesSpeech(  # noqa: C901
 			levelTranslation: str = _('level %s') % level
 			if (
 				role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM)
-				and level != _SpeechState.oldTreeLevel
+				and level != _speechState.oldTreeLevel
 			):
 				textList.insert(0, levelTranslation)
-				_SpeechState.oldTreeLevel = level
+				_speechState.oldTreeLevel = level
 			else:
 				textList.append(levelTranslation)
 	types.logBadSequenceTypes(textList)
