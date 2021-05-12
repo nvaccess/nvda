@@ -747,7 +747,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	// If paccTable2 is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
 	if (!paccTable2) {
 		// Try to get table information.
-		pacc->QueryInterface(IID_IAccessibleTable2,(void**)&curNodePaccTable2);
+		pacc->QueryInterface(IID_IAccessibleTable2, (void**)&curNodePaccTable2);
 		if (curNodePaccTable2) {
 			// This is a table, so add its information as attributes.
 			if((IA2AttribsMapIt = IA2AttribsMap.find(L"layout-guess")) != IA2AttribsMap.end()) {
