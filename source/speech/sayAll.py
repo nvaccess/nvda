@@ -61,7 +61,7 @@ class _SayAllHandler:
 		active = self._getActiveSayAll()
 		if active:
 			active.stop()
-			self.speechWithoutPausesInstance.reset()
+		self.speechWithoutPausesInstance.reset()
 
 	def isRunning(self):
 		"""Determine whether say all is currently running.

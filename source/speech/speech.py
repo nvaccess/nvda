@@ -1,12 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
 """High-level functions to speak information.
 """ 
-# flake8: noqa ignore lint for mass refactor in (#12251), to be fixed with follow up PR
 
 import itertools
 import weakref
@@ -55,17 +54,54 @@ from logHandler import log
 import config
 import aria
 from .priorities import Spri
+from enum import IntEnum
+from dataclasses import dataclass
+from copy import copy
 
 
-speechMode_off=0
-speechMode_beeps=1
-speechMode_talk=2
-#: How speech should be handled; one of speechMode_off, speechMode_beeps or speechMode_talk.
-speechMode=speechMode_talk
-speechMode_beeps_ms=15
-beenCanceled=True
-isPaused=False
-curWordChars=[]
+_speechState: Optional['SpeechState'] = None
+_curWordChars: List[str] = []
+
+
+class SpeechMode(IntEnum):
+	off = 0
+	beeps = 1
+	talk = 2
+
+
+@dataclass
+class SpeechState:
+	beenCanceled = True
+	isPaused = False
+	#: How speech should be handled; one of SpeechMode.off, SpeechMode.beeps or SpeechMode.talk.
+	speechMode: SpeechMode = SpeechMode.talk
+	# Length of the beep tone when speech mode is beeps
+	speechMode_beeps_ms = 15
+	#: The number of typed characters for which to suppress speech.
+	_suppressSpeakTypedCharactersNumber = 0
+	#: The time at which suppressed typed characters were sent.
+	_suppressSpeakTypedCharactersTime: Optional[float] = None
+	# Property values that are kept from getPropertiesSpeech
+	oldTreeLevel = None
+	oldTableID = None
+	oldRowNumber = None
+	oldRowSpan = None
+	oldColumnNumber = None
+	oldColumnSpan = None
+
+
+def getState():
+	return copy(_speechState)
+
+
+def setSpeechMode(newMode: SpeechMode):
+	_speechState.speechMode = newMode
+
+
+def initialize():
+	global _speechState
+	_speechState = SpeechState()
+
 
 #Set containing locale codes for languages supporting conjunct characters
 LANGS_WITH_CONJUNCT_CHARS = {'hi', 'as', 'bn', 'gu', 'kn', 'kok', 'ml', 'mni', 'mr', 'pa', 'te', 'ur', 'ta'}
@@ -75,12 +111,6 @@ LANGS_WITH_CONJUNCT_CHARS = {'hi', 'as', 'bn', 'gu', 'kn', 'kok', 'ml', 'mni', '
 # for languages such as French and German which use space as a thousands separator.
 CHUNK_SEPARATOR = "  "
 
-oldTreeLevel=None
-oldTableID=None
-oldRowNumber=None
-oldRowSpan=None
-oldColumnNumber=None
-oldColumnSpan=None
 
 #: If a chunk of text contains only these characters, it will be considered blank.
 BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", u"\xa0"))
@@ -103,25 +133,23 @@ def processText(locale,text,symbolLevel):
 
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
-	global beenCanceled, isPaused
 	# Import only for this function to avoid circular import.
-	from speech import sayAll
-	sayAll.SayAllHandler.stop()
-	if beenCanceled:
+	from .sayAll import SayAllHandler
+	SayAllHandler.stop()
+	if _speechState.beenCanceled:
 		return
-	elif speechMode==speechMode_off:
+	elif _speechState.speechMode == SpeechMode.off:
 		return
-	elif speechMode==speechMode_beeps:
+	elif _speechState.speechMode == SpeechMode.beeps:
 		return
 	_manager.cancel()
-	beenCanceled=True
-	isPaused=False
+	_speechState.beenCanceled = True
+	_speechState.isPaused = False
 
 def pauseSpeech(switch):
-	global isPaused, beenCanceled
 	getSynth().pause(switch)
-	isPaused=switch
-	beenCanceled=False
+	_speechState.isPaused = switch
+	_speechState.beenCanceled = False
 
 
 def _getSpeakMessageSpeech(
@@ -693,7 +721,10 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	@param formatConfig: The configuration to use.
 	"""
 	speechIndentConfig = formatConfig["reportLineIndentation"]
-	toneIndentConfig = formatConfig["reportLineIndentationWithTones"] and speechMode == speechMode_talk
+	toneIndentConfig = (
+		formatConfig["reportLineIndentationWithTones"]
+		and _speechState.speechMode == SpeechMode.talk
+	)
 	indentSequence: SpeechSequence = []
 	if not indentation:
 		if toneIndentConfig:
@@ -758,15 +789,14 @@ def speak(  # noqa: C901
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
-	global beenCanceled
-	if speechMode==speechMode_off:
+	if _speechState.speechMode == SpeechMode.off:
 		return
-	elif speechMode==speechMode_beeps:
-		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
+	elif _speechState.speechMode == SpeechMode.beeps:
+		tones.beep(config.conf["speech"]["beepSpeechModePitch"], _speechState.speechMode_beeps_ms)
 		return
-	if isPaused:
+	if _speechState.isPaused:
 		cancelSpeech()
-	beenCanceled=False
+	_speechState.beenCanceled = False
 	#Filter out redundant LangChangeCommand objects 
 	#And also fill in default values
 	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']
@@ -975,21 +1005,14 @@ def speakSelectionChange(  # noqa: C901
 				speakMessage(_("selection removed"),priority=priority)
 
 
-#: The number of typed characters for which to suppress speech.
-_suppressSpeakTypedCharactersNumber = 0
-#: The time at which suppressed typed characters were sent.
-_suppressSpeakTypedCharactersTime = None
-
-
 def _suppressSpeakTypedCharacters(number: int):
 	"""Suppress speaking of typed characters.
 	This should be used when sending a string of characters to the system
 	and those characters should not be spoken individually as if the user were typing them.
 	@param number: The number of characters to suppress.
 	"""
-	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
-	_suppressSpeakTypedCharactersNumber += number
-	_suppressSpeakTypedCharactersTime = time.time()
+	_speechState._suppressSpeakTypedCharactersNumber += number
+	_speechState._suppressSpeakTypedCharactersTime = time.time()
 
 
 #: The character to use when masking characters in protected fields.
@@ -1001,37 +1024,35 @@ FIRST_NONCONTROL_CHAR = u" "
 
 
 def speakTypedCharacters(ch: str):
-	global curWordChars
 	typingIsProtected=api.isTypingProtected()
 	if typingIsProtected:
 		realChar=PROTECTED_CHAR
 	else:
 		realChar=ch
 	if unicodedata.category(ch)[0] in "LMN":
-		curWordChars.append(realChar)
+		_curWordChars.append(realChar)
 	elif ch=="\b":
 		# Backspace, so remove the last character from our buffer.
-		del curWordChars[-1:]
+		del _curWordChars[-1:]
 	elif ch==u'\u007f':
 		# delete character produced in some apps with control+backspace
 		return
-	elif len(curWordChars)>0:
-		typedWord="".join(curWordChars)
-		curWordChars=[]
+	elif len(_curWordChars) > 0:
+		typedWord = "".join(_curWordChars)
+		clearTypedWordBuffer()
 		if log.isEnabledFor(log.IO):
 			log.io("typed word: %s"%typedWord)
 		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
-	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
-	if _suppressSpeakTypedCharactersNumber > 0:
+	if _speechState._suppressSpeakTypedCharactersNumber > 0:
 		# We primarily suppress based on character count and still have characters to suppress.
 		# However, we time out after a short while just in case.
-		suppress = time.time() - _suppressSpeakTypedCharactersTime <= 0.1
+		suppress = time.time() - _speechState._suppressSpeakTypedCharactersTime <= 0.1
 		if suppress:
-			_suppressSpeakTypedCharactersNumber -= 1
+			_speechState._suppressSpeakTypedCharactersNumber -= 1
 		else:
-			_suppressSpeakTypedCharactersNumber = 0
-			_suppressSpeakTypedCharactersTime = None
+			_speechState._suppressSpeakTypedCharactersNumber = 0
+			_speechState._suppressSpeakTypedCharactersTime = None
 	else:
 		suppress = False
 	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
@@ -1485,7 +1506,6 @@ def getPropertiesSpeech(  # noqa: C901
 		reason: OutputReason = OutputReason.QUERY,
 		**propertyValues
 ) -> SpeechSequence:
-	global oldTreeLevel, oldTableID, oldRowNumber, oldRowSpan, oldColumnNumber, oldColumnSpan
 	textList: List[str] = []
 	name: Optional[str] = propertyValues.get('name')
 	if name:
@@ -1561,16 +1581,20 @@ def getPropertiesSpeech(  # noqa: C901
 	if cellCoordsText or rowNumber or columnNumber:
 		tableID = propertyValues.get("_tableID")
 		# Always treat the table as different if there is no tableID.
-		sameTable = (tableID and tableID == oldTableID)
+		sameTable = (tableID and tableID == _speechState.oldTableID)
 		# Don't update the oldTableID if no tableID was given.
 		if tableID and not sameTable:
-			oldTableID = tableID
+			_speechState.oldTableID = tableID
 		# When fetching row and column span
 		# default the values to 1 to make further checks a lot simpler.
 		# After all, a table cell that has no rowspan implemented is assumed to span one row.
 		rowSpan = propertyValues.get("rowSpan") or 1
 		columnSpan = propertyValues.get("columnSpan") or 1
-		if rowNumber and (not sameTable or rowNumber != oldRowNumber or rowSpan != oldRowSpan):
+		if rowNumber and (
+			not sameTable
+			or rowNumber != _speechState.oldRowNumber
+			or rowSpan != _speechState.oldRowSpan
+		):
 			rowHeaderText: Optional[str] = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
 				textList.append(rowHeaderText)
@@ -1582,9 +1606,13 @@ def getPropertiesSpeech(  # noqa: C901
 					# Translators: Speaks the row span added to the current row number (example output: through 5).
 					rowSpanAddedTranslation: str = _("through %s") % (rowNumber + rowSpan - 1)
 					textList.append(rowSpanAddedTranslation)
-			oldRowNumber = rowNumber
-			oldRowSpan = rowSpan
-		if columnNumber and (not sameTable or columnNumber != oldColumnNumber or columnSpan != oldColumnSpan):
+			_speechState.oldRowNumber = rowNumber
+			_speechState.oldRowSpan = rowSpan
+		if columnNumber and (
+			not sameTable
+			or columnNumber != _speechState.oldColumnNumber
+			or columnSpan != _speechState.oldColumnSpan
+		):
 			columnHeaderText: Optional[str] = propertyValues.get("columnHeaderText")
 			if columnHeaderText:
 				textList.append(columnHeaderText)
@@ -1596,8 +1624,8 @@ def getPropertiesSpeech(  # noqa: C901
 					# Translators: Speaks the column span added to the current column number (example output: through 5).
 					colSpanAddedTranslation: str = _("through %s") % (columnNumber + columnSpan - 1)
 					textList.append(colSpanAddedTranslation)
-			oldColumnNumber = columnNumber
-			oldColumnSpan = columnSpan
+			_speechState.oldColumnNumber = columnNumber
+			_speechState.oldColumnSpan = columnSpan
 		if includeTableCellCoords and not cellCoordsText and rowSpan>1 and columnSpan>1:
 			# Translators: Speaks the row and column span added to the current row and column numbers
 			#			(example output: through row 5 column 3).
@@ -1625,7 +1653,7 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(rowCountTranslation)
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
-		oldTableID = None
+		_speechState.oldTableID = None
 
 	# speak isCurrent property EG aria-current
 	isCurrent = propertyValues.get('current', controlTypes.IsCurrent.NO)
@@ -1652,9 +1680,12 @@ def getPropertiesSpeech(  # noqa: C901
 		if level is not None:
 			# Translators: Speaks the item level in treeviews (example output: level 2).
 			levelTranslation: str = _('level %s') % level
-			if role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM) and level!=oldTreeLevel:
+			if (
+				role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM)
+				and level != _speechState.oldTreeLevel
+			):
 				textList.insert(0, levelTranslation)
-				oldTreeLevel=level
+				_speechState.oldTreeLevel = level
 			else:
 				textList.append(levelTranslation)
 	types.logBadSequenceTypes(textList)
@@ -2448,5 +2479,4 @@ def clearTypedWordBuffer() -> None:
 	This should be called when the user's context changes such that they could no longer 
 	complete the word (such as a focus change or choosing to move the caret).
 	"""
-	global curWordChars
-	curWordChars=[]
+	_curWordChars.clear()
