@@ -16,6 +16,7 @@ which provide library functions related to monitoring NVDA and asserting NVDA ou
 from os.path import join as _pJoin, abspath as _abspath, expandvars as _expandvars
 import tempfile as _tempFile
 from typing import Optional
+import re
 
 from robotremoteserver import (
 	test_remote_server as _testRemoteServer,
@@ -37,6 +38,8 @@ from robot.libraries.Remote import Remote as _Remote
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _Process = _getLib('Process')
+
+RE_INVALID_FILENAME_CHRS = re.compile("[^A-z0-9\\-_ ]")
 
 
 class _NvdaLocationData:
@@ -111,6 +114,7 @@ class NvdaLib:
 		suiteName = builtIn.get_variable_value("${SUITE NAME}")
 		testName = builtIn.get_variable_value("${TEST NAME}")
 		outputFileName = f"{suiteName}-{testName}-{name}".replace(" ", "_")
+		outputFileName = re.sub(RE_INVALID_FILENAME_CHRS, "", outputFileName)
 		return outputFileName
 
 	@staticmethod
