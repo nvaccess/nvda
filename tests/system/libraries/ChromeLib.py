@@ -158,6 +158,24 @@ class ChromeLib:
 			f"{windowInformation}"
 		)
 
+	def _focusWindowContent(self, spy, testCaseTitle: str):
+		focusedItemSpeech = []
+		for i in range(10):
+			lastSpeechIndex = spy.get_last_speech_index()
+			spy.emulateKeyPress('F6')
+			spy.wait_for_speech_to_finish()
+			actualSpeech = spy.get_speech_at_index_until_now(lastSpeechIndex)
+			if actualSpeech in focusedItemSpeech:
+				# we've done a full revolution through the chrome f6 nav
+				break
+			focusedItemSpeech.append(actualSpeech)
+			if f"{testCaseTitle}  document" in actualSpeech or ChromeLib._beforeMarker in actualSpeech:
+				return True
+		raise AssertionError(
+			"Unable to focus Chrome test document content.\n"
+			f"Focused items spoken: {focusedItemSpeech}"
+		)
+
 	def prepareChrome(self, testCase: str) -> None:
 		"""
 		Starts Chrome opening a file containing the HTML sample
@@ -172,6 +190,7 @@ class ChromeLib:
 		self._focusChrome(ChromeLib.getUniqueTestCaseTitleRegex(testCase))
 		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
+		self._focusWindowContent(spy, applicationTitle)
 		self._waitForStartMarker(spy, appTitleIndex)
 		# Move to the loading status line, and wait fore it to become complete
 		# the page has fully loaded.
