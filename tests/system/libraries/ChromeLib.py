@@ -158,7 +158,7 @@ class ChromeLib:
 			f"{windowInformation}"
 		)
 
-	def _focusWindowContent(self, spy, testCaseTitle: str):
+	def _focusDocumentContent(self, spy, testCaseTitle: str):
 		focusedItemSpeech = []
 		for i in range(10):
 			lastSpeechIndex = spy.get_last_speech_index()
@@ -190,7 +190,7 @@ class ChromeLib:
 		self._focusChrome(ChromeLib.getUniqueTestCaseTitleRegex(testCase))
 		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
-		self._focusWindowContent(spy, applicationTitle)
+		self._focusDocumentContent(spy, applicationTitle)
 		self._waitForStartMarker(spy, appTitleIndex)
 		# Move to the loading status line, and wait fore it to become complete
 		# the page has fully loaded.
