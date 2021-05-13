@@ -56,3 +56,5 @@ i12147
 Table in style display: table
 	[Documentation]	Properly announce table row/column count and working table navigation for a HTML table in a div with style display: table
 	test_tableInStyleDisplayTable
+failed: test name ? with special chars
+	Fail	forced fail
