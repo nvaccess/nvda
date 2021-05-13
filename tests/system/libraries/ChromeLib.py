@@ -165,9 +165,6 @@ class ChromeLib:
 			spy.emulateKeyPress('F6')
 			spy.wait_for_speech_to_finish()
 			actualSpeech = spy.get_speech_at_index_until_now(lastSpeechIndex)
-			if actualSpeech in focusedItemSpeech:
-				# we've done a full revolution through the chrome f6 nav
-				break
 			focusedItemSpeech.append(actualSpeech)
 			if ChromeLib._beforeMarker == actualSpeech:
 				return True
