@@ -110,26 +110,26 @@ class ChromeLib:
 		marker = ChromeLib._beforeMarker
 		return marker in speech and documentIndex < speech.index(marker)
 
-	def _waitForStartMarker(self, spy, lastSpeechIndex):
-		""" Wait until the page loads and NVDA reads the start marker.
-		@param spy:
-		@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
-		@return: None
-		"""
-		for i in range(10):  # set a limit on the number of tries.
-			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
-			spy.wait_for_speech_to_finish()
-			actualSpeech = spy.get_speech_at_index_until_now(lastSpeechIndex)
-			if self._wasStartMarkerSpoken(actualSpeech):
-				break
-			lastSpeechIndex = spy.get_last_speech_index()
-		else:  # Exceeded the number of tries
-			spy.dump_speech_to_log()
-			builtIn.fail(
-				"Unable to locate 'before sample' marker."
-				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
-				" See NVDA log for full speech."
-			)
+	# def _waitForStartMarker(self, spy, lastSpeechIndex):
+	# 	""" Wait until the page loads and NVDA reads the start marker.
+	# 	@param spy:
+	# 	@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
+	# 	@return: None
+	# 	"""
+	# 	for i in range(10):  # set a limit on the number of tries.
+	# 		builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
+	# 		spy.wait_for_speech_to_finish()
+	# 		actualSpeech = spy.get_speech_at_index_until_now(lastSpeechIndex)
+	# 		if self._wasStartMarkerSpoken(actualSpeech):
+	# 			break
+	# 		lastSpeechIndex = spy.get_last_speech_index()
+	# 	else:  # Exceeded the number of tries
+	# 		spy.dump_speech_to_log()
+	# 		builtIn.fail(
+	# 			"Unable to locate 'before sample' marker."
+	# 			f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
+	# 			" See NVDA log for full speech."
+	# 		)
 
 	def _focusChrome(self, startsWithTestCaseTitle: re.Pattern):
 		""" Ensure chrome started and is focused.
@@ -158,7 +158,7 @@ class ChromeLib:
 			f"{windowInformation}"
 		)
 
-	def _focusDocumentContent(self, spy, testCaseTitle: str):
+	def _focusDocumentContent(self, spy):
 		focusedItemSpeech = []
 		for i in range(10):
 			lastSpeechIndex = spy.get_last_speech_index()
@@ -169,7 +169,7 @@ class ChromeLib:
 				# we've done a full revolution through the chrome f6 nav
 				break
 			focusedItemSpeech.append(actualSpeech)
-			if f"{testCaseTitle}  document" in actualSpeech or ChromeLib._beforeMarker in actualSpeech:
+			if ChromeLib._beforeMarker == actualSpeech:
 				return True
 		raise AssertionError(
 			"Unable to focus Chrome test document content.\n"
@@ -185,13 +185,13 @@ class ChromeLib:
 		path = self._writeTestFile(testCase)
 
 		spy.wait_for_speech_to_finish()
-		lastSpeechIndex = spy.get_last_speech_index()
+		# lastSpeechIndex = spy.get_last_speech_index()
 		self.start_chrome(path)
 		self._focusChrome(ChromeLib.getUniqueTestCaseTitleRegex(testCase))
-		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
-		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
-		self._focusDocumentContent(spy, applicationTitle)
-		self._waitForStartMarker(spy, appTitleIndex)
+		# applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
+		# appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
+		self._focusDocumentContent(spy)
+		# self._waitForStartMarker(spy, appTitleIndex)
 		# Move to the loading status line, and wait fore it to become complete
 		# the page has fully loaded.
 		spy.emulateKeyPress('downArrow')
