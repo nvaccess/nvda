@@ -34,13 +34,11 @@ The specification itself may or may not define other aspects of the data type su
 Usage IDs are also used to uniquely identify collections of controls or values.
 
 #### HID reports
-The data blocks that are read from or written to the HID device are referred to as a report.
-They have a size specififed by the device, and contain a special report ID as the first byte.
+A report is a block of data that is read from or written to the HID device.
+It has a size specified by the HID descriptor, and contains a report ID as the first byte.
 On Windows, when fetching a new report with ReadFile, the report ID is automatically written into the data block by Windows, and most likely never needs to be known by the developer user as other high-level Windows APIs that can extract data from reports will use this report ID byte internally.
 When writing reports however, the developer user must set the appropriate report ID byte in the report specific to the value/s the developer user includes in the report.
 On Windows the report ID can be found in the HIDP_VALUE_CAPS (value capabilities) structure for that value, fetched from the HID descriptor with HidP_GetValueCaps.
-HID specifications may or may not use report IDs (report ID in the value capabilities structure may be 0) but this should not matter to the developer user on Windows.
-They should just assume that all values have an opaque report ID.
 
 #### HID collections
 HID groups controls on a device into collections.
