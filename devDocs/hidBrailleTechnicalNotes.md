@@ -131,8 +131,7 @@ This page contains new Usage IDs such as:
 * left, right and centre braille space keys (for typing a space).
 * Joystick and dpad buttons
 * Panning buttons for scrolling the braille display.
-Although the specification defines the Usage Page, Usage IDs and the type (selector, dynamic value or named array) for each, It does not say too much about the order and quantity of things.
-Thus there may be some variation across actual implementations.
+details for the number of collections, usages, and reports must be queried at run time and may vary between devices and even with device firmware updates.
 
 ### Pattern for talking with a HID braille device
 #### Initialization
