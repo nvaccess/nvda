@@ -41,11 +41,11 @@ When writing reports however, the developer user must set the appropriate report
 On Windows the report ID can be found in the HIDP_VALUE_CAPS (value capabilities) structure for that value, fetched from the HID descriptor with HidP_GetValueCaps.
 
 #### HID collections
-HID groups controls on a device into collections.
+HID controls are grouped into collections.
 Some examples might be all the keys on a keyboard, or all the cells in a line of Braille. 
 Each defined collection has a Usage Page and a Usage ID so it can be uniquely identified.
-All HID devices also have a special top-level collection, which is the main point of ventry for gathering information about the device, including fetching other collections.
-these other collections are known as Linked collections.
+All HID devices have a top-level collection, which is the main point of entry for gathering information about the device, including fetching other collections.
+These other collections are known as Linked collections.
 
 ### General pattern for supporting HID on Windows
 #### Enumerating HID devices
