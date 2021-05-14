@@ -53,7 +53,7 @@ def _GetVisibleWindows() -> List[Window]:
 def SetForegroundWindow(targetTitle: re.Pattern, logger: Callable[[str], None] = lambda _: None) -> bool:
 	currentTitle = GetForegroundWindowTitle()
 	if re.match(targetTitle, currentTitle):
-		logger(f"Current window {currentTitle} already matches the title")
+		logger(f"Window '{currentTitle}' already focused")
 		return True
 	windows = _GetWindows(
 		filterUsingWindow=lambda window: re.match(targetTitle, window.title)
