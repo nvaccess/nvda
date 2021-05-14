@@ -54,8 +54,8 @@ These other collections are known as Linked collections.
 #### Enumerating HID devices
 * Fetch the class guid for HID devices: HidD_GetHidGuid
 * Fetch the device information set for the local machine with SetupDiGetClassDevs, specifying the HID class guid as the class guid.
- * Keep calling SetupDiEnumDeviceInterfaces, increasing memberIndex each time, to enumerate over all available devices fetching a SP_DEVICE_INTERFACE_DATA structure for each, until the function returns false.
-** For each data structure fetched, call SetupDiGetDeviceInterfaceDetail to get a SP_DEVICE_INTERFACE_DETAIL_DATA structure.
+ * Keep calling SetupDiEnumDeviceInterfaces, increasing memberIndex each time, to enumerate over all available devices fetching a SP_DEVICE_INTERFACE_DATA structure for each, until the function returns false, which means there are no more devices left to enumerate.
+* For each data structure fetched, call SetupDiGetDeviceInterfaceDetail to get a SP_DEVICE_INTERFACE_DETAIL_DATA structure.
 * The SP_DEVICE_INTERFACE_DETAIL_DATA structure's devicePath member  is the path that should be used to open the device for reading / writing later.
 * Some other properties such as hardwareID may be required to further identify the device, these can be fetched with SetupDiGetDeviceRegistryProperty.
 * For an implementation see listHidDevices in NVDA's source/hwPortUtils.py 
