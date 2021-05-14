@@ -47,7 +47,7 @@ This release also drops support for Adobe Flash.
 - The list of messages in Outlook 2010 is once again readable. (#12241)
 - In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
   - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
-- Fixed access to edit fields in MCS Electronics IDE's. (#11966) 
+- Fixed access to edit fields in MCS Electronics IDE's. (#11966)
 - In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
 - In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
 - Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
@@ -72,7 +72,7 @@ This release also drops support for Adobe Flash.
 == Changes for Developers ==
 - Note: this is an Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
-  - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons``  is no longer supported, and ``scons.py`` has also been removed. 
+  - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons``  is no longer supported, and ``scons.py`` has also been removed.
   - To run NVDA from source, rather than executing ``source/nvda.pyw`` directly, the developer should now use ``runnvda.bat`` in the root of the repository. If you do try to execute ``source/nvda.pyw``, a message box will alert you this is no longer supported.
   - To perform unit tests, execute ``rununittests.bat [<extra unittest discover options>]``
   - To perform system tests: execute ``runsystemtests.bat [<extra robot options>] ``
@@ -127,7 +127,7 @@ This release also drops support for Adobe Flash.
   - Convenience constants have been added for known Windows releases, see winVersion.WIN* constants.
 - IAccessibleHandler no longer star imports everything from IAccessible and IA2 COM interfaces - please use them directly. (#12232)
 - TextInfo objects now have start and end properties which can be compared mathematically with operators such as < <= == != >= >. (#11613)
-  - E.g. ti1.start <= ti2.end 
+  - E.g. ti1.start <= ti2.end
   - This usage is now prefered instead of ti1.compareEndPoints(ti2,"startToEnd") <= 0
 - TextInfo start and end properties can also be set to each other.
   - E.g. ti1.start = ti2.end
