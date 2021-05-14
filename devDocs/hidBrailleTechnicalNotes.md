@@ -5,14 +5,17 @@ The HID specification standardizes the low-level communication with a USB or Blu
 Example devices being keyboards, mice, screens, and now Braille Displays.
 
 ### Definitions
-There are several terms in HID which may be confusing to those just beginning to familiarise themselves with this technology.
+In this document, device means a piece of hardware that connects to a computer via a connection such as USB or Bluetooth.
+The device may contain one or more Controls for a human to physically communicate with the device, such as buttons or keys for input, or LEDs or cells of raised Braille pins for output.
+
+There are also several terms in HID which may be confusing to those just beginning to familiarise themselves with this technology.
 * Descriptors
 * Usage pages
 * Usages
 * Reports
 * Collections
 
-These terms are described in this section.
+These terms are described in the subsections below. 
 
 #### HID descriptors
 At connection time, a HID device must expose a block of data over the connection called a descriptor.
