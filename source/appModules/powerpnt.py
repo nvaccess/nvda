@@ -15,7 +15,7 @@ import queueHandler
 import colors
 import api
 import speech
-import sayAllHandler
+from speech import sayAll
 import NVDAHelper
 import winUser
 import msoAutoShapeTypes
@@ -1097,7 +1097,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 
 	def reportNewSlide(self):
 		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
-		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
+		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
 
 	def script_toggleNotesMode(self,gesture):
 		self.rootNVDAObject.notesMode=not self.rootNVDAObject.notesMode

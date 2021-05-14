@@ -37,7 +37,7 @@ from logHandler import log
 import UIAUtils
 from comInterfaces import UIAutomationClient as UIA
 # F403: unable to detect undefined names
-from comInterfaces .UIAutomationClient import *  # noqa:  F403
+from comInterfaces.UIAutomationClient import *  # noqa:  F403
 import textInfos
 from typing import Dict
 from queue import Queue
@@ -58,7 +58,6 @@ WDAG_PROCESS_NAME=u'hvsirdpclient'
 goodUIAWindowClassNames=[
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
 	'RAIL_WINDOW',
-	"EXCEL6",
 ]
 
 badUIAWindowClassNames=[

@@ -51,6 +51,18 @@ def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
 		],
 		libsDest=spyPackageLibsDir
 	)
+
+	try:
+		opSys.directory_should_exist(_pJoin(spyPackageLibsDir, "xmlrpc"))
+	except AssertionError:
+		# installed copies of NVDA <= 2020.4 don't copy this over
+		_copyPythonLibs(
+			pythonImports=[  # relative to the python path
+				"xmlrpc",
+			],
+			libsDest=spyPackageLibsDir
+		)
+
 	# install the global plugin
 	# Despite duplication, specify full paths for clarity.
 	opSys.copy_file(

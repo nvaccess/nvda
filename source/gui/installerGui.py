@@ -1,27 +1,44 @@
-#gui/installerGui.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2011-2018 NV Access Limited, Babbage B.v.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2011-2021 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
+# Bill Dengler, Joseph Lee, Takuya Nishimoto
 
 import os
-import ctypes
 
-import buildVersion
 import shellapi
 import winUser
 import wx
 import config
+import core
 import globalVars
-import versionInfo
 import installer
 from logHandler import log
 import gui
 from gui import guiHelper
 import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-import tones
 import systemUtils
+
+
+def _canPortableConfigBeCopied() -> bool:
+	# In some cases even though user requested to copy config from the portable copy during installation
+	# it should not be done.
+	if globalVars.appArgs.launcher:
+		# Normally when running from the launcher
+		# and configPath is not overridden by the user copying config during installation is rather pointless
+		# as we would  copy it into itself.
+		# However, if a user wants to run the launcher with a custom configPath,
+		# it is likely that he wants to copy that configuration when installing.
+		return globalVars.appArgs.configPath != config.getUserDefaultConfigPath(useInstalledPathIfExists=True)
+	else:
+		# For portable copies we want to avoid copying the configuration to itself,
+		# so return True only if the configPath
+		# does not point to the config of the installed copy in appdata.
+		confPath = config.getInstalledUserConfigPath()
+		if confPath and confPath == globalVars.appArgs.configPath:
+			return False
+		return True
 
 
 def doInstall(
@@ -52,7 +69,8 @@ def doInstall(
 		if copyPortableConfig:
 			installedUserConfigPath=config.getInstalledUserConfigPath()
 			if installedUserConfigPath:
-				gui.ExecAndPump(installer.copyUserConfig,installedUserConfigPath)
+				if _canPortableConfigBeCopied():
+					gui.ExecAndPump(installer.copyUserConfig, installedUserConfigPath)
 	except Exception as e:
 		res=e
 		log.error("Failed to execute installer",exc_info=True)
@@ -102,7 +120,7 @@ def doInstall(
 			winUser.SW_SHOWNORMAL
 		)
 	else:
-		gui.safeAppExit()
+		core.triggerNVDAExit()
 
 
 def doSilentInstall(
@@ -211,11 +229,10 @@ class InstallerDialog(
 		createPortableBox = wx.CheckBox(optionsBox, label=createPortableText)
 		self.copyPortableConfigCheckbox = optionsHelper.addItem(createPortableBox)
 		self.bindHelpEvent("CopyPortableConfigurationToCurrentUserAccount", self.copyPortableConfigCheckbox)
-		self.copyPortableConfigCheckbox.Value = bool(globalVars.appArgs.copyPortableConfig)
-		if globalVars.appArgs.copyPortableConfig is None:
-			# copyPortableConfig is set to C{None} in the main loop,
-			# when copying the portable configuration should be disabled at all costs.
-			self.copyPortableConfigCheckbox.Disable()
+		self.copyPortableConfigCheckbox.Value = (
+			bool(globalVars.appArgs.copyPortableConfig) and _canPortableConfigBeCopied()
+		)
+		self.copyPortableConfigCheckbox.Enable(_canPortableConfigBeCopied())
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		if shouldAskAboutAddons:
@@ -450,7 +467,7 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 		return
 	d.done()
 	if silent:
-		gui.safeAppExit()
+		core.triggerNVDAExit()
 	else:
 		# Translators: The message displayed when a portable copy of NVDA has been successfully created.
 		# %s will be replaced with the destination directory.
