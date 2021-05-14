@@ -27,8 +27,7 @@ A Usage Page may represent a specific device type such as a keyboard, joystick o
 
 #### HID Usages
 A Usage represents a type of control (key, button, braille cell, LED).
-In the standard it is assigned its own constant name, and a unique number relative to the particular Usage Page in the standard it is found on.
-E.g. BRAILLE_KEYBOARD_DOT_1 is from the Braille Display page.
+The Usage is assigned its own constant name, and a unique number relative to the particular Usage Page in the standard it is found on.
 A Usage defines information about the control such as whether it is a boolean button, static or dynamic value, flag, or selector (1 of many).
 For further information on what these types (sel, dv, nary etc) actually mean, refer to the first few pages of the HID Usage Tables 1.22 spaceification referenced at the bottom of this document.
 The specification itself may or may not define other aspects of the data type such as its size or number of elements, though the HID descriptor the device makes available at runtime must contain all this information.
