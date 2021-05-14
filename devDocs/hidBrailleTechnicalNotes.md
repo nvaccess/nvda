@@ -62,7 +62,7 @@ These other collections are known as Linked collections.
 
 #### Opening a HID device
 * Use CreateFile to open a HID device, giving it the DevicePath as the file path.
-Depending on how you want to handle future reads/writes, you may wish to open the device using overlapped IO by specifying particular flags and values to CreateFile.
+ Note overlapped IO is possible; See CreateFile documentation.
  * If this device may need to be opened by other processes at the same time, you will want to specify FILE_SHARE_READ | FILE_SHARE_WRITE as well.
 * Once the open device handle is no longer needed, it can be closed with CloseHandle.
 * For an implementation see the Hid class in NVDA's source/hwIo/base.py 
