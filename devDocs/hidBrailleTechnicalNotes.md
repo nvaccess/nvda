@@ -120,7 +120,6 @@ This has meant that in order for a Screen Reader to support a particular Braille
 Further to this, On Windows at least, an OS-level driver provided by the Braille Display manufacturer must also be installed by the user in order for the computer to detect and communicate with the device.
 With the introduction of the HID (Human Interface Device) standard for USB (and later Bluetooth), it became possible to remove the need for the required OS-level device driver on Windows if the Braille Display manufacturer exposed the device as a custom HID device, however the Screen Reader still needed device-specific code, as being custom HID only simplified the low-level bytes communication, but did not standardise what those bytes actually meant.
 
-### Official specification
 In 2018, The HID specification was extended to define the concept of a Braille Display device, including setting of braille cells, and the standardizing of common buttons found on Braille displays such as routing keys, Braille dot input keys, braille space and panning keys.
 A new Usage Page was added to the HID specification: HID_USAGE_PAGE_BRAILLE (0x41).
 This page contains new Usage IDs such as:
