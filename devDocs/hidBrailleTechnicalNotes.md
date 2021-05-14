@@ -7,6 +7,7 @@ Example devices being keyboards, mice, screens, and now Braille Displays.
 ### Definitions
 There are several terms in HID which may be confusing to those just beginning to familiarise themselves with this technology.
 * Descriptors
+* Usage pages
 * Usages
 * Reports
 * Collections
@@ -18,6 +19,11 @@ At connection time, a HID device must expose a block of data over the connection
 This is machine-readable data that describes all the input and output controls supported by the device, including their type and number of elements etc.
 It also defines the size of data blocks (or reports) that can be written to and read from the device.
 A descriptor can be read by a human (either as raw values or with some kind of decompiler) but from the point of view of Windows, the descriptor is opaque, and other more high-level Windows APIs should be used to communicate with the device, which will do all the type checking for you.
+
+#### HID Usage Pages
+The HID specification groups controls into categories which it refers to as pages.
+Each page has its own unique number, and is referred to as a usage Page.
+A Usage Page may represent a specific device type such as a keyboard, joystick or Braille display, or may be more general such as a generic Buttons page.
 
 #### HID Usages
 A Usage represents a type of control (key, button, braille cell, LED).
