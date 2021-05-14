@@ -162,7 +162,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			# Retrieve the cell on which we started.
 			info = self._getTableCellAt(tableID, self.selection,origRow, origCol)
 
-		speech.speakTextInfo(info,formatConfig=formatConfig,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(info, formatConfig=formatConfig, reason=controlTypes.OutputReason.CARET)
 		info.collapse()
 		self.selection = info
 
