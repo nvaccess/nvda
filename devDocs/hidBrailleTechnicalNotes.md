@@ -4,13 +4,22 @@ HID Braille Developer Notes
 The HID specification standardizes the low-level communication with a USB or Bluetooth device, plus the types of input and output controls on the device.
 Example devices being keyboards, mice, screens, and now Braille Displays.
 
-### HID descriptors
+### Definitions
+There are several terms in HID which may be confusing to those just beginning to familiarise themselves with this technology.
+* Descriptors
+* Usages
+* Reports
+* Collections
+
+These terms are described in this section.
+
+#### HID descriptors
 At connection time, a HID device must expose a block of data over the connection called a descriptor.
 This is machine-readable data that describes all the input and output controls supported by the device, including their type and number of elements etc.
 It also defines the size of data blocks (or reports) that can be written to and read from the device.
 A descriptor can be read by a human (either as raw values or with some kind of decompiler) but from the point of view of Windows, the descriptor is opaque, and other more high-level Windows APIs should be used to communicate with the device, which will do all the type checking for you.
 
-### HID Usages
+#### HID Usages
 A Usage represents a type of control (key, button, braille cell, LED).
 In the standard it is assigned its own constant name, and a unique number relative to the particular Usage Page in the standard it is found on.
 E.g. BRAILLE_KEYBOARD_DOT_1 is from the Braille Display page.
@@ -19,7 +28,7 @@ For further information on what these types (sel, dv, nary etc) actually mean, r
 The specification itself may or may not define other aspects of the data type such as its size or number of elements, though the HID descriptor the device makes available at runtime must contain all this information.
 Usage IDs are also used to uniquely identify collections of controls or values.
 
-### HID reports
+#### HID reports
 The data blocks that are read from or written to the HID device are referred to as a report.
 They have a size specififed by the device, and contain a special report ID as the first byte.
 On Windows, when fetching a new report with ReadFile, the report ID is automatically written into the data block by Windows, and most likely never needs to be known by the developer user as other high-level Windows APIs that can extract data from reports will use this report ID byte internally.
@@ -28,7 +37,7 @@ On Windows the report ID can be found in the HIDP_VALUE_CAPS (value capabilities
 HID specifications may or may not use report IDs (report ID in the value capabilities structure may be 0) but this should not matter to the developer user on Windows.
 They should just assume that all values have an opaque report ID.
 
-### HID collections
+#### HID collections
 HID groups controls on a device into collections.
 Some examples might be all the keys on a keyboard, or all the cells in a line of Braille. 
 Each defined collection has a Usage Page and a Usage ID so it can be uniquely identified.
