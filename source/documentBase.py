@@ -6,9 +6,8 @@
 from baseObject import AutoPropertyObject, ScriptableObject
 import config
 import textInfos
-import speech
-import ui
 import controlTypes
+
 
 class TextContainerObject(AutoPropertyObject):
 	"""
@@ -140,10 +139,11 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		raise LookupError
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
-		# documentBase shouldn't depend on scriptHandler
-		# documentBase is a core module and should not depend on UI classes
-		# this function should be somewhere else or dependency injected
+		# documentBase is a core module and should not depend on these UI modules. (#12404)
 		from scriptHandler import isScriptWaiting
+		from speech import speakTextInfo
+		import ui
+
 		if isScriptWaiting():
 			return
 		formatConfig=config.conf["documentFormatting"].copy()
@@ -165,7 +165,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			# Retrieve the cell on which we started.
 			info = self._getTableCellAt(tableID, self.selection,origRow, origCol)
 
-		speech.speakTextInfo(info, formatConfig=formatConfig, reason=controlTypes.OutputReason.CARET)
+		speakTextInfo(info, formatConfig=formatConfig, reason=controlTypes.OutputReason.CARET)
 		info.collapse()
 		self.selection = info
 
@@ -190,6 +190,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
 	def script_toggleIncludeLayoutTables(self,gesture):
+		# documentBase is a core module and should not depend on UI modules. (#12404)
+		import ui
 		if config.conf["documentFormatting"]["includeLayoutTables"]:
 			# Translators: The message announced when toggling the include layout tables browse mode setting.
 			state = _("layout tables off")

@@ -47,6 +47,7 @@ def initialize(
 		getTextInfoSpeech: 'getTextInfoSpeech',
 		SpeakTextInfoState: 'SpeakTextInfoState',
 ):
+	log.debug("Initializing sayAllHandler")
 	global SayAllHandler
 	SayAllHandler = _SayAllHandler(
 		SpeechWithoutPauses(speakFunc=speakFunc),
