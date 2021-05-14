@@ -1,24 +1,39 @@
 HID Braille Developer Notes
 
 ## HID (Human Interface Device)
-The HID specification standardizes the low-level communication with a USB or Bluetooth device, plus the types of input and output controls on the device. Example devices being keyboards, mice, screens, and now Braille Displays.
+The HID specification standardizes the low-level communication with a USB or Bluetooth device, plus the types of input and output controls on the device.
+Example devices being keyboards, mice, screens, and now Braille Displays.
 
 ### HID descriptors
-At connection time, a HID device must expose a block of data over the connection called a descriptor. This is machine-readable data that describes all the input and output controls supported by the device, including their type and number of elements etc. It also defines the size of data blocks (or reports) that can be written to and read from the device.
+At connection time, a HID device must expose a block of data over the connection called a descriptor.
+This is machine-readable data that describes all the input and output controls supported by the device, including their type and number of elements etc.
+It also defines the size of data blocks (or reports) that can be written to and read from the device.
 A descriptor can be read by a human (either as raw values or with some kind of decompiler) but from the point of view of Windows, the descriptor is opaque, and other more high-level Windows APIs should be used to communicate with the device, which will do all the type checking for you.
 
 ### HID Usages
-A Usage represents a type of control (key, button, braille cell, LED). In the standard it is assigned its own constant name, and a unique number relative to the particular Usage Page in the standard it is found on. E.g. BRAILLE_KEYBOARD_DOT_1 is from the Braille Display page. A Usage defines information about the control such as whether it is a boolean button, static or dynamic value, flag, or selector (1 of many). For further information on what these types (sel, dv, nary etc) actually mean, refer to the first few pages of the HID Usage Tables 1.22 spaceification referenced at the bottom of this document.
+A Usage represents a type of control (key, button, braille cell, LED).
+In the standard it is assigned its own constant name, and a unique number relative to the particular Usage Page in the standard it is found on.
+E.g. BRAILLE_KEYBOARD_DOT_1 is from the Braille Display page.
+A Usage defines information about the control such as whether it is a boolean button, static or dynamic value, flag, or selector (1 of many).
+For further information on what these types (sel, dv, nary etc) actually mean, refer to the first few pages of the HID Usage Tables 1.22 spaceification referenced at the bottom of this document.
 The specification itself may or may not define other aspects of the data type such as its size or number of elements, though the HID descriptor the device makes available at runtime must contain all this information.
 Usage IDs are also used to uniquely identify collections of controls or values.
 
 ### HID reports
-The data blocks that are read from or written to the HID device are referred to as a report. They have a size specififed by the device, and contain a special report ID as the first byte. On Windows, when fetching a new report with ReadFile, the report ID is automatically written into the data block by Windows, and most likely never needs to be known by the developer user as other high-level Windows APIs that can extract data from reports will use this report ID byte internally. When writing reports however, the developer user must set the appropriate report ID byte in the report specific to the value/s the developer user includes in the report. On Windows the report ID can be found in the HIDP_VALUE_CAPS (value capabilities) structure for that value, fetched from the HID descriptor with HidP_GetValueCaps. HID specifications may or may not use report IDs (report ID in the value capabilities structure may be 0) but this should not matter to the developer user on Windows. They should just assume that all values have an opaque report ID.
+The data blocks that are read from or written to the HID device are referred to as a report.
+They have a size specififed by the device, and contain a special report ID as the first byte.
+On Windows, when fetching a new report with ReadFile, the report ID is automatically written into the data block by Windows, and most likely never needs to be known by the developer user as other high-level Windows APIs that can extract data from reports will use this report ID byte internally.
+When writing reports however, the developer user must set the appropriate report ID byte in the report specific to the value/s the developer user includes in the report.
+On Windows the report ID can be found in the HIDP_VALUE_CAPS (value capabilities) structure for that value, fetched from the HID descriptor with HidP_GetValueCaps.
+HID specifications may or may not use report IDs (report ID in the value capabilities structure may be 0) but this should not matter to the developer user on Windows.
+They should just assume that all values have an opaque report ID.
 
 ### HID collections
-HID groups controls on a device into collections. Some examples might be all the keys on a keyboard, or all the cells in a line of Braille. 
+HID groups controls on a device into collections.
+Some examples might be all the keys on a keyboard, or all the cells in a line of Braille. 
 Each defined collection has a Usage Page and a Usage ID so it can be uniquely identified.
-All HID devices also have a special top-level collection, which is the main point of ventry for gathering information about the device, including fetching other collections. these other collections are known as Linked collections.
+All HID devices also have a special top-level collection, which is the main point of ventry for gathering information about the device, including fetching other collections.
+these other collections are known as Linked collections.
 
 ### General pattern for supporting HID on Windows
 #### Enumerating HID devices
@@ -31,7 +46,8 @@ All HID devices also have a special top-level collection, which is the main poin
 * For an implementation see listHidDevices in NVDA's source/hwPortUtils.py 
 
 #### Opening a HID device
-* Use CreateFile to open a HID device, giving it the DevicePath as the file path. Depending on how you want to handle future reads/writes, you may wish to open the device using overlapped IO by specifying particular flags and values to CreateFile.
+* Use CreateFile to open a HID device, giving it the DevicePath as the file path.
+Depending on how you want to handle future reads/writes, you may wish to open the device using overlapped IO by specifying particular flags and values to CreateFile.
  * If this device may need to be opened by other processes at the same time, you will want to specify FILE_SHARE_READ | FILE_SHARE_WRITE as well.
 * Once the open device handle is no longer needed, it can be closed with CloseHandle.
 * For an implementation see the Hid class in NVDA's source/hwIo/base.py 
@@ -42,33 +58,43 @@ All HID devices also have a special top-level collection, which is the main poin
 * To fetch the product string, use HidD_GetProductString giving the open device handle.
 
 #### Fetching the HID descriptor
-Fetching device capabilities, getting data from reports and setting data in reports all requires the device's HID descriptor. Windows represents the HID descriptor as an opaque value referred to as the preparsed data.
-* Fetch the device's preparsed data with HidD_GetPreparsedData, giving it the open device handle. Note this must be freed once it is no longer needed with HidD_FreePreparsedData.
+Fetching device capabilities, getting data from reports and setting data in reports all requires the device's HID descriptor.
+Windows represents the HID descriptor as an opaque value referred to as the preparsed data.
+* Fetch the device's preparsed data with HidD_GetPreparsedData, giving it the open device handle.
+Note this must be freed once it is no longer needed with HidD_FreePreparsedData.
  
 #### Fetching device capabilities
 Device capabilities (sometimes shortned to caps in the Windows API) exposes information about the HID device's top-level collection, such as its Usage Page, Usage ID, size of input and output reports, and number of buttons and values on the device.
 * Fetch a HIDP_CAPS structure for the device with HidP_GetCaps, giving the open device handle and the preparsed data.
 
 #### Fetching value / button capabilities
-type information of input buttons and values and output values on a device (such as their Usage ID, size and number of items) can be found out through a HIDP_VALUE_CAPS structure for each. An array of these structures can be fetched with HidP_GetValueCaps for input or output values, and HidP_GetButtonCaps for buttons.
-Sometimes a HIDP_VALUE_CAPS structure can represent a range of buttons or values, where minimum and maximum Usage IDs and Data indices are exposed, rather than a specific value. Examples of these might be the way that Braille dot input keys are exposed. There is only one HIDP_VALUE_CAPS structure, covering values from dot1 to dot8.
+type information of input buttons and values and output values on a device (such as their Usage ID, size and number of items) can be found out through a HIDP_VALUE_CAPS structure for each.
+An array of these structures can be fetched with HidP_GetValueCaps for input or output values, and HidP_GetButtonCaps for buttons.
+Sometimes a HIDP_VALUE_CAPS structure can represent a range of buttons or values, where minimum and maximum Usage IDs and Data indices are exposed, rather than a specific value.
+Examples of these might be the way that Braille dot input keys are exposed.
+There is only one HIDP_VALUE_CAPS structure, covering values from dot1 to dot8.
  
 
 #### Reading data from the device
-* Use ReadFile to read the next available input report from the device. The size of data to read in bytes must be equal to the InputReportByteLength member of the device's HIDP_CAPS structure.
+* Use ReadFile to read the next available input report from the device.
+The size of data to read in bytes must be equal to the InputReportByteLength member of the device's HIDP_CAPS structure.
  * Use functions such as HidP_GetData and HidP_GetUsages to extract the current value of buttons and other values set in the report.
 
 #### Writing data to the device
 To set the value of particular controls on the device:
 * Create an output report by allocating a block of memory of size OutputReportByteLength from the device's HIDP_CAPS structure, using something like malloc.
-* Set the report ID (the first byte) to the report ID found in the HIDP_VALUE_CAPS structure for the value/s you want to set. This obviusly means you can only set values who share the same report ID in a single report.
+* Set the report ID (the first byte) to the report ID found in the HIDP_VALUE_CAPS structure for the value/s you want to set.
+This obviusly means you can only set values who share the same report ID in a single report.
 * Set the data for the values using functions such as HidP_SetUsageValue or HidP_SetUsageValuesArray.
-* Send the report to the device using WriteFile. The size in bytes sent must be equal to the OutputReportByteLength of the device's HIDP_CAPS structure.
+* Send the report to the device using WriteFile.
+The size in bytes sent must be equal to the OutputReportByteLength of the device's HIDP_CAPS structure.
 
 ## HID Braille specification
 ### Background
-Braille Display devices allow being controlled by Screen Readers using a variety of connections such as Serial, USB and Bluetooth. The protocols used over these channels have traditionally been Braille Display manufacturer specific.
-This has meant that in order for a Screen Reader to support a particular Braille display, it must have specific logic in the Screen Reader that knows how to speak the required device-specific protocol. Further to this, On Windows at least, an OS-level driver provided by the Braille Display manufacturer must also be installed by the user in order for the computer to detect and communicate with the device.
+Braille Display devices allow being controlled by Screen Readers using a variety of connections such as Serial, USB and Bluetooth.
+The protocols used over these channels have traditionally been Braille Display manufacturer specific.
+This has meant that in order for a Screen Reader to support a particular Braille display, it must have specific logic in the Screen Reader that knows how to speak the required device-specific protocol.
+Further to this, On Windows at least, an OS-level driver provided by the Braille Display manufacturer must also be installed by the user in order for the computer to detect and communicate with the device.
 With the introduction of the HID (Human Interface Device) standard for USB (and later Bluetooth), it became possible to remove the need for the required OS-level device driver on Windows if the Braille Display manufacturer exposed the device as a custom HID device, however the Screen Reader still needed device-specific code, as being custom HID only simplified the low-level bytes communication, but did not standardise what those bytes actually meant.
 
 ### Official specification
@@ -82,25 +108,38 @@ This page contains new Usage IDs such as:
 * left, right and centre braille space keys (for typing a space).
 * Joystick and dpad buttons
 * Panning buttons for scrolling the braille display.
-Although the specification defines the Usage Page, Usage IDs and the type (selector, dynamic value or named array) for each, It does not say too much about the order and quantity of things. Thus there may be some variation across actual implementations.
+Although the specification defines the Usage Page, Usage IDs and the type (selector, dynamic value or named array) for each, It does not say too much about the order and quantity of things.
+Thus there may be some variation across actual implementations.
 
 ### Pattern for talking with a HID braille device
 #### Initialization
 * Follow the general instructions for enumerating and opening a HID device,  plus fetching device and value capabilities as mentioned earlier in this document.
 * Ensure the Hid device is truely a Braille display by checking that the HIDP_CAPS.UsagePage of the HID device's top-level collection is set to HID_USAGE_PAGE_BRAILLE (0x41).
- * Find the correct output HIDP_VALUE_CAPS structure which represents the array of braille cells. I.e. the Usage ID is either EIGHT_DOT_BRAILLE_CELL or six_dot_braille_cell. The ReportCount member of this struct states the number of cells for the device. This structure should also be saved off as it is later needed when writing braille to the display.
+ * Find the correct output HIDP_VALUE_CAPS structure which represents the array of braille cells.
+I.e.
+the Usage ID is either EIGHT_DOT_BRAILLE_CELL or six_dot_braille_cell.
+The ReportCount member of this struct states the number of cells for the device.
+This structure should also be saved off as it is later needed when writing braille to the display.
 * Collect all the HIDP_VALUE_CAPS structures for input buttons / values and store them in a mapping keyed by their DataIndex member (or a calculated data index offset from the DataIndexMin member if the HIDP_VALUE_CAPS represents a range of values).
-* It may also be useful to store an index of each HIDP_VALUE_CAPS structure relative to the first HIDP_VALUE_CAPS structure in the current collection (I.e. when the LinkCollection member last differed from the previous structure). In other words, the index within its collection. this is needed in some implementations to work out which routing key a value represents, as the Usage ID for the value will be just ROUTING_KEY and the collection will be one of the ROUTER_SET_* collection Usage IDs.
+* It may also be useful to store an index of each HIDP_VALUE_CAPS structure relative to the first HIDP_VALUE_CAPS structure in the current collection (I.e.
+when the LinkCollection member last differed from the previous structure).
+In other words, the index within its collection.
+this is needed in some implementations to work out which routing key a value represents, as the Usage ID for the value will be just ROUTING_KEY and the collection will be one of the ROUTER_SET_* collection Usage IDs.
 
 #### Writing cells to the device
 * Create a HID output report (block of memory), setting the report ID (first byte) to the value of the ReportID member of the Braille cell HIDP_VALUE_CAPS structure found at construction time. 
 * Call HidP_SetUsageValueArray to place the data (braille cell dot patterns) into the report at the appropriate place, Using the Usage ID and collection number etc from the cell HIDP_VALUE_CAPS structure.
-* Send the report to the Braille display using WriteFile. The number of bytes written will be the value of HIDP_CAPS.OutputReportByteLength.
+* Send the report to the Braille display using WriteFile.
+The number of bytes written will be the value of HIDP_CAPS.OutputReportByteLength.
 
 #### Receive input (key / button presses)
 * Read an input report of size InputReportByteLength with ReadFile (or an overlapped IO callback)
- * HidP_GetData is used to extract all HIDP_DATA structures from the report. these represent the state of all input buttons and other controls.
-* Using the DataIndex member of each retrieved data item, lookup the original HIDP_VALUE_CAPS structure for that data index to find out its Usage Page and Usage ID. This will denote the actual button pressed or changed value. If you only need to find out what buttons are pressed, but not any further data such as the actual set value or data index, you could call HidP_GetButtons. But this would not be useful for buttons such as routing keys as you need to know specifically which routing key was pressed.
+ * HidP_GetData is used to extract all HIDP_DATA structures from the report.
+these represent the state of all input buttons and other controls.
+* Using the DataIndex member of each retrieved data item, lookup the original HIDP_VALUE_CAPS structure for that data index to find out its Usage Page and Usage ID.
+This will denote the actual button pressed or changed value.
+If you only need to find out what buttons are pressed, but not any further data such as the actual set value or data index, you could call HidP_GetButtons.
+But this would not be useful for buttons such as routing keys as you need to know specifically which routing key was pressed.
 
 ## References:
 * USB HID article on wikipedia: https://en.wikipedia.org/wiki/USB_human_interface_device_class
