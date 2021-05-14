@@ -55,7 +55,7 @@ This release also drops support for Adobe Flash.
 - Performance when interacting with Visual Studio has been improved. (#12171)
 - Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
 - Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
-   - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
+  - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
 - The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
 - - TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
 - It is once again possible to use NVDA in languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
@@ -72,26 +72,26 @@ This release also drops support for Adobe Flash.
 == Changes for Developers ==
 - Note: this is an Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
- - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons``  is no longer supported, and ``scons.py`` has also been removed. 
- - To run NVDA from source, rather than executing ``source/nvda.pyw`` directly, the developer should now use ``runnvda.bat`` in the root of the repository. If you do try to execute ``source/nvda.pyw``, a message box will alert you this is no longer supported.
- - To perform unit tests, execute ``rununittests.bat [<extra unittest discover options>]``
- - To perform system tests: execute ``runsystemtests.bat [<extra robot options>] ``
- - To perform linting, execute ``runlint.bat <base branch>``
- - Please refer to readme.md for more details.
+  - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons``  is no longer supported, and ``scons.py`` has also been removed. 
+  - To run NVDA from source, rather than executing ``source/nvda.pyw`` directly, the developer should now use ``runnvda.bat`` in the root of the repository. If you do try to execute ``source/nvda.pyw``, a message box will alert you this is no longer supported.
+  - To perform unit tests, execute ``rununittests.bat [<extra unittest discover options>]``
+  - To perform system tests: execute ``runsystemtests.bat [<extra robot options>] ``
+  - To perform linting, execute ``runlint.bat <base branch>``
+  - Please refer to readme.md for more details.
 - The following Python dependencies have also been upgraded:
- - comtypes updated to 1.1.8.
- - pySerial updated to 3.5.
- - wxPython updated to 4.1.1.
- - Py2exe updated to 0.10.1.0.
+  - comtypes updated to 1.1.8.
+  - pySerial updated to 3.5.
+  - wxPython updated to 4.1.1.
+  - Py2exe updated to 0.10.1.0.
 - ``LiveText._getTextLines`` has been removed. (#11639)
   - Instead, override ``_getText`` which returns a string of all text in the object.
 - ``LiveText`` objects can now calculate diffs by character. (#11639)
   - To alter the diff behaviour for some object, override the ``diffAlgo`` property (see the docstring for details).
 - When defining a script with the script decorator, the 'allowInSleepMode' boolean argument can be specified to control  if a script is available in sleep mode or not. (#11979)
 - The following functions are removed from the config module:
- - canStartOnSecureScreens - use config.isInstalledCopy instead.
- - hasUiAccess and execElevated - use them from the systemUtils module.
- - getConfigDirs - use globalVars.appArgs.configPath instead
+  - canStartOnSecureScreens - use config.isInstalledCopy instead.
+  - hasUiAccess and execElevated - use them from the systemUtils module.
+  - getConfigDirs - use globalVars.appArgs.configPath instead
 - Module level REASON_* constants are removed from controlTypes - please use controlTypes.OutputReason instead. (#11969)
 - REASON_QUICKNAV has been removed from browseMode - use controlTypes.OutputReason.QUICKNAV instead. (#11969)
 - 'NVDAObject' (and derivatives) property 'isCurrent' now strictly returns Enum class 'controlTypes.IsCurrent'. (#11782)
@@ -127,11 +127,11 @@ This release also drops support for Adobe Flash.
   - Convenience constants have been added for known Windows releases, see winVersion.WIN* constants.
 - IAccessibleHandler no longer star imports everything from IAccessible and IA2 COM interfaces - please use them directly. (#12232)
 - TextInfo objects now have start and end properties which can be compared mathematically with operators such as < <= == != >= >. (#11613)
- - E.g. ti1.start <= ti2.end 
+  - E.g. ti1.start <= ti2.end 
   - This usage is now prefered instead of ti1.compareEndPoints(ti2,"startToEnd") <= 0
 - TextInfo start and end properties can also be set to each other.
- - E.g. ti1.start = ti2.end
- - This usage is prefered instead of ti1.SetEndPoint(ti2,"startToEnd")
+  - E.g. ti1.start = ti2.end
+  - This usage is prefered instead of ti1.SetEndPoint(ti2,"startToEnd")
 - ``wx.CENTRE_ON_SCREEN`` and ``wx.CENTER_ON_SCREEN`` are removed, use ``self.CentreOnScreen()`` instead. (#12309)
 - ``easeOfAccess.isSupported`` has been removed, NVDA only supports versions of Windows where this evaluates to ``True``. (#12222)
 - ``sayAllHandler`` has been moved to ``speech.sayAll`` (#12251):
@@ -141,15 +141,15 @@ This release also drops support for Adobe Flash.
 - ``speech.SpeechWithoutPauses`` has been moved to ``speech.speechWithoutPauses.SpeechWithoutPauses``. (#12251)
 - ``speech.curWordChars`` has been renamed ``speech._curWordChars``. (#12395)
 - the following have been removed from ``speech`` and can be accessed through ``speech.getState()``. These are readonly values now. (#12395)
-   - speechMode
-   - speechMode_beeps_ms
-   - beenCanceled
-   - isPaused
+  - speechMode
+  - speechMode_beeps_ms
+  - beenCanceled
+  - isPaused
 - to update ``speech.speechMode`` use ``speech.setSpeechMode`` (#12395)
 - the following have been moved to ``speech.SpeechMode`` (#12395)
-   - ``speech.speechMode_off`` becomes ``speech.SpeechMode.off``
-   - ``speech.speechMode_beeps`` becomes ``speech.SpeechMode.beeps``
-   - ``speech.speechMode_talk`` becomes ``speech.SpeechMode.talk``
+  - ``speech.speechMode_off`` becomes ``speech.SpeechMode.off``
+  - ``speech.speechMode_beeps`` becomes ``speech.SpeechMode.beeps``
+  - ``speech.speechMode_talk`` becomes ``speech.SpeechMode.talk``
 - ``IAccessibleHandler.IAccessibleObjectIdentifierType`` is now ``IAccessibleHandler.types.IAccessibleObjectIdentifierType``. (#12367)
 
 
