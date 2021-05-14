@@ -14,6 +14,7 @@ There are also several terms in HID which may be confusing to those just beginni
 * Usages
 * Reports
 * Collections
+* Caps (Capabilities)
 
 These terms are described in the subsections below. 
 
@@ -50,6 +51,13 @@ Each defined collection has a Usage Page and a Usage ID so it can be uniquely id
 All HID devices have a top-level collection, which is the main point of entry for gathering information about the device, including fetching other collections.
 These other collections are known as Linked collections.
 
+#### Caps
+A shortening of the word Capabilities used by particular Windows APIs and structures for HID.
+E.g. HidP_GetCaps gets the capabilities of the HID device.
+These include things like the number of input buttons or output values on the device, the size of reports, and the Usage and Usage Page for the device.
+Similarly HidP_GetButtonCaps gets the capabilities of all buttons on the device.
+Capabilities of buttons and values nclude such things as their Usage and Usage Page, whether they represent a range of Usages, and whether they have a NULL state etc.
+ 
 ### General pattern for supporting HID on Windows
 #### Enumerating HID devices
 * Fetch the class guid for HID devices: HidD_GetHidGuid
