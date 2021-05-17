@@ -1849,6 +1849,14 @@ The combo box has the following options:
 - No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
 -
 
+==== Enable Experimental ARIA annotations support ====[Annotations]
+Used to enable features which add experimental support for ARIA annotations.
+Some of these features may be incomplete.
+The following options exist: 
+- "Report details in browse mode": enables reporting if an object has details in browse mode.
+Reporting the summary of those details can be done by adding an input gesture for <command>.
+-
+
 ==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]
 When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
 This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.

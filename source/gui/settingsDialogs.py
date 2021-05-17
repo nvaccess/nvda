@@ -2646,13 +2646,13 @@ class AdvancedPanelControls(
 		AnnotationsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		AnnotationsBox = AnnotationsSizer.GetStaticBox()
 		AnnotationsGroup = guiHelper.BoxSizerHelper(self, sizer=AnnotationsSizer)
+		self.bindHelpEvent("Annotations", AnnotationsBox)
 		sHelper.addItem(AnnotationsGroup)
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
 		label = _("Report details in browse mode")
 		self.annotationsDetailsCheckBox = AnnotationsGroup.addItem(wx.CheckBox(AnnotationsBox, label=label))
-		self.bindHelpEvent("AdvancedSettingsAnnotationsDetails", self.annotationsDetailsCheckBox)
 		self.annotationsDetailsCheckBox.SetValue(config.conf["annotations"]["reportDetails"])
 		self.annotationsDetailsCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportDetails"])
 
