@@ -28,7 +28,6 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 		VBufStorage_buffer_t* buffer,
 		VBufStorage_controlFieldNode_t* parentNode,
 		VBufStorage_fieldNode_t* previousNode,
-		IAccessibleTable* paccTable=NULL,
 		IAccessibleTable2* paccTable2=NULL,
 		long tableID=0, const wchar_t* parentPresentationalRowNumber=NULL,
 		bool ignoreInteractiveUnlabelledGraphics=false

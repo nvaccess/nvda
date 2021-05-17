@@ -16,6 +16,7 @@ which provide library functions related to monitoring NVDA and asserting NVDA ou
 from os.path import join as _pJoin, abspath as _abspath, expandvars as _expandvars
 import tempfile as _tempFile
 from typing import Optional
+from urllib.parse import quote as _quoteStr
 
 from robotremoteserver import (
 	test_remote_server as _testRemoteServer,
@@ -111,6 +112,7 @@ class NvdaLib:
 		suiteName = builtIn.get_variable_value("${SUITE NAME}")
 		testName = builtIn.get_variable_value("${TEST NAME}")
 		outputFileName = f"{suiteName}-{testName}-{name}".replace(" ", "_")
+		outputFileName = _quoteStr(outputFileName)
 		return outputFileName
 
 	@staticmethod
