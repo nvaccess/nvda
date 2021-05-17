@@ -139,7 +139,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		raise LookupError
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
-		# documentBase is a core module and should not depend on these UI modules. (#12404)
+		# documentBase is a core module and should not depend on these UI modules and so they are imported
+		# at run-time. (#12404)
 		from scriptHandler import isScriptWaiting
 		from speech import speakTextInfo
 		import ui
@@ -190,7 +191,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
 	def script_toggleIncludeLayoutTables(self,gesture):
-		# documentBase is a core module and should not depend on UI modules. (#12404)
+		# documentBase is a core module and should not depend on UI, so it is imported at run-time. (#12404)
 		import ui
 		if config.conf["documentFormatting"]["includeLayoutTables"]:
 			# Translators: The message announced when toggling the include layout tables browse mode setting.
