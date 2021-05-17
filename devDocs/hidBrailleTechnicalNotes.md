@@ -87,8 +87,7 @@ Windows represents the HID descriptor as an opaque value referred to as the prep
 Note this must be freed once it is no longer needed with `HidD_FreePreparsedData`.
  
 #### Fetching device capabilities
-Device capabilities (sometimes shortned to caps in the Windows API) exposes information about the HID device's top-level collection, such as its Usage Page, Usage ID, size of input and output reports, and number of buttons and values on the device.
-* Fetch a `HIDP_CAPS` structure for the device with `HidP_GetCaps`, giving the open device handle and the preparsed data.
+* To find out a top-level collection's Usage Page, Usage, number of input and output values, and report sizes, fetch a `HIDP_CAPS` structure for the device with `HidP_GetCaps`, giving the open device handle and the preparsed data.
 
 #### Fetching value / button capabilities
 type information of input buttons and values and output values on a device (such as their Usage ID, size and number of items) can be found out through a `HIDP_VALUE_CAPS` structure for each.
