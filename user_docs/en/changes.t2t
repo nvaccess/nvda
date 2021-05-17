@@ -151,6 +151,12 @@ This release also drops support for Adobe Flash.
   - ``speech.speechMode_beeps`` becomes ``speech.SpeechMode.beeps``
   - ``speech.speechMode_talk`` becomes ``speech.SpeechMode.talk``
 - ``IAccessibleHandler.IAccessibleObjectIdentifierType`` is now ``IAccessibleHandler.types.IAccessibleObjectIdentifierType``. (#12367)
+- The following in ``NVDAObjects.UIA.WinConsoleUIA`` have been changed (#12094)
+  - ``NVDAObjects.UIA.winConsoleUIA.is21H1Plus`` renamed ``NVDAObjects.UIA.winConsoleUIA.isImprovedTextRangeAvailable``.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfo`` renamed to start class name with upper case.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfoPre21H1`` renamed ``NVDAObjects.UIA.winConsoleUIA.ConsoleUIATextInfoWorkaroundEndInclusive``
+    - The implementation works around both end points being inclusive (in text ranges) before [microsoft/terminal PR 4018 https://github.com/microsoft/terminal/pull/4018]
+    - Workarounds for ``expand``, ``collapse``, ``compareEndPoints``, ``setEndPoint``, etc
 
 
 = 2020.4 =
