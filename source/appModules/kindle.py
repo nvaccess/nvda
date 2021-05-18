@@ -346,8 +346,8 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		log.debug("Setting selection to (%d, %d)" % (sel._startOffset, sel._endOffset))
 		sel.updateSelection()
 
-	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
-		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
+	def _getControlFieldForObject(self, obj):
+		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(obj)
 		if field and field["role"] == controlTypes.Role.MATH:
 			try:
 				field["mathMl"] = obj.mathMl

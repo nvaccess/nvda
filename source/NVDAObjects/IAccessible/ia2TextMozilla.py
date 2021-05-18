@@ -65,8 +65,8 @@ def _getEmbedded(obj, offset) -> typing.Optional[IAccessible]:
 
 class MozillaCompoundTextInfo(CompoundTextInfo):
 
-	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
-		controlField = super()._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
+	def _getControlFieldForObject(self, obj):
+		controlField = super()._getControlFieldForObject(obj)
 		if controlField is None:
 			return None
 		# Set the uniqueID of the controlField if we can get one
@@ -267,7 +267,13 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			elif isinstance(item, int): # Embedded object.
 				embedded: typing.Optional[IAccessible] = _getEmbedded(ti.obj, item)
 				notText = _getRawTextInfo(embedded) is NVDAObjectTextInfo
-				if controlStack is not None:
+				if (
+					controlStack is not None
+					and not (
+						self._isObjectEditableText(embedded)
+						or self._isNamedlinkDestination(embedded)
+					)
+				):
 					controlField = self._getControlFieldForObject(embedded)
 					controlStack.append(controlField)
 					if controlField:
@@ -313,8 +319,11 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			ti = self._start
 			cannotBeStart = False
 			while obj and obj != rootObj:
-				field = self._getControlFieldForObject(obj)
-				if field:
+				if not (
+					self._isObjectEditableText(obj)
+					or self._isNamedlinkDestination(obj)
+				):
+					field = self._getControlFieldForObject(obj)
 					if ti._startOffset == 0:
 						if not cannotBeStart:
 							field["_startOfNode"] = True
@@ -322,7 +331,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 						# We're not at the start of this object, which also means we're not at the start of any ancestors.
 						cannotBeStart = True
 					fields.insert(0, textInfos.FieldCommand("controlStart", field))
-				controlStack.insert(0, field)
+					controlStack.insert(0, field)
 				ti = self._getEmbedding(obj)
 				if not ti:
 					log.debugWarning(
@@ -341,7 +350,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# (We already handled collapsed above.)
 			return fields
 		obj = self._startObj
-		while fields[-1] is not None:
+		while fields[-1] is not None and controlStack:
 			# The end hasn't yet been reached, which means it isn't a descendant of obj.
 			# Therefore, continue from where obj was embedded.
 			if withFields:
@@ -354,10 +363,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					# range is invalid, so just return nothing.
 					log.debugWarning("Tried to walk up past the root. Objects probably dead.")
 					return []
-				if field:
-					# This object had a control field.
-					field["_endOfNode"] = True
-					fields.append(textInfos.FieldCommand("controlEnd", None))
+				# This object had a control field.
+				field["_endOfNode"] = True
+				fields.append(textInfos.FieldCommand("controlEnd", None))
 			ti = self._getEmbedding(obj)
 			if not ti:
 				log.debugWarning(
@@ -377,13 +385,11 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# Determine whether the range covers the end of any ancestors of endObj.
 			obj = self._endObj
 			ti = self._end
-			while obj and obj != rootObj:
+			while obj and obj != rootObj and controlStack:
 				field = controlStack.pop()
-				if field:
-					fields.append(textInfos.FieldCommand("controlEnd", None))
+				fields.append(textInfos.FieldCommand("controlEnd", None))
 				if ti.compareEndPoints(self._makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd") == 0:
-					if field:
-						field["_endOfNode"] = True
+					field["_endOfNode"] = True
 				else:
 					# We're not at the end of this object, which also means we're not at the end of any ancestors.
 					break

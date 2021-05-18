@@ -124,18 +124,21 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def _get_pointAtStart(self):
 		return self._start.pointAtStart
 
-	def _isObjectEditableText(self, obj):
-		return obj.role in (controlTypes.Role.PARAGRAPH, controlTypes.Role.EDITABLETEXT)
+	def _isObjectEditableText(self, obj: NVDAObject) -> bool:
+		return obj.role in (
+			controlTypes.Role.PARAGRAPH,
+			controlTypes.Role.EDITABLETEXT,
+		)
 
-	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
-		if ignoreEditableText and self._isObjectEditableText(obj):
-			# This is basically just a text node.
-			return None
+	def _isNamedlinkDestination(self, obj: NVDAObject) -> bool:
+		return (  # Named link destination, not a link that can be activated.
+			obj.role == controlTypes.Role.LINK
+			and controlTypes.STATE_LINKED not in obj.states
+		)
+
+	def _getControlFieldForObject(self, obj: NVDAObject):
 		role = obj.role
 		states = obj.states
-		if role == controlTypes.Role.LINK and controlTypes.STATE_LINKED not in states:
-			# Named link destination, not a link that can be activated.
-			return None
 		field = textInfos.ControlField()
 		field["role"] = role
 		field['roleText'] = obj.roleText
@@ -266,8 +269,11 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		rootObj = self.obj.rootNVDAObject
 		obj = self._startObj
 		while obj and obj != rootObj:
-			field = self._getControlFieldForObject(obj)
-			if field:
+			if not (
+				self._isObjectEditableText(obj)
+				or self._isNamedlinkDestination(obj)
+			):
+				field = self._getControlFieldForObject(obj)
 				fields.insert(0, textInfos.FieldCommand("controlStart", field))
 			obj = obj.parent
 
@@ -282,13 +288,18 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 					else:
 						embedIndex += 1
 					field = ti.obj.getChild(embedIndex)
-					controlField = self._getControlFieldForObject(field, ignoreEditableText=False)
-					controlField["content"] = field.name
-					fields.extend((
-						textInfos.FieldCommand("controlStart", controlField),
-						textUtils.OBJ_REPLACEMENT_CHAR,
-						textInfos.FieldCommand("controlEnd", None)
-					))
+					if not (
+						# Don't check for self._isObjectEditableText
+						# Only for named link destinations.
+						self._isNamedlinkDestination(obj)
+					):
+						controlField = self._getControlFieldForObject(field)
+						controlField["content"] = field.name
+						fields.extend((
+							textInfos.FieldCommand("controlStart", controlField),
+							textUtils.OBJ_REPLACEMENT_CHAR,
+							textInfos.FieldCommand("controlEnd", None),
+						))
 				else:
 					fields.append(field)
 		return fields
