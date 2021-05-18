@@ -53,3 +53,6 @@ ARIA checkbox
 i12147
 	[Documentation]	New focus target should be announced if the triggering element is removed when activated
 	test_i12147
+Table in style display: table
+	[Documentation]	Properly announce table row/column count and working table navigation for a HTML table in a div with style display: table
+	test_tableInStyleDisplayTable

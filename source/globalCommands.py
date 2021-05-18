@@ -1549,21 +1549,21 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+s"
 	)
 	def script_speechMode(self,gesture):
-		curMode=speech.speechMode
-		speech.speechMode=speech.speechMode_talk
+		curMode = speech.getState().speechMode
+		speech.setSpeechMode(speech.SpeechMode.talk)
 		newMode=(curMode+1)%3
-		if newMode==speech.speechMode_off:
+		if newMode == speech.SpeechMode.off:
 			# Translators: A speech mode which disables speech output.
 			name=_("Speech mode off")
-		elif newMode==speech.speechMode_beeps:
+		elif newMode == speech.SpeechMode.beeps:
 			# Translators: A speech mode which will cause NVDA to beep instead of speaking.
 			name=_("Speech mode beeps")
-		elif newMode==speech.speechMode_talk:
+		elif newMode == speech.SpeechMode.talk:
 			# Translators: The normal speech mode; i.e. NVDA will talk as normal.
 			name=_("Speech mode talk")
 		speech.cancelSpeech()
 		ui.message(name)
-		speech.speechMode=newMode
+		speech.setSpeechMode(newMode)
 
 	@script(
 		description=_(
