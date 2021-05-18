@@ -5,15 +5,9 @@
 # Julien Cochuyt
 
 from enum import IntEnum
-from typing import TYPE_CHECKING
+from typing import Callable, TYPE_CHECKING
 import weakref
 import garbageHandler
-from .speech import (
-	speak,
-	getTextInfoSpeech,
-	SpeakTextInfoState,
-	speakObject,
-)
 from logHandler import log
 import config
 import controlTypes
@@ -26,11 +20,17 @@ from .commands import CallbackCommand, EndUtteranceCommand
 from .speechWithoutPauses import SpeechWithoutPauses
 
 from .types import (
+	SpeechSequence,
 	_flattenNestedSequences,
 )
 
 if TYPE_CHECKING:
 	import NVDAObjects
+	from .speech import (
+		getTextInfoSpeech,
+		SpeakTextInfoState,
+		speakObject,
+	)
 
 
 class CURSOR(IntEnum):
@@ -41,18 +41,38 @@ class CURSOR(IntEnum):
 SayAllHandler = None
 
 
-def initialize():
+def initialize(
+		speakFunc: Callable[[SpeechSequence], None],
+		speakObject: 'speakObject',
+		getTextInfoSpeech: 'getTextInfoSpeech',
+		SpeakTextInfoState: 'SpeakTextInfoState',
+):
+	log.debug("Initializing sayAllHandler")
 	global SayAllHandler
-	SayAllHandler = _SayAllHandler(SpeechWithoutPauses(speakFunc=speak))
+	SayAllHandler = _SayAllHandler(
+		SpeechWithoutPauses(speakFunc=speakFunc),
+		speakObject,
+		getTextInfoSpeech,
+		SpeakTextInfoState,
+	)
 
 
 class _SayAllHandler:
-	def __init__(self, speechWithoutPausesInstance: SpeechWithoutPauses):
+	def __init__(
+			self,
+			speechWithoutPausesInstance: SpeechWithoutPauses,
+			speakObject: 'speakObject',
+			getTextInfoSpeech: 'getTextInfoSpeech',
+			SpeakTextInfoState: 'SpeakTextInfoState',
+	):
 		self.lastSayAllMode = None
 		self.speechWithoutPausesInstance = speechWithoutPausesInstance
 		#: The active say all manager.
 		#: This is a weakref because the manager should be allowed to die once say all is complete.
 		self._getActiveSayAll = lambda: None  # noqa: Return None when called like a dead weakref.
+		self._speakObject = speakObject
+		self._getTextInfoSpeech = getTextInfoSpeech
+		self._makeSpeakTextInfoState = SpeakTextInfoState
 
 	def stop(self):
 		'''
@@ -115,7 +135,11 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 			return
 		# Call this method again when we start speaking this object.
 		callbackCommand = CallbackCommand(self.next, name="say-all:next")
-		speakObject(obj, reason=controlTypes.OutputReason.SAYALL, _prefixSpeechCommand=callbackCommand)
+		SayAllHandler._speakObject(
+			obj,
+			reason=controlTypes.OutputReason.SAYALL,
+			_prefixSpeechCommand=callbackCommand
+		)
 
 	def stop(self):
 		self.walker = None
@@ -158,7 +182,7 @@ class _TextReader(garbageHandler.TrackedObject):
 			self.reader = api.getReviewPosition()
 		# #10899: SayAll profile can't be activated earlier because they may not be anything to read
 		self.trigger.enter()
-		self.speakTextInfoState = SpeakTextInfoState(self.reader.obj)
+		self.speakTextInfoState = SayAllHandler._makeSpeakTextInfoState(self.reader.obj)
 		self.numBufferedLines = 0
 
 	def nextLine(self):
@@ -207,7 +231,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		# and insert the lineReached callback at the very beginning of the sequence.
 		# _linePrefix on speakTextInfo cannot be used here
 		# As it would be inserted in the sequence after all initial control starts which is too late.
-		speechGen = getTextInfoSpeech(
+		speechGen = SayAllHandler._getTextInfoSpeech(
 			self.reader,
 			unit=textInfos.UNIT_READINGCHUNK,
 			reason=controlTypes.OutputReason.SAYALL,
