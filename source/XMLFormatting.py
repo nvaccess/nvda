@@ -6,6 +6,7 @@
 import typing
 from xml.parsers import expat
 import textInfos
+import textUtils
 from logHandler import log
 from textUtils import WCHAR_ENCODING, isLowSurrogate
 
@@ -20,7 +21,7 @@ class XMLTextParser(object):
 				try:
 					data=chr(int(data))
 				except ValueError:
-					data=u'\ufffd'
+					data = textUtils.REPLACEMENT_CHAR
 				self._CharacterDataHandler(data, processBufferedSurrogates=isLowSurrogate(data))
 			return
 		elif tagName=='control':

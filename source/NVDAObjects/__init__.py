@@ -13,6 +13,8 @@ import time
 import re
 import typing
 import weakref
+
+import textUtils
 from logHandler import log
 import review
 import eventHandler
@@ -1123,7 +1125,7 @@ Tries to force this object to take the focus.
 			notBlank=False
 			if text:
 				for ch in text:
-					if not ch.isspace() and ch!=u'\ufffc':
+					if not ch.isspace() and ch != textUtils.OBJ_REPLACEMENT_CHAR:
 						notBlank=True
 			if notBlank:
 				if not speechWasCanceled:

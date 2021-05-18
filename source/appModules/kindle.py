@@ -1,13 +1,14 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 from typing import Optional, Dict
 
 from comtypes import COMError
 from comtypes.hresult import S_OK
 import appModuleHandler
 import speech
+import textUtils
 from speech import sayAll
 import api
 from scriptHandler import willSayAllResume, isScriptWaiting
@@ -199,13 +200,13 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		offset = pos.innerTextInfo._start._startOffset
 		if direction == "next":
 			text = obj.IAccessibleTextObject.text(offset + 1, obj.IAccessibleTextObject.nCharacters)
-			embed = text.find(u"\uFFFC")
+			embed = text.find(textUtils.OBJ_REPLACEMENT_CHAR)
 			if embed != -1:
 				embed += offset + 1
 		else:
 			if offset > 0:
 				text = obj.IAccessibleTextObject.text(0, offset)
-				embed = text.rfind(u"\uFFFC")
+				embed = text.rfind(textUtils.OBJ_REPLACEMENT_CHAR)
 			else:
 				# We're at the start; we can't go back any further.
 				embed = -1

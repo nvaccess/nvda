@@ -1,9 +1,8 @@
-#compoundDocuments.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2010-2018 NV Access Limited, Bram Duvigneau
-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2021 NV Access Limited, Bram Duvigneau
+import textUtils
 import winUser
 import textInfos
 import controlTypes
@@ -259,7 +258,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		# Get the number of embeds before the start.
 		# The index is 0 based, so this is the index of the first embed after start.
 		text = info._getTextRange(0, info._startOffset)
-		return text.count(u"\uFFFC")
+		return text.count(textUtils.OBJ_REPLACEMENT_CHAR)
 
 	def getTextWithFields(self, formatConfig=None):
 		# Get the initial control fields.
@@ -285,9 +284,11 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 					field = ti.obj.getChild(embedIndex)
 					controlField = self._getControlFieldForObject(field, ignoreEditableText=False)
 					controlField["content"] = field.name
-					fields.extend((textInfos.FieldCommand("controlStart", controlField),
-						u"\uFFFC",
-						textInfos.FieldCommand("controlEnd", None)))
+					fields.extend((
+						textInfos.FieldCommand("controlStart", controlField),
+						textUtils.OBJ_REPLACEMENT_CHAR,
+						textInfos.FieldCommand("controlEnd", None)
+					))
 				else:
 					fields.append(field)
 		return fields

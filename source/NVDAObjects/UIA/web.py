@@ -7,6 +7,7 @@ from comtypes import COMError
 from comtypes.automation import VARIANT
 from ctypes import byref
 
+import textUtils
 from . import (
 	UIATextInfo,
 	UIA,
@@ -239,7 +240,7 @@ class UIAWebTextInfo(UIATextInfo):
 				# embedded object characters (which can appear in Edgium)
 				# should also be treated as whitespace
 				# allowing to be replaced by an overridden label
-				text = text.replace('\ufffc', '')
+				text = text.replace(textUtils.OBJ_REPLACEMENT_CHAR, '')
 				if not text or text.isspace():
 					content = obj.name or field.pop('description', None)
 			if content:

@@ -177,11 +177,11 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			if not text:
 				return
 			try:
-				self._startOffset=text.rindex(u'\ufffc',0,oldStart-self._startOffset)
+				self._startOffset = text.rindex(textUtils.OBJ_REPLACEMENT_CHAR, 0, oldStart - self._startOffset)
 			except ValueError:
 				pass
 			try:
-				self._endOffset=text.index(u'\ufffc',oldEnd-self._startOffset)
+				self._endOffset = text.index(textUtils.OBJ_REPLACEMENT_CHAR, oldEnd - self._startOffset)
 			except ValueError:
 				pass
 
@@ -357,7 +357,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			while chunkStart < itemLen:
 				# Find the next embedded object character.
 				try:
-					chunkEnd = item.index(u"\uFFFC", chunkStart)
+					chunkEnd = item.index(textUtils.OBJ_REPLACEMENT_CHAR, chunkStart)
 				except ValueError:
 					# This is the last chunk of text.
 					yield item[chunkStart:]

@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import locale
 import comtypes.client
@@ -631,7 +631,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		newTextList=[]
 		start=rangeObj.start
 		for offset in range(len(bufText)):
-			if ord(bufText[offset])==0xfffc:
+			if ord(bufText[offset]) == ord(textUtils.OBJ_REPLACEMENT_CHAR):
 				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
 				embedRangeObj.setRange(start+offset,start+offset+1)
 				label=self._getEmbeddedObjectLabel(embedRangeObj)
