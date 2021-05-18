@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
 # Davy Kager
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -412,9 +412,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		else:
 			return self._appModuleRef()
 
-	def _get_name(self):
+	#: Type definition for auto prop '_get_name'
+	name: str
+
+	def _get_name(self) -> str:
 		"""The name or label of this object (example: the text of a button).
-		@rtype: str
 		"""
 		return ""
 
@@ -426,7 +428,10 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""  
 		return controlTypes.Role.UNKNOWN
 
-	def _get_roleText(self):
+	#: Type definition for auto prop '_get_roleText'
+	roleText: typing.Optional[str]
+
+	def _get_roleText(self) -> typing.Optional[str]:
 		"""
 		A custom role string for this object, which is used for braille and speech presentation, which will override the standard label for this object's role property.
 		No string is provided by default, meaning that NVDA will fall back to using role.
@@ -564,24 +569,35 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return None
 
-	def _get_firstChild(self):
+	#: Type definition for auto prop '_get_firstChild'
+	firstChild: typing.Optional["NVDAObject"]
+
+	def _get_firstChild(self) -> typing.Optional["NVDAObject"]:
 		"""Retrieves the first object that this object contains.
 		@return: the first child object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
-	def _get_lastChild(self):
+	#: Type definition for auto prop '_get_lastChild'
+	lastChild: typing.Optional["NVDAObject"]
+
+	def _get_lastChild(self) -> typing.Optional["NVDAObject"]:
 		"""Retrieves the last object that this object contains.
 		@return: the last child object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
+
+	#: Type definition for auto prop '_get_children'
+	children: typing.List["NVDAObject"]
 
 	def _get_children(self):
 		"""Retrieves a list of all the objects directly contained by this object (who's parent is this object).
 		@rtype: list of L{NVDAObject}
 		"""
+		log.debugWarning(
+			"Base implementation used."
+			" Relies on child.next which is error prone in many IA2 implementations."
+		)
 		children=[]
 		child=self.firstChild
 		while child:
@@ -589,14 +605,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			child=child.next
 		return children
 
-	def getChild(self, index):
+	def getChild(self, index: int) -> "NVDAObject":
 		"""Retrieve a child by index.
 		@note: Subclasses may override this if they have an efficient way to retrieve a single, arbitrary child.
 			The base implementation uses L{children}.
 		@param index: The 0-based index of the child to retrieve.
-		@type index: int
 		@return: The child.
-		@rtype: L{NVDAObject}
 		"""
 		return self.children[index]
 

@@ -1,16 +1,17 @@
-#NVDAObjects/IAccessible/ia2TextMozilla.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2015-2019 NV Access Limited, Mozilla Corporation
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2015-2021 NV Access Limited, Mozilla Corporation
 
 """Support for the IAccessible2 rich text model first implemented by Mozilla.
 This is now used by other applications as well.
 """
+import typing
 
 from comtypes import COMError
 import winUser
 import textInfos
+from textInfos import offsets
 import controlTypes
 from comInterfaces import IAccessible2Lib as IA2
 import api
@@ -20,28 +21,35 @@ from compoundDocuments import CompoundTextInfo
 import locationHelper
 from logHandler import log
 
-class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+class FakeEmbeddingTextInfo(offsets.OffsetsTextInfo):
 	encoding = None
 
 	def _getStoryLength(self):
 		return self.obj.childCount
 
-	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
-		return range(self._startOffset, self._endOffset)
+	def _iterTextWithEmbeddedObjects(
+			self,
+			withFields,
+			formatConfig=None
+	) -> typing.Generator[int, None, None]:
+		yield from range(self._startOffset, self._endOffset)
 
 	def _getUnitOffsets(self,unit,offset):
 		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
 			unit=textInfos.UNIT_CHARACTER
 		return super(FakeEmbeddingTextInfo,self)._getUnitOffsets(unit,offset)
 
-def _getRawTextInfo(obj):
+
+def _getRawTextInfo(obj) -> type(offsets.OffsetsTextInfo):
 	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.Role.TABLE, controlTypes.Role.TABLEROW):
 		return FakeEmbeddingTextInfo
 	elif obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
 	return IA2TextTextInfo
 
-def _getEmbedded(obj, offset):
+
+def _getEmbedded(obj, offset) -> typing.Optional[IAccessible]:
 	if not hasattr(obj, "IAccessibleTextObject"):
 		return obj.getChild(offset)
 	# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
@@ -179,7 +187,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			return ti, obj
 		raise RuntimeError("No selection or caret")
 
-	def _makeRawTextInfo(self, obj, position):
+	def _makeRawTextInfo(self, obj, position) -> offsets.OffsetsTextInfo:
 		return _getRawTextInfo(obj)(obj, position)
 
 	def _getEmbedding(self, obj):
@@ -244,7 +252,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		ti._startOffset=ti._endOffset=descendantOffset.value
 		return ti,obj
 
-	def _iterRecursiveText(self, ti, controlStack, formatConfig):
+	def _iterRecursiveText(self, ti: offsets.OffsetsTextInfo, controlStack, formatConfig):
 		if ti.obj == self._endObj:
 			end = True
 			ti.setEndPoint(self._end, "endToEnd")
@@ -257,7 +265,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			elif isinstance(item, str):
 				yield item
 			elif isinstance(item, int): # Embedded object.
-				embedded = _getEmbedded(ti.obj, item)
+				embedded: typing.Optional[IAccessible] = _getEmbedded(ti.obj, item)
 				notText = _getRawTextInfo(embedded) is NVDAObjectTextInfo
 				if controlStack is not None:
 					controlField = self._getControlFieldForObject(embedded)
