@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2015-2020 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2015-2021 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
@@ -190,8 +190,8 @@ class UIAWebTextInfo(UIATextInfo):
 				self.setEndPoint(tempInfo, "endToEnd" if endPoint == "end" else "startToStart")
 			return res
 
-	def _getControlFieldForObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
-		field = super()._getControlFieldForObject(
+	def _getControlFieldForUIAObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
+		field = super()._getControlFieldForUIAObject(
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
