@@ -39,8 +39,9 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	std::wstring toolkitName;
 
+	std::optional<int> getRelationId(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2);
 	std::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);
-	CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element);
+	CComPtr<IAccessible2> getRelationElement(LPCOLESTR ia2TargetRelation, IAccessible2_2* element);
 	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
 		const std::map<std::wstring, std::wstring>& attribs);
 

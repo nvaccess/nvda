@@ -48,6 +48,55 @@ def checkbox_labelled_by_inner_element():
 	)
 
 
+def test_aria_details():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <mark aria-details="cat-details">cat</mark> has a comment tied to it.</p>
+			<div id="cat-details" role="comment">
+				Cats go woof BTW<br>&mdash;Jonathon Commentor
+				<div role="comment">
+				No they don't<br>&mdash;Zara
+				</div>
+				<div role="form">
+				<textarea cols="80" placeholder="Add reply..."></textarea>
+				<input type="submit">
+				</div>
+			</div>
+		</div>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		"The word  marked content  cat  out of marked content  has a comment tied to it."
+	)
+	# this word has no details attached
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"word"
+	)
+	# check that there is no summary reported
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
+	_asserts.strings_match(
+		actualSpeech,
+		"No additional details"
+	)
+	# this word has details attached to it
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"marked content  cat  out of marked content"
+	)
+	# read the details summary
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
+	_asserts.strings_match(
+		actualSpeech,
+		"Cats go woof BTW  Jonathon Commentor No they don't  Zara Submit"
+	)
+
+
 def announce_list_item_when_moving_by_word_or_character():
 	_chrome.prepareChrome(
 		r"""
