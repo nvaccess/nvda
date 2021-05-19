@@ -47,7 +47,10 @@ bool hasXmlRoleAttribContainingValue(const map<wstring,wstring>& attribsMap, con
 	return attribsMapIt != attribsMap.end() && attribsMapIt->second.find(roleName) != wstring::npos;
 }
 
-CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* element) {
+CComPtr<IAccessible2> GeckoVBufBackend_t::getRelationElement(
+	LPCOLESTR ia2TargetRelation,
+	IAccessible2_2* element
+) {
 	IUnknown** ppUnk=nullptr;
 	long nTargets=0;
 	// We only need to request one relation target
@@ -60,7 +63,13 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* elemen
 		numRelations=0;
 	}
 	// the relation type string *must* be passed correctly as a BSTR otherwise we can see crashes in 32 bit Firefox.
-	HRESULT res=element->get_relationTargetsOfType(CComBSTR(IA2_RELATION_LABELLED_BY),numRelations,&ppUnk,&nTargets);
+	CComBSTR relationAsBSTR(ia2TargetRelation);
+	HRESULT res = element->get_relationTargetsOfType(
+		relationAsBSTR,
+		numRelations,
+		&ppUnk,
+		&nTargets
+	);
 	if(res!=S_OK) return nullptr;
 	// Grab all the returned IUnknowns and store them as smart pointers within a smart pointer array 
 	// so that any further returns will correctly release all the objects. 
@@ -71,7 +80,7 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* elemen
 	// we can now free the memory that Gecko  allocated to give us  the IUnknowns
 	CoTaskMemFree(ppUnk);
 	if(nTargets==0) {
-		LOG_DEBUG(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY found no targets");
+		LOG_DEBUG(L"relationTargetsOfType for " << relationAsBSTR.m_str << L" found no targets");
 		return nullptr;
 	}
 	return CComQIPtr<IAccessible2>(ppUnk_smart[0]);
@@ -227,7 +236,7 @@ using OptionalLabelInfo = optional< LabelInfo >;
 OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
 	if (!pacc2_2) return OptionalLabelInfo();
-	auto targetAcc=getLabelElement(pacc2_2);
+	auto targetAcc = getRelationElement(IA2_RELATION_LABELLED_BY, pacc2_2);
 	if(!targetAcc) return OptionalLabelInfo();
 	CComVariant child;
 	child.vt = VT_I4;
@@ -237,6 +246,15 @@ OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	bool isVisible = res == S_OK && !(state.lVal & STATE_SYSTEM_INVISIBLE);
 	auto ID = getIAccessible2UniqueID(targetAcc);
 	return LabelInfo { isVisible, ID } ;
+}
+
+std::optional<int> GeckoVBufBackend_t::getRelationId(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2) {
+	CComQIPtr<IAccessible2_2> pacc2_2 = pacc2;
+	if (pacc2_2 == nullptr) return std::optional<int>();
+	auto targetAcc = getRelationElement(ia2TargetRelation, pacc2_2);
+	if (targetAcc == nullptr) return std::optional<int>();
+	auto ID = getIAccessible2UniqueID(targetAcc);
+	return ID;
 }
 
 long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
@@ -1078,6 +1096,29 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					}
 				}
 			}
+		}
+	}
+
+
+	/* Set the details summary by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
+	of the nodes in the relationship will not be in the buffer yet */
+	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
+	if (detailsId) {
+		auto detailsControlFieldNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
+		if (detailsControlFieldNode) {
+			std::wstring detailsSummary = L"";
+			detailsControlFieldNode->getTextInRange(0, detailsControlFieldNode->getLength(), detailsSummary, false);
+			parentNode->addAttribute(L"detailsSummary", detailsSummary);
+		}
+	}
+
+	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
+	if (detailsForId) {
+		auto detailsControlFieldNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
+		if (detailsControlFieldNode) {
+			std::wstring detailsSummary = L"";
+			parentNode->getTextInRange(0, parentNode->getLength(), detailsSummary, false);
+			detailsControlFieldNode->addAttribute(L"detailsSummary", detailsSummary);
 		}
 	}
 

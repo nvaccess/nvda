@@ -1399,6 +1399,26 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	# Translators: the description for the activateLongDescription script on browseMode documents.
 	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
 
+	@script(
+		description=_(
+			# Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
+			"Shows a summary of the details at this position if found."
+		)
+	)
+	def script_activateAriaDetailsSummary(self, gesture):
+		info = self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand("character")
+		for field in reversed(info.getTextWithFields()):
+			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
+				states = field.field.get('states')
+				if states and controlTypes.STATE_HAS_ARIA_DETAILS in states:
+					ui.message(field.field['detailsSummary'])
+					return
+
+		# Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
+		# set of details to read.
+		ui.message(_("No additional details"))
+
 	def event_caretMovementFailed(self, obj, nextHandler, gesture=None):
 		if not self.passThrough or not gesture or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
 			return nextHandler()
