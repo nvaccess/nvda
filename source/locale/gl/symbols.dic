@@ -12,7 +12,6 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
-
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
@@ -26,10 +25,10 @@ symbols:
 
 # Complex symbols
 . sentence ending	punto	all	always
-! sentence ending	pechar exclamación	all	always
-? sentence ending	pechar interrogación	all	always
-; phrase ending	punto e coma	most	always
-: phrase ending	dous puntos	most	always
+! sentence ending	cerrar exclamación	all	always
+? sentence ending	cerrar interrogación	all	always
+; phrase ending	punto y coma	most	always
+: phrase ending	dos puntos	most	always
 decimal point		none	always
 in-word '	apóstrofo	all	norep
 in-word -	guión	all	norep
@@ -44,58 +43,52 @@ dates /	 	all	always
 \r	retorno de carro	char
  	espazo	char
  	espazo	char	# no-break space
-
 # Standard punctuation/symbols
 !	pechar exclamación	all
 "	comiñas	most
 \#	signo de número	some
-$	dólar	all	norep
+$	dólares	all	norep
 £	libras	all	norep
 €	euros	all	norep
-¢	Centavos	all	norep
-¥	Yen	all	norep
-₹	Rupia	some	norep
-ƒ	florín	all	norep
+¢	centavos	all	norep
+¥	yen	all	norep
+₹	rupias	some	norep
+ƒ	floríns	all	norep
 ¤	signo de moneda	all	norep
 %	porcento	some
 ‰	por mil	some
 &	et	some
 '	apóstrofo	all
-(	abrir paréntesis	most	always
-)	pechar paréntesis	most	always
+(	abrir paréntese	most	always
+)	pechar paréntese	most	always
 *	estrela	some
-+	máis	some
-−	menos	some
 ,	coma	all	always
--	guión	most
+-	guion	most
 .	punto	some
-/	barra 	some
+/	barra	some
 :	dous puntos	most	norep
 ;	punto e coma	most
-<	menor que	some
->	maior que	some
-=	igual	some
 ?	pechar interrogación	all
 @	arroba	some
 [	abrir corchete	most
 ]	pechar corchete	most
-\\	barra invertida	most
-^	circunfrexo	most
+\\	barra inversa	most
+^	acento circunfrexo	most
 _	subliñado	most
-`	grave	most
+`	acento grave	most
 {	abrir chave	most
 }	pechar chave	most
 |	barra vertical	most
-¦	barra cortada	most
+¦	Barra curtada	most
 ~	tilde	most
-¿	abrir interrogación	all
-¡	abrir exclamación	all
+¡	abrir exclamación point	some
+¿	abrir interrogación	some
 ·	punto centrado	most
-‚	Comiñas baixas sinxelas	most
+‚	comiñas baixas sinxelas	most
 „	comiñas baixas dobres	most
 ′	primo	some
-″	primo dobre	some
-‴	primo triple	some
+″	doble primo	some
+‴	triple primo	some
 
 # Other characters
 •	viñeta	some
@@ -103,42 +96,38 @@ _	subliñado	most
 ...	puntos suspensivos	all	always
 “	abrir comiñas	most
 ”	pechar comiñas	most
-‘	apóstrofo esquerdo	most
-’	apóstrofo dereito	most
-–	guión	most	always
+‘	abrir apóstrofo	most
+’	pechar apóstrofo	most
+–	guion	most	always
 —	raia	most
-­	guión suave	most
-⁃	guión viñeta	none
+­	guion suave	most
+⁃	guion viñeta	none
 ●	círculo	most
 ○	círculo branco	most
-¨	diéresis	most
+¨	diérese	most
 ¯	macron	most
-´	agudo	most
+´	acento agudo	most
 ¸	cedilla	most
-‎‎	marca de esquerda a dereita	char
+‎	marca de esquerda a dereita	char
 ‏	marca de dereita a esquerda	char
 ¶	marca de parágrafo	most
 ■	cadrado negro	some
 ▪	cadrado negro	some
 ◾	cadrado negro	some
 □	cadrado branco	some
-◦	Viñeta branca	some
-⇒	frecha dobre á dereita	some
+◦	viñeta branca	some
 ⇨	frecha branca á dereita	some
 ➔	frecha apuntando á dereita	some
 ➢	frecha con cabeza á dereita	some
-⮚	frecha con cabeza á dereita	some
-❖	diamante negro menos X blanca	some
+❖	diamante negro menos X branca	some
 ♣	clube negro	some
 ♦	diamante negro	some
 ◆	diamante negro	some
-§	Seción	most
+§	seción	all
 °	graos	some
-«	Abrir Comiñas angulares
-»	pechar comiñas angulares
+«	abrir comiñas angulares	none
+»	pechar comiñas angulares	none
 µ	micro	some
-º	ordinal masculino	some
-ª	ordinal feminino	some
 ⁰	superíndice 0	some
 ¹	superíndice 1	some
 ²	superíndice 2	some
@@ -150,10 +139,9 @@ _	subliñado	most
 ⁸	superíndice 8	some
 ⁹	superíndice 9	some
 ⁺	superíndice máis	some
-⁻	superíndice menos	some
 ⁼	superíndice igual	some
-⁽	superíndice abrir paréntesis	some
-⁾	superíndice pechar paréntesis	some
+⁽	superíndice abrir paréntese	some
+⁾	superíndice pechar paréntese	some
 ⁿ	superíndice n	some
 ₀	subíndice 0	some
 ₁	subíndice 1	some
@@ -168,74 +156,178 @@ _	subliñado	most
 ₊	subíndice máis	some
 ₋	subíndice menos	some
 ₌	subíndice igual	some
-₍	subíndice abrir paréntesis	some
-₎	subíndice pechar paréntesis	some
-®	marca rexistrada	some
-™	Marca comercial	some
-©	dereitos de autor	some	norep
-℠	Marca de servizo	some
-±	Máis ou menos	some
-×	multiplicado por	some
-÷	dividido por	some
-←	Frecha esquerda	some
-↑	Frecha arriba	some
+₍	subíndice abrir paréntese	some
+₎	subíndice pechar paréntese	some
+®	rexistrado	some
+™	marca rexistrada	some
+©	copyright	some
+℠	marca de servizo	some
+←	frecha esquerda	some
+↑	frecha arriba	some
 →	Frecha dereita	some
 ↓	frecha abaixo	some
 ✓	marcado	some
 ✔	marcado	some
-🡺	Frecha dereita	some
+🡺	frecha dereita	some
 †	daga	some
-‡	dobre daga	some
+‡	doble daga	some
 ‣	viñeta triangular	none
-✗	viñenta en forma de x	none
+✗	viñeta en forma de x	none
+⊕	máis rodeado por un círculo	none
+⊖	menos rodeado por un círculo	none
+⇄	frecha dereita sobre frecha esquerda	none
+⇒	frecha dobre á dereita	none
 
-#Mathematical Operators U+2200 to U+220F
-∀	Por Todos	none
-∁	Complemento	none
-∂	Derivativa Parcial	none
-∃	Existe	none
-∄	Non Existe	none
-∅	Conxunto Valdeiro	none
-∆	INCREMENTO	none
-∇	NABLA	none
-∈	Pertence a	none
-∉	Non Pertence a	none
-∊	Elemento pequeño de	none
-∋	Contén como Membro a	none
-∌	Non contén como Membro a	none
-∍	Contén como Membro Pequeno a	none
-∎	Fin de Proba	none
-∏	N-Producto Aritmético	none
+#Arithmetic operators
++	máis	some
+−	menos	some
+×	multiplicado por	some
+⋅	multiplicado por	some
+⨯	multiplicado por	none
+∕	dividido por	some
+⁄	dividido por	some
+÷	dividido por	some
+∓	menos ou máis	some
+±	Máis ou Menos	some
 
-# Miscellaneous Mathematical Operators
-∑	N-Suma Aritmética	none
-√	Raíz Cadrada	none
-∛	Raíz Cúbica	none
-∜	Raíz Cuadrática	none
-∝	Proporcional a	none
-∞	Infinito	none
-∟	Ángulo Dereito	none
-∠	Ángulo	none
-∥	Paralelo A	none
-∦	Non Paralelo A	none
-∧	Y Lóxico	none
-∨	O Lóxico	none
-¬	non lóxico	none
-∩	Intersección	none
-∪	Unión	none
-∫	Integral	none
-∴	Por Tanto	none
-∵	Porque	none
-∶	RATIO	none
-∷	Proporción	none
-≤	Menor ou Igual a	none
-≥	Maior ou Igual A	none
-⊂	Subconxunto De	none
-⊃	Superconxunto de 	none
-⊆	Subconxunto de Ou Igual A	none
-⊇	Superconxunto de Ou Igual A	none
+#Set operations
+∖	conxunto menos	none
+⊍	unión de conxunto	none
+𝒫	conxunto potencia do conxunto	none
+𝔓	conxunto potencia do conxunto	none
+℘	conxunto potencia do conxunto	none
+∁	complemento do conxunto	none
+
+#Set relations and set constructions
+∅	conxunto valdeiro	none
+⊂	subconxunto de	none
+⊄	non un subconxunto de	none
+⊃	superconxunto de	none
+⊅	non un superconxunto de	none
+⊆	subconxunto de ou igual a	none
+⊈	nin un subconxunto de nin igual a	none
+⊇	superconxunto de ou igual a	none
+⊉	nin un superconxunto de nin igual a	none
+⊌	multiconxunto	none
+
+#Equality signs
+=	igual	some
+≃	asintóticamente igual a	none
+≄	non asintóticamente igual a	none
+≅	aproximadamente igual a	none
+≆	aproximadamente pero non actualmente igual a	none
+≈	casi igual a	none
+≌	todo igual a	none
+≍	equivalente a	none
+≭	non equivalente a	none
+≎	geométricamente equivalente a	none
+≑	geométricamente igual a	none
+≚	equiangular a	none
+≬	entre	none
+≠	non igual a	none
+≡	idéntico a	none
+≣	estrictamente idéntico a	none
+≢	non idéntico a	none
+∼	similar a	none
+≙	estimaciones	none
+≟	cuestionado igual a	none
+
+#comparison signs
+<	menor que	some
+>	maior que	some
+≤	menor ou igual a	none
+≦	menor ou igual a	none
+≪	moito menor a	none
+≥	maior ou igual a	none
+≧	maior ou igual a	none
+≫	moito maior anone
+≶	menor ou maior que	none
+≷	maior ou menor que	none
+≮	non menor que	none
+≯	non maior que	none
+
+#Functions
+⁻	inversa	some
+∘	operador anular	none
+∂	derivativa parcial	none
+∇	gradente de	none
+
+#Geometry and linear Algebra
+⃗	vector entre	none
+△	triángulo	none
+▭	rectángulo	none
+∟	ángulo dereito	none
+∠	ángulo	none
+∥	paralelo a	none
+∦	non paralelo a	none
+⊥	perpendicular a	none
+⟂	ortogonal a	none
+‖	norma do vector	none
+̂	normalizacións	none
+∿	onda sinusoidal	none
+∡	medida de ángulo	none
+∢	ángulo esférico	none
+
+#Logical operators
+∀	por todos	none
+∃	existe	none
+∄	non existe	none
+⇏	non implica	none
+⇐	está implícito por	none
+
+#Other mathematical Operators
+∈	pertence a	none
+∉	non pertence a	none
+∊	elemento pequeno de	none
+∋	contén como membro	none
+∌	non contén como membro	none
+∍	contén como membro pequeno	none
+∎	fin de comprobación	none
+∏	producto aritmético de n	none
+∐	coproducto aritmético de n	none
+∑	suma aritmética de n	none
+√	raíz cadrada	none
+∛	raíz cúbica	none
+∜	raíz cuadrática	none
+∝	proporcional a	none
+∞	infinito	none
+∧	e lógico	none
+∨	ou lógico	none
+¬	non lógico	none
+∩	intersección	none
+∪	unión	none
+∫	integral	none
+∬	doble Integral	none
+∭	tripple Integral	none
+∮	contorno Integral	none
+∯	superficie Integral	none
+∰	volumen Integral	none
+∱	Integral no sentido das agullas do reloxo	none
+∲	Integral da contorna das agullas do reloxo	none
+∳	Integral do contorno contrario ás agullas do reloxo	none
+∴	por tanto	none
+∵	porque	none
+∶	ratio	none
+∷	proporción	none
+∹	exceso	none
+∺	proporción xeométrica	none
+≀	producto da corona	none
+≏	diferencia entre	none
+≐	aproxima ao límite	none
+∙	operador de viñeta	none
+∣	divide	none
+∤	non divide	none
+≔	dous puntos igual	none
+≕	igual dos puntos	none
+≺	precede	none
+≻	ten éxito	none
+⊀	non precede	none
+⊁	non tiene éxito	none
 
 # Vulgur Fractions U+2150 to U+215E
+¼	un cuarto	none
+½	un medio	none
+¾	tres cuartos	none
 ⅐	un séptimo	none
 ⅑	un noveno	none
 ⅒	un décimo	none
@@ -252,5 +344,19 @@ _	subliñado	most
 ⅝	cinco octavos	none
 ⅞	sete octavos	none
 
+#Number sets
+𝔸	números alxebraicos	none
+ℂ	Números comprexos	none
+ℑ	parte imaxinaria de número comprexo	none
+ℍ	cuaterniones	none
+ℕ	números naturais	none
+𝕁	números non negativos (enteiros)	none
+ℚ	números racionais	none
+ℝ	números reais	none
+ℜ	parte real de número comprexo	none
+ℤ	enteiros	none
+ℵ	número aleph	none
+ℶ	número beth	none
+
 # Miscellaneous Technical
-⌘	Tecla Command do Mac	none
+⌘	tecla command do Mac	none
