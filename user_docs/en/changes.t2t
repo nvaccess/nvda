@@ -3,6 +3,20 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+
+== New Features ==
+
+
+== Changes ==
+
+
+== Bug Fixes ==
+
+
+== Changes for Developers ==
+
+
 = 2021.1 =
 This release includes optional experimental support for UIA in Excel and Chromium browsers.
 There are fixes for several languages, and for accessing links in Braille.
@@ -67,6 +81,7 @@ This release also drops support for Adobe Flash.
 - Fixed the pitch change failure in SAPI4 speech synthesizer. (#12311)
 - The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
 - In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
+- NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
 
 
 == Changes for Developers ==
