@@ -1838,7 +1838,7 @@ class UIA(Window):
 		A prominent example is rearranging Start screen tiles on Windows 8 and later.
 		"""
 		# #12271: speech does not report new location but braille does.
-		self.reportFocus()
+		self.event_gainFocus()
 
 	def event_UIA_droptTargetDropped(self):
 		"""
@@ -1846,8 +1846,9 @@ class UIA(Window):
 		A prominent example is rearranging quick actions in Windows 10 Action Center.
 		"""
 		# #12271: unlike drag complete event, it is a different element that raises this event.
+		# Specifically, it is the containing element that raises this event.
 		# but NVDA does record the newly dragged element as focused object.
-		api.getFocusObject().reportFocus()
+		api.getFocusObject().event_gainFocus()
 
 
 class TreeviewItem(UIA):
