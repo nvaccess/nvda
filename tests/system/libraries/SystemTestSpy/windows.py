@@ -50,14 +50,21 @@ def _GetVisibleWindows() -> List[Window]:
 	)
 
 
-def SetForegroundWindow(targetTitle: re.Pattern) -> bool:
-	if re.match(targetTitle, GetForegroundWindowTitle()):
+def SetForegroundWindow(targetTitle: re.Pattern, logger: Callable[[str], None] = lambda _: None) -> bool:
+	currentTitle = GetForegroundWindowTitle()
+	if re.match(targetTitle, currentTitle):
+		logger(f"Window '{currentTitle}' already focused")
 		return True
 	windows = _GetWindows(
 		filterUsingWindow=lambda window: re.match(targetTitle, window.title)
 	)
-	for window in windows:
-		return windll.user32.SetForegroundWindow(window.hwnd)
+	if len(windows) == 1:
+		logger(f"Focusing window to (HWND: {windows[0].hwnd}) (title: {windows[0].title})")
+		return windll.user32.SetForegroundWindow(windows[0].hwnd)
+	elif len(windows) == 0:
+		logger("No windows matching the pattern found")
+	else:
+		logger(f"Too many windows to focus {windows}")
 	return False
 
 

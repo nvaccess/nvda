@@ -16,6 +16,7 @@ which provide library functions related to monitoring NVDA and asserting NVDA ou
 from os.path import join as _pJoin, abspath as _abspath, expandvars as _expandvars
 import tempfile as _tempFile
 from typing import Optional
+from urllib.parse import quote as _quoteStr
 
 from robotremoteserver import (
 	test_remote_server as _testRemoteServer,
@@ -111,14 +112,16 @@ class NvdaLib:
 		suiteName = builtIn.get_variable_value("${SUITE NAME}")
 		testName = builtIn.get_variable_value("${TEST NAME}")
 		outputFileName = f"{suiteName}-{testName}-{name}".replace(" ", "_")
+		outputFileName = _quoteStr(outputFileName)
 		return outputFileName
 
 	@staticmethod
-	def setup_nvda_profile(configFileName):
+	def setup_nvda_profile(configFileName, gesturesFileName: Optional[str] = None):
 		configManager.setupProfile(
 			_locations.repoRoot,
 			configFileName,
-			_locations.stagingDir
+			_locations.stagingDir,
+			gesturesFileName,
 		)
 
 	@staticmethod
@@ -247,9 +250,9 @@ class NvdaLib:
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
 
-	def start_NVDA(self, settingsFileName):
+	def start_NVDA(self, settingsFileName: str, gesturesFileName: Optional[str] = None):
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
-		self.setup_nvda_profile(settingsFileName)
+		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()

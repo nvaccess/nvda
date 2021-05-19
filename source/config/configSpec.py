@@ -225,6 +225,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# 0:default, 1:Only when necessary, 2:yes, 3:no
 	allowInChromium = integer(0, 3, default=0)
 
+[annotations]
+	reportDetails = boolean(default=false)
+
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)

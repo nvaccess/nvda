@@ -33,7 +33,7 @@ import textInfos
 import braille
 import vision
 import speech
-import sayAllHandler
+from speech import sayAll
 import treeInterceptorHandler
 import inputCore
 import api
@@ -470,7 +470,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		script = lambda self,gesture: self._quickNavScript(gesture, itemType, "next", nextError, readUnit)
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
-		script.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+		script.resumeSayAllMode = sayAll.CURSOR.CARET
 		setattr(cls, funcName, script)
 		if key is not None:
 			cls.__gestures["kb:%s" % key] = scriptName
@@ -479,7 +479,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		script = lambda self,gesture: self._quickNavScript(gesture, itemType, "previous", prevError, readUnit)
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
-		script.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+		script.resumeSayAllMode = sayAll.CURSOR.CARET
 		setattr(cls, funcName, script)
 		if key is not None:
 			cls.__gestures["kb:shift+%s" % key] = scriptName
@@ -1288,7 +1288,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if not self.passThrough:
 			if doSayAll:
 				speech.speakObjectProperties(self.rootNVDAObject, name=True, states=True, reason=OutputReason.FOCUS)
-				sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
+				sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
 			else:
 				# Speak it like we would speak focus on any other document object.
 				# This includes when entering the treeInterceptor for the first time:
@@ -1398,6 +1398,26 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			ui.message(_("No long description"))
 	# Translators: the description for the activateLongDescription script on browseMode documents.
 	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
+
+	@script(
+		description=_(
+			# Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
+			"Shows a summary of the details at this position if found."
+		)
+	)
+	def script_activateAriaDetailsSummary(self, gesture):
+		info = self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand("character")
+		for field in reversed(info.getTextWithFields()):
+			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
+				states = field.field.get('states')
+				if states and controlTypes.STATE_HAS_ARIA_DETAILS in states:
+					ui.message(field.field['detailsSummary'])
+					return
+
+		# Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
+		# set of details to read.
+		ui.message(_("No additional details"))
 
 	def event_caretMovementFailed(self, obj, nextHandler, gesture=None):
 		if not self.passThrough or not gesture or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
@@ -1591,7 +1611,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			# The virtual caret is not within the focus node.
 			oldPassThrough=self.passThrough
 			passThrough = self.shouldPassThrough(obj, reason=OutputReason.FOCUS)
-			if not oldPassThrough and (passThrough or sayAllHandler.isRunning()):
+			if not oldPassThrough and (passThrough or sayAll.SayAllHandler.isRunning()):
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
 				speech.cancelSpeech()
@@ -1822,7 +1842,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if not willSayAllResume(gesture):
 			container.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(container, reason=OutputReason.FOCUS)
-	script_moveToStartOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_moveToStartOfContainer.resumeSayAllMode = sayAll.CURSOR.CARET
 	# Translators: Description for the Move to start of container command in browse mode. 
 	script_moveToStartOfContainer.__doc__=_("Moves to the start of the container element, such as a list or table")
 
@@ -1847,7 +1867,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if not willSayAllResume(gesture):
 			container.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(container, reason=OutputReason.FOCUS)
-	script_movePastEndOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_movePastEndOfContainer.resumeSayAllMode = sayAll.CURSOR.CARET
 	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 

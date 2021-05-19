@@ -18,19 +18,19 @@ te puno drugih važnih ispravaka grešaka  i unapređenja.
 - Od sada se korisnik obavještava prilikom pokušaja stvaranja zapisa sa netočnom zamjenom regularnog izraza. (#11407)
   - Točnije otkrivaju se greške prilikom grupiranja.
 - Dodana podrška za nove metode unosa Kineski tradicionalni Quick i Pinyin U Windowsima 10. (#11562)
-- Zaglavlje tabova od sada se tretiraju kao formulari po kojima se može kretati uz pomoć prečaca "f" za brzu navigaciju. (#10432)
+- Zaglavlje kartica od sada se tretiraju kao formulari po kojima se može kretati uz pomoć prečaca "f" za brzu navigaciju. (#10432)
 - Dodan prečac za uključivanje ili isključivanje označenog (istaknutog) teksta; Ne postoji podrazumjevana pridjeljena gesta. (#11807)
 - Dodan parametar --copy-portable-config koji omogućuje kopiranje konfiguracije u NVDA prijenosnu kopiju. (#9676)
 - Za korisnike miša koji koriste brajični preglednik, od sada su dostupne virtualne routing tipke, prijeđite preko ćelije kako biste se na nju usmjerili. (#11804)
-- NVDA od sada može automatski otkrivati Humanware Brailliant BI 40X and 20X brajične redke kada su spojeni preko USB ili bluetoth portovah. (#11819)
+- NVDA od sada može automatski otkrivati Humanware Brailliant BI 40X and 20X brajične redke kada su spojeni preko USB ili bluetoth portova. (#11819)
 
 
 == Izmjene ==
 - Nadograđen liblouis brajični prevoditelj na inačicu 3.16.1:
- - Ispravlja višestruka rušenja
+ - Ispravljena višestruka rušenja
  - Dodana brajična tablica za baškirsko puno pismo
  - Dodana koptska kompjutorska brajična tablica
- - Dodana ruska književna i ruska književna brajična tablica koja prikazuje velika slova.
+ - Dodana ruska literarna i ruska literarna sa prikazom velikih slova.
  - Dodana brajična tablica za afrikanersko puno pismo
  - Izbrisana je brajična tablica za rusko staro puno pismo
 - Prilikom čitanja cijelog dokumenta u modusu pregleda, prečaci traži sljedeće i traži prethodno više ne zaustavljaju čitanje ako je opcija omogući letimično čitanje uključena; umjesto toga čitanje svega se nastavlja prije prethodnog ili sljedećeg pronađenog termina. (#11563)
@@ -42,7 +42,7 @@ te puno drugih važnih ispravaka grešaka  i unapređenja.
 - Unapređeno čitanje tablice grafičkog pregleda u upravljanju tvrdim diskovima. (#10048)
 - Oznake kontrola su od sada onemogućene (posivljene) kada je kontrola onemogućena. (#11809)
 - Nadograđena CLDR anotacija Emoji na inačicu 38. (#11817)
-- Ugrađena funkcija "prećenje fokusa" preimenovana je u "vizualno praćenje". (#11700)
+- Ugrađena funkcija "praćenje fokusa" preimenovana je u "vizualno praćenje". (#11700)
 
 
 == Ispravke grešaka ==
@@ -56,8 +56,8 @@ te puno drugih važnih ispravaka grešaka  i unapređenja.
 - Kada je opcija "pokušaj otkloniti događaje fokusa koji su istekli" omogućena, naslov kartice se sada izgovara ponovno prilikom prebacivanja kartica u Firefoxu. (#11397)
 - NVDA više nema probleme poslije upisivanja znakova u popisu prilikom korištenja SAPI5 Ivona glasova. (#11651)
 - Sada je ponovno moguće korištenje modusa čitanja prilikom čitanja elektroničke pošte u  Windows 10 Mailu 16005.13110 and later. (#11439)
-- Prilikom korištenja SAPI5 Ivona glasova sa stranice harposoftware.com, NVDA sada može spremati svoju konfiguraciju, prebacivati govorne jedinice, te više neće se utišati poslije ponovnog pokretanja. (#11650)
-- Sada je moguće upisati znamenku  6 koristeći kompjutorsku brajicu sa brajične tipkovnice na HIMSovim brajičnim redcima. (#11710)
+- Prilikom korištenja SAPI5 Ivona glasova sa stranice harposoftware.com, NVDA sada može spremati svoju konfiguraciju, prebacivati govorne jedinice, te više te se neće utišavati poslije ponovnog pokretanja. (#11650)
+- Sada je moguće upisati znamenku  6 koristeći kompjutorsku brajicu sa brajične tipkovnice na Himsovim brajičnim redcima. (#11710)
 - Drastično poboljšanje performansi u Azure Data Studiu. (#11533, #11715)
 - Sa uključenom opcijom "pokušaj ignoriranja događaja fokusa koji su istekli"  naslov dijaloškog okvira NVDA pretrage ponovno se čita. (#11632)
 - NVDA više se ne bi trebao rušiti prilikom buđenja računala i premještanja fokusa u Microsoft edge dokumentu. (#11576)

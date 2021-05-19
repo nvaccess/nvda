@@ -697,6 +697,7 @@ class ExitDialog(wx.Dialog):
 			action += 1
 		if action == 0:
 			core.triggerNVDAExit()
+			return  # there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:
