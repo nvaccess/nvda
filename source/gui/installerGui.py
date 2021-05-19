@@ -269,7 +269,7 @@ class InstallerDialog(
 			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
 			silent=self.isUpdate
 		)
-		self.Destroy()
+		wx.GetApp().ScheduleForDestruction(self)
 
 	def onCancel(self, evt):
 		self.Destroy()
