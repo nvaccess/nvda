@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2019 NV Access Limited
+# Copyright (C) 2014-2021 NV Access Limited, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import enum
@@ -280,7 +280,7 @@ class BrailleViewerFrame(
 			gui.mainFrame,
 			title=self._title,
 			pos=dialogPos,
-			style=wx.CAPTION | wx.STAY_ON_TOP
+			style=wx.CAPTION | wx.CLOSE_BOX | wx.STAY_ON_TOP
 		)
 		self.Bind(wx.EVT_CLOSE, self._onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)

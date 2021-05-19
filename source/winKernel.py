@@ -1,17 +1,17 @@
-#winKernel.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner, Mozilla Corporation, Babbage B.V., Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner,
+# Mozilla Corporation, Babbage B.V., Joseph Lee, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
 
+from typing import Union
 import contextlib
 import ctypes
 import ctypes.wintypes
-from ctypes import WinError
-from ctypes import *
-from ctypes.wintypes import *
+from ctypes import byref, c_byte, POINTER, sizeof, Structure, windll, WinError
+from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LPWSTR, LPVOID, WORD
 
 kernel32=ctypes.windll.kernel32
 advapi32 = windll.advapi32
@@ -160,17 +160,62 @@ class SYSTEMTIME(ctypes.Structure):
 		("wMilliseconds", WORD)
 	)
 
-def GetDateFormat(Locale,dwFlags,date,lpFormat):
-	"""@Deprecated: use GetDateFormatEx instead."""
-	if date is not None:
-		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
-		lpDate=byref(date)
-	else:
-		lpDate=None
-	bufferLength=kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, None, 0)
-	buf=ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength)
-	return buf.value
+
+class FILETIME(Structure):
+	_fields_ = (
+		("dwLowDateTime", DWORD),
+		("dwHighDateTime", DWORD)
+	)
+
+
+class TIME_ZONE_INFORMATION(Structure):
+	_fields_ = (
+		("Bias", ctypes.wintypes.LONG),
+		("StandardName", ctypes.wintypes.WCHAR * 32),
+		("StandardDate", SYSTEMTIME),
+		("StandardBias", ctypes.wintypes.LONG),
+		("DaylightName", ctypes.wintypes.WCHAR * 32),
+		("DaylightDate", SYSTEMTIME),
+		("DaylightBias", ctypes.wintypes.LONG)
+	)
+
+
+def time_tToFileTime(time_tToConvert: float) -> FILETIME:
+	"""Converts time_t as returned from `time.time` to a FILETIME structure.
+	Based on a code snipped from:
+	https://docs.microsoft.com/en-us/windows/win32/sysinfo/converting-a-time-t-value-to-a-file-time
+	"""
+	timeAsFileTime = FILETIME()
+	res = (int(time_tToConvert) * 10000000) + 116444736000000000
+	timeAsFileTime.dwLowDateTime = res
+	timeAsFileTime.dwHighDateTime = res >> 32
+	return timeAsFileTime
+
+
+def FileTimeToSystemTime(lpFileTime: FILETIME, lpSystemTime: SYSTEMTIME) -> None:
+	if kernel32.FileTimeToSystemTime(byref(lpFileTime), byref(lpSystemTime)) == 0:
+		raise WinError()
+
+
+def SystemTimeToTzSpecificLocalTime(
+		lpTimeZoneInformation: Union[TIME_ZONE_INFORMATION, None],
+		lpUniversalTime: SYSTEMTIME,
+		lpLocalTime: SYSTEMTIME
+) -> None:
+	"""Wrapper for `SystemTimeToTzSpecificLocalTime` from kernel32.
+	:param lpTimeZoneInformation: Either TIME_ZONE_INFORMATION containing info about the desired time zone
+	or `None` when the current time zone as configured in Windows settings should be used.
+	:param lpUniversalTime: SYSTEMTIME structure containing time in UTC wwhich you wish to convert.
+	: param lpLocalTime: A SYSTEMTIME structure in which time converted to the desired time zone would be placed.
+	:raises WinError
+	"""
+	if lpTimeZoneInformation is not None:
+		lpTimeZoneInformation = byref(lpTimeZoneInformation)
+	if kernel32.SystemTimeToTzSpecificLocalTime(
+		lpTimeZoneInformation, byref(lpUniversalTime), byref(lpLocalTime)
+	) == 0:
+		raise WinError()
+
 
 def GetDateFormatEx(Locale,dwFlags,date,lpFormat):
 	if date is not None:
@@ -181,18 +226,6 @@ def GetDateFormatEx(Locale,dwFlags,date,lpFormat):
 	bufferLength=kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, None, 0, None)
 	buf=ctypes.create_unicode_buffer("", bufferLength)
 	kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength, None)
-	return buf.value
-
-def GetTimeFormat(Locale,dwFlags,date,lpFormat):
-	"""@Deprecated: use GetTimeFormatEx instead."""
-	if date is not None:
-		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
-		lpTime=byref(date)
-	else:
-		lpTime=None
-	bufferLength=kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, None, 0)
-	buf=ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)
 	return buf.value
 
 def GetTimeFormatEx(Locale,dwFlags,date,lpFormat):
@@ -206,8 +239,6 @@ def GetTimeFormatEx(Locale,dwFlags,date,lpFormat):
 	kernel32.GetTimeFormatEx(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)
 	return buf.value
 
-def openProcess(*args):
-	return kernel32.OpenProcess(*args)
 
 def virtualAllocEx(*args):
 	res = kernel32.VirtualAllocEx(*args)

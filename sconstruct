@@ -1,11 +1,24 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2020 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee, Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt  # noqa: E501
+# Copyright (C) 2010-2021 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
+# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import sys
 import os
 import platform
+
+# Ensure we are inside the Python virtual environment.
+nvdaVenv = os.getenv("NVDA_VENV")
+virtualEnv = os.getenv("VIRTUAL_ENV")
+if not virtualEnv or not os.path.isdir(virtualEnv): 
+	print(
+		"Error: SCons cannot detect the NVDA build system Python virtual environment.\n"
+		"SCons must be executed using scons.bat in the root of this repository."
+	)
+	sys.exit(1)
+if nvdaVenv != virtualEnv:
+	print("Warning: SCons launched within a custom Python virtual environment.")
 
 # Variables for storing required version of Python, and the version which is used to run this script.
 requiredPythonMajor ="3"
@@ -34,17 +47,12 @@ if (
 		requiredPythonArchitecture
 	)
 	)
-if sys.version_info.micro == 6:
-	# #10696: Building with Python 3.7.6 fails. Innform user and exit.
-	Py376FailMsg = "Building with Python 3.7.6 is not possible.\nPlease use more  recent version of Python 3."
-	raise RuntimeError(Py376FailMsg)
 sourceEnvPath = os.path.abspath(os.path.join(Dir('.').srcnode().path, "source"))
 sys.path.append(sourceEnvPath)
 import sourceEnv
 sys.path.remove(sourceEnvPath)
 import time
 from glob import glob
-from py2exe.dllfinder import pydll
 import importlib.util
 import winreg
 
@@ -102,21 +110,6 @@ vars.Add("certTimestampServer", "The URL of the timestamping server to use to ti
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC","analyze"]))
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in range(60)]))
-if "tests" in COMMAND_LINE_TARGETS:
-	vars.Add("unitTests", "A list of unit tests to run", "")
-if "lint" in COMMAND_LINE_TARGETS:
-	vars.Add(  # pass through variable that lint is requested
-		"doLint",
-		"internal use",
-		True
-	)
-	vars.Add(
-		"base",
-		"Lint is done only on a diff, specify the ref to use as base for the diff.",
-		None
-	)
-if "systemTests" in COMMAND_LINE_TARGETS:
-	vars.Add("filter", "A filter for the name of the system test(s) to run. Wildcards accepted.", "")
 
 #Base environment for this and sub sconscripts
 env = Environment(variables=vars,HOST_ARCH='x86',tools=[
@@ -254,6 +247,11 @@ t2tBuildConf = env.Textfile(userDocsDir.File("build.t2tConf"), [
 	r"%!PreProc: NVDA_COPYRIGHT_YEARS {}".format(versionInfo.copyrightYears),
 ])
 
+userGuideConf = os.path.join(userDocsDir.path, 'userGuide.t2tconf')
+globalConf = os.path.join(userDocsDir.path, 'global.t2tconf')
+changesConf = os.path.join(userDocsDir.path, 'changes.t2tconf')
+styles = os.path.join(userDocsDir.path, 'styles.css')
+
 #Allow all t2t files to be converted to html in user_docs
 #As we use scons Glob this will also include the keyCommands.t2t files
 for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
@@ -261,7 +259,18 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 	#txt2tags can not be run in parallel so make sure scons knows this
 	env.SideEffect('_txt2tags',htmlFile)
 	# All of our t2t files require build.t2tConf.
-	env.Depends(htmlFile,t2tBuildConf)
+	styleInstallPath = os.path.dirname(t2tFile.abspath)
+	installedStyle = env.Install(styleInstallPath, styles)
+	env.Depends(
+		htmlFile,
+		[
+			t2tBuildConf,
+			userGuideConf,
+			globalConf,
+			changesConf,
+			styles,
+			installedStyle
+		])
 # Build unicode CLDR dictionaries
 env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
 
@@ -299,23 +308,27 @@ def NVDADistGenerator(target, source, env, for_signature):
 
 	action.append(buildCmd)
 
-	# Python3 has started signing its main python dll.
-	# However, Py2exe currently tries to add a string resource to it, invalidating the signature and possibly currupting the certificate.
-	# Therefore, copy a fresh version  of the dll one more time once py2exe has completed.
-	action.append(Copy(target[0],pydll))
-
 	# #10031: Apps written in Python 3 require Universal CRT to be installed. We cannot assume users have it on their systems.
 	# Therefore , copy required libraries from Windows 10 SDK.
 	try:
 		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0', 0,winreg.KEY_READ|winreg.KEY_WOW64_32KEY) as SDKKey:
-			CRTDir = os.path.join(winreg.QueryValueEx(SDKKey, 'InstallationFolder')[0], "Redist", "ucrt", "DLLs", "x86")
+			sdk_installationFolder = winreg.QueryValueEx(SDKKey, 'InstallationFolder')[0]
+			sdk_productVersion = winreg.QueryValueEx(SDKKey, 'ProductVersion')[0]
 	except WindowsError:
 		raise RuntimeError("Windows 10 SDK not found")
-	if os.path.isdir(CRTDir):
-		with os.scandir(CRTDir) as dir:
-			for file in dir:
-				if file.name.endswith(".dll") and file.is_file():
-					action.append(Copy(target[0], file.path))
+	# The Universal CRT should be in an SDK version-specific directory
+	# But usually has a '.0' appended after the productVersion found in the registry. 
+	# E.g. 10.0.1941 might e actually 10.0.1941.0.
+	# Thus try both.
+	CRTDir = os.path.join(sdk_installationFolder, "Redist", sdk_productVersion+".0", "ucrt", "DLLs", "x86")
+	if not os.path.isdir(CRTDir):
+		CRTDir = os.path.join(sdk_installationFolder, "Redist", sdk_productVersion, "ucrt", "DLLs", "x86")
+		if not os.path.isdir(CRTDir):
+			raise RuntimeError(f"Could not locate CRT dlls in SDK at {CRTDir}")
+	with os.scandir(CRTDir) as dir:
+		for file in dir:
+			if file.name.endswith(".dll") and file.is_file():
+				action.append(Copy(target[0], file.path))
 
 	if certFile:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_eoaProxy.exe":
@@ -402,14 +415,30 @@ env.Alias("launcher", launcher)
 clientArchive = env.ZipArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir)
 env.Alias("client", clientArchive)
 
+outputStylesFile=env.Command(outputDir.File("styles.css"),userDocsDir.File('styles.css'),Copy('$TARGET','$SOURCE'))
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
+env.Depends(changesFile, outputStylesFile)
 env.Alias('changes',changesFile)
 userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
+env.Depends(userGuideFile, outputStylesFile)
 env.Alias('userGuide',userGuideFile)
 
+
+def makePotSourceFileList(target, sourceFiles, env):
+	potSourceFiles = [
+		os.path.relpath(str(f), str(sourceDir)) for f in sourceFiles
+	]
+	with open(target.abspath, "w") as fileList:
+		fileList.writelines([f + '\n' for f in potSourceFiles])
+
+
 def makePot(target, source, env):
+	potSourceFileList = outputDir.File("potSourceFileList.txt")
+	makePotSourceFileList(potSourceFileList, source, env)
 	# Generate the pot.
-	if env.Execute([["cd", sourceDir, "&&",
+	if env.Execute([
+		[
+			"cd", sourceDir, "&&",
 			XGETTEXT,
 			"-o", target[0].abspath,
 			"--package-name", versionInfo.name, "--package-version", version,
@@ -419,7 +448,9 @@ def makePot(target, source, env):
 			"--from-code", "utf-8",
 			# Needed because xgettext doesn't recognise the .pyw extension.
 			"--language=python",
-		] + [os.path.relpath(str(f), str(sourceDir)) for f in source]
+			# Too many files to list on commandline, use a file list instead.
+			f"--files-from={potSourceFileList.abspath}",
+		]
 	]) != 0:
 		raise RuntimeError("xgettext failed")
 
@@ -439,17 +470,35 @@ def makePot(target, source, env):
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
 
+
 env.SConscript("devDocs/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
 
-pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
+
+def getSubDirs(path):
+	for root, dirNames, fileNames in os.walk(path):
+		yield root
+
+
+# The Glob() SCons function doesnt have the ability to go recursive. Instead
+# walk the dirs and match patterns.
+potSourceFiles = [
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
-	[f for pattern in ("*.py", "*.pyw", r"*\*.py", r"*\*\*.py")
-		for f in env.Glob(os.path.join(sourceDir.path, pattern))
+	f for recurseDirs in getSubDirs(sourceDir.path)
+	for pattern in ("*.py", "*.pyw")
+	for f in env.Glob(
+		os.path.join(recurseDirs, pattern),
 		# Exclude comInterfaces, since these don't contain translatable strings
 		# and they cause unknown encoding warnings.
-		if not f.path.startswith("source\\comInterfaces\\")],
-	makePot)
+		exclude="source/comInterfaces/*"
+	)
+]
+
+pot = env.Command(
+	outputDir.File("%s.pot" % outFilePrefix),
+	potSourceFiles,
+	makePot
+)
 
 env.Alias("pot", pot)
 

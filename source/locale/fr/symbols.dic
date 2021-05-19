@@ -7,25 +7,24 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\s?\.(?=[\"'”’);\s]|$)
-! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);\s]|$)
-? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);\s]|$)
+! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);!\s]|$)
+? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);?\s]|$)
 ... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’);\s]|$)
 … sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’);\s]|$)
 # Phrase endings.
-; phrase ending	(?<=[^\s;])\s?;(?=\s|$)
-: phrase ending	(?<=[^\s:])\s?:(?=\s|$)
+; phrase ending	(?<=[^\s;])\s?;(?=[\"'”’);\s]|$)
+: phrase ending	(?<=[^\s:])\s?:(?=[\"'”’);\s]|$)
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
+between-words -	(?<=\s)[-](?=\s)
 in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
-between-words -	(?<=\s)[-](?=\s)
+dates .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
+dates /	\b(\d\d)\/(\d\d)\/(\d{2}|\d{4})\b
 negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
-dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
-dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
-
 after-number %	(?<=\d)(\s?\%)(?=\W|$)
-n°	\b[nN]°
+n°	\b([nN])(°)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -41,14 +40,14 @@ symbols:
 
 decimal point		# virgule décimale
 thousands separator		# point des mille
-dates .	 point 	all	norep	# point de date
-dates /	 barre oblique 	all	norep	# barre oblique de date
-negative number	moins	none	norep	# - devant un nombre
-after-number %	pour cent	none	norep	# % après un nombre
+between-words -	tiret	all	norep	# - entre deux mots
 in-word '	apostrophe	# ' dans un mot
 in-word -	tiret	all	norep	# - dans un mot
-between-words -	tiret	all	norep	# - entre deux mots
-n°	numéro	none	norep	# numéro
+dates .	\1 point \2 point \3	all	norep	# point de date
+dates /	\1 barre oblique \2 barre oblique \3	all	norep	# barre oblique de date
+negative number	moins	none	norep	# - devant un nombre
+after-number %	pour cent	none	norep	# % après un nombre
+n°	\1 \2 	most	norep	# numéro
 
 # Whitespace
 \0	nul
@@ -92,7 +91,6 @@ $	dollar
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
-"	guillemet
 \\	barre oblique inversée
 ^	accent circonflexe
 _	souligné
@@ -110,8 +108,8 @@ _	souligné
 …	points de suspension
 ...	point point point
 	puce
-“	guillemet ouvert
-”	guillemet fermé
+“	double guillemet ouvrant
+”	double guillemet fermant
 ‘	apostrophe gauche
 ’	apostrophe droite
 –	tiret demicadratin
@@ -135,8 +133,8 @@ _	souligné
 
 §	section
 °	degré	some	norep
-«	guillemet ouvert
-»	guillemet fermé
+«	guillemet ouvert	most
+»	guillemet fermé	most
 µ	micro
 º	ordinal
 ª	puissance a	some
@@ -183,7 +181,7 @@ _	souligné
 ✔	coché
 ¶	paragraphe	all
 ‰	pour-mille
-„	guillemet vers le bas	none
+„	double guillemet vers le bas	most
 ↔	flèche gauche droite	none
 ∞	infini	none
 	flèche gauche	some
@@ -249,9 +247,9 @@ _	souligné
 
 ≠	différent de	none	never	# Δ
 ­	Trait d'union conditionnel
-‚	Guillemet simple  en bas
-‹	Simple Guillemet ouvrant
-›	Simple Guillemet fermant
+‚	Guillemet vers le bas	most
+‹	Simple Guillemet ouvrant	most
+›	Simple Guillemet fermant	most
 ℅	Attention à
 ―	Barre horizontale
 ‾	Ligne au dessus
@@ -309,7 +307,6 @@ _	souligné
 Ω	oméga	none	never
 ¤	symbole monétaire	none	never
 ¸	cédille	none	never
-	guillemet vers le bas	none	never
 ↦	a pour image	none	never
 ′	prime	none	never
 ″	double prime	some

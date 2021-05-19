@@ -360,6 +360,14 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 	# Because UIA TextRanges are opaque and are tied specifically to one particular document.
 	shouldRememberCaretPositionAcrossLoads=False
 
+	def event_UIA_activeTextPositionChanged(self, obj, nextHandler, textRange=None):
+		if not self.isReady:
+			self._initialScrollObj = obj
+			return nextHandler()
+		scrollInfo = self.makeTextInfo(textRange)
+		if not self._handleScrollTo(scrollInfo):
+			return nextHandler()
+
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType.startswith("heading"):
 			return UIAHeadingQuicknavIterator(nodeType,self,pos,direction=direction)
