@@ -357,8 +357,8 @@ class CalendarView(IAccessible):
 
 		# Translators: Part of a message reported when on a calendar appointment with one or more categories
 		# in Microsoft Outlook.
-		categoriesText = ngettext("category", "categories", categoriesCount)
-		return f"{categoriesText} {categories}"
+		categoriesText = ngettext("category {categories}", "categories {categories}", categoriesCount)
+		return categoriesText.format(categories)
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
