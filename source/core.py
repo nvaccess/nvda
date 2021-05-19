@@ -232,11 +232,7 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 
 
 def triggerNVDAExit():
-	preNVDAExit.notify()
-	# ensure NVDA only runs exit procedures once
-	handlers = list(preNVDAExit.handlers)  # don't mutate .handlers directly with unregister while iterating
-	for handler in handlers:
-		preNVDAExit.unregister(handler)
+	preNVDAExit.notifyOnce()
 
 
 def _closeAllWindows():
