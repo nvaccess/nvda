@@ -8,6 +8,7 @@
 
 import appModuleHandler
 import controlTypes
+import winVersion
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.UIA import UIA, SearchField, SuggestionListItem
 
@@ -24,7 +25,11 @@ class AppModule(appModuleHandler.AppModule):
 			# As part of this, suggestion count is part of a live region.
 			# Although it is geared for Narrator, it is applicable to other screen readers as well.
 			# The live region itself is a child of the one shown here.
-			if obj.UIAAutomationId == "suggestionCountForNarrator" and obj.firstChild is not None:
+			if (
+				winVersion.getWinVer() >= winVersion.WIN10_1909
+				and obj.UIAAutomationId == "suggestionCountForNarrator"
+				and obj.firstChild is not None
+			):
 				obj.name = obj.firstChild.name
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
