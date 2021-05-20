@@ -274,6 +274,10 @@ def _closeAllWindows():
 	gui.mainFrame.sysTrayIcon.RemoveIcon()
 	app.ScheduleForDestruction(gui.mainFrame.sysTrayIcon)
 
+	wx.Yield()  # processes pending messages
+	gui.mainFrame.sysTrayIcon.menu = None
+	gui.mainFrame.sysTrayIcon = None
+
 	for window in wx.GetTopLevelWindows():
 		if isinstance(window, wx.Dialog) and window.IsModal():
 			log.debug(f"ending modal {window} during exit process")
