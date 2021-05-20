@@ -25,16 +25,24 @@ For Developers
 
 <!--
 This checklist is a reminder of things commonly forgotten in a new PR.
-Authors, please do a self-review and confirm you have considered the following items.
-Mark items you have considered by checking them.
-You can do this when editing the Pull request description with an x: `[ ]` becomes `[x]`.
+Authors, please do a self-review of this pull-request.
+Check items to confirm you have thought about the relevance of the item.
+Where items are missing (eg unit / system tests), please explain in the PR.
+To check an item `- [ ]` becomes `- [x]`, note spacing.
 You can also check the checkboxes after the PR is created.
+A detailed explanation of this checklist is available here:
+https://github.com/nvaccess/nvda/wiki/Github-pull-request-template-explanation-and-examples#code-review-checklist
 -->
 
 - [ ] Pull Request description is up to date.
 - [ ] Unit tests.
 - [ ] System (end to end) tests.
-- [ ] Manual tests.
+- [ ] Manual testing / Reviewer verification.
 - [ ] User Documentation.
 - [ ] Change log entry.
 - [ ] Context sensitive help for GUI changes.
+- [ ] UX of all users considered:
+  - Speech 
+  - Braille
+  - Low Vision
+  - Different browsers
