@@ -69,7 +69,7 @@ def test_aria_details():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		"The word  marked content  cat  out of marked content  has a comment tied to it."
+		"The word  marked content  has details  cat  out of marked content  has a comment tied to it."
 	)
 	# this word has no details attached
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
@@ -87,7 +87,7 @@ def test_aria_details():
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"marked content  cat  out of marked content"
+		"marked content  has details  cat  out of marked content"
 	)
 	# read the details summary
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
