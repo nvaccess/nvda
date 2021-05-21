@@ -4,18 +4,18 @@
 %!includeconf: ../changes.t2tconf
 
 = 2021.1 =
-This release includes optional experimental support for UIA in Excel and Chromium browsers.
-There are fixes for several languages, and for accessing links in Braille.
-There are updates to Unicode CLDR and mathematical symbols, eSpeak-NG and LibLouis.
+Ova verzija uključuje neobaveznu eksperimentalnu podršku za UIA u Excelu i preglednicima koji su bazirani na Chromium platformi.
+Ova verzija donosi ispravke za neke jezike i naglaske, te za poveznice pristupačnosti na brajičnim redcima.
+Nadograđeni su Unicode CLDR i matematički simboli, eSpeak-NG i LibLouis.
 
-Many bug fixes and improvements, including in Office, Visual Studio and several languages.
-Note: this is an Add-on API compatibility breaking release.
-Add-ons will need to be re-tested and have their manifest updated.
-This release also drops support for Adobe Flash.
+Puno ispravki grešaka i poboljšanja, uključujući pogreške u Microsoft office paketu, Visual Studio te također ispravke za neke jezike.
+Upozorenje: ova inačica donosi promjene koje mogu prouzrokovati nekompatibilnost sa instaliranim dodacima.
+Dodatke će ponovno trebati testirati i osvježiti njihove manifest datoteke.
+U ovoj verziji je također uklonjena podrška za Adobe Flash tehnologiju.
 
 
 == Nove značajke ==
-- Early support for UIA with Chromium based browsers (such as Edge). (#12025)
+- Rana podrška UIA za preglednike bazirane na Chromium (kao što je to microsoft edge). (#12025)
 - Optional experimental support for Microsoft Excel via UI Automation. Only recommended for Microsoft Excel build 16.0.13522.10000 or higher. (#12210)
 - Easier navigation of output in NVDA Python Console. (#9784)
   - alt+up/down jumps to the previous/next output result (add shift for selecting).
@@ -67,6 +67,7 @@ This release also drops support for Adobe Flash.
 - Fixed the pitch change failure in SAPI4 speech synthesizer. (#12311)
 - The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
 - In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
+
 
 == Izmjene za razvojne programere ==
 Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
