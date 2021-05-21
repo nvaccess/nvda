@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 04:45+0000\n"
-"PO-Revision-Date: 2021-05-14 17:01+0200\n"
+"POT-Creation-Date: 2021-05-21 07:49+0000\n"
+"PO-Revision-Date: 2021-05-21 09:22+0200\n"
 "Last-Translator: Zvonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -7211,11 +7211,9 @@ msgstr "{startTime} do {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-msgid "category"
-msgid_plural "categories"
-msgstr[0] "Kategoria"
-msgstr[1] "kategorie"
-msgstr[2] "kategorii"
+#, fuzzy, python-brace-format
+msgid "categories {categories}"
+msgstr "kategoria {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -9127,7 +9125,7 @@ msgstr "P&rzerwij mowę podczas wpisywania znaków"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Speech i&nterrupt for Enter key"
-msgstr "&Przerwa mowy dla klawisza &Enter"
+msgstr "Przerwa mowy dla klawisza &Enter"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -12333,6 +12331,12 @@ msgstr "Interlinia podwójna"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interlinia 1.5"
+
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "Kategoria"
+#~ msgstr[1] "kategorie"
+#~ msgstr[2] "kategorii"
 
 #~ msgid "&Activate"
 #~ msgstr "&Aktywuj"
