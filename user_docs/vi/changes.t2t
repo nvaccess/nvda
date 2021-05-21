@@ -10,7 +10,7 @@ Các cập nhật cho Unicode CLDR và kí hiệu toán học, eSpeak-NG và Lib
 
 Sửa nhiều lỗi và có nhiều cải thiện, bao gồm cải thiện trong  Office, Visual Studio và vài ngôn ngữ.
 Lưu ý: đây là bản phát hành bổ trợ Add-on API.
-Các add-on cần phải được thử nghiệm lại và phải cập nhật lại manifest.
+Các add-on cần phải được thử nghiệm lại và phải cập lại manifest.
 Bản phát hành này cũng ngưng hỗ trợ cho Adobe Flash.
 
 
@@ -34,40 +34,39 @@ Bản phát hành này cũng ngưng hỗ trợ cho Adobe Flash.
   - Có thể tắt nó bằng cách chọn "Không" trong tùy chọn này.
   - Các ứng dụng web  (Gmail chẳng hạn) không còn đọc các thông tin lỗi thời khi di chuyển focus một cách nhanh chóng.
 - Espeak-ng đã được cập nhật lên 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
-- Đã cập nhật bản phiên dịch chữ nổi liblouis lên [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
-+  - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
-+- Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
-+- NVDA will exit even with windows still open, the exit process now closes all NVDA windows and dialogs. (#1740)
-+- The Speech Viewer can now be closed with ``alt+F4`` and has a standard close button for easier interaction with users of pointing devices. (#12330)
-+- The Braille Viewer now has a standard close button for easier interaction with users of pointing devices. (#12328)
-+- In the Elements List dialog, the accelerator key on the "Activate" button has been removed in some locales to avoid collision with an element type radio button label. When available, the button is still the default of the dialog and as such can still be invoked by simply pressing enter from the elements list itself. (#6167)
-+
-+
-+== Bug Fixes ==
-+- The list of messages in Outlook 2010 is once again readable. (#12241)
-+- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
-+  - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
-+- Fixed access to edit fields in MCS Electronics IDE's. (#11966)
-+- In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
-+- In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
-+- Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
-+- It is now possible to read comments in MS Word with UIA enabled. (#9285)
-+- Performance when interacting with Visual Studio has been improved. (#12171)
-+- Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
-+- Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
-+  - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
-+- The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
-+- TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
-+- It is once again possible to use NVDA in languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
-+- In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
-+- NVDA no longer fails to announce the newly focused content on a web page if the old focus disappears and is replaced by the new focus in the same position. (#12147)
-+- Strikethrough, superscript and subscript formatting for entire Excel cells are now reported if the corresponding option is enabled. (#12264)
-+- Fixed copying config during installation from a portable copy when default destination config directory is empty. (#12071, #12205)
-+- Fixed incorrect announcement of some letters with accents or diacritic when 'Say cap before capitals' option is checked. (#11948)
-+- Fixed the pitch change failure in SAPI4 speech synthesizer. (#12311)
-+- The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
-+- In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
-+- NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - Các bản chữ nổi mới: Belarus chữ nổi văn học, Belarus chữ nổi máy tính, Urdu cấp 1, Urdu cấp 2.
+- Hỗ trợ cho nội dung của Adobe Flash đã bị gỡ khỏi NVDA vì việc dùng Flash đang được Adobe mạnh mẽ không khuyên khích. (#11131)
+- NVDA sẽ bị thoát ngay cả khi các cửa sổ đang mở. Việc thoát chương trình giờ đây sẽ đóng tất cả cửa sổ và hộp thoại của NVDA. (#1740)
+- Giờ đây, có thể đóng trình hiển thị nội dung đọc bằng ``alt+F4`` và có nút đóng để người dùng các thiết bị trỏ dễ tương tác hơn. (#12330)
+- Trình xem chữ nổi giờ đây có nút đóng để người dùng các thiết bị trỏ dễ tương tác hơn. (#12328)
+- Trong hộp thoại danh sách các thành phần, phím tắt cho nút "Kích hoạt" đã dược gỡ khỏi vài ngôn ngữ để tránh xung đột với loại thành phần nút radio. Khi khả dụng, đây vẫn là nút mặc định của hộp thoại và vẫn có thể kích hoạt bằng cách đơn giản là bấm enter từ danh sách các thành phần. (#6167)
+
+
+== Sửa lỗi ==
+- Danh sách thư trong Outlook 2010 lại có thể đọc được. (#12241)
+- Trong các chương trình terminal trên Windows 10 phiên bản 1607 trở lên, khi chèn hay xóa kí từ ở giữa một dòng, kí tự bên phải kí tự đó không còn bị đọc lên. (#3200)
+  - Sửa lỗi thử nghiệm này phải được bật thủ công trong bảng cài đặt nâng cao của NVDA bằng cách đổi thuật toán diff algorithm thành Diff Match Patch.
+- Trong MS Outlook, việc thông báo khoảng cách một cách không hợp lý khi shift+tab từ nội dung thư đến trường tiêu đề sẽ không còn nữa. (#10254)
+- Trong Python Console, việc chèn một tab để thụt lề ở đầu của một dòng nhập liệu không rỗng và thao tác từ hoàn thành bằng tab ở giữa một dòng giờ đã được hỗ trợ. (#11532)
+- Thông tin định dạng và các thông điệp có thể duyệt khác không còn đọc là dòng trắng ngoài ý muốn khi tắt trình bày theo màn hình. (#12004)
+- Giờ đây, có thể đọc bình luận trong MS Word khi bật UIA. (#9285)
+- Khả năng vận hành khi tương tác với Visual Studio đã được cải thiện. (#12171)
+- Sửa các lỗi đồ họa như thiếu thành phần khi dùng NVDA với phác thảo từ phải sang trái. (#8859)
+- Tôn trọng phác thảo giao diện người dùng dựa trên ngôn ngữ NVDA, không phải bản địa hóa của hệ thống. (#638)
+  - vấn đề đã biết cho các ngôn ngữ từ phải sang trái: bảng bên phải của các nhóm clip với các nhãn / điều khiển. (#12181)
+- Phần bản đĩa của python đã được thiết lập là khớp với ngôn ngữ đã chọn trong tùy chọn, và sẽ xuất hiện khi dùng ngôn ngữ mặc định. (#12214)
+- TextInfo.getTextInChunks không còn bị treo khi dược gọi trong các điều khiển Rich Edit như trình xem log của NVDA. (#11613)
+- Lại có thể dùng NVDA trong các ngôn ngữ có chứa dấu gạch dưới trong tên bản địa của nó như de_CH trên Windows 10 1803 và 1809. (#12250)
+- Trong WordPad, cấu hình việc đọc chỉ số trên / chỉ số dưới đã hoạt động như mong muốn. (#12262)
+- NVDA không còn bị lỗi khi đọc nội dung mới có focus trên một trang web nếu focus cũ biến mất và được thay thế bằng focus mới ở cùng vị trí. (#12147)
+- Định dạng gạch ngang, chỉ số trên và chỉ số dưới cho toàn bộ ô trong Excel giờ đã được đọc nếu bật các tùy chọn tương ứng. (#12264)
+- Sửa lỗi sao chép cấu hình trong khi cài đặt từ một bản chạy trực tiếp khi thư mục mặc định để chép cấu hình là thư mục rỗng. (#12071, #12205)
+- Sửa lỗi đọc không chính xác cho vài kí tự có âm nhấn hoặc âm tiêu khi bật tùy chọn 'Đọc chữ hoa'. (#11948)
+- Sửa lỗi thay đổi cao độ trong các bộ đọc SAPI4. (#12311)
+- Bộ cài NVDA giờ đây tôn trọng tham số của dòng lệnh ``--minimal`` và không phát âm thanh khởi động, hoạt động giống nahu với tập tin thực thi của bản cái hay bản chạy trực tiếp của NVDA. (#12289)
+- In MS Word hay Outlook, các phím di chuyển nhanh trong bảng giờ đây có thẻ đi đến bố cục bảng nếu bật tùy chọn "Đọc các bảng bố cục" trong cài đặt chế độ duyệt. (#11899)
+- NVDA sẽ không còn đọc "↑↑↑" cho các biểu tượng cảm xúc trong một số ngôn ngữ. (#11963)
 +
 +
 == Các thay đổi cho nhà phát triển ==

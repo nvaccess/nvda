@@ -47,7 +47,6 @@ Mit dieser Version entfällt auch die Unterstützung für Adobe Flash, deren Sup
 - Die Liste der Nachrichten in Microsoft Outlook 2010 ist wieder auslesbar. (#12241)
 - In Terminalprogrammen unter Windows 10 ab Version 1607 werden beim Einfügen oder Löschen von Zeichen in der Mitte einer Zeile die Zeichen rechts vom Cursor nicht mehr mit vorgelesen. (#3200)
   - Diese experimentelle Korrektur kann manuell in den erweiterten Einstellungen von NVDA aktiviert werden, indem der Diff-Algorithmus auf "Diff-Match-Patch zulassen" geändert wird.
-- Der Zugriff auf Eingabefelder in MCS Electronics IDE's wurde korrigiert. (#11966)
 - In Microsoft Outlook sollte die unangemessene Abstandsmeldung beim Verwenden von Umschalt+Tab vom Nachrichtentext zum Betreff-Feld nicht mehr vorkommen. (#10254)
 - In der Python-Konsole wird nun das Einfügen eines Tabulators zur Einrückung am Anfang einer nicht leeren Eingabezeile und das Ausführen der Tabulator-Vervollständigung in der Mitte einer Eingabezeile unterstützt. (#11532)
 - Formatierungsinformationen und andere blätterbare Meldungen zeigen keine unerwarteten Leerzeilen mehr an, wenn das Bildschirmlayout ausgeschaltet ist. (#12004)
@@ -67,6 +66,7 @@ Mit dieser Version entfällt auch die Unterstützung für Adobe Flash, deren Sup
 - Fehler bei der Tonhöhenänderung in Sprachausgaben für SAPI4 behoben. (#12311)
 - Das NVDA-Installationsprogramm beachtet nun auch den ``--minimal`` Kommandozeilenparameter und spielt keinen Start-Sound ab. Es folgt damit dem gleichen dokumentierten Verhalten wie eine installierte oder portable Kopie des NVDA-Programms. (#12289)
 - In Microsoft Word oder Microsoft Outlook kann die Tabellenschnellnavigationstaste jetzt zur Layouttabelle springen, wenn die Option "Layout-Tabellen einbeziehen" in den Einstellungen des Lesemodus aktiviert ist. (#11899)
+- NVDA sagt nicht mehr "↑↑↑" bei manchen Emojis in bestimmten Sprachen. (#11963)
 
 
 == Änderungen für Entwickler ==
@@ -151,6 +151,12 @@ Mit dieser Version entfällt auch die Unterstützung für Adobe Flash, deren Sup
   - Aus ``speech.speechMode_beeps`` wurde ``speech.SpeechMode.beeps``.
   - Aus ``speech.speechMode_talk`` wurde ``speech.SpeechMode.talk``.
 - ``IAccessibleHandler.IAccessibleObjectIdentifierType`` ist jetzt ``IAccessibleHandler.types.IAccessibleObjectIdentifierType``. (#12367)
+- Folgendes in ``NVDAObjects.UIA.WinConsoleUIA`` wurde geändert (#12094)
+  - ``NVDAObjects.UIA.winConsoleUIA.is21H1Plus`` wurde umbenannt in ``NVDAObjects.UIA.winConsoleUIA.isImprovedTextRangeAvailable``.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfo`` umbenannt, um den Klassennamen mit Großbuchstaben zu beginnen.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfoPre21H1`` umbenannt in ``NVDAObjects.UIA.winConsoleUIA.ConsoleUIATextInfoWorkaroundEndInclusive``
+    - Die Implementierung arbeitet einschließlich mit den beiden Endpunkten (in Textbereichen) vor [Microsoft/Terminal PR 4018 https://github.com/microsoft/terminal/pull/4018].
+    - Workarounds für ``expand``, ``collapse``, ``compareEndPoints``, ``setEndPoint``, etc.
 
 
 = 2020.4 =

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 04:45+0000\n"
-"PO-Revision-Date: 2021-05-13 22:06-0700\n"
+"POT-Creation-Date: 2021-05-21 07:49+0000\n"
+"PO-Revision-Date: 2021-05-20 00:31-0700\n"
 "Last-Translator: ungjinPark <ungjin312@kakao.com>\n"
 "Language-Team: NVDA Korean users and translations forum <advck1123@gmail."
 "com>\n"
@@ -108,10 +108,9 @@ msgid "none"
 msgstr "없음"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "color"
-msgstr "{color}"
+msgstr "color"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 #, fuzzy
@@ -7162,9 +7161,9 @@ msgstr "{startTime} - {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-msgid "category"
-msgid_plural "categories"
-msgstr[0] "category"
+#, fuzzy, python-brace-format
+msgid "categories {categories}"
+msgstr "category {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -10773,10 +10772,10 @@ msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
 msgstr ""
 
 #. Translators: The fill color of an Excel cell
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill color: {0.name}"
-msgstr "슬라이스 색상: {colorName} "
+msgstr ""
 
 #. Translators: The fill type (pattern, gradient etc) of an Excel Cell
 #, python-brace-format
@@ -10790,9 +10789,8 @@ msgid "Number format: {0}"
 msgstr ""
 
 #. Translators: If an excel cell has data validation set
-#, fuzzy
 msgid "Has data validation"
-msgstr "%s 프로그램 실행 시 적용"
+msgstr ""
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #, python-brace-format
@@ -12241,3 +12239,7 @@ msgstr "두 줄 간격"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 줄 간격"
+
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "category"
