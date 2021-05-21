@@ -1838,23 +1838,23 @@ Wenn diese Option aktiviert ist, verwendet NVDA eine neue, experimentelle Versio
 ==== Passwörter vorlesen in der Windows-Konsole mit UIA-Unterstützung ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Diese Einstellung steuert, ob Zeichen während der Eingabe #KeyboardSettingsSpeakTypedCharacters] oder [Wörter während der Eingabe #KeyboardSettingsSpeakTypedWords] in Situationen vorgelesen werden sollen, in denen der Bildschirm in der Windows-Konsole bei aktivierter Unterstützung von UIA nicht aktualisiert wird (z. B. bei der Kennworteingabe). Aus Sicherheitsgründen sollte diese Einstellung deaktiviert bleiben. Sie sollten sie jedoch aktivieren, wenn Sie bei der Verwendung der neuen experimentellen Konsolenunterstützung von NVDA Leistungsprobleme oder Instabilität bei der Meldung von Zeichen und/oder Wörtern während der Eingabe feststellen.
 
-==== Use UIA with Microsoft Edge and other Chromium based browsers when available ====[ChromiumUIA]
-Allows specifying when UIA will be used when it is available in Chromium based browsers such as Microsoft Edge.
-UIA support for Chromium based browsers is early in development and may not provide the same level of access as IA2.
-The combo box has the following options:
-- Default (Only when necessary): The NVDA default, currently this is "Only when necessary". This default may change in the future as the technology matures.
-- Only when necessary: When NVDA is unable to inject into the browser process in order to use IA2 and UIA is available, then NVDA will fall back to using UIA.
-- Yes: If the browser makes UIA available, NVDA will use it.
-- No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
+==== UIA mit Microsoft Edge und anderen Chromium-basierten Browsern verwenden, sofern verfügbar ====[ChromiumUIA]
+Ermöglicht das Festlegen, wann UIA verwendet wird, wenn es in Chromium-basierten Browsern wie Microsoft Edge verfügbar ist.
+Die UIA-Unterstützung für Chromium-basierte Browser befindet sich noch in einem frühen Entwicklungsstadium und bietet möglicherweise nicht das gleiche Maß an Zugriff wie IA2.
+Das Kombinationsfeld hat die folgenden Optionen:
+- Standard (nur wenn nötig): Der NVDA-Standard, derzeit ist dies "Nur wenn nötig". Diese Voreinstellung kann sich in Zukunft ändern, wenn die Technologie ausgereift ist.
+- Nur wenn nötig: Wenn NVDA nicht in der Lage ist, in den Browser-Prozess einzugreifen, um IA2 zu verwenden, und UIA verfügbar ist, greift NVDA auf die Verwendung von UIA zurück.
+- Ja: Wenn der Browser UIA zur Verfügung stellt, wird NVDA es verwenden.
+- Nein: UIA wird nicht verwendet, auch wenn NVDA nicht in den Prozess injizieren kann. Dies kann für Entwickler nützlich sein, die Probleme mit IA2 debuggen und sicherstellen wollen, dass NVDA nicht auf UIA zurückgreift.
 -
 
-==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]
-When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
-This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
-For instance, NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet features are not available.
-However, for basic spreadsheet navigating / editing, this option may provide a vast performance improvement.
-We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Microsoft Excel  build 16.0.13522.10000 or higher to test this feature and provide feedback.
-Microsoft Excel's UIA implementation is ever changing, and  versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
+==== UIA verwenden, um auf die Steuerelemente der Microsoft Excel-Tabelle zuzugreifen, sofern verfügbar ====[UseUiaForExcel]
+Wenn diese Option aktiviert ist, versucht NVDA, die Eingabehilfen-API von Microsoft UI Automation zu verwenden, um Informationen aus den Steuerelementen von Microsoft Excel-Tabellen abzurufen.
+Dies ist eine experimentelle Funktion, und einige Funktionen von Microsoft Excel sind in diesem Modus möglicherweise nicht verfügbar.
+So sind z. B. die NVDA-Elementeliste zum Auflisten von Formeln und Kommentaren und die Schnellnavigation im Lesemodus zum Springen zu Formularfeldern in einer Kalkulationstabelle nicht verfügbar.
+Für die grundlegende Navigation bzw. Bearbeitung von Tabellenkalkulationen kann diese Option jedoch eine enorme Leistungsverbesserung darstellen.
+Es wird nach wie vor empfohlen, dass die meisten Benutzer diese Funktion sie nicht standardmäßig aktivieren. Dafür wird mindestens Microsoft Excel Build 16.0.13522.10000 oder neuer benötigt. Jedoch können die Anwender diese Funktion trotzdem testen und Feedback auf Englisch bei NV Access einreichen.
+Die UIA-Implementierung von Microsoft Excel wird fortlaufend angepasst. die Versionen von Microsoft Office, die noch die Build 16.0.13522.10000 haben, stellen möglicherweise nicht genügend Informationen bereit, damit diese Option von Nutzen ist.
 
 ==== Unterstützung bei neu eingegebenen Zeichen in der Windows-Konsole (falls verfügbar) ====[AdvancedSettingsKeyboardSupportInLegacy]
 Diese Option aktiviert eine alternative Methode zur Erkennung von Zeichen während der Eingabe in der Windows-Konsole.
@@ -3101,12 +3101,12 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 %kc:endInclude
 
 ++ Nattiq nBraille ++[NattiqTechnologies]
-NVDA supports displays from [Nattiq Technologies https://www.nattiq.com/] when connected via USB.
-Windows 10 detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
-You can get them from the manufacturer's website.
+NVDA unterstützt Braillezeilen von [Nattiq Technologies https://www.nattiq.com/], wenn sie über USB angeschlossen sind.
+Windows 10 erkennt die Braillezeilen, sobald sie angeschlossen sind. Wenn Sie ältere Windows-Versionen (unter Win10) verwenden, müssen Sie eventuell USB-Treiber nachinstallieren.
+Diese können Sie von der Website des Herstellers beziehen.
 
-Following are the key assignments for Nattiq Technologies displays with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Nachfolgend finden Sie die wichtigsten Zuordnungen für die Braillezeilen von Nattiq Technologies mit NVDA.
+Wo diese Tasten zu finden sind, entnehmen Sie bitte der Dokumentation der Braillezeile.
 %kc:beginInclude
 || Name | Taste |
 | Braillezeile rückwärts navigieren | Aufwärts |

@@ -67,6 +67,7 @@ This release also drops support for Adobe Flash.
 - Fixed the pitch change failure in SAPI4 speech synthesizer. (#12311)
 - The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
 - In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
+- NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
 
 
 == Changes for Developers ==
@@ -151,6 +152,12 @@ This release also drops support for Adobe Flash.
   - ``speech.speechMode_beeps`` becomes ``speech.SpeechMode.beeps``
   - ``speech.speechMode_talk`` becomes ``speech.SpeechMode.talk``
 - ``IAccessibleHandler.IAccessibleObjectIdentifierType`` is now ``IAccessibleHandler.types.IAccessibleObjectIdentifierType``. (#12367)
+- The following in ``NVDAObjects.UIA.WinConsoleUIA`` have been changed (#12094)
+  - ``NVDAObjects.UIA.winConsoleUIA.is21H1Plus`` renamed ``NVDAObjects.UIA.winConsoleUIA.isImprovedTextRangeAvailable``.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfo`` renamed to start class name with upper case.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfoPre21H1`` renamed ``NVDAObjects.UIA.winConsoleUIA.ConsoleUIATextInfoWorkaroundEndInclusive``
+    - The implementation works around both end points being inclusive (in text ranges) before [microsoft/terminal PR 4018 https://github.com/microsoft/terminal/pull/4018]
+    - Workarounds for ``expand``, ``collapse``, ``compareEndPoints``, ``setEndPoint``, etc
 
 
 = 2020.4 =
