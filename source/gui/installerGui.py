@@ -110,17 +110,24 @@ def doInstall(
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
 	if startAfterInstall:
-		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
-		shellapi.ShellExecute(
-			None,
-			None,
-			os.path.join(installer.defaultInstallPath,'nvda.exe'),
-			None,
-			None,
-			winUser.SW_SHOWNORMAL
-		)
-	else:
-		core.triggerNVDAExit()
+		core.preNVDAExit.register(_startNewInstalledNVDAInstance)
+	core.triggerNVDAExit()
+
+
+def _startNewInstalledNVDAInstance():
+	_startNewNVDAInstance(installer.defaultInstallPath)
+
+
+def _startNewNVDAInstance(path: str):
+	# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
+	shellapi.ShellExecute(
+		None,
+		None,
+		os.path.join(path, 'nvda.exe'),
+		None,
+		None,
+		winUser.SW_SHOWNORMAL
+	)
 
 
 def doSilentInstall(
@@ -269,7 +276,7 @@ class InstallerDialog(
 			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
 			silent=self.isUpdate
 		)
-		self.Destroy()
+		wx.GetApp().ScheduleForDestruction(self)
 
 	def onCancel(self, evt):
 		self.Destroy()
@@ -466,20 +473,13 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 			wx.OK | wx.ICON_ERROR)
 		return
 	d.done()
-	if silent:
-		core.triggerNVDAExit()
-	else:
+	if not silent:
 		# Translators: The message displayed when a portable copy of NVDA has been successfully created.
 		# %s will be replaced with the destination directory.
 		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
 			_("Success"))
 		if startAfterCreate:
-			# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
-			shellapi.ShellExecute(
-				None,
-				None,
-				os.path.join(portableDirectory, 'nvda.exe'),
-				None,
-				None,
-				winUser.SW_SHOWNORMAL
-			)
+			def startNewPortableNVDAInstance():
+				_startNewNVDAInstance(portableDirectory)
+			core.preNVDAExit.register(startNewPortableNVDAInstance)
+	core.triggerNVDAExit()

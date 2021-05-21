@@ -3,6 +3,156 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.1 =
+Diese Version enthält optionale experimentelle Unterstützung für UIA in Microsoft Excel und Chromium-basierte Browser.
+Viele Korrekturen für mehrere Sprachen und für den Zugriff auf Links in Braille-Schrift wurden durchgeführt.
+Daneben gibt es auch Updates für Unicode CLDR und mathematische Symbole, eSpeak-NG und LibLouis.
+
+Viele Fehlerkorrekturen und Verbesserungen, u. a. in Office, Visual Studio und mehreren Sprachen.
+Hinweis: Bei dieser Version muss die Kompatibilität der Erweiterungen zwingend erneuert werden, da signifikante Änderungen an der API erfolgte.
+Alle Erweiterungen müssen erneut getestet und deren Manifest-Datei aktualisiert werden.
+Mit dieser Version entfällt auch die Unterstützung für Adobe Flash, deren Support bereits am 31. Dezember 2020 auslief.
+
+
+== Neue Features ==
+- Frühe Unterstützung für UIA mit Chromium-basierte Browser (wie Microsoft Edge). (#12025)
+- Optionale experimentelle Unterstützung für Microsoft Excel über UIA. Nur empfohlen für Microsoft Excel Build 16.0.13522.10000 oder neuer. (#12210)
+- Vereinfachtere Navigation der Ausgabe in der NVDA-Python-Konsole. (#9784)
+  - Mit Alt+Pfeiltasten nach oben/unten springt man zum vorherigen/nächsten Ausgabe-Ergebnis (zum Auswählen Umschalt-Taste zusätzlich drücken).
+  - Mit Strg+L wird das Ausgabefenster geleert.
+- NVDA meldet jetzt die Kategorien, die einem Termin in Microsoft Outlook zugeordnet sind, falls vorhanden. (#11598)
+
+
+== Änderungen ==
+- Im Lesemodus können Steuerelemente nun mit Braille-Cursor-Routing auf ihrem Deskriptor (z. B. "lnk" für einen Link) aktiviert werden. Dies ist besonders nützlich, um z. B. Kontrollkästchen ohne Beschriftung zu aktivieren. (#7447)
+- NVDA verhindert jetzt, dass der Benutzer die Windows 10-Texterkennung ausführt, wenn der Bildschirmvorhang aktiviert ist. (#11911)
+- Unicode Common Locale Data Repository (CLDR) auf 38.1 aktualisiert. (#11943)
+- Weitere mathematische Symbole zum Symbolwörterbuch hinzugefügt. (#11467)
+- Das Benutzerhandbuch, Was ist neu und die Auflistung der Kurzübersicht der Befehle haben jetzt ein aktualisiertes Aussehen. (#12027)
+- Die Meldung "Nicht unterstützt" wird jetzt gemeldet, wenn versucht wird, das Bildschirmlayout in Anwendungen umzuschalten, die dies nicht unterstützen, wie z. B. in Microsoft Word. (#7297)
+- Die Option "Versuch, die Sprachausgabe bei abgelaufenen Fokus-Ereignissen abzubrechen" in der Kategorie "Erweiterte Einstellungen" nun standardmäßig aktiviert. (#10885)
+  - Dieses Verhalten kann deaktiviert werden, indem diese Option auf "Nein" gesetzt wird.
+  - In Web-Anwendungen, wie z. B. Gmail, werden nicht mehr veraltete Informationen mitgeteilt, wenn der Fokus schnell verschoben wird.
+- eSpeak-NG wurde auf 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84 aktualisiert. (#12202, #12280)
+- Der Liblouis-Braille-Übersetzer wurde auf [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0] aktualisiert. (#12137)
+  - Neue Braille-Tabellen: Belarussiches Literaturbraille, Belarussisches Computer-Braille sowie Voll- und Kurzschrift in Urdu (Indien und Pakistan).
+- Die Unterstützung für Adobe Flash wurde aus NVDA vollständig entfernt, da Adobe die Entwicklung eingestellt hat und der Support damit auch bereits Ende 2020 auslief. (#11131)
+- NVDA beendet sich auch bei noch geöffneten Fenstern, der Beendigungsvorgang schließt nun alle NVDA-Fenster und -Dialoge. (#1740)
+- Der Sprachausgaben-Betrachter kann nun mit ``Alt+F4`` geschlossen werden und hat einen Schließen-Schalter für eine einfachere Interaktion mit Benutzern von Zeigegeräten. (#12330)
+- Der Braille-Betrachter verfügt nun standardmäßig über einen Schließen-Schalter, um die Interaktion mit Benutzern von Zeigegeräten zu erleichtern. (#12328)
+- Im Dialog "Elementliste" wurde in einigen Sprachumgebungen die Beschleunigungstaste auf der Schaltfläche "Aktivieren" entfernt, um Konflikte mit der Beschriftung eines Optionsfeldes für den Elementtyp zu vermeiden. Sofern vorhanden, ist die Schaltfläche immer noch der Standard des Dialogs und kann als solcher weiterhin durch einfaches Drücken der Eingabetaste in der Elementliste selbst aufgerufen werden. (#6167)
+
+
+== Fehlerkorrekturen ==
+- Die Liste der Nachrichten in Microsoft Outlook 2010 ist wieder auslesbar. (#12241)
+- In Terminalprogrammen unter Windows 10 ab Version 1607 werden beim Einfügen oder Löschen von Zeichen in der Mitte einer Zeile die Zeichen rechts vom Cursor nicht mehr mit vorgelesen. (#3200)
+  - Diese experimentelle Korrektur kann manuell in den erweiterten Einstellungen von NVDA aktiviert werden, indem der Diff-Algorithmus auf "Diff-Match-Patch zulassen" geändert wird.
+- Der Zugriff auf Eingabefelder in MCS Electronics IDE's wurde korrigiert. (#11966)
+- In Microsoft Outlook sollte die unangemessene Abstandsmeldung beim Verwenden von Umschalt+Tab vom Nachrichtentext zum Betreff-Feld nicht mehr vorkommen. (#10254)
+- In der Python-Konsole wird nun das Einfügen eines Tabulators zur Einrückung am Anfang einer nicht leeren Eingabezeile und das Ausführen der Tabulator-Vervollständigung in der Mitte einer Eingabezeile unterstützt. (#11532)
+- Formatierungsinformationen und andere blätterbare Meldungen zeigen keine unerwarteten Leerzeilen mehr an, wenn das Bildschirmlayout ausgeschaltet ist. (#12004)
+- Es ist jetzt möglich, Kommentare in Microsoft Word mit aktivierter UIA zu auszulesen. (#9285)
+- Die Leistung bei der Interaktion mit Visual Studio wurde verbessert. (#12171)
+- Behebung von Grafikfehlern wie fehlende Elemente bei Verwendung von NVDA mit einem Layout von Rechts nach Links. (#8859)
+- Die Richtung des GUI-Layouts wird nun basierend auf der NVDA-Sprache und nicht auf dem Systemgebietsschema berücksichtigt. (#638)
+ - Ein bekanntes Problem für Sprachen, die von Rechts nach Links verlaufen: der rechte Rand von Gruppierungen klammert mit Beschriftungen/Steuerungen. (#12181)
+- Die Landessprache für Python wird konsistent auf die in den Voreinstellungen gewählte Sprache eingestellt und tritt bei Verwendung der Standardsprache auf. (#12214)
+- TextInfo.getTextInChunks friert nicht mehr ein, wenn es auf Rich-Edit-Steuerelementen wie dem NVDA Log Viewer aufgerufen wird. (#11613)
+- Es ist wieder möglich, NVDA in Sprachen zu verwenden, die Unterstriche im Gebietsschemennamen enthalten, wie z. B. de_CH unter Windows 10 Version 1803 und 1809. (#12250)
+- In WordPad funktioniert die Konfiguration der Hochstellung/Tiefstellung wie erwartet. (#12262)
+- NVDA zeigt den neu fokussierten Inhalt auf einer Webseite nicht mehr an, wenn der alte Fokus verschwindet und durch den neuen Fokus an der gleichen Position ersetzt wird. (#12147)
+- Durchgestrichene, hoch- und tiefgestellte Formatierungen für die komplette Zelle in Microsoft Excel werden nun gemeldet, wenn die entsprechende Option aktiviert ist. (#12264)
+- Das Kopieren der Konfiguration während der Installation aus einer portablen Kopie wurde korrigiert, wenn das Standard-Zielverzeichnis für die Konfiguration leer ist. (#12071, #12205)
+- Fehlerhafte Ansage einiger Buchstaben mit Akzenten oder diakritischen Zeichen behoben, wenn die Option 'Großbuchstaben vor Großbuchstaben sagen' aktiviert ist. (#11948)
+- Fehler bei der Tonhöhenänderung in Sprachausgaben für SAPI4 behoben. (#12311)
+- Das NVDA-Installationsprogramm beachtet nun auch den ``--minimal`` Kommandozeilenparameter und spielt keinen Start-Sound ab. Es folgt damit dem gleichen dokumentierten Verhalten wie eine installierte oder portable Kopie des NVDA-Programms. (#12289)
+- In Microsoft Word oder Microsoft Outlook kann die Tabellenschnellnavigationstaste jetzt zur Layouttabelle springen, wenn die Option "Layout-Tabellen einbeziehen" in den Einstellungen des Lesemodus aktiviert ist. (#11899)
+
+
+== Änderungen für Entwickler ==
+- Hinweis: Dies ist eine Version, die die Kompatibilität der API für Erweiterungen inkompatibel macht. Daher sollten Erweiterungen erneut getestet und deren Manifest-Dateien aktualisiert werden.
+- Das Build-System von NVDA holt jetzt alle Python-Abhängigkeiten mit pip und speichert sie in einer virtuellen Python-Umgebung. Dies geschieht alles transparent.
+  - Um NVDA zu kompilieren, sollte SCons weiterhin auf die übliche Weise verwendet werden, z. B. Ausführen von "scons.bat" im Stammverzeichnis des Repositorys. Die Ausführung von ``py -m SCons`` wird nicht mehr unterstützt. Die Datei ``scons.py`` wurde ebenfalls entfernt.
+  - Um NVDA aus dem Quellcode zu starten, sollte der Entwickler nun ``runnvda.bat`` im Wurzelverzeichnis des Repositorys verwenden, anstatt ``source/nvda.pyw`` direkt auszuführen. Wenn Sie versuchen, ``source/nvda.pyw`` auszuführen, werden Sie in einem Meldungsfenster darauf hingewiesen, dass dies nicht mehr unterstützt wird.
+  - Um Unit-Tests durchzuführen, führen Sie ``rununittests.bat [<extra unittest discover options>]`` aus.
+  - Um Systemtests durchzuführen: führen Sie ``runsystemtests.bat [<extra robot options>]`` aus.
+  - Um Linting auszuführen, führen Sie ``runlint.bat <Basiszweig>`` aus.
+  - Weitere Details entnehmen Sie bitte der englischsprachigen Datei "readme.md".
+- Die folgenden Python-Abhängigkeiten wurden ebenfalls aktualisiert:
+  - comtypes wurde auf 1.1.8 aktualisiert.
+  - pySerial wurde auf 3.5 aktualisiert.
+  - wxPython wurde auf 4.1.1 aktualisiert.
+  - Py2exe wurde auf 0.10.1.0 aktualisiert.
+- Die Funktion ``LiveText._getTextLines`` wurde entfernt. (#11639)
+  - Überschreiben Sie stattdessen ``_getText``, welches eine Zeichenkette mit dem gesamten Text des Objekts zurückgibt.
+- Die Objekte von ``LiveText`` können nun Diffs nach Zeichen berechnen. (#11639)
+  - Um das Diff-Verhalten für ein bestimmtes Objekt zu ändern, überschreiben Sie die Eigenschaft ``diffAlgo`` (siehe den Docstring für Details).
+- Bei der Definition eines Skripts mit dem Skript-Dekorator kann das boolesche Argument "allowInSleepMode" angegeben werden, um zu signalisieren, ob ein Skript im Schlafmodus verfügbar ist oder nicht. (#11979)
+- Die folgenden Funktionen wurden aus dem Konfigurationsmodul entfernt. (#11935)
+  - "canStartOnSecureScreens" - verwenden Sie stattdessen "config.isInstalledCopy".
+  - "hasUiAccess" und "execElevated" - verwenden Sie diese aus dem systemUtils-Modul.
+  - "getConfigDirs" - verwenden Sie stattdessen "globalVars.appArgs.configPath".
+- Die Konstanten aus "REASON_*" auf Modulebene wurden aus "controlTypes" entfernt - bitte verwenden Sie stattdessen "controlTypes.OutputReason". (#11969)
+- Die Konstante "REASON_QUICKNAV" wurde aus browseMode entfernt - verwenden Sie stattdessen "controlTypes.OutputReason.QUICKNAV". (#11969)
+- Die Eigenschaft ``isCurrent`` von ``NVDAObject`` (und Derivaten) liefert nun strikt die Enum-Klasse ``controlTypes.IsCurrent`` zurück. (#11782)
+  - ``isCurrent`` ist nicht länger mehr optional und gibt daher keinen Wert zurück.
+  - Wenn ein Objekt nicht aktuell ist, wird ``controlTypes.IsCurrent.NO`` zurückgegeben.
+- Das Mapping ``controlTypes.isCurrentLabels`` wurde entfernt. (#11782)
+  - Verwenden Sie stattdessen die Eigenschaft ``displayString`` für einen ``controlTypes.IsCurrent``-Enum-Wert, z. B. ``controlTypes.IsCurrent.YES.displayString``
+- Die Eigenschaft ``isCurrent`` von ``NVDAObject`` (und Derivate) liefert nun strikt ``controlTypes.IsCurrent``. (#11782)
+  - ``isCurrent`` ist nicht mehr optional und gibt somit keinen Wert zurück, wenn ein Objekt nicht aktuell ist, wird ``controlTypes.IsCurrent.NO`` zurückgegeben.
+- Die Eigenschaft ``controlTypes.isCurrentLabels`` wurde entfernt, stattdessen wird die Eigenschaft ``displayString`` für einen ``controlTypes.IsCurrent``-Enum-Wert verwendet. (#11782)
+  - Z. B. ``controlTypes.IsCurrent.YES.displayString``
+- ``winKernel.GetTimeFormat`` wurde entfernt - verwenden Sie stattdessen ``winKernel.GetTimeFormatEx``. (#12139)
+- ``winKernel.GetDateFormat`` wurde entfernt - verwenden Sie stattdessen ``winKernel.GetDateFormatEx``. (#12139)
+- ``gui.DriverSettingsMixin`` wurde entfernt - verwenden Sie ``gui.AutoSettingsMixin``. (#12144)
+- ``speech.getSpeechForSpelling`` wurde entfernt - verwenden Sie ``speech.getSpellingSpeech``. (#12145)
+- Befehle können nicht direkt aus "speech" als ``import speech; speech.ExampleCommand()`` oder ``import speech.manager; speech.manager.ExampleCommand()`` importiert werden - verwenden Sie stattdessen ``from speech.commands import ExampleCommand``. (#12126)
+- ``speakTextInfo`` schleift die Sprachausgabe nicht mehr durch ``speakWithoutPauses``, wenn der Grund ``SAYALL`` ist, da ``SayAllHandler`` dies nun manuell macht. (#12150)
+- Das Modul ``SynthDriverHandler`` wird nicht mehr in ``globalCommands`` und ``gui.settingsDialogs`` importiert - verwenden Sie stattdessen ``from synthDriverHandler import synthFunctionExample``. (#12172)
+- ``ROLE_EQUATION`` wurde aus "controlTypes" entfernt - verwenden Sie stattdessen ``ROLE_MATH``. (#12164)
+- Die Klassen ``autoSettingsUtils.driverSetting`` wurden aus dem ``driverHandler`` entfernt - bitte verwenden Sie diese aus ``autoSettingsUtils.driverSetting``. (#12168)
+- Die Klassen ``autoSettingsUtils.utils`` wurden aus ``driverHandler`` entfernt - bitte verwenden Sie diese aus ``autoSettingsUtils.utils``. (#12168)
+- Die Unterstützung von ``TextInfo``, die nicht von ``contentRecog.BaseContentRecogTextInfo`` erben, wurde entfernt. (#12157)
+- ``speech.speakWithoutPauses`` wurde entfernt - bitte verwenden Sie stattdessen ``speech.speechWithoutPauses.SpeechWithoutPauses(speakFunc=speech.speak).speakWithoutPauses``. (#12195, #12251)
+- ``speech.re_last_pause`` wurde entfernt - bitte verwenden Sie stattdessen ``speech.speechWithoutPauses.SpeechWithoutPauses.re_last_pause``. (#12195, #12251)
+- ``WelcomeDialog``, ``LauncherDialog`` und ``AskAllowUsageStatsDialog`` wurden nach ``gui.startupDialogs`` verschoben. (#12105)
+- ``getDocFilePath`` wurde von ``gui`` in das Modul ``documentationUtils`` verschoben. (#12105)
+- Das Modul "gui.accPropServer" sowie die Klassen "AccPropertyOverride" und "ListCtrlAccPropServer" aus dem Modul "gui.nvdaControls" wurden zugunsten der nativen WX-Unterstützung für das Überschreiben von eigenschaften der Barrierefreiheit entfernt. Wenn Sie die Barrierefreiheit von WX-Steuerelementen verbessern, implementieren Sie stattdessen "wx.Accessible". (#12215)
+- Dateien in ``source/comInterfaces/`` sind nun leichter von Entwicklerwerkzeugen wie IDEs verwendbar. (#12201)
+- Dem winVersion-Modul wurden komfortablere Methoden und -Typen hinzugefügt, um Windows-Versionen zu erhalten und besser zu vergleichen. (#11909)
+  - Die Funktion "isWin10" wurde aus dem Modul "winVersion" entfernt.
+  - Die Klasse "winVersion.WinVersion" ist ein vergleichbarer und bestellbarer Typ, der Windows-Versionsinformationen kapselt.
+  - Die Funktion "winVersion.getWinVer" wurde hinzugefügt, um "winVersion.WinVersion" zu erhalten, die das aktuelle Betriebssystem zurückgibt.
+  - Komfortablere Konstanten für bekannte Windows-Versionen hinzugefügt, siehe winVersion.WIN*-Konstanten.
+- IAccessibleHandler importiert nicht mehr alles von IAccessible und IA2 COM Schnittstellen - bitte verwenden Sie diese direkt. (#12232)
+- TextInfo-Objekte haben jetzt Start- und Endeigenschaften, die mit Operatoren wie < <= == != >= > mathematisch verglichen werden können. (#11613)
+  - Z. B. ti1.start <= ti2.end
+  - Diese Verwendung wird nun anstelle von ti1.compareEndPoints(ti2, "startToEnd") <= 0 bevorzugt
+- TextInfo-Start- und -Ende-Eigenschaften können auch zueinander gesetzt werden. (#11613)
+  - Z. B. ti1.start = ti2.end
+  - Diese Verwendung wird anstelle von ti1.SetEndPoint(ti2, "startToEnd") bevorzugt
+- ``wx.CENTRE_ON_SCREEN`` und ``wx.CENTER_ON_SCREEN`` wurden entfernt, verwenden Sie stattdessen ``self.CentreOnScreen()``. (#12309)
+- ``easeOfAccess.isSupported`` wurde entfernt, NVDA unterstützt nur noch Versionen von Windows, bei denen dies als ``True`` ausgewertet wird. (#12222)
+- ``sayAllHandler`` wurde nach ``speech.sayAll`` verschoben. (#12251)
+  - ``speech.sayAll.SayAllHandler`` stellt die Funktionen ``stop``, ``isRunning``, ``readObjects``, ``readText``, ``lastSayAllMode`` zur Verfügung.
+  - ``SayAllHandler.stop`` setzt auch die ``SayAllHandler``-Instanz ``SpeechWithoutPauses`` zurück.
+  - ``CURSOR_REVIEW`` und ``CURSOR_CARET`` wurde durch ``CURSOR.REVIEW`` und ``CURSOR.CARET`` ersetzt.
+- ``speech.SpeechWithoutPauses`` wurde nach ``speech.speechWithoutPauses.SpeechWithoutPauses`` verschoben. (#12251)
+- ``speech.curWordChars`` wurde umbenannt in ``speech._curWordChars``. (#12395)
+- Die folgenden Werte wurden aus ``speech`` entfernt und können über ``speech.getState()`` abgerufen werden. Diese sind nun schreibgeschützte Werte. (#12395)
+  - speechMode
+  - speechMode_beeps_ms
+  - beenCanceled
+  - isPaused
+- Um ``speech.speechMode`` zu aktualisieren, verwenden Sie ``speech.setSpeechMode``. (#12395)
+- Die folgenden Funktionen wurden nach ``speech.SpeechMode`` verschoben. (#12395)
+  - Aus ``speech.speechMode_off`` wurde ``speech.SpeechMode.off``.
+  - Aus ``speech.speechMode_beeps`` wurde ``speech.SpeechMode.beeps``.
+  - Aus ``speech.speechMode_talk`` wurde ``speech.SpeechMode.talk``.
+- ``IAccessibleHandler.IAccessibleObjectIdentifierType`` ist jetzt ``IAccessibleHandler.types.IAccessibleObjectIdentifierType``. (#12367)
+
+
 = 2020.4 =
 Diese Version enthält neue chinesische Eingabemethoden, ein Update für Liblouis und die Elementliste (NVDA+F7) funktioniert jetzt im Fokusmodus.
 Die kontextbezogene Hilfe ist jetzt in NVDA-Dialogfeldern mit der Taste F1 erreichbar.
@@ -66,7 +216,7 @@ Diverse weitere Fehlerbehebungen und Verbesserungen.
 - ARIA-Treegrids werden jetzt sowohl in Firefox als auch in Chrome als normale Tabellen im Suchmodus angezeigt. (#9715)
 - Eine umgekehrte Suche kann jetzt mit der Rückwärtssuche über NVDA+Umschalt+F3 erfolgen. (#11770)
 - Ein NVDA-Skript wird nicht mehr als wiederholt behandelt, wenn zwischen den beiden Ausführungen des Skripts ein nicht zusammenhängender Tastendruck erfolgt. (#11388)
-- Betonte und hervorgehobene Tags in Internet Explorer können erneut daran gehindert werden, gemeldet zu werden, indem die Berichtsbetonung in den einstellungen unter Dokument-Formatierungen von NVDA deaktiviert werden. (#11808)
+- Strong- und Emphasis-Tags im Internet Explorer können wieder unterdrückt werden, indem man die Report Emphasis in den NVDA-Einstellungen unter "Dokument-Formatierung" ausschaltet. (#11808)
 - Ein Einfrieren von mehreren Sekunden, das bei einer kleinen Anzahl von Benutzern beim Navigieren mit den Pfeiltasten zwischen Zellen in Microsoft Excel auftritt, sollte nicht mehr auftreten. (#11818)
 - In Microsoft Teams-Builds mit Versionsnummern wie 1.3.00.28xxx schlägt NVDA das Lesen von Nachrichten in Chats oder Team-Channels auf Grund eines falsch fokussierten Menüs nicht mehr fehl. (#11821)
 - Text, der in Google Chrome gleichzeitig als Rechtschreib- und Grammatikfehler markiert ist, wird von NVDA entsprechend als Rechtschreib- und Grammatikfehler mitgeteilt. (#11787)
@@ -76,6 +226,7 @@ Diverse weitere Fehlerbehebungen und Verbesserungen.
 - NVDA stürzt nicht mehr bei der Verwendung der amerikanische Kurzschrift ab und Sie mit aktiviertem Cursor auf Computer-Braille umschalten, wenn bestimmte Inhalte wie eine URL in Braille angezeigt werden. (#11754)
 - In Microsoft Excel ist es wieder möglich, Formatierungsinformationen für die aktuelle Zelle mit NVDA+F abzufragen. (#11914)
 - Die QWERTZ-Eingabe auf Papenmeier-Braillezeilen, die dies unterstützen, funktioniert wieder und bewirkt nicht mehr, dass NVDA zufällig einfriert. (#11944)
+- In Chromium-basierten Browsern wurden mehrere Fälle behoben, in denen die Tabellen-Navigation nicht funktionierte und NVDA nicht die Anzahl der Zeilen und/oder Spalten der Tabelle meldete. (#12359)
 
 
 == Änderungen für Entwickler ==

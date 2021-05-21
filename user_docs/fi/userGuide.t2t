@@ -498,7 +498,6 @@ Tällaisia asiakirjoja voidaan lukea seuraavissa sovelluksissa:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - Tuetut kirjat Amazon Kindle for PC:ssä
 -
 
@@ -596,7 +595,7 @@ hakujen suorittamiseen käytetään seuraavia näppäimiä:
 %kc:endInclude
 
 ++ Upotetut objektit ++[ImbeddedObjects]
-Sivut voivat sisältää monipuolista sisältöä, jossa käytetään sellaisia tekniikoita kuin Flash, Java, HTML5, kuten myös sovelluksia ja valintaikkunoita.
+Sivut voivat sisältää monipuolista sisältöä, jossa käytetään sellaisia tekniikoita kuin Java, HTML5, kuten myös sovelluksia ja valintaikkunoita.
 Kun selaustilassa tullaan niiden kohdalle, NVDA ilmoittaa "upotettu objekti", "sovellus" tai "valintaikkuna".
 Niihin voidaan siirtyä nopeasti käyttäen upotettuihin objekteihin siirtäviä pikaselausnäppäimiä O ja Vaihto+O.
 Näiden objektien kanssa voidaan olla vuorovaikutuksessa painamalla Enteriä niiden kohdalla.
@@ -794,6 +793,8 @@ Tällaisia tilanteita varten NVDA:ssa on ominaisuus nimeltä näyttöverho, jonk
 
 Voit ottaa näyttöverhon käyttöön [NVDA:n asetusvalintaikkunan #NVDASettings] [Näkö-kategoriassa. #VisionSettings]
 
+Kun näyttöverho on aktiivisena, jotkin näytöllä näkyvään tietoon perustuvat tehtävät, kuten [tekstintunnistuksen #Win10Ocr] suorittaminen tai kuvakaappauksen ottaminen, eivät onnistu.
+
 + Sisällöntunnistus +[ContentRecognition]
 Kun tekijät eivät tarjoa riittävästi tietoa ruudunlukuohjelman käyttäjälle sisällön määrittämiseen, sitä voidaan yrittää tunnistaa kuvasta eri työkaluja käyttäen.
 NVDA tukee Windows 10:n sisäänrakennettua tekstintunnistustoimintoa kuvissa olevan tekstin tunnistamiseen.
@@ -801,8 +802,8 @@ Lisää sisällöntunnistimia voidaan tarjota NVDA:n lisäosina.
 
 Kun sisällöntunnistuskomentoa käytetään, NVDA tunnistaa nykyisen [navigointiobjektin #ObjectNavigation] sisällön.
 Navigointiobjekti seuraa oletusarvoisesti järjestelmän kohdistusta tai selaustilakohdistinta, joten yleensä kohdistus tai selaustilakohdistin voidaan siirtää haluttuun kohtaan.
-Jos esim. siirretään selaustilakohdistin grafiikan kohdalle, sen sisältö tunnistetaan.
-Saatetaan kuitenkin haluta käyttää suoraan Objektinavigointia esim. koko sovellusikkunan tunnistamiseen.
+Jos esim. siirrät selaustilakohdistimen grafiikan kohdalle, sen sisältö tunnistetaan.
+Saatat kuitenkin haluta käyttää suoraan Objektinavigointia esim. koko sovellusikkunan tunnistamiseen.
 
 Kun tunnistus on suoritettu, tulokset näytetään selaustilaa vastaavassa asiakirjassa, joka mahdollistaa tietojen lukemisen nuolinäppäimillä jne.
 Enterin tai Välilyönnin painaminen aktivoi (yleensä napsauttaa) kohdistimen kohdalla olevan tekstin, mikäli mahdollista.
@@ -813,7 +814,9 @@ Windows 10 sisältää tekstintunnistuksen useille kielille.
 NVDA voi käyttää sitä kuvissa olevan tekstin tai esteellisten sovellusten tunnistamiseen.
 
 Tekstintunnistuksen kieli Voidaan määrittää [Asetukset #NVDASettings]-valintaikkunan [Tekstintunnistus (Windows 10) -kategoriasta #Win10OcrSettings].
-Lisäkieliä on mahdolista asentaa avaamalla Käynnistä-valikko, valitsemalla Asetukset -> Aika ja kieli -> Alue ja kieli, ja valitsemalla sitten Lisää kieli.
+Lisäkieliä on mahdollista asentaa avaamalla Käynnistä-valikko, valitsemalla Asetukset -> Aika ja kieli -> Alue ja kieli, ja valitsemalla sitten Lisää kieli.
+
+Windows 10:n tekstintunnistus voi olla osittain tai täysin yhteensopimaton [NVDA:n näönparannusten  #Vision] tai muiden ulkoisten aputoimintojen kanssa. Sinun on poistettava käytöstä tällaiset aputoiminnot ennen tunnistuksen suorittamista.
 
 %kc:beginInclude
 Nykyisen navigointiobjektin teksti tunnistetaan Windows 10:n tekstintunnistusta käyttäen painamalla NVDA+R.
@@ -1743,14 +1746,14 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - Sivut ja välit
  - Sivunumerot
  - Rivinumerot
- - Rivien sisennysten ilmoittaminen [(ei käytössä, puheella, äänimerkeillä, puheella ja äänimerkeillä) #lineIndentationOptions]
+ - Rivien sisennysten ilmoittaminen [(ei käytössä, puheella, äänimerkeillä, puheella ja äänimerkeillä) #DocumentFormattingSettingsLineIndentation]
  - Kappalesisennykset (esim. riippuva ja ensimmäisen rivin sisennys)
  - Rivivälit (yksin- ja kaksinkertainen jne.)
  - Tasaus
 - Taulukon tiedot
  - Taulukot
  - Rivi- ja sarakeotsikot
- - Solujen koordinaatit
+ - Solun koordinaatit
  - Solun reunat (ei käytössä, tyylit, värit ja tyylit)
 - Elementit
  - Otsikot
@@ -1823,7 +1826,7 @@ Tällä on suuri kielteinen vaikutus suorituskykyyn, etenkin sellaisissa sovellu
 Tämän takia NVDA rajoittaa tapahtumien rekisteröinnin useimmissa tapauksissa järjestelmän kohdistukseen tämän asetuksen ollessa käytössä.
 Mikäli sinulla on suorituskykyongelmia yhdessä tai useammassa sovelluksessa, suosittelemme, että kokeilet tätä toimintoa nähdäksesi, paraneeko suorituskyky.
 
-==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimille, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
+==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
 Kun tämä asetus on käytössä, NVDA yrittää käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseksi Microsoft Wordin asiakirjasäätimistä.
 Tällaisia ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
 Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 10:ssä käytettäessä riittävän kattava tarjotakseen lähes nykyisen kaltaisen tuen Microsoft Word -asiakirjoille, jossa on lisäetuna huomattavasti lisääntynyt reagoivuus.
@@ -1836,12 +1839,44 @@ Kun tämä asetus on käytössä, NVDA käyttää uutta, työn alla olevaa versi
 ==== Puhu salasanat UIA-konsoleissa ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Tämä asetus säätää, puhutaanko merkit [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] tai [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetusta käytettäessä tilanteissa, joissa ruutu ei päivity (kuten salasanaa syötettäessä) Windows-konsolissa UI automation -tuen ollessa käytössä. Turvallisuussyistä tämä asetus tulisi pitää poissa käytöstä. Voit kuitenkin halutessasi ottaa sen käyttöön, mikäli sinulla on suorituskykyongelmia tai epävakautta kirjoitettujen merkkien ja/tai sanojen puhumisessa NVDA:n uutta konsolitukea käytettäessä.
 
+==== Käytä UIA:ta Microsoft Edgessä ja muissa Chromium-pohjaisissa selaimissa, kun käytettävissä ====[ChromiumUIA]
+Tämän asetuksen avulla voit määrittää, milloin UIA:ta käytetään (mikäli se on käytettävissä) Chromium-pohjaisissa selaimissa, kuten Microsoft Edgessä.
+Chromium-pohjaisten selainten UIA-tuki on alkuvaiheessa, eikä välttämättä tarjoa samantasoista käyttökokemusta kuin IA2.
+Yhdistelmäruudussa on seuraavat vaihtoehdot:
+- Oletus (vain tarvittaessa): NVDA:n oletusasetus, joka on tällä hetkellä "Vain tarvittaessa". Tämä voi muuttua tulevaisuudessa tekniikan kehittyessä.
+- Vain tarvittaessa: Kun NVDA ei pysty toimimaan selainprosessin sisällä IA2:n käyttämiseksi ja kun UIA on käytettävissä, NVDA siirtyy käyttämään UIA:ta.
+- Kyllä: Jos UIA on käytettävissä selaimessa, NVDA käyttää sitä.
+- Ei: Älä käytä UIA:ta, vaikka NVDA ei pysty toimimaan selainprosessin sisällä. Tästä voi olla hyötyä kehittäjille, jotka selvittävät IA2:n ongelmia ja haluavat varmistaa, ettei NVDA ala käyttää UIA:ta.
+-
+
+==== Käytä UI Automation -rajapintaa Microsoft  Excelin laskentataulukkosäätimissä, kun käytettävissä ====[UseUiaForExcel]
+Kun tämä asetus on käytössä, NVDA yrittää käyttää Microsoft UI Automation -esteettömyysrajapintaa tietojen hakemiseen Microsoft Excelin laskentataulukkosäätimistä.
+Tämä on kokeellinen ominaisuus, eivätkä jotkin Microsoft Excelin toiminnot välttämättä ole käytettävissä tässä tilassa.
+Esimerkiksi NVDA:n elementtilista kaavojen ja kommenttien näyttämiseen ja selaustilan pikaselauskomento laskentataulukon lomakekenttään siirtämiseen eivät ole käytettävissä.
+Alkeelliseen laskentataulukossa liikkumiseen/muokkaamiseen tämä asetus voi kuitenkin tarjota valtavan suorituskyvyn parannuksen.
+Emme vielä suosittele tämän asetuksen oletusarvoista käyttöön ottoa suurimmalle osalle käyttäjistä, mutta Excel 16.0.13522.10000 tai uudemman käyttäjiltä palaute on tervetullutta.
+Excelin UI automation -rajapinnan toteutus muuttuu jatkuvasti, eikä Microsoft Officen vanhemmat versiot kuin 16.0.13522.10000 anna välttämättä tarpeeksi tietoja, jotta tästä asetuksesta olisi mitään hyötyä.
+
 ==== Käytä uutta kirjoitettujen merkkien tukea Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsKeyboardSupportInLegacy]
 Tämä asetus ottaa käyttöön vaihtoehtoisen menetelmän kirjoitettujen merkkien tunnistamiseen Windowsin komentokonsoleissa.
 Vaikka se parantaa suorituskykyä ja estää konsolitulosteen tavaamista, se ei ehkä ole yhteensopiva joidenkin pääteohjelmien kanssa.
 Tämä ominaisuus on käytettävissä ja käytössä oletusarvoisesti Windows 10:n versiossa 1607 ja sitä uudemmissa, kun UI Automation -rajapinta ei ole käytettävissä tai se on poistettu käytöstä.
 Varoitus: Kun tämä asetus on käytössä, ruudulla näkymättömät kirjoitetut merkit, kuten salasanat, puhutaan.
 Epäluotettavissa ympäristöissä voit salasanoja kirjoittaessasi poistaa väliaikaisesti käytöstä [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] ja [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetukset.
+
+==== Muutosten havaitsemismenetelmä ====[DiffAlgo]
+Tämä asetus määrittää, miten NVDA havaitsee uuden puhuttavan tekstin päätteissä.
+Tässä yhdistelmäruudussa on kolme vaihtoehtoa:
+- Automaattinen: NVDA 2021.1:stä lähtien tämä asetus on sama kuin Difflib.
+Tulevassa versiossa se saatetaan muuttaa Diff Match Patchiksi.
+- Salli Diff Match Patch: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset merkeittäin.
+Tämä saattaa parantaa suorituskykyä, kun konsolille kirjoitetaan suuria tekstimääriä, ja mahdollistaa rivien keskellä tehtyjen muutosten tarkemman ilmoittamisen.
+Tämä voi kuitenkin olla yhteensopimaton joidenkin sovellusten kanssa.
+Tätä ominaisuutta tuetaan Windows-konsolissa Windows 10:n versioissa 1607 ja uudemmissa.
+Se voi olla käytettävissä myös muissa päätteissä aiemmissa Windows-versioissa.
+- Pakota Difflib: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset riveittäin.
+Tämä vastaa NVDA:n toiminnallisuutta versiossa 2020.4 ja sitä vanhemmissa.
+-
 
 ==== Yritä perua vanhentuneiden kohdistustapahtumien puhe ====[CancelExpiredFocusSpeech]
 Tämä asetus ottaa käyttöön toiminnallisuuden, joka yrittää perua vanhentuneiden kohdistustapahtumien puheen.
