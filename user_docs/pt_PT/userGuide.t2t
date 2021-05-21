@@ -498,7 +498,6 @@ Isso inclui documentos nas seguintes aplicações:
 - mensagens HTML no Microsoft Outlook;
 - Adobe Reader;
 - Foxit Reader;
-- Adobe Flash;
 - Livros suportados no Amazon Kindle para PC.
 -
 
@@ -596,7 +595,7 @@ Use os seguintes comandos para pesquisar:
 %kc:endInclude
 
 ++ Objectos Embutidos ++[ImbeddedObjects]
-As páginas podem incluir conteúdo enriquecido, através de tecnologias, tais como Adobe Flash, Sun JAVA, HTML5, bem como aplicações e diálogos. 
+As páginas podem incluir conteúdo enriquecido, através de tecnologias, tais como Oracle JAVA, HTML5, bem como aplicações e diálogos. 
 Quando estas são encontradas no modo de navegação, o NVDA anuncia "objecto embutido", "aplicação" ou "diálogo", respectivamente.
 Pode mover-se rapidamente para esses objectos, pressionando O ou Shift+O, os comandos de navegação por caracter.
 Pode pressionar Enter sobre esses objectos, para interagir com os mesmos.
@@ -794,6 +793,8 @@ Para estas situações, o NVDA tem a funcionalidade de "Cortina de ecrã", que p
 
 Pode activar esta funcionalidade na secção [Visão #VisionSettings] na janela das [configurações do NVDA #NVDASettings].
 
+Quando a Cortina de ecrã está activa algumas tarefas, directamente ligadas ao que é mostrado no ecrã, tal como a execução do [OCR #Win10Ocr] ou obter um PrintScreen, não podem ser executadas.
+
 + Reconhecimento de Conteúdo +[ContentRecognition]
 Quando os autores não disponibilizam informação suficiente para que os utilizadores de leitores de ecrã possam determinar o conteúdo de um objecto, vários métodos podem ser usados para reconhecer o conteúdo de uma imagem.
 O NVDA suporta o Reconhecimento Óptico de Caracteres (OCR), uma funcionalidade incluida no Windows 10 para reconhecer texto de imagens.
@@ -814,6 +815,8 @@ O NVDA pode usá-lo para reconhecer texto de imagens ou de aplicações inacess�
 
 Pode configurar o idioma a utilizar na secção [Windows 10 OCR #Win10OcrSettings] do diálogo [Configurações do NVDA #NVDASettings].
 Idiomas adicionais podem ser instalados, abrindo o menu "Iniciar", escolhendo "configurações", seleccionando o separador "Hora e Idioma", depois "Região e Idioma", e, por fim, "Adicionar um idioma".
+
+O Windows 10 OCR pode ser, total ou parcialmente, incompatível com as [Ajudas visuais do NVDA #Vision] ou outras ajudas visuais externas. É necessário desactivá-las antes de executar um reconhecimento por OCR.
 
 %kc:beginInclude
 Para reconhecer o texto no objecto de navegação actual, usando o Windows 10 OCR, pressione NVDA+r.

@@ -1862,7 +1862,7 @@ Bu seçenek, Windows komut konsollarında yazılan karakterleri algılamak için
 Performansı artırıp bazı konsol çıktılarının hecelenmesini engellerken, bazı terminal programlarıyla uyumlu olmayabilir.
 Bu özellik varsayılan olarak etkindir, Windows 10 1607 ve sonraki sürümlerde ve UI Automation kullanılamadığında veya devre dışı bırakıldığında kullanılabilir.
 Dikkat: bu seçenek etkin durumdayken, şifreler gibi ekranda görünmeyen yazılan karakterler gizlenmez.
-Güvensiz ortamlarda, parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] özelliklerini geçici olarak kapatabilirsiniz.
+Güvensiz ortamlarda, parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] işlevlerini geçici olarak devre dışı bırakabilirsiniz.
 
 ==== Diff algorithm ====[DiffAlgo]
 Bu ayar, NVDA'nın terminallerde  yeni metni nasıl konuşacağını kontrol eder.
@@ -1880,12 +1880,12 @@ NVDA'nın 2020.4 ve daha önceki sürümlerindeki davranışıyla aynıdır.
 
 ==== Süresi dolmuş odak etkinlikleri için konuşmayı iptal etmeyi dene ====[CancelExpiredFocusSpeech]
 Bu seçenek, süresi dolmuş odak olayları için konuşmanın iptal edilmesi  davranışını etkinleştirir.
-Özellikle Chrome ile Gmail'deki mesajlarda hızlı bir şekilde hareket etmek NVDA'nın artık geçerli olmayan bilgileri konuşmasına neden olabilir.
+Özellikle Chrome ile Gmail'deki mesajlarda hızlı bir şekilde hareket etmek NVDA'nın artık geçerli olmayan bilgileri aktarmasına neden olabilir.
 Bu işlev NVDA 2020.2'den itibaren deneysel olarak eklenmiştir.
 
 ==== Düzenleme imleci hareketi zaman aşımı (MS cinsinden) ====[AdvancedSettingsCaretMoveTimeout]
 Bu seçenek, NVDA'nın düzenleme imleci (ekleme noktası) düzenlenebilir metin kontrollerinde hareket etmesini bekleyeceği mili saniye sayısını ayarlamanızı sağlar.
-NVDA’nın, düzenleme imlecini yanlış şekilde takip ettiğini fark ederseniz, her zaman arkasında bir karakter gibi görünüyor veya satırları tekrarlıyor, o zaman bu değeri arttırmayı deneyebilirsiniz.
+NVDA’nın, düzenleme imlecini yanlış şekilde takip ettiğini fark ederseniz, her zaman arkasında bir karakter varmış gibi görünüyor veya satırları tekrarlıyorsa, o zaman bu değeri arttırmayı deneyebilirsiniz.
 
 ==== Hata ayıklama kategorileri ====[AdvancedSettingsDebugLoggingCategories]
 Bu listedeki onay kutuları, NVDA günlüğünde belirli hata ayıklama mesajı kategorilerini etkinleştirmenize izin verir.
