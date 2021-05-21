@@ -118,7 +118,7 @@ they think further changes need to be made.
 Reviewers are invited to start a conversation about items in the list, to provide guidance on how to
 improve the PR.
 Not all items will be applicable for all situations, in this case checking the item lets reviewers
-know its been considered.
+know it's been considered.
 If the reviewer reaches the same conclusion as the author, no further work is necessary.
 Most items in the checklist have a section in the PR template where you can add your thoughts, doing
 so may preempt questions from the reviewer ensuring you are on the same page, and speed up the
