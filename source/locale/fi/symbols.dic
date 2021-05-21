@@ -1,16 +1,17 @@
 ﻿#locale/fi/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2011-2021 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
-decimal point	(?<![^\d -])\,(?=\d)
-negative number	(?<!\w)[-−]{1}(?=[$£€¥,.]?\d)
+# Others
+decimal comma	(?<![^\d -])\,(?=\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥,]?\d)
 percent	(?<=\d)\ ?\%(?!\w)
 dates	(((0?[1-9]|[12]\d|3[01])[\.](0?[13578]|1[02])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.](0?[13456789]|1[012])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.]0?2[\.]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.]0?2[\.]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))
 euro	^(0|(([1-9]{1}|[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{2}){1}(\ [0-9]{3}){0,})),(([0-9]{2})|\-\-)([\ ]{1})(€){1}$
-thousands	(^(((\d)|(\d\d)|(\d\d\d))(\xA0|\x20))*((\d)|(\d\d)|(\d\d\d))([,.]\d*)?$)
+thousand separators	(^(((\d)|(\d\d)|(\d\d\d))(\xA0|\x20))*((\d)|(\d\d)|(\d\d\d))([,.]\d*)?$)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -23,13 +24,13 @@ symbols:
 … sentence ending	piste piste piste	all	always
 ; phrase ending	puolipiste	most	always
 : phrase ending	kaksoispiste	most	always
-decimal point		none	always
+decimal comma		none	always
 in-word '	heitto	all	norep
 negative number	miinus	none	norep
 percent	prosenttia	none	norep
 dates	 	all	always
 euro	euroa	all	norep
-thousands	 	all	always
+thousand separators	 	all	always
 
 # Whitespace
 \0	tyhjä	char	# nollamerkki
@@ -42,28 +43,29 @@ thousands	 	all	always
 
 # Standard punctuation/symbols
 !	huuto	all
-"	lainaus	most	norep
+"	lainaus	most
 \#	risu	some
 $	dollari	all	norep
 £	punta	all	norep
 €	euro	all	norep
+¢	sentti	all	norep
+¥	jeni	all	norep
+₹	rupia	some	norep
+ƒ	floriini	all	norep
+¤	valuuttamerkki	all	norep
 %	prosentti	some
+‰	promille	some
 &	et	some
 '	heitto	all
 (	alkusulku	most	always
 )	loppusulku	most	always
 *	tähti	some
-+	plus	some
-−	miinus	some
 ,	pilkku	all	always
 -	viiva	most
 .	piste	some
 /	kautta	some
-:	kaksoispiste	most
+:	kaksoispiste	most	norep
 ;	puolipiste	most
-<	pienempi	most
->	suurempi	most
-=	on yhtä kuin	some
 ?	kysymys	all
 @	ät	some
 [	alkuhaka	most
@@ -75,7 +77,16 @@ _	alaviiva	most
 {	alkuaalto	most
 }	loppuaalto	most
 |	pysty	most
+¦	katkopystyviiva	most
 ~	aaltoviiva	most
+¡	käänteinen huuto	some
+¿	käänteinen kysymys	some
+·	rivinkeskinen piste	most
+‚	alennettu puolilainaus	most
+„	alennettu lainaus	most
+′	yläpuolinen indeksointipilkku	some
+″	kaksinkertainen yläpuolinen indeksointipilkku	some
+‴	kolminkertainen yläpuolinen indeksointipilkku	some
 
 # Other characters
 •	luetelmapallo	some
@@ -90,42 +101,31 @@ _	alaviiva	most
 ­	pehmeä tavuviiva	most
 ⁃	luetteloviiva	none
 ●	tähti	some
+○	valkoinen ympyrä	most
 ¨	treema	most
+¯	pituusmerkki	most
+´	akuutti	most
+¸	sedilji	most
 ‎	nuoli vasemmalta oikealle	char
 ‏	nuoli oikealta vasemmalle	char
-‑	sitova viiva	most
-←	nuoli vasemmalle	some
-↑	nuoli ylös	some
-→	nuoli oikealle	some
-↓	nuoli alas	some
-►	musta osoitin oikealle	most
-♥	hertta	most
-♡	valkoinen hertta	most
-♧	valkoinen risti	most
-♢	valkoinen ruutu	most
-○	valkoinen ympyrä	most
-♤	valkoinen pata	most
-☆	valkoinen tähti	most
-♠	musta pata	most
-★	musta tähti	most
-▪	pieni musta neliö	some
-◾	musta neliö	some
-◦	valkoinen luettelomerkki	some
+¶	kappale	most
 ■	musta neliö	most
-□	valkoinen neliö	some
-➔	nuoli oikealle	some
-⇒	kaksoisnuoli oikealle	some
+▪	pieni musta neliö	some
+◾	musta neliö	most
+□	valkoinen neliö	most
+◦	valkoinen luettelomerkki	some
 ⇨	valkoinen nuoli oikealle	some
+➔	nuoli oikealle	some
 ➢	nuolenpää oikealle	some
-⮚	nuolenpää oikealle	some
-◆	musta timantti	some
 ❖	musta ruutu miinus valkoinen X	some
 ♣	musta risti	some
 ♦	musta ruutu	some
-¡	käänteinen huuto	some
-¦	katkopystyviiva	most
-º	maskuliinisen järjestysluvun merkki	some
-ª	yläindeksi a	some
+◆	musta timantti	some
+§	pykälä	all
+°	aste	some
+«	vasen kulmalainaus	none
+»	oikea kulmalainaus	none
+µ	mikro	some
 ⁰	yläindeksi 0	some
 ¹	yläindeksi 1	some
 ²	yläindeksi 2	some
@@ -137,7 +137,6 @@ _	alaviiva	most
 ⁸	yläindeksi 8	some
 ⁹	yläindeksi 9	some
 ⁺	yläindeksi plus	some
-⁻	yläindeksi miinus	some
 ⁼	yläindeksi on yhtä kuin	some
 ⁽	yläindeksi alkusulku	some
 ⁾	yläindeksi loppusulku	some
@@ -157,146 +156,191 @@ _	alaviiva	most
 ₌	alaindeksi on yhtä kuin	some
 ₍	alaindeksi alkusulku	some
 ₎	alaindeksi loppusulku	some
-´	akuutti	most
-·	rivinkeskinen piste	most
-‚	alennettu puolilainaus	most
-„	alennettu lainaus	most
-′	yläpuolinen indeksointipilkku	some
-″	kaksinkertainen yläpuolinen indeksointipilkku	some
-‴	kolminkertainen yläpuolinen indeksointipilkku	some
-¸	sedilji	most
-‣	kolmikulmainen luettelomerkki	none
-✗	rasti	none
-«	vasen kulmalainaus
-»	oikea kulmalainaus
-µ	mikro	some
-¿	käänteinen kysymys	some
-†	risti	some
-‡	kaksoisristi	some
-☼	säteilevä aurinko	most
-˜	pieni aaltoviiva	most
-‰	promille	some
-§	pykälä	some
-¶	kappale	most
-¯	pituusmerkki	most
-÷	jaettuna	some
-×	kertaa	some
+®	rekisteröity tavaramerkki	most
+™	tavaramerkki	most
+©	copyright	some
+℠	palvelumerkki	some
+←	nuoli vasemmalle	some
+↑	nuoli ylös	some
+→	nuoli oikealle	some
+↓	nuoli alas	some
 ✓	valintamerkki	most
 ✔	valintamerkki	most
 🡺	nuoli oikealle	some
-°	aste	some
-¢	sentti	all	norep
-¤	valuuttamerkki	all	norep
-≠	eri suuri kuin	some
-¬	negaatio	none
-±	plus miinus	some
-₨	rupia	some	norep
-₹	rupia	some	norep
-ƒ	floriini	all	norep
-™	tavaramerkki	most
-®	rekisteröity tavaramerkki	most
-©	copyright	some
-℠	palvelumerkki	some
-¥	jeni	all	norep
-Α	iso alfa	some
-Β	iso beeta	some
-Γ	iso gamma	some
-Δ	iso delta	some
-Ε	iso epsilon	most
-Ζ	iso tseeta	most
-Η	iso eeta	most
-Θ	iso theeta	most
-Ι	iso joota	most
-Κ	iso kappa	most
-Λ	iso lambda	most
-Μ	iso myy	most
-Ν	iso nyy	most
-Ξ	iso ksii	most
-Ο	iso omikron	most
-Π	iso pii	most
-Ρ	iso roo	most
-Σ	iso sigma	most
-Τ	iso tau	most
-Υ	iso ypsilon	most
-Φ	iso fii	most
-Χ	iso kii	most
-Ψ	iso psii	most
-Ω	iso omega	most
-α	alfa	some
-β	beeta	some
-γ	gamma	some
-δ	delta	some
-ε	epsilon	most
-ζ	tseeta	most
-η	eeta	most
-θ	theeta	most
-ι	joota	most
-κ	kappa	most
-λ	lambda	most
-μ	myy	most
-ν	nyy	most
-ξ	ksii	most
-ο	omikron	most
-π	pii	most
-ρ	roo	most
-ς	loppu sigma	most
-σ	sigma	most
-τ	tau	most
-υ	ypsilon	most
-φ	fii	most
-χ	kii	most
-ψ	psii	most
-ω	omega	most
+†	risti	some
+‡	kaksoisristi	some
+‣	kolmikulmainen luettelomerkki	none
+✗	rasti	none
+⊕	ympyröity plus	none
+⊖	ympyröity miinus	none
+⇄	nuolet oikealle ja vasemmalle päällekkäin	none
+⇒	kaksoisnuoli oikealle	none
+
+‑	sitova viiva	most
+►	musta osoitin oikealle	most
+♥	hertta	most
+♡	valkoinen hertta	most
+♧	valkoinen risti	most
+♢	valkoinen ruutu	most
+♤	valkoinen pata	most
+☆	valkoinen tähti	most
+♠	musta pata	most
+★	musta tähti	most
+⮚	nuolenpää oikealle	most
+º	maskuliinisen järjestysluvun merkki	most
+ª	yläindeksi a	most
+☼	säteilevä aurinko	most
+˜	pieni aaltoviiva	most
 ☺	valkoiset hymyilevät kasvot	most
 ☂	sateenvarjo	most
 ♩	neljäsosanuotti	most
 ♪	kahdeksasosanuotti	most
 ♫	varrellinen kahdeksasosanuotti	most
 
-# Mathematical Operators U+2200 to U+220F
-∀	kaikilla	none
-∁	komplementti	none
+# Arithmetic operators
++	plus	some
+−	miinus	some
+×	kertaa	some
+⋅	pisteoperaattori	some
+⨯	kertaa	none
+∕	jakoviiva	some
+⁄	murtoluvun kauttaviiva	some
+÷	jaettuna	some
+∓	miinus tai plus	some
+±	plus tai miinus	some
+
+# Set operations
+∖	joukkomiinus	none
+⊍	monijoukkojen unioni	none
+𝒫	joukon potenssijoukko	none
+𝔓	joukon potenssijoukko	none
+℘	joukon potenssijoukko	none
+∁	joukon komplementti	none
+
+# Set relations and set constructions
+∅	tyhjä joukko	none
+⊂	osajoukko	none
+⊄	osajoukkomerkin negaatio	none
+⊃	ei osajoukko	none
+⊆	osajoukko tai yhtäsuuri kuin	none
+⊈	ei osajoukko eikä yhtä suuri kuin	none
+⊇	ylijoukko tai yhtä suuri kuin	none
+⊉	ei ylijoukko eikä yhtä suuri kuin	none
+⊌	monijoukko	none
+
+# Equality signs
+=	on yhtä kuin	some
+≃	asymptoottisesti yhtä suuri kuin	none
+≄	ei asymptoottisesti yhtä suuri kuin	none
+≅	yhtenevä	none
+≆	likimäärin mutta ei tasan yhtä suuri kuin	none
+≈	likimäärin yhtä suuri kuin	none
+≌	kaikki yhtä suuria kuin	none
+≍	ekvivalenssi	none
+≭	ei ekvivalenssi	none
+≎	geometrisesti ekvivalenssi	none
+≑	geometrisesti samanarvoinen	none
+≚	samankulmainen	none
+≬	välissä	none
+≠	eri suuri kuin	none
+≡	sama kuin	none
+≣	vahvasti sama kuin	none
+≢	ei sama kuin	none
+∼	tildeoperaattori	none
+≙	vastaavuus	none
+≟	kyseenalaisesti yhtä suuri kuin	none
+
+# Comparison signs
+<	pienempi	some
+>	suurempi	some
+≤	pienempi tai yhtäsuuri kuin	none
+≦	pienempi tai yhtä suuri kuin	none
+≪	paljon pienempi kuin	none
+≥	suurempi tai yhtäsuuri kuin	none
+≧	suurempi tai yhtä suuri kuin	none
+≫	paljon suurempi kuin	none
+≶	pienempi tai suurempi kuin	none
+≷	suurempi tai pienempi kuin	none
+≮	ei pienempi kuin	none
+≯	ei suurempi kuin	none
+
+# Functions
+⁻	yläindeksi miinus	some
+∘	pallo	none
 ∂	osittaisderivaatta	none
+∇	nabla	none
+
+# Geometry and linear Algebra
+⃗	vektori välillä	none
+△	kolmio	none
+▭	suorakulmio	none
+∟	suora kulma	none
+∠	kulma	none
+∥	samansuuntainen kuin	none
+∦	erisuuntainen kuin	none
+⊥	ylös osoittava nupi	none
+⟂	kohtisuora	none
+‖	vektorin normi	none
+	normalisoi	none
+∿	siniaalto	none
+∡	mitattu kulma	none
+∢	kaarellinen kulma	none
+
+# Logical operators
+∀	kaikki	none
 ∃	on olemassa	none
 ∄	ei ole olemassa	none
-∅	tyhjä joukko	none
-∆	lisäys	none
-∇	nabla	none
+⇏	ei viittaa	none
+⇐	viittaa	none
+
+# Other mathematical operators
 ∈	kuuluu joukkoon	none
 ∉	ei kuulu joukkoon	none
 ∊	pieni osa	none
 ∋	sisältää jäsenenä	none
-∌	ei sisällä jäsenenä	none
+∌	does not contain as member	none
 ∍	pieni sisältää jäsenenä	none
 ∎	todistuksen loppu	none
-∏	tulo yli	none
- 
-# Miscellaneous Mathematical Operators
-∑	summa yli	none
+∏	tulo	none
+∐	kotulo	none
+∑	summa	none
 √	neliöjuuri	none
 ∛	kuutiojuuri	none
 ∜	neljäs juuri	none
-∝	on verrannollinen	none
+∝	verrannollinen	none
 ∞	ääretön	none
-∟	loppukulma	none
-+∠	kulma	none
-∥	samansuuntainen kuin	none
-∦	erisuuntainen kuin	none
-∧	looginen konjuktio	none
-∨	looginen disjunktio	none
-∩	leikkaa	none
-∪	joukko-opillinen yhdiste	none
-∫	määräämätön integraali	none
-∴	siksi	none
-∵	koska	none
-∶	kerroin	none
-∷	verranto	none
-≤	pienempi tai yhtäsuuri kuin	none
-≥	suurempi tai yhtäsuuri kuin	none
-⊂	on osajoukko	none
-⊃	implikaatio	none
-⊆	on alijoukko tai yhtäsuuri kuin	none
-⊇	on ylijoukko tai yhtäsuuri kuin	none
+∧	ja	none
+∨	tai	none
+¬	ei	none
+∩	leikkaus	none
+∪	unioni	none
+∫	integraali	none
+∬	kaksoisintegraali	none
+∭	kolmoisintegraali	none
+∮	käyräintegraali	none
+∯	pintaintegraali	none
+∰	tilavuusintegraali	none
+∱	myötäpäiväinen integraali	none
+∲	myötäpäiväinen käyräintegraali	none
+∳	vastapäiväinen käyräintegraali	none
+∴	koska	none
+∵	siis	none
+∶	suhde	none
+∷	suhteellisuus	none
+∹	ylitys	none
+∺	geometrinen suhde	none
+≀	punostulo	none
+≏	ero	none
+≐	lähestyy raja-arvoa	none
+∙	musta pallo	none
+∣	jaollisuus	none
+∤	jaottomuus	none
+≔	kaksoispiste yhtä suuri kuin	none
+≕	yhtä suuri kuin kaksoispiste	none
+≺	edeltää	none
+≻	seuraa	none
+⊀	ei edellä	none
+⊁	ei seuraa	none
 
 # Vulgur Fractions U+2150 to U+215E
 ¼	yksi neljäsosaa	none
@@ -318,5 +362,70 @@ _	alaviiva	most
 ⅝	viisi kahdeksasosaa	none
 ⅞	seitsemän kahdeksasosaa	none
 
-# Miscellaneous Technical
+#Number sets
+𝔸	algebralliset luvut	none
+ℂ	kompleksiluvut	none
+ℑ	kuvitteellinen osa kompleksilukua	none
+ℍ	kvaternionit	none
+ℕ	luonnolliset luvut	none
+𝕁	positiiviset kokonaisluvut	none
+ℚ	rationaaliluvut	none
+ℝ	reaaliluvut	none
+ℜ	kompleksiluvun reaaliosa	none
+ℤ	kokonaisluvut	none
+ℵ	alef-luku	none
+ℶ	bet-luku	none
+
+# Miscellaneous technical
 ⌘	Macin komentonäppäin	none
+
+# Greek alphabet
+Α	iso alfa	most
+Β	iso beeta	most
+Γ	iso gamma	most
+Δ	iso delta	most
+Ε	iso epsilon	most
+Ζ	iso tseeta	most
+Η	iso eeta	most
+Θ	iso theeta	most
+Ι	iso joota	most
+Κ	iso kappa	most
+Λ	iso lambda	most
+Μ	iso myy	most
+Ν	iso nyy	most
+Ξ	iso ksii	most
+Ο	iso omikron	most
+Π	iso pii	most
+Ρ	iso roo	most
+Σ	iso sigma	most
+Τ	iso tau	most
+Υ	iso ypsilon	most
+Φ	iso fii	most
+Χ	iso kii	most
+Ψ	iso psii	most
+Ω	iso omega	most
+α	alfa	most
+β	beeta	most
+γ	gamma	most
+δ	delta	most
+ε	epsilon	most
+ζ	tseeta	most
+η	eeta	most
+θ	theeta	most
+ι	joota	most
+κ	kappa	most
+λ	lambda	most
+μ	myy	most
+ν	nyy	most
+ξ	ksii	most
+ο	omikron	most
+π	pii	most
+ρ	roo	most
+ς	loppu sigma	most
+σ	sigma	most
+τ	tau	most
+υ	ypsilon	most
+φ	fii	most
+χ	kii	most
+ψ	psii	most
+ω	omega	most

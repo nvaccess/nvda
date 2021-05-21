@@ -23,7 +23,7 @@ NVDA可供盲人和低视力人群使用 Windows 操作系统，以及与众多�
 - 支持文档格式的朗读（如字体名称或大小，样式或拼写错误等）。
 - 可自动朗读鼠标指向的文本，还包括用声音提示鼠标所在位置的选项。
 - 支持许多种可刷新点显器，并且支持部分品牌点显器的自动检测，实现即插即用，还支持带有盲文输入键盘的点显器的盲文输入。
-- 无需安装，可完全运行在U盘或者其他可携式存储设备上。
+- 无需安装，可完全运行在 U盘或者其他便携式存储设备上。
 - 便捷易用的语音安装程序。
 - 已翻译为54种语言。
 - 支持现代的 Windows 操作系统，包括32位和64位和其他衍生版本。
@@ -57,8 +57,8 @@ NVDA 支持显示多种语言的简写或非简写盲文以及电脑盲文。
  NVDA版权归 NVDA贡献者所有 @ NVDA_COPYRIGHT_YEARS 。
 
 NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护，不过有两个例外。
-具体例外情况在NVDA许可协议 "Non-GPL Components in Plugins and Drivers" 和 "Microsoft Distributable Code"这两部分里。
-NVDA还使用了其他协议的开源免费软件。
+具体的例外情况在NVDA许可协议 "Non-GPL Components in Plugins and Drivers" 和 "Microsoft Distributable Code"这两部分里。
+NVDA 还使用了其他协议的开源免费软件。
 只要将此公开许可协议随附于软件内，您可以自由地以任何形式分享或改变此软件，并将所有的源代码提供给需要的人
 此槼则适用于原始发布的软件或任何以此软件修改之后发布的作品，以及所有采用此软件内的程序码所生成的作品。 
 
@@ -69,7 +69,7 @@ NVDA还使用了其他协议的开源免费软件。
 - 操作系统： 所有32位或者64位的Windows 7 Sp1、Windows 8 、Windows 8.1 、Windows 10(包括服务器系统)。
 - 对于 Windows 7 版本，NVDA 要求 SP1 以上。
 - 对于 Windows Server 2008 R2 服务器操作系统 ， NVDA 要求 SP1 或者更高。
-- 约需要150 MB 的磁盘空间。
+- 大约需要150 MB 的磁盘空间。
 -
 
 + 获取和配置 NVDA +[GettingAndSettingUpNVDA]
@@ -3144,12 +3144,12 @@ nvda -q
 | -s | --secure | 安全模式 禁用 Python 控制台并且停用以下功能 创建删除重命名配置、检查更新、欢迎对话框、开机启动NVDA、退出时保存设置、日志查看器、日志记录功能。在安全模式下，无法保存当前配置到系统配置、按键和手势同样无法保存。 |
 | 无 | --disable-addons | 禁用插件。 |
 | 无 | --debug-logging | 开启调试日志 覆盖之前的日志记录级别设置(""--loglevel"", -l) 包括已禁用日志。 |
-| 无 | --no-logging | 禁用NVDA日志功能 注意 --debug-logging 和 --loglevel 会覆盖这个参数 |
-| 无 | --no-sr-flag  | 不修改Windows系统全局屏幕阅读器标志。 |
+| 无 | --no-logging | 禁用 NVDA 日志功能 注意 --debug-logging 和 --loglevel 会覆盖这个参数 |
+| 无 | --no-sr-flag  | 不修改 Windows 系统全局屏幕阅读器标志。 |
 | 无 | --install | 安装 NVDA（并启动最新安装的副本）。 |
 | 无 | --install-silent | 静默安装 NVDA（但不启动安装后的副本）。 |
-| 无 | --enable-start-on-logon=True|False | 为安装的副本开启[在 Windows 启动时运行 #StartAtWindowsLogon]这个选项 |
-| 无 | --copy-portable-config | 安装过程中，将便携版配置从所提供的路径（--config-path， -c）复制到当前用户帐户目录下。 |
+| 无 | --enable-start-on-logon=True|False | 安装时开启或关闭[进入 Windows 欢迎界面时启用 NVDA #StartAtWindowsLogon]选项 |
+| 无 | --copy-portable-config | 安装时，将便携版配置从所提供的路径（--config-path， -c）复制到当前用户帐户目录下。 |
 | 无 | --create-portable | 创建一个便携版（并启动该便携版）。 必须和 --portable-path 一起使用。 |
 | 无 | --create-portable-silent | 创建一个便携版（但不启动该便携版）。 必须和 --portable-path 一起使用。 |
 | 无 | --portable-path=PORTABLEPATH | 创建便携版的目录 |
