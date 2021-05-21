@@ -1,5 +1,5 @@
 <!-- Please read and fill in the following template, for an explanation of the sections see:
-https://github.com/nvaccess/nvda/wiki/Github-pull-request-template-explanation-and-examples
+https://github.com/nvaccess/nvda/blob/master/devDocs/githubPullRequestTemplateExplanationAndExamples.md
 Please also note that the NVDA project has a Citizen and Contributor Code of Conduct which can be found at https://github.com/nvaccess/nvda/blob/master/CODE_OF_CONDUCT.md. NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project. This includes creating or commenting on issues and pull requests. 
 
 Please initially open PRs as a draft. See https://github.com/nvaccess/nvda/wiki/Contributing
@@ -31,7 +31,7 @@ Where items are missing (eg unit / system tests), please explain in the PR.
 To check an item `- [ ]` becomes `- [x]`, note spacing.
 You can also check the checkboxes after the PR is created.
 A detailed explanation of this checklist is available here:
-https://github.com/nvaccess/nvda/wiki/Github-pull-request-template-explanation-and-examples#code-review-checklist
+https://github.com/nvaccess/nvda/blob/master/devDocs/githubPullRequestTemplateExplanationAndExamples.md#code-review-checklist
 -->
 
 - [ ] Pull Request description is up to date.
