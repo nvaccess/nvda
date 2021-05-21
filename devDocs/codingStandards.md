@@ -44,9 +44,11 @@ for more information.
   - E.G. `BrailleHandler`.
 * Constants should be all upper case, separating words with underscores;
   - E.G. `LANGS_WITH_CONJUNCT_CHARS`.
-* Event handlers are prefixed with "event_", subsequent words in capitals using snake case.
-  - E.G.: `event_ACTION` or `event_OBJECT_ACTION`.
-  - `OBJECT` refers to the class type that the `ACTION` refers to.
+* Event handlers are prefixed with "event_", subsequent words in camel case.
+  Note, `object` and `action` are separated by underscores.
+  - E.G.: `event_action` or `event_object_action`.
+  - `object` refers to the class type that the `action` refers to.
+  - Examples: `event_caret`, `event_appModule_gainFocus`
 * Extension points:
   * `Action`
     - Prefixed with `pre_` or `post_` to specify that handlers are being notified before / after the
