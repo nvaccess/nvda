@@ -31,7 +31,8 @@ Modifications will need to be made in `<nvda repo root>/nvdaHelper/espeak`
    1. Modify the `<nvda repo root>/nvdaHelper/espeak/config.h` file as required.
 1. Update our record of the version number and build.
    1. Change back to the NVDA repo root
-   1. Update the package version in `<nvda repo root>/nvdaHelper/espeak/config.h`
+   1. Update the `/DPACKAGE_VERSION` in `espeak/sconscript`
+      - The preprocessor definition is used to create `<nvda repo root>/nvdaHelper/espeak/config.h`
       - Compare to espeak source info: `<nvda repo root>/include/espeak/src/windows/config.h`.
    1. Update NVDA `readme.md` with espeak version and commit.
    1. Build NVDA
