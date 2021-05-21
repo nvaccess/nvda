@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 04:45+0000\n"
-"PO-Revision-Date: 2021-05-15 11:22+0900\n"
+"POT-Creation-Date: 2021-05-21 07:49+0000\n"
+"PO-Revision-Date: 2021-05-21 10:14+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -4810,7 +4810,8 @@ msgstr "Windows 10 文字認識は利用できません"
 
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows 10 OCR."
-msgstr "Windows 10 文字認識を使用する前にスクリーンカーテンを無効にしてください"
+msgstr ""
+"Windows 10 文字認識を使用する前にスクリーンカーテンを無効にしてください"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -7137,9 +7138,9 @@ msgstr "{startTime} から {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-msgid "category"
-msgid_plural "categories"
-msgstr[0] "カテゴリ"
+#, fuzzy, python-brace-format
+msgid "categories {categories}"
+msgstr "カテゴリ {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -12205,3 +12206,7 @@ msgstr "2行の行間"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5行の行間"
+
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "カテゴリ"
