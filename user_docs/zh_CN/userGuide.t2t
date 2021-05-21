@@ -89,7 +89,7 @@ NVDA 还使用了其他协议的开源免费软件。
 您如果只是想把 NVDA 拷贝到如 CD 等只读存储设备上，您只需要拷贝下载的文件即可。
 在只读媒体上直接运行便携版本的 NVDA 在目前是不受支持的。
 
-如只是希望试用，可选择使用临时的 NVDA 副本，虽然每次以这种方式启动 NVDA 非常费时。
+如果只想试用，可选择使用临时的 NVDA 副本，虽然每次以这种方式启动 NVDA 非常麻烦。
 
 ++ 便携版和临时副本的限制 ++[PortableAndTemporaryCopyRestrictions]
 除了不能在登录期间和或其后自动启动，NVDA 的便携版和临时副本还有以下限制：
@@ -3146,7 +3146,7 @@ nvda -q
 | 无 | --debug-logging | 开启调试日志 覆盖之前的日志记录级别设置(""--loglevel"", -l) 包括已禁用日志。 |
 | 无 | --no-logging | 禁用 NVDA 日志功能 注意 --debug-logging 和 --loglevel 会覆盖这个参数 |
 | 无 | --no-sr-flag  | 不修改 Windows 系统全局屏幕阅读器标志。 |
-| 无 | --install | 安装 NVDA（并启动最新安装的副本）。 |
+| 无 | --install | 安装 NVDA（并启动安装的副本）。 |
 | 无 | --install-silent | 静默安装 NVDA（但不启动安装后的副本）。 |
 | 无 | --enable-start-on-logon=True|False | 安装时开启或关闭[进入 Windows 欢迎界面时启用 NVDA #StartAtWindowsLogon]选项 |
 | 无 | --copy-portable-config | 安装时，将便携版配置从所提供的路径（--config-path， -c）复制到当前用户帐户目录下。 |
