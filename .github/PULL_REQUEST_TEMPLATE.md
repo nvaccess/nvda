@@ -37,7 +37,7 @@ https://github.com/nvaccess/nvda/wiki/Github-pull-request-template-explanation-a
 - [ ] Pull Request description is up to date.
 - [ ] Unit tests.
 - [ ] System (end to end) tests.
-- [ ] Manual testing / Reviewer verification.
+- [ ] Manual testing.
 - [ ] User Documentation.
 - [ ] Change log entry.
 - [ ] Context sensitive help for GUI changes.
