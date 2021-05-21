@@ -45,4 +45,4 @@ https://github.com/nvaccess/nvda/wiki/Github-pull-request-template-explanation-a
   - Speech 
   - Braille
   - Low Vision
-  - Different browsers
+  - Different web browsers
