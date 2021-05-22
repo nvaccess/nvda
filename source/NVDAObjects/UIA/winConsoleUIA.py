@@ -11,6 +11,7 @@ import UIAHandler
 
 from comtypes import COMError
 from logHandler import log
+from UIAUtils import _isImprovedConhostTextRangeAvailable
 from . import UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
@@ -356,10 +357,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		internally to determine whether to activate workarounds and as a
 		convenience when debugging.
 		"""
-		# microsoft/terminal#4495: In newer consoles,
-		# IUIAutomationTextRange::getVisibleRanges returns one visible range.
-		# Therefore, if exactly one range is returned, it is almost definitely a newer console.
-		return self.UIATextPattern.GetVisibleRanges().length == 1
+		return _isImprovedConhostTextRangeAvailable(self.windowHandle)
 
 	def _get_TextInfo(self):
 		"""Overriding _get_ConsoleUIATextInfo and thus the ConsoleUIATextInfo property
