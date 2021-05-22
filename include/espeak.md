@@ -31,7 +31,9 @@ Modifications will need to be made in `<nvda repo root>/nvdaHelper/espeak`
    1. Modify the `<nvda repo root>/nvdaHelper/espeak/config.h` file as required.
 1. Update our record of the version number and build.
    1. Change back to the NVDA repo root
-   1. Update the package version in `<nvda repo root>/nvdaHelper/espeak/config.h`
+   1. Update the `/DPACKAGE_VERSION` in `espeak/sconscript`
+      - The preprocessor definition is used to supply these definitions instead of `<nvda repo root>/nvdaHelper/espeak/config.h`
+      - `<nvda repo root>/nvdaHelper/espeak/config.h` must exist (despite being empty) since a "config.h" is included within espeak.
       - Compare to espeak source info: `<nvda repo root>/include/espeak/src/windows/config.h`.
    1. Update NVDA `readme.md` with espeak version and commit.
    1. Build NVDA
@@ -52,4 +54,3 @@ any changes in our `sconscript` file.
 Due to problems with emoji support (causing crashes), emoji dictionary files are being excluded
 from the build, they are deleted prior to compiling the dictionaries in the
 `<nvda repo root>/nvdaHelper/espeak/sconscript` file.
-
