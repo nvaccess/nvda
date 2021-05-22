@@ -1,13 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2016 NV Access Limited
+# Copyright (C) 2015-2021 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import operator
 from comtypes import COMError
+import config
 import ctypes
 import UIAHandler
 import weakref
+from functools import lru_cache
+from logHandler import log
 
 
 def createUIAMultiPropertyCondition(*dicts):
@@ -282,3 +285,52 @@ class FakeEventHandlerGroup:
 				self.clientObject.RemoveNotificationEventHandler(element, handler)
 		for handler in self._propertyChangedEventHandlers.values():
 			self.clientObject.RemovePropertyChangedEventHandler(element, handler)
+
+
+def _shouldUseUIAConsole(hwnd: int) -> bool:
+	"""Determines whether to use UIA in the Windows Console."""
+	setting = config.conf['UIA']['winConsoleImplementation']
+	if setting == "UIA":
+		return True
+	elif setting == "legacy":
+		return False
+	else:
+		# #7497: the UIA implementation in old conhost is incomplete, therefore we
+		# should ignore it.
+		# When the UIA implementation is improved, the below line will be replaced
+		# with a call to _isImprovedConhostTextRangeAvailable.
+		return False
+
+
+@lru_cache(maxsize=10)
+def _isImprovedConhostTextRangeAvailable(hwnd: int) -> bool:
+	"""This function determines whether microsoft/terminal#4495 and by extension
+	microsoft/terminal#4018 are present in this conhost.
+	In consoles before these PRs, a number of workarounds were needed
+	in our UIA implementation. However, these do not fix all bugs and are
+	problematic on newer console releases. This function is therefore used
+	to determine whether this console's UIA implementation is good enough to
+	use by default."""
+	# microsoft/terminal#4495: In newer consoles,
+	# IUIAutomationTextRange::getVisibleRanges returns one visible range.
+	# Therefore, if exactly one range is returned, it is almost definitely a newer console.
+	try:
+		UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
+			hwnd, UIAHandler.handler.baseCacheRequest
+		)
+		textAreaCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+		textAreaCacheRequest.TreeScope = UIAHandler.TreeScope_Children
+		textAreaCacheRequest.treeFilter = UIAHandler.handler.clientObject.createPropertyCondition(
+			UIAHandler.UIA_AutomationIdPropertyId,
+			"Text Area"
+		)
+		textArea = UIAElement.buildUpdatedCache(
+			textAreaCacheRequest
+		).getCachedChildren().GetElement(0)
+		UIATextPattern = textArea.GetCurrentPattern(
+			UIAHandler.UIA_TextPatternId
+		).QueryInterface(UIAHandler.IUIAutomationTextPattern)
+		return UIATextPattern.GetVisibleRanges().length == 1
+	except (COMError, ValueError):
+		log.exception()
+		return False
