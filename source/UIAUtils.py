@@ -314,8 +314,9 @@ def _isImprovedConhostTextRangeAvailable(hwnd):
 		)
 		textAreaCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
 		textAreaCacheRequest.TreeScope = UIAHandler.TreeScope_Children
-		textAreaCacheRequest.treeFilter = createUIAMultiPropertyCondition(
-			{UIAHandler.UIA_AutomationIdPropertyId: ["Text Area"]}
+		textAreaCacheRequest.treeFilter = UIAHandler.handler.clientObject.createPropertyCondition(
+			UIAHandler.UIA_AutomationIdPropertyId,
+			"Text Area"
 		)
 		textArea = UIAElement.buildUpdatedCache(
 			textAreaCacheRequest
