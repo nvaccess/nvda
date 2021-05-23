@@ -55,10 +55,10 @@ HorizontalTextAlignment_Justified=3
 # The name of the WDAG (Windows Defender Application Guard) process
 WDAG_PROCESS_NAME=u'hvsirdpclient'
 
-goodUIAWindowClassNames=[
+goodUIAWindowClassNames = (
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
 	'RAIL_WINDOW',
-]
+)
 
 badUIAWindowClassNames = (
 	# UIA events of candidate window interfere with MSAA events.
