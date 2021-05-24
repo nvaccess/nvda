@@ -19,7 +19,7 @@ import controlTypes
 import api
 import textInfos
 import speech
-import sayAllHandler
+from speech import sayAll
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -1253,7 +1253,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for move review cursor to previous line command.
 		description=_("Moves the review cursor to the previous line of the current navigator object and speaks it"),
-		resumeSayAllMode=sayAllHandler.CURSOR_REVIEW,
+		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad7", "kb(laptop):NVDA+upArrow", "ts(text):flickUp")
 	)
@@ -1294,7 +1294,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for move review cursor to next line command.
 		description=_("Moves the review cursor to the next line of the current navigator object and speaks it"),
-		resumeSayAllMode=sayAllHandler.CURSOR_REVIEW,
+		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad9", "kb(laptop):NVDA+downArrow", "ts(text):flickDown")
 	)
@@ -1549,21 +1549,21 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+s"
 	)
 	def script_speechMode(self,gesture):
-		curMode=speech.speechMode
-		speech.speechMode=speech.speechMode_talk
+		curMode = speech.getState().speechMode
+		speech.setSpeechMode(speech.SpeechMode.talk)
 		newMode=(curMode+1)%3
-		if newMode==speech.speechMode_off:
+		if newMode == speech.SpeechMode.off:
 			# Translators: A speech mode which disables speech output.
 			name=_("Speech mode off")
-		elif newMode==speech.speechMode_beeps:
+		elif newMode == speech.SpeechMode.beeps:
 			# Translators: A speech mode which will cause NVDA to beep instead of speaking.
 			name=_("Speech mode beeps")
-		elif newMode==speech.speechMode_talk:
+		elif newMode == speech.SpeechMode.talk:
 			# Translators: The normal speech mode; i.e. NVDA will talk as normal.
 			name=_("Speech mode talk")
 		speech.cancelSpeech()
 		ui.message(name)
-		speech.speechMode=newMode
+		speech.setSpeechMode(newMode)
 
 	@script(
 		description=_(
@@ -1675,7 +1675,7 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:numpadPlus", "kb(laptop):NVDA+shift+a", "ts(text):3finger_flickDown")
 	)
 	def script_review_sayAll(self,gesture):
-		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
+		sayAll.SayAllHandler.readText(sayAll.CURSOR.REVIEW)
 
 	@script(
 		# Translators: Input help mode message for say all with system caret command.
@@ -1684,7 +1684,7 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb(desktop):NVDA+downArrow", "kb(laptop):NVDA+a")
 	)
 	def script_sayAll(self,gesture):
-		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
+		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
 
 	def _reportFormattingHelper(self, info, browseable=False):
 		# Report all formatting-related changes regardless of user settings
@@ -1991,7 +1991,7 @@ class GlobalCommands(ScriptableObject):
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
 		if obj:
-			sayAllHandler.readObjects(obj)
+			sayAll.SayAllHandler.readObjects(obj)
 
 	@script(
 		gesture="kb(desktop):NVDA+control+f2"
