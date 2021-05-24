@@ -1,8 +1,7 @@
-#audioDucking.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015-2016 NV Access Limited 
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import threading
 from ctypes import *
@@ -10,6 +9,7 @@ from ctypes import oledll
 import time
 import config
 from logHandler import log
+import systemUtils
 
 def _isDebug():
 	return config.conf["debugLog"]["audioDucking"]
@@ -146,6 +146,7 @@ def isAudioDuckingSupported():
 			config.isInstalledCopy()
 			or config.isAppX
 		) and hasattr(oledll.oleacc, 'AccSetRunningUtilityState')
+		_isAudioDuckingSupported &= systemUtils.hasUiAccess()
 	return _isAudioDuckingSupported
 
 def handlePostConfigProfileSwitch():
