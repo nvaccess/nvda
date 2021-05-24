@@ -56,7 +56,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def __init__(self):
 		super(BrailleInputHandler,self).__init__()
-		self._table: Optional(brailleTables.BrailleTable) = None
+		self._table: Optional[brailleTables.BrailleTable] = None
 		#: A buffer of entered braille cells so that state set by previous cells can be maintained;
 		#: e.g. capital and number signs.
 		self.bufferBraille = []
