@@ -13,6 +13,7 @@ from locale import strxfrm
 
 import config
 import globalVars
+from logHandler import log
 
 
 #: The directory in which liblouis braille tables are located.
@@ -485,8 +486,6 @@ _tables = _tables.new_child()
 def initialize():
 	# The builtin tables were added at import time to the parent map.
 	# Now, add the custom tables to the first map.
-	import os
-	from logHandler import log
 
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
