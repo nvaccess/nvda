@@ -6,12 +6,9 @@
 from typing import List, Optional
 import time
 import weakref
-import inspect
 import types
 import config
-import speech
 from speech import sayAll
-import appModuleHandler
 import api
 import queueHandler
 from logHandler import log
@@ -19,7 +16,6 @@ import inputCore
 import globalPluginHandler
 import braille
 import vision
-import keyLabels
 import baseObject
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed

@@ -55,6 +55,7 @@ from .speech import (
 	speakSpelling,
 	speakText,
 	speakTextInfo,
+	SpeakTextInfoState,
 	speakTextSelected,
 	speakTypedCharacters,
 	SpeechMode,
@@ -132,6 +133,7 @@ __all__ = [
 	"speakSpelling",
 	"speakText",
 	"speakTextInfo",
+	"SpeakTextInfoState",
 	"speakTextSelected",
 	"speakTypedCharacters",
 	"SpeechMode",
@@ -142,13 +144,22 @@ __all__ = [
 import synthDriverHandler
 import config
 from .speech import initialize as speechInitialize
+from .sayAll import initialize as sayAllInitialize
 
 
 def initialize():
-	"""Loads and sets the synth driver configured in nvda.ini."""
+	""" Loads and sets the synth driver configured in nvda.ini.
+	Initializes the state of speech and initializes the sayAllHandler
+	"""
 	synthDriverHandler.initialize()
 	synthDriverHandler.setSynth(config.conf["speech"]["synth"])
 	speechInitialize()
+	sayAllInitialize(
+		speak,
+		speakObject,
+		getTextInfoSpeech,
+		SpeakTextInfoState,
+	)
 
 
 def terminate():

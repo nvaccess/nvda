@@ -87,7 +87,7 @@ $	dolar	all	norep
 ♂	büyüktür	some
 ♂	büyüktür	some
 =	eşittir	some
-═	eşittir	most
+═	eşittir	some
 ?	soru	all
 @	et	some
 [	aç köşeli parantez	most
@@ -140,7 +140,7 @@ _	alt çizgi	most
 «	çift kancalı parantezaç	most
 ¸	cedila	most
 ¶	paragraf işareti	most
-»	çift kancalı parantez kapa	most
+»	çift kancalı parantez kapa	some
 µ	mikro	some
 º	derece	some
 ª	üssü a	some
@@ -176,7 +176,7 @@ _	alt çizgi	most
 ₍	alt simge sol parantez	some
 ₎	alt simge sağ parantez	some
 ¿	ters soru	most
-‣	üçgen madde imi	most
+‣	üçgen madde imi	none
 ◆	siyah karo	some
 §	bölüm	all
 ÷	bölü	some
@@ -226,6 +226,72 @@ _	alt çizgi	most
 υ	upsilon	some
 φ	fi	some
 ω	omega	some
+
+#Mathematical Operators U+2200 to U+220F
+∀	Her 	none
+∁	Tümleyen	none
+∂	Kısmi Türev	none
+∃	vardır	none
+∄	Hiçbir	none
+∅	Boş Küme	none
+∆	Artım	none
+∇	Nabla	none
+∈	Elemanıdır	none
+∉	Elemanı değildir	none
+∊	Küçük elemanıdır	none
+∋	Içerir	none
+∌	Içermez	none
+∍	Küçük içerir	none
+∎	İspat sonu	none
+∏	Çarpım	none
+
+# Miscellaneous Mathematical Operators
+∑	Toplam	none
+√	Karekök	none
+∛	Küp kök	none
+∜	4.dereceden kök	none
+∝	Orantılı	none
+∞	Sonsuz	none
+∟	Dik açı	none
+∠	Açı	none
+∥	Paralel	none
+∦	Paralel değil	none
+∧	Mantık ve	none
+∨	Mantık veya	none
+∩	Kesişim	none
+∪	Birleşim	none
+∫	İntegral	none
+∴	Dolayısıyla	none
+∵	Çünkü	none
+∶	Oran	none
+∷	Orantı	none
+≤	Eşit veya daha az	none
+≥	Eşit veya daha fazla	none
+⊂	Alt kümesi	none
+⊃	Üstkümesi	none
+⊆	Eşit veya alt kümesi	none
+⊇	Eşit veya üstkümesi	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	yedide bir	none
+⅑	dokuzda bir	none
+⅒	onda bir	none
+⅓	üçte bir	none
+⅔	üçte iki	none
+⅕	beşte bir	none
+⅖	beşte iki	none
+⅗	beşte üç	none
+⅘	beşte dört	none
+⅙	altıda bir	none
+⅚	altıda beş	none
+⅛	sekizde bir	none
+⅜	sekizde üç	none
+⅝	sekizde beş	none
+⅞	sekizde yedi	none
+
+# Miscellaneous Technical
+⌘	Mek Komut tuşu	none
+
 # Ottoman chars:
 أ	elif altında hemze	some
 ا	elif	some
@@ -409,70 +475,3 @@ _	alt çizgi	most
 ٨	8	some
 ٩	9	some
 ٠	0	some
-
-#Mathematical Operators U+2200 to U+220F
-
-∀	Her 	none
-∁	Tümleyen	none
-∂	Kısmi Türev	none
-∃	vardır	none
-∄	Hiçbir	none
-∅	Boş Küme	none
-∆	Artım	none
-∇	Nabla	none
-∈	Elemanıdır	none
-∉	Elemanı değildir	none
-∊	Küçük elemanıdır	none
-∋	Içerir	none
-∌	Içermez	none
-∍	Küçük içerir	none
-∎	İspat sonu	none
-∏	Çarpım	none
-
-# Miscellaneous Mathematical Operators
-
-∑	Toplam	none
-√	Karekök	none
-∛	Küp kök	none
-∜	4.dereceden kök	none
-∝	Orantılı	none
-∞	Sonsuz	none
-∟	Dik açı	none
-∠	Açı	none
-∥	Paralel	none
-∦	Paralel değil	none
-∧	Mantık ve	none
-∨	Mantık veya	none
-∩	Kesişim	none
-∪	Birleşim	none
-∫	İntegral	none
-∴	Dolayısıyla	none
-∵	Çünkü	none
-∶	Oran	none
-∷	Orantı	none
-≤	Eşit veya daha az	none
-≥	Eşit veya daha fazla	none
-⊂	Alt kümesi	none
-⊃	Üstkümesi	none
-⊆	Eşit veya alt kümesi	none
-⊇	Eşit veya üstkümesi	none
-
-# Vulgur Fractions U+2150 to U+215E
-⅐	yedide bir	none
-⅑	dokuzda bir	none
-⅒	onda bir	none
-⅓	üçte bir	none
-⅔	üçte iki	none
-⅕	beşte bir	none
-⅖	beşte iki	none
-⅗	beşte üç	none
-⅘	beşte dört	none
-⅙	altıda bir	none
-⅚	altıda beş	none
-⅛	sekizde bir	none
-⅜	sekizde üç	none
-⅝	sekizde beş	none
-⅞	sekizde yedi	none
-
-# Miscellaneous Technical
-⌘	Mek Komut tuşu	none
