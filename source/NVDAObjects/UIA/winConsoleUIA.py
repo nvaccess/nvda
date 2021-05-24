@@ -11,6 +11,7 @@ import UIAHandler
 
 from comtypes import COMError
 from logHandler import log
+from UIAUtils import _isImprovedConhostTextRangeAvailable
 from . import UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
@@ -333,8 +334,10 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
-	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
-	_caretMovementTimeoutMultiplier = 1.5
+
+	def _get__caretMovementTimeoutMultiplier(self):
+		"On older consoles, the caret can take a while to move."
+		return 1 if self.isImprovedTextRangeAvailable else 1.5
 
 	def _get_windowThreadID(self):
 		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
@@ -356,10 +359,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		internally to determine whether to activate workarounds and as a
 		convenience when debugging.
 		"""
-		# microsoft/terminal#4495: In newer consoles,
-		# IUIAutomationTextRange::getVisibleRanges returns one visible range.
-		# Therefore, if exactly one range is returned, it is almost definitely a newer console.
-		return self.UIATextPattern.GetVisibleRanges().length == 1
+		return _isImprovedConhostTextRangeAvailable(self.windowHandle)
 
 	def _get_TextInfo(self):
 		"""Overriding _get_ConsoleUIATextInfo and thus the ConsoleUIATextInfo property
