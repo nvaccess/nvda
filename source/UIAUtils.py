@@ -10,6 +10,7 @@ import ctypes
 import UIAHandler
 import weakref
 from functools import lru_cache
+from logHandler import log
 
 
 def createUIAMultiPropertyCondition(*dicts):
@@ -286,18 +287,23 @@ class FakeEventHandlerGroup:
 			self.clientObject.RemovePropertyChangedEventHandler(element, handler)
 
 
-def _shouldUseUIAConsole(hwnd):
+def _shouldUseUIAConsole(hwnd: int) -> bool:
 	"""Determines whether to use UIA in the Windows Console."""
 	setting = config.conf['UIA']['winConsoleImplementation']
 	if setting == "UIA":
 		return True
-	# #7497: the UIA implementation in old conhost is incomplete, therefore we
-	# should ignore it.
-	return False
+	elif setting == "legacy":
+		return False
+	else:
+		# #7497: the UIA implementation in old conhost is incomplete, therefore we
+		# should ignore it.
+		# When the UIA implementation is improved, the below line will be replaced
+		# with a call to _shouldUseUIAConsole.
+		return False
 
 
 @lru_cache(maxsize=10)
-def _isImprovedConhostTextRangeAvailable(hwnd):
+def _isImprovedConhostTextRangeAvailable(hwnd: int) -> bool:
 	"""This function determines whether microsoft/terminal#4495 and by extension
 	microsoft/terminal#4018 are present in this conhost.
 	In consoles before these PRs, a number of workarounds were needed
@@ -326,6 +332,5 @@ def _isImprovedConhostTextRangeAvailable(hwnd):
 		).QueryInterface(UIAHandler.IUIAutomationTextPattern)
 		return UIATextPattern.GetVisibleRanges().length == 1
 	except (COMError, ValueError):
-		from logHandler import log
 		log.exception()
 		return False
