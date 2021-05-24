@@ -897,7 +897,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for a command.
-		description=_("Toggle the announce of all punctuations and symbols when reviewing by word"),
+		description=_("Toggle the announcement of all punctuation and symbols when reviewing by word"),
 		category=SCRCAT_SPEECH
 	)
 	def script_toggleSpeechSymbolLevelWordAll(self, gesture):
