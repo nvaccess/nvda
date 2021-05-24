@@ -911,7 +911,7 @@ class GlobalCommands(ScriptableObject):
 		config.conf["speech"]["symbolLevelWord"] = level
 		ui.message(
 			# Translators: Reported when toggling a speech setting
-			_("Speak all punctuations and symbols when reviewing by word: {state}").format(
+			_("Speak all punctuation and symbols when reviewing by word: {state}").format(
 				state=reportedState
 			)
 		)
