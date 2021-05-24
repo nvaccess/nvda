@@ -498,7 +498,6 @@ Chế độ này bao gồm tài liệu trong các ứng dụng sau:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - Các sách của  Amazon được hỗ trợ với máy Kindle
 -
 
@@ -596,7 +595,7 @@ Dùng các phím lệnh sau để thực hiện tìm kiếm:
 %kc:endInclude
 
 ++ Thao tác trên đối tượng nhúng ++[ImbeddedObjects]
-Các trang có thể chứa các loại đối tượng sử dụng công nghệ như Adobe Flash, Oracle Java, HTML5 cũng như các hộp thoại hay ứng dụng  khác.
+Các trang có thể chứa các loại đối tượng sử dụng công nghệ như Oracle Java và HTML5, cũng như các hộp thoại hay các ứng dụng.
 Trong chế độ duyệt, nếu gặp các đối tượng trên thì NVDA sẽ thông báo kiểu đối tượng cho bạn, ví dụ đối tượng nhúng, hộp thoại, v...v...
 Có thể bấm phím di chuyển đơn o và shift+o để đi nhanh đến các đối tượng đó.
 Bạn có thể bấm phím enter để tương tác trực tiếp trên các đối tượng này.
@@ -794,6 +793,8 @@ Tình huống này, NVDA có một tính năng tên gọi "che màn hình", có 
 
 Bạn có thể bật tính năng này trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings].
 
+Khi bật tính năng che màn hình, vài thao tác dựa vào những gì hiển thị trên màn hình như [Nhận dạng văn bản #Win10Ocr] hay chụp màn hình không thể thực hiện.
+
 + Nhận Dạng Nội Dung +[ContentRecognition]
 Khi tác giả không cung cấp đầy đủ thông tin của ứng dụng cho trình đọc màn hình, sẽ có nhiều công cụ khác nhau hỗ trợ để có thể nhận dạng nội dung của một hình ảnh chẳng hạn.
 NVDA hỗ trợ sử dụng chức năng nhận dạng văn bản từ hình ảnh - optical character recognition (OCR) với công cụ nhận dạng Windows 10 OCR.
@@ -814,6 +815,8 @@ NVDA có thể dùng công cụ này để nhận dạng văn bản trong hình 
 
 Bạn có thể chọn ngôn ngữ nhận dạng trong phân loại [Windows 10 OCR #Win10OcrSettings] trong [hộp thoại cấu hình NVDA #NVDASettings].
 Có thể cài đặt thêm ngôn ngữ nhận dạng bằng cách mở start menu, chọn Settings (cài đặt), mở Time & Language (ngôn ngữ và thời gian) -> Region & Language (ngôn ngữ và vùng), sau đó chọn Add a language (thêm ngôn ngữ).
+
+Windows 10 OCR có thể không tương thích một phần hay toàn phần với [hỗ trợ nhìn của NVDA #Vision] hoặc các tiện ích hỗ trợ nhìn bên ngoài. Bạn sẽ phải tắt các tiện ích này trước khi thực hiện nhận dạng.
 
 %kc:beginInclude
 Bấm NVDA+r để nhận dạng với Windows 10 OCR.
@@ -1743,7 +1746,7 @@ Bạn có thể chọn các mục sau:
 - Trang và Phân cách
  - Số trang
  - Số dòng
- - Thông báo thụt lề dòng [(tắt, đọc, âm thanh, cả âm thanh và đọc) #lineIndentationOptions]
+ - Thông báo thụt lề dòng [(tắt, đọc, âm thanh, cả âm thanh và đọc) #DocumentFormattingSettingsLineIndentation]
  - Thụt lề đoạn (ví dụ căn lề cho dòng đầu tiên của đoạn, v.v)
  - Phân cách dòng (dòng đơn, dòng đôi)
  - Canh lề
@@ -1751,7 +1754,7 @@ Bạn có thể chọn các mục sau:
  - Bảng
  - Tiêu đề cho hàng và cột
  - Tọa độ ô
- - Đường viền ô [(Tắt, Kiểu dáng, Cả Màu và Kiểu Dáng)
+ - Đường viền ô (Tắt, Kiểu dáng, Cả Màu và Kiểu Dáng)
 - Thành phần
  - Tiêu đề
  - Liên kết
@@ -1836,6 +1839,24 @@ Khi bật tùy chọn này, NVDA sẽ sử dụng một phiên bản mới, đan
 ==== Nói mật khẩu trong UIA console ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Thiết lập này điều khiển việc các kí tự sẽ được đọc bởi [đọc ký tự khi gõ #KeyboardSettingsSpeakTypedCharacters] hay [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] trong các tình huống mà màn hình không được cập nhật (ô nhập mật khẩu chẳng hạn) trong Windows Console khi đã bật hỗ trợ UI automation. Vì mục đích bảo mật, thiết lập này nên được để nguyên, tức là tắt. Tuy nhiên, có thể bạn muốn bật nó khi gặp các vấn đề  về hiệu suất vận hành hoặc  việc đọc từ / kí tự   đã nhập không ổn định khi dùng tính năng console mới, đang được thử nghiệm của NVDA.
 
+==== Sử dụng UIA với Microsoft Edge và các trình duyệt trên nền Chromium khi có thể ====[ChromiumUIA]
+Cho phép thiết lập khi nào UIA sẽ được dùng nếu có thể trong các trình duyệt trên nền Chromium như Microsoft Edge.
+UIA hỗ trợ các trình duyệt trên nền Chromium vẫn đang ở đầu giai đoạn phát triển và có thể không cung cấp mức độ truy cập giống với IA2.
+Hộp xổ có các tùy chọn sau:
+- Mặc định (chỉ khi cần): mặc định của NVDA là "Chỉ khi cần". Tùy chọn mặc định này có thể thay đổi trong tương lai khi công nghệ phát triển.
+- Chỉ khi cần: khi NVDA không thể can thiệp vào quá trình của trình duyệt để dùng IA2 và UIA thì khả dụng, NVDA sẽ quay trở lại để dùng UIA.
+- Có: nếu trình duyệt làm cho UIA khả dụng, NVDA sẽ dùng nó.
+- Không: không dùng UIA, thậm chí khi NVDA không thể can thiệp vào tiến trình. Điều này có thể hữu dụng cho những nhà phát triển đang tiếp lỗi với IA2 và muốn chắc chắn rằng NVDA không quay trở lại dùng UIA.
+-
+
+==== Sử dụng UI Automation để truy cập các điều khiển của bảng tính trong Microsoft Excel khi có thể ====[UseUiaForExcel]
+Khi bật tùy chọn này, NVDA sẽ nỗ lực sử dụng Microsoft UI Automation accessibility API để lấy thông tin từ các điều khiển của bảng tính trong Microsoft Excel.
+Đây là một tính năng thử nghiệm, và vài tính năng của Microsoft Excel có thể không dùng được trong chế độ này.
+Ví dụ, danh sách các thành phần của NVDA để liệt kê các công thức và chú thích, cũng như  lệnh di chuyển nhanh trong chế độ duyệt để đi đến biểu mẫu trên một bảng tính sẽ không khả dụng.
+Tuy nhiên, với việc di chuyển / chỉnh sửa căn bản trong bảng tính, tùy chọn này có thể cung cấp cải thiện giúp vận hành nhanh hơn.
+Chúng tôi vẫn không khuyến khích đại đa số người dùng bật tùy chọn này làm mặc định, dù rằng vẫn hoan nghênh người dùng Microsoft Excel  bản dựng 16.0.13522.10000 trở lên dùng thử và cung cấp phản hồi cho tính năng này.
+Việc triển khai UI automation của Microsoft Excel đang thay đổi, và các phiên bản của Microsoft Office cũ hơn 16.0.13522.10000 có thể không đủ thông tin để dùng cho tùy chọn này.
+
 ==== Dùng hỗ trợ nhập văn bản mới trong  Windows console khi có thể ====[AdvancedSettingsKeyboardSupportInLegacy]
 Tùy chọn này  gọi một phương thức thay thế để nhận các kí tự đã nhập trong Windows command console.
 Trong khi nó cải thiện hiệu suất và ngăn chặn việc đánh vần thông tin đầu ra của console, nó cũng có thể không tương thích với vài ứng dụng terminal .
@@ -1843,6 +1864,20 @@ Tính năng này tồn tại và mặc định được bật trên Windows 10 p
 Cảnh báo: khi bật tùy chọn này, các kí tự được nhập mà không hiển thị trên màn hình như mật khẩu chẳng hạn sẽ không bị bỏ qua.
 Trong những môi trường không an toàn, bạn có thể tạm thời vô hiệu [đọc kí tự khi gõ #KeyboardSettingsSpeakTypedCharacters] và [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] khi nhập mật khẩu.
 
+==== Thuật toán Diff ====[DiffAlgo]
+Thiết lập này điều khiển cách NVDA xác định công cụ chuyển văn bản sang giọng nói mới trong terminal.
+Hộp xổ thuật toán diff có ba tùy chọn:
+- Tự động: với NVDA 2021.1, tùy chọn này tương đương với Difflib.
+Ở các bản phát hành trong tương lai, nó có thể được đổi thành Diff Match Patch đang chờ người dùng thử nghiệm.
+- cho phép Diff Match Patch: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng kí tự.
+Nó có thể cải thiện khả năng vận hành khi số lượng lớn nội dugn văn bản được viết vào console và cho phép nhiều thông báo  chính xác hơn cho các thay đổi tạo ra ở giữa các dòng.
+Tuy nhiên, nó có thể không tương thích với vài ứng dụng.
+Tính năng này đã hỗ trợ trong Windows Console trên Windows 10 phiên bản 1607 trở lên.
+Ngoài ra, nó có thể khả dụng trong các ứng dụng terminal khác trên các bản phát hành cũ hơn của Windows.
+- buộc dùng Difflib: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng dòng.
+Nó giống như cách hoạt động của NVDA phiên bản 2020.4 trở về trước.
+-
++
 ==== Cố gắng không đọc các sự kiện lỗi thời của focus ====[CancelExpiredFocusSpeech]
 Bật tùy chọn này để không đọc các sự kiện đã lỗi thời của focus.
 Đặc biệt là khi di chuyển nhanh qua các thư trong Gmail với Chrome có thể làm cho NVDA đọc các thông tin đã lỗi thời.

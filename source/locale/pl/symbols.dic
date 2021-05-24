@@ -26,28 +26,28 @@ symbols:
 ? sentence ending	pytajnik	all	always
 ; phrase ending	średnik	most	always
 : phrase ending	dwukropek	most	always
-decimal point		none	always
+przecinek		none	always
 in-word '	apostrof	all	norep
 negative number	minus	none	norep
 
 # Whitespace
-\0	biała spacja	char	# null
+\0	pusta	char	# null
 \t	tab
 \n	koniec linii	char
 \f	podział strony	none
-\r	nowy wiersz	char
+\r	koniec wiersza	char
  	spacja	char
  	spacja	char	# no-break space
 
 # Standard punctuation/symbols
 !	wykrzyknik	all
 "	cudzysłów	most
-\#	hash	some
+\#	hasz	some
 $	dolar	all	norep
 £	funt	all	norep
-€	euro	some
-¢	Cent	all	norep
-¥	Jen	all	norep
+€	euro	all	norep
+¢	cent	all	norep
+¥	yen	all	norep
 ₹	rupia	some	norep
 ƒ	florin	all	norep
 ¤	waluta	all	norep
@@ -58,17 +58,12 @@ $	dolar	all	norep
 (	lewy nawias	most	always
 )	prawy nawias	most	always
 *	gwiazdka	some
-+	plus	some
-−	minus	some
 ,	przecinek	all	always
 -	minus	most
 .	kropka	some
 /	slesz	some
 :	dwukropek	most	norep
 ;	średnik	most
-<	mniejsze	some
->	większe	some
-=	równe	some
 ?	pytajnik	all
 @	małpa	some
 [	lewy kwadratowy	most
@@ -85,16 +80,16 @@ _	podkreślacz	most
 ¡	odwrócony wykrzyknik	some
 ¿	odwrócony pytajnik	some
 ·	kropka środkowa	most
-‚	Cudzysłów niski	most
-„	Podwójny cudzysłów niski	most
+‚	cudzysłów nizki	most
+„	podwójny cudzysłów nizki	most
 ′	symbol liczby pierwszej	some
-″	podwujny symbol liczby pierwszej	some
-‴	potrójny symbol liczby pierwszej	some
+″	podwójny symbol liczby pierwszej	some
+‴	potrójny symbol liczby piewszej	some
 
 # Other characters
 •	punktor	some
 …	wielokropek	all	always
-...	wielokropek	all	always
+...	trzy kropki	all	always
 “	lewy cudzysłów	most
 ”	prawy cudzysłów	most
 ‘	lewy apostrof	most
@@ -102,7 +97,7 @@ _	podkreślacz	most
 –	półpauza	most	always
 —	myślnik	most
 ­	miękki myślnik	most
-⁃	podłóżny punktor	none
+⁃	podłużny punktor	none
 ●	kółko	most
 ○	białe kółko	most
 ¨	diereza	most
@@ -111,28 +106,24 @@ _	podkreślacz	most
 ¸	cedilla	most
 ‎	znak lewa do prawej	char
 ‏	znak prawa do lewej	char
-¶	oznaczenie paragrafu	most
+¶	paragraf	most
 ■	czarny kwadrat	some
 ▪	czarny kwadrat	some
 ◾	czarny kwadrat	some
 □	biały kwadrat	some
 ◦	biały punktor	some
-⇒	podwójna strzałka w prawo	some
 ⇨	biała strzałka w prawo	some
 ➔	strzałka wskazująca w prawo	some
 ➢	prawy grot strzałki	some
-⮚	końcowy grot strzałki	some
-❖	czarny diament minus białe X	some
+❖	czarny diament minus białe iks	some
 ♣	czarny trefl	some
 ♦	czarny diament	some
 ◆	czarny diament	some
 §	sekcja	all
 °	stopień	some
-«	podwujny cudzysłów otwierający
-»	podwujny cudzysłów zamykający
+«	podwójny cudzysłów otwierajacy	none
+»	podwójny cudzysłów zamykający	none
 µ	mikro	some
-º	wskaźnik porządkowy	some
-ª	Indeks górny a	some
 ⁰	indeks górny 0	some
 ¹	indeks górny 1	some
 ²	indeks górny 2	some
@@ -144,10 +135,9 @@ _	podkreślacz	most
 ⁸	indeks górny 8	some
 ⁹	indeks górny 9	some
 ⁺	indeks górny plus	some
-⁻	indeks górny minus	some
-⁼	indeks górny equals	some
+⁼	indeks górny równa się	some
 ⁽	indeks górny lewy nawias	some
-⁾	indeks górny prawy nawias	some
+⁾	indek górny prawy nawias	some
 ⁿ	indeks górny n	some
 ₀	indeks dolny 0	some
 ₁	indeks dolny 1	some
@@ -156,21 +146,18 @@ _	podkreślacz	most
 ₄	indeks dolny 4	some
 ₅	indeks dolny 5	some
 ₆	indeks dolny 6	some
-₇	indeks dolny 7	some
+₇	indkes dolny 7	some
 ₈	indeks dolny 8	some
-₉	Indeks dolny 9	some
+₉	indeks dolny 9	some
 ₊	indeks dolny plus	some
 ₋	indeks dolny minus	some
-₌	indeks dolny ruwne	some
+₌	indeks dolny ruwna sie	some
 ₍	indeks dolny lewy nawias	some
 ₎	indeks dolny prawy nawias	some
 ®	zarejestrowany	some
 ™	znak handlowy	some
-©	Znak praw autorskich	some
-℠	Znak usługi	some
-±	Plus Minus	some
-×	razy	some
-÷	dzielenie	some
+©	znak praw autorskich	some
+℠	znak usługi	some
 ←	strzałka w lewo	some
 ↑	strzałka w górę	some
 →	strzałka w prawo	some
@@ -180,62 +167,163 @@ _	podkreślacz	most
 🡺	strzałka w prawo	some
 †	krzyżyk	some
 ‡	podwójny krzyżyk	some
-‣	trójkontna kropka	none
+‣	trójkątna kropka	none
 ✗	kropka w kształcie x	none
+⊕	circled plus	none
+⊖	circled minus	none
+⇄	right arrow over left arrow	none
+⇒	podwójna strzałka w prawo	none
 
-#Mathematical Operators U+2200 to U+220F
+#Arithmetic operators
++	plus	some
+−	minus	some
+×	razy	some
+⋅	razy	some
+⨯	razy	none
+∕	divided by	some
+⁄	divided by	some
+÷	dzielenie	some
+∓	minus or plus	some
+±	plus Minus	some
 
-∀	dla każdego	none
-∁	Dopełnienie	none
-∂	Pochodna cząstkowa	none
-∃	Istnieje	none
-∄	Nie istnieje	none
-∅	Zbiór pusty	none
-∆	Inkrementacja	none
-∇	NABLA	none
-∈	Element zbioru	none
-∉	nie element zbioru	none
-∊	Mały element zbioru	none
-∋	Zawiera jako element	none
-∌	Nie zawiera jako element	none
-∍	Mały zawiera jako element	none
-∎	Koniec dowodu	none
-∏	N-ty produkt	none
+#Set operations
+∖	set minus	none
+⊍	set union	none
+𝒫	power set of the set	none
+𝔓	power set of the set	none
+℘	power set of the set	none
+∁	complement of the set	none
 
-# Miscellaneous Mathematical Operators
-
-∑	N-ta suma	none
-√	Pierwiastek kwadratowy	none
-∛	Pierwiastek sześcienny	none
-∜	Pierwiastek czwartego stopnia	none
-∝	Proporcjonalne do	none
-∞	Nieskończoność	none
-∟	Kąt prosty	none
-∠	Kąt	none
-∥	Równoległe do	none
-∦	Nierównoległe do	none
-∧	Logiczne i	none
-∨	Logiczne lub	none
-¬	logicznie nie	none
-∩	Przecięcie	none
-∪	Część wspólna	none
-∫	Całka	none
-∴	Dlatego	none
-∵	Ponieważ	none
-∶	Stosunek	none
-∷	Proporcja	none
-≤	Mniejsze lub równe	none
-≥	Większe lub równe	none
-⊂	Podzbiór zbioru	none
-⊃	Nadzbiór zbioru	none
+#Set relations and set constructions
+∅	zbiór pusty	none
+⊂	podzbiór zbioru	none
+⊄	not a subset of	none
+⊃	nadzbiór zbioru	none
+⊅	not a superset of	none
 ⊆	podzbiór lub równość	none
-⊇	Nadzbiór lub równość	none
-‰	promil	most
+⊈	neither a subset of nor equal to	none
+⊇	nadzbiór lub równośc	none
+⊉	neither a superset of nor equal to	none
+⊌	multiset	none
+
+#Equality signs
+=	równe	some
+≃	asymptotically equal to	none
+≄	not asymptotically equal to	none
+≅	approximately equal to	none
+≆	approximately but not actually equal to	none
+≈	prawie równe	none
+≌	all equal to	none
+≍	equivalent to	none
+≭	not equivalent to	none
+≎	geometrically equivalent to	none
+≑	geometrically equal to	none
+≚	equiangular to	none
+≬	between	none
+≠	róźne	none
+≡	tożsamy z	none
+≣	strictly identical to	none
+≢	not identical to	none
+∼	similar to	none
+≙	estimates	none
+≟	questioned equal to	none
+
+#comparison signs
+<	mniejsze	some
+>	większe	some
+≤	mniesze lub równe	none
+≦	less- than or equal to	none
+≪	much smaller than	none
+≥	większe lub równe	none
+≧	greater-than or equal to	none
+≫	much bigger than	none
+≶	less than or greater than	none
+≷	greater than or less than	none
+≮	not less than	none
+≯	not greater than	none
+
+#Functions
+⁻	indeks górny minus	some
+∘	ring Operator	none
+∂	pochodna czastkowa	none
+∇	nabla	none
+
+#Geometry and linear Algebra
+⃗	vector between	none
+△	triangle	none
+▭	rectangle	none
+∟	prostokąt	none
+∠	kąt	none
+∥	równoległe do	none
+∦	nie równoległę do	none
+⊥	perpendicular to	none
+⟂	ortogonal to	none
+‖	norm of vector	none
+̂	normalizes	none
+∿	sine wave	none
+∡	measured Angle	none
+∢	spherical Angle	none
+
+#Logical operators
+∀	dla każdego	none
+∃	istnieje	none
+∄	nie istnieje	none
+⇏	does not imply	none
+⇐	is implied by	none
+
+#Other mathematical Operators
+∈	jest elementem zbioru	none
+∉	nie jest elementem zbioru	none
+∊	mały element zbioru	none
+∋	zawiera jako element	none
+∌	nie zawiera jako element	none
+∍	mały zawiera jako element	none
+∎	koniec dowodu	none
+∏	enty produkt	none
+∐	n-ary coproduct	none
+∑	n-ta suma	none
+√	pierwiastek kwadratowy	none
+∛	pierwiastek sześcienny	none
+∜	pierwiastek czwartego stopnia	none
+∝	proporcjonalnie do	none
+∞	nieskończoność	none
+∧	logiczne i	none
+∨	logiczne lub	none
+¬	logiczne nie	none
+∩	przecięcie	none
+∪	część wspólna	none
+∫	całka	none
+∬	double Integral	none
+∭	tripple Integral	none
+∮	contour Integral	none
+∯	surface Integral	none
+∰	volume Integral	none
+∱	clockwise Integral	none
+∲	clockwise contour Integral	none
+∳	anticlockwise Contour Integral	none
+∴	dlatego	none
+∵	ponieważ	none
+∶	stosunek	none
+∷	proporcja	none
+∹	excess	none
+∺	geometric proportion	none
+≀	wreath product	none
+≏	difference between	none
+≐	approaches the limit	none
+∙	bullet Operator	none
+∣	divides	none
+∤	does not divide	none
+≔	colon equals	none
+≕	equals colon	none
+≺	precedes	none
+≻	succeeds	none
+⊀	does not precede	none
+⊁	does not succeed	none
 
 # Vulgur Fractions U+2150 to U+215E
 ¼	jedna czwarta	none
 ½	półtora	none
-¾	trzy czwartte	none
+¾	trzy czwarte	none
 ⅐	jedna siódma	none
 ⅑	jedna dziewiąta	none
 ⅒	jedna dziesiąta	none
@@ -252,5 +340,19 @@ _	podkreślacz	most
 ⅝	pięć ósmych	none
 ⅞	siedem ósmych	none
 
+#Number sets
+𝔸	algebraic numbers	none
+ℂ	complex numbers	none
+ℑ	imaginary part of complex number	none
+ℍ	quaternions	none
+ℕ	natural numbers	none
+𝕁	nonnegative (whole) numbers	none
+ℚ	liczby wymierne	none
+ℝ	liczby rzeczywiste	none
+ℜ	rzeczywista część liczby zespolonej	none
+ℤ	liczby całkowite	none
+ℵ	Skala alefów	none
+ℶ	skala betów	none
+
 # Miscellaneous Technical
-⌘	klawisz komendy Mac	none
+⌘	klawisz komendy mac	none
