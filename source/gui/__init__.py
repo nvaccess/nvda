@@ -573,9 +573,9 @@ def initialize():
 	wx.CallAfter = wx_CallAfter_wrapper
 
 	# Deprecated: The three following lines should be removed for 2022.1
-	DictionaryEntryDialog = speechDict.DictionaryEntryDialog
-	settingsDialogs.DictionaryDialog = DictionaryDialog
-	settingsDialogs.DictionaryEntryDialog = DictionaryEntryDialog
+	DictionaryEntryDialog = speechDict.DictionaryEntryDialog  # noqa: F405
+	settingsDialogs.DictionaryDialog = DictionaryDialog  # noqa: F405
+	settingsDialogs.DictionaryEntryDialog = DictionaryEntryDialog  # noqa: F405
 
 
 def terminate():
