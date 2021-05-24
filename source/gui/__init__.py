@@ -572,6 +572,11 @@ def initialize():
 			winUser.PostMessage(topHandle, winUser.WM_NULL, 0, 0)
 	wx.CallAfter = wx_CallAfter_wrapper
 
+	# Deprecated: The three following lines should be removed for 2022.1
+	DictionaryEntryDialog = speechDict.DictionaryEntryDialog
+	settingsDialogs.DictionaryDialog = DictionaryDialog
+	settingsDialogs.DictionaryEntryDialog = DictionaryEntryDialog
+
 
 def terminate():
 	global mainFrame
