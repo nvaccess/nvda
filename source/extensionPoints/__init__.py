@@ -48,6 +48,20 @@ class Action(HandlerRegistrar):
 			except:
 				log.exception("Error running handler %r for %r" % (handler, self))
 
+	def notifyOnce(self, **kwargs):
+		"""Notify all registered handlers that the action has occurred.
+		Unregister handlers after calling.
+		@param kwargs: Arguments to pass to the handlers.
+		"""
+		oldHandlers = list(self.handlers)
+		for handler in oldHandlers:
+			try:
+				callWithSupportedKwargs(handler, **kwargs)
+				self.unregister(handler)
+			except Exception as e:
+				log.exception(f"Error running handler {handler} for {self}. Exception {e}")
+
+
 class Filter(HandlerRegistrar):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.

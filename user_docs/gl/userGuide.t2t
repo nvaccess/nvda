@@ -498,7 +498,6 @@ Esto inclúe documentos nas seguintes aplicacións:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash.
 - Libros admitidos en Amazon Kindle for PC
 -
 
@@ -596,7 +595,7 @@ Usa as seguintes teclas para realizar buscas:
 %kc:endInclude
 
 ++ Obxectos Empotrados ++[ImbeddedObjects]
-As páxinas poden incluir contido enriquecido utilizando tecnoloxías como Adobe Flash, Oracle Java e HTML5, así coma aplicacións e diálogos.
+As páxinas poden incluir contido enriquecido utilizando tecnoloxías como Oracle Java e HTML5, así coma aplicacións e diálogos.
 onde estas se atopen nun modo virtual, NVDA anunciará "obxecto integrado", "aplicación" ou "diálogo", respectivamente.
 Podes moverte rápidamente cara eles usando as teclas de navegación dunha soa tecla de obxectos integrados o e shift+o.
 Para interactuar con estos obxectos, podes premer intro sobre eles.
@@ -794,6 +793,8 @@ Para esta situación, o NVDA contén unha característica chamada "cortina de pa
 
 Podes activar a Cortina de Pantalla na [categoría visión #VisionSettings] do diálogo [Opcións do NVDA #NVDASettings].
 
+Cando a cortina de pantalla estea activa algunhas tarefas baseadas directamente no que aparece sobre a pantalla como a realización do [OCR #Win10Ocr] ou a toma dunha captura non se poden lograr.
+
 + Recoñecemento de Contidos +[ContentRecognition]
 Cando os autores non proporcionan suficiente información para que un usuario de lector de pantalla determine o contido de algo, poden usarse varias ferramentas para tentar recoñecer o contido dende unha imaxe.
 O NVDA soporta a funcionalidade de recoñecemento óptico de caracteres (OCR) integrada en Windows 10 para recoñecer texto dende imaxes.
@@ -814,6 +815,8 @@ O NVDA pode usar esto para recoñecer texto dende imaxes ou aplicacións inacces
 
 Podes configurar a lingua a usar para o recoñecemento de texto na [categoría OCR de Windows 10 #Win10OcrSettings]do diálogo [Opcións do NVDA #NVDASettings].
 Poden instalarse linguas adicionais abrindo o menú Inicio, escollendo Configuración, selecionando Hora e lingua -> Rexión e lingua e logo escollendo Engadir unha Lingua.
+
+O OCR de Windows 10 pode ser total ou parcialmente incompatible coas [Melloras visuais de NVDA #Vision] ou outras axudas visuais externas. Terás que deshabilitar estas axudas antes de proceder cun recoñecemento.
 
 %kc:beginInclude
 Para recoñecer o texto no actual navegador de obxectos usando o OCR do Windows 10, preme NVDA+r.
@@ -1743,7 +1746,7 @@ Podes configurar o anunciado de:
 - Páxinas e espaciado
  - Números de páxina
  - Números de liña
- - Anunciado de sangría de liña [(Desactivado, voz, Tons, voz e tons) #lineIndentationOptions]
+ - Anunciado de sangría de liña [(Desactivado, voz, Tons, voz e tons) #DocumentFormattingSettingsLineIndentation]
  - Sangría de parágrafo (ex.: sangría, sangría de primeira liña)
  - Espaciado de liña (simple, doble etc)
  - Alineamento
@@ -1751,7 +1754,7 @@ Podes configurar o anunciado de:
  - Táboas
  - Cabeceiras de fila/columna
  - Coordenadas de celda
- - Bordes de celdas [(desactivado, Estilos, Ambos Colores e Estilos)
+ - Bordes de celdas (desactivado, Estilos, Ambos Colores e Estilos)
 - Elementos
  - Cabeceiras
  - Ligas
@@ -1826,8 +1829,7 @@ Se sofres problemas de rendemento nunha ou máis aplicacións, recomendámosche 
 ==== Usar UI automation para acesar a controis de documento de Microsoft Word cando estea dispoñible ====[AdvancedSettingsUseUiaForWord]
 Cando esta opción estea activada, o NVDA tentará usar a API de accesibilidade de Microsoft UI Automation para obter información dos controis de documentos de Microsoft Word.
 Esto inclúe ao mesmo Microsoft Word, e tamén o visor de mensajes e o compositor de Microsoft Outlook.
- Para as versións máis recentes de Microsoft Office 2016/365 que se executan en Windows 10, a compatibilidade coa UI Automation  é o suficentemente compreta como para proporcionar acceso a documentos de Microsoft Word case igual á compatibilidade con Microsoft Word existente de NVDA, coa ventaxa engadida de que a capacidade de resposta aumenta considerablemente.
-
+Para as versións máis recentes de Microsoft Office 2016/365 que se executan en Windows 10, a compatibilidade coa UI Automation  é o suficentemente compreta como para proporcionar acceso a documentos de Microsoft Word case igual á compatibilidade con Microsoft Word existente de NVDA, coa ventaxa engadida de que a capacidade de resposta aumenta considerablemente.
 Sen embargo, pode haber algunha información que non estea exposta ou que estea incorrectamente exposta nalgunhas versións de Microsoft Office, o que significa que non sempre se pode confiar neste soporte da UI automation.
 Aínda non recomendamos que a maioría dos usuarios activen esta opción de xeito predeterminado, aínda que invitamos aos usuarios de Office 2016/365 a que proben esta función e que nos envíen os seus comentarios.
 
@@ -1837,6 +1839,24 @@ Cando esta opción estea activada, o NVDA usará unha versión nova en progreso 
 ==== Falar Contrasinais en Consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Esta opción controla se os caracteres se falan por [falar caracteres ao se escreber #KeyboardSettingsSpeakTypedCharacters] ou por [falar palabras ao se escreber #KeyboardSettingsSpeakTypedWords] en situacións nas que a pantalla non se actualiza (como a entrada de contrasinais) na Consola de Windows co soporte para UI automation activado. Por razóns de seguridade, esta opción debería permanecer desactivada. Sen embargo, é posible que desexes habilitalo se experimentas problemas de rendemento ou inestabilidade co anunciado de caracteres e/ou palabras ao se escreber mentres usas o novo soporte experimental de consolas do NVDA.
 
+==== Utilizar UIA con Microsoft Edge e outros navegadores baseados en Chromium cando estea dispoñible ====[ChromiumUIA]
+Permite especificar que se utilizará UIA cando estea dispoñible en navegadores baseados en Chromium como Microsoft Edge.
+O soporte UIA para os navegadores baseados en Chromium está nunha fase primitiva de desenvolvemento e pode que non ofreza o mesmo nivel de aceso que IA2.
+A caixa combinada ten as seguintes opcións:
+- Por defecto (Só cando é necesario): o valor por defecto do NVDA, actualmente é "Só cando sexa necesario". Este valor por defecto pode cambiar no futuro a medida que a tecnoloxía madureza.
+- Só cando sexa necesario: cando o NVDA non poda inxectar no proceso do navegador para usar IA2 e UIA estea dispoñible, entón o NVDA voltará a usar UIA.
+- Sí: se o navegador fai acesible a UIA, o NVDA usaráo.
+- Non: non usa UIA, incluso se o NVDA non pode inxectar no proceso. Esto pode seren útil para os desenvolvedores que depuren problemas con IA2 e queren asegurarse de que o NVDA non volte a usar UIA.
+-
+
+==== Usar UI automation para acesar a controis en follas de cálculo de Microsoft  Excel cando estea dispoñible ====[UseUiaForExcel]
+Cando esta opción está activada, o NVDA tentará usar a API de accesibilidade Microsoft UI Automation  para obter información dos controis das follas de cálculo de Microsoft Excel.
+Esta é unha funcionalidade experimental e algunhas caraterísticas de Microsoft Excel poden non estaren dispoñibles neste modo.
+Por exemplo, as características da Listaxe de Elementos do NVDA para enumerar fórmulas e comentarios e a tecla rápida de navegación do modo Explorarción saltar campos de formulario nunha folla de cálculo non están dispoñibles.
+Sen embargo, para a navegación e edición básica das follas de cálculo, esta opción pode proporcionar unha grande mellora de rendemento.
+Aínda non recomendamos que a maioría dos usuarios activen esta opción por defecto, aíndaque invitamos aos usuarios de Microsoft Excel  compilación 16.0.13522.10000 ou superior a que proben esta función e nos den a súa opinión.
+A implementación de UI automation de Microsoft Excel cambia constantemente e é posible que as versións de Microsoft Office anteriores á 16.0.13522.10000 podan non expoñer suficiente información para que esta opción sexa útil.
+
 ==== Usar o novo soporte de Caracteres ao se Escreber na Consola de Windows cando estea Dispoñible ====[AdvancedSettingsKeyboardSupportInLegacy]
 Esta opción habilita un método alternativo para detectar caracteres escrebidos en Consolas de ordes de Windows.
 Aíndaque mellora o rendemento e evita que se especifique a saída da consola, pode ser incompatible con algúns programas de terminal.
@@ -1844,7 +1864,21 @@ Esta característica está dispoñible e activada por omisión en versións de W
 Advertencia: con esta opción activada, os caracteres escrebidos que non aparezan en pantalla, como contrasinais, non se suprimirán.
 En entornos non confiables, poderás desactivar temporalmente [falar caracteres ao se escrebir #KeyboardSettingsSpeakTypedCharacters] e [falar palabras ao se escrebir #KeyboardSettingsSpeakTypedWords] ao introducir contrasinais.
 
-==== Intentar cancelar voz para eventos de foco caducados ====[CancelExpiredFocusSpeech]
+==== Algoritmo Diff ====[DiffAlgo]
+Esta opción controla o xeito no que o NVDA determina o novo texto para falar en terminais.
+A caixa combinada do algoritmo diff ten tres opcións:
+- Automático: a partir do NVDA 2021.1, esta opción equivale a Difflib.
+Nunha versión futura, pode cambiarse a Diff Match Patch á espera de que os usuarios o proben.
+- Permitir Diff Match Patch: esta opción fai que o NVDA calcule os cambios por caracteres no texto da terminal.
+Pode mellorar o rendemento cando se escriban grandes volúmenes de texto na consola e permite un anunciado máis preciso dos cambios realizados no medio das liñas.
+Sen embargo, pode ser incompatible con algunhas aplicacións.
+Esta función é compatible coa consola de Windows en Windows 10 versión 1607 e posteriores.
+Ademáis, pode estar dispoñible noutras terminais en versións anteriores de Windows.
+- Forzar Difflib: esta opción fai que o NVDA calcule os cambios no texto da terminal por liñas.
+É idéntico ao comportamento do NVDA na versión 2020.4 e anteriores.
+-
+
+==== Tentar cancelar voz para eventos de foco caducados ====[CancelExpiredFocusSpeech]
 Esta opción habilita o comportamento que tenta cancelar a voz para eventos de foco caducados.
 En particular moverse rápidamente polas mensaxes  en Gmail con Chrome pode facer que o NVDA fale información obsoleta.
 Esta funcionalidade é experimental a partires do NVDA 2020.2.

@@ -3,6 +3,76 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.1 =
+Tämä versio sisältää valinnaisen kokeellisen UIA-tuen Excelille ja Chromium-pohjaisille selaimille.
+Korjauksia useille kielille sekä linkkien käyttämiseen pistenäytöltä.
+Päivityksiä Unicode-CLDR:ään sekä matemaattisiin symboleihin, eSpeak-NG:hen ja LibLouis-pistekirjoituskääntäjään.
+
+Paljon bugikorjauksia ja parannuksia esim. Officeen, Visual Studioon sekä useisiin kieliin.
+Huom: Tämä versio rikkoo lisäosarajapinnan yhteensopivuuden.
+Lisäosat on testattava uudelleen sekä niiden manifestit päivitettävä.
+Adobe Flashia ei myöskään enää tueta.
+
+
+== Uudet ominaisuudet ==
+- Alkeellinen tuki UIA:lle Chromium-pohjaisissa selaimissa (kuten Edge). (#12025)
+- Valinnainen kokeellinen UI Automation -tuki Microsoft Excelille. Suositellaan vain Excelin versiolle 16.0.13522.10000 tai uudemmalle. (#12210)
+- Helpompi liikkuminen NVDA:n Python-konsolin tulosteessa. (#9784)
+ - Alt+ylä/alanuoli siirtää edelliseen/seuraavaan tulokseen (lisää komentoon Vaihto valitaksesi).
+ - Ctrl+L tyhjentää tulosteruudun.
+- NVDA ilmoittaa nyt Microsoft Outlookissa tapaamiseen liitetyt kategoriat, mikäli sellaisia on. (#11598)
+
+
+== Muutokset ==
+- Säätimiä on nyt mahdollista aktivoida niiden kuvauksen kohdalta (esim. "lnk" linkillä) selaustilassa pistenäytön kosketuskohdistinnäppäimillä. Tämä on erityisen hyödyllistä esim. nimettömiä valintaruutuja aktivoitaessa. (#7447)
+- NVDA estää nyt käyttäjää suorittamasta Windows 10:n tekstintunnistusta, jos näyttöverho on käytössä. (#11911)
+- Päivitetty Unicode Common Locale Data -tietokanta (CLDR) versioksi 38.1. (#11943)
+- Matemaattisia merkkejä lisätty symbolisanastoon. (#11467)
+- Käyttöoppaan, mitä uutta -dokumentin ja näppäinkomentojen pikaoppaan ulkoasu on päivitetty. (#12027)
+- "Ei tueta" ilmoitetaan nyt yritettäessä vaihtaa ruutuasettelun tilaa sovelluksissa (kuten Microsoft Word), jotka eivät tue sitä. (#7297)
+- Lisäasetukset-paneelin "Yritä perua vanhentuneiden kohdistustapahtumien puhe" -asetus on nyt oletusarvoisesti käytössä. (#10885)
+ - Toiminto voidaan poistaa käytöstä määrittämällä tämän asetuksen arvoksi "Ei".
+ - Verkkopohjaisissa sovelluksissa (esim. Gmail) ei enää puhuta vanhentunutta tietoa siirrettäessä kohdistusta nopeasti.
+- eSpeak-NG on päivitetty versioksi 1.51-dev muutos cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
+- Liblouis-pistekirjoituskääntäjä päivitetty versioksi [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+ - Uusia pistetaulukoita: valkovenäläinen kaunokirjallisuuden pistekirjoitus, valkovenäläinen tietokonemerkistö, urdu taso 1, urdu taso 2.
+- Adobe Flash -sisällön tuki on poistettu NVDA:sta, koska Adobe on aktiivisesti varoittanut Flashin käytöstä. (#11131)
+- NVDA sulkeutuu, vaikka sen ikkunoita olisi avoinna. Sulkeutumisprosessi sulkee nyt kaikki NVDA:n ikkunat ja valintaikkunat. (#1740)
+- Puheen tarkastelu -ikkuna voidaan nyt sulkea Alt+F4-näppäinyhdistelmällä, ja siinä on tavallinen Sulje-painike, joka helpottaa vuorovaikutusta osoitinlaitteiden käyttäjille. (#12330)
+- Pistekirjoituksen tarkastelu -ikkunassa on tavallinen Sulje-painike, joka helpottaa vuorovaikutusta osoitinlaitteiden käyttäjille. (#12328)
+- Elementtilista-valintaikkunan Aktivoi-painikkeen pikanäppäin on poistettu joistakin kielistä, jotta vältetään yhteentörmäys elementtityyppivalintapainikkeen nimen kanssa. Kun painike on käytettävissä, se on edelleen valintaikkunan oletuspainike ja voidaan aktivoida painamalla Enteriä kuten ennenkin. (#6167)
+
+
+== Bugikorjaukset ==
+- Viestiluettelo on taas luettavissa Outlook 2010:ssä. (#12241)
+- Kun pääteohjelmissa poistetaan tai lisätään merkkejä keskellä riviä Windows 10:n versiossa 1607 ja uudemmissa, kohdistimen oikealla puolella olevia merkkejä ei enää lueta. (#3200)
+ - Tämä kokeellinen korjaus on otettava käyttöön manuaalisesti NVDA:n Lisäasetukset-paneelista muuttamalla Muutosten havaitsemismenetelmä -asetuksen arvoksi Diff Match Patch.
+- Korjattu MCS Electronics -kehitysympäristön muokkauskenttien käyttäminen. (#11966)
+- Virheellisiä etäisyysilmoituksia ei pitäisi enää tapahtua MS Outlookissa siirryttäessä Vaihto+Sarkain-näppäinyhdistelmällä viestirungosta aihekenttään. (#10254)
+- Python-konsolissa tuetaan nyt sarkainsisennyksen lisäämistä sellaisen syöttörivin alkuun, joka ei ole tyhjä, ja sarkaintäydennyksen suorittamista syöttörivin keskellä. (#11532)
+- Muotoilutiedoissa ja  muissa selaustilassa näytettävissä ilmoituksissa ei enää näytetä odottamattomia tyhjiä rivejä, kun ruutuasettelu on poistettu käytöstä. (#12004)
+- MS Wordissa on nyt mahdollista lukea kommentteja UIA:n ollessa käytössä. (#9285)
+- Vuorovaikutuksen suorituskykyä Visual Studiossa on parannettu. (#12171)
+- Korjattu graafisia bugeja, kuten puuttuvia elementtejä käytettäessä NVDA:ta oikealta vasemmalle luettavalla kielellä. (#8859)
+- Noudata graafisen käyttöliittymän ulkoasun suuntaa NVDA:n kielen mukaisesti, ei järjestelmäkielen. (#638)
+ - Tunnettu ongelma oikealta vasemmalle luettavissa kielissä: Selitteet/säätimet katkaisevat ryhmien oikean reunan. (#12181)
+- Pythonin kielialue asetetaan samaksi kuin NVDA:n asetuksissa määritetty kieli, ja tämä tapahtuu oletuskieltä käytettäessä. (#12214)
+- TextInfo.getTextInChunks ei enää jumiudu kutsuttaessa Rich Edit -säätimissä, kuten NVDA:n lokin tarkastelussa. (#11613)
+- NVDA:ta on taas mahdollista käyttää Windows 10:n versioissa 1803 ja 1809 kielillä, joiden nimissä on alaviivoja, kuten de_CH. (#12250)
+- Ylä/alaindeksin ilmoittaminen toimii WordPadissa odotetulla tavalla. (#12262)
+- NVDA ei jätä enää ilmoittamatta vasta kohdistettua sisältöä verkkosivulla, mikäli entinen kohdistus katoaa ja korvataan uudella samassa sijainnissa. (#12147)
+- Kokonaisten Excel-solujen yliviivaus, yläindeksi ja alaindeksi-muotoilut ilmoitetaan, mikäli vastaava asetus on käytössä. (#12264)
+- Korjattu asetusten kopiointi massamuistiversiosta asentamisen aikana, kun oletusarvoinen asetusten kohdehakemisto on tyhjä. (#12071, #12205)
+- Korjattu joidenkin aksentillisten tai diakriittisten kirjainten virheellinen sanominen, kun Ilmaise isot kirjaimet sanomalla "iso" -asetus on käytössä. (#11948)
+- Korjattu virhe SAPI 4 -puhesyntetisaattorin äänenkorkeutta muutettaessa. (#12311)
+- Nyt myös NVDA:n asennusohjelma huomioi ``--minimal``-komentoriviparametrin, eikä soita käynnistysääntä noudattaen samaa dokumentoitua käyttäytymistä kuin asennetun tai massamuistiversion nvda.exe. (#12289)
+- Taulukkoon siirtävä pikanavigointikomento voi nyt siirtää asettelutaulukkoon MS Wordissa tai Outlookissa, mikäli "Sisällytä asettelutaulukot" -asetus on otettu käyttöön selaustilan asetuksista. (#11899)
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2020.4 =
 Tämä versio sisältää uusia kiinalaisia syöttömenetelmiä ja päivitetyn Liblouis-pistekirjoituskääntäjän sekä elementtilistan.
 Tilannekohtainen ohje on nyt käytettävissä painettaessa F1 NVDA:n valintaikkunoissa.
@@ -65,7 +135,7 @@ Lisäksi monia muita tärkeitä bugikorjauksia ja parannuksia.
 - ARIA-puuruudukot näkyvät nyt normaalina taulukkona selaustilassa sekä Firefoxissa että Chromessa. (#9715)
 - Käänteinen haku voidaan nyt suorittaa Etsi edellinen -toiminnolla painamalla NVDA+Vaihto+F3. (#11770)
 - NVDA-skriptiä ei enää pidetä toistuvana, jos kahden suorituksen välissä painetaan skriptiin kuulumatonta näppäintä. (#11388) 
-- Strong- ja emphasis-tagien ilmaiseminen voidaan jälleen estää Internet Explorerissa poistamalla uudelleen käytöstä korostuksen ilmaiseminen NVDA:n asiakirjojen muotoiluasetuksista. (#11808)
+- Strong- ja emphasis-tagien ilmaiseminen voidaan jälleen estää Internet Explorerissa poistamalla käytöstä korostuksen ilmaiseminen NVDA:n asiakirjojen muotoiluasetuksista. (#11808)
 - Useiden sekuntien jumiutumista, jota pieni määrä käyttäjiä kokee Excelissä liikuttaessa nuolinäppäimillä solujen välillä, ei pitäisi enää tapahtua. (#11818)
 - Keskusteluviestien tai Teams-kanavien lukeminen ei enää epäonnistu väärin kohdistetun valikon takia Microsoft Teamsin koontiversioissa, joiden versionumero on 1.3.00.28xxx. (#11821)
 - Teksti, joka on merkitty sekä kirjoitus- että kielioppivirheeksi Google Chromessa, ilmaistaan nyt NVDA:n toimesta asianmukaisesti sellaisiksi. (#11787)
@@ -75,6 +145,7 @@ Lisäksi monia muita tärkeitä bugikorjauksia ja parannuksia.
 - NVDA ei enää kaadu käytettäessä englanti (Yhdysvallat), taso 2 -pistetaulukkoa Laajenna kohdistimen kohdalla oleva sana -asetuksen ollessa käytössä näytettäessä tiettyä sisältöä, kuten URL:ää pistekirjoituksella. (#11754)
 - Kohdistetun Excel-solun muotoilutietojen ilmoittaminen on taas mahdollista NVDA+F-näppäinkomentoa käyttäen. (#11914)
 - QWERTY-syöttö toimii taas sitä tukevissa Papenmeier-pistenäytöissä, eikä se enää aiheuta NVDA:n satunnaista jumiutumista. (#11944)
+- Ratkaistu Chromium-pohjaisissa selaimissa useita tapauksia, joissa taulukossa liikkuminen ei toiminut eikä NVDA ilmoittanut taulukon rivien/sarakkeiden määrää. (#12359)
 
 
 == Muutokset kehittäjille ==
@@ -262,7 +333,7 @@ Muita merkittäviä muutoksia tässä versiossa ovat mm. 64-bittinen tuki Java-v
 - Päivitetty Liblouis-pistekirjoituskääntäjä muutoksella 58d67e63. (#10094)
 - Kun emojien puhuminen on käytössä, ne sanotaan kaikilla välimerkkitasoilla. (#8826)
 - NVDA:han sisältyvät kolmannen osapuolen Python-paketit, kuten comtypes, tallentavat nyt varoituksensa ja virheensä NVDA:n lokiin. (#10393)
-- Päivitetty Unicode Common Locale Data Repository -tietokannan emojiselitteet versioksi 36.0. (#10426)
+- Päivitetty Unicode Common Locale Data -tietokannan emojiselitteet versioksi 36.0. (#10426)
 - Kun kohdistus siirretään selaustilassa ryhmän kohdalle, nyt luetaan lisäksi sen kuvaus. (#10095)
 - Java Access Bridge sisältyy nyt NVDA:han, jotta Java-sovellusten (mukaan lukien 64-bittiset Java-virtuaalikoneet) käyttäminen olisi mahdollista. (#7724)
 - Mikäli Java Access Bridgeä ei ole otettu käyttöön nykyiselle käyttäjälle, se otetaan automaattisesti käyttöön NVDA:ta käynnistettäessä. (#7952)
@@ -344,7 +415,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat Freedom Scientificin p
 == Muutokset ==
 - Syntetisaattorin äänenvoimakkuutta lisätään ja vähennetään nyt 10:n asemesta 5:llä asetusrengasta käytettäessä. (#6754)
 - Selvennetty lisäosien hallinnan tekstiä, joka näytetään kun NVDA on käynnistetty --disable-addons-komentoriviparametrilla. (#9473)
-- Unicode Common Locale Data Repository -tietokannan emojiselitteet päivitetty versioksi 35.0. (#9445)
+- Unicode Common Locale Data -tietokannan emojiselitteet päivitetty versioksi 35.0. (#9445)
 - Selaustilan elementtilistan suodatuskentän pikanäppäin on muutettu englanninkielisessä käyttöliittymässä Alt+Y:ksi. (#8728)
 - Kun automaattisesti tunnistettu pistenäyttö kytketään bluetoothin kautta, NVDA jatkaa saman ajurin tukemien USB-näyttöjen etsimistä ja vaihtaa USB-yhteyteen, mikäli sellainen tulee saataville. (#8853)
 - eSpeak-NG päivitetty muutoksella 67324cc.
