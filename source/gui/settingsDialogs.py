@@ -1497,7 +1497,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			wx.CheckBox(
 				self,
 				# Translators: The label for a setting in the Speech category
-				label=_("Speak all punctuations and symbols when reviewing by &word"),
+				label=_("Speak all punctuation and symbols when reviewing by &word"),
 				style=wx.CHK_3STATE
 			)
 		)
