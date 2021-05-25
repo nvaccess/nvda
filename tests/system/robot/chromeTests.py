@@ -284,7 +284,6 @@ def test_ariaTreeGrid_browseMode():
 	"""
 	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
 	"""
-	_asserts.strings_match("foo", "bar")
 	testFile = os.path.join(ARIAExamplesDir, "treegrid", "treegrid-1.html")
 	_chrome.prepareChrome(
 		f"""
