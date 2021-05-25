@@ -31,6 +31,32 @@ class espeak_ERROR(enum.IntEnum):
 	EE_BUFFER_FULL = 1
 	EE_NOT_FOUND = 2
 
+class espeak_ng_STATUS(enum.IntEnum):
+	ENS_GROUP_MASK = 0x70000000
+	ENS_GROUP_ERRNO = 0x00000000  # Values 0 - 255 map to errno error codes.
+	ENS_GROUP_ESPEAK_NG = 0x10000000  # eSpeak NG error codes.
+
+	#eSpeak NG 1.49 .0
+	ENS_OK = 0
+	ENS_COMPILE_ERROR = 0x100001FF
+	ENS_VERSION_MISMATCH = 0x100002FF
+	ENS_FIFO_BUFFER_FULL = 0x100003FF
+	ENS_NOT_INITIALIZED = 0x100004FF
+	ENS_AUDIO_ERROR = 0x100005FF
+	ENS_VOICE_NOT_FOUND = 0x100006FF
+	ENS_MBROLA_NOT_FOUND = 0x100007FF
+	ENS_MBROLA_VOICE_NOT_FOUND = 0x100008FF
+	ENS_EVENT_BUFFER_FULL = 0x100009FF
+	ENS_NOT_SUPPORTED = 0x10000AFF
+	ENS_UNSUPPORTED_PHON_FORMAT = 0x10000BFF
+	ENS_NO_SPECT_FRAMES = 0x10000CFF
+	ENS_EMPTY_PHONEME_MANIFEST = 0x10000DFF
+	ENS_SPEECH_STOPPED = 0x10000EFF
+
+	# eSpeak NG 1.49 .2
+	ENS_UNKNOWN_PHONEME_FEATURE = 0x10000FFF
+	ENS_UNKNOWN_TEXT_ENCODING = 0x100010FF
+
 class espeak_VOICE(ctypes.Structure):
 	_fields_=[
 		('name',ctypes.c_char_p),
@@ -111,6 +137,7 @@ def espeak_compilePhonemeData_buildAction(target,source,env):
 
 env['BUILDERS']['espeak_compilePhonemeData']=Builder(action=env.Action(espeak_compilePhonemeData_buildAction,"Compiling phoneme data"),emitter=espeak_compilePhonemeData_buildEmitter)
 
+#: See dictionaries section of /include/espeak/Makefile.am
 espeakDictionaryCompileList: typing.Dict[
 	str, # expected dict file name EG 'es_dict'
 	typing.Tuple[str, str] # rules file and language code. EG, ('es_rules, 'es'))
@@ -274,6 +301,8 @@ def espeak_compileDict_buildAction(
 		dirForRules:SCons.Node.FS.Base = source.dir
 		voice = espeak_VOICE(languages=lang.encode() + b'\x00')
 
+		# see: espeak-ng/speak_lib.h for espeak_SetVoiceByProperties
+		# returns: espeak_ERROR
 		setVoiceResult = espeak.espeak_SetVoiceByProperties(ctypes.byref(voice))
 		if espeak_ERROR.EE_OK.value != setVoiceResult:
 			print(
@@ -284,7 +313,8 @@ def espeak_compileDict_buildAction(
 			return ACTION_FAILURE
 
 		rulesPathEncoded = os.fsencode(dirForRules.abspath + '/')
-		# see: libespeak-ng/compiledict.c for espeak_ng_CompileDictionary
+		# see: espeak-ng/espeak_ng.h for espeak_ng_CompileDictionary
+		# returns: espeak_ng_STATUS
 		compileDictResult = espeak.espeak_ng_CompileDictionary(
 			rulesPathEncoded,  # const char *dsource
 			None,  # const char *dict_name
@@ -298,7 +328,7 @@ def espeak_compileDict_buildAction(
 				f"\n rules: '{langRulesName}'"
 				f"\n rulesPath: {rulesPathEncoded}"
 				f"\n language: '{lang}'"
-				f"\n result: {espeak_ERROR(compileDictResult)!s}"
+				f"\n result: {espeak_ng_STATUS(compileDictResult)!s}"
 			)
 			return ACTION_FAILURE
 	finally:
