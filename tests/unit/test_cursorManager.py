@@ -34,6 +34,7 @@ class TestMove(unittest.TestCase):
 
 	def test_nextChar(self):
 		cm = CursorManager(text="abc") # Caret at "a"
+		self.assertEqual( False, True) 
 		cm.script_moveByCharacter_forward(None)
 		self.assertEqual(cm.selectionOffsets, (1, 1)) # Caret at "b"
 
