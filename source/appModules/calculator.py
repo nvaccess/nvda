@@ -11,6 +11,7 @@ from NVDAObjects.UIA import UIA
 import queueHandler
 import ui
 import scriptHandler
+import braille
 
 # #9428: do not announce current values until calculations are done in order to avoid repetitions.
 noCalculatorEntryAnnouncements = [
@@ -64,7 +65,10 @@ class AppModule(appModuleHandler.AppModule):
 		self._shouldAnnounceResult = False
 		nextHandler()
 
-	def event_UIA_notification(self, obj, nextHandler, activityId=None, **kwargs):
+	def event_UIA_notification(self, obj, nextHandler, displayString=None, activityId=None, **kwargs):
+		# #12268: for "DisplayUpdated", announce display strings in braille and move on.
+		if activityId == "DisplayUpdated":
+			braille.handler.message(displayString)
 		try:
 			shouldAnnounceNotification = (
 				obj.previous.UIAAutomationId in
