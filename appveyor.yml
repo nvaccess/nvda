@@ -112,9 +112,9 @@ build_script:
      cmd.exe /c "scons checkPot $sconsArgs"
      if($LastExitCode -ne 0) {
       Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
-      Add-AppveyorMessage "checkPot failed: Translation comments missing or unexpectedly included. See build log for more information."
+      Add-AppveyorMessage "FAIL: checkPot. Translation comments missing or unexpectedly included. See build log for more information."
      } else {
-      Add-AppveyorMessage "checkPot passed."
+      Add-AppveyorMessage "PASS: checkPot."
      }
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
@@ -179,9 +179,9 @@ test_script:
      .\rununittests.bat --with-xunit --xunit-file="$unitTestsXml"
      if($LastExitCode -ne 0) {
       Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
-      Add-AppveyorMessage "Unit tests failed: See test results for more information."
+      Add-AppveyorMessage "FAIL: Unit tests. See test results for more information."
      } else {
-      Add-AppveyorMessage "Unit tests passed."
+      Add-AppveyorMessage "PASS: Unit tests."
      }
      Push-AppveyorArtifact $unitTestsXml
      $wc = New-Object 'System.Net.WebClient'
@@ -210,9 +210,9 @@ test_script:
       .\runlint.bat FETCH_HEAD "$flake8Output" 
       if($LastExitCode -ne 0) {
         Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
-        Add-AppveyorMessage "Lint check failed: See test results for more information."
+        Add-AppveyorMessage "FAIL: Lint check. See test results for more information."
       } else {
-        Add-AppveyorMessage "Lint check passed."
+        Add-AppveyorMessage "PASS: Lint check."
       }
       Push-AppveyorArtifact $flake8Output
       $junitXML = "$lintOutput\PR-Flake8.xml"
@@ -229,9 +229,9 @@ test_script:
      .\runsystemtests.bat --variable whichNVDA:installed --variable installDir:"${env:nvdaLauncherFile}" --include installer
      if($LastExitCode -ne 0) {
       Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
-      Add-AppveyorMessage "System tests failed: See test results for more information."
+      Add-AppveyorMessage "FAIL: System tests. See test results for more information."
      } else {
-      Add-AppveyorMessage "System tests passed."
+      Add-AppveyorMessage "PASS: System tests."
      }
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
