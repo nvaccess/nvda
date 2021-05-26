@@ -110,9 +110,9 @@ class AppModule(appModuleHandler.AppModule):
 		# In redstone, pressing enter does not move focus to equals button.
 		if isinstance(focus, UIA):
 			if focus.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
-				queueHandler.queueFunction(queueHandler.eventQueue, focus.reportFocus)
+				queueHandler.queueFunction(queueHandler.eventQueue, ui.message, focus.name)
 			else:
 				resultsScreen = api.getForegroundObject().children[1].lastChild
 				if isinstance(resultsScreen, UIA) and resultsScreen.UIAElement.cachedClassName == "LandmarkTarget":
 					# And no, do not allow focus to move.
-					queueHandler.queueFunction(queueHandler.eventQueue, resultsScreen.firstChild.reportFocus)
+					queueHandler.queueFunction(queueHandler.eventQueue, ui.message, resultsScreen.firstChild.name)
