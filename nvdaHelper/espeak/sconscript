@@ -443,7 +443,8 @@ for dictFileName, (rulesFileName, langCode) in espeakDictionaryCompileList.items
 	try:
 		dictDeps.remove(rulesFilePath)
 	except Exception:
-		print(f"Removing from dictDeps: {rulesFilePath} from \n{dictDeps}")
+		print(f"Failed to remove from dictDeps: {rulesFilePath} from \n{dictDeps}")
+		raise
 	env.Depends(dictFile, dictDeps)
 	env.Depends(dictFile, [espeakLib, phonemeData])
 
