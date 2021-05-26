@@ -232,11 +232,7 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 
 
 def triggerNVDAExit():
-	preNVDAExit.notify()
-	# ensure NVDA only runs exit procedures once
-	handlers = list(preNVDAExit.handlers)  # don't mutate .handlers directly with unregister while iterating
-	for handler in handlers:
-		preNVDAExit.unregister(handler)
+	preNVDAExit.notifyOnce()
 
 
 def _closeAllWindows():
@@ -273,6 +269,10 @@ def _closeAllWindows():
 	app.ScheduleForDestruction(gui.mainFrame.sysTrayIcon.menu)
 	gui.mainFrame.sysTrayIcon.RemoveIcon()
 	app.ScheduleForDestruction(gui.mainFrame.sysTrayIcon)
+
+	wx.Yield()  # processes pending messages
+	gui.mainFrame.sysTrayIcon.menu = None
+	gui.mainFrame.sysTrayIcon = None
 
 	for window in wx.GetTopLevelWindows():
 		if isinstance(window, wx.Dialog) and window.IsModal():
@@ -351,9 +351,6 @@ def main():
 	import speech
 	log.debug("Initializing speech")
 	speech.initialize()
-	from speech import sayAll
-	log.debug("Initializing sayAllHandler")
-	sayAll.initialize()
 	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 		# Translators: This is spoken when NVDA is starting.
