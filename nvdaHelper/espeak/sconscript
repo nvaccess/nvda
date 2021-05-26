@@ -140,127 +140,126 @@ env['BUILDERS']['espeak_compilePhonemeData']=Builder(action=env.Action(espeak_co
 #: See dictionaries section of /include/espeak/Makefile.am
 espeakDictionaryCompileList: typing.Dict[
 	str, # expected dict file name EG 'es_dict'
-	typing.Tuple[str, str] # rules file and language code. EG, ('es_rules, 'es'))
+	typing.Tuple[str, typing.List[str]] # language code, list of input files
 ] = {
-	"af_dict": ("af_rules", "af"),
-	"am_dict": ("am_rules", "am"),
-	"an_dict": ("an_rules", "an"),
-	"ar_dict": ("ar_rules", "ar"),
-	"as_dict": ("as_rules", "as"),
-	"az_dict": ("az_rules", "az"),
-	"ba_dict": ("ba_rules", "ba"),
-	"bg_dict": ("bg_rules", "bg"),
-	"bn_dict": ("bn_rules", "bn"),
-	"bpy_dict": ("bpy_rules", "bpy"),
-	"bs_dict": ("bs_rules", "bs"),
-	"ca_dict": ("ca_rules", "ca"),
-	"chr_dict": ("chr_rules", "chr"),
-	"cmn_dict": ("cmn_rules", "cmn"),
-	"cs_dict": ("cs_rules", "cs"),
-	"cv_dict": ("cv_rules", "cv"),
-	"cy_dict": ("cy_rules", "cy"),
-	"da_dict": ("da_rules", "da"),
-	"de_dict": ("de_rules", "de"),
-	"el_dict": ("el_rules", "el"),
-	"en_dict": ("en_rules", "en"),
-	"eo_dict": ("eo_rules", "eo"),
-	"es_dict": ("es_rules", "es"),
-	"et_dict": ("et_rules", "et"),
-	"eu_dict": ("eu_rules", "eu"),
-	"fa_dict": ("fa_rules", "fa"),
-	"fi_dict": ("fi_rules", "fi"),
-	"fr_dict": ("fr_rules", "fr"),
-	"ga_dict": ("ga_rules", "ga"),
-	"gd_dict": ("gd_rules", "gd"),
-	"gn_dict": ("gn_rules", "gn"),
-	"grc_dict": ("grc_rules", "grc"),
-	"gu_dict": ("gu_rules", "gu"),
-	"hak_dict": ("hak_rules", "hak"),
-	"haw_dict": ("haw_rules", "haw"),
-	"he_dict": ("he_rules", "he"),
-	"hi_dict": ("hi_rules", "hi"),
-	"hr_dict": ("hr_rules", "hr"),
-	"ht_dict": ("ht_rules", "ht"),
-	"hu_dict": ("hu_rules", "hu"),
-	"hy_dict": ("hy_rules", "hy"),
-	"ia_dict": ("ia_rules", "ia"),
-	"id_dict": ("id_rules", "id"),
-	"io_dict": ("io_rules", "io"),
-	"is_dict": ("is_rules", "is"),
-	"it_dict": ("it_rules", "it"),
-	"ja_dict": ("ja_rules", "ja"),
-	"jbo_dict": ("jbo_rules", "jbo"),
-	"ka_dict": ("ka_rules", "ka"),
-	"kk_dict": ("kk_rules", "kk"),
-	"kl_dict": ("kl_rules", "kl"),
-	"kn_dict": ("kn_rules", "kn"),
-	"kok_dict": ("kok_rules", "kok"),
-	"ko_dict": ("ko_rules", "ko"),
-	"ku_dict": ("ku_rules", "ku"),
-	"ky_dict": ("ky_rules", "ky"),
-	"la_dict": ("la_rules", "la"),
-	"lfn_dict": ("lfn_rules", "lfn"),
-	"lt_dict": ("lt_rules", "lt"),
-	"lv_dict": ("lv_rules", "lv"),
-	"mi_dict": ("mi_rules", "mi"),
-	"mk_dict": ("mk_rules", "mk"),
-	"ml_dict": ("ml_rules", "ml"),
-	"mr_dict": ("mr_rules", "mr"),
-	"ms_dict": ("ms_rules", "ms"),
-	"mt_dict": ("mt_rules", "mt"),
-	"my_dict": ("my_rules", "my"),
-	"nci_dict": ("nci_rules", "nci"),
-	"ne_dict": ("ne_rules", "ne"),
-	"nl_dict": ("nl_rules", "nl"),
-	"nog_dict": ("nog_rules", "nog"),
-	"no_dict": ("no_rules", "no"),
-	"om_dict": ("om_rules", "om"),
-	"or_dict": ("or_rules", "or"),
-	"pap_dict": ("pap_rules", "pap"),
-	"pa_dict": ("pa_rules", "pa"),
-	"piqd_dict": ("piqd_rules", "piqd"),
-	"pl_dict": ("pl_rules", "pl"),
-	"pt_dict": ("pt_rules", "pt"),
-	"py_dict": ("py_rules", "py"),
-	"qdb_dict": ("qdb_rules", "qdb"),
-	"quc_dict": ("quc_rules", "quc"),
-	"qu_dict": ("qu_rules", "qu"),
-	"ro_dict": ("ro_rules", "ro"),
-	"ru_dict": ("ru_rules", "ru"),
-	"sd_dict": ("sd_rules", "sd"),
-	"shn_dict": ("shn_rules", "shn"),
-	"si_dict": ("si_rules", "si"),
-	"sk_dict": ("sk_rules", "sk"),
-	"sl_dict": ("sl_rules", "sl"),
-	"smj_dict": ("smj_rules", "smj"),
-	"sq_dict": ("sq_rules", "sq"),
-	"sr_dict": ("sr_rules", "sr"),
-	"sv_dict": ("sv_rules", "sv"),
-	"sw_dict": ("sw_rules", "sw"),
-	"ta_dict": ("ta_rules", "ta"),
-	"te_dict": ("te_rules", "te"),
-	"th_dict": ("th_rules", "th"),
-	"tk_dict": ("tk_rules", "tk"),
-	"tn_dict": ("tn_rules", "tn"),
-	"tr_dict": ("tr_rules", "tr"),
-	"tt_dict": ("tt_rules", "tt"),
-	"ug_dict": ("ug_rules", "ug"),
-	"uk_dict": ("uk_rules", "uk"),
-	"ur_dict": ("ur_rules", "ur"),
-	"uz_dict": ("uz_rules", "uz"),
-	"vi_dict": ("vi_rules", "vi"),
-	"yue_dict": ("yue_rules", "yue"),
+	"af_dict": ("af", ["af_list", "af_rules", ]),
+	"am_dict": ("am", ["am_list", "am_rules", ]),
+	"an_dict": ("an", ["an_list", "an_rules", ]),
+	"ar_dict": ("ar", ["ar_listx", "ar_list", "ar_rules"]),
+	"as_dict": ("as", ["as_list", "as_rules", ]),
+	"az_dict": ("az", ["az_list", "az_rules", ]),
+	"ba_dict": ("ba", ["ba_list", "ba_rules", ]),
+	"bg_dict": ("bg", ["bg_listx", "bg_list", "bg_rules"]),
+	"bn_dict": ("bn", ["bn_list", "bn_rules", ]),
+	"bpy_dict": ("bpy", ["bpy_list", "bpy_rules", ]),
+	"bs_dict": ("bs", ["bs_list", "bs_rules", ]),
+	"ca_dict": ("ca", ["ca_list", "ca_rules", ]),
+	"chr_dict": ("chr", ["chr_list", "chr_rules", ]),
+	"cmn_dict": ("cmn", ["cmn_listx", "cmn_list", "cmn_rules"]),
+	"cs_dict": ("cs", ["cs_list", "cs_rules", ]),
+	"cv_dict": ("cv", ["cv_list", "cv_rules", ]),
+	"cy_dict": ("cy", ["cy_list", "cy_rules", ]),
+	"da_dict": ("da", ["da_list", "da_rules", ]),
+	"de_dict": ("de", ["de_list", "de_rules", ]),
+	"el_dict": ("el", ["el_list", "el_rules", ]),
+	"en_dict": ("en", ["en_list", "en_rules", ]),
+	"eo_dict": ("eo", ["eo_list", "eo_rules", ]),
+	"es_dict": ("es", ["es_list", "es_rules", ]),
+	"et_dict": ("et", ["et_list", "et_rules", ]),
+	"eu_dict": ("eu", ["eu_list", "eu_rules", ]),
+	"fa_dict": ("fa", ["fa_list", "fa_rules", ]),
+	"fi_dict": ("fi", ["fi_list", "fi_rules", ]),
+	"fr_dict": ("fr", ["fr_list", "fr_rules", ]),
+	"ga_dict": ("ga", ["ga_list", "ga_rules", ]),
+	"gd_dict": ("gd", ["gd_list", "gd_rules", ]),
+	"gn_dict": ("gn", ["gn_list", "gn_rules", ]),
+	"grc_dict": ("grc", ["grc_list", "grc_rules", ]),
+	"gu_dict": ("gu", ["gu_list", "gu_rules", ]),
+	"hak_dict": ("hak", ["hak_list", "hak_rules", ]),
+	"haw_dict": ("haw", ["haw_list", "haw_rules", ]),
+	"he_dict": ("he", ["he_listx", "he_list", "he_rules"]),
+	"hi_dict": ("hi", ["hi_list", "hi_rules", ]),
+	"hr_dict": ("hr", ["hr_list", "hr_rules", ]),
+	"ht_dict": ("ht", ["ht_list", "ht_rules", ]),
+	"hu_dict": ("hu", ["hu_list", "hu_rules", ]),
+	"hy_dict": ("hy", ["hy_list", "hy_rules", ]),
+	"ia_dict": ("ia", ["ia_listx", "ia_list", "ia_rules"]),
+	"id_dict": ("id", ["id_list", "id_rules", ]),
+	"io_dict": ("io", ["io_list", "io_rules", ]),
+	"is_dict": ("is", ["is_list", "is_rules", ]),
+	"it_dict": ("it", ["it_listx", "it_list", "it_rules"]),
+	"ja_dict": ("ja", ["ja_list", "ja_rules", ]),
+	"jbo_dict": ("jbo", ["jbo_list", "jbo_rules", ]),
+	"ka_dict": ("ka", ["ka_list", "ka_rules", ]),
+	"kk_dict": ("kk", ["kk_list", "kk_rules", ]),
+	"kl_dict": ("kl", ["kl_list", "kl_rules", ]),
+	"kn_dict": ("kn", ["kn_list", "kn_rules", ]),
+	"kok_dict": ("kok", ["kok_list", "kok_rules", ]),
+	"ko_dict": ("ko", ["ko_list", "ko_rules", ]),
+	"ku_dict": ("ku", ["ku_list", "ku_rules", ]),
+	"ky_dict": ("ky", ["ky_list", "ky_rules", ]),
+	"la_dict": ("la", ["la_list", "la_rules", ]),
+	"lfn_dict": ("lfn", ["lfn_list", "lfn_rules", ]),
+	"lt_dict": ("lt", ["lt_list", "lt_rules", ]),
+	"lv_dict": ("lv", ["lv_list", "lv_rules", ]),
+	"mi_dict": ("mi", ["mi_list", "mi_rules", ]),
+	"mk_dict": ("mk", ["mk_list", "mk_rules", ]),
+	"ml_dict": ("ml", ["ml_list", "ml_rules", ]),
+	"mr_dict": ("mr", ["mr_list", "mr_rules", ]),
+	"ms_dict": ("ms", ["ms_list", "ms_rules", ]),
+	"mt_dict": ("mt", ["mt_list", "mt_rules", ]),
+	"my_dict": ("my", ["my_list", "my_rules", ]),
+	"nci_dict": ("nci", ["nci_list", "nci_rules", ]),
+	"ne_dict": ("ne", ["ne_list", "ne_rules", ]),
+	"nl_dict": ("nl", ["nl_list", "nl_rules", ]),
+	"nog_dict": ("nog", ["nog_list", "nog_rules", ]),
+	"no_dict": ("no", ["no_list", "no_rules", ]),
+	"om_dict": ("om", ["om_list", "om_rules", ]),
+	"or_dict": ("or", ["or_list", "or_rules", ]),
+	"pap_dict": ("pap", ["pap_list", "pap_rules", ]),
+	"pa_dict": ("pa", ["pa_list", "pa_rules", ]),
+	"piqd_dict": ("piqd", ["piqd_list", "piqd_rules", ]),
+	"pl_dict": ("pl", ["pl_list", "pl_rules", ]),
+	"pt_dict": ("pt", ["pt_list", "pt_rules", ]),
+	"py_dict": ("py", ["py_list", "py_rules", ]),
+	"qdb_dict": ("qdb", ["qdb_list", "qdb_rules", ]),
+	"quc_dict": ("quc", ["quc_list", "quc_rules", ]),
+	"qu_dict": ("qu", ["qu_list", "qu_rules", ]),
+	"ro_dict": ("ro", ["ro_list", "ro_rules", ]),
+	"ru_dict": ("ru", ["ru_listx", "ru_list", "ru_rules"]),
+	"sd_dict": ("sd", ["sd_list", "sd_rules", ]),
+	"shn_dict": ("shn", ["shn_list", "shn_rules", ]),
+	"si_dict": ("si", ["si_list", "si_rules", ]),
+	"sk_dict": ("sk", ["sk_list", "sk_rules", ]),
+	"sl_dict": ("sl", ["sl_list", "sl_rules", ]),
+	"smj_dict": ("smj", ["smj_list", "smj_rules", ]),
+	"sq_dict": ("sq", ["sq_list", "sq_rules", ]),
+	"sr_dict": ("sr", ["sr_list", "sr_rules", ]),
+	"sv_dict": ("sv", ["sv_list", "sv_rules", ]),
+	"sw_dict": ("sw", ["sw_list", "sw_rules", ]),
+	"ta_dict": ("ta", ["ta_list", "ta_rules", ]),
+	"te_dict": ("te", ["te_list", "te_rules", ]),
+	"th_dict": ("th", ["th_list", "th_rules", ]),
+	"tk_dict": ("tk", ["tk_listx", "tk_list", "tk_rules"]),
+	"tn_dict": ("tn", ["tn_list", "tn_rules", ]),
+	"tr_dict": ("tr", ["tr_listx", "tr_list", "tr_rules"]),
+	"tt_dict": ("tt", ["tt_list", "tt_rules", ]),
+	"ug_dict": ("ug", ["ug_list", "ug_rules", ]),
+	"uk_dict": ("uk", ["uk_list", "uk_rules", ]),
+	"ur_dict": ("ur", ["ur_list", "ur_rules", ]),
+	"uz_dict": ("uz", ["uz_list", "uz_rules", ]),
+	"vi_dict": ("vi", ["vi_list", "vi_rules", ]),
+	"yue_dict": ("yue", ["yue_list", "yue_listx", "yue_rules"]),
 }
 
 def espeak_compileDict_buildAction(
-		# SCons docs claim target and source should be a Node, not list, but this is what we get.
 		target: typing.List[SCons.Node.FS.File],
 		source: typing.List[SCons.Node.FS.File],
 		env: SCons.Environment.Environment
 ) -> int:
 	"""
 	@param target: The langCode_dict file to build
-	@param source: The langCode_rules file
+	@param source: The langCode_[rules|list|listx] files that are used as inputs
 	@param env: Scons build environment
 	@return From SCons docs: "Return 0 or None to indicate a successful build of
 		the target file(s). The function may raise an exception or return a non-zero
@@ -271,10 +270,10 @@ def espeak_compileDict_buildAction(
 		raise ValueError(f"Unexpected number of targets: {targetStrings}")
 	target = target[0]
 
-	if len(source) != 1:
-		sourceStrings = list((str(s) for s in source))
-		raise ValueError(f"Unexpected number of source files: {sourceStrings}")
-	source = source[0]
+	if not source:
+		raise ValueError(f"No source files provided: {source!s}")
+	# All source files are in the same directory, just use the first one.
+	dirForRules: SCons.Node.FS.Base = source[0].dir
 
 	ACTION_SUCCESS = 0
 	ACTION_FAILURE = 1
@@ -296,9 +295,7 @@ def espeak_compileDict_buildAction(
 	)
 
 	try: # ensure that espeak_Terminate is called
-		lang = espeakDictionaryCompileList[target.name][1]
-		langRulesName:str = source.name  # example: "es_rules"
-		dirForRules:SCons.Node.FS.Base = source.dir
+		lang = espeakDictionaryCompileList[target.name][0]
 		voice = espeak_VOICE(languages=lang.encode() + b'\x00')
 
 		# see: espeak-ng/speak_lib.h for espeak_SetVoiceByProperties
@@ -307,7 +304,6 @@ def espeak_compileDict_buildAction(
 		if espeak_ERROR.EE_OK.value != setVoiceResult:
 			print(
 				f"Failed to switch to language: '{lang}'"
-				f"\n rules: '{langRulesName}'"
 				f"\n result: {espeak_ERROR(setVoiceResult)!s}"
 			)
 			return ACTION_FAILURE
@@ -325,7 +321,6 @@ def espeak_compileDict_buildAction(
 		if espeak_ERROR.EE_OK.value != compileDictResult:
 			print(
 				f"Failed to compile dictionary: '{target}'"
-				f"\n rules: '{langRulesName}'"
 				f"\n rulesPath: {rulesPathEncoded}"
 				f"\n language: '{lang}'"
 				f"\n result: {espeak_ng_STATUS(compileDictResult)!s}"
@@ -425,27 +420,17 @@ for f in glob(emojiGlob):
 	os.remove(f)
 
 # Create compile commands for all languages
-for dictFileName, (rulesFileName, langCode) in espeakDictionaryCompileList.items():
+for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
 	if langCode in excludeLangs: continue
 
-	rulesFilePath = dictSourcePath.File(rulesFileName)
 	dictFilePath = espeakRepo.Dir('espeak-ng-data').File(dictFileName)
 
 	dictFile = env.Command(
 		target=dictFilePath,
-		source=rulesFilePath,
+		source=list((dictSourcePath.File(f) for f in inputFiles)),
 		action=espeak_compileDict_buildAction
 	)
 
-	# Find all files related to "langCode", these are all dependencies for the language.
-	dictDeps = dictSourcePath.glob(langCode + '_*')
-	# Remove, sourceRulesFilePath, SCons already knows the target depends on the source
-	try:
-		dictDeps.remove(rulesFilePath)
-	except Exception:
-		print(f"Failed to remove from dictDeps: {rulesFilePath} from \n{dictDeps}")
-		raise
-	env.Depends(dictFile, dictDeps)
 	env.Depends(dictFile, [espeakLib, phonemeData])
 
 	# Dictionaries can not be compiled in parallel, force SCons not to do this
