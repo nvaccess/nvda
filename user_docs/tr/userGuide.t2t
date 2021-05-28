@@ -1864,17 +1864,17 @@ Bu özellik varsayılan olarak etkindir, Windows 10 1607 ve sonraki sürümlerde
 Dikkat: bu seçenek etkin durumdayken, şifreler gibi ekranda görünmeyen yazılan karakterler gizlenmez.
 Güvensiz ortamlarda, parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] işlevlerini geçici olarak devre dışı bırakabilirsiniz.
 
-==== Diff algorithm ====[DiffAlgo]
+==== Diff algoritması ====[DiffAlgo]
 Bu ayar, NVDA'nın terminallerde  yeni metni nasıl konuşacağını kontrol eder.
-diff algorithm seçim kutusunda üç seçenek vardır:
-- Automatic: NVDA 2021.1'den itibaren bu seçenek Difflib'e eşdeğerdir.
+diff algoritması seçim kutusunda üç seçenek vardır:
+- Otomatik: NVDA 2021.1'den itibaren bu seçenek Difflib'e eşdeğerdir.
 Gelecekteki bir sürümde, pozitif kullanıcı testi yapılıncaya kadar Diff Match Patch olarak değiştirilebilir.
-- allow Diff Match Patch: Bu seçenek, NVDA'nın terminal metnindeki değişiklikleri karakter karakter hesaplamasına neden olur.
+- Diff Match Patch'e izin ver: Bu seçenek, NVDA'nın terminal metnindeki değişiklikleri karakter karakter hesaplamasına neden olur.
 Konsola büyük hacimlerde metin girildiğinde  performansı artırabilir ve satırların ortasında yapılan değişikliklerin daha doğru raporlanmasına olanak tanır.
 Ancak bazı uygulamalarla uyumsuz olabilir.
 Bu özellik, Windows 10'un 1607 ve sonraki sürümlerinde Windows Konsolunda desteklenir.
 Ek olarak, önceki Windows sürümlerindeki diğer terminallerde de mevcut olabilir.
-- force Difflib: bu seçenek NVDA'nın terminal metnindeki değişiklikleri satır satır hesaplamasına neden olur.
+- Difflib'e zorla: bu seçenek NVDA'nın terminal metnindeki değişiklikleri satır satır hesaplamasına neden olur.
 NVDA'nın 2020.4 ve daha önceki sürümlerindeki davranışıyla aynıdır.
 -
 
