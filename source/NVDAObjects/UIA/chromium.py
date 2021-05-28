@@ -6,6 +6,8 @@
 import UIAHandler
 from . import web
 import controlTypes
+from comtypes import COMError
+from logHandler import log
 
 """
 This module provides UIA behaviour specific to the chromium family of browsers.
@@ -15,6 +17,16 @@ or UIA.anaheim_edge.
 
 
 class ChromiumUIATextInfo(web.UIAWebTextInfo):
+
+	def expand(self, unit):
+		# #12474: Expanding to line breaks when the underlying text range is empty.
+		copy = self._rangeObj.Clone()
+		super().expand(unit)
+		try:
+			self._rangeObj.Compare(copy)
+		except COMError:
+			log.debugWarning(f"Expand to {unit} failed for {self}, resorting to backup range before expand")
+			self._rangeObj = copy
 
 	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
 		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)

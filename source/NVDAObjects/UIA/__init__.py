@@ -940,6 +940,9 @@ class UIA(Window):
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
+		elif self.windowClassName == "Chrome_WidgetWin_1" and self.UIATextPattern:
+			from . import chromium
+			clsList.append(chromium.ChromiumUIA)
 		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
 			from . import chromium
 			from . import web
@@ -1265,8 +1268,9 @@ class UIA(Window):
 
 	_TextInfo=UIATextInfo
 	def _get_TextInfo(self):
-		if self.UIATextPattern: return self._TextInfo
-		textInfo=super(UIA,self).TextInfo
+		if self.UIATextPattern:
+			return self._TextInfo
+		textInfo = super(UIA, self).TextInfo
 		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.ROLE_WINDOW:
 			import displayModel
 			return displayModel.DisplayModelTextInfo
