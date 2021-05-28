@@ -32,10 +32,10 @@ negative number	minus	none	norep
 
 # Whitespace
 \0	prazno	char	# null
-\t	tab
-\n	kraj redka	char
-\f	prijelom stranice	none
-\r	novi redak	char
+\t	tabulator
+\n	novi redak	char
+\f	prekid stranice	none
+\r	kraj retka	char
  	razmak	char
  	razmak	char	# no-break space
 
@@ -53,7 +53,7 @@ $	dolar	all	norep
 ¤	opći znak valuta	all	norep
 %	posto	some
 ‰	promil	some
-&	trgovačko i	some
+&	i	some
 '	izostavnik	all
 (	otvorena zagrada	most	always
 )	zatvorena zagrada	most	always
@@ -63,7 +63,7 @@ $	dolar	all	norep
 .	točka	some
 /	kosa crta	some
 :	dvotočka	most	norep
-;	točka zarz	most
+;	točka zarez	most
 ?	upitnik	all
 @	et	some
 [	otvorena uglata zagrada	most
@@ -75,15 +75,15 @@ _	podvlaka	most
 {	otvorena vitičasta zagrada	most
 }	zatvorena vitičasta zagrada	most
 |	okomita crta	most
-¦	rastavljena okomita crta	most
+¦	isprekidana okomita crta	most
 ~	tilda	most
 ¡	preokrenuti uskličnik	some
 ¿	preokrenuti upitnik	some
 ·	dignuta točka	most
 ‚	otvoreni polunavodnik	most
 „	otvoreni navodnici	most
-′	oznaka minute	some
-″	oznaka sekunde	some
+′	minuta	some
+″	sekunda	some
 ‴	trostruki prime	some
 
 # Other characters
@@ -106,12 +106,12 @@ _	podvlaka	most
 ¸	cedilla	most
 ‎	oznaka za lijevo na desno	char
 ‏	oznaka za desno na lijevo	char
-¶	znak za odlomak marker	most
+¶	znak za odlomak	most
 ■	kvadratić	some
 ▪	kvadratić	some
 ◾	kvadratić	some
 □	bijeli kvadratić	some
-◦	kružić	some
+◦	bijeli predznak	some
 ⇨	bijela strelica desno	some
 ➔	desno ukazujuća strelica	some
 ➢	vrh strelice desno	some
@@ -119,8 +119,8 @@ _	podvlaka	most
 ♣	tref	some
 ♦	karo	some
 ◆	romb	some
-§	članak	all
-°	stupnjeva	some
+§	znak za članak	all
+°	stupanj	some
 «	zatvoreni francuski navodnici	none
 »	otvoreni francuski navodnici	none
 µ	mikro	some
@@ -169,10 +169,10 @@ _	podvlaka	most
 ‡	dvostruki križ	some
 ‣	trokutasti predznak	none
 ✗	predznak u obliku slova x	none
-⊕	circled plus	none
-⊖	circled minus	none
-⇄	strelica udesno iznad strelice ulijevo	none
-⇒	double right arrow	none
+⊕	zaokruženi plus	none
+⊖	zaokruženi minus	none
+⇄	strelica desno iznad strelice lijevo	none
+⇒	dvostruka strelica desno	none
 
 #Arithmetic operators
 +	plus	some
@@ -180,112 +180,112 @@ _	podvlaka	most
 ×	puta	some
 ⋅	puta	some
 ⨯	puta	none
-∕	divided by	some
-⁄	divided by	some
-÷	divide by	some
-∓	minus or plus	some
+∕	podijeljeno sa	some
+⁄	podijeljeno sa	some
+÷	podijeljeno sa	some
+∓	minus plus	some
 ±	plus minus	some
 
 #Set operations
-∖	set minus	none
-⊍	set union	none
-𝒫	power set of the set	none
-𝔓	power set of the set	none
-℘	power set of the set	none
+∖	razlika skupova	none
+⊍	unija skupova	none
+𝒫	partitivni skup skupa	none
+𝔓	partitivni skup skupa	none
+℘	partitivni skup skupa	none
 ∁	komplement skupa	none
 
 #Set relations and set constructions
 ∅	prazan skup	none
-⊂	pravi podskup	none
-⊄	not a subset of	none
-⊃	pravi nadskup	none
-⊅	not a superset of	none
-⊆	podskup of or equal to	none
-⊈	neither a subset of nor equal to	none
-⊇	nadskup	none
-⊉	neither a superset of nor equal to	none
-⊌	multiset	none
+⊂	je pravi podskup od	none
+⊄	nije pravi podskup od	none
+⊃	je pravi nadskup od	none
+⊅	nije pravi nadskup od	none
+⊆	je podskup od	none
+⊈	nije podskup od	none
+⊇	je nadskup od	none
+⊉	nije nadskup od	none
+⊌	skup istovrsnih elemenata	none
 
 #Equality signs
 =	jednako	some
-≃	asymptotically equal to	none
-≄	not asymptotically equal to	none
-≅	approximately equal to	none
-≆	approximately but not actually equal to	none
-≈	približno jednako	none
-≌	all equal to	none
-≍	equivalent to	none
-≭	not equivalent to	none
-≎	geometrically equivalent to	none
-≑	geometrically equal to	none
-≚	equiangular to	none
+≃	asimptotski jednako	none
+≄	nije asimptotski jednako	none
+≅	približno jednako	none
+≆	približno ali ne stvarno jednako	none
+≈	skoro jednako	none
+≌	sve jednako	none
+≍	ekvivalent od	none
+≭	nije ekvivalent od	none
+≎	geometrijski ekvivalent	none
+≑	geometrijski jednako	none
+≚	istokutno	none
 ≬	između	none
-≠	različito	none
-≡	identično jednako	none
-≣	strictly identical to	none
-≢	not identical to	none
-∼	similar to	none
-≙	estimates	none
-≟	questioned equal to	none
+≠	nije jednako	none
+≡	identično	none
+≣	strogo identično	none
+≢	nije identično	none
+∼	slično	none
+≙	procjena	none
+≟	upitno jednako	none
 
 #comparison signs
 <	manje od	some
 >	veće od	some
 ≤	manje ili jednako	none
-≦	less- than or equal to	none
-≪	much smaller than	none
+≦	manje ili jednako	none
+≪	puno manje od	none
 ≥	veće ili jednako	none
-≧	greater-than or equal to	none
-≫	much bigger than	none
-≶	less than or greater than	none
-≷	greater than or less than	none
-≮	not less than	none
-≯	not greater than	none
+≧	veće ili jednako	none
+≫	puno veće od	none
+≶	manje ili veće od	none
+≷	veće ili jednako	none
+≮	nije manje od	none
+≯	nije veće od	none
 
 #Functions
-⁻	eksponent minus	some
-∘	ring Operator	none
+⁻	inverzija	some
+∘	kompozicija	none
 ∂	parcijalna derivacija	none
-∇	gradijan	none
+∇	gradijent	none
 
 #Geometry and linear Algebra
-⃗	vector between	none
-△	triangle	none
-▭	rectangle	none
+⃗	vektor	none
+△	trokut	none
+▭	četverokut	none
 ∟	pravi kut	none
 ∠	kut	none
 ∥	je paralelno sa	none
 ∦	nije paralelno sa	none
-⊥	perpendicular to	none
-⟂	ortogonal to	none
-‖	norm of vector	none
-̂	normalizes	none
-∿	sine wave	none
-∡	measured Angle	none
-∢	spherical Angle	none
+⊥	okomito na	none
+⟂	ortogonalno na	none
+‖	norma vektora	none
+̂	normalizacija	none
+∿	sinusova krivulja	none
+∡	izmjereni kut	none
+∢	sferni kut	none
 
 #Logical operators
 ∀	za svaki	none
 ∃	postoji	none
 ∄	ne postoji	none
-⇏	precrtana dvostruka strelica udesno	none
-⇐	is implied by	none
+⇏	ne implicira	none
+⇐	obrnuta implikacija	none
 
 #Other mathematical Operators
-∈	element skupa	none
-∉	nije element skupa	none
-∊	element skupa	none
-∋	sadrži	none
-∌	ne sadrži	none
-∍	sadrži	none
+∈	element od	none
+∉	nije element od	none
+∊	mali element od	none
+∋	sadrži kao član	none
+∌	ne sadrži kao član	none
+∍	mali sadrži kao član	none
 ∎	kraj dokaza	none
 ∏	produkt	none
-∐	n-ary coproduct	none
-∑	suma	none
-√	drugi korijen	none
+∐	koprodukt niza	none
+∑	zbroj	none
+√	kvadratni korijen	none
 ∛	treći korijen	none
 ∜	četvrti korijen	none
-∝	je proporcionalno sa	none
+∝	proporcionalno sa	none
 ∞	beskonačnost	none
 ∧	logičko i	none
 ∨	logičko ili	none
@@ -293,32 +293,32 @@ _	podvlaka	most
 ∩	presjek	none
 ∪	unija	none
 ∫	integral	none
-∬	double Integral	none
-∭	tripple Integral	none
-∮	contour Integral	none
-∯	surface Integral	none
-∰	volume Integral	none
-∱	clockwise Integral	none
-∲	clockwise contour Integral	none
-∳	anticlockwise Contour Integral	none
-∴	stoga, dakle	none
+∬	dvostruki integral	none
+∭	trostruki integral	none
+∮	krivuljni integral	none
+∯	plošni integral	none
+∰	volumni integral	none
+∱	integral udesno	none
+∲	krivuljni integral udesno	none
+∳	krivuljni integral ulijevo	none
+∴	stoga	none
 ∵	zato što	none
 ∶	omjer	none
 ∷	proporcija	none
-∹	excess	none
-∺	geometric proportion	none
-≀	wreath product	none
-≏	difference between	none
-≐	approaches the limit	none
-∙	bullet Operator	none
-∣	divides	none
-∤	does not divide	none
-≔	colon equals	none
-≕	equals colon	none
-≺	precedes	none
-≻	succeeds	none
-⊀	does not precede	none
-⊁	does not succeed	none
+∹	višak	none
+∺	geometrijska proporcija	none
+≀	neizravni produkt	none
+≏	razlika između	none
+≐	približava se granici	none
+∙	predznak operator	none
+∣	je djelitelj od	none
+∤	nije djelitelj od	none
+≔	dvotočka jednako	none
+≕	jednako dvotočka	none
+≺	prethodi	none
+≻	slijedi	none
+⊀	ne prethodi	none
+⊁	ne slijedi	none
 
 # Vulgur Fractions U+2150 to U+215E
 ¼	jedna četvrtina	none
@@ -341,18 +341,18 @@ _	podvlaka	most
 ⅞	sedam osmina	none
 
 #Number sets
-𝔸	algebraic numbers	none
-ℂ	complex numbers	none
-ℑ	imaginary part of complex number	none
-ℍ	quaternions	none
-ℕ	natural numbers	none
-𝕁	nonnegative (whole) numbers	none
-ℚ	rational numbers	none
-ℝ	real numbers	none
-ℜ	real part of complex number	none
-ℤ	integers	none
-ℵ	aleph number	none
-ℶ	beth number	none
+𝔸	algebarski brojevi	none
+ℂ	kompleksni brojevi	none
+ℑ	imaginarna jedinica kompleksnog broja	none
+ℍ	kvaternioni	none
+ℕ	prirodni brojevi	none
+𝕁	nenegativni (cijeli) brojevi	none
+ℚ	racionalni brojevi	none
+ℝ	realni brojevi	none
+ℜ	realna jedinica kompleksnog broja	none
+ℤ	cijeli brojevi	none
+ℵ	alef	none
+ℶ	beth	none
 
 # Miscellaneous Technical
 ⌘	mac command tipka	none
