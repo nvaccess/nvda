@@ -47,7 +47,6 @@ Adobe Flashia ei myöskään enää tueta.
 - Viestiluettelo on taas luettavissa Outlook 2010:ssä. (#12241)
 - Kun pääteohjelmissa poistetaan tai lisätään merkkejä keskellä riviä Windows 10:n versiossa 1607 ja uudemmissa, kohdistimen oikealla puolella olevia merkkejä ei enää lueta. (#3200)
  - Tämä kokeellinen korjaus on otettava käyttöön manuaalisesti NVDA:n Lisäasetukset-paneelista muuttamalla Muutosten havaitsemismenetelmä -asetuksen arvoksi Diff Match Patch.
-- Korjattu MCS Electronics -kehitysympäristön muokkauskenttien käyttäminen. (#11966)
 - Virheellisiä etäisyysilmoituksia ei pitäisi enää tapahtua MS Outlookissa siirryttäessä Vaihto+Sarkain-näppäinyhdistelmällä viestirungosta aihekenttään. (#10254)
 - Python-konsolissa tuetaan nyt sarkainsisennyksen lisäämistä sellaisen syöttörivin alkuun, joka ei ole tyhjä, ja sarkaintäydennyksen suorittamista syöttörivin keskellä. (#11532)
 - Muotoilutiedoissa ja  muissa selaustilassa näytettävissä ilmoituksissa ei enää näytetä odottamattomia tyhjiä rivejä, kun ruutuasettelu on poistettu käytöstä. (#12004)
@@ -67,6 +66,7 @@ Adobe Flashia ei myöskään enää tueta.
 - Korjattu virhe SAPI 4 -puhesyntetisaattorin äänenkorkeutta muutettaessa. (#12311)
 - Nyt myös NVDA:n asennusohjelma huomioi ``--minimal``-komentoriviparametrin, eikä soita käynnistysääntä noudattaen samaa dokumentoitua käyttäytymistä kuin asennetun tai massamuistiversion nvda.exe. (#12289)
 - Taulukkoon siirtävä pikanavigointikomento voi nyt siirtää asettelutaulukkoon MS Wordissa tai Outlookissa, mikäli "Sisällytä asettelutaulukot" -asetus on otettu käyttöön selaustilan asetuksista. (#11899)
+- NVDA ei enää sano emojien kohdalla "↑↑↑" tietyissä kielissä. (#11963)
 
 
 == Muutokset kehittäjille ==
