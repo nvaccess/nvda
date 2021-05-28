@@ -2,6 +2,7 @@
 
 
 %!includeconf: ../changes.t2tconf
+
 = 2021.1 =
 This release includes optional experimental support for UIA in Excel and Chromium browsers.
 There are fixes for several languages, and for accessing links in Braille.
@@ -46,7 +47,6 @@ This release also drops support for Adobe Flash.
 - The list of messages in Outlook 2010 is once again readable. (#12241)
 - In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
   - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
-- Fixed access to edit fields in MCS Electronics IDE's. (#11966)
 - In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
 - In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
 - Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
@@ -66,6 +66,7 @@ This release also drops support for Adobe Flash.
 - Fixed the pitch change failure in SAPI4 speech synthesizer. (#12311)
 - The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
 - In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
+- NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
 
 == Zmiany dla programistów ==
 Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
