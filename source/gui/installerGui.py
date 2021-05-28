@@ -482,4 +482,5 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 			def startNewPortableNVDAInstance():
 				_startNewNVDAInstance(portableDirectory)
 			core.preNVDAExit.register(startNewPortableNVDAInstance)
-	core.triggerNVDAExit()
+	if silent or startAfterCreate:
+		core.triggerNVDAExit()

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 04:45+0000\n"
-"PO-Revision-Date: 2021-05-15 09:43+0200\n"
+"POT-Creation-Date: 2021-05-21 07:49+0000\n"
+"PO-Revision-Date: 2021-05-22 15:27+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -7235,10 +7235,9 @@ msgstr "alkaa {startTime}, päättyy {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-msgid "category"
-msgid_plural "categories"
-msgstr[0] "kategoria"
-msgstr[1] "kategoriat"
+#, python-brace-format
+msgid "categories {categories}"
+msgstr "{categories} kategoriaa"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -12349,6 +12348,11 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "kategoria"
+#~ msgstr[1] "kategoriat"
 
 #~ msgid "&Activate"
 #~ msgstr "&Aktivoi"
