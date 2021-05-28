@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 04:45+0000\n"
+"POT-Creation-Date: 2021-05-21 07:49+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -4047,8 +4047,8 @@ msgid ""
 "its supposed to speak something. If talk then NVDA will just speak normally."
 msgstr ""
 "Kapalı, bip ve konuşma gibi konuşma modları arasında geçiş yapar. "
-"apatıldığında NVDAhiçbir şey söylemez. Bip olarak ayarlanırsa , NVDA "
-"konuştuğu her durumda bip sesi çıkaracaktır. Konuşma modunda, NVDA normal "
+"Kapatıldığında NVDA hiçbir şey söylemez. Bip olarak ayarlanırsa , NVDA'nın "
+"konuştuğu her durumda bip sesi çıkacaktır. Konuşma modunda ise, NVDA normal "
 "şekilde konuşacaktır."
 
 #. Translators: A speech mode which disables speech output.
@@ -4512,7 +4512,7 @@ msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times resets to factory defaults."
 msgstr ""
-"Bir kez basıldığında kaydedilmiş en son konfigürasyon ayarlarına dönülür.Üç "
+"Bir kez basıldığında kaydedilmiş en son konfigürasyon ayarlarına dönülür. Üç "
 "kez basılırsa fabrika ayarlarına sıfırlanır"
 
 #. Translators: Input help mode message for activate python console command.
@@ -7186,10 +7186,9 @@ msgstr "{startTime} ile {endTime} arası"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-msgid "category"
-msgid_plural "categories"
-msgstr[0] "kategori"
-msgstr[1] "categories"
+#, python-brace-format
+msgid "categories {categories}"
+msgstr "kategoriler {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -9636,8 +9635,8 @@ msgid ""
 "Use UI Automation to access Microsoft &Excel spreadsheet controls when "
 "available"
 msgstr ""
-"Uygunsa Microsoft &Excel doküman kontrollerine erişmek için UI Otomasyonu "
-"kullan"
+"Uygunsa Microsoft &Excel elektronik tablo kontrollerine erişmek için UI "
+"Otomasyonu kullan"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9695,7 +9694,7 @@ msgstr "U&ygunsa Windows Konsolu'nda yeni karakter giriş desteğini kullan"
 #. settings panel.
 #. Choices are automatic, allow Diff Match Patch, and force Difflib.
 msgid "&Diff algorithm:"
-msgstr ""
+msgstr "&Diff algoritması:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
@@ -9707,13 +9706,13 @@ msgstr "Otomatik (Difflib)"
 #. panel to have NVDA detect changes in terminals
 #. by character when supported, using the diff match patch algorithm.
 msgid "allow Diff Match Patch"
-msgstr ""
+msgstr "Diff Match Patch'e izin ver"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 msgid "force Difflib"
-msgstr ""
+msgstr "Difflib'e zorla"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -12304,6 +12303,11 @@ msgstr "Çift satır aralığı"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 satır aralığı"
+
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "kategori"
+#~ msgstr[1] "categories"
 
 #~ msgid "&Activate"
 #~ msgstr "&Etkinleştir"
