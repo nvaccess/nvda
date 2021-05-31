@@ -1,13 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2020 NV Access limited, Leonard de Ruijter
+# Copyright (C) 2020-2021 NV Access limited, Leonard de Ruijter
 
 import UIAHandler
 from . import web
 import controlTypes
-from comtypes import COMError
-from logHandler import log
 
 """
 This module provides UIA behaviour specific to the chromium family of browsers.
@@ -20,13 +18,12 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 
 	def expand(self, unit):
 		# #12474: Expanding to line breaks when the underlying text range is empty.
-		copy = self._rangeObj.Clone()
+		if (
+			UIAHandler.NVDAUnitsToUIAUnits.get(unit) == UIAHandler.UIA.TextUnit_Line
+			and self.obj.UIATextPattern.documentRange.GetText(1) == ""
+		):
+			return
 		super().expand(unit)
-		try:
-			self._rangeObj.Compare(copy)
-		except COMError:
-			log.debugWarning(f"Expand to {unit} failed for {self}, resorting to backup range before expand")
-			self._rangeObj = copy
 
 	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
 		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
