@@ -1267,6 +1267,8 @@ class UIA(Window):
 		return self.UIALegacyIAccessiblePattern
 
 	_TextInfo=UIATextInfo
+	_cache_TextInfo = False
+
 	def _get_TextInfo(self):
 		if self.UIATextPattern:
 			return self._TextInfo

@@ -159,9 +159,6 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				log.exception(f"Exception in event_NVDAObject_init for {appModule}")
 				pass
 
-		# Ensure the property cache is cleared since overlays can change property values
-		obj.invalidateCache()
-
 		return obj
 
 	@classmethod
