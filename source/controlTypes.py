@@ -1,8 +1,8 @@
-#controlTypes.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
+
 from typing import Dict, Union, Set, Any, Optional, List
 from enum import Enum, auto
 
@@ -111,7 +111,6 @@ ROLE_SPLITBUTTON=101
 ROLE_MENUBUTTON=102
 ROLE_DROPDOWNBUTTONGRID=103
 ROLE_MATH=104
-ROLE_EQUATION=ROLE_MATH # Deprecated; for backwards compatibility.
 ROLE_GRIP=105
 ROLE_HOTKEYFIELD=106
 ROLE_INDICATOR=107
@@ -204,6 +203,7 @@ STATE_OBSCURED=0x4000000000
 STATE_CROPPED=0x8000000000
 STATE_OVERFLOWING=0x10000000000
 STATE_UNLOCKED=0x20000000000
+STATE_HAS_ARIA_DETAILS = 0x40000000000
 
 roleLabels: Dict[int, str] = {
 	# Translators: The word for an unknown control type.
@@ -336,7 +336,7 @@ roleLabels: Dict[int, str] = {
 	ROLE_ICON:_("icon"),
 	# Translators: Identifies a directory pane.
 	ROLE_DIRECTORYPANE:_("directory pane"),
-	# Translators: Identifies an embedded object such as flash content on webpages.
+	# Translators: Identifies an object that is embedded in a document.
 	ROLE_EMBEDDEDOBJECT:_("embedded object"),
 	# Translators: Identifies an end note.
 	ROLE_ENDNOTE:_("end note"),
@@ -574,6 +574,8 @@ stateLabels: Dict[int, str] = {
 	STATE_SORTED_DESCENDING:_("sorted descending"),
 	# Translators: a state that denotes that an object (usually a graphic) has a long description.
 	STATE_HASLONGDESC:_("has long description"),
+	# Translators: a state that denotes that an object has additional details (such as a comment section).
+	STATE_HAS_ARIA_DETAILS: _("has details"),
 	# Translators: a state that denotes that an object is pinned in its current location
 	STATE_PINNED:_("pinned"),
 	# Translators: a state that denotes the existance of a formula on a spreadsheet cell
@@ -758,6 +760,9 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 		positiveStates.discard(STATE_EXPANDED)
 	if STATE_FOCUSABLE not in states:
 		positiveStates.discard(STATE_EDITABLE)
+	if not config.conf["annotations"]["reportDetails"]:
+		# reading aria-details is an experimental feature still and should not always be reported.
+		positiveStates.discard(STATE_HAS_ARIA_DETAILS)
 	return positiveStates
 
 

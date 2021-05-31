@@ -5,7 +5,7 @@
 # Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
-
+import typing
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
@@ -17,6 +17,7 @@ import numbers
 import colors
 import languageHandler
 import UIAHandler
+import _UIACustomProps
 import globalVars
 import eventHandler
 import controlTypes
@@ -334,7 +335,7 @@ class UIATextInfo(textInfos.TextInfo):
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
 		elif isinstance(position,locationHelper.Point):
-			if (winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1):
+			if winVersion.getWinVer() <= winVersion.WIN7_SP1:
 				# #9435: RangeFromPoint causes a freeze in UIA client library in the Windows 7 start menu!
 				raise NotImplementedError("RangeFromPoint not supported on Windows 7")
 			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
@@ -813,6 +814,9 @@ class UIATextInfo(textInfos.TextInfo):
 	updateCaret = updateSelection
 
 class UIA(Window):
+	_UIACustomProps = _UIACustomProps.CustomPropertiesCommon.get()
+
+	shouldAllowDuplicateUIAFocusEvent = False
 
 	def _get__coreCycleUIAPropertyCacheElementCache(self):
 		"""
@@ -872,6 +876,19 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
+		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.ROLE_PANE:
+			from .excel import BadExcelFormulaEdit
+			clsList.append(BadExcelFormulaEdit)
+		elif self.windowClassName == "EXCEL7":
+			if self.role in (controlTypes.ROLE_DATAITEM, controlTypes.ROLE_HEADERITEM):
+				from .excel import ExcelCell
+				clsList.append(ExcelCell)
+			elif self.role == controlTypes.ROLE_DATAGRID:
+				from .excel import ExcelWorksheet
+				clsList.append(ExcelWorksheet)
+			elif self.role == controlTypes.ROLE_EDITABLETEXT:
+				from .excel import CellEdit
+				clsList.append(CellEdit)
 		elif self.TextInfo == UIATextInfo and (
 			UIAClassName == '_WwG'
 			or self.windowClassName == '_WwG'
@@ -1010,10 +1027,7 @@ class UIA(Window):
 			VisualStudio.findExtraOverlayClasses(self, clsList)
 
 		# Support Windows Console's UIA interface
-		if (
-			self.windowClassName == "ConsoleWindowClass"
-			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
-		):
+		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		elif UIAClassName == "TermControl":
@@ -1168,8 +1182,72 @@ class UIA(Window):
 		self.UIASelectionItemPattern=self._getUIAPattern(UIAHandler.UIA_SelectionItemPatternId,UIAHandler.IUIAutomationSelectionItemPattern)
 		return self.UIASelectionItemPattern
 
+	def _get_UIASelectionPattern(self):
+		self.UIASelectionPattern = self._getUIAPattern(
+			UIAHandler.UIA_SelectionPatternId,
+			UIAHandler.IUIAutomationSelectionPattern
+		)
+		return self.UIASelectionPattern
+
+	def _get_UIASelectionPattern2(self):
+		try:
+			self.UIASelectionPattern2 = self._getUIAPattern(
+				UIAHandler.UIA_SelectionPattern2Id,
+				UIAHandler.IUIAutomationSelectionPattern2
+			)
+		except COMError:
+			# SelectionPattern2 is not available on older Operating Systems such as Windows 7
+			self.UIASelectionPattern2 = None
+		return self.UIASelectionPattern2
+
+	def getSelectedItemsCount(self, maxItems=None):
+		p = self.UIASelectionPattern2
+		if p:
+			return p.currentItemCount
+		return 0
+
+	#: Typing information for auto-property: _get_selectionContainer
+	selectionContainer: "typing.Optional[UIA]"
+
+	def _get_selectionContainer(self) -> "typing.Optional[UIA]":
+		p = self.UIASelectionItemPattern
+		if not p:
+			return None
+		e = p.currentSelectionContainer
+		if not e:
+			# Some implementations of SelectionItemPattern, such as the Outlook attachment list
+			# give back a NULL selectionContainer
+			return None
+		e = e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		obj = UIA(UIAElement=e)
+		if obj.UIASelectionPattern2:
+			return obj
+		return None
+
+	#: typing for auto-property: UIAAnnotationObjects
+	UIAAnnotationObjects: typing.Dict[int, UIAHandler.IUIAutomationElement]
+
+	def _get_UIAAnnotationObjects(self) -> typing.Dict[int, UIAHandler.IUIAutomationElement]:
+		"""
+		Returns this UIAElement's annotation objects,
+		in a dict keyed by their annotation type ID.
+		"""
+		objsByTypeID = {}
+		objs = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationObjectsPropertyId)
+		if objs:
+			objs = objs.QueryInterface(UIAHandler.IUIAutomationElementArray)
+			for index in range(objs.length):
+				obj = objs.getElement(index)
+				typeID = obj.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
+				objsByTypeID[typeID] = obj
+		return objsByTypeID
+
 	def _get_UIATextPattern(self):
-		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern,cache=True)
+		self.UIATextPattern = self._getUIAPattern(
+			UIAHandler.UIA_TextPatternId,
+			UIAHandler.IUIAutomationTextPattern,
+			cache=False
+		)
 		return self.UIATextPattern
 
 	def _get_UIATextEditPattern(self):
@@ -1247,7 +1325,10 @@ class UIA(Window):
 			# #11445: due to timing errors, elements will be instantiated with no automation Id present.
 			return ""
 
-	def _get_name(self):
+	#: Typing info for auto property _get_name()
+	name: str
+
+	def _get_name(self) -> str:
 		try:
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_NamePropertyId)
 		except COMError:
@@ -1320,6 +1401,7 @@ class UIA(Window):
 		UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,
 		UIAHandler.UIA_IsOffscreenPropertyId,
+		UIAHandler.UIA_AnnotationTypesPropertyId,
 	}
 
 	def _get_states(self):
@@ -1385,6 +1467,14 @@ class UIA(Window):
 				states.add(controlTypes.STATE_CHECKABLE)
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
+		try:
+			annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
+		except COMError:
+			# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
+			annotationTypes = None
+		if annotationTypes:
+			if UIAHandler.AnnotationType_Comment in annotationTypes:
+				states.add(controlTypes.STATE_HASCOMMENT)
 		return states
 
 	def _getReadOnlyState(self) -> bool:
@@ -1447,7 +1537,10 @@ class UIA(Window):
 			return None
 		return self.correctAPIForRelation(UIA(UIAElement=previousElement))
 
-	def _get_next(self):
+	#: Typing information for auto-property: _get_next
+	next: "typing.Optional[UIA]"
+
+	def _get_next(self) -> "typing.Optional[UIA]":
 		try:
 			nextElement=UIAHandler.handler.baseTreeWalker.GetNextSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 		except COMError:
@@ -1793,7 +1886,7 @@ class UIItem(UIA):
 		info={}
 		itemIndex=0
 		try:
-			itemIndex=self._getUIACacheablePropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+			itemIndex = self._getUIACacheablePropertyValue(self._UIACustomProps.itemIndex.id)
 		except COMError:
 			pass
 		if itemIndex>0:
@@ -1805,7 +1898,7 @@ class UIItem(UIA):
 				e=None
 			if e:
 				try:
-					itemCount=e.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
+					itemCount = e.getCurrentPropertyValue(self._UIACustomProps.itemCount.id)
 				except COMError:
 					itemCount=0
 				if itemCount>0:

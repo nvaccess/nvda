@@ -3,6 +3,75 @@ NVDA 변경 이력
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.1 =
+This release includes optional experimental support for UIA in Excel and Chromium browsers.
+There are fixes for several languages, and for accessing links in Braille.
+There are updates to Unicode CLDR and mathematical symbols, eSpeak-NG and LibLouis.
+
+Many bug fixes and improvements, including in Office, Visual Studio and several languages.
+Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+This release also drops support for Adobe Flash.
+
+
+== New Features ==
+- Early support for UIA with Chromium based browsers (such as Edge). (#12025)
+- Optional experimental support for Microsoft Excel via UI Automation. Only recommended for Microsoft Excel build 16.0.13522.10000 or higher. (#12210)
+- Easier navigation of output in NVDA Python Console. (#9784)
+  - alt+up/down jumps to the previous/next output result (add shift for selecting).
+  - control+l clears the output pane.
+- NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
+
+
+== Changes ==
+- In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
+- NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
+- Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
+- Added more mathematical symbols to the symbols dictionary. (#11467)
+- The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
+- "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
+- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
+  - This behaviour can be disabled by setting this option to "No".
+  - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly.
+- Espeak-ng has been updated to 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
+- Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
+- Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
+- NVDA will exit even with windows still open, the exit process now closes all NVDA windows and dialogs. (#1740)
+- The Speech Viewer can now be closed with ``alt+F4`` and has a standard close button for easier interaction with users of pointing devices. (#12330)
+- The Braille Viewer now has a standard close button for easier interaction with users of pointing devices. (#12328)
+- In the Elements List dialog, the accelerator key on the "Activate" button has been removed in some locales to avoid collision with an element type radio button label. When available, the button is still the default of the dialog and as such can still be invoked by simply pressing enter from the elements list itself. (#6167)
+
+
+== Bug Fixes ==
+- The list of messages in Outlook 2010 is once again readable. (#12241)
+- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
+  - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
+- In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
+- In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
+- Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
+- It is now possible to read comments in MS Word with UIA enabled. (#9285)
+- Performance when interacting with Visual Studio has been improved. (#12171)
+- Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
+- Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
+  - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
+- The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
+- TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
+- It is once again possible to use NVDA in languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
+- In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
+- NVDA no longer fails to announce the newly focused content on a web page if the old focus disappears and is replaced by the new focus in the same position. (#12147)
+- Strikethrough, superscript and subscript formatting for entire Excel cells are now reported if the corresponding option is enabled. (#12264)
+- Fixed copying config during installation from a portable copy when default destination config directory is empty. (#12071, #12205)
+- Fixed incorrect announcement of some letters with accents or diacritic when 'Say cap before capitals' option is checked. (#11948)
+- Fixed the pitch change failure in SAPI4 speech synthesizer. (#12311)
+- The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
+- In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
+- NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
+
+
+== 개발자를 위한 내용 ==
+개발자를 위한 내용에 대해서는 영어판 changes.html 문서를 참조하세요. 
+
 = 2020.4 =
 이 버전은 새로운 중국어 입력 방법과 Liblouis를 위한 업데이트, 그리고 요소목록(NVDA+F7)이 이제 포커스 모드에서 동작합니다.
 NVDA 창에서 F1을 눌러서 그 창에 대한 도움말을 얻는 기능이 추가됐습니다.
@@ -31,6 +100,7 @@ NVDA 창에서 F1을 눌러서 그 창에 대한 도움말을 얻는 기능이 �
  - 바슈키르어 grade 1 점자 테이블 추가
  - 콥트어 8점 컴퓨터 점자 테이블 추가
  - 러시아 정자 점자와 러시아 정자(상세) 점자표 추가.
+ - 아프리칸스어 grade 2 점자 테이블 추가
  - 러시아어 grade 1 점자 테이블 제거
 - 브라우즈 모드에서 모두 읽기 사용 도중에 모두 읽기 사용 시 건너뛰어 읽기 사용 설정이 활성화되어있다면 이전 또는 다음 탐색이 더이상 모두 읽기를 중지하지 않습니다. (#11563)
 - HIMS 점자 디스플레이에서 F3이 스페이스 + 148점으로 리매핑되었습니다. (#11710)
@@ -45,36 +115,36 @@ NVDA 창에서 F1을 눌러서 그 창에 대한 도움말을 얻는 기능이 �
 
 
 == 버그 수정 ==
-- NVDA once again works correctly with edit fields when using the Fast Log Entry application. (#8996)
-- Report elapsed time in Foobar2000 if no total time is available (e.g. when playing a live stream). (#11337)
-- NVDA now honors the aria-roledescription attribute on elements in editable content in web pages. (#11607)
-- 'list' is no longer announced on every line of a list in Google Docs or other editable content in Google Chrome. (#7562)
-- When arrowing by character or word from one list item to another in editable content on the web, entering the new list item is now announced. (#11569)
-- NVDA now reads the correct line when the caret is placed at the end of a link on the end of a list item in Google Docs or other editable content on the web. (#11606)
+- Fast Log Entry 애플리케이션을 사용할 때 편집 영역에서 NVDA가 제대로 동작하도록 수정됐습니다. (#8996)
+- Foobar2000 에서 생방송 스트림의 경우와 같이 전체 재생시간이 없는 경우, 재생된 시간을 대신 알려줍니다. (#11337)
+- 웹페이지에서 편집 가능한 내용 안에 포함된 요소들에 대해서, aria-roledescription 속성을 제대로 다루도록 수정됐습니다. (#11607)
+- Google Chrome 에서 Google Docs 나 다른 편집 가능한 내용을 읽을 때 목록의 모든 항목마다 '목록'이라고 말하지 않게 수정됐습니다. (#7562)
+- 웹사이트의 편집 가능한 내용에 포함된 목록에서 문자나 단어 단위로 항목 사이를 이동할 때, 새 목록 항목으로 들어간다는 것을 알려줍니다. (#11569)
+- Google Docs 나 다른 편집 가능한 웹 요소에서, 목록 항목 끝에 위치한 링크 끝으로 캐럿을 옮겼을 때 올바른 줄을 읽습니다. (#11606)
 - Windows 7의 바탕화면에서 메뉴를 열고 닫았을 때의 초점이 올바르게 설정되었습니다. (#10567)
-- 포커스 이벤트 만료 시 발화 중단을 켜져있을 때, Firefox에서 탭을 전환할 때 탭의 제목을 다시 알립니다. (#11397)
-- NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
+- 포커스 이벤트 만료 시 발화 중단이 켜져있을 때, Firefox에서 탭을 전환할 때 탭의 제목을 다시 알립니다. (#11397)
+- SAPI 5 Ivona 음성을 쓰면서 목록을 편집할 때, 제대로 목록 항목을 알려주도록 수정됐습니다. (#11651)
 - Windows 10 Mail 앱 버전 16005.13110 이상에서 이메일을 읽을 때 이제 다시 브라우즈 모드를 사용할 수 있습니다. (#11439)
-- When using the SAPI5 Ivona voices from harposoftware.com, NVDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
-- It is now possible to enter number 6 in computer braille from a braille keyboard on HIMS displays. (#11710)
-- Major performance improvements in Azure Data Studio. (#11533, #11715)
+- NVDA 에서 harposoftware.com 에서 만든 SAPI 5 Ivona 음성을 쓸 때, 이제 설정 내용을 저장하고 음성합성기를 바꿀 수 있습니다. 또한 재시작한 후에 조용해지는 문제를 해결했습니다. (#11650)
+- HIMS 디스플레이 장치에서 점자 키보드로 컴퓨터 점자 숫자 6을 입력할 수 없었던 문제가 수정됐습니다. (#11710)
+- Azure Data Studio 사용 시 성능이 향상되었습니다. (#11533, #11715)
 - "포커스 이벤트 만료 시 발화 중단"이 켜져있을 때, NVDA 찾기 대화상자의 제목을 다시 읽습니다. (#11632)
-- NVDA should no longer freeze when waking the computer and focus lands in a Microsoft Edge document. (#11576)
-- MS Edge에서 컨텍스트 메뉴를 닫은 후 브라우즈 모드를 다시 활성화하려면 Microsoft Edge에서 더 이상 탭을 누르거나 포커스를 이동할 필요가 없습니다. (#11202)
+- 컴퓨터를 켤 때 Microsoft Edge 문서에 포커스가 있으면 동작을 멈추는 문제가 수정됐습니다. (#11576)
+- Microsoft Edge에서 컨텍스트 메뉴를 닫은 후 브라우즈 모드를 다시 활성화하려면 Microsoft Edge에서 더 이상 탭을 누르거나 포커스를 이동할 필요가 없습니다. (#11202)
 - NVDA가 Tortoise SVN와 같은 64-bit 응용프로그램에서, 목록 보기 항목을 읽는 것에 실패하지 않습니다. (#8175)
 - 이제 Firefox와 Google Chrome 모두 ARIA의 트리그리드 요소를 일반 테이블로 안내합니다. (#9715)
-- A reverse search can now be initiated with 'find previous' via NVDA+shift+F3 (#11770)
 - "현재 커서 위치 이전부터 입력된 문자열을 검색" 기능을 기본적으로 NVDA+shift+F3로 사용할 수 있습니다. (#11770)
-- An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 
+- NVDA 스크립트가 연달아 실행되는 사이에 관련 없는 키 입력을 있을 경우, 반복되는 스크립트로 다루어지는 문제가 수정됐습니다. (#11388)
 - Internet Explorer에서 Strong과 emphasis 태그의 알림을 문서 서식 알림 설정의 글꼴 섹션 안에 있는 "강조" 설정값을 해제하여 다시 안내되지 않도록 할 수 있습니다. (#11808)
 - 화살표 키로 셀 간 탐색할 때 일부 유저가 경험했던 몇 초 동안 멈추던 현상이 발생하지 않습니다. (#11818)
-- In Microsoft Teams builds with version numbers like 1.3.00.28xxx, NVDA no longer fails reading messages in chats or Teams channels due to an incorrectly focused menu. (#11821)
-- Text marked both as being a spelling and grammar error at the same time in Google Chrome will be appropriately announced as both a spelling and grammar error by NVDA. (#11787)
-- 프랑스어 로케일 환경에서 Outlook을 사용할 때, '전체 답장' 단축키(control+shift+R)가 다시 작동합니다.. (#11196)
+- 1.3.00.28 으로 시작하는 버전의 Microsoft Teams 에서, 메뉴 포커스가 올바르지 않다고 해서 NVDA가 채팅이나 팀 채널의 메시지를 못 읽는 문제가 해결했습니다. (#11821)
+- Google Chrome 에서 철자 오류와 문법 오류가 함께 표시된 문구에서, NVDA 가 철자와 문법 오류를 둘 다 알려주도록 변경됐습니다. (#11787)
+- 프랑스어 로케일 환경에서 Outlook을 사용할 때, '전체 답장' 단축키(control+shift+R)가 다시 작동합니다. (#11196)
 - Visual Studio에서 현재 선텍된 IntelliSense 목록 항목의 툴팁을 이제 한 번만 읽습니다. (#11611)
 - Windows 10 계산기에서 입력한 글자 알림을 끄면 계산 진행 내용을 NVDA가 안내하지 않습니다. (#9428)
 - 커서 위치 단어 정자로 보기 설정이 켜져있고, 영어 (미국) 2종을 사용하는 환경에서 점자로 URL과 같은 특정 콘텐츠를 표시할 때, NVDA가 더 이상 충돌하지 않습니다. (#11754)
 - Excel 셀에서 NVDA+F 키를 사용하여 "서식 정보 알림"을 사용할 수 있습니다. (#11914)
+- Papenmeier 점자 디스플레이의 QWERTY 입력이 다시 작동하며 더 이상 NVDA가 무작위로 멈추지 않습니다. (#11944)
 
 
 == 개발자를 위한 내용 ==

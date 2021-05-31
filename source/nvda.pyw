@@ -10,14 +10,29 @@
 import sys
 import os
 import globalVars
+import ctypes
 
-
+customVenvDetected = False
 if getattr(sys, "frozen", None):
 	# We are running as an executable.
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
 	appDir = sys.prefix
 else:
+	# we are running from source
+	# Ensure we are inside the NVDA build system's Python virtual environment.
+	nvdaVenv = os.getenv("NVDA_VENV")
+	virtualEnv = os.getenv("VIRTUAL_ENV")
+	if not virtualEnv or not os.path.isdir(virtualEnv):
+		ctypes.windll.user32.MessageBoxW(
+			0,
+			"NVDA cannot  detect the Python virtual environment. "
+			"To run NVDA from source, please use runnvda.bat in the root of this repository.",
+			"Error",
+			0,
+		)
+		sys.exit(1)
+	customVenvDetected = nvdaVenv != virtualEnv
 	import sourceEnv
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
 	appDir = os.path.normpath(os.path.dirname(__file__))
@@ -25,7 +40,7 @@ appDir = os.path.abspath(appDir)
 os.chdir(appDir)
 globalVars.appDir = appDir
 
-import ctypes
+
 import locale
 import gettext
 
@@ -183,8 +198,8 @@ if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 		sys.exit(0)
 	try:
 		terminateRunningNVDA(oldAppWindowHandle)
-	except:
-		sys.exit(1)
+	except Exception as e:
+		parser.error(f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}")
 if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
@@ -232,11 +247,15 @@ if logHandler.log.getEffectiveLevel() is log.DEBUG:
 import buildVersion
 log.info("Starting NVDA version %s" % buildVersion.version)
 log.debug("Debug level logging enabled")
+if customVenvDetected:
+	log.warning("NVDA launched using a custom Python virtual environment.")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
-#Accept wm_quit from other processes, even if running with higher privilages
-if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
-	raise WinError()
+
+# Accept WM_QUIT from other processes, even if running with higher privileges
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT.ALLOW):
+	log.error("Unable to set the NVDA process to receive WM_QUIT messages from other processes")
+	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 if not isSecureDesktop and not config.isAppX:

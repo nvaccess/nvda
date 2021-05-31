@@ -68,8 +68,8 @@ NVDA 同時也包含並使用了那些受其他免費且開放板權的組件。
 + 系統需求 +[SystemRequirements]
 - 作業系統：32或64位元的微軟 Windows 7、Windows 8、Windows 8.1 及 Window 10，及 Windows Server 2008 R2 以上所有的伺服器作業系統。
  - 使用 Windows 7，NVDA 需要 SP 1以上的等級。
- - 使用Windows Server 2008 R2，NVDA 需要 SP 1以上的等級。
- - 最少 150 MB 以上的內存空間
+ - 使用 Windows Server 2008 R2，NVDA 需要 SP 1以上的版本。
+- 最少 150 MB 以上的內存空間
 -
 
 + 取得並設定 NVDA +[GettingAndSettingUpNVDA]
@@ -1052,7 +1052,7 @@ NVDA 設定對話框包含許多組態參數可以修改。
 NVDA 將套用您目前電腦系統所使用的語言。
 
 附註：若變更語言設定，您需要重新啟動 NVDA。
-當確認對話框出現時，您可以依照自己的需要選擇「立即重新啟動」或「稍候重新啟動」。當選擇「稍候重新啟動」，無論您是否有勾選「關閉時儲存設定」，NVDA 皆會自動儲存該設定。
+當確認對話框出現時，您可以依照自己的需要選擇「立即重新啟動」或「稍候重新啟動」。若選擇「稍候重新啟動」，該設定必須被儲存才會再下一次啟動時生效（無論是手動儲存或使用關閉時儲存）。
 
 ==== 關閉時儲存設定 ====[GeneralSettingsSaveConfig]
 此為一核取方塊，勾選後，在關閉 NVDA時，會自動儲存此次所做的變更設定。
@@ -2252,11 +2252,21 @@ SAPI 5 是微軟語音合成器的標準版本。
 Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語音。
 該語音提供了多種語系，且與微軟 SAPI 5合成器對接的語音相比，較之來的反應更快速。
 在 Windows 10 中，NVDA 預設使用 Windows OneCore。（在其它版本中則預設是使用[eSpeak NG #eSpeakNG]）
+要新增 Windows OneCore 語音，請前往 Windows 系統設定中的「輕鬆存取」，接著在清單中選擇「朗讀程式」，並選擇「新增其他語音」。
+接著找到「新增語音」按鈕來添加新的語音。
 
-請參照微軟此篇文章之內容來安裝: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+許多語言會包含多種不同地區使用的語音。
+例如「英國」、「加拿大」、「印度」等都是英文可選擇的不同語音。
+又例如「法國」、「加拿大」、「瑞士」等都是法文可使用的不同語音。
+您可以使用大範圍的語言來搜尋，例如輸入「英文」、「法文」等，清單便會列出該語言的不同地區語音。
+選擇想要的語言後，按下「新增」按鈕來加入。
+新增完成後，重新啟動 NVDA。
+
+
+請參考微軟此篇文章來查看可使用的語音清單: https://support.microsoft.com/zh-tw/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + 支援的點顯器 +[SupportedBrailleDisplays]
-這一節的內容包含 NVDA 支援的點顯器的資訊。
+這一節的內容包含 NVDA 可支援點顯器的資訊。
 
 ++ 支援背景自動偵測功能的點顯器之相關資訊 ++[AutomaticDetection]
 無論是使用 USB 或藍牙連接，NVDA 均能夠在背景自動偵測到許多點顯器。

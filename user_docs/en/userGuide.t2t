@@ -498,7 +498,6 @@ This includes documents in the following applications:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - Supported books in Amazon Kindle for PC
 -
 
@@ -596,7 +595,7 @@ Use the following keys for performing searches:
 %kc:endInclude
 
 ++ Embedded Objects ++[ImbeddedObjects]
-Pages can include rich content using technologies such as Adobe Flash, Oracle Java and HTML5, as well as applications and dialogs.
+Pages can include rich content using technologies such as Oracle Java and HTML5, as well as applications and dialogs.
 Where these are encountered in browse mode, NVDA will report "embedded object", "application" or "dialog", respectively.
 You can quickly move to them using the o and shift+o embedded object single letter navigation keys.
 To interact with these objects, you can press enter on them.
@@ -1764,7 +1763,7 @@ You can configure reporting of:
 - Pages and spacing
  - Page numbers
  - Line numbers
- - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #lineIndentationOptions]
+ - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #DocumentFormattingSettingsLineIndentation]
  - Paragraph indentation (e.g. hanging indent, first line indent)
  - Line spacing (single, double, etc.)
  - Alignment
@@ -1772,7 +1771,7 @@ You can configure reporting of:
  - Tables
  - Row/column headers
  - Cell coordinates
- - Cell borders [(Off, Styles, Both Colours and Styles)
+ - Cell borders (Off, Styles, Both Colours and Styles)
 - Elements
  - Headings
  - Links
@@ -1867,6 +1866,22 @@ The combo box has the following options:
 - No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
 -
 
+==== Enable Experimental ARIA annotations support ====[Annotations]
+Used to enable features which add experimental support for ARIA annotations.
+Some of these features may be incomplete.
+The following options exist: 
+- "Report details in browse mode": enables reporting if an object has details in browse mode.
+Reporting the summary of those details can be done by assigning a gesture using the [Input Gestures dialog #InputGestures].
+-
+
+==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]
+When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
+This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
+For instance, NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet features are not available.
+However, for basic spreadsheet navigating / editing, this option may provide a vast performance improvement.
+We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Microsoft Excel  build 16.0.13522.10000 or higher to test this feature and provide feedback.
+Microsoft Excel's UI automation implementation is ever changing, and  versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
+
 ==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in Windows command consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
@@ -1874,7 +1889,7 @@ This feature is available and enabled by default on Windows 10 versions 1607 and
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
-==== Diff algorithm ====[AdvancedSettingsDiffAlgo]
+==== Diff algorithm ====[DiffAlgo]
 This setting controls how NVDA determines the new text to speak in terminals.
 The diff algorithm combo box has three options:
 - Automatic: as of NVDA 2021.1, this option is equivalent to Difflib.
@@ -1891,7 +1906,7 @@ It is identical to NVDA's behaviour in versions 2020.4 and earlier.
 ==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
 This option enables behaviour which attempts to cancel speech for expired focus events.
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
-This functionality is experimental as of NVDA 2020.2.
+This functionality is enabled by default as of NVDA 2021.1.
 
 ==== Caret move timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
@@ -2298,7 +2313,17 @@ Windows 10 includes new voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
 On Windows 10, NVDA uses Windows OneCore voices by default ([eSpeak NG #eSpeakNG] is used in other releases).
 
-Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+To add new Windows OneCore voices, go to "Speech Settings", within Windows system settings. 
+Use the "Add voices" option and search for the desired language.
+Many languages include multiple variants.
+"United Kingdom" and "Australia" are two of the English variants.
+"France", "Canada" and "Switzerland" are French variants available.
+Search for the broader language (such as English or French), then locate the variant in the list.
+Select any languages desired and use the "add" button to add them.
+Once added, restart NVDA.
+
+
+Please see this Microsoft article for a list of available voices: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
