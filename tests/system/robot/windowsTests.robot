@@ -25,8 +25,10 @@ setup and open windows search
 	open windows search
 
 close windows search and teardown
-	default teardown
+	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
+	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	close windows search
+	quit NVDA
 
 *** Test Cases ***
 emoji panel search
