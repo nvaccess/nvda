@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-21 07:49+0000\n"
-"PO-Revision-Date: 2021-05-20 00:31-0700\n"
+"PO-Revision-Date: 2021-05-25 22:52+0900\n"
 "Last-Translator: ungjinPark <ungjin312@kakao.com>\n"
 "Language-Team: NVDA Korean users and translations forum <advck1123@gmail."
 "com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.4.3\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -102,7 +102,6 @@ msgid "grammar: {text}"
 msgstr "문법: {text}"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "none"
 msgstr "없음"
@@ -113,21 +112,19 @@ msgid "color"
 msgstr "color"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "gradient"
-msgstr "직선 그라데이션"
+msgstr "그라데이션"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "picture"
-msgstr ""
+msgstr "그림"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
-msgstr "기존값"
+msgstr "패턴"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -7076,30 +7073,26 @@ msgstr "파이썬 콘솔"
 
 #. Translators: Description of a command to clear the Python Console output pane
 msgid "Clear the output pane"
-msgstr ""
+msgstr "출력 영역 비우기"
 
 #. Translators: Description of a command to move to the next result in the Python Console output pane
-#, fuzzy
 msgid "Move to the next result"
-msgstr "다음 목록으로 이동합니다"
+msgstr "다음 결과로 이동"
 
 #. Translators: Description of a command to move to the previous result
 #. in the Python Console output pane
-#, fuzzy
 msgid "Move to the previous result"
-msgstr "이전 목록으로 이동합니다"
+msgstr "이전 결과로 이동"
 
 #. Translators: Description of a command to select from the current caret position to the end
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the end of the current result"
-msgstr "현재 셀의 주석을 알려줍니다"
+msgstr "현재 결과에서 끝까지 선택"
 
 #. Translators: Description of a command to select from the current caret position to the start
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the start of the current result"
-msgstr "현재 셀의 주석을 알려줍니다"
+msgstr "현재 결과에서 처음까지 선택"
 
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
@@ -7161,9 +7154,9 @@ msgstr "{startTime} - {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "categories {categories}"
-msgstr "category {categories}"
+msgstr "{categories} 분류"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -9645,7 +9638,7 @@ msgstr "윈도우즈 콘솔에서 가능한 경우 입력한 글자 지원 기�
 #. settings panel.
 #. Choices are automatic, allow Diff Match Patch, and force Difflib.
 msgid "&Diff algorithm:"
-msgstr ""
+msgstr "&Diff 알고리듬:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
@@ -9657,13 +9650,13 @@ msgstr "자동(Difflib)"
 #. panel to have NVDA detect changes in terminals
 #. by character when supported, using the diff match patch algorithm.
 msgid "allow Diff Match Patch"
-msgstr ""
+msgstr "Diff Match Patch 방식 사용"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 msgid "force Difflib"
-msgstr ""
+msgstr "Difflib 방식 언제나 사용"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -10739,88 +10732,88 @@ msgid ""
 "Shows a browseable message Listing information about a cell's appearance "
 "such as outline and fill colors, rotation and size"
 msgstr ""
+"셀의 윤곽선, 배경색, 회전각도, 크기 등 셀의 겉모습에 대한 정보를 나열하여 브"
+"라우징할 수 있게 합니다."
 
 #. Translators: The width of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
-msgstr ""
+msgstr "셀 가로길이: {0.x:.1f} 포인트"
 
 #. Translators: The height of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
-msgstr ""
+msgstr "셀 세로길이: {0.y:.1f} 포인트"
 
 #. Translators: The rotation in degrees of an Excel cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degrees"
-msgstr ""
+msgstr "회전각도: {0}도"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid ""
 "Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
-msgstr ""
+msgstr "윤곽선 색: 위={0.name}, 아래={1.name}, 왼쪽={2.name}, 오른쪽={3.name}"
 
 #. Translators: The outline (border) thickness values of an Excel cell.
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
-msgstr ""
+msgstr "윤곽선 두께: 위={0}, 아래={1}, 왼쪽={2}, 오른쪽={3}"
 
 #. Translators: The fill color of an Excel cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill color: {0.name}"
-msgstr ""
+msgstr "배경색: {0.name}"
 
 #. Translators: The fill type (pattern, gradient etc) of an Excel Cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill type: {0}"
-msgstr ""
+msgstr "배경 유형: {0}"
 
 #. Translators: the number format of an Excel cell
 #, python-brace-format
 msgid "Number format: {0}"
-msgstr ""
+msgstr "숫자 형식: {0}"
 
 #. Translators: If an excel cell has data validation set
 msgid "Has data validation"
-msgstr ""
+msgstr "데이터 유효성 검사가 설정되어 있음"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #, python-brace-format
 msgid "Data validation prompt: {0}"
-msgstr ""
+msgstr "데이터 유효성 검사 프롬프트: {0}"
 
 #. Translators: If an excel cell has conditional formatting
-#, fuzzy
 msgid "Has conditional formatting"
-msgstr "문서 서식 알림"
+msgstr "조건부 서식이 설정되어 있음"
 
 #. Translators: If an excel cell has visible gridlines
-#, fuzzy
 msgid "Gridlines are visible"
-msgstr "보이지 않음"
+msgstr "가이드라인이 표시됨"
 
 #. Translators: Title for a browsable message that describes the appearance of a cell in Excel
 msgctxt "excel-UIA"
 msgid "Cell Appearance"
-msgstr ""
+msgstr "셀 형태"
 
 #. Translators:  an error message on a cell in Microsoft Excel.
 #, python-brace-format
 msgid "Error: {errorText}"
-msgstr ""
+msgstr "오류: {errorText}"
 
 #. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
 #, python-brace-format
 msgid "{author} is editing"
-msgstr ""
+msgstr "{author}님이 편집하는 중입니다."
 
 #. Translators: Excel, report range of cell coordinates
 #, python-brace-format
@@ -10829,9 +10822,8 @@ msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue}에서 {lastAddress} {lastValue}"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Reports the note or comment thread on the current cell"
-msgstr "현재 셀의 주석을 알려줍니다"
+msgstr "현재 셀에 메모 혹은 주석이 있는지 확인합니다."
 
 #. Translators: a comment on a cell in Microsoft excel.
 #, python-brace-format
@@ -10845,7 +10837,7 @@ msgstr "주석: {comment}; 저자: {author}; 답변수: {numReplies}"
 
 #. Translators: A message in Excel when there is no note
 msgid "No note or comment thread on this cell"
-msgstr ""
+msgstr "이 셀에는 메모 혹은 코멘트가 없습니다."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.

@@ -760,8 +760,9 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 		positiveStates.discard(STATE_EXPANDED)
 	if STATE_FOCUSABLE not in states:
 		positiveStates.discard(STATE_EDITABLE)
-	# reading aria-details is an experimental feature still and should not be reported. (#12364)
-	positiveStates.discard(STATE_HAS_ARIA_DETAILS)
+	if not config.conf["annotations"]["reportDetails"]:
+		# reading aria-details is an experimental feature still and should not always be reported.
+		positiveStates.discard(STATE_HAS_ARIA_DETAILS)
 	return positiveStates
 
 
