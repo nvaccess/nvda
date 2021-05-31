@@ -12,7 +12,6 @@ from comtypes import COMError
 from comtypes.automation import VARIANT
 import time
 import weakref
-import sys
 import numbers
 import colors
 import languageHandler
