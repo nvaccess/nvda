@@ -35,6 +35,7 @@ emoji panel search
 	[Documentation]	Read emoji by navigating the emoji panel
 	[Setup]	setup and open windows search
 	[Teardown]	close windows search and teardown
+	[Tags]	excluded_from_build	# AppVeyor's Windows build doesn't have an emoji panel with searching
 	open emoji panel
 	search emojis	came
 	read emojis	camel	two-hump camel	camera
