@@ -42,10 +42,10 @@ def write_and_copy_text(text: str):
 	spy = _nvdaLib.getSpyLib()
 	spy.emulateKeyPress("control+a")
 	for c in text:
-		spy.emulateKeyPress(c, blockUntilProcessed=False)
+		spy.emulateKeyPress(c)
 	spy.wait_for_speech_to_finish()
 	spy.emulateKeyPress("control+a")
-	spy.emulateKeyPress("control+c")
+	spy.emulateKeyPress("control+x")
 
 
 def read_clipboard_history(*expectedClipboardHistory: str):
@@ -70,7 +70,7 @@ def open_emoji_panel() -> str:
 	try:
 		return lastSpeech.split("  ")[1]
 	except IndexError:
-		AssertionError(f"Emoji not announced. Last speech: '{lastSpeech}'")
+		raise AssertionError(f"Emoji not announced. Last speech: '{lastSpeech}'")
 
 
 def search_emojis(emojiNameSearchStr: str):
