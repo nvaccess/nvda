@@ -202,7 +202,6 @@ class FieldCommand(object):
 			"controlEnd", indicating the end of a L{ControlField}; or
 			"formatChange", indicating a L{FormatField} change.
 		@param field: The field associated with this command; may be C{None} for controlEnd.
-		@type field: L{Field}
 		"""
 		if command not in ("controlStart","controlEnd","formatChange"):
 			raise ValueError("Unknown command: %s"%command)
