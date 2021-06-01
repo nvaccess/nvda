@@ -45,6 +45,7 @@ emoji panel open
 	[Documentation]	Confirm that opening the emoji panel announces an emoji
 	[Setup]	setup and open windows search
 	[Teardown]	close windows search and teardown
+	[Tags]	excluded_from_build	# NVDA fails to announce emojis sometimes, to be fixed with #11485 
 	${firstEmoji}=	open emoji panel	# set expected first emoji
 	search emojis	${firstEmoji}
 	read emojis	${firstEmoji}
@@ -65,6 +66,7 @@ toggle between emoji panel and clipboard history
 	[Documentation]	Toggle between clipboard history and emoji panel and ensure items are announced
 	[Setup]	setup and open windows search
 	[Teardown]	close windows search and teardown
+	[Tags]	excluded_from_build	# NVDA fails to announce emojis sometimes, to be fixed with #11485
 	write and copy text	test toggle between
 	${firstEmoji}=	open emoji panel
 	open clipboard history
