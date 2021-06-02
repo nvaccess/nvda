@@ -37,7 +37,7 @@ def quits_from_menu(showExitDialog=True):
 	spy = _nvdaLib.getSpyLib()
 	_builtIn.sleep(1)
 	spy.emulateKeyPress("NVDA+n")
-	spy.emulateKeyPress("x")
+	spy.emulateKeyPress("x", blockUntilProcessed=False)  # don't block so NVDA can exit
 	if showExitDialog:
 		exitTitleIndex = spy.wait_for_specific_speech("Exit NVDA")
 
@@ -52,7 +52,7 @@ def quits_from_menu(showExitDialog=True):
 			])
 		)
 		_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little for it
-		spy.emulateKeyPress("enter", blockUntilProcessed=False)
+		spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
 
 	_process.wait_for_process(_nvdaProcessAlias, timeout="10 sec")
 	_process.process_should_be_stopped(_nvdaProcessAlias)
@@ -81,7 +81,7 @@ def quits_from_keyboard():
 		])
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
-	spy.emulateKeyPress("enter", blockUntilProcessed=False)
+	spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
 	_process.wait_for_process(_nvdaProcessAlias, timeout="10 sec")
 	_process.process_should_be_stopped(_nvdaProcessAlias)
 
