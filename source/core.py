@@ -232,7 +232,9 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 
 
 def triggerNVDAExit():
-	preNVDAExit.notifyOnce()
+	import queueHandler
+	# queue this so that the calling process can exit safely (eg a Popup menu)
+	queueHandler.queueFunction(queueHandler.eventQueue, preNVDAExit.notifyOnce)
 
 
 def _closeAllWindows():
