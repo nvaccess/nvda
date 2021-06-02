@@ -1862,6 +1862,15 @@ Some of these features may be incomplete.
 The following options exist: 
 - "Report details in browse mode": enables reporting if an object has details in browse mode.
 Reporting the summary of those details can be done by assigning a gesture using the [Input Gestures dialog #InputGestures].
+- "Report aria-description always":
+  When the source of ``accDescription`` is aria-description, the description is reported.
+  This is useful for annotations on the web.
+  Note:
+  - There are many sources for ``accDescription`` several have mixed or unreliable semantics.
+    Historically AT has not been able to differentiate sources of ``accDescription`` typically it wasn't spoken due to the mixed semantics.
+  - This option is in very early development, it relies on browser features not yet widely available.
+  - Expected to work with Chromium 92.0.4479.0+
+  -
 -
 
 ==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]
