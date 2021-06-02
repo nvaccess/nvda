@@ -32,6 +32,33 @@ def NVDA_Starts():
 	_process.process_should_be_running(_nvdaProcessAlias)
 
 
+def quits_from_menu(showExitDialog=True):
+	"""Ensure NVDA can be quit from menu."""
+	spy = _nvdaLib.getSpyLib()
+	_builtIn.sleep(1)
+	spy.emulateKeyPress("NVDA+n")
+	spy.emulateKeyPress("x")
+	if showExitDialog:
+		exitTitleIndex = spy.wait_for_specific_speech("Exit NVDA")
+
+		spy.wait_for_speech_to_finish()
+		actualSpeech = spy.get_speech_at_index_until_now(exitTitleIndex)
+
+		_asserts.strings_match(
+			actualSpeech,
+			"\n".join([
+				"Exit NVDA  dialog",
+				"What would you like to do?  combo box  Exit  collapsed  Alt plus d"
+			])
+		)
+		_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little for it
+		spy.emulateKeyPress("enter", blockUntilProcessed=False)
+
+	_process.wait_for_process(_nvdaProcessAlias, timeout="10 sec")
+	_process.process_should_be_stopped(_nvdaProcessAlias)
+
+
+
 def quits_from_keyboard():
 	"""Ensure NVDA can be quit from keyboard."""
 	spy = _nvdaLib.getSpyLib()
@@ -40,7 +67,7 @@ def quits_from_keyboard():
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
 	spy.emulateKeyPress("enter")
 
-	spy.emulateKeyPress("insert+q")
+	spy.emulateKeyPress("NVDA+q")
 	exitTitleIndex = spy.wait_for_specific_speech("Exit NVDA")
 
 	spy.wait_for_speech_to_finish()
