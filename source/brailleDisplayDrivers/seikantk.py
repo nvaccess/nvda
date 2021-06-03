@@ -174,23 +174,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						pass
 
 	def _handKeys(self, arg: bytes):
-		Brl = arg[1]
-		Key = arg[2] | (arg[3] << 8)
-		Btn = 0  # Seika has no button
-		if not (Key or Btn or Brl):
-			pass
-		if Key:  # Mini Seika has 2 Top and 4 Front ....
-			gesture = InputGesture(keys=Key)
-		if Btn:  # Mini Seika has no Btn ....
-			gesture = InputGesture(keys=Btn)
-		if Brl:  # or how to handle Brailleinput?
-			gesture = InputGesture(dots=Brl)
-		if Key or Btn or Brl:
+		braille = arg[1]
+		key = arg[2] | (arg[3] << 8)
+		gesture = None
+		if key:  # Mini Seika has 2 Top and 4 Front
+			gesture = InputGesture(keys=key)
+		if braille:
+			gesture = InputGesture(dots=braille)
+		if gesture is not None:
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
-				log.debug("No Action for keys ")
-				pass
+				log.debug("No action for Seika Notetaker keys.")
 
 	def _handKeysRouting(self, arg: bytes):
 		argk = b"\x03" + arg[1:]
