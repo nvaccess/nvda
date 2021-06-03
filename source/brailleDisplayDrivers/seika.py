@@ -124,7 +124,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			cellData = (b"\x00" + intToByte(cell) for cell in cells)
 			lineBytes = self.sendHeader + b"".join(cellData)
 		else:
-			log.error("Unsupported cell count")
+			log.error("Unsupported cell count for seika braille device")
 			return
 		self._ser.write(lineBytes)
 
