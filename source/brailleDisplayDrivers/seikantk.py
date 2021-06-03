@@ -160,7 +160,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numBtns = arg[1]
 
 	def _handRouting(self, arg: bytes):
-		Rou = 0
 		for i in range(arg[0]):
 			for j in range(8):
 				if arg[i + 1] & (1 << j):
