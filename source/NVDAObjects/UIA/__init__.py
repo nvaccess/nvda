@@ -940,6 +940,9 @@ class UIA(Window):
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
+		elif self.windowClassName == "Chrome_WidgetWin_1" and self.UIATextPattern:
+			from . import chromium
+			clsList.append(chromium.ChromiumUIA)
 		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
 			from . import chromium
 			from . import web
@@ -1217,6 +1220,10 @@ class UIA(Window):
 		if not p:
 			return None
 		e = p.currentSelectionContainer
+		if not e:
+			# Some implementations of SelectionItemPattern, such as the Outlook attachment list
+			# give back a NULL selectionContainer
+			return None
 		e = e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		obj = UIA(UIAElement=e)
 		if obj.UIASelectionPattern2:
@@ -1260,9 +1267,12 @@ class UIA(Window):
 		return self.UIALegacyIAccessiblePattern
 
 	_TextInfo=UIATextInfo
+	_cache_TextInfo = False
+
 	def _get_TextInfo(self):
-		if self.UIATextPattern: return self._TextInfo
-		textInfo=super(UIA,self).TextInfo
+		if self.UIATextPattern:
+			return self._TextInfo
+		textInfo = super(UIA, self).TextInfo
 		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.ROLE_WINDOW:
 			import displayModel
 			return displayModel.DisplayModelTextInfo

@@ -498,7 +498,6 @@ Web sayfaları gibi karmaşık salt okunur belgeler, NVDA'da tarama kipinde gös
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - Amazon Kindle for PC içinde desteklenen kitaplar
 -
 
@@ -596,7 +595,7 @@ Arama yapmak için aşağıdaki tuşları kullanın:
 %kc:endInclude
 
 ++ Gömülü Nesneler ++[ImbeddedObjects]
-Sayfalar, Adobe Flash, Oracle Java ve HTML 5 gibi teknolojilerle üretilmiş öğelerin yanında uygulamalar ve iletişim kutuları gibi zengin içerikler barındırabilir.
+Sayfalar, Oracle Java ve HTML 5 gibi teknolojilerle üretilmiş öğelerin yanında uygulamalar ve iletişim kutuları gibi zengin içerikler barındırabilir.
 Bunlarla tarama kipinde karşılaşıldığında, NVDA "gömülü nesne", "uygulama" ya da "iletişim kutusu" olduklarını bildirecektir.
 Bu öğelere o ve shift+o gömülü nesne tek harf dolaşım tuşlarını kullanarak hızlı bir şekilde ulaşabilirsiniz.
 Enter tuşuna basarak onlarla etkileşime geçebilirsiniz.
@@ -794,6 +793,8 @@ Bu tür durumlar için  NVDA, ekranı karartmak için etkinleştirilebilen "ekra
 
 [NVDA Ayarları #NVDASettings] iletişim kutusunda [görsellik  kategorisi #VisionSettings] altından ekran perdesini etkinleştirebilirsiniz.
 
+Ekran perdesi etkinse, [OCR #Win10Ocr] veya  ekran görüntüsü almak gibi doğrudan ekranda görünenle ilgili işlemler gerçekleştirilemez.
+
 + Görsel İçerik Tanıma +[ContentRecognition]
 Yazarlar bir şeyin içeriğiyle ilgili ekran okuyucuların algılayabileceği tarzda yeterli bilgi sunmadıklarında, bir görüntünün içeriğinin tanınması için çeşitli araçlar kullanılabilir.
 NVDA görüntülerin içerisindeki metnin tanınması için Windows 10'la sunulan (OCR) işlevini optik karakter tanımayı destekler.
@@ -814,6 +815,8 @@ NVDA bu aracı imajlardaki metni ya da erişilebilir olmayan uygulamalardaki kon
 
 [NVDA ayarları #NVDASettings] iletişim kutusundaki [Windows 10 OCR kategorisi #Win10OcrSettings] altından metin tanıma için kullanılacak dili seçebilirsiniz.
 başlat menüsü, ayarlar, zaman ve dil, bölge ve dil altında dil ekle düğmesi kullanılarak ek diller yüklenebilir.
+
+Windows 10 OCR, [NVDA görsel geliştirmeleri #Vision] ya da  diğer harici görsel yardımcılarla  kısmen veya tamamen uyumsuz olabilir. Tanıma işlemine geçmeden önce bu araçları devre dışı bırakmanız gerekecektir.
 
 %kc:beginInclude
 Windows 10 OCR kullanarak geçerli nesne içindeki metni tanımak için, NVDA+r tuşlarına basın.
@@ -1743,7 +1746,7 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 - Sayfalar ve Aralık
  - Sayfa numaraları
  - Satır Numaraları
- - Satır girintilerinin bildirimi [(Kapalı, Konuşma, Ses çalarak, Konuşarak ve Ses çalarak) #lineIndentationOptions]
+ - Satır girintilerinin bildirimi [(Kapalı, Konuşma, Ses çalarak, Konuşarak ve Ses çalarak) #DocumentFormattingSettingsLineIndentation]
  - Paragraf girintisi (Örn, asılı girinti, ilk satır girintisi)
  - Satır aralığı (tek, çift vs)
  - Hizzalama
@@ -1836,21 +1839,53 @@ Bu seçenek etkinleştirildiğinde, NVDA, [Microsoft tarafından yapılan erişi
 ==== UIA konsollarında şifreleri seslendir ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Bu ayar ekranın güncellenmediği durumlarda (şifre girişi gibi) UI otomasyon desteği etkin Windows Konsolu'nda [yazılan karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] veya [yazılan sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] ayrlarına bağlı olarak karakterlerin seslendirilip seslendirilmeyeceğini belirler. Güvenlik nedeniyle, bu ayar devre dışı bırakılmalıdır. Bununla birlikte, NVDA'nın yeni deneysel konsol desteğini kullanırken yazılan karakter ve / veya kelime bildiriminde performans sorunları veya kararsızlık yaşıyorsanız etkinleştirmek isteyebilirsiniz.
 
+==== Microsoft Edge ve diğer Chromium tabanlı tarayıcılar'la uygun olduğunda UIA kullan ====[ChromiumUIA]
+Microsoft Edge gibi Chromium tabanlı tarayıcılarda mevcut olduğunda UIA'nın ne zaman kullanılacağını belirlemenize izin verir.
+Chromium tabanlı tarayıcılar için UIA desteği geliştirme aşamasındadır ve IA2 ile aynı düzeyde erişim sağlamayabilir.
+Seçim kutusunda aşağıdaki seçenekler vardır:
+- Varsayılan (Yalnızca gerekli olduğunda): NVDA varsayılanı, şu anda bu "Yalnızca gerektiğinde" dir. Bu varsayılan durum, teknoloji olgunlaştıkça gelecekte değişebilir.
+- Yalnızca gerekli olduğunda: NVDA, IA2'yi kullanmak için tarayıcı sürecine enjekte edemediğinde ve UIA mevcut olduğunda, NVDA UIA kullanacaktır.
+- Evet: Tarayıcı UIA'yı kullanılabilir hale getirirse, NVDA onu kullanır.
+- Hayır: NVDA işlem sırasında enjekte edemese bile UIA'yı kullanmaz. Bu, geliştiriciler için IA2 ile ilgili sorunları gidermek için yararlı olabilir ve NVDA'nın UIA'ya geri dönmediğinden emin olmak isteyebilirler.
+-
+
+==== mevcut olduğunda Microsoft Excel elektronik tablo kontrollerine erişmek için UI otomasyonunu kullan ====[UseUiaForExcel]
+Bu seçenek etkinleştirildiğinde, NVDA, Microsoft Excel Elektronik Tablo kontrollerinden bilgi almak için Microsoft UI Otomasyon erişilebilirlik API'sini kullanmayı deneyecektir.
+Bu geliştirilmekte olan deneysel bir özelliktir ve Microsoft Excel'in bazı özellikleri bu modda kullanılamayabilir.
+Örneğin, formülleri ve yorumları listelemek için NVDA Öğeler Listesi ve bir elektronik tablodaki form alanlarına atlamak için tarama kipi  hızlı dolaşım özellikleri kullanılamaz.
+Bununla birlikte, temel elektronik tablo gezinme / düzenleme işlemleri için bu seçenek, önemli bir performans artışı sağlayabilir.
+Kullanıcıların çoğunun bunu varsayılan olarak açmasını önermemekle birlikte, Microsoft Excel'in 16.0.13522.10000 veya sonraki sürümlerini kullananların bu özelliği test etmelerini ve geri bildirimde bulunmalarını memnuniyetle karşılarız.
+Microsoft Excel'in UI otomasyon uygulaması sürekli değişiyor ve Microsoft Office'in 16.0.13522.10000'den daha eski sürümleri, bu seçeneğin herhangi bir şekilde kullanılması için yeterli bilgiyi sunmayabilir.
+
 ==== Mevcutsa Windows Konsolu'nda yeni yazılan karakter desteğini kullan ====[AdvancedSettingsKeyboardSupportInLegacy]
 Bu seçenek, Windows komut konsollarında yazılan karakterleri algılamak için alternatif bir yöntem sunar.
 Performansı artırıp bazı konsol çıktılarının hecelenmesini engellerken, bazı terminal programlarıyla uyumlu olmayabilir.
 Bu özellik varsayılan olarak etkindir, Windows 10 1607 ve sonraki sürümlerde ve UI Automation kullanılamadığında veya devre dışı bırakıldığında kullanılabilir.
 Dikkat: bu seçenek etkin durumdayken, şifreler gibi ekranda görünmeyen yazılan karakterler gizlenmez.
-Güvensiz ortamlarda, parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] özelliklerini geçici olarak kapatabilirsiniz.
+Güvensiz ortamlarda, parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] işlevlerini geçici olarak devre dışı bırakabilirsiniz.
+
+==== Diff algoritması ====[DiffAlgo]
+Bu ayar, NVDA'nın terminallerde  yeni metni nasıl konuşacağını kontrol eder.
+diff algoritması seçim kutusunda üç seçenek vardır:
+- Otomatik: NVDA 2021.1'den itibaren bu seçenek Difflib'e eşdeğerdir.
+Gelecekteki bir sürümde, pozitif kullanıcı testi yapılıncaya kadar Diff Match Patch olarak değiştirilebilir.
+- Diff Match Patch'e izin ver: Bu seçenek, NVDA'nın terminal metnindeki değişiklikleri karakter karakter hesaplamasına neden olur.
+Konsola büyük hacimlerde metin girildiğinde  performansı artırabilir ve satırların ortasında yapılan değişikliklerin daha doğru raporlanmasına olanak tanır.
+Ancak bazı uygulamalarla uyumsuz olabilir.
+Bu özellik, Windows 10'un 1607 ve sonraki sürümlerinde Windows Konsolunda desteklenir.
+Ek olarak, önceki Windows sürümlerindeki diğer terminallerde de mevcut olabilir.
+- Difflib'e zorla: bu seçenek NVDA'nın terminal metnindeki değişiklikleri satır satır hesaplamasına neden olur.
+NVDA'nın 2020.4 ve daha önceki sürümlerindeki davranışıyla aynıdır.
+-
 
 ==== Süresi dolmuş odak etkinlikleri için konuşmayı iptal etmeyi dene ====[CancelExpiredFocusSpeech]
 Bu seçenek, süresi dolmuş odak olayları için konuşmanın iptal edilmesi  davranışını etkinleştirir.
-Özellikle Chrome ile Gmail'deki mesajlarda hızlı bir şekilde hareket etmek NVDA'nın artık geçerli olmayan bilgileri konuşmasına neden olabilir.
+Özellikle Chrome ile Gmail'deki mesajlarda hızlı bir şekilde hareket etmek NVDA'nın artık geçerli olmayan bilgileri aktarmasına neden olabilir.
 Bu işlev NVDA 2020.2'den itibaren deneysel olarak eklenmiştir.
 
 ==== Düzenleme imleci hareketi zaman aşımı (MS cinsinden) ====[AdvancedSettingsCaretMoveTimeout]
 Bu seçenek, NVDA'nın düzenleme imleci (ekleme noktası) düzenlenebilir metin kontrollerinde hareket etmesini bekleyeceği mili saniye sayısını ayarlamanızı sağlar.
-NVDA’nın, düzenleme imlecini yanlış şekilde takip ettiğini fark ederseniz, her zaman arkasında bir karakter gibi görünüyor veya satırları tekrarlıyor, o zaman bu değeri arttırmayı deneyebilirsiniz.
+NVDA’nın, düzenleme imlecini yanlış şekilde takip ettiğini fark ederseniz, her zaman arkasında bir karakter varmış gibi görünüyor veya satırları tekrarlıyorsa, o zaman bu değeri arttırmayı deneyebilirsiniz.
 
 ==== Hata ayıklama kategorileri ====[AdvancedSettingsDebugLoggingCategories]
 Bu listedeki onay kutuları, NVDA günlüğünde belirli hata ayıklama mesajı kategorilerini etkinleştirmenize izin verir.
@@ -2177,7 +2212,7 @@ Uyumsuz eklentiler aşağıdaki sütunları içeren bir listede sunulur:
 + Uyumsuzluk sebebi, eklentinin neden uyumsuz olarak kabul edildiğinin bir açıklaması
 +
 
-Uyumsuz eklenti yöneticisinde ayrıca "Eklentiler hakkında ..." düğmesi bulunur.
+Uyumsuz eklenti yöneticisinde ayrıca "Eklentiler hakkında..." düğmesi bulunur.
 Bu iletişim kutusu, eklentinin yazarı ile iletişime geçerken yardımcı olacak tüm ayrıntıları size sunacaktır.
 
 ++ Taşınabilir kopya oluştur ++[CreatePortableCopy]
@@ -2259,6 +2294,16 @@ Birçok dil birden çok aksan içerir.
 "Birleşik Krallık" ve "Avustralya" İngilizce aksanlardan ikisidir.
 "Fransa", "Kanada" ve "İsviçre", mevcut Fransızca aksanlardır.
 Farklı aksanlara  sahip dili (İngilizce veya Fransızca gibi) arayın, ardından aksanı listede bulun.
+İstediğiniz dilleri seçin ve eklemek için "ekle" düğmesini kullanın.
+Ekledikten sonra NVDA'yı yeniden başlatın.
+
+
+Yeni Windows OneCore seslerinden birini  eklemek için Windows sistem ayarlarında "Konuşma Ayarları"na gidin. 
+"Ses ekle" seçeneğini kullanın ve istediğiniz dili arayın.
+Birçok dilde birden çok seçenek bulunabilir.
+"Birleşik Krallık" ve "Avustralya" İngilizce seçeneklerden ikisidir.
+"Fransa", "Kanada" ve "İsviçre", mevcut Fransızca seçenekleridir.
+Daha geniş  bir dil (İngilizce veya Fransızca gibi) arayın, ardından alt seçeneği listede bulun.
 İstediğiniz dilleri seçin ve eklemek için "ekle" düğmesini kullanın.
 Ekledikten sonra NVDA'yı yeniden başlatın.
 
@@ -3162,9 +3207,9 @@ Bu değerler kayıt defterinde aşağıdaki anahtarlardan birinin altında tutul
 -
 
 Bu kayıt defteri anahtarı altında aşağıdaki değerler ayarlanabilir:
-|| Name | Type | Possible values | Description |
-| configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
-| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables secure mode on windows secure desktops, allowing the use of the Python console and Log viewer. Due to several major security implications, the use of this option is strongly discouraged |
+|| Ad | Tür | Olası değerler | Açıklama |
+| configInLocalAppData | DWORD | devre dışı bırakmak için 0 (varsayılan), etkinleştirmek için 1 | etkinleştirilirse, NVDA kullanıcı konfigürasyonunu roaming application data  yerine local application data  altında tutar |
+| serviceDebug | DWORD | devre dışı bırakmak için 0 (varsayılan), etkinleştirmek için 1 | Etkinleştirilirse, Windows güvenli masaüstlerinde güvenli modu devre dışı bırakarak Python konsolu ve Günlük görüntüleyicinin kullanımına izin verir. Güvenlik açısından birkaç önemli sonuç nedeniyle, bu seçeneğin kullanılması kesinlikle önerilmez. |
 
 + Daha Detaylı Bilgi +[FurtherInformation]
 NVDA ile ilgili daha fazla bilgiye veya yardıma ihtiyaç duyarsanız, NVDA_URL adresini ziyaret edebilirsiniz.

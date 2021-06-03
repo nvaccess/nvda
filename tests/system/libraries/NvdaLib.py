@@ -16,6 +16,7 @@ which provide library functions related to monitoring NVDA and asserting NVDA ou
 from os.path import join as _pJoin, abspath as _abspath, expandvars as _expandvars
 import tempfile as _tempFile
 from typing import Optional
+from urllib.parse import quote as _quoteStr
 
 from robotremoteserver import (
 	test_remote_server as _testRemoteServer,
@@ -55,12 +56,12 @@ class _NvdaLocationData:
 			self._runNVDAFilePath = _pJoin(self.repoRoot, "runnvda.bat")
 			self.baseNVDACommandline = self._runNVDAFilePath
 		elif self.whichNVDA == "installed":
-			self._runNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'nvda', 'nvda.exe')
+			self._runNVDAFilePath = self.findInstalledNVDAPath()
 			self.baseNVDACommandline = f'"{str(self._runNVDAFilePath)}"'
 			if self._installFilePath is not None:
 				self.NVDAInstallerCommandline = f'"{str(self._installFilePath)}"'
 		else:
-			raise AssertionError("RobotFramework should be run with argument: '-v whichNVDA [source|installed]'")
+			raise AssertionError("RobotFramework should be run with argument: '-v whichNVDA:[source|installed]'")
 
 		self.profileDir = _pJoin(self.stagingDir, "nvdaProfile")
 		self.logPath = _pJoin(self.profileDir, 'nvda.log')
@@ -68,6 +69,18 @@ class _NvdaLocationData:
 			builtIn.get_variable_value("${OUTPUT DIR}"),
 			"nvdaTestRunLogs"
 		)
+
+	def findInstalledNVDAPath(self) -> Optional[str]:
+		NVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'nvda', 'nvda.exe')
+		legacyNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'NVDA', 'nvda.exe')
+		exeErrorMsg = f"Unable to find installed NVDA exe. Paths tried: {NVDAFilePath}, {legacyNVDAFilePath}"
+		try:
+			opSys.file_should_exist(NVDAFilePath)
+			return NVDAFilePath
+		except AssertionError:
+			# Older versions of NVDA (<=2020.4) install the exe in NVDA\nvda.exe
+			opSys.file_should_exist(legacyNVDAFilePath, exeErrorMsg)
+			return legacyNVDAFilePath
 
 	def ensureInstallerPathsExist(self):
 		fileWarnMsg = f"Unable to run NVDA installer unless path exists. Path given: {self._installFilePath}"
@@ -99,6 +112,7 @@ class NvdaLib:
 		suiteName = builtIn.get_variable_value("${SUITE NAME}")
 		testName = builtIn.get_variable_value("${TEST NAME}")
 		outputFileName = f"{suiteName}-{testName}-{name}".replace(" ", "_")
+		outputFileName = _quoteStr(outputFileName)
 		return outputFileName
 
 	@staticmethod
