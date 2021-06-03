@@ -89,7 +89,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return cls.path
 
 	def __init__(self, port="hid"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 		self.numBtns = 0
 		self.status = 0
