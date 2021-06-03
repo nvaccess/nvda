@@ -30,6 +30,11 @@ Quits from keyboard
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 	quits_from_keyboard	# run test
 
+Quits from menu
+	[Documentation]	Starts NVDA and ensures that it can be quit using the keyboard
+	[Setup]	start NVDA	standard-dontShowExitDialog.ini
+	quits from menu	False	# run test
+
 Read welcome dialog
 	[Documentation]	Ensure that the welcome dialog can be read in full
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
