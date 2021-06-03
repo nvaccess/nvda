@@ -6,12 +6,13 @@ What's New in NVDA
 = 2021.1 =
 This release includes optional experimental support for UIA in Excel and Chromium browsers.
 There are fixes for several languages, and for accessing links in Braille.
-There are updates to Unicode CLDR and mathematical symbols, eSpeak-NG and LibLouis.
-Many bug fixes and improvements, including in Office, Visual Studio and several languages.
+There are updates to Unicode CLDR, mathematical symbols, and LibLouis.
+As well as many bug fixes and improvements, including in Office, Visual Studio, and several languages.
 
 Note:
  - This release breaks compatibility with existing add-ons.
  - This release also drops support for Adobe Flash.
+ -
 
 
 == New Features ==
@@ -33,7 +34,6 @@ Note:
 - 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
   - This behaviour can be disabled by setting this option to "No".
   - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly.
-- Espeak-ng has been updated to 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
 - Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
@@ -67,6 +67,8 @@ Note:
 - The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
 - In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
 - NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
+- Espeak now supports Cantonese and Mandarin again. (#10418)
+- In the new Chromium based Microsoft Edge, text fields such as the address bar are now announced when empty. (#12474)
 
 
 == Changes for Developers ==
