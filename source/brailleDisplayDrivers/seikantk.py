@@ -6,10 +6,11 @@
 # This file represents the braille display driver for
 # Seika Notetaker, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
-# 29.06.2020 / 12:36
 
 from io import BytesIO
+import typing
 from typing import List
+
 import braille
 import brailleInput
 import inputCore
@@ -19,7 +20,8 @@ import hwIo
 from serial.win32 import INVALID_HANDLE_VALUE
 from logHandler import log
 
-TIMEOUT = 0.2
+MAX_READ_ATTEMPTS = 30
+READ_TIMEOUT_SECS = 0.2
 
 DOT_1 = 0x1
 DOT_2 = 0x2
@@ -62,10 +64,16 @@ vidpid = "VID_10C4&PID_EA80"
 hidvidpid = "HID\\VID_10C4&PID_EA80"
 SEIKA_NAME = "seikantk"
 
-_dotNames = {}
-for i in range(1, 9):
-	key = globals()["DOT_%d" % i]
-	_dotNames[key] = "d%d" % i
+
+def _getDotNames():
+	dotNames = {}
+	for dotNum in range(1, 9):
+		keyName = globals()[f"DOT_{dotNum}"]
+		dotNames[keyName] = f"d{dotNum}"
+	return dotNames
+
+
+_dotNames = _getDotNames()
 bdDetect.addUsbDevices(SEIKA_NAME, bdDetect.KEY_HID, {vidpid, })
 
 
@@ -92,30 +100,35 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super().__init__()
 		self.numCells = 0
 		self.numBtns = 0
-		self.status = 0
-		self.cmdlen = 0
 		self.handle = None
+
 		self._hidBuffer = b""
+		self._command: typing.Optional[bytes] = None
+		self._argsLen: typing.Optional[int] = None
 		log.info(f"Seika Notetaker braille driver path: {self.path}")
 
 		if self.path == "":
 			raise RuntimeError("No MINI-SEIKA display found, no path found")
-		self._dev = hwIo.Hid(path=self.path, onReceive=self._onReceive)
-		if self._dev._file == INVALID_HANDLE_VALUE:
+		self._dev = dev = hwIo.Hid(path=self.path, onReceive=self._onReceive)
+		if dev._file == INVALID_HANDLE_VALUE:
 			raise RuntimeError("No MINI-SEIKA display found, open error")
-		self._dev.setFeature(SEIKA_CONFIG)  # baudrate, stopbit usw
-		self._dev.setFeature(SEIKA_CMD_ON)  # device on
-		self._dev.write(SEIKA_REQUEST_INFO)  # Request the Info from the device
+		dev.setFeature(SEIKA_CONFIG)  # baud rate, stop bit usw
+		dev.setFeature(SEIKA_CMD_ON)  # device on
+		dev.write(SEIKA_REQUEST_INFO)  # Request the Info from the device
 
 		# wait and try to get info from the Braille display
-		for i in range(30):  # the info-block is about
-			self._dev.waitForRead(TIMEOUT)
+		for i in range(MAX_READ_ATTEMPTS):  # the info-block is about
+			dev.waitForRead(READ_TIMEOUT_SECS)
 			if self.numCells:
-				log.info("Seikanotetaker an USB-HID, Cells {c} Buttons {b}".format(c=self.numCells, b=self.numBtns))
+				log.info(
+					f"Seika notetaker on USB-HID,"
+					f" Cells {self.numCells}"
+					f" Buttons {self.numBtns}"
+				)
 				break
 
 		if self.numCells == 0:
-			self._dev.close()
+			dev.close()
 			raise RuntimeError("No MINI-SEIKA display found, no response")
 
 	def terminate(self):
@@ -130,30 +143,65 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._dev.write(cellBytes)
 
 	def _onReceive(self, data: bytes):
+		"""
+		Note: Further insight into this function would be greatly appreciated.
+		- on each call, read three bytes only the second byte is used.
+		- first 3 bytes: command
+		- 1 byte: specify total length in bytes?
+		- variable length: arguments for command type
+		"""
+		COMMAND_LEN = 3
 		stream = BytesIO(data)
-		cmd = stream.read(3)
-		self._hidBuffer += cmd[1:2]
-		if len(self._hidBuffer) == 3:
-			self.status = 1
-		elif len(self._hidBuffer) == 4:
-			self.cmdlen = cmd[1]
-			self.status = 2
-		elif self.status == 2 and len(self._hidBuffer) == self.cmdlen + 4:
-			command = self._hidBuffer[0:3]
-			arg = self._hidBuffer[3:self.cmdlen + 4]
-			self.status = 0
+		cmd = stream.read(3)  # Note, first and third bytes are discarded
+		newByte: bytes = cmd[1:2]  # use range to return bytes
+		self._hidBuffer += newByte
+		hasCommandBeenCollected = self._command is None
+		hasArgLenBeenCollected = self._argsLen is None
+		if (  # still collecting command bytes
+			not hasCommandBeenCollected
+			and len(self._hidBuffer) == COMMAND_LEN
+		):
+			self._command = self._hidBuffer  # command found reset and wait for args length
+			self._hidBuffer = None
+		elif (  # next byte gives the command + args length
+			hasCommandBeenCollected
+			and not hasArgLenBeenCollected  # argsLen has not
+		):
+			# Unknown why we must wait for 4 extra bytes. Without a device to inspect actual data
+			# it has to be assumed that the prior approach is correct, and infer what we can from
+			# it.
+			# Best guess: the data is sent with the following structure
+			# - command name (3 bytes)
+			# - total bytes Command + Args size (1 byte)
+			# - Args (variable bytes)
+			# - Constant 4 bytes containing unknown
+			self._argsLen = ord(newByte) - COMMAND_LEN + 4
+			# don't reset _hidBuffer the value for total length
+		elif (  # now collect the args,
+			hasCommandBeenCollected
+			and hasArgLenBeenCollected
+			and len(self._hidBuffer) == self._argsLen
+		):
+			arg = self._hidBuffer
+			command = self._command
+
+			# reset state variables
+			self._command = None
+			self._argsLen = None
 			self._hidBuffer = b""
-			
-			if command == SEIKA_INFO:
-				self._handInfo(arg)
-			elif command == SEIKA_ROUTING:
-				self._handRouting(arg)
-			elif command == SEIKA_KEYS:
-				self._handKeys(arg)
-			elif command == SEIKA_KEYS_ROU:
-				self._handKeysRouting(arg)
-			else:
-				log.warning(f"Seika device has received an unknown command {command}")
+			self._processCommand(command, arg)
+
+	def _processCommand(self, command: bytes, arg: bytes) -> None:
+		if command == SEIKA_INFO:
+			self._handInfo(arg)
+		elif command == SEIKA_ROUTING:
+			self._handRouting(arg)
+		elif command == SEIKA_KEYS:
+			self._handKeys(arg)
+		elif command == SEIKA_KEYS_ROU:
+			self._handKeysRouting(arg)
+		else:
+			log.warning(f"Seika device has received an unknown command {command}")
 
 	def _handInfo(self, arg: bytes):
 		self.numCells = arg[2]
@@ -171,13 +219,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						log.debug("No action for Seika Notetaker routing command")
 
 	def _handKeys(self, arg: bytes):
-		braille = arg[1]
+		brailleDots = arg[1]
 		key = arg[2] | (arg[3] << 8)
 		gesture = None
 		if key:  # Mini Seika has 2 Top and 4 Front
 			gesture = InputGesture(keys=key)
-		if braille:
-			gesture = InputGesture(dots=braille)
+		if brailleDots:
+			gesture = InputGesture(dots=brailleDots)
 		if gesture is not None:
 			try:
 				inputCore.manager.executeGesture(gesture)
