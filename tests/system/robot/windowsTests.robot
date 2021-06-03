@@ -24,21 +24,21 @@ default teardown
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	quit NVDA
 
-setup and open windows search
+setup and open text field
 	start NVDA	standard-dontShowWelcomeDialog.ini
-	open windows search
+	open text field
 
-close windows search and teardown
+close text field and teardown
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
-	close windows search
+	close text field
 	quit NVDA
 
 *** Test Cases ***
 emoji panel search
 	[Documentation]	Read emoji by navigating the emoji panel
-	[Setup]	setup and open windows search
-	[Teardown]	close windows search and teardown
+	[Setup]	setup and open text field
+	[Teardown]	close text field and teardown
 	[Tags]	emojiPanel	excluded_from_build	# AppVeyor's Windows build doesn't have an emoji panel with searching
 	open emoji panel
 	search emojis	came
@@ -47,8 +47,8 @@ emoji panel search
 
 emoji panel open
 	[Documentation]	Confirm that opening the emoji panel announces an emoji
-	[Setup]	setup and open windows search
-	[Teardown]	close windows search and teardown
+	[Setup]	setup and open text field
+	[Teardown]	close text field and teardown
 	[Tags]	emojiPanel
 	${firstEmoji}=	open emoji panel	# set expected first emoji
 	search emojis	${firstEmoji}
@@ -57,8 +57,8 @@ emoji panel open
 
 clipboard history
 	[Documentation]	Copy text and read from the clipboard history
-	[Setup]	setup and open windows search
-	[Teardown]	close windows search and teardown
+	[Setup]	setup and open text field
+	[Teardown]	close text field and teardown
 	[Tags]	clipboard
 	write and copy text	foo
 	write and copy text	lorem ipsum
@@ -69,8 +69,8 @@ clipboard history
 
 toggle between emoji panel and clipboard history
 	[Documentation]	Toggle between clipboard history and emoji panel and ensure items are announced
-	[Setup]	setup and open windows search
-	[Teardown]	close windows search and teardown
+	[Setup]	setup and open text field
+	[Teardown]	close text field and teardown
 	[Tags]	emojiPanel	clipboard
 	write and copy text	test toggle between
 	${firstEmoji}=	open emoji panel
