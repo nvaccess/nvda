@@ -6,12 +6,13 @@ What's New in NVDA
 = 2021.1 =
 This release includes optional experimental support for UIA in Excel and Chromium browsers.
 There are fixes for several languages, and for accessing links in Braille.
-There are updates to Unicode CLDR, mathematical symbols and LibLouis.
+There are updates to Unicode CLDR, mathematical symbols, and LibLouis.
+As well as many bug fixes and improvements, including in Office, Visual Studio, and several languages.
 
-Many bug fixes and improvements, including in Office, Visual Studio and several languages.
-Note: this is an Add-on API compatibility breaking release.
-Add-ons will need to be re-tested and have their manifest updated.
-This release also drops support for Adobe Flash.
+Note:
+ - This release breaks compatibility with existing add-ons.
+ - This release also drops support for Adobe Flash.
+ -
 
 
 == New Features ==
@@ -26,7 +27,7 @@ This release also drops support for Adobe Flash.
 == Changes ==
 - In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
 - NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
-- Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
+- Updated Unicode Common Locale Data Repository (CLDR) to 39.0. (#11943, #12314)
 - Added more mathematical symbols to the symbols dictionary. (#11467)
 - The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
 - "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
