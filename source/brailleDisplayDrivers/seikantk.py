@@ -247,7 +247,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		if keys is not None:
 			names.update(_keyNames[1 << i] for i in range(22) if (1 << i) & keys)
 		elif dots is not None:
-			# now the dots
 			self.dots = dots
 			if space:
 				self.space = space
