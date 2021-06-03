@@ -15,7 +15,7 @@ import queueHandler
 import colors
 import api
 import speech
-import sayAllHandler
+from speech import sayAll
 import NVDAHelper
 import winUser
 import msoAutoShapeTypes
@@ -929,7 +929,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField['bold']=bool(font.bold)
 			formatField['italic']=bool(font.italic)
 			formatField['underline']=bool(font.underline)
-		if formatConfig['reportSuperscriptAndSubscript']:
+		if formatConfig['reportSuperscriptsAndSubscripts']:
 			if font.subscript:
 				formatField['text-position']='sub'
 			elif font.superscript:
@@ -1085,7 +1085,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 				speech.speakPreselectedText(info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
+				speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_LINE)
 
 	def event_gainFocus(self,obj,nextHandler):
 		pass
@@ -1097,7 +1097,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 
 	def reportNewSlide(self):
 		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
-		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
+		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
 
 	def script_toggleNotesMode(self,gesture):
 		self.rootNVDAObject.notesMode=not self.rootNVDAObject.notesMode

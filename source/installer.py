@@ -4,10 +4,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
-from ctypes import *
-from ctypes.wintypes import *
+import ctypes
 import winreg
-import threading
 import time
 import os
 import tempfile
@@ -121,7 +119,7 @@ def getDocFilePath(fileName,installDir):
 				return tryPath
 
 def copyProgramFiles(destPath):
-	sourcePath=os.getcwd()
+	sourcePath = globalVars.appDir
 	detectUserConfig=True
 	detectNVDAExe=True
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
@@ -140,7 +138,7 @@ def copyProgramFiles(destPath):
 			tryCopyFile(sourceFilePath,destFilePath)
 
 def copyUserConfig(destPath):
-	sourcePath=os.path.abspath(globalVars.appArgs.configPath)
+	sourcePath = globalVars.appArgs.configPath
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
 		curDestDir=os.path.join(destPath,os.path.relpath(curSourceDir,sourcePath))
 		if not os.path.isdir(curDestDir):
@@ -168,11 +166,16 @@ def removeOldLibFiles(destPath, rebootOK=False):
 				continue
 			for d in subdirs:
 				path = os.path.join(parent, d)
-				log.debug("Removing old lib directory: %r"%path)
-				try:
-					os.rmdir(path)
-				except OSError:
-					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %r"%path)
+				if path != currentLibPath:
+					log.debug(f"Removing old lib directory: {repr(path)}")
+					try:
+						os.rmdir(path)
+					except OSError:
+						log.warning(
+							"Failed to remove a directory no longer needed. "
+							"This can be manually removed after a reboot or the  installer will try"
+							f" removing it again next time. Directory: {repr(path)}"
+						)
 			for f in files:
 				path = os.path.join(parent, f)
 				log.debug("Removing old lib file: %r"%path)
@@ -391,6 +394,15 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		prependSpecialFolder="AllUsersPrograms"
 	)
 
+	# Translators: A label for a shortcut in start menu to open NVDA what's new.
+	changesTranslated = _("What's new")
+	_createShortcutWithFallback(
+		path=os.path.join(docFolder, changesTranslated + ".lnk"),
+		fallbackPath=os.path.join(docFolder, "What's new.lnk"),
+		targetPath=getDocFilePath("changes.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 
 def isDesktopShortcutInstalled():
 	wsh=_getWSH()
@@ -522,8 +534,8 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		sourceFilePath=u"\\\\?\\"+sourceFilePath
 	if not destFilePath.startswith('\\\\'):
 		destFilePath=u"\\\\?\\"+destFilePath
-	if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
-		errorCode=GetLastError()
+	if ctypes.windll.kernel32.CopyFileW(sourceFilePath, destFilePath, False) == 0:
+		errorCode = ctypes.GetLastError()
 		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
 		if not os.path.exists(destFilePath):
 			raise OSError("error %d copying %s to %s"%(errorCode,sourceFilePath,destFilePath))
@@ -534,8 +546,8 @@ def tryCopyFile(sourceFilePath,destFilePath):
 			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
 		winKernel.moveFileEx(tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
-		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
-			errorCode=GetLastError()
+		if ctypes.windll.kernel32.CopyFileW(sourceFilePath, destFilePath, False) == 0:
+			errorCode = ctypes.GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
 
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
@@ -589,7 +601,7 @@ def removeOldLoggedFiles(installPath):
 			tryRemoveFile(filePath,rebootOK=True)
 
 def createPortableCopy(destPath,shouldCopyUserConfig=True):
-	destPath=os.path.abspath(destPath)
+	assert os.path.isabs(destPath), f"Destination path {destPath} is not absolute"
 	#Remove all the main executables always
 	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
 		f=os.path.join(destPath,f)

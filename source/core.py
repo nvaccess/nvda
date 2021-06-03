@@ -1,9 +1,10 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
+from typing import Optional
 
 """NVDA core"""
 
@@ -37,9 +38,13 @@ import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
+import garbageHandler  # noqa: E402
+
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
+# inform those who want to know that NVDA has begun to exit.
+preNVDAExit = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
 
@@ -76,7 +81,8 @@ def doStartupDialogs():
 			_("Configuration File Error"),
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
-		gui.WelcomeDialog.run()
+		from gui.startupDialogs import WelcomeDialog
+		WelcomeDialog.run()
 	if config.conf["brailleViewer"]["showBrailleViewerAtStartup"]:
 		gui.mainFrame.onToggleBrailleViewerCommand(evt=None)
 	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
@@ -102,41 +108,39 @@ def doStartupDialogs():
 					except:
 						pass
 			# Ask the user if usage stats can be collected.
-			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
+			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
-		import wx
 		globalVars.exitCode=3
-		wx.GetApp().ExitMainLoop()
+		triggerNVDAExit()
 		return
 	import subprocess
 	import winUser
 	import shellapi
-	options=[]
-	try:
-		sys.argv.remove('--disable-addons')
-	except ValueError:
-		pass
-	try:
-		sys.argv.remove('--debug-logging')
-	except ValueError:
-		pass
+	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
+		try:
+			sys.argv.remove(paramToRemove)
+		except ValueError:
+			pass
+	options = []
+	if not hasattr(sys, "frozen"):
+		options.append(os.path.basename(sys.argv[0]))
 	if disableAddons:
 		options.append('--disable-addons')
 	if debugLogging:
 		options.append('--debug-logging')
-	try:
-		sys.argv.remove("--ease-of-access")
-	except ValueError:
-		pass
-	shellapi.ShellExecute(None, None,
-		sys.executable,
-		subprocess.list2cmdline(sys.argv + options),
-		None,
+	shellapi.ShellExecute(
+		hwnd=None,
+		operation=None,
+		file=sys.executable,
+		parameters=subprocess.list2cmdline(options + sys.argv[1:]),
+		directory=globalVars.appDir,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-		winUser.SW_SHOWNORMAL)
+		showCmd=winUser.SW_SHOWNORMAL
+	)
+
 
 def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
@@ -206,6 +210,87 @@ def _setInitialFocus():
 	except:
 		log.exception("Error retrieving initial focus")
 
+
+def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
+	import languageHandler
+	import wx
+	lang = languageHandler.getLanguage()
+	locale = wx.Locale()
+	wxLang = locale.FindLanguageInfo(lang)
+	if not wxLang and '_' in lang:
+		wxLang = locale.FindLanguageInfo(lang.split('_')[0])
+	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
+	# If we try to initialize this language, wx will show a warning dialog.
+	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
+	# In this case, wxLang is already set to None.
+	# Therefore treat these situations like wx not knowing the language at all.
+	if wxLang and not locale.IsAvailable(wxLang.Language):
+		wxLang = None
+	if not wxLang:
+		log.debugWarning("wx does not support language %s" % lang)
+	return wxLang
+
+
+def triggerNVDAExit():
+	import queueHandler
+	# queue this so that the calling process can exit safely (eg a Popup menu)
+	queueHandler.queueFunction(queueHandler.eventQueue, preNVDAExit.notifyOnce)
+
+
+def _closeAllWindows():
+	"""
+	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit.
+	Ensures the wx mainloop is exited by all the top windows being destroyed.
+	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
+	"""
+	import gui
+	from gui.settingsDialogs import SettingsDialog
+	from typing import Dict
+	import wx
+
+	app = wx.GetApp()
+
+	# prevent race condition with object deletion
+	# prevent deletion of the object while we work on it.
+	_SettingsDialog = SettingsDialog
+	nonWeak: Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
+
+	for instance, state in nonWeak.items():
+		if state is _SettingsDialog.DialogState.DESTROYED:
+			log.error(
+				"Destroyed but not deleted instance of gui.SettingsDialog exists"
+				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
+
+	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
+	# They must be manually destroyed when exiting the app.
+	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12286, #12238)
+	log.debug("destroying system tray icon and menu")
+	app.ScheduleForDestruction(gui.mainFrame.sysTrayIcon.menu)
+	gui.mainFrame.sysTrayIcon.RemoveIcon()
+	app.ScheduleForDestruction(gui.mainFrame.sysTrayIcon)
+
+	wx.Yield()  # processes pending messages
+	gui.mainFrame.sysTrayIcon.menu = None
+	gui.mainFrame.sysTrayIcon = None
+
+	for window in wx.GetTopLevelWindows():
+		if isinstance(window, wx.Dialog) and window.IsModal():
+			log.debug(f"ending modal {window} during exit process")
+			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
+		elif not isinstance(window, gui.MainFrame):
+			log.debug(f"closing window {window} during exit process")
+			wx.CallAfter(window.Close)
+
+	wx.Yield()  # creates a temporary event loop and uses it instead to process pending messages
+	log.debug("destroying main frame during exit process")
+	# the MainFrame has EVT_CLOSE bound to the ExitDialog
+	# which calls this function on exit, so destroy this window
+	app.ScheduleForDestruction(gui.mainFrame)
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -222,7 +307,7 @@ def main():
 		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
 	#Initialize the config path (make sure it exists)
 	config.initConfigPath()
-	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
+	log.info(f"Config dir: {globalVars.appArgs.configPath}")
 	log.debug("loading config")
 	import config
 	config.initialize()
@@ -230,7 +315,7 @@ def main():
 		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\start.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
@@ -241,7 +326,7 @@ def main():
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
-	log.info("Using Windows version %s" % winVersion.winVersionText)
+	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
 	import configobj
@@ -273,15 +358,20 @@ def main():
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
-	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
-	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
-	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
 	import six
 	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
 			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
+
+		def InitLocale(self):
+			# Backport of `InitLocale` from wx Python 4.1.2 as the current version tries to set a Python
+			# locale to an nonexistent one when creating an instance of `wx.App`.
+			# This causes a crash when running under a particular version of Universal CRT (#12160)
+			import locale
+			locale.setlocale(locale.LC_ALL, "C")
+
 	app = App(redirect=False)
 	# We support queryEndSession events, but in general don't do anything for them.
 	# However, when running as a Windows Store application, we do want to request to be restarted for updates
@@ -296,7 +386,10 @@ def main():
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
-				nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+				nvwave.playWaveFile(
+					os.path.join(globalVars.appDir, "waves", "exit.wav"),
+					asynchronous=False
+				)
 			except:
 				pass
 		log.info("Windows session ending")
@@ -403,26 +496,20 @@ def main():
 
 	# initialize wxpython localization support
 	locale = wx.Locale()
-	lang=languageHandler.getLanguage()
-	wxLang=locale.FindLanguageInfo(lang)
-	if not wxLang and '_' in lang:
-		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
+	wxLang = getWxLangOrNone()
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
-	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
-	# If we try to initialize this language, wx will show a warning dialog.
-	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
-	# In this case, wxLang is already set to None.
-	# Therefore treat these situations like wx not knowing the language at all.
-	if wxLang and not locale.IsAvailable(wxLang.Language):
-		wxLang=None
+		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
 		try:
 			locale.Init(wxLang.Language)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
-	else:
-		log.debugWarning("wx does not support language %s" % lang)
+		finally:
+			# Revert wx's changes to the python locale
+			languageHandler.setLocale(languageHandler.curLang)
+
+	log.debug("Initializing garbageHandler")
+	garbageHandler.initialize()
 
 	import api
 	import winUser
@@ -475,7 +562,11 @@ def main():
 	globalPluginHandler.initialize()
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
-		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
+		wx.CallAfter(
+			gui.installerGui.doSilentInstall,
+			copyPortableConfig=globalVars.appArgs.copyPortableConfig,
+			startAfterInstall=not globalVars.appArgs.installSilent
+		)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
@@ -487,7 +578,8 @@ def main():
 		except:
 			log.error("", exc_info=True)
 		if globalVars.appArgs.launcher:
-			gui.LauncherDialog.run()
+			from gui.startupDialogs import LauncherDialog
+			LauncherDialog.run()
 			# LauncherDialog will call doStartupDialogs() afterwards if required.
 		else:
 			wx.CallAfter(doStartupDialogs)
@@ -539,17 +631,42 @@ def main():
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
-	postNvdaStartup.notify()
+
+	# Queue the firing of the postNVDAStartup notification.
+	# This is queued so that it will run from within the core loop,
+	# and initial focus has been reported.
+	def _doPostNvdaStartupAction():
+		log.debug("Notify of postNvdaStartup action")
+		postNvdaStartup.notify()
+
+	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
+
+	def handleNVDAModuleCleanupBeforeGUIExit():
+		""" Terminates various modules that rely on the GUI. This should be used before closing all windows
+		and terminating the GUI
+		"""
+		import brailleViewer
+		# before the GUI is terminated we must terminate the update checker
+		if updateCheck:
+			_terminate(updateCheck)
+
+		# The core is expected to terminate, so we should not treat this as a crash
+		_terminate(watchdog)
+		# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
+		_terminate(globalPluginHandler)
+		# the brailleViewer should be destroyed safely before closing the window
+		brailleViewer.destroyBrailleViewer()
+	
+	preNVDAExit.register(handleNVDAModuleCleanupBeforeGUIExit)
+	preNVDAExit.register(_closeAllWindows)
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
 
 	log.info("Exiting")
-	if updateCheck:
-		_terminate(updateCheck)
-
-	_terminate(watchdog)
-	_terminate(globalPluginHandler, name="global plugin handler")
+	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
+	# triggerNVDAExit has not been called yet
+	triggerNVDAExit()
 	_terminate(gui)
 	config.saveOnExit()
 
@@ -582,10 +699,22 @@ def main():
 	_terminate(braille)
 	_terminate(speech)
 	_terminate(addonHandler)
+	_terminate(garbageHandler)
+	# DMP is only started if needed.
+	# Terminate manually (and let it write to the log if necessary)
+	# as core._terminate always writes an entry.
+	try:
+		import diffHandler
+		diffHandler._dmp._terminate()
+	except Exception:
+		log.exception("Exception while terminating DMP")
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+			nvwave.playWaveFile(
+				os.path.join(globalVars.appDir, "waves", "exit.wav"),
+				asynchronous=False
+			)
 		except:
 			pass
 	# #5189: Destroy the message window as late as possible

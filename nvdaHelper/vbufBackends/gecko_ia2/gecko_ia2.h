@@ -28,7 +28,6 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 		VBufStorage_buffer_t* buffer,
 		VBufStorage_controlFieldNode_t* parentNode,
 		VBufStorage_fieldNode_t* previousNode,
-		IAccessibleTable* paccTable=NULL,
 		IAccessibleTable2* paccTable2=NULL,
 		long tableID=0, const wchar_t* parentPresentationalRowNumber=NULL,
 		bool ignoreInteractiveUnlabelledGraphics=false
@@ -38,8 +37,6 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell);
 
-	bool shouldDisableTableHeaders;
-	bool hasEncodedAccDescription;
 	std::wstring toolkitName;
 
 	std::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);

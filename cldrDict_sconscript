@@ -56,7 +56,7 @@ NVDAToCLDRLocales = {
 	"bg":("bg",),
 	"bn":("bn",),
 	"ca":("ca",),
-	#"ckb":(),
+	"ckb":("ckb",),
 	"cs":("cs",),
 	"da":("da",),
 	"de":("de",),
@@ -64,7 +64,7 @@ NVDAToCLDRLocales = {
 	"el":("el",),
 	"en":("en_001","en"),
 	"es":("es",),
-	#"es_CO":(),
+	"es_CO":("es_419",),
 	"fa":("fa",),
 	"fi":("fi",),
 	"fr":("fr",),
@@ -83,15 +83,15 @@ NVDAToCLDRLocales = {
 	#"kmr":(),
 	"kn":("kn",),
 	"ko":("ko",),
-	#"kok":(),
+	"kok":("kok",),
 	"ky":("ky",),
 	"lt":("lt",),
 	"mk":("mk",),
 	"ml":("ml",),
 	"mn":("mn",),
-	#"mni":(),
+	"mni":("mni",),
 	"my":("my",),
-	"nb_NO":("nb",),
+	"nb_NO":("no",),
 	"ne":("ne",),
 	"nl":("nl",),
 	"nn_NO":("nn",),
@@ -103,7 +103,7 @@ NVDAToCLDRLocales = {
 	"ru":("ru",),
 	"sk":("sk",),
 	"sl":("sl",),
-	#"so":(),
+	"so":("so",),
 	"sq":("sq",),
 	"sr":("sr",),
 	"sv":("sv",),
@@ -112,14 +112,15 @@ NVDAToCLDRLocales = {
 	"th":("th",),
 	"tr":("tr",),
 	"uk":("uk",),
+	"ur":("ur",),
 	"vi":("vi",),
 	"zh_cn":("zh",),
 	"zh_hk":("zh","zh_Hant_HK"),
 	"zh_tw":("zh","zh_Hant"),
 }
 
-annotationsDir = env.Dir("include/cldr-emoji-annotation/annotations")
-annotationsDerivedDir = env.Dir("include/cldr-emoji-annotation/annotationsDerived")
+annotationsDir = env.Dir("include/cldr/production/common/annotations")
+annotationsDerivedDir = env.Dir("include/cldr/production/common/annotationsDerived")
 for destLocale, sourceLocales in NVDAToCLDRLocales.items():
 	cldrSources = []
 	# First add all annotations, then the derived ones.

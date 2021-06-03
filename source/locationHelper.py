@@ -1,8 +1,7 @@
-#locationHelper.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2018 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2021 NV Access Limited, Babbage B.V.
 
 """Classes and helper functions for working with rectangles and coordinates."""
 
@@ -39,8 +38,8 @@ class Point(namedtuple("Point",("x","y"))):
 	def fromDWORD(cls, dwPoint):
 		if isinstance(dwPoint,DWORD):
 			dwPoint = dwPoint.value
-		if not isinstance(dwPoint,(int,long)):
-			raise TypeError("dwPoint should be one of int, long or ctypes.wintypes.DWORD (ctypes.ulong)")
+		if not isinstance(dwPoint, int):
+			raise TypeError("dwPoint should be either int or ctypes.wintypes.DWORD (ctypes.ulong)")
 		return Point(winUser.GET_X_LPARAM(dwPoint),winUser.GET_Y_LPARAM(dwPoint))
 
 	def __add__(self,other):
@@ -395,9 +394,9 @@ class RectLTRB(_RectMixin, namedtuple("RectLTRB",("left","top","right","bottom")
 
 	def __new__(cls, left, top, right, bottom):
 		if left>right:
-			raise ValueError("left=%d is greather than right=%d, which is not allowed"%(left,right))
+			raise ValueError("left=%d is greater than right=%d, which is not allowed" % (left, right))
 		if top>bottom:
-			raise ValueError("top=%d is greather than bottom=%d, which is not allowed"%(top,bottom))
+			raise ValueError("top=%d is greater than bottom=%d, which is not allowed" % (top, bottom))
 		return super(RectLTRB, cls).__new__(cls, left, top, right, bottom)
 
 	@property

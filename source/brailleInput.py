@@ -21,6 +21,7 @@ import keyboardHandler
 import api
 from baseObject import AutoPropertyObject
 import keyLabels
+import struct
 
 
 """Framework for handling braille input from the user.
@@ -391,6 +392,9 @@ class BrailleInputHandler(AutoPropertyObject):
 		@param chars: The characters to send to the system.
 		"""
 		inputs = []
+		chars = ''.join(
+			ch if ord(ch) <= 0xffff else ''.join(
+				chr(x) for x in struct.unpack(">2H", ch.encode("utf-16be"))) for ch in chars)
 		for ch in chars:
 			for direction in (0,winUser.KEYEVENTF_KEYUP): 
 				input = winUser.Input()

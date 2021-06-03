@@ -630,11 +630,25 @@ def event_gainFocus(vmID,accContext,hwnd):
 	eventHandler.queueEvent("gainFocus",obj)
 
 @AccessBridge_PropertyActiveDescendentChangeFP
-def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
-	hwnd=getWindowHandleFromAccContext(vmID,source)
-	internalQueueFunction(event_gainFocus,vmID,newDescendant,hwnd)
-	for accContext in [event,oldDescendant]:
-		bridgeDll.releaseJavaObject(vmID,accContext)
+def internal_event_activeDescendantChange(vmID, event, source, oldDescendant, newDescendant):
+	hwnd = getWindowHandleFromAccContext(vmID, source)
+	sourceContext = JABContext(hwnd=hwnd, vmID=vmID, accContext=source)
+	if internal_hasFocus(sourceContext):
+		internalQueueFunction(event_gainFocus, vmID, newDescendant, hwnd)
+	for accContext in [event, oldDescendant]:
+		bridgeDll.releaseJavaObject(vmID, accContext)
+
+
+def internal_hasFocus(sourceContext):
+	focus = api.getFocusObject()
+	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == sourceContext:
+		return True
+	ancestors = api.getFocusAncestors()
+	for ancestor in reversed(ancestors):
+		if isinstance(ancestor, NVDAObjects.JAB.JAB) and ancestor.jabContext == sourceContext:
+			return True
+	return False
+
 
 @AccessBridge_PropertyNameChangeFP
 def event_nameChange(vmID,event,source,oldVal,newVal):
@@ -781,10 +795,10 @@ def initialize():
 	):
 		enableBridge()
 	# Accept wm_copydata and any wm_user messages from other processes even if running with higher privileges
-	if not windll.user32.ChangeWindowMessageFilter(winUser.WM_COPYDATA, 1):
+	if not windll.user32.ChangeWindowMessageFilter(winUser.WM_COPYDATA, winUser.MSGFLT.ALLOW):
 		raise WinError()
 	for msg in range(winUser.WM_USER + 1, 0xffff):
-		if not windll.user32.ChangeWindowMessageFilter(msg, 1):
+		if not windll.user32.ChangeWindowMessageFilter(msg, winUser.MSGFLT.ALLOW):
 			raise WinError()
 	bridgeDll.Windows_run()
 	# Register java events
