@@ -96,7 +96,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.cmdlen = 0
 		self.handle = None
 		self._hidBuffer = b""
-		log.info("path: " + self.path)
+		log.info(f"Seika Notetaker braille driver path: {self.path}")
 
 		if self.path == "":
 			raise RuntimeError("No MINI-SEIKA display found, no path found")
