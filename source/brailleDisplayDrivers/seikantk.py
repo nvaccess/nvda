@@ -145,10 +145,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _onReceive(self, data: bytes):
 		"""
 		Note: Further insight into this function would be greatly appreciated.
-		- on each call, read three bytes only the second byte is used.
-		- first 3 bytes: command
-		- 1 byte: specify total length in bytes?
-		- variable length: arguments for command type
+
+		On each call, read three bytes only the second byte is used, and appended to a buffer.
+		This function is a state machine with three states of processing the accumulating buffer:
+		1: first 3 bytes: command
+		2: 1 byte: specify total length in bytes?
+		3: variable length: arguments for command type
+
+		After accumulating enough bytes for each phase, the buffer is cleared and the next stage is entered.
 		"""
 		COMMAND_LEN = 3
 		stream = BytesIO(data)
