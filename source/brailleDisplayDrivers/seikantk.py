@@ -145,9 +145,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _onReceive(self, data: bytes):
 		"""
 		Note: Further insight into this function would be greatly appreciated.
+		This function is a very simple state machine, each stage represents the collection of a field, when all
+		fields are collected the command they represent can be processed.
 
-		On each call, read three bytes only the second byte is used, and appended to a buffer.
-		This function is a state machine with three states of processing the accumulating buffer:
+		On each call to _onReceive three bytes are read from the device.
+		The first and third bytes are discarded, the second byte is appended to a buffer.
+		The buffer is accumulated until the buffer has the required number of bytes for the field being collected.
+		There are 3 fields to be collected before a command can be processed:
 		1: first 3 bytes: command
 		2: 1 byte: specify total length in bytes?
 		3: variable length: arguments for command type
