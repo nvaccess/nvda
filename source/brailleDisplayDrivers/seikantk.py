@@ -232,7 +232,7 @@ class InputGestureRouting(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):
-		super(InputGestureRouting, self).__init__()
+		super().__init__()
 		self.id = "routing"
 		self.routingIndex = index
 
