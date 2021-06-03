@@ -164,9 +164,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for i in range(arg[0]):
 			for j in range(8):
 				if arg[i + 1] & (1 << j):
-					Rou = i * 8 + j
-					
-					gesture = InputGestureRouting(Rou)
+					routingIndex = i * 8 + j
+					gesture = InputGestureRouting(routingIndex)
 					try:
 						inputCore.manager.executeGesture(gesture)
 					except inputCore.NoInputGestureAction:
