@@ -2320,11 +2320,13 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
 			pass
 
-	def _get_numCells(self):
+	#: typing information for autoproperty _get_numCells
+	numCells: int
+
+	def _get_numCells(self) -> int:
 		"""Obtain the number of braille cells on this  display.
 		@note: 0 indicates that braille should be disabled.
 		@return: The number of cells.
-		@rtype: int
 		"""
 		return 0
 
