@@ -153,7 +153,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			elif command == SEIKA_KEYS_ROU:
 				self._handKeysRouting(arg)
 			else:
-				log.debug("other data.")
+				log.warning(f"Seika device has received an unknown command {command}")
 
 	def _handInfo(self, arg: bytes):
 		self.numCells = arg[2]
