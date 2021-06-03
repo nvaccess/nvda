@@ -3,12 +3,9 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-# A redesign was made for Python V3.7 in 2020
-#
 # This file represents the braille display driver for
 # Seika3/5 V1.x/2.0, Seika80, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
-# 24.07.2020 17:03
 
 from typing import List
 import wx
@@ -61,8 +58,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 			log.debug(f"serial port open {port}")
 
-			# get the version infos
-			self._ser.write(BUF_START + b"\x1C")
+			# get the version information
+			VERSION_INFO_REQUEST = b"\x1C"
+			self._ser.write(BUF_START + VERSION_INFO_REQUEST)
 			self._ser.flush()
 
 			# Read out the input buffer
@@ -77,7 +75,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self.sendHeader = (BUF_START + b"s80").ljust(8, b"\x00")
 				break
 
-			if versionS.startswith(b"seika3"):
+			elif versionS.startswith(b"seika3"):
 				log.info(f"Found Seika3/5 connected via {port} Version {versionS}")
 				self.numCells = 40
 				self._maxCellRead = 10
@@ -87,7 +85,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 			# is it a old Seika3?
 			log.debug("test if it is a old Seika3")
-			self._ser.write(BUF_START + b"\x0A")
+			LEGACY_VERSION_REQUEST = b"\x0A"
+			self._ser.write(BUF_START + LEGACY_VERSION_REQUEST)
 			self._ser.flush()
 
 			# Read out the input buffer
