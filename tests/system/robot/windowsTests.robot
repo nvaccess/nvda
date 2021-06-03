@@ -2,6 +2,10 @@
 # Copyright (C) 2021 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+
+# TODO: NVDA fails to announce emojis sometimes, as such the emojiPanel tag is excluded in robotArgs.robot
+# to be fixed with #11485
+
 *** Settings ***
 Documentation	Tests how NVDA interacts with various features of the Windows system
 Force Tags	NVDA	smoke test
@@ -35,7 +39,7 @@ emoji panel search
 	[Documentation]	Read emoji by navigating the emoji panel
 	[Setup]	setup and open windows search
 	[Teardown]	close windows search and teardown
-	[Tags]	excluded_from_build	# AppVeyor's Windows build doesn't have an emoji panel with searching
+	[Tags]	emojiPanel	excluded_from_build	# AppVeyor's Windows build doesn't have an emoji panel with searching
 	open emoji panel
 	search emojis	came
 	read emojis	camel	two-hump camel	camera
@@ -45,7 +49,7 @@ emoji panel open
 	[Documentation]	Confirm that opening the emoji panel announces an emoji
 	[Setup]	setup and open windows search
 	[Teardown]	close windows search and teardown
-	[Tags]	excluded_from_build	# NVDA fails to announce emojis sometimes, to be fixed with #11485 
+	[Tags]	emojiPanel
 	${firstEmoji}=	open emoji panel	# set expected first emoji
 	search emojis	${firstEmoji}
 	read emojis	${firstEmoji}
@@ -55,6 +59,7 @@ clipboard history
 	[Documentation]	Copy text and read from the clipboard history
 	[Setup]	setup and open windows search
 	[Teardown]	close windows search and teardown
+	[Tags]	clipboard
 	write and copy text	foo
 	write and copy text	lorem ipsum
 	write and copy text	bar
@@ -66,7 +71,7 @@ toggle between emoji panel and clipboard history
 	[Documentation]	Toggle between clipboard history and emoji panel and ensure items are announced
 	[Setup]	setup and open windows search
 	[Teardown]	close windows search and teardown
-	[Tags]	excluded_from_build	# NVDA fails to announce emojis sometimes, to be fixed with #11485
+	[Tags]	emojiPanel	clipboard
 	write and copy text	test toggle between
 	${firstEmoji}=	open emoji panel
 	open clipboard history
