@@ -33,7 +33,7 @@ Esta versión tamén deixa de seren compatible co Adobe Flash.
 - A opción 'Tentar cancelar a voz para eventos de foco caducados' no panel de opcións avanzadas agora está activada por defecto. (#10885)
   - Este comportamento pódese desactivar configurando esta opción como "Non".
   - As aplicacións web (Ex.: Gmail) xa non falan información obsoleta cando se mova o foco rápidamente.
-- Espeak-ng actualizouse a 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
+- Espeak-ng actualizouse a 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Actualizado o transcriptor braille liblouis a [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - Novas táboas braille: braille literario bielorruso, braille computerizado bielorruso, Urdu grao 1, Urdu grao 2.
 - O soporte para contido Adobe Flash eliminouse do NVDA debido a que Adobe  desaconsella activamente o uso de Flash. (#11131)
@@ -47,7 +47,6 @@ Esta versión tamén deixa de seren compatible co Adobe Flash.
 - A listaxe de mensaxes en Outlook 2010 volta a ser lexible. (#12241)
 - En programas de terminal en Windows 10 versión 1607 e posteriores, ao se insertar ou eliminar caracteres en medio dunha liña, xa non se len os caracteres á dereita do cursor. (#3200)
   - Esta correción experimental debe habilitarse manualmente no panel de opcións avanzadas do NVDA cambiando o algoritmo diff a Diff Match Patch.
-- Arranxouse o aceso aos campos de edición nos IDE de MCS Electronics. (#11966)
 - En MS Outlook, xa non debería producirse un anunciado de distancia inapropriada cando se faga shift+tabulador dende o corpo da mensaxe ao campo de asunto. (#10254)
 - Na consola de Python, agora admítese a inserción dun tabulador para a sangría ao comenzo dunha liña de entrada non valdeira e a realización dun tabulador en medio dunha liña de entrada. (#11532)
 - A información de formato e outras mensaxes navegables xa non presentan liñas en branco inesperadas cando o deseño de pantalla estea desactivado. (#12004)
@@ -67,6 +66,7 @@ Esta versión tamén deixa de seren compatible co Adobe Flash.
 - Arranxouse o fallo de cambio de ton no sintetizador de voz SAPI4. (#12311)
 - O instalador do NVDA agora tamén respeta o parámetro de liña de ordes ``--minimal`` e non reproduce o son de inicio, seguindo o mesmo comportamento documentado que un executable do NVDA instalado ou con copia portátil. (#12289)
 - En MS Word ou Outlook, a tecla rápida de navegación da táboa agora pode saltar á táboa de deseño se a opción "Incluir tablas de deseño" está activada na configuración do modo de navegación. (#11899)
+- NVDA xa non anunciará "↑↑↑" para emojis en linguas en particular. (#11963)
 
 
 == Cambios para Desenvolvedores ==
@@ -151,6 +151,12 @@ Esta versión tamén deixa de seren compatible co Adobe Flash.
   - ``speech.speechMode_beeps`` pasa a ser ``speech.SpeechMode.beeps``
   - speechMode_talk" pasa a ser "speech.Speech.SpeechMode.talk".
 - ``IAccessibleHandler.IAccessibleObjectIdentifierType`` é agora ``IAccessibleHandler.types.IAccessibleObjectIdentifierType``. (#12367)
+- Cambiaron ``NVDAObjects.UIA.WinConsoleUIA`` (#12094)
+  - ``NVDAObjects.UIA.winConsoleUIA.is21H1Plus`` renomeado a ``NVDAObjects.UIA.winConsoleUIA.isImprovedTextRangeAvailable``.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfo`` renomeado ao nome da crase de inicio en maiúsculas.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfoPre21H1`` renomeado a ``NVDAObjects.UIA.winConsoleUIA.ConsoleUIATextInfoWorkaroundEndInclusive``
+    - A implementación funciona en ambos sendo incluidos os puntos finais (en rangos de texto) antes de [microsoft/terminal PR 4018 https://github.com/microsoft/terminal/pull/4018]
+    - Solucións para ``expand``, ``collapse``, ``compareEndPoints``, ``setEndPoint``, etc
 
 
 = 2020.4 =
