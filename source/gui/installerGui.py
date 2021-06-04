@@ -111,8 +111,7 @@ def doInstall(
 			_("Success"))
 	if startAfterInstall:
 		installedPath = os.path.join(installer.defaultInstallPath, 'nvda.exe')
-		core.NewNVDAInstanceOnExitManager.queueInstance(installedPath)
-	core.triggerNVDAExit()
+	core.triggerNVDAExit(newNVDA=core.NewNVDAInstance(installedPath))
 
 
 def doSilentInstall(
@@ -463,7 +462,8 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 		# %s will be replaced with the destination directory.
 		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
 			_("Success"))
-		if startAfterCreate:
-			core.NewNVDAInstanceOnExitManager.queueInstance(os.path.join(portableDirectory, 'nvda.exe'))
 	if silent or startAfterCreate:
-		core.triggerNVDAExit()
+		newNVDA = None
+		if startAfterCreate:
+			newNVDA = core.NewNVDAInstance(os.path.join(portableDirectory, 'nvda.exe'))
+		core.triggerNVDAExit(newNVDA)

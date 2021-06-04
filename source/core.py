@@ -3,7 +3,7 @@
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
+from dataclasses import dataclass
 from typing import Optional
 
 """NVDA core"""
@@ -45,6 +45,7 @@ import garbageHandler  # noqa: E402
 postNvdaStartup = extensionPoints.Action()
 # inform those who want to know that NVDA has begun to exit.
 preNVDAExit = extensionPoints.Action()
+_nvdaExitActions = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
 
@@ -111,49 +112,12 @@ def doStartupDialogs():
 			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
 
 
-class NewNVDAInstanceOnExitManager:
+@dataclass
+class NewNVDAInstance:
 	shouldStartNewInstance = False
 	filePath: Optional[str] = None
 	parameters: Optional[str] = None
 	directory: Optional[str] = None
-
-	@classmethod
-	def queueInstance(
-			cls,
-			filePath: str,
-			parameters: Optional[str] = None,
-			directory: Optional[str] = None
-	):
-		"""
-		Queue a new NVDA instance to be started after exiting.
-		"""
-		cls.shouldStartNewInstance = True
-		cls.filePath = filePath
-		cls.parameters = parameters
-		cls.directory = directory
-
-	@classmethod
-	def _startQueuedNVDAInstanceIfExists(cls):
-		"""
-		If something (eg the installer or exit dialog) has queued a new NVDA instance to start, start it.
-		Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit and
-		_closeAllWindows.
-		"""
-		import shellapi
-		from winUser import SW_SHOWNORMAL
-		if not cls.shouldStartNewInstance:
-			return
-		log.debug("Starting new NVDA instance")
-		shellapi.ShellExecute(
-			hwnd=None,
-			operation=None,
-			file=cls.filePath,
-			parameters=cls.parameters,
-			directory=cls.directory,
-			# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-			showCmd=SW_SHOWNORMAL
-		)
-
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
@@ -174,12 +138,12 @@ def restart(disableAddons=False, debugLogging=False):
 		options.append('--disable-addons')
 	if debugLogging:
 		options.append('--debug-logging')
-	NewNVDAInstanceOnExitManager.queueInstance(
+
+	triggerNVDAExit(NewNVDAInstance(
 		sys.executable,
 		subprocess.list2cmdline(options + sys.argv[1:]),
 		globalVars.appDir
-	)
-	triggerNVDAExit()
+	))
 
 
 def resetConfiguration(factoryDefaults=False):
@@ -270,11 +234,47 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 		log.debugWarning("wx does not support language %s" % lang)
 	return wxLang
 
+def _start(newNVDa: NewNVDAInstance):
+	"""
+	If something (eg the installer or exit dialog) has queued a new NVDA instance to start, start it.
+	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit and
+	_closeAllWindows.
+	"""
+	import shellapi
+	from winUser import SW_SHOWNORMAL
+	if not newNVDa.shouldStartNewInstance:
+		return
+	log.debug("Starting new NVDA instance")
+	shellapi.ShellExecute(
+		hwnd=None,
+		operation=None,
+		file=newNVDa.filePath,
+		parameters=newNVDa.parameters,
+		directory=newNVDa.directory,
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
+		showCmd=SW_SHOWNORMAL
+	)
 
-def triggerNVDAExit():
+
+def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
+	preNVDAExit.notifyOnce()
+	_nvdaExitActions.notifyOnce()
+	if newNVDA:
+		_start(newNVDA)
+
+
+_hasShutdownBeenTriggered = False
+_shuttingDownFlagLock = threading.Lock()
+
+
+def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
 	import queueHandler
-	# queue this so that the calling process can exit safely (eg a Popup menu)
-	queueHandler.queueFunction(queueHandler.eventQueue, preNVDAExit.notifyOnce)
+	global _hasShutdownBeenTriggered
+	with _shuttingDownFlagLock:
+		if not _hasShutdownBeenTriggered:
+			# queue this so that the calling process can exit safely (eg a Popup menu)
+			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
+			_hasShutdownBeenTriggered = True
 
 
 def _closeAllWindows():
@@ -697,9 +697,8 @@ def main():
 		# the brailleViewer should be destroyed safely before closing the window
 		brailleViewer.destroyBrailleViewer()
 	
-	preNVDAExit.register(handleNVDAModuleCleanupBeforeGUIExit)
-	preNVDAExit.register(_closeAllWindows)
-	preNVDAExit.register(NewNVDAInstanceOnExitManager._startQueuedNVDAInstanceIfExists)
+	_nvdaExitActions.register(handleNVDAModuleCleanupBeforeGUIExit)
+	_nvdaExitActions.register(_closeAllWindows)
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
