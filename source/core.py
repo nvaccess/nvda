@@ -110,6 +110,51 @@ def doStartupDialogs():
 			# Ask the user if usage stats can be collected.
 			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
 
+
+class NewNVDAInstanceOnExitManager:
+	shouldStartNewInstance = False
+	filePath: Optional[str] = None
+	parameters: Optional[str] = None
+	directory: Optional[str] = None
+
+	@classmethod
+	def queueInstance(
+			cls,
+			filePath: str,
+			parameters: Optional[str] = None,
+			directory: Optional[str] = None
+	):
+		"""
+		Queue a new NVDA instance to be started after exiting.
+		"""
+		cls.shouldStartNewInstance = True
+		cls.filePath = filePath
+		cls.parameters = parameters
+		cls.directory = directory
+
+	@classmethod
+	def _startQueuedNVDAInstanceIfExists(cls):
+		"""
+		If something (eg the installer or exit dialog) has queued a new NVDA instance to start, start it.
+		Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit and
+		_closeAllWindows.
+		"""
+		import shellapi
+		from winUser import SW_SHOWNORMAL
+		if not cls.shouldStartNewInstance:
+			return
+		log.debug("Starting new NVDA instance")
+		shellapi.ShellExecute(
+			hwnd=None,
+			operation=None,
+			file=cls.filePath,
+			parameters=cls.parameters,
+			directory=cls.directory,
+			# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
+			showCmd=SW_SHOWNORMAL
+		)
+
+
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
@@ -117,8 +162,6 @@ def restart(disableAddons=False, debugLogging=False):
 		triggerNVDAExit()
 		return
 	import subprocess
-	import winUser
-	import shellapi
 	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
 		try:
 			sys.argv.remove(paramToRemove)
@@ -131,15 +174,12 @@ def restart(disableAddons=False, debugLogging=False):
 		options.append('--disable-addons')
 	if debugLogging:
 		options.append('--debug-logging')
-	shellapi.ShellExecute(
-		hwnd=None,
-		operation=None,
-		file=sys.executable,
-		parameters=subprocess.list2cmdline(options + sys.argv[1:]),
-		directory=globalVars.appDir,
-		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-		showCmd=winUser.SW_SHOWNORMAL
+	NewNVDAInstanceOnExitManager.queueInstance(
+		sys.executable,
+		subprocess.list2cmdline(options + sys.argv[1:]),
+		globalVars.appDir
 	)
+	triggerNVDAExit()
 
 
 def resetConfiguration(factoryDefaults=False):
@@ -659,6 +699,7 @@ def main():
 	
 	preNVDAExit.register(handleNVDAModuleCleanupBeforeGUIExit)
 	preNVDAExit.register(_closeAllWindows)
+	preNVDAExit.register(NewNVDAInstanceOnExitManager._startQueuedNVDAInstanceIfExists)
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()

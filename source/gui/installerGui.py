@@ -110,24 +110,9 @@ def doInstall(
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
 	if startAfterInstall:
-		core.preNVDAExit.register(_startNewInstalledNVDAInstance)
+		installedPath = os.path.join(installer.defaultInstallPath, 'nvda.exe')
+		core.NewNVDAInstanceOnExitManager.queueInstance(installedPath)
 	core.triggerNVDAExit()
-
-
-def _startNewInstalledNVDAInstance():
-	_startNewNVDAInstance(installer.defaultInstallPath)
-
-
-def _startNewNVDAInstance(path: str):
-	# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-	shellapi.ShellExecute(
-		None,
-		None,
-		os.path.join(path, 'nvda.exe'),
-		None,
-		None,
-		winUser.SW_SHOWNORMAL
-	)
 
 
 def doSilentInstall(
@@ -479,8 +464,6 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
 			_("Success"))
 		if startAfterCreate:
-			def startNewPortableNVDAInstance():
-				_startNewNVDAInstance(portableDirectory)
-			core.preNVDAExit.register(startNewPortableNVDAInstance)
+			core.NewNVDAInstanceOnExitManager.queueInstance(os.path.join(portableDirectory, 'nvda.exe'))
 	if silent or startAfterCreate:
 		core.triggerNVDAExit()
