@@ -33,7 +33,7 @@ Cette version interrompt également le support d'Adobe Flash.
 - Dans les paramètres avancés, l'option "Essayer de couper la parole pour les événements de focus expirés" est maintenant activée par défaut. (#10885)
   - Ce comportement peut être désactivé en définissant cette option sur "Non".
   - Les applications Web, comme GMail, n'annoncent plus d'informations erronées lors du déplacement rapide du focus.
-- eSpeak-NG a été mis à jour à la version 1.51-dev révision cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
+- eSpeak-NG a été mis à jour à la version 1.51-dev révision f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Mise à jour du transcripteur Braille Liblouis à la version [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - Nouvelles tables Braille: Bélarusse Braille littéraire, Bélarusse Braille informatique, Urdu intégral, Urdu abrégé.
 - Le support des contenus flash a été supprimé de NVDA en raison de l'utilisation de flash déconseillée par Adobe. (#11131)
@@ -96,9 +96,10 @@ Cette version interrompt également le support d'Adobe Flash.
 - REASON_QUICKNAV a été supprimé de BrowseMode - utilisez controlTypes.OutputReason.QUICKNAV à la place . (#11969)
 - La propriété ``isCurrent`` de ``NVDAObject`` (et ses dérivés) renvoie désormais strictement la classe d'énumération ``controlTypes.IsCurrent``. (#11782)
   - ``isCurrent`` n'est plus optionnel et ne retournera donc pas None.
-  - Lorsqu'un objet n'est pas le courant, ``controlTypes.IsCurrent.NO`` est renvoyé.
+    - Lorsqu'un objet n'est pas le courant, ``controlTypes.IsCurrent.NO`` est renvoyé.
 - Le dictionnaire ``controlTypes.isCurrentLabels`` a été supprimé. (#11782)
-  - A la place, utilisez la propriété ``displayString`` sur une valeur d'énumération ``controlTypes.IsCurrent``. Par exemple ``controlTypes.IsCurrent.YES.displayString``
+  - A la place, utilisez la propriété ``displayString`` sur une valeur d'énumération ``controlTypes.IsCurrent``.
+    - Par exemple ``controlTypes.IsCurrent.YES.displayString``
 - ``winKernel.GetTimeFormat`` a été supprimé - utilisez ``winKernel.GetTimeFormatEx`` à la place. (#12139)
 - ``winKernel.GetDateFormat`` a été supprimé - utilisez ``winKernel.GetDateFormatEx`` à la place. (#12139)
 - ``gui.DriverSettingsMixin`` a été supprimé - utilisez ``gui.AutoSettingsMixin``. (#12144)

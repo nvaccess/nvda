@@ -4,48 +4,48 @@ NVDA 변경 이력
 %!includeconf: ../changes.t2tconf
 
 = 2021.1 =
-This release includes optional experimental support for UIA in Excel and Chromium browsers.
-There are fixes for several languages, and for accessing links in Braille.
-There are updates to Unicode CLDR and mathematical symbols, eSpeak-NG and LibLouis.
+이 버전은 Chromium 기반 브라우저와 Excel에서 선택 가능한 실험적인 UIA를 지원 기능을 포함합니다..
+여러 언어 및 점자로 된 링크에 엑세스하기 위한 수정 사항이 있습니다.
+eSpeak-NG와 LibLouis에 CLDR 유니코드와 수식기호 문자 업데이트가 있습니다.
 
-Many bug fixes and improvements, including in Office, Visual Studio and several languages.
-Note: this is an Add-on API compatibility breaking release.
-Add-ons will need to be re-tested and have their manifest updated.
-This release also drops support for Adobe Flash.
-
-
-== New Features ==
-- Early support for UIA with Chromium based browsers (such as Edge). (#12025)
-- Optional experimental support for Microsoft Excel via UI Automation. Only recommended for Microsoft Excel build 16.0.13522.10000 or higher. (#12210)
-- Easier navigation of output in NVDA Python Console. (#9784)
-  - alt+up/down jumps to the previous/next output result (add shift for selecting).
-  - control+l clears the output pane.
-- NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
+많은 버그 수정과 개선이 Office, Visaul Studio, 그리고 몇몇 언어에 포함되었습니다.
+참고: 추가 기능 API의 호환성 차단
+추가기능은 다시 테스트되어야 하며, 추가기능의 manifast를 업데이트해야 합니다.
+또한 이 버전에서는 Adobe Flash 지원을 종료하였습니다.
 
 
-== Changes ==
-- In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
-- NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
-- Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
-- Added more mathematical symbols to the symbols dictionary. (#11467)
-- The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
-- "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
-- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
-  - This behaviour can be disabled by setting this option to "No".
-  - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly.
-- Espeak-ng has been updated to 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
-- Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
-  - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
-- Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
-- NVDA will exit even with windows still open, the exit process now closes all NVDA windows and dialogs. (#1740)
-- The Speech Viewer can now be closed with ``alt+F4`` and has a standard close button for easier interaction with users of pointing devices. (#12330)
-- The Braille Viewer now has a standard close button for easier interaction with users of pointing devices. (#12328)
-- In the Elements List dialog, the accelerator key on the "Activate" button has been removed in some locales to avoid collision with an element type radio button label. When available, the button is still the default of the dialog and as such can still be invoked by simply pressing enter from the elements list itself. (#6167)
+== 새로운 기능 ==
+- Chromium 기반 브라우저에 대한 UIA를 먼저 지원합니다. (Edge 등). (#12025)
+- Excel에서 UI Automation을 통해 실험 기능을 선택적으로 지원합니다. 16.0.13522.10000 빌드 버전 이상의 Microsoft Excel만을 사용하기를 권장합니다. (#12210)
+- Python 콘솔에서 결과를 탐색하기 쉬워졌습니다. (#9784)
+  - Alt + 위/아래 화살표 키로 출력된 이전 또는 다음 결과값을 읽을 수 있습니다. (선택할 때는 Shift 키를 사용할 수 있습니다).
+  - Control + I 키를 눌러 출력창을 깨끗이 정리할 수 있습니다.
+- 이제 NVDA가 Microsoft Outlook(마이크로소프트 아웃룩)에서 약속에 할당된 범주를 보고합니다. (#11598)
 
 
-== Bug Fixes ==
-- The list of messages in Outlook 2010 is once again readable. (#12241)
-- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
+== 변경 사항 ==
+- 브라우즈 모드 사용 중, 컨트롤은 이제 설명자에 점자 커서 라우팅을 사용하여 활성화할 수 있습니다 (예 "lnk", 링크). 레이블이 없는 체크박스를 활성화할 때 특히 유용합니다. (#7447)
+- NVDA는 이제 화면 커튼이 켜진 상태에서 Windows 10 OCR를 사용할 수 없습니다. (#11911)
+- 유니코드 Common Locale Data Repository (CLDR)가 38.1로 업데이트되었습니다. (#11943)
+- 더 많은 수식 기호가 구두좀/기호 발음 사전에 추가되었습니다. (#11467)
+- 사용 설명서, 변경 이력, NVDA 기능키 목록이 새로 고쳐졌습니다. (#12027)
+- 이제 Microsoft Word 같이 화면 레이아웃을 지원하지 않는 프로그램에서 화면 레이아웃 기능을 전환을 시도하면 "지원 안 됨"을 알립니다. (#7297)
+- 고급설정에 있는 '포커스 이벤트가 만료되면 발화를 중단합니다' 옵션은 이제 활성화(예)가 기본값으로 설정됩니다. (#10885)
+  - 이 기능은 설정에서 "아니오"를 선택하여 비활성화할 수 있습니다.
+  - 웹 애플리케이션 (E.G. Gmail) 포커스를 빠르게 이동할 때 더 이상 오래된 정보를 말하지 않습니다..
+- eSpeak-NG 1.51-dev 커밋 cad1c8e87fcccf677a445202e340f61980450a84로 업데이트 되었습니다. (#12202, #12280)
+- liblouis 점역 엔진이 [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]로 업데이트되었습니다. (#12137)
+  - 새로운 점자표: 벨라루스어 점자, 벨라루스어 컴퓨터 점자, 우르두어 1종, 우르두어 2종 점자 추가됨.
+- Adobe가 를 사용하지 않아 Adobe Flash 컨텐츠에 대한 지원이 NVDA에서 제거되었습니다. (#11131)
+- NVDA 종료 프로세스 중, NVDA의 대화상자, 창이 열려있으면 해당 창을 닫습니다. (#1740)
+- 음성 출력 뷰어를 이제 ``Alt+F4``로 닫을 수 있으며 포인팅 장치(예: 마우스) 사용자가 쉽게 상호 작용할 수 있는 표준 닫기 버튼이 추가되었습니다. (#12330)
+- 점자 뷰어에 이제 포인팅 장치(예: 마웃) 사용자가 쉽게 상호작용할 수 있는 표준 닫기 버튼이 추가되었습니다. (#12328)
+- "활성화" 버튼의 바로가기 키가 일부 로케일에서 제거되어 요소 유형의 라디오 버튼 라벨과 충돌하지 않도록 합니다. 사용 가능한 경우 버튼은 여전히 대화상자의 기본값이므로 요소 리스트 자체에서 Enter 키를 눌러 호출할 수 있습니다. (#6167)
+
+
+== 버그 수정 ==
+- Outlook 2010의 메시지 목록을 다시 읽을 수 있습니다. (#12241)
+- Windows 10 버전 1607 이상의 터미널 프로그램에서 줄 중간에 문자를 삽입하거나 삭제할 때 캐럿 오른쪽에 있는 문자를 더 이상 읽지 않습니다. (#3200)
   - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
 - In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
 - In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
