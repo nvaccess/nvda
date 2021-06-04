@@ -32,8 +32,8 @@ Bu sürüm ayrıca Adobe Flash desteğini de kaldırmaktadır.
 - Microsoft Word gibi desteklemeyen uygulamalarda ekran düzenini değiştirmeye çalışırken artık "Desteklenmiyor" deniyor. (#7297)
 - Gelişmiş ayarlar kategorisindeki 'Süresi dolan odak olayları için konuşmayı iptal etmeyi dene' seçeneği artık varsayılan olarak etkindir. (#10885)
   - Bu davranış, bu seçenek "Hayır" olarak ayarlanarak devre dışı bırakılabilir.
-  - Web uygulamaları (Gmail gibi) artık odağı hızla hareket ettirirken güncel olmayan bilgileri söylemez.
-- Espeak-ng, 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84 olarak güncellendi. (#12202, #12280)
+  - Web uygulamaları (Gmail gibi) artık odağı hızla hareket ettirirken güncel olmayan bilgiler söylenmez.
+- Espeak-ng, 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09 olarak güncellendi. (#12202, #12280)
 - liblouis braille çevirmen  [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0] sürümüne güncellendi. (#12137)
   - Yeni braille tabloları: Belarus edebi braille, Belarus bilgisayar braille, Urduca derece 1, Urduca derece 2.
 - Adobe Flash içerik desteği, Flash kullanımının Adobe tarafından etkin bir şekilde önerilmemesi nedeniyle NVDA'dan kaldırılmıştır. (#11131)
@@ -96,14 +96,11 @@ Bu sürüm ayrıca Adobe Flash desteğini de kaldırmaktadır.
 - REASON_QUICKNAV has been removed from browseMode - use controlTypes.OutputReason.QUICKNAV instead. (#11969)
 - ``NVDAObject`` (and derivatives) property ``isCurrent`` now strictly returns Enum class ``controlTypes.IsCurrent``. (#11782)
   - ``isCurrent`` is no longer Optional, and thus will not return None.
-  - When an object is not current ``controlTypes.IsCurrent.NO`` is returned.
+    - When an object is not current ``controlTypes.IsCurrent.NO`` is returned.
 - The ``controlTypes.isCurrentLabels`` mapping has been removed. (#11782)
-  - Instead use the ``displayString`` property on a ``controlTypes.IsCurrent`` enum value. EG ``controlTypes.IsCurrent.YES.displayString``
-- ``NVDAObject`` (and derivatives) property ``isCurrent`` now strictly returns ``controlTypes.IsCurrent``. (#11782)
-  - ``isCurrent`` is no longer Optional, and thus will not return None, when an object is not current ``controlTypes.IsCurrent.NO`` is returned.
-- The ``controlTypes.isCurrentLabels`` has been removed, instead use the ``displayString`` property on a ``controlTypes.IsCurrent`` enum value. (#11782)
-  - EG ``controlTypes.IsCurrent.YES.displayString``
-- ``winKernel.GetTimeFormat`` has been removed - use ``winKernel.GetTimeFormatEx`` instead. (#12139)
+  - Instead use the ``displayString`` property on a ``controlTypes.IsCurrent`` enum value.
+    - For example: ``controlTypes.IsCurrent.YES.displayString``.
+  ``winKernel.GetTimeFormat`` has been removed - use ``winKernel.GetTimeFormatEx`` instead. (#12139)
 - ``winKernel.GetDateFormat`` has been removed - use ``winKernel.GetDateFormatEx`` instead. (#12139)
 - ``gui.DriverSettingsMixin`` has been removed - use ``gui.AutoSettingsMixin``. (#12144)
 - ``speech.getSpeechForSpelling`` has been removed - use ``speech.getSpellingSpeech``. (#12145)
