@@ -4,37 +4,40 @@ Traduzido pela Equipa portuguesa do NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2021.1 =
-This release includes optional experimental support for UIA in Excel and Chromium browsers.
-There are fixes for several languages, and for accessing links in Braille.
-There are updates to Unicode CLDR and mathematical symbols, eSpeak-NG and LibLouis.
+Esta versão inclui, entre muitas outras novidades:
+- Suporte opcional, experimental, para UIA no Excel e nos navegadores baseados no Chromium;
+- Correcções  para vários idiomas;
+- Melhoria no acesso aos links em Braille;
+- Actualização ao dicionário CLDR Unicode, símbolos matemáticos, eSpeak-NG e LibLouis;
+- Muitas correcções de erros.
+-
+Notas importantes:
+- Esta versão exige uma mudança na API de compatibilidade dos extras.
+Os extras terão de ser testados e, pelo menos, reflectir esta mudança no manifest.ini.
+- Esta versão termina com o suporte ao Adobe Flash.
 
-Many bug fixes and improvements, including in Office, Visual Studio and several languages.
-Note: this is an Add-on API compatibility breaking release.
-Add-ons will need to be re-tested and have their manifest updated.
-This release also drops support for Adobe Flash.
 
-
-== New Features ==
-- Early support for UIA with Chromium based browsers (such as Edge). (#12025)
-- Optional experimental support for Microsoft Excel via UI Automation. Only recommended for Microsoft Excel build 16.0.13522.10000 or higher. (#12210)
-- Easier navigation of output in NVDA Python Console. (#9784)
-  - alt+up/down jumps to the previous/next output result (add shift for selecting).
-  - control+l clears the output pane.
-- NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
+== Novas Funcionalidades ==
+- Suporte inicial ao UIA com navegadores baseados em Chromium (como o Edge). (#12025)
+- Suporte opcional, experimental, ao Microsoft Excel via UI Automation. Apenas recomendado para Microsoft Excel build 16.0.13522.10000 ou superior. (#12210)
+- Navegação facilitada nos resultados na Consola Python do NVDA. (#9784)
+  - alt+seta acima/abaixo salta para o anterior/próximo resultado (juntar shift para seleccionar);
+  - control+l limpa o painel de resultados;
+- O NVDA passa a anunciar as categorias associadas a um compromisso no Microsoft Outlook, se houver algum. (#11598)
 
 
 == Changes ==
-- In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
-- NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
-- Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
-- Added more mathematical symbols to the symbols dictionary. (#11467)
-- The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
-- "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
-- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
+- No modo de navegação, os controlos já podem ser activados com os cursores de toque da linha Braille na descrição, por exemplo, "lnk" para um link. Isto é especialmente útil para activar uma caixa de verificação sem etiqueta. (#7447)
+- O NVDA passa a impedir a execução do OCR do Windows 10 se a cortina de ecrã estiver activa. (#11911)
+- Actualizado o Repositório CLDR Unicode para a versão 38.1. (#11943)
+- Adicionados mais símbolos matemáticos ao dicionário de símbolos. (#11467)
+- O "Manual do utilizador" e os documentos "O que há de novo" e "Referência rápida de comandos" têm uma aparência melhorada. (#12027)
+- Ao tentar alterar a disposição do ecrã, numa aplicação que não o suporte, como o Word, passa a ser anunciado "Não suportado neste documento". (#7297)
+***- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
   - This behaviour can be disabled by setting this option to "No".
   - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly.
-- Espeak-ng has been updated to 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
-- Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+- O eSpeak-ng foi actualizado para a versão 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
+- Actualizado o conversor Braille liblouis para a versão [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
 - Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
 - NVDA will exit even with windows still open, the exit process now closes all NVDA windows and dialogs. (#1740)
@@ -47,7 +50,6 @@ This release also drops support for Adobe Flash.
 - The list of messages in Outlook 2010 is once again readable. (#12241)
 - In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
   - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
-- Fixed access to edit fields in MCS Electronics IDE's. (#11966)
 - In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
 - In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
 - Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
