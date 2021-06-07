@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2020-2021 NV Access Limited, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,55 @@ def checkbox_labelled_by_inner_element():
 		# "Simulate evil cat  Simulate evil cat  check box  not checked"
 		# Instead this should be spoken as:
 		"Simulate evil cat  check box  not checked"
+	)
+
+
+def test_aria_details():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <mark aria-details="cat-details">cat</mark> has a comment tied to it.</p>
+			<div id="cat-details" role="comment">
+				Cats go woof BTW<br>&mdash;Jonathon Commentor
+				<div role="comment">
+				No they don't<br>&mdash;Zara
+				</div>
+				<div role="form">
+				<textarea cols="80" placeholder="Add reply..."></textarea>
+				<input type="submit">
+				</div>
+			</div>
+		</div>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		"The word  marked content  has details  cat  out of marked content  has a comment tied to it."
+	)
+	# this word has no details attached
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"word"
+	)
+	# check that there is no summary reported
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
+	_asserts.strings_match(
+		actualSpeech,
+		"No additional details"
+	)
+	# this word has details attached to it
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"marked content  has details  cat  out of marked content"
+	)
+	# read the details summary
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
+	_asserts.strings_match(
+		actualSpeech,
+		"Cats go woof BTW  Jonathon Commentor No they don't  Zara Submit"
 	)
 
 
@@ -378,4 +427,44 @@ def test_i12147():
 	_asserts.strings_match(
 		actualSpeech,
 		"target 0  heading  level 4"
+	)
+
+
+def test_tableInStyleDisplayTable():
+	"""
+	Chrome treats nodes with `style="display: table"` as tables.
+	When a HTML style table is positioned in such a node, NVDA was previously unable to announce
+	table row and column count as well as provide table navigation for the inner table.
+	"""
+	_chrome.prepareChrome(
+		"""
+			<p>Paragraph</p>
+			<div style="display:table">
+				<table>
+					<thead>
+						<tr>
+							<th>First heading</th>
+							<th>Second heading</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>First content cell</td>
+							<td>Second content cell</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		"""
+	)
+	# Jump to the table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(
+		actualSpeech,
+		"table  with 2 rows and 2 columns  row 1  First heading  column 1  First heading"
+	)
+	nextActualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(
+		nextActualSpeech,
+		"row 2  First content cell"
 	)

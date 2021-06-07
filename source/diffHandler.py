@@ -174,14 +174,13 @@ class Difflib(DiffAlgo):
 def get_dmp_algo():
 	"""
 		This function returns a Diff Match Patch object if allowed by the user.
-		DMP is experimental and can be explicitly enabled/disabled by a user
-		setting to opt in or out of the experiment. If config does not allow
-		DMP, this function returns a Difflib instance instead.
+		DMP is new and can be explicitly disabled by a user setting. If config
+		does not allow DMP, this function returns a Difflib instance instead.
 	"""
 	return (
-		_dmp
-		if config.conf["terminals"]["diffAlgo"] == "dmp"
-		else _difflib
+		_difflib
+		if config.conf["terminals"]["diffAlgo"] == "difflib"
+		else _dmp
 	)
 
 

@@ -1849,6 +1849,14 @@ The combo box has the following options:
 - No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
 -
 
+==== Enable Experimental ARIA annotations support ====[Annotations]
+Used to enable features which add experimental support for ARIA annotations.
+Some of these features may be incomplete.
+The following options exist: 
+- "Report details in browse mode": enables reporting if an object has details in browse mode.
+Reporting the summary of those details can be done by assigning a gesture using the [Input Gestures dialog #InputGestures].
+-
+
 ==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]
 When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
 This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
@@ -1867,11 +1875,10 @@ In untrusted environments, you may temporarily disable [speak typed characters #
 ==== Diff algorithm ====[DiffAlgo]
 This setting controls how NVDA determines the new text to speak in terminals.
 The diff algorithm combo box has three options:
-- Automatic: as of NVDA 2021.1, this option is equivalent to Difflib.
-In a future release, it may be changed to Diff Match Patch pending positive user testing.
+- Automatic: as of NVDA 2021.2, this option is equivalent to "allow Diff Match Patch".
 - allow Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character.
 It may improve performance when large volumes of text are written to the console and allow more accurate reporting of changes made in the middle of lines.
-However, it may be incompatible with some applications.
+However, it may be incompatible with some applications, so Diff Match Patch is not always used.
 This feature is supported in Windows Console on Windows 10 versions 1607 and later.
 Additionally, it may be available in other terminals on earlier Windows releases.
 - force Difflib: this option causes NVDA to calculate changes to terminal text by line.
@@ -1881,7 +1888,7 @@ It is identical to NVDA's behaviour in versions 2020.4 and earlier.
 ==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
 This option enables behaviour which attempts to cancel speech for expired focus events.
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
-This functionality is experimental as of NVDA 2020.2.
+This functionality is enabled by default as of NVDA 2021.1.
 
 ==== Caret move timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
