@@ -439,7 +439,7 @@ def _getHidInfo(hwId, path):
 	if hwId.startswith("VID"):
 		info["provider"] = "usb"
 		info["usbID"] = hwId[:17] # VID_xxxx&PID_xxxx
-	elif hwId.startswith("{00001124-0000-1000-8000-00805f9b34fb}"): # Not Bluetooth
+	elif hwId.startswith("{00001124-0000-1000-8000-00805f9b34fb}"):  # Not Bluetooth
 		info["provider"] = "bluetooth"
 	else:
 		# Unknown provider.

@@ -1,7 +1,8 @@
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2015-2018 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2015-2021 NV Access Limited, Babbage B.V.
+
 
 """Raw input/output for braille displays via serial and HID.
 See the L{Serial} and L{Hid} classes.
@@ -10,12 +11,10 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
 
-from .base import (
+from .base import (  # noqa: F401
 	Serial,
 	Bulk,
 	boolToByte,
 	intToByte,
 	getByte
 )
-
-

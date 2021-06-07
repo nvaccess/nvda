@@ -1,4 +1,3 @@
-"hid"
 #bdDetect.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -124,7 +123,7 @@ def getDriversForConnectedUsbDevices():
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		# check for the Braille HID protocol before any other device matching. 
+		# check for the Braille HID protocol before any other device matching.
 		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
 			yield ("hid", match)
 		for driver, devs in _driverDevices.items():
@@ -145,7 +144,7 @@ def getDriversForPossibleBluetoothDevices():
 			for port in deviceInfoFetcher.hidDevices if port["provider"]=="bluetooth"),
 	)
 	for match in btDevs:
-		# check for the Braille HID protocol before any other device matching. 
+		# check for the Braille HID protocol before any other device matching.
 		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
 			yield ("hid", match)
 		for driver, devs in _driverDevices.items():
@@ -344,14 +343,14 @@ def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		# check for the Braille HID protocol before any other device matching. 
+		# check for the Braille HID protocol before any other device matching.
 		if driver == "hid":
 			if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
 				yield match
 		else:
 			devs = _driverDevices[driver]
 			for type, ids in devs.items():
-				if match.type==type and match.id in ids:
+				if match.type == type and match.id in ids:
 					yield match
 
 def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
@@ -362,7 +361,7 @@ def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	if driver == "hid":
-		# check for the Braille HID protocol before any other device matching. 
+		# check for the Braille HID protocol before any other device matching.
 		def matchFunc(match):
 			return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
 	else:

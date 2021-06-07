@@ -1,13 +1,11 @@
-#brailleDisplayDrivers/HID.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Babbage B.V.
+# brailleDisplayDrivers/HID.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2021 NV Access Limited
 
 from dataclasses import dataclass
-import ctypes
-import time
-from typing import List, Union, Optional
+from typing import List, Optional
 import enum
 import braille
 import inputCore
@@ -16,7 +14,7 @@ import brailleInput
 import bdDetect
 import hidpi
 import hwIo.hid
-from hwIo import intToByte, boolToByte
+from hwIo import intToByte
 
 from bdDetect import HID_USAGE_PAGE_BRAILLE
 
@@ -67,10 +65,12 @@ class BraillePageUsageID(enum.IntEnum):
 	BRAILLE_ROCKER_DOWN = 0x21D
 	BRAILLE_ROCKER_PRESS = 0x21E
 
+
 @dataclass
 class ButtonCapsInfo:
 	buttonCaps: hidpi.HIDP_VALUE_CAPS
 	relativeIndexInCollection: int = 0
+
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.hid.Hid
@@ -91,7 +91,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._dev = hwIo.hid.Hid(port, onReceive=self._hidOnReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
-				continue # Couldn't connect.
+				continue  # Couldn't connect.
 			if self._dev.usagePage != HID_USAGE_PAGE_BRAILLE:
 				log.debug("Not braille")
 				continue
@@ -116,7 +116,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if (
 				valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
 				and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
-				and valueCaps.u1.NotRange.Usage in (BraillePageUsageID.EIGHT_DOT_BRAILLE_CELL, BraillePageUsageID.SIX_DOT_BRAILLE_CELL)
+				and valueCaps.u1.NotRange.Usage in (
+					BraillePageUsageID.EIGHT_DOT_BRAILLE_CELL,
+					BraillePageUsageID.SIX_DOT_BRAILLE_CELL
+				)
 				and valueCaps.ReportCount > 0
 			):
 				return valueCaps
@@ -134,7 +137,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				relativeIndexInCollection += 1
 			if buttonCaps.IsRange:
 				r = buttonCaps.u1.Range
-				for index in range(r.DataIndexMin,r.DataIndexMax+1):
+				for index in range(r.DataIndexMin, r.DataIndexMax + 1):
 					capsByDataIndex[index] = ButtonCapsInfo(buttonCaps, relativeIndexInCollection=relativeIndexInCollection)
 			else:
 				nr = buttonCaps.u1.NotRange
@@ -166,7 +169,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
 			return
-		keyInfoList = []
 		try:
 			inputCore.manager.executeGesture(InputGesture(self, self._keysDown))
 		except inputCore.NoInputGestureAction:
@@ -179,7 +181,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# cells will already be padded up to numCells.
 		cellBytes = b"".join(intToByte(cell) for cell in cells)
 		report = hwIo.hid.HidOutputReport(self._dev, reportID=self._cellValueCaps.ReportID)
-		report.setUsageValueArray(HID_USAGE_PAGE_BRAILLE, self._cellValueCaps.LinkCollection, self._cellValueCaps.u1.NotRange.Usage, cellBytes)
+		report.setUsageValueArray(
+			HID_USAGE_PAGE_BRAILLE,
+			self._cellValueCaps.LinkCollection,
+			self._cellValueCaps.u1.NotRange.Usage,
+			cellBytes
+		)
 		self._dev.write(report.data)
 
 	gestureMap = inputCore.GlobalGestureMap({
@@ -213,6 +220,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		},
 	})
 
+
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
 	source = BrailleDisplayDriver.name
@@ -236,7 +244,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				usageID = buttonCaps.u1.NotRange.Usage
 			linkUsagePage = buttonCaps.LinkUsagePage
 			linkUsageID = buttonCaps.LinkUsage
-			log.info("index %d, usage page %d, usage ID %d"%(index, usagePage, usageID))
 			if usagePage == HID_USAGE_PAGE_BRAILLE and isBrailleInput:
 				if BraillePageUsageID.BRAILLE_KEYBOARD_DOT_1 <= usageID <= BraillePageUsageID.BRAILLE_KEYBOARD_DOT_8:
 					self.dots |= 1 << (usageID - BraillePageUsageID.BRAILLE_KEYBOARD_DOT_1)
@@ -260,7 +267,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				namePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
 		name = self._usageIDToGestureName(usagePage, usageID)
 		if namePrefix:
-			name = "_".join([namePrefix,name])
+			name = "_".join([namePrefix, name])
 		names.append(name)
 		self.id = "+".join(names)
 
@@ -268,13 +275,13 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		if usagePage != HID_USAGE_PAGE_BRAILLE:
 			# The usage ID is from another HID usage page
 			# Return a generic name with page and ID included
-			return "usagePage%d&usageID%d"%(usagePage, usageID)
+			return "usagePage%d&usageID%d" % (usagePage, usageID)
 		try:
 			rawName = BraillePageUsageID(usageID).name
 		except ValueError:
 			# An unknown usage ID within the braille usage page
 			# Return a generic name with the unknown ID included
-			return "brailleUsage%d"%usageID
+			return "brailleUsage%d" % usageID
 		name = rawName.lower()
 		# Remove braille_keyboard or braille_ from the beginning of the name
 		if name.startswith('braille_keyboard_'):
@@ -283,7 +290,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			name = name[len('braille_'):]
 		# Capitalize the start of all words except the first
 		wordList = name.split('_')
-		for index in range(1,len(wordList)):
+		for index in range(1, len(wordList)):
 			wordList[index] = wordList[index].title()
 		# Join the words together as  camelcase.
 		name = "".join(wordList)

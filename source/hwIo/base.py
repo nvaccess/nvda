@@ -1,8 +1,9 @@
-#hwIo.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2015-2018 NV Access Limited, Babbage B.V.
+# hwIo.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2015-2018 NV Access Limited, Babbage B.V.
+
 
 """Raw input/output for braille displays via serial and HID.
 See the L{Serial} and L{Hid} classes.
@@ -11,10 +12,9 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
 import sys
-import enum
 import ctypes
 from ctypes import byref
-from ctypes.wintypes import DWORD, USHORT, BOOLEAN, ULONG, LONG
+from ctypes.wintypes import DWORD
 from typing import Optional, Any, Union, Tuple, Callable
 
 import serial
