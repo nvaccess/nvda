@@ -174,7 +174,7 @@ La deuxième spécifie si NVDA doit démarrer à l'ouverture de votre session et
 La troisième permet d'indiquer si ce dialogue d'accueil doit apparaître à chaque démarrage.
 
 +++ Dialogue de statistiques d'utilisation des données +++[UsageStatsDialog]
-Depuis NVDA 2018.3, il est demandé à l'utilisateur s'il veut autoriser l'envoi de données d'utilisation à NV Access dans le but d'aider à l'amélioration de NVDA dans le futur. 
+Depuis NVDA 2018.3, il est demandé à l'utilisateur s'il veut autoriser l'envoi de données d'utilisation à NV Access afin d'aider à l'amélioration de NVDA à l'avenir. 
 Au premier démarrage de NVDA, un dialogue vous demandant si vous désirer envoyer des données à NV Access durant l'utilisation de NVDA apparaîtra.
 Vous pouvez obtenir plus d'informations concernant les données rassemblées par NV Access dans la section paramètres généraux, [Autoriser le projet NVDA à recueillir des statistiques d'utilisation #GeneralSettingsGatherUsageStats].
 Note : l'appui sur "oui" ou "non" sauvegardera ce choix et ce dialogue n'apparaîtra plus à moins que vous réinstalliez NVDA.
@@ -555,7 +555,7 @@ Les touches suivantes permettent d'aller à l'élément suivant. En les combinan
 - d : région
 - o : objet embarqué (lecteur audio et vidéo, application, dialogue etc.)
 - 1 ... 6 : Titres 1 ... 6.
-- a: annotation (commentaire, révision de l'éditeur, etc.)
+- a: annotation (commentaire, modification de l'éditeur, etc.)
 - w: fautes d'orthographe
 -
 Pour se déplacer au début ou à la fin des éléments contenants comme les listes et tableaux :
@@ -1741,7 +1741,7 @@ On peut configurer les annonces suivantes :
  - Couleurs
 - Informations sur le document
  - Commentaires
- - Révisions de l'éditeur
+ - Modifications de l'éditeur
  - Fautes d'orthographe
 - Pages et espacement
  - Numéros de page
@@ -1840,10 +1840,10 @@ Si cette option est activée, NVDA utilisera une nouvelle version en cours de d�
 Cette option définit si les caractères sont annoncés par [Écho clavier par caractère #KeyboardSettingsSpeakTypedCharacters] ou [Écho clavier par mot #KeyboardSettingsSpeakTypedWords] dans les situation où l'écran ne se met pas à jour (telles que les zones de saisie de mot de passe) dans certains programmes de terminaux, comme la Console Windows avec le support UI automation activé. Pour des raisons de sécurité, ce paramètre devrait rester désactivé. Cependant, vous pouvez souhaiter l'activer si vous ressentez des problèmes de performances ou d'instabilité avec l'écho par caractère ou par mot dans la console, ou si vous travaillez dans un environnement de confiance et préférez l'annonce des mots de passe.
  
 ==== Utiliser UIA avec Microsoft Edge et autres navigateurs basés sur Chromium quand c'est possible ====[ChromiumUIA]
-Permet de définir quand UIA sera utilisé si disponible dans les navigateurs basés sur Chromium tels que Microsoft Edge.
+Cette option permet de définir quand UIA sera utilisé si disponible dans les navigateurs basés sur Chromium tels que Microsoft Edge.
 Le support d'UIA pour les navigateurs basés sur Chromium est au début de son développement et peut ne pas apporter le même niveau d'accessibilité que IA2.
 La liste déroulante contient les options suivantes :
-- Défaut (Seulement quand nécessaire) : C'est actuellement la valeur par défaut de NVDA. Ce défaut peut changer dans le futur en fonction l'amélioration de la technologie.
+- Défaut (Seulement quand nécessaire) : C'est actuellement la valeur par défaut de NVDA. Cette valeur par défaut peut changer à l'avenir en fonction de l'amélioration de la technologie.
 - Seulement quand nécessaire : Quand NVDA est incapable d'injecter dans le processus du navigateur de quoi utiliser IA2 et que UIA est disponible, NVDA utilisera UIA.
 - Oui : Si le navigateur rend UIA disponible, NVDA l'utilisera.
 - Non : Ne pas utiliser UIA, même si NVDA ne peut pas injecter dans le processus. Ceci peut être utile pour les développeurs corrigeant des problèmes liés à IA2 et voulant s'assurer que NVDA ne revient pas à UIA.
@@ -1851,7 +1851,7 @@ La liste déroulante contient les options suivantes :
 
 ==== Utiliser UI automation pour accéder aux contrôles des feuilles de calcul Microsoft Excel quand c'est possible ====[UseUiaForExcel]
 Quand cette option est activée, NVDA essaiera d'utiliser l'API d'accessibilité Microsoft UI Automation pour extraire des informations des contrôles des feuilles de calcul Microsoft Excel.
-Ceci est une fonctionnalité expérimentale, et certaines fonctionnalités de Microsoft Excel peuvent ne pas être disponibles dans ce mode.
+C'est une fonctionnalité expérimentale, et certaines fonctionnalités de Microsoft Excel peuvent ne pas être disponibles dans ce mode.
 Par exemple, la liste d'éléments de NVDA permettant de lister les formules et commentaires, et la navigation rapide en mode navigation pour sauter aux zones de formulaire dans une feuille de calcul ne sont pas disponibles.
 Cependant, pour la navigation/édition de feuilles de calcul basiques, cette option peut procurer de grandes améliorations de performances.
 Nous ne recommandons toujours pas que la majorité des utilisateurs active cette option par défaut, mais nous encourageons les utilisateurs de Microsoft Excel version 16.0.13522.10000 ou ultérieures à tester cette fonctionnalité et à nous faire part de leurs commentaires.
@@ -1864,9 +1864,9 @@ Cette fonctionnalité est disponible et activée par défaut sous Windows 10 ver
 Avertissement : quand cette option est activée, les caractères tapés qui n'apparaissent pas à l'écran comme les mots de passe, ne seront pas supprimés.
 Dans les environnement non sûrs, vous pouvez désactiver temporairement [Écho clavier par caractère #KeyboardSettingsSpeakTypedCharacters] et [Écho clavier par mot #KeyboardSettingsSpeakTypedWords] quand vous entrez un mot de passe.
 
-==== Algorithme Diff ====[DiffAlgo]
+==== Algorithme de diff ====[DiffAlgo]
 Ce paramètre définit comment NVDA détermine le nouveau texte à annoncer dans les terminaux.
-La liste déroulante algorithme diff a trois options :
+La liste déroulante algorithme de diff a trois options :
 - Automatique : À partir de NVDA 2021.1, cette option est équivalente à Difflib.
 Dans une version future, cela peut changer en faveur de Diff Match Patch si les tests des utilisateurs sont positifs.
 - Autoriser Diff Match Patch : Cette option fait que NVDA calcule les changements de texte du terminal par caractère.
@@ -1881,7 +1881,7 @@ C'est identique au comportement de NVDA en version 2020.4 et antérieures.
 ==== Tenter d'interrompre la parole pour les événements de focus expirés ====[CancelExpiredFocusSpeech]
 Cette option active un comportement qui tente d'interrompre la parole pour les événements de focus expirés.
 En particulier se déplacer rapidement parmi les messages dans Gmail sous Chrome peut amener NVDA à annoncer des informations périmées.
-Cette fonctionnalité est expérimentale sous NVDA 2020.2.
+Cette fonctionnalité est activée par défaut à partir de NVDA 2021.1.
 
 ==== Délai d'attente de mouvement du curseur (en ms) ====[AdvancedSettingsCaretMoveTimeout]
 Cette option vous permet de configurer le nombre de millisecondes durant lequel NVDA attendra le déplacement du curseur (point d'insertion) dans les contrôles de texte éditable.

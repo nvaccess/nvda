@@ -2704,7 +2704,7 @@ class AdvancedPanelControls(
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA determine the method of detecting changed
 			# content in terminals automatically.
-			_("Automatic (Difflib)"),
+			_("Automatic (Diff Match Patch)"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
 			# by character when supported, using the diff match patch algorithm.

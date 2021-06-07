@@ -4,69 +4,69 @@
 %!includeconf: ../changes.t2tconf
 
 = 2021.1 =
-Ova verzija uključuje neobaveznu eksperimentalnu podršku za UIA u Excelu i preglednicima koji su bazirani na Chromium platformi.
-Ova verzija donosi ispravke za neke jezike i naglaske, te za poveznice pristupačnosti na brajičnim redcima.
+Ova inačica sadrži opcionalnu eksperimentalnu podršku za UIA u Excelu i preglednicima baziranima na Chromium platformi.
+Dodane su ispravke za neke jezike, te je popravljen način interakciej sa poveznicama koristeći brajični redak.
 Nadograđeni su Unicode CLDR i matematički simboli, eSpeak-NG i LibLouis.
 
-Puno ispravki grešaka i poboljšanja, uključujući pogreške u Microsoft office paketu, Visual Studio te također ispravke za neke jezike.
-Upozorenje: ova inačica donosi promjene koje mogu prouzrokovati nekompatibilnost sa instaliranim dodacima.
-Dodatke će ponovno trebati testirati i osvježiti njihove manifest datoteke.
-U ovoj verziji je također uklonjena podrška za Adobe Flash tehnologiju.
+Puno ispravaka grešaka, uključujući u Microsoft Officeu, Visual Studio te su ispravljene greške koje su se ticale nekih jezika.
+Upozorenje: u Ovoj inačici NVDA došlo je do izmjena kompatibilnosti.
+Dodaci trebaju biti ponovno testirani a manifest datoteke obnovljene u skladu sa činjeničnim stanjem.
+U ovoj je inačici također uklonjena podrška za Adobe Flash.
 
 
 == Nove značajke ==
-- Rana podrška UIA za preglednike bazirane na Chromium (kao što je to microsoft edge). (#12025)
-- Optional experimental support for Microsoft Excel via UI Automation. Only recommended for Microsoft Excel build 16.0.13522.10000 or higher. (#12210)
-- Easier navigation of output in NVDA Python Console. (#9784)
-  - alt+up/down jumps to the previous/next output result (add shift for selecting).
-  - control+l clears the output pane.
-- NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
+- Rana podrška za UIA u preglednicima baziranim na Chromium platformi. (such as Edge). (#12025)
+- Rana eksperimentalna podrška za Microsoft Excel koristeći UI Automation. Preporučuje se samo sa Microsoft Excel inačicom 16.0.13522.10000 ili novijom. (#12210)
+- Lakše kretanje po rezultatima u NVDA Python konzoli. (#9784)
+  - alt+strelice gore/dolje skače na prethodni odnosno sljedeći rezultat (add shift for selecting).
+  - control+l briše okno rezultata.
+- NVDA sada izgovara kategorije zadataka u Microsoft Outlooku, ako postoje. (#11598)
 
 
 == Izmjene ==
-- In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
-- NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
-- Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
-- Added more mathematical symbols to the symbols dictionary. (#11467)
-- The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
-- "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
-- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
-  - This behaviour can be disabled by setting this option to "No".
-  - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly.
-- Espeak-ng has been updated to 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
-- Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
-  - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
-- Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
-- NVDA will exit even with windows still open, the exit process now closes all NVDA windows and dialogs. (#1740)
-- The Speech Viewer can now be closed with ``alt+F4`` and has a standard close button for easier interaction with users of pointing devices. (#12330)
-- The Braille Viewer now has a standard close button for easier interaction with users of pointing devices. (#12328)
-- In the Elements List dialog, the accelerator key on the "Activate" button has been removed in some locales to avoid collision with an element type radio button label. When available, the button is still the default of the dialog and as such can still be invoked by simply pressing enter from the elements list itself. (#6167)
+- U modusu čitanja, kontrole se mogu aktivirati uz pomoć brajičnog kursora koji se nalazi na opisu kontrole (na primjer. "pvz" za poveznicu). To je korisno za aktivaciju na primjer potvrdnih okvira bez oznaka. (#7447)
+- NVDA sada sprječava izvođenje prepoznavanja teksta uz pomoć Windows 10 OCR, ako je zaslonska zavjesa uključena. (#11911)
+- Nadograđen repozitorij zajedničkih podataka o lokalizaciju  (CLDR) na inačicu 38.1. (#11943)
+- Dodano više matematičkih simbola u rječnik simbola. (#11467)
+- Vodič za korisnike, datoteka sa popisom izmjena, i popis tipkovničkih prečaca sada imaju osvježen izgled. (#12027)
+- Sada NVDA izgovara"nije podržano" prilikom pokušaja izmjene izgleda u aplikacijama koje to ne podržavaju, kao što je to Microsoft Word. (#7297)
+- 'Pokušaj ignoriranja događaja govora koji su istekli' u naprednom panelu postavki je sada podrazumjevano omogućena. (#10885)
+  - Ta se opcija može onemogučiti tako da se vrijednost postavi na "Ne".
+  - Web aplikacije (npr. Gmail) više ne izgovaraju informacije koje su istekle pri brzom premještanju fokusa.
+- Espeak-ng je nadograđen na verziju 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
+- Nadograđen Liblouis brajični prevoditelj na inačicu [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - Nove brajične tablice: bjeloruska literarna brajica, bjeloruska kompjutorska brajica, Urdsko puno pismo, urdski kratkopis.
+- Podrška za Flash sadržaj je uklonjena iz NVDA zbog toga što Adobe ne preporučuje korištenje te tehnologije. (#11131)
+- NVDA će se isključiti čak iako su prozori otvoreni, u procesu izlazka iz NVDA zatvaraju se svi prozori NVDA sa njihovim pripadajućim dijaloškim okvirima. (#1740)
+- Preglednik govora može biti zatvoren uz pomoć ``alt+F4`` te sadrži gumb zatvori za lakšu interakciju sa pokazivačkim uređajima. (#12330)
+- Preglednik brajice sada posjeduje standardnu tipku zatvori za lakšu interakciju sa pokazivačkim uređajima. (#12328)
+- U popisu elemenata, prečac na gumbu "aktiviraj" je uklonjen kako bise izbjegle kolizije za neke jezike sa oznakom izbornog gumba tip elementa. Kada je dostupan, gumb je podrazumjevani u dijaloškom okviru i kao takav se može aktivirati jednostavnim pritiskom tipke enter iz samog popisa elemenata. (#6167)
 
 
 == Ispravke grešaka ==
-- The list of messages in Outlook 2010 is once again readable. (#12241)
-- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
-  - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
-- Fixed access to edit fields in MCS Electronics IDE's. (#11966)
-- In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
-- In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
-- Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
-- It is now possible to read comments in MS Word with UIA enabled. (#9285)
-- Performance when interacting with Visual Studio has been improved. (#12171)
-- Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
-- Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
-  - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
-- The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
-- TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
-- It is once again possible to use NVDA in languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
-- In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
-- NVDA no longer fails to announce the newly focused content on a web page if the old focus disappears and is replaced by the new focus in the same position. (#12147)
-- Strikethrough, superscript and subscript formatting for entire Excel cells are now reported if the corresponding option is enabled. (#12264)
-- Fixed copying config during installation from a portable copy when default destination config directory is empty. (#12071, #12205)
-- Fixed incorrect announcement of some letters with accents or diacritic when 'Say cap before capitals' option is checked. (#11948)
-- Fixed the pitch change failure in SAPI4 speech synthesizer. (#12311)
-- The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
-- In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
+- Popis poruka u Outlooku 2010 je ponovno čitljiv. (#12241)
+- U terminalnim programima u  Windows 10 inačici 1607 i novijim, prilikom umetanja ili brisanja znakova usred redka, znakovi sa desne strane se više ne čitaju. (#3200)
+  - Ova ispravka treba biti ručno uključena u naprednim korisnicima NVDA tako da se promjeni način čitanja izmjena u terminalnih programima na Diff Match Patch.
+- U MS Outlooku, nepotrebno izgovaranje daljine prilikom prelazka iz polja za uređivanje poruke u u polje za upisivanje naslova više se ne bi smjelo događati. (#10254)
+- U Python konzoli, sada je podržano unošenje znaka znaka tab za uvlačenje redka, i automatsko dovršavanje. (#11532)
+- Informacije o oblikovanju teksta i druge poruke u modusu čitanja više ne pokazuju neočekivane prazne redke kada se isključi izlged ekrana. (#12004)
+- Sada je moguće pročitati komentare u MS Wordu sa uključenom podrškom za UIA. (#9285)
+- Unapređene su performanse prilikom interakcije sa Visual studio. (#12171)
+- Ispravljene su grafičke pogreške kao što su to na primjer izostavljeni elementi kada se NVDA koristi sa jezikom koji se piše s desna na lijevo. (#8859)
+- Poštuje se izgled prozora i njegov smjer baziran na jeziku NVDA, umjesto na jeziku sustava. (#638)
+  - Poznata pogreška za jezike koji su pisani s desna na lijevo: desni graničnik grupiranja poklapa se sa oznakama/kontrolama. (#12181)
+- Jezik pythona sada poštuje jezik namješten u postavkama, te će se isti koristiti prilikom korištenja podrazumjevanog jezika sustava. (#12214)
+- TextInfo.getTextInChunks više se ne ruši kada se poziva na kontrolu obogaćenog teksta kao što je to NVAD preglednik zapisnika. (#11613)
+- Sada je ponovno moguće koristiti NVDA sa jezicima koji u sebi sadrže znak podvlaka u nazivu jezika kao na primjer de_CH u verzijama operacijskog sustava Windows 10 1803 i 1809. (#12250)
+- U WordPadu, podešavanje izgovora indeksa i eksponenata radi kao što je to i očekivano. (#12262)
+- NVDA više ne neuspijeva izgovoriti novofokusirani sadržaj na web stranici ako stari fokus nestane i bude zamijenjen novim u na toj istoj poziciji. (#12147)
+- Podcrtano, eksponent i indeks sada se izgovaraju za  cijele ćelije u Excelu ako je odgovarajuća opcija uključena. (#12264)
+- Ispravljeno je kopiranje konfiguracije tijekom instalacije iz prijenosne kopije kada je odredišna putanja prazna. (#12071, #12205)
+- Ispravljen je neispravan izgovor nekih slova sa akcentima ili dijakritičkih znakova kada je opcija 'izgovori veliko prije velikih slova' uključena. (#11948)
+- Ispravljena je nemogućnost izmjene visine pri pisanju velikih slova koristeći  SAPI4 govornu jedinicu. (#12311)
+- Instalacijski program NVDA sada također poštuje ``--minimal`` opciju naredbenog redka te ne reproducira zvuk pokretanja, ponašajući se kao prijenosna kopija NVDA izvršne datoteke. (#12289)
+- U MS Wordu ili Outlooku, tipke za kretanje poi tablicama sada mogu se koristiti za kretanej po tablicama izgleda ako ej opcija  "uključi tablce izgleda" uključena u postavkama modusa čitanja. (#11899)
+- više neće izgovarati "↑↑↑" za emoji znakove u određenim jezicima. (#11963)
 
 
 == Izmjene za razvojne programere ==

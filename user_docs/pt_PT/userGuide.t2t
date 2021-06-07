@@ -490,12 +490,12 @@ Apesar de um rato físico, ou um touchpad, terem de ser utilizados para navegar 
 + Modo de Navegação +[BrowseMode]
 Os documentos complexos, só de leitura, tais como páginas de Internet, são apresentados pelo NVDA, através da utilização do modo de navegação.
 Isso inclui documentos nas seguintes aplicações:
-- Microsoft Edge;
-- Microsoft Internet Explorer;
-- Google Chrome;
 - Mozilla Firefox;
+- Microsoft Internet Explorer;
 - Mozilla Thunderbird;
 - mensagens HTML no Microsoft Outlook;
+- Google Chrome;
+- Microsoft Edge;
 - Adobe Reader;
 - Foxit Reader;
 - Livros suportados no Amazon Kindle para PC.
@@ -1746,14 +1746,14 @@ Pode configurar o anúncio de:
 - Paginação:
  - Números de página
  - Números de linha
- - Indentação da linha [(Desligado, Voz, Sons ou ambos) #lineIndentationOptions]
+ - Indentação da linha [(Desligado, Voz, Sons ou ambos) #DocumentFormattingSettingsLineIndentation]
  - Indentação do parágrafo (i.e. indentação suspensa, indentação da primeira linha)
  - Espaçamento das linhas (simples, duplo, etc.)
  - Alinhamento
 - Informação de tabelas:
  - Tabelas
  - Títulos de linha e coluna
- - Limites das células [(Desligado, Estilos, Cores e Estilos)
+ - Limites das células (Desligado, Estilos, Cores e Estilos)
  - Coordenadas da célula
 - Elementos:
  - Títulos
@@ -1839,6 +1839,24 @@ Quando esta opção está activa, o NVDA usará a nova, ainda em progresso, vers
 ==== Falar palavras passe em consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Esta opção controla se os caracteres são anunciados pelo [anúncio de caracteres #KeyboardSettingsSpeakTypedCharacters] ou [anúncio de palavras escritas #KeyboardSettingsSpeakTypedWords] em situações em que o ecrã não é actualizado, tal como na entrada de palavras-passe em Consolas Windows com o suporte UI automation activado. Por motivos de segurança, esta opção deve ser deixada desactivada. No entanto, pode querer activá-la se notar problemas de performance ou instabilidade com o anúncio de caracteres e/ou palavras escritas activado ao usar o novo e experimental suporte do NVDA às consolas.
  
+==== Usar UIA com Microsoft Edge e outros navegadores baseados em chromium quando disponível: ====[ChromiumUIA]
+Permite especificar quando UIA será usado, se disponível, nos navegadores baseados em Chromium, tais como o Microsoft Edge.
+O suporte UIA para os navegadores baseados em Chromium está no início do desenvolvimento e pode não proporcionar o mesmo nível de acessibilidade que a IA2.
+A caixa combinada tem as seguintes opções:
+- Predefinição (Apenas quando necessário);
+- Apenas quando necessário;
+- Sim: se o navegador disponibilizar UIA o NVDA usá-la-á;
+- Não: Não usar UIA, mesmo que o NVDA não consiga injectar no processo. Isto pode ser útil para desenvolvedores para descortinar problemas com IA2 e querem assegurar-se que NVDA não volta para o uso de UIA.
+-
+
+==== Usar UI Automation para aceder às folhas do Microsoft Excel se disponível ====[UseUiaForExcel]
+Quando esta opção está activada o NVDA tentará usar a Microsoft UI Automation accessibility API para recolher informação dos controlos das folhas do Microsoft Excel.
+Esta é uma funcionalidade experimental e algumas funcionalidades do Microsoft Excel podem não estar acessíveis neste modo.
+Por exemplo, a lista de elementos, para listar fórmulas e comentários,, e o modo de navegação, para activar as teclas rápidas para saltar para um elemento de formulário, não estão disponíveis.
+No entanto, para um uso básico do Excel, este método permite uma melhoria na performance.
+Ainda não recomendamos que a maioria dos utilizadores active esta opção, mas agradecemos que utilizadores do Microsoft Excel  build 16.0.13522.10000 ou superior testem esta funcionalidade e nos dêem retorno.
+A implementação do UI automation no Microsoft Excel's está em constante alteração e as versões do Microsoft Office anteriores à 16.0.13522.10000 podem não expor informações suficientes para que esta funcionalidade tenha algum uso.
+
 ==== Use o novo suporte para caracteres digitados em aplicações de consola Windows quando disponível ====[AdvancedSettingsKeyboardSupportInLegacy]
 Esta opção activa um método alternativo para detectar os caracteres escritos em consolas Windows.
 Apesar de melhorar a performance e evitar que alguns anúncios sejam soletrados, pode ser incompatível com alguns programas em modo terminal.
@@ -1846,10 +1864,24 @@ Esta funcionalidade está disponível, e activada por padrão, no Windows 10, ve
 Atenção: Com esta opção activada os caracteres escritos que não aparecem no ecrã, tal como palavras-passe, não serão suprimidos.
 Em ambientes não confiáveis, pode desactivar temporariamente [o anúncio de caracteres escritos #KeyboardSettingsSpeakTypedCharacters] e o [anúncio de palavras escritas #KeyboardSettingsSpeakTypedWords] ao introduzir palavras-passe.
 
+==== Algoritmo Diff ====[DiffAlgo]
+Esta opção controla como o NVDA determina o novo texto a ser falado nas consolas de terminal.
+A caixa de combinação "algoritmo diff" tem três opções:
+- Automático (Difflib): A partir do NVDA 2021.1, esta opção é equivalente a Difflib.
+Em versões futuras pode ser alterado para Diff Match Patch, dependendo dos testes positivos dos utilizadores;
+- Permitir Diff Match Patch: Esta opção faz com que o NVDA calcule as alterações ao texto por caracter.
+Pode melhorar a performance quando muito texto é escrito na consola, e permite maior acerto no anúncio de alterações no meio das linhas.
+Todavia isso pode ser incompatível com algumas aplicações.
+Esta funcionalidade é suportada na Consola Windows no Windows 10 versões 1607 e seguintes.
+Adicionalmente, pode também estar disponível em outras consolas de Windows de versões anteriores.
+- Forçar Difflib: Esta opção faz com que o NVDA calcule as alterações ao texto por linha.
+É idêntico ao comportamento do NVDA até à versão 2020.4.
+-
+
 ==== Tentar cancelar a voz para eventos de foco expirados ====[CancelExpiredFocusSpeech]
 Esta opção activa a funcionalidade que tenta cancelar a fala para eventos de foco expoirados.
 Em especial, mover-se rapidamente pelas  mensagens no GMail usando o Chrome, pode fazer com que o NVDA anuncie informação desactualizada.
-Esta funcionalidade é experimental a partir do NVDA 2020.2.
+Esta funcionalidade é activada por padrão a partir do NVDA 2021.1.
 
 ==== Tempo limite dos movimentos do cursor (em ms) ====[AdvancedSettingsCaretMoveTimeout]
 Esta opção permite configurar quantos milissegundos o NVDA irá aguardar até que o cursor (ponto de inserção) se mova nos controlos de texto editáveis.

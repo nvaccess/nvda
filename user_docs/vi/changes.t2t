@@ -30,13 +30,13 @@ Bản phát hành này cũng ngưng hỗ trợ cho Adobe Flash.
 - Đã thêm nhiều kí hiệu toán học vào từ điển kí hiệu. (#11467)
 - Các tập tin hướng dẫn sử dụng, tính năng mới và danh sách các phím lệnh giờ đã có một diện mạo mới. (#12027)
 - Giờ đây, sẽ có thông báo "Không được hỗ trợ" khi cố gắng bật / tắt chế độ trình bày theo màn hình trong các ứng dụng không được hỗ trợ, như Microsoft Word. (#7297)
-- Tùy chọn 'Cố gắng không đọc các sự kiện lỗi thời của focus' trong bản thiết lập nâng cao gời đây mặc định được bật. (#10885)
+- Tùy chọn 'Cố gắng không đọc các sự kiện lỗi thời của focus trong bản thiết lập nâng cao gời đây mặc định được bật. (#10885)
   - Có thể tắt nó bằng cách chọn "Không" trong tùy chọn này.
   - Các ứng dụng web  (Gmail chẳng hạn) không còn đọc các thông tin lỗi thời khi di chuyển focus một cách nhanh chóng.
-- Espeak-ng đã được cập nhật lên 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
+- Espeak-ng đã được cập nhật lên 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - Các bản chữ nổi mới: Belarus chữ nổi văn học, Belarus chữ nổi máy tính, Urdu cấp 1, Urdu cấp 2.
-- Hỗ trợ cho nội dung của Adobe Flash đã bị gỡ khỏi NVDA vì việc dùng Flash đang được Adobe mạnh mẽ không khuyên khích. (#11131)
+- Hỗ trợ cho nội dung của Adobe Flash đã bị gỡ khỏi NVDA vì việc dùng Flash đang được Adobe ngưng hỗ trợ. (#11131)
 - NVDA sẽ bị thoát ngay cả khi các cửa sổ đang mở. Việc thoát chương trình giờ đây sẽ đóng tất cả cửa sổ và hộp thoại của NVDA. (#1740)
 - Giờ đây, có thể đóng trình hiển thị nội dung đọc bằng ``alt+F4`` và có nút đóng để người dùng các thiết bị trỏ dễ tương tác hơn. (#12330)
 - Trình xem chữ nổi giờ đây có nút đóng để người dùng các thiết bị trỏ dễ tương tác hơn. (#12328)
@@ -52,8 +52,8 @@ Bản phát hành này cũng ngưng hỗ trợ cho Adobe Flash.
 - Thông tin định dạng và các thông điệp có thể duyệt khác không còn đọc là dòng trắng ngoài ý muốn khi tắt trình bày theo màn hình. (#12004)
 - Giờ đây, có thể đọc bình luận trong MS Word khi bật UIA. (#9285)
 - Khả năng vận hành khi tương tác với Visual Studio đã được cải thiện. (#12171)
-- Sửa các lỗi đồ họa như thiếu thành phần khi dùng NVDA với phác thảo từ phải sang trái. (#8859)
-- Tôn trọng phác thảo giao diện người dùng dựa trên ngôn ngữ NVDA, không phải bản địa hóa của hệ thống. (#638)
+- Sửa các lỗi đồ họa như thiếu thành phần khi dùng NVDA với bố cục từ phải sang trái. (#8859)
+- Tôn trọng bố cục giao diện người dùng dựa trên ngôn ngữ NVDA, không phải bản địa hóa của hệ thống. (#638)
   - vấn đề đã biết cho các ngôn ngữ từ phải sang trái: bảng bên phải của các nhóm clip với các nhãn / điều khiển. (#12181)
 - Phần bản đĩa của python đã được thiết lập là khớp với ngôn ngữ đã chọn trong tùy chọn, và sẽ xuất hiện khi dùng ngôn ngữ mặc định. (#12214)
 - TextInfo.getTextInChunks không còn bị treo khi dược gọi trong các điều khiển Rich Edit như trình xem log của NVDA. (#11613)
@@ -1486,7 +1486,7 @@ Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t 
  - Hỗ trợ dấu trang của Microsoft Word để thống nhất các ô tiêu đề (tương thích với trình đọc màn hình Jaws).
  -  Dùng các lệnh thiết lập tiêu đề cột (NVDA+shift+c) và thiết lập tiêu đề dòng (NVDA+shift+r) khi đứng ở ô tiêu đề đầu tiên trong một bảng sẽ cho phép bạn thiết lập để NVDA tự đọc những tiêu đề này. Các thiết lập được lưu luôn trong tài liệu nên có thể dùng tiếp khi mở lại tài liệu này, và cũng dùng được với các trình đọc màn hình khác có hỗ trợ dấu trang.
 - Microsoft Word: thông báo khoảng cách từ lề trái của trang khi bấm phím tab. (#1353)
-- Microsoft Word: cung cấp phản hồi với cả bộ đọc và chữ nổi cho hầu hết các phím tắt định dạng (in đậm, in nghiêng, gạch chân, căn lề, cấp độ phác thảo, superscript, subscript và kích thước phông). (#1353)
+- Microsoft Word: cung cấp phản hồi với cả bộ đọc và chữ nổi cho hầu hết các phím tắt định dạng (in đậm, in nghiêng, gạch chân, căn lề, cấp độ bố cục, chỉ số trên, chỉ số dưới và kích thước phông). (#1353)
 - Microsoft Excel: nếu có chú thích trong các ô được chọn, có thể đọc chúng bằng cách bấm NVDA+alt+c. (#2920)
 - Microsoft Excel: Cung cấp một hộp thoại của NVDA để chỉnh sửa chú thích ở ô hiện tại khi bấm lệnh shift+f2 của Excel để vào chế độ chỉnh sửa chú thích. (#2920)
 - Microsoft Excel: phản hồi bằng giọng đọc và chữ nổi với nhiều phím tắt hơn để chọn và di chuyển (#4211) including:

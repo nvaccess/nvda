@@ -33,7 +33,7 @@ Adobe Flashia ei myöskään enää tueta.
 - Lisäasetukset-paneelin "Yritä perua vanhentuneiden kohdistustapahtumien puhe" -asetus on nyt oletusarvoisesti käytössä. (#10885)
  - Toiminto voidaan poistaa käytöstä määrittämällä tämän asetuksen arvoksi "Ei".
  - Verkkopohjaisissa sovelluksissa (esim. Gmail) ei enää puhuta vanhentunutta tietoa siirrettäessä kohdistusta nopeasti.
-- eSpeak-NG on päivitetty versioksi 1.51-dev muutos cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
+- eSpeak-NG on päivitetty versioksi 1.51-dev muutos f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Liblouis-pistekirjoituskääntäjä päivitetty versioksi [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
  - Uusia pistetaulukoita: valkovenäläinen kaunokirjallisuuden pistekirjoitus, valkovenäläinen tietokonemerkistö, urdu taso 1, urdu taso 2.
 - Adobe Flash -sisällön tuki on poistettu NVDA:sta, koska Adobe on aktiivisesti varoittanut Flashin käytöstä. (#11131)
@@ -47,7 +47,6 @@ Adobe Flashia ei myöskään enää tueta.
 - Viestiluettelo on taas luettavissa Outlook 2010:ssä. (#12241)
 - Kun pääteohjelmissa poistetaan tai lisätään merkkejä keskellä riviä Windows 10:n versiossa 1607 ja uudemmissa, kohdistimen oikealla puolella olevia merkkejä ei enää lueta. (#3200)
  - Tämä kokeellinen korjaus on otettava käyttöön manuaalisesti NVDA:n Lisäasetukset-paneelista muuttamalla Muutosten havaitsemismenetelmä -asetuksen arvoksi Diff Match Patch.
-- Korjattu MCS Electronics -kehitysympäristön muokkauskenttien käyttäminen. (#11966)
 - Virheellisiä etäisyysilmoituksia ei pitäisi enää tapahtua MS Outlookissa siirryttäessä Vaihto+Sarkain-näppäinyhdistelmällä viestirungosta aihekenttään. (#10254)
 - Python-konsolissa tuetaan nyt sarkainsisennyksen lisäämistä sellaisen syöttörivin alkuun, joka ei ole tyhjä, ja sarkaintäydennyksen suorittamista syöttörivin keskellä. (#11532)
 - Muotoilutiedoissa ja  muissa selaustilassa näytettävissä ilmoituksissa ei enää näytetä odottamattomia tyhjiä rivejä, kun ruutuasettelu on poistettu käytöstä. (#12004)
@@ -67,6 +66,7 @@ Adobe Flashia ei myöskään enää tueta.
 - Korjattu virhe SAPI 4 -puhesyntetisaattorin äänenkorkeutta muutettaessa. (#12311)
 - Nyt myös NVDA:n asennusohjelma huomioi ``--minimal``-komentoriviparametrin, eikä soita käynnistysääntä noudattaen samaa dokumentoitua käyttäytymistä kuin asennetun tai massamuistiversion nvda.exe. (#12289)
 - Taulukkoon siirtävä pikanavigointikomento voi nyt siirtää asettelutaulukkoon MS Wordissa tai Outlookissa, mikäli "Sisällytä asettelutaulukot" -asetus on otettu käyttöön selaustilan asetuksista. (#11899)
+- NVDA ei enää sano emojien kohdalla "↑↑↑" tietyissä kielissä. (#11963)
 
 
 == Muutokset kehittäjille ==
