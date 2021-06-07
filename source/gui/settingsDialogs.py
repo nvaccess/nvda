@@ -1504,7 +1504,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("SpeechSettingsSymbolLevelWord", self.symbolLevelWord)
 		if config.conf["speech"]["symbolLevelWord"] == characterProcessing.SYMLVL_ALL:
 			self.symbolLevelWord.Set3StateValue(wx.CHK_CHECKED)
-		elif config.conf["speech"]["symbolLevelWord"] == characterProcessing.SYMLVL_UNCHANGED:
+		elif config.conf["speech"]["symbolLevelWord"] == characterProcessing.SYMLVL.UNCHANGED:
 			self.symbolLevelWord.Set3StateValue(wx.CHK_UNCHECKED)
 		else:
 			self.symbolLevelWord.Set3StateValue(wx.CHK_UNDETERMINED)
@@ -1602,7 +1602,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		if self.symbolLevelWord.Get3StateValue() == wx.CHK_CHECKED:
 			config.conf["speech"]["symbolLevelWord"] = characterProcessing.SYMLVL_ALL
 		elif self.symbolLevelWord.Get3StateValue() == wx.CHK_UNCHECKED:
-			config.conf["speech"]["symbolLevelWord"] = characterProcessing.SYMLVL_UNCHANGED
+			config.conf["speech"]["symbolLevelWord"] = characterProcessing.SYMLVL.UNCHANGED
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
 		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()

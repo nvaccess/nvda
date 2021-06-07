@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2020 NV Access Limited, World Light Information Limited,
+# Copyright (C) 2010-2021 NV Access Limited, World Light Information Limited,
 # Hong Kong Blind Union, Babbage B.V., Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import time
+from versionInfo import version_year
+from enum import IntEnum
 import os
 import codecs
 import collections
@@ -124,27 +125,40 @@ def getCharacterDescription(locale,character):
 		desc=getCharacterDescription('en',character)
 	return desc
 
+
 # Speech symbol levels
-SYMLVL_NONE = 0
-SYMLVL_SOME = 100
-SYMLVL_MOST = 200
-SYMLVL_ALL = 300
-SYMLVL_CHAR = 1000
-SYMLVL_UNCHANGED = -1
+class SYMLVL(IntEnum):
+	NONE = 0
+	SOME = 100
+	MOST = 200
+	ALL = 300
+	CHAR = 1000
+	UNCHANGED = -1
+
+
+# The following SYMLVL_ constants are deprecated in #11856 but remain to maintain backwards compatibility.
+# Remove these in 2022.1 and replace instances using them with the SYMLVL IntEnum.
+if version_year < 2022:
+	SYMLVL_NONE = SYMLVL.NONE
+	SYMLVL_SOME = SYMLVL.SOME
+	SYMLVL_MOST = SYMLVL.MOST
+	SYMLVL_ALL = SYMLVL.ALL
+	SYMLVL_CHAR = SYMLVL.CHAR
+
 SPEECH_SYMBOL_LEVEL_LABELS = {
 	# Translators: The level at which the given symbol will be spoken.
-	SYMLVL_NONE: pgettext("symbolLevel", "none"),
+	SYMLVL.NONE: pgettext("symbolLevel", "none"),
 	# Translators: The level at which the given symbol will be spoken.
-	SYMLVL_SOME: pgettext("symbolLevel", "some"),
+	SYMLVL.SOME: pgettext("symbolLevel", "some"),
 	# Translators: The level at which the given symbol will be spoken.
-	SYMLVL_MOST: pgettext("symbolLevel", "most"),
+	SYMLVL.MOST: pgettext("symbolLevel", "most"),
 	# Translators: The level at which the given symbol will be spoken.
-	SYMLVL_ALL: pgettext("symbolLevel", "all"),
+	SYMLVL.ALL: pgettext("symbolLevel", "all"),
 	# Translators: The level at which the given symbol will be spoken.
-	SYMLVL_CHAR: pgettext("symbolLevel", "character"),
+	SYMLVL.CHAR: pgettext("symbolLevel", "character"),
 }
-CONFIGURABLE_SPEECH_SYMBOL_LEVELS = (SYMLVL_NONE, SYMLVL_SOME, SYMLVL_MOST, SYMLVL_ALL)
-SPEECH_SYMBOL_LEVELS = CONFIGURABLE_SPEECH_SYMBOL_LEVELS + (SYMLVL_CHAR,)
+CONFIGURABLE_SPEECH_SYMBOL_LEVELS = (SYMLVL.NONE, SYMLVL.SOME, SYMLVL.MOST, SYMLVL.ALL)
+SPEECH_SYMBOL_LEVELS = CONFIGURABLE_SPEECH_SYMBOL_LEVELS + (SYMLVL.CHAR,)
 
 # Speech symbol preserve modes
 SYMPRES_NEVER = 0
@@ -255,11 +269,11 @@ class SpeechSymbols(object):
 	}
 	IDENTIFIER_ESCAPES_OUTPUT = {v: k for k, v in IDENTIFIER_ESCAPES_INPUT.items()}
 	LEVEL_INPUT = {
-		"none": SYMLVL_NONE,
-		"some": SYMLVL_SOME,
-		"most": SYMLVL_MOST,
-		"all": SYMLVL_ALL,
-		"char": SYMLVL_CHAR,
+		"none": SYMLVL.NONE,
+		"some": SYMLVL.SOME,
+		"most": SYMLVL.MOST,
+		"all": SYMLVL.ALL,
+		"char": SYMLVL.CHAR,
 	}
 	LEVEL_OUTPUT = {v:k for k, v in LEVEL_INPUT.items()}
 	PRESERVE_INPUT = {
@@ -485,7 +499,7 @@ class SpeechSymbolProcessor(object):
 					pass
 				continue
 			if symbol.level is None:
-				symbol.level = SYMLVL_ALL
+				symbol.level = SYMLVL.ALL
 			if symbol.preserve is None:
 				symbol.preserve = SYMPRES_NEVER
 			if symbol.displayName is None:
@@ -667,7 +681,7 @@ def processSpeechSymbols(locale, text, level):
 	@type locale: str
 	@param text: The text to process.
 	@type text: str
-	@param level: The symbol level to use; one of the SYMLVL_* constants.
+	@param level: The symbol level to use; one of the SYMLVL.* constants.
 	"""
 	try:
 		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)

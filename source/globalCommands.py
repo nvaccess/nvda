@@ -903,7 +903,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleSpeechSymbolLevelWordAll(self, gesture):
 		curLevel = config.conf["speech"]["symbolLevelWord"]
 		if curLevel == characterProcessing.SYMLVL_ALL:
-			level = characterProcessing.SYMLVL_UNCHANGED
+			level = characterProcessing.SYMLVL.UNCHANGED
 			reportedState = _("off")
 		else:
 			level = characterProcessing.SYMLVL_ALL
