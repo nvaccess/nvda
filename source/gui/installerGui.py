@@ -109,9 +109,11 @@ def doInstall(
 		gui.messageBox(msg+_("Please press OK to start the installed copy."),
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
+
+	newNVDA = None
 	if startAfterInstall:
-		installedPath = os.path.join(installer.defaultInstallPath, 'nvda.exe')
-	core.triggerNVDAExit(newNVDA=core.NewNVDAInstance(installedPath))
+		newNVDA = core.NewNVDAInstance(os.path.join(installer.defaultInstallPath, 'nvda.exe'))
+	core.triggerNVDAExit(newNVDA)
 
 
 def doSilentInstall(

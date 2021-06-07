@@ -67,6 +67,10 @@ post_windowMessageReceipt = extensionPoints.Action()
 _pump = None
 _isPumpPending = False
 
+_hasShutdownBeenTriggered = False
+_shuttingDownFlagLock = threading.Lock()
+
+
 def doStartupDialogs():
 	import config
 	import gui
@@ -114,10 +118,10 @@ def doStartupDialogs():
 
 @dataclass
 class NewNVDAInstance:
-	shouldStartNewInstance = False
 	filePath: Optional[str] = None
 	parameters: Optional[str] = None
 	directory: Optional[str] = None
+
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
@@ -234,23 +238,22 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 		log.debugWarning("wx does not support language %s" % lang)
 	return wxLang
 
-def _start(newNVDa: NewNVDAInstance):
+
+def _startNewInstance(newNVDA: NewNVDAInstance):
 	"""
-	If something (eg the installer or exit dialog) has queued a new NVDA instance to start, start it.
+	If something (eg the installer or exit dialog) has requested a new NVDA instance to start, start it.
 	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit and
 	_closeAllWindows.
 	"""
 	import shellapi
 	from winUser import SW_SHOWNORMAL
-	if not newNVDa.shouldStartNewInstance:
-		return
-	log.debug("Starting new NVDA instance")
+	log.debug(f"Starting new NVDA instance: {newNVDA}")
 	shellapi.ShellExecute(
 		hwnd=None,
 		operation=None,
-		file=newNVDa.filePath,
-		parameters=newNVDa.parameters,
-		directory=newNVDa.directory,
+		file=newNVDA.filePath,
+		parameters=newNVDA.parameters,
+		directory=newNVDA.directory,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
 		showCmd=SW_SHOWNORMAL
 	)
@@ -259,12 +262,8 @@ def _start(newNVDa: NewNVDAInstance):
 def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
 	preNVDAExit.notifyOnce()
 	_nvdaExitActions.notifyOnce()
-	if newNVDA:
-		_start(newNVDA)
-
-
-_hasShutdownBeenTriggered = False
-_shuttingDownFlagLock = threading.Lock()
+	if newNVDA is not None:
+		_startNewInstance(newNVDA)
 
 
 def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
