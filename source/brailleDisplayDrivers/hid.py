@@ -256,9 +256,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				and usageID == BraillePageUsageID.ROUTER_KEY
 			):
 				self.routingIndex = buttonCapsInfo.relativeIndexInCollection + 1
-				# Hack: BrailliantB incorrectly exposed routing keys backwards!
-				self.routingIndex = driver.numCells - self.routingIndex
-				print("routingIndex %d"%self.routingIndex)
 				# Prefix the gesture name with the specific routing collection name (E.g. routerSet1)
 				namePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
 		name = self._usageIDToGestureName(usagePage, usageID)

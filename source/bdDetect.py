@@ -126,9 +126,6 @@ def getDriversForConnectedUsbDevices():
 	for match in usbDevs:
 		# check for the Braille HID protocol before any other device matching. 
 		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
-			# Skip over broken Brailliant BI 20X interface 0
-			if match.deviceInfo['vendorID'] == 0x1C71 and match.deviceInfo['productID'] == 0xC141 and 'mi_00' in match.port:
-				continue
 			yield ("hid", match)
 		for driver, devs in _driverDevices.items():
 			for type, ids in devs.items():
@@ -350,9 +347,6 @@ def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 		# check for the Braille HID protocol before any other device matching. 
 		if driver == "hid":
 			if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
-				# Skip over broken Brailliant BI 20X interface 0
-				if match.deviceInfo['vendorID'] == 0x1C71 and match.deviceInfo['productID'] == 0xC141 and 'mi_00' in match.port:
-					continue
 				yield match
 		else:
 			devs = _driverDevices[driver]
