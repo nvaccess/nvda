@@ -43,8 +43,7 @@ import garbageHandler  # noqa: E402
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
-# inform those who want to know that NVDA has begun to exit.
-preNVDAExit = extensionPoints.Action()
+# used internally to ensure exit events fire in order safely
 _nvdaExitActions = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
@@ -260,7 +259,6 @@ def _startNewInstance(newNVDA: NewNVDAInstance):
 
 
 def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
-	preNVDAExit.notifyOnce()
 	_nvdaExitActions.notifyOnce()
 	if newNVDA is not None:
 		_startNewInstance(newNVDA)
@@ -274,6 +272,8 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
 			# queue this so that the calling process can exit safely (eg a Popup menu)
 			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
 			_hasShutdownBeenTriggered = True
+		else:
+			log.warn("NVDA exit has already been triggered")
 
 
 def _closeAllWindows():
