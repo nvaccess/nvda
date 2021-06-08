@@ -276,7 +276,7 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
 			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
 			_hasShutdownBeenTriggered = True
 		else:
-			log.warn("NVDA exit has already been triggered")
+			log.debugWarning("NVDA exit has already been triggered")
 
 
 def _closeAllWindows():
