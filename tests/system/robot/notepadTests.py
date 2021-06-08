@@ -28,8 +28,6 @@ def test_symbolLevelWord(isSymbolLevelWordAllExpected=True):
 		'.': 'dot',
 	}
 	textStr = ' '.join(wordsWithSymbols)
-	_asserts.strings_match(textStr, 'He said (quietly), "Hello, Jim".')
-
 	_notepad.prepareNotepad(f"Test: {textStr}")
 	for expectedWord in wordsWithSymbols:
 		wordSpoken = _notepad.getSpeechAfterKey("numpad6")
