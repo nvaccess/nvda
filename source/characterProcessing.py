@@ -675,13 +675,12 @@ class SpeechSymbolProcessor(object):
 
 _localeSpeechSymbolProcessors = LocaleDataMap(SpeechSymbolProcessor)
 
-def processSpeechSymbols(locale, text, level):
+
+def processSpeechSymbols(locale: str, text: str, level: SYMLVL):
 	"""Process some text, converting symbols according to desired pronunciation.
 	@param locale: The locale of the text.
-	@type locale: str
 	@param text: The text to process.
-	@type text: str
-	@param level: The symbol level to use; one of the SYMLVL.* constants.
+	@param level: The symbol level to use.
 	"""
 	try:
 		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
