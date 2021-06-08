@@ -1129,9 +1129,8 @@ def speakTextInfo(
 	if unit == textInfos.UNIT_CHARACTER:
 		symbolLevel = characterProcessing.SYMLVL_ALL
 	elif unit == textInfos.UNIT_WORD:
-		symbolLevelWord = config.conf["speech"]["symbolLevelWord"]
-		if symbolLevelWord != characterProcessing.SYMLVL.UNCHANGED:
-			symbolLevel = symbolLevelWord
+		if config.conf["speech"]["symbolLevelWordAll"]:
+			symbolLevel = characterProcessing.SYMLVL.ALL
 	for seq in speechGen:
 		speak(seq, symbolLevel=symbolLevel, priority=priority)
 	return speechGen.returnValue

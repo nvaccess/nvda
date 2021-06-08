@@ -1493,21 +1493,15 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel)
 		)
 
-		self.symbolLevelWord = settingsSizerHelper.addItem(
+		self.symbolLevelWordAll = settingsSizerHelper.addItem(
 			wx.CheckBox(
 				self,
 				# Translators: The label for a setting in the Speech category
 				label=_("Speak all punctuation and symbols when reviewing by &word"),
-				style=wx.CHK_3STATE
 			)
 		)
-		self.bindHelpEvent("SpeechSettingsSymbolLevelWord", self.symbolLevelWord)
-		if config.conf["speech"]["symbolLevelWord"] == characterProcessing.SYMLVL_ALL:
-			self.symbolLevelWord.Set3StateValue(wx.CHK_CHECKED)
-		elif config.conf["speech"]["symbolLevelWord"] == characterProcessing.SYMLVL.UNCHANGED:
-			self.symbolLevelWord.Set3StateValue(wx.CHK_UNCHECKED)
-		else:
-			self.symbolLevelWord.Set3StateValue(wx.CHK_UNDETERMINED)
+		self.bindHelpEvent("SpeechSettingsSymbolLevelWord", self.symbolLevelWordAll)
+		self.symbolLevelWordAll.SetValue(config.conf["speech"]["symbolLevelWordAll"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel (if checked, text will be read using the voice for the language of the text).
@@ -1599,10 +1593,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"]["symbolLevel"] = characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[
 			self.symbolLevelList.GetSelection()
 		]
-		if self.symbolLevelWord.Get3StateValue() == wx.CHK_CHECKED:
-			config.conf["speech"]["symbolLevelWord"] = characterProcessing.SYMLVL_ALL
-		elif self.symbolLevelWord.Get3StateValue() == wx.CHK_UNCHECKED:
-			config.conf["speech"]["symbolLevelWord"] = characterProcessing.SYMLVL.UNCHANGED
+		config.conf["speech"]["symbolLevelWordAll"] = self.symbolLevelWordAll.IsChecked()
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
 		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
