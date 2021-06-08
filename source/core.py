@@ -43,8 +43,6 @@ import garbageHandler  # noqa: E402
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
-# used internally to ensure exit events fire in order safely
-_nvdaExitActions = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
 
@@ -259,7 +257,8 @@ def _startNewInstance(newNVDA: NewNVDAInstance):
 
 
 def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
-	_nvdaExitActions.notifyOnce()
+	_handleNVDAModuleCleanupBeforeGUIExit()
+	_closeAllWindows()
 	if newNVDA is not None:
 		_startNewInstance(newNVDA)
 
@@ -282,7 +281,7 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
 
 def _closeAllWindows():
 	"""
-	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit.
+	Should only be used by calling triggerNVDAExit and after _handleNVDAModuleCleanupBeforeGUIExit.
 	Ensures the wx mainloop is exited by all the top windows being destroyed.
 	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
 	"""
@@ -332,6 +331,29 @@ def _closeAllWindows():
 	# the MainFrame has EVT_CLOSE bound to the ExitDialog
 	# which calls this function on exit, so destroy this window
 	app.ScheduleForDestruction(gui.mainFrame)
+
+
+def _handleNVDAModuleCleanupBeforeGUIExit():
+	""" Terminates various modules that rely on the GUI. This should be used before closing all windows
+	and terminating the GUI.
+	"""
+	import brailleViewer
+	import globalPluginHandler
+	import watchdog
+
+	try:
+		import updateCheck
+		# before the GUI is terminated we must terminate the update checker
+		_terminate(updateCheck)
+	except RuntimeError:
+		pass
+
+	# The core is expected to terminate, so we should not treat this as a crash
+	_terminate(watchdog)
+	# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
+	_terminate(globalPluginHandler)
+	# the brailleViewer should be destroyed safely before closing the window
+	brailleViewer.destroyBrailleViewer()
 
 
 def main():
@@ -683,25 +705,6 @@ def main():
 		postNvdaStartup.notify()
 
 	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
-
-	def handleNVDAModuleCleanupBeforeGUIExit():
-		""" Terminates various modules that rely on the GUI. This should be used before closing all windows
-		and terminating the GUI
-		"""
-		import brailleViewer
-		# before the GUI is terminated we must terminate the update checker
-		if updateCheck:
-			_terminate(updateCheck)
-
-		# The core is expected to terminate, so we should not treat this as a crash
-		_terminate(watchdog)
-		# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
-		_terminate(globalPluginHandler)
-		# the brailleViewer should be destroyed safely before closing the window
-		brailleViewer.destroyBrailleViewer()
-	
-	_nvdaExitActions.register(handleNVDAModuleCleanupBeforeGUIExit)
-	_nvdaExitActions.register(_closeAllWindows)
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
