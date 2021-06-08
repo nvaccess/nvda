@@ -265,6 +265,10 @@ def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
 
 
 def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
+	"""
+	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
+	instance information with `newNVDA`.
+	"""
 	import queueHandler
 	global _hasShutdownBeenTriggered
 	with _shuttingDownFlagLock:
