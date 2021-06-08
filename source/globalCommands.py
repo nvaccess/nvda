@@ -902,7 +902,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleSpeechSymbolLevelWordAll(self, gesture):
 		curLevel = config.conf["speech"]["symbolLevelWordAll"]
-		reportedState = _("off") if curLevel else _("on")
+		reportedState = pgettext("command toggle", "off") if curLevel else pgettext("command toggle", "on")
 		config.conf["speech"]["symbolLevelWordAll"] = not curLevel
 		ui.message(
 			# Translators: Reported when toggling a speech setting
