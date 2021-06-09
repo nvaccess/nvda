@@ -901,9 +901,14 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SPEECH
 	)
 	def script_toggleSpeechSymbolLevelWordAll(self, gesture):
-		curLevel = config.conf["speech"]["symbolLevelWordAll"]
-		reportedState = pgettext("command toggle", "off") if curLevel else pgettext("command toggle", "on")
-		config.conf["speech"]["symbolLevelWordAll"] = not curLevel
+		symbolLevelWordAll = config.conf["speech"]["symbolLevelWordAll"]
+		if symbolLevelWordAll:
+			# Translators: Used to report the new state of a setting which is toggled via a command.
+			reportedState = pgettext("command toggle", "off")
+		else:
+			# Translators: Used to report the new state of a setting which is toggled via a command.
+			reportedState = pgettext("command toggle", "on")
+		config.conf["speech"]["symbolLevelWordAll"] = not symbolLevelWordAll
 		ui.message(
 			# Translators: Reported when toggling a speech setting
 			_("Speak all punctuation and symbols when reviewing by word: {state}").format(
