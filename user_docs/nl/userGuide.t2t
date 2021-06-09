@@ -507,7 +507,6 @@ Het gaat om documenten van de volgende toepassingen:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - ondersteunde boeken in Amazon Kindle voor PC
 -
 
@@ -606,7 +605,7 @@ Gebruik de volgende toetsen  voor zoekopdrachten:
 %kc:endInclude
 
 ++ Ingebedde objecten ++[ImbeddedObjects]
-De inhoud van pagina’s kan verrijkt zijn met programmatuur zoals Adobe Flash, Oracle Java en HTML5, maar ook met applicaties en dialoogvensters.
+De inhoud van pagina’s kan verrijkt zijn met programmatuur zoals Oracle Java en HTML5, maar ook met applicaties en dialoogvensters.
 Wanneer u iets dergelijks tegenkomt in bladermodus zal NVDA dit respectievelijk melden als “Ingebed (Embedded) Object”, “applicatie”, of “dialoogvenster.
 Met de letternavigatietoetsen o en Shift + o kunt u hier snel naar toe navigeren.
 Door op Enter te drukken wordt interactie met zulke objecten mogelijk.
@@ -803,6 +802,8 @@ In zo'n geval kent NVDA de optie 'Scherm dimmen' die ingeschakeld kan worden om 
 
 U kunt Scherm dimmen inschakelen in de categorie [zicht #VisionSettings] in het dialoogvenster   [Instellingen van NVDA #NVDASettings].
 
+Wanneer Schermdimmen is ingeschakeld, zijn taken die rechtstreeks te maken hebben met wat er op het scherm verschijnt, niet uitvoerbaar.
+
 + Inhoudherkenning +[ContentRecognition]
 Wanneer auteurs onvoldoende informatie verschaffen waarmee een gebruiker van een schermleesprogramma kan bepalen om welke inhoud het gaat, kunnen verscheidene hulpprogramma's worden gebruikt om de inhoud te herkennen uit een afbeelding.
 NVDA ondersteunt de OCR Optical Character Recognition, meestal 'tekstherkenning' genoemd in het nederlands, ) functionaliteit die in Windows 10 is ingebouwd om tekst uit afbeeldingen te herkennen.
@@ -823,6 +824,8 @@ NVDA kan hiervan gebruik maken om tekst uit afbeeldingen en ontoegankelijke toep
 
 In de categorie [Windows 10 OCR #Win10OcrSettings] van het dialoogvenster [Instellingen van NVDA #NVDASettings] kunt u de tekstherkenningstaal opgeven.
 U kunt extra talen toevoegen door in het menu Start, (of met linker Windows-toets +i) Instellingen te kiezen, Tijd en Taal -> Regio & Taal te selecteren en dan Een taal toevoegen te kiezen.
+
+Het kan voorkomen dat Windows 10 OCR gedeeltelijk of in het geheel niet compatibel is met [zicht-gerelateerde toepassingen van NVDA #Vision] of andere externe visuele hulpmiddelen. U zult deze hulpprogramma's dan ook uit moeten schakelen voordat u verder gaat met herkennen.
 
 %kc:beginInclude
 Om de tekst in het huidige navigatorobject te herkennen met behulp van Windows 10 OCR drukt u op NVDA+r.
@@ -1760,7 +1763,7 @@ U kunt de vermelding laten horen van:
 - Pagina's en Afstand
  - Paginanummers
  - Regelnummers
- - Regel inspringen melden [(Uit, Spraak, Tonen, Zowel Spraak als Tonen) #lineIndentationOptions]
+ - Regel inspringen melden [(Uit, Spraak, Tonen, Zowel Spraak als Tonen) #DocumentFormattingSettingsLineIndentation]
  - Inspringen alinea (bij voorbeeld verkeerd om , eerste regel)
  - Regelafstand ( enkel, dubbel, etc.)
  - Uitlijning
@@ -1768,7 +1771,8 @@ U kunt de vermelding laten horen van:
  - Tabellen
  - Rij- en kolomkoppen
  - Celcoördinaten
- - Celranden [(Uit, Stijlen, Zowel kleuren als stijlen
+ - Celranden (Uit, Stijlen, Zowel kleuren als stijlen
+ - Celranden (Uit, Stijlen, Zowel kleuren als stijlen
 - Elementen
   - Links
   - Koppen
@@ -1850,9 +1854,27 @@ Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, a
 ==== UI Automation gebruiken om toegang te krijgen tot Windows-consool wanneer beschikbaar ====[AdvancedSettingsConsoleUIA]
 Wanneer deze optie ingeschakeld is, zal NVDA een nieuwe, nog in otwikkeling zijnde, versie van haar ondersteuning voor de Windows-consool gebruiken waarmee toegankelijkheidsverbeteringen worden benut die Microsoft heeft doorgevoerd https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Deze mogelijkheid is nog zeer experimenteel van aard en  nog incompleet, dus wordt het gebruik ervan nog niet aanbevolen. Wanneer deze echter volledig is uitontwikkeld, dan is de verwachting dat deze nieuwe vorm van ondersteuning de standaard gaat worden waarmee de prestaties en stabiliteit van NVDA in opdrachtmodules van Windows worden verbeterd. 
 
-==== Wachtwoorden uitspreken in  Windows-consool ====[AdvancedSettingsWinConsoleSpeakPasswords]
+==== Wachtwoorden uitspreken in  UIA consools ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Hiermee bepaalt u of [getypte karakters uitspreken #KeyboardSettingsSpeakTypedCharacters] nof [getypte woorden uitspreken #KeyboardSettingsSpeakTypedWords] actief is in situaties waar het  scherm niet wordt ververst zoals bij het invoeren van een wachtwoord in het Windows-consool als ondersteuning voor UI automation ingeschakeld is. Om veiligheidsredenen moet deze instelling uitgeschakeld blijven. Het kan echter voorkomen dat u de instelling  zou willen inschakelen als het mis gaat met het uitsprken van getypte tekens / worden    bij gebruik van de nieuwe, experimentele consool-ondersteuning van NVDA. 
-		
+
+==== UI automation gebruiken bij Edge en andere op Chromium gebaseerde browsers waar beschikbaar ====[ChromiumUIA]
+Biedt de mogelijkheid aan te geven wanneer UIA (User Interface Automation)  gebruikt wordt, voor zover deze beschikbaar is, in op Chromium gebaseerde browsers zoals Microsoft Edge.
+UIA Ondersteuning voor op Chromium gebaseerde browsers bevindt zich nog in een vroeg stadium van ontwikkeling en biedt wellicht nog niet hetzelfde toegangsniveau als IA2.
+Het keuzemenu heeft de volgende opties:
+- Standaard (Alleen indien nodig: De huidige NVDA-standaardinstelling is Alleen indien nodig". Deze standaardinstelling kan met het voortschrijden van de technologie in de toekomst aangepast worden.
+- Alleen indien nodig: Als NVDA niet in staat is in te breken inhet browserproces om IA2 te gebruiken en UIA beschikbaar is, dan zal NVDA terugvallen op UIA.
+- Ja: Als de browser over UIA kan beschikken zal NVDA UIA gebruiken.
+- Nee: UIA, niet gebruiken, zelfs niet als NVDA de toegang tot het browserproces wordt ontzegd. Dit kan nuttig zijn voor ontwikkelaars die bugs in / met IA2 proberen op te lossen en er zeker van willen zijn dat NVDA niet op UIA terugvalt.
+-
+
+==== UI automation gebruiken voor toegang tot Microsoft  Excel spreadsheet-besturingselementen indien beschikbaar ====[UseUiaForExcel]
+Wanneer deze optie is ingeschakeld zal NVDA proberen de Microsoft UI Automation accessibility API te gebruiken om informatie op te halen uit Microsoft Excel Spreadsheet-besturingselementen.
+Deze toepassing is in een experimentele fase, en sommige mogelijkheden van  Microsoft Excel zijn wellicht niet beschikbaar  in deze modus.
+Zo is bijv. de Elementenlijst van NVDA voor het opsommen van formules en opmerkingen niet beschikbaar. Dit geldt ook voor de Bladermodus snelnavigatieoptie om naar formuliervelden te springen op een spreadsheet (rekenblad).
+Voor zover het gaat om navigeren in / werken met spreadsheets op een meer elementair niveau kan deze  optie echter  een enorme prestatieverbetering opleveren.
+Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Microsoft Excel  build 16.0.13522.10000  of hoger de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
+De implementatie van Microsoft Excel's UI automation is aan voortdurende verandering onderhevig, en  versies van Microsoft Office die ouder zijn dan 16.0.13522.10000 geven mogelijk niet genoeg informatie prijs, wat deze optie vokomen onbruikbaar maakt.
+
 ==== Gebruik de nieuwe ondersteuning voor getypte karakters in het Windows-consool wanneer beschikbaar ====[AdvancedSettingsKeyboardSupportInLegacy]
 Met deze optie stelt u een alternatieve methode in voor het detecteren van getypte karakters in opdrachtmodules van Windows.
 Terwijl de prestatie hiermee verbetert en voorkomen wordt dat consool-uitvoer wordt uitgespeld, kan deze methode incompatibel zijn  met enkele terminal-programma's.
@@ -1860,6 +1882,20 @@ Dit alternatief is beschikbaar en staat standaard aan in Windows 10 versie 1607 
 Waarschuwing: Als deze optie is ingeschakeld, worden getypte karakters die niet op het scherm te zien zijn zoals wachtwoorden, niet onderdrukt.
 In een omgeving die u niet vertrouwt kunt u [Getypte karakters uitspreken #KeyboardSettingsSpeakTypedCharacters] en [Getypte woorden uitspreken #KeyboardSettingsSpeakTypedWords] tijdelijk uitzetten wanneer u wachtwoorden invoert.
 
+==== Diff algoritme ====[DiffAlgo]
+Deze instelling bepaalt hoe NVDA moet omgaan met de nieuwe in spraak om te zetten tekst in terminals.
+Het diff algorithm keuzemenu heeft drie opties:
+- Automatisch: met ingang van NVDA 2021.1, is deze optie gelijk aan Difflib.
+In een later te verschijnen versie kan de optie mogelijk gewijzigd worden in  Diff Match Patch afhankelijk van positieve gebruikerservaringen.
+- Diff Match Patch toestaan: Deze optie zorgt ervoor dat  NVDA wijzigingen aan de terminal-tekst per  teken berekent.
+Dit kan de prestatie verbeteren wanneer er grote tekstvolumes  naar het console worden weggeschreven en maakt een nauwkeurigere melding van wijzigingen midden in regels mogelijk.
+De optie is mogelijk niet compatibel met sommige toepassingen.
+Deze feature wordt ondersteund in Windows Console van Windows 10 versies 1607 en later.
+Voorts kan er wellicht gebruik van worden gemaakt in andere terminals in eerder uitgebrachte versies van Windows.
+- force Difflib: Deze optie zorgt ervoor dat  NVDA wijzigingen aan terminaltekst per regel berekent.
+Hiermee zal NVDA zich hetzelfde gedragen als  in versie 2020.4 en in daaraan voorafgaande versies.
+-
+ 
 ==== Probeer spraak te annuleren bij verlopen gebeurtenissen met focus ====[CancelExpiredFocusSpeech]
 Met deze optie kunt u ervoor zorgen dat geprobeerd wordt spraak bij verlopen gebeurtenissen met focus uitte zetten.
 Met name als u snel met Chrome door berichten in Gmail gaat, doet de gesproken informatie die NVDA geeft er mogelijk niet meer toe.

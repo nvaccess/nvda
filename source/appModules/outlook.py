@@ -37,7 +37,7 @@ from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 import languageHandler
-from gettext import ngettext
+
 
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
@@ -246,10 +246,10 @@ class SuperGridClient2010(IAccessible):
 			return super(SuperGridClient2010,self).event_gainFocus()
 		try:
 			kwargs = {}
-			UIA.kwargsFromSuper(kwargs, relation="focus")
-			obj=UIA(**kwargs)
-		except:
-			log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+			UIA.kwargsFromSuper(kwargs, relation="focus", ignoreNonNativeElementsWithFocus=False)
+			obj = UIA(**kwargs)
+		except Exception:
+			log.error("Retrieving UIA focus failed", exc_info=True)
 			return super(SuperGridClient2010,self).event_gainFocus()
 		if not isinstance(obj,UIAGridRow):
 			return super(SuperGridClient2010,self).event_gainFocus()
@@ -353,12 +353,10 @@ class CalendarView(IAccessible):
 			bufLength
 		) == 0:
 			raise ctypes.WinError()
-		categoriesCount = len(categories.split(f"{separatorBuf.value} "))
 
 		# Translators: Part of a message reported when on a calendar appointment with one or more categories
 		# in Microsoft Outlook.
-		categoriesText = ngettext("category", "categories", categoriesCount)
-		return f"{categoriesText} {categories}"
+		return _("categories {categories}").format(categories=categories)
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False

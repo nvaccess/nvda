@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2020-2021 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,8 +12,15 @@ from os.path import join as _pJoin
 import tempfile as _tempfile
 from typing import Optional as _Optional
 from SystemTestSpy import (
+	_blockUntilConditionMet,
 	_getLib,
 )
+from SystemTestSpy.windows import (
+	GetForegroundWindowTitle,
+	GetVisibleWindowTitles,
+	SetForegroundWindow,
+)
+import re
 from robot.libraries.BuiltIn import BuiltIn
 
 # Imported for type information
@@ -65,6 +72,14 @@ class ChromeLib:
 	_loadCompleteString = "Test page load complete"
 
 	@staticmethod
+	def getUniqueTestCaseTitle(testCase: str) -> str:
+		return f"{ChromeLib._testCaseTitle} ({abs(hash(testCase))})"
+
+	@staticmethod
+	def getUniqueTestCaseTitleRegex(testCase: str) -> re.Pattern:
+		return re.compile(f"^{ChromeLib._testCaseTitle} \\({abs(hash(testCase))}\\)")
+
+	@staticmethod
 	def _writeTestFile(testCase) -> str:
 		"""
 		Creates a file for a HTML test case. The sample is written with a button before and after so that NVDA
@@ -75,7 +90,7 @@ class ChromeLib:
 		filePath = ChromeLib._getTestCasePath("test.html")
 		fileContents = (f"""
 			<head>
-				<title>{ChromeLib._testCaseTitle}</title>
+				<title>{ChromeLib.getUniqueTestCaseTitle(testCase)}</title>
 			</head>
 			<body onload="document.getElementById('loadStatus').innerHTML='{ChromeLib._loadCompleteString}'">
 				<p>{ChromeLib._beforeMarker}</p>
@@ -116,6 +131,33 @@ class ChromeLib:
 				" See NVDA log for full speech."
 			)
 
+	def _focusChrome(self, startsWithTestCaseTitle: re.Pattern):
+		""" Ensure chrome started and is focused.
+		Different versions of chrome have variations in how the title is presented.
+		This may mean that there is a separator between document name and application name.
+		E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no application name at all.
+		Rather than try to get this right, just use the doc title.
+		If this continues to be unreliable we could use Selenium or similar to start chrome and inform us
+		when it is ready.
+		"""
+		success, _success = _blockUntilConditionMet(
+			getValue=lambda: SetForegroundWindow(startsWithTestCaseTitle, builtIn.log),
+			giveUpAfterSeconds=3,
+			intervalBetweenSeconds=0.5
+		)
+		if success:
+			return
+		windowInformation = ""
+		try:
+			windowInformation = f"Foreground Window: {GetForegroundWindowTitle()}.\n"
+			windowInformation += f"Open Windows: {GetVisibleWindowTitles()}"
+		except OSError as e:
+			builtIn.log(f"Couldn't retrieve active window information.\nException: {e}")
+		raise AssertionError(
+			"Unable to focus Chrome.\n"
+			f"{windowInformation}"
+		)
+
 	def prepareChrome(self, testCase: str) -> None:
 		"""
 		Starts Chrome opening a file containing the HTML sample
@@ -127,15 +169,8 @@ class ChromeLib:
 		spy.wait_for_speech_to_finish()
 		lastSpeechIndex = spy.get_last_speech_index()
 		self.start_chrome(path)
-		# Ensure chrome started
-		# Different versions of chrome have variations in how the title is presented
-		# This may mean that there is a separator between document name and
-		# application name. E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no applcation
-		# name at all.
-		# Rather than try to get this right, just wait for the doc title.
-		# If this continues to be unreliable we could use solenium or similar to start chrome and inform us when
-		# it is ready.
-		applicationTitle = f"{self._testCaseTitle}"
+		self._focusChrome(ChromeLib.getUniqueTestCaseTitleRegex(testCase))
+		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
 		self._waitForStartMarker(spy, appTitleIndex)
 		# Move to the loading status line, and wait fore it to become complete

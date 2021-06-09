@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2021 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2011-2021 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -37,7 +37,7 @@ from logHandler import log
 import UIAUtils
 from comInterfaces import UIAutomationClient as UIA
 # F403: unable to detect undefined names
-from comInterfaces .UIAutomationClient import *  # noqa:  F403
+from comInterfaces.UIAutomationClient import *  # noqa:  F403
 import textInfos
 from typing import Dict
 from queue import Queue
@@ -55,13 +55,12 @@ HorizontalTextAlignment_Justified=3
 # The name of the WDAG (Windows Defender Application Guard) process
 WDAG_PROCESS_NAME=u'hvsirdpclient'
 
-goodUIAWindowClassNames=[
+goodUIAWindowClassNames = (
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
 	'RAIL_WINDOW',
-	"EXCEL6",
-]
+)
 
-badUIAWindowClassNames=[
+badUIAWindowClassNames = (
 	# UIA events of candidate window interfere with MSAA events.
 	"Microsoft.IME.CandidateWindow.View",
 	"SysTreeView32",
@@ -79,7 +78,7 @@ badUIAWindowClassNames=[
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
-]
+)
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
 UIADialogClassNames=[
@@ -234,7 +233,8 @@ class UIAHandler(COMObject):
 		UIA.IUIAutomationEventHandler,
 		UIA.IUIAutomationFocusChangedEventHandler,
 		UIA.IUIAutomationPropertyChangedEventHandler,
-		UIA.IUIAutomationNotificationEventHandler
+		UIA.IUIAutomationNotificationEventHandler,
+		UIA.IUIAutomationActiveTextPositionChangedEventHandler,
 	]
 
 	def __init__(self):
@@ -379,6 +379,12 @@ class UIAHandler(COMObject):
 		# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 		if isinstance(self.clientObject, UIA.IUIAutomation5):
 			self.globalEventHandlerGroup.AddNotificationEventHandler(
+				UIA.TreeScope_Subtree,
+				self.baseCacheRequest,
+				self
+			)
+		if isinstance(self.clientObject, UIA.IUIAutomation6):
+			self.globalEventHandlerGroup.AddActiveTextPositionChangedEventHandler(
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
 				self
@@ -672,16 +678,33 @@ class UIAHandler(COMObject):
 			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
-	def _isBadUIAWindowClassName(self, windowClass):
-		"Given a windowClassName, returns True if this is a known problematic UIA implementation."
-		# #7497: Windows 10 Fall Creators Update has an incomplete UIA
-		# implementation for console windows, therefore for now we should
-		# ignore it.
-		# It does not implement caret/selection, and probably has no new text
-		# events.
-		if windowClass == "ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
-			return True
-		return windowClass in badUIAWindowClassNames
+	def IUIAutomationActiveTextPositionChangedEventHandler_HandleActiveTextPositionChangedEvent(
+			self,
+			sender,
+			textRange
+	):
+		if not self.MTAThreadInitEvent.isSet():
+			# UIAHandler hasn't finished initialising yet, so just ignore this event.
+			if _isDebug():
+				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")
+			return
+		import NVDAObjects.UIA
+		try:
+			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+		except Exception:
+			if _isDebug():
+				log.debugWarning(
+					"HandleActiveTextPositionChangedEvent: Exception while creating object: ",
+					exc_info=True
+				)
+			return
+		if not obj:
+			if _isDebug():
+				log.debug(
+					"HandleActiveTextPositionchangedEvent: Ignoring because no object: "
+				)
+			return
+		eventHandler.queueEvent("UIA_activeTextPositionChanged", obj, textRange=textRange)
 
 	def _isUIAWindowHelper(self,hwnd):
 		# UIA in NVDA's process freezes in Windows 7 and below
@@ -699,7 +722,7 @@ class UIAHandler(COMObject):
 		if appModule and appModule.isGoodUIAWindow(hwnd):
 			return True
 		# There are certain window classes that just had bad UIA implementations
-		if self._isBadUIAWindowClassName(windowClass):
+		if windowClass in badUIAWindowClassNames:
 			return False
 		# allow the appModule for the window to also choose if this window is bad
 		if appModule and appModule.isBadUIAWindow(hwnd):
@@ -775,6 +798,8 @@ class UIAHandler(COMObject):
 				)
 			):
 				return False
+			if windowClass == "ConsoleWindowClass":
+				return UIAUtils._shouldUseUIAConsole(hwnd)
 		return bool(res)
 
 	def isUIAWindow(self,hwnd):

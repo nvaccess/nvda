@@ -1,5 +1,6 @@
+# languageHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2021 NV Access Limited, Joseph Lee
+# Copyright (C) 2007-2018 NV access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -7,6 +8,7 @@
 This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
+import builtins
 import os
 import sys
 import ctypes
@@ -124,6 +126,28 @@ def getAvailableLanguages(presentational=False):
 	)
 	return langs
 
+
+def makePgettext(translations):
+	"""Obtaina  pgettext function for use with a gettext translations instance.
+	pgettext is used to support message contexts,
+	but Python's gettext module doesn't support this,
+	so NVDA must provide its own implementation.
+	"""
+	if isinstance(translations, gettext.GNUTranslations):
+		def pgettext(context, message):
+			try:
+				# Look up the message with its context.
+				return translations._catalog[u"%s\x04%s" % (context, message)]
+			except KeyError:
+				return message
+	elif isinstance(translations, gettext.NullTranslations):
+		# A language with out a translation catalog, such as English.
+		def pgettext(context, message):
+			return message
+	else:
+		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
+	return pgettext
+
 def getWindowsLanguage():
 	"""
 	Fetches the locale name of the user's configured language in Windows.
@@ -178,10 +202,10 @@ def setLanguage(lang: str) -> None:
 		trans = gettext.translation("nvda", fallback=True)
 		curLang = "en"
 
-	# #9207: Python 3.8 adds gettext.pgettext, so add it to the built-in namespace.
-	trans.install(names=["pgettext"])
+	trans.install()
 	setLocale(curLang)
-
+	# Install our pgettext function.
+	builtins.pgettext = makePgettext(trans)
 
 def setLocale(localeName: str) -> None:
 	'''

@@ -191,10 +191,10 @@ def handleInputCompositionEnd(result):
 	curInputComposition=None
 	if isinstance(focus,InputComposition):
 		curInputComposition=focus
-		oldSpeechMode=speech.speechMode
-		speech.speechMode=speech.speechMode_off
+		oldSpeechMode = speech.getState().speechMode
+		speech.setSpeechMode(speech.SpeechMode.off)
 		eventHandler.executeEvent("gainFocus",focus.parent)
-		speech.speechMode=oldSpeechMode
+		speech.setSpeechMode(oldSpeechMode)
 	elif isinstance(focus.parent,InputComposition):
 		#Candidate list is still up
 		curInputComposition=focus.parent
@@ -210,10 +210,10 @@ def handleInputCompositionEnd(result):
 			# Sometimes InputCompositon object is gone
 			# Correct to container of CandidateItem
 			newFocus=focus.container
-		oldSpeechMode=speech.speechMode
-		speech.speechMode=speech.speechMode_off
+		oldSpeechMode = speech.getState().speechMode
+		speech.setSpeechMode(speech.SpeechMode.off)
 		eventHandler.executeEvent("gainFocus",newFocus)
-		speech.speechMode=oldSpeechMode
+		speech.setSpeechMode(oldSpeechMode)
 
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
@@ -240,11 +240,11 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 		if parent==focus:
 			parent=focus
 		curInputComposition=InputComposition(parent=parent)
-		oldSpeechMode=speech.speechMode
-		speech.speechMode=speech.speechMode_off
+		oldSpeechMode = speech.getState().speechMode
+		speech.setSpeechMode(speech.SpeechMode.off)
 		eventHandler.executeEvent("gainFocus",curInputComposition)
 		focus=curInputComposition
-		speech.speechMode=oldSpeechMode
+		speech.setSpeechMode(oldSpeechMode)
 	focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
 
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
@@ -269,10 +269,10 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex,inputMethod):
 	focus=api.getFocusObject()
 	if not (0<=selectionIndex<len(candidateStrings)):
 		if isinstance(focus,CandidateItem):
-			oldSpeechMode=speech.speechMode
-			speech.speechMode=speech.speechMode_off
+			oldSpeechMode = speech.getState().speechMode
+			speech.setSpeechMode(speech.SpeechMode.off)
 			eventHandler.executeEvent("gainFocus",focus.parent)
-			speech.speechMode=oldSpeechMode
+			speech.setSpeechMode(oldSpeechMode)
 		return
 	oldCandidateItemsText=None
 	if isinstance(focus,CandidateItem):
@@ -386,9 +386,9 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	#But threadIDs for console windows are always wrong so don't ignore for those.
 	if not isinstance(focus,NVDAObjects.window.Window) or (threadID!=focus.windowThreadID and focus.windowClassName!="ConsoleWindowClass"):
 		return 0
-	import sayAllHandler
+	from speech import sayAll
 	#Never announce changes while in sayAll (#1676)
-	if sayAllHandler.isRunning():
+	if sayAll.SayAllHandler.isRunning():
 		return 0
 	import queueHandler
 	import ui
