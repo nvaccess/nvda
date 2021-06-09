@@ -3,7 +3,7 @@
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
+from dataclasses import dataclass
 from typing import Optional
 
 """NVDA core"""
@@ -64,6 +64,10 @@ post_windowMessageReceipt = extensionPoints.Action()
 _pump = None
 _isPumpPending = False
 
+_hasShutdownBeenTriggered = False
+_shuttingDownFlagLock = threading.Lock()
+
+
 def doStartupDialogs():
 	import config
 	import gui
@@ -108,16 +112,21 @@ def doStartupDialogs():
 			# Ask the user if usage stats can be collected.
 			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
 
+
+@dataclass
+class NewNVDAInstance:
+	filePath: Optional[str] = None
+	parameters: Optional[str] = None
+	directory: Optional[str] = None
+
+
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
-		import gui
 		globalVars.exitCode=3
-		gui.safeAppExit()
+		triggerNVDAExit()
 		return
 	import subprocess
-	import winUser
-	import shellapi
 	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
 		try:
 			sys.argv.remove(paramToRemove)
@@ -130,15 +139,12 @@ def restart(disableAddons=False, debugLogging=False):
 		options.append('--disable-addons')
 	if debugLogging:
 		options.append('--debug-logging')
-	shellapi.ShellExecute(
-		hwnd=None,
-		operation=None,
-		file=sys.executable,
-		parameters=subprocess.list2cmdline(options + sys.argv[1:]),
-		directory=globalVars.appDir,
-		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-		showCmd=winUser.SW_SHOWNORMAL
-	)
+
+	triggerNVDAExit(NewNVDAInstance(
+		sys.executable,
+		subprocess.list2cmdline(options + sys.argv[1:]),
+		globalVars.appDir
+	))
 
 
 def resetConfiguration(factoryDefaults=False):
@@ -228,6 +234,126 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 	if not wxLang:
 		log.debugWarning("wx does not support language %s" % lang)
 	return wxLang
+
+
+def _startNewInstance(newNVDA: NewNVDAInstance):
+	"""
+	If something (eg the installer or exit dialog) has requested a new NVDA instance to start, start it.
+	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit and
+	_closeAllWindows.
+	"""
+	import shellapi
+	from winUser import SW_SHOWNORMAL
+	log.debug(f"Starting new NVDA instance: {newNVDA}")
+	shellapi.ShellExecute(
+		hwnd=None,
+		operation=None,
+		file=newNVDA.filePath,
+		parameters=newNVDA.parameters,
+		directory=newNVDA.directory,
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
+		showCmd=SW_SHOWNORMAL
+	)
+
+
+def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
+	_handleNVDAModuleCleanupBeforeGUIExit()
+	_closeAllWindows()
+	if newNVDA is not None:
+		_startNewInstance(newNVDA)
+
+
+def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
+	"""
+	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
+	instance information with `newNVDA`.
+	"""
+	import queueHandler
+	global _hasShutdownBeenTriggered
+	with _shuttingDownFlagLock:
+		if not _hasShutdownBeenTriggered:
+			# queue this so that the calling process can exit safely (eg a Popup menu)
+			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
+			_hasShutdownBeenTriggered = True
+		else:
+			log.warn("NVDA exit has already been triggered")
+
+
+def _closeAllWindows():
+	"""
+	Should only be used by calling triggerNVDAExit and after _handleNVDAModuleCleanupBeforeGUIExit.
+	Ensures the wx mainloop is exited by all the top windows being destroyed.
+	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
+	"""
+	import gui
+	from gui.settingsDialogs import SettingsDialog
+	from typing import Dict
+	import wx
+
+	app = wx.GetApp()
+
+	# prevent race condition with object deletion
+	# prevent deletion of the object while we work on it.
+	_SettingsDialog = SettingsDialog
+	nonWeak: Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
+
+	for instance, state in nonWeak.items():
+		if state is _SettingsDialog.DialogState.DESTROYED:
+			log.error(
+				"Destroyed but not deleted instance of gui.SettingsDialog exists"
+				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
+
+	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
+	# They must be manually destroyed when exiting the app.
+	# Note: this doesn't consistently clean them from the tray and appears to be a wx issue. (#12286, #12238)
+	log.debug("destroying system tray icon and menu")
+	app.ScheduleForDestruction(gui.mainFrame.sysTrayIcon.menu)
+	gui.mainFrame.sysTrayIcon.RemoveIcon()
+	app.ScheduleForDestruction(gui.mainFrame.sysTrayIcon)
+
+	wx.Yield()  # processes pending messages
+	gui.mainFrame.sysTrayIcon.menu = None
+	gui.mainFrame.sysTrayIcon = None
+
+	for window in wx.GetTopLevelWindows():
+		if isinstance(window, wx.Dialog) and window.IsModal():
+			log.debug(f"ending modal {window} during exit process")
+			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
+		elif not isinstance(window, gui.MainFrame):
+			log.debug(f"closing window {window} during exit process")
+			wx.CallAfter(window.Close)
+
+	wx.Yield()  # creates a temporary event loop and uses it instead to process pending messages
+	log.debug("destroying main frame during exit process")
+	# the MainFrame has EVT_CLOSE bound to the ExitDialog
+	# which calls this function on exit, so destroy this window
+	app.ScheduleForDestruction(gui.mainFrame)
+
+
+def _handleNVDAModuleCleanupBeforeGUIExit():
+	""" Terminates various modules that rely on the GUI. This should be used before closing all windows
+	and terminating the GUI.
+	"""
+	import brailleViewer
+	import globalPluginHandler
+	import watchdog
+
+	try:
+		import updateCheck
+		# before the GUI is terminated we must terminate the update checker
+		_terminate(updateCheck)
+	except RuntimeError:
+		pass
+
+	# The core is expected to terminate, so we should not treat this as a crash
+	_terminate(watchdog)
+	# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
+	_terminate(globalPluginHandler)
+	# the brailleViewer should be destroyed safely before closing the window
+	brailleViewer.destroyBrailleViewer()
 
 
 def main():
@@ -580,16 +706,13 @@ def main():
 
 	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
 
-
 	log.debug("entering wx application main loop")
 	app.MainLoop()
 
 	log.info("Exiting")
-	if updateCheck:
-		_terminate(updateCheck)
-
-	_terminate(watchdog)
-	_terminate(globalPluginHandler, name="global plugin handler")
+	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
+	# triggerNVDAExit has not been called yet
+	triggerNVDAExit()
 	_terminate(gui)
 	config.saveOnExit()
 

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2020 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Copyright (C) 2009-2021 NV Access Limited, Joseph Lee, Mohammad Suliman,
 # Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
@@ -12,7 +12,6 @@ from comtypes import COMError
 from comtypes.automation import VARIANT
 import time
 import weakref
-import sys
 import numbers
 import colors
 import languageHandler
@@ -938,6 +937,9 @@ class UIA(Window):
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
+		elif self.windowClassName == "Chrome_WidgetWin_1" and self.UIATextPattern:
+			from . import chromium
+			clsList.append(chromium.ChromiumUIA)
 		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
 			from . import chromium
 			from . import web
@@ -1025,10 +1027,7 @@ class UIA(Window):
 			VisualStudio.findExtraOverlayClasses(self, clsList)
 
 		# Support Windows Console's UIA interface
-		if (
-			self.windowClassName == "ConsoleWindowClass"
-			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
-		):
+		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		elif UIAClassName == "TermControl":
@@ -1262,9 +1261,12 @@ class UIA(Window):
 		return self.UIALegacyIAccessiblePattern
 
 	_TextInfo=UIATextInfo
+	_cache_TextInfo = False
+
 	def _get_TextInfo(self):
-		if self.UIATextPattern: return self._TextInfo
-		textInfo=super(UIA,self).TextInfo
+		if self.UIATextPattern:
+			return self._TextInfo
+		textInfo = super(UIA, self).TextInfo
 		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.ROLE_WINDOW:
 			import displayModel
 			return displayModel.DisplayModelTextInfo
@@ -1970,7 +1972,7 @@ class Toast_win8(Notification, UIA):
 class Toast_win10(Notification, UIA):
 
 	# #6096: Windows 10 build 14366 and later does not fire tooltip event when toasts appear.
-	if sys.getwindowsversion().build > 10586:
+	if winVersion.getWinVer() > winVersion.WIN10_1511:
 		event_UIA_window_windowOpen=Notification.event_alert
 	else:
 		event_UIA_toolTipOpened=Notification.event_alert
@@ -1980,7 +1982,7 @@ class Toast_win10(Notification, UIA):
 	_lastToastRuntimeID = None
 
 	def event_UIA_window_windowOpen(self):
-		if sys.getwindowsversion().build >= 15063:
+		if winVersion.getWinVer() >= winVersion.WIN10_1703:
 			toastTimestamp = time.time()
 			toastRuntimeID = self.UIAElement.getRuntimeID()
 			if toastRuntimeID == self._lastToastRuntimeID and toastTimestamp-self._lastToastTimestamp < 1.0:

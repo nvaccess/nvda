@@ -237,8 +237,7 @@ class SettingsDialog(
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
 		"""
-		self.DestroyChildren()
-		self.Destroy()
+		self.DestroyLater()
 		self.SetReturnCode(wx.ID_OK)
 
 	def onCancel(self, evt):
@@ -246,8 +245,7 @@ class SettingsDialog(
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
 		"""
-		self.DestroyChildren()
-		self.Destroy()
+		self.DestroyLater()
 		self.SetReturnCode(wx.ID_CANCEL)
 
 	def onApply(self, evt):
@@ -404,7 +402,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title=""
-	categoryClasses=[]
+	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError): pass
 
@@ -428,8 +426,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.initialCategory = initialCategory
 		self.currentCategory = None
 		self.setPostInitFocus = None
-		# dictionary key is index of category in self.catList, value is the instance. Partially filled, check for KeyError
-		self.catIdToInstanceMap = {}
+		# dictionary key is index of category in self.catList, value is the instance.
+		# Partially filled, check for KeyError
+		self.catIdToInstanceMap: typing.Dict[int, SettingsPanel] = {}
 
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
@@ -635,37 +634,42 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		else:
 			evt.Skip()
 
-	def _doSave(self):
+	def _validateAllPanels(self):
+		"""Check if all panels are valid, and can be saved
+		@note: raises ValueError if a panel is not valid. See c{SettingsPanel.isValid}
+		"""
 		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
 				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
+
+	def _saveAllPanels(self):
 		for panel in self.catIdToInstanceMap.values():
 			panel.onSave()
+
+	def _notifyAllPanelsSaveOccurred(self):
 		for panel in self.catIdToInstanceMap.values():
 			panel.postSave()
 
-	def onOk(self,evt):
+	def _doSave(self):
 		try:
-			self._doSave()
+			self._validateAllPanels()
+			self._saveAllPanels()
+			self._notifyAllPanelsSaveOccurred()
 		except ValueError:
-			log.debugWarning("", exc_info=True)
+			log.debugWarning("Error while saving settings:", exc_info=True)
 			return
-		for panel in self.catIdToInstanceMap.values():
-			panel.Destroy()
+
+	def onOk(self, evt):
+		self._doSave()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
 		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
-			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		try:
-			self._doSave()
-		except ValueError:
-			log.debugWarning("", exc_info=True)
-			return
+		self._doSave()
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
 
@@ -1000,17 +1004,9 @@ class SpeechSettingsPanel(SettingsPanel):
 		super(SpeechSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
-		# Work around wxAssertion error #12220
-		# Manually destroying the ExpandoTextCtrl when the settings dialog is
-		# exited prevents the wxAssertion.
-		self.synthNameCtrl.Destroy()
 		self.voicePanel.onDiscard()
 
 	def onSave(self):
-		# Work around wxAssertion error #12220
-		# Manually destroying the ExpandoTextCtrl when the settings dialog is
-		# exited prevents the wxAssertion.
-		self.synthNameCtrl.Destroy()
 		self.voicePanel.onSave()
 
 class SynthesizerSelectionDialog(SettingsDialog):
@@ -2646,6 +2642,22 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Annotations")
+		AnnotationsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		AnnotationsBox = AnnotationsSizer.GetStaticBox()
+		AnnotationsGroup = guiHelper.BoxSizerHelper(self, sizer=AnnotationsSizer)
+		self.bindHelpEvent("Annotations", AnnotationsBox)
+		sHelper.addItem(AnnotationsGroup)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Report details in browse mode")
+		self.annotationsDetailsCheckBox = AnnotationsGroup.addItem(wx.CheckBox(AnnotationsBox, label=label))
+		self.annotationsDetailsCheckBox.SetValue(config.conf["annotations"]["reportDetails"])
+		self.annotationsDetailsCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportDetails"])
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Terminal programs")
 		terminalsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		terminalsBox = terminalsSizer.GetStaticBox()
@@ -2669,7 +2681,7 @@ class AdvancedPanelControls(
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA determine the method of detecting changed
 			# content in terminals automatically.
-			_("Automatic (Difflib)"),
+			_("Automatic (Diff Match Patch)"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
 			# by character when supported, using the diff match patch algorithm.
@@ -2816,6 +2828,7 @@ class AdvancedPanelControls(
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
+			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
@@ -2831,6 +2844,7 @@ class AdvancedPanelControls(
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
+		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
 
@@ -2853,6 +2867,7 @@ class AdvancedPanelControls(
 			self.diffAlgoVals[diffAlgoChoice]
 		)
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
+		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 
@@ -3216,17 +3231,9 @@ class BrailleSettingsPanel(SettingsPanel):
 		super(BrailleSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
-		# Work around wxAssertion error #12220
-		# Manually destroying the ExpandoTextCtrl when the settings dialog is
-		# exited prevents the wxAssertion.
-		self.displayNameCtrl.Destroy()
 		self.brailleSubPanel.onDiscard()
 
 	def onSave(self):
-		# Work around wxAssertion error #12220
-		# Manually destroying the ExpandoTextCtrl when the settings dialog is
-		# exited prevents the wxAssertion.
-		self.displayNameCtrl.Destroy()
 		self.brailleSubPanel.onSave()
 
 
