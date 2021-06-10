@@ -39,3 +39,8 @@ Read welcome dialog
 	[Documentation]	Ensure that the welcome dialog can be read in full
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 	read_welcome_dialog	# run test
+
+Restarts
+	[Documentation]	Ensure that NVDA can restart from keyboard
+	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
+	NVDA restarts
