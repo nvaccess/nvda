@@ -12,6 +12,7 @@ from robot.libraries.BuiltIn import BuiltIn
 from SystemTestSpy import (
 	_getLib,
 )
+from SystemTestSpy.windows import waitUntilWindowFocused
 
 # Imported for type information
 from robot.libraries.Process import Process as _ProcessLib
@@ -108,3 +109,21 @@ def read_welcome_dialog():
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
 	spy.emulateKeyPress("enter")
+
+
+def NVDA_restarts():
+	"""Ensure NVDA can be restarted from keyboard."""
+	spy = _nvdaLib.getSpyLib()
+	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present.
+	spy.wait_for_speech_to_finish()
+
+	spy.emulateKeyPress("NVDA+q")
+	spy.wait_for_specific_speech("Exit NVDA")
+
+	_builtIn.sleep(0.5)  # the dialog is not always receiving the enter keypress, wait a little longer for it
+	spy.emulateKeyPress("downArrow")
+	spy.wait_for_specific_speech("Restart")
+	spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
+	_process.wait_for_process(_nvdaProcessAlias, timeout="10 sec")
+	_process.process_should_be_stopped(_nvdaProcessAlias)
+	waitUntilWindowFocused("Welcome to NVDA")
