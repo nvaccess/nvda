@@ -1,7 +1,8 @@
-# A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2012-2021 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+#updateCheck.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2012-2019 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -9,7 +10,7 @@
 import garbageHandler
 import globalVars
 import config
-import core
+
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -221,7 +222,10 @@ def _executeUpdate(destPath):
 		else:
 			executeParams = u"--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
-	core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams))
+	shellapi.ShellExecute(None, None,
+		destPath,
+		executeParams,
+		None, winUser.SW_SHOWNORMAL)
 
 
 class UpdateChecker(garbageHandler.TrackedObject):
