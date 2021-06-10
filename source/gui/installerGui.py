@@ -260,7 +260,7 @@ class InstallerDialog(
 			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
 			startOnLogon=self.startOnLogonCheckbox.Value,
 			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
-			silent=self.isUpdate
+			isUpdate=self.isUpdate
 		)
 		wx.GetApp().ScheduleForDestruction(self)
 
