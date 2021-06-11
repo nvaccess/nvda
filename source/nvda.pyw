@@ -200,22 +200,33 @@ def terminateRunningNVDA(window):
 #Handle running multiple instances of NVDA
 try:
 	oldAppWindowHandle=winUser.FindWindow(u'wxWindowClassNR',u'NVDA')
-except:
+except WindowsError as e:
+	_log.info("Can't find existing NVDA via Window Class")
+	_log.debug(f"FindWindow error: {e}")
 	oldAppWindowHandle=0
 if not winUser.isWindow(oldAppWindowHandle):
 	oldAppWindowHandle=0
+
 if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
+	_log.debug(f"NVDA already running. OldAppWindowHandle: {oldAppWindowHandle}")
 	if globalVars.appArgs.check_running:
 		# NVDA is running.
+		_log.debug("Is running check complete: NVDA is running.")
+		_log.debug("Exiting")
 		sys.exit(0)
 	try:
+		_log.debug(f"Terminating oldAppWindowHandle: {oldAppWindowHandle}")
 		terminateRunningNVDA(oldAppWindowHandle)
 	except Exception as e:
 		parser.error(f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}")
+
 if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
+	_log.debug("Quitting")
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
 	# NVDA is not running.
+	_log.debug("Is running check: NVDA is not running")
+	_log.debug("Exiting")
 	sys.exit(1)
 
 UOI_NAME = 2
