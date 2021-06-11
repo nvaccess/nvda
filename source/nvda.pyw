@@ -1,11 +1,13 @@
 # -*- coding: UTF-8 -*-
-#nvda.pyw
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
+"""The NVDA launcher - main / entry point into NVDA.
+It can handle some command-line arguments (including help).
+It sets up logging, and then starts the core.
+"""
 
 import sys
 import os

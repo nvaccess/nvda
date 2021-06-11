@@ -221,7 +221,8 @@ def _executeUpdate(destPath):
 		else:
 			executeParams = u"--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
-	core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams))
+	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams)):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 class UpdateChecker(garbageHandler.TrackedObject):
