@@ -6,7 +6,7 @@ NVDA'daki Yenilikler
 = 2021.1 =
 Bu sürüm, Excel ve Chromium tarayıcılarda UIA için isteğe bağlı deneysel destek içerir.
 Çeşitli diller ve bağlantılara Braille erişimi  için düzeltmelere sahip.
-Unicode CLDR ve matematiksel semboller, eSpeak-NG ve LibLouis için güncellemeler var.
+Unicode CLDR, matematiksel semboller ve LibLouis için güncellemeler var.
 
 Office, Visual Studio ve çeşitli diller dahil olmak üzere birçok hata düzeltmesi ve iyileştirme.
 Not: Bu, Eklenti API uyumluluğunu değiştiren bir sürümdür.
@@ -33,7 +33,6 @@ Bu sürüm ayrıca Adobe Flash desteğini de kaldırmaktadır.
 - Gelişmiş ayarlar kategorisindeki 'Süresi dolan odak olayları için konuşmayı iptal etmeyi dene' seçeneği artık varsayılan olarak etkindir. (#10885)
   - Bu davranış, bu seçenek "Hayır" olarak ayarlanarak devre dışı bırakılabilir.
   - Web uygulamaları (Gmail gibi) artık odağı hızla hareket ettirirken güncel olmayan bilgiler söylenmez.
-- Espeak-ng, 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09 olarak güncellendi. (#12202, #12280)
 - liblouis braille çevirmen  [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0] sürümüne güncellendi. (#12137)
   - Yeni braille tabloları: Belarus edebi braille, Belarus bilgisayar braille, Urduca derece 1, Urduca derece 2.
 - Adobe Flash içerik desteği, Flash kullanımının Adobe tarafından etkin bir şekilde önerilmemesi nedeniyle NVDA'dan kaldırılmıştır. (#11131)
@@ -67,6 +66,9 @@ Bu sürüm ayrıca Adobe Flash desteğini de kaldırmaktadır.
 - NVDA yükleyicisi artık `` --minimal '' komut satırı parametresini kabul ediyor ve kurulu veya taşınabilir bir NVDA yürütülebilir kopyasıyla aynı belgelenmiş davranışı izleyerek başlangıç ​​sesini çalmıyor. (#12289)
 - MS Word veya Outlook'ta, tarama kipi ayarlarında "düzenleme tablolarını göster" seçeneği etkinleştirilmişse, tablo hızlı gezinme tuşu artık düzen tablosuna atlayabilir. (#11899)
 - NVDA artık emojiler için bazı dillerde "↑↑↑" ifadesini söylemeyecektir. (#11963)
+- Espeak şimdi tekrar Kantonca ve Mandarin dilini destekliyor. (#10418)
+- Yeni Chromium tabanlı Microsoft Edge'de adres çubuğu gibi metin alanları artık boşken de duyuruluyor. (#12474)
+- Seika Braille sürücüsü düzeltildi. (#10787)
 
 
 == Geliştiriciler için Değişiklikler ==
