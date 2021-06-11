@@ -6,12 +6,13 @@
 = 2021.1 =
 Tämä versio sisältää valinnaisen kokeellisen UIA-tuen Excelille ja Chromium-pohjaisille selaimille.
 Korjauksia useille kielille sekä linkkien käyttämiseen pistenäytöltä.
-Päivityksiä Unicode-CLDR:ään sekä matemaattisiin symboleihin, eSpeak-NG:hen ja LibLouis-pistekirjoituskääntäjään.
+Päivityksiä Unicode-CLDR:ään, matemaattisiin symboleihin ja LibLouis-pistekirjoituskääntäjään.
+Lisäksi useita bugikorjauksia ja parannuksia esim. Officeen, Visual Studioon sekä useisiin kieliin.
 
-Paljon bugikorjauksia ja parannuksia esim. Officeen, Visual Studioon sekä useisiin kieliin.
-Huom: Tämä versio rikkoo lisäosarajapinnan yhteensopivuuden.
-Lisäosat on testattava uudelleen sekä niiden manifestit päivitettävä.
-Adobe Flashia ei myöskään enää tueta.
+Huom:
+- Tämä versio rikkoo olemassa olevien lisäosien yhteensopivuuden.
+- Adobe Flashia ei myöskään enää tueta.
+-
 
 
 == Uudet ominaisuudet ==
@@ -26,14 +27,13 @@ Adobe Flashia ei myöskään enää tueta.
 == Muutokset ==
 - Säätimiä on nyt mahdollista aktivoida niiden kuvauksen kohdalta (esim. "lnk" linkillä) selaustilassa pistenäytön kosketuskohdistinnäppäimillä. Tämä on erityisen hyödyllistä esim. nimettömiä valintaruutuja aktivoitaessa. (#7447)
 - NVDA estää nyt käyttäjää suorittamasta Windows 10:n tekstintunnistusta, jos näyttöverho on käytössä. (#11911)
-- Päivitetty Unicode Common Locale Data -tietokanta (CLDR) versioksi 38.1. (#11943)
+- Päivitetty Unicode Common Locale Data -tietokanta (CLDR) versioksi 39.0. (#11943, #12314)
 - Matemaattisia merkkejä lisätty symbolisanastoon. (#11467)
 - Käyttöoppaan, mitä uutta -dokumentin ja näppäinkomentojen pikaoppaan ulkoasu on päivitetty. (#12027)
 - "Ei tueta" ilmoitetaan nyt yritettäessä vaihtaa ruutuasettelun tilaa sovelluksissa (kuten Microsoft Word), jotka eivät tue sitä. (#7297)
 - Lisäasetukset-paneelin "Yritä perua vanhentuneiden kohdistustapahtumien puhe" -asetus on nyt oletusarvoisesti käytössä. (#10885)
  - Toiminto voidaan poistaa käytöstä määrittämällä tämän asetuksen arvoksi "Ei".
  - Verkkopohjaisissa sovelluksissa (esim. Gmail) ei enää puhuta vanhentunutta tietoa siirrettäessä kohdistusta nopeasti.
-- eSpeak-NG on päivitetty versioksi 1.51-dev muutos f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Liblouis-pistekirjoituskääntäjä päivitetty versioksi [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
  - Uusia pistetaulukoita: valkovenäläinen kaunokirjallisuuden pistekirjoitus, valkovenäläinen tietokonemerkistö, urdu taso 1, urdu taso 2.
 - Adobe Flash -sisällön tuki on poistettu NVDA:sta, koska Adobe on aktiivisesti varoittanut Flashin käytöstä. (#11131)
@@ -66,7 +66,10 @@ Adobe Flashia ei myöskään enää tueta.
 - Korjattu virhe SAPI 4 -puhesyntetisaattorin äänenkorkeutta muutettaessa. (#12311)
 - Nyt myös NVDA:n asennusohjelma huomioi ``--minimal``-komentoriviparametrin, eikä soita käynnistysääntä noudattaen samaa dokumentoitua käyttäytymistä kuin asennetun tai massamuistiversion nvda.exe. (#12289)
 - Taulukkoon siirtävä pikanavigointikomento voi nyt siirtää asettelutaulukkoon MS Wordissa tai Outlookissa, mikäli "Sisällytä asettelutaulukot" -asetus on otettu käyttöön selaustilan asetuksista. (#11899)
-- NVDA ei enää sano emojien kohdalla "↑↑↑" tietyissä kielissä. (#11963)
+- NVDA ei enää sano tietyissä kielissä emojien kohdalla "↑↑↑". (#11963)
+- eSpeak tukee taas kantonin- ja mandariinikiinaa. (#10418)
+- Tekstikentät, kuten osoitepalkki puhutaan nyt uudessa Chromium-pohjaisessa Microsoft Edgessä, kun ne ovat tyhjiä. (#12474)
+- Seika-pistenäyttöjen ajuri korjattu. (#10787)
 
 
 == Muutokset kehittäjille ==
