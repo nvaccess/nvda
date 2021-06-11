@@ -6,12 +6,13 @@
 = 2021.1 =
 Ova inačica sadrži opcionalnu eksperimentalnu podršku za UIA u Excelu i preglednicima baziranima na Chromium platformi.
 Dodane su ispravke za neke jezike, te je popravljen način interakciej sa poveznicama koristeći brajični redak.
-Nadograđeni su Unicode CLDR i matematički simboli, eSpeak-NG i LibLouis.
+Nadograđeni su Unicode CLDR, matematički simboli i LibLouis.
+Kao i puno ispravaka grešaka i unapređenja, uključujući ispravke grešaka u  Officeu, Visual Studio, te u nekim jezicima.
 
-Puno ispravaka grešaka, uključujući u Microsoft Officeu, Visual Studio te su ispravljene greške koje su se ticale nekih jezika.
-Upozorenje: u Ovoj inačici NVDA došlo je do izmjena kompatibilnosti.
-Dodaci trebaju biti ponovno testirani a manifest datoteke obnovljene u skladu sa činjeničnim stanjem.
-U ovoj je inačici također uklonjena podrška za Adobe Flash.
+Upozorenje:
+- Ova inačica zahtjeva nadogradnju na novije inačice dodataka.
+- Ova inačica također ukida podršku za tehnologiju Adobe flash.
+-
 
 
 == Nove značajke ==
@@ -26,14 +27,13 @@ U ovoj je inačici također uklonjena podrška za Adobe Flash.
 == Izmjene ==
 - U modusu čitanja, kontrole se mogu aktivirati uz pomoć brajičnog kursora koji se nalazi na opisu kontrole (na primjer. "pvz" za poveznicu). To je korisno za aktivaciju na primjer potvrdnih okvira bez oznaka. (#7447)
 - NVDA sada sprječava izvođenje prepoznavanja teksta uz pomoć Windows 10 OCR, ako je zaslonska zavjesa uključena. (#11911)
-- Nadograđen repozitorij zajedničkih podataka o lokalizaciju  (CLDR) na inačicu 38.1. (#11943)
+- Nadograđen repozitorij zajedničkih podataka o lokalizaciju  (CLDR) na inačicu 39.0. (#11943)
 - Dodano više matematičkih simbola u rječnik simbola. (#11467)
 - Vodič za korisnike, datoteka sa popisom izmjena, i popis tipkovničkih prečaca sada imaju osvježen izgled. (#12027)
 - Sada NVDA izgovara"nije podržano" prilikom pokušaja izmjene izgleda u aplikacijama koje to ne podržavaju, kao što je to Microsoft Word. (#7297)
 - 'Pokušaj ignoriranja događaja govora koji su istekli' u naprednom panelu postavki je sada podrazumjevano omogućena. (#10885)
   - Ta se opcija može onemogučiti tako da se vrijednost postavi na "Ne".
   - Web aplikacije (npr. Gmail) više ne izgovaraju informacije koje su istekle pri brzom premještanju fokusa.
-- Espeak-ng je nadograđen na verziju 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Nadograđen Liblouis brajični prevoditelj na inačicu [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - Nove brajične tablice: bjeloruska literarna brajica, bjeloruska kompjutorska brajica, Urdsko puno pismo, urdski kratkopis.
 - Podrška za Flash sadržaj je uklonjena iz NVDA zbog toga što Adobe ne preporučuje korištenje te tehnologije. (#11131)
@@ -67,7 +67,9 @@ U ovoj je inačici također uklonjena podrška za Adobe Flash.
 - Instalacijski program NVDA sada također poštuje ``--minimal`` opciju naredbenog redka te ne reproducira zvuk pokretanja, ponašajući se kao prijenosna kopija NVDA izvršne datoteke. (#12289)
 - U MS Wordu ili Outlooku, tipke za kretanje poi tablicama sada mogu se koristiti za kretanej po tablicama izgleda ako ej opcija  "uključi tablce izgleda" uključena u postavkama modusa čitanja. (#11899)
 - više neće izgovarati "↑↑↑" za emoji znakove u određenim jezicima. (#11963)
-
+- Espeak sada podržava kantonski i mandarinski kineski. (#10418)
+- U novom Microsoft Edge pregledniku baziranom na Chromium platformi, tekstualna polja poput adresne trake sada se izgovaraju kada su prazna. (#12474)
+- Ispravljen upravljački program za Seika brajične redke. (#10787)
 
 == Izmjene za razvojne programere ==
 Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].

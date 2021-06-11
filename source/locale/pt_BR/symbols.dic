@@ -3,10 +3,12 @@
 #Copyright (c) 2011-2021 NVDA Contributors, Cleverson Casarin Uliana, Rui Batista, Marlin Rodrigues da Silva, Tiago Melo Casal
 #This file is covered by the GNU General Public License.
 
+# pt_BR: na medida do possível, foi usado os nomes oficiais dos caracteres constantes na tabela Unicode como fonte para tradução, fontes como dicionários/enciclopédias/wikipedia/páginas especializadas também foram utilizadas, nos casos em que há nomes locais oficiais foi preferido utilizar a forma local ou uma forma híbrida, foi utilizado para cada caractere um nome distinto dos demais evitando ambiguidades ocasionadas por nomes idênticos para caracteres diferentes, em pouquíssimos casos especiais adaptações foram usadas para uma melhor pronúncia dos sintetizadores. Link da tabela internacional de caracteres Unicode: www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
+
 complexSymbols:
 # identifier	regexp
 # Others
-# pt_BR: em português o separador decimal é , (vírgula) e o separador de milhares clássico é . (ponto).
+# pt_BR: em português o separador decimal é , (vírgula) e o separador de classes (milhares) tradicional é . (ponto)
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<=\d)\.(?=\d)
 
@@ -22,7 +24,7 @@ symbols:
 decimal point		# separador decimal
 in-word '	apóstrofo	# ' em palavra
 negative number	menos	# número negativo
-thousands separator	ponto	all	norep	# clássico separador de milhares
+thousands separator	ponto	all	norep	# separador de classes numéricas (milhares, milhão, etc)
 
 # Whitespace
 \0	em branco	# nulo
@@ -36,35 +38,30 @@ thousands separator	ponto	all	norep	# clássico separador de milhares
 # Standard punctuation/symbols
 !	exclamação
 "	aspas
-# pt_BR: "#" na tabela de caracteres Unicode (caractere U+0023) é nomeado oficialmente como "number sign" (sinal de número) - www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
+# pt_BR: "#" na tabela Unicode (caractere U+0023) é nomeado oficialmente como "number sign" (sinal de número), no symbols.dic está como "number", traduzido então como "número"
 \#	número
 $	cifrão
 £	libra
 €	euro
-¢	Centavos
-¥	Iene
-₹	Rupya
+¢	centavos
+¥	iene
+₹	rupya
 ƒ	florim
 ¤	símbolo monetário
 %	porcento
-# pt_BR: em "&	eh comercial" usado "eh" para pronúncia correta com alguns sintetizadores
+# pt_BR: nos itens em que aparece letra "e" individual, usado "eh" no lugar para pronúncia correta com alguns sintetizadores
 &	eh comercial
 ‰	por mil
 '	apóstrofo
 (	abre parêntesis
 )	fecha parêntesis
 *	asterisco
-+	mais
-−	menos
 ,	vírgula
 -	hífen
 .	ponto
 /	barra
 :	dois pontos
 ;	ponto e vírgula
-<	menor
->	maior
-=	igual
 ?	interrogação
 @	arroba
 [	abre colchete
@@ -98,7 +95,7 @@ _	sublinha
 –	traço
 —	travessão
 ­	hífen discricionário
-⁃	marcador hífen
+⁃	marcador tracinho
 ●	círculo
 ○	círculo branco
 ¨	trema
@@ -113,16 +110,13 @@ _	sublinha
 ◾	quadradinho médio negro
 □	quadrado branco
 ◦	bolinha branca
-⇒	seta dupla para a direita
 ⇨	seta branca para a direita
 ➔	seta realçada para a direita de cabeça larga
 ➢	Seta para a direita com iluminação superior tridimensional
-⮚	seta equilateral para a direita com iluminação superior tridimensional
-# pt_BR: para o caractere "❖" no original chamado de "black diamond minus white X", em vez de usar "diamante" para traduzir "diamond" é usado "losango" que é uma das traduções para tal palavra inglesa representando melhor o formato desse caractere
+# pt_BR: para caracteres no original chamados de "diamond", em vez de usar "diamante" para traduzir foi usado "losango" que é uma das traduções para tal palavra inglesa representando melhor o formato de tais caracteres
 ❖	losango negro menos x branco
-# pt_BR: para o caractere "♣" na tabela Unicode chamado de "black club suit", em vez de usar "clube" para traduzir "club suit" é usado "naipe de paus" por ser a tradução para tal expressão inglesa representando o formato desse caractere
+# pt_BR: caracteres unicode chamados de "club suit", na tradução em vez de usar "clube" são traduzidos como "naipe de paus" por ser a tradução para tal expressão inglesa representando o formato de tais caracteres, mesmo tipo de situação com os caracteres "diamond suit" que são traduzidos como "naipe de ouros"
 ♣	naipe de paus negro
-# pt_BR: para o caractere "♦" na tabela Unicode chamado de "black diamond suit", em vez de usar "diamante" para traduzir "diamond suit" é usado "naipe de ouros" por ser a tradução para tal expressão inglesa representando o formato desse caractere
 ♦	naipe de ouros Negro
 ◆	losango negro
 §	parágrafo
@@ -130,8 +124,6 @@ _	sublinha
 «	abre aspas angulares
 »	fecha aspas angulares
 µ	micro
-º	ordinal masculino
-ª	ordinal feminino
 ⁰	0 sobrescrito
 ¹	1 sobrescrito
 ²	2 sobrescrito
@@ -143,7 +135,6 @@ _	sublinha
 ⁸	8 sobrescrito
 ⁹	9 sobrescrito
 ⁺	mais sobrescrito
-⁻	menos sobrescrito
 ⁼	igual sobrescrito
 ⁽	abre parêntesis sobrescrito
 ⁾	fecha parêntesis sobrescrito
@@ -165,11 +156,8 @@ _	sublinha
 ₎	fecha parêntesis subscrito
 ®	registrado
 ™	marca registrada
-©	Copyright
+©	copyright
 ℠	Marca de Serviço
-±	mais ou menos
-×	vezes
-÷	dividido por
 ←	seta para esquerda
 ↑	seta para cima
 →	seta para direita
@@ -181,16 +169,109 @@ _	sublinha
 ‡	cruz dupla
 ‣	marcador triangular
 ✗	x de cédula
+⊕	mais circulado
+⊖	menos circulado
+⇄	seta para a direita sobre seta para a esquerda
+⇒	seta dupla para a direita
 
-#Mathematical Operators U+2200 to U+220F
-∀	para todo
-∁	complemento
+#Arithmetic operators
++	mais
+−	menos
+×	vezes
+⋅	operador ponto de multiplicação
+⨯	vetor ou produto vetorial
+∕	barra de divisão
+⁄	barra de fração
+÷	dividido por
+∓	menos ou mais
+±	mais ou menos
+
+#Set operations
+∖	diferença de conjunto
+⊍	multiplicação de multiconjunto
+𝒫	conjunto potência p maiúsculo
+𝔓	p maiúsculo fraktur
+℘	p maiúsculo Weierstrass
+∁	conjunto complementar
+
+#Set relations and set constructions
+∅	conjunto vazio
+⊂	subconjunto de
+⊄	não é um subconjunto de
+⊃	superconjunto de
+⊅	não é um superconjunto de
+⊆	subconjunto de ou igual a
+⊈	nem um subconjunto de nem igual a
+⊇	superconjunto de ou igual a
+⊉	nem um superconjunto de nem igual a
+⊌	multiconjunto
+
+#Equality signs
+=	igual
+≃	assintoticamente igual a
+≄	não assintoticamente igual a
+≅	aproximadamente igual a
+≆	aproximadamente mas não realmente igual a
+≈	quase igual a
+≌	tudo igual a
+≍	equivalente a
+≭	não equivalente a
+≎	geometricamente equivalente a
+≑	geometricamente igual a
+≚	equiangular a
+≬	entre
+≠	diferente de
+≡	idêntico a
+≣	estritamente idêntico a
+≢	não idêntico a
+∼	semelhante a ou operador til
+≙	estimativas
+≟	questionado igual a
+
+#comparison signs
+<	menor
+>	maior
+≤	menor ou igual a
+≦	menos do quê igual a
+≪	muito menor quê
+≥	maior ou igual a
+≧	maior do quê igual a
+≫	muito maior quê
+≶	menor quê ou maior quê
+≷	maior quê ou menor quê
+≮	não menor quê
+≯	não maior quê
+
+#Functions
+⁻	inversa menos sobrescrito
+∘	Operador anel
 ∂	derivada parcial
+∇	nabla
+
+#Geometry and linear Algebra
+⃗	vetor entre
+△	triângulo branco apontando para cima
+▭	retângulo branco
+∟	ângulo reto
+∠	ângulo
+∥	paralelo a
+∦	não paralelo a
+⊥	aderência para cima
+⟂	perpendicular
+‖	linha vertical dupla
+̂	normaliza
+∿	onda senoidal
+∡	Ângulo medido
+∢	Ângulo esférico
+
+#Logical operators
+∀	para todo
 ∃	existe
 ∄	não existe
-∅	conjunto vazio
-∆	incremento
-∇	nabla
+⇏	seta dupla para a direita com traço não implica
+⇐	seta dupla para a esquerda implica
+
+#Other mathematical Operators
 ∈	pertence
 ∉	não pertence
 ∊	pertence pequeno
@@ -198,36 +279,46 @@ _	sublinha
 ∌	não contém como membro
 ∍	contém como membro pequeno
 ∎	fim de prova
-∏	produto n-ário
-
-# Miscellaneous Mathematical Operators
-∑	somatório n-ário
+∏	produtório
+∐	coprodutório
+∑	somatório
 √	raíz quadrada
 ∛	raíz cúbica
 ∜	raiz quarta
 ∝	proporcional a
 ∞	infinito
-∟	ângulo reto
-∠	ângulo
-∥	paralelo a
-∦	não paralelo a
-# pt_BR: em "∧	eh lógico" usado "eh" para pronúncia correta com alguns sintetizadores
 ∧	eh lógico
 ∨	ou lógico
 ¬	não
 ∩	interseção
 ∪	união
 ∫	integral
+∬	Integral dupla
+∭	Integral tripla
+∮	Integral de linha
+∯	Integral de superfície
+∰	Integral de volume
+∱	Integral em sentido horário
+∲	Integral linear em sentido horário
+∳	Integral linear em sentido anti-horário
 ∴	portanto
 ∵	porquê
 ∶	razão
 ∷	proporção
-≤	menor quê ou igual a
-≥	maior quê ou igual a
-⊂	subconjunto de
-⊃	superconjunto de
-⊆	subconjunto de ou igual a
-⊇	superconjunto de ou igual a
+∹	excesso
+∺	proporção geométrica
+≀	produto entrelaçado
+≏	diferença entre
+≐	aproxima-se do limite
+∙	Operador bolinha
+∣	divide
+∤	não divide
+≔	dois pontos igual
+≕	igual dois pontos
+≺	precede
+≻	sucede
+⊀	não precede
+⊁	não sucede
 
 # Vulgur Fractions U+2150 to U+215E
 ¼	um quarto
@@ -248,6 +339,20 @@ _	sublinha
 ⅜	três oitavos
 ⅝	cinco oitavos
 ⅞	sete oitavos
+
+#Number sets
+𝔸	números algébricos a maiúsculo cunhado
+ℂ	números complexos c maiúsculo cunhado
+ℑ	parte imaginária do número complexo letra preta i maiúscula
+ℍ	quatérnios h maiúsculo cunhado
+ℕ	números naturais n maiúsculo cunhado
+𝕁	números não negativos (inteiros) j maiúsculo cunhado
+ℚ	números racionais q maiúsculo cunhado
+ℝ	números reais r maiúsculo cunhado
+ℜ	parte real do número complexo letra preta r maiúscula
+ℤ	inteiros z maiúsculo cunhado
+ℵ	primeiro cardinal transfinito símbolo alef
+ℶ	segundo cardinal transfinito símbolo bet
 
 # Miscellaneous Technical
 ⌘	Tecla Command do Mac
