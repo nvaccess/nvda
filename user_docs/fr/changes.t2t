@@ -6,12 +6,13 @@ Quoi de Neuf dans NVDA
 = 2021.1 =
 Cette version inclut un support expérimental d'UIA dans Microsoft Excel et les navigateurs basés sur Chromium.
 Elle contient également des correctifs pour de nombreuses langues, et pour l'accès aux liens en Braille.
-Des mises à jour de la base CLDR, des symboles mathématiques, de eSpeak-NG et de Liblouis.
+Des mises à jour de la base CLDR, des symboles mathématiques, et de Liblouis.
+Comme toujours de nombreux correctifs et améliorations, y compris pour Office, Visual Studio, et pour de nombreuses langues.
 
-De nombreux correctifs et améliorations, dans Office, Visual Studio, et pour de nombreuses langues.
-Note : ceci est une version de rupture de compatibilité pour l'API des extensions.
-Les extensions devront être retestées et avoir leur manifest à jour.
-Cette version interrompt également le support d'Adobe Flash.
+Note :
+ - Cette version rompt la compatibilité avec les extensions existantes.
+ - Cette version interrompt également le support d'Adobe Flash.
+ -
 
 
 == Nouvelles fonctionnalités ==
@@ -26,14 +27,13 @@ Cette version interrompt également le support d'Adobe Flash.
 == Changements ==
 - En mode navigation, les contrôles peuvent maintenant être activés sur leurs descripteurs en utilisant les curseurs éclair d'un afficheur Braille (par exemple ln pour un lien). Ceci est particulièrement utile sur les cases à cocher sans label par exemple. (#7447)
 - NVDA empêche maintenant l'utilisateur d'exécuter la reconnaissance optique de caractères de Windows 10 quand le rideau d'écran est actif. (#11911)
-- Mise à jour du référentiel commun de données Unicode (CLDR) à la version 38.1. (#11943)
+- Mise à jour du référentiel commun de données Unicode (CLDR) à la version 39.0. (#11943, #12314)
 - Ajout de plusieurs symboles mathématiques au dictionnaire de symboles. (#11467)
 - Le guide utilisateur, la liste de changements et le résumé des commandes ont maintenant une apparence révisée. (#12027)
 - "Non supporté" est maintenant annoncé lorsque vous essayez de changer la disposition de l'écran dans des applications ne le supportant pas, comme Microsoft Word. (#7297)
 - Dans les paramètres avancés, l'option "Essayer de couper la parole pour les événements de focus expirés" est maintenant activée par défaut. (#10885)
   - Ce comportement peut être désactivé en définissant cette option sur "Non".
   - Les applications Web, comme GMail, n'annoncent plus d'informations erronées lors du déplacement rapide du focus.
-- eSpeak-NG a été mis à jour à la version 1.51-dev révision f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Mise à jour du transcripteur Braille Liblouis à la version [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - Nouvelles tables Braille: Bélarusse Braille littéraire, Bélarusse Braille informatique, Urdu intégral, Urdu abrégé.
 - Le support des contenus flash a été supprimé de NVDA en raison de l'utilisation de flash déconseillée par Adobe. (#11131)
@@ -58,7 +58,7 @@ Cette version interrompt également le support d'Adobe Flash.
 - La langue de Python est définie pour toujours respecter la langue des préférences et devrait maintenant utiliser la langue par défaut. (#12214)
 - TextInfo.getTextInChunks ne plante plus lorsqu'appelé dans des contrôles d'édition riches comme la visionneuse du journal. (#11613)
 - Il est à nouveau possible d'utiliser NVDA avec des langues contenant des soulignements dans leur nom comme de_CH sous Windows 10 1803 et 1809. (#12250)
-- Dans WordPad, le report des exposants et indices fonctionne maintenant comme attendu. (#12262)
+- Dans WordPad, la configuration de l'annonce des exposants et indices fonctionne maintenant comme attendu. (#12262)
 - NVDA n'échoue plus à lire le nouveau contenu sous le curseur sur une page Web si l'ancien contenu disparaît et est remplacé par le nouveau à la même place. (#12147)
 - Le formatage barré, exposant et indice est maintenant correctement renvoyé pour des cellules Excel entières si les options correspondantes sont activées. (#12264)
 - Correction de la copie de la configuration pendant l'installation depuis une version portable si le dossier de configuration par défaut est vide. (#12071, #12205)
@@ -67,6 +67,9 @@ Cette version interrompt également le support d'Adobe Flash.
 - Le programme d'installation de NVDA respecte maintenant l'argument de ligne de commande ``--minimal`` et ne joue plus le son de démarrage, suivant le même comportement que celui documenté pour l'exécutable d'une version portable ou installée de NVDA. (#12289)
 - Dans Microsoft Word ou Outlook, les commandes de navigation de tableau permettent maintenant d'amener à la table de visualisation suivante ou précédente si l'option "Inclure les tables de visualisation" est cochée dans les paramètres du mode navigation. (#11899)
 - NVDA n'annoncera plus "↑↑↑" pour les emojis dans certaines langues. (#11963)
+- Espeak supporte à nouveau le Cantonais et le Mandarin. (#10418)
+- Dans le nouveau Microsoft Edge basé sur Chromium, les zones de texte comme la barre d'adresse sont maintenant annoncées lorsqu'elles sont vides. (#12474)
+- Correction du pilote Braille Seika. (#10787)
 
 
 == Changements pour les développeurs ==
