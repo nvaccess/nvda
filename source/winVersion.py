@@ -11,6 +11,7 @@ making sure NVDA can run on a minimum supported version of Windows.
 import sys
 import os
 import functools
+import winreg
 
 
 @functools.total_ordering
@@ -49,12 +50,22 @@ class WinVersion(object):
 		elif (self.major, self.minor) == (6, 3):
 			return "Windows 8.1"
 		elif self.major == 10:
-			buildsToReleases = {build: release for release, build in WIN10_RELEASE_NAME_TO_BUILDS.items()}
-			if self.build in buildsToReleases:
-				return f"Windows 10 {buildsToReleases[self.build]}"
-			else:
-				# Windows Insider build.
-				return "Windows 10 prerelease"
+			# From Version 1511 (build 10586), release Id/display version comes from Windows Registry.
+			# Always return "Windows 10 1507" on build 10240.
+			if self.build == 10240:
+				return "Windows 10 1507"
+			currentVersion = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion")
+			# Version 20H2 and later where a separate display version string is used.
+			# For backward compatibility, release ID variable will store display version string.
+			try:
+				releaseID = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
+			except OSError:
+				releaseID = None
+			# Version 1511 and later unless display version string is present.
+			if not releaseID:
+				releaseID = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
+			winreg.CloseKey(currentVersion)
+			return f"Windows 10 {releaseID}"
 		else:
 			raise RuntimeError("Unknown Windows release")
 
