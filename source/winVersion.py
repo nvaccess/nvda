@@ -56,16 +56,16 @@ class WinVersion(object):
 				return "Windows 10 1507"
 			currentVersion = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion")
 			# Version 20H2 and later where a separate display version string is used.
-			# For backward compatibility, release ID variable will store display version string.
+			# For backward compatibility, release Id will store display version string.
 			try:
-				releaseID = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
+				releaseId = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
 			except OSError:
-				releaseID = None
+				releaseId = None
 			# Version 1511 and later unless display version string is present.
-			if not releaseID:
-				releaseID = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
+			if not releaseId:
+				releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
 			winreg.CloseKey(currentVersion)
-			return f"Windows 10 {releaseID}"
+			return f"Windows 10 {releaseId}"
 		else:
 			raise RuntimeError("Unknown Windows release")
 
