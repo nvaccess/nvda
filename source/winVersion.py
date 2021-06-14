@@ -54,17 +54,18 @@ class WinVersion(object):
 			# Always return "Windows 10 1507" on build 10240.
 			if self.build == 10240:
 				return "Windows 10 1507"
-			currentVersion = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion")
-			# Version 20H2 and later where a separate display version string is used.
-			# For backward compatibility, release Id will store display version string.
-			try:
-				releaseId = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
-			except OSError:
-				releaseId = None
-			# Version 1511 and later unless display version string is present.
-			if not releaseId:
-				releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
-			winreg.CloseKey(currentVersion)
+			with winreg.OpenKey(
+				winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+			) as currentVersion:
+				# Version 20H2 and later where a separate display version string is used.
+				# For backward compatibility, release Id will store display version string.
+				try:
+					releaseId = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
+				except OSError:
+					releaseId = None
+				# Version 1511 and later unless display version string is present.
+				if not releaseId:
+					releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
 			return f"Windows 10 {releaseId}"
 		else:
 			raise RuntimeError("Unknown Windows release")
