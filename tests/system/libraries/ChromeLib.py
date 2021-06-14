@@ -142,8 +142,8 @@ class ChromeLib:
 		"""
 		success, _success = _blockUntilConditionMet(
 			getValue=lambda: SetForegroundWindow(startsWithTestCaseTitle, builtIn.log),
-			giveUpAfterSeconds=3,
-			intervalBetweenSeconds=0.5
+			giveUpAfterSeconds=5,
+			intervalBetweenSeconds=0.2
 		)
 		if success:
 			return
