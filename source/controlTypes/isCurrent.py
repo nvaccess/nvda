@@ -3,13 +3,12 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
-from enum import Enum
 from typing import Dict
 
-from logHandler import log
+from utils.displayString import DisplayStringStrEnum
 
 
-class IsCurrent(Enum):
+class IsCurrent(DisplayStringStrEnum):
 	"""Values to use within NVDA to denote 'current' values.
 	These describe if an item is the current item within a particular kind of selection.
 	EG aria-current
@@ -23,22 +22,20 @@ class IsCurrent(Enum):
 	TIME = "time"
 
 	@property
+	def _displayStringLabels(self):
+		return _isCurrentLabels
+
+	@property
 	def displayString(self):
-		"""
-		@return: The translated UI display string that should be used for this value of the IsCurrent enum
-		"""
 		try:
-			return _isCurrentLabels[self]
+			return super().displayString
 		except KeyError:
-			log.debugWarning(f"No translation mapping for: {self}")
-			# there is a value for 'current' but NVDA hasn't learned about it yet,
-			# at least describe in the general sense that this item is 'current'
-			return _isCurrentLabels[IsCurrent.YES]
+			return self.YES.displayString
 
 
 #: Text to use for 'current' values. These describe if an item is the current item
 #: within a particular kind of selection. EG aria-current
-_isCurrentLabels: Dict[Enum, str] = {
+_isCurrentLabels: Dict[IsCurrent, str] = {
 	IsCurrent.NO: "",  # There is nothing extra to say for items that are not current.
 	# Translators: Presented when an item is marked as current in a collection of items
 	IsCurrent.YES: _("current"),

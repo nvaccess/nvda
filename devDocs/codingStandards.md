@@ -44,6 +44,7 @@ for more information.
   - E.G. `BrailleHandler`.
 * Constants should be all upper case, separating words with underscores;
   - E.G. `LANGS_WITH_CONJUNCT_CHARS`.
+  - Avoid unnecesary shared prefixes in constants. Instead, use an enum for related constants.
 * Event handlers are prefixed with "event_", subsequent words in camel case.
   Note, `object` and `action` are separated by underscores.
   - E.G.: `event_action` or `event_object_action`.
@@ -59,6 +60,13 @@ for more information.
     - TBD. Ideally follows a similar style the others, and communicates if the filtering happens
       before or after some action.
     - It would also be nice to have a naming scheme that differentiates it from the others.
+* Enums should be formatted using the expected mix of above eg:
+  ```python
+  class ExampleGroupOfData(Enum):
+      CONSTANT_VALUE_MEMBER = auto()
+      @property
+      def _formatMember(self): pass
+  ```
 
 ### Translatable Strings
 * All strings that could be presented to the user should be marked as translatable using the `_()`
@@ -86,3 +94,11 @@ self.copySettingsButton = wx.Button(
 	)
 )
 ```
+
+### Imports
+* Unused imports should be removed where possible.
+  - Anything imported into a (sub)module can also be imported from that submodule.
+  - As a result, removing unused imports may break compatibility, and should be done in compatibility breaking releases (see `deprecations.md`).
+* Unused imports will give a lint warning. These can be handled the following ways: 
+  - If these imports are inteded to be imported from other modules, they can be done included in a definition for `__all__`. This will override and define the symbols imported when performing a star import, eg `from module import *`.
+  - Otherwise, with a comment like `# noqa: <explanation>`.
