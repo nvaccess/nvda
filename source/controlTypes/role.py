@@ -161,7 +161,7 @@ class Role(IntEnum):
 	MARKED_CONTENT = 153
 
 
-roleLabels: Dict[int, str] = {
+roleLabels: Dict[Role, str] = {
 	# Translators: The word for an unknown control type.
 	Role.UNKNOWN: _("unknown"),
 	# Translators: The word for window of a program such as document window.
@@ -467,7 +467,7 @@ roleLabels: Dict[int, str] = {
 }
 
 
-silentRolesOnFocus: Set[int] = {
+silentRolesOnFocus: Set[Role] = {
 	Role.PANE,
 	Role.ROOTPANE,
 	Role.FRAME,
@@ -483,10 +483,25 @@ silentRolesOnFocus: Set[int] = {
 }
 
 
-silentValuesForRoles: Set[int] = {
+silentValuesForRoles: Set[Role] = {
 	Role.CHECKBOX,
 	Role.RADIOBUTTON,
 	Role.LINK,
 	Role.MENUITEM,
 	Role.APPLICATION,
+}
+
+
+clickableRoles: Set[Role] = {
+	Role.LINK,
+	Role.BUTTON,
+	Role.CHECKBOX,
+	Role.RADIOBUTTON,
+	Role.TOGGLEBUTTON,
+	Role.MENUITEM,
+	Role.TAB,
+	Role.SLIDER,
+	Role.DOCUMENT,
+	Role.CHECKMENUITEM,
+	Role.RADIOMENUITEM,
 }

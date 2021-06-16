@@ -56,7 +56,7 @@ class State(IntEnum):
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
 
 
-stateLabels: Dict[int, str] = {
+stateLabels: Dict[State, str] = {
 	# Translators: This is presented when a control or document is unavailable.
 	State.UNAVAILABLE: _("unavailable"),
 	# Translators: This is presented when a control has focus.
@@ -139,7 +139,7 @@ stateLabels: Dict[int, str] = {
 }
 
 
-negativeStateLabels: Dict[int, str] = {
+negativeStateLabels: Dict[State, str] = {
 	# Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 	State.SELECTED: _("not selected"),
 	# Translators: This is presented when a button is not pressed.

@@ -38,7 +38,7 @@ class IsCurrent(Enum):
 
 #: Text to use for 'current' values. These describe if an item is the current item
 #: within a particular kind of selection. EG aria-current
-_isCurrentLabels: Dict[Enum, str] = {
+_isCurrentLabels: Dict[IsCurrent, str] = {
 	IsCurrent.NO: "",  # There is nothing extra to say for items that are not current.
 	# Translators: Presented when an item is marked as current in a collection of items
 	IsCurrent.YES: _("current"),

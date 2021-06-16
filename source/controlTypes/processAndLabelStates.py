@@ -3,9 +3,9 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
-from typing import Any, Dict, List, Optional, Set
+from typing import Dict, List, Optional, Set
 
-from .role import Role
+from .role import Role, clickableRoles
 from .state import State, STATES_SORTED, negativeStateLabels, stateLabels
 from .outputReason import OutputReason
 
@@ -39,7 +39,7 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 		# Combo boxes inherently have a popup, so don't report it.
 		positiveStates.discard(State.HASPOPUP)
 	import config
-	if not config.conf['documentFormatting']['reportClickable'] or role in (Role.LINK, Role.BUTTON, Role.CHECKBOX, Role.RADIOBUTTON, Role.TOGGLEBUTTON, Role.MENUITEM, Role.TAB, Role.SLIDER, Role.DOCUMENT, Role.CHECKMENUITEM, Role.RADIOMENUITEM):
+	if not config.conf['documentFormatting']['reportClickable'] or role in clickableRoles:
 		# This control is clearly clickable according to its role,
 		# or reporting clickable just isn't useful,
 		# or the user has explicitly requested no reporting clickable
@@ -147,13 +147,13 @@ def processNegativeStates(role, states, reason: OutputReason, negativeStates=Non
 
 
 def processAndLabelStates(
-		role: int,
-		states: Set[Any],
+		role: Role,
+		states: Set[State],
 		reason: OutputReason,
-		positiveStates: Optional[Set[Any]] = None,
-		negativeStates: Optional[Set[Any]] = None,
-		positiveStateLabelDict: Dict[int, str] = {},
-		negativeStateLabelDict: Dict[int, str] = {},
+		positiveStates: Optional[Set[State]] = None,
+		negativeStates: Optional[Set[State]] = None,
+		positiveStateLabelDict: Dict[State, str] = {},
+		negativeStateLabelDict: Dict[State, str] = {},
 ) -> List[str]:
 	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
 	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}.
