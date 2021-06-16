@@ -5,15 +5,15 @@
 
 from typing import Any, Dict, List, Optional, Set
 
-from .role import *
-from .state import STATES_SORTED, negativeStateLabels, stateLabels, *
+from .role import Role
+from .state import State, STATES_SORTED, negativeStateLabels, stateLabels
 from .outputReason import OutputReason
 
 
 def processPositiveStates(role, states, reason: OutputReason, positiveStates=None):
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
-	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is checked.
-	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
+	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is checked.
+	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}.
 	@type role: int
 	@param states: The raw states for an object to process.
 	@type states: set
@@ -25,62 +25,62 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 	"""
 	positiveStates = positiveStates.copy() if positiveStates is not None else states.copy()
 	# The user never cares about certain states.
-	if role==ROLE_EDITABLETEXT:
-		positiveStates.discard(STATE_EDITABLE)
-	if role!=ROLE_LINK:
-		positiveStates.discard(STATE_VISITED)
-	positiveStates.discard(STATE_SELECTABLE)
-	positiveStates.discard(STATE_FOCUSABLE)
-	positiveStates.discard(STATE_CHECKABLE)
-	if STATE_DRAGGING in positiveStates:
+	if role==Role.EDITABLETEXT:
+		positiveStates.discard(State.EDITABLE)
+	if role!=Role.LINK:
+		positiveStates.discard(State.VISITED)
+	positiveStates.discard(State.SELECTABLE)
+	positiveStates.discard(State.FOCUSABLE)
+	positiveStates.discard(State.CHECKABLE)
+	if State.DRAGGING in positiveStates:
 		# It's obvious that the control is draggable if it's being dragged.
-		positiveStates.discard(STATE_DRAGGABLE)
-	if role == ROLE_COMBOBOX:
+		positiveStates.discard(State.DRAGGABLE)
+	if role == Role.COMBOBOX:
 		# Combo boxes inherently have a popup, so don't report it.
-		positiveStates.discard(STATE_HASPOPUP)
+		positiveStates.discard(State.HASPOPUP)
 	import config
-	if not config.conf['documentFormatting']['reportClickable'] or role in (ROLE_LINK, ROLE_BUTTON, ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_TOGGLEBUTTON, ROLE_MENUITEM, ROLE_TAB, ROLE_SLIDER, ROLE_DOCUMENT, ROLE_CHECKMENUITEM, ROLE_RADIOMENUITEM):
+	if not config.conf['documentFormatting']['reportClickable'] or role in (Role.LINK, Role.BUTTON, Role.CHECKBOX, Role.RADIOBUTTON, Role.TOGGLEBUTTON, Role.MENUITEM, Role.TAB, Role.SLIDER, Role.DOCUMENT, Role.CHECKMENUITEM, Role.RADIOMENUITEM):
 		# This control is clearly clickable according to its role,
 		# or reporting clickable just isn't useful,
 		# or the user has explicitly requested no reporting clickable
-		positiveStates.discard(STATE_CLICKABLE)
+		positiveStates.discard(State.CLICKABLE)
 	if reason == OutputReason.QUERY:
 		return positiveStates
-	positiveStates.discard(STATE_DEFUNCT)
-	positiveStates.discard(STATE_MODAL)
-	positiveStates.discard(STATE_FOCUSED)
-	positiveStates.discard(STATE_OFFSCREEN)
-	positiveStates.discard(STATE_INVISIBLE)
+	positiveStates.discard(State.DEFUNCT)
+	positiveStates.discard(State.MODAL)
+	positiveStates.discard(State.FOCUSED)
+	positiveStates.discard(State.OFFSCREEN)
+	positiveStates.discard(State.INVISIBLE)
 	if reason != OutputReason.CHANGE:
-		positiveStates.discard(STATE_LINKED)
+		positiveStates.discard(State.LINKED)
 		if role in (
-			ROLE_LISTITEM,
-			ROLE_TREEVIEWITEM,
-			ROLE_MENUITEM,
-			ROLE_TABLEROW,
-			ROLE_CHECKBOX,
-		) and STATE_SELECTABLE in states:
-			positiveStates.discard(STATE_SELECTED)
-	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
-		positiveStates.discard(STATE_READONLY)
-	if role == ROLE_CHECKBOX:
-		positiveStates.discard(STATE_PRESSED)
-	if role == ROLE_MENUITEM and STATE_HASPOPUP in positiveStates:
+			Role.LISTITEM,
+			Role.TREEVIEWITEM,
+			Role.MENUITEM,
+			Role.TABLEROW,
+			Role.CHECKBOX,
+		) and State.SELECTABLE in states:
+			positiveStates.discard(State.SELECTED)
+	if role not in (Role.EDITABLETEXT, Role.CHECKBOX):
+		positiveStates.discard(State.READONLY)
+	if role == Role.CHECKBOX:
+		positiveStates.discard(State.PRESSED)
+	if role == Role.MENUITEM and State.HASPOPUP in positiveStates:
 		# The user doesn't usually care if a submenu is expanded or collapsed.
-		positiveStates.discard(STATE_COLLAPSED)
-		positiveStates.discard(STATE_EXPANDED)
-	if STATE_FOCUSABLE not in states:
-		positiveStates.discard(STATE_EDITABLE)
+		positiveStates.discard(State.COLLAPSED)
+		positiveStates.discard(State.EXPANDED)
+	if State.FOCUSABLE not in states:
+		positiveStates.discard(State.EDITABLE)
 	if not config.conf["annotations"]["reportDetails"]:
 		# reading aria-details is an experimental feature still and should not always be reported.
-		positiveStates.discard(STATE_HAS_ARIA_DETAILS)
+		positiveStates.discard(State.HAS_ARIA_DETAILS)
 	return positiveStates
 
 
 def processNegativeStates(role, states, reason: OutputReason, negativeStates=None):
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
-	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is not checked.
-	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
+	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is not checked.
+	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}.
 	@type role: int
 	@param states: The raw states for an object to process.
 	@type states: set
@@ -99,46 +99,46 @@ def processNegativeStates(role, states, reason: OutputReason, negativeStates=Non
 	# when the state change for the previous focus is issued before the focus change.
 	if (
 		# Only include if the object is actually selectable
-		STATE_SELECTABLE in states
+		State.SELECTABLE in states
 		# Only include if the object is focusable (E.g. ARIA grid cells, but not standard html tables)
-		and STATE_FOCUSABLE in states
+		and State.FOCUSABLE in states
 		# Only include  if reporting the focus or when states are changing on the focus.
 		# This is to avoid exposing it for things like caret movement in browse mode. 
-		and (reason == OutputReason.FOCUS or (reason == OutputReason.CHANGE and STATE_FOCUSED in states))
+		and (reason == OutputReason.FOCUS or (reason == OutputReason.CHANGE and State.FOCUSED in states))
 		and role in (
-			ROLE_LISTITEM, 
-			ROLE_TREEVIEWITEM, 
-			ROLE_TABLEROW,
-			ROLE_TABLECELL,
-			ROLE_TABLECOLUMNHEADER,
-			ROLE_TABLEROWHEADER,
-			ROLE_CHECKBOX,
+			Role.LISTITEM, 
+			Role.TREEVIEWITEM, 
+			Role.TABLEROW,
+			Role.TABLECELL,
+			Role.TABLECOLUMNHEADER,
+			Role.TABLEROWHEADER,
+			Role.CHECKBOX,
 		)
 	):
-		speakNegatives.add(STATE_SELECTED)
+		speakNegatives.add(State.SELECTED)
 	# Restrict "not checked" in a similar way to "not selected".
 	if(
-		(role in (ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_CHECKMENUITEM) or STATE_CHECKABLE in states)
-		and (STATE_HALFCHECKED not in states)
-		and (reason != OutputReason.CHANGE or STATE_FOCUSED in states)
+		(role in (Role.CHECKBOX, Role.RADIOBUTTON, Role.CHECKMENUITEM) or State.CHECKABLE in states)
+		and (State.HALFCHECKED not in states)
+		and (reason != OutputReason.CHANGE or State.FOCUSED in states)
 	):
-		speakNegatives.add(STATE_CHECKED)
-	if role == ROLE_TOGGLEBUTTON:
-		speakNegatives.add(STATE_PRESSED)
+		speakNegatives.add(State.CHECKED)
+	if role == Role.TOGGLEBUTTON:
+		speakNegatives.add(State.PRESSED)
 	if reason == OutputReason.CHANGE:
 		# We want to speak this state only if it is changing to negative.
-		speakNegatives.add(STATE_DROPTARGET)
+		speakNegatives.add(State.DROPTARGET)
 		# We were given states which have changed to negative.
 		# Return only those supplied negative states which should be spoken;
 		# i.e. the states in both sets.
 		speakNegatives &= negativeStates
 		# #6946: if HALFCHECKED is present but CHECKED isn't, we should make sure we add CHECKED to speakNegatives.
-		if (STATE_HALFCHECKED in negativeStates and STATE_CHECKED not in states):
-			speakNegatives.add(STATE_CHECKED)
+		if (State.HALFCHECKED in negativeStates and State.CHECKED not in states):
+			speakNegatives.add(State.CHECKED)
 		if STATES_SORTED & negativeStates and not STATES_SORTED & states:
 			# If the object has just stopped being sorted, just report not sorted.
 			# The user doesn't care how it was sorted before.
-			speakNegatives.add(STATE_SORTED)
+			speakNegatives.add(State.SORTED)
 		return speakNegatives
 	else:
 		# This is not a state change; only positive states were supplied.
@@ -156,7 +156,7 @@ def processAndLabelStates(
 		negativeStateLabelDict: Dict[int, str] = {},
 ) -> List[str]:
 	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
-	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
+	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}.
 	@param states: The raw states for an object to process.
 	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}.
 	@param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to positive;
