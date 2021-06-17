@@ -45,7 +45,7 @@ def applyRegistryPatch(fileName,wow64=False):
 	"""
 	if not os.path.isfile(fileName):
 		raise FileNotFoundError(f"Cannot apply registry patch, {fileName} not found.")
-	regedit=os.path.join(sysWow64 if wow64 else systemRoot,'regedit.exe')
+	regedit = os.path.join(sysWow64 if wow64 else systemRoot + "\\Sysnative", "regedt32.exe")
 	try:
 		subprocess.check_call([regedit,'/s',fileName])
 	except subprocess.CalledProcessError as e:
