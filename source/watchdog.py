@@ -213,7 +213,8 @@ def _crashHandler(exceptionInfo):
 	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
 	log.info("Restarting due to crash")
-	core.restartUnsafely()  # if NVDA has crashed we cannot rely on it to exit safely
+	# if NVDA has crashed we cannot rely on the queue handler to start the new NVDA instance
+	core.restartUnsafely()
 	return 1 # EXCEPTION_EXECUTE_HANDLER
 
 @ctypes.WINFUNCTYPE(None)
