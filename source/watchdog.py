@@ -1,8 +1,7 @@
-#watchdog.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import sys
 import os
@@ -214,7 +213,7 @@ def _crashHandler(exceptionInfo):
 	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
 	log.info("Restarting due to crash")
-	core.restart()
+	core.restartUnsafely()  # if NVDA has crashed we cannot rely on it to exit safely
 	return 1 # EXCEPTION_EXECUTE_HANDLER
 
 @ctypes.WINFUNCTYPE(None)

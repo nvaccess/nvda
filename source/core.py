@@ -120,6 +120,24 @@ class NewNVDAInstance:
 	directory: Optional[str] = None
 
 
+def restartUnsafely():
+	"""Force a new copy to start, which is useful if NVDA is frozen."""
+	import subprocess
+	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
+		try:
+			sys.argv.remove(paramToRemove)
+		except ValueError:
+			pass
+	options = []
+	if not hasattr(sys, "frozen"):
+		options.append(os.path.basename(sys.argv[0]))
+	_startNewInstance(NewNVDAInstance(
+		sys.executable,
+		subprocess.list2cmdline(options + sys.argv[1:]),
+		globalVars.appDir
+	))
+
+
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
