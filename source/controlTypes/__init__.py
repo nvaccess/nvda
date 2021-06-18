@@ -8,7 +8,7 @@ from buildVersion import version_year
 # imports used in __all__, _ prefixed imports are marked for deprecation
 from .isCurrent import IsCurrent
 from .outputReason import OutputReason
-from .processAndLabelStates import processAndLabelStates, processNegativeStates, processPositiveStates
+from .processAndLabelStates import processAndLabelStates, _processNegativeStates, _processPositiveStates
 from .role import Role, roleLabels, silentRolesOnFocus, silentValuesForRoles
 from .state import State, STATES_SORTED, negativeStateLabels, stateLabels
 
@@ -17,8 +17,6 @@ __all__ = [
 	"IsCurrent",
 	"OutputReason",
 	"processAndLabelStates",
-	"processNegativeStates",
-	"processPositiveStates",
 	"Role",
 	"roleLabels",
 	"silentRolesOnFocus",
@@ -28,6 +26,13 @@ __all__ = [
 	"negativeStateLabels",
 	"stateLabels",
 ]
+
+
+# Added to maintain backwards compatibility, marked for deprecation to be removed in 2022.1
+# usages to be replaced by .processAndLabelStates.[_processNegativeStates|_processPositiveStates]
+if version_year < 2022:
+	processNegativeStates = _processNegativeStates
+	processPositiveStates = _processPositiveStates
 
 
 # Added to maintain backwards compatibility, marked for deprecation to be removed in 2022.1
