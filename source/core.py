@@ -135,7 +135,7 @@ def restartUnsafely():
 	"""
 
 	import subprocess
-	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
+	for paramToRemove in ("--ease-of-access"):
 		try:
 			sys.argv.remove(paramToRemove)
 		except ValueError:
