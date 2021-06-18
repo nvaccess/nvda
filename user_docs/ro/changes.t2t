@@ -3,6 +3,66 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.1 =
+Această versiune include suportul opțional și experimental pentru UIA-ul din Excel și din navigatoarele web bazate pe Chromium.
+Există corecturi pentru câteva limbi și pentru accesarea link-urilor în Braille.
+De asemenea, există actualizări făcute la Unicode CLDR și la simbolurile matematice, precum și la LibLouis.
+Versiunea vine la pachet și cu rezolvarea multor erori precum cele din Office, Visual Studio și din interfețele câtorva limbi.
+
+Notă:
+ - Această versiune afectează compatibilitatea cu suplimentele existente.
+ - Adobe Flash nu va mai avea suport începând cu această versiune de NVDA.
+ -
+
+
+== Noi Funcționalități ==
+- Suport prematur pentru UIA cu navigatoarele web bazate pe Chromium precum Edge. (#12025)
+- Suport experimental și opțional pentru Microsoft Excel prin UI Automation. Se recomandă numai pentru compilarea 16.0.13522.10000 sau pentru cele mai noi decât aceasta. (#12210)
+- Navigare mai facilă a ieșirii din Consola NVDA Python. (#9784)
+  - cu alt+săgețile sus/jos se sare la rezultatul următor/precedent al ieșirii (se adaugă shift pentru selectare).
+  - control+l curăță panoul de ieșire.
+- NVDA raportează categoriile atribuite unei întâlniri din Microsoft Outlook dacă aceasta există. (#11598)
+- Suport pentru afișajul braille Seika Notetaker de la Nippon Telesoft. (#11514)
+
+
+== Modificări ==
+- În modul de navigare, controalele pot fi activate cu deplasarea cursorului braille pe descriptoarele lor (e.x. „lnk” pentru un link). Acest lucru este util în special în cazul activării casetelor de bifat care nu au etichete. (#7447)
+- NVDA îl împiedică pe utilizator să folosească funcționalitatea Windows 10 OCR dacă este activă cortina ecranului. (#11911)
+- S-a actualizat Depozitul de Date Locale Comune Unicode (CLDR) la 38.1. (#11943)
+- Au fost adăugate mai multe simboluri matematice în dicționarul de simboluri. (#11467)
+- Manualul de utilizare, jurnalul de modificări și lista de comenzi au un aspect reîmprospătat. (#12027)
+- NVDA pronunță cuvântul „nesuportat” atunci când se încearcă activarea aspectului ecranului în aplicații pentru care această funcționalitate nu este compatibilă, Microsoft Word fiind un bun exemplu. (#7297)
+- Opțiunea „Încearcă să anulezi vorbirea pentru evenimentele expirate ale focalizării” din panoul de setări avansate este activă în mod implicit. (#10885)
+  - Acest comportament poate fi dezactivat setând opțiunea la valoarea „Nu”.
+  - Aplicațiile web precum Gmail nu mai furnizează informații învechite la deplasarea focalizării într-un mod rapid.
+- S-a actualizat traducătorul braille liblouis la [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - Noi tabele braille: braille literar bielorus, braille bielorus pentru calculator, urdu grad 1, urdu grad 2.
+- A fost eliminat din NVDA suportul pentru conținutul Adobe Flash, fiindcă utilizarea acestui program este activ descurajată de către cei care l-au dezvoltat. (#11131)
+- NVDA se va opri chiar și cu ferestrele deschise, procesul de dezactivare va închide toate ferestrele și casetele de dialog ale acestui cititor de ecran. (#1740)
+- Monitorul de vorbire poate fi închis cu ``alt+F4`` și are un buton standard de închidere pentru o interacțiune mai ușoară cu utilizatorii care dețin dispozitive de indicare. (#12330)
+- Monitorul Braille are un buton standard de închidere pentru o interacțiune mai ușoară cu utilizatorii care dețin dispozitive de indicare. (#12328)
+- În dialogul listei de elemente, tasta acceleratoare pentru butonul „Activare” a fost eliminată din niște traduceri pentru a se evita coliziunea cu o etichetă a unui buton rotativ de tip element. Atunci când se poate, butonul încă este implicit al dialogului și, ca atare, poate fi activat prin simpla apăsare a tastei enter din lista de elemente. (#6167)
+
+
+== Defecte Rezolvate ==
+- Lista de mesaje din Outlook 2010 poate fi citită din nou. (#12241)
+- În programele terminale din versiunea 1607 a Windows 10 și din cele mai noi decât aceasta, nu mai sunt citite caracterele din dreapta cursorului de scriere atunci când sunt inserate caractere în mijlocul unui rând sau sunt șterse. (#3200)
+  - Această soluție experimentală trebuie să fie activată manual din panoul setărilor avansate NVDA prin modificarea algoritmului diff la Diff Match Patch.
+- Nu ar trebui să mai apară în Microsoft Outlook distanța inadecvată care este raportată la apăsarea combinației Shift+Tab pentru deplasarea de la corpul mesajului la câmpul „Subiect”. (#10254)
+- Inserarea caracterului tab pentru indentare la începutul unei linii de intrare care nu este goală, precum și efectuarea completării tab-ului în mijlocul unei linii de intrare, sunt suportate. (#11532)
+- Informațiile de formatare și celelalte mesaje navigabile nu mai prezintă rânduri goale neașteptate atunci când aspectul ecranului este dezactivat. (#12004)
+- Acum se pot citi comentariile din Microsoft Word cu UIA-ul activat. (#9285)
+- A fost îmbunătățită performanța la interacțiunea cu Visual Studio. (#12171)
+- Au fost reparate niște erori grafice precum lipsa elementelor la utilizarea NVDA cu un aspect de la stânga la dreapta. (#8859)
+- Se respectă direcția aspectului GUI bazată pe limba NVDA, nu pe cea a sistemului de operare Windows. (#638)
+  - problemă cunoscută pentru limbile care se citesc de la dreapta la stânga: marginea din dreapta a clipurilor grupate pe etichete/controale. (#12181)
+- Locația Python este setată să corespundă în mod consecvent limbii selectate în preferințe și va apărea la utilizarea limbii implicite. (#12214)
+- TextInfo.getTextInChunks nu se mai blochează atunci când este apelat în controalele Rich Edit precum vizualizatorul jurnalului NVDA. (#11613)
+- În versiunile 1803 și 1809 ale Windows 10, se poate din nou folosi NVDA în limbile care au semnul Underscore (_) în cadrul numelui acestora. Una dintre aceste limbi este germana elvețiană, al cărei nume în sistemul NVDA de traduceri este de_CH. (#12250)
+
+
+
+
 = 2020.4 =
 Această versiune include noi metode de intrare chinezești, o actualizare la Liblouis și la lista de elemente (NVDA+f7) funcționează acum în modul de focalizare.
 Este disponibil ajutorul sensibil contextual la apăsarea F1 în ferestrele de dialog ale NVDA.
