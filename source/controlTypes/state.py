@@ -44,7 +44,7 @@ class State(IntEnum):
 	SORTED_DESCENDING = 0x200000000
 	HASLONGDESC = 0x400000000
 	PINNED = 0x800000000
-	HASFORMULA = 0x1000000000 #Mostly for spreadsheets
+	HASFORMULA = 0x1000000000  # Mostly for spreadsheets
 	HASCOMMENT = 0X2000000000
 	OBSCURED = 0x4000000000
 	CROPPED = 0x8000000000
@@ -95,9 +95,11 @@ stateLabels: Dict[State, str] = {
 	# Translators: This is presented when an invalid entry has been made.
 	State.INVALID_ENTRY: _("invalid entry"),
 	State.MODAL: _("modal"),
-	# Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
+	# Translators: This is presented when a field supports auto completion of entered text such as email
+	# address field in Microsoft Outlook.
 	State.AUTOCOMPLETE: _("has auto complete"),
-	# Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
+	# Translators: This is presented when an edit field allows typing multiple lines of text such as comment
+	# fields on websites.
 	State.MULTILINE: _("multi line"),
 	State.ICONIFIED: _("iconified"),
 	# Translators: Presented when the current control is located off screen.
@@ -130,11 +132,13 @@ stateLabels: Dict[State, str] = {
 	State.HASCOMMENT: _("has comment"),
 	# Translators: a state that denotes that the object is covered partially or fully by another object
 	State.OBSCURED: _("obscured"),
-	# Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
+	# Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the
+	# allocated/available space
 	State.CROPPED: _("cropped"),
 	# Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 	State.OVERFLOWING: _("overflowing"),
-	# Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet). 
+	# Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
+	# Excel spreadsheet).
 	State.UNLOCKED: _("unlocked"),
 }
 

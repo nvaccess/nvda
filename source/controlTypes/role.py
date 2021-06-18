@@ -196,9 +196,11 @@ roleLabels: Dict[Role, str] = {
 	Role.LISTITEM: _("list item"),
 	# Translators: The word used to identify graphics such as webpage graphics.
 	Role.GRAPHIC: _("graphic"),
-	# Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
+	# Translators: Used to identify help balloon (a circular window with helpful text such as notification
+	# text).
 	Role.HELPBALLOON: _("help balloon"),
-	# Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
+	# Translators: Used to identify a tooltip (a small window with additional text about selected item such as
+	# file information).
 	Role.TOOLTIP: _("tool tip"),
 	# Translators: Identifies a link in webpage documents.
 	Role.LINK: _("link"),
@@ -216,7 +218,8 @@ roleLabels: Dict[Role, str] = {
 	Role.PROGRESSBAR: _("progress bar"),
 	# Translators: Identifies a scroll bar.
 	Role.SCROLLBAR: _("scroll bar"),
-	# Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
+	# Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
+	# document).
 	Role.STATUSBAR: _("status bar"),
 	# Translators: Identifies a table such as ones used in various websites.
 	Role.TABLE: _("table"),
@@ -262,7 +265,8 @@ roleLabels: Dict[Role, str] = {
 	# i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 	# See http://en.wikipedia.org/wiki/Block_quotation
 	Role.BLOCKQUOTE: _("block quote"),
-	# Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
+	# Translators: Identifies a table header (a short text at the start of a table which describes what the
+	# table is about).
 	Role.TABLEHEADER: _("table header"),
 	# Translators: Identifies a table body (the main body of the table).
 	Role.TABLEBODY: _("table body"),
@@ -276,15 +280,18 @@ roleLabels: Dict[Role, str] = {
 	Role.APPLICATION: _("application"),
 	# Translators: Identifies a box element.
 	Role.BOX: _("box"),
-	# Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
+	# Translators: Identifies a grouping (a number of related items grouped together, such as related options
+	# in dialogs).
 	Role.GROUPING: _("grouping"),
 	# Translators: Identifies a property page such as drive properties dialog.
 	Role.PROPERTYPAGE: _("property page"),
-	# Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
+	# Translators: Identifies a canvas element on webpages (a box with some background color with some text
+	# drawn on the box, like a canvas).
 	Role.CANVAS: _("canvas"),
 	# Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 	Role.CAPTION: _("caption"),
-	# Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
+	# Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
+	# name).
 	Role.CHECKMENUITEM: _("check menu item"),
 	# Translators: Identifies a data edit field.
 	Role.DATEEDITOR: _("date edit"),
@@ -328,7 +335,8 @@ roleLabels: Dict[Role, str] = {
 	Role.EDITBAR: _("edit bar"),
 	# Translators: Identifies a terminal window such as command prompt.
 	Role.TERMINAL: _("terminal"),
-	# Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
+	# Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
+	# addition to text; encountered on webpages and NvDA log viewer).
 	Role.RICHEDIT: _("rich edit"),
 	# Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 	Role.RULER: _("ruler"),
@@ -367,7 +375,8 @@ roleLabels: Dict[Role, str] = {
 	Role.DIAL: _("dial"),
 	# Translators: Identifies a drop list.
 	Role.DROPLIST: _("drop list"),
-	# Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
+	# Translators: Identifies a split button (a control which performs different actions when different parts
+	# are clicked).
 	Role.SPLITBUTTON: _("split button"),
 	# Translators: Identifies a menu button (a button which opens a menu of items).
 	Role.MENUBUTTON: _("menu button"),
@@ -377,7 +386,8 @@ roleLabels: Dict[Role, str] = {
 	Role.MATH: _("math"),
 	# Translators: Identifies a grip control.
 	Role.GRIP: _("grip"),
-	# Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
+	# Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
+	# assigning shortcut for icons on the desktop).
 	Role.HOTKEYFIELD: _("hot key field"),
 	# Translators: Identifies an indicator control.
 	Role.INDICATOR: _("indicator"),
@@ -391,9 +401,11 @@ roleLabels: Dict[Role, str] = {
 	Role.TREEVIEWBUTTON: _("tree view button"),
 	# Translators: Identifies an IP address (an IP address field element).
 	Role.IPADDRESS: _("IP address"),
-	# Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
+	# Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts
+	# for programs).
 	Role.DESKTOPICON: _("desktop icon"),
-	# Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
+	# Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
+	# embedded within a web page.
 	Role.INTERNALFRAME: _("frame"),
 	# Translators: Identifies desktop pane (the desktop window).
 	Role.DESKTOPPANE: _("desktop pane"),
@@ -408,7 +420,8 @@ roleLabels: Dict[Role, str] = {
 	Role.MENU: _("menu"),
 	# Translators: Identifies a panel control for grouping related options.
 	Role.PANEL: _("panel"),
-	# Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
+	# Translators: Identifies a password field (a protected edit field for entering passwords such as when
+	# logging into web-based email sites).
 	Role.PASSWORDEDIT: _("password edit"),
 	# Translators: Identifies a font chooser.
 	Role.FONTCHOOSER: _("font chooser"),
@@ -437,7 +450,8 @@ roleLabels: Dict[Role, str] = {
 	Role.INDENT: _("indent"),
 	# Translators: Describes text formatting.
 	Role.ALIGNMENT: _("alignment"),
-	# Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
+	# Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such
+	# as file downloads or pop-up blocker).
 	Role.ALERT: _("alert"),
 	# Translators: Identifies a data grid control (a grid which displays data).
 	Role.DATAGRID: _("data grid"),
@@ -450,9 +464,9 @@ roleLabels: Dict[Role, str] = {
 	Role.AUDIO: _("audio"),
 	# Translators: Identifies a chart element.
 	Role.CHARTELEMENT: _("chart element"),
-	# Translators: Identifies deleted content. 
+	# Translators: Identifies deleted content.
 	Role.DELETED_CONTENT: _("deleted"),
-	# Translators: Identifies inserted content. 
+	# Translators: Identifies inserted content.
 	Role.INSERTED_CONTENT: _("inserted"),
 	# Translators: Identifies a landmark.
 	Role.LANDMARK: _("landmark"),

@@ -10,24 +10,26 @@ from .state import State, STATES_SORTED, negativeStateLabels, stateLabels
 from .outputReason import OutputReason
 
 
-def processPositiveStates(role, states, reason: OutputReason, positiveStates=None):
+def processPositiveStates(
+		role: Role,
+		states: Set[State],
+		reason: OutputReason,
+		positiveStates: Optional[Set[State]] = None
+) -> Set[State]:
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
 	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is checked.
-	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}.
-	@type role: int
+	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).
 	@param states: The raw states for an object to process.
-	@type states: set
-	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}.
-	@param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to positive;
-	@type positiveStates: set
+	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}).
+	@param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to
+	positive.
 	@return: The processed positive states.
-	@rtype: set
 	"""
 	positiveStates = positiveStates.copy() if positiveStates is not None else states.copy()
 	# The user never cares about certain states.
-	if role==Role.EDITABLETEXT:
+	if role == Role.EDITABLETEXT:
 		positiveStates.discard(State.EDITABLE)
-	if role!=Role.LINK:
+	if role != Role.LINK:
 		positiveStates.discard(State.VISITED)
 	positiveStates.discard(State.SELECTABLE)
 	positiveStates.discard(State.FOCUSABLE)
@@ -77,24 +79,27 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 	return positiveStates
 
 
-def processNegativeStates(role, states, reason: OutputReason, negativeStates=None):
+def processNegativeStates(
+		role: Role,
+		states: Set[State],
+		reason: OutputReason,
+		negativeStates: Optional[Set[State]] = None
+) -> Set[State]:
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
-	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is not checked.
-	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}.
-	@type role: int
+	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is not
+	checked.
+	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).
 	@param states: The raw states for an object to process.
-	@type states: set
-	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}.
-	@param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to negative;
-	@type negativeStates: set
+	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS)}.
+	@param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to
+	negative.
 	@return: The processed negative states.
-	@rtype: set
 	"""
 	if reason == OutputReason.CHANGE and not isinstance(negativeStates, set):
 		raise TypeError("negativeStates must be a set for this reason")
 	speakNegatives = set()
 	# Add the negative selected state if the control is selectable,
-	# but only if it is reported for the reason of focus, or this is a change to the focused object. 
+	# but only if it is reported for the reason of focus, or this is a change to the focused object.
 	# The condition stops "not selected" from being spoken in some broken controls
 	# when the state change for the previous focus is issued before the focus change.
 	if (
@@ -103,11 +108,11 @@ def processNegativeStates(role, states, reason: OutputReason, negativeStates=Non
 		# Only include if the object is focusable (E.g. ARIA grid cells, but not standard html tables)
 		and State.FOCUSABLE in states
 		# Only include  if reporting the focus or when states are changing on the focus.
-		# This is to avoid exposing it for things like caret movement in browse mode. 
+		# This is to avoid exposing it for things like caret movement in browse mode.
 		and (reason == OutputReason.FOCUS or (reason == OutputReason.CHANGE and State.FOCUSED in states))
 		and role in (
-			Role.LISTITEM, 
-			Role.TREEVIEWITEM, 
+			Role.LISTITEM,
+			Role.TREEVIEWITEM,
 			Role.TABLEROW,
 			Role.TABLECELL,
 			Role.TABLECOLUMNHEADER,
@@ -155,17 +160,22 @@ def processAndLabelStates(
 		positiveStateLabelDict: Dict[State, str] = {},
 		negativeStateLabelDict: Dict[State, str] = {},
 ) -> List[str]:
-	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
-	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}.
+	"""Processes the states for an object and returns the appropriate state labels for both positive and
+	negative states.
+	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).
 	@param states: The raw states for an object to process.
-	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}.
-	@param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to positive;
-	@param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to negative;
-	@param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive labels as their values.
-	@param negativeStateLabelDict: Dictionary containing state identifiers as keys and associated negative labels as their values.
+	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}).
+	@param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to
+	positive.
+	@param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to
+	negative.
+	@param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive
+	labels as their values.
+	@param negativeStateLabelDict: Dictionary containing state identifiers as keys and associated negative
+	labels as their values.
 	@return: The labels of the relevant positive and negative states.
 	"""
-	mergedStateLabels=[]
+	mergedStateLabels = []
 	positiveStates = processPositiveStates(role, states, reason, positiveStates)
 	negativeStates = processNegativeStates(role, states, reason, negativeStates)
 	for state in sorted(positiveStates | negativeStates):
@@ -173,8 +183,9 @@ def processAndLabelStates(
 			mergedStateLabels.append(positiveStateLabelDict.get(state, stateLabels[state]))
 		elif state in negativeStates:
 			# Translators: Indicates that a particular state of an object is negated.
-			# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-			# but this still might be used in some other cases.
+			# Separate strings have now been defined for commonly negated states (e.g. not selected and not
+			# checked), but this still might be used in some other cases.
 			# %s will be replaced with the full identifier of the negated state (e.g. selected).
-			mergedStateLabels.append(negativeStateLabelDict.get(state, negativeStateLabels.get(state, _("not %s") % stateLabels[state])))
+			negativeStateLabel = negativeStateLabels.get(state, _("not %s") % stateLabels[state])
+			mergedStateLabels.append(negativeStateLabelDict.get(state, negativeStateLabel))
 	return mergedStateLabels
