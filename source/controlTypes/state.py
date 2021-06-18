@@ -6,8 +6,33 @@
 from enum import IntEnum
 from typing import Dict
 
+from utils.displayString import DisplayStringEnumMixin, DisplayStringEnumMixinMeta
 
-class State(IntEnum):
+
+class State(DisplayStringEnumMixin, IntEnum, metaclass=DisplayStringEnumMixinMeta):
+	@property
+	def _displayStringLabels(self):
+		return _stateLabels
+
+	@property
+	def defaultValue(self):
+		return self.DEFUNCT
+
+	@property
+	def negativeDisplayString(self) -> str:
+		"""
+		@return: The translated UI display string that should be used for when referring to this value of
+		the enum in the negative.
+		"""
+		try:
+			return _negativeStateLabels[self]
+		except KeyError:
+			# Translators: Indicates that a particular state of an object is negated.
+			# Separate strings have now been defined for commonly negated states (e.g. not selected and not
+			# checked), but this still might be used in some other cases.
+			# %s will be replaced with the full identifier of the negated state (e.g. selected).
+			return _("not %s") % self.displayString
+
 	UNAVAILABLE = 0x1
 	FOCUSED = 0x2
 	SELECTED = 0x4
@@ -56,7 +81,7 @@ class State(IntEnum):
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
 
 
-stateLabels: Dict[State, str] = {
+_stateLabels: Dict[State, str] = {
 	# Translators: This is presented when a control or document is unavailable.
 	State.UNAVAILABLE: _("unavailable"),
 	# Translators: This is presented when a control has focus.
@@ -143,7 +168,7 @@ stateLabels: Dict[State, str] = {
 }
 
 
-negativeStateLabels: Dict[State, str] = {
+_negativeStateLabels: Dict[State, str] = {
 	# Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 	State.SELECTED: _("not selected"),
 	# Translators: This is presented when a button is not pressed.

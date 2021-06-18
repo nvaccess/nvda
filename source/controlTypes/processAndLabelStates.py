@@ -6,11 +6,11 @@
 from typing import Dict, List, Optional, Set
 
 from .role import Role, clickableRoles
-from .state import State, STATES_SORTED, negativeStateLabels, stateLabels
+from .state import State, STATES_SORTED
 from .outputReason import OutputReason
 
 
-def processPositiveStates(
+def _processPositiveStates(
 		role: Role,
 		states: Set[State],
 		reason: OutputReason,
@@ -79,7 +79,7 @@ def processPositiveStates(
 	return positiveStates
 
 
-def processNegativeStates(
+def _processNegativeStates(
 		role: Role,
 		states: Set[State],
 		reason: OutputReason,
@@ -176,16 +176,11 @@ def processAndLabelStates(
 	@return: The labels of the relevant positive and negative states.
 	"""
 	mergedStateLabels = []
-	positiveStates = processPositiveStates(role, states, reason, positiveStates)
-	negativeStates = processNegativeStates(role, states, reason, negativeStates)
+	positiveStates = _processPositiveStates(role, states, reason, positiveStates)
+	negativeStates = _processNegativeStates(role, states, reason, negativeStates)
 	for state in sorted(positiveStates | negativeStates):
 		if state in positiveStates:
-			mergedStateLabels.append(positiveStateLabelDict.get(state, stateLabels[state]))
+			mergedStateLabels.append(positiveStateLabelDict.get(state, state.displayString))
 		elif state in negativeStates:
-			# Translators: Indicates that a particular state of an object is negated.
-			# Separate strings have now been defined for commonly negated states (e.g. not selected and not
-			# checked), but this still might be used in some other cases.
-			# %s will be replaced with the full identifier of the negated state (e.g. selected).
-			negativeStateLabel = negativeStateLabels.get(state, _("not %s") % stateLabels[state])
-			mergedStateLabels.append(negativeStateLabelDict.get(state, negativeStateLabel))
+			mergedStateLabels.append(negativeStateLabelDict.get(state, state.negativeDisplayString))
 	return mergedStateLabels

@@ -6,8 +6,18 @@
 from enum import IntEnum
 from typing import Dict, Set
 
+from utils.displayString import DisplayStringEnumMixin, DisplayStringEnumMixinMeta
 
-class Role(IntEnum):
+
+class Role(DisplayStringEnumMixin, IntEnum, metaclass=DisplayStringEnumMixinMeta):
+	@property
+	def _displayStringLabels(self):
+		return _roleLabels
+
+	@property
+	def defaultValue(self):
+		return self.UNKNOWN
+
 	UNKNOWN = 0
 	WINDOW = 1
 	TITLEBAR = 2
@@ -161,7 +171,7 @@ class Role(IntEnum):
 	MARKED_CONTENT = 153
 
 
-roleLabels: Dict[Role, str] = {
+_roleLabels: Dict[Role, str] = {
 	# Translators: The word for an unknown control type.
 	Role.UNKNOWN: _("unknown"),
 	# Translators: The word for window of a program such as document window.

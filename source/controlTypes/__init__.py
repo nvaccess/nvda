@@ -9,8 +9,8 @@ from buildVersion import version_year
 from .isCurrent import IsCurrent
 from .outputReason import OutputReason
 from .processAndLabelStates import processAndLabelStates, _processNegativeStates, _processPositiveStates
-from .role import Role, roleLabels, silentRolesOnFocus, silentValuesForRoles
-from .state import State, STATES_SORTED, negativeStateLabels, stateLabels
+from .role import Role, silentRolesOnFocus, silentValuesForRoles, _roleLabels
+from .state import State, STATES_SORTED, _negativeStateLabels, _stateLabels
 
 
 __all__ = [
@@ -18,13 +18,10 @@ __all__ = [
 	"OutputReason",
 	"processAndLabelStates",
 	"Role",
-	"roleLabels",
 	"silentRolesOnFocus",
 	"silentValuesForRoles",
 	"State",
 	"STATES_SORTED",
-	"negativeStateLabels",
-	"stateLabels",
 ]
 
 
@@ -33,6 +30,14 @@ __all__ = [
 if version_year < 2022:
 	processNegativeStates = _processNegativeStates
 	processPositiveStates = _processPositiveStates
+
+
+# Added to maintain backwards compatibility, marked for deprecation to be removed in 2022.1
+# usages to be replaced by Role.*.displayString and State.*.displayString
+if version_year < 2022:
+	roleLabels = _roleLabels
+	stateLabels = _stateLabels
+	negativeStateLabels = _negativeStateLabels
 
 
 # Added to maintain backwards compatibility, marked for deprecation to be removed in 2022.1

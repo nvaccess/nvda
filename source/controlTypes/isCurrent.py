@@ -6,10 +6,10 @@
 from enum import Enum
 from typing import Dict
 
-from logHandler import log
+from utils.displayString import DisplayStringEnumMixin, DisplayStringEnumMixinMeta
 
 
-class IsCurrent(Enum):
+class IsCurrent(DisplayStringEnumMixin, str, Enum, metaclass=DisplayStringEnumMixinMeta):
 	"""Values to use within NVDA to denote 'current' values.
 	These describe if an item is the current item within a particular kind of selection.
 	EG aria-current
@@ -23,17 +23,12 @@ class IsCurrent(Enum):
 	TIME = "time"
 
 	@property
-	def displayString(self):
-		"""
-		@return: The translated UI display string that should be used for this value of the IsCurrent enum
-		"""
-		try:
-			return _isCurrentLabels[self]
-		except KeyError:
-			log.debugWarning(f"No translation mapping for: {self}")
-			# there is a value for 'current' but NVDA hasn't learned about it yet,
-			# at least describe in the general sense that this item is 'current'
-			return _isCurrentLabels[IsCurrent.YES]
+	def _displayStringLabels(self):
+		return _isCurrentLabels
+
+	@property
+	def defaultValue(self):
+		return self.YES
 
 
 #: Text to use for 'current' values. These describe if an item is the current item
