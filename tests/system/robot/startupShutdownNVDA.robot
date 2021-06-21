@@ -44,3 +44,8 @@ Restarts
 	[Documentation]	Ensure that NVDA can restart from keyboard
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 	NVDA restarts
+
+Restarts on crash
+	[Documentation]	Ensure NVDA restarts on crash.
+	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
+	NVDA restarts on crash
