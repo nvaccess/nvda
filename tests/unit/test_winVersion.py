@@ -35,3 +35,12 @@ class TestWinVersion(unittest.TestCase):
 		self.assertGreaterEqual(
 			audioDuckingAvailable, minimumWinVer
 		)
+
+	def test_winVerReleaseName(self):
+		# Test the fact that later Windows releases provide version information in a consistent manner,
+		# specifically, via Windows Registry on Windows 10 1511 and later.
+		# Test with Windows Server 2016 (client release name: Windows 10 1607).
+		server2016 = winVersion.WIN10_1607
+		self.assertIn(
+			"Windows 10 1607", repr(server2016)
+		)
