@@ -34,7 +34,7 @@ class WinVersion(object):
 		self.major = major
 		self.minor = minor
 		self.build = build
-		self.releaseName = servicePack
+		self.releaseName = releaseName
 		self.servicePack = servicePack
 		self.productType = productType
 
