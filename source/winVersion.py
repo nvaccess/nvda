@@ -27,12 +27,14 @@ class WinVersion(object):
 			major: int = 0,
 			minor: int = 0,
 			build: int = 0,
+			releaseName: str = "",
 			servicePack: str = "",
 			productType: str = ""
 	):
 		self.major = major
 		self.minor = minor
 		self.build = build
+		self.releaseName = servicePack
 		self.servicePack = servicePack
 		self.productType = productType
 
