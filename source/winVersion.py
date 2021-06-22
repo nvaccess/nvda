@@ -58,19 +58,7 @@ class WinVersion(object):
 			# Always return "Windows 10 1507" on build 10240.
 			if self.build == 10240:
 				return "Windows 10 1507"
-			with winreg.OpenKey(
-				winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
-			) as currentVersion:
-				# Version 20H2 and later where a separate display version string is used.
-				# For backward compatibility, release Id will store display version string.
-				try:
-					releaseId = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
-				except OSError:
-					releaseId = None
-				# Version 1511 and later unless display version string is present.
-				if not releaseId:
-					releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
-			return f"Windows 10 {releaseId}"
+			return f"Windows 10 {WIN10CURRENTRELEASENAME}"
 		else:
 			raise RuntimeError("Unknown Windows release")
 
@@ -113,6 +101,22 @@ WIN10_1909 = WinVersion(major=10, minor=0, build=18363, releaseName="Windows 10 
 WIN10_2004 = WinVersion(major=10, minor=0, build=19041, releaseName="Windows 10 2004")
 WIN10_20H2 = WinVersion(major=10, minor=0, build=19042, releaseName="Windows 10 20H2")
 WIN10_21H1 = WinVersion(major=10, minor=0, build=19043, releaseName="Windows 10 21H1")
+
+
+# On Windows 10 1511 and later, cache the version in use on the system.
+with winreg.OpenKey(
+	winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+) as currentVersion:
+	# Version 20H2 and later where a separate display version string is used.
+	# Release Id (older releases) and display version (20H2 and later) will be cached.
+	try:
+		WIN10CURRENTRELEASENAME = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
+	except OSError:
+		# Don't set anything if this is Windows 10 1507 or earlier.
+		try:
+			WIN10CURRENTRELEASENAME = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
+		except OSError:
+			WIN10CURRENTRELEASENAME = None
 
 
 def getWinVer():
