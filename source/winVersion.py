@@ -39,10 +39,10 @@ class WinVersion(object):
 		self.productType = productType
 
 	def _windowsVersionToReleaseName(self):
-		"""Returns release names for a given Windows version.
+		"""Returns release names for a given Windows version if not defined.
 		For example, 6.1 will return 'Windows 7'.
 		For Windows 10, feature update release name will be included.
-		On server systems, client release names will be returned.
+		On server systems, unless noted otherwise, client release names will be returned.
 		For example, 'Windows 10 1809' will be returned on Server 2019 systems.
 		"""
 		if self.releaseName:
