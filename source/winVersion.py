@@ -45,6 +45,8 @@ class WinVersion(object):
 		On server systems, client release names will be returned.
 		For example, 'Windows 10 1809' will be returned on Server 2019 systems.
 		"""
+		if self.releaseName:
+			return self.releaseName
 		if (self.major, self.minor) == (6, 1):
 			return "Windows 7"
 		elif (self.major, self.minor) == (6, 2):
