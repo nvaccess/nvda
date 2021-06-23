@@ -133,8 +133,12 @@ def restartUnsafely():
 	- Remove icons (systray)
 	- Saving settings
 	"""
-
+	log.info("Restarting unsafely")
 	import subprocess
+	# Unlike a normal restart, see L{restart}:
+	# - if addons are disabled, leave them disabled
+	# - if debug logging is set, leave it set.
+	# The new instance should operate in the same way (as much as possible) as the old instance.
 	for paramToRemove in ("--ease-of-access"):
 		try:
 			sys.argv.remove(paramToRemove)
