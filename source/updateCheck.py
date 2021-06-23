@@ -220,7 +220,6 @@ def _executeUpdate(destPath):
 			)
 		else:
 			executeParams = u"--launcher"
-	executeParams += f"--log-level={log.level}"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams)):
 		log.error("NVDA already in process of exiting, this indicates a logic error.")
