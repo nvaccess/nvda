@@ -144,6 +144,8 @@ def isUwpOcrAvailable():
 	return os.path.isdir(UWP_OCR_DATA_PATH)
 
 
+# Deprecated: Windows 10 releases will be obtained from Windows Registry, no entries will be added.
+# The below map will be removed in 2022.1.
 WIN10_RELEASE_NAME_TO_BUILDS = {
 	"1507": 10240,
 	"1511": 10586,
