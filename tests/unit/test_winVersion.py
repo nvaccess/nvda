@@ -36,7 +36,7 @@ class TestWinVersion(unittest.TestCase):
 			audioDuckingAvailable, minimumWinVer
 		)
 
-	def test_winVerReleaseName(self):
+	def test_winVerKnownReleaseNameForWinVersionConstant(self):
 		# Test the fact that later Windows releases provide version information in a consistent manner,
 		# specifically, via Windows Registry on Windows 10 1511 and later.
 		# Test with Windows Server 2016 (client release name: Windows 10 1607).
@@ -44,3 +44,38 @@ class TestWinVersion(unittest.TestCase):
 		self.assertIn(
 			"Windows 10 1607", repr(server2016)
 		)
+
+	def test_winVerKnownBuildToReleaseName(self):
+		# Specifically to test if the correct release name is returned for use in getWinVer() function.
+		# Try Windows 10 1809.
+		knownMajor, knownMinor, knownBuild = 10, 0, 17763
+		releaseName = winVersion.getWindowsReleaseName(
+			major=knownMajor, minor=knownMinor, build=knownBuild
+		)
+		self.assertEqual(releaseName, "Windows 10 1809")
+
+	def test_winVerReleaseNameFromWindowsRegistry(self):
+		# Test to make sure something is indeed returned from Windows Registry
+		# when fetching release names for Windows 10 releases.
+		# Try Windows Insider Preview build 21390, which is recorded as 'Dev".
+		# But on public releases, version recorded on Windows Registry is returned.
+		# This will fail if release name cannot be obtained from Windows Registry
+		# ("unknown" will be recorded in release name text),
+		# usually if Release Id and/or display version key is not defined.
+		major, minor, build = 10, 0, 21390
+		releaseName = winVersion.getWindowsReleaseName(
+			major=major, minor=minor, build=build
+		)
+		self.assertNotIn(
+			"unknown", releaseName
+		)
+
+	def test_winVerUnknownBuildToReleaseName(self):
+		# It might be possible that Microsoft could use major.minor versions other than 10.0 in future releases.
+		# Try Windows 8.1 which is actually version 6.3.
+		unknownMajor, unknownMinor, unknownBuild = 8, 1, 0
+		with self.assertRaises(RuntimeError):
+			# Flake8 F841: local variable name is assigned to but never used
+			releaseName = winVersion.getWindowsReleaseName(  # NOQA: F841
+				major=unknownMajor, minor=unknownMinor, build=unknownBuild
+			)
