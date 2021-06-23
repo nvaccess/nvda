@@ -47,20 +47,7 @@ class WinVersion(object):
 		"""
 		if self.releaseName:
 			return self.releaseName
-		if (self.major, self.minor) == (6, 1):
-			return "Windows 7"
-		elif (self.major, self.minor) == (6, 2):
-			return "Windows 8"
-		elif (self.major, self.minor) == (6, 3):
-			return "Windows 8.1"
-		elif self.major == 10:
-			# From Version 1511 (build 10586), release Id/display version comes from Windows Registry.
-			# Always return "Windows 10 1507" on build 10240.
-			if self.build == 10240:
-				return "Windows 10 1507"
-			return f"Windows 10 {WIN10CURRENTRELEASENAME}"
-		else:
-			raise RuntimeError("Unknown Windows release")
+		return getWindowsReleaseName(major=self.major, minor=self.minor, build=self.build)
 
 	def __repr__(self):
 		winVersionText = [self._windowsVersionToReleaseName()]
@@ -120,30 +107,54 @@ BUILDS_TO_RELEASE_NAMES = {
 	19043: "Windows 10 21H1"
 }
 
-# On Windows 10 1511 and later, cache the version in use on the system.
-with winreg.OpenKey(
-	winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
-) as currentVersion:
-	# Version 20H2 and later where a separate display version string is used.
-	# Release Id (older releases) and display version (20H2 and later) will be cached.
-	try:
-		WIN10CURRENTRELEASENAME = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
-	except OSError:
-		# Don't set anything if this is Windows 10 1507 or earlier.
-		try:
-			WIN10CURRENTRELEASENAME = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
-		except OSError:
-			WIN10CURRENTRELEASENAME = None
+
+def getWindowsReleaseName(major: int = 0, minor: int = 0, build: int = 0) -> str:
+	"""Returns the public release name for a given Windows release based on major, minor, and build.
+	"""
+	if (major, minor) == (6, 1):
+		return "Windows 7"
+	elif (major, minor) == (6, 2):
+		return "Windows 8"
+	elif (major, minor) == (6, 3):
+		return "Windows 8.1"
+	elif major == 10:
+		# From Version 1511 (build 10586), release Id/display version comes from Windows Registry.
+		# However there are builds with no release name (Version 1507/10240)
+		# or releases with different builds.
+		# Look these up first before asking Windows Registry.
+		if build in BUILDS_TO_RELEASE_NAMES:
+			return BUILDS_TO_RELEASE_NAMES[build]
+		# On Windows 10 1511 and later, cache the version in use on the system.
+		with winreg.OpenKey(
+			winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+		) as currentVersion:
+			# Version 20H2 and later where a separate display version string is used.
+			try:
+				releaseId = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
+			except OSError:
+				# Don't set anything if this is Windows 10 1507 or earlier.
+				try:
+					releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
+				except OSError:
+					releaseId = "unknown"
+		return f"Windows 10 {releaseId}"
+	else:
+		raise RuntimeError("Unknown Windows release")
 
 
 def getWinVer():
 	"""Returns a record of current Windows version NVDA is running on.
 	"""
 	winVer = sys.getwindowsversion()
+	try:
+		releaseName = getWindowsReleaseName(major=winVer.major, minor=winVer.minor, build=winVer.build)
+	except RuntimeError:
+		releaseName = "Windows release unknown"
 	return WinVersion(
 		major=winVer.major,
 		minor=winVer.minor,
 		build=winVer.build,
+		releaseName=releaseName,
 		servicePack=winVer.service_pack,
 		productType=("workstation", "domain controller", "server")[winVer.product_type - 1]
 	)
