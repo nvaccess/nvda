@@ -102,6 +102,23 @@ WIN10_2004 = WinVersion(major=10, minor=0, build=19041, releaseName="Windows 10 
 WIN10_20H2 = WinVersion(major=10, minor=0, build=19042, releaseName="Windows 10 20H2")
 WIN10_21H1 = WinVersion(major=10, minor=0, build=19043, releaseName="Windows 10 21H1")
 
+# Records a mapping between Windows builds and release names.
+# These include build 10240 for Windows 10 1507 and releases with multiple release builds.
+# These are applicable to Windows 10 as they report the same system version (10.0).
+BUILDS_TO_RELEASE_NAMES = {
+	10240: "Windows 10 1507",
+	10586: "Windows 10 1511",
+	14393: "Windows 10 1607",
+	15063: "Windows 10 1703",
+	16299: "Windows 10 1709",
+	17134: "Windows 10 1803",
+	17763: "Windows 10 1809",
+	18362: "Windows 10 1903",
+	18363: "Windows 10 1909",
+	19041: "Windows 10 2004",
+	19042: "Windows 10 20H2",
+	19043: "Windows 10 21H1"
+}
 
 # On Windows 10 1511 and later, cache the version in use on the system.
 with winreg.OpenKey(
