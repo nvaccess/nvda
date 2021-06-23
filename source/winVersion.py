@@ -38,19 +38,17 @@ class WinVersion(object):
 		self.servicePack = servicePack
 		self.productType = productType
 
-	def _windowsVersionToReleaseName(self):
-		"""Returns release names for a given Windows version if not defined.
-		For example, 6.1 will return 'Windows 7'.
-		For Windows 10, feature update release name will be included.
-		On server systems, unless noted otherwise, client release names will be returned.
-		For example, 'Windows 10 1809' will be returned on Server 2019 systems.
-		"""
-		if self.releaseName:
-			return self.releaseName
-		return getWindowsReleaseName(major=self.major, minor=self.minor, build=self.build)
-
 	def __repr__(self):
-		winVersionText = [self._windowsVersionToReleaseName()]
+		winVersionText = []
+		if self.releaseName:
+			winVersionText.append(self.releaseName)
+		else:
+			try:
+				winVersionText.append(getWindowsReleaseName(
+					major=self.major, minor=self.minor, build=self.build
+				))
+			except RuntimeError:
+				winVersionText.append("Windows release unknown")
 		winVersionText.append(f"({self.major}.{self.minor}.{self.build})")
 		if self.servicePack != "":
 			winVersionText.append(f"service pack {self.servicePack}")
@@ -110,6 +108,11 @@ BUILDS_TO_RELEASE_NAMES = {
 
 def getWindowsReleaseName(major: int = 0, minor: int = 0, build: int = 0) -> str:
 	"""Returns the public release name for a given Windows release based on major, minor, and build.
+	This is useful if release names are not defined as part of Windows version constants.
+	For example, 6.1 will return 'Windows 7'.
+	For Windows 10, feature update release name will be included.
+	On server systems, unless noted otherwise, client release names will be returned.
+	For example, 'Windows 10 1809' will be returned on Server 2019 systems.
 	"""
 	if (major, minor) == (6, 1):
 		return "Windows 7"
