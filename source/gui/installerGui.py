@@ -112,10 +112,7 @@ def doInstall(
 
 	newNVDA = None
 	if startAfterInstall:
-		newNVDA = core.NewNVDAInstance(
-			filePath=os.path.join(installer.defaultInstallPath, 'nvda.exe'),
-			parameters=f"--log-level={log.level}"
-		)
+		newNVDA = core.NewNVDAInstance(os.path.join(installer.defaultInstallPath, 'nvda.exe'))
 	if not core.triggerNVDAExit(newNVDA):
 		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
@@ -471,9 +468,6 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 	if silent or startAfterCreate:
 		newNVDA = None
 		if startAfterCreate:
-			newNVDA = core.NewNVDAInstance(
-				filePath=os.path.join(portableDirectory, 'nvda.exe'),
-				parameters=f"--log-level={log.level}"
-			)
+			newNVDA = core.NewNVDAInstance(os.path.join(portableDirectory, 'nvda.exe'))
 		if not core.triggerNVDAExit(newNVDA):
 			log.error("NVDA already in process of exiting, this indicates a logic error.")
