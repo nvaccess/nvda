@@ -6,8 +6,48 @@
 """Unit tests for braille display drivers.
 """
 
+from brailleDisplayDrivers.seikantk import BrailleDisplayDriver as SeikaNotetakerDriver, SEIKA_INFO
+
 import unittest
 import braille
+
+
+class TestSeikaNotetakerDriver(unittest.TestCase):
+	def test_onReceive(self):
+		""" Tests how the Seika Notetaker driver handles receiving data via `_onReceive`.
+		Simulates sending a sample message from the device, which should result in our driver processing a
+		command via `_processCommand`. Without knowing the specifications of the device, this simulation may
+		be inaccurate or uncomprehensive.
+		"""
+		sampleCommand = SEIKA_INFO
+		sampleArgument = b"test"
+		sampleArgLen = bytes([len(sampleArgument)])
+		sampleMessage = sampleCommand + sampleArgLen + sampleArgument + b"\0\0\0"
+		PRE_CANARY = bytes([2])  # start of text character
+		POST_CANARY = bytes([3])  # end of text character
+
+		class FakeSeikaNotetakerDriver(SeikaNotetakerDriver):
+			def __init__(self):
+				"""Sets the variables necessary to test _onReceive without a braille device connected.
+				"""
+				self._hidBuffer = b""
+				self._command = None
+				self._argsLen = None
+
+			def _processCommand(self, command, arg):
+				"""Intercept processCommand to confirm _onReceive processes a message correctly.
+				"""
+				self._finalCommand = command
+				self._finalArg = arg
+		
+		seikaTestDriver = FakeSeikaNotetakerDriver()
+		for byteToSend in sampleMessage:
+			# the middle byte is the only one used, padded by a byte on either side.
+			seikaTestDriver._onReceive(PRE_CANARY + bytes([byteToSend]) + POST_CANARY)
+
+		self.assertEqual(sampleCommand, seikaTestDriver._finalCommand)
+		self.assertEqual(sampleArgLen + sampleArgument, seikaTestDriver._finalArg)
+
 
 class TestGestureMap(unittest.TestCase):
 	"""Tests the integrity of braille display driver gesture maps."""
