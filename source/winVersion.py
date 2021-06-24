@@ -12,6 +12,7 @@ import sys
 import os
 import functools
 import winreg
+from buildVersion import version_year
 
 
 @functools.total_ordering
@@ -177,20 +178,21 @@ def isUwpOcrAvailable():
 
 # Deprecated: Windows 10 releases will be obtained from Windows Registry, no entries will be added.
 # The below map will be removed in 2022.1.
-WIN10_RELEASE_NAME_TO_BUILDS = {
-	"1507": 10240,
-	"1511": 10586,
-	"1607": 14393,
-	"1703": 15063,
-	"1709": 16299,
-	"1803": 17134,
-	"1809": 17763,
-	"1903": 18362,
-	"1909": 18363,
-	"2004": 19041,
-	"20H2": 19042,
-	"21H1": 19043,
-}
+if version_year < 2022:
+	WIN10_RELEASE_NAME_TO_BUILDS = {
+		"1507": 10240,
+		"1511": 10586,
+		"1607": 14393,
+		"1703": 15063,
+		"1709": 16299,
+		"1803": 17134,
+		"1809": 17763,
+		"1903": 18362,
+		"1909": 18363,
+		"2004": 19041,
+		"20H2": 19042,
+		"21H1": 19043,
+	}
 
 
 def isFullScreenMagnificationAvailable():
