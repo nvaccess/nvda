@@ -1,8 +1,7 @@
-#updateCheck.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2019 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2021 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -10,7 +9,7 @@
 import garbageHandler
 import globalVars
 import config
-
+import core
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -222,10 +221,8 @@ def _executeUpdate(destPath):
 		else:
 			executeParams = u"--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
-	shellapi.ShellExecute(None, None,
-		destPath,
-		executeParams,
-		None, winUser.SW_SHOWNORMAL)
+	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams)):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 class UpdateChecker(garbageHandler.TrackedObject):
@@ -610,6 +607,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 			# and waits for the user to press the Close button.
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
+		self._progressDialog.CentreOnScreen()
 		self._progressDialog.Raise()
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.start.__qualname__}",

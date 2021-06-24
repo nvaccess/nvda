@@ -1,11 +1,19 @@
+import enum
+import typing
+import os
+import ctypes
+import SCons.Node
+import SCons.Node.FS
+import SCons.Environment
+from glob import glob
+
+sourceDir: SCons.Node.FS.Dir
+thirdPartyEnv: SCons.Environment.Environment
+
 Import([
 	'thirdPartyEnv',
 	'sourceDir',
 ])
-
-import os
-import ctypes
-from glob import glob
 
 class AutoFreeCDLL(ctypes.CDLL):
 	def __del__(self):
@@ -16,6 +24,38 @@ espeakRepo=Dir("#include/espeak")
 espeakSrcDir=espeakRepo.Dir('src')
 espeakIncludeDir=espeakSrcDir.Dir('include')
 sonicSrcDir=Dir("#include/sonic")
+
+class espeak_ERROR(enum.IntEnum):
+	EE_OK = 0
+	EE_INTERNAL_ERROR = -1
+	EE_BUFFER_FULL = 1
+	EE_NOT_FOUND = 2
+
+class espeak_ng_STATUS(enum.IntEnum):
+	ENS_GROUP_MASK = 0x70000000
+	ENS_GROUP_ERRNO = 0x00000000  # Values 0 - 255 map to errno error codes.
+	ENS_GROUP_ESPEAK_NG = 0x10000000  # eSpeak NG error codes.
+
+	# eSpeak NG 1.49.0
+	ENS_OK = 0
+	ENS_COMPILE_ERROR = 0x100001FF
+	ENS_VERSION_MISMATCH = 0x100002FF
+	ENS_FIFO_BUFFER_FULL = 0x100003FF
+	ENS_NOT_INITIALIZED = 0x100004FF
+	ENS_AUDIO_ERROR = 0x100005FF
+	ENS_VOICE_NOT_FOUND = 0x100006FF
+	ENS_MBROLA_NOT_FOUND = 0x100007FF
+	ENS_MBROLA_VOICE_NOT_FOUND = 0x100008FF
+	ENS_EVENT_BUFFER_FULL = 0x100009FF
+	ENS_NOT_SUPPORTED = 0x10000AFF
+	ENS_UNSUPPORTED_PHON_FORMAT = 0x10000BFF
+	ENS_NO_SPECT_FRAMES = 0x10000CFF
+	ENS_EMPTY_PHONEME_MANIFEST = 0x10000DFF
+	ENS_SPEECH_STOPPED = 0x10000EFF
+
+	# eSpeak NG 1.49.2
+	ENS_UNKNOWN_PHONEME_FEATURE = 0x10000FFF
+	ENS_UNKNOWN_TEXT_ENCODING = 0x100010FF
 
 class espeak_VOICE(ctypes.Structure):
 	_fields_=[
@@ -30,7 +70,20 @@ class espeak_VOICE(ctypes.Structure):
 		('spare',ctypes.c_void_p),
 	]
 
-env = thirdPartyEnv.Clone()
+
+class espeak_AUDIO_OUTPUT(enum.IntEnum):
+	"""From '/espeak-ng/speak_lib.h'
+	"""
+	#: PLAYBACK mode: plays the audio data, supplies events to the calling program
+	AUDIO_OUTPUT_PLAYBACK = 0
+	#: RETRIEVAL mode: supplies audio data and events to the calling program
+	AUDIO_OUTPUT_RETRIEVAL = 1
+	#: SYNCHRONOUS mode: as RETRIEVAL but doesn't return until synthesis is completed
+	AUDIO_OUTPUT_SYNCHRONOUS = 2
+	#: Synchronous playback
+	AUDIO_OUTPUT_SYNCH_PLAYBACK = 3
+
+env: SCons.Environment.Environment = thirdPartyEnv.Clone()
 env.Append(
 	CCFLAGS=[
 		# Whole-program optimization causes eSpeak to distort and warble with its Klatt4 voice
@@ -84,25 +137,198 @@ def espeak_compilePhonemeData_buildAction(target,source,env):
 
 env['BUILDERS']['espeak_compilePhonemeData']=Builder(action=env.Action(espeak_compilePhonemeData_buildAction,"Compiling phoneme data"),emitter=espeak_compilePhonemeData_buildEmitter)
 
-def espeak_compileDict_buildAction(target,source,env):
+#: See dictionaries section of /include/espeak/Makefile.am
+espeakDictionaryCompileList: typing.Dict[
+	str, # expected dict file name EG 'es_dict'
+	typing.Tuple[str, typing.List[str]] # language code, list of input files
+] = {
+	"af_dict": ("af", ["af_list", "af_rules", ]),
+	"am_dict": ("am", ["am_list", "am_rules", ]),
+	"an_dict": ("an", ["an_list", "an_rules", ]),
+	"ar_dict": ("ar", ["ar_listx", "ar_list", "ar_rules"]),
+	"as_dict": ("as", ["as_list", "as_rules", ]),
+	"az_dict": ("az", ["az_list", "az_rules", ]),
+	"ba_dict": ("ba", ["ba_list", "ba_rules", ]),
+	"bg_dict": ("bg", ["bg_listx", "bg_list", "bg_rules"]),
+	"bn_dict": ("bn", ["bn_list", "bn_rules", ]),
+	"bpy_dict": ("bpy", ["bpy_list", "bpy_rules", ]),
+	"bs_dict": ("bs", ["bs_list", "bs_rules", ]),
+	"ca_dict": ("ca", ["ca_list", "ca_rules", ]),
+	"chr_dict": ("chr", ["chr_list", "chr_rules", ]),
+	"cmn_dict": ("cmn", ["cmn_listx", "cmn_list", "cmn_rules"]),
+	"cs_dict": ("cs", ["cs_list", "cs_rules", ]),
+	"cv_dict": ("cv", ["cv_list", "cv_rules", ]),
+	"cy_dict": ("cy", ["cy_list", "cy_rules", ]),
+	"da_dict": ("da", ["da_list", "da_rules", ]),
+	"de_dict": ("de", ["de_list", "de_rules", ]),
+	"el_dict": ("el", ["el_list", "el_rules", ]),
+	"en_dict": ("en", ["en_list", "en_rules", ]),
+	"eo_dict": ("eo", ["eo_list", "eo_rules", ]),
+	"es_dict": ("es", ["es_list", "es_rules", ]),
+	"et_dict": ("et", ["et_list", "et_rules", ]),
+	"eu_dict": ("eu", ["eu_list", "eu_rules", ]),
+	"fa_dict": ("fa", ["fa_list", "fa_rules", ]),
+	"fi_dict": ("fi", ["fi_list", "fi_rules", ]),
+	"fr_dict": ("fr", ["fr_list", "fr_rules", ]),
+	"ga_dict": ("ga", ["ga_list", "ga_rules", ]),
+	"gd_dict": ("gd", ["gd_list", "gd_rules", ]),
+	"gn_dict": ("gn", ["gn_list", "gn_rules", ]),
+	"grc_dict": ("grc", ["grc_list", "grc_rules", ]),
+	"gu_dict": ("gu", ["gu_list", "gu_rules", ]),
+	"hak_dict": ("hak", ["hak_list", "hak_rules", ]),
+	"haw_dict": ("haw", ["haw_list", "haw_rules", ]),
+	"he_dict": ("he", ["he_listx", "he_list", "he_rules"]),
+	"hi_dict": ("hi", ["hi_list", "hi_rules", ]),
+	"hr_dict": ("hr", ["hr_list", "hr_rules", ]),
+	"ht_dict": ("ht", ["ht_list", "ht_rules", ]),
+	"hu_dict": ("hu", ["hu_list", "hu_rules", ]),
+	"hy_dict": ("hy", ["hy_list", "hy_rules", ]),
+	"ia_dict": ("ia", ["ia_listx", "ia_list", "ia_rules"]),
+	"id_dict": ("id", ["id_list", "id_rules", ]),
+	"io_dict": ("io", ["io_list", "io_rules", ]),
+	"is_dict": ("is", ["is_list", "is_rules", ]),
+	"it_dict": ("it", ["it_listx", "it_list", "it_rules"]),
+	"ja_dict": ("ja", ["ja_list", "ja_rules", ]),
+	"jbo_dict": ("jbo", ["jbo_list", "jbo_rules", ]),
+	"ka_dict": ("ka", ["ka_list", "ka_rules", ]),
+	"kk_dict": ("kk", ["kk_list", "kk_rules", ]),
+	"kl_dict": ("kl", ["kl_list", "kl_rules", ]),
+	"kn_dict": ("kn", ["kn_list", "kn_rules", ]),
+	"kok_dict": ("kok", ["kok_list", "kok_rules", ]),
+	"ko_dict": ("ko", ["ko_list", "ko_rules", ]),
+	"ku_dict": ("ku", ["ku_list", "ku_rules", ]),
+	"ky_dict": ("ky", ["ky_list", "ky_rules", ]),
+	"la_dict": ("la", ["la_list", "la_rules", ]),
+	"lfn_dict": ("lfn", ["lfn_list", "lfn_rules", ]),
+	"lt_dict": ("lt", ["lt_list", "lt_rules", ]),
+	"lv_dict": ("lv", ["lv_list", "lv_rules", ]),
+	"mi_dict": ("mi", ["mi_list", "mi_rules", ]),
+	"mk_dict": ("mk", ["mk_list", "mk_rules", ]),
+	"ml_dict": ("ml", ["ml_list", "ml_rules", ]),
+	"mr_dict": ("mr", ["mr_list", "mr_rules", ]),
+	"ms_dict": ("ms", ["ms_list", "ms_rules", ]),
+	"mt_dict": ("mt", ["mt_list", "mt_rules", ]),
+	"my_dict": ("my", ["my_list", "my_rules", ]),
+	"nci_dict": ("nci", ["nci_list", "nci_rules", ]),
+	"ne_dict": ("ne", ["ne_list", "ne_rules", ]),
+	"nl_dict": ("nl", ["nl_list", "nl_rules", ]),
+	"nog_dict": ("nog", ["nog_list", "nog_rules", ]),
+	"no_dict": ("no", ["no_list", "no_rules", ]),
+	"om_dict": ("om", ["om_list", "om_rules", ]),
+	"or_dict": ("or", ["or_list", "or_rules", ]),
+	"pap_dict": ("pap", ["pap_list", "pap_rules", ]),
+	"pa_dict": ("pa", ["pa_list", "pa_rules", ]),
+	"piqd_dict": ("piqd", ["piqd_list", "piqd_rules", ]),
+	"pl_dict": ("pl", ["pl_list", "pl_rules", ]),
+	"pt_dict": ("pt", ["pt_list", "pt_rules", ]),
+	"py_dict": ("py", ["py_list", "py_rules", ]),
+	"qdb_dict": ("qdb", ["qdb_list", "qdb_rules", ]),
+	"quc_dict": ("quc", ["quc_list", "quc_rules", ]),
+	"qu_dict": ("qu", ["qu_list", "qu_rules", ]),
+	"ro_dict": ("ro", ["ro_list", "ro_rules", ]),
+	"ru_dict": ("ru", ["ru_listx", "ru_list", "ru_rules"]),
+	"sd_dict": ("sd", ["sd_list", "sd_rules", ]),
+	"shn_dict": ("shn", ["shn_list", "shn_rules", ]),
+	"si_dict": ("si", ["si_list", "si_rules", ]),
+	"sk_dict": ("sk", ["sk_list", "sk_rules", ]),
+	"sl_dict": ("sl", ["sl_list", "sl_rules", ]),
+	"smj_dict": ("smj", ["smj_list", "smj_rules", ]),
+	"sq_dict": ("sq", ["sq_list", "sq_rules", ]),
+	"sr_dict": ("sr", ["sr_list", "sr_rules", ]),
+	"sv_dict": ("sv", ["sv_list", "sv_rules", ]),
+	"sw_dict": ("sw", ["sw_list", "sw_rules", ]),
+	"ta_dict": ("ta", ["ta_list", "ta_rules", ]),
+	"te_dict": ("te", ["te_list", "te_rules", ]),
+	"th_dict": ("th", ["th_list", "th_rules", ]),
+	"tk_dict": ("tk", ["tk_listx", "tk_list", "tk_rules"]),
+	"tn_dict": ("tn", ["tn_list", "tn_rules", ]),
+	"tr_dict": ("tr", ["tr_listx", "tr_list", "tr_rules"]),
+	"tt_dict": ("tt", ["tt_list", "tt_rules", ]),
+	"ug_dict": ("ug", ["ug_list", "ug_rules", ]),
+	"uk_dict": ("uk", ["uk_list", "uk_rules", ]),
+	"ur_dict": ("ur", ["ur_list", "ur_rules", ]),
+	"uz_dict": ("uz", ["uz_list", "uz_rules", ]),
+	"vi_dict": ("vi", ["vi_list", "vi_rules", ]),
+	"yue_dict": ("yue", ["yue_list", "yue_listx", "yue_rules"]),
+}
+
+def espeak_compileDict_buildAction(
+		target: typing.List[SCons.Node.FS.File],
+		source: typing.List[SCons.Node.FS.File],
+		env: SCons.Environment.Environment
+) -> int:
+	"""
+	@param target: The langCode_dict file to build
+	@param source: The langCode_[rules|list|listx] files that are used as inputs
+	@param env: Scons build environment
+	@return From SCons docs: "Return 0 or None to indicate a successful build of
+		the target file(s). The function may raise an exception or return a non-zero
+		exit status to indicate an unsuccessful build."
+	"""
+	if len(target) != 1:
+		targetStrings = list((str(t) for t in target))
+		raise ValueError(f"Unexpected number of targets: {targetStrings}")
+	target = target[0]
+
+	if not source:
+		raise ValueError(f"No source files provided: {source!s}")
+	# All source files are in the same directory, just use the first one.
+	dirForRules: SCons.Node.FS.Base = source[0].dir
+
+	ACTION_SUCCESS = 0
+	ACTION_FAILURE = 1
+
 	# We want the eSpeak dll to be freed after each dictionary.
 	# This is because it writes to stderr but doesn't flush it.
 	# Unfortunately, there's no way we can flush it or use a different stream
 	# because our eSpeak statically links the CRT.
 	espeak=AutoFreeCDLL(espeakLib[0].abspath)
-	espeak.espeak_Initialize(0,0,os.fsencode(target[0].Dir('..').abspath),0x8000)
-	try:
-		lang=source[0].name.split('_')[0].encode()
-		v=espeak_VOICE(languages=lang+b'\x00')
-		if espeak.espeak_SetVoiceByProperties(ctypes.byref(v))!=0:
-			print("espeak_compileDict_action: failed to switch to language %s"%lang)
-			return 1
-		dictPath=os.fsencode(os.path.split(source[0].abspath)[0]+'/')
-		if espeak.espeak_ng_CompileDictionary(dictPath,None,0,None)!=0:
-			print("espeak_compileDict_action: failed to compile dictionary for  language %s"%lang)
-			return
+
+	# from: espeak-ng/speak_lib.h
+	espeakINITIALIZE_DONT_EXIT = 0x8000
+	# see: libespeak-ng/espeak_api.c for espeak_Initialize
+	espeak.espeak_Initialize(
+		espeak_AUDIO_OUTPUT.AUDIO_OUTPUT_PLAYBACK,  # espeak_AUDIO_OUTPUT output_type
+		0,  # int buf_length
+		os.fsencode(target.Dir('..').abspath),  # const char *path
+		espeakINITIALIZE_DONT_EXIT  # int options
+	)
+
+	try: # ensure that espeak_Terminate is called
+		lang = espeakDictionaryCompileList[target.name][0]
+		voice = espeak_VOICE(languages=lang.encode() + b'\x00')
+
+		# see: espeak-ng/speak_lib.h for espeak_SetVoiceByProperties
+		# returns: espeak_ERROR
+		setVoiceResult = espeak.espeak_SetVoiceByProperties(ctypes.byref(voice))
+		if espeak_ERROR.EE_OK.value != setVoiceResult:
+			print(
+				f"Failed to switch to language: '{lang}'"
+				f"\n result: {espeak_ERROR(setVoiceResult)!s}"
+			)
+			return ACTION_FAILURE
+
+		rulesPathEncoded = os.fsencode(dirForRules.abspath + '/')
+		# see: espeak-ng/espeak_ng.h for espeak_ng_CompileDictionary
+		# returns: espeak_ng_STATUS
+		compileDictResult = espeak.espeak_ng_CompileDictionary(
+			rulesPathEncoded,  # const char *dsource
+			None,  # const char *dict_name
+			None,  # FILE *log
+			0,  # int flags
+			None,  # espeak_ng_ERROR_CONTEXT *context
+		)
+		if espeak_ERROR.EE_OK.value != compileDictResult:
+			print(
+				f"Failed to compile dictionary: '{target}'"
+				f"\n rulesPath: {rulesPathEncoded}"
+				f"\n language: '{lang}'"
+				f"\n result: {espeak_ng_STATUS(compileDictResult)!s}"
+			)
+			return ACTION_FAILURE
 	finally:
 		espeak.espeak_Terminate()
+	return ACTION_SUCCESS
 
 sonicLib=env.StaticLibrary(
 	target='sonic',
@@ -138,6 +364,7 @@ espeakLib=env.SharedLibrary(
 		"phonemelist.c",
 		"readclause.c",
 		"setlengths.c",
+		"soundIcon.c",
 		"spect.c",
 		"speech.c",
 		"ssml.c",
@@ -181,8 +408,9 @@ for i in phonemeData:
 env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspath,'dictsource','extra','*_*')))
 
 #Compile all dictionaries
-missingDicts=['zhy', ] #'mt','tn','tt']
-dictSourcePath=espeakRepo.Dir('dictsource').abspath
+excludeLangs: typing.List[str] = [] # Use to exclude languages which don't compile.
+dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir('dictsource')
+
 # Remove emoji files before compiling dictionaries.
 # Currently many of these simply crash eSpeak at runtime.
 # Also, our own emoji processing using CLDR data is preferred.
@@ -190,18 +418,27 @@ emojiGlob = os.path.join(espeakRepo.abspath,'dictsource','*_emoji')
 for f in glob(emojiGlob):
 	print("Removing emoji file: %s"%f)
 	os.remove(f)
-for f in env.Glob(os.path.join(dictSourcePath,'*_rules')):
-	lang=f.name.split('_')[0]
-	if lang in missingDicts: continue
-	dictFileName = lang+'_dict'
-	dictFile=env.Command(espeakRepo.Dir('espeak-ng-data').File(dictFileName),f,espeak_compileDict_buildAction)
-	dictDeps=env.Glob(os.path.join(espeakRepo.abspath,'dictsource',lang+'_*'))
-	dictDeps.remove(f)
-	env.Depends(dictFile,dictDeps)
-	env.Depends(dictFile,[espeakLib,phonemeData])
-	#Dictionaries can not be compiled in parallel, force SCons not to do this
+
+# Create compile commands for all languages
+for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
+	if langCode in excludeLangs: continue
+
+	dictFilePath = espeakRepo.Dir('espeak-ng-data').File(dictFileName)
+
+	dictFile = env.Command(
+		target=dictFilePath,
+		source=list((dictSourcePath.File(f) for f in inputFiles)),
+		action=espeak_compileDict_buildAction
+	)
+
+	env.Depends(dictFile, [espeakLib, phonemeData])
+
+	# Dictionaries can not be compiled in parallel, force SCons not to do this
 	env.SideEffect('_espeak_compileDict',dictFile)
-	env.InstallAs(os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, dictFileName), dictFile)
+	env.InstallAs( # Install files to the "synthDrivers/espeak-ng-data/" dir.
+		os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, dictFileName),
+		dictFile
+	)
 
 env.Install(synthDriversDir,espeakLib)
 

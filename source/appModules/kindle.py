@@ -8,7 +8,7 @@ from comtypes import COMError
 from comtypes.hresult import S_OK
 import appModuleHandler
 import speech
-import sayAllHandler
+from speech import sayAll
 import api
 from scriptHandler import willSayAllResume, isScriptWaiting
 import controlTypes
@@ -106,11 +106,11 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 
 	def script_moveByPage_forward(self,gesture):
 		self._changePageScriptHelper(gesture)
-	script_moveByPage_forward.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_moveByPage_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_moveByPage_back(self,gesture):
 		self._changePageScriptHelper(gesture,previous=True)
-	script_moveByPage_back.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_moveByPage_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def _tabOverride(self,direction):
 		return False

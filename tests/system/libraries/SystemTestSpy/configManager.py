@@ -11,7 +11,7 @@ NVDA config before NVDA is started by the system tests.
 from os.path import join as _pJoin
 from .getLib import _getLib
 import sys
-
+from typing import Optional
 
 # Imported for type information
 from robot.libraries.BuiltIn import BuiltIn
@@ -51,6 +51,18 @@ def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
 		],
 		libsDest=spyPackageLibsDir
 	)
+
+	try:
+		opSys.directory_should_exist(_pJoin(spyPackageLibsDir, "xmlrpc"))
+	except AssertionError:
+		# installed copies of NVDA <= 2020.4 don't copy this over
+		_copyPythonLibs(
+			pythonImports=[  # relative to the python path
+				"xmlrpc",
+			],
+			libsDest=spyPackageLibsDir
+		)
+
 	# install the global plugin
 	# Despite duplication, specify full paths for clarity.
 	opSys.copy_file(
@@ -79,13 +91,24 @@ def _copyPythonLibs(pythonImports, libsDest):
 			opSys.copy_file(libSource, libsDest)
 
 
-def setupProfile(repoRoot: str, settingsFileName: str, stagingDir: str):
+def setupProfile(
+		repoRoot: str,
+		settingsFileName: str,
+		stagingDir: str,
+		gesturesFileName: Optional[str] = None,
+):
 	builtIn.log("Copying files into NVDA profile", level='DEBUG')
 	opSys.copy_file(
 		# Despite duplication, specify full paths for clarity.
 		_pJoin(repoRoot, "tests", "system", "nvdaSettingsFiles", settingsFileName),
 		_pJoin(stagingDir, "nvdaProfile", "nvda.ini")
 	)
+	if gesturesFileName is not None:
+		opSys.copy_file(
+			# Despite duplication, specify full paths for clarity.
+			_pJoin(repoRoot, "tests", "system", "nvdaSettingsFiles", gesturesFileName),
+			_pJoin(stagingDir, "nvdaProfile", "gestures.ini")
+		)
 	# create a package to use as the globalPlugin
 	_installSystemTestSpyToScratchPad(
 		repoRoot,

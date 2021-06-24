@@ -20,7 +20,6 @@ from scriptHandler import script
 import speech
 import NVDAObjects
 import api
-import sayAllHandler
 import controlTypes
 import textInfos.offsets
 import config

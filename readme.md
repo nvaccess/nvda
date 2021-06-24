@@ -4,22 +4,22 @@ NVDA (NonVisual Desktop Access) is a free, open source screen reader for Microso
 It is developed by NV Access in collaboration with a global community of contributors.
 To learn more about NVDA or download a copy, visit the main [NV Access](http://www.nvaccess.org/) website.
 
-Please note: the NVDA project has a [Citizen and Contributor Code of Conduct](CODE_OF_CONDUCT.md). NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project.
+Please note: the NVDA project has a [Citizen and Contributor Code of Conduct](CODE_OF_CONDUCT.md). NV Access expects that all contributors and other community members will read and abide by the rules set out in this document while participating or contributing to this project.
 
 ## Get support
-Either if you are a beginner, an advanced user, a new or a long time developer, or if you are an organization willing to know more or to contribute to NVDA, you can get support through the documentation in place as well as several communication channels dedicated for the NVDA screen reader. Here is an overview of the most important support sources.
+Whether you are a beginner, an advanced user, a new or a long time developer; or if you represent an organization wishing to know more or to contribute to NVDA: you can get support through the included documentation as well as several communication channels dedicated to the NVDA screen reader. Here is an overview of the most important support sources.
 
 ### Documentation
 * [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [NVDA Add-ons Development Internals](https://github.com/nvdaaddons/DevGuide/wiki)
 * [NVDA ControllerClient manual](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
-* Further documentation is included in the Wiki of this repository and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
+* Further documentation is available in the NVDA repository's [Wiki](https://github.com/nvaccess/nvda/wiki), and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
 
 ### Communication channels
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
-* [NVDA Add-ons Mailing List](https://nvda-addons.groups.io/g/nvda-addons)
+* [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
 * [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
 * [Other sources including groups and profiles on social media channels, language specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
 
@@ -55,7 +55,7 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](https://www.python.org/), version 3.8, 32 bit
+* [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
 * Microsoft Visual Studio 2019 Community, Version 16.3 or later:
 	* Download from https://visualstudio.microsoft.com/vs/
@@ -81,11 +81,11 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 53915bf0a
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit ab11439b18238b7
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.org/), version 3.17.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 38.1
+* [liblouis](http://www.liblouis.org/), version 3.18.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 39.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
@@ -110,7 +110,7 @@ The following dependencies aren't needed by most people, and are not included in
 	```git clone https://github.com/nvaccess/vscode-nvda.git .vscode```
 
 ### Python dependencies
-NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in a requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. these packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
+NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in the requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. These packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
  
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
@@ -166,7 +166,7 @@ These arguments are also documented in the user guide.
 ## Building NVDA
 A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
 
-Binary archives and bundles can be created using scons from the root of the NVDA source distribution. To build any of the following, open a command prompt and change to this directory.
+Binary archives and bundles can be created using scons from the root of the NVDA source distribution. To build any of the following, open a command prompt and change to that directory.
 
 To make a non-archived binary build (equivalent to an extracted portable archive), type:
 
@@ -287,7 +287,7 @@ If you create a Pull Request, the `base` branch you use here should be the same 
 runlint origin/master
 ```
 
-To be warned about linting errors faster, you may wish to integrate Flake8 other development tools you are using.
+To be warned about linting errors faster, you may wish to integrate Flake8 with other development tools you are using.
 For more details, see `tests/lint/readme.md`
 
 ### Unit Tests

@@ -75,6 +75,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
 			role = controlTypes.ROLE_STATICTEXT
+		if attrs.get("detailsSummary") is not None:
+			states.add(controlTypes.STATE_HAS_ARIA_DETAILS)
 		if attrs.get("IAccessibleAction_showlongdesc") is not None:
 			states.add(controlTypes.STATE_HASLONGDESC)
 		if "IAccessibleAction_click" in attrs:

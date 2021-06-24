@@ -11,8 +11,10 @@ branches:
   - /release-.*/
   
 environment:
- PY_PYTHON: 3.8-32
- encFileKey:
+ PY_PYTHON: 3.7-32
+ secure_authenticode_pass:
+  secure: Way+hJyhbiLG/cmCo4+dHHzS5DiSvk/45o6frnIQ27GBX6nVDsh7jwQ7fSnqxBRP
+ secure_ssh_pass:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
  mozillaSymsAuthToken:
   secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
@@ -55,18 +57,26 @@ init:
      if ($versionType) {
       Set-AppveyorBuildVariable "versionType" $versionType
      }
-
-clone_depth: 1
+     Set-AppveyorBuildVariable "testFailExitCode" 0
 
 install:
  - cd appveyor
  # Decrypt files.
  - ps: |
     if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
-     openssl enc -md md5 -aes-256-cbc -d -pass pass:$env:encFileKey -in authenticode.pfx.enc -out authenticode.pfx
-     openssl enc -md md5 -aes-256-cbc -d -pass pass:$env:encFileKey -in ssh_id_rsa.enc -out ssh_id_rsa
+     openssl enc -d -md sha256 -aes-256-cbc -pbkdf2 -salt -pass pass:$env:secure_authenticode_pass -in authenticode.pfx.enc -out authenticode.pfx
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "Unable to decrypt authenticode certificate"
+     }
+     openssl enc -md md5 -aes-256-cbc -d -pass pass:$env:secure_ssh_pass -in ssh_id_rsa.enc -out ssh_id_rsa
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "Unable to decrypt ssh key"
+     }
      # Install ssh stuff.
      copy ssh_id_rsa $env:userprofile\.ssh\id_rsa
+     if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
     }
  - type ssh_known_hosts >> %userprofile%\.ssh\known_hosts
  - cd ..
@@ -98,8 +108,14 @@ build_script:
  - scons source %sconsArgs%
  - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
- - scons checkPot %sconsArgs%
- - if ERRORLEVEL 1 exit %ERRORLEVEL%
+ - ps: |
+     cmd.exe /c "scons checkPot $sconsArgs"
+     if($LastExitCode -ne 0) {
+      Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
+      Add-AppveyorMessage "FAIL: Translation comments check. Translation comments missing or unexpectedly included. See build log for more information."
+     } else {
+      Add-AppveyorMessage "PASS: Translation comments check."
+     }
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
  - scons %sconsOutTargets% %sconsArgs%
@@ -158,35 +174,45 @@ before_test:
 test_script:
 # Unit Tests (Python)
  - ps: |
-     $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
      .\rununittests.bat --with-xunit --xunit-file="$unitTestsXml"
      if($LastExitCode -ne 0) {
-      $errorCode=$LastExitCode
-      Add-AppveyorMessage "Unit test failure"
+      Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
+      Add-AppveyorMessage "FAIL: Unit tests. See test results for more information."
+     } else {
+      Add-AppveyorMessage "PASS: Unit tests."
      }
      Push-AppveyorArtifact $unitTestsXml
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $unitTestsXml)
-     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 # Flake8 Linting
  - ps: |
-    if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+    if ($env:APPVEYOR_PULL_REQUEST_NUMBER -or $env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
       $lintSource = (Resolve-Path .\tests\lint\)
+      $flake8Output = "$lintOutput\Flake8.txt"
       # When Appveyor runs for a pr,
       # the build is made from a new temporary commit,
       # resulting from the pr branch being merged into its base branch.
       # Therefore to create a diff for linting, we must fetch the head of the base branch.
       # In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
-     git fetch -q origin $env:APPVEYOR_REPO_BRANCH
-     $flake8Output = "$lintOutput\PR-Flake8.txt"
+      # Additionally, we can not use a clone_depth of 1, but must use an unlimited clone.
+      if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+        git fetch -q origin $env:APPVEYOR_REPO_BRANCH
+        $msgBaseLabel = "PR"
+      } else {
+        # However in a pushed branch, we must fetch master.
+        git fetch -q origin master:master
+        $msgBaseLabel = "Branch"
+      }
       .\runlint.bat FETCH_HEAD "$flake8Output" 
       if($LastExitCode -ne 0) {
-       $errorCode=$LastExitCode
-       Add-AppveyorMessage "PR introduces Flake8 errors"
+        Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
+        Add-AppveyorMessage "FAIL: Lint check. See test results for more information."
+      } else {
+        Add-AppveyorMessage "PASS: Lint check."
       }
       Push-AppveyorArtifact $flake8Output
       $junitXML = "$lintOutput\PR-Flake8.xml"
@@ -194,7 +220,6 @@ test_script:
       Push-AppveyorArtifact $junitXML
       $wc = New-Object 'System.Net.WebClient'
       $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $junitXML)
-      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
     }
 
 # System tests
@@ -203,14 +228,20 @@ test_script:
      $systemTestOutput = (Resolve-Path "$testOutput\system")
      .\runsystemtests.bat --variable whichNVDA:installed --variable installDir:"${env:nvdaLauncherFile}" --include installer
      if($LastExitCode -ne 0) {
-      $errorCode=$LastExitCode
-      Add-AppveyorMessage "System test failure"
+      Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
+      Add-AppveyorMessage "FAIL: System tests. See test results for more information."
+     } else {
+      Add-AppveyorMessage "PASS: System tests."
      }
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
-     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+
+after_test:
+ # fail build if any tests failed
+ - ps: |
+     if($env:testFailExitCode -ne 0) { $host.SetShouldExit($env:testFailExitCode) }
 
 # Artifacts are required by deploy code,
 artifacts:

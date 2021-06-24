@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
-# Thomas Stivers, Babbage B.V.
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -24,6 +24,7 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
+from .settingsDialogs import SettingsDialog
 from .settingsDialogs import *
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
@@ -83,7 +84,12 @@ class MainFrame(wx.Frame):
 		"""
 		nvdaPid = os.getpid()
 		focus = api.getFocusObject()
-		if focus.processID != nvdaPid:
+		# Do not set prevFocus if the focus is on a control rendered by NVDA itself, such as the NVDA menu.
+		# This allows to refer to the control that had focus before opening the menu while still using NVDA
+		# on its own controls. The L{nvdaPid} check can be bypassed by setting the optional attribute
+		# L{isPrevFocusOnNvdaPopup} to L{True} when a NVDA dialog offers customizable bound gestures,
+		# eg. the NVDA Python Console.
+		if focus.processID != nvdaPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
 			self.prevFocus = focus
 			self.prevFocusAncestors = api.getFocusAncestors()
 		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != nvdaPid:
@@ -195,7 +201,8 @@ class MainFrame(wx.Frame):
 			d.Show()
 			self.postPopup()
 		else:
-			safeAppExit()
+			if not core.triggerNVDAExit():
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 	def onNVDASettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog)
@@ -355,25 +362,6 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
-
-def safeAppExit():
-	"""
-	Ensures the app is exited by all the top windows being destroyed
-	"""
-
-	for window in wx.GetTopLevelWindows():
-		if isinstance(window, wx.Dialog) and window.IsModal():
-			log.info(f"ending modal {window} during exit process")
-			wx.CallAfter(window.EndModal, wx.ID_CLOSE_ALL)
-		if isinstance(window, MainFrame):
-			log.info(f"destroying main frame during exit process")
-			# the MainFrame has EVT_CLOSE bound to the ExitDialog
-			# which calls this function on exit, so destroy this window
-			wx.CallAfter(window.Destroy)
-		else:
-			log.info(f"closing window {window} during exit process")
-			wx.CallAfter(window.Close)
-
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -437,7 +425,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			item = menu_tools.Append(wx.ID_ANY, _("View log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
 		# Translators: The label for the menu item to toggle Speech Viewer.
-		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		item.Check(speechViewer.isActive)
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 
 		self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
@@ -555,6 +544,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			appModules.nvda.nvdaMenuIaIdentity = None
 		mainFrame.postPopup()
 
+
 def initialize():
 	global mainFrame
 	if mainFrame:
@@ -581,28 +571,9 @@ def initialize():
 			winUser.PostMessage(topHandle, winUser.WM_NULL, 0, 0)
 	wx.CallAfter = wx_CallAfter_wrapper
 
-def terminate():
-	import brailleViewer
-	brailleViewer.destroyBrailleViewer()
 
-	for instance, state in gui.SettingsDialog._instances.items():
-		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
-			log.error(
-				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
-			)
-		else:
-			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
+def terminate():
 	global mainFrame
-	# This is called after the main loop exits because WM_QUIT exits the main loop
-	# without destroying all objects correctly and we need to support WM_QUIT.
-	# Therefore, any request to exit should exit the main loop.
-	safeAppExit()
-	# #4460: We need another iteration of the main loop
-	# so that everything (especially the TaskBarIcon) is cleaned up properly.
-	# ProcessPendingEvents doesn't seem to work, but MainLoop does.
-	# Because the top window gets destroyed,
-	# MainLoop thankfully returns pretty quickly.
-	wx.GetApp().MainLoop()
 	mainFrame = None
 
 def showGui():
@@ -723,7 +694,9 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
-			safeAppExit()
+			if not core.triggerNVDAExit():
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
+			return  # there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:
@@ -745,7 +718,7 @@ class ExitDialog(wx.Dialog):
 					confirmUpdateDialog.ShowModal()
 				else:
 					updateCheck.executePendingUpdate()
-		self.Destroy()
+		wx.CallAfter(self.Destroy)
 
 	def onCancel(self, evt):
 		self.Destroy()

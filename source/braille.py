@@ -221,6 +221,8 @@ positiveStateLabels = {
 	controlTypes.STATE_SORTED_ASCENDING: _("sorted asc"),
 	# Translators: Displayed in braille when an object is sorted descending.
 	controlTypes.STATE_SORTED_DESCENDING: _("sorted desc"),
+	# Translators: Displayed in braille when an object has additional details (such as a comment section).
+	controlTypes.STATE_HAS_ARIA_DETAILS: _("details"),
 	# Translators: Displayed in braille when an object (usually a graphic) has a long description.
 	controlTypes.STATE_HASLONGDESC: _("ldesc"),
 	# Translators: Displayed in braille when there is a formula on a spreadsheet cell.
@@ -2320,11 +2322,13 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
 			pass
 
-	def _get_numCells(self):
+	#: typing information for autoproperty _get_numCells
+	numCells: int
+
+	def _get_numCells(self) -> int:
 		"""Obtain the number of braille cells on this  display.
 		@note: 0 indicates that braille should be disabled.
 		@return: The number of cells.
-		@rtype: int
 		"""
 		return 0
 
