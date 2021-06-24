@@ -23,6 +23,8 @@ class TestSeikaNotetakerDriver(unittest.TestCase):
 		sampleArgument = b"test"
 		sampleArgLen = bytes([len(sampleArgument)])
 		sampleMessage = sampleCommand + sampleArgLen + sampleArgument + b"\0\0\0"
+		PRE_CANARY = bytes([2])  # start of text character
+		POST_CANARY = bytes([3])  # end of text character
 
 		class FakeSeikaNotetakerDriver(SeikaNotetakerDriver):
 			def __init__(self):
@@ -41,7 +43,7 @@ class TestSeikaNotetakerDriver(unittest.TestCase):
 		seikaTestDriver = FakeSeikaNotetakerDriver()
 		for byteToSend in sampleMessage:
 			# the middle byte is the only one used, padded by a byte on either side.
-			seikaTestDriver._onReceive(b"\0" + bytes([byteToSend]) + b"\0")
+			seikaTestDriver._onReceive(PRE_CANARY + bytes([byteToSend]) + POST_CANARY)
 
 		self.assertEqual(sampleCommand, seikaTestDriver._finalCommand)
 		self.assertEqual(sampleArgLen + sampleArgument, seikaTestDriver._finalArg)
