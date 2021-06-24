@@ -14,6 +14,11 @@ import braille
 
 class TestSeikaNotetakerDriver(unittest.TestCase):
 	def test_onReceive(self):
+		""" Tests how the Seika Notetaker driver handles receiving data via `_onReceive`.
+		Simulates sending a sample message from the device, which should result in our driver processing a
+		command via `_processCommand`. Without knowing the specifications of the device, this simulation may
+		be inaccurate or uncomprehensive.
+		"""
 		sampleCommand = SEIKA_INFO
 		sampleArgument = b"test"
 		sampleArgLen = bytes([len(sampleArgument)])
@@ -22,7 +27,7 @@ class TestSeikaNotetakerDriver(unittest.TestCase):
 
 		class FakeSeikaNotetakerDriver(SeikaNotetakerDriver):
 			def __init__(self):
-				"""Sets the variables necessary to test _onReceive without a braille device
+				"""Sets the variables necessary to test _onReceive without a braille device connected.
 				"""
 				self._hidBuffer = b""
 				self._command = None
@@ -36,7 +41,7 @@ class TestSeikaNotetakerDriver(unittest.TestCase):
 		
 		seikaTestDriver = FakeSeikaNotetakerDriver()
 		for i in range(len(sampleMessage)):
-			# the middle byte is the only one used, padded by 2 other bits
+			# the middle byte is the only one used, padded by a byte on either side.
 			# paddedMessage[i:i + 2] == [sampleMessage[i-1], sampleMessage[i], sampleMessage[i+1]]
 			seikaTestDriver._onReceive(paddedMessage[i:i + 2])
 
