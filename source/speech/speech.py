@@ -1790,7 +1790,11 @@ def getControlFieldSpeech(  # noqa: C901
 	# speakContentFirst: Speak the content before the control field info.
 	speakContentFirst = (
 		reason == OutputReason.FOCUS
-		and presCat != attrs.PRESCAT_CONTAINER
+		and (
+			# the category is not a container, unless it's an article (#11103)
+			presCat != attrs.PRESCAT_CONTAINER
+			or role == controlTypes.ROLE_ARTICLE
+		)
 		and role not in (
 			controlTypes.ROLE_EDITABLETEXT,
 			controlTypes.ROLE_COMBOBOX,
