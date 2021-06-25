@@ -39,17 +39,46 @@ class WinVersion(object):
 		self.servicePack = servicePack
 		self.productType = productType
 
-	def __repr__(self):
-		winVersionText = []
-		if self.releaseName:
-			winVersionText.append(self.releaseName)
+	def _getWindowsReleaseName(self) -> str:
+		"""Returns the public release name for a given Windows release based on major, minor, and build.
+		This is useful if release names are not defined as part of Windows version constants.
+		For example, 6.1 will return 'Windows 7'.
+		For Windows 10, feature update release name will be included.
+		On server systems, unless noted otherwise, client release names will be returned.
+		For example, 'Windows 10 1809' will be returned on Server 2019 systems.
+		"""
+		if (self.major, self.minor) == (6, 1):
+			return "Windows 7"
+		elif (self.major, self.minor) == (6, 2):
+			return "Windows 8"
+		elif (self.major, self.minor) == (6, 3):
+			return "Windows 8.1"
+		elif self.major == 10:
+			# From Version 1511 (build 10586), release Id/display version comes from Windows Registry.
+			# However there are builds with no release name (Version 1507/10240)
+			# or releases with different builds.
+			# Look these up first before asking Windows Registry.
+			if self.build in BUILDS_TO_RELEASE_NAMES:
+				return BUILDS_TO_RELEASE_NAMES[self.build]
+			# On Windows 10 1511 and later, cache the version in use on the system.
+			with winreg.OpenKey(
+				winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+			) as currentVersion:
+				# Version 20H2 and later where a separate display version string is used.
+				try:
+					releaseId = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
+				except OSError:
+					# Don't set anything if this is Windows 10 1507 or earlier.
+					try:
+						releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
+					except OSError:
+						releaseId = "unknown"
+			return f"Windows 10 {releaseId}"
 		else:
-			try:
-				winVersionText.append(getWindowsReleaseName(
-					major=self.major, minor=self.minor, build=self.build
-				))
-			except RuntimeError:
-				winVersionText.append("Windows release unknown")
+			return "Windows release unknown"
+
+	def __repr__(self):
+		winVersionText = [self._windowsVersionToReleaseName()]
 		winVersionText.append(f"({self.major}.{self.minor}.{self.build})")
 		if self.servicePack != "":
 			winVersionText.append(f"service pack {self.servicePack}")
@@ -105,45 +134,6 @@ BUILDS_TO_RELEASE_NAMES = {
 	19042: "Windows 10 20H2",
 	19043: "Windows 10 21H1"
 }
-
-
-def getWindowsReleaseName(major: int = 0, minor: int = 0, build: int = 0) -> str:
-	"""Returns the public release name for a given Windows release based on major, minor, and build.
-	This is useful if release names are not defined as part of Windows version constants.
-	For example, 6.1 will return 'Windows 7'.
-	For Windows 10, feature update release name will be included.
-	On server systems, unless noted otherwise, client release names will be returned.
-	For example, 'Windows 10 1809' will be returned on Server 2019 systems.
-	"""
-	if (major, minor) == (6, 1):
-		return "Windows 7"
-	elif (major, minor) == (6, 2):
-		return "Windows 8"
-	elif (major, minor) == (6, 3):
-		return "Windows 8.1"
-	elif major == 10:
-		# From Version 1511 (build 10586), release Id/display version comes from Windows Registry.
-		# However there are builds with no release name (Version 1507/10240)
-		# or releases with different builds.
-		# Look these up first before asking Windows Registry.
-		if build in BUILDS_TO_RELEASE_NAMES:
-			return BUILDS_TO_RELEASE_NAMES[build]
-		# On Windows 10 1511 and later, cache the version in use on the system.
-		with winreg.OpenKey(
-			winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
-		) as currentVersion:
-			# Version 20H2 and later where a separate display version string is used.
-			try:
-				releaseId = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
-			except OSError:
-				# Don't set anything if this is Windows 10 1507 or earlier.
-				try:
-					releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
-				except OSError:
-					releaseId = "unknown"
-		return f"Windows 10 {releaseId}"
-	else:
-		raise RuntimeError("Unknown Windows release")
 
 
 def getWinVer():
