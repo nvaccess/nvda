@@ -35,7 +35,7 @@ init:
        $versionType = "stable"
       }
      } else {
-      $versionPrefix = (py -m appveyor\getVersionPrefix)
+      $versionPrefix = (py -m appveyor.getVersionPrefix)
       if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
        $version = "$($versionPrefix)pr$env:APPVEYOR_PULL_REQUEST_NUMBER-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
       } elseif($env:APPVEYOR_REPO_BRANCH -eq "master") {
