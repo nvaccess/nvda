@@ -41,18 +41,16 @@ class TestWinVersion(unittest.TestCase):
 		# specifically, via Windows Registry on Windows 10 1511 and later.
 		# Test with Windows Server 2016 (client release name: Windows 10 1607).
 		server2016 = winVersion.WIN10_1607
-		self.assertIn(
-			"Windows 10 1607", repr(server2016)
-		)
+		self.assertEqual(server2016.releaseName, "Windows 10 1607")
 
 	def test_winVerKnownBuildToReleaseName(self):
 		# Specifically to test if the correct release name is returned for use in getWinVer() function.
 		# Try Windows 10 1809.
 		knownMajor, knownMinor, knownBuild = 10, 0, 17763
-		releaseName = winVersion.getWindowsReleaseName(
+		knownPublicRelease = winVersion.WinVersion(
 			major=knownMajor, minor=knownMinor, build=knownBuild
 		)
-		self.assertEqual(releaseName, "Windows 10 1809")
+		self.assertEqual(knownPublicRelease.releaseName, "Windows 10 1809")
 
 	def test_winVerReleaseNameFromWindowsRegistry(self):
 		# Test to make sure something is indeed returned from Windows Registry
@@ -63,19 +61,18 @@ class TestWinVersion(unittest.TestCase):
 		# ("unknown" will be recorded in release name text),
 		# usually if Release Id and/or display version key is not defined.
 		major, minor, build = 10, 0, 21390
-		releaseName = winVersion.getWindowsReleaseName(
+		insiderBuild = winVersion.WinVersion(
 			major=major, minor=minor, build=build
 		)
 		self.assertNotIn(
-			"unknown", releaseName
+			"unknown", insiderBuild.releaseName
 		)
 
 	def test_winVerUnknownBuildToReleaseName(self):
 		# It might be possible that Microsoft could use major.minor versions other than 10.0 in future releases.
 		# Try Windows 8.1 which is actually version 6.3.
 		unknownMajor, unknownMinor, unknownBuild = 8, 1, 0
-		with self.assertRaises(RuntimeError):
-			# Flake8 F841: local variable name is assigned to but never used
-			releaseName = winVersion.getWindowsReleaseName(  # NOQA: F841
-				major=unknownMajor, minor=unknownMinor, build=unknownBuild
-			)
+		badWin81Info = winVersion.WinVersion(
+			major=unknownMajor, minor=unknownMinor, build=unknownBuild
+		)
+		self.assertEqual(badWin81Info.releaseName, "Windows release unknown")
