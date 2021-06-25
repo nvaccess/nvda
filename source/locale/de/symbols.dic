@@ -7,30 +7,33 @@ complexSymbols:
 # identifier	regexp
 
 # Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+. Satzende	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! Satzende	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? Satzende	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 
 # Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
+; Satzzeichen	(?<=[^\s;]);(?=\s|$)
+: Satzzeichen	(?<=[^\s:]):(?=\s|$)
+
 # Others
-decimal point	(?<![^\d -])\.(?=\d)
+Dezimalpunkt	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+negative Zahl	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+Tausender Punkt	(?<=\d)\.(?=\d{3})
+Datumstrennzeichen	(?<=\d\d)\.(?=\d\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	dot	all	always
-! sentence ending	bang	all	always
-? sentence ending	question	all	always
-; phrase ending	semi	most	always
-: phrase ending	colon	most	always
+. sentence ending	Punkt	all	always
+! sentence ending	Ausrufezeichen	all	always
+? sentence ending	Fragezeichen	all	always
+; phrase ending	Semikolon	most	always
+: phrase ending	Doppelpunkt	most	always
 decimal point		none	always
-in-word '	tick	all	norep
-negative number	minus	none	norep
+in-word '	Apostroph	all	norep
+negative number	Minus	none	norep
 
 # Whitespace
 \0	Leer	char	# null
@@ -175,7 +178,48 @@ _	Unterstrich	most
 ⊕	Eingekreistes Plus	none
 ⊖	Eingekreistes Minus	none
 ⇄	Pfeil nach rechts über Pfeil nach links	none
-⇒	Doppelter rechtsweisender Pfeil	none
+⇒	Doppelter nach rechtsweisender Pfeil	none
+―	Waagerechter Strich
+،	Arabisches Komma
+、	Ideografisches Komma
+؛	Arabisches Semikolon
+؟	Arabisches Fragezeichen
+。	Ideografischer Punkt
+“	Typografisches Anführungszeichen rechts
+〈	Spitze Klammer auf
+〉	Spitze Klammer zu
+《	Doppelte, spitze Klammer auf
+》	Doppelte, spitze Klammer zu
+「	Eckige Klammer auf
+」	Eckige Klammer zu
+『	Weiße, eckige Klammer auf
+』	Weiße, eckige Klammer zu
+【	Schwarze, konkave Klammer auf
+】	Schwarze, konkave Klammer zu
+〔	Stumpfe Klammer auf
+〕	Stumpfe Klammer zu
+〖	Hohle, konkave Klammer auf
+〗	Hohle, konkave Klammer zu
+&	Und
+‧	Silbentrennzeichen
+‸	Dach
+⁂	Asterismus
+℗	Copyright-Zeichen für Audio-Aufnahme
+↚	Durchgestrichener Pfeil nach links
+↛	Durchgestrichener Pfeil nach rechts
+↜	Wellenförmiger Pfeil nach links
+↝	Wellenförmiger Pfeil nach rechts
+↢	Pfeilende nach links
+↣	Pfeilende nach rechts
+↤	Pfeil nach links von Strich wegführend
+↥	Pfeil nach oben von Strich wegführend
+↦	Pfeil nach rechts von Strich wegführend
+↧	Pfeil nach unten von Strich wegführend
+↭	Wellenförmiger Pfeil nach links und rechts
+↶	Halbkreisförmiger Pfeil gegen den Uhrzeigersinn nach oben
+↷	Halbkreisförmiger Pfeil im Uhrzeigersinn nach oben
+↺	Kreisförmiger Pfeil gegen den Uhrzeigersinn
+⇅	Nach oben und nach unten weisende Pfeile
 
 # Arithmetic Operators
 +	plus	some
