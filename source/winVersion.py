@@ -35,7 +35,10 @@ class WinVersion(object):
 		self.major = major
 		self.minor = minor
 		self.build = build
-		self.releaseName = releaseName
+		if releaseName:
+			self.releaseName = releaseName
+		else:
+			self.releaseName = self._getWindowsReleaseName()
 		self.servicePack = servicePack
 		self.productType = productType
 
@@ -78,7 +81,7 @@ class WinVersion(object):
 			return "Windows release unknown"
 
 	def __repr__(self):
-		winVersionText = [self._windowsVersionToReleaseName()]
+		winVersionText = [self.releaseName]
 		winVersionText.append(f"({self.major}.{self.minor}.{self.build})")
 		if self.servicePack != "":
 			winVersionText.append(f"service pack {self.servicePack}")
@@ -140,15 +143,10 @@ def getWinVer():
 	"""Returns a record of current Windows version NVDA is running on.
 	"""
 	winVer = sys.getwindowsversion()
-	try:
-		releaseName = getWindowsReleaseName(major=winVer.major, minor=winVer.minor, build=winVer.build)
-	except RuntimeError:
-		releaseName = "Windows release unknown"
 	return WinVersion(
 		major=winVer.major,
 		minor=winVer.minor,
 		build=winVer.build,
-		releaseName=releaseName,
 		servicePack=winVer.service_pack,
 		productType=("workstation", "domain controller", "server")[winVer.product_type - 1]
 	)
