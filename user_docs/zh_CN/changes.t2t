@@ -10,68 +10,71 @@ NVDA更新日志
 一如既往的，包含许多 Bug 修复和改进，涵盖 Office、 Visual Studio 以及多语言显示等。
 
 注意：
-- 此版本对插件 API 进行了兼容性更新，在您更新之后一些旧版插件可能因为兼容性原因被禁用，您可以访问 [NVDA 中文站 nvdacn.com](https://www.nvdacn.com) 获取所需的新版插件。
+- 此版本对插件 API 进行了兼容性改进，在您更新之后一些旧版插件可能因为兼容性原因被禁用，您可以访问 [NVDA 中文站 https://www.nvdacn.com] 获取所需的新版插件。
 - 自本版起，也不再支持过时的 Adobe Flash 。
  -
 
 
 == 新特性 ==
 
-- Early support for UIA with Chromium based browsers (such as Edge). (#12025)
-- Optional experimental support for Microsoft Excel via UI Automation. Only recommended for Microsoft Excel build 16.0.13522.10000 or higher. (#12210)
-- Easier navigation of output in NVDA Python Console. (#9784)
-  - alt+up/down jumps to the previous/next output result (add shift for selecting).
-  - control+l clears the output pane.
-- NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
-- Support for the Seika Notetaker braille display from Nippon Telesoft. (#11514)
+- 对 Chromium 内核浏览器的初步 UIA 支持（如 Edge）。 (#12025)
+- 为 Microsoft Excel 启用可选的实验性 UI automation 支持。 仅推荐 Excel 16.0.13522.10000 或更高版本使用。 (#12210)
+- 更方便的 NVDA Python 控制台的输出浏览支持。 (#9784)
+  - alt+上光标/下光标 跳转到上一个/下一个输出结果（同时按下 shift 键可进行选择）。
+  - control+l 清除输出窗格。
+- 可以读出在 Microsoft Outlook 中为特定约会指定的分类（如果存在）。 (#11598)
+- 支持 Nippon Telesoft 开发的 Seika Notetaker 点显器。 (#11514)
+  - 译者注： 即我们熟知的国内带有盲文输入键盘的清华点显（包括 Mini16, Mini24, Seika V6, Seika V7, SDPlus）。
 
 
-== Changes ==
-- In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
-- NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
-- Updated Unicode Common Locale Data Repository (CLDR) to 39.0. (#11943, #12314)
-- Added more mathematical symbols to the symbols dictionary. (#11467)
-- The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
-- "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
-- 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
-  - This behaviour can be disabled by setting this option to "No".
-  - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly.
-- Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
-  - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
-- Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
-- NVDA will exit even with windows still open, the exit process now closes all NVDA windows and dialogs. (#1740)
-- The Speech Viewer can now be closed with ``alt+F4`` and has a standard close button for easier interaction with users of pointing devices. (#12330)
-- The Braille Viewer now has a standard close button for easier interaction with users of pointing devices. (#12328)
-- In the Elements List dialog, the accelerator key on the "Activate" button has been removed in some locales to avoid collision with an element type radio button label. When available, the button is still the default of the dialog and as such can still be invoked by simply pressing enter from the elements list itself. (#6167)
+== 修改 ==
+- 在浏览模式中，现在可使用盲文光标来直接点击控件标记（如 "lnk" 是链接)，这特别适合用来点击没有标签的控件（如复选框）。 (#7447)
+- 在启用黑屏状态下使用 Windows 10 OCR 识别时会给出提醒。 (#11911)
+- 升级 Unicode 通用本地化数据 库 (CLDR) 到 39.0 。 (#11943, #12314)
+- 在符号词典中增加了更多的数学符号。 (#11467)
+- 美化了用户指南、更新日志、快捷键快速参考的外观样式。 (#12027)
+- 如果在不支持屏幕布局切换的应用（如 Microsoft word）中切换屏幕布局时，给出提示“不支持”。 (#7297)
+- 在“高级”面板的“尝试取消过期的焦点事件的语音输出”选项默认启用。 (#10885)
+  - 可通过将选项设置为“否”来禁用该行为。
+  - 将选项设置为“是”，可以在快速浏览时忽略 Web 应用的过期信息（如 GMail）。
+- 升级 liblouis braille translator 到 [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - 新增盲文表： 白俄罗斯文学盲文、白俄罗斯电脑盲文、乌尔都语一级盲文、乌尔都语二级盲文。
+- 因为 adobe 已经弃用 flash，故此移除相关支持。 (#11131)
+- 修复了某些模态对话框显示时无法退出 NVDA 的 Bug （如： “元素列表”对话框）。 (#1740)
+- 可使用 alt+f4 关闭“语音查看器”窗口，同时还增加了一个“关闭”按钮。 (#12330)
+- 为“盲文查看器”增加了“关闭”按钮。 (#12328)
+- 为防止快捷键冲突，为某些语言版本删除“元素列表”对话框“激活”按钮的默认快捷键“A”，但您仍然可以使用回车点击该默认按钮。 (#6167)
 
 
-== Bug Fixes ==
-- The list of messages in Outlook 2010 is once again readable. (#12241)
-- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
-  - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
-- In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
-- In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
-- Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
-- It is now possible to read comments in MS Word with UIA enabled. (#9285)
-- Performance when interacting with Visual Studio has been improved. (#12171)
-- Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
-- Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
-  - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
-- The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
-- TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
-- It is once again possible to use NVDA in languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
-- In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
-- NVDA no longer fails to announce the newly focused content on a web page if the old focus disappears and is replaced by the new focus in the same position. (#12147)
-- Strikethrough, superscript and subscript formatting for entire Excel cells are now reported if the corresponding option is enabled. (#12264)
-- Fixed copying config during installation from a portable copy when default destination config directory is empty. (#12071, #12205)
-- Fixed incorrect announcement of some letters with accents or diacritic when 'Say cap before capitals' option is checked. (#11948)
-- Fixed the pitch change failure in SAPI4 speech synthesizer. (#12311)
-- The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
-- In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
-- NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
-- Espeak now supports Cantonese and Mandarin again. (#10418)
-- In the new Chromium based Microsoft Edge, text fields such as the address bar are now announced when empty. (#12474)
-- Fix Seika Braille driver. (#10787)
+== Bug 修复 ==
+- 恢复了对 Outlook 2010 消息列表的朗读支持。 (#12241)
+- 在 Windows 10 版本1607 及更高版本的命令行终端内删除中间字符时，不再朗读其后面的字符。 (#3200)
+  - 译者注： VIM 编辑器下此特性可能尤其重要。
+  - 此实验性特性紧可通过 NVDA 的“高级设置”面板把差分算法设置为“差异匹配修补”启用。
+- 当在 Microsoft Outlook 中，使用 shift+tab 从“消息”切换到“主题”时不在朗读冗余的缩进距离。 (#10254)
+- 在 Python 控制台中， 现在可为非空行增加制表符做行首缩进，也可在中间的行使用 tab 键进行自动缩进。 (#11532)
+- 在关闭“屏幕布局”的情况下，格式信息和其他可浏览的信息中不再出现多余的空行。 (#12004)
+- 在启用 UIA 支持的情况下，可在 Microsoft word 中朗读批注内容。 (#9285)
+- 提升了与 Visual Studio 交互的响应速度。 (#12171)
+- 修复 NVDA 的可视化错误（如使用从右到左布局时元素丢失等）。 (#8859)
+- 优先使用 NVDA 语言的布局设置，而不是系统默认的设置。 (#638)
+  - 已知从右到左语言的群集存在边缘会被标签或控件分割的问题。 (#12181)
+- Python locale 匹配“首选项”里设置的语言，且在调用默认语言时触发。 (#12214)
+- TextInfo.getTextInChunks 不再音于富文本控件调用时冻结（如日志查看器）。 (#11613)
+- Windows 10 的 1803 或 1809 的 locale 名称中包含下划线时，NVDA 再度可正常识别 （如 de_CS)。 (#12250)
+- wordpad 中的上标和下标可正常读出。 (#12262)
+- NVDA 现在可时时朗读 web 页面相同位置的焦点内容变化。 (#12147)
+- Excel 的单元格上标、下标和强调在对应选项启用的情况下可正常朗读。 (#12264)
+- 修复从便携版安装 NVDA 且在用户配置目录为空的情况下，“拷贝配置到用户目录”会失败的问题。 (#12071, #12205)
+- 修复在“遇到大写字母时提示大写”选项启用时，遇到加重音符号和读音符号的字符朗读不正常的问题。 (#11948)
+- 修复 SAPI4 语音合成气“大写时音高变化”无效的问题。 (#12311)
+- 在便携版或安装板中传入命令行参数 ``--minimal`` 时，均不会播放启动声音。 (#12289)
+- 在 Microsoft word 和 outlook 上，如果启用了“浏览模式”设置的选项“包含布局表格”后，可使用快捷键跳转到布局表格。 (#11899)
+- 在特定语言下，NVDA 不会将 "↑↑↑" 视为表情。 (#11963)
+- Espeak 恢复了对粤语和普通话的支持。 (#10418)
+- 可以读出在最新版基于 Chromium 的 edge 浏览器中编辑框的空白状态。 (#12474)
+- 修复 Seika 点显器驱动。 (#10787)
+  - 译者注： 即我们熟知的清华点显（包括 Seika v3v5v80）。
 
 
 == Changes for Developers ==
