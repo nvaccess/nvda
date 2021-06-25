@@ -34,6 +34,30 @@ _BUILDS_TO_RELEASE_NAMES = {
 }
 
 
+@functools.lru_cache(maxsize=128)
+def _getRunningVersionNameFromWinReg() -> str:
+	"""Returns the Windows release name defined in Widnows Registry.
+	This is applicable on Windows 10 Version 1511 (build 10586) and later.
+	"""
+	# Release name is recorded in Windows Registry from Windows 10 Version 1511 (build 10586) onwards.
+	if getWinVer() < WIN10_1511:
+		raise RuntimeError("Release name is not recorded in Windows Registry on this version of Windows")
+	# Cache the version in use on the system.
+	with winreg.OpenKey(
+		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+	) as currentVersion:
+		# Version 20H2 and later where a separate display version string is used.
+		try:
+			releaseId = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
+		except OSError:
+			# Don't set anything if this is Windows 10 1507 or earlier.
+			try:
+				releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
+			except OSError:
+				releaseId = ""
+	return releaseId
+
+
 @functools.total_ordering
 class WinVersion(object):
 	"""
@@ -82,31 +106,12 @@ class WinVersion(object):
 			# Look these up first before asking Windows Registry.
 			if self.build in _BUILDS_TO_RELEASE_NAMES:
 				return _BUILDS_TO_RELEASE_NAMES[self.build]
-			releaseId = self._getRunningVersionNameFromWinReg()
+			releaseId = _getRunningVersionNameFromWinReg()
 			if not releaseId:
 				releaseId = "unknown"
 			return f"Windows 10 {releaseId}"
 		else:
 			return "Windows release unknown"
-
-	def _getRunningVersionNameFromWinReg(self) -> str:
-		"""Returns the Windows release name defined in Widnows Registry.
-		This is applicable on Windows 10 Version 1511 (build 10586) and later.
-		"""
-		# On Windows 10 1511 and later, cache the version in use on the system.
-		with winreg.OpenKey(
-			winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
-		) as currentVersion:
-			# Version 20H2 and later where a separate display version string is used.
-			try:
-				releaseId = winreg.QueryValueEx(currentVersion, "DisplayVersion")[0]
-			except OSError:
-				# Don't set anything if this is Windows 10 1507 or earlier.
-				try:
-					releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
-				except OSError:
-					releaseId = ""
-		return releaseId
 
 	def __repr__(self):
 		winVersionText = [self.releaseName]
