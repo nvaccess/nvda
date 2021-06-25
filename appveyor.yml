@@ -35,12 +35,13 @@ init:
        $versionType = "stable"
       }
      } else {
+      $versionPrefix = (py -m appveyor\getVersionPrefix)
       if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
-       $version = "pr$env:APPVEYOR_PULL_REQUEST_NUMBER-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+       $version = "$($versionPrefix)pr$env:APPVEYOR_PULL_REQUEST_NUMBER-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
       } elseif($env:APPVEYOR_REPO_BRANCH -eq "master") {
-       $version = "alpha-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+       $version = "$($versionPrefix)alpha-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
       } else {
-       $version = "$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+       $version = "$($versionPrefix)$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
        if($env:APPVEYOR_REPO_BRANCH.StartsWith("try-release-")) {
         Set-AppveyorBuildVariable "release" "1"
        }

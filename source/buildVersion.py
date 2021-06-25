@@ -63,6 +63,15 @@ def formatVersionForGUI(year, major, minor):
 	return "{y}.{M}.{m}".format(y=year, M=major, m=minor)
 
 
+def formatDisplayVersionString():
+	"""Formats a display version string, from the values in the buildVersion module.
+	Examples:
+	- "2019.1"
+	- "2020.3.2"
+	"""
+	return formatVersionForGUI(version_year, version_major, version_minor)
+
+
 # Version information for NVDA
 name = "NVDA"
 version_year = 2021
