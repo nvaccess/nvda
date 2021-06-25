@@ -103,22 +103,22 @@ class WinVersion(object):
 
 
 # Windows releases to WinVersion instances for easing comparisons.
-WIN7 = WinVersion(major=6, minor=1, build=7600, releaseName="Windows 7")
-WIN7_SP1 = WinVersion(major=6, minor=1, build=7601, releaseName="Windows 7", servicePack="1")
-WIN8 = WinVersion(major=6, minor=2, build=9200, releaseName="Windows 8")
-WIN81 = WinVersion(major=6, minor=3, build=9600, releaseName="Windows 8.1")
-WIN10 = WIN10_1507 = WinVersion(major=10, minor=0, build=10240, releaseName="Windows 10 1507")
-WIN10_1511 = WinVersion(major=10, minor=0, build=10586, releaseName="Windows 10 1511")
-WIN10_1607 = WinVersion(major=10, minor=0, build=14393, releaseName="Windows 10 1607")
-WIN10_1703 = WinVersion(major=10, minor=0, build=15063, releaseName="Windows 10 1703")
-WIN10_1709 = WinVersion(major=10, minor=0, build=16299, releaseName="Windows 10 1709")
-WIN10_1803 = WinVersion(major=10, minor=0, build=17134, releaseName="Windows 10 1803")
-WIN10_1809 = WinVersion(major=10, minor=0, build=17763, releaseName="Windows 10 1809")
-WIN10_1903 = WinVersion(major=10, minor=0, build=18362, releaseName="Windows 10 1903")
-WIN10_1909 = WinVersion(major=10, minor=0, build=18363, releaseName="Windows 10 1909")
-WIN10_2004 = WinVersion(major=10, minor=0, build=19041, releaseName="Windows 10 2004")
-WIN10_20H2 = WinVersion(major=10, minor=0, build=19042, releaseName="Windows 10 20H2")
-WIN10_21H1 = WinVersion(major=10, minor=0, build=19043, releaseName="Windows 10 21H1")
+WIN7 = WinVersion(major=6, minor=1, build=7600)
+WIN7_SP1 = WinVersion(major=6, minor=1, build=7601, servicePack="1")
+WIN8 = WinVersion(major=6, minor=2, build=9200)
+WIN81 = WinVersion(major=6, minor=3, build=9600)
+WIN10 = WIN10_1507 = WinVersion(major=10, minor=0, build=10240)
+WIN10_1511 = WinVersion(major=10, minor=0, build=10586)
+WIN10_1607 = WinVersion(major=10, minor=0, build=14393)
+WIN10_1703 = WinVersion(major=10, minor=0, build=15063)
+WIN10_1709 = WinVersion(major=10, minor=0, build=16299)
+WIN10_1803 = WinVersion(major=10, minor=0, build=17134)
+WIN10_1809 = WinVersion(major=10, minor=0, build=17763)
+WIN10_1903 = WinVersion(major=10, minor=0, build=18362)
+WIN10_1909 = WinVersion(major=10, minor=0, build=18363)
+WIN10_2004 = WinVersion(major=10, minor=0, build=19041)
+WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
+WIN10_21H1 = WinVersion(major=10, minor=0, build=19043)
 
 # Records a mapping between Windows builds and release names.
 # These include build 10240 for Windows 10 1507 and releases with multiple release builds.
