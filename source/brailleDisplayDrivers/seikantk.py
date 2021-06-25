@@ -163,14 +163,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		cmd = stream.read(3)  # Note, first and third bytes are discarded
 		newByte: bytes = cmd[1:2]  # use range to return bytes
 		self._hidBuffer += newByte
-		hasCommandBeenCollected = self._command is None
-		hasArgLenBeenCollected = self._argsLen is None
+		hasCommandBeenCollected = self._command is not None
+		hasArgLenBeenCollected = self._argsLen is not None
 		if (  # still collecting command bytes
 			not hasCommandBeenCollected
 			and len(self._hidBuffer) == COMMAND_LEN
 		):
 			self._command = self._hidBuffer  # command found reset and wait for args length
-			self._hidBuffer = None
+			self._hidBuffer = b""
 		elif (  # next byte gives the command + args length
 			hasCommandBeenCollected
 			and not hasArgLenBeenCollected  # argsLen has not
