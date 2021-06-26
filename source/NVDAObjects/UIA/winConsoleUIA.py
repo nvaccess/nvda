@@ -373,18 +373,6 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 			else ConsoleUIATextInfoWorkaroundEndInclusive
 		)
 
-	def detectPossibleSelectionChange(self):
-		try:
-			return super().detectPossibleSelectionChange()
-		except COMError:
-			# microsoft/terminal#5399: when attempting to compare text ranges
-			# from the standard and alt mode buffers, E_FAIL is returned.
-			# Downgrade this to a debugWarning.
-			log.debugWarning((
-				"Exception raised when comparing selections, "
-				"probably due to a switch to/from the alt buffer."
-			), exc_info=True)
-
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
