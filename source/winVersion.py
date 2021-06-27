@@ -87,7 +87,7 @@ class WinVersion(object):
 
 	def _getWindowsReleaseName(self) -> str:
 		"""Returns the public release name for a given Windows release based on major, minor, and build.
-		This is useful if release names are not defined as part of Windows version constants.
+		This is useful if release names are not defined when constructing this class.
 		For example, 6.1 will return 'Windows 7'.
 		For Windows 10, feature update release name will be included.
 		On server systems, unless noted otherwise, client release names will be returned.
