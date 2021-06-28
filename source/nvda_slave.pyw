@@ -131,7 +131,7 @@ def main():
 		sys.exit(1)
 
 if __name__ == "__main__":
-	# Initialize remote logging back to NVDA 
+	# Initialize remote logging back to NVDA
 	logHandler.initialize(True)
 	# Log at the most detailed level, and NVDA will filter it using its own level setting.
 	logHandler.log.setLevel(1)
