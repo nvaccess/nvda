@@ -37,7 +37,7 @@ _BUILDS_TO_RELEASE_NAMES = {
 
 @functools.lru_cache(maxsize=1)
 def _getRunningVersionNameFromWinReg() -> str:
-	"""Returns the Windows release name defined in Widnows Registry.
+	"""Returns the Windows release name defined in Windows Registry.
 	This is applicable on Windows 10 Version 1511 (build 10586) and later.
 	"""
 	# Release name is recorded in Windows Registry from Windows 10 Version 1511 (build 10586) onwards.
