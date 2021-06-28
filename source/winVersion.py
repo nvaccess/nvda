@@ -159,10 +159,16 @@ def getWinVer():
 	"""Returns a record of current Windows version NVDA is running on.
 	"""
 	winVer = sys.getwindowsversion()
+	# #12509: on Windows 10, fetch whatever Windows Registry says for the current build.
+	try:
+		releaseName = f"Windows 10 {_getRunningVersionNameFromWinReg()}"
+	except RuntimeError:
+		releaseName = None
 	return WinVersion(
 		major=winVer.major,
 		minor=winVer.minor,
 		build=winVer.build,
+		releaseName=releaseName,
 		servicePack=winVer.service_pack,
 		productType=("workstation", "domain controller", "server")[winVer.product_type - 1]
 	)
