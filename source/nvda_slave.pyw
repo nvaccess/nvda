@@ -134,7 +134,7 @@ if __name__ == "__main__":
 	# Initialize remote logging back to NVDA
 	logHandler.initialize(True)
 	# Log at the most detailed level, and NVDA will filter it using its own level setting.
-	logHandler.log.setLevel(1)
+	logHandler.log.setLevel(logHandler.log.DEBUG)
 	import languageHandler
 	languageHandler.setLanguage("Windows")
 	main()
