@@ -60,11 +60,13 @@ class TestWinVersion(unittest.TestCase):
 		# This will fail if release name cannot be obtained from Windows Registry
 		# ("unknown" will be recorded in release name text),
 		# usually if Release Id and/or display version key is not defined.
+		# For build 21390, as an Insider Preview build, "unknown" is fine
+		# as this is defined for testing purposes.
 		major, minor, build = 10, 0, 21390
 		insiderBuild = winVersion.WinVersion(
 			major=major, minor=minor, build=build
 		)
-		self.assertNotIn(
+		self.assertIn(
 			"unknown", insiderBuild.releaseName
 		)
 
