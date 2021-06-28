@@ -107,10 +107,7 @@ class WinVersion(object):
 			# Look these up first before asking Windows Registry.
 			if self.build in _BUILDS_TO_RELEASE_NAMES:
 				return _BUILDS_TO_RELEASE_NAMES[self.build]
-			if not releaseId:
-				releaseId = "unknown"
-
-			return f"Windows 10 {releaseId}"
+			return "Windows 10 unknown"
 		else:
 			return "Windows release unknown"
 
