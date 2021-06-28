@@ -8,6 +8,7 @@ It is also used to define feature checks such as
 making sure NVDA can run on a minimum supported version of Windows.
 """
 
+from typing import Optional
 import sys
 import os
 import functools
@@ -35,7 +36,6 @@ _BUILDS_TO_RELEASE_NAMES = {
 
 
 @functools.lru_cache(maxsize=1)
-
 def _getRunningVersionNameFromWinReg() -> str:
 	"""Returns the Windows release name defined in Widnows Registry.
 	This is applicable on Windows 10 Version 1511 (build 10586) and later.
@@ -72,7 +72,7 @@ class WinVersion(object):
 			major: int = 0,
 			minor: int = 0,
 			build: int = 0,
-			releaseName: str = "",
+			releaseName: Optional[str] = "",
 			servicePack: str = "",
 			productType: str = ""
 	):
