@@ -341,8 +341,11 @@ class UpdateResultDialog(
 
 		remoteUpdateExists = updateInfo is not None
 		pendingUpdateDetails = getPendingUpdate()
-		remoteUpdateMatchesPending = pendingUpdateDetails[1] == updateInfo["version"]
-		canOfferPendingUpdate = isPendingUpdate() and remoteUpdateExists and remoteUpdateMatchesPending
+		canOfferPendingUpdate = (
+			isPendingUpdate()
+			and remoteUpdateExists
+			and pendingUpdateDetails[1] == updateInfo["version"]
+		)
 
 		text = sHelper.addItem(wx.StaticText(self))
 		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
