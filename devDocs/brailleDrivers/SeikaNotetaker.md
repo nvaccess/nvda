@@ -26,6 +26,7 @@ B means the number of the buttons in the SBD
 E means the number of cells in the SBD
 
 R means the number of the routing switches in the SBD
+
 S1…S(N-3) means the SBD description，each byte in the S1…S(N-3) is corresponding to
 the ASCII character.
 
@@ -154,6 +155,7 @@ P1 P2 P3 and HZ1…HZG are defined as the above section3 and section4
 ex:
 1. Seika Notetaker 16cell SSD->SR `0xff 0xff 0xa8 0x05 0x00 0x90 0x00 0x00 0x40` means that: 13th button, 16th button, and 15th routing key are pressed and
 released.
-2. Seika Notetaker 40cell SSD->SR `0xff 0xff 0xa8 0x08 0x01 0x20 0x00 0x00 0x00 0x02 0x00 0x00` means that: 14th button, 17th button and 18
+2. Seika Notetaker 40cell SSD->SR `0xff 0xff 0xa8 0x08 0x00 0x20 0x01 0x00 0x00 0x02 0x00 0x00` means that: 14th button, 17th button and 18
 th routing key
 are pressed and released.
+(Note: The example bytestring from the PDF has been changed to correctly reflect the expected results of the driver.)

@@ -6,10 +6,11 @@
 # This file represents the braille display driver for
 # Seika Notetaker, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
+# Driver information can be found in .\devDocs\brailleDrivers\SeikaNotetaker.md
 
 from io import BytesIO
 import typing
-from typing import List
+from typing import List, Set
 
 import braille
 import brailleInput
@@ -47,7 +48,7 @@ _keyNames = {
 	0x000400: "RJ_LEFT",
 	0x000800: "RJ_RIGHT",
 	0x001000: "RJ_UP",
-	0x002000: "RJ_DOWN"
+	0x002000: "RJ_DOWN",
 }
 
 SEIKA_REQUEST_INFO = b"\x03\xff\xff\xa1"
@@ -100,6 +101,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super().__init__()
 		self.numCells = 0
 		self.numBtns = 0
+		self.numRoutingKeys = 0
 		self.handle = None
 
 		self._hidBuffer = b""
@@ -153,7 +155,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		The buffer is accumulated until the buffer has the required number of bytes for the field being collected.
 		There are 3 fields to be collected before a command can be processed:
 		1: first 3 bytes: command
-		2: 1 byte: specify total length in bytes?
+		2: 1 byte: specify length of subsequent arguments in bytes
 		3: variable length: arguments for command type
 
 		After accumulating enough bytes for each phase, the buffer is cleared and the next stage is entered.
@@ -175,16 +177,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			hasCommandBeenCollected
 			and not hasArgLenBeenCollected  # argsLen has not
 		):
-			# Unknown why we must wait for 4 extra bytes. Without a device to inspect actual data
-			# it has to be assumed that the prior approach is correct, and infer what we can from
-			# it.
-			# Best guess: the data is sent with the following structure
+			# the data is sent with the following structure
 			# - command name (3 bytes)
-			# - total bytes Command + Args size (1 byte)
+			# - number of subsequent bytes to read (1 byte)
 			# - Args (variable bytes)
-			# - Constant 4 bytes containing unknown
-			self._argsLen = ord(newByte) - COMMAND_LEN + 4
-			# don't reset _hidBuffer the value for total length
+			self._argsLen = ord(newByte)
+			self._hidBuffer = b""
 		elif (  # now collect the args,
 			hasCommandBeenCollected
 			and hasArgLenBeenCollected
@@ -212,39 +210,37 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.warning(f"Seika device has received an unknown command {command}")
 
 	def _handInfo(self, arg: bytes):
-		self.numCells = arg[2]
-		self.numBtns = arg[1]
+		self.numBtns = arg[0]
+		self.numCells = arg[1]
+		self.numRoutingKeys = arg[2]
+		self._description = arg[3:].decode("ascii")
 
 	def _handRouting(self, arg: bytes):
-		for i in range(arg[0]):
-			for j in range(8):
-				if arg[i + 1] & (1 << j):
-					routingIndex = i * 8 + j
-					gesture = InputGestureRouting(routingIndex)
-					try:
-						inputCore.manager.executeGesture(gesture)
-					except inputCore.NoInputGestureAction:
-						log.debug("No action for Seika Notetaker routing command")
-
-	def _handKeys(self, arg: bytes):
-		brailleDots = arg[1]
-		key = arg[2] | (arg[3] << 8)
-		gesture = None
-		if key:  # Mini Seika has 2 Top and 4 Front
-			gesture = InputGesture(keys=key)
-		if brailleDots:
-			gesture = InputGesture(dots=brailleDots)
-		if gesture is not None:
+		routingIndexes = _getRoutingIndexes(arg)
+		for routingIndex in routingIndexes:
+			gesture = InputGestureRouting(routingIndex)
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
-				log.debug("No action for Seika Notetaker keys.")
+				log.debug("No action for Seika Notetaker routing command")
+
+	def _handKeys(self, arg: bytes):
+		brailleDots = arg[0]
+		key = arg[1] | (arg[2] << 8)
+		gestures = []
+		if key:
+			gestures.append(InputGesture(keys=key))
+		if brailleDots:
+			gestures.append(InputGesture(dots=brailleDots))
+		for gesture in gestures:
+			try:
+				inputCore.manager.executeGesture(gesture)
+			except inputCore.NoInputGestureAction:
+				log.debug("No action for Seika Notetaker keys.") 
 
 	def _handKeysRouting(self, arg: bytes):
-		argk = b"\x03" + arg[1:]
-		argr = (arg[0] - 3).to_bytes(1, 'little') + arg[4:]
-		self._handRouting(argr)
-		self._handKeys(argk)
+		self._handRouting(arg[3:])
+		self._handKeys(arg[:3])
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
@@ -290,6 +286,18 @@ class InputGestureRouting(braille.BrailleDisplayGesture):
 		self.routingIndex = index
 
 
+def _getKeyNames(keys: int) -> Set[int]:
+	return {_keyNames[1 << i] for i in range(16) if (1 << i) & keys}
+
+
+def _getDotNames(dots: int) -> Set[int]:
+	return {_dotNames[1 << i] for i in range(8) if (1 << i) & dots}
+
+
+def _getRoutingIndexes(routingKeys: bytes) -> Set[int]:
+	return {i * 8 + j for i in range(len(routingKeys)) for j in range(8) if routingKeys[i] & (1 << j)}
+
+
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
@@ -298,13 +306,13 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		# see what thumb keys are pressed:
 		names = set()
 		if keys is not None:
-			names.update(_keyNames[1 << i] for i in range(22) if (1 << i) & keys)
+			names.update(_getKeyNames(keys))
 		elif dots is not None:
 			self.dots = dots
 			if space:
 				self.space = space
 				names.add(_keyNames[1])
-			names.update(_dotNames[1 << i] for i in range(8) if (1 << i) & dots)
+			names.update(_getDotNames(dots))
 		elif routing is not None:
 			self.routingIndex = routing
 			names.add('routing')
