@@ -76,7 +76,12 @@ class TestSeikaNotetakerDriver(unittest.TestCase):
 		self._test_handKeysAndRouting(example16Cell, {"LJ_CENTER", "LJ_UP"}, {14})
 		self._test_handKeysAndRouting(example40Cell, {"LJ_LEFT", "LJ_DOWN"}, {17})
 
-	def _test_handKeysAndRouting(self, sampleMessage: bytes, expectedKeyNames: Set[str], expectedRoutingIndexes: Set[int]):
+	def _test_handKeysAndRouting(
+			self,
+			sampleMessage: bytes,
+			expectedKeyNames: Set[str],
+			expectedRoutingIndexes: Set[int]
+	):
 		""" Tests how the Seika Notetaker driver handles routing keys and buttons using
 		SeikaNotetaker.md
 		"""

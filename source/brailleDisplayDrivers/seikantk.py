@@ -236,7 +236,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
-				log.debug("No action for Seika Notetaker keys.") 
+				log.debug("No action for Seika Notetaker keys.")
 
 	def _handKeysRouting(self, arg: bytes):
 		self._handRouting(arg[3:])
