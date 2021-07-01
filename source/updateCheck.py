@@ -6,6 +6,7 @@
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
+from typing import Dict, Optional, Tuple
 import garbageHandler
 import globalVars
 import config
@@ -94,13 +95,12 @@ def getQualifiedDriverClassNameForStats(cls):
 		return "%s (external)"%name
 	return "%s (core)"%name
 
-def checkForUpdate(auto=False):
+
+def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
 	@param auto: Whether this is an automatic check for updates.
-	@type auto: bool
 	@return: Information about the update or C{None} if there is no update.
-	@rtype: dict
 	@raise RuntimeError: If there is an error checking for an update.
 	"""
 	allowUsageStats=config.conf["update"]['allowUsageStats']
@@ -169,9 +169,8 @@ def _setStateToNone(_state):
 	_state["pendingUpdateBackCompatToAPIVersion"] = (0,0,0)
 
 
-def getPendingUpdate():
+def getPendingUpdate() -> Optional[Tuple]:
 	"""Returns a tuple of the path to and version of the pending update, if any. Returns C{None} otherwise.
-	@rtype: tuple
 	"""
 	try:
 		pendingUpdateFile=state["pendingUpdateFile"]
@@ -190,11 +189,12 @@ def getPendingUpdate():
 			_setStateToNone(state)
 	return None
 
-def isPendingUpdate():
+
+def isPendingUpdate() -> bool:
 	"""Returns whether there is a pending update.
-	@rtype: bool
 	"""
-	return bool(getPendingUpdate())
+	return getPendingUpdate() is not None
+
 
 def executePendingUpdate():
 	updateTuple = getPendingUpdate()
@@ -276,7 +276,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			_("Error"),
 			wx.OK | wx.ICON_ERROR)
 
-	def _result(self, info):
+	def _result(self, info: Optional[Dict]) -> None:
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
@@ -331,7 +331,7 @@ class UpdateResultDialog(
 ):
 	helpId = "GeneralSettingsCheckForUpdates"
 
-	def __init__(self, parent, updateInfo, auto):
+	def __init__(self, parent, updateInfo: Optional[Dict], auto: bool) -> None:
 		# Translators: The title of the dialog informing the user about an NVDA update.
 		super().__init__(parent, title=_("NVDA Update"))
 
@@ -339,12 +339,17 @@ class UpdateResultDialog(
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
+		remoteUpdateExists = updateInfo is not None
 		pendingUpdateDetails = getPendingUpdate()
-		canOfferPendingUpdate = isPendingUpdate() and pendingUpdateDetails[1] == updateInfo["version"]
+		canOfferPendingUpdate = (
+			isPendingUpdate()
+			and remoteUpdateExists
+			and pendingUpdateDetails[1] == updateInfo["version"]
+		)
 
 		text = sHelper.addItem(wx.StaticText(self))
 		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		if not updateInfo:
+		if not remoteUpdateExists:
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
 		elif canOfferPendingUpdate:
