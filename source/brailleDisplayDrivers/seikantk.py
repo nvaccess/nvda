@@ -304,7 +304,7 @@ def _getKeyNames(keys: int, names: Dict[int, str]) -> Set[str]:
 
 def _getRoutingIndexes(routingKeys: bytes, numKeys: int) -> Set[int]:
 	"""Converts a bitset of routing keys to their 0-index, up to 15 or 39 depending on the device"""
-	routingKeyBitSet = sum([routingKeys[i] << (8 * i) for i in range(len(routingKeys))])
+	routingKeyBitSet = sum([key << (8 * i) for i, key in enumerate(routingKeys)])
 	return {index for index in range(numKeys) if routingKeyBitSet & 2**index}
 
 
