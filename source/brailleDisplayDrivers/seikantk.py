@@ -205,7 +205,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numBtns = arg[0]
 		self.numCells = arg[1]
 		self.numRoutingKeys = arg[2]
-		self._description = arg[3:].decode("ascii")
+		try:
+			self._description = arg[3:].decode("ascii")
+		except UnicodeDecodeError:
+			log.debugWarning(f"Unable to decode Seika Notetaker description {arg[3:]}")
 
 	def _handleRouting(self, arg: bytes):
 		routingIndexes = _getRoutingIndexes(arg)
