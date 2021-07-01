@@ -7,12 +7,12 @@
 """
 
 from typing import Set
-import brailleDisplayDrivers.seikantk as seikaNotetaker
+from brailleDisplayDrivers import seikantk
 import unittest
 import braille
 
 
-class FakeSeikaNotetakerDriver(seikaNotetaker.BrailleDisplayDriver):
+class FakeseikantkDriver(seikantk.BrailleDisplayDriver):
 	def __init__(self):
 		"""Sets the variables necessary to test _onReceive without a braille device connected.
 		"""
@@ -20,23 +20,24 @@ class FakeSeikaNotetakerDriver(seikaNotetaker.BrailleDisplayDriver):
 		self._hidBuffer = b""
 		self._command = None
 		self._argsLen = None
+		self.numRoutingKeys = 40
 		# Used to capture information for testing
 		self._pressedKeys = set()
 		self._routingIndexes = set()
 
-	def _handKeys(self, arg: bytes):
+	def _handleKeys(self, arg: bytes):
 		"""Overridden method to capture data"""
 		brailleDots = arg[0]
 		keys = arg[1] | (arg[2] << 8)
-		self._pressedKeys = set(seikaNotetaker._getKeyNames(keys)).union(
-			seikaNotetaker._getDotNames(brailleDots)
+		self._pressedKeys = set(seikantk._getKeyNames(keys, seikantk._keyNames)).union(
+			seikantk._getKeyNames(brailleDots, seikantk._dotNames)
 		)
 
-	def _handRouting(self, arg: bytes):
+	def _handleRouting(self, arg: bytes):
 		"""Overridden method to capture data"""
-		self._routingIndexes = seikaNotetaker._getRoutingIndexes(arg)
+		self._routingIndexes = seikantk._getRoutingIndexes(arg, self.numRoutingKeys)
 
-	def spoofMessageReceived(self, sampleMessage: bytes):
+	def simulateMessageReceived(self, sampleMessage: bytes):
 		PRE_CANARY = bytes([2])  # start of text character
 		POST_CANARY = bytes([3])  # end of text character
 
@@ -45,48 +46,52 @@ class FakeSeikaNotetakerDriver(seikaNotetaker.BrailleDisplayDriver):
 			self._onReceive(PRE_CANARY + bytes([byteToSend]) + POST_CANARY)
 
 
-class TestSeikaNotetakerDriver(unittest.TestCase):
-	def test_handInfo(self):
-		SBDDesc = bytes([3 for _ in range(14)])
+class TestseikantkDriver(unittest.TestCase):
+	def test_handleInfo(self):
+		"""Examples taken from section 1 of SeikaNotetaker.md"""
+		SBDDesc = bytes([3 for _ in range(14)])  # a dummy description filled with canary bits
 		example16Cell = bytes([0xff, 0xff, 0xa2, 0x11, 0x16, 0x10, 0x10]) + SBDDesc
 		example40Cell = bytes([0xff, 0xff, 0xa2, 0x11, 0x16, 0x28, 0x28]) + SBDDesc
-		seikaTestDriver = FakeSeikaNotetakerDriver()
-		seikaTestDriver.spoofMessageReceived(example16Cell)
+		seikaTestDriver = FakeseikantkDriver()
+		seikaTestDriver.simulateMessageReceived(example16Cell)
 		self.assertEqual(16, seikaTestDriver.numCells)
 		self.assertEqual(22, seikaTestDriver.numBtns)
 
-		seikaTestDriver = FakeSeikaNotetakerDriver()
-		seikaTestDriver.spoofMessageReceived(example40Cell)
+		seikaTestDriver = FakeseikantkDriver()
+		seikaTestDriver.simulateMessageReceived(example40Cell)
 		self.assertEqual(40, seikaTestDriver.numCells)
 		self.assertEqual(22, seikaTestDriver.numBtns)
 
-	def test_handRouting(self):
+	def test_handleRouting(self):
+		"""Examples taken from section 3 of SeikaNotetaker.md"""
 		example16Cell = bytes([0xff, 0xff, 0xa4, 0x02, 0b10000001, 0b10000001])
 		example40Cell = bytes([0xff, 0xff, 0xa4, 0x05, 0b10000001, 0b10000001, 0b10000001, 0b10000001, 0b10000001])
-		self._test_handKeysAndRouting(example16Cell, set(), {0, 7, 8, 15})
-		self._test_handKeysAndRouting(example40Cell, set(), {0, 7, 8, 15, 16, 23, 24, 31, 32, 39})
+		self._simulateKeyPress(example16Cell, set(), {0, 7, 8, 15})
+		self._simulateKeyPress(example40Cell, set(), {0, 7, 8, 15, 16, 23, 24, 31, 32, 39})
 
-	def test_handKeys(self):
+	def test_handleKeys(self):
+		"""Examples taken from section 4 of SeikaNotetaker.md"""
 		example4 = bytes([0xff, 0xff, 0xa6, 0x03, 0b10000001, 0x00, 0b00100000])
-		self._test_handKeysAndRouting(example4, {"d1", "d8", "RJ_DOWN"}, set())
+		self._simulateKeyPress(example4, {"d1", "d8", "RJ_DOWN"}, set())
 
-	def test_handKeysAndRouting(self):
+	def test_handleKeysAndRouting(self):
+		"""Examples taken from section 5 of SeikaNotetaker.md. Note that the 40cell example does not match the
+		pdf spec provided."""
 		example16Cell = bytes([0xff, 0xff, 0xa8, 0x05, 0x00, 0b10010000, 0x00, 0x00, 0x40])
 		example40Cell = bytes([0xff, 0xff, 0xa8, 0x08, 0x00, 0b00100000, 0x01, 0x00, 0x00, 0x02, 0x00, 0x00])
-		self._test_handKeysAndRouting(example16Cell, {"LJ_CENTER", "LJ_UP"}, {14})
-		self._test_handKeysAndRouting(example40Cell, {"LJ_LEFT", "LJ_DOWN"}, {17})
+		self._simulateKeyPress(example16Cell, {"LJ_CENTER", "LJ_UP"}, {14})
+		self._simulateKeyPress(example40Cell, {"LJ_LEFT", "LJ_DOWN"}, {17})
 
-	def _test_handKeysAndRouting(
+	def _simulateKeyPress(
 			self,
 			sampleMessage: bytes,
 			expectedKeyNames: Set[str],
 			expectedRoutingIndexes: Set[int]
 	):
-		""" Tests how the Seika Notetaker driver handles routing keys and buttons using
-		SeikaNotetaker.md
+		"""Tests how the Seika Notetaker driver handles routing keys and buttons
 		"""
-		seikaTestDriver = FakeSeikaNotetakerDriver()
-		seikaTestDriver.spoofMessageReceived(sampleMessage)
+		seikaTestDriver = FakeseikantkDriver()
+		seikaTestDriver.simulateMessageReceived(sampleMessage)
 		self.assertEqual(expectedKeyNames, seikaTestDriver._pressedKeys)
 		self.assertEqual(expectedRoutingIndexes, seikaTestDriver._routingIndexes)
 

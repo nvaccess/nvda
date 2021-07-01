@@ -10,7 +10,7 @@
 
 from io import BytesIO
 import typing
-from typing import List, Set
+from typing import Dict, List, Set
 
 import braille
 import brailleInput
@@ -140,6 +140,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._dev.close()
 
 	def display(self, cells: List[int]):
+		"""Corresponds to section 2 of SeikaNotetaker.md
+		"""
 		# cells will already be padded up to numCells.
 		cellBytes = SEIKA_SEND_TEXT + self.numCells.to_bytes(1, 'little') + bytes(cells)
 		self._dev.write(cellBytes)
@@ -199,24 +201,29 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _processCommand(self, command: bytes, arg: bytes) -> None:
 		if command == SEIKA_INFO:
-			self._handInfo(arg)
+			self._handleInfo(arg)
 		elif command == SEIKA_ROUTING:
-			self._handRouting(arg)
+			self._handleRouting(arg)
 		elif command == SEIKA_KEYS:
-			self._handKeys(arg)
+			self._handleKeys(arg)
 		elif command == SEIKA_KEYS_ROU:
-			self._handKeysRouting(arg)
+			self._handleKeysRouting(arg)
 		else:
 			log.warning(f"Seika device has received an unknown command {command}")
 
-	def _handInfo(self, arg: bytes):
+	def _handleInfo(self, arg: bytes):
+		"""After sending a request for information from the braille device this data is returned to complete
+		the handshake. Corresponds to section 1 of SeikaNotetaker.md.
+		"""
 		self.numBtns = arg[0]
 		self.numCells = arg[1]
 		self.numRoutingKeys = arg[2]
 		self._description = arg[3:].decode("ascii")
 
-	def _handRouting(self, arg: bytes):
-		routingIndexes = _getRoutingIndexes(arg)
+	def _handleRouting(self, arg: bytes):
+		"""Corresponds to section 3 of SeikaNotetaker.md
+		"""
+		routingIndexes = _getRoutingIndexes(arg, self.numRoutingKeys)
 		for routingIndex in routingIndexes:
 			gesture = InputGestureRouting(routingIndex)
 			try:
@@ -224,7 +231,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except inputCore.NoInputGestureAction:
 				log.debug("No action for Seika Notetaker routing command")
 
-	def _handKeys(self, arg: bytes):
+	def _handleKeys(self, arg: bytes):
+		"""Corresponds to section 4 of SeikaNotetaker.md
+		"""
 		brailleDots = arg[0]
 		key = arg[1] | (arg[2] << 8)
 		gestures = []
@@ -238,9 +247,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except inputCore.NoInputGestureAction:
 				log.debug("No action for Seika Notetaker keys.")
 
-	def _handKeysRouting(self, arg: bytes):
-		self._handRouting(arg[3:])
-		self._handKeys(arg[:3])
+	def _handleKeysRouting(self, arg: bytes):
+		"""Corresponds to section 5 of SeikaNotetaker.md
+		"""
+		self._handleRouting(arg[3:])
+		self._handleKeys(arg[:3])
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
@@ -286,16 +297,15 @@ class InputGestureRouting(braille.BrailleDisplayGesture):
 		self.routingIndex = index
 
 
-def _getKeyNames(keys: int) -> Set[int]:
-	return {_keyNames[1 << i] for i in range(16) if (1 << i) & keys}
+def _getKeyNames(keys: int, names: Dict[int, str]) -> Set[str]:
+	"""Converts a bitset of hardware buttons and keys to their equivalent names"""
+	return {keyName for bitFlag, keyName in names.items() if bitFlag & keys}
 
 
-def _getDotNames(dots: int) -> Set[int]:
-	return {_dotNames[1 << i] for i in range(8) if (1 << i) & dots}
-
-
-def _getRoutingIndexes(routingKeys: bytes) -> Set[int]:
-	return {i * 8 + j for i in range(len(routingKeys)) for j in range(8) if routingKeys[i] & (1 << j)}
+def _getRoutingIndexes(routingKeys: bytes, numKeys: int) -> Set[int]:
+	"""Converts a bitset of routing keys to their 0-index, up to 15 or 39 depending on the device"""
+	routingKeyBitSet = sum([routingKeys[i] << (8 * i) for i in range(len(routingKeys))])
+	return {index for index in range(numKeys) if routingKeyBitSet & 2**index}
 
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
@@ -306,13 +316,13 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		# see what thumb keys are pressed:
 		names = set()
 		if keys is not None:
-			names.update(_getKeyNames(keys))
+			names.update(_getKeyNames(keys, _keyNames))
 		elif dots is not None:
 			self.dots = dots
 			if space:
 				self.space = space
 				names.add(_keyNames[1])
-			names.update(_getDotNames(dots))
+			names.update(_getKeyNames(dots, _dotNames))
 		elif routing is not None:
 			self.routingIndex = routing
 			names.add('routing')
