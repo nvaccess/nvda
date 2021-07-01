@@ -20,7 +20,7 @@ class FakeseikantkDriver(seikantk.BrailleDisplayDriver):
 		self._hidBuffer = b""
 		self._command = None
 		self._argsLen = None
-		self.numRoutingKeys = 40
+		self.numRoutingKeys = 40  # the max number of keys, will be overridden when testing _handleInfo
 		# Used to capture information for testing
 		self._pressedKeys = set()
 		self._routingIndexes = set()
@@ -49,18 +49,22 @@ class FakeseikantkDriver(seikantk.BrailleDisplayDriver):
 class TestseikantkDriver(unittest.TestCase):
 	def test_handleInfo(self):
 		"""Examples taken from section 1 of SeikaNotetaker.md"""
-		SBDDesc = bytes([3 for _ in range(14)])  # a dummy description filled with canary bits
+		SBDDesc = b"foobarloremips"  # a dummy description as this isn't specified in the spec
 		example16Cell = bytes([0xff, 0xff, 0xa2, 0x11, 0x16, 0x10, 0x10]) + SBDDesc
 		example40Cell = bytes([0xff, 0xff, 0xa2, 0x11, 0x16, 0x28, 0x28]) + SBDDesc
 		seikaTestDriver = FakeseikantkDriver()
 		seikaTestDriver.simulateMessageReceived(example16Cell)
-		self.assertEqual(16, seikaTestDriver.numCells)
 		self.assertEqual(22, seikaTestDriver.numBtns)
+		self.assertEqual(16, seikaTestDriver.numCells)
+		self.assertEqual(16, seikaTestDriver.numRoutingKeys)
+		self.assertEqual(SBDDesc.decode("UTF-8"), seikaTestDriver._description)
 
 		seikaTestDriver = FakeseikantkDriver()
 		seikaTestDriver.simulateMessageReceived(example40Cell)
-		self.assertEqual(40, seikaTestDriver.numCells)
 		self.assertEqual(22, seikaTestDriver.numBtns)
+		self.assertEqual(40, seikaTestDriver.numCells)
+		self.assertEqual(40, seikaTestDriver.numRoutingKeys)
+		self.assertEqual(SBDDesc.decode("UTF-8"), seikaTestDriver._description)
 
 	def test_handleRouting(self):
 		"""Examples taken from section 3 of SeikaNotetaker.md"""
