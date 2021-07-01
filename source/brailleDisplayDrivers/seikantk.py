@@ -6,7 +6,6 @@
 # This file represents the braille display driver for
 # Seika Notetaker, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
-# Driver information can be found in .\devDocs\brailleDrivers\SeikaNotetaker.md
 
 from io import BytesIO
 import typing
@@ -24,16 +23,6 @@ from logHandler import log
 MAX_READ_ATTEMPTS = 30
 READ_TIMEOUT_SECS = 0.2
 
-DOT_1 = 0x1
-DOT_2 = 0x2
-DOT_3 = 0x4
-DOT_4 = 0x8
-DOT_5 = 0x10
-DOT_6 = 0x20
-DOT_7 = 0x40
-DOT_8 = 0x80
-
-
 _keyNames = {
 	0x000001: "BACKSPACE",
 	0x000002: "SPACE",
@@ -50,6 +39,16 @@ _keyNames = {
 	0x001000: "RJ_UP",
 	0x002000: "RJ_DOWN",
 }
+_dotNames = {
+	0x1: "d1",
+	0x2: "d2",
+	0x4: "d3",
+	0x8: "d4",
+	0x10: "d5",
+	0x20: "d6",
+	0x40: "d7",
+	0x80: "d8",
+}
 
 SEIKA_REQUEST_INFO = b"\x03\xff\xff\xa1"
 SEIKA_INFO = b"\xff\xff\xa2"
@@ -65,16 +64,6 @@ vidpid = "VID_10C4&PID_EA80"
 hidvidpid = "HID\\VID_10C4&PID_EA80"
 SEIKA_NAME = "seikantk"
 
-
-def _getDotNames():
-	dotNames = {}
-	for dotNum in range(1, 9):
-		keyName = globals()[f"DOT_{dotNum}"]
-		dotNames[keyName] = f"d{dotNum}"
-	return dotNames
-
-
-_dotNames = _getDotNames()
 bdDetect.addUsbDevices(SEIKA_NAME, bdDetect.KEY_HID, {vidpid, })
 
 
@@ -140,8 +129,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._dev.close()
 
 	def display(self, cells: List[int]):
-		"""Corresponds to section 2 of SeikaNotetaker.md
-		"""
 		# cells will already be padded up to numCells.
 		cellBytes = SEIKA_SEND_TEXT + self.numCells.to_bytes(1, 'little') + bytes(cells)
 		self._dev.write(cellBytes)
@@ -213,7 +200,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleInfo(self, arg: bytes):
 		"""After sending a request for information from the braille device this data is returned to complete
-		the handshake. Corresponds to section 1 of SeikaNotetaker.md.
+		the handshake.
 		"""
 		self.numBtns = arg[0]
 		self.numCells = arg[1]
@@ -221,8 +208,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._description = arg[3:].decode("ascii")
 
 	def _handleRouting(self, arg: bytes):
-		"""Corresponds to section 3 of SeikaNotetaker.md
-		"""
 		routingIndexes = _getRoutingIndexes(arg, self.numRoutingKeys)
 		for routingIndex in routingIndexes:
 			gesture = InputGestureRouting(routingIndex)
@@ -232,8 +217,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.debug("No action for Seika Notetaker routing command")
 
 	def _handleKeys(self, arg: bytes):
-		"""Corresponds to section 4 of SeikaNotetaker.md
-		"""
 		brailleDots = arg[0]
 		key = arg[1] | (arg[2] << 8)
 		gestures = []
@@ -248,8 +231,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.debug("No action for Seika Notetaker keys.")
 
 	def _handleKeysRouting(self, arg: bytes):
-		"""Corresponds to section 5 of SeikaNotetaker.md
-		"""
 		self._handleRouting(arg[3:])
 		self._handleKeys(arg[:3])
 
@@ -302,10 +283,11 @@ def _getKeyNames(keys: int, names: Dict[int, str]) -> Set[str]:
 	return {keyName for bitFlag, keyName in names.items() if bitFlag & keys}
 
 
-def _getRoutingIndexes(routingKeys: bytes, numKeys: int) -> Set[int]:
+def _getRoutingIndexes(routingKeyBytes: bytes, numRoutingKeys: int) -> Set[int]:
 	"""Converts a bitset of routing keys to their 0-index, up to 15 or 39 depending on the device"""
-	routingKeyBitSet = sum([key << (8 * i) for i, key in enumerate(routingKeys)])
-	return {index for index in range(numKeys) if routingKeyBitSet & 2**index}
+	# Convert bytes into a single bitset int
+	routingKeyBitSet = sum([byte << (8 * leftPos) for leftPos, byte in enumerate(routingKeyBytes)])
+	return {index for index in range(numRoutingKeys) if routingKeyBitSet & 2**index}
 
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):

@@ -48,7 +48,6 @@ class FakeseikantkDriver(seikantk.BrailleDisplayDriver):
 
 class TestseikantkDriver(unittest.TestCase):
 	def test_handleInfo(self):
-		"""Examples taken from section 1 of SeikaNotetaker.md"""
 		SBDDesc = b"foobarloremips"  # a dummy description as this isn't specified in the spec
 		example16Cell = bytes([0xff, 0xff, 0xa2, 0x11, 0x16, 0x10, 0x10]) + SBDDesc
 		example40Cell = bytes([0xff, 0xff, 0xa2, 0x11, 0x16, 0x28, 0x28]) + SBDDesc
@@ -67,20 +66,16 @@ class TestseikantkDriver(unittest.TestCase):
 		self.assertEqual(SBDDesc.decode("UTF-8"), seikaTestDriver._description)
 
 	def test_handleRouting(self):
-		"""Examples taken from section 3 of SeikaNotetaker.md"""
 		example16Cell = bytes([0xff, 0xff, 0xa4, 0x02, 0b10000001, 0b10000001])
 		example40Cell = bytes([0xff, 0xff, 0xa4, 0x05, 0b10000001, 0b10000001, 0b10000001, 0b10000001, 0b10000001])
 		self._simulateKeyPress(example16Cell, set(), {0, 7, 8, 15})
 		self._simulateKeyPress(example40Cell, set(), {0, 7, 8, 15, 16, 23, 24, 31, 32, 39})
 
 	def test_handleKeys(self):
-		"""Examples taken from section 4 of SeikaNotetaker.md"""
 		example4 = bytes([0xff, 0xff, 0xa6, 0x03, 0b10000001, 0x00, 0b00100000])
 		self._simulateKeyPress(example4, {"d1", "d8", "RJ_DOWN"}, set())
 
 	def test_handleKeysAndRouting(self):
-		"""Examples taken from section 5 of SeikaNotetaker.md. Note that the 40cell example does not match the
-		pdf spec provided."""
 		example16Cell = bytes([0xff, 0xff, 0xa8, 0x05, 0x00, 0b10010000, 0x00, 0x00, 0x40])
 		example40Cell = bytes([0xff, 0xff, 0xa8, 0x08, 0x00, 0b00100000, 0x01, 0x00, 0x00, 0x02, 0x00, 0x00])
 		self._simulateKeyPress(example16Cell, {"LJ_CENTER", "LJ_UP"}, {14})
@@ -92,8 +87,6 @@ class TestseikantkDriver(unittest.TestCase):
 			expectedKeyNames: Set[str],
 			expectedRoutingIndexes: Set[int]
 	):
-		"""Tests how the Seika Notetaker driver handles routing keys and buttons
-		"""
 		seikaTestDriver = FakeseikantkDriver()
 		seikaTestDriver.simulateMessageReceived(sampleMessage)
 		self.assertEqual(expectedKeyNames, seikaTestDriver._pressedKeys)
