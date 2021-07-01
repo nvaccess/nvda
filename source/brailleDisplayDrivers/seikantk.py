@@ -208,7 +208,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._description = arg[3:].decode("ascii")
 
 	def _handleRouting(self, arg: bytes):
-		routingIndexes = _getRoutingIndexes(arg, self.numRoutingKeys)
+		routingIndexes = _getRoutingIndexes(arg)
 		for routingIndex in routingIndexes:
 			gesture = InputGestureRouting(routingIndex)
 			try:
@@ -283,11 +283,15 @@ def _getKeyNames(keys: int, names: Dict[int, str]) -> Set[str]:
 	return {keyName for bitFlag, keyName in names.items() if bitFlag & keys}
 
 
-def _getRoutingIndexes(routingKeyBytes: bytes, numRoutingKeys: int) -> Set[int]:
+def _getRoutingIndexes(routingKeyBytes: bytes) -> Set[int]:
 	"""Converts a bitset of routing keys to their 0-index, up to 15 or 39 depending on the device"""
+	bitsPerByte = 8
 	# Convert bytes into a single bitset int
-	routingKeyBitSet = sum([byte << (8 * leftPos) for leftPos, byte in enumerate(routingKeyBytes)])
-	return {index for index in range(numRoutingKeys) if routingKeyBitSet & 2**index}
+	combinedRoutingKeysBitSet = sum(
+		[value << (bitsPerByte * bitIndex) for bitIndex, value in enumerate(routingKeyBytes)]
+	)
+	numRoutingKeys = len(routingKeyBytes) * bitsPerByte
+	return {i for i in range(numRoutingKeys) if (1 << i) & combinedRoutingKeysBitSet}
 
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):

@@ -20,7 +20,6 @@ class FakeseikantkDriver(seikantk.BrailleDisplayDriver):
 		self._hidBuffer = b""
 		self._command = None
 		self._argsLen = None
-		self.numRoutingKeys = 40  # the max number of keys, will be overridden when testing _handleInfo
 		# Used to capture information for testing
 		self._pressedKeys = set()
 		self._routingIndexes = set()
@@ -35,7 +34,7 @@ class FakeseikantkDriver(seikantk.BrailleDisplayDriver):
 
 	def _handleRouting(self, arg: bytes):
 		"""Overridden method to capture data"""
-		self._routingIndexes = seikantk._getRoutingIndexes(arg, self.numRoutingKeys)
+		self._routingIndexes = seikantk._getRoutingIndexes(arg)
 
 	def simulateMessageReceived(self, sampleMessage: bytes):
 		PRE_CANARY = bytes([2])  # start of text character
