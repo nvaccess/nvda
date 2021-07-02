@@ -28,10 +28,10 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 
 	# Upload symbols to Mozilla.
 	py -m pip install --no-warn-script-location requests
-	py appveyor\mozillaSyms.py
-	if($LastExitCode -ne 0) {
-		$errorCode=$LastExitCode
-		echo "Unable to upload symbols to Mozilla"
+	Try {
+		py appveyor\mozillaSyms.py
+	}
+	Catch {
 		Add-AppveyorMessage "Unable to upload symbols to Mozilla"
 	}
 }

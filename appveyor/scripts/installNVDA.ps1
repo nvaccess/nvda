@@ -1,4 +1,3 @@
-$ErrorActionPreference = "Stop";
 $errorCode=0
 $nvdaLauncherFile=".\output\nvda"
 if(!$env:release) {

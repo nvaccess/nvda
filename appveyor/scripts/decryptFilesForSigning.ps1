@@ -1,4 +1,3 @@
-$ErrorActionPreference = "Stop";
 if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
 	openssl enc -d -md sha256 -aes-256-cbc -pbkdf2 -salt -pass pass:$env:secure_authenticode_pass -in appveyor\authenticode.pfx.enc -out appveyor\authenticode.pfx
 	if($LastExitCode -ne 0) {
@@ -11,7 +10,7 @@ if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
 		Add-AppveyorMessage "Unable to decrypt ssh key"
 	}
 	# Install ssh stuff.
-	copy ssh_id_rsa $env:userprofile\.ssh\id_rsa
+	copy appveyor\ssh_id_rsa $env:userprofile\.ssh\id_rsa
 	if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 }
 Get-Content appveyor\ssh_known_hosts >> $env:userprofile\.ssh\known_hosts
