@@ -72,7 +72,7 @@ class WinVersion(object):
 			major: int = 0,
 			minor: int = 0,
 			build: int = 0,
-			releaseName: Optional[str] = "",
+			releaseName: Optional[str] = None,
 			servicePack: str = "",
 			productType: str = ""
 	):
