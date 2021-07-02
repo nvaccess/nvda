@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-21 07:49+0000\n"
+"POT-Creation-Date: 2021-06-25 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -240,7 +240,7 @@ msgstr "lst"
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
 msgid "gra"
-msgstr "aksan"
+msgstr "grf"
 
 #. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
@@ -325,7 +325,7 @@ msgstr "grp"
 #. Translators: Displayed in braille for an object which is a
 #. caption.
 msgid "cap"
-msgstr "lty"
+msgstr "alty"
 
 #. Translators: Displayed in braille for an object which is a
 #. embedded object.
@@ -335,7 +335,7 @@ msgstr "gömülü"
 #. Translators: Displayed in braille for an object which is a
 #. end note.
 msgid "enote"
-msgstr "sonnot"
+msgstr "snot"
 
 #. Translators: Displayed in braille for an object which is a
 #. foot note.
@@ -477,7 +477,7 @@ msgstr "frml"
 
 #. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
 msgid "cmnt"
-msgstr "yrm"
+msgstr "açkl"
 
 #. Translators: Displayed in braille when an object is not selected.
 msgid "nsel"
@@ -1784,19 +1784,19 @@ msgstr "Geride gömülü nesne yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
-msgstr "sonraki açıklamaya gider"
+msgstr "sonraki bilgi notuna gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
-msgstr "İleride açıklama yok"
+msgstr "İleride bilgi notu yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr "önceki açıklamaya gider"
+msgstr "önceki bilgi notuna gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr "Geride açıklama yok"
+msgstr "Geride bilgi notu yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next error"
@@ -2935,7 +2935,7 @@ msgstr "formül var"
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
-msgstr "yorum var"
+msgstr "açıklama var"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
@@ -3415,15 +3415,15 @@ msgstr "Üst ve alt simge bildirimi kapalı"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
-msgstr "Editör revizyonlarının bildirimini açıp kapatır"
+msgstr "Editör düzenlemelerinin bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "Değişiklikleri bildirme"
+msgstr "Düzenlemeleri bildirme"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "Değişiklikleri bildir"
+msgstr "Düzenlemeleri bildir"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
@@ -3627,15 +3627,15 @@ msgstr "grafikleri bildir"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
-msgstr "Yorumların bildirimini açıp kapatır"
+msgstr "Açıklamaların bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "yorumları bildirme"
+msgstr "Açıklamaları bildirme"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "Yorumları bildir"
+msgstr "Açıklamaları bildir"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
@@ -7627,8 +7627,12 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Papenmeier BRAILLEX eski modelleri"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
+msgid "Seika Braille Displays"
 msgstr "Seika  Braille Ekranları"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr "Seika Not Defteri"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -9419,12 +9423,12 @@ msgstr "Belge Bilgileri"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "No&tes and comments"
-msgstr "No&tlar ve yorumlar "
+msgstr "No&tlar ve açıklamalar "
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Editor revisions"
-msgstr "&Editör düzeltmeleri"
+msgstr "&Editör düzenlemeleri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10782,7 +10786,7 @@ msgstr "Yorum yok."
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "Sistem imlecinin bulunduğu noktadaki yorum metnini aktarır"
+msgstr "Sistem imlecinin bulunduğu noktadaki açıklama metnini aktarır"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -10889,7 +10893,7 @@ msgstr "{firstAddress} {firstValue} ile {lastAddress} {lastValue} arasında"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
-msgstr "mevcut hücredeki notu veya yorum dizisini bildirir"
+msgstr "Geçerli hücredeki not veya açıklama dizisini bildirir"
 
 #. Translators: a comment on a cell in Microsoft excel.
 #, python-brace-format
@@ -10903,12 +10907,12 @@ msgstr "{comment}, yazan: {author}, {numReplies} cevaplarla"
 
 #. Translators: A message in Excel when there is no note
 msgid "No note or comment thread on this cell"
-msgstr "Bu hücrede not veya yorum dizisi yok"
+msgstr "Bu hücrede not veya açıklama dizisi yok"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "&Açıklamalar"
+msgstr "Ek &Açıklamalar"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10933,12 +10937,12 @@ msgstr "Değiştirilen metin: {text}"
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
 msgid "Comment: {comment} by {author}"
-msgstr "Yorum: {comment}, yazan: {author}"
+msgstr "Açıklama: {comment}, yazan: {author}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
-msgstr "Yorum: {comment}, {author} tarafından, {date}"
+msgstr "Açıklama: {comment}, {author} tarafından, {date}"
 
 msgid "Desktop"
 msgstr "masaüstü"
