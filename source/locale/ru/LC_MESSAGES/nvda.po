@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-04 00:01+0000\n"
-"PO-Revision-Date: 2021-06-07 00:46+0800\n"
+"POT-Creation-Date: 2021-06-25 00:01+0000\n"
+"PO-Revision-Date: 2021-07-01 12:31+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -100,27 +100,27 @@ msgstr "грамматика: {text}"
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "none"
-msgstr ""
+msgstr "отсутствует"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "color"
-msgstr ""
+msgstr "цвет"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "gradient"
-msgstr ""
+msgstr "градиент"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "picture"
-msgstr ""
+msgstr "изображение"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
-msgstr ""
+msgstr "узор"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -7253,7 +7253,7 @@ msgstr "{startTime} по {endTime}"
 #. in Microsoft Outlook.
 #, python-brace-format
 msgid "categories {categories}"
-msgstr ""
+msgstr "категории {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7693,7 +7693,11 @@ msgstr "Устаревшие модели Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 msgid "Seika Braille Displays"
-msgstr ""
+msgstr "Seika"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr "Seika Notetaker"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -10897,24 +10901,26 @@ msgid ""
 "Shows a browseable message Listing information about a cell's appearance "
 "such as outline and fill colors, rotation and size"
 msgstr ""
+"Отображает в режиме обзора сообщение с информацией о внешнем виде ячейки, "
+"такой как цвета границ и заливки, угол поворота и размер"
 
 #. Translators: The width of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
-msgstr ""
+msgstr "Ширина ячейки: {0.x:.1f} pt"
 
 #. Translators: The height of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
-msgstr ""
+msgstr "Высота ячейки: {0.y:.1f} pt"
 
 #. Translators: The rotation in degrees of an Excel cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degrees"
-msgstr ""
+msgstr "Поворот: {0} градусов"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #, python-brace-format
@@ -10922,51 +10928,53 @@ msgctxt "excel-UIA"
 msgid ""
 "Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
 msgstr ""
+"Цвет границ: верхняя={0.name}, нижняя={1.name}, левая={2.name}, правая={3."
+"name}"
 
 #. Translators: The outline (border) thickness values of an Excel cell.
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
-msgstr ""
+msgstr "Толщина границ: верхняя={0}, нижняя={1}, левая={2}, правая={3}"
 
 #. Translators: The fill color of an Excel cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill color: {0.name}"
-msgstr ""
+msgstr "Цвет заливки: {0.name}"
 
 #. Translators: The fill type (pattern, gradient etc) of an Excel Cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill type: {0}"
-msgstr ""
+msgstr "Тип заливки: {0}"
 
 #. Translators: the number format of an Excel cell
 #, python-brace-format
 msgid "Number format: {0}"
-msgstr ""
+msgstr "Числовой формат: {0}"
 
 #. Translators: If an excel cell has data validation set
 msgid "Has data validation"
-msgstr ""
+msgstr "Содержит проверку вводимых данных"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #, python-brace-format
 msgid "Data validation prompt: {0}"
-msgstr ""
+msgstr "Запрос проверочных данных: {0}"
 
 #. Translators: If an excel cell has conditional formatting
 msgid "Has conditional formatting"
-msgstr ""
+msgstr "Содержит условное форматирование"
 
 #. Translators: If an excel cell has visible gridlines
 msgid "Gridlines are visible"
-msgstr ""
+msgstr "Сетка видима"
 
 #. Translators: Title for a browsable message that describes the appearance of a cell in Excel
 msgctxt "excel-UIA"
 msgid "Cell Appearance"
-msgstr ""
+msgstr "Внешний вид ячейки"
 
 #. Translators:  an error message on a cell in Microsoft Excel.
 #, python-brace-format
@@ -10976,31 +10984,31 @@ msgstr "Ошибка: {errorText}"
 #. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
 #, python-brace-format
 msgid "{author} is editing"
-msgstr ""
+msgstr "{author} редактирует"
 
 #. Translators: Excel, report range of cell coordinates
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
-msgstr ""
+msgstr "{firstAddress} {firstValue} по {lastAddress} {lastValue}"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
-msgstr ""
+msgstr "Сообщает заметку или цепочку примечаний в текущей ячейке"
 
 #. Translators: a comment on a cell in Microsoft excel.
 #, python-brace-format
 msgid "{comment}  by {author}"
-msgstr ""
+msgstr "{comment} от {author}"
 
 #. Translators: a comment on a cell in Microsoft excel.
 #, python-brace-format
 msgid "{comment}  by {author} with {numReplies} replies"
-msgstr ""
+msgstr "{comment} от {author} с {numReplies} ответами"
 
 #. Translators: A message in Excel when there is no note
 msgid "No note or comment thread on this cell"
-msgstr ""
+msgstr "В этой ячейке нет заметок или цепочек примечаний"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11030,7 +11038,7 @@ msgstr "отслеживаемое изменение: {text}"
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
 msgid "Comment: {comment} by {author}"
-msgstr ""
+msgstr "Примечание: {comment} от {author}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
@@ -12412,34 +12420,3 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
-
-#, fuzzy
-#~ msgid "category"
-#~ msgid_plural "categories"
-#~ msgstr[0] "&Категории:"
-#~ msgstr[1] "&Категории:"
-
-#~ msgid "&Activate"
-#~ msgstr "&Активировать"
-
-#~ msgctxt "line spacing value"
-#~ msgid "exact"
-#~ msgstr "точный"
-
-#~ msgid "Russian grade 1"
-#~ msgstr "Русский (первая ступень)"
-
-#~ msgid "%s copied to clipboard"
-#~ msgstr "%s скопировано в буфер обмена"
-
-#~ msgid "Review selection copied to clipboard"
-#~ msgstr "Выбранный фрагмент скопирован в буфер обмена"
-
-#~ msgid "Apply"
-#~ msgstr "Применить"
-
-#~ msgid "Co&mments"
-#~ msgstr "&Примечания"
-
-#~ msgid "C&omments"
-#~ msgstr "Пр&имечания"
