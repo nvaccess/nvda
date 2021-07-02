@@ -348,11 +348,16 @@ class MainFrame(wx.Frame):
 			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
 		progressDialog.done()
 		del progressDialog
-		# Translators: The message displayed when the COM Registration Fixing tool completes.
-		gui.messageBox(_("COM Registration Fixing tool complete"),
+		messageBox(
+			_(
+				# Translators: The message displayed when the COM Registration Fixing tool completes.
+				"The COM Registration Fixing tool has finished. "
+				"It is highly recommended that you restart your computer now, to make sure the changes take full effect."
+			),
 			# Translators: The title of a dialog presented when the COM Registration Fixing tool is complete. 
 			_("COM Registration Fixing Tool"),
-			wx.OK)
+			wx.OK
+		)
 
 	def onConfigProfilesCommand(self, evt):
 		if isInMessageBox:
