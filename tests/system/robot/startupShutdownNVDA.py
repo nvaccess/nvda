@@ -137,4 +137,4 @@ def NVDA_restarts_on_crash():
 	_process.wait_for_process(_nvdaProcessAlias, timeout="3 sec")
 	_process.process_should_be_stopped(_nvdaProcessAlias)
 	waitUntilWindowFocused("Welcome to NVDA")
-	# check for crash.dmp
+	# TODO: check for crash.dmp
