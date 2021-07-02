@@ -73,7 +73,7 @@ Note :
 
 
 == Changements pour les développeurs ==
-- Remarque : Cette version rompt la compatibilité de l'API des extensions. Les extensions devront être retestés et leur manifeste mis à jour.
+- Remarque : Cette version rompt la compatibilité de l'API des extensions. Les extensions devront être retestées et leur manifeste mis à jour.
 - Le système de construction de NVDA récupère désormais toutes les dépendances Python avec pip et les stocke dans un environnement virtuel Python. Tout cela est fait de manière transparente.
   - Pour construire NVDA, SCons doit continuer à être utilisés de la manière habituelle. Par exemple. exécuter scons.bat à la racine du dépôt. L'exécution de ``py -m SCons`` n'est plus prise en charge, et ``scons.py`` a également été supprimé.
   - Pour exécuter NVDA à partir des sources, plutôt que d'exécuter directement ``source/nvda.pyw``, le développeur doit maintenant utiliser ``runnvda.bat`` à la racine du dépôt. Si vous essayez d'exécuter ``source/nvda.pyw``, une boîte de message vous avertira que ce n'est plus supporté.
