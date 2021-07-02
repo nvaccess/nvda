@@ -1,4 +1,3 @@
-$ErrorActionPreference = "Stop";
 if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
 	openssl enc -d -md sha256 -aes-256-cbc -pbkdf2 -salt -pass pass:$env:secure_authenticode_pass -in appveyor\authenticode.pfx.enc -out appveyor\authenticode.pfx
 	if($LastExitCode -ne 0) {
