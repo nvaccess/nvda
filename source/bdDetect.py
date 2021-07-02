@@ -413,6 +413,7 @@ addUsbDevices("baum", KEY_HID, {
 	"VID_0904&PID_600A", # Brailliant2 80
 	"VID_0904&PID_6201", # Vario 340
 	"VID_0483&PID_A1D3", # Orbit Reader 20
+	"VID_0483&PID_6301", # Vario 4
 })
 
 addUsbDevices("baum", KEY_SERIAL, {
@@ -446,6 +447,7 @@ addBluetoothDevices("baum", lambda m: any(m.id.startswith(prefix) for prefix in 
 	"Pronto!",
 	"VarioUltra",
 	"Orbit Reader 20",
+	"Vario 4",
 )))
 
 # brailleNote
