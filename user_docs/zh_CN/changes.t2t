@@ -27,11 +27,12 @@ NVDA更新日志
   - 译者注： 即我们熟知的国内带有盲文输入键盘的清华点显（包括 Mini16, Mini24, Seika V6, Seika V7, SDPlus）。
 
 
-== 修改 ==
+== 改进 ==
 - 在浏览模式中，现在可使用盲文光标来直接点击控件标记（如 "lnk" 是链接)，这特别适合用来点击没有标签的控件（如复选框）。 (#7447)
 - 在启用黑屏状态下使用 Windows 10 OCR 识别时会给出提醒。 (#11911)
 - 升级 Unicode 通用本地化数据 库 (CLDR) 到 39.0 。 (#11943, #12314)
 - 在符号词典中增加了更多的数学符号。 (#11467)
+  - 译者注： 新增了众多腧穴符号，涵盖集合、逻辑、线性代数、几何和微积分等。
 - 美化了用户指南、更新日志、快捷键快速参考的外观样式。 (#12027)
 - 如果在不支持屏幕布局切换的应用（如 Microsoft word）中切换屏幕布局时，给出提示“不支持”。 (#7297)
 - 在“高级”面板的“尝试取消过期的焦点事件的语音输出”选项默认启用。 (#10885)
@@ -46,17 +47,17 @@ NVDA更新日志
 - 为防止快捷键冲突，为某些语言版本删除“元素列表”对话框“激活”按钮的默认快捷键“A”，但您仍然可以使用回车点击该默认按钮。 (#6167)
 
 
-== Bug 修复 ==
+== 错误修复 ==
 - 恢复了对 Outlook 2010 消息列表的朗读支持。 (#12241)
 - 在 Windows 10 版本1607 及更高版本的命令行终端内删除中间字符时，不再朗读其后面的字符。 (#3200)
   - 译者注： VIM 编辑器下此特性可能尤其重要。
-  - 此实验性特性紧可通过 NVDA 的“高级设置”面板把差分算法设置为“差异匹配修补”启用。
+  - 此实验性特性需要在 NVDA 的“高级设置”面板将“Diff 算法”设置为“允许 Diff Match Patch”来启用。
 - 当在 Microsoft Outlook 中，使用 shift+tab 从“消息”切换到“主题”时不在朗读冗余的缩进距离。 (#10254)
 - 在 Python 控制台中， 现在可为非空行增加制表符做行首缩进，也可在中间的行使用 tab 键进行自动缩进。 (#11532)
 - 在关闭“屏幕布局”的情况下，格式信息和其他可浏览的信息中不再出现多余的空行。 (#12004)
 - 在启用 UIA 支持的情况下，可在 Microsoft word 中朗读批注内容。 (#9285)
 - 提升了与 Visual Studio 交互的响应速度。 (#12171)
-- 修复 NVDA 的可视化错误（如使用从右到左布局时元素丢失等）。 (#8859)
+- 修复 NVDA 的视觉错误（如使用从右到左布局时元素丢失等）。 (#8859)
 - 优先使用 NVDA 语言的布局设置，而不是系统默认的设置。 (#638)
   - 已知从右到左语言的群集存在边缘会被标签或控件分割的问题。 (#12181)
 - Python locale 匹配“首选项”里设置的语言，且在调用默认语言时触发。 (#12214)
@@ -77,7 +78,18 @@ NVDA更新日志
   - 译者注： 即我们熟知的清华点显（包括 Seika v3v5v80）。
 
 
-== Changes for Developers ==
+== 简体中文翻译条目更改 ==
+为持续优化 NVDA 的简体中文用户体验，我们在本版对相关翻译条目进行了以下更改，现将重要更改条目列举如下：
+
+
+- “输入手势”统一改为“按键与手势”。
+- “点字”统一改为“盲文”。
+- “光学字符识别”统一改为“OCR”。
+- 除翻译了本版中新增的腧穴符号外，还改进了一些已有符号的翻译。
+- 新增 Unicode 和 GBK盲文字符的朗读支持（便于盲文校对）。
+
+
+== 插件以及NVDA核心开发者需要了解的变动 ==
 - Note: this is an Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
   - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons`` is no longer supported, and ``scons.py`` has also been removed.
@@ -363,7 +375,7 @@ NVDA更新日志
 - 当选择在未聚焦的树、表或列表中更改时，不在更改 Java 应用程序中的焦点。 (#5989)
 
 
-== NVDA核心开发者需要了解的变动 ==
+== 插件以及NVDA核心开发者需要了解的变动 ==
 - execElevated and hasUiAccess have moved from config module to systemUtils module. Usage via config module is deprecated. (#10493)
 - Updated configobj to 5.1.0dev commit f9a265c4. (#10939)
 - Automated testing of NVDA with Chrome and a HTML sample is now possible. (#10553)
@@ -382,7 +394,7 @@ NVDA更新日志
 - 支持新的盲文点显器： APH Chameleon 20，APH Mantis Q40，HumanWare BrailleOne，BrailleNote Touch v2和NLS eReader。 (#10830)
 
 
-== 修改 ==
+== 改进 ==
 - NVDA现在可以防止系统锁定或进入休眠状态。 (#10643)
 - 在Mozilla Firefox中支持iframe。 (#10707)
 - 更新liblouis盲文翻译器为版本3.12。 (#10161)
@@ -403,7 +415,7 @@ NVDA更新日志
 - 在启用了略读功能的情况下，在sayAll中的列表和表格上现在箭头移开和移出不再继续朗读退出列表或表格。 (#10706)}+
 
 
-== NVDA核心开发者需要了解的变动 ==
+== 插件以及NVDA核心开发者需要了解的变动 ==
 - Developer documentation is now build using sphinx. (#9840)
 - Several speech functions have been split into two. (#10593)
   The speakX version remains, but now depends on a getXSpeech function which returns a speech sequence.
@@ -448,7 +460,7 @@ NVDA更新日志
 - 新增盲文查看器工具，现在可以通过屏幕上的窗口查看盲文输出。 (#7788)
 
 
-== 修改 ==
+== 改进 ==
 - 当前，用户指南介绍了如何在Windows命令行中使用NVDA。 (#9957)
 - 默认情况下，运行nvda.exe会替换已运行的NVDA副本。 -r | --replace命令行参数仍被接受，但会被忽略。 (#8320)
 - 在Windows 8和更高版本上，NVDA现在将朗读所指向程序的产品名称和版本信息，例如从Microsoft Store下载的应用程序。 (#4259, #10108)
@@ -598,7 +610,7 @@ NVDA更新日志
 - 在 Python 控制台中，输入区现在支持从剪贴板粘贴多行内容。 (#9776)
 
 
-== 修改 ==
+== 改进 ==
 - 当使用快捷键调整音量时，每按一次的音量变化从10变为5。 (#6754)
 - 当NVDA带“--disable-addons”命令行参数启动时，插件管理器的文字显示更加准确。 (#9473)
 - 更新 Unicode 通用语言解释库的表情注释至35.0版本。 (#9445)
@@ -688,7 +700,7 @@ NVDA更新日志
  - 浏览模式快捷键响应速度缓慢。
 
 
-== 修改 ==
+== 改进 ==
 - 更新liblouis盲文翻译器至3.8.0。 (#9013)
 - 插件作者现在可以为其插件强制执行所需的最低NVDA版本标准。不支持的插件将无法加载或安装。 (#6275)
 - 插件作者现在必须为NVDA指定插件的测试最新版本。假如为指定，NVDA将警告用户不要安装或启用未经测试的插件。 (#6275)
@@ -758,7 +770,7 @@ NVDA更新日志
 - 添加对DBeaver数据库管理工具的支持。 (#8905)
 
 
-== 修改 ==
+== 改进 ==
 - “对象演示文稿”对话框中的“朗读帮助气球”已重命名为“朗读通知”，包括Windows 8及更高版本中的Toast通知朗读。 (#5789)
 - 在NVDA的键盘设置中，启用或禁用NVDA键的复选框现在显示在列表而不是单独的复选框。
 - 在某些版本的Windows上读取时钟系统托盘时，NVDA将不再显示冗余信息。 (#4364)
@@ -820,7 +832,7 @@ NVDA更新日志
 - 现在，Mozilla Firefox 63支持使用ARIA标签块引用的内容。 (#8577)
 
 
-== 修改 ==
+== 改进 ==
 - “NVDA常规设置”对话框中可用语言的列表现在将根据语言名称进行排序而不是ISO 639代码。 (#7284)
 - 为所有支持的Freedom Scientific盲文点显器添加alt shift标签和windows标签的默认手势。 (#7387)
 - 对于ALVA BC680和协议转换器的点显器，现在可以为左右智能平板，拇指和etouch键分配不同的功能。 (#8230)
@@ -898,7 +910,7 @@ NVDA更新日志
 - 现在可以分配输入手势以临时禁用所有配置的配置文件触发器。 (#4935)
 
 
-== 修改 ==
+== 改进 ==
 - NVDA 插件管理器中的状态列已更改，现在会提示插件是启用还是禁用，而不是运行或挂起。 (#7929)
 - 更新 liblouis 盲文 翻译器至3.5.0。 (#7839)
 - 立陶宛盲文表已更名为立陶宛6点，以避免与新的8点立陶宛盲文混淆。 (#7839)
@@ -961,7 +973,7 @@ NVDA更新日志
 - 支持Eurobraille Esys，Esytime和Iris盲文点显器。 (#7488)
 
 
-== 修改 ==
+== 改进 ==
 - HIMS Braille Sense / Braille EDGE / Smart Beetle和Hims Sync盲文点显器驱动已被名司机所取代。新的驱动程序将自动为以前的syncBraille驱动程序用户激活。 (#7459)
 - 某些键，特别是滚动键，已被重新分配，以遵循Hims产品使用的惯例。有关详细信息，请参阅用户指南。
 - 通过触摸交互使用屏幕键盘进行打字时，默认情况下，您现在需要按照与激活其他任何控件相同的方式来敲击每个按键。 (#7309)
@@ -1021,7 +1033,7 @@ NVDA更新日志
 - 支持Handy Tech盲文点显器的盲文输入。（#7590）
 
 
-== 修改 ==
+== 改进 ==
 - NVDA支持的最低操作系统现在是Windows 7 Service Pack 1或Windows Server 2008 R2 Service Pack 1。（#7546）
 - Firefox和Chrome浏览器中的Web对话框现在自动使用浏览模式，除非对话框嵌入到了Web应用程序里（#4493）
 - 在浏览模式下，使用快速导航命令进行切换和移动时不再提示跳出容器（如列表和表格等），从而使导航更高效。（#2591）
@@ -1098,7 +1110,7 @@ NVDA更新日志
 - 在Firefox和Chrome中，NVDA现在支持复杂的动态网格，例如只有一些内容可能被加载或显示的电子表格（具体来说，在ARIA 1.1中引入的aria-rowcount，aria-colcount，aria-rowindex和aria-colindex属性）。 (#7410)
 
 
-== 修改 ==
+== 改进 ==
 - 添加未绑定的命令“重新启动 NVDA”,可以根据需要使用。您可以在“输入手势”对话框的“杂项”类别中找到它。 （#6396）
 - 现在可以从NVDA欢迎对话框中设置键盘布局。 (#6863)
 - 更多的控件类型和状态已被缩写为盲文，地标也被缩写。请参阅“用户指南”中的“盲文”下的“控件类型，状态和地标缩写”，以获取完整列表。 (#7188,#3975)
@@ -1161,7 +1173,7 @@ NVDA更新日志
 - Unicode 编码的 向上和向下光标以及小部分符号现在可正确的朗读。 (#3805)
 
 
-== 修改 ==
+== 改进 ==
 - 当使用简易浏览模式浏览应用程序中的 UI Automation 内容时，更多的无关对象被忽略了，使导航变得更加容易。 (#6948, #6950)
 
 
@@ -1223,7 +1235,7 @@ NVDA更新日志
 - 增加了一个退出对话框的选项，可以选择用调试级别记录重新启动NVDA。 (#6689)
 
 
-== 修改 ==
+== 改进 ==
 - 最小盲文光标闪烁率现在为200毫秒。如果此前设置得较低，则会增加到200毫秒。 (#6470)
 - 盲文设置对话框中添加了一个复选框，以允许启用/禁用盲文光标闪烁。以前使用零数值来控制这一功能。 (#6470)
 - 更新eSpeak NG到（commit e095f008，2017年1月10日）。 (#6717)
