@@ -22,7 +22,7 @@ environment:
 install:
  - ps: appveyor\scripts\setBuildVersionVars.ps1
  - ps: appveyor\scripts\decryptFilesForSigning.ps1
- - py -m pip install --upgrade pip
+ - py -m pip install --upgrade --no-warn-script-location pip
  - git submodule update --init
 
 build_script:
