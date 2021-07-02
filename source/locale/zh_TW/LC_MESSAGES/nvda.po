@@ -4,16 +4,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"POT-Creation-Date: \n"
+"POT-Creation-Date: 2021-06-25 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_TW\n"
-"X-Generator: Poedit 2.4.3\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -7091,6 +7091,8 @@ msgstr "{date} (全天)"
 msgid "{startTime} to {endTime}"
 msgstr "從 {startTime} 到 {endTime}"
 
+#. Translators: Part of a message reported when on a calendar appointment with one or more categories
+#. in Microsoft Outlook.
 #, python-brace-format
 msgid "categories {categories}"
 msgstr "類別 {categories}"
@@ -7533,6 +7535,10 @@ msgstr "Papenmeier BRAILLEX 點字較舊模組"
 #. Translators: Names of braille displays.
 msgid "Seika Braille Displays"
 msgstr "Seika 點顯器"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr "Seika Notetaker"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -9953,7 +9959,7 @@ msgstr "每當 NVDA 啟動時顯示此對話框"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
-msgstr "授權協議"
+msgstr "授權合約"
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
@@ -11264,17 +11270,17 @@ msgstr "切片顏色為: {colorName} "
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr "{previousIndex} 點並沒有改變，"
+msgstr "與點 {previousIndex} 相比沒有改變， "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "增加了 {incrementValue} 來自於 {previousIndex} 點，"
+msgstr "與點 {previousIndex} 點相比增加了 {incrementValue}， "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "減少了 {decrementValue}來自於 {previousIndex} 點，"
+msgstr "與點 {previousIndex} 相比減少了 {decrementValue}， "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -11973,13 +11979,13 @@ msgstr "1.5倍行高"
 #, python-brace-format
 msgctxt "line spacing value"
 msgid "exactly {space:.1f} pt"
-msgstr "正好 {space:.1f} pt"
+msgstr "固定行高 {space:.1f} pt"
 
 #. Translators: line spacing of at least x point
 #, python-format
 msgctxt "line spacing value"
 msgid "at least %.1f pt"
-msgstr "至少 %.1f 點"
+msgstr "最小行高 %.1f 點"
 
 #. Translators: line spacing of x lines
 #, python-format
