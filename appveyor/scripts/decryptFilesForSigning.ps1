@@ -10,7 +10,7 @@ if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
 		Add-AppveyorMessage "Unable to decrypt ssh key"
 	}
 	# Install ssh stuff.
-	copy appveyor\ssh_id_rsa $env:userprofile\.ssh\id_rsa
+	Copy-Item -Path appveyor\ssh_id_rsa -Destination $env:userprofile\.ssh\id_rsa
 	if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 }
-Get-Content appveyor\ssh_known_hosts >> $env:userprofile\.ssh\known_hosts
+Copy-Item -Path appveyor\ssh_known_hosts -Destination $env:userprofile\.ssh\known_hosts
