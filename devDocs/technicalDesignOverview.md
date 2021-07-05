@@ -57,7 +57,7 @@ It handles command line arguments, performs some basic initialisation and starts
 ### Core
 The core (in the function `core.main`) loads the configuration, initialises all other components and then enters the main loop.
 The main loop keeps looping until NVDA is instructed to exit.
-IN each iteration/tick, the core pumps the [API](#api-handlers) and [input](#input-handlers) handlers, [registered generators](#registered-generators) and the main queue.
+In each iteration/tick, the core pumps the [API](#api-handlers) and [input](#input-handlers) handlers, [registered generators](#registered-generators) and the main queue.
 All events, scripts, etc.
 are indirectly queued to this main queue by API and input handlers, so pumping the main queue causes these to be executed.
 The main loop is what "drives" NVDA or makes it "tick".
@@ -110,7 +110,7 @@ An NVDA object (NVDAObject) is an abstract representation of a single widget in 
 All NVDA objects derive from the base `NVDAObjects.NVDAObject` class.
 Methods and properties are used to query information about, handle events from and execute actions on the widget represented by the NVDA object in an abstract way.
 This means that the bulk of NVDA need not be concerned with specific accessibility or native APIs, but can instead work with a single, abstract representation.
-This allows for the seemless support and integration of many vastly different APIs.
+This allows for the seamless support and integration of many vastly different APIs.
 It is here that the full power of object oriented programming is used.
 Many methods are implemented on the base `NVDAObject` class and only need to be overridden if specific functionality is required.
 Similarly, if a particular widget is non-standard, problematic, provides additional information using other mechanisms, etc., it can simply subclass another NVDA object and override methods as appropriate.
@@ -152,7 +152,7 @@ They can also implement their own global [NVDA Objects](#nvda-objects).
 
 ### Tree Interceptors
 Sometimes, it is necessary to intercept events and scripts for an entire hierarchy (or tree) of [NVDA objects](#nvda-objects).
-For example, this is necessary to seemlessly handle complex documents which consist of many objects.
+For example, this is necessary to seamlessly handle complex documents which consist of many objects.
 This can be done using a tree interceptor.
 A tree interceptor (TreeInterceptor) is derived from the `treeInterceptorHandler.TreeInterceptor` base class.
 It receives events and scripts for all [NVDA objects](#nvda-objects) beneath and including the root NVDA object.
