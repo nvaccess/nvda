@@ -33,7 +33,7 @@ A Usage Page may represent a specific device type such as a keyboard, joystick o
 A Usage represents a type of control (key, button, braille cell, LED).
 The Usage is assigned its own constant name, and a unique number relative to the particular Usage Page in the standard it is found on.
 A Usage defines information about the control such as whether it is a boolean button, static or dynamic value, flag, or selector (1 of many).
-For further information on what these types (sel, dv, nary etc) actually mean, refer to the first few pages of the HID Usage Tables 1.22 spaceification referenced at the bottom of this document.
+For further information on what these types (sel, dv, nary etc) actually mean, refer to the first few pages of the HID Usage Tables 1.22 specification referenced at the bottom of this document.
 The specification itself may or may not define other aspects of the data type such as its size or number of elements, though the HID descriptor the device makes available at runtime must contain all this information.
 Usage IDs are also used to uniquely identify collections of controls or values.
 
@@ -56,7 +56,7 @@ A shortening of the word Capabilities used by particular Windows APIs and struct
 E.g. `HidP_GetCaps` gets the capabilities of the HID device.
 These include things like the number of input buttons or output values on the device, the size of reports, and the Usage and Usage Page for the device.
 Similarly `HidP_GetButtonCaps` gets the capabilities of all buttons on the device.
-Capabilities of buttons and values nclude such things as their Usage and Usage Page, whether they represent a range of Usages, and whether they have a NULL state etc.
+Capabilities of buttons and values include such things as their Usage and Usage Page, whether they represent a range of Usages, and whether they have a NULL state etc.
  
 ### General pattern for supporting HID on Windows
 #### Enumerating HID devices
@@ -105,7 +105,7 @@ The size of data to read in bytes must be equal to the `InputReportByteLength` m
 To set the value of particular controls on the device:
 * Create an output report by allocating a block of memory of size OutputReportByteLength from the device's HIDP_CAPS structure, using something like `malloc`.
 * Set the report ID (the first byte) to the report ID found in the `HIDP_VALUE_CAPS` structure for the value/s you want to set.
-This obviusly means you can only set values who share the same report ID in a single report.
+This obviously means you can only set values who share the same report ID in a single report.
 * Set the data for the values using functions such as `HidP_SetUsageValue` or `HidP_SetUsageValuesArray`.
 * Send the report to the device using `WriteFile`.
 The size in bytes sent must be equal to the `OutputReportByteLength` of the device's `HIDP_CAPS` structure.
@@ -133,7 +133,7 @@ details for the number of collections, usages, and reports must be queried at ru
 ### Pattern for talking with a HID braille device
 #### Initialization
 * Follow the general instructions for enumerating and opening a HID device,  plus fetching device and value capabilities as mentioned earlier in this document.
-* Ensure the Hid device is truely a Braille display by checking that the `HIDP_CAPS.UsagePage` of the HID device's top-level collection is set to `HID_USAGE_PAGE_BRAILLE` (0x41).
+* Ensure the Hid device is truly a Braille display by checking that the `HIDP_CAPS.UsagePage` of the HID device's top-level collection is set to `HID_USAGE_PAGE_BRAILLE` (0x41).
  * Find the correct output `HIDP_VALUE_CAPS` structure which represents the array of braille cells.
 I.e.
 the Usage ID is either EIGHT_DOT_BRAILLE_CELL or six_dot_braille_cell.
