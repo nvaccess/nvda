@@ -370,3 +370,9 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	result = ctypes.wintypes.DWORD()
 	NVDAHelper.localLib.cancellableSendMessageTimeout(hwnd, msg, wParam, lParam, flags, timeout, ctypes.byref(result))
 	return result.value
+
+
+class WatchdogObserver:
+	def _get_isAttemptingRecovery(self):
+		global isAttemptingRecovery
+		return isAttemptingRecovery

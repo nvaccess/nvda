@@ -29,7 +29,7 @@ import tones
 import core
 from contextlib import contextmanager
 import threading
-
+_watchdogObserver = None
 ignoreInjected=False
 
 # Fake vk codes.
@@ -195,6 +195,10 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			currentModifiers.discard(stickyNVDAModifier)
 			stickyNVDAModifier = None
 
+		if _watchdogObserver._get_isAttemptingRecovery():
+			# When attempting recovery only process modifiers, but do not execute gesture.
+			return True
+
 		try:
 			inputCore.manager.executeGesture(gesture)
 			gestureExecuted=True
@@ -208,6 +212,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
 	finally:
+		if _watchdogObserver._get_isAttemptingRecovery():
+			return True
 		# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process 
 		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
 		focus=api.getFocusObject()
@@ -275,8 +281,11 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 
 #Register internal key press event with  operating system
 
-def initialize():
+
+def initialize(watchdogObserver=None):
 	"""Initialises keyboard support."""
+	global _watchdogObserver
+	_watchdogObserver = watchdogObserver
 	winInputHook.initialize()
 	winInputHook.setCallbacks(keyDown=internal_keyDownEvent,keyUp=internal_keyUpEvent)
 
