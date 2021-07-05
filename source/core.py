@@ -318,6 +318,7 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 			log.debug("_doShutdown has been queued")
 			while not _has_doShutdownCompleted:
 				time.sleep(0.1)
+			log.debug("_doShutdown has completed")
 			return True
 		else:
 			log.debug("NVDA has already been triggered to exit safely.")
