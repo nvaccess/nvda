@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+
 def replace__new__():
 	import enum
 	# prevent cyclic references on ValueError during construction
@@ -46,7 +47,7 @@ def _replacement__new__(cls, value):
 		return result
 
 	with ValueError(
-			"%r is not a valid %s" % (value, cls.__name__)
+		"%r is not a valid %s" % (value, cls.__name__)
 	) as ve_exc:
 		if result is None:
 			raise ve_exc

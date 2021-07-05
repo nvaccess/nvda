@@ -3,9 +3,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+
 def applyMonkeyPatches():
 	# Apply several monkey patches to comtypes
-	from . import comtypesMonkeyPatches  # patches are applied once imported
+	# F401 - imported but unused: Patches are applied during import
+	from . import comtypesMonkeyPatches  # noqa: F401
 
 	# Apply patches to Enum, prevent cyclic references on ValueError during construction
 	from . import enumPatches
