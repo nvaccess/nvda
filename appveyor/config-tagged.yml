@@ -1,0 +1,59 @@
+os: Visual Studio 2019
+version: "{branch}-{build}"
+
+branches:
+ only:
+  - master
+  - beta
+  - rc
+  - /try-.*/
+  - /release-.*/
+  
+environment:
+ PY_PYTHON: 3.7-32
+ secure_authenticode_pass:
+  secure: Way+hJyhbiLG/cmCo4+dHHzS5DiSvk/45o6frnIQ27GBX6nVDsh7jwQ7fSnqxBRP
+ secure_ssh_pass:
+  secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
+ mozillaSymsAuthToken:
+  secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
+ symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
+
+install:
+ - ps: appveyor\scripts\setBuildVersionVars.ps1
+ - ps: appveyor\scripts\decryptFilesForSigning.ps1
+ - py -m pip install --upgrade --no-warn-script-location pip
+ - git submodule update --init
+
+build_script:
+ - ps: appveyor\scripts\setSconsArgs.ps1
+ - scons source %sconsArgs%
+ - scons %sconsOutTargets% %sconsArgs%
+ - ps: appveyor\scripts\buildSymbolStore.ps1
+ - 7z a -tzip -r output\symbols.zip symbols\*.dl_ symbols\*.ex_ symbols\*.pd_
+
+before_test:
+ - ps: appveyor\scripts\tests\beforeTests.ps1
+ - ps: appveyor\scripts\installNVDA.ps1
+
+test_script:
+ - ps: appveyor\scripts\tests\translationCheck.ps1
+ - ps: appveyor\scripts\tests\unitTests.ps1
+ - ps: appveyor\scripts\tests\lintCheck.ps1
+ - ps: appveyor\scripts\tests\systemTests.ps1
+
+after_test:
+ - ps: appveyor\scripts\tests\checkTestFailure.ps1
+
+artifacts:
+ - path: output\*
+ - path: output\*\*
+
+deploy_script:
+ - ps: appveyor\scripts\deployScript.ps1
+
+on_failure:
+ - ps: appveyor\scripts\uploadArtifacts.ps1
+
+on_finish:
+ - ps: appveyor\scripts\pushPackagingInfo.ps1
