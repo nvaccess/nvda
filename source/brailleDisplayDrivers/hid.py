@@ -1,4 +1,3 @@
-# brailleDisplayDrivers/HID.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -80,7 +79,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	isThreadSafe = True
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
@@ -147,7 +146,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
@@ -226,7 +225,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, driver, dataIndices):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		self.keyCodes = set(dataIndices)
 
 		self.keyNames = names = []

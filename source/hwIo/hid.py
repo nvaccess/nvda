@@ -238,7 +238,7 @@ class Hid(IoBase):
 		# On Windows 7, writing any less than caps.OutputReportByteLength is also an error.
 		# See also: http://www.onarm.com/forum/20152/
 		if len(data) > self._writeSize:
-			log.error(u"Attempting to send a buffer larger than supported.")
+			log.error("Attempting to send a buffer larger than supported.")
 			raise RuntimeError("Unable to send buffer of: %d", len(data))
 		return (
 			self._writeSize,
