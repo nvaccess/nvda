@@ -65,6 +65,7 @@ _pump = None
 _isPumpPending = False
 
 _hasShutdownBeenTriggered = False
+_has_doShutdownCompleted = False
 _shuttingDownFlagLock = threading.Lock()
 
 
@@ -297,12 +298,14 @@ def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
 	_closeAllWindows()
 	if newNVDA is not None:
 		_startNewInstance(newNVDA)
+	global _has_doShutdownCompleted
+	_has_doShutdownCompleted = True
 
 
 def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 	"""
 	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
-	instance information with `newNVDA`.
+	instance information with `newNVDA`. Waits until _doShutdown has completed.
 	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
 	"""
 	import queueHandler
@@ -313,6 +316,8 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
 			_hasShutdownBeenTriggered = True
 			log.debug("_doShutdown has been queued")
+			while not _has_doShutdownCompleted:
+				time.sleep(0.1)
 			return True
 		else:
 			log.debug("NVDA has already been triggered to exit safely.")
