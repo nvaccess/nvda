@@ -14,6 +14,6 @@ if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
 	}
 	# Install ssh stuff.
 	Copy-Item -Path appveyor\ssh_id_rsa -Destination $env:userprofile\.ssh\id_rsa
-	if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 }
 Copy-Item -Path appveyor\ssh_known_hosts -Destination $env:userprofile\.ssh\known_hosts
+if ($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
