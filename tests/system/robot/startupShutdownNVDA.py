@@ -138,3 +138,27 @@ def NVDA_restarts_on_crash():
 	_process.process_should_be_stopped(_nvdaProcessAlias)
 	waitUntilWindowFocused("Welcome to NVDA")
 	# TODO: check for crash.dmp
+
+
+def NVDA_restarts_on_braille_crash():
+	"""Ensure NVDA restarts on crash."""
+	spy = _nvdaLib.getSpyLib()
+	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present
+	spy.emulateKeyPress("enter")  # close the dialog so we can check for it after the crash
+	spy.queueNVDABrailleThreadCrash()
+	_process.wait_for_process(_nvdaProcessAlias, timeout="3 sec")
+	_process.process_should_be_stopped(_nvdaProcessAlias)
+	waitUntilWindowFocused("Welcome to NVDA")
+	# TODO: check for crash.dmp
+
+
+def NVDA_restarts_on_UIAHandler_crash():
+	"""Ensure NVDA restarts on crash."""
+	spy = _nvdaLib.getSpyLib()
+	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present
+	spy.emulateKeyPress("enter")  # close the dialog so we can check for it after the crash
+	spy.queueNVDAUIAHandlerThreadCrash()
+	_process.wait_for_process(_nvdaProcessAlias, timeout="3 sec")
+	_process.process_should_be_stopped(_nvdaProcessAlias)
+	waitUntilWindowFocused("Welcome to NVDA")
+	# TODO: check for crash.dmp

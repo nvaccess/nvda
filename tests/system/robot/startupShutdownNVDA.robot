@@ -46,3 +46,11 @@ Restarts
 Restarts on crash
 	[Documentation]	Ensure NVDA restarts on crash.
 	NVDA restarts on crash
+
+Restarts on braille crash
+	[Documentation]	Ensure NVDA restarts on a crash on the braille thread.
+	NVDA restarts on braille crash
+
+Restarts on UIAHandler crash
+	[Documentation]	Ensure NVDA restarts on crash on the UIAHandler thread.
+	NVDA restarts on UIAHandler crash
