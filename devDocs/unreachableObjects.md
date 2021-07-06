@@ -2,7 +2,7 @@
 NVDA's `garbageHandler.py` monitors Python's cyclic garbage collector and reports
 on objects that are unreachable.
 Cyclic references are typically a symptom of bad design, and can cause major problems for certain objects.
-For instance, cyclic references can cause deadlocks for UIA objects.
+For instance, cyclic references involving COM objects may cause a deadlock if the garbage collector happens to break the cycle and release the COM object in the wrong thread.
 
 ## How to know about a cyclic reference?
 The log may contain errors like the following.
