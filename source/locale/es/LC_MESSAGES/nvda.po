@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 04:45+0000\n"
-"PO-Revision-Date: 2021-05-18 12:04+0200\n"
+"POT-Creation-Date: 2021-06-04 00:01+0000\n"
+"PO-Revision-Date: 2021-06-04 10:36+0200\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -7267,10 +7267,9 @@ msgstr "de {startTime} a {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-msgid "category"
-msgid_plural "categories"
-msgstr[0] "categoría"
-msgstr[1] "categories"
+#, python-brace-format
+msgid "categories {categories}"
+msgstr "categorías {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7709,7 +7708,7 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Modelos antiguos de la Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
+msgid "Seika Braille Displays"
 msgstr "Pantallas braille Seika"
 
 #. Translators: Names of braille displays.
@@ -12431,6 +12430,11 @@ msgstr "Espaciado de línea doble"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "espaciado de línea a 1.5"
+
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "categoría"
+#~ msgstr[1] "categories"
 
 #~ msgid "&Activate"
 #~ msgstr "&Activar"

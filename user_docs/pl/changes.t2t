@@ -4,14 +4,14 @@
 %!includeconf: ../changes.t2tconf
 
 = 2021.1 =
-This release includes optional experimental support for UIA in Excel and Chromium browsers.
-There are fixes for several languages, and for accessing links in Braille.
-There are updates to Unicode CLDR and mathematical symbols, eSpeak-NG and LibLouis.
+To wydanie zawiera opcjonalne, eksperymentalne wsparcie UIA w programie Microsoft Excel i przeglądarkach opartych na silniku Chromium.
+Wprowadzono poprawki dla kilku języków. Od teraz możliwy jest też dostęp do linków za pomocą monitora brajlowskiego.
+Zaktualizowano symbole matematyczne, Unicode CLDR i LibLouis.
+Poprawiono też liczne błędy i dodano ulepszenia dla programów takich jak Microsoft Office lub Visual Studio, a także dla kilku języków.
 
-Many bug fixes and improvements, including in Office, Visual Studio and several languages.
-Note: this is an Add-on API compatibility breaking release.
-Add-ons will need to be re-tested and have their manifest updated.
-This release also drops support for Adobe Flash.
+Uwaga!
+ - Od tego wydania obecnie używane dodatki tracą zgodność z NVDA.
+ - Kończy się też wsparcie technologii Adobe Flash.
 
 
 == Nowości ==
@@ -21,19 +21,19 @@ This release also drops support for Adobe Flash.
   - alt+up/down jumps to the previous/next output result (add shift for selecting).
   - control+l clears the output pane.
 - NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
+- Support for the Seika Notetaker braille display from Nippon Telesoft. (#11514)
 
 
 == Zmiany ==
 - In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
 - NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
-- Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
+- Updated Unicode Common Locale Data Repository (CLDR) to 39.0. (#11943, #12314)
 - Added more mathematical symbols to the symbols dictionary. (#11467)
 - The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
 - "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
 - 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
   - This behaviour can be disabled by setting this option to "No".
   - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly.
-- Espeak-ng has been updated to 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
 - Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
 - Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
@@ -67,6 +67,10 @@ This release also drops support for Adobe Flash.
 - The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
 - In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
 - NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
+- Espeak now supports Cantonese and Mandarin again. (#10418)
+- In the new Chromium based Microsoft Edge, text fields such as the address bar are now announced when empty. (#12474)
+- Fix Seika Braille driver. (#10787)
+
 
 == Zmiany dla programistów ==
 Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.

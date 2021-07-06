@@ -109,25 +109,14 @@ def doInstall(
 		gui.messageBox(msg+_("Please press OK to start the installed copy."),
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
+
+	newNVDA = None
 	if startAfterInstall:
-		core.preNVDAExit.register(_startNewInstalledNVDAInstance)
-	core.triggerNVDAExit()
-
-
-def _startNewInstalledNVDAInstance():
-	_startNewNVDAInstance(installer.defaultInstallPath)
-
-
-def _startNewNVDAInstance(path: str):
-	# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-	shellapi.ShellExecute(
-		None,
-		None,
-		os.path.join(path, 'nvda.exe'),
-		None,
-		None,
-		winUser.SW_SHOWNORMAL
-	)
+		newNVDA = core.NewNVDAInstance(
+			filePath=os.path.join(installer.defaultInstallPath, 'nvda.exe'),
+		)
+	if not core.triggerNVDAExit(newNVDA):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 def doSilentInstall(
@@ -274,7 +263,7 @@ class InstallerDialog(
 			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
 			startOnLogon=self.startOnLogonCheckbox.Value,
 			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
-			silent=self.isUpdate
+			isUpdate=self.isUpdate
 		)
 		wx.GetApp().ScheduleForDestruction(self)
 
@@ -478,9 +467,11 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 		# %s will be replaced with the destination directory.
 		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
 			_("Success"))
-		if startAfterCreate:
-			def startNewPortableNVDAInstance():
-				_startNewNVDAInstance(portableDirectory)
-			core.preNVDAExit.register(startNewPortableNVDAInstance)
 	if silent or startAfterCreate:
-		core.triggerNVDAExit()
+		newNVDA = None
+		if startAfterCreate:
+			newNVDA = core.NewNVDAInstance(
+				filePath=os.path.join(portableDirectory, 'nvda.exe'),
+			)
+		if not core.triggerNVDAExit(newNVDA):
+			log.error("NVDA already in process of exiting, this indicates a logic error.")
