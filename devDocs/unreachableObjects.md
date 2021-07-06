@@ -22,7 +22,7 @@ Once you can reliably reproduce the log error, you can tell the garbage collecto
 After an unreachable object is detected the references to the unreachable object can be inspected via the python console.
 Inspecting this should give you a fair idea of where the issue is occurring.
 
-1. Open the NVDA console `NVDA+control+z`
+1. Open the NVDA Python console `NVDA+control+z`
 1. Enable saving all objects:
    ``` python
    import gc
