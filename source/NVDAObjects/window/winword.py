@@ -14,7 +14,6 @@ import operator
 import locale
 import collections
 import colorsys
-import sayAllHandler
 import eventHandler
 import braille
 from scriptHandler import script
@@ -544,8 +543,10 @@ class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator
 class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.tables
+
 	def filter(self,item):
-		return item.borders.enable
+		return config.conf["documentFormatting"]["includeLayoutTables"] or item.borders.enable
+
 
 class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentChartQuickNavItem
@@ -946,7 +947,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			newEndOffset = self._rangeObj.end
 			# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
 			# a case where you called move end then collapse until the size of the range is no longer being reduced.
-			# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+			# For an example of this see sayAll (specifically readTextHelper_generator in sayAll.py)
 			if newEndOffset < oldEndOffset :
 				raise RuntimeError
 

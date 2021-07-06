@@ -172,7 +172,7 @@ signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
 if certPassword:
 	signExecCmd.extend(("/p", certPassword))
 if certTimestampServer:
-	signExecCmd.extend(("/t", certTimestampServer))
+	signExecCmd.extend(("/tr", certTimestampServer, "/td", "SHA256"))
 def signExec(target,source,env):
 	print([str(x) for x in target])
 	#sys.exit(1)

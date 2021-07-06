@@ -117,7 +117,7 @@ class WelcomeDialog(
 		gui.mainFrame.prePopup()
 		d = cls(gui.mainFrame)
 		d.ShowModal()
-		d.Destroy()
+		wx.CallAfter(d.Destroy)
 		gui.mainFrame.postPopup()
 
 
@@ -192,8 +192,10 @@ class LauncherDialog(
 		self.Destroy()
 		core.doStartupDialogs()
 
-	def onExit(self, evt):
-		gui.safeAppExit()
+	def onExit(self, evt: wx.CommandEvent):
+		if not core.triggerNVDAExit():
+			log.error("NVDA already in process of exiting, this indicates a logic error.")
+		self.Destroy()  # Without this, the onExit is called multiple times by wx.
 
 	@classmethod
 	def run(cls):

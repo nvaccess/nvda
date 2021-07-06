@@ -247,7 +247,7 @@ class AppModule(appModuleHandler.AppModule):
 		or (self._recentlySelected is not None and self._recentlySelected in obj.name)):
 			return
 		# The word "blank" is kept announced, so suppress this on build 17666 and later.
-		if winVersion.getWinVer().build > 17134:
+		if winVersion.getWinVer() > winVersion.WIN10_1803:
 			# In build 17672 and later,
 			# return immediately when element selected event on clipboard item was fired just prior to this.
 			# In some cases, parent will be None, as seen when emoji panel is closed in build 18267.
