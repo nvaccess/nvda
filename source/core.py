@@ -757,6 +757,7 @@ def main():
 			"NVDA not already exiting, hit catch-all exit trigger."
 			" This likely indicates NVDA is exiting due to WM_QUIT."
 		)
+		queueHandler.pumpAll()
 	_terminate(gui)
 	config.saveOnExit()
 
