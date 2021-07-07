@@ -6,6 +6,8 @@
 from dataclasses import dataclass
 from typing import Optional
 
+import config
+
 """NVDA core"""
 
 RPC_E_CALL_CANCELED = -2147418110
@@ -396,6 +398,17 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 
 
+def _startLogCleanupThread(conf: config.ConfigManager):
+	# todo: this needs to be replaced with:
+	#  - start a thread
+	#  - thread will sort log files by file name
+	#  - keep the first N (defined in conf)
+	#  - delete all older log files
+	#  - end thread
+	# logHandler._backupOldLog(os.path.dirname(globalVars.appArgs.logFileName))
+	pass
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -742,6 +755,7 @@ def main():
 	# and initial focus has been reported.
 	def _doPostNvdaStartupAction():
 		log.debug("Notify of postNvdaStartup action")
+		_startLogCleanupThread(config.conf)
 		postNvdaStartup.notify()
 
 	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)

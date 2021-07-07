@@ -1,35 +1,45 @@
-#globalVars.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-"""global variables module
-@var foregroundObject: holds the current foreground object. The object for the last foreground event received.
-@type foregroundObject: L{NVDAObjects.NVDAObject}
-  @var focusObject: holds the current focus object
-@type focusObject: L{NVDAObjects.NVDAObject}
-@var mouseObject: holds the object that is at the position of the mouse pointer
-@type mouseObject: L{NVDAObjects.NVDAObject}
-@var mouseOldX: the last x coordinate of the mouse pointer before its current position
-@type oldMouseX: int
-@var mouseOldY: the last y coordinate of the mouse pointer before its current position
-@type oldMouseY: int
-  @var navigatorObject: holds the current navigator object
-@type navigatorObject: L{NVDAObjects.NVDAObject}
-@var navigatorTracksFocus: if true, the navigator object will follow the focus as it changes
-@type navigatorTracksFocus: boolean
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Leonard de Ruijter, pvagner
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+"""Global variables module
 """
- 
+import typing
+from typing import(
+	Optional,
+)
+
+if typing.TYPE_CHECKING:
+	import NVDAObjects
+
+#: The directory that contains 'nvda.pyw'
+appDir = Optional[str]
+
 startTime=0
 desktopObject=None
-foregroundObject=None
-focusObject=None
+
+#: Holds the current foreground object. The object for the last foreground event received.
+foregroundObject: Optional["NVDAObjects.NVDAObject"] = None
+
+#: Holds the current focus object
+focusObject: Optional["NVDAObjects.NVDAObject"] = None
+
 focusAncestors=[]
 focusDifferenceLevel=None
-mouseObject=None
-mouseOldX=None
-mouseOldY=None
-navigatorObject=None
+
+#: Holds the object that is at the position of the mouse pointer
+mouseObject: Optional["NVDAObjects.NVDAObject"] = None
+
+#: The last x coordinate of the mouse pointer before its current position
+mouseOldX: Optional[int] = None
+
+#: The last y coordinate of the mouse pointer before its current position
+mouseOldY: Optional[int] = None
+
+#: Holds the current navigator object
+navigatorObject: Optional["NVDAObjects.NVDAObject"] = None
+
 reviewPosition=None
 reviewPositionObj=None
 lastProgressValue=0
