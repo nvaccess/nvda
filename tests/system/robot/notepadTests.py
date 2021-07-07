@@ -34,5 +34,6 @@ def test_symbolLevelWord(isSymbolLevelWordAllExpected=True):
 		for symbol in symbolMap.keys():
 			if isSymbolLevelWordAllExpected:
 				expectedWord = expectedWord.replace(symbol, f" {symbolMap[symbol]}{symbol}")
-		expectedWord = expectedWord.replace('"', ' ').strip()  # always strip quote symbols
+		# unlike other symbols used, symbols.dic doesn't preserve quote symbols with SYMPRES_ALWAYS
+		expectedWord = expectedWord.replace('"', ' ').strip()
 		_asserts.strings_match(wordSpoken, expectedWord)
