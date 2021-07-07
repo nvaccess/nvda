@@ -3,9 +3,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-# TODO: NVDA fails to announce emojis sometimes, as such the emojiPanel tag is excluded in robotArgs.robot
-# to be fixed with #11485
-
 *** Settings ***
 Documentation	Tests how NVDA interacts with various features of the Windows system
 Force Tags	NVDA	smoke test
@@ -58,12 +55,18 @@ emoji panel open
 
 clipboard history
 	[Documentation]	Copy text and read from the clipboard history
-	[Setup]	setup and open notepad
 	[Teardown]	close notepad and teardown
 	[Tags]	clipboard
-	write and copy text	foo
-	write and copy text	lorem ipsum
-	write and copy text	bar
+	prepareNotepad	foo
+	copy text
+	exit notepad
+	prepareNotepad	lorem ipsum
+	copy text
+	exit notepad
+	prepareNotepad	bar
+	copy text
+	exit notepad
+	prepareNotepad
 	open clipboard history
 	read clipboard history	bar	lorem ipsum	foo
 
@@ -73,7 +76,9 @@ toggle between emoji panel and clipboard history
 	[Setup]	setup and open notepad
 	[Teardown]	close notepad and teardown
 	[Tags]	emojiPanel	clipboard
-	write and copy text	test toggle between
+	prepareNotepad	test toggle between
+	copy text
+	exit notepad
 	${firstEmoji}=	open emoji panel
 	open clipboard history
 	read clipboard history	test toggle between

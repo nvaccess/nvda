@@ -5,7 +5,6 @@
 
 """Logic for testing NVDA interacting with the Windows system.
 """
-from robot.libraries.BuiltIn import BuiltIn
 # relative import not used for 'systemTestUtils' because the folder is added to the path for 'libraries'
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from SystemTestSpy import (
@@ -13,40 +12,27 @@ from SystemTestSpy import (
 )
 
 # Imported for type information
-from robot.libraries.Process import Process as _ProcessLib
-from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _nvdaLib
-from NvdaLib import NvdaLib as _nvdaRobotLib
-_nvdaProcessAlias = _nvdaRobotLib.nvdaProcessAlias
+from NotepadLib import NotepadLib as _NotepadLib
 
-builtIn: BuiltIn = BuiltIn()
-_process: _ProcessLib = _getLib("Process")
-_asserts: _AssertsLib = _getLib("AssertsLib")
+
+_notepad: _NotepadLib = _getLib("NotepadLib")
 
 
 def open_clipboard_history() -> str:
 	"""
 	Returns the last read item after opening the clipboard history.
 	"""
-	spy = _nvdaLib.getSpyLib()
-	spy.emulateKeyPress("leftWindows+v")
-	spy.wait_for_speech_to_finish()
-	return spy.get_last_speech()
+	return _notepad.getSpeechAfterKey("leftWindows+.")
 
 
-def write_and_copy_text(text: str):
+def copy_text():
 	"""
 	Expects an editable field to be focused.
 	"""
 	spy = _nvdaLib.getSpyLib()
 	spy.emulateKeyPress("control+a")
-	spy.emulateKeyPress("backspace")
-	for c in text:
-		spy.emulateKeyPress(c)
-	spy.wait_for_speech_to_finish()
-	spy.emulateKeyPress("control+a")
 	spy.emulateKeyPress("control+x")
-	spy.reset_all_speech_index()
 
 
 def read_clipboard_history(*expectedClipboardHistory: str):
@@ -64,10 +50,7 @@ def open_emoji_panel() -> str:
 	"""
 	Returns the first read emoji after opening the emoji panel.
 	"""
-	spy = _nvdaLib.getSpyLib()
-	spy.emulateKeyPress("leftWindows+.")
-	spy.wait_for_speech_to_finish()
-	lastSpeech = spy.get_last_speech()
+	lastSpeech = _notepad.getSpeechAfterKey("leftWindows+.")
 	try:
 		return lastSpeech.split("  ")[1]
 	except IndexError:
