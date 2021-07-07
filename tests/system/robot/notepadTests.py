@@ -18,22 +18,32 @@ _notepad: _NotepadLib = _getLib("NotepadLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 
-def test_symbolLevelWord(isSymbolLevelWordAllExpected=True):
-	wordsWithSymbols = ['He', 'said', '(quietly),', '"Hello,', 'Jim".']
-	symbolMap = {
-		'(': 'left paren',
-		')': 'right paren',
-		',': 'comma',
-		'"': 'quote',
-		'.': 'dot',
-	}
-	textStr = ' '.join(wordsWithSymbols)
+# unlike other symbols used, symbols.dic doesn't preserve quote symbols with SYMPRES_ALWAYS
+_wordsToExpectedSymbolLevelAllSpeech = {
+	'Say': 'Say',
+	'(quietly)': 'left paren(quietly right paren)',
+	'"Hello,': 'quote Hello comma,',
+	'Jim".': 'Jim quote  dot.',
+}
+_wordsToExpectedSymbolLevelDefaultSpeech = {
+	'Say': 'Say',
+	'(quietly)': '(quietly)',
+	'"Hello,': 'Hello,',
+	'Jim".': 'Jim .',
+}
+
+
+def test_symbolLevelWord_all():
+	textStr = ' '.join(_wordsToExpectedSymbolLevelAllSpeech.keys())
 	_notepad.prepareNotepad(f"Test: {textStr}")
-	for expectedWord in wordsWithSymbols:
-		wordSpoken = _notepad.getSpeechAfterKey("numpad6")
-		for symbol in symbolMap.keys():
-			if isSymbolLevelWordAllExpected:
-				expectedWord = expectedWord.replace(symbol, f" {symbolMap[symbol]}{symbol}")
-		# unlike other symbols used, symbols.dic doesn't preserve quote symbols with SYMPRES_ALWAYS
-		expectedWord = expectedWord.replace('"', ' ').strip()
+	for expectedWord in _wordsToExpectedSymbolLevelAllSpeech.values():
+		wordSpoken = _notepad.getSpeechAfterKey("numpad6")  # navigate to next word
+		_asserts.strings_match(wordSpoken, expectedWord)
+
+
+def test_symbolLevelWord_default():
+	textStr = ' '.join(_wordsToExpectedSymbolLevelDefaultSpeech.keys())
+	_notepad.prepareNotepad(f"Test: {textStr}")
+	for expectedWord in _wordsToExpectedSymbolLevelDefaultSpeech.values():
+		wordSpoken = _notepad.getSpeechAfterKey("numpad6")  # navigate to next word
 		_asserts.strings_match(wordSpoken, expectedWord)

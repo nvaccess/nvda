@@ -28,8 +28,8 @@ default setup
 *** Test Cases ***
 symbolLevelWord
 	[Documentation]	Ensure all symbols are read when navigating by word. 
-	test symbolLevelWord
+	test symbolLevelWord all
 symbolLevelWord off
 	[Documentation]	Use default behaviour of reading symbols when navigating by word.
 	[Setup]	start NVDA	symbolLevelWordOff.ini
-	test symbolLevelWord	False
+	test symbolLevelWord default
