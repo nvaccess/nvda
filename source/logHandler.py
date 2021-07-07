@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Copyright (C) 2007-2021 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
 # Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -341,18 +341,59 @@ log: Logger = logging.getLogger("nvda")
 #: The singleton log handler instance.
 logHandler: Optional[logging.Handler] = None
 
-def _getDefaultLogFilePath():
-	if getattr(sys, "frozen", None):
-		import tempfile
-		return os.path.join(tempfile.gettempdir(), "nvda.log")
-	else:
-		return os.path.join(globalVars.appDir, "nvda.log")
+
+def _getDefaultLogFilePath(logDir: str, _duplicate: int = 0) -> str:
+	"""Log file path is named using the current timestamp.
+	Log initialisation can happen before NVDA acquires it's 'singleInstance mutex'( L{core.mutex}),
+	therefore it is possible for multiple NVDA processes to be in contention for the same log file name.
+	To work around this, a mutex must be acquired while creating the log file.
+	Subsequent NVDA processes starting at the same time will append '.1', '.2'... '.n' to the timestamp.
+	@var _duplicate: Used internally to function during recursive search for available log name.
+	@return The full file path the log file, eg
+		C:/Users/username/AppData/Local/Temp/nvdaLogs/20210618-143515.0.log
+	"""
+	import time
+	logTime = time.strftime("%Y%m%d-%H%M%S")
+	fileName = f"nvda-{logTime}.{_duplicate}.log"
+	fullPath = os.path.join(logDir, "nvdaLogs", fileName)
+	if os.path.isfile(fullPath):
+		# log already exists, try the next increment.
+		return _getDefaultLogFilePath(logDir, _duplicate=_duplicate + 1)
+	return fullPath
 
 def _excepthook(*exc_info):
 	log.exception(exc_info=exc_info, codepath="unhandled exception")
 
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
+
+
+def _backupOldLog(logDir: str):
+	# Keep a backups of the previous log files so we can access it even if NVDA crashes or restarts several
+	# times. This may be the case during installation.
+	backupLogDir = os.path.join(logDir, "nvda-old-logs")
+	try:
+		os.mkdir(backupLogDir)
+	except FileExistsError:
+		pass
+	import glob
+	# Match nvda-20210609-175710.log, nvda.log, and nvda-old.log
+	oldLogFiles = glob.glob(os.path.join(logDir, "nvda*.log"))
+	for f in oldLogFiles:
+		if f == globalVars.appArgs.logFileName:
+			continue  # don't try to move the file we are currently using.
+		movedLogPath = os.path.join(backupLogDir, os.path.basename(f))
+		try:
+			os.rename(f, movedLogPath)
+		except (IOError, WindowsError) as e:
+			log.info(f"{e} Error moving {f} to {movedLogPath}")
+			pass  # Probably log does not exist, don't care.
+
+def _createLogsDir(fullLogFileDir: str):
+	try:
+		os.mkdir(fullLogFileDir)
+	except FileExistsError:
+		pass
 
 def initialize(shouldDoRemoteLogging=False):
 	"""Initialize logging.
@@ -366,46 +407,8 @@ def initialize(shouldDoRemoteLogging=False):
 	logging.addLevelName(Logger.IO, "IO")
 	logging.addLevelName(Logger.OFF, "OFF")
 	if not shouldDoRemoteLogging:
-		# This produces log entries such as the following:
-		# IO - inputCore.InputManager.executeGesture (09:17:40.724) - Thread-5 (13576):
-		# Input: kb(desktop):v
-		logFormatter = Formatter(
-			fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
-			style="{"
-		)
-		if (globalVars.appArgs.secure or globalVars.appArgs.noLogging) and (not globalVars.appArgs.debugLogging and globalVars.appArgs.logLevel == 0):
-			# Don't log in secure mode.
-			# #8516: also if logging is completely turned off.
-			logHandler = logging.NullHandler()
-			# There's no point in logging anything at all, since it'll go nowhere.
-			log.root.setLevel(Logger.OFF)
-		else:
-			if not globalVars.appArgs.logFileName:
-				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
-			# Keep a backup of the previous log file so we can access it even if NVDA crashes or restarts.
-			oldLogFileName = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda-old.log")
-			try:
-				# We must remove the old log file first as os.rename does replace it.
-				if os.path.exists(oldLogFileName):
-					os.unlink(oldLogFileName)
-				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
-			except (IOError, WindowsError):
-				pass # Probably log does not exist, don't care.
-			try:
-				logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w", encoding="utf-8")
-			except IOError:
-				# if log cannot be opened, we use NullHandler to avoid logging preserving logger behaviour
-				# and set log filename to None to inform logViewer about it
-				globalVars.appArgs.logFileName = None
-				logHandler = logging.NullHandler()
-				log.error("Faile to open log file, redirecting to standard output")
-			logLevel = globalVars.appArgs.logLevel
-			if globalVars.appArgs.debugLogging:
-				logLevel = Logger.DEBUG
-			elif logLevel <= 0:
-				logLevel = Logger.INFO
-			log.setLevel(logLevel)
-			log.root.setLevel(max(logLevel, logging.WARN))
+		logFormatter = _setupLocalLogging(log)
+
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter(
@@ -418,6 +421,55 @@ def initialize(shouldDoRemoteLogging=False):
 	sys.excepthook = _excepthook
 	warnings.showwarning = _showwarning
 	warnings.simplefilter("default", DeprecationWarning)
+
+
+def _setupLocalLogging(log):
+	global logHandler
+	# This produces log entries such as the following:
+	# IO - inputCore.InputManager.executeGesture (09:17:40.724) - Thread-5 (13576):
+	# Input: kb(desktop):v
+	logFormatter = Formatter(
+		fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
+		style="{"
+	)
+	if (
+			globalVars.appArgs.secure
+			or globalVars.appArgs.noLogging
+	) and (
+			not globalVars.appArgs.debugLogging
+			and globalVars.appArgs.logLevel == 0
+	):
+		# Don't log in secure mode.
+		# #8516: also if logging is completely turned off.
+		logHandler = logging.NullHandler()
+		# There's no point in logging anything at all, since it'll go nowhere.
+		log.root.setLevel(Logger.OFF)
+	else:
+		if not globalVars.appArgs.logFileName:
+			if getattr(sys, "frozen", None):
+				import tempfile
+				logDir = tempfile.gettempdir()
+			else:
+				logDir = globalVars.appDir
+			fullLogPath = _getDefaultLogFilePath(logDir)
+			globalVars.appArgs.logFileName = fullLogPath
+			_createLogsDir(os.path.dirname(fullLogPath))
+		try:
+			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w", encoding="utf-8")
+		except IOError:
+			# if log cannot be opened, we use NullHandler to avoid logging preserving logger behaviour
+			# and set log filename to None to inform logViewer about it
+			globalVars.appArgs.logFileName = None
+			logHandler = logging.NullHandler()
+			log.error("Failed to open log file, redirecting to standard output")
+		logLevel = globalVars.appArgs.logLevel
+		if globalVars.appArgs.debugLogging:
+			logLevel = Logger.DEBUG
+		elif logLevel <= 0:
+			logLevel = Logger.INFO
+		log.setLevel(logLevel)
+		log.root.setLevel(max(logLevel, logging.WARNING))
+	return logFormatter
 
 
 def isLogLevelForced() -> bool:
