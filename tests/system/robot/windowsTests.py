@@ -10,6 +10,7 @@ import re as _re
 # relative import not used for 'systemTestUtils' because the folder is added to the path for 'libraries'
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from SystemTestSpy import (
+	_blockUntilConditionMet,
 	_getLib,
 )
 
@@ -25,11 +26,22 @@ EMOJI_PANNEL_PATTERNS = [
 ]
 
 
+def _open_clipboard_history() -> str:
+	return _notepad.getSpeechAfterKey("leftWindows+v")
+
+
 def open_clipboard_history() -> str:
 	"""
 	Returns the last read item after opening the clipboard history.
 	"""
-	return _notepad.getSpeechAfterKey("leftWindows+v")
+	success, lastHistoryItem = _blockUntilConditionMet(
+		getValue=_open_clipboard_history,
+		giveUpAfterSeconds=2,
+		intervalBetweenSeconds=0.2
+	)
+	if success:
+		return lastHistoryItem
+	raise AssertionError(f"Clipboard history not announced.")
 
 
 def copy_text():
