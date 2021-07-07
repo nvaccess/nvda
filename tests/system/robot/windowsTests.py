@@ -5,19 +5,15 @@
 
 """Logic for testing NVDA interacting with the Windows system.
 """
-import re
-
 from robot.libraries.BuiltIn import BuiltIn
 # relative import not used for 'systemTestUtils' because the folder is added to the path for 'libraries'
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from SystemTestSpy import (
 	_getLib,
 )
-from SystemTestSpy.windows import SetForegroundWindow
 
 # Imported for type information
 from robot.libraries.Process import Process as _ProcessLib
-
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _nvdaLib
 from NvdaLib import NvdaLib as _nvdaRobotLib
@@ -26,8 +22,6 @@ _nvdaProcessAlias = _nvdaRobotLib.nvdaProcessAlias
 builtIn: BuiltIn = BuiltIn()
 _process: _ProcessLib = _getLib("Process")
 _asserts: _AssertsLib = _getLib("AssertsLib")
-
-run_dialog_title = re.compile("^Run$")
 
 
 def open_clipboard_history() -> str:
@@ -100,16 +94,3 @@ def read_emojis(*expectedEmojiNameList: str):
 	for emojiName in expectedEmojiNameList:
 		spy.wait_for_specific_speech(emojiName)
 		spy.emulateKeyPress('rightArrow')
-
-
-def open_text_field():
-	spy = _nvdaLib.getSpyLib()
-	spy.emulateKeyPress("leftWindows+r")
-	spy.wait_for_speech_to_finish()
-
-
-def close_text_field():
-	spy = _nvdaLib.getSpyLib()
-	SetForegroundWindow(run_dialog_title)
-	spy.emulateKeyPress("escape")  # escape any focus or close the win search bar
-	spy.emulateKeyPress("escape")  # ensure the win search bar is closed

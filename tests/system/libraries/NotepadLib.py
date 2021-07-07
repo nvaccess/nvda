@@ -49,8 +49,9 @@ class NotepadLib:
 
 	def exit_notepad(self):
 		spy = _NvdaLib.getSpyLib()
+		spy.emulateKeyPress('control+s')
 		spy.emulateKeyPress('alt+f4')
-		process.wait_for_process(self.notepadHandle, timeout="1 minute", on_timeout="continue")
+		process.wait_for_process(self.notepadHandle, timeout="3 seconds", on_timeout="continue")
 
 	def start_notepad(self, filePath):
 		builtIn.log(f"starting notepad: {filePath}")
@@ -104,7 +105,7 @@ class NotepadLib:
 			f"{windowInformation}"
 		)
 
-	def prepareNotepad(self, testCase: str) -> None:
+	def prepareNotepad(self, testCase: str = "") -> None:
 		"""
 		Starts Notepad opening a file containing the plaintext sample.
 		Different versions of notepad/windows have variations in how the title is presented.

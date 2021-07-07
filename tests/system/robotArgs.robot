@@ -4,6 +4,5 @@
 --pythonpath .\tests\system\libraries
 --include NVDA
 --exclude excluded_from_build
---exclude emojiPanel
 --variable whichNVDA:source
 --variable installDir:
