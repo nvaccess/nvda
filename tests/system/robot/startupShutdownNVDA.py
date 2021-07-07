@@ -59,7 +59,6 @@ def quits_from_menu(showExitDialog=True):
 	_process.process_should_be_stopped(_nvdaProcessAlias)
 
 
-
 def quits_from_keyboard():
 	"""Ensure NVDA can be quit from keyboard."""
 	spy = _nvdaLib.getSpyLib()
@@ -127,3 +126,15 @@ def NVDA_restarts():
 	_process.wait_for_process(_nvdaProcessAlias, timeout="10 sec")
 	_process.process_should_be_stopped(_nvdaProcessAlias)
 	waitUntilWindowFocused("Welcome to NVDA")
+
+
+def NVDA_restarts_on_crash():
+	"""Ensure NVDA restarts on crash."""
+	spy = _nvdaLib.getSpyLib()
+	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present
+	spy.emulateKeyPress("enter")  # close the dialog so we can check for it after the crash
+	spy.queueNVDAMainThreadCrash()
+	_process.wait_for_process(_nvdaProcessAlias, timeout="3 sec")
+	_process.process_should_be_stopped(_nvdaProcessAlias)
+	waitUntilWindowFocused("Welcome to NVDA")
+	# TODO: check for crash.dmp

@@ -489,17 +489,16 @@ NVDA 的这个额外的鼠标特性默认情况下是关闭的。
 
 + 浏览模式 +[BrowseMode]
 NVDA 使用浏览模式来浏览复杂的只读文档，比如网页或者PDF文档。
-NVDA支持以下应用的文档
+NVDA支持以下应用中的文档
 - 火狐浏览器
 - IE浏览器
-- Mozilla Thunderbird
+- Mozilla Thunderbird（雷鸟邮件客户端）
 - Microsoft Outlook 邮件内网页形式的消息
 - 谷歌浏览器
-- 微软Edge浏览器
+- 微软 Edge 浏览器
 - Adobe PDF阅读器
 - 福昕PDF阅读器
-- Adobe Flash
-- 亚马逊Kindle阅读软件
+- 亚马逊 Kindle 阅读软件
 -
 
 浏览模式在阅读微软Word文档时也可用(可选)。
@@ -596,7 +595,7 @@ NVDA支持以下应用的文档
 %kc:endInclude
 
 ++ 嵌入式对象 ++[ImbeddedObjects]
-使用 Adobe Flash 和 Sun Java 的技术可以使得页面的内容变得很丰富，甚至可以包含应用程序和对话框。
+使用 html5 和 Sun Java 的技术可以使得页面的内容变得很丰富，甚至可以包含应用程序和对话框。
 使用浏览模式遇到“嵌入式对象”、“应用程序”或者“对话框”时，NVDA 都会作出相应的提示。
 使用单键导航，按O或者Shift加O可以把焦点快速移动到这些对象上。
 您可以在此对象上按下“回车键”与之进行交互。
@@ -794,6 +793,9 @@ NVDA提供了几种内置的视觉增强提供程序。
 
 您可以在[NVDA 设置对话框 #NVDASettings][视觉增强 #VisionSettings]那一栏里面启用黑屏。
 
+
+如果启用黑屏，所有基于屏幕所显示内容而执行的功能均不可用，如执行[OCR #Win10Ocr] 或截屏等。
+
 + 图像内容识别 +[ContentRecognition]
 当开发者没有为屏幕阅读软件的用户提供足够信息来确认内容时，可以使用各种工具来尝试从图像中识别其内容。
 NVDA 支持 Windows 10内置的光学字符识别（OCR）功能，以便将图像识别成为文本。 
@@ -814,6 +816,8 @@ NVDA可以使用它来识别来自图像或无障碍支持差的应用程序的�
 
 您可以在[NVDA设置 #NVDASettings]对话框的[Windows 10 OCR部分 #Win10OcrSettings]中设置用于文本识别的语言。
 您可以打开开始菜单，选择设置，选择时间和语言 - >地区和语言，然后选择添加语言来安装其他语言。
+
+Windows 10 OCR 可能与[NVDA 视觉增强 #Vision] 或其他辅助技术部分或完全不兼容。执行识别功能前您必须先停用他们。
 
 %kc:beginInclude
 按 NVDA加r 使用Windows 10 OCR 识别当前导航对象内包含的文本。

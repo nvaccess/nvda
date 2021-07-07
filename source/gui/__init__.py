@@ -201,7 +201,8 @@ class MainFrame(wx.Frame):
 			d.Show()
 			self.postPopup()
 		else:
-			core.triggerNVDAExit()
+			if not core.triggerNVDAExit():
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 	def onNVDASettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog)
@@ -347,11 +348,16 @@ class MainFrame(wx.Frame):
 			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
 		progressDialog.done()
 		del progressDialog
-		# Translators: The message displayed when the COM Registration Fixing tool completes.
-		gui.messageBox(_("COM Registration Fixing tool complete"),
+		messageBox(
+			_(
+				# Translators: The message displayed when the COM Registration Fixing tool completes.
+				"The COM Registration Fixing tool has finished. "
+				"It is highly recommended that you restart your computer now, to make sure the changes take full effect."
+			),
 			# Translators: The title of a dialog presented when the COM Registration Fixing tool is complete. 
 			_("COM Registration Fixing Tool"),
-			wx.OK)
+			wx.OK
+		)
 
 	def onConfigProfilesCommand(self, evt):
 		if isInMessageBox:
@@ -693,7 +699,8 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
-			core.triggerNVDAExit()
+			if not core.triggerNVDAExit():
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
 			return  # there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
