@@ -51,7 +51,7 @@ class NotepadLib:
 		spy = _NvdaLib.getSpyLib()
 		spy.emulateKeyPress('control+s')
 		spy.emulateKeyPress('alt+f4')
-		process.wait_for_process(self.notepadHandle, timeout="3 seconds", on_timeout="continue")
+		process.wait_for_process(self.notepadHandle, timeout="3 sec", on_timeout="continue")
 
 	def start_notepad(self, filePath):
 		builtIn.log(f"starting notepad: {filePath}")
