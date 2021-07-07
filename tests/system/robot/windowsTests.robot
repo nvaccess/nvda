@@ -73,12 +73,12 @@ clipboard history
 
 toggle between emoji panel and clipboard history
 	[Documentation]	Toggle between clipboard history and emoji panel and ensure items are announced
-	[Setup]	setup and open notepad
 	[Teardown]	close notepad and teardown
 	[Tags]	emojiPanel	clipboard
 	prepareNotepad	test toggle between
 	copy text
 	exit notepad
+	prepareNotepad
 	${firstEmoji}=	open emoji panel
 	open clipboard history
 	read clipboard history	test toggle between

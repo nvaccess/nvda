@@ -5,6 +5,8 @@
 
 """Logic for testing NVDA interacting with the Windows system.
 """
+import re as _re
+
 # relative import not used for 'systemTestUtils' because the folder is added to the path for 'libraries'
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from SystemTestSpy import (
@@ -15,8 +17,8 @@ from SystemTestSpy import (
 import NvdaLib as _nvdaLib
 from NotepadLib import NotepadLib as _NotepadLib
 
-
 _notepad: _NotepadLib = _getLib("NotepadLib")
+EMOJI_PANEL_ITEM_RE = _re.compile(r"level [0-9]+  ([A-z ]+)  1 of [0-9]+")
 
 
 def open_clipboard_history() -> str:
@@ -32,7 +34,7 @@ def copy_text():
 	"""
 	spy = _nvdaLib.getSpyLib()
 	spy.emulateKeyPress("control+a")
-	spy.emulateKeyPress("control+x")
+	spy.emulateKeyPress("control+c")
 
 
 def read_clipboard_history(*expectedClipboardHistory: str):
@@ -51,10 +53,10 @@ def open_emoji_panel() -> str:
 	Returns the first read emoji after opening the emoji panel.
 	"""
 	lastSpeech = _notepad.getSpeechAfterKey("leftWindows+.")
-	try:
-		return lastSpeech.split("  ")[1]
-	except IndexError:
-		raise AssertionError(f"Emoji not announced. Last speech: '{lastSpeech}'")
+	emojiMatch = _re.match(EMOJI_PANEL_ITEM_RE, lastSpeech)
+	if emojiMatch is not None:
+		return emojiMatch.group(1)
+	raise AssertionError(f"Emoji not announced. Last speech: '{lastSpeech}'")
 
 
 def search_emojis(emojiNameSearchStr: str):
