@@ -4,16 +4,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-21 07:49+0000\n"
-"PO-Revision-Date: 2021-05-26 23:05+0300\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2021-06-18 00:01+0000\n"
+"PO-Revision-Date: 2021-06-20 17:31+0300\n"
+"Last-Translator: Hatoon <h.felemban@hotmail.com>\n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.11\n"
-"X-Poedit-Bookmarks: -1,1664,-1,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Poedit-Bookmarks: -1,1664,-1,-1,1582,-1,-1,-1,-1,-1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -108,10 +108,9 @@ msgid "color"
 msgstr "لون"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "gradient"
-msgstr "ُّتدرج خطي"
+msgstr "تدرُّج"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
@@ -119,10 +118,9 @@ msgid "picture"
 msgstr "صورة"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
-msgstr "الكلمة الأصلية"
+msgstr "نقش"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -743,15 +741,13 @@ msgstr "بنغالية بدون اختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian computer braille"
-msgstr "روسي برايل الحاسوب"
+msgstr "بيلاروسي برايل الحاسوب"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian literary braille"
-msgstr "روسي (literary braille)"
+msgstr "بيلاروسي غير مختصر (literary braille)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1280,15 +1276,13 @@ msgstr "أوكراني برايل الحاسوب"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 1"
-msgstr "أيرلندي بدون اختصارات"
+msgstr "أُردو الدرجة الأولى"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 2"
-msgstr "أيرلندي باختصارات"
+msgstr "أُردو الدرجة الثانية"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -7581,8 +7575,12 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "الأسطر الإلكترونية الأقدم من Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
-msgstr "الأسطر الإلكترونيةSeika braille"
+msgid "Seika Braille Displays"
+msgstr "أسطر Seika braille الإلكترونية"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr "Seika Notetaker"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -9628,26 +9626,25 @@ msgstr ""
 #. settings panel.
 #. Choices are automatic, allow Diff Match Patch, and force Difflib.
 msgid "&Diff algorithm:"
-msgstr ""
+msgstr "&خوارزمية Diff:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#, fuzzy
 msgid "Automatic (Difflib)"
-msgstr "آلي"
+msgstr "تلقائي (Difflib)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character when supported, using the diff match patch algorithm.
 msgid "allow Diff Match Patch"
-msgstr ""
+msgstr "تمكين Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 msgid "force Difflib"
-msgstr ""
+msgstr "Difflib إلزامًا"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -10074,7 +10071,6 @@ msgid "NVDA  Usage Data Collection"
 msgstr "تجميع بيانات استخدام NVDA"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
-#, fuzzy
 msgid ""
 "In order to improve NVDA in the future, NV Access wishes to collect usage "
 "data from running copies of NVDA.\n"
@@ -10088,16 +10084,15 @@ msgid ""
 "Do you wish to allow NV Access to periodically collect this data in order to "
 "improve NVDA?"
 msgstr ""
-"لضمان تطوير NVDA في المستقبل ترغب منظمة NV Access في تجميع بيانات الاستخدام "
+"من أجل تحسين NVDA في المستقبل، ترغب مؤسّسة NV Access في جمع بيانات الاستخدام "
 "من النسخ العاملة من NVDA\n"
 "\n"
-"وتضمن البيانات إصدار نظام التشغيل, وإصدار NVDA, واللغة, والدولة, فضلا عن بعض "
-"الإعدادات كآلة النطق العاملة, والسطر الإلكتروني وجدول ترجمة برايل المستخدم. "
-"لم يتم إرسال أي محتوى منطوق أو مكتوب للمنظمة. يرجى الرجوع لدليل المستخدم "
-"لمعرفة قائمة البيانات التي سيتم تجميعها.\n"
+"تشمل البيانات إصدار نظام التشغيل, إصدار NVDA، اللغة، والدولة، إضافةً لبعض "
+"الإعدادات كآلة النطق المُستخدَمة، وسطر برايل الإلكتروني وجدول برايل المستخدم. "
+"لن يُرسَلَ أي محتوى منطوق أو معروض على برايل لNV Access. يُرجى الرجوع لدليل "
+"المستخدم لمعرفة قائمة البيانات التي تُجمَع.\n"
 "\n"
-"هل تريد أن تقوم منظمة NV Access بتجميع هذه البيانات على فترات منتظمة كي نطور "
-"NVDA?"
+"هل ترغب في السماح ل NV Access بجمع هذه البيانات على فترات منتظمة لتحسين NVDA?"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10723,6 +10718,8 @@ msgid ""
 "Shows a browseable message Listing information about a cell's appearance "
 "such as outline and fill colors, rotation and size"
 msgstr ""
+"عرض قائمة قابلة للتصفُّح لمعلومات حول مظهر الخلية مثل: الحدود وألوان التعبئة، "
+"ودرجة الدوران والحجم."
 
 #. Translators: The width of the cell in points
 #, python-brace-format
@@ -10740,7 +10737,7 @@ msgstr "ارتفاع الخلية: {0.y:.1f} pt"
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degrees"
-msgstr ""
+msgstr "الدوران: {0} درجة"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #, python-brace-format
@@ -10775,19 +10772,17 @@ msgid "Number format: {0}"
 msgstr "تنسيق الأرقام: {0}"
 
 #. Translators: If an excel cell has data validation set
-#, fuzzy
 msgid "Has data validation"
-msgstr "توجد "
+msgstr "تحتوي بياناتٍ موثَّقة"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #, python-brace-format
 msgid "Data validation prompt: {0}"
-msgstr ""
+msgstr "عملية التحقق من صحة البيانات: : {0}"
 
 #. Translators: If an excel cell has conditional formatting
-#, fuzzy
 msgid "Has conditional formatting"
-msgstr "تنسيق المستند"
+msgstr "ضمن تنسيق مشروط"
 
 #. Translators: If an excel cell has visible gridlines
 msgid "Gridlines are visible"

@@ -3,7 +3,7 @@
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
+from dataclasses import dataclass
 from typing import Optional
 
 """NVDA core"""
@@ -43,8 +43,6 @@ import garbageHandler  # noqa: E402
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
-# inform those who want to know that NVDA has begun to exit.
-preNVDAExit = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
 
@@ -65,6 +63,10 @@ post_windowMessageReceipt = extensionPoints.Action()
 
 _pump = None
 _isPumpPending = False
+
+_hasShutdownBeenTriggered = False
+_shuttingDownFlagLock = threading.Lock()
+
 
 def doStartupDialogs():
 	import config
@@ -110,15 +112,56 @@ def doStartupDialogs():
 			# Ask the user if usage stats can be collected.
 			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
 
+
+@dataclass
+class NewNVDAInstance:
+	filePath: str
+	parameters: Optional[str] = None
+	directory: Optional[str] = None
+
+
+def restartUnsafely():
+	"""Start a new copy of NVDA immediately.
+	Used as a last resort, in the event of a serious error to immediately restart NVDA without running any
+	cleanup / exit code.
+	There is no dependency on NVDA currently functioning correctly, which is in contrast with L{restart} which
+	depends on the internal queue processing (queueHandler).
+	Because none of NVDA's shutdown code is run, NVDA is likely to be left in an unclean state.
+	Some examples of clean up that may be skipped.
+	- Free NVDA's mutex (mutex prevents multiple NVDA instances), leaving it abandoned when this process ends.
+	  - However, this situation is handled during mutex acquisition.
+	- Remove icons (systray)
+	- Saving settings
+	"""
+	log.info("Restarting unsafely")
+	import subprocess
+	# Unlike a normal restart, see L{restart}:
+	# - if addons are disabled, leave them disabled
+	# - if debug logging is set, leave it set.
+	# The new instance should operate in the same way (as much as possible) as the old instance.
+	for paramToRemove in ("--ease-of-access"):
+		try:
+			sys.argv.remove(paramToRemove)
+		except ValueError:
+			pass
+	options = []
+	if not hasattr(sys, "frozen"):
+		options.append(os.path.basename(sys.argv[0]))
+	_startNewInstance(NewNVDAInstance(
+		sys.executable,
+		subprocess.list2cmdline(options + sys.argv[1:]),
+		globalVars.appDir
+	))
+
+
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
 		globalVars.exitCode=3
-		triggerNVDAExit()
+		if not triggerNVDAExit():
+			log.error("NVDA already in process of exiting, this indicates a logic error.")
 		return
 	import subprocess
-	import winUser
-	import shellapi
 	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
 		try:
 			sys.argv.remove(paramToRemove)
@@ -131,15 +174,13 @@ def restart(disableAddons=False, debugLogging=False):
 		options.append('--disable-addons')
 	if debugLogging:
 		options.append('--debug-logging')
-	shellapi.ShellExecute(
-		hwnd=None,
-		operation=None,
-		file=sys.executable,
-		parameters=subprocess.list2cmdline(options + sys.argv[1:]),
-		directory=globalVars.appDir,
-		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-		showCmd=winUser.SW_SHOWNORMAL
-	)
+
+	if not triggerNVDAExit(NewNVDAInstance(
+		sys.executable,
+		subprocess.list2cmdline(options + sys.argv[1:]),
+		globalVars.appDir
+	)):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 def resetConfiguration(factoryDefaults=False):
@@ -231,13 +272,56 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 	return wxLang
 
 
-def triggerNVDAExit():
-	preNVDAExit.notifyOnce()
+def _startNewInstance(newNVDA: NewNVDAInstance):
+	"""
+	If something (eg the installer or exit dialog) has requested a new NVDA instance to start, start it.
+	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit and
+	_closeAllWindows.
+	"""
+	import shellapi
+	from winUser import SW_SHOWNORMAL
+	log.debug(f"Starting new NVDA instance: {newNVDA}")
+	shellapi.ShellExecute(
+		hwnd=None,
+		operation=None,
+		file=newNVDA.filePath,
+		parameters=newNVDA.parameters,
+		directory=newNVDA.directory,
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
+		showCmd=SW_SHOWNORMAL
+	)
+
+
+def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
+	_handleNVDAModuleCleanupBeforeGUIExit()
+	_closeAllWindows()
+	if newNVDA is not None:
+		_startNewInstance(newNVDA)
+
+
+def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
+	"""
+	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
+	instance information with `newNVDA`.
+	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
+	"""
+	import queueHandler
+	global _hasShutdownBeenTriggered
+	with _shuttingDownFlagLock:
+		if not _hasShutdownBeenTriggered:
+			# queue this so that the calling process can exit safely (eg a Popup menu)
+			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
+			_hasShutdownBeenTriggered = True
+			log.debug("_doShutdown has been queued")
+			return True
+		else:
+			log.debug("NVDA has already been triggered to exit safely.")
+			return False
 
 
 def _closeAllWindows():
 	"""
-	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit.
+	Should only be used by calling triggerNVDAExit and after _handleNVDAModuleCleanupBeforeGUIExit.
 	Ensures the wx mainloop is exited by all the top windows being destroyed.
 	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
 	"""
@@ -287,6 +371,29 @@ def _closeAllWindows():
 	# the MainFrame has EVT_CLOSE bound to the ExitDialog
 	# which calls this function on exit, so destroy this window
 	app.ScheduleForDestruction(gui.mainFrame)
+
+
+def _handleNVDAModuleCleanupBeforeGUIExit():
+	""" Terminates various modules that rely on the GUI. This should be used before closing all windows
+	and terminating the GUI.
+	"""
+	import brailleViewer
+	import globalPluginHandler
+	import watchdog
+
+	try:
+		import updateCheck
+		# before the GUI is terminated we must terminate the update checker
+		_terminate(updateCheck)
+	except RuntimeError:
+		pass
+
+	# The core is expected to terminate, so we should not treat this as a crash
+	_terminate(watchdog)
+	# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
+	_terminate(globalPluginHandler)
+	# the brailleViewer should be destroyed safely before closing the window
+	brailleViewer.destroyBrailleViewer()
 
 
 def main():
@@ -639,32 +746,18 @@ def main():
 
 	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
 
-	def handleNVDAModuleCleanupBeforeGUIExit():
-		""" Terminates various modules that rely on the GUI. This should be used before closing all windows
-		and terminating the GUI
-		"""
-		import brailleViewer
-		# before the GUI is terminated we must terminate the update checker
-		if updateCheck:
-			_terminate(updateCheck)
-
-		# The core is expected to terminate, so we should not treat this as a crash
-		_terminate(watchdog)
-		# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
-		_terminate(globalPluginHandler)
-		# the brailleViewer should be destroyed safely before closing the window
-		brailleViewer.destroyBrailleViewer()
-	
-	preNVDAExit.register(handleNVDAModuleCleanupBeforeGUIExit)
-	preNVDAExit.register(_closeAllWindows)
-
 	log.debug("entering wx application main loop")
 	app.MainLoop()
 
 	log.info("Exiting")
 	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
 	# triggerNVDAExit has not been called yet
-	triggerNVDAExit()
+	if triggerNVDAExit():
+		log.debug(
+			"NVDA not already exiting, hit catch-all exit trigger."
+			" This likely indicates NVDA is exiting due to WM_QUIT."
+		)
+		queueHandler.pumpAll()
 	_terminate(gui)
 	config.saveOnExit()
 

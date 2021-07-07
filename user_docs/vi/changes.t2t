@@ -5,13 +5,14 @@
 
 = 2021.1 =
 Bản phát hành này bao gồm tùy chọn hỗ trợ thử nghiệm cho UIA trong Excel và các trình duyệt trên nền Chromium.
-Sửa các lỗi cho vài ngôn ngữ, cũng như việc truy cập các liên kết trong chữ nổi.
-Các cập nhật cho Unicode CLDR và kí hiệu toán học, eSpeak-NG và LibLouis.
-
+Sửa các lỗi cho vài ngôn ngữ và lỗi  truy cập các liên kết trong chữ nổi.
+Các cập nhật cho Unicode CLDR, kí hiệu toán học và LibLouis.
 Sửa nhiều lỗi và có nhiều cải thiện, bao gồm cải thiện trong  Office, Visual Studio và vài ngôn ngữ.
-Lưu ý: đây là bản phát hành bổ trợ Add-on API.
-Các add-on cần phải được thử nghiệm lại và phải cập lại manifest.
-Bản phát hành này cũng ngưng hỗ trợ cho Adobe Flash.
+
+Lưu ý:
+ - Bản phát hành này không tương thích với các add-on đang có.
+ - Bản phát hành này cũng ngưng hỗ trợ cho Adobe Flash.
+  -
 
 
 == Tính năng mới ==
@@ -20,20 +21,20 @@ Bản phát hành này cũng ngưng hỗ trợ cho Adobe Flash.
 - Điều hướng dễ hơn cho đầu ra trong NVDA Python Console. (#9784)
   - alt+mũi tên lên xuống đi đến kết quả đầu ra trước và đầu ra kế tiếp (thêm phím shift để chọn).
   - control+l xóa thông tin đầu ra.
-- NVDA giờ đây sẽ đọc phân loại được gán cho một cuộc hẹn trong Microsoft Outlook nếu có. (#11598)
+- NVDA giờ đây sẽ đọc phân loại được gán cho một cuộc hẹn (appointment) trong Microsoft Outlook nếu có. (#11598)
+- Hỗ trợ cho màn hình nổi Seika Notetaker của Nippon Telesoft. (#11514)
 
 
 == Các thay đổi ==
-- Trong chế độ duyệt, các điều khiển giờ đây có thể kích hoạt với việc đưa con trỏ nổi trên mô tả của chúng (ví dụ "lnk" cho một liên kết). Điều này đặc biệt hữu dụng để kích hoạt các đối tượng như hộp kiểm không có nhãn. (#7447)
-- NVDA giờ đây sẽ ngăn không cho  người dùng thực hiện Windows 10 OCR nếu đang bật che màn hình. (#11911)
-- Đã cập nhật Unicode Common Locale Data Repository (CLDR) lên 38.1. (#11943)
+- Trong chế độ duyệt, các điều khiển giờ đây có thể được kích hoạt với việc đưa con trỏ nổi trên mô tả của chúng (ví dụ "lnk" cho một liên kết). Điều này đặc biệt hữu dụng để kích hoạt các đối tượng như hộp kiểm không có nhãn. (#7447)
+- NVDA giờ đây sẽ ngăn không cho  người dùng thực hiện chức năng Windows 10 OCR nếu đang bật che màn hình. (#11911)
+- Đã cập nhật Unicode Common Locale Data Repository (CLDR) lên 39.0. (#11943, #12314)
 - Đã thêm nhiều kí hiệu toán học vào từ điển kí hiệu. (#11467)
 - Các tập tin hướng dẫn sử dụng, tính năng mới và danh sách các phím lệnh giờ đã có một diện mạo mới. (#12027)
 - Giờ đây, sẽ có thông báo "Không được hỗ trợ" khi cố gắng bật / tắt chế độ trình bày theo màn hình trong các ứng dụng không được hỗ trợ, như Microsoft Word. (#7297)
-- Tùy chọn 'Cố gắng không đọc các sự kiện lỗi thời của focus trong bản thiết lập nâng cao gời đây mặc định được bật. (#10885)
+- Tùy chọn 'Cố gắng không đọc các sự kiện lỗi thời của focus trong bản thiết lập nâng cao giờ đây mặc định được bật. (#10885)
   - Có thể tắt nó bằng cách chọn "Không" trong tùy chọn này.
   - Các ứng dụng web  (Gmail chẳng hạn) không còn đọc các thông tin lỗi thời khi di chuyển focus một cách nhanh chóng.
-- Espeak-ng đã được cập nhật lên 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
 - Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - Các bản chữ nổi mới: Belarus chữ nổi văn học, Belarus chữ nổi máy tính, Urdu cấp 1, Urdu cấp 2.
 - Hỗ trợ cho nội dung của Adobe Flash đã bị gỡ khỏi NVDA vì việc dùng Flash đang được Adobe ngưng hỗ trợ. (#11131)
@@ -45,18 +46,18 @@ Bản phát hành này cũng ngưng hỗ trợ cho Adobe Flash.
 
 == Sửa lỗi ==
 - Danh sách thư trong Outlook 2010 lại có thể đọc được. (#12241)
-- Trong các chương trình terminal trên Windows 10 phiên bản 1607 trở lên, khi chèn hay xóa kí từ ở giữa một dòng, kí tự bên phải kí tự đó không còn bị đọc lên. (#3200)
+- Trong các chương trình terminal trên Windows 10 phiên bản 1607 trở lên, khi chèn hay xóa kí tự ở giữa một dòng, kí tự bên phải kí tự đó không còn bị đọc lên. (#3200)
   - Sửa lỗi thử nghiệm này phải được bật thủ công trong bảng cài đặt nâng cao của NVDA bằng cách đổi thuật toán diff algorithm thành Diff Match Patch.
 - Trong MS Outlook, việc thông báo khoảng cách một cách không hợp lý khi shift+tab từ nội dung thư đến trường tiêu đề sẽ không còn nữa. (#10254)
 - Trong Python Console, việc chèn một tab để thụt lề ở đầu của một dòng nhập liệu không rỗng và thao tác từ hoàn thành bằng tab ở giữa một dòng giờ đã được hỗ trợ. (#11532)
-- Thông tin định dạng và các thông điệp có thể duyệt khác không còn đọc là dòng trắng ngoài ý muốn khi tắt trình bày theo màn hình. (#12004)
+- Thông tin định dạng và các thông điệp có thể duyệt khác không còn đọc là dòng trắng một cách không mong muốn khi tắt trình bày theo màn hình. (#12004)
 - Giờ đây, có thể đọc bình luận trong MS Word khi bật UIA. (#9285)
 - Khả năng vận hành khi tương tác với Visual Studio đã được cải thiện. (#12171)
 - Sửa các lỗi đồ họa như thiếu thành phần khi dùng NVDA với bố cục từ phải sang trái. (#8859)
 - Tôn trọng bố cục giao diện người dùng dựa trên ngôn ngữ NVDA, không phải bản địa hóa của hệ thống. (#638)
   - vấn đề đã biết cho các ngôn ngữ từ phải sang trái: bảng bên phải của các nhóm clip với các nhãn / điều khiển. (#12181)
-- Phần bản đĩa của python đã được thiết lập là khớp với ngôn ngữ đã chọn trong tùy chọn, và sẽ xuất hiện khi dùng ngôn ngữ mặc định. (#12214)
-- TextInfo.getTextInChunks không còn bị treo khi dược gọi trong các điều khiển Rich Edit như trình xem log của NVDA. (#11613)
+- Phần bản địa của python đã được thiết lập là khớp với ngôn ngữ đã chọn trong tùy chọn, và sẽ xuất hiện khi dùng ngôn ngữ mặc định. (#12214)
+- TextInfo.getTextInChunks không còn bị treo khi được gọi trong các điều khiển Rich Edit như trình xem log của NVDA. (#11613)
 - Lại có thể dùng NVDA trong các ngôn ngữ có chứa dấu gạch dưới trong tên bản địa của nó như de_CH trên Windows 10 1803 và 1809. (#12250)
 - Trong WordPad, cấu hình việc đọc chỉ số trên / chỉ số dưới đã hoạt động như mong muốn. (#12262)
 - NVDA không còn bị lỗi khi đọc nội dung mới có focus trên một trang web nếu focus cũ biến mất và được thay thế bằng focus mới ở cùng vị trí. (#12147)
@@ -64,9 +65,12 @@ Bản phát hành này cũng ngưng hỗ trợ cho Adobe Flash.
 - Sửa lỗi sao chép cấu hình trong khi cài đặt từ một bản chạy trực tiếp khi thư mục mặc định để chép cấu hình là thư mục rỗng. (#12071, #12205)
 - Sửa lỗi đọc không chính xác cho vài kí tự có âm nhấn hoặc âm tiêu khi bật tùy chọn 'Đọc chữ hoa'. (#11948)
 - Sửa lỗi thay đổi cao độ trong các bộ đọc SAPI4. (#12311)
-- Bộ cài NVDA giờ đây tôn trọng tham số của dòng lệnh ``--minimal`` và không phát âm thanh khởi động, hoạt động giống nahu với tập tin thực thi của bản cái hay bản chạy trực tiếp của NVDA. (#12289)
-- In MS Word hay Outlook, các phím di chuyển nhanh trong bảng giờ đây có thẻ đi đến bố cục bảng nếu bật tùy chọn "Đọc các bảng bố cục" trong cài đặt chế độ duyệt. (#11899)
+- Bộ cài NVDA giờ đây tôn trọng tham số của dòng lệnh ``--minimal`` và không phát âm thanh khởi động, hoạt động giống nhau với tập tin thực thi của bản cài hay bản chạy trực tiếp của NVDA. (#12289)
+- Trong MS Word hay Outlook, các phím di chuyển nhanh trong bảng giờ đây có thể đi đến bố cục bảng nếu bật tùy chọn "Đọc các bảng bố cục" trong cài đặt chế độ duyệt. (#11899)
 - NVDA sẽ không còn đọc "↑↑↑" cho các biểu tượng cảm xúc trong một số ngôn ngữ. (#11963)
+- Espeak giờ đây lại hỗ trợ tiếng Quảng Đông và tiếng Quan Thoại. (#10418)
+ - Trong phiên bản  Microsoft Edge mới trên nền tản Chromium, các trường nhập liệu như thanh địa chỉ giờ đã được đọc khi không có nội dung. (#12474)
+- Sửa lỗi trình điều khiển của Seika Braille. (#10787)
 +
 +
 == Các thay đổi cho nhà phát triển ==

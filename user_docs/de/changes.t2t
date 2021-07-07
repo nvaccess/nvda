@@ -7,11 +7,12 @@ Was ist neu in NVDA
 Diese Version enthält optionale experimentelle Unterstützung für UIA in Microsoft Excel und Chromium-basierte Browser.
 Viele Korrekturen für mehrere Sprachen und für den Zugriff auf Links in Braille-Schrift wurden durchgeführt.
 Daneben gibt es auch Updates für Unicode CLDR und mathematische Symbole, eSpeak-NG und LibLouis.
+Sowie viele Fehlerbehebungen und Verbesserungen, einschließlich in Office, Visual Studio und mehreren Sprachen.
 
-Viele Fehlerkorrekturen und Verbesserungen, u. a. in Office, Visual Studio und mehreren Sprachen.
-Hinweis: Bei dieser Version muss die Kompatibilität der Erweiterungen zwingend erneuert werden, da signifikante Änderungen an der API erfolgte.
-Alle Erweiterungen müssen erneut getestet und deren Manifest-Datei aktualisiert werden.
-Mit dieser Version entfällt auch die Unterstützung für Adobe Flash, deren Support bereits am 31. Dezember 2020 auslief.
+Hinweis:
+ - Für diese Version muss die Kompatibilität aller Erweiterungen überprüft und ggf. angepasst werden.
+ - In dieser Version wurde auch die Unterstützung für Adobe Flash endgültig eingestellt.
+ -
 
 
 == Neue Features ==
@@ -20,23 +21,23 @@ Mit dieser Version entfällt auch die Unterstützung für Adobe Flash, deren Sup
 - Vereinfachtere Navigation der Ausgabe in der NVDA-Python-Konsole. (#9784)
   - Mit Alt+Pfeiltasten nach oben/unten springt man zum vorherigen/nächsten Ausgabe-Ergebnis (zum Auswählen Umschalt-Taste zusätzlich drücken).
   - Mit Strg+L wird das Ausgabefenster geleert.
-- NVDA meldet jetzt die Kategorien, die einem Termin in Microsoft Outlook zugeordnet sind, falls vorhanden. (#11598)
+- NVDA sagt nun die Kategorien an, die einem Termin in Microsoft Outlook zugeordnet sind, sofern vorhanden. (#11598)
+- Unterstützung für die Braillezeile Seika Notetaker von Nippon Telesoft. (#11514)
 
 
 == Änderungen ==
 - Im Lesemodus können Steuerelemente nun mit Braille-Cursor-Routing auf ihrem Deskriptor (z. B. "lnk" für einen Link) aktiviert werden. Dies ist besonders nützlich, um z. B. Kontrollkästchen ohne Beschriftung zu aktivieren. (#7447)
 - NVDA verhindert jetzt, dass der Benutzer die Windows 10-Texterkennung ausführt, wenn der Bildschirmvorhang aktiviert ist. (#11911)
-- Unicode Common Locale Data Repository (CLDR) auf 38.1 aktualisiert. (#11943)
+- Das Unicode Common Locale Data Repository (CLDR) wurde auf 39.0 aktualisiert. (#11943, #12314)
 - Weitere mathematische Symbole zum Symbolwörterbuch hinzugefügt. (#11467)
 - Das Benutzerhandbuch, Was ist neu und die Auflistung der Kurzübersicht der Befehle haben jetzt ein aktualisiertes Aussehen. (#12027)
 - Die Meldung "Nicht unterstützt" wird jetzt gemeldet, wenn versucht wird, das Bildschirmlayout in Anwendungen umzuschalten, die dies nicht unterstützen, wie z. B. in Microsoft Word. (#7297)
 - Die Option "Versuch, die Sprachausgabe bei abgelaufenen Fokus-Ereignissen abzubrechen" in der Kategorie "Erweiterte Einstellungen" nun standardmäßig aktiviert. (#10885)
   - Dieses Verhalten kann deaktiviert werden, indem diese Option auf "Nein" gesetzt wird.
   - In Web-Anwendungen, wie z. B. Gmail, werden nicht mehr veraltete Informationen mitgeteilt, wenn der Fokus schnell verschoben wird.
-- eSpeak-NG wurde auf 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84 aktualisiert. (#12202, #12280)
 - Der Liblouis-Braille-Übersetzer wurde auf [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0] aktualisiert. (#12137)
-  - Neue Braille-Tabellen: Belarussiches Literaturbraille, Belarussisches Computer-Braille sowie Voll- und Kurzschrift in Urdu (Indien und Pakistan).
-- Die Unterstützung für Adobe Flash wurde aus NVDA vollständig entfernt, da Adobe die Entwicklung eingestellt hat und der Support damit auch bereits Ende 2020 auslief. (#11131)
+  - Neue Braille-Tabellen: Belarussisches Literaturbraille, Belarussisches Computer-Braille sowie Voll- und Kurzschrift in Urdu (Indien und Pakistan).
+- Die Unterstützung für Adobe Flash wurde aus NVDA vollständig entfernt, da Adobe die Entwicklung eingestellt hat und damit der Support auch bereits Ende 2020 auslief. (#11131)
 - NVDA beendet sich auch bei noch geöffneten Fenstern, der Beendigungsvorgang schließt nun alle NVDA-Fenster und -Dialoge. (#1740)
 - Der Sprachausgaben-Betrachter kann nun mit ``Alt+F4`` geschlossen werden und hat einen Schließen-Schalter für eine einfachere Interaktion mit Benutzern von Zeigegeräten. (#12330)
 - Der Braille-Betrachter verfügt nun standardmäßig über einen Schließen-Schalter, um die Interaktion mit Benutzern von Zeigegeräten zu erleichtern. (#12328)
@@ -67,6 +68,9 @@ Mit dieser Version entfällt auch die Unterstützung für Adobe Flash, deren Sup
 - Das NVDA-Installationsprogramm beachtet nun auch den ``--minimal`` Kommandozeilenparameter und spielt keinen Start-Sound ab. Es folgt damit dem gleichen dokumentierten Verhalten wie eine installierte oder portable Kopie des NVDA-Programms. (#12289)
 - In Microsoft Word oder Microsoft Outlook kann die Tabellenschnellnavigationstaste jetzt zur Layouttabelle springen, wenn die Option "Layout-Tabellen einbeziehen" in den Einstellungen des Lesemodus aktiviert ist. (#11899)
 - NVDA sagt nicht mehr "↑↑↑" bei manchen Emojis in bestimmten Sprachen. (#11963)
+- eSpeak unterstützt nun wieder Kantonesisch und Mandarin. (#10418)
+- Im neuen Chromium-basierten Microsoft Edge werden Textfelder wie die Adressleiste nun angesagt, wenn sie leer sind. (#12474)
+- Der Treiber für die Seika-Braillezeilen funktioniert nun wieder. (#10787)
 
 
 == Änderungen für Entwickler ==
@@ -98,11 +102,8 @@ Mit dieser Version entfällt auch die Unterstützung für Adobe Flash, deren Sup
   - ``isCurrent`` ist nicht länger mehr optional und gibt daher keinen Wert zurück.
   - Wenn ein Objekt nicht aktuell ist, wird ``controlTypes.IsCurrent.NO`` zurückgegeben.
 - Das Mapping ``controlTypes.isCurrentLabels`` wurde entfernt. (#11782)
-  - Verwenden Sie stattdessen die Eigenschaft ``displayString`` für einen ``controlTypes.IsCurrent``-Enum-Wert, z. B. ``controlTypes.IsCurrent.YES.displayString``
-- Die Eigenschaft ``isCurrent`` von ``NVDAObject`` (und Derivate) liefert nun strikt ``controlTypes.IsCurrent``. (#11782)
-  - ``isCurrent`` ist nicht mehr optional und gibt somit keinen Wert zurück, wenn ein Objekt nicht aktuell ist, wird ``controlTypes.IsCurrent.NO`` zurückgegeben.
-- Die Eigenschaft ``controlTypes.isCurrentLabels`` wurde entfernt, stattdessen wird die Eigenschaft ``displayString`` für einen ``controlTypes.IsCurrent``-Enum-Wert verwendet. (#11782)
-  - Z. B. ``controlTypes.IsCurrent.YES.displayString``
+  - Verwenden Sie stattdessen die Eigenschaft ``displayString`` für einen Enum-Wert ``controlTypes.IsCurrent``.
+    - Zum Beispiel: ``controlTypes.IsCurrent.YES.displayString``.
 - ``winKernel.GetTimeFormat`` wurde entfernt - verwenden Sie stattdessen ``winKernel.GetTimeFormatEx``. (#12139)
 - ``winKernel.GetDateFormat`` wurde entfernt - verwenden Sie stattdessen ``winKernel.GetDateFormatEx``. (#12139)
 - ``gui.DriverSettingsMixin`` wurde entfernt - verwenden Sie ``gui.AutoSettingsMixin``. (#12144)
@@ -310,10 +311,8 @@ Markierte (hervorgehobenene) Inhalte kann man in Browsern sich ansagen lassen. A
 - MSAA-Ereignisse von Windows für das aktuell fokussierte Objekt werden nicht mehr zusammen mit anderen Ereignissen herausgefiltert, wenn die Ereignisanzahl für einen bestimmten Thread überschritten wird. (#11520)
 
 
-
 = 2020.2 =
 Zu den Highlights dieser Version gehören die Unterstützung für eine neue Braillezeile von Nattiq, verbessere Unterstützung für ESET Antivirus und Windows-Terminal, Leistungsverbesserungen in 1Password und mit Windows OneCore-Sprachausgaben und viele wietere wichtige Fehlerbehebungen und Verbesserungen.
-
 
 == Neue Features ==
 - Unterstützungen neuer braillezeilen::
@@ -2302,7 +2301,6 @@ Schwerpunkte dieser Version sind u. a. eine eingebaute Installationsroutine sowi
 
 = 2012.1 =
 Die wichtigsten Neuerungen für diese Version beinhalten Funktionen, um Braille flüssiger lesen zu können; Kennzeichnungen für Dokumentformatierungen in Braille; Zugriff auf viel mehr Formatierungsinformationen und verbesserte Geschwindigkeit in Microsoft Word; und Unterstützung für den iTunes Store.
-
 
 == Neue Funktionen ==
 - NVDA kann nun die Anzahl führender Tabs und Leerzeichen in der aktuellen Zeile in der Reihenfolge angeben, in der sie eingegeben wurden. Dies kann in den Einstellungen zur Dokumentformatierung mit der Option "Zeileneinrückungen ansagen" eingestellt werden. (#373)

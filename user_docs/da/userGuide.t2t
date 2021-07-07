@@ -498,7 +498,6 @@ Dette omfatter dokumenter i følgende applikationer:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - Understøttede bøger i Amazon Kindle for PC
 -
 
@@ -596,7 +595,7 @@ Brug følgende kommandoer for at udføre en søgning:
 %kc:endInclude
 
 ++ Indlejrede objekter ++[ImbeddedObjects]
-Sider kan ved hjælp af teknologier som Adobe Flash, Oracle Java og HTML5 omfatte meget dynamisk indhold, såsom applikationer og dialoger.
+Sider kan ved hjælp af teknologier som Oracle Java og HTML5 omfatte meget dynamisk indhold, såsom applikationer og dialoger.
 Når man støder på disse objekter i i et dokument, vil NVDA henholdsvist annoncere "Indlejret objekt", "applikation" og "dialog".
 Du kan hurtigt flytte til dem ved brug af O og shift+O bogstavnavigationstasterne til indlejrede objekter.
 Du kan trykke Enter på disse objekter for at aktivere dem.
@@ -794,6 +793,8 @@ I denne situation indeholder NVDA en funktion kaldet "skærmtæppe", der kan akt
 
 Du kan aktivere funktionen ved at gå til [indstillingskategorien "Syn" #VisionSettings] i [NVDAs indstillinger #NVDASettings].
 
+Vær opmærksom på at du ikke kan udføre nogle handlinger, der tager udgangspunkt i noget visuelt på skærmen såsom at tage et skærmbillede eller benytte [Windows 10 tekstgenkendelse #Win10Ocr], hvis denne funktion er aktiveret.
+
 + Indholdsgenkendelse +[ContentRecognition]
 Når forfattere ikke giver tilstrækkelig information til en skærmlæserbruger til at bestemme indholdet af noget, kan forskellige værktøjer bruges til at forsøge at genkende indholdet fra et billede.
 NVDA understøtter den optiske tegngenkendelse (OCR) -funktionalitet indbygget i Windows 10 til at genkende tekst fra billeder.
@@ -814,6 +815,8 @@ NVDA kan bruge denne funktionalitet til at genkende tekst fra billeder eller uti
 
 Du kan indstille det sprog, der skal bruges til tekstgenkendelse ved brug af indstillingskategorien [Windows 10 Tekstgenkendelse #Win10OcrSettings] i [NVDAs indstillinger #NVDASettings].
 Yderligere sprog kan installeres ved at åbne startmenuen, vælge Indstillinger, vælge Tid og sprog, Område og sprog og derefter vælge Tilføj et sprog.
+
+Bemærk at Windows 10 tekstgenkendelsen kan forekomme delvist eller fuldkommen inkompatibel med [synshjælpemidler i NVDA #Vision] eller andre eksterne visuelle hjælpemidler. Disse skal deaktiveres, før du fortsætter.
 
 %Kc:beginInclude
 For at genkende teksten af det aktuelle navigatorobjekt ved hjælp af Windows 10 Tekstgenkendelse, skal du trykke på NVDA + r.
@@ -1743,7 +1746,7 @@ Du kan tilpasse annoncering af:
  - Sider og linjeafstand
  - Sidetal
  - Linjenumre
- - Rapportering af linjeindrykning (fra, tale, toner eller både tale og toner) #lineIndentationOptions]
+ - Rapportering af linjeindrykning (fra, tale, toner eller både tale og toner) #DocumentFormattingSettingsLineIndentation]
  - Indrykning af afsnit (f.eks. hængende indrykning, indrykning af første linje)
  - Linjeafstand (enkelt, dobbel, osv.)
  - Justering
@@ -1836,17 +1839,48 @@ Når denne indstilling er aktiveret, vil NVDA benytte [tilgængelighedsforbedrin
 ==== Udtal adgangskoder i Windows-konsoller ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Denne funktion bestemmer om tegn udtales ved brug af indstillingen [sig indtastede tegn #KeyboardSettingsSpeakTypedCharacters] eller [sig indtastede ord #KeyboardSettingsSpeakTypedWords]. Dette kan evt. være nyttigt i situationer hvor skærmen ikke opdateres (som ved indtastning af adgangskoder i konsolvinduer), i nogle terminalprogrammer som Windows-konsollen med understøttelse for UIA aktiveret. På grund af sikkerhedsårsager bør denne indstilling forblive deaktiveret. Du kan dog ønske at aktivere indstillingen, hvis du oplever problemer med udtale af indtastede ord og tegn.
 
+==== Brug UIA med Microsoft Edge og andre Chromium-baserede browsere, hvis muligt ====[ChromiumUIA]
+Denne indstillinger lader dig vælge, hvorvidt UIA bliver benyttet, når du bruger en Chromium-baseret browser som Microsoft Edge.
+Understøttelse af UIA for disse browsere er i begyndelse af udviklingsfasen, og vil derfor muligvis ikke give samme form for tilgængelighed som IA2.
+Du kan vælge følgende indstillinger:
+- Standard (kun når dette er nødvendigt): Dette er standardindstillingen. Dette vil muligvis ændres eftersom teknologien udvikler sig.
+- Kun når dette er nødvendigt: Hvis NVDA ikke kan forbinde til browserprocessen for at bruge IA2 vil UIA automatisk benyttes, hvis UIA er tilgængeligt.
+- Ja: Hvis browseren gør UIA tilgængeligt, vil NVDA bruge dette.
+- Nej: Brug ikke UIA, selv hvis NVDA ikke kan forbinde sig selv med processen. Dette kan være nyttigt, hvis udviklere er i færd med at problemløse IA2 og vil sikre sig, at NVDA ikke benytter UIA.
+-
+
+==== Benyt UI Automation til at få adgang til kontrolelementer for Microsoft &Excel-regneark, når disse er tilgængelige ====[UseUiaForExcel]
+Når denne indstilling er aktiveret, vil NVDA forsøge at benytte Microsoft UI Automation Accessibility API til at få informationer fra kontrolelementer for Microsoft Excel-regneark.
+Dette er en eksperimental funktion, og nogle funktioner vil ikke være tilgængelig i denne tilstand.
+Du kan f.eks. ikke bruge elementlisten til at vise formularer og kommentarer, og du kan heller ikke benytte bogstavnavigation i gennemsynstilstand til at springe til formularfelter i et regneark.
+Denne funktion kan dog forbedre ydeevnen, når du navigere og redigere celler.
+Vi anbefaler dog ikke at størstedelen af brugere benytter denne indstilling, men vi ønsker feedback fra brugere med Microsoft Excel  build 16.0.13522.10000 eller nyere.
+Implementeringen af UIA i Microsoft Office er under konstant revidering, og ældre versioner af Office end 16.0.13522.10000 vil muligvis ikke vise nok information til at være brugbart.
+
 ==== Benyt den nye understøttelse for indtastede tegn i Windows-konsoller, når denne er tilgængelig ====[AdvancedSettingsKeyboardSupportInLegacy]
 Denne indstilling aktivere en alternative metode til at opdage indtastede tegn i konsolvinduer.
 Selvom denne indstilling kan forbedre ydeevnen og forhindre at noget konsolindhold staves, kan denne indstilling forekomme inkompatibel med nogle terminalprogrammer.
 Denne funktion kan aktiveres i Windows 10 version 1607 og nyere versioner af Windows 10, hvor UI Automation ikke er tilgængelig.
 Advarsel: Med denne indstilling aktiveret vil indtastede tegn, der ikke vises på skærmen såsom adgangskoder ikke blive undertrykket.
 I usikre miljøer, kan du midlertidigt deaktivere [sig indtastede tegn #KeyboardSettingsSpeakTypedCharacters] og [sig indtastede ord #KeyboardSettingsSpeakTypedWords] under indtastning af adgangskoder.
+==== Diff-algoritme ====[DiffAlgo]
+Denne indstilling styrer, hvordan NVDA skal bestemme teksten, der skal udtales i terminalmiljøer.
+Der er følgende indstillinger:
+- Automatisk: Fra og med NVDA 2021.1,vil denne indstilling være svarende til Difflib.
+Dette vil muligvis blive ændret til Diff Match Patch i en fremtidig version af NVDA, afhængigt af positivt feedback fra brugere, der har testet indstillingen.
+- Tillad Diff Match Patch: Denne mulighed får NVDA til at beregne ændringer i terminaltekst efter tegn. 
+Det kan forbedre ydelsen, når der skrives store mængder tekst til konsollen og muliggøre mere nøjagtig rapportering af ændringer foretaget midt på linierne. 
+Indstillingen er muligvis inkompatibel med nogle applikationer.
+Indstillingen understøttes i Windows-konsoller med Windows version 1607 og nyere.
+Desuden vil indstillingen muligvis være tilgængelig i andre terminalprogrammer for tidligere Windows-udgaver.
+- Gennemtving Difflib: Denne indstilling får NVDA til at beregne ændringer til terminalens tekst pr. linje.
+Dette er identiskt til NVDAs adfærd i NVDA 2020.4 og tidligere.
+-
 
 ==== Forsøg at annullere tale for udløbne fokushændelser ====[CancelExpiredFocusSpeech]
 Denne indstilling gør det muligt for NVDA at forsøge på at annullere tale for udløbne fokushændelser
 Som et eksempel kan hurtig navigation gennem GMail i Chrome forårsage, at NVDA oplæser forældede  informationer.
-Denne indstilling skal anses for at være eksperimentel.
+Denne indstilling er automatisk aktiveret som standard i NVDA 2021.1.
 
 ==== Interval for markøren (i MS) ====
 Denne indstilling lader dig konfigurere hvor mange millisekunder NVDA skal vente på systemmarkøren (indsættelsesmarkøren) i redigerbare tekstfelter.

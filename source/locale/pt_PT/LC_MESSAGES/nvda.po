@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-19 10:31+0000\n"
+"POT-Creation-Date: 2021-06-04 00:01+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
+"Last-Translator: Rui Fontes  <rui.fontes@tiflotecnia.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
 "<ampa4374@gmail.com>\n"
 "Language: pt_PT\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -98,33 +98,29 @@ msgid "grammar: {text}"
 msgstr "Gramática: {text}"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "none"
 msgstr "nenhum"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "color"
-msgstr "{color}"
+msgstr "cor"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "gradient"
-msgstr "gradiente linear"
+msgstr "gradiente"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "picture"
-msgstr ""
+msgstr "Imagem"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
-msgstr "Texto original"
+msgstr "padrão"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -746,15 +742,13 @@ msgstr "Bengali grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian computer braille"
-msgstr "Russo Braille de computador de 8 pontos"
+msgstr "Bielorrusso Braille de computador"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian literary braille"
-msgstr "Russo Braille literário"
+msgstr "Bielorrusso Braille literário"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1283,15 +1277,13 @@ msgstr "ucraniano Braille de computador de 8 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 1"
-msgstr "Irlandês grau 1"
+msgstr "Urdu grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 2"
-msgstr "Irlandês grau 2"
+msgstr "Urdu grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1954,9 +1946,8 @@ msgstr ""
 "captar o conteúdo do documento"
 
 #. Translators: The message reported for not supported toggling of screen layout
-#, fuzzy
 msgid "Not supported in this document."
-msgstr "Não suportado neste documento"
+msgstr "Não suportado neste documento."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4097,16 +4088,15 @@ msgid "Expanded symbol ({})"
 msgstr "Símbolo expandido ({})"
 
 #. Translators: Input help mode message for toggle speech mode command.
-#, fuzzy
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA will just speak normally."
 msgstr ""
 "Alterna entre os modos de voz desligado, bips e falar. Quando está no modo "
-"de fala desligado, o NVDA permanece em  silêncio. Quando está no modo de "
-"beeps, o NVDA apita sempre que seria suposto falar e no modo de fala, o NVDA "
-"fala normalmente."
+"de voz desligado, o NVDA permanece em  silêncio. Quando está no modo de "
+"bips, o NVDA apita sempre que seria suposto falar, e no modo de voz falar, o "
+"NVDA fala normalmente."
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -4931,7 +4921,7 @@ msgstr "Windows 10 OCR não disponível"
 
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows 10 OCR."
-msgstr ""
+msgstr "Por favor, desactive a Cortina de ecrã antes de usar o Windows 10 OCR"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -7181,36 +7171,31 @@ msgid "unread"
 msgstr "não lida"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Python Console"
 msgstr "Consola de Pyton"
 
 #. Translators: Description of a command to clear the Python Console output pane
 msgid "Clear the output pane"
-msgstr ""
+msgstr "Limpar o painel de resultados"
 
 #. Translators: Description of a command to move to the next result in the Python Console output pane
-#, fuzzy
 msgid "Move to the next result"
-msgstr "move para a lista seguinte"
+msgstr "move para a resultado seguinte"
 
 #. Translators: Description of a command to move to the previous result
 #. in the Python Console output pane
-#, fuzzy
 msgid "Move to the previous result"
-msgstr "Move para a lista anterior"
+msgstr "Mover para o resultado anterior"
 
 #. Translators: Description of a command to select from the current caret position to the end
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the end of the current result"
-msgstr "Anuncia a nota na célula actual"
+msgstr "Seleccionar até ao fim do resultado actual"
 
 #. Translators: Description of a command to select from the current caret position to the start
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the start of the current result"
-msgstr "Anuncia a nota na célula actual"
+msgstr "Seleccionar até ao início do resultado actual"
 
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
@@ -7272,11 +7257,9 @@ msgstr "{startTime} até {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-#, fuzzy, python-brace-format
-msgid "category {categories}"
-msgid_plural "categories {categories}"
-msgstr[0] "Categoria {categoryAxisData}: "
-msgstr[1] "Categoria {categoryAxisData}: "
+#, python-brace-format
+msgid "categories {categories}"
+msgstr "categorias {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7715,8 +7698,8 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Papenmeier BRAILLEX (Modelos antigos)"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
-msgstr "Seika"
+msgid "Seika Braille Displays"
+msgstr "Linhas Braille Seika"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -9737,13 +9720,11 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid ""
 "Use UI Automation to access Microsoft &Excel spreadsheet controls when "
 "available"
 msgstr ""
-"Usar UI Automation para aceder a controlos de documentos do Microsoft &Word "
-"se disponível"
+"Usar UI Automation para aceder às folhas do Microsoft &Excel se disponível"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9762,26 +9743,26 @@ msgid ""
 "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
 msgstr ""
+"Usar UIA com Microsoft Edge e outros\n"
+"navegadores baseados em &chromium quando disponível:"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
-msgstr ""
+msgstr "Predefinição (Apenas quando necessário)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
-msgstr ""
+msgstr "Apenas quando necessário"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "Sim"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "Não"
@@ -9803,32 +9784,30 @@ msgstr ""
 #. settings panel.
 #. Choices are automatic, allow Diff Match Patch, and force Difflib.
 msgid "&Diff algorithm:"
-msgstr ""
+msgstr "Algoritmo &Diff:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#, fuzzy
 msgid "Automatic (Difflib)"
-msgstr "Automática"
+msgstr "Automático (Difflib)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character when supported, using the diff match patch algorithm.
 msgid "allow Diff Match Patch"
-msgstr ""
+msgstr "Permitir Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 msgid "force Difflib"
-msgstr ""
+msgstr "forçar Difflib"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#, fuzzy
 msgid "Default (Yes)"
-msgstr "Predefinição (não)"
+msgstr "Predefinição (Sim)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -10259,7 +10238,6 @@ msgid "NVDA  Usage Data Collection"
 msgstr "Recolha de dados de utilização do NVDA"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
-#, fuzzy
 msgid ""
 "In order to improve NVDA in the future, NV Access wishes to collect usage "
 "data from running copies of NVDA.\n"
@@ -10273,7 +10251,7 @@ msgid ""
 "Do you wish to allow NV Access to periodically collect this data in order to "
 "improve NVDA?"
 msgstr ""
-"Para futuramente poder melhorar o NVDA, a NV Access necessita de recolher "
+"Para no futuro poder melhorar o NVDA, a NV Access necessita de recolher "
 "informações de utilização do NVDA.\n"
 "\n"
 "Os dados a recolher incluem a versão do sistema Operativo, versão do NVDA, "
@@ -10281,7 +10259,10 @@ msgstr ""
 "sintetizador, linha Braille, e tabela de conversão Braille em utilização. "
 "Nenhum conteúdo falado ou representado em Braille será alguma vez enviado à "
 "NV Access.  Por favor, consulte o Manual do utilizador para ver a lista "
-"completa dos dados recolhidos."
+"completa dos dados recolhidos.\n"
+"\n"
+"Pretende permitir a NV Access recolher periodicamente estes dados para "
+"melhorar o NVDA?"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10923,24 +10904,26 @@ msgid ""
 "Shows a browseable message Listing information about a cell's appearance "
 "such as outline and fill colors, rotation and size"
 msgstr ""
+"Mostra uma mensagem navegável com as informações sobre a aparência de uma "
+"célula, tais como cores de contorno e preenchimento, rotação e tamanho"
 
 #. Translators: The width of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
-msgstr ""
+msgstr "Largura da célula: {0.x:.1f} pt"
 
 #. Translators: The height of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
-msgstr ""
+msgstr "Altura da célula: {0.y:.1f} pt"
 
 #. Translators: The rotation in degrees of an Excel cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degrees"
-msgstr ""
+msgstr "Rotação: {0} graus"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #, python-brace-format
@@ -10948,89 +10931,87 @@ msgctxt "excel-UIA"
 msgid ""
 "Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
 msgstr ""
+"Cor do contorno: topo={0.name}, fundo={1.name}, esquerda={2.name}, "
+"direita={3.name}"
 
 #. Translators: The outline (border) thickness values of an Excel cell.
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
-msgstr ""
+msgstr "Espessura do contorno: topo={0}, fundo={1}, esquerda={2}, direita={3}"
 
 #. Translators: The fill color of an Excel cell
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill color: {0.name}"
-msgstr "Cor das fatias: {colorName} "
+msgstr "Cor de preenchimento: {0.name}"
 
 #. Translators: The fill type (pattern, gradient etc) of an Excel Cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill type: {0}"
-msgstr ""
+msgstr "Tipo de preenchimento: {0}"
 
 #. Translators: the number format of an Excel cell
 #, python-brace-format
 msgid "Number format: {0}"
-msgstr ""
+msgstr "Formato de número: {0}"
 
 #. Translators: If an excel cell has data validation set
-#, fuzzy
 msgid "Has data validation"
-msgstr "aplicação %s"
+msgstr "Tem validação de dados"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #, python-brace-format
 msgid "Data validation prompt: {0}"
-msgstr ""
+msgstr "Prompt validação dos dados: {0}"
 
 #. Translators: If an excel cell has conditional formatting
-#, fuzzy
 msgid "Has conditional formatting"
-msgstr "Formatação de Documentos"
+msgstr "Tem formatação condicional"
 
 #. Translators: If an excel cell has visible gridlines
-#, fuzzy
 msgid "Gridlines are visible"
-msgstr "invisível"
+msgstr "As linhas de grelha estão visíveis"
 
 #. Translators: Title for a browsable message that describes the appearance of a cell in Excel
 msgctxt "excel-UIA"
 msgid "Cell Appearance"
-msgstr ""
+msgstr "Aparência da célula"
 
 #. Translators:  an error message on a cell in Microsoft Excel.
 #, python-brace-format
 msgid "Error: {errorText}"
-msgstr ""
+msgstr "Erro: {errorText}"
 
 #. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
 #, python-brace-format
 msgid "{author} is editing"
-msgstr ""
+msgstr "{author} está a editar"
 
 #. Translators: Excel, report range of cell coordinates
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
-msgstr "{firstAddress} {firstContent} até {lastAddress} {lastContent}"
+msgstr "{firstAddress} {firstValue} até {lastAddress} {lastValue}"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Reports the note or comment thread on the current cell"
-msgstr "Anuncia a nota na célula actual"
+msgstr "Anuncia a nota ou linha de comentários na célula actual"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment}  by {author}"
-msgstr "{comment} de {author} em {date}"
+msgstr "{comment} de {author}"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment}  by {author} with {numReplies} replies"
-msgstr "{comment} de {author} em {date}"
+msgstr "{comment} de {author} com {numReplies} respostas"
 
 #. Translators: A message in Excel when there is no note
 msgid "No note or comment thread on this cell"
-msgstr ""
+msgstr "Nenhuma nota ou linha de comentário sobre esta célula"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11058,9 +11039,9 @@ msgid "track change: {text}"
 msgstr "Registo de Alterações: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author}"
-msgstr "Comentário: {comment} de {author} em {date}"
+msgstr "Comentário: {comment} de {author}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
