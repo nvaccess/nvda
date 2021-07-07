@@ -18,14 +18,18 @@ import NvdaLib as _nvdaLib
 from NotepadLib import NotepadLib as _NotepadLib
 
 _notepad: _NotepadLib = _getLib("NotepadLib")
-EMOJI_PANEL_ITEM_RE = _re.compile(r"level [0-9]+  ([A-z ]+)  1 of [0-9]+")
+
+EMOJI_PANNEL_PATTERNS = [
+	_re.compile(r"level [0-9]+  ([A-z ]+)  1 of [0-9]+"),
+	_re.compile(r"([A-z ]+)  1 of [0-9]+  level [0-9]+")
+]
 
 
 def open_clipboard_history() -> str:
 	"""
 	Returns the last read item after opening the clipboard history.
 	"""
-	return _notepad.getSpeechAfterKey("leftWindows+.")
+	return _notepad.getSpeechAfterKey("leftWindows+v")
 
 
 def copy_text():
@@ -53,9 +57,10 @@ def open_emoji_panel() -> str:
 	Returns the first read emoji after opening the emoji panel.
 	"""
 	lastSpeech = _notepad.getSpeechAfterKey("leftWindows+.")
-	emojiMatch = _re.match(EMOJI_PANEL_ITEM_RE, lastSpeech)
-	if emojiMatch is not None:
-		return emojiMatch.group(1)
+	for pattern in EMOJI_PANNEL_PATTERNS:
+		emojiMatch = _re.match(pattern, lastSpeech)
+		if emojiMatch is not None:
+			return emojiMatch.group(1)
 	raise AssertionError(f"Emoji not announced. Last speech: '{lastSpeech}'")
 
 
