@@ -14,6 +14,8 @@ What's New in NVDA
 
 
 == Changes ==
+- NVDA now speaks by default every symbol when navigating by word.
+This can be toggled in the Preferences dialog or with a new (unassigned) command. (#11779)
 - Espeak-ng has been updated to 1.51-dev commit `ab11439b18238b7a08b965d1d5a6ef31cbb05cbb`. (#12449, #12202, #12280, #12568)
 - If article is enabled in the user preferences for document formatting, NVDA announces "article" after the content. (#11103)
 -
@@ -37,6 +39,7 @@ What's New in NVDA
 
 
 == Changes for Developers ==
+- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SYMLVL.*`` before 2022.1. (#11856)
 - `controlTypes` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
   - `ROLE_*` and `STATE_*` constants should be replaced to their equivalent `Role.*` and `State.*`.
   - `roleLabels`, `stateLabels` and `negativeStateLabels` have been deprecated, usages such as `roleLabels[ROLE_*]` should be replaced to their equivalent `Role.*.displayString` or `State.*.negativeDisplayString`.
