@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-09 00:01+0000\n"
+"POT-Creation-Date: 2021-06-18 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk NVDA <dansk@nvda.dk>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -97,6 +97,31 @@ msgstr "stavning: {text}"
 #, python-brace-format
 msgid "grammar: {text}"
 msgstr "gramatik: {text}"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "Ingen"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "farve"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "graduering"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr "billede"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "Mønster"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -717,6 +742,16 @@ msgstr "Bengali Niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Belarusian computer braille"
+msgstr "Hviderussisk computer braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Belarusian literary braille"
+msgstr "Hviderussisk litterær punktskrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
 msgstr "Bulgarsk 8 punkt computer braille"
 
@@ -1239,6 +1274,16 @@ msgstr "Ukrainsk niveau 1"
 #. braille settings dialog.
 msgid "Ukrainian computer braille"
 msgstr "Ukrainsk computer braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Urdu grade 1"
+msgstr "Urdu niveau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Urdu grade 2"
+msgstr "Urdu niveau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1848,10 +1893,12 @@ msgstr "Type:"
 msgid "Filter b&y:"
 msgstr "Filtrér &efter:"
 
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "&Aktivér"
+#. Translators: The label of a button to activate an element in the browse mode Elements List dialog.
+#. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
+#. element type radio label.
+#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+msgid "Activate"
+msgstr "Aktivér"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
@@ -1881,6 +1928,8 @@ msgstr "Flytter til start på objektbeholder, eksempelvis en liste eller tabel"
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+#. Translators: Reported when attempting to move to the next result in the Python Console
+#. output pane while there is no next result.
 msgid "Bottom"
 msgstr "Bund"
 
@@ -1889,6 +1938,19 @@ msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Flytter forbi slutningen af objektbeholderen, eksempelvis en liste  eller "
 "tabel"
+
+#. Translators: the description for the toggleScreenLayout script.
+#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+msgstr ""
+"Slår bevaring af skærmlayout under visning af indholdet af dokumentet til og "
+"fra"
+
+#. Translators: The message reported for not supported toggling of screen layout
+msgid "Not supported in this document."
+msgstr "Ikke understøttet i dette dokument"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2392,7 +2454,7 @@ msgstr "ikon"
 msgid "directory pane"
 msgstr "mapperude"
 
-#. Translators: Identifies an embedded object such as flash content on webpages.
+#. Translators: Identifies an object that is embedded in a document.
 msgid "embedded object"
 msgstr "Indlejret objekt"
 
@@ -3147,10 +3209,6 @@ msgstr "Indtastning"
 msgid "Document formatting"
 msgstr "Dokumentformatering"
 
-#. Translators: a message when audio ducking is not supported on this machine
-msgid "Audio ducking not supported"
-msgstr "Lyddæmpning ikke understøttet"
-
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
@@ -3159,13 +3217,9 @@ msgstr ""
 "Skifter imellem lyddæmpningstilstande der bestemmer hvornår NVDA sænker "
 "lydstyrken af andre lydkilder"
 
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help on"
-msgstr "tastaturhjælp til"
-
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help off"
-msgstr "tastaturhjælp fra"
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Lyddæmpning ikke understøttet"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
@@ -3176,6 +3230,18 @@ msgstr ""
 "slået til, oplæses navnet på det script, der er tilknyttet, hvis der findes "
 "et."
 
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help on"
+msgstr "tastaturhjælp til"
+
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help off"
+msgstr "tastaturhjælp fra"
+
+#. Translators: Input help mode message for toggle sleep mode command.
+msgid "Toggles sleep mode on and off for the active application."
+msgstr "Slår dvaletilstand til og fra for den aktive applikation."
+
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
 msgstr "Dvaletilstand fra"
@@ -3183,10 +3249,6 @@ msgstr "Dvaletilstand fra"
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
 msgstr "Dvaletilstand til"
-
-#. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles sleep mode on and off for the active application."
-msgstr "Slår dvaletilstand til og fra for den aktive applikation."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3198,21 +3260,25 @@ msgstr ""
 "staver den aktuelle linje. Ved tre tryk staves linjen ved brug af "
 "tegnbeskrivelser."
 
+#. Translators: Input help mode message for left mouse click command.
+msgid "Clicks the left mouse button once at the current mouse position"
+msgstr "Udfører et enkelt venstre museklik på musens aktuelle position"
+
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
 msgstr "Venstre klik"
 
-#. Translators: Input help mode message for left mouse click command.
-msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Udfører et enkelt venstre museklik på musens aktuelle position"
+#. Translators: Input help mode message for right mouse click command.
+msgid "Clicks the right mouse button once at the current mouse position"
+msgstr "Udfører et enkelt højre museklik på musens aktuelle position"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
 msgstr "Højre klik"
 
-#. Translators: Input help mode message for right mouse click command.
-msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "Udfører et enkelt højre museklik på musens aktuelle position"
+#. Translators: Input help mode message for left mouse lock/unlock toggle command.
+msgid "Locks or unlocks the left mouse button"
+msgstr "Låser venstre museknap eller låser den op"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
@@ -3222,9 +3288,9 @@ msgstr "Lås venstre museknap op"
 msgid "Left mouse button lock"
 msgstr "Lås venstre museknap"
 
-#. Translators: Input help mode message for left mouse lock/unlock toggle command.
-msgid "Locks or unlocks the left mouse button"
-msgstr "Låser venstre museknap eller låser den op"
+#. Translators: Input help mode message for right mouse lock/unlock command.
+msgid "Locks or unlocks the right mouse button"
+msgstr "Låser højre museknap eller låser den op"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
@@ -3233,10 +3299,6 @@ msgstr "Lås højre museknap op"
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 msgid "Right mouse button lock"
 msgstr "Lås højre museknap"
-
-#. Translators: Input help mode message for right mouse lock/unlock command.
-msgid "Locks or unlocks the right mouse button"
-msgstr "Låser højre museknap eller låser den op"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3252,14 +3314,14 @@ msgid ""
 "current date"
 msgstr "Et enkelt tryk giver aktuel tid. To tryk giver aktuel dato"
 
-#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
-msgid "No settings"
-msgstr "Ingen indstillinger"
-
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr ""
 "Forøger den aktuelle indstilling i ringen af indstillinger for talesyntese"
+
+#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
+msgid "No settings"
+msgstr "Ingen indstillinger"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
@@ -3279,6 +3341,10 @@ msgstr ""
 "Flytter til forrige tilgængelige indstilling i ringen af indstillinger for "
 "talesyntese"
 
+#. Translators: Input help mode message for toggle speaked typed characters command.
+msgid "Toggles on and off the speaking of typed characters"
+msgstr "Slår oplæsning af indtastede tegn til og fra"
+
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
 msgstr "Sig indtastede tegn fra"
@@ -3287,9 +3353,9 @@ msgstr "Sig indtastede tegn fra"
 msgid "speak typed characters on"
 msgstr "Sig indtastede tegn til"
 
-#. Translators: Input help mode message for toggle speaked typed characters command.
-msgid "Toggles on and off the speaking of typed characters"
-msgstr "Slår oplæsning af indtastede tegn til og fra"
+#. Translators: Input help mode message for toggle speak typed words command.
+msgid "Toggles on and off the speaking of typed words"
+msgstr "Slår oplæsning af indtastede ord til og fra"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -3299,9 +3365,11 @@ msgstr "Sig indtastede ord fra"
 msgid "speak typed words on"
 msgstr "sig indtastede ord til"
 
-#. Translators: Input help mode message for toggle speak typed words command.
-msgid "Toggles on and off the speaking of typed words"
-msgstr "Slår oplæsning af indtastede ord til og fra"
+#. Translators: Input help mode message for toggle speak command keys command.
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
+msgstr "Slå oplæsning af tegn, der ikke er bogstaver, til og fra"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -3311,11 +3379,9 @@ msgstr "Sig funktionstaster fra"
 msgid "speak command keys on"
 msgstr "Sig funktionstaster til"
 
-#. Translators: Input help mode message for toggle speak command keys command.
-msgid ""
-"Toggles on and off the speaking of typed keys, that are not specifically "
-"characters"
-msgstr "Slå oplæsning af tegn, der ikke er bogstaver, til og fra"
+#. Translators: Input help mode message for toggle report font name command.
+msgid "Toggles on and off the reporting of font changes"
+msgstr "Slår rapportering af skrifttype til og fra"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -3325,9 +3391,9 @@ msgstr "Rapportér skrifttype fra"
 msgid "report font name on"
 msgstr "Rapportér skrifttype til"
 
-#. Translators: Input help mode message for toggle report font name command.
-msgid "Toggles on and off the reporting of font changes"
-msgstr "Slår rapportering af skrifttype til og fra"
+#. Translators: Input help mode message for toggle report font size command.
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "Slår rapportering af skriftstørrelse til og fra"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
@@ -3337,9 +3403,9 @@ msgstr "Rapportér skriftstørrelse fra"
 msgid "report font size on"
 msgstr "Rapportér skriftstørrelse til"
 
-#. Translators: Input help mode message for toggle report font size command.
-msgid "Toggles on and off the reporting of font size changes"
-msgstr "Slår rapportering af skriftstørrelse til og fra"
+#. Translators: Input help mode message for toggle report font attributes command.
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "Slår rapportering af skriftattributter til og fra"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
@@ -3348,10 +3414,6 @@ msgstr "Rapportér skriftattributter fra"
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
 msgstr "Rapportér skriftattributter til"
-
-#. Translators: Input help mode message for toggle report font attributes command.
-msgid "Toggles on and off the reporting of font attributes"
-msgstr "Slår rapportering af skriftattributter til og fra"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 msgid "Toggles on and off the reporting of superscripts and subscripts"
@@ -3367,6 +3429,10 @@ msgstr "Rapportér hævet og sænket skrift til"
 msgid "report superscripts and subscripts off"
 msgstr "Rapportér hævet og sænket skrift fra"
 
+#. Translators: Input help mode message for toggle report revisions command.
+msgid "Toggles on and off the reporting of revisions"
+msgstr "Slår sporing af ændringer til og fra"
+
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
 msgstr "Rapportér ændringer fra"
@@ -3375,9 +3441,9 @@ msgstr "Rapportér ændringer fra"
 msgid "report revisions on"
 msgstr "Rapportér ændringer til"
 
-#. Translators: Input help mode message for toggle report revisions command.
-msgid "Toggles on and off the reporting of revisions"
-msgstr "Slår sporing af ændringer til og fra"
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Slår rapportering af fremhævelse til og fra"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
@@ -3386,10 +3452,6 @@ msgstr "Rapportér fremhævelse fra"
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
 msgstr "Rapportér fremhævelse til"
-
-#. Translators: Input help mode message for toggle report emphasis command.
-msgid "Toggles on and off the reporting of emphasis"
-msgstr "Slår rapportering af fremhævelse til og fra"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
 msgid "Toggles on and off the reporting of marked text"
@@ -3403,6 +3465,10 @@ msgstr "Rapportér markeret til"
 msgid "report marked off"
 msgstr "Rapportér markeret fra"
 
+#. Translators: Input help mode message for toggle report colors command.
+msgid "Toggles on and off the reporting of colors"
+msgstr "Slår rapportering af farver til og fra"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "Rapportér farver fra"
@@ -3411,9 +3477,9 @@ msgstr "Rapportér farver fra"
 msgid "report colors on"
 msgstr "Rapportér farver til"
 
-#. Translators: Input help mode message for toggle report colors command.
-msgid "Toggles on and off the reporting of colors"
-msgstr "Slår rapportering af farver til og fra"
+#. Translators: Input help mode message for toggle report alignment command.
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "Slår rapportering af justering til og fra"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
@@ -3423,9 +3489,9 @@ msgstr "Rapportér justering fra"
 msgid "report alignment on"
 msgstr "Rapportér justering til"
 
-#. Translators: Input help mode message for toggle report alignment command.
-msgid "Toggles on and off the reporting of text alignment"
-msgstr "Slår rapportering af justering til og fra"
+#. Translators: Input help mode message for toggle report style command.
+msgid "Toggles on and off the reporting of style changes"
+msgstr "Slår rapportering af typografi til og fra"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
@@ -3435,9 +3501,9 @@ msgstr "Rapportér typografi fra"
 msgid "report style on"
 msgstr "Rapportér typografi til"
 
-#. Translators: Input help mode message for toggle report style command.
-msgid "Toggles on and off the reporting of style changes"
-msgstr "Slår rapportering af typografi til og fra"
+#. Translators: Input help mode message for toggle report spelling errors command.
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "Slår rapportering af stavefejl til og fra"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
@@ -3447,9 +3513,9 @@ msgstr "Rapportér stavefejl fra"
 msgid "report spelling errors on"
 msgstr "Rapportér stavefejl til"
 
-#. Translators: Input help mode message for toggle report spelling errors command.
-msgid "Toggles on and off the reporting of spelling errors"
-msgstr "Slår rapportering af stavefejl til og fra"
+#. Translators: Input help mode message for toggle report pages command.
+msgid "Toggles on and off the reporting of pages"
+msgstr "Slår rapportering af sider til og fra"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -3459,9 +3525,9 @@ msgstr "Rapportér sider fra"
 msgid "report pages on"
 msgstr "Rapportér sider til"
 
-#. Translators: Input help mode message for toggle report pages command.
-msgid "Toggles on and off the reporting of pages"
-msgstr "Slår rapportering af sider til og fra"
+#. Translators: Input help mode message for toggle report line numbers command.
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "Slår rapportering af linjenumre til og fra"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
@@ -3471,9 +3537,9 @@ msgstr "Rapportér linjenumre fra"
 msgid "report line numbers on"
 msgstr "Rapportér linjenumre til"
 
-#. Translators: Input help mode message for toggle report line numbers command.
-msgid "Toggles on and off the reporting of line numbers"
-msgstr "Slår rapportering af linjenumre til og fra"
+#. Translators: Input help mode message for toggle report line indentation command.
+msgid "Cycles through line indentation settings"
+msgstr "Skifter mellem indstillinger for linjeindrykning"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
@@ -3491,9 +3557,9 @@ msgstr "Rapportér indrykning med tale og lyde"
 msgid "Report line indentation off"
 msgstr "Rapportér indrykning fra"
 
-#. Translators: Input help mode message for toggle report line indentation command.
-msgid "Cycles through line indentation settings"
-msgstr "Skifter mellem indstillinger for linjeindrykning"
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "Slår rapportering af indrykning af afsnit til og fra"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3503,9 +3569,9 @@ msgstr "Rapportér indrykning af afsnit fra"
 msgid "report paragraph indentation on"
 msgstr "Rapportér indrykning af afsnit til"
 
-#. Translators: Input help mode message for toggle report paragraph indentation command.
-msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "Slår rapportering af indrykning af afsnit til og fra"
+#. Translators: Input help mode message for toggle report line spacing command.
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "Slår rapportering af linjeafstand til og fra"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -3515,9 +3581,9 @@ msgstr "Rapportér linjeafstand fra"
 msgid "report line spacing on"
 msgstr "Rapportér linjeafstand til"
 
-#. Translators: Input help mode message for toggle report line spacing command.
-msgid "Toggles on and off the reporting of line spacing"
-msgstr "Slår rapportering af linjeafstand til og fra"
+#. Translators: Input help mode message for toggle report tables command.
+msgid "Toggles on and off the reporting of tables"
+msgstr "Slår rapportering af tabeller til og fra"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3527,9 +3593,10 @@ msgstr "Rapportér tabeller fra"
 msgid "report tables on"
 msgstr "Rapportér tabeller til"
 
-#. Translators: Input help mode message for toggle report tables command.
-msgid "Toggles on and off the reporting of tables"
-msgstr "Slår rapportering af tabeller til og fra"
+#. Translators: Input help mode message for toggle report table row/column headers command.
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr ""
+"Slår rapportering af kolonne- og rekke-overskrifter i tabeller til og fra"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
@@ -3539,10 +3606,9 @@ msgstr "Rapportér kolonne- og rækkeoverskrifter i tabeller fra"
 msgid "report table row and column headers on"
 msgstr "Rapportér kolonne- og rækkeoverskrifter i tabeller til"
 
-#. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr ""
-"Slår rapportering af kolonne- og rekke-overskrifter i tabeller til og fra"
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "Slår rapportering af cellekoordinater i tabeller til og fra"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
@@ -3552,9 +3618,9 @@ msgstr "Rapportér cellekoordinater i tabeller fra"
 msgid "report table cell coordinates on"
 msgstr "Rapportér cellekoordinater i tabeller til"
 
-#. Translators: Input help mode message for toggle report table cell coordinates command.
-msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "Slår rapportering af cellekoordinater i tabeller til og fra"
+#. Translators: Input help mode message for toggle report links command.
+msgid "Toggles on and off the reporting of links"
+msgstr "Slår rapportering af links til og fra"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -3563,10 +3629,6 @@ msgstr "Rapportér links fra"
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
 msgstr "Rapportér links til"
-
-#. Translators: Input help mode message for toggle report links command.
-msgid "Toggles on and off the reporting of links"
-msgstr "Slår rapportering af links til og fra"
 
 #. Translators: Input help mode message for toggle report graphics command.
 msgid "Toggles on and off the reporting of graphics"
@@ -3580,6 +3642,10 @@ msgstr "Rapportér grafik fra"
 msgid "report graphics on"
 msgstr "Rapportér grafik til"
 
+#. Translators: Input help mode message for toggle report comments command.
+msgid "Toggles on and off the reporting of comments"
+msgstr "Slår rapportering af kommentarer til og fra"
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
 msgstr "Rapportér kommentarer fra"
@@ -3588,9 +3654,9 @@ msgstr "Rapportér kommentarer fra"
 msgid "report comments on"
 msgstr "Rapportér kommentarer til"
 
-#. Translators: Input help mode message for toggle report comments command.
-msgid "Toggles on and off the reporting of comments"
-msgstr "Slår rapportering af kommentarer til og fra"
+#. Translators: Input help mode message for toggle report lists command.
+msgid "Toggles on and off the reporting of lists"
+msgstr "Slår rapportering af lister til og fra"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
@@ -3600,9 +3666,9 @@ msgstr "Rapportér lister fra"
 msgid "report lists on"
 msgstr "Rapportér lister til"
 
-#. Translators: Input help mode message for toggle report lists command.
-msgid "Toggles on and off the reporting of lists"
-msgstr "Slår rapportering af lister til og fra"
+#. Translators: Input help mode message for toggle report headings command.
+msgid "Toggles on and off the reporting of headings"
+msgstr "Slår rapportering af overskrifter til og fra"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
@@ -3611,10 +3677,6 @@ msgstr "Rapportér overskrifter fra"
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
 msgstr "Rapportér overskrifter til"
-
-#. Translators: Input help mode message for toggle report headings command.
-msgid "Toggles on and off the reporting of headings"
-msgstr "Slår rapportering af overskrifter til og fra"
 
 #. Translators: Input help mode message for toggle report groupings command.
 msgid "Toggles on and off the reporting of groupings"
@@ -3628,6 +3690,10 @@ msgstr "Rapportér grupper fra"
 msgid "report groupings on"
 msgstr "Rapportér grupper til"
 
+#. Translators: Input help mode message for toggle report block quotes command.
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "Slår rapportering af blokcitater til og fra."
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "Rapportér blokcitater fra"
@@ -3636,9 +3702,9 @@ msgstr "Rapportér blokcitater fra"
 msgid "report block quotes on"
 msgstr "Rapportér blokcitater til"
 
-#. Translators: Input help mode message for toggle report block quotes command.
-msgid "Toggles on and off the reporting of block quotes"
-msgstr "Slår rapportering af blokcitater til og fra."
+#. Translators: Input help mode message for toggle report landmarks command.
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "Slår rapportering af landmærker til og fra."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions off"
@@ -3647,10 +3713,6 @@ msgstr "Rapportér landmærker og områder fra"
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions on"
 msgstr "Rapportér landmærker og områder til"
-
-#. Translators: Input help mode message for toggle report landmarks command.
-msgid "Toggles on and off the reporting of landmarks"
-msgstr "Slår rapportering af landmærker til og fra."
 
 #. Translators: Input help mode message for toggle report articles command.
 msgid "Toggles on and off the reporting of articles"
@@ -3664,6 +3726,10 @@ msgstr "Rapportér artikler fra"
 msgid "report articles on"
 msgstr "Rapportér artikler til"
 
+#. Translators: Input help mode message for toggle report frames command.
+msgid "Toggles on and off the reporting of frames"
+msgstr "Slår rapportering af rammer til og fra."
+
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
 msgstr "Rapportér rammer fra"
@@ -3672,9 +3738,9 @@ msgstr "Rapportér rammer fra"
 msgid "report frames on"
 msgstr "Rapportér rammer til"
 
-#. Translators: Input help mode message for toggle report frames command.
-msgid "Toggles on and off the reporting of frames"
-msgstr "Slår rapportering af rammer til og fra."
+#. Translators: Input help mode message for toggle report if clickable command.
+msgid "Toggles on and off reporting if clickable"
+msgstr "Slår rapportering af klikbare elementer til og fra."
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
@@ -3684,9 +3750,12 @@ msgstr "Rapportér hvis klikbar fra"
 msgid "report if clickable on"
 msgstr "Rapportér hvis klikbar til"
 
-#. Translators: Input help mode message for toggle report if clickable command.
-msgid "Toggles on and off reporting if clickable"
-msgstr "Slår rapportering af klikbare elementer til og fra."
+#. Translators: Input help mode message for cycle speech symbol level command.
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr ""
+"Skifter imellem niveauer for oplæsning af symboler. Styrer, hvilke symboler, "
+"der skal læses op."
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3695,24 +3764,13 @@ msgstr "Slår rapportering af klikbare elementer til og fra."
 msgid "Symbol level %s"
 msgstr "Symbol niveau %s"
 
-#. Translators: Input help mode message for cycle speech symbol level command.
-msgid ""
-"Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr ""
-"Skifter imellem niveauer for oplæsning af symboler. Styrer, hvilke symboler, "
-"der skal læses op."
-
-#. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "Object has no location"
-msgstr "Objekt har ingen placering"
-
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Flytter musemarkøren til det aktuelle navigatorobjekt."
 
-#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
-msgid "Move navigator object to mouse"
-msgstr "Flyt navigatorobjekt til mus"
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "Object has no location"
+msgstr "Objekt har ingen placering"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 msgid ""
@@ -3722,9 +3780,9 @@ msgstr ""
 "Flytter navigatorobjektet til det objekt, der aktuelt er under musemarkøren "
 "og oplæser det."
 
-#. Translators: reported when there are no other available review modes for this object
-msgid "No next review mode"
-msgstr "Ingen næste læsetilstand"
+#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
+msgid "Move navigator object to mouse"
+msgstr "Flyt navigatorobjekt til mus"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
@@ -3735,8 +3793,8 @@ msgstr ""
 "læsemarkøren på positionen for navigeringsobjektet."
 
 #. Translators: reported when there are no other available review modes for this object
-msgid "No previous review mode"
-msgstr "Ingen forrige læsetilstand"
+msgid "No next review mode"
+msgstr "Ingen næste læsetilstand"
 
 #. Translators: Script help message for previous review mode command.
 msgid ""
@@ -3746,6 +3804,14 @@ msgstr ""
 "Skifter til forrige læsetilstand (objekt, tekst eller skærm) og placerer "
 "læsemarkøren på positionen for navigeringsobjektet."
 
+#. Translators: reported when there are no other available review modes for this object
+msgid "No previous review mode"
+msgstr "Ingen forrige læsetilstand"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Slår simpel læsetilstand til og fra."
+
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
 msgstr "Simpel læsetilstand fra"
@@ -3753,15 +3819,6 @@ msgstr "Simpel læsetilstand fra"
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
 msgstr "Simpel læsetilstand til"
-
-#. Translators: Input help mode message for toggle simple review mode command.
-msgid "Toggles simple review mode on and off"
-msgstr "Slår simpel læsetilstand til og fra."
-
-#. Translators: Reported when the user tries to perform a command related to the navigator object
-#. but there is no current navigator object.
-msgid "No navigator object"
-msgstr "Intet navigatorobjekt"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -3772,9 +3829,10 @@ msgstr ""
 "Oplyser det aktuelle navigatorobjekt. 2 tryk staver informationen og 3 tryk "
 "kopierer navn og værdi på objektet til udklipsholderen"
 
-#. Translators: message when there is no location information for the review cursor
-msgid "No location information"
-msgstr "Ingen oplysninger om placering"
+#. Translators: Reported when the user tries to perform a command related to the navigator object
+#. but there is no current navigator object.
+msgid "No navigator object"
+msgstr "Intet navigatorobjekt"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
@@ -3783,6 +3841,10 @@ msgid ""
 msgstr ""
 "Viser information om placeringen af teksten eller objektet ved læsemarkøren. "
 "To tryk kan give flere detaljer."
+
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "Ingen oplysninger om placering"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3795,6 +3857,14 @@ msgstr ""
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
 msgstr "Flyt til fokus"
+
+#. Translators: Input help mode message for move focus to current navigator object command.
+msgid ""
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"Et enkelt tryk sætter tastaturfokus  til navigatorobjektet, to tryk sætter "
+"systemmarkøren til læsemarkørens position."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3811,56 +3881,40 @@ msgstr "Flyt fokus"
 msgid "No caret"
 msgstr "Ingen systemmarkør"
 
-#. Translators: Input help mode message for move focus to current navigator object command.
-msgid ""
-"Pressed once sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
+#. Translators: Input help mode message for move to parent object command.
+msgid "Moves the navigator object to the object containing it"
 msgstr ""
-"Et enkelt tryk sætter tastaturfokus  til navigatorobjektet, to tryk sætter "
-"systemmarkøren til læsemarkørens position."
+"Flytter navigatorobjektet til det objekt, som indeholder det aktuelle objekt."
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
 msgstr "Intet overordnet objekt"
 
-#. Translators: Input help mode message for move to parent object command.
-msgid "Moves the navigator object to the object containing it"
-msgstr ""
-"Flytter navigatorobjektet til det objekt, som indeholder det aktuelle objekt."
+#. Translators: Input help mode message for move to next object command.
+msgid "Moves the navigator object to the next object"
+msgstr "Flytter navigatorobjektet til det næste objekt."
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Ingen næste"
 
-#. Translators: Input help mode message for move to next object command.
-msgid "Moves the navigator object to the next object"
-msgstr "Flytter navigatorobjektet til det næste objekt."
+#. Translators: Input help mode message for move to previous object command.
+msgid "Moves the navigator object to the previous object"
+msgstr "Flytter navigatorobjektet til det forrige objekt."
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Ingen forrige"
 
-#. Translators: Input help mode message for move to previous object command.
-msgid "Moves the navigator object to the previous object"
-msgstr "Flytter navigatorobjektet til det forrige objekt."
-
-#. Translators: Reported when there is no contained (first child) object such as inside a document.
-msgid "No objects inside"
-msgstr "Ingen underordnede objekter"
-
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
 msgstr "Flytter navigatorobjektet til det første objekt inden i det."
 
-#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "Activate"
-msgstr "Aktivér"
-
-#. Translators: the message reported when there is no action to perform on the review position or navigator object.
-msgid "No action"
-msgstr "Ingen standardhandling"
+#. Translators: Reported when there is no contained (first child) object such as inside a document.
+msgid "No objects inside"
+msgstr "Ingen underordnede objekter"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
@@ -3870,6 +3924,10 @@ msgstr ""
 "Udfører standardhandlingen for det aktuelle navigatorobjekt (eksempel: "
 "trykker hvis det er en knap)."
 
+#. Translators: the message reported when there is no action to perform on the review position or navigator object.
+msgid "No action"
+msgstr "Ingen standardhandling"
+
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
@@ -3878,10 +3936,6 @@ msgstr ""
 "Flytter læsemarkøren til den øverste linje i det aktuelle navigatorobjekt og "
 "læser den op."
 
-#. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "Top"
-msgstr "Top"
-
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
@@ -3889,6 +3943,12 @@ msgid ""
 msgstr ""
 "Flytter læsemarkøren til den forrige linje i det aktuelle navigatorobjekt og "
 "læser den op."
+
+#. Translators: a message reported when review cursor is at the top line of the current navigator object.
+#. Translators: Reported when attempting to move to the previous result in the Python Console
+#. output pane while there is no previous result.
+msgid "Top"
+msgstr "Top"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
@@ -3949,10 +4009,6 @@ msgstr ""
 "Flytter læsemarkøren til første tegn på linjen i navigatorobjektet og læser "
 "tegnet op."
 
-#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-msgid "Left"
-msgstr "Venstre"
-
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
@@ -3960,6 +4016,10 @@ msgid ""
 msgstr ""
 "Flytter læsemarkøren til forrige tegn i det aktuelle navigatorobjekt og "
 "læser det op."
+
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Venstre"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
@@ -3972,10 +4032,6 @@ msgstr ""
 "placeret. Tryk to gange for at høre tegnet fonetisk. Tryk tre gange for at "
 "høre den numeriske værdi af tegnet decimalt og hexadecimalt."
 
-#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-msgid "Right"
-msgstr "Højre"
-
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
@@ -3983,6 +4039,10 @@ msgid ""
 msgstr ""
 "Flytter læsemarkøren til næste tegn i det aktuelle navigatorobjekt og læser "
 "det op."
+
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "Højre"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
@@ -4016,6 +4076,17 @@ msgstr ""
 msgid "Expanded symbol ({})"
 msgstr "Udvidet symbol ({})"
 
+#. Translators: Input help mode message for toggle speech mode command.
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA will just speak normally."
+msgstr ""
+"Skifter imellem tale tilstandene fra, bip og tale. Hvis indstillingen er sat "
+"til fra, siger NVDA ingenting. Hvis den er sat til bip, høres blot et bip "
+"for hver gang NVDA ellers ville have sagt noget. Hvis denne indstilling er "
+"sat til tale, taler NVDA blot som normalt."
+
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
 msgstr "Tale tilstand fra"
@@ -4028,21 +4099,13 @@ msgstr "Tale tilstand bip"
 msgid "Speech mode talk"
 msgstr "Tale tilstand tale"
 
-#. Translators: Input help mode message for toggle speech mode command.
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it "
-"its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr ""
-"Skifter imellem tale tilstandene fra, bip og tale. Hvis indstillingen er sat "
-"til fra, siger NVDA ingenting. Hvis den er sat til bip, høres blot et bip "
-"for hver gang NVDA ellers ville have sagt noget. Hvis denne indstilling er "
-"sat til tale, taler NVDA blot som normalt."
-
-#. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
+#. Translators: Input help mode message for move to next document with focus command,
+#. mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "Flytter fokus til det nærmeste dokument, der indeholder fokus."
 
+#. Translators: Input help mode message for toggle focus and browse mode command
+#. in web browsing and other situations.
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
@@ -4135,6 +4198,16 @@ msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
 "Læser objektet med fokus. Tryk to gange for at få informationen stavet."
 
+#. Translators: Input help mode message for report status line text command.
+msgid ""
+"Reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
+msgstr ""
+"Oplyser statuslinjen i den aktuelle applikation og flytter navigatoren "
+"dertil. Tryk to gange for at få stavet informationen. Tryk tre gange for at "
+"kopiere informationen til udklipsholderen."
+
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Statuslinje ikke fundet"
@@ -4147,15 +4220,9 @@ msgstr "Ingen statuslinjeoplysninger"
 msgid "unable to copy status bar content to clipboard"
 msgstr "Kan ikke kopiere statuslinjeindhold til udklipsholder"
 
-#. Translators: Input help mode message for report status line text command.
-msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
-msgstr ""
-"Oplyser statuslinjen i den aktuelle applikation og flytter navigatoren "
-"dertil. Tryk to gange for at få stavet informationen. Tryk tre gange for at "
-"kopiere informationen til udklipsholderen."
+#. Translators: Input help mode message for toggle mouse tracking command.
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr "Skifter rapportering af information under musebevægelse."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4165,9 +4232,9 @@ msgstr "Følg mus fra"
 msgid "Mouse tracking on"
 msgstr "Følg mus til"
 
-#. Translators: Input help mode message for toggle mouse tracking command.
-msgid "Toggles the reporting of information as the mouse moves"
-msgstr "Skifter rapportering af information under musebevægelse."
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "Skifter rapportering af information under musebevægelse"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
@@ -4175,14 +4242,6 @@ msgstr "Skifter rapportering af information under musebevægelse."
 #, python-format
 msgid "Mouse text unit resolution %s"
 msgstr "Opløsning for tekst&enhed under musen %s"
-
-#. Translators: Input help mode message for toggle mouse text unit resolution command.
-msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "Skifter rapportering af information under musebevægelse"
-
-#. Translators: Reported when there is no title text for current program or window.
-msgid "No title"
-msgstr "Ingen titel"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -4192,6 +4251,10 @@ msgid ""
 msgstr ""
 "Oplyser titel på aktuel applikation eller forreste vindue. Tryk to gange for "
 "at stave titlen. Tryk tre gange for at kopiere titlen til udklipsholderen."
+
+#. Translators: Reported when there is no title text for current program or window.
+msgid "No title"
+msgstr "Ingen titel"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Reads all controls in the active window"
@@ -4205,7 +4268,9 @@ msgstr ""
 "Åbner WX GUI-inspektionsværktøjet. Dette værktøj bruges til at få flere "
 "oplysninger om tilstanden for GUI-komponenter."
 
-#. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
+#. Translators: Input help mode message for developer info for current navigator object command,
+#. used by developers to examine technical info on navigator object.
+#. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -4253,6 +4318,14 @@ msgstr "Kunne ikke kopiere"
 msgid "Opens NVDA configuration directory for the current user."
 msgstr "Åbner NVDA-konfigurationsmappen for den aktuelle bruger."
 
+#. Translators: Input help mode message for toggle progress bar output command.
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Skifter imellem  bip, tale bip og tale, og fra, til indikering af "
+"opdateringer af behandlingslinje."
+
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
 msgstr "Ingen opdateringer af behandlingslinje"
@@ -4269,13 +4342,13 @@ msgstr "Bip ved opdatering af behandlingslinje"
 msgid "Beep and speak progress bar updates"
 msgstr "Indikér med tale og lyd, når behandlingslinjen opdateres"
 
-#. Translators: Input help mode message for toggle progress bar output command.
+#. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting "
-"progress bar updates"
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
 msgstr ""
-"Skifter imellem  bip, tale bip og tale, og fra, til indikering af "
-"opdateringer af behandlingslinje."
+"Slår rapportering af dynamisk indhold til og fra, f.eks. ny tekst i DOS-"
+"konsol vinduer."
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -4285,13 +4358,12 @@ msgstr "Dynamisk indhold fra"
 msgid "report dynamic content changes on"
 msgstr "Dynamisk indhold til"
 
-#. Translators: Input help mode message for toggle dynamic content changes command.
+#. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new "
-"text in dos console windows"
+"Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
-"Slår rapportering af dynamisk indhold til og fra, f.eks. ny tekst i DOS-"
-"konsol vinduer."
+"Slår flytning af læsemarkøren som følge af flytning af systemmarkør til og "
+"fra."
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -4301,12 +4373,10 @@ msgstr "systemmarkør flytter læsemarkør fra"
 msgid "caret moves review cursor on"
 msgstr "systemmarkør flytter læsemarkør til"
 
-#. Translators: Input help mode message for toggle caret moves review cursor command.
+#. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
-"Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr ""
-"Slår flytning af læsemarkøren som følge af flytning af systemmarkør til og "
-"fra."
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr "Slår flytning af navigatorobjekt som følge af fokusændring til og fra."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -4316,10 +4386,13 @@ msgstr "Fokus flytter navigatorobjekt fra"
 msgid "focus moves navigator object on"
 msgstr "Fokus flytter navigatorobjekt til"
 
-#. Translators: Input help mode message for toggle focus moves navigator object command.
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
 msgid ""
-"Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Slår flytning af navigatorobjekt som følge af fokusændring til og fra."
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr ""
+"Slår bevægelse af systemfokus til og fra, når kommandoer til "
+"gennemsynstilstand benyttes"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements off"
@@ -4329,13 +4402,11 @@ msgstr "Placer automatisk systemfokus på fokuserbare elementer slået fra"
 msgid "Automatically set system focus to focusable elements on"
 msgstr "Placer automatisk systemfokus på fokuserbare elementer slået til"
 
-#. Translators: Input help mode message for toggle auto focus focusable elements command.
-msgid ""
-"Toggles on and off automatic movement of the system focus due to browse mode "
-"commands"
+#. Translators: Input help mode message for report battery status command.
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"Slår bevægelse af systemfokus til og fra, når kommandoer til "
-"gennemsynstilstand benyttes"
+"Oplyser batteristatus og resterende tid, hvis AC-strømforsyningen ikke er "
+"tilsluttet."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4355,16 +4426,6 @@ msgstr "AC-strømforsyning tilsluttet"
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} timer og {minutes:d} minutter tilbage"
 
-#. Translators: Input help mode message for report battery status command.
-msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr ""
-"Oplyser batteristatus og resterende tid, hvis AC-strømforsyningen ikke er "
-"tilsluttet."
-
-#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
-msgid "Pass next key through"
-msgstr "Slip næste tast igennem"
-
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
@@ -4372,6 +4433,18 @@ msgid ""
 msgstr ""
 "Den næste tast,du trykker på, bliver ikke behandlet af NVDA men slippes "
 "igennem til Windows."
+
+#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
+msgid "Pass next key through"
+msgstr "Slip næste tast igennem"
+
+#. Translators: Input help mode message for report current program name and app module name command.
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr ""
+"Oplæser filnavnet på den aktuelle applikation og navnet på det aktuelt "
+"indlæste appModul."
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
@@ -4385,14 +4458,6 @@ msgstr " %s modul er indlæst. "
 #, python-format
 msgid " %s is currently running."
 msgstr " %s kører i øjeblikket."
-
-#. Translators: Input help mode message for report current program name and app module name command.
-msgid ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
-msgstr ""
-"Oplæser filnavnet på den aktuelle applikation og navnet på det aktuelt "
-"indlæste appModul."
 
 #. Translators: Input help mode message for go to general settings command.
 msgid "Shows NVDA's general settings"
@@ -4502,6 +4567,13 @@ msgstr ""
 "Aktiverer styring af tilføjelsesprogrammer, så du kan installere eller "
 "fjerne tilføjelsesprogrammer til NVDA"
 
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr ""
+"Slår talevisning til/fra, et vindue, hvor du kan se alt, hvad NVDA siger"
+
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
 msgstr "Talevisning fra"
@@ -4510,12 +4582,10 @@ msgstr "Talevisning fra"
 msgid "speech viewer enabled"
 msgstr "Talevisning til"
 
-#. Translators: Input help mode message for toggle speech viewer command.
-msgid ""
-"Toggles the NVDA Speech viewer, a floating window that allows you to view "
-"all the text that NVDA is currently speaking"
-msgstr ""
-"Slår talevisning til/fra, et vindue, hvor du kan se alt, hvad NVDA siger"
+#. Translators: Input help mode message for toggle braille tether to command
+#. (tethered means connected to or follows).
+msgid "Toggle tethering of braille between the focus and the review position"
+msgstr "Skifter imellem punkt  følger fokus og punkt følger læsemarkør"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
@@ -4523,9 +4593,9 @@ msgstr ""
 msgid "Braille tethered %s"
 msgstr "Punkt følger %s"
 
-#. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
-msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "Skifter imellem punkt  følger fokus og punkt følger læsemarkør"
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "Skift mellem de forskellige tilstande kontekstinformationer kan vises"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4534,9 +4604,9 @@ msgstr "Skifter imellem punkt  følger fokus og punkt følger læsemarkør"
 msgid "Braille focus context presentation: %s"
 msgstr "Punkt fokuskontekstpræsentation: %s"
 
-#. Translators: Input help mode message for toggle braille focus context presentation command.
-msgid "Toggle the way context information is presented in braille"
-msgstr "Skift mellem de forskellige tilstande kontekstinformationer kan vises"
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Slå punktmarkøren til og fra"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -4546,9 +4616,9 @@ msgstr "Punktmarkør fra"
 msgid "Braille cursor on"
 msgstr "Punktmarkør til"
 
-#. Translators: Input help mode message for toggle braille cursor command.
-msgid "Toggle the braille cursor on and off"
-msgstr "Slå punktmarkøren til og fra"
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Skifter mellem punktmarkørens tilgængelige forme"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
@@ -4559,9 +4629,9 @@ msgstr "Punktmarkør slået fra"
 msgid "Braille cursor %s"
 msgstr "Punktmarkør %s"
 
-#. Translators: Input help mode message for cycle braille cursor shape command.
-msgid "Cycle through the braille cursor shapes"
-msgstr "Skifter mellem punktmarkørens tilgængelige forme"
+#. Translators: Input help mode message for report clipboard text command.
+msgid "Reports the text on the Windows clipboard"
+msgstr "Oplyser teksten i Windows udklipsholder"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4574,21 +4644,18 @@ msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Udklipsholderen indeholder en stor mængde tekst. Den er på %s tegn"
 
-#. Translators: Input help mode message for report clipboard text command.
-msgid "Reports the text on the Windows clipboard"
-msgstr "Oplyser teksten i Windows udklipsholder"
-
-#. Translators: Indicates start of review cursor text to be copied to clipboard.
-msgid "Start marked"
-msgstr "Start markeret"
-
-#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command
+#. (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr ""
 "Markerer læsemarkørens aktuelle position som begyndelsen af teksten der skal "
 "vælges eller kopieres"
+
+#. Translators: Indicates start of review cursor text to be copied to clipboard.
+msgid "Start marked"
+msgstr "Start markeret"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
@@ -4604,6 +4671,17 @@ msgstr ""
 msgid "No start marker set"
 msgstr "Ingen startmarkør sat"
 
+#. Translators: Input help mode message for the select then copy command.
+#. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+msgid ""
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
+msgstr ""
+"Ved et tryk vælges teksten fra den tidligere startmarkør til og med "
+"læsemarkørens aktuelle position. Ved to tryk vil teksten blive kopieret til "
+"udklipsholderen"
+
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
 msgstr "Tryk to gange for at kopiere eller nulstille startmarkøren"
@@ -4615,16 +4693,6 @@ msgstr "Ingen tekst at kopiere"
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
 msgstr "Kan ikke vælge tekst, tryk to gange for at kopiere"
-
-#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-msgid ""
-"If pressed once, the text from the previously set start marker up to and "
-"including the current position of the review cursor is selected. If pressed "
-"twice, the text is copied to the clipboard"
-msgstr ""
-"Ved et tryk vælges teksten fra den tidligere startmarkør til og med "
-"læsemarkørens aktuelle position. Ved to tryk vil teksten blive kopieret til "
-"udklipsholderen"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -4711,10 +4779,6 @@ msgstr ""
 "Trykker virtuelt NVDA-tasten for emulation af en tastaturkommando med "
 "punktinput"
 
-#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
-msgid "Plugins reloaded"
-msgstr "Plugins genindlæst"
-
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
@@ -4722,6 +4786,10 @@ msgid ""
 msgstr ""
 "Genindlæser app moduler og globale plugins uden at genstarte NVDA. Kan være "
 "nyttigt for udviklere."
+
+#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
+msgid "Plugins reloaded"
+msgstr "Plugins genindlæst"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4754,14 +4822,14 @@ msgstr "Berøringsinteraktion aktiveret"
 msgid "Touch interaction disabled"
 msgstr "Berøringsinteraktion deaktiveret"
 
+#. Translators: Input help mode message for a touchscreen gesture.
+msgid "Cycles between available touch modes"
+msgstr "Skifter imellem tilgængelige berøringstilstande"
+
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
 msgid "%s mode"
 msgstr "%s mode"
-
-#. Translators: Input help mode message for a touchscreen gesture.
-msgid "Cycles between available touch modes"
-msgstr "Skifter imellem tilgængelige berøringstilstande"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4775,10 +4843,6 @@ msgstr ""
 "Oplyser det nye objekt eller indhold under fingeren hvis forskelligt fra din "
 "fingers sidste position ."
 
-#. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
-msgstr "Objektet har ingen placering"
-
 #. Translators: Input help mode message for touch right click command.
 msgid ""
 "Clicks the right mouse button at the current touch position. This is "
@@ -4787,17 +4851,13 @@ msgstr ""
 "Udfører et enkelt højre museklik ved musens aktuelle position. Generelt "
 "benyttes denne funktion til at få adgang til kontekstmenuen."
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "Objektet har ingen placering"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Viser dialogboksen med NVDAs indstillingsprofiler"
-
-#. Translators: The message announced when temporarily disabling all configuration profile triggers.
-msgid "Configuration profile triggers disabled"
-msgstr "Udløsere for indstillingsprofiler deaktiverede"
-
-#. Translators: The message announced when re-enabling all configuration profile triggers.
-msgid "Configuration profile triggers enabled"
-msgstr "Udløsere for indstillingsprofiler aktiverede"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 msgid ""
@@ -4807,18 +4867,22 @@ msgstr ""
 "Skifter deaktivering af alle indstillingsprofiludløsere. Deaktivering "
 "forbliver i kraft, indtil NVDA genstartes"
 
-#. Translators: Reported when the user attempts math interaction
-#. with something that isn't math.
-msgid "Not math"
-msgstr "Ikke matematik"
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Udløsere for indstillingsprofiler deaktiverede"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Udløsere for indstillingsprofiler aktiverede"
 
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Start interaktion med matematikindhold"
 
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "Windows 10 tekstgenkendelse ikke tilgængelig"
+#. Translators: Reported when the user attempts math interaction
+#. with something that isn't math.
+msgid "Not math"
+msgstr "Ikke matematik"
 
 #. Translators: Describes a command.
 msgid ""
@@ -4826,6 +4890,14 @@ msgid ""
 msgstr ""
 "Genkender indholdet af det aktuelle navigatorobjekt ved brug af Windows 10 "
 "Tekstgenkendelse"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "Windows 10 tekstgenkendelse ikke tilgængelig"
+
+#. Translators: Reported when screen curtain is enabled.
+msgid "Please disable screen curtain before using Windows 10 OCR."
+msgstr "Deaktiver skærmtæppe, før du bruger Windows 10 tekstgenkendelse"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -7065,6 +7137,33 @@ msgstr "BCC:"
 msgid "unread"
 msgstr "ulæst"
 
+#. Translators: The name of a category of NVDA commands.
+msgid "Python Console"
+msgstr "Python-konsol"
+
+#. Translators: Description of a command to clear the Python Console output pane
+msgid "Clear the output pane"
+msgstr "Ryd output"
+
+#. Translators: Description of a command to move to the next result in the Python Console output pane
+msgid "Move to the next result"
+msgstr "Flytter til næste resultat"
+
+#. Translators: Description of a command to move to the previous result
+#. in the Python Console output pane
+msgid "Move to the previous result"
+msgstr "Flytter til forrige resultat"
+
+#. Translators: Description of a command to select from the current caret position to the end
+#. of the current result in the Python Console output pane
+msgid "Select until the end of the current result"
+msgstr "Vælg til slutningen af det aktuelle resultat"
+
+#. Translators: Description of a command to select from the current caret position to the start
+#. of the current result in the Python Console output pane
+msgid "Select until the start of the current result"
+msgstr "Vælg til starten af det aktuelle resultat"
+
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
@@ -7123,7 +7222,13 @@ msgstr "{date} (hele dagen)"
 msgid "{startTime} to {endTime}"
 msgstr "{startTime}-{endTime}"
 
-#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#. Translators: Part of a message reported when on a calendar appointment with one or more categories
+#. in Microsoft Outlook.
+#, python-brace-format
+msgid "categories {categories}"
+msgstr "kategorier {categories}"
+
+#. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Aftale {subject}, {time}"
@@ -7560,8 +7665,12 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Papenmeier BRAILLEX ældre modeller"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
-msgstr "Seika braille displays"
+msgid "Seika Braille Displays"
+msgstr "Seika punktdisplays"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr "Seika Notatapparat"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -7880,81 +7989,6 @@ msgstr "&Afslut"
 msgid "Exit NVDA"
 msgstr "Afslut NVDA"
 
-#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
-msgid ""
-"Most commands for controlling NVDA require you to hold down the NVDA key "
-"while pressing other keys.\n"
-"By default, the numpad Insert and main Insert keys may both be used as the "
-"NVDA key.\n"
-"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-"Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA "
-"functions."
-msgstr ""
-"De fleste kommandoer til styring af NVDA kræver, at du holder NVDA-tasten "
-"nede, mens du trykker en anden tast.\n"
-"Du kan som standard enten bruge Insert på det numeriske tastatur eller den "
-"normale Insert-tast.\n"
-"Du kan også indstille NVDA til at benytte tasten Caps Lock som NVDA-tast.\n"
-"Tryk NVDA+n hvor som helst for at aktivere NVDA-menuen.\n"
-"Fra denne menu kan du konfigurere NVDA, få hjælp og få adgang til andre "
-"faciliteter i NVDA."
-
-#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
-msgid "Welcome to NVDA"
-msgstr "Velkommen til NVDA"
-
-#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
-#. bold lettering
-msgid "Welcome to NVDA!"
-msgstr "Velkommen til NVDA!"
-
-#. Translators: The label for a group box containing the NVDA welcome dialog options.
-#. Translators: The label for a group box containing the NVDA installation dialog options.
-msgid "Options"
-msgstr "Indstillinger"
-
-#. Translators: The label of a combobox in the Welcome dialog.
-#. Translators: This is the label for a combobox in the
-#. keyboard settings panel.
-msgid "&Keyboard layout:"
-msgstr "&Tastaturlayout:"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "&Brug Caps Lock som NVDA-tast"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
-#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
-#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-msgid "St&art NVDA after I sign in"
-msgstr "&Start NVDA, når jeg er logget ind"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-msgid "&Show this dialog when NVDA starts"
-msgstr "&Vis denne dialog, når NVDA startes"
-
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "Licensaftale"
-
-#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-msgid "I &agree"
-msgstr "&Enig"
-
-#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
-msgid "&Install NVDA on this computer"
-msgstr "&Installér NVDA på denne computer"
-
-#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
-msgid "Create &portable copy"
-msgstr "Opret &flytbar kopi"
-
-#. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
-msgid "&Continue running"
-msgstr "&Fortsæt med at køre"
-
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -7991,52 +8025,6 @@ msgstr "Installér ventende opdatering"
 msgid "Please wait"
 msgstr "Vent venligst"
 
-#. Translators: The title of the dialog asking if usage data can be collected
-msgid "NVDA  Usage Data Collection"
-msgstr "Indsamling af brugsdata under brugen af NVDA"
-
-#. Translators: A message asking the user if they want to allow usage stats gathering
-msgid ""
-"In order to improve NVDA in the future, NV Access wishes to collect usage "
-"data from running copies of NVDA.\n"
-"\n"
-"Data includes Operating System version, NVDA version, language, country of "
-"origin, plus certain NVDA configuration such as current synthesizer, braille "
-"display and braille table. No spoken or braille content will be ever sent to "
-"NV Access.  Please refer to the User Guide for a current list of all data "
-"collected.\n"
-"\n"
-"Do you wish to allow NV Access to periodically collect this data in order to "
-"improve NVDA?"
-msgstr ""
-"For at forbedre NVDA i fremtiden ønsker NV Access at indsamle brugsdata fra "
-"kørende kopier af NVDA.\n"
-"\n"
-"Data inkluderer operativsystemversion, NVDA-version, sprog, oprindelsesland, "
-"samt visse NVDA-indstillinger som f.eks. aktuelle talesyntese, benyttet "
-"punktdisplay og punktskriftsindstillinger. Intet indhold i form af tale "
-"eller punktskrift vil blive sendt til NV Access. Se venligst "
-"brugervejledningen for en aktuel liste over alle indsamlede data.\n"
-"\n"
-"Ønsker du at give tilladelse til, at NV Access regelmæssigt må indsamle "
-"brugsdata til forbedring af NVDA?"
-
-#. Translators: The label of a Yes button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
-#. the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. agree to enabling the curtain.
-msgid "&Yes"
-msgstr "&Ja"
-
-#. Translators: The label of a No button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
-#. install the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. disagree to enabling the curtain.
-msgid "&No"
-msgstr "&Nej"
-
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -8055,6 +8043,22 @@ msgstr "Genstart NVDA"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&Om tilføjelsesprogram..."
+
+#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+#. the add-on
+#. Translators: The label of a Yes button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
+msgid "&Yes"
+msgstr "&Ja"
+
+#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
+#. install the add-on
+#. Translators: The label of a No button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
+msgid "&No"
+msgstr "&Nej"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -8706,6 +8710,11 @@ msgstr ""
 "Stien til NVDA-installationen er blevet ændret. Programmet bliver nu "
 "installeret i {path}"
 
+#. Translators: The label for a group box containing the NVDA installation dialog options.
+#. Translators: The label for a group box containing the NVDA welcome dialog options.
+msgid "Options"
+msgstr "Indstillinger"
+
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA during sign-in"
 msgstr "Brug af NVDA på logon-skærmen"
@@ -8910,6 +8919,13 @@ msgstr "&Afspil lyde ved opstart og afslutning af NVDA"
 msgid "L&ogging level:"
 msgstr "L&ogningsniveau"
 
+#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
+#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
+#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "St&art NVDA after I sign in"
+msgstr "&Start NVDA, når jeg er logget ind"
+
 #. Translators: The label for a setting in general settings to
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
@@ -9107,6 +9123,12 @@ msgstr "Brug &stavefunktion hvis understøttet"
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
 msgstr "Tastatur"
+
+#. Translators: This is the label for a combobox in the
+#. keyboard settings panel.
+#. Translators: The label of a combobox in the Welcome dialog.
+msgid "&Keyboard layout:"
+msgstr "&Tastaturlayout:"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
@@ -9656,6 +9678,15 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid ""
+"Use UI Automation to access Microsoft &Excel spreadsheet controls when "
+"available"
+msgstr ""
+"Benyt UI Automation til at få adgang til kontrolelementer for Microsoft "
+"&Excel-regneark, når disse er tilgængelige"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
 "Benyt UI Automation til at få adgang til Windows-&konsollen, når denne er "
@@ -9665,6 +9696,37 @@ msgstr ""
 #. Advanced settings panel.
 msgid "Speak &passwords in UIA consoles (may improve performance)"
 msgstr "Udtal &adgangskoder i UIA-konsoller (kan forbedre ydeevnen)"
+
+#. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
+#. Note the '\n' is used to split this long label approximately in half.
+msgctxt "advanced.uiaWithChromium"
+msgid ""
+"Use UIA with Microsoft Edge and other \n"
+"&Chromium based browsers when available:"
+msgstr ""
+"Brug UIA med Microsoft Edge og andre \n"
+"&Chromium-baserede browsere hvis muligt:"
+
+#. Translators: Label for the default value of the Use UIA with Chromium combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Default (Only when necessary)"
+msgstr "Standard (kun når dette er nødvendigt)"
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Only when necessary"
+msgstr "Kun når dette er nødvendigt"
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Yes"
+msgstr "Ja"
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "No"
+msgstr "Nej"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9678,10 +9740,35 @@ msgstr ""
 "Benyt den nye understøttelse for indtastede &tegn i Windows-konsoller, når "
 "denne er tilgængelig"
 
+#. Translators: This is the label for a combo box for selecting a
+#. method of detecting changed content in terminals in the advanced
+#. settings panel.
+#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+msgid "&Diff algorithm:"
+msgstr "&Diff-algoritme:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine the method of detecting changed
+#. content in terminals automatically.
+msgid "Automatic (Difflib)"
+msgstr "Automatisk (Difflib)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by character when supported, using the diff match patch algorithm.
+msgid "allow Diff Match Patch"
+msgstr "Tillad Diff Match Patch"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by line, using the difflib algorithm.
+msgid "force Difflib"
+msgstr "Gennemtving Difflib"
+
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-msgid "Default (No)"
-msgstr "Standard (Nej)"
+msgid "Default (Yes)"
+msgstr "Standard (Ja)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -10042,6 +10129,94 @@ msgstr "&Fjern"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Symbolet \"%s\" findes allerede."
+
+#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+msgid ""
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad Insert and main Insert keys may both be used as the "
+"NVDA key.\n"
+"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions."
+msgstr ""
+"De fleste kommandoer til styring af NVDA kræver, at du holder NVDA-tasten "
+"nede, mens du trykker en anden tast.\n"
+"Du kan som standard enten bruge Insert på det numeriske tastatur eller den "
+"normale Insert-tast.\n"
+"Du kan også indstille NVDA til at benytte tasten Caps Lock som NVDA-tast.\n"
+"Tryk NVDA+n hvor som helst for at aktivere NVDA-menuen.\n"
+"Fra denne menu kan du konfigurere NVDA, få hjælp og få adgang til andre "
+"faciliteter i NVDA."
+
+#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
+msgid "Welcome to NVDA"
+msgstr "Velkommen til NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time.
+#. This is in larger, bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Velkommen til NVDA!"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "&Brug Caps Lock som NVDA-tast"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr "&Vis denne dialog, når NVDA startes"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "Licensaftale"
+
+#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
+msgid "I &agree"
+msgstr "&Enig"
+
+#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
+msgid "&Install NVDA on this computer"
+msgstr "&Installér NVDA på denne computer"
+
+#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
+msgid "Create &portable copy"
+msgstr "Opret &flytbar kopi"
+
+#. Translators: The label of the button in NVDA installation program
+#. to continue using the installation program as a temporary copy of NVDA.
+msgid "&Continue running"
+msgstr "&Fortsæt med at køre"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Indsamling af brugsdata under brugen af NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access. Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"For at forbedre NVDA i fremtiden ønsker NV Access at indsamle brugsdata fra "
+"kørende kopier af NVDA.\n"
+"\n"
+"Data inkluderer operativsystemversion, NVDA-version, sprog, oprindelsesland, "
+"samt visse NVDA-indstillinger som f.eks. aktuelle talesyntese, benyttet "
+"punktdisplay og punktskriftsindstillinger. Intet indhold i form af tale "
+"eller punktskrift vil blive sendt til NV Access. Se venligst "
+"brugervejledningen for en aktuel liste over alle indsamlede data.\n"
+"\n"
+"Ønsker du at give tilladelse til, at NV Access regelmæssigt må indsamle "
+"brugsdata til forbedring af NVDA?"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10505,14 +10680,6 @@ msgstr "Brug skærmlayout til"
 msgid "Use screen layout off"
 msgstr "Brug skærmlayout fra"
 
-#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
-msgid ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-msgstr ""
-"Slår bevaring af skærmlayout under visning af indholdet af dokumentet til og "
-"fra"
-
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 msgid "Highlight system fo&cus"
@@ -10667,6 +10834,7 @@ msgid "No comments"
 msgstr "Ingen kommentarer"
 
 #. Translators: a description for a script
+#. Translators: a description for a script that reports the comment at the caret.
 msgid "Reports the text of the comment where the System caret is located."
 msgstr "Læser kommentaren til det sted, hvor markøren står."
 
@@ -10677,6 +10845,121 @@ msgstr "ikke i tabel"
 
 msgid "invoke"
 msgstr "Kald"
+
+#. Translators: the description of a script
+msgctxt "excel-UIA"
+msgid ""
+"Shows a browseable message Listing information about a cell's appearance "
+"such as outline and fill colors, rotation and size"
+msgstr ""
+"Viser en meddelelse med oplysninger om en celles udseende, såsom konturer og "
+"udfyldningsfarver, rotation og størrelse. Oplysningerne kan læses med "
+"gennemsynstilstand."
+
+#. Translators: The width of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell width: {0.x:.1f} pt"
+msgstr "Cellebredde: {0.x:.1f} pt"
+
+#. Translators: The height of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell height: {0.y:.1f} pt"
+msgstr "Cellehøjde: {0.y:.1f} pt"
+
+#. Translators: The rotation in degrees of an Excel cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Rotation: {0} degrees"
+msgstr "Rotation: {0} grader"
+
+#. Translators: The outline (border) colors of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid ""
+"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
+msgstr ""
+"Konturfarve: top={0.name}, bund={1.name}, venstre={2.name}, højre={3.name}"
+
+#. Translators: The outline (border) thickness values of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
+msgstr "Konturtykhed: top={0}, bund={1}, venstre={2}, højre={3}"
+
+#. Translators: The fill color of an Excel cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill color: {0.name}"
+msgstr "Fyldfarve: {0.name}"
+
+#. Translators: The fill type (pattern, gradient etc) of an Excel Cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill type: {0}"
+msgstr "Fyldtype: {0}"
+
+#. Translators: the number format of an Excel cell
+#, python-brace-format
+msgid "Number format: {0}"
+msgstr "Nummerformat: {0}"
+
+#. Translators: If an excel cell has data validation set
+msgid "Has data validation"
+msgstr "Har datavalidering"
+
+#. Translators: the data validation prompt (input message) for an Excel cell
+#, python-brace-format
+msgid "Data validation prompt: {0}"
+msgstr "Datavalideringsprompt: {0}"
+
+#. Translators: If an excel cell has conditional formatting
+msgid "Has conditional formatting"
+msgstr "Har betinget formatering"
+
+#. Translators: If an excel cell has visible gridlines
+msgid "Gridlines are visible"
+msgstr "Gitterlinjer er synlige"
+
+#. Translators: Title for a browsable message that describes the appearance of a cell in Excel
+msgctxt "excel-UIA"
+msgid "Cell Appearance"
+msgstr "Celleudseende"
+
+#. Translators:  an error message on a cell in Microsoft Excel.
+#, python-brace-format
+msgid "Error: {errorText}"
+msgstr "Fejl: {errorText}"
+
+#. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
+#, python-brace-format
+msgid "{author} is editing"
+msgstr "{author} redigerer"
+
+#. Translators: Excel, report range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "{firstAddress} {firstValue} til og med {lastAddress} {lastValue}"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the note or comment thread on the current cell"
+msgstr "Oplyser noten eller kommentartråden for den aktuelle celle"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "{comment}  by {author}"
+msgstr "{comment} af {author}"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "{comment}  by {author} with {numReplies} replies"
+msgstr "{comment} af {author} med {numReplies} svar"
+
+#. Translators: A message in Excel when there is no note
+msgid "No note or comment thread on this cell"
+msgstr "Ingen note eller kommentartråd på denne celle"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10705,13 +10988,13 @@ msgstr "Ændring: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
-msgid "Comment: {comment} by {author} on {date}"
-msgstr "Kommentar: {comment} af {author} den {date}"
+msgid "Comment: {comment} by {author}"
+msgstr "Kommentar: {comment} af {author}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
-msgid "{comment} by {author} on {date}"
-msgstr "{comment} af {author} den {date}"
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "Kommentar: {comment} af {author} den {date}"
 
 msgid "Desktop"
 msgstr "Skrivebord"
@@ -12073,6 +12356,14 @@ msgstr "dobbelt linjeafstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 linjeafstand"
+
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "&Kategorier"
+#~ msgstr[1] "&Kategorier"
+
+#~ msgid "&Activate"
+#~ msgstr "&Aktivér"
 
 #~ msgctxt "line spacing value"
 #~ msgid "exact"

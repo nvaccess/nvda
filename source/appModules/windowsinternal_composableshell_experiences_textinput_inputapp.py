@@ -119,19 +119,17 @@ class AppModule(appModuleHandler.AppModule):
 		# However, in recent builds, name change event is also fired.
 		# For consistent experience, report the new category first by traversing through controls.
 		# #8189: do not announce candidates list itself (not items), as this is repeated each time candidate items are selected.
-		if obj.UIAElement.cachedAutomationID == "CandidateList": return
+		if obj.UIAElement.cachedAutomationID == "CandidateList":
+			return
 		speech.cancelSpeech()
 		# Sometimes, due to bad tree traversal or wrong item getting selected, something other than the selected item sees this event.
-		# Sometimes clipboard candidates list gets selected, so ask NvDA to descend one more level.
-		if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList":
-			obj = obj.firstChild
-		# In build 18262, emoji panel may open to People group and skin tone modifier or the list housing them gets selected.
-		elif obj.UIAElement.cachedAutomationID == "SkinTonePanelModifier_ListView":
-			obj = obj.next
-		elif obj.parent.UIAElement.cachedAutomationID == "SkinTonePanelModifier_ListView":
+		# In build 18262, emoji panel may open to People group and skin tone modifier gets selected.
+		if obj.parent.UIAAutomationId == "SkinTonePanelModifier_ListView":
 			# But this will point to nothing if emoji search results are not people.
-			if obj.parent.next is not None: obj = obj.parent.next
-			else: obj = obj.parent.parent.firstChild
+			if obj.parent.next is not None:
+				obj = obj.parent.next
+			else:
+				obj = obj.parent.parent.firstChild
 		candidate = obj
 		if obj and obj.UIAElement.cachedClassName == "ListViewItem" and obj.parent and isinstance(obj.parent, UIA) and obj.parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList":
 			# The difference between emoji panel and suggestions list is absence of categories/emoji separation.
@@ -156,6 +154,12 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(_("No emoji"))
 		nextHandler()
 
+	# Emoji panel for build 16299 and 17134.
+	_classicEmojiPanelAutomationIds = (
+		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
+		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
+	)
+
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
 		firstChild = obj.firstChild
 		# Handle Ime Candidate UI being shown
@@ -168,43 +172,58 @@ class AppModule(appModuleHandler.AppModule):
 		# However, in build 17666 and later, child count is the same for both emoji panel and hardware keyboard candidates list.
 		# Thankfully first child automation ID's are different for each modern input technology.
 		# However this event is raised when the input panel closes.
-		if obj.firstChild is None:
+		if firstChild is None:
 			return
-		# #9104: different aspects of modern input panel are represented by automation iD's.
-		childAutomationID = obj.firstChild.UIAElement.cachedAutomationID
+		# #9104: different aspects of modern input panel are represented by Automation Id's.
+		childAutomationId = firstChild.UIAAutomationId
 		# Emoji panel for 1709 (build 16299) and 1803 (17134).
 		emojiPanelInitial = winVersion.WIN10_1709
 		# This event is properly raised in build 17134.
 		emojiPanelWindowOpenEvent = winVersion.WIN10_1803
 		if (
-			emojiPanelInitial <= winVersion.getWinVer() <= emojiPanelWindowOpenEvent
-			and childAutomationID in (
-				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
-				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
-			)
+			childAutomationId in self._classicEmojiPanelAutomationIds
+			and emojiPanelInitial <= winVersion.getWinVer() <= emojiPanelWindowOpenEvent
 		):
-			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
+			eventHandler.queueEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
-		elif childAutomationID == "CandidateWindowControl" and config.conf["inputComposition"]["autoReportAllCandidates"]:
+		elif (
+			childAutomationId == "CandidateWindowControl"
+			and config.conf["inputComposition"]["autoReportAllCandidates"]
+		):
 			try:
-				self.event_UIA_elementSelected(obj.firstChild.firstChild.firstChild, nextHandler)
+				eventHandler.queueEvent("UIA_elementSelected", firstChild.firstChild.firstChild)
 			except AttributeError:
 				# Because this is dictation window.
 				pass
-		# Emoji panel in build 17666 and later (unless this changes).
-		elif childAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
+		# Emoji panel in Version 1809 (specifically, build 17666) and later.
+		elif childAutomationId == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
-			try:
-				self.event_UIA_elementSelected(obj.firstChild.children[-2].firstChild.firstChild, nextHandler)
-			except AttributeError:
-				# In build 18272's emoji panel, emoji list becomes empty in some situations.
-				pass
+			# #10377: on some systems (particularly non-English builds of Version 1903 and later),
+			# there is something else besides grouping controls, so another child control must be used.
+			emojisList = firstChild.children[-2]
+			if emojisList.UIAAutomationId != "TEMPLATE_PART_Items_GridView":
+				emojisList = emojisList.previous
+			if emojisList.firstChild and emojisList.firstChild.firstChild:
+				emojiItem = emojisList.firstChild.firstChild
+			# Avoid announcing skin tone modifiers if possible.
+			# For people emoji, the first emoji is actually next to skin tone modifiers list.
+			if emojiItem.UIAAutomationId == "SkinTonePanelModifier_ListView" and emojiItem.next:
+				emojiItem = emojiItem.next
+			eventHandler.queueEvent("UIA_elementSelected", emojiItem)
 		# Clipboard history.
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
-		elif childAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
-			self.event_UIA_elementSelected(obj.children[-2], nextHandler)
+		elif childAutomationId == "TEMPLATE_PART_ClipboardTitleBar":
+			# Under some cases, clipboard tip text isn't shown on screen,
+			# causing clipboard history title to be announced instead of most recently copied item.
+			clipboardHistoryItem = obj.children[-2]
+			if clipboardHistoryItem.UIAAutomationId == childAutomationId:
+				clipboardHistoryItem = clipboardHistoryItem.next
+			# Make sure to move to actual clipboard history item if available.
+			if clipboardHistoryItem.firstChild is not None:
+				clipboardHistoryItem = clipboardHistoryItem.firstChild
+			eventHandler.queueEvent("UIA_elementSelected", clipboardHistoryItem)
 		nextHandler()
 
 	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
@@ -228,7 +247,7 @@ class AppModule(appModuleHandler.AppModule):
 		or (self._recentlySelected is not None and self._recentlySelected in obj.name)):
 			return
 		# The word "blank" is kept announced, so suppress this on build 17666 and later.
-		if winVersion.getWinVer().build > 17134:
+		if winVersion.getWinVer() > winVersion.WIN10_1803:
 			# In build 17672 and later,
 			# return immediately when element selected event on clipboard item was fired just prior to this.
 			# In some cases, parent will be None, as seen when emoji panel is closed in build 18267.

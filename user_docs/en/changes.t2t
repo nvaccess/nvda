@@ -3,15 +3,63 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+
+== New Features ==
+- Support for ARIA annotations:
+  - adds a command to read a summary of details of an object with aria-details. (#12364)
+  - adds an option in advanced to report if an object has details in browse mode. (#12439) 
+  -
+-
+
+
+== Changes ==
+- NVDA now speaks by default every symbol when navigating by word.
+This can be toggled in the Preferences dialog or with a new (unassigned) command. (#11779)
+- Espeak-ng has been updated to 1.51-dev commit `ab11439b18238b7a08b965d1d5a6ef31cbb05cbb`. (#12449, #12202, #12280, #12568)
+- If article is enabled in the user preferences for document formatting, NVDA announces "article" after the content. (#11103)
+-
+
+
+== Bug Fixes ==
+- In Windows 10 Calculator, NVDA will announce calculator expressions on a braille display. (#12268)
+- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
+  - Diff Match Patch now enabled by default. (#12485)
+  -
+- Updated liblouis braille translator to [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - New braille tables: Bulgarian grade 1, Burmese grade 1, Burmese grade 2, Kazakh grade 1, Khmer grade 1, Northern Kurdish grade 0, Sepedi grade 1, Sepedi grade 2, Sesotho grade 1, Sesotho grade 2, Setswana grade 1, Setswana grade 2, Tatar grade 1, Vietnamese grade 0, Vietnamese grade 2, Southern Vietnamese grade 1, Xhosa grade 1, Xhosa grade 2, Yakut grade 1, Zulu grade 1, Zulu grade 2
+  -
+- The braille input works properly with the following contracted tables: Arabic grade 2, Spanish grade 2, Urdu grade 2, Chinese (China, Mandarin) grade 2. (#12541)
+- The COM Registration Fixing Tool now resolves more issues, especially on 64 bit Windows. (#1256)
+- Improvements to button handling for the Seika Notetaker braille device from Nippon Telesoft. (#12598)
+- Improvements to announcing the Windows emoji panel and clipboard history. (#11485)
+- Updated the Bengali alphabet character descriptions. (#12502)
+- NVDA exits safely when a new process is started. (#12605)
+-
+
+
+== Changes for Developers ==
+- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SYMLVL.*`` before 2022.1. (#11856)
+- `controlTypes` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
+  - `ROLE_*` and `STATE_*` constants should be replaced to their equivalent `Role.*` and `State.*`.
+  - `roleLabels`, `stateLabels` and `negativeStateLabels` have been deprecated, usages such as `roleLabels[ROLE_*]` should be replaced to their equivalent `Role.*.displayString` or `State.*.negativeDisplayString`.
+  - `processPositiveStates` and `processNegativeStates` have been deprecated for removal.
+  -
+- On Windows 10 Version 1511 and later (including Insider Preview builds), current Windows feature update release name is obtained from Windows Registry. (#12509)
+- Deprecated: winVersion.WIN10_RELEASE_NAME_TO_BUILDS will be removed in 2022.1, there is no direct replacement. (#12544)
+-
+
+
 = 2021.1 =
 This release includes optional experimental support for UIA in Excel and Chromium browsers.
 There are fixes for several languages, and for accessing links in Braille.
-There are updates to Unicode CLDR and mathematical symbols, eSpeak-NG and LibLouis.
+There are updates to Unicode CLDR, mathematical symbols, and LibLouis.
+As well as many bug fixes and improvements, including in Office, Visual Studio, and several languages.
 
-Many bug fixes and improvements, including in Office, Visual Studio and several languages.
-Note: this is an Add-on API compatibility breaking release.
-Add-ons will need to be re-tested and have their manifest updated.
-This release also drops support for Adobe Flash.
+Note:
+ - This release breaks compatibility with existing add-ons.
+ - This release also drops support for Adobe Flash.
+ -
 
 
 == New Features ==
@@ -21,19 +69,19 @@ This release also drops support for Adobe Flash.
   - alt+up/down jumps to the previous/next output result (add shift for selecting).
   - control+l clears the output pane.
 - NVDA now reports the categories assigned to an appointment in Microsoft Outlook, if any. (#11598)
+- Support for the Seika Notetaker braille display from Nippon Telesoft. (#11514)
 
 
 == Changes ==
 - In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
 - NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
-- Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
+- Updated Unicode Common Locale Data Repository (CLDR) to 39.0. (#11943, #12314)
 - Added more mathematical symbols to the symbols dictionary. (#11467)
 - The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
 - "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
 - 'Attempt to cancel speech for expired focus events' option in the advanced settings panel now enabled by default. (#10885)
   - This behaviour can be disabled by setting this option to "No".
   - Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly.
-- Espeak-ng has been updated to 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
 - Updated liblouis braille translator to [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - New braille tables: Belarusian literary braille, Belarusian computer braille, Urdu grade 1, Urdu grade 2.
 - Support for Adobe Flash content has been removed from NVDA due to the use of Flash being actively discouraged by Adobe. (#11131)
@@ -47,7 +95,6 @@ This release also drops support for Adobe Flash.
 - The list of messages in Outlook 2010 is once again readable. (#12241)
 - In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
   - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
-- Fixed access to edit fields in MCS Electronics IDE's. (#11966)
 - In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
 - In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
 - Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
@@ -68,6 +115,9 @@ This release also drops support for Adobe Flash.
 - The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
 - In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
 - NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
+- Espeak now supports Cantonese and Mandarin again. (#10418)
+- In the new Chromium based Microsoft Edge, text fields such as the address bar are now announced when empty. (#12474)
+- Fix Seika Braille driver. (#10787)
 
 
 == Changes for Developers ==
@@ -97,13 +147,10 @@ This release also drops support for Adobe Flash.
 - REASON_QUICKNAV has been removed from browseMode - use controlTypes.OutputReason.QUICKNAV instead. (#11969)
 - ``NVDAObject`` (and derivatives) property ``isCurrent`` now strictly returns Enum class ``controlTypes.IsCurrent``. (#11782)
   - ``isCurrent`` is no longer Optional, and thus will not return None.
-  - When an object is not current ``controlTypes.IsCurrent.NO`` is returned.
+    - When an object is not current ``controlTypes.IsCurrent.NO`` is returned.
 - The ``controlTypes.isCurrentLabels`` mapping has been removed. (#11782)
-  - Instead use the ``displayString`` property on a ``controlTypes.IsCurrent`` enum value. EG ``controlTypes.IsCurrent.YES.displayString``
-- ``NVDAObject`` (and derivatives) property ``isCurrent`` now strictly returns ``controlTypes.IsCurrent``. (#11782)
-  - ``isCurrent`` is no longer Optional, and thus will not return None, when an object is not current ``controlTypes.IsCurrent.NO`` is returned.
-- The ``controlTypes.isCurrentLabels`` has been removed, instead use the ``displayString`` property on a ``controlTypes.IsCurrent`` enum value. (#11782)
-  - EG ``controlTypes.IsCurrent.YES.displayString``
+  - Instead use the ``displayString`` property on a ``controlTypes.IsCurrent`` enum value.
+    - For example: ``controlTypes.IsCurrent.YES.displayString``.
 - ``winKernel.GetTimeFormat`` has been removed - use ``winKernel.GetTimeFormatEx`` instead. (#12139)
 - ``winKernel.GetDateFormat`` has been removed - use ``winKernel.GetDateFormatEx`` instead. (#12139)
 - ``gui.DriverSettingsMixin`` has been removed - use ``gui.AutoSettingsMixin``. (#12144)
@@ -152,6 +199,12 @@ This release also drops support for Adobe Flash.
   - ``speech.speechMode_beeps`` becomes ``speech.SpeechMode.beeps``
   - ``speech.speechMode_talk`` becomes ``speech.SpeechMode.talk``
 - ``IAccessibleHandler.IAccessibleObjectIdentifierType`` is now ``IAccessibleHandler.types.IAccessibleObjectIdentifierType``. (#12367)
+- The following in ``NVDAObjects.UIA.WinConsoleUIA`` have been changed (#12094)
+  - ``NVDAObjects.UIA.winConsoleUIA.is21H1Plus`` renamed ``NVDAObjects.UIA.winConsoleUIA.isImprovedTextRangeAvailable``.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfo`` renamed to start class name with upper case.
+  - ``NVDAObjects.UIA.winConsoleUIA.consoleUIATextInfoPre21H1`` renamed ``NVDAObjects.UIA.winConsoleUIA.ConsoleUIATextInfoWorkaroundEndInclusive``
+    - The implementation works around both end points being inclusive (in text ranges) before [microsoft/terminal PR 4018 https://github.com/microsoft/terminal/pull/4018]
+    - Workarounds for ``expand``, ``collapse``, ``compareEndPoints``, ``setEndPoint``, etc
 
 
 = 2020.4 =

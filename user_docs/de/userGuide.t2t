@@ -498,7 +498,6 @@ Dies betrifft folgende Anwendungen:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - Unterstützte Bücher in Amazon Kindle für PC
 -
 
@@ -596,7 +595,7 @@ Verwenden Sie die folgenden Tasten für die Suche:
 %kc:endInclude
 
 ++ Eingebettete Objekte ++[ImbeddedObjects]
-Es gibt zunehmend Internetseiten, die mit Technologien für mediale Inhalte wie Adobe Flash, Oracle Java oder html5 mit Anwendungen und Dialogen ausgestattet sind.
+Es gibt zunehmend Internetseiten, die mit Technologien für mediale Inhalte wie Oracle Java oder html5 mit Anwendungen und Dialogen ausgestattet sind.
 Wenn Sie im Lesemodus auf einen dieser Inhalte stoßen, meldet NVDA dem entsprechend "Eingebettetes Objekt", "Anwendung" oder "Dialog".
 Um zu einem eingebetteten Objekt zu navigieren, betätigen Sie die Schnellnavigationstaste O oder Umschalt+O.
 Betätigen Sie anschließend die Eingabetaste, um mit einem Objekt zu interagieren.
@@ -794,6 +793,8 @@ In NVDA gibt es dafür den Bildschirmvorhang, der aktiviert werden kann, um den 
 
 Sie können den Bildschirmvorhang in den [NVDA-Einstellungen #NVDASettings], in der Kategorie [Visuelle Darstellungen #VisionSettings] aktivieren.
 
+Wenn der Bildschirmvorhang aktiv ist, können einige Aufgaben, die sich direkt auf das beziehen, was auf dem Bildschirm angezeigt wird, wie z. B. die Durchführung von [OCR #Win10Ocr] oder das Erstellen eines Screenshots, nicht ausgeführt werden.
+
 + Inhaltserkennung +[ContentRecognition]
 Wenn Entwickler von Anwendungen unzureichende Informationen zur Zugänglichkeit bereitstellen, können Sie zahlreiche Werkzeuge verwenden, um z. B. Text aus einem Bild auszulesen.
 NVDA unterstützt die in Windows 10 enthaltene Texterkennung, um Text aus Bildern auszulesen.
@@ -814,6 +815,8 @@ Sie können diese Zeichenerkennung verwenden, um Text aus Grafiken oder unzugän
 
 Sie können die Erkennungssprache einstellen, indem Sie die Kategorie [Windows 10-Texterkennung #Win10OcrSettings] in den NVDA-Einstellungen unter dem Menü "Optionen" aufrufen.
 Zusätzliche Sprachen können Sie in den Einstellungen von Windows unter Zeit und Sprache -> Region und Sprache -> Sprache hinzufügen installieren.
+
+Die integrierte Texterkennung in Windows 10 kann teilweise oder ganz inkompatibel mit [NVDA-Sehhilfen #Vision] oder anderen externen Sehhilfen sein. Sie müssen diese Hilfen deaktivieren, bevor Sie mit einer Erkennung fortfahren.
 
 %kc:beginInclude
 Drücken Sie NVDA+R, um den Text im aktuellen NAvigator-Objekt mit Hilfe der Windows 10-Texterkennung zu erkennen.
@@ -1743,7 +1746,7 @@ Konfigurieren können Sie die Meldungen von:
  - Seiten und Abstände
 - Seitenwechsel
  - Zeilennummern
- - Zeileneinrückungen ausgeben durch: [Aus, Ansage, Signaltöne oder Ansagen und Signaltöne #lineIndentationOptions]
+ - Zeileneinrückungen ausgeben durch: [Aus, Ansage, Signaltöne oder Ansagen und Signaltöne #DocumentFormattingSettingsLineIndentation]
  - Absatzeinrückungen (z. B. hängender Einzug, Erstzeileneinzug)
  - Zeilenabstand (einfach, doppelt, etc.)
  - Ausrichtung
@@ -1751,7 +1754,7 @@ Konfigurieren können Sie die Meldungen von:
  - Tabellen
  - Reihen- und Spaltenüberschriften
  - Zellkoordinaten
- - Zellrahmen [(Aus, Formatierung, Farben und Formatierung)]
+ - Zellrahmen (Aus, Formatierung, Farben und Formatierung)
 - Elemente
  - Überschriften
  - Links
@@ -1836,6 +1839,24 @@ Wenn diese Option aktiviert ist, verwendet NVDA eine neue, experimentelle Versio
 ==== Passwörter vorlesen in der Windows-Konsole mit UIA-Unterstützung ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Diese Einstellung steuert, ob Zeichen während der Eingabe #KeyboardSettingsSpeakTypedCharacters] oder [Wörter während der Eingabe #KeyboardSettingsSpeakTypedWords] in Situationen vorgelesen werden sollen, in denen der Bildschirm in der Windows-Konsole bei aktivierter Unterstützung von UIA nicht aktualisiert wird (z. B. bei der Kennworteingabe). Aus Sicherheitsgründen sollte diese Einstellung deaktiviert bleiben. Sie sollten sie jedoch aktivieren, wenn Sie bei der Verwendung der neuen experimentellen Konsolenunterstützung von NVDA Leistungsprobleme oder Instabilität bei der Meldung von Zeichen und/oder Wörtern während der Eingabe feststellen.
 
+==== UIA mit Microsoft Edge und anderen Chromium-basierten Browsern verwenden, sofern verfügbar ====[ChromiumUIA]
+Ermöglicht das Festlegen, wann UIA verwendet wird, wenn es in Chromium-basierten Browsern wie Microsoft Edge verfügbar ist.
+Die UIA-Unterstützung für Chromium-basierte Browser befindet sich noch in einem frühen Entwicklungsstadium und bietet möglicherweise nicht das gleiche Maß an Zugriff wie IA2.
+Das Kombinationsfeld hat die folgenden Optionen:
+- Standard (nur wenn nötig): Der NVDA-Standard, derzeit ist dies "Nur wenn nötig". Diese Voreinstellung kann sich in Zukunft ändern, wenn die Technologie ausgereift ist.
+- Nur wenn nötig: Wenn NVDA nicht in der Lage ist, in den Browser-Prozess einzugreifen, um IA2 zu verwenden, und UIA verfügbar ist, greift NVDA auf die Verwendung von UIA zurück.
+- Ja: Wenn der Browser UIA zur Verfügung stellt, wird NVDA es verwenden.
+- Nein: UIA wird nicht verwendet, auch wenn NVDA nicht in den Prozess injizieren kann. Dies kann für Entwickler nützlich sein, die Probleme mit IA2 debuggen und sicherstellen wollen, dass NVDA nicht auf UIA zurückgreift.
+-
+
+==== UIA verwenden, um auf die Steuerelemente der Microsoft Excel-Tabelle zuzugreifen, sofern verfügbar ====[UseUiaForExcel]
+Wenn diese Option aktiviert ist, versucht NVDA, die Eingabehilfen-API von Microsoft UI Automation zu verwenden, um Informationen aus den Steuerelementen von Microsoft Excel-Tabellen abzurufen.
+Dies ist eine experimentelle Funktion, und einige Funktionen von Microsoft Excel sind in diesem Modus möglicherweise nicht verfügbar.
+So sind z. B. die NVDA-Elementeliste zum Auflisten von Formeln und Kommentaren und die Schnellnavigation im Lesemodus zum Springen zu Formularfeldern in einer Kalkulationstabelle nicht verfügbar.
+Für die grundlegende Navigation bzw. Bearbeitung von Tabellenkalkulationen kann diese Option jedoch eine enorme Leistungsverbesserung darstellen.
+Es wird nach wie vor empfohlen, dass die meisten Benutzer diese Funktion sie nicht standardmäßig aktivieren. Dafür wird mindestens Microsoft Excel Build 16.0.13522.10000 oder neuer benötigt. Jedoch können die Anwender diese Funktion trotzdem testen und Feedback auf Englisch bei NV Access einreichen.
+Die UIA-Implementierung von Microsoft Excel wird fortlaufend angepasst. die Versionen von Microsoft Office, die noch die Build 16.0.13522.10000 haben, stellen möglicherweise nicht genügend Informationen bereit, damit diese Option von Nutzen ist.
+
 ==== Unterstützung bei neu eingegebenen Zeichen in der Windows-Konsole (falls verfügbar) ====[AdvancedSettingsKeyboardSupportInLegacy]
 Diese Option aktiviert eine alternative Methode zur Erkennung von Zeichen während der Eingabe in der Windows-Konsole.
 Durch das Aktivieren dieser Option wird zwar die Leistung gesteigert und das Buchstabieren mancher Ausgaben in Windows-Konsolen verhindert; es könnten jedoch Probleme mit einigen Terminals auftreten.
@@ -1843,10 +1864,24 @@ Diese Funktion ist verfügbar und seit Windows 10 Version 1607 standardmäßig a
 Das eingeben von Zeichen, die nicht auf dem Bildschirm erscheinen (z. B. bei Passwörtern) wird nicht unterstützt, wenn diese Option aktiviert ist.
 In Umgebungen, die nicht unterstützt werden, können Sie vorübergehend [Zeichen beim Eingeben ansagen #KeyboardSettingsSpeakTypedCharacters] und [Wörter beim Eingeben ansagen #KeyboardSettingsSpeakTypedWords] deaktivieren, wenn Sie Passwörter eingeben.
 
+==== Diff-Algorithmus ====[DiffAlgo]
+Diese Einstellung steuert, wie NVDA neuen Text in Terminals vorgelesen werden sollen.
+Das Kombinationsfeld "Diff-Algorithmus" hat drei Optionen:
+- Automatisch: Mit NVDA 2021.1 ist diese Option gleichbedeutend mit Difflib.
+In einer zukünftigen Version wird er möglicherweise in Diff Match Patch geändert, sofern die Anwendertests positiv ausfallen.
+- Diff Match Patch zulassen: Diese Option veranlasst NVDA, Änderungen am Terminaltext zeichenweise zu berechnen.
+Dies kann die Leistung verbessern, wenn große Textmengen in die Konsole geschrieben werden, und ermöglicht eine genauere Meldung von Änderungen, die in der Mitte von Zeilen vorgenommen wurden.
+Sie kann jedoch mit einigen Anwendungen inkompatibel sein.
+Diese Funktion wird in der Windows-Konsole auf Windows 10 Versionen 1607 und neuer unterstützt.
+Zusätzlich kann es in anderen Terminals auf ältere Windows-Versionen verfügbar sein.
+- Difflib erzwingen: Diese Option veranlasst NVDA, Änderungen am Terminaltext zeilenweise zu berechnen.
+Es ist identisch mit dem Verhalten von NVDA in den Versionen 2020.4 und älter.
+-
+
 ==== Sprachausgabe unterbrechen, wenn das Ereignis für den Fokus abgelaufen ist: ====[CancelExpiredFocusSpeech]
 Diese Option aktiviert ein Verhalten, welches bei abgelaufenen Ereignissen des Fokus versucht, die Sprachausgabe abzubrechen.
-Insbesondere das schnelle Durchlaufen von Nachrichten in Gmail mit Google Chrome kann dazu führen, dass NVDA alte Informationen noch vorliest.
-Diese Funktionalität ist ab NVDA 2020.2 experimentell.
+Insbesondere das schnelle Durchlaufen von Nachrichten in GMail mit Google Chrome kann dazu führen, dass NVDA alte Informationen noch vorliest.
+Diese Funktion ist ab NVDA 2021.1 standardmäßig aktiviert.
 
 === Zeitüberschreitung beim Bewegen des System-Cursors ====[AdvancedSettingsCaretMoveTimeout]
 Mit dieser Option können Sie die Anzahl der Millisekunden konfigurieren, die NVDA wartet, bis sich der Cursor (Einfügepunkt) in den editierbaren Textsteuerelementen bewegt.
@@ -1942,7 +1977,8 @@ Unterhalb jeder Funktion werden die zugewiesenen Befehle, sofern vorhanden, ange
 um einen Befehl einer Funktion zuzuweisen, wählen Sie die Funktion aus und klicken Sie auf den Schalter "Hinzufügen".
 Führen Sie anschließend den zuzuweisenden Befehl durch - Drücken Sie die entsprechende Tastenkombination oder die Tasten an der Braillezeile.
 Oft kann eine NVDA-Funktion durch mehr als eine Tastenkombination ausgeführt werden.
-Bei Tastenkombinationen kann es beispielsweise sinnvoll sein, das Tastaturschema anzugeben, in dem diese Tastenkombination wirksam werden soll (Desktop/Laptop) in solchen Fällen wird ein Menü angezeigt, in dem Sie die entsprechende Option auswählen können.
+Bei Tastenkombinationen kann es beispielsweise sinnvoll sein, das Tastaturschema anzugeben, in dem diese Tastenkombination wirksam werden soll (Desktop/Laptop).
+In solchen Fällen wird ein Menü angezeigt, in dem Sie die entsprechende Option auswählen können.
 
 Um eine Tastenkombination von einer Funktion zu entfernen, wählen Sie diese aus und klicken Sie anschließend auf den Schalter "Entfernen".
 
@@ -3067,12 +3103,12 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 %kc:endInclude
 
 ++ Nattiq nBraille ++[NattiqTechnologies]
-NVDA supports displays from [Nattiq Technologies https://www.nattiq.com/] when connected via USB.
-Windows 10 detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
-You can get them from the manufacturer's website.
+NVDA unterstützt Braillezeilen von [Nattiq Technologies https://www.nattiq.com/], wenn sie über USB angeschlossen sind.
+Windows 10 erkennt die Braillezeilen, sobald sie angeschlossen sind. Wenn Sie ältere Windows-Versionen (unter Win10) verwenden, müssen Sie eventuell USB-Treiber nachinstallieren.
+Diese können Sie von der Website des Herstellers beziehen.
 
-Following are the key assignments for Nattiq Technologies displays with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Nachfolgend finden Sie die wichtigsten Zuordnungen für die Braillezeilen von Nattiq Technologies mit NVDA.
+Wo diese Tasten zu finden sind, entnehmen Sie bitte der Dokumentation der Braillezeile.
 %kc:beginInclude
 || Name | Taste |
 | Braillezeile rückwärts navigieren | Aufwärts |

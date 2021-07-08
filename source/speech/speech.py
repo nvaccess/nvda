@@ -42,6 +42,7 @@ from .types import (
 	_flattenNestedSequences
 )
 from typing import (
+	Iterable,
 	Optional,
 	Dict,
 	List,
@@ -1125,8 +1126,14 @@ def speakTextInfo(
 	)
 
 	speechGen = GeneratorWithReturn(speechGen)
+	symbolLevel: Optional[characterProcessing.SYMLVL] = None
+	if unit == textInfos.UNIT_CHARACTER:
+		symbolLevel = characterProcessing.SYMLVL.ALL
+	elif unit == textInfos.UNIT_WORD:
+		if config.conf["speech"]["symbolLevelWordAll"]:
+			symbolLevel = characterProcessing.SYMLVL.ALL
 	for seq in speechGen:
-		speak(seq, priority=priority)
+		speak(seq, symbolLevel=symbolLevel, priority=priority)
 	return speechGen.returnValue
 
 
@@ -1322,7 +1329,7 @@ def getTextInfoSpeech(  # noqa: C901
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
-		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
+		and len(textWithFields[0]) == 1
 		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if not onlyCache:
@@ -1692,6 +1699,39 @@ def getPropertiesSpeech(  # noqa: C901
 	return textList
 
 
+def _shouldSpeakContentFirst(
+		reason: OutputReason,
+		role: int,
+		presCat: str,
+		attrs: textInfos.ControlField,
+		tableID: Any,
+		states: Iterable[int],
+) -> bool:
+	"""
+	Determines whether or not to speak the content before the controlField information.
+	Helper function for getControlFieldSpeech.
+	"""
+	_neverSpeakContentFirstRoles = (
+		controlTypes.ROLE_EDITABLETEXT,
+		controlTypes.ROLE_COMBOBOX,
+		controlTypes.ROLE_TREEVIEW,
+		controlTypes.ROLE_LIST,
+		controlTypes.ROLE_LANDMARK,
+		controlTypes.ROLE_REGION,
+	)
+	return (
+		reason == OutputReason.FOCUS
+		and (
+			# the category is not a container, unless it's an article (#11103)
+			presCat != attrs.PRESCAT_CONTAINER
+			or role == controlTypes.ROLE_ARTICLE
+		)
+		and not (role in _neverSpeakContentFirstRoles)
+		and not tableID
+		and controlTypes.STATE_EDITABLE not in states
+	)
+
+
 # C901 'getControlFieldSpeech' is too complex
 # Note: when working on getControlFieldSpeech, look for opportunities to simplify
 # and move logic out into smaller helper functions.
@@ -1788,20 +1828,7 @@ def getControlFieldSpeech(  # noqa: C901
 
 	# Determine the order of speech.
 	# speakContentFirst: Speak the content before the control field info.
-	speakContentFirst = (
-		reason == OutputReason.FOCUS
-		and presCat != attrs.PRESCAT_CONTAINER
-		and role not in (
-			controlTypes.ROLE_EDITABLETEXT,
-			controlTypes.ROLE_COMBOBOX,
-			controlTypes.ROLE_TREEVIEW,
-			controlTypes.ROLE_LIST,
-			controlTypes.ROLE_LANDMARK,
-			controlTypes.ROLE_REGION,
-		)
-		and not tableID
-		and controlTypes.STATE_EDITABLE not in states
-	)
+	speakContentFirst = _shouldSpeakContentFirst(reason, role, presCat, attrs, tableID, states)
 	# speakStatesFirst: Speak the states before the role.
 	speakStatesFirst=role==controlTypes.ROLE_LINK
 

@@ -13,7 +13,13 @@ This is in contrast with the `SystemTestSpy/speechSpy*.py files,
 which provide library functions related to monitoring NVDA and asserting NVDA output.
 """
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-from os.path import join as _pJoin, abspath as _abspath, expandvars as _expandvars
+from os.path import (
+	join as _pJoin,
+	abspath as _abspath,
+	expandvars as _expandvars,
+	exists as _exists,
+	splitext as _splitext,
+)
 import tempfile as _tempFile
 from typing import Optional
 from urllib.parse import quote as _quoteStr
@@ -70,6 +76,14 @@ class _NvdaLocationData:
 			"nvdaTestRunLogs"
 		)
 
+	def getPy2exeBootLogPath(self) -> Optional[str]:
+		if self.whichNVDA == "installed":
+			executablePath = _locations.findInstalledNVDAPath()
+			# py2exe names this log file after the executable, see py2exe/boot_common.py
+			return _splitext(executablePath)[0] + ".log"
+		elif self.whichNVDA == "source":
+			return None  # Py2exe not used for source.
+
 	def findInstalledNVDAPath(self) -> Optional[str]:
 		NVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'nvda', 'nvda.exe')
 		legacyNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'NVDA', 'nvda.exe')
@@ -116,11 +130,12 @@ class NvdaLib:
 		return outputFileName
 
 	@staticmethod
-	def setup_nvda_profile(configFileName):
+	def setup_nvda_profile(configFileName, gesturesFileName: Optional[str] = None):
 		configManager.setupProfile(
 			_locations.repoRoot,
 			configFileName,
-			_locations.stagingDir
+			_locations.stagingDir,
+			gesturesFileName,
 		)
 
 	@staticmethod
@@ -249,9 +264,9 @@ class NvdaLib:
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
 
-	def start_NVDA(self, settingsFileName):
+	def start_NVDA(self, settingsFileName: str, gesturesFileName: Optional[str] = None):
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
-		self.setup_nvda_profile(settingsFileName)
+		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()
@@ -267,6 +282,24 @@ class NvdaLib:
 			saveToPath
 		)
 		builtIn.log(f"Log saved to: {saveToPath}", level='DEBUG')
+
+	def save_py2exe_boot_log(self):
+		""" If a dialog shows: Errors in "nvda.exe", see the logfile at <path> for details.
+		This orginates from
+		py2exe boot logs are saved to
+		${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-py2exe-nvda.log
+		"""
+		copyFrom = _locations.getPy2exeBootLogPath()
+		if not copyFrom or not _exists(copyFrom):
+			builtIn.log("No py2exe log")
+			return
+		builtIn.log("Saving py2exe log")
+		saveToPath = self.create_preserved_test_output_filename("py2exe-nvda.log")
+		opSys.copy_file(
+			copyFrom,
+			saveToPath
+		)
+		builtIn.log(f"py2exe log saved to: {saveToPath}", level='DEBUG')
 
 	def create_preserved_test_output_filename(self, fileName):
 		"""EG for nvda.log path will become:
@@ -287,6 +320,7 @@ class NvdaLib:
 			raise
 		finally:
 			self.save_NVDA_log()
+			self.save_py2exe_boot_log()
 			# remove the spy so that if nvda is run manually against this config it does not interfere.
 			self.teardown_nvda_profile()
 
@@ -302,6 +336,7 @@ class NvdaLib:
 			raise
 		finally:
 			self.save_NVDA_log()
+			self.save_py2exe_boot_log()
 			# remove the spy so that if nvda is run manually against this config it does not interfere.
 			self.teardown_nvda_profile()
 
