@@ -2683,9 +2683,9 @@ class AdvancedPanelControls(
 		#  Advanced settings panel.
 		label = _("Only process MSAA/IA2 &events for specific objects (focus, etc.)")
 		self.iaccessibleSpecificObjEventsCheckBox = iaccessibleGroup.addItem(wx.CheckBox(self, label=label))
-		self.iaccessibleSpecificObjEventsCheckBox.SetValue(config.conf["iaccessible"]["specificObjEvents"])
+		self.iaccessibleSpecificObjEventsCheckBox.SetValue(config.conf["IAccessible"]["specificObjEvents"])
 		self.iaccessibleSpecificObjEventsCheckBox.defaultValue = (
-			self._getDefaultValue(["iaccessible", "specificObjEvents"])
+			self._getDefaultValue(["IAccessible", "specificObjEvents"])
 		)
 
 		# Translators: This is the label for a group of advanced options in the
@@ -2896,7 +2896,7 @@ class AdvancedPanelControls(
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
-		config.conf["iaccessible"]["specificObjEvents"] = self.iaccessibleSpecificObjEventsCheckBox.IsChecked()
+		config.conf["IAccessible"]["specificObjEvents"] = self.iaccessibleSpecificObjEventsCheckBox.IsChecked()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()

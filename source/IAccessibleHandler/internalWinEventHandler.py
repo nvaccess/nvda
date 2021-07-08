@@ -190,7 +190,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			# WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will
 			# silently exit (#677). Therefore, completely ignore these events, which is useless to us anyway.
 			return
-		if config.conf["iaccessible"]["specificObjEvents"] and not (
+		if config.conf["IAccessible"]["specificObjEvents"] and not (
 			objectID == winUser.OBJID_CARET
 			or eventID in EVENTS_ALLOWED_FOR_ALL_OBJS
 			or (

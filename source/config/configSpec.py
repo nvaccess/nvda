@@ -278,7 +278,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# 0:default, 1:yes, 2:no
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 
-[iaccessible]
+[IAccessible]
 	specificObjEvents = boolean(default=false)
 """
 
