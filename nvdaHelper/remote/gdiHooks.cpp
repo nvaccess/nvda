@@ -12,6 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#include <vector>
 #include <map>
 #include <set>
 #include <list>
@@ -180,26 +181,22 @@ void swapBuffer(WORD* array, int length) {
 }
 
 //Retrieves table data from font selected in DC using GetFontData [SynPdf]
-PBYTE getTTFData(HDC hdc, char* tableName, LPDWORD dataSize) {
-	PBYTE res=NULL;
+std::vector<BYTE> getTTFData(HDC hdc, char* tableName) {
 	DWORD len=GetFontData(hdc,*((LPDWORD)tableName),0,NULL,0);
 	if(len==GDI_ERROR) {
 		LOG_DEBUG("getTTFData for table "<<tableName<<" result GDI_ERROR");
-		if(dataSize!=NULL) *dataSize=0;
-		return NULL;
+        return std::vector<BYTE>();
 	}
-	res=(PBYTE)calloc(len,sizeof(BYTE));
+	std::vector<BYTE> resVec(len, BYTE(0));
+	PBYTE res = resVec.data();
 	if(GetFontData(hdc,*((LPDWORD)tableName),0,res,len)==GDI_ERROR) {
 		//Probably could not happen
 		LOG_DEBUG("getTTFData for table "<<tableName<<", dataSize="<<len<<" result GDI_ERROR");
-		free(res);
-		if(dataSize!=NULL) *dataSize=0;
-		return NULL;
+		return std::vector<BYTE>();
 	}
-	if(dataSize!=NULL) *dataSize=len;
 	LOG_DEBUG("getTTFData for table "<<tableName<<", dataSize="<<len);
 	swapBuffer((WORD*)res,len>>1);
-	return res;
+	return resVec;
 }
 
 //This class contains glyphIndex to wchar_t mapping. See [cmap], subheading "Format 4: Segment mapping to delta values"
@@ -226,9 +223,13 @@ class GlyphTranslator {
 	GlyphTranslator(HDC hdc) : _glyphs(), _refCount(0) {
 		incRef();
 		LOG_DEBUG("Creating instance at "<<this);
-		DWORD cmapLen;
-		PBYTE p=getTTFData(hdc,"cmap",&cmapLen);
-		if(p==NULL) return;
+
+		std::vector<BYTE> pVec = getTTFData(hdc, "cmap");
+		if(pVec.empty()){
+			return;
+		}
+		PBYTE p = pVec.data();
+		DWORD cmapLen = static_cast<DWORD>(pVec.size()); // size could be bigger than a DWORD
 		CmapHeader* header=(CmapHeader*)p;
 		EncodingRecord* encodings=(EncodingRecord*)(p+sizeof(CmapHeader));
 		DWORD off=0;
@@ -243,12 +244,10 @@ class GlyphTranslator {
 		}
 		if(off==0 || off>cmapLen) {
 			LOG_DEBUG("Offset seems to be out of range ("<<off<<")");
-			free(p);
 			return;
 		}
 		CmapFmt4Header* fmt4=(CmapFmt4Header*)(p+off);
 		if(fmt4->format!=4) {
-			free(p);
 			LOG_DEBUG("No format4 table found, found format "<<fmt4->format);
 			return;
 		}
@@ -278,7 +277,6 @@ class GlyphTranslator {
 			}
 		}
 		LOG_DEBUG(_glyphs.size()<<" glyphs were mapped");
-		free(p);
 	}
 
 	~GlyphTranslator() {
@@ -289,16 +287,14 @@ class GlyphTranslator {
 
 	bool translateGlyphs(const wchar_t* lpString, int cbCount, wstring& newString) {
 		if(!hasMapping()) return false;
-		wchar_t* newStr=(wchar_t*)calloc(cbCount,sizeof(wchar_t));
-		if(newStr==NULL) return false;
+		newString.assign(cbCount, '\0');
+		wchar_t* newStr = newString.data();
 		for(int i=0; i<cbCount; i++) {
 			map<int,wchar_t>::iterator wchr=_glyphs.find((int)lpString[i]);
 			if(wchr==_glyphs.end()) newStr[i]=' ';
 			else newStr[i]=wchr->second;
 		}
-		newString=wstring(newStr,cbCount);
-		free(newStr);
-		LOG_DEBUG("Translated glyphs: "<<newString);
+		LOG_DEBUG("Translated glyphs: " << newString);
 		return true;
 	}
 };
@@ -313,8 +309,11 @@ class GlyphTranslatorCache : protected LockableObject {
 	GlyphTranslatorCache() : _glyphTranslatorsByFontChecksum(), LockableObject() {}
 
 	GlyphTranslator* fetchGlyphTranslator(HDC hdc) {
-		FontHeader* fh=(FontHeader*)getTTFData(hdc,"head",NULL);
-		if(!fh) return NULL;
+		std::vector<BYTE> fhVec = getTTFData(hdc, "head");
+		if (fhVec.empty()) {
+			return nullptr;
+		}
+		FontHeader* fh = reinterpret_cast<FontHeader*>(fhVec.data());
 		GlyphTranslator* gt=NULL;
 		acquire();
 		map<int,GlyphTranslator*>::iterator i=_glyphTranslatorsByFontChecksum.find(fh->checksumAdjustment);
@@ -326,7 +325,6 @@ class GlyphTranslatorCache : protected LockableObject {
 		}
 		if(gt) gt->incRef();
 		release();
-		free(fh);
 		return gt;
 	}
 
@@ -410,8 +408,9 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Fetch the text metrics for this font
 	TEXTMETRIC tm;
 	GetTextMetrics(hdc,&tm);
-	//Calculate character extents array 
-	POINT* characterExtents=(POINT*)calloc(cbCount,sizeof(POINT));
+	//Calculate character extents array
+	std::vector<POINT> characterExtentsVec(cbCount);
+	POINT* characterExtents = characterExtentsVec.data();
 	if(lpdx) {
 		long acX=0;
 		long acY=tm.tmHeight;
@@ -422,17 +421,24 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		resultTextSize->cx=acX;
 		resultTextSize->cy=acY;
 	} else {
-		long* characterExtentsX=(long*)calloc(cbCount,sizeof(long));
+		std::vector<int>characterExtentsXVec(cbCount);
+		int* characterExtentsX = characterExtentsXVec.data();
 		if(fromGlyphs) {
-			GetTextExtentExPointI(hdc,(LPWORD)lpString,cbCount,0,NULL,(LPINT)characterExtentsX,resultTextSize);
+			LPWORD lpwszString = reinterpret_cast<LPWORD>(const_cast<wchar_t*>(lpString));
+			GetTextExtentExPointI(
+				hdc, lpwszString, cbCount, 0, nullptr,
+				characterExtentsX, resultTextSize
+			);
 		} else {
-			GetTextExtentExPoint(hdc,newText.c_str(),cbCount,0,NULL,(LPINT)characterExtentsX,resultTextSize);
+			GetTextExtentExPoint(
+				hdc, newText.data(), cbCount, 0, nullptr,
+				characterExtentsX, resultTextSize
+			);
 		}
 		for(int i=0;i<cbCount;++i) {
 			characterExtents[i].x=characterExtentsX[i];
 			characterExtents[i].y=tm.tmHeight;
 		}
-		free(characterExtentsX);
 	}
 	//Convert the character extents from logical to physical points, but keep them relative
 	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
@@ -443,7 +449,6 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		BOOL whitespace=TRUE;
 		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));++i);
 		if(whitespace) {
-			free(characterExtents);
 			return;
 		}
 	}
@@ -505,7 +510,6 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		HWND hwnd=WindowFromDC(hdc);
 		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}
-	free(characterExtents);
 }
 
 /**
@@ -515,16 +519,32 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
   */
 void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction) {
 	int newCount=0;
-	wchar_t* newString=NULL;
+	wchar_t* pNewString = nullptr;
+	std::wstring newString;
 	if(lpString&&cbCount) {
 		newCount=MultiByteToWideChar(codePage,0,lpString,cbCount,NULL,0);
 		if(newCount>0) {
-			newString=(wchar_t*)calloc(newCount+1,sizeof(wchar_t));
-			MultiByteToWideChar(codePage,0,lpString,cbCount,newString,newCount);
+			newString.assign(newCount + 1, '\0');
+			pNewString = newString.data();
+			MultiByteToWideChar(codePage, 0, lpString, cbCount, pNewString, newCount);
 		}
 	}
-	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,lpdx,newCount,resultTextSize,direction);
-	if(newString) free(newString);
+	ExtTextOutHelper(
+					model,
+					hdc,
+					x,
+					y,
+					lprc,
+					fuOptions,
+					textAlign,
+					stripHotkeyIndicator,
+					pNewString,
+					codePage,
+					lpdx,
+					newCount,
+					resultTextSize,
+					direction
+	);
 }
 
 //TextOut hook class template
