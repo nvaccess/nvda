@@ -159,8 +159,17 @@ def getWinVer():
 	"""
 	winVer = sys.getwindowsversion()
 	# #12509: on Windows 10, fetch whatever Windows Registry says for the current build.
+	# #12626: note that not all Windows 10 releases are labeled "Windows 10"
+	# (build 22000 is Windows 11 despite major.minor being 10.0).
 	try:
-		releaseName = f"Windows 10 {_getRunningVersionNameFromWinReg()}"
+		if WinVersion(
+			major=winVer.major,
+			minor=winVer.minor,
+			build=winVer.build
+		) >= WIN11:
+			releaseName = f"Windows 11 {_getRunningVersionNameFromWinReg()}"
+		else:
+			releaseName = f"Windows 10 {_getRunningVersionNameFromWinReg()}"
 	except RuntimeError:
 		releaseName = None
 	return WinVersion(
