@@ -39,6 +39,8 @@ What's New in NVDA
   - `roleLabels`, `stateLabels` and `negativeStateLabels` have been deprecated, usages such as `roleLabels[ROLE_*]` should be replaced to their equivalent `Role.*.displayString` or `State.*.negativeDisplayString`.
   - `processPositiveStates` and `processNegativeStates` have been deprecated for removal.
   -
+- On Windows 10 Version 1511 and later (including Insider Preview builds), current Windows feature update release name is obtained from Windows Registry. (#12509)
+- Deprecated: winVersion.WIN10_RELEASE_NAME_TO_BUILDS will be removed in 2022.1, there is no direct replacement. (#12544)
 -
 
 
