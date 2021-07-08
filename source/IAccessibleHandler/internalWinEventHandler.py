@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited, James Teh
+# Copyright (C) 2020-2021 NV Access Limited, James Teh, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,14 +14,8 @@ from typing import Dict, Callable
 import core
 import winUser
 import config
-from . import getWinEventLogInfo
-from . import isMSAADebugLoggingEnabled
-from comInterfaces.IAccessible2Lib import (
-	IA2_EVENT_TEXT_CARET_MOVED,
-	IA2_EVENT_DOCUMENT_LOAD_COMPLETE,
-	IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED,
-	IA2_EVENT_PAGE_CHANGED,
-)
+from .utils import getWinEventLogInfo, isMSAADebugLoggingEnabled
+from comInterfaces import IAccessible2Lib as IA2
 
 from .orderedWinEventLimiter import OrderedWinEventLimiter, MENU_EVENTIDS
 from logHandler import log
@@ -60,10 +54,10 @@ winEventIDsToNVDAEventNames = {
 	winUser.EVENT_OBJECT_STATECHANGE: "stateChange",
 	winUser.EVENT_OBJECT_VALUECHANGE: "valueChange",
 	winUser.EVENT_OBJECT_LIVEREGIONCHANGED: "liveRegionChange",
-	IA2_EVENT_TEXT_CARET_MOVED: "caret",
-	IA2_EVENT_DOCUMENT_LOAD_COMPLETE: "documentLoadComplete",
-	IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED: "IA2AttributeChange",
-	IA2_EVENT_PAGE_CHANGED: "pageChange",
+	IA2.IA2_EVENT_TEXT_CARET_MOVED: "caret",
+	IA2.IA2_EVENT_DOCUMENT_LOAD_COMPLETE: "documentLoadComplete",
+	IA2.IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED: "IA2AttributeChange",
+	IA2.IA2_EVENT_PAGE_CHANGED: "pageChange",
 }
 
 _processDestroyWinEvent = None
@@ -78,7 +72,7 @@ EVENTS_ALLOWED_FOR_ALL_OBJS = (
 	# In IA2 rich text editors, caret events can come from a descendant of the
 	# focus. The simplest way to deal with this is to just allow this event for
 	# all objects, since they're unlikely to flood us anyway.
-	IA2_EVENT_TEXT_CARET_MOVED,
+	IA2.IA2_EVENT_TEXT_CARET_MOVED,
 )
 WINDOW_CLASSES_ALLOWED_FOR_SHOW_EVENTS = (
 	"Frame Notification Bar",  # notification bars

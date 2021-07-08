@@ -21,6 +21,7 @@ import inputCore
 import queueHandler
 import watchdog
 
+import ctypes
 import sys
 import os
 
@@ -65,6 +66,10 @@ class NVDASpyLib:
 		# Import path must be valid after `speechSpySynthDriver.py` is moved to "scratchpad/synthDrivers/"
 		from synthDrivers.speechSpySynthDriver import post_speech
 		post_speech.register(self._onNvdaSpeech)
+
+	def queueNVDAMainThreadCrash(self):
+		from queueHandler import queueFunction, eventQueue
+		queueFunction(eventQueue, _crashNVDA)
 
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
@@ -159,8 +164,7 @@ class NVDASpyLib:
 			giveUpAfterSeconds=self._minTimeout(10),
 			errorMessage="Unable to connect to nvdaSpy",
 		)
-		if self._isNvdaStartupComplete:
-			self.reset_all_speech_index()
+		self.reset_all_speech_index()
 
 	def get_last_speech(self) -> str:
 		return self._getSpeechAtIndex(-1)
@@ -275,6 +279,10 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 	def terminate(self):
 		log.debug("Terminating the SystemTestSpyServer")
 		self._server.stop()
+
+
+def _crashNVDA():
+	ctypes.windll.Kernel32.DebugBreak()
 
 
 GlobalPlugin = SystemTestSpyServer

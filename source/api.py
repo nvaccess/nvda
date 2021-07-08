@@ -6,7 +6,6 @@
 
 """General functions for NVDA"""
 
-import ctypes
 import config
 import textInfos
 import review
@@ -14,9 +13,7 @@ import globalVars
 from logHandler import log
 import ui
 import treeInterceptorHandler
-import virtualBuffers
 import NVDAObjects
-import NVDAObjects.IAccessible
 import winUser
 import controlTypes
 import eventHandler
@@ -318,7 +315,7 @@ def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
 			winUser.emptyClipboard()
 			winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
 		got = getClipData()
-	except ctypes.WinError:
+	except OSError:
 		if notify:
 			ui.reportTextCopiedToClipboard()  # No argument reports a failure.
 		return False

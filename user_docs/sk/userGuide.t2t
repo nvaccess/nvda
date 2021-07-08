@@ -307,7 +307,7 @@ Napríklad v čase, keď píšete text do editačného poľa, má fokus toto edi
 
 Najbežnejší spôsob pohybu v systéme Windows s NVDA je používanie obvyklých klávesových skratiek pre pohyb po ovládacích prvkoch: tab a shift+tab, vyvolanie panela ponúk pomocou klávesu alt, pohyby v ponukách prostredníctvom kurzorových šípok, či prepínanie sa medzi spustenými aplikáciami alt+tab.
 Toto spôsobuje zmeny systémového fokusu, objektu, ktorý práve reaguje na príkazy z klávesnice. NVDA reaguje na zmeny fokusu, čo spôsobuje, že  budete počuť informáciu o názve objektu, type, hodnote, popise, jeho klávesovú skratku, či informáciu o pozícii vzhľadom na susediace objekty.
-Ak je zapnuté [zvýraznenie fokusu #VisionFocusHighlight], systémový fokus je zvýraznený aj na obrazovke.
+Ak je zapnuté [zvýraznenie na obrazovke #VisionFocusHighlight], systémový fokus je zvýraznený aj na obrazovke.
 
 Pri zameraní fokusu možno použiť niekoľko užitočných skratiek:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Veľmi podobne aj panel nástrojov obsahuje viaceré prvky. Aby ste mohli tieto 
 
 Objekt, ktorý si práve týmto spôsobom prezeráte je nazývaný navigačný objekt.
 Po zameraní objektu je možné [prezerať text objektu #ReviewingText] ak sa nachádzate v [prezeraní objektov #ObjectReview].
-Ak je zapnuté [zvýraznenie fokusu #VisionFocusHighlight], navigačný objekt  je zvýraznený aj na obrazovke.
+Ak je zapnuté [zvýraznenie na obrazovke #VisionFocusHighlight], navigačný objekt  je zvýraznený aj na obrazovke.
 Ak presuniete fokus na iný objekt, predvolene sa  zmení  aj objekt ktorý prezeráte, avšak toto je možné vypnúť a zapnúť podľa potreby.
 
 Sledovanie objektov na braillovskom riadku je možné nastaviť s použitím funkcie [zviazania braillovského kurzora #BrailleTether].
@@ -498,7 +498,6 @@ Toto zahŕňa dokumenty v programoch:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - Podporované knihy v aplikácii Amazon Kindle pre  PC
 -
 
@@ -506,7 +505,7 @@ Režim prehliadania môžete aktivovať aj v dokumentoch programu Microsoft Word
 
 V režime prehliadania je obsah dokumentu usporiadaný plošne, takže na navigáciu je možné použiť bežné navigačné príkazy ako v prípade textových dokumentov.
 V tomto režime fungujú štandardné klávesové skratky na [čítanie textu systémovým kurzorom #SystemCaret] ako napríklad plynulé čítanie, informácie o formátovaní a navigačné príkazy po tabuľkách.
-Ak je zapnuté [zvýraznenie fokusu #VisionFocusHighlight], pozícia kurzora v režime prehliadania je zvýraznená aj na obrazovke.
+Ak je zapnuté [zvýraznenie na obrazovke #VisionFocusHighlight], pozícia kurzora v režime prehliadania je zvýraznená aj na obrazovke.
 Informácia o type prvku napr. či sa jedná o odkaz, nadpis a podobne je automaticky oznamovaná pri pohybe.
 
 Niektoré situácie si vyžadujú interakciu priamo s prvkami v dokumente.
@@ -596,7 +595,7 @@ Na vyhľadávanie môžete použiť nasledujúce klávesové skratky:
 %kc:endInclude
 
 ++ Vnorené objekty ++[ImbeddedObjects]
-Moderné webové stránky môžu byť obohatené o prvky Adobe Flash, Oracle Java a HTML5, ale aj o dialógy či aplikácie.
+Moderné webové stránky môžu byť obohatené o prvky Oracle Java a HTML5, ale aj o dialógy či aplikácie.
 Ak sa tieto nachádzajú v dokumente, NVDA oznámi "vnorený objekt", "aplikácia", alebo "dialóg".
 medzi týmito prvkami sa môžete pohybovať skratkami rýchlej  navigácie O a shift+O.
 Stlačením klávesu enter môžete premiestniť fokus do takéhoto vnoreného objektu.
@@ -776,8 +775,8 @@ NVDA ponúka viacero vizuálnych rozšírení, ktoré sú popísané nižšie.
 
 Nastavenia vizuálnych rozšírení nájdete v [kategórii zrak #VisionSettings] v dialógu [Nastavenia #NVDASettings].
 
-++ Zvýraznenie fokusu ++[VisionFocusHighlight]
-Zvýraznenie fokusu vám uľahčí identifikovanie [systémového fokusu #SystemFocus], [navigačného objektu #ObjectNavigation] a pozíciu kurzora v [Režime prehliadania #BrowseMode].
+++ Zvýraznenie na obrazovke ++[VisionFocusHighlight]
+Zvýraznenie na obrazovke vám uľahčí identifikovanie [systémového fokusu #SystemFocus], [navigačného objektu #ObjectNavigation] a pozíciu kurzora v [Režime prehliadania #BrowseMode].
 Objekty sú vyznačené farebným obdĺžnikom.
 - Neprerušovaný modrý obdĺžnik charakterizuje súčasne navigačný objekt a systémový fokus (typicky v prípadoch, keď [navigačný objekt sleduje systémový fokus #ReviewCursorFollowFocus]).
 - Prerušovaný modrý obdĺžnik upozorňuje len na systémový fokus.
@@ -785,7 +784,7 @@ Objekty sú vyznačené farebným obdĺžnikom.
 - Neprerušovaný žltý obdĺžnik zvýrazňuje virtuálny kurzor, ktorý sa používa v režime prehliadania (Kde nie je fyzický kurzor, napríklad vo webových prehliadačoch).
 -
 
-Ak aktivujete zvýraznenie fokusu v [kategórii zrak #VisionSettings] v dialógu [nastavenia #NVDASettings], môžete nastaviť, či chcete [zvýrazňovať fokus, navigačný objekt alebo kurzor v režime prehliadania #VisionSettingsFocusHighlight].
+Ak aktivujete zvýraznenie na obrazovke v [kategórii zrak #VisionSettings] v dialógu [nastavenia #NVDASettings], môžete nastaviť, či chcete [zvýrazňovať fokus, navigačný objekt alebo kurzor v režime prehliadania #VisionSettingsFocusHighlight].
 
 ++ Tienenie obrazovky ++[VisionScreenCurtain]
 Ak ste zrakovo postihnutí alebo úplne nevidiaci, často nechcete alebo jednoducho nemôžete pozerať na obrazovku.
@@ -793,6 +792,8 @@ Navyše sa nemôžete uistiť, že niekto nenazerá na obrazovku vášho počít
 V týchto situáciách môžete použiť funkciu tienenia obrazovky. Toto spôsobí, že celá obrazovka bude úplne čierna.
 
 Tienenie obrazovky môžete aktivovať v [kategórii zrak #VisionSettings] v [Dialógu Nastavenia #NVDASettings].
+
+Kým je tienenie obrazovky aktívne, nie je možné robiť činosti priamo závislé na obsahu obrazovky ako [rozpoznávanie textu použitím OCR #Win10Ocr] alebo zachytenie snímky obrazovky.
 
 +Optické rozpoznávanie textu+[ContentRecognition]
 Ak nie sú k dispozícii užitočné textové informácie, je možné použiť nástroje na optické  rozpoznávanie textu z obrázka.
@@ -814,6 +815,8 @@ NVDA môže pomocou OCR rozpoznať text v obrázku alebo v neprístupnom okne ap
 
 jazyk rozpoznávania nastavíte v kategórii  [Rozpoznávanie textu OCR #Win10OcrSettings] v [Nastaveniach #NVDASettings].
 Doplnkové jazyky pre rozpoznávanie (Napríklad Češtinu) nainštalujete z menu štart > nastavenia > čas a jazyk > miestne a jazykové nastavenia > Pridanie jazyka.
+
+OCR systému Windows 10 môže byť čiastočne alebo úplne nepoužiteľné v kombinácii s [vizuálnými rozšíreniami NVDA #Vision] alebo inými externými vizuálnymi pomôckami. Pred spustením optického rozpoznávania by ste mali obmedziť použitie takýchto pomôcok.
 
 %kc:beginInclude
 rozpoznanie textu v aktuálnom navigačnom objekte vyvoláte skratkou NVDA+R.
@@ -1147,6 +1150,9 @@ Táto možnosť je tiež dostupná aj pre niektoré hlasové výstupy tretích s
 Je to posuvník od nula po sto, ktorým nastavíte rýchlosť reči.
 Nula znamená najpomalšie tempo reči a sto najrýchlejšie.
 
+==== Zdvojnásobiť tempo ====[SpeechSettingsRateBoost]
+Začiarknutím tejto možnosti docielite značné zrýchlenie reči. Túto funkciu podporujú len niektoré hlasové výstupi.
+
 ==== Výška ====[speechSettingsPitch]
 Posuvník, ktorým nastavíte výšku od nula po sto.
 Nula je najnižší tón a sto najvyšší tón reči.
@@ -1298,13 +1304,13 @@ Neovplyvňuje však zobrazenie vybratého textu.
 toto nastavenie určuje tvar kurzora (teda kombináciu bodov), ktoré sa zobrazujú, ak je braillovský kurzor zviazaný s prezeracím kurzorom.
 Neovplyvňuje však zobrazenie vybratého textu.
 
+==== Zobrazovať správy ====[BrailleSettingsShowMessages]
+V tomto zozname môžete určiť, či sa hlásenia na braillovskom riadku budú zobrazovať stále, alebo zmiznú po zadanom čase.
+
 ==== Zobrazovať správy (sek) ====[BrailleSettingsMessageTimeout]
 Táto numerická hodnota určuje ako dlho majú na riadku byť zobrazované správy NVDA.
-Nastavením hodnoty na 0 úplne vypnete zobrazovanie týchto správ.
 Správy NVDA sú automaticky odstránené pri posunutí riadka. Opätovne sa zobrazia po stlačení príslušnej klávesovej skratky.
-
-==== zobraziť správy bez obmedzenia ====[BrailleSettingsNoMessageTimeout]
-Ak začiarknete túto možnosť, správy budú na riadku zobrazené bez časového obmedzenia.
+Táto možnosť je dostupná len v prípade, že ste v predošlom zoznamovom rámiku vybrali možnosť "po určenú dobu".
 
 %kc:setting
 ==== Braillovský kurzor zviazaný s ====[BrailleTether]
@@ -1397,8 +1403,8 @@ V kategórii Zrak môžete zapínať, vypínať a upravovať jednotlivé [vizuá
 Upozorňujeme, že dostupné možnosti môžete rozšíriť pomocou [doplnkov #AddonsManager].
 Predvolene sú dostupné tieto možnosti:
 
-==== Zvýraznenie fokusu ====[VisionSettingsFocusHighlight]
-Začiarkávacie polia v tejto skupine nastavujú správanie [zvýraznenia fokusu #VisionFocusHighlight].
+==== Zvýraznenie na obrazovke ====[VisionSettingsFocusHighlight]
+Začiarkávacie polia v tejto skupine nastavujú správanie [zvýraznenia na obrazovke #VisionFocusHighlight].
 
 - Povoliť zvýraznenie: Zapína a vypína zvýraznenie fokusu.
 - Zvýrazniť systémový fokus: Určuje, či bude na obrazovke zvýraznený [systémový fokus #SystemFocus].
@@ -1740,7 +1746,7 @@ Takto môžete nastaviť:
 - Riadkovanie a strany
  - Číslovanie strán
  - Číslovanie riadkov
- - Odsadenie riadka [(vypnuté, reč, pípanie alebo reč a pípanie) #lineIndentationOptions]
+ - Odsadenie riadka [(vypnuté, reč, pípanie alebo reč a pípanie) #DocumentFormattingSettingsLineIndentation]
  - Odsadenie odseku (vysunutý text, odsadenie prvého riadka)
  - Riadkovanie (jednoduché, dvojité, ...)
  - zarovnanie
@@ -1748,7 +1754,7 @@ Takto môžete nastaviť:
  - Tabuľky
  - Hlavičky riadkov stĺpcov tabuľky
  - súradnice buniek tabuľky
- - orámovanie (vypnuté, štýly, farby a štýly)
+ - orámovanie (vypnuté, štýly, oboje farby a štýly)
 - Prvky
  - nadpisy
  - odkazy
@@ -1833,6 +1839,24 @@ Ak začiarknete túto možnosť, NVDA bude používať novú, rozpracovanú  [po
 ==== Hovoriť heslá v UIA konzole====[AdvancedSettingsWinConsoleSpeakPasswords]
 Toto nastavenie určuje, či NVDA [číta napísané znaky #KeyboardSettingsSpeakTypedCharacters] alebo [číta po slovách #KeyboardSettingsSpeakTypedWords] v prípadoch, ak sa obrazovka neaktualizuje (napríklad pri písaní hesiel) v niektorých termináloch, ako napríklad Windows konzola s aktívnou podporou UI automation. Z bezpečnostného hľadiska odporúčame toto nastavenie ponechať vypnuté. Môžete ho zapnúť, ak zaznamenáte zhoršenú odozvu alebo stabilitu vo Windows konzolách pri aktívnom čítaní po znakoch a po slovách pri aktívnej podpore UIA.
 
+==== Použiť UI Automation v Microsoft Edge a ostatných prehliadačoch založených na Chromium ====[ChromiumUIA]
+Umožňuje nastaviť za akých okolností sa použije rozhranie UIA, ak je dostupné v prehliadačoch založených na jadre Chromium ako je Microsoft Edge.
+Podpora pre sprístupnenie prehliadačov založených na jadre Chromium cez rozhranie prístupnosti UIA je v skorom štádiu vývoja a nemusí poskytovať dostatočnú úroveň prístupnosti ako prístupnosť cez rozhranie IA2.
+V zoznamovom rámiku sa nachádzajú tieto možnosti:
+- Predvolené (len keď je to nevyhnutné): Predvolená hodnota NVDA, momentálne len keď je to nevyhnutné. V budúcnosti sa to môže zmeniť, keď sa technológia vyvinie do dokonalosti.
+- Len keď je to nevyhnutné: Ak sa NVDA nedokáže zaviesť do procesu prehliadača s cieľom použiť rozhranie IA2 a k dispozícii je rozhranie UIA, NVDA použie UIA ako náhradu.
+- Áno: Vždy ak je v prehliadači k dispozícii rozhranie UIA, NVDA ho použije.
+- Nie: UIA sa nepoužije vôbec, ani ak sa NVDA nedokáže zaviesť do procesu prehliadača. Môže byť užitočné pre vývojárov, pri ladení implementácie IA2.
+-
+
+==== Na sprístupnenie prvkov v zošitoch Microsoft Excel používať UI Automation ====[UseUiaForExcel]
+Keď je táto voľba aktívna, NVDA sa pokúsi na získavanie informácií o ovládacích prvkoch v programe Microsoft Excel používať rozhranie prístupnosti Microsoft UI Automation.
+Toto je experimentálna funkcia a niektoré vlastnosti programu Microsoft Excel nemusia byť v tomto režime dostupné.
+Takímito sú hlavne zoznam prvkov NVDA, kde je možné si zobraziť zoznamy vzorcov a komentárov a podpora pre rýchlu navigáciu v režime prehliadania na pohyb po prvkoch formulára v zošite.
+Pre základnú navigáciu v zošite a jednoduché úpravy, tento režim poskytne výrazné zrýchlenie odozvy.
+Zatiaľ neodporúčame toto nastavenie aktivovať pre väčšinu bežných používateľov, ale budeme radi, ak si tento režim vyskúšate s programom Microsoft Excel verziou 16.0.13522.10000 alebo novšou a poskytnete nám spätnú väzbu.
+Implementácia rozhrania UI automation v programe Microsoft Excel sa stále zlepšuje a staršie verzie než Microsoft Office 16.0.13522.10000 nemusia poskytovať dostatok informácií, aby ste z tohoto nastavenia mohli mať skutočný úžitok.
+
 ==== Použiť novú podporu oznamovania napísaných znakov vo Windows konzolách====[AdvancedSettingsKeyboardSupportInLegacy]
 Toto začiarkávacie pole aktivuje alternatívnu metódu oznamovania napísaných znakov vo windows konzolách.
 Toto môže zlepšiť odozvu a odstrániť hláskovanie výstupu z konzoly, súčasne však toto nastavenie nie je vhodné pre všetky terminály.
@@ -1840,10 +1864,24 @@ Táto možnosť je dostupná a predvolene aktivovaná v systémoch od verzie Win
 Pozor: Keď aktivujete túto funkciu, NVDA bude čítať napísané znaky a slová aj pri písaní hesiel.
 Ak tomu chcete zabrániť, vypnite dočasne čítanie poznakoch a po slovách.
 
+==== Algoritmus počítania rozdielov ====[DiffAlgo]
+Toto nastavenie ovplyvňuje, ako NVDA zisťuje nový text na prečítanie v okne príkazového riadku.
+V zoznamovom rámiku sú 3 možnosti:
+- Automaticky: Od NVDA 2021.1 toto je rovnaké ako Difflib.
+Ak sa preukáže, že používatelia sú spokojní s novým nastavením, v budúcnosti sa to môže zmeniť na Diff Match Patch.
+- povoliť Diff Match Patch: Táto možnosť spôsobí, že NVDA zisťuje text na prečítanie v okne príkazového riadku po znakoch.
+Môže to zlepšiť odozvu pri množstve textu na výstupe a spresniť oznamovanie zmien v strede riadkov.
+Žiaľ nemusí to byť kompatibilné so všetkými aplikáciami.
+Táto funkcia je podporovaná v okne príkazového riadku vo Windows 10 verzia 1607 a novšie.
+Môže tiež byť dostupná v niektorých oknách v niektorých skorších verziách Windows.
+- vynútiť Difflib: Pri tomto nastavení NVDA počíta text na prečítanie po riadkoch.
+Takto sa správa NVDA 2020.4 a staršie verzie.
+-
+
 ==== Prerušiť reč po vypršaní zameranej udalosti ====[CancelExpiredFocusSpeech]
 Ak je táto možnosť zapnutá, NVDA prestane čítať udalosti, ktoré už nie sú aktuálne.
 Toto môže vyriešiť problém, keď pri prezeraní správ v aplikácii Gmail v prehliadači Chrome NVDA čítalo neaktuálne informácie.
-Táto experimentálna funkcia bola pridaná od verzie NVDA 2020.2.
+Táto funkcia je predvolene zapnutá od verzie NVDA 2021.1.
 
 ==== Počkať pred pohybom systémového kurzora (v milisekundách) ====[AdvancedSettingsCaretMoveTimeout]
 Tu môžete nastaviť časový úsek, ktorý NVDA počká pred pohybom systémového kurzora (bodu vloženia).
@@ -1851,8 +1889,8 @@ Ak zistíte, že NVDA nesprávne sleduje kurzor, napríklad je o znak pozadu ale
 
 ==== Úroveň záznamu ====[AdvancedSettingsDebugLoggingCategories]
 Začiarkávacie políčka v tejto časti umožňujú povoliť dodatočné zaznamenávanie do logu NVDA.
-Logovanie týchto správ môže spomaliť NVDA a zvýšiť veľkosť logov.
-Zaznamenávanie týchto správ povoľte, len ak dostanete inštrukcie od vývojáro, napríklad pri diagnostike nefunkčného ovládača braillovského riadka.
+Zapisovanie  týchto správ môže spomaliť NVDA a zvýšiť veľkosť súborov.
+Zaznamenávanie týchto správ povoľte, len ak dostanete inštrukcie od vývojárov, napríklad pri diagnostike nefunkčného ovládača braillovského riadka.
 
 ++ Ďalšie nastavenia ++[MiscSettings]
 Okrem rozsiahleho [dialógu nastavení #NVDASettings], je v ponuke NVDA v časti možnosti viacero položiek, ktorým sa budeme venovať v nasledujúcich riadkoch.
@@ -1922,6 +1960,9 @@ Následne nastavte parametre tak, ako pri ostatných symboloch.
 Symboly, ktoré ste pridali, môžete odstrániť aktivovaním tlačidla odstrániť.
 
 Ak ste skončili s úpravami, môžete stlačiť tlačidlo OK a uložiť zmeny, alebo tlačidlom Zrušiť zmeny zahodiť.
+
+Ak chcete použiť komplexné symboly, v poli nahradiť je potrebné zadať skupinu znakov, ktoré majú reprezentovať interpretovaný text. Napríklad, ak chceme hľadať celý dátum, budeme očakávať výstup v tvare \1, \2 a \3.
+V poli nahradiť potom použijeme odkazy na pamäť, napríklad "\\1".
 
 +++ Klávesové skratky +++[InputGestures]
 V tomto dialógu môžete nastaviť klávesové skratky (klávesy na klávesnici, tlačidlá na braillovskom riadku a podobne) pre príkazy NVDA.
@@ -2104,6 +2145,14 @@ V okne s braillovským zobrazením je aj začiarkávacie pole "spustiť zobrazov
 Po začiarknutí sa bude zobrazovač braillu spúšťať pri každom spustení NVDA.
 NVDA sa pokúsi okno zobrazovača otvoriť na rovnakom mieste a v rovnakom pomere v akom bolo naposledy.
 
+V okne braillovského zobrazovača je možné začiarknuť možnosť "Pridržanie myši simuluje presunutie na znak". Predvolene je táto možnosť vypnutá.
+Ak je táto možnosť zapnutá, potom pridržanie kurzora myši nad braillovským znakom spustí funkciu presunúť na znak.
+Toto sa často používa na presunutie systémového kurzora, prípadne aktivovanie prvku.
+Funkcionalitu využijete, keď chcete vyskúšať, či správne funguje presúvanie kurzora na znak pomocou fyzických tlačidiel braillovského riadka a súčasne riadok nemáte pripojený.
+Aby sa zabránilo ustavičnému spúšťaniu prechodu na znak, pridržanie myšy funguje ako semafor:
+Funkcia sa spustí až vtedy, keď sa farba znaku zmení na zelenú.
+Po pridržaní kurzora myši je farba žltá, následne sa zmení na oranžovú a napokon na zelenú.
+
 ++ Python konzola ++[PythonConsole]
 Python konzola programu NVDA, dostupná z podmenu nástroje, je nástroj pre vývojárov, ktorý umožňuje kontrolovať správnosť behu NVDA, zisťovať stav vnútorných premenných NVDA a tiež skúmať hierarchiu prístupnosti aplikácií.
 Viac informácií je dostupných v príručke pre vývojárov, ktorú nájdete na stránke NVDA v časti [vývoj (anglicky) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2239,7 +2288,17 @@ Operačný systém windows 10 obsahuje hlasy označené ako "one core" alebo "mo
 hlasy sú dostupné pre mnoho jazykov (vrátane Slovenčiny a Češtiny) a často majú lepšiu odozvu ako hlasy v rozhraní Sapi5.
 NVDA používa Hlasy Onecore predvolene v systémoch Windows 10. ([eSpeak NG #eSpeakNG] sa používa v starších systémoch).
 
-Podrobný postup, ako nainštalovať hlaspre konkrétny jazyk nájdete v tomto článku: https://support.microsoft.com/sk-sk/help/22797/windows-10-narrator-tts-voices
+Ak chcete nainštalovať nový hlas, otvorte nastavenia systému (windows+i), tu hľadajte kategóriu čas a jazyk a následne sekciu reč. Môžete samozrejme prejsť priamo do tejto sekcie cez vyhľadávanie.
+Aktivujte tlačidlo Pridať hlasy.
+Pre mnohé jazyky je dostupných viacero hlasov. (Poznámka prekladateľa: V Slovenčine je dostupný hlas Filip, v Češtine hlas Jakub).
+Môžete si nainštalovať Austrálsku alebo britskú angličtinu.
+Pre Francúzštinu sú dostupné verzie Francúzsko, Kanada a Švajčiarsko.
+Vyhľadajte príslušné jazyky a potom ich varianty.
+Vyberte jazyky klávesom enter a potvrďte inštaláciu tlačidlom Pridať.
+Aby sa prejavili zmeny, reštartujte NVDA.
+
+
+Zoznam dostupných hlasov je dostupný na nasledujúcom odkaze: https://support.microsoft.com/sk-sk/windows/pr%C3%ADloha-a-podporovan%C3%A9-jazyky-a-hlasy-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Podporované braillovské zobrazovače +[SupportedBrailleDisplays]
 Táto sekcia obsahuje informácie o braillovských zobrazovačoch, ktoré môžete používať s NVDA.
@@ -2505,7 +2564,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B / BrailleNote Touch  ++[HumanWareBrailliant]
-Riadky Brailliant BI and B od [HumanWare https://www.humanware.com/], zahŕňajúc BI 14, BI 32, BI 40 a B 80, sú podporované pripojené cez USB alebo bluetooth.
+Riadky Brailliant BI and B od [HumanWare https://www.humanware.com/], zahŕňajúc BI 14, BI 32, BI 20X, BI 40 BI 40X a B 80, sú podporované pripojené cez USB alebo bluetooth.
 Ak máte riadok pripojený cez USB a protokol nastavený na HumanWare, je potrebné nainštalovať ovládač dodaný od výrobcu.
 Ovládače nebudete potrebovať, ak nastavíte protokol na OpenBraille.
 
@@ -2625,7 +2684,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie
 | escape | body 1+5+medzera, f4, brailleedge:f1 |
 | delete key | body 135+medzera, body 145+medzera |
 | f1 | bod1+bod2+bod5+medzera |
-| f3 | bod1+bod2+bod4+bod8 |
+| f3 | bod1+bod4+bod8 + medzera|
 | f4 | bod7+f3 |
 | windows+b | body 12+f1 |
 | windows+d | body 145+f1 |
@@ -3125,6 +3184,7 @@ NVDA v súčasnosti podporuje tieto parametre:
 | Nie je | --install | Nainštaluje NVDA a spustí nainštalovanú kópiu |
 | nie je | --install-silent | Nainštaluje NVDA s predvolenými parametrami bez používateľského rozhrania, ale nespustí nainštalovanú kópiu |
 | Nie je | --enable-start-on-logon=True|False | Počas inštalácie povolí [Spustenie na prihlasovacej obrazovke  #StartAtWindowsLogon] |
+| None | --copy-portable-config | Počas inštalácie skopíruje nastavenia z prenosnej verzie NVDA podľa zadanej cesty (--config-path, -c) do používateľského profilu|
 | Nie je | --create-portable | Vytvorí prenosnú verziu NVDA a spustí ju. Je potrebné určiť cestu cez argument --portable-path |
 | Nie je | --create-portable-silent | Vytvorí prenosnú verziu NVDA, ale nespustí ju. Je potrebné určiť cestu cez argument --portable-path |
 | Nie je  | --portable-path=cesta | určuje, kam sa uloží prenosná verzia NVDA |

@@ -107,7 +107,7 @@ def shouldUseToUnicodeEx(focus=None):
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 	return (
 		# This is only possible in Windows 10 1607 and above
-		winVersion.isWin10(1607)
+		winVersion.getWinVer() >= winVersion.WIN10_1607
 		and (  # Either of
 			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.
@@ -484,7 +484,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if self.vkCode==winUser.VK_RETURN and not config.conf['keyboard']['speechInterruptForEnter']:
 			return None
 		if self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT):
-			return self.SPEECHEFFECT_RESUME if speech.isPaused else self.SPEECHEFFECT_PAUSE
+			return self.SPEECHEFFECT_RESUME if speech.getState().isPaused else self.SPEECHEFFECT_PAUSE
 		return self.SPEECHEFFECT_CANCEL
 
 	def reportExtra(self):
@@ -651,16 +651,9 @@ def injectRawKeyboardInput(isPress, code, isExtended):
 		# Change what we pass to MapVirtualKeyEx, but don't change what NVDA gets.
 		mapScan |= 0xE000
 	vkCode = winUser.user32.MapVirtualKeyExW(mapScan, winUser.MAPVK_VSC_TO_VK_EX, getInputHkl())
-	if isPress:
-		shouldSend = internal_keyDownEvent(vkCode, code, isExtended, False)
-	else:
-		shouldSend = internal_keyUpEvent(vkCode, code, isExtended, False)
-	if shouldSend:
-		flags = 0
-		if not isPress:
-			flags |= 2
-		if isExtended:
-			flags |= 1
-		with ignoreInjection():
-			winUser.keybd_event(vkCode, code, flags, None)
-			wx.Yield()
+	flags = 0
+	if not isPress:
+		flags |= 2
+	if isExtended:
+		flags |= 1
+	winUser.keybd_event(vkCode, code, flags, None)

@@ -1,8 +1,7 @@
-# NVDAObjects/UIA/winConsoleUIA.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2020 Bill Dengler
+# Copyright (C) 2019-2021 Bill Dengler
 
 import ctypes
 import NVDAHelper
@@ -12,12 +11,13 @@ import UIAHandler
 
 from comtypes import COMError
 from logHandler import log
+from UIAUtils import _isImprovedConhostTextRangeAvailable
 from . import UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
 
 
-class consoleUIATextInfo(UIATextInfo):
+class ConsoleUIATextInfo(UIATextInfo):
 	def __init__(self, obj, position, _rangeObj=None):
 		collapseToEnd = None
 		# We want to limit  textInfos to just the visible part of the console.
@@ -34,7 +34,7 @@ class consoleUIATextInfo(UIATextInfo):
 				log.warning("Couldn't get bounding range for console", exc_info=True)
 				# Fall back to presenting the entire buffer.
 				_rangeObj, collapseToEnd = None, None
-		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
+		super(ConsoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 		if collapseToEnd is not None:
 			self.collapse(end=collapseToEnd)
 
@@ -91,26 +91,17 @@ class consoleUIATextInfo(UIATextInfo):
 
 	def _move(self, unit, direction, endPoint=None):
 		"Perform a move without respect to bounding."
-		return super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+		return super(ConsoleUIATextInfo, self).move(unit, direction, endPoint)
 
 	def __ne__(self, other):
 		"""Support more accurate caret move detection."""
 		return not self == other
 
-	def _get_text(self):
-		# #10036: return a space if the text range is empty.
-		# Consoles don't actually store spaces, the character is merely left blank.
-		res = super(consoleUIATextInfo, self)._get_text()
-		if not res:
-			return ' '
-		else:
-			return res
 
-
-class consoleUIATextInfoPre21H1(consoleUIATextInfo):
-	"""Fixes expand/collapse on end inclusive UIA text ranges, uses rangeFromPoint
-	instead of broken GetVisibleRanges for bounding, and implements word
-	movement support."""
+class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
+	"""Implementation of various workarounds for pre-microsoft/terminal#4018
+	conhost: fixes expand/collapse, uses rangeFromPoint instead of broken
+	GetVisibleRanges for bounding, and implements word movement support."""
 	def _getBoundingRange(self, obj, position):
 		# We could use IUIAutomationTextRange::getVisibleRanges, but it seems very broken in consoles
 		# once more than a few screens worth of content has been written to the console.
@@ -140,12 +131,12 @@ class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 		return (_rangeObj, None)
 
 	def collapse(self, end=False):
-		"""Works around a UIA bug on Windows 10 versions before 21H1.
+		"""Works around a UIA bug on conhost versions before microsoft/terminal#4018.
 		When collapsing, consoles seem to incorrectly push the start of the
 		textRange back one character.
 		Correct this by bringing the start back up to where the end is."""
 		oldInfo = self.copy()
-		super(consoleUIATextInfo, self).collapse(end=end)
+		super(ConsoleUIATextInfo, self).collapse(end=end)
 		if not end:
 			self._rangeObj.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
@@ -154,7 +145,7 @@ class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 			)
 
 	def compareEndPoints(self, other, which):
-		"""Works around a UIA bug on Windows 10 versions before 21H1.
+		"""Works around a UIA bug on conhost versions before microsoft/terminal#4018.
 		Even when a console textRange's start and end have been moved to the
 		same position, the console incorrectly reports the end as being
 		past the start.
@@ -169,7 +160,7 @@ class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 
 	def setEndPoint(self, other, which):
 		"""Override of L{textInfos.TextInfo.setEndPoint}.
-		Works around a UIA bug on Windows 10 versions before 21H1 that means we can
+		Works around a UIA bug on conhost versions before microsoft/terminal#4018 that means we can
 		not trust the "end" endpoint of a collapsed (empty) text range
 		for comparisons.
 		"""
@@ -206,11 +197,11 @@ class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 					wordEndPoints[1]
 				)
 		else:
-			return super(consoleUIATextInfo, self).expand(unit)
+			return super(ConsoleUIATextInfo, self).expand(unit)
 
 	def _move(self, unit, direction, endPoint=None):
 		if unit == textInfos.UNIT_WORD and direction != 0:
-			# On Windows 10 versions before 21H1, UIA doesn't implement word
+			# On conhost versions before microsoft/terminal#4018, UIA doesn't implement word
 			# movement, so we need to do it manually.
 			# Relative to the current line, calculate our offset
 			# and the current word's offsets.
@@ -262,8 +253,7 @@ class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 						endPoint=endPoint
 					)
 		else:  # moving by a unit other than word
-			res = super(consoleUIATextInfo, self).move(unit, direction,
-														endPoint)
+			res = super(ConsoleUIATextInfo, self).move(unit, direction, endPoint)
 		if not endPoint:
 			# #10191: IUIAutomationTextRange::move in consoles does not correctly produce a collapsed range
 			# after moving.
@@ -310,7 +300,7 @@ class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 		)
 
 	def _isCollapsed(self):
-		"""Works around a UIA bug on Windows 10 versions before 21H1 that means we
+		"""Works around a UIA bug on conhost versions before microsoft/terminal#4018 that means we
 		cannot trust the "end" endpoint of a collapsed (empty) text range
 		for comparisons.
 		Instead we check to see if we can get the first character from the
@@ -322,6 +312,15 @@ class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 		# To decide if the textRange is collapsed,
 		# Check if it has no text.
 		return self._isCollapsed()
+
+	def _get_text(self):
+		# #10036: return a space if the text range is empty.
+		# Consoles don't actually store spaces, the character is merely left blank.
+		res = super()._get_text()
+		if not res:
+			return ' '
+		else:
+			return res
 
 
 class consoleUIAWindow(Window):
@@ -335,8 +334,10 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
-	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
-	_caretMovementTimeoutMultiplier = 1.5
+
+	def _get__caretMovementTimeoutMultiplier(self):
+		"On older consoles, the caret can take a while to move."
+		return 1 if self.isImprovedTextRangeAvailable else 1.5
 
 	def _get_windowThreadID(self):
 		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
@@ -349,33 +350,28 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 			threadID = super().windowThreadID
 		return threadID
 
-	def _get_is21H1Plus(self):
-		"Returns whether this is a newer version of Windows Console with an improved UIA implementation."
-		# microsoft/terminal#4495: In newer consoles,
-		# IUIAutomationTextRange::getVisibleRanges returns one visible range.
-		return self.UIATextPattern.GetVisibleRanges().length == 1
+	def _get_isImprovedTextRangeAvailable(self):
+		"""This property determines whether microsoft/terminal#4495
+		and by extension microsoft/terminal#4018 are present in this conhost.
+		In consoles before these PRs, a number of workarounds were needed
+		in our UIA implementation. However, these do not fix all bugs and are
+		problematic on newer console releases. This property is therefore used
+		internally to determine whether to activate workarounds and as a
+		convenience when debugging.
+		"""
+		return _isImprovedConhostTextRangeAvailable(self.windowHandle)
 
 	def _get_TextInfo(self):
-		"""Overriding _get_TextInfo and thus the TextInfo property
+		"""Overriding _get_ConsoleUIATextInfo and thus the ConsoleUIATextInfo property
 		on NVDAObjects.UIA.UIA
-		consoleUIATextInfo bounds review to the visible text.
-		ConsoleUIATextInfoPre21H1 fixes expand/collapse and implements word
-		movement."""
-		return consoleUIATextInfo if self.is21H1Plus else consoleUIATextInfoPre21H1
-
-	def _getTextLines(self):
-		if self.is21H1Plus:
-			# #11760: the 21H1 UIA console wraps across lines.
-			# When text wraps, NVDA starts reading from the beginning of the visible text for every new line of output.
-			# Use the superclass _getTextLines instead.
-			return super()._getTextLines()
-		# This override of _getTextLines takes advantage of the fact that
-		# the console text contains linefeeds for every line
-		# Thus a simple string splitlines is much faster than splitting by unit line.
-		ti = self.makeTextInfo(textInfos.POSITION_ALL)
-		text = ti.text or ""
-		return text.splitlines()
-
+		ConsoleUIATextInfo bounds review to the visible text.
+		ConsoleUIATextInfoWorkaroundEndInclusive fixes expand/collapse and implements
+		word movement."""
+		return (
+			ConsoleUIATextInfo
+			if self.isImprovedTextRangeAvailable
+			else ConsoleUIATextInfoWorkaroundEndInclusive
+		)
 
 	def detectPossibleSelectionChange(self):
 		try:
@@ -399,4 +395,4 @@ def findExtraOverlayClasses(obj, clsList):
 
 class WinTerminalUIA(EnhancedTermTypedCharSupport):
 	def _get_TextInfo(self):
-		return consoleUIATextInfo
+		return ConsoleUIATextInfo
