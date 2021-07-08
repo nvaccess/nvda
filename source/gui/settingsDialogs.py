@@ -2656,22 +2656,6 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
-		label = _("Annotations")
-		AnnotationsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		AnnotationsBox = AnnotationsSizer.GetStaticBox()
-		AnnotationsGroup = guiHelper.BoxSizerHelper(self, sizer=AnnotationsSizer)
-		self.bindHelpEvent("Annotations", AnnotationsBox)
-		sHelper.addItem(AnnotationsGroup)
-
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Report details in browse mode")
-		self.annotationsDetailsCheckBox = AnnotationsGroup.addItem(wx.CheckBox(AnnotationsBox, label=label))
-		self.annotationsDetailsCheckBox.SetValue(config.conf["annotations"]["reportDetails"])
-		self.annotationsDetailsCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportDetails"])
-
-		# Translators: This is the label for a group of advanced options in the
-		#  Advanced settings panel
 		label = _("Microsoft Active Accessibility/IAccessible2")
 		iaccessibleGroup = guiHelper.BoxSizerHelper(
 			parent=self,
@@ -2687,6 +2671,22 @@ class AdvancedPanelControls(
 		self.iaccessibleSpecificObjEventsCheckBox.defaultValue = (
 			self._getDefaultValue(["IAccessible", "specificObjEvents"])
 		)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Annotations")
+		AnnotationsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		AnnotationsBox = AnnotationsSizer.GetStaticBox()
+		AnnotationsGroup = guiHelper.BoxSizerHelper(self, sizer=AnnotationsSizer)
+		self.bindHelpEvent("Annotations", AnnotationsBox)
+		sHelper.addItem(AnnotationsGroup)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Report details in browse mode")
+		self.annotationsDetailsCheckBox = AnnotationsGroup.addItem(wx.CheckBox(AnnotationsBox, label=label))
+		self.annotationsDetailsCheckBox.SetValue(config.conf["annotations"]["reportDetails"])
+		self.annotationsDetailsCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportDetails"])
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
