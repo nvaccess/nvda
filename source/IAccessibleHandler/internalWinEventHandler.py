@@ -9,7 +9,7 @@ Provides a non-threaded (limited by GIL) Windows Event Hook and processing.
 
 from ctypes import WINFUNCTYPE, c_int
 
-from typing import Dict, Callable
+from typing import Dict, Callable, Set
 
 import core
 import winUser
@@ -296,19 +296,19 @@ def _shouldGetEvents():
 consoleWindowsToThreadIDs: Dict[int, int] = {}
 
 
-def getNVDAObjectsToMonitor():
+def getNVDAObjectsToMonitor() -> Set:
 	import api
-	objs = [
+	objs = {
 		*api.getFocusAncestors(),
 		api.getFocusObject(),
 		# The desktop object should be in the focus ancestry, but include it here just
-		# in case.
+		# in case. This being a set will filter out any duplicates.
 		api.getDesktopObject()
-	]
+	}
 	return objs
 
 
-def isEventForNVDAObject(windowHandle, objectId, childId, obj):
+def isEventForNVDAObject(windowHandle: int, objectId: int, childId: int, obj) -> bool:
 	import NVDAObjects.IAccessible
 	return (
 		isinstance(obj, NVDAObjects.IAccessible.IAccessible)
