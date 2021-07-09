@@ -667,7 +667,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	@classmethod
 	def destroyMessageWindow(cls):
 		if len(cls._instances) > 1:
-			# When switching from automatic detection to manual display selection or vise versa,
+			# When switching from automatic detection to manual display selection or vice versa,
 			# there could exist more than one driver instance at a time.
 			# Ensure that the message window won't be destroyed in these cases.
 			return
