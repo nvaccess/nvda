@@ -6,5 +6,5 @@
 """Windows Search app module for Windows 11 (build 22000) and later.
 """
 
-# Flake8/F403: this is an alias for SearchUI app module.
-from .searchui import * # NOQA
+from .searchui import AppModule, StartMenuSearchField
+__all__ = ["AppModule", "StartMenuSearchField"]
