@@ -32,7 +32,7 @@ _BUILDS_TO_RELEASE_NAMES = {
 	19041: "Windows 10 2004",
 	19042: "Windows 10 20H2",
 	19043: "Windows 10 21H1",
-	22000: "Windows 11 21H2"
+	22000: "Windows 11 21H2",
 }
 
 
