@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-25 00:01+0000\n"
+"POT-Creation-Date: 2021-07-02 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1333,11 +1333,11 @@ msgstr "Etiketsiz"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "Tek harf dolaşımı kapalı"
+msgstr "Tek tuşla dolaşım kapalı"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "Tek harf dolaşımı açık"
+msgstr "Tek tuşla dolaşım açık"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -1345,9 +1345,9 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Tek harf dolaşımını açıp kapatır. Açıkken harflerle tarama kipinde çeşitli "
-"öğeler arasında dolaşılabilirken, kapalıyken harfler doğrudan uygulamaya "
-"gönderilir."
+"Tek tuşla dolaşımı açıp kapatır. Açıkken ilgili tuşla tarama kipinde çeşitli "
+"öğeler arasında dolaşılabilirken, kapalıyken basılaan tuş doğrudan "
+"uygulamaya gönderilir."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -2416,7 +2416,7 @@ msgstr "kutusu"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 msgid "grouping"
-msgstr "gurup"
+msgstr "grup"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 msgid "property page"
@@ -6684,7 +6684,7 @@ msgstr "Güncelleme mevcut değil"
 #. and is pending to be installed.
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
-msgstr "NVDA versiyon {version} indirildi ve yükleme bekliyor."
+msgstr "NVDA {version} sürümü indirildi ve yüklenmeyi bekliyor."
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -6721,7 +6721,7 @@ msgstr "&Eklentileri inceleyin..."
 #. {version} will be replaced with the version; e.g. 2011.3.
 #, python-brace-format
 msgid "&Install NVDA {version}"
-msgstr "NVDA {version} &kur"
+msgstr "NVDA {version} sürümünü &kur"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
 msgid "Re-&download update"
@@ -6731,7 +6731,7 @@ msgstr "Güncellemeyi yeniden in&dir"
 #. {version} will be replaced with the version; e.g. 2011.3.
 #, python-brace-format
 msgid "NVDA version {version} is available."
-msgstr "NVDA versiyonu {version} mevcut."
+msgstr "NVDA {version} sürümü mevcut."
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6750,7 +6750,7 @@ msgstr "&Kapat"
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
-msgstr "NVDA versiyon {version} yüklenmeye hazır.\n"
+msgstr "NVDA {version} sürümü yüklenmeye hazır.\n"
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -6871,7 +6871,7 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name})\n"
-"Versioyn: {version}\n"
+"Sürüm: {version}\n"
 "Web sayfası: {url}\n"
 "{copyright}\n"
 "\n"
@@ -8035,7 +8035,7 @@ msgid ""
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
-"Versiyon: {version}\n"
+"Sürüm: {version}\n"
 "Yazar: {author}\n"
 "Açıklama: {description}\n"
 
@@ -8050,7 +8050,7 @@ msgstr "Gereken minimum NVDA sürümü: {}"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgid "Last NVDA version tested: {}"
-msgstr "Test edilen son NVDA versiyonu: {}"
+msgstr "Test edilen son NVDA sürümü: {}"
 
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
