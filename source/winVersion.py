@@ -31,7 +31,8 @@ _BUILDS_TO_RELEASE_NAMES = {
 	18363: "Windows 10 1909",
 	19041: "Windows 10 2004",
 	19042: "Windows 10 20H2",
-	19043: "Windows 10 21H1"
+	19043: "Windows 10 21H1",
+	22000: "Windows 11 21H2",
 }
 
 
@@ -150,6 +151,7 @@ WIN10_1909 = WinVersion(major=10, minor=0, build=18363)
 WIN10_2004 = WinVersion(major=10, minor=0, build=19041)
 WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
 WIN10_21H1 = WinVersion(major=10, minor=0, build=19043)
+WIN11 = WIN11_21H2 = WinVersion(major=10, minor=0, build=22000)
 
 
 def getWinVer():
@@ -157,8 +159,17 @@ def getWinVer():
 	"""
 	winVer = sys.getwindowsversion()
 	# #12509: on Windows 10, fetch whatever Windows Registry says for the current build.
+	# #12626: note that not all Windows 10 releases are labeled "Windows 10"
+	# (build 22000 is Windows 11 despite major.minor being 10.0).
 	try:
-		releaseName = f"Windows 10 {_getRunningVersionNameFromWinReg()}"
+		if WinVersion(
+			major=winVer.major,
+			minor=winVer.minor,
+			build=winVer.build
+		) >= WIN11:
+			releaseName = f"Windows 11 {_getRunningVersionNameFromWinReg()}"
+		else:
+			releaseName = f"Windows 10 {_getRunningVersionNameFromWinReg()}"
 	except RuntimeError:
 		releaseName = None
 	return WinVersion(
