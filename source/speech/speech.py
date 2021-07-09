@@ -1126,8 +1126,14 @@ def speakTextInfo(
 	)
 
 	speechGen = GeneratorWithReturn(speechGen)
+	symbolLevel: Optional[characterProcessing.SYMLVL] = None
+	if unit == textInfos.UNIT_CHARACTER:
+		symbolLevel = characterProcessing.SYMLVL.ALL
+	elif unit == textInfos.UNIT_WORD:
+		if config.conf["speech"]["symbolLevelWordAll"]:
+			symbolLevel = characterProcessing.SYMLVL.ALL
 	for seq in speechGen:
-		speak(seq, priority=priority)
+		speak(seq, symbolLevel=symbolLevel, priority=priority)
 	return speechGen.returnValue
 
 
@@ -1323,7 +1329,7 @@ def getTextInfoSpeech(  # noqa: C901
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
-		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
+		and len(textWithFields[0]) == 1
 		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if not onlyCache:
