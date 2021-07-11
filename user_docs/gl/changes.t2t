@@ -6,12 +6,13 @@ Que hai de Novo no NVDA
 = 2021.1 =
 Esta versión inclúe soporte experimental opcional para UIA en Excel e navegadores Chromium.
 Hai correcións para varias linguas e para aceso ás ligas en braille.
-Hai actualizacións para Unicode CLDR e símbolos matemáticos, para eSpeak-NG e para LibLouis.
+Hai actualizacións para Unicode CLDR, para símbolos matemáticos e para LibLouis.
+Así coma moitas outras correcións e melloras incluindo Office, Visual Studio e varias linguas.
 
-Moitas outras correcións e melloras incluindo Office, Visual Studio e varias linguas.
-Nota: trátase dunha versión que rompe a compatibilidade da API de complementos.
-Os complementos terán que voltar a se probar e actualizar o seu manifesto.
-Esta versión tamén deixa de seren compatible co Adobe Flash.
+Nota:
+ - Esta versión rompe a compatibilidade cos complementos existentes.
+ - Esta versión tamén deixa de seren compatible co Adobe Flash.
+ -
 
 
 == Novas Características ==
@@ -21,19 +22,19 @@ Esta versión tamén deixa de seren compatible co Adobe Flash.
   - alt+arriba/abaixo salta ao resultado anterior/seguinte (engade shift para selecionar).
   - control+l borra o panel de saída.
 - O NVDA agora anuncia as categorías asignadas a unha cita en Microsoft Outlook se a hai. (#11598)
+- Soporte para a pantalla braille do Anotador Electrónico Seika de Nippon Telesoft. (#11514)
 
 
 == Cambios ==
 - En modo Exploración, os controis agora poden activarse cos sensores de seguemento braille sobre o seu descriptor (Ex.: "lig" para unha liga). esto é especialmente útil para activar, por exemplo, caixas de verificación sen etiquetas. (#7447)
 - O NVDA agora evita que o usuario faga o OCR de Windows 10 se a cortina de pantalla está habilitada. (#11911)
-- Actualizado o repositorio Unicode Common Locale Data (CLDR) a 38.1. (#11943)
+- Actualizado o repositorio Unicode Common Locale Data (CLDR) a 39.0. (#11943), #12314)
 - Engadidos máis signos matemáticos ao diccionario de símbolos. (#11467)
 - A guía do usuario, o ficheiro de cambios e a listaxe de teclas de ordes agora teñen un aspecto remozado. (#12027)
 - Agora anúnciase "non soportado" cando se tente cambiar o deseño de pantalla en aplicacións que non o admitan como Microsoft Word. (#7297)
 - A opción 'Tentar cancelar a voz para eventos de foco caducados' no panel de opcións avanzadas agora está activada por defecto. (#10885)
   - Este comportamento pódese desactivar configurando esta opción como "Non".
   - As aplicacións web (Ex.: Gmail) xa non falan información obsoleta cando se mova o foco rápidamente.
-- Espeak-ng actualizouse a 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Actualizado o transcriptor braille liblouis a [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - Novas táboas braille: braille literario bielorruso, braille computerizado bielorruso, Urdu grao 1, Urdu grao 2.
 - O soporte para contido Adobe Flash eliminouse do NVDA debido a que Adobe  desaconsella activamente o uso de Flash. (#11131)
@@ -67,6 +68,9 @@ Esta versión tamén deixa de seren compatible co Adobe Flash.
 - O instalador do NVDA agora tamén respeta o parámetro de liña de ordes ``--minimal`` e non reproduce o son de inicio, seguindo o mesmo comportamento documentado que un executable do NVDA instalado ou con copia portátil. (#12289)
 - En MS Word ou Outlook, a tecla rápida de navegación da táboa agora pode saltar á táboa de deseño se a opción "Incluir tablas de deseño" está activada na configuración do modo de navegación. (#11899)
 - NVDA xa non anunciará "↑↑↑" para emojis en linguas en particular. (#11963)
+- Espeak agora admite de novo o Cantonés e o Mandarín. (#10418)
+- No novo Microsoft Edge baseado en Chromium os campos de texto como a barra de enderezos agora anúncianse cando estean valdeiros. (#12474)
+- Arranxado o controlador braille de Seika. (#10787)
 
 
 == Cambios para Desenvolvedores ==

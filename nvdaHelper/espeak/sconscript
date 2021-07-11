@@ -110,6 +110,7 @@ env.Append(
 		'#nvdaHelper/espeak',  # ensure that nvdaHelper/espeak/config.h is found first.
 		espeakIncludeDir,
 		espeakIncludeDir.Dir('compat'),
+		espeakSrcDir.Dir('speechPlayer/include'),
 		sonicSrcDir,
 		espeakSrcDir.Dir('ucd-tools/src/include')
 	])
@@ -154,6 +155,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"bs_dict": ("bs", ["bs_list", "bs_rules", ]),
 	"ca_dict": ("ca", ["ca_list", "ca_rules", ]),
 	"chr_dict": ("chr", ["chr_list", "chr_rules", ]),
+	"cmn_dict": ("cmn", ["cmn_listx", "cmn_list", "cmn_rules"]),
 	"cs_dict": ("cs", ["cs_list", "cs_rules", ]),
 	"cv_dict": ("cv", ["cv_list", "cv_rules", ]),
 	"cy_dict": ("cy", ["cy_list", "cy_rules", ]),
@@ -181,8 +183,9 @@ espeakDictionaryCompileList: typing.Dict[
 	"ht_dict": ("ht", ["ht_list", "ht_rules", ]),
 	"hu_dict": ("hu", ["hu_list", "hu_rules", ]),
 	"hy_dict": ("hy", ["hy_list", "hy_rules", ]),
-	"ia_dict": ("ia", ["ia_list", "ia_rules"]),
+	"ia_dict": ("ia", ["ia_listx", "ia_list", "ia_rules"]),
 	"id_dict": ("id", ["id_list", "id_rules", ]),
+	"io_dict": ("io", ["io_list", "io_rules", ]),
 	"is_dict": ("is", ["is_list", "is_rules", ]),
 	"it_dict": ("it", ["it_listx", "it_list", "it_rules"]),
 	"ja_dict": ("ja", ["ja_list", "ja_rules", ]),
@@ -215,9 +218,11 @@ espeakDictionaryCompileList: typing.Dict[
 	"or_dict": ("or", ["or_list", "or_rules", ]),
 	"pap_dict": ("pap", ["pap_list", "pap_rules", ]),
 	"pa_dict": ("pa", ["pa_list", "pa_rules", ]),
+	"piqd_dict": ("piqd", ["piqd_list", "piqd_rules", ]),
 	"pl_dict": ("pl", ["pl_list", "pl_rules", ]),
 	"pt_dict": ("pt", ["pt_list", "pt_rules", ]),
 	"py_dict": ("py", ["py_list", "py_rules", ]),
+	"qdb_dict": ("qdb", ["qdb_list", "qdb_rules", ]),
 	"quc_dict": ("quc", ["quc_list", "quc_rules", ]),
 	"qu_dict": ("qu", ["qu_list", "qu_rules", ]),
 	"ro_dict": ("ro", ["ro_list", "ro_rules", ]),
@@ -227,6 +232,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"si_dict": ("si", ["si_list", "si_rules", ]),
 	"sk_dict": ("sk", ["sk_list", "sk_rules", ]),
 	"sl_dict": ("sl", ["sl_list", "sl_rules", ]),
+	"smj_dict": ("smj", ["smj_list", "smj_rules", ]),
 	"sq_dict": ("sq", ["sq_list", "sq_rules", ]),
 	"sr_dict": ("sr", ["sr_list", "sr_rules", ]),
 	"sv_dict": ("sv", ["sv_list", "sv_rules", ]),
@@ -243,8 +249,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"ur_dict": ("ur", ["ur_list", "ur_rules", ]),
 	"uz_dict": ("uz", ["uz_list", "uz_rules", ]),
 	"vi_dict": ("vi", ["vi_list", "vi_rules", ]),
-	"zh_dict": ("cmn", ["zh_list", "zh_listx", "zh_rules"]),
-	"zhy_dict": ("yue", ["zhy_list", "zhy_listx", "zhy_rules"]),
+	"yue_dict": ("yue", ["yue_list", "yue_listx", "yue_rules"]),
 }
 
 def espeak_compileDict_buildAction(
@@ -359,6 +364,7 @@ espeakLib=env.SharedLibrary(
 		"phonemelist.c",
 		"readclause.c",
 		"setlengths.c",
+		"soundIcon.c",
 		"spect.c",
 		"speech.c",
 		"ssml.c",
@@ -370,6 +376,14 @@ espeakLib=env.SharedLibrary(
 		"voices.c",
 		"wavegen.c",
 		sonicLib,
+		# espeak OPT_SPEECHPLAYER block
+		"sPlayer.c",
+		"../speechPlayer/src/frame.cpp",
+		"../speechPlayer/src/speechPlayer.cpp",
+		"../speechPlayer/src/speechWaveGenerator.cpp",
+		#"../speak-ng.cpp",
+		# if not OPT_SPEECHPLAYER
+		# "../speak-ng.c",
 		# espeak does not need to handle its own audio output so dont include:
 		# pcaudiolib\src\audio.c
 		# pcaudiolib\src\windows.c

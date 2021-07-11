@@ -192,8 +192,10 @@ class LauncherDialog(
 		self.Destroy()
 		core.doStartupDialogs()
 
-	def onExit(self, evt):
-		core.triggerNVDAExit()
+	def onExit(self, evt: wx.CommandEvent):
+		if not core.triggerNVDAExit():
+			log.error("NVDA already in process of exiting, this indicates a logic error.")
+		self.Destroy()  # Without this, the onExit is called multiple times by wx.
 
 	@classmethod
 	def run(cls):
