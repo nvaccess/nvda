@@ -1,12 +1,4 @@
-`*.yml` config files specify build settings which generally [override online UI driven settings](https://www.appveyor.com/docs/build-configuration/#appveyoryml-and-ui-coexistence).
-
-We have multiple appveyor projects which correspond to various appveyor\*.yml config files.
-
-project name|url|config file|priority|notes
-:--|:--|:--|:--|:--
-NVDA|[nvda](https://ci.appveyor.com/project/NVAccess/nvda)|appveyor.yml|3|Legacy project that operates as we move other branches to the new projects
-NVDA tagged releases|[nvda-tagged-releases](https://ci.appveyor.com/project/NVAccess/nvda-tagged-releases)|appveyor/config-tagged.yml|1|Builds anything that is a tagged release.
-NVDA CI/CD|[nvda-ci-cd](https://ci.appveyor.com/project/NVAccess/nvda-ci-cd)|appveyor/config-non-tagged.yml|2|Builds anything that is not a tagged release.
+`appveyor.yml` specifies build settings which generally [override online UI driven settings](https://www.appveyor.com/docs/build-configuration/#appveyoryml-and-ui-coexistence). 
 
 # Branch and tag filtering
 
