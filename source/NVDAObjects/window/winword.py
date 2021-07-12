@@ -14,7 +14,6 @@ import operator
 import locale
 import collections
 import colorsys
-import sayAllHandler
 import eventHandler
 import braille
 from scriptHandler import script
@@ -639,8 +638,10 @@ class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator
 class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.tables
+
 	def filter(self,item):
-		return item.borders.enable
+		return config.conf["documentFormatting"]["includeLayoutTables"] or item.borders.enable
+
 
 class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentChartQuickNavItem
@@ -767,7 +768,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self.updateCaret()
 			tiCopy = self.copy()
 			tiCopy.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 			return
 
@@ -1041,7 +1042,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			newEndOffset = self._rangeObj.end
 			# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
 			# a case where you called move end then collapse until the size of the range is no longer being reduced.
-			# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+			# For an example of this see sayAll (specifically readTextHelper_generator in sayAll.py)
 			if newEndOffset < oldEndOffset :
 				raise RuntimeError
 
@@ -1472,6 +1473,22 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Baseline"))
 
+	@script(gestures=["kb:control+m", "kb:control+shift+m", "kb:control+t", "kb:control+shift+t"])
+	def script_changeParagraphLeftIndent(self, gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		margin = self.WinwordDocumentObject.PageSetup.LeftMargin
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordSelectionObject.paragraphFormat.LeftIndent
+		)
+		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
+		ui.message(msg)
+
 	def script_moveParagraphDown(self,gesture):
 		oldBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
 		gesture.send()
@@ -1562,7 +1579,7 @@ class WordDocument(Window):
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			isCollapsed=info.isCollapsed
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 		if selectionObj and isCollapsed:
 			offset=selectionObj.information(wdHorizontalPositionRelativeToPage)
@@ -1570,7 +1587,7 @@ class WordDocument(Window):
 			ui.message(msg)
 			if selectionObj.paragraphs[1].range.start==selectionObj.start:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	def getLocalizedMeasurementTextForPointSize(self,offset):
 		options=self.WinwordApplicationObject.options

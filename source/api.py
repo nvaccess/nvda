@@ -6,7 +6,6 @@
 
 """General functions for NVDA"""
 
-import ctypes
 import config
 import textInfos
 import review
@@ -14,9 +13,7 @@ import globalVars
 from logHandler import log
 import ui
 import treeInterceptorHandler
-import virtualBuffers
 import NVDAObjects
-import NVDAObjects.IAccessible
 import winUser
 import controlTypes
 import eventHandler

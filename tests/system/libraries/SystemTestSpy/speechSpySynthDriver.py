@@ -12,7 +12,7 @@ in the `tests/system/nvdaSettingsFiles/*.ini` files.
 
 import synthDriverHandler
 import extensionPoints
-import speech
+from speech.commands import IndexCommand
 
 # inform those who want to know that there is new speech
 post_speech = extensionPoints.Action()
@@ -36,7 +36,7 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 
 	def speak(self, speechSequence):
 		for item in speechSequence:
-			if isinstance(item, speech.IndexCommand):
+			if isinstance(item, IndexCommand):
 				synthDriverHandler.synthIndexReached.notify(synth=self, index=item.index)
 		synthDriverHandler.synthDoneSpeaking.notify(synth=self)
 		post_speech.notify(speechSequence=speechSequence)

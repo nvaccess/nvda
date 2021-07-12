@@ -1,8 +1,8 @@
-#appModules/outlook.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager,
+# Babbage B.V., Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from comtypes import COMError
 from comtypes.hresult import S_OK
@@ -36,6 +36,8 @@ from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
+import languageHandler
+
 
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
@@ -244,10 +246,10 @@ class SuperGridClient2010(IAccessible):
 			return super(SuperGridClient2010,self).event_gainFocus()
 		try:
 			kwargs = {}
-			UIA.kwargsFromSuper(kwargs, relation="focus")
-			obj=UIA(**kwargs)
-		except:
-			log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+			UIA.kwargsFromSuper(kwargs, relation="focus", ignoreNonNativeElementsWithFocus=False)
+			obj = UIA(**kwargs)
+		except Exception:
+			log.error("Retrieving UIA focus failed", exc_info=True)
 			return super(SuperGridClient2010,self).event_gainFocus()
 		if not isinstance(obj,UIAGridRow):
 			return super(SuperGridClient2010,self).event_gainFocus()
@@ -334,6 +336,28 @@ class CalendarView(IAccessible):
 		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
 
+	@staticmethod
+	def _generateCategoriesText(appointment):
+		categories = appointment.Categories
+		if not categories:
+			return None
+		# Categories is a delimited string of category names that have been assigned to an Outlook item.
+		# This property uses the user locale's list separator to separate entries.
+		# See also https://docs.microsoft.com/en-us/office/vba/api/outlook.appointmentitem.categories
+		bufLength = 4
+		separatorBuf = ctypes.create_unicode_buffer(bufLength)
+		if ctypes.windll.kernel32.GetLocaleInfoW(
+			languageHandler.LOCALE_USER_DEFAULT,
+			languageHandler.LOCALE_SLIST,
+			separatorBuf,
+			bufLength
+		) == 0:
+			raise ctypes.WinError()
+
+		# Translators: Part of a message reported when on a calendar appointment with one or more categories
+		# in Microsoft Outlook.
+		return _("categories {categories}").format(categories=categories)
+
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
 
@@ -355,8 +379,15 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				t=self._generateTimeRangeText(start,end)
-				# Translators: A message reported when on a calendar appointment in Microsoft Outlook
-				ui.message(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
+				# Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
+				message = _("Appointment {subject}, {time}").format(subject=p.subject, time=t)
+				try:
+					categoriesText = self._generateCategoriesText(p)
+				except COMError:
+					categoriesText = None
+				if categoriesText is not None:
+					message = f"{message}, {categoriesText}"
+				ui.message(message)
 			else:
 				v=e.currentView
 				try:
@@ -365,9 +396,31 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
-				startLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
-				endLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
-				query=u'[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
+				startDate = winKernel.GetDateFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.DATE_LONGDATE,
+					selectedStartTime,
+					None
+				)
+				startTime = winKernel.GetTimeFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.TIME_NOSECONDS,
+					selectedStartTime,
+					None
+				)
+				endDate = winKernel.GetDateFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.DATE_LONGDATE,
+					selectedEndTime,
+					None
+				)
+				endTime = winKernel.GetTimeFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.TIME_NOSECONDS,
+					selectedEndTime,
+					None
+				)
+				query = f'[Start] < "{endDate} {endTime}" And [End] > "{startDate} {startTime}"'
 				i=e.currentFolder.items
 				i.sort('[Start]')
 				i.IncludeRecurrences =True
@@ -546,7 +599,7 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 			info.expand(textInfos.UNIT_CELL)
 			isCollapsed=False
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 
 	__gestures={

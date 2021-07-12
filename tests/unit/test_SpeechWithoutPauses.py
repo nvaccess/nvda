@@ -1,16 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019 NV Access Limited
+# Copyright (C) 2019-2021 NV Access Limited
 
-"""Unit tests for speechWithoutPauses"""
+"""Unit tests for SpeechWithoutPauses"""
 
 import unittest
 from typing import List
 
 from speech.types import SpeechSequence
 from speech.commands import EndUtteranceCommand, LangChangeCommand, CallbackCommand
-from speech import re_last_pause, SpeechWithoutPauses
+from speech.speechWithoutPauses import SpeechWithoutPauses
 from logHandler import log
 
 
@@ -89,7 +89,7 @@ def old_speakWithoutPauses(  # noqa: C901
 		for index in range(len(speechSequence) - 1, -1, -1):
 			item = speechSequence[index]
 			if isinstance(item, str):
-				m = re_last_pause.match(item)
+				m = SpeechWithoutPauses.re_last_pause.match(item)
 				if m:
 					before, after = m.groups()
 					if after:

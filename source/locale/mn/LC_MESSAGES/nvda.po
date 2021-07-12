@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mongolian Translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-30 00:10+1000\n"
-"PO-Revision-Date: 2020-11-03 08:06+0800\n"
+"POT-Creation-Date: 2021-06-04 00:01+0000\n"
+"PO-Revision-Date: 2021-06-09 09:14+0800\n"
 "Last-Translator: \n"
 "Language-Team: MongolianNVDATranslationTeam <mongoliannvdatranslation@gmail."
 "com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -98,11 +98,40 @@ msgstr "зөв бичих: {text}"
 msgid "grammar: {text}"
 msgstr "зөв бичих дүрэм: {text}"
 
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "Үл таарах"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "{color} өнгө"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "Шулуун хазайлт "
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr "зураг"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "Жишээ"
+
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
-msgstr "цонх идэвхжүүлэх бол windows m товчыг дарах хэрэгтэй"
+msgstr "үйлдэл хийгдэж байгааг түр хүлээнэ үү!"
 
 #. Translators: This is presented when errors are found in an appModule
 #. (example output: error in appModule explorer).
@@ -682,6 +711,11 @@ msgstr "Африк grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Afrikaans grade 2"
+msgstr "Африк grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
 msgstr "Arabic 8 цэгийн компьютер  брайл"
 
@@ -702,8 +736,25 @@ msgstr "Assamese grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Bashkir grade 1"
+msgstr "Kashmiri grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bengali grade 1"
 msgstr "Bengali grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Belarusian computer braille"
+msgstr "орос компьютер  брайл"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Belarusian literary braille"
+msgstr "орос бичиглэлийн брайл"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -714,6 +765,11 @@ msgstr "Bulgarian 8 цэгийн компьютер  брайл"
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Central Kurdish grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Coptic 8 dot computer braille"
+msgstr "Coptic  8 цэгийн компьютер  брайл"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1157,8 +1213,13 @@ msgstr "орос компьютер  брайл"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
-msgstr "орос grade 1"
+msgid "Russian literary braille"
+msgstr "орос бичиглэлийн брайл"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Russian literary braille (detailed)"
+msgstr "орос бичиглэлийн брайл (наривчилсан)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1219,6 +1280,18 @@ msgstr "Ukrainian grade 1"
 #. braille settings dialog.
 msgid "Ukrainian computer braille"
 msgstr "Ukrainian компьютер  брайл"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Urdu grade 1"
+msgstr "Irish grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Urdu grade 2"
+msgstr "Irish grade 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1824,10 +1897,12 @@ msgstr "Бичнэ үү:"
 msgid "Filter b&y:"
 msgstr "ялгах"
 
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "Идэвхжүүл"
+#. Translators: The label of a button to activate an element in the browse mode Elements List dialog.
+#. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
+#. element type radio label.
+#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+msgid "Activate"
+msgstr "Идэвхжүүлэх "
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
@@ -1855,6 +1930,8 @@ msgstr "Жагсаалт эсхүүл хүснэгт зэрэг элементү
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+#. Translators: Reported when attempting to move to the next result in the Python Console
+#. output pane while there is no next result.
 msgid "Bottom"
 msgstr "Доод тал"
 
@@ -1862,6 +1939,20 @@ msgstr "Доод тал"
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Жагсаалт эсхүүл хүснэгт зэрэг элементүүд контейнер дотор шилжин өнгөрөх"
+
+#. Translators: the description for the toggleScreenLayout script.
+#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+msgstr ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+
+#. Translators: The message reported for not supported toggling of screen layout
+#, fuzzy
+msgid "Not supported in this document."
+msgstr "үйлдэл хийх боломжгүй байна"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2365,7 +2456,7 @@ msgstr "дүрс"
 msgid "directory pane"
 msgstr "чиглүүлж байна"
 
-#. Translators: Identifies an embedded object such as flash content on webpages.
+#. Translators: Identifies an object that is embedded in a document.
 msgid "embedded object"
 msgstr "объект  оруулах"
 
@@ -2740,7 +2831,7 @@ msgstr "хагас чагтлагдсан"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
-msgstr "зөвхөн унших"
+msgstr "зөвхөн уншигдах хэлбэрт байна"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
@@ -3015,10 +3106,6 @@ msgstr ""
 msgid "No selection"
 msgstr "Сонгогдоогүй"
 
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "санах ойн самбарт түр хуулагдлаа."
-
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
@@ -3128,10 +3215,6 @@ msgstr "оруулах"
 msgid "Document formatting"
 msgstr "бичвэр форматлах"
 
-#. Translators: a message when audio ducking is not supported on this machine
-msgid "Audio ducking not supported"
-msgstr "Audio ducking ажиллагаагүй байна"
-
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
@@ -3140,13 +3223,9 @@ msgstr ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help on"
-msgstr "гарын тусламж аслаа."
-
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help off"
-msgstr "гарын тусламж унтарлаа."
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Audio ducking ажиллагаагүй байна"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
@@ -3156,6 +3235,20 @@ msgstr ""
 "гарын Зааварчилгааг нээж хааж ашиглах ба нээлттэй үед аль ч товчыг дархад "
 "тухайн товчны үйлдлийг тайлбарлаж хэлэх болно."
 
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help on"
+msgstr "гарын тусламж аслаа."
+
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help off"
+msgstr "гарын тусламж унтарлаа."
+
+#. Translators: Input help mode message for toggle sleep mode command.
+msgid "Toggles sleep mode on and off for the active application."
+msgstr ""
+"ажлын талбар болон програмууд ажилгаатай байсан ч амрах горимыг унтрааж "
+"асааж хэрэглэх."
+
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
 msgstr "амрах горим унтарлаа."
@@ -3163,12 +3256,6 @@ msgstr "амрах горим унтарлаа."
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
 msgstr "амрах горим аслаа."
-
-#. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles sleep mode on and off for the active application."
-msgstr ""
-"ажлын талбар болон програмууд ажилгаатай байсан ч амрах горимыг унтрааж "
-"асааж хэрэглэх."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3180,21 +3267,25 @@ msgstr ""
 "twice will spell the current line. Pressing three times will spell the line "
 "using character descriptions."
 
+#. Translators: Input help mode message for left mouse click command.
+msgid "Clicks the left mouse button once at the current mouse position"
+msgstr "тухайн байршилд хулганы заагчаар зүүн товшиж болно."
+
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
 msgstr "Зүүн товш"
 
-#. Translators: Input help mode message for left mouse click command.
-msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "тухайн байршилд хулганы заагчаар зүүн товшиж болно."
+#. Translators: Input help mode message for right mouse click command.
+msgid "Clicks the right mouse button once at the current mouse position"
+msgstr "тухайн байршилд хулганы заагчаар баруун товшиж болно."
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
 msgstr "Баруун товш"
 
-#. Translators: Input help mode message for right mouse click command.
-msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "тухайн байршилд хулганы заагчаар баруун товшиж болно."
+#. Translators: Input help mode message for left mouse lock/unlock toggle command.
+msgid "Locks or unlocks the left mouse button"
+msgstr "Хулганы зүүн товчыг цоожилж мөн түгжээгүй болгож хэрэглэнэ."
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
@@ -3204,9 +3295,9 @@ msgstr "Хулганы зүүн товч түгжээгүй"
 msgid "Left mouse button lock"
 msgstr "Хулганы зүүн товч цоожтой байна"
 
-#. Translators: Input help mode message for left mouse lock/unlock toggle command.
-msgid "Locks or unlocks the left mouse button"
-msgstr "Хулганы зүүн товчыг цоожилж мөн түгжээгүй болгож хэрэглэнэ."
+#. Translators: Input help mode message for right mouse lock/unlock command.
+msgid "Locks or unlocks the right mouse button"
+msgstr "Хулганы баруун товчыг цоожилж мөн түгжээгүй болгож хэрэглэнэ."
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
@@ -3215,10 +3306,6 @@ msgstr "Хулганы баруун товч түгжээгүй"
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 msgid "Right mouse button lock"
 msgstr "Хулганы баруун товч цоожтой байна"
-
-#. Translators: Input help mode message for right mouse lock/unlock command.
-msgid "Locks or unlocks the right mouse button"
-msgstr "Хулганы баруун товчыг цоожилж мөн түгжээгүй болгож хэрэглэнэ."
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3234,13 +3321,13 @@ msgid ""
 "current date"
 msgstr "нэг дарж цаг сонсоно. хоёр удаа хурдан дарж он сар өдөр сонсоно."
 
-#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
-msgid "No settings"
-msgstr "тохируулга алга"
-
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "Increases the currently active setting in the synth settings ring"
+
+#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
+msgid "No settings"
+msgstr "тохируулга алга"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
@@ -3254,6 +3341,10 @@ msgstr "Moves to the next available setting in the synth settings ring"
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "Moves to the previous available setting in the synth settings ring"
 
+#. Translators: Input help mode message for toggle speaked typed characters command.
+msgid "Toggles on and off the speaking of typed characters"
+msgstr "үсэг хэлэх үйлдлийг нээж хааж хэрэглэх."
+
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
 msgstr "үсэг унтарлаа"
@@ -3262,9 +3353,9 @@ msgstr "үсэг унтарлаа"
 msgid "speak typed characters on"
 msgstr "үсэг аслаа"
 
-#. Translators: Input help mode message for toggle speaked typed characters command.
-msgid "Toggles on and off the speaking of typed characters"
-msgstr "үсэг хэлэх үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle speak typed words command.
+msgid "Toggles on and off the speaking of typed words"
+msgstr "зай авах товчыг дарж үгээр нь уншуулах үйлдлийг хааж нээж хэрэглэх."
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -3274,9 +3365,11 @@ msgstr "зай авах бүрт үг унших унтарлаа."
 msgid "speak typed words on"
 msgstr "зай авах бүрт үг унших аслаа."
 
-#. Translators: Input help mode message for toggle speak typed words command.
-msgid "Toggles on and off the speaking of typed words"
-msgstr "зай авах товчыг дарж үгээр нь уншуулах үйлдлийг хааж нээж хэрэглэх."
+#. Translators: Input help mode message for toggle speak command keys command.
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
+msgstr "гарын команд сонсох үйлдлийг хааж нээж хэрэглэх."
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -3286,11 +3379,9 @@ msgstr "гарын команд сонсох унтарлаа."
 msgid "speak command keys on"
 msgstr "гарын команд сонсох аслаа."
 
-#. Translators: Input help mode message for toggle speak command keys command.
-msgid ""
-"Toggles on and off the speaking of typed keys, that are not specifically "
-"characters"
-msgstr "гарын команд сонсох үйлдлийг хааж нээж хэрэглэх."
+#. Translators: Input help mode message for toggle report font name command.
+msgid "Toggles on and off the reporting of font changes"
+msgstr "үсгийн хэвний нэр сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -3300,9 +3391,9 @@ msgstr "үсгийн нэр сонсох унтарлаа."
 msgid "report font name on"
 msgstr "үсгийн нэр  сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report font name command.
-msgid "Toggles on and off the reporting of font changes"
-msgstr "үсгийн хэвний нэр сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report font size command.
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "үсгийн хэвний хэмжээг сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
@@ -3312,9 +3403,9 @@ msgstr "үсгийн хэмжээг сонсох  унтарлаа."
 msgid "report font size on"
 msgstr "үсгийн хэмжээг сонсох  аслаа."
 
-#. Translators: Input help mode message for toggle report font size command.
-msgid "Toggles on and off the reporting of font size changes"
-msgstr "үсгийн хэвний хэмжээг сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report font attributes command.
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "үсгийн хэвний төлөв сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
@@ -3323,10 +3414,6 @@ msgstr "үсгийн төлөв сонсох  унтарлаа."
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
 msgstr "үсгийн төлөв сонсох аслаа."
-
-#. Translators: Input help mode message for toggle report font attributes command.
-msgid "Toggles on and off the reporting of font attributes"
-msgstr "үсгийн хэвний төлөв сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 msgid "Toggles on and off the reporting of superscripts and subscripts"
@@ -3343,6 +3430,10 @@ msgstr "мөрний дээд индекс болон доод индекс со
 msgid "report superscripts and subscripts off"
 msgstr "мөрний дээд индекс болон доод индекс  сонсох унтарлаа."
 
+#. Translators: Input help mode message for toggle report revisions command.
+msgid "Toggles on and off the reporting of revisions"
+msgstr "залруулга сонсох үйлдлийг нээж хааж хэрэглэх."
+
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
 msgstr "залруулга сонсох унтарлаа"
@@ -3351,9 +3442,9 @@ msgstr "залруулга сонсох унтарлаа"
 msgid "report revisions on"
 msgstr "залруулга сонсох  аслаа."
 
-#. Translators: Input help mode message for toggle report revisions command.
-msgid "Toggles on and off the reporting of revisions"
-msgstr "залруулга сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "тодотгол сонсох үйлдлийг хааж нээж хэрэглэх."
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
@@ -3363,9 +3454,21 @@ msgstr "тодотгол сонсох  унтарлаа."
 msgid "report emphasis on"
 msgstr "тодотгол  сонсох  аслаа."
 
-#. Translators: Input help mode message for toggle report emphasis command.
-msgid "Toggles on and off the reporting of emphasis"
-msgstr "тодотгол сонсох үйлдлийг хааж нээж хэрэглэх."
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+msgid "Toggles on and off the reporting of marked text"
+msgstr "бичвэр тэмдэглэгдсэн эсэхийг сонсох үйлдлийг нээж хааж хэрэглэх."
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked on"
+msgstr "тэмдэглэгдсэн эсэхийг сонсох аслаа."
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked off"
+msgstr "тэмдэглэгдсэн эсэхийг сонсох унтарлаа."
+
+#. Translators: Input help mode message for toggle report colors command.
+msgid "Toggles on and off the reporting of colors"
+msgstr "өнгө сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3375,9 +3478,9 @@ msgstr "өнгө сонсох  унтарлаа."
 msgid "report colors on"
 msgstr "өнгө сонсох  аслаа."
 
-#. Translators: Input help mode message for toggle report colors command.
-msgid "Toggles on and off the reporting of colors"
-msgstr "өнгө сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report alignment command.
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "мөр эгнүүлэх үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
@@ -3387,9 +3490,9 @@ msgstr "эгнүүлэлтийг сонсох унтарлаа."
 msgid "report alignment on"
 msgstr "эгнүүлэлтийг сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report alignment command.
-msgid "Toggles on and off the reporting of text alignment"
-msgstr "мөр эгнүүлэх үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report style command.
+msgid "Toggles on and off the reporting of style changes"
+msgstr "хэв загвар сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
@@ -3399,9 +3502,9 @@ msgstr "хэв загвар сонсох унтарлаа."
 msgid "report style on"
 msgstr "хэв загвар сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report style command.
-msgid "Toggles on and off the reporting of style changes"
-msgstr "хэв загвар сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report spelling errors command.
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "зөв бичих дүрэмний анхааруулга сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
@@ -3411,9 +3514,9 @@ msgstr "зөв бичих дүрэмний анхааруулга сонсох �
 msgid "report spelling errors on"
 msgstr "зөв бичих дүрэмний анхааруулга сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report spelling errors command.
-msgid "Toggles on and off the reporting of spelling errors"
-msgstr "зөв бичих дүрэмний анхааруулга сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report pages command.
+msgid "Toggles on and off the reporting of pages"
+msgstr "хуудасны дугаар сонсох   үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -3423,9 +3526,9 @@ msgstr "хуудасны дугаар сонсох унтарлаа."
 msgid "report pages on"
 msgstr "хуудасны дугаар сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report pages command.
-msgid "Toggles on and off the reporting of pages"
-msgstr "хуудасны дугаар сонсох   үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report line numbers command.
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "мөрний дугаарыг сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
@@ -3435,9 +3538,9 @@ msgstr "мөрний дугаар сонсох унтарлаа."
 msgid "report line numbers on"
 msgstr "мөрний дугаар сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report line numbers command.
-msgid "Toggles on and off the reporting of line numbers"
-msgstr "мөрний дугаарыг сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report line indentation command.
+msgid "Cycles through line indentation settings"
+msgstr "Cycles through line indentation settings"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
@@ -3455,9 +3558,9 @@ msgstr "догол мөр хэлүүлэх болон дуу эгшгээр да
 msgid "Report line indentation off"
 msgstr "догол мөр хэлэх хаагдав."
 
-#. Translators: Input help mode message for toggle report line indentation command.
-msgid "Cycles through line indentation settings"
-msgstr "Cycles through line indentation settings"
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "бүлэг бичвэрт байгаа догол мөр хэлэх үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3467,9 +3570,9 @@ msgstr "бүлэг бичвэрт байгаа догол мөр хэлэх ун
 msgid "report paragraph indentation on"
 msgstr "бүлэг бичвэрт байгаа догол мөр хэлэх аслаа."
 
-#. Translators: Input help mode message for toggle report paragraph indentation command.
-msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "бүлэг бичвэрт байгаа догол мөр хэлэх үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report line spacing command.
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "мөр хоорондын зайг сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -3479,9 +3582,9 @@ msgstr "мөр хоорондын зай сонсох унтарлаа."
 msgid "report line spacing on"
 msgstr "мөр хоорондын зай сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report line spacing command.
-msgid "Toggles on and off the reporting of line spacing"
-msgstr "мөр хоорондын зайг сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report tables command.
+msgid "Toggles on and off the reporting of tables"
+msgstr "хүснэгт сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3491,9 +3594,10 @@ msgstr "хүснэгт сонсох унтарлаа."
 msgid "report tables on"
 msgstr "хүснэгт сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report tables command.
-msgid "Toggles on and off the reporting of tables"
-msgstr "хүснэгт сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report table row/column headers command.
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr ""
+"Хүснэгтийн мөр болон баганын толгойг хэлэх үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
@@ -3503,10 +3607,9 @@ msgstr "хүснэгтийн мөр болон баганын толгойг х�
 msgid "report table row and column headers on"
 msgstr "хүснэгтийн мөр болон баганын толгойг хэлэх аслаа."
 
-#. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr ""
-"Хүснэгтийн мөр болон баганын толгойг хэлэх үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "Хүснэгтийн нүдний солбицол хэлэх үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
@@ -3516,9 +3619,9 @@ msgstr "хүснэгтийн нүдний солбицол хэлэх унта�
 msgid "report table cell coordinates on"
 msgstr "хүснэгтийн нүдний солбицол хэлэх аслаа."
 
-#. Translators: Input help mode message for toggle report table cell coordinates command.
-msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "Хүснэгтийн нүдний солбицол хэлэх үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report links command.
+msgid "Toggles on and off the reporting of links"
+msgstr "холбоос хэлэх үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -3527,10 +3630,6 @@ msgstr "холбоос хэлэх унтарлаа."
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
 msgstr "холбоос хэлэх аслаа."
-
-#. Translators: Input help mode message for toggle report links command.
-msgid "Toggles on and off the reporting of links"
-msgstr "холбоос хэлэх үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: Input help mode message for toggle report graphics command.
 msgid "Toggles on and off the reporting of graphics"
@@ -3544,6 +3643,10 @@ msgstr "зураг сонсох унтарлаа."
 msgid "report graphics on"
 msgstr "зураг сонсох аслаа."
 
+#. Translators: Input help mode message for toggle report comments command.
+msgid "Toggles on and off the reporting of comments"
+msgstr "Комментууд сонсох үйлдлийг нээж хааж хэрэглэх."
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
 msgstr "комментууд сонсох унтарлаа."
@@ -3552,9 +3655,9 @@ msgstr "комментууд сонсох унтарлаа."
 msgid "report comments on"
 msgstr "комментууд сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report comments command.
-msgid "Toggles on and off the reporting of comments"
-msgstr "Комментууд сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report lists command.
+msgid "Toggles on and off the reporting of lists"
+msgstr "жагсаалтууд сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
@@ -3564,9 +3667,9 @@ msgstr "жагсаалтууд сонсох унтарлаа."
 msgid "report lists on"
 msgstr "жагсаалтууд сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report lists command.
-msgid "Toggles on and off the reporting of lists"
-msgstr "жагсаалтууд сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report headings command.
+msgid "Toggles on and off the reporting of headings"
+msgstr "гарчиг сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
@@ -3575,10 +3678,6 @@ msgstr "гарчиг сонсох унтарлаа."
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
 msgstr "гарчиг сонсох аслаа."
-
-#. Translators: Input help mode message for toggle report headings command.
-msgid "Toggles on and off the reporting of headings"
-msgstr "гарчиг сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: Input help mode message for toggle report groupings command.
 msgid "Toggles on and off the reporting of groupings"
@@ -3592,6 +3691,10 @@ msgstr "бүлэг хэсгийг сонсох унтарлаа."
 msgid "report groupings on"
 msgstr "бүлэг хэсгийг сонсох аслаа."
 
+#. Translators: Input help mode message for toggle report block quotes command.
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "хашилтанд бичсэнийг сонсох үйлдлийг нээж хааж хэрэглэх."
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "хашилтанд бичсэнийг сонсох унтарлаа."
@@ -3600,9 +3703,9 @@ msgstr "хашилтанд бичсэнийг сонсох унтарлаа."
 msgid "report block quotes on"
 msgstr "хашилтанд бичсэнийг сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report block quotes command.
-msgid "Toggles on and off the reporting of block quotes"
-msgstr "хашилтанд бичсэнийг сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report landmarks command.
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "хуудасны заагуудыг сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions off"
@@ -3611,10 +3714,6 @@ msgstr "хуудасны зааг сонсох унтарлаа."
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions on"
 msgstr "хуудасны зааг сонсох аслаа."
-
-#. Translators: Input help mode message for toggle report landmarks command.
-msgid "Toggles on and off the reporting of landmarks"
-msgstr "хуудасны заагуудыг сонсох үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: Input help mode message for toggle report articles command.
 msgid "Toggles on and off the reporting of articles"
@@ -3628,6 +3727,10 @@ msgstr "юм сонсох унтарлаа."
 msgid "report articles on"
 msgstr "юм сонсох аслаа."
 
+#. Translators: Input help mode message for toggle report frames command.
+msgid "Toggles on and off the reporting of frames"
+msgstr "тухайн зүйл хүрээтэй эсэхийг сонсох үйлдлийг нээж хааж хэрэглэх."
+
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
 msgstr "хүрээ сонсох унтарлаа."
@@ -3636,9 +3739,9 @@ msgstr "хүрээ сонсох унтарлаа."
 msgid "report frames on"
 msgstr "хүрээ сонсох аслаа."
 
-#. Translators: Input help mode message for toggle report frames command.
-msgid "Toggles on and off the reporting of frames"
-msgstr "тухайн зүйл хүрээтэй эсэхийг сонсох үйлдлийг нээж хааж хэрэглэх."
+#. Translators: Input help mode message for toggle report if clickable command.
+msgid "Toggles on and off reporting if clickable"
+msgstr "Toggles on and off reporting if clickable"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
@@ -3648,17 +3751,6 @@ msgstr "товших үйлдэл унтарлаа"
 msgid "report if clickable on"
 msgstr "товших үйлдэл аслаа"
 
-#. Translators: Input help mode message for toggle report if clickable command.
-msgid "Toggles on and off reporting if clickable"
-msgstr "Toggles on and off reporting if clickable"
-
-#. Translators: Reported when the user cycles through speech symbol levels
-#. which determine what symbols are spoken.
-#. %s will be replaced with the symbol level; e.g. none, some, most and all.
-#, python-format
-msgid "Symbol level %s"
-msgstr "Бичиглэлийн төвшин %s"
-
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
@@ -3667,16 +3759,19 @@ msgstr ""
 " өөрийн сонголтоор цэг тэмдэглэл хэлэх төвшинг тохируулна.\n"
 " таны тохируулсан төвшинд цэг тэмдгүүдийг хэлнэ."
 
-#. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "Object has no location"
-msgstr "объектийн байршил тодорхойгүй"
+#. Translators: Reported when the user cycles through speech symbol levels
+#. which determine what symbols are spoken.
+#. %s will be replaced with the symbol level; e.g. none, some, most and all.
+#, python-format
+msgid "Symbol level %s"
+msgstr "Бичиглэлийн төвшин %s"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Хулганы заагчыг хөдөлгөөнт объект дээр аваачих"
 
-#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
-msgid "Move navigator object to mouse"
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "Object has no location"
 msgstr "объектийн байршил тодорхойгүй"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
@@ -3687,9 +3782,9 @@ msgstr ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 
-#. Translators: reported when there are no other available review modes for this object
-msgid "No next review mode"
-msgstr "дараа нь нарийвчлан шалгах горим алга"
+#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
+msgid "Move navigator object to mouse"
+msgstr "объектийн байршил тодорхойгүй"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
@@ -3700,8 +3795,8 @@ msgstr ""
 "positions the review position at the point of the navigator object"
 
 #. Translators: reported when there are no other available review modes for this object
-msgid "No previous review mode"
-msgstr "өмнө нь нарийвчлан шалгах горим алга"
+msgid "No next review mode"
+msgstr "дараа нь нарийвчлан шалгах горим алга"
 
 #. Translators: Script help message for previous review mode command.
 msgid ""
@@ -3711,6 +3806,14 @@ msgstr ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 
+#. Translators: reported when there are no other available review modes for this object
+msgid "No previous review mode"
+msgstr "өмнө нь нарийвчлан шалгах горим алга"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "энгийн харах горимыг нээж хааж хэрэглэх. "
+
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
 msgstr "ердийн харах горим унтарлаа."
@@ -3718,21 +3821,6 @@ msgstr "ердийн харах горим унтарлаа."
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
 msgstr "ердийн харах горим аслаа."
-
-#. Translators: Input help mode message for toggle simple review mode command.
-msgid "Toggles simple review mode on and off"
-msgstr "энгийн харах горимыг нээж хааж хэрэглэх. "
-
-#. Translators: Reported when the user tries to perform a command related to the navigator object
-#. but there is no current navigator object.
-msgid "No navigator object"
-msgstr "хөдөлгөөнт объект алга"
-
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "%s санах ойн самбарт түр  хуулагдлаа."
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -3744,9 +3832,10 @@ msgstr ""
 "information, and pressing three times Copies name and value of this  object "
 "to the clipboard"
 
-#. Translators: message when there is no location information for the review cursor
-msgid "No location information"
-msgstr "байршлын мэдээлэл алга"
+#. Translators: Reported when the user tries to perform a command related to the navigator object
+#. but there is no current navigator object.
+msgid "No navigator object"
+msgstr "хөдөлгөөнт объект алга"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
@@ -3755,6 +3844,10 @@ msgid ""
 msgstr ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
+
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "байршлын мэдээлэл алга"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3767,6 +3860,14 @@ msgstr ""
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
 msgstr "шилжиж байна"
+
+#. Translators: Input help mode message for move focus to current navigator object command.
+msgid ""
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3783,55 +3884,39 @@ msgstr "Шилжүүлж байна"
 msgid "No caret"
 msgstr "Тэмдэгт алга"
 
-#. Translators: Input help mode message for move focus to current navigator object command.
-msgid ""
-"Pressed once sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
-msgstr ""
-"Pressed once sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
+#. Translators: Input help mode message for move to parent object command.
+msgid "Moves the navigator object to the object containing it"
+msgstr "Moves the navigator object to the object containing it"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
 msgstr "Агуулж байгаа объект алга"
 
-#. Translators: Input help mode message for move to parent object command.
-msgid "Moves the navigator object to the object containing it"
-msgstr "Moves the navigator object to the object containing it"
+#. Translators: Input help mode message for move to next object command.
+msgid "Moves the navigator object to the next object"
+msgstr "хөдөлгөөнт объектыг дараагийн объект дээр аваачих"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "дараа нь алга"
 
-#. Translators: Input help mode message for move to next object command.
-msgid "Moves the navigator object to the next object"
-msgstr "хөдөлгөөнт объектыг дараагийн объект дээр аваачих"
+#. Translators: Input help mode message for move to previous object command.
+msgid "Moves the navigator object to the previous object"
+msgstr "хөдөлгөөнт объектыг өмнөх объект дээр аваачих"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "өмнө нь алга"
 
-#. Translators: Input help mode message for move to previous object command.
-msgid "Moves the navigator object to the previous object"
-msgstr "хөдөлгөөнт объектыг өмнөх объект дээр аваачих"
-
-#. Translators: Reported when there is no contained (first child) object such as inside a document.
-msgid "No objects inside"
-msgstr "дотор нь объект алга"
-
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
 msgstr "Moves the navigator object to the first object inside it"
 
-#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "Activate"
-msgstr "Идэвхжүүлэх "
-
-#. Translators: the message reported when there is no action to perform on the review position or navigator object.
-msgid "No action"
-msgstr "үйлдэл алга"
+#. Translators: Reported when there is no contained (first child) object such as inside a document.
+msgid "No objects inside"
+msgstr "дотор нь объект алга"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
@@ -3841,6 +3926,10 @@ msgstr ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 
+#. Translators: the message reported when there is no action to perform on the review position or navigator object.
+msgid "No action"
+msgstr "үйлдэл алга"
+
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
@@ -3849,10 +3938,6 @@ msgstr ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 
-#. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "Top"
-msgstr "дээд"
-
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
@@ -3860,6 +3945,12 @@ msgid ""
 msgstr ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
+
+#. Translators: a message reported when review cursor is at the top line of the current navigator object.
+#. Translators: Reported when attempting to move to the previous result in the Python Console
+#. output pane while there is no previous result.
+msgid "Top"
+msgstr "дээд"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
@@ -3921,10 +4012,6 @@ msgstr ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
 
-#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-msgid "Left"
-msgstr "Зүүн"
-
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
@@ -3932,6 +4019,10 @@ msgid ""
 msgstr ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
+
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Зүүн"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
@@ -3945,10 +4036,6 @@ msgstr ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 
-#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-msgid "Right"
-msgstr "Баруун"
-
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
@@ -3956,6 +4043,10 @@ msgid ""
 msgstr ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
+
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "Баруун"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
@@ -3989,6 +4080,16 @@ msgstr ""
 msgid "Expanded symbol ({})"
 msgstr "дэлгэрэнгүй харагдах тэмдэг ({})"
 
+#. Translators: Input help mode message for toggle speech mode command.
+#, fuzzy
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA will just speak normally."
+msgstr ""
+"Ярьдаг програмын ярих үйлдлийг өөрийн сонголтоор нээж хааж мөн дуут дохио "
+"болгож тохируулан хэрэглэх."
+
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
 msgstr "Ярих үйлдэл хаагдлаа."
@@ -4001,19 +4102,13 @@ msgstr "Ярих үйлдлийн оронд дохио дуугарах идэ�
 msgid "Speech mode talk"
 msgstr "Ярих үйлдэл нээгдлээ."
 
-#. Translators: Input help mode message for toggle speech mode command.
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it "
-"its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr ""
-"Ярьдаг програмын ярих үйлдлийг өөрийн сонголтоор нээж хааж мөн дуут дохио "
-"болгож тохируулан хэрэглэх."
-
-#. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
+#. Translators: Input help mode message for move to next document with focus command,
+#. mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "Moves the focus to the next closest document that contains the focus"
 
+#. Translators: Input help mode message for toggle focus and browse mode command
+#. in web browsing and other situations.
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
@@ -4104,6 +4199,16 @@ msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
 "Reports the object with focus. If pressed twice, spells the information"
 
+#. Translators: Input help mode message for report status line text command.
+msgid ""
+"Reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
+msgstr ""
+"Reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
+
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Төлвийн мөр олдсонгүй"
@@ -4116,15 +4221,9 @@ msgstr "төлвийн мөрний мэдээлэл алга"
 msgid "unable to copy status bar content to clipboard"
 msgstr "санах ойн самбарт төлвийн мөрний контентыг хуулах команд ажиллахгүй"
 
-#. Translators: Input help mode message for report status line text command.
-msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
-msgstr ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
+#. Translators: Input help mode message for toggle mouse tracking command.
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr "хулганы заагчаар дэлгэцэнд байгаа мэдээлэл сонсож чагтлах"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4134,9 +4233,9 @@ msgstr "хулганы заагч унтарлаа."
 msgid "Mouse tracking on"
 msgstr "хулганы заагч аслаа."
 
-#. Translators: Input help mode message for toggle mouse tracking command.
-msgid "Toggles the reporting of information as the mouse moves"
-msgstr "хулганы заагчаар дэлгэцэнд байгаа мэдээлэл сонсож чагтлах"
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "хулганы заагчаар бичвэр хэлүүлэх"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
@@ -4144,14 +4243,6 @@ msgstr "хулганы заагчаар дэлгэцэнд байгаа мэдэ
 #, python-format
 msgid "Mouse text unit resolution %s"
 msgstr "хулганы Бичвэрийн %s нарийвчлал сонгох:"
-
-#. Translators: Input help mode message for toggle mouse text unit resolution command.
-msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "хулганы заагчаар бичвэр хэлүүлэх"
-
-#. Translators: Reported when there is no title text for current program or window.
-msgid "No title"
-msgstr "Гарчиг алга"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -4161,6 +4252,10 @@ msgid ""
 msgstr ""
 "цонхны гарчиг хэлүүлэх бол нэг дараад гарчиг сонсох хоёр дарвал үсэглэх "
 "хэрэв гурав дарвал санах ойн самбарт түр хуулагдана"
+
+#. Translators: Reported when there is no title text for current program or window.
+msgid "No title"
+msgstr "Гарчиг алга"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Reads all controls in the active window"
@@ -4174,7 +4269,9 @@ msgstr ""
 "WX GUI төхөөрөмжийг нээнэ. GUI бүтэц хэсгүүдийн талаар илүү дэлгэрэнгүй "
 "мэдээлэл авахад ашиглана."
 
-#. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
+#. Translators: Input help mode message for developer info for current navigator object command,
+#. used by developers to examine technical info on navigator object.
+#. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -4213,12 +4310,22 @@ msgid "Log fragment copied to clipboard"
 msgstr "логний хэсэг санах ойн самбарт хууллагдлаа. "
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
 msgid "Unable to copy"
 msgstr "хуулагдахгүй байна."
 
 #. Translators: Input help mode message for Open user configuration directory command.
 msgid "Opens NVDA configuration directory for the current user."
 msgstr "NVDA хэрэглэгчийн тохируулгыг нээж орох "
+
+#. Translators: Input help mode message for toggle progress bar output command.
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Үйлдлийн явцыг өөрийн сонголтоор яриулах, дан дохио дуугарах,\n"
+" ярих болон давхар дохио дуугарах гэх мэтээр тохируулан хэрэглэж болно."
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
@@ -4236,13 +4343,11 @@ msgstr "Үйлдлийн явцыг дохио дуугарч мэдэгдэх �
 msgid "Beep and speak progress bar updates"
 msgstr "Үйлдлийн явц ярих, давхар дохио дугарах идэвхжлээ"
 
-#. Translators: Input help mode message for toggle progress bar output command.
+#. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting "
-"progress bar updates"
-msgstr ""
-"Үйлдлийн явцыг өөрийн сонголтоор яриулах, дан дохио дуугарах,\n"
-" ярих болон давхар дохио дуугарах гэх мэтээр тохируулан хэрэглэж болно."
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr "dynamic агууламжын өөрчлөлтийг сонсох  үйлдлийг нээж хааж хэрэглэх"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -4252,11 +4357,10 @@ msgstr "dynamic агууламжын өөрчлөлтийг сонсох  ха�
 msgid "report dynamic content changes on"
 msgstr "dynamic агууламжын өөрчлөлтийг сонсох  нээгдэв."
 
-#. Translators: Input help mode message for toggle dynamic content changes command.
+#. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new "
-"text in dos console windows"
-msgstr "dynamic агууламжын өөрчлөлтийг сонсох  үйлдлийг нээж хааж хэрэглэх"
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr "заагч тэмдэгт хэлэх үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -4266,10 +4370,10 @@ msgstr "заагч тэмдэгт хэлэх хаагдлаа"
 msgid "caret moves review cursor on"
 msgstr "заагч тэмдэгт хэлэх нээгдлээ"
 
-#. Translators: Input help mode message for toggle caret moves review cursor command.
+#. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
-"Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "заагч тэмдэгт хэлэх үйлдлийг нээж хааж хэрэглэх."
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr "хөдөлгөөнт объектыг сонсож, шилжүүлэх үйлдлийг нээж хааж хэрэглэх."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -4279,10 +4383,13 @@ msgstr "хөдөлгөөнт объектыг шилжүүлэх үйлдэл х
 msgid "focus moves navigator object on"
 msgstr "хөдөлгөөнт объектыг шилжүүлэх үйлдэл нээгдэв."
 
-#. Translators: Input help mode message for toggle focus moves navigator object command.
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
 msgid ""
-"Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "хөдөлгөөнт объектыг сонсож, шилжүүлэх үйлдлийг нээж хааж хэрэглэх."
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr ""
+"system focus болон browse mode командуудийн автомат хөдөлгөөнийг хааж нээж "
+"чагтлах"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements off"
@@ -4292,13 +4399,12 @@ msgstr "Automatically set system focus to focusable elements off"
 msgid "Automatically set system focus to focusable elements on"
 msgstr "Automatically set system focus to focusable elements on"
 
-#. Translators: Input help mode message for toggle auto focus focusable elements command.
-msgid ""
-"Toggles on and off automatic movement of the system focus due to browse mode "
-"commands"
+#. Translators: Input help mode message for report battery status command.
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"system focus болон browse mode командуудийн автомат хөдөлгөөнийг хааж нээж "
-"чагтлах"
+"батарейний олон талын мэдээлэл авах болно.\n"
+"тухайлбал цэнэглэгдэж байгаа хувь болон үлдсэн цэнэгний тухай, түүнчлэн "
+"цэнэглэгч залгаатай эсхүүл үгүй байгааг мэдээлэх болно."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4318,17 +4424,6 @@ msgstr "цэнэглэгч залгаатай байна."
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} цаг {minutes:d} минут ажиллах цэнэг үлдсэн  "
 
-#. Translators: Input help mode message for report battery status command.
-msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr ""
-"батарейний олон талын мэдээлэл авах болно.\n"
-"тухайлбал цэнэглэгдэж байгаа хувь болон үлдсэн цэнэгний тухай, түүнчлэн "
-"цэнэглэгч залгаатай эсхүүл үгүй байгааг мэдээлэх болно."
-
-#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
-msgid "Pass next key through"
-msgstr "энэ командыг алгасаж дараагийн команданд  шууд шилжих"
-
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
@@ -4336,6 +4431,18 @@ msgid ""
 msgstr ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
+
+#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
+msgid "Pass next key through"
+msgstr "энэ командыг алгасаж дараагийн команданд  шууд шилжих"
+
+#. Translators: Input help mode message for report current program name and app module name command.
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
@@ -4349,14 +4456,6 @@ msgstr " %s модул уншигдсан"
 #, python-format
 msgid " %s is currently running."
 msgstr "%s ажиллаж байна"
-
-#. Translators: Input help mode message for report current program name and app module name command.
-msgid ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
-msgstr ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
 
 #. Translators: Input help mode message for go to general settings command.
 msgid "Shows NVDA's general settings"
@@ -4465,14 +4564,6 @@ msgstr ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 
-#. Translators: The message announced when disabling speech viewer.
-msgid "speech viewer disabled"
-msgstr "ярьдаг програм ажиглагч идэвхгүй байна"
-
-#. Translators: The message announced when enabling speech viewer.
-msgid "speech viewer enabled"
-msgstr "ярьдаг програм ажиглагч ажиллаж байна"
-
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
@@ -4481,15 +4572,28 @@ msgstr ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 
+#. Translators: The message announced when disabling speech viewer.
+msgid "speech viewer disabled"
+msgstr "ярьдаг програм ажиглагч идэвхгүй байна"
+
+#. Translators: The message announced when enabling speech viewer.
+msgid "speech viewer enabled"
+msgstr "ярьдаг програм ажиглагч ажиллаж байна"
+
+#. Translators: Input help mode message for toggle braille tether to command
+#. (tethered means connected to or follows).
+msgid "Toggle tethering of braille between the focus and the review position"
+msgstr "Toggle tethering of braille between the focus and the review position"
+
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
 msgstr "Брайл бичиг %s"
 
-#. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
-msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "Toggle tethering of braille between the focus and the review position"
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "Toggle the way context information is presented in braille"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4498,9 +4602,9 @@ msgstr "Toggle tethering of braille between the focus and the review position"
 msgid "Braille focus context presentation: %s"
 msgstr "брайлаар хам утга үзүүлэх: %s"
 
-#. Translators: Input help mode message for toggle braille focus context presentation command.
-msgid "Toggle the way context information is presented in braille"
-msgstr "Toggle the way context information is presented in braille"
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "брайл заагчийг нээж хааж өөрийн сонголтоор хэрэглэх."
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -4510,9 +4614,9 @@ msgstr "Брайл заагч унтарлаа."
 msgid "Braille cursor on"
 msgstr "Брайл заагч аслаа."
 
-#. Translators: Input help mode message for toggle braille cursor command.
-msgid "Toggle the braille cursor on and off"
-msgstr "брайл заагчийг нээж хааж өөрийн сонголтоор хэрэглэх."
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Cycle through the braille cursor shapes"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
@@ -4523,9 +4627,9 @@ msgstr "Брайл заагч унтарсан байна."
 msgid "Braille cursor %s"
 msgstr "Брайл заагч %s"
 
-#. Translators: Input help mode message for cycle braille cursor shape command.
-msgid "Cycle through the braille cursor shapes"
-msgstr "Cycle through the braille cursor shapes"
+#. Translators: Input help mode message for report clipboard text command.
+msgid "Reports the text on the Windows clipboard"
+msgstr "Reports the text on the Windows clipboard"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4538,21 +4642,18 @@ msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "самбарын санах ой %s үсгээр хэтэрсэн."
 
-#. Translators: Input help mode message for report clipboard text command.
-msgid "Reports the text on the Windows clipboard"
-msgstr "Reports the text on the Windows clipboard"
-
-#. Translators: Indicates start of review cursor text to be copied to clipboard.
-msgid "Start marked"
-msgstr "эхлэл тэмдэглэгдсэн"
-
-#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command
+#. (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
+
+#. Translators: Indicates start of review cursor text to be copied to clipboard.
+msgid "Start marked"
+msgstr "эхлэл тэмдэглэгдсэн"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
@@ -4568,6 +4669,17 @@ msgstr ""
 msgid "No start marker set"
 msgstr "эхлэл тэмдэглэгдээгүй"
 
+#. Translators: Input help mode message for the select then copy command.
+#. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+msgid ""
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
+msgstr ""
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
+
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
 msgstr "хоёр удаа дарж хуулах команд хий эсхүл тэмдэглэл дахин тавих"
@@ -4579,20 +4691,6 @@ msgstr "хуулах бичвэр алга"
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
 msgstr "бичвэр идэвхжсэнгүй хоёр удаа дарж хуулна уу"
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "идэвхжүүлсэн хэсгийг санах ойн самбарт хууллаа"
-
-#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-msgid ""
-"If pressed once, the text from the previously set start marker up to and "
-"including the current position of the review cursor is selected. If pressed "
-"twice, the text is copied to the clipboard"
-msgstr ""
-"If pressed once, the text from the previously set start marker up to and "
-"including the current position of the review cursor is selected. If pressed "
-"twice, the text is copied to the clipboard"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -4668,10 +4766,6 @@ msgid ""
 "input"
 msgstr "Дэлгэц уншигч програмыг удирдах товчыг брайлаар бичхэд холбож ашиглах"
 
-#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
-msgid "Plugins reloaded"
-msgstr "залгаас програм дахин ачаалж байна"
-
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
@@ -4679,6 +4773,10 @@ msgid ""
 msgstr ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
+
+#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
+msgid "Plugins reloaded"
+msgstr "залгаас програм дахин ачаалж байна"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4712,14 +4810,14 @@ msgstr "мэдрэгчээр ажиллах үйлдэл идэвхтэй"
 msgid "Touch interaction disabled"
 msgstr "мэдрэгчээр ажиллах үйлдэл идэвхгүй"
 
+#. Translators: Input help mode message for a touchscreen gesture.
+msgid "Cycles between available touch modes"
+msgstr "мэдрэгчээр ажиллах горим хооронд өөрчлөх"
+
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
 msgid "%s mode"
 msgstr "%s горим"
-
-#. Translators: Input help mode message for a touchscreen gesture.
-msgid "Cycles between available touch modes"
-msgstr "мэдрэгчээр ажиллах горим хооронд өөрчлөх"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4733,10 +4831,6 @@ msgstr ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
 
-#. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
-msgstr "байршилгүй объект"
-
 #. Translators: Input help mode message for touch right click command.
 msgid ""
 "Clicks the right mouse button at the current touch position. This is "
@@ -4745,17 +4839,13 @@ msgstr ""
 "тухайн байршилд заагчаар баруун товшиж болно.гэхдээ хулганы цэсийг "
 "идэвхжүүлэх комманд хийж болно"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "байршилгүй объект"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "NVDA програмын profiles тохируулгын харилцах цонхыг үзүүлэх"
-
-#. Translators: The message announced when temporarily disabling all configuration profile triggers.
-msgid "Configuration profile triggers disabled"
-msgstr "profile тохируулгын түгжээнүүд ажиллагаагүй байна."
-
-#. Translators: The message announced when re-enabling all configuration profile triggers.
-msgid "Configuration profile triggers enabled"
-msgstr "profile тохируулгын түгжээнүүд ажиллагаатай байна."
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 msgid ""
@@ -4765,24 +4855,36 @@ msgstr ""
 "profile бүх тохируулгын түгжээнүүд NVDA програмыг дахин эхлэх хүртэл "
 "ажиллагаагүй байх болно."
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "profile тохируулгын түгжээнүүд ажиллагаагүй байна."
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "profile тохируулгын түгжээнүүд ажиллагаатай байна."
+
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr "математикийн контенттой харилцах"
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
 msgstr "математик биш"
 
 #. Translators: Describes a command.
-msgid "Begins interaction with math content"
-msgstr "математикийн контенттой харилцах"
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr ""
+"хөдөлгөөнт объектын утга агуулгыг windows 10 үсэг танигч OCR таниж байна."
 
 #. Translators: Reported when Windows 10 OCR is not available.
 msgid "Windows 10 OCR not available"
 msgstr "Windows 10 үсэг танигч OCR ажиллах боломжгүй байна."
 
-#. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
+#. Translators: Reported when screen curtain is enabled.
+msgid "Please disable screen curtain before using Windows 10 OCR."
 msgstr ""
-"хөдөлгөөнт объектын утга агуулгыг windows 10 үсэг танигч OCR таниж байна."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -4803,34 +4905,35 @@ msgid ""
 "enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
 "until you disable it"
 msgstr ""
-"Toggles the state of the screen curtain, enable to make the screen black or "
-"disable to show the contents of the screen. Pressed once, screen curtain is "
-"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
-"until you disable it"
+"дэлгэц хаах идэвхжүүлвэл дэлгэц харлана. эсхүл идэвхгүй болвол дэлгэц "
+"нээгдэж харагдана.\n"
+"нэг дарж nvda дахин эхлэх хүртэл дэлгэц хаагдана.\n"
+"хоёр дарвал дэлгэц хаагдаж дараа нь идэвхгүй болгох үйлдэл хийж дэлгэц "
+"нээнэ.."
 
 #. Translators: Reported when the screen curtain is disabled.
 msgid "Screen curtain disabled"
-msgstr "дэлгэцний хаалт идэвхгүй болсон"
+msgstr "дэлгэц хаах идэвхгүй болсон"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not disable screen curtain"
-msgstr "дэлгэцний хаалт ажиллагаагүй болгох идэвхжсэнгүй"
+msgstr "дэлгэц хаах ажиллагаагүй болгох идэвхжсэнгүй"
 
 #. Translators: Reported when the screen curtain is not available.
 msgid "Screen curtain not available"
-msgstr "дэлгэцний хаалт идэвхжүүлэх боломжгүй"
+msgstr "дэлгэц хаах идэвхжүүлэх боломжгүй"
 
 #. Translators: Reported when the screen curtain is enabled.
 msgid "Screen curtain enabled"
-msgstr "дэлгэцний хаалт идэвхжсэн байна"
+msgstr "дэлгэц хаах идэвхжсэн байна"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 msgid "Temporary Screen curtain, enabled until next restart"
-msgstr "дэлгэцний хаалт NVDA програмын дахин эхлүүлэх хүртэл түр идэвхжлээ "
+msgstr "дэлгэц хаах NVDA програмын дахин эхлүүлэх хүртэл түр идэвхжлээ "
 
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
-msgstr "дэлгэцний хаалт ажиллуулах идэвхжсэнгүй"
+msgstr "дэлгэц хаах ажилсангүй"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6439,7 +6542,7 @@ msgstr "&дууг чангалж суллах"
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
 msgid "Volume"
-msgstr "чангалж суллах"
+msgstr "дууг чангалж суллах"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
@@ -6544,13 +6647,32 @@ msgstr "дээш элих"
 msgid "NVDA Message"
 msgstr "NVDA програмын мэссэж"
 
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d үсэг тэмдгүүд"
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "санах ойн самбарт түр {text} хуулагдлаа."
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied: {text}"
+msgstr "{text} хуулагдсан."
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
-msgstr "Шинэчилсэн хувилбар байгаа эсэхийг шалгах"
+msgstr "шинэ хувилбар байгаа эсэхийг шалгах"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 msgid "Checking for update"
-msgstr "Шинэчлэлт байгаа эсэхийг шалгаж байна"
+msgstr "шинэ хувилбар гарсан эсэхийг шалгаж байна"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
@@ -6562,6 +6684,9 @@ msgstr "Шинэчлэлтийг шалгах явцад алдаа гарлаа
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6576,7 +6701,7 @@ msgstr "NVDA програмыг шинэчлэх үйлдлийн"
 
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
-msgstr "Одоогоор шинэчлэлт алга."
+msgstr "Одоогоор шинэ хувилбар алга."
 
 #. Translators: A message indicating that an updated version of NVDA has been downloaded
 #. and is pending to be installed.
@@ -6599,16 +6724,15 @@ msgid ""
 "continue with the installation"
 msgstr ""
 "\n"
-"Таны NVDA програмын тохируулгад дараах add-ons нэмэлт програмууд суусан "
-"бөгөөд эдгээр нэмэлт програмууд нь шинэ хувилбартай ажиллахгүй тул та дараах "
-"жагсаалтыг нягтлаж үргэлжлүүлэх эсэхээ шийднэ үү."
+"Таны NVDA програмд дараах add-ons байгаа хэдий ч эдгээр нь шинэ хувилбартай "
+"ажиллахгүй тул та дараах жагсаалтыг нягтлаж үргэлжлүүлэх эсэхээ шийднэ үү."
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
 #. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
 #. available, will be disabled after installation.
 msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "Эдгээр add-ons програмуудын ажиллагааг зогсохыг зөвшөөрч байна."
+msgstr "Эдгээр add-ons програмууд ажиллагаагүй болохыг хүлээн  зөвшөөрч байна."
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6619,7 +6743,7 @@ msgstr "&Add-ons програмууд харах"
 #. {version} will be replaced with the version; e.g. 2011.3.
 #, python-brace-format
 msgid "&Install NVDA {version}"
-msgstr "NVDA програмыг суулга {version}"
+msgstr "монгол NVDA програм {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
 msgid "Re-&download update"
@@ -6633,7 +6757,7 @@ msgstr "Монгол NVDA програмын шинэ хувилбар {version}
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
-msgstr "&Шинэчлэлтийг татаж авна уу"
+msgstr "&Шинэ хувилбар татаж авна уу"
 
 #. Translators: The label of a button to remind the user later about performing some action.
 msgid "Remind me &later"
@@ -6648,7 +6772,7 @@ msgstr "&Хаах"
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
-msgstr "NVDA програмын хувилбар {version} аль хэдийн суулгасан байна\n"
+msgstr "Монгол NVDA програм {version} шинэ хувилбар бэлэн боллоо\n"
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -6660,21 +6784,21 @@ msgid ""
 "continue with the installation"
 msgstr ""
 "\n"
-"Таны NVDA програмын тохируулгад дараах add-ons нэмэлт програмууд суусан "
-"бөгөөд эдгээр нэмэлт програмууд нь шинэ хувилбартай ажиллахгүй тул та дараах "
-"жагсаалтыг нягтлаж үргэлжлүүлэх эсэхээ шийднэ үү."
+"өмнөх монгол NVDA програмд дараах add-ons суусан байгаа хэдий ч эдгээр нь "
+"шинэ хувилбарт ажиллахгүй тул та дараах жагсаалтыг нягтлаж үргэлжлүүлэх "
+"эсэхээ шийднэ үү."
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
-msgstr "&Шинэчлэлтйиг суулга"
+msgstr "&шинээр суулга"
 
 #. Translators: The label of a button to postpone an NVDA update.
 msgid "&Postpone update"
-msgstr "&Шинэчлэлт суулгахыг түр хойшлуулах"
+msgstr "&шинээр суулгахыг түр хойшлуулах"
 
 #. Translators: The message when a downloaded update file could not be preserved.
 msgid "Unable to postpone update."
-msgstr "&Шинэчлэлт суулгахыг хойшлуулах боломжгүй байна"
+msgstr "&шинээр суулгахыг хойшлуулах боломжгүй байна"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6737,7 +6861,7 @@ msgstr ""
 #, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr ""
-"Зохиогчийн эрхээр хамгаалагдсан 2020 ХАРААГҮЙ ХҮМҮҮСИЙН ИННОВАЦИ ХӨГЖЛИЙН "
+"Зохиогчийн эрхээр хамгаалагдсан 2021 ХАРААГҮЙ ХҮМҮҮСИЙН ИННОВАЦИ ХӨГЖЛИЙН "
 "ТӨВ албан ёсны байнга хөгжүүлэгч байгууллага \n"
 "Copyright (C) {years} NVDA Contributors"
 
@@ -6767,9 +6891,9 @@ msgid ""
 msgstr ""
 "Монгол NVDA дэлгэц уншигч програм\n"
 "Зохиогчийн эрхээр хамгаалагдсан Хараагүй Хүмүүсийн Инноваци Хөгжлийн Төв "
-"байнгын хөгжүүлэгч байгууллага 2020 он\n"
+"байнгын хөгжүүлэгч байгууллага 2021 он\n"
 "Цахим брайл Технологи 2015 он\n"
-"Ярьдаг Програмын Технологи 2013-2019  он\n"
+"Ярьдаг Програмын Технологи 2013-2021  он\n"
 "\n"
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6851,6 +6975,8 @@ msgid "Composition"
 msgstr "Байгуулалт "
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "Дэвшигч "
@@ -6870,6 +6996,10 @@ msgstr "баримт бичгийн цонхонд олдсонгүй"
 msgid "No track playing"
 msgstr "ямарч зүйл тоглуулагдаагүй байна"
 
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr "үлдсэн цаг гарахгүй байна"
+
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "тоглуулагдаж байгаа файлийн үлдэх хугацаа  сонсох"
@@ -6877,6 +7007,10 @@ msgstr "тоглуулагдаж байгаа файлийн үлдэх хуга
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "файлийн тоглуулагдаж байгаа өнгөрсөн хугацааг сонсох"
+
+#. Translators: Reported if the total time is not available in Foobar2000
+msgid "Total time not available"
+msgstr "нийт цаг гарах боломжгүй"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -6991,6 +7125,38 @@ msgstr "BCC: давхар илгээх имэйл хаяг оруулна уу:
 msgid "unread"
 msgstr "уншигдаагүй"
 
+#. Translators: The name of a category of NVDA commands.
+#, fuzzy
+msgid "Python Console"
+msgstr "Python компьютерийн операторын удирдах хэрэгсэл."
+
+#. Translators: Description of a command to clear the Python Console output pane
+msgid "Clear the output pane"
+msgstr ""
+
+#. Translators: Description of a command to move to the next result in the Python Console output pane
+#, fuzzy
+msgid "Move to the next result"
+msgstr "дараагийн жагсаалтанд шилжих"
+
+#. Translators: Description of a command to move to the previous result
+#. in the Python Console output pane
+#, fuzzy
+msgid "Move to the previous result"
+msgstr "өмнөх жагсаалтанд шилжих"
+
+#. Translators: Description of a command to select from the current caret position to the end
+#. of the current result in the Python Console output pane
+#, fuzzy
+msgid "Select until the end of the current result"
+msgstr "энэ нүдэнд тэмдэглэл бичих"
+
+#. Translators: Description of a command to select from the current caret position to the start
+#. of the current result in the Python Console output pane
+#, fuzzy
+msgid "Select until the start of the current result"
+msgstr "энэ нүдэнд тэмдэглэл бичих"
+
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
@@ -7049,7 +7215,13 @@ msgstr "{date} (өдрийн турш)"
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} хүртэл {endTime}"
 
-#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#. Translators: Part of a message reported when on a calendar appointment with one or more categories
+#. in Microsoft Outlook.
+#, fuzzy, python-brace-format
+msgid "categories {categories}"
+msgstr "Category {categoryAxisData}: "
+
+#. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Уулзалтын {subject}, {time}"
@@ -7376,6 +7548,14 @@ msgstr "давтан тоглуулах унтарлаа."
 msgid "No emoji"
 msgstr "Emoji алга"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "жижиг засварлагч нээгдлээ"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "жижиг засварлагч хаагдлаа"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 series/protocol converter"
@@ -7478,7 +7658,8 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Papenmeier BRAILLEX хуучирсан загварууд"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
+#, fuzzy
+msgid "Seika Braille Displays"
 msgstr "Seika брайл дэлгэцүүд"
 
 #. Translators: Names of braille displays.
@@ -7493,6 +7674,11 @@ msgstr "Дэлгэц уншигч програмын брайл ажиглагч
 #. whether the braille viewer is shown at startup or not.
 msgid "&Show Braille Viewer on Startup"
 msgstr "брайл ажиглагч үзүүлж эхлүүлэх"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
+msgstr "хөдөлгөөний чиг хүлээх"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7789,88 +7975,6 @@ msgstr "&Гарах"
 msgid "Exit NVDA"
 msgstr "NVDA програмаас гарах"
 
-#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
-msgid ""
-"Most commands for controlling NVDA require you to hold down the NVDA key "
-"while pressing other keys.\n"
-"By default, the numpad Insert and main Insert keys may both be used as the "
-"NVDA key.\n"
-"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-"Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA "
-"functions."
-msgstr ""
-"NVDA програмыг удирдах товчыг бусад гарын товчнуудтай хослуулан дарж "
-"хэрэглэдэг.\n"
-" Гар дээр numpad insert товч,\n"
-" insert товчны аль нэгийг NVDA програмыг удирдах товчлуур болгож ашигладаг.\n"
-" Түүнчлэн том үсгийн товчыг NVDA удирдах товч болгон ашиглана .\n"
-" NVDA удирдах товчыг n үсэгтэй дараалуулан дарж програмыг үндсэн цэс "
-"нээгдэнэ.\n"
-" Цэс дотроос програмын бүх тохируулгыг өөрийн сонголтоор тохируулж хэрэглэнэ."
-
-#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
-msgid "Welcome to NVDA"
-msgstr "Монгол дэлгэц уншигч NVDA програмд тавтай морилно уу"
-
-#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
-#. bold lettering
-msgid "Welcome to NVDA!"
-msgstr "Монгол NVDA програм Тавтай морилно уу!"
-
-#. Translators: The label for a group box containing the NVDA welcome dialog options.
-#. Translators: The label for a group box containing the NVDA installation dialog options.
-msgid "Options"
-msgstr "Сонголтууд"
-
-#. Translators: The label of a combobox in the Welcome dialog.
-#. Translators: This is the label for a combobox in the
-#. keyboard settings panel.
-msgid "&Keyboard layout:"
-msgstr "Гар ашиглах төлөв сонгох"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "&Том үсгийн товчыг NVDA програмыг удирдах товч болгон ашиглах"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
-#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
-#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-msgid "St&art NVDA after I sign in"
-msgstr "NVDA эхэлсний дараа би нэвтрэх"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-msgid "&Show this dialog when NVDA starts"
-msgstr ""
-"NVDA програм эхлэх бүрт \n"
-" энэ харилцах цонхыг үзүүлэх"
-
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr ""
-"Монгол NVDA Програм ашиглах зөвшөөрөл\n"
-"Хараагүй хүмүүсийн инноваци хөгжлийн төвд хандаж албан ёсны хэрэглэх эрхээ "
-"баталгаажуулна уу\n"
-"Холбоо барих хаяг мэйл:idcbinnovation@gmail.com\n"
-"байршил: Сөүлийн  гудамж 7 Улаанбаатар хотын нийтийн төв номын сан зүүн блок"
-
-#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-msgid "I &agree"
-msgstr "&Би хүлээн зөвшөөрч байна."
-
-#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
-msgid "&Install NVDA on this computer"
-msgstr "&Энэ компьютерт NVDA програмыг суулга"
-
-#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
-msgid "Create &portable copy"
-msgstr "NVDA програмын зөөврийн хувилбар үйсгэх"
-
-#. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
-msgid "&Continue running"
-msgstr "&үргэлжлүүл"
-
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -7907,53 +8011,6 @@ msgstr "Шинэчлэлтийг суулгах хүлээгдэж байна."
 msgid "Please wait"
 msgstr "Түр хүлээнэ үү"
 
-#. Translators: The title of the dialog asking if usage data can be collected
-msgid "NVDA  Usage Data Collection"
-msgstr "NVDA програм ашиглалтын мэдээллийг цуглуулах"
-
-#. Translators: A message asking the user if they want to allow usage stats gathering
-msgid ""
-"In order to improve NVDA in the future, NV Access wishes to collect usage "
-"data from running copies of NVDA.\n"
-"\n"
-"Data includes Operating System version, NVDA version, language, country of "
-"origin, plus certain NVDA configuration such as current synthesizer, braille "
-"display and braille table. No spoken or braille content will be ever sent to "
-"NV Access.  Please refer to the User Guide for a current list of all data "
-"collected.\n"
-"\n"
-"Do you wish to allow NV Access to periodically collect this data in order to "
-"improve NVDA?"
-msgstr ""
-"уг програмыг цааш сайжруулах зорилгоор NV Access таны ашиглаж байгаа NVDA "
-"програмын зарим мэдээллийг цуглуулж байгаа болно.\n"
-"үүнд дараах програмын хэсгүүд багтана\n"
-"\n"
-"Data includes Operating System version, NVDA version, language, country of "
-"origin, plus certain NVDA configuration such as current synthesizer, braille "
-"display and braille table. No spoken or braille content will be ever sent to "
-"NV Access.  Please refer to the User Guide for a current list of all data "
-"collected.\n"
-"\n"
-"NV Access байгууллагаас цаашид програмыг сайжруулах зорилгоор мэдээллийг "
-"цуглуулж авхыг та зөвшөөрж байна уу?"
-
-#. Translators: The label of a Yes button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
-#. the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. agree to enabling the curtain.
-msgid "&Yes"
-msgstr "&Тийм"
-
-#. Translators: The label of a No button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
-#. install the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. disagree to enabling the curtain.
-msgid "&No"
-msgstr "&Үгүй"
-
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -7973,6 +8030,22 @@ msgstr "NVDA програмыг дахин эхлүүл"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&Add-on програмын тухай..."
+
+#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+#. the add-on
+#. Translators: The label of a Yes button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
+msgid "&Yes"
+msgstr "&Тийм"
+
+#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
+#. install the add-on
+#. Translators: The label of a No button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
+msgid "&No"
+msgstr "&Үгүй"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -8112,6 +8185,8 @@ msgid "Install"
 msgstr "суулга"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
 msgstr "ажиллагаагүй байна"
 
@@ -8455,6 +8530,15 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "гараар идэвхжүүлэх"
 
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+msgid "No help available here."
+msgstr "энд тусламж авах боломжгүй байна."
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+msgid "No user guide found."
+msgstr "ашиглах заавар олдсонгүй"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8534,7 +8618,7 @@ msgstr "Монгол NVDA програм шинэчлэгдэж байна"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
 msgid "Installing NVDA"
-msgstr "Монгол NVDA програмыг суулгаж байна"
+msgstr "Монгол NVDA програм сууж байна"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
@@ -8543,7 +8627,7 @@ msgstr ""
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
-msgstr "монгол NVDA програмыг суулгаж дуустал түр хүлээнэ үү!"
+msgstr "монгол NVDA програмын суулгац дуустал түр хүлээнэ үү!"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
@@ -8551,27 +8635,27 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"The installation is unable to remove or overwrite a file. Another copy of "
-"NVDA may be running on another logged-on user account. Please make sure all "
-"installed copies of NVDA are shut down and try the installation again."
+"суулгац бүрэн ажилсангүй. өөр NVDA програм өөр хэрэглэгчийн бүртгэлээр "
+"ажиллаж байна. NVDA програм бүрийг бүгдийг унтрааж байгаад суулгацыг дахин "
+"ажиллуулна уу."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
 msgid "File in Use"
-msgstr "ашиглагдаж байгаа Файл байна"
+msgstr "Файл ашиглагдаж  байна"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 msgid ""
 "The installation of NVDA failed. Please check the Log Viewer for more "
 "information."
 msgstr ""
-"Монгол NVDA програм суулгах үйлдэл амжилтгүй болсон.\n"
+"Монгол NVDA програм суулгац амжилтгүй болсон.\n"
 "дэлгэрэнгүй мэдээллийг\n"
 " Log харагчыг ажиллуулж авна уу"
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "Монгол NVDA програмыг амжилттай суулгаж дууслаа."
+msgstr "Монгол NVDA програмын суулгац амжилттай дууслаа."
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
@@ -8608,8 +8692,13 @@ msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
 msgstr ""
-"The installation path for NVDA has changed. it will now  be installed in "
-"{path}"
+"NVDA програм суулгах зам өөрчлөгдлөө. одоо энэ замаар {path} байршилд "
+"суулгана"
+
+#. Translators: The label for a group box containing the NVDA installation dialog options.
+#. Translators: The label for a group box containing the NVDA welcome dialog options.
+msgid "Options"
+msgstr "Сонголтууд"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA during sign-in"
@@ -8692,6 +8781,15 @@ msgstr "Үйсгэж дууссаны дараа шинэ зөөврийн ху�
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Зөөврийн хувилбарыг үйсгэх байршлыг тодорхой зааж өгнө үү"
 
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
+msgstr ""
+"Зөөврийн хувилбарыг үйсгэх байршлыг хатуу дискний үсэг оруулан тодорхой зааж "
+"өгнө үү"
+
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
 #, python-format
@@ -8704,11 +8802,11 @@ msgstr "Зөөврийн хувилбарыг үйсгэж байна"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "Монгол NVDA програмын зөөврийн хувилбар үйсэж дуустал түр хүлээнэ үү."
+msgstr "Монгол NVDA програмын зөөврийн хувилбар бэлэн болохыг түр хүлээнэ үү."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
-msgstr "NVDA is unable to remove or overwrite a file."
+msgstr "NVDA суулгац файл ажилсангүй"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
@@ -8815,6 +8913,13 @@ msgstr ""
 #. themselves).
 msgid "L&ogging level:"
 msgstr "&Бүртгэл сонгох:"
+
+#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
+#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
+#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "St&art NVDA after I sign in"
+msgstr "NVDA эхэлсний дараа би нэвтрэх"
 
 #. Translators: The label for a setting in general settings to
 #. allow NVDA to come up in Windows login screen (useful if user
@@ -9015,6 +9120,12 @@ msgstr "Зөв бичих дүрэм шалгах үйлдэл ашиглах"
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
 msgstr "Компьютерийн гар"
+
+#. Translators: This is the label for a combobox in the
+#. keyboard settings panel.
+#. Translators: The label of a combobox in the Welcome dialog.
+msgid "&Keyboard layout:"
+msgstr "Гар ашиглах төлөв сонгох"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
@@ -9334,13 +9445,13 @@ msgstr "&Онцлох"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Marked (highlighted text)"
-msgstr "бичвэр ялгаж тэмдэглэх"
+msgid "Mar&ked (highlighted text)"
+msgstr "бичвэр ялгаж тэмдэглэгдсэн (бичвэр тодруулсан)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "St&yle"
-msgstr "&загвар"
+msgstr "загвар"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9562,6 +9673,14 @@ msgstr "UI автомаажуулалт Microsoft &Word бичвэр controls wh
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+#, fuzzy
+msgid ""
+"Use UI Automation to access Microsoft &Excel spreadsheet controls when "
+"available"
+msgstr "UI автомаажуулалт Microsoft &Word бичвэр controls when available"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
 "UI хэрэглэх автомаажуулалт хүлээн авах the Windows Console when available"
@@ -9570,6 +9689,37 @@ msgstr ""
 #. Advanced settings panel.
 msgid "Speak &passwords in UIA consoles (may improve performance)"
 msgstr "нууц үг ярих in UIA consoles (may improve performance)"
+
+#. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
+#. Note the '\n' is used to split this long label approximately in half.
+msgctxt "advanced.uiaWithChromium"
+msgid ""
+"Use UIA with Microsoft Edge and other \n"
+"&Chromium based browsers when available:"
+msgstr ""
+
+#. Translators: Label for the default value of the Use UIA with Chromium combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Default (Only when necessary)"
+msgstr ""
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Only when necessary"
+msgstr ""
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+#, fuzzy
+msgctxt "advanced.uiaWithChromium"
+msgid "Yes"
+msgstr "Тийм"
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+#, fuzzy
+msgctxt "advanced.uiaWithChromium"
+msgid "No"
+msgstr "Үгүй"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9582,9 +9732,36 @@ msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
 "шинээр бичсэн character хэрэглэх support in Windows Console when available"
 
+#. Translators: This is the label for a combo box for selecting a
+#. method of detecting changed content in terminals in the advanced
+#. settings panel.
+#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+msgid "&Diff algorithm:"
+msgstr ""
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine the method of detecting changed
+#. content in terminals automatically.
+#, fuzzy
+msgid "Automatic (Difflib)"
+msgstr "автоматчилагдсан "
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by character when supported, using the diff match patch algorithm.
+msgid "allow Diff Match Patch"
+msgstr ""
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by line, using the difflib algorithm.
+msgid "force Difflib"
+msgstr ""
+
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-msgid "Default (No)"
+#, fuzzy
+msgid "Default (Yes)"
 msgstr "Өгөгдмөл (үгүй)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -9789,13 +9966,24 @@ msgstr "Брайл заагчаар ажиллах цэг  сонгох:"
 msgid "Cursor shape for &review:"
 msgstr "Брайл заагч ажиллах хэлбэр сонгох:"
 
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "хугацаа хэтрэлт ашиглах"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "хязгааргүйгээр харуулах"
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+msgid "Show messages"
+msgstr "Мэссэжүүд харуулах"
+
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
 msgstr "Мэссэж &хугацаа хэтрэлт (сик)"
-
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
-msgstr "&Хязгааргүйгээр мэссэж харуулах"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
@@ -9937,6 +10125,103 @@ msgstr "&Дахин шилжүүлэх"
 msgid "Symbol \"%s\" is already present."
 msgstr "Цэг тэмдэгт \"%s\" байсан байна."
 
+#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+msgid ""
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad Insert and main Insert keys may both be used as the "
+"NVDA key.\n"
+"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions."
+msgstr ""
+"NVDA програмыг удирдах товчыг бусад гарын товчнуудтай хослуулан дарж "
+"хэрэглэдэг.\n"
+" Гар дээр numpad insert товч,\n"
+" insert товчны аль нэгийг NVDA програмыг удирдах товчлуур болгож ашигладаг.\n"
+" Түүнчлэн том үсгийн товчыг NVDA удирдах товч болгон ашиглана .\n"
+" NVDA удирдах товчыг n үсэгтэй дараалуулан дарж програмыг үндсэн цэс "
+"нээгдэнэ.\n"
+" Цэс дотроос програмын бүх тохируулгыг өөрийн сонголтоор тохируулж хэрэглэнэ."
+
+#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
+msgid "Welcome to NVDA"
+msgstr "Монгол дэлгэц уншигч NVDA програмд тавтай морилно уу"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time.
+#. This is in larger, bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Монгол NVDA програм Тавтай морилно уу!"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "&Том үсгийн товчыг NVDA програмыг удирдах товч болгон ашиглах"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr ""
+"NVDA програм эхлэх бүрт \n"
+" энэ харилцах цонхыг үзүүлэх"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr ""
+"Монгол NVDA Програм ашиглах зөвшөөрөл\n"
+"Хараагүй хүмүүсийн инноваци хөгжлийн төвд хандаж албан ёсны хэрэглэх эрхээ "
+"баталгаажуулна уу\n"
+"Холбоо барих хаяг мэйл:idcbinnovation@gmail.com\n"
+"байршил: Сөүлийн  гудамж 7 Улаанбаатар хотын нийтийн төв номын сан зүүн блок"
+
+#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
+msgid "I &agree"
+msgstr "&Би хүлээн зөвшөөрч байна."
+
+#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
+msgid "&Install NVDA on this computer"
+msgstr "&Энэ компьютерт NVDA програмыг суулга"
+
+#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
+msgid "Create &portable copy"
+msgstr "NVDA програмын зөөврийн хувилбар үйсгэх"
+
+#. Translators: The label of the button in NVDA installation program
+#. to continue using the installation program as a temporary copy of NVDA.
+msgid "&Continue running"
+msgstr "&үргэлжлүүл"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "NVDA програм ашиглалтын мэдээллийг цуглуулах"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+#, fuzzy
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access. Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"уг програмыг цааш сайжруулах зорилгоор NV Access таны ашиглаж байгаа NVDA "
+"програмын зарим мэдээллийг цуглуулж байгаа болно.\n"
+"үүнд дараах програмын хэсгүүд багтана\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"NV Access байгууллагаас цаашид програмыг сайжруулах зорилгоор мэдээллийг "
+"цуглуулж авхыг та зөвшөөрж байна уу?"
+
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr "Математикийн үйлдлээс гарах"
@@ -9974,12 +10259,6 @@ msgstr "идэвхжсэн байна %s"
 #, python-format
 msgid "%s selected"
 msgstr "%s идэвхжлээ"
-
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d үсэг тэмдгүүд"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -10405,14 +10684,6 @@ msgstr "Дэлгэцийн төлөв асаалттай "
 msgid "Use screen layout off"
 msgstr "Дэлгэцийн төлөв унтраалттай"
 
-#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
-msgid ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-msgstr ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 msgid "Highlight system fo&cus"
@@ -10429,13 +10700,13 @@ msgid "Highlight navigator &object"
 msgstr "тодруулсан хөдөлгөөнт обект"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-msgid "Focus Highlight"
-msgstr "Highlight байна"
+msgid "Visual Highlight"
+msgstr "харах тодруулах"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
 msgid "&Enable Highlighting"
-msgstr "&Highlighting идэвхжүүлэх"
+msgstr "тодруулж идэвхжүүлэх"
 
 #. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
@@ -10445,11 +10716,11 @@ msgstr "дэлгэцний хаалт"
 #. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
 msgid "Always &show a warning when loading Screen Curtain"
-msgstr "Always &show a warning when loading Screen Curtain"
+msgstr "дэлгэцний хаалт ажиллуулах бүрт байнга анхааруулга үзүүлэх"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 msgid "&Play sound when toggling Screen Curtain"
-msgstr "&Play sound when toggling Screen Curtain"
+msgstr "дэлгэцний хаалт ажиллах бүрт хөгжим эгшиглэх"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -10460,15 +10731,12 @@ msgid ""
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"Enabling Screen Curtain will make the screen of your computer completely "
-"black. Ensure you will be able to navigate without any use of your screen "
-"before continuing. \n"
-"\n"
-"Do you wish to continue?"
+"дэлгэцийн хаалт ажиллуулхад таны дэлгэц хар болно.\n"
+"иймд дэлгэц ашиглахгүйгээр та үйлдлийг үргэлжлүүлэхүү"
 
 #. Translators: option to enable screen curtain in the vision settings panel
 msgid "Make screen black (immediate effect)"
-msgstr "Make screen black (immediate effect)"
+msgstr "одоо дэлгэц (харална)."
 
 msgid "Taskbar"
 msgstr "ажлын талбар"
@@ -10560,6 +10828,7 @@ msgid "No comments"
 msgstr "Комментууд алга"
 
 #. Translators: a description for a script
+#. Translators: a description for a script that reports the comment at the caret.
 msgid "Reports the text of the comment where the System caret is located."
 msgstr "Reports the text of the comment where the System caret is located."
 
@@ -10570,6 +10839,121 @@ msgstr "хүснэгт биш"
 
 msgid "invoke"
 msgstr "хүргэх "
+
+#. Translators: the description of a script
+msgctxt "excel-UIA"
+msgid ""
+"Shows a browseable message Listing information about a cell's appearance "
+"such as outline and fill colors, rotation and size"
+msgstr ""
+
+#. Translators: The width of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell width: {0.x:.1f} pt"
+msgstr ""
+
+#. Translators: The height of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell height: {0.y:.1f} pt"
+msgstr ""
+
+#. Translators: The rotation in degrees of an Excel cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Rotation: {0} degrees"
+msgstr ""
+
+#. Translators: The outline (border) colors of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid ""
+"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
+msgstr ""
+
+#. Translators: The outline (border) thickness values of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
+msgstr ""
+
+#. Translators: The fill color of an Excel cell
+#, fuzzy, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill color: {0.name}"
+msgstr "Slice color: {colorName} "
+
+#. Translators: The fill type (pattern, gradient etc) of an Excel Cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill type: {0}"
+msgstr ""
+
+#. Translators: the number format of an Excel cell
+#, python-brace-format
+msgid "Number format: {0}"
+msgstr ""
+
+#. Translators: If an excel cell has data validation set
+#, fuzzy
+msgid "Has data validation"
+msgstr "%s апп"
+
+#. Translators: the data validation prompt (input message) for an Excel cell
+#, python-brace-format
+msgid "Data validation prompt: {0}"
+msgstr ""
+
+#. Translators: If an excel cell has conditional formatting
+#, fuzzy
+msgid "Has conditional formatting"
+msgstr "бичвэр форматлах"
+
+#. Translators: If an excel cell has visible gridlines
+#, fuzzy
+msgid "Gridlines are visible"
+msgstr "зүйл харагдахгүй "
+
+#. Translators: Title for a browsable message that describes the appearance of a cell in Excel
+msgctxt "excel-UIA"
+msgid "Cell Appearance"
+msgstr ""
+
+#. Translators:  an error message on a cell in Microsoft Excel.
+#, python-brace-format
+msgid "Error: {errorText}"
+msgstr ""
+
+#. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
+#, python-brace-format
+msgid "{author} is editing"
+msgstr ""
+
+#. Translators: Excel, report range of cell coordinates
+#, fuzzy, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "{firstAddress}  {firstContent} байна {lastAddress}  {lastContent}"
+
+#. Translators: the description  for a script for Excel
+#, fuzzy
+msgid "Reports the note or comment thread on the current cell"
+msgstr "энэ нүдэнд тэмдэглэл бичих"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, fuzzy, python-brace-format
+msgid "{comment}  by {author}"
+msgstr "{comment} by {author} on {date}"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, fuzzy, python-brace-format
+msgid "{comment}  by {author} with {numReplies} replies"
+msgstr "{comment} by {author} on {date}"
+
+#. Translators: A message in Excel when there is no note
+msgid "No note or comment thread on this cell"
+msgstr ""
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10597,14 +10981,14 @@ msgid "track change: {text}"
 msgstr "Жижиг засвар оруулах: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, python-brace-format
-msgid "Comment: {comment} by {author} on {date}"
+#, fuzzy, python-brace-format
+msgid "Comment: {comment} by {author}"
 msgstr "Comment: {comment} by {author} on {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
-msgid "{comment} by {author} on {date}"
-msgstr "{comment} by {author} on {date}"
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "Comment: {comment} by {author} on {date}"
 
 msgid "Desktop"
 msgstr "компьютерийн дэлгэц"
@@ -11813,10 +12197,11 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr "1.5 хэмжээтэй мөрүүд"
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
-msgstr "Яг таг "
+msgid "exactly {space:.1f} pt"
+msgstr "яг таарсан {space:.1f} pt"
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -11914,14 +12299,6 @@ msgstr "{styleName} загвар, дээд төвшин {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "{size:g} үсгийн хэмжээ"
 
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking on"
-msgstr "жижиг засварлагч нээгдлээ"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking off"
-msgstr "жижиг засварлагч хаагдлаа"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr "хэвлэгдэхгүй үсэг тэмдэгтүүд"
@@ -11972,6 +12349,28 @@ msgstr "Давхар мөр хоорондын зай"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 мөр хоорондын зай"
+
+#, fuzzy
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "&Зүйлсийн:"
+#~ msgstr[1] "&Зүйлсийн:"
+
+#~ msgid "&Activate"
+#~ msgstr "Идэвхжүүл"
+
+#~ msgctxt "line spacing value"
+#~ msgid "exact"
+#~ msgstr "Яг таг "
+
+#~ msgid "Russian grade 1"
+#~ msgstr "орос grade 1"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "%s санах ойн самбарт түр  хуулагдлаа."
+
+#~ msgid "Review selection copied to clipboard"
+#~ msgstr "идэвхжүүлсэн хэсгийг санах ойн самбарт хууллаа"
 
 #~ msgid "Apply"
 #~ msgstr "Хэрэглэх"

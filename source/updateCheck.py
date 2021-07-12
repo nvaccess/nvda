@@ -1,16 +1,16 @@
-#updateCheck.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2019 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2021 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
+from typing import Dict, Optional, Tuple
 import garbageHandler
 import globalVars
 import config
-
+import core
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -22,7 +22,7 @@ import addonAPIVersion
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
 import gui.contextHelp  # noqa: E402
 from gui.dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit  # noqa: E402
-import winVersion
+import sys  # noqa: E402
 import os
 import inspect
 import threading
@@ -95,22 +95,30 @@ def getQualifiedDriverClassNameForStats(cls):
 		return "%s (external)"%name
 	return "%s (core)"%name
 
-def checkForUpdate(auto=False):
+
+def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
 	@param auto: Whether this is an automatic check for updates.
-	@type auto: bool
 	@return: Information about the update or C{None} if there is no update.
-	@rtype: dict
 	@raise RuntimeError: If there is an error checking for an update.
 	"""
 	allowUsageStats=config.conf["update"]['allowUsageStats']
+	# #11837: build version string, service pack, and product type manually
+	# because winVersion.getWinVer adds Windows release name.
+	winVersion = sys.getwindowsversion()
+	winVersionText = "{v.major}.{v.minor}.{v.build}".format(v=winVersion)
+	if winVersion.service_pack_major != 0:
+		winVersionText += " service pack %d" % winVersion.service_pack_major
+		if winVersion.service_pack_minor != 0:
+			winVersionText += ".%d" % winVersion.service_pack_minor
+	winVersionText += " %s" % ("workstation", "domain controller", "server")[winVersion.product_type - 1]
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats":allowUsageStats,
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
-		"osVersion": winVersion.winVersionText,
+		"osVersion": winVersionText,
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 	}
 	if auto and allowUsageStats:
@@ -161,9 +169,8 @@ def _setStateToNone(_state):
 	_state["pendingUpdateBackCompatToAPIVersion"] = (0,0,0)
 
 
-def getPendingUpdate():
+def getPendingUpdate() -> Optional[Tuple]:
 	"""Returns a tuple of the path to and version of the pending update, if any. Returns C{None} otherwise.
-	@rtype: tuple
 	"""
 	try:
 		pendingUpdateFile=state["pendingUpdateFile"]
@@ -182,11 +189,12 @@ def getPendingUpdate():
 			_setStateToNone(state)
 	return None
 
-def isPendingUpdate():
+
+def isPendingUpdate() -> bool:
 	"""Returns whether there is a pending update.
-	@rtype: bool
 	"""
-	return bool(getPendingUpdate())
+	return getPendingUpdate() is not None
+
 
 def executePendingUpdate():
 	updateTuple = getPendingUpdate()
@@ -213,10 +221,8 @@ def _executeUpdate(destPath):
 		else:
 			executeParams = u"--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
-	shellapi.ShellExecute(None, None,
-		destPath,
-		executeParams,
-		None, winUser.SW_SHOWNORMAL)
+	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams)):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 class UpdateChecker(garbageHandler.TrackedObject):
@@ -270,7 +276,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			_("Error"),
 			wx.OK | wx.ICON_ERROR)
 
-	def _result(self, info):
+	def _result(self, info: Optional[Dict]) -> None:
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
@@ -325,7 +331,7 @@ class UpdateResultDialog(
 ):
 	helpId = "GeneralSettingsCheckForUpdates"
 
-	def __init__(self, parent, updateInfo, auto):
+	def __init__(self, parent, updateInfo: Optional[Dict], auto: bool) -> None:
 		# Translators: The title of the dialog informing the user about an NVDA update.
 		super().__init__(parent, title=_("NVDA Update"))
 
@@ -333,12 +339,17 @@ class UpdateResultDialog(
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
+		remoteUpdateExists = updateInfo is not None
 		pendingUpdateDetails = getPendingUpdate()
-		canOfferPendingUpdate = isPendingUpdate() and pendingUpdateDetails[1] == updateInfo["version"]
+		canOfferPendingUpdate = (
+			isPendingUpdate()
+			and remoteUpdateExists
+			and pendingUpdateDetails[1] == updateInfo["version"]
+		)
 
 		text = sHelper.addItem(wx.StaticText(self))
 		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		if not updateInfo:
+		if not remoteUpdateExists:
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
 		elif canOfferPendingUpdate:
@@ -601,6 +612,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 			# and waits for the user to press the Close button.
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
+		self._progressDialog.CentreOnScreen()
 		self._progressDialog.Raise()
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.start.__qualname__}",

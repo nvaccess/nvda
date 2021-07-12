@@ -25,6 +25,17 @@ import languageHandler
 import winVersion
 import NVDAHelper
 
+from speech.commands import (
+	IndexCommand,
+	CharacterModeCommand,
+	LangChangeCommand,
+	BreakCommand,
+	PitchCommand,
+	RateCommand,
+	VolumeCommand,
+	PhonemeCommand,
+)
+
 #: The number of 100-nanosecond units in 1 second.
 HUNDRED_NS_PER_SEC = 10000000 # 1000000000 ns per sec / 100 ns
 ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
@@ -78,9 +89,9 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 		yield next(commands)
 		# OneCore didn't provide a way to set base prosody values before API version 5.
 		# Therefore, the base values need to be set using SSML.
-		yield self.convertRateCommand(speech.RateCommand(multiplier=1))
-		yield self.convertVolumeCommand(speech.VolumeCommand(multiplier=1))
-		yield self.convertPitchCommand(speech.PitchCommand(multiplier=1))
+		yield self.convertRateCommand(RateCommand(multiplier=1))
+		yield self.convertVolumeCommand(VolumeCommand(multiplier=1))
+		yield self.convertPitchCommand(PitchCommand(multiplier=1))
 		for command in commands:
 			yield command
 
@@ -105,21 +116,21 @@ class SynthDriver(SynthDriver):
 	# Translators: Description for a speech synthesizer.
 	description = _("Windows OneCore voices")
 	supportedCommands = {
-		speech.IndexCommand,
-		speech.CharacterModeCommand,
-		speech.LangChangeCommand,
-		speech.BreakCommand,
-		speech.PitchCommand,
-		speech.RateCommand,
-		speech.VolumeCommand,
-		speech.PhonemeCommand,
+		IndexCommand,
+		CharacterModeCommand,
+		LangChangeCommand,
+		BreakCommand,
+		PitchCommand,
+		RateCommand,
+		VolumeCommand,
+		PhonemeCommand,
 	}
 	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
 
 	@classmethod
 	def check(cls):
 		# Only present this as an available synth if this is Windows 10.
-		return winVersion.isWin10()
+		return winVersion.getWinVer() >= winVersion.WIN10
 
 	def _get_supportsProsodyOptions(self):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
