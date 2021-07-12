@@ -12,6 +12,7 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 
 
 from .base import (  # noqa: F401
+	IoBase,
 	Serial,
 	Bulk,
 	boolToByte,
