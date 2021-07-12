@@ -88,7 +88,7 @@ void __stdcall ocSpeech_speak(OcSpeech* instance, char16 *text) {
 	}).then([instance, markersStr] (IBuffer^ buffer) {
 		// Data has been read from the speech stream.
 		// Pass it to the callback.
-		byte* bytes = getBytes(buffer);
+		BYTE* bytes = getBytes(buffer);
 		instance->callback(bytes, buffer->Length, markersStr->c_str());
 	}).then([instance] (task<void> previous) {
 		// Catch any unhandled exceptions that occurred during these tasks.

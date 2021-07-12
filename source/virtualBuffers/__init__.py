@@ -16,11 +16,10 @@ import review
 import NVDAHelper
 import XMLFormatting
 import scriptHandler
-from scriptHandler import isScriptWaiting, willSayAllResume
+from scriptHandler import script
 import speech
 import NVDAObjects
 import api
-import sayAllHandler
 import controlTypes
 import textInfos.offsets
 import config
@@ -33,7 +32,6 @@ import queueHandler
 from logHandler import log
 import ui
 import aria
-import nvwave
 import treeInterceptorHandler
 import watchdog
 from abc import abstractmethod
@@ -333,9 +331,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
 			attrs["table-%sheadertext" % axis] = "\n".join(textList)
 
-		if attrs.get("landmark") == "region" and not attrs.get("name"):
-			# We only consider region to be a landmark if it has a name.
-			del attrs["landmark"]
+		if attrs.get("role") in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION):
+			attrs['alwaysReportName'] = True
 
 		# Expose a unique ID on the controlField for quick and safe comparison using the virtualBuffer field's docHandle and ID
 		docHandle=attrs.get('controlIdentifier_docHandle')
@@ -540,6 +537,13 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	# Translators: the description for the refreshBuffer script on virtualBuffers.
 	script_refreshBuffer.__doc__ = _("Refreshes the document content")
 
+	@script(
+		description=_(
+			# Translators: the description for the toggleScreenLayout script on virtualBuffers.
+			"Toggles on and off if the screen layout is preserved while rendering the document content"
+		),
+		gesture="kb:NVDA+v",
+	)
 	def script_toggleScreenLayout(self,gesture):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		if config.conf["virtualBuffers"]["useScreenLayout"]:
@@ -548,8 +552,6 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		else:
 			# Translators: Presented when use screen layout option is toggled.
 			ui.message(_("Use screen layout off"))
-	# Translators: the description for the toggleScreenLayout script on virtualBuffers.
-	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the document content")
 
 	def _searchableAttributesForNodeType(self,nodeType):
 		pass
@@ -725,5 +727,4 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	__gestures = {
 		"kb:NVDA+f5": "refreshBuffer",
-		"kb:NVDA+v": "toggleScreenLayout",
 	}

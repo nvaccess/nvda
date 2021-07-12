@@ -1,8 +1,7 @@
-#NVDAObjects/WinConsole.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2019 NV Access Limited, Bill Dengler
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2020 NV Access Limited, Bill Dengler
 
 import winConsoleHandler
 from . import Window
@@ -14,17 +13,22 @@ import speech
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	"""
-		NVDA's legacy Windows Console support.
+		Base class for NVDA's legacy Windows Console support.
 		This is used in situations where UIA isn't available.
 		Please consider using NVDAObjects.UIA.winConsoleUIA instead.
 	"""
 	STABILIZE_DELAY = 0.03
 
-	def initOverlayClass(self):
-		# Legacy consoles take quite a while to send textChange events.
-		# This significantly impacts typing performance, so don't queue chars.
-		if isinstance(self, KeyboardHandlerBasedTypedCharSupport):
-			self._supportsTextChange = False
+	def _get_windowThreadID(self):
+		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
+		# However, To correctly handle speaking of typed characters,
+		# NVDA really requires the real thread the window was created in,
+		# I.e. a thread inside conhost.
+		from IAccessibleHandler.internalWinEventHandler import consoleWindowsToThreadIDs
+		threadID = consoleWindowsToThreadIDs.get(self.windowHandle, 0)
+		if not threadID:
+			threadID = super().windowThreadID
+		return threadID
 
 	def _get_TextInfo(self):
 		consoleObject=winConsoleHandler.consoleObject
@@ -58,8 +62,8 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	def event_nameChange(self):
 		pass
 
-	def _getTextLines(self):
-		return winConsoleHandler.getConsoleVisibleLines()
+	def _getText(self):
+		return '\n'.join(winConsoleHandler.getConsoleVisibleLines())
 
 	def script_caret_backspaceCharacter(self, gesture):
 		super(WinConsole, self).script_caret_backspaceCharacter(gesture)

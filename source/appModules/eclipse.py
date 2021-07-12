@@ -12,7 +12,7 @@ import speech
 import braille
 import ui
 import api
-import sayAllHandler
+from speech import sayAll
 import eventHandler
 import keyboardHandler
 from scriptHandler import script
@@ -98,7 +98,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 			if documentObj.role == controlTypes.ROLE_DOCUMENT:
 				api.setNavigatorObject(documentObj)
 				braille.handler.handleReviewMove()
-				sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
+				sayAll.SayAllHandler.readText(sayAll.CURSOR.REVIEW)
 
 			elif documentObj.role == controlTypes.ROLE_EDITABLETEXT:
 				ui.message(documentObj.value)
@@ -143,12 +143,13 @@ class AutocompletionListItem(IAccessible):
 			# Reporting as focused should be sufficient
 			self.reportFocus()
 
-			# I picked up this from UIA SuggestionItem for rendering in braille.
-			# Simply calling `reportFocus` doesn't outputs the text to braille devices
+			# Simply calling `reportFocus` doesn't output the text in braille
 			# and reporting with `ui.message` needs an extra translation string when reporting position info
-			braille.handler.message(
-				braille.getBrailleTextForProperties(name=self.name,
-					role=self.role, position=self.positionInfo))
+			braille.handler.message(braille.getPropertiesBraille(
+				name=self.name,
+				role=self.role,
+				positionInfo=self.positionInfo
+			))
 
 class AppModule(appModuleHandler.AppModule):
 	LIST_VIEW_CLASS = "SysListView32"

@@ -2,28 +2,28 @@
 #Copyright (C) 2016-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+from typing import Optional, Dict
 
 from comtypes import COMError
-import time
 from comtypes.hresult import S_OK
 import appModuleHandler
 import speech
-import sayAllHandler
-import eventHandler
+from speech import sayAll
 import api
 from scriptHandler import willSayAllResume, isScriptWaiting
 import controlTypes
+from controlTypes import OutputReason
 import treeInterceptorHandler
 from cursorManager import ReviewCursorManager
 import browseMode
 from browseMode import BrowseModeDocumentTreeInterceptor
 import textInfos
+from speech.types import SpeechSequence
 from textInfos import DocumentWithPageTurns
-from IAccessibleHandler import IAccessible2
 from NVDAObjects.IAccessible import IAccessible
 from globalCommands import SCRCAT_SYSTEMCARET
 from NVDAObjects.IAccessible.ia2TextMozilla import MozillaCompoundTextInfo
-import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
 import winUser
 import mouseHandler
 from logHandler import log
@@ -58,7 +58,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 			# Don't report anything if the book area isn't focused.
 			return
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=OutputReason.CARET)
 
 	def isAlive(self):
 		return winUser.isWindow(self.rootNVDAObject.windowHandle)
@@ -77,7 +77,9 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 			raise LookupError
 		table = obj.table
 		try:
-			cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			cell = table.IAccessibleTable2Object.cellAt(
+				destRow - 1, destCol - 1
+			).QueryInterface(IA2.IAccessible2)
 			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
 			if cell.IA2Attributes.get('hidden'):
@@ -99,15 +101,16 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		info=self.makeTextInfo(textInfos.POSITION_FIRST)
 		self.selection=info
 		info.expand(textInfos.UNIT_LINE)
-		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+		if not willSayAllResume(gesture):
+			speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=OutputReason.CARET)
 
 	def script_moveByPage_forward(self,gesture):
 		self._changePageScriptHelper(gesture)
-	script_moveByPage_forward.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_moveByPage_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_moveByPage_back(self,gesture):
 		self._changePageScriptHelper(gesture,previous=True)
-	script_moveByPage_back.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_moveByPage_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def _tabOverride(self,direction):
 		return False
@@ -158,7 +161,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		log.debug("Starting at hyperlink index %d" % startIndex)
 		for index in range(startIndex, hypertext.nHyperlinks if direction == "next" else -1, 1 if direction == "next" else -1):
 			hl = hypertext.hyperlink(index)
-			obj = IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
+			obj = IAccessible(IAccessibleObject=hl.QueryInterface(IA2.IAccessible2), IAccessibleChildID=0)
 			log.debug("Yielding object at index %d" % index)
 			yield obj
 			try:
@@ -225,7 +228,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 			if not getattr(parent,'IAccessibleTextObject',None):
 				obj=parent
 				continue
-			hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
+			hl = obj.IAccessibleObject.QueryInterface(IA2.IAccessibleHyperlink)
 			offset = hl.startIndex
 			obj=parent
 			hli = obj.iaHypertext.hyperlinkIndex(offset)
@@ -272,8 +275,17 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 				item.field.pop("content", None)
 		return items
 
-	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=speech.CHUNK_SEPARATOR):
-		out = ""
+	def getFormatFieldSpeech(
+			self,
+			attrs: textInfos.Field,
+			attrsCache: Optional[textInfos.Field] = None,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			reason: Optional[OutputReason] = None,
+			unit: Optional[str] = None,
+			extraDetail: bool = False,
+			initialFormat: bool = False
+	) -> SpeechSequence:
+		out: SpeechSequence = []
 		comment = attrs.get("kindle-user-note")
 		if comment:
 			# For now, we report this the same way we do comments.
@@ -281,20 +293,37 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		highlight = attrs.get("kindle-highlight")
 		oldHighlight = attrsCache.get("kindle-highlight") if attrsCache is not None else None
 		if oldHighlight != highlight:
-			# Translators: Reported when text is highlighted.
-			out += (_("highlight") if highlight
+			translation = (
+				# Translators: Reported when text is highlighted.
+				_("highlight") if highlight else
 				# Translators: Reported when text is not highlighted.
-				else _("no highlight")) + separator
+				_("no highlight")
+			)
+			out.append(translation)
 		popular = attrs.get("kindle-popular-highlight-count")
 		oldPopular = attrsCache.get("kindle-popular-highlight-count") if attrsCache is not None else None
 		if oldPopular != popular:
-			# Translators: Reported in Kindle when text has been identified as a popular highlight;
-			# i.e. it has been highlighted by several people.
-			# %s is replaced with the number of people who have highlighted this text.
-			out += (_("%s highlighted") % popular if popular
+			translation = (
+				# Translators: Reported in Kindle when text has been identified as a popular highlight;
+				# i.e. it has been highlighted by several people.
+				# %s is replaced with the number of people who have highlighted this text.
+				_("%s highlighted") % popular if popular else
 				# Translators: Reported when moving out of a popular highlight.
-				else _("out of popular highlight")) + separator
-		out += super(BookPageViewTextInfo, self).getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
+				_("out of popular highlight")
+			)
+			out.append(translation)
+
+		superSpeech = super(BookPageViewTextInfo, self).getFormatFieldSpeech(
+			attrs,
+			attrsCache=attrsCache,
+			formatConfig=formatConfig,
+			reason=reason,
+			unit=unit,
+			extraDetail=extraDetail,
+			initialFormat=initialFormat
+		)
+		out.extend(superSpeech)
+		textInfos._logBadSequenceTypes(out)
 		return out
 
 	def updateSelection(self):
@@ -381,7 +410,11 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if isinstance(obj,IAccessible):
 			clsList.insert(0,PageTurnFocusIgnorer)
-			if ((isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2) and obj.IA2Attributes.get("class") == "KindleBookPageView")
+			if (
+				(
+					isinstance(obj.IAccessibleObject, IA2.IAccessible2)
+					and obj.IA2Attributes.get("class") == "KindleBookPageView"
+				)
 				# We must rely on .name in Kindle <= 1.19.
 				or (hasattr(obj,'IAccessibleTextObject') and obj.name=="Book Page View")
 			):
@@ -391,7 +424,11 @@ class AppModule(appModuleHandler.AppModule):
 		return clsList
 
 	def event_NVDAObject_init(self, obj):
-		if isinstance(obj, IAccessible) and isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2) and obj.role == controlTypes.ROLE_LINK:
+		if (
+			isinstance(obj, IAccessible)
+			and isinstance(obj.IAccessibleObject, IA2.IAccessible2)
+			and obj.role == controlTypes.ROLE_LINK
+		):
 			xRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
 			if "kindle-footnoteref" in xRoles:
 				obj.role = controlTypes.ROLE_FOOTNOTE

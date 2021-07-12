@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import synthDriverHandler
-import speech
+from speech.commands import IndexCommand
 
 class SynthDriver(synthDriverHandler.SynthDriver):
 	"""A dummy synth driver used to disable speech in NVDA.
@@ -23,7 +23,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def speak(self, speechSequence):
 		self.lastIndex = None
 		for item in speechSequence:
-			if isinstance(item, speech.IndexCommand):
+			if isinstance(item, IndexCommand):
 				self.lastIndex = item.index
 
 	def cancel(self):

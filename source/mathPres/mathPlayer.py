@@ -13,9 +13,20 @@ import comtypes.client
 from comtypes import COMError
 from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathSpeechSettings, IMathNavigation, IMathBraille
 import speech
+from synthDriverHandler import getSynth
 from keyboardHandler import KeyboardInputGesture
 import braille
 import mathPres
+
+from speech.commands import (
+	PitchCommand,
+	VolumeCommand,
+	RateCommand,
+	LangChangeCommand,
+	BreakCommand,
+	CharacterModeCommand,
+	PhonemeCommand,
+)
 
 RE_MP_SPEECH = re.compile(
 	# Break.
@@ -34,28 +45,27 @@ RE_MP_SPEECH = re.compile(
 	# Actual content.
 	r"|(?P<content>[^<,]+)")
 PROSODY_COMMANDS = {
-	"pitch": speech.PitchCommand,
-	"volume": speech.VolumeCommand,
-	"rate": speech.RateCommand,
+	"pitch": PitchCommand,
+	"volume": VolumeCommand,
+	"rate": RateCommand,
 }
 def _processMpSpeech(text, language):
 	# MathPlayer's default rate is 180 wpm.
 	# Assume that 0% is 80 wpm and 100% is 450 wpm and scale accordingly.
-	synth = speech.getSynth()
+	synth = getSynth()
 	wpm = synth._percentToParam(synth.rate, 80, 450)
 	breakMulti = 180.0 / wpm
 	out = []
 	if language:
-		out.append(speech.LangChangeCommand(language))
+		out.append(LangChangeCommand(language))
 	resetProsody = set()
 	for m in RE_MP_SPEECH.finditer(text):
 		if m.lastgroup == "break":
-			out.append(speech.BreakCommand(time=int(m.group("break")) * breakMulti))
+			out.append(BreakCommand(time=int(m.group("break")) * breakMulti))
 		elif m.lastgroup == "char":
-			out.extend((speech.CharacterModeCommand(True),
-				m.group("char"), speech.CharacterModeCommand(False)))
+			out.extend((CharacterModeCommand(True), m.group("char"), CharacterModeCommand(False)))
 		elif m.lastgroup == "comma":
-			out.append(speech.BreakCommand(time=100))
+			out.append(BreakCommand(time=100))
 		elif m.lastgroup in PROSODY_COMMANDS:
 			command = PROSODY_COMMANDS[m.lastgroup]
 			out.append(command(multiplier=int(m.group(m.lastgroup)) / 100.0))
@@ -65,12 +75,11 @@ def _processMpSpeech(text, language):
 				out.append(command(multiplier=1))
 			resetProsody.clear()
 		elif m.lastgroup == "phonemeText":
-			out.append(speech.PhonemeCommand(m.group("ipa"),
-				text=m.group("phonemeText")))
+			out.append(PhonemeCommand(m.group("ipa"), text=m.group("phonemeText")))
 		elif m.lastgroup == "content":
 			out.append(m.group(0))
 	if language:
-		out.append(speech.LangChangeCommand(None))
+		out.append(LangChangeCommand(None))
 	return out
 
 class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):

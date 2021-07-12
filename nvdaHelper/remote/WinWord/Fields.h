@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #define WIN32_LEAN_AND_MEAN 
 #include <vector>
-#include <boost/optional.hpp>
+#include <optional>
 
 struct IDispatch;
 namespace WinWord {
@@ -49,7 +49,7 @@ namespace WinWord {
 		* @param index Find a range that this index is part of.
 		* @returns an optional value, if a range exists the end index is returned of visible text range.
 		*/
-		std::experimental::optional<int> getEndOfPageNumberFieldAtIndex(const int index);
+		std::optional<int> getEndOfPageNumberFieldAtIndex(const int index);
 
 		Fields(const Fields&) = delete; // Copy constructor disabled, no implementation.
 		Fields& operator=(const Fields&) = delete; // Assignment disabled, no implementation.

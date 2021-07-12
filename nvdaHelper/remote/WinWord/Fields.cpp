@@ -123,13 +123,13 @@ bool Fields::hasLinks(){
 }
 
 
-std::experimental::optional<int> Fields::getEndOfPageNumberFieldAtIndex(const int index){
+std::optional<int> Fields::getEndOfPageNumberFieldAtIndex(const int index){
 	for( auto&& pageNum : m_pageNumbers ){
 		if(inRange(index, pageNum.first, pageNum.second)){
 			return pageNum.second;
 		}
 	}
-	return std::experimental::optional<int>();
+	return std::optional<int>();
 }
 
 } // end namespace WinWord

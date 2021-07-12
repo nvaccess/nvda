@@ -1,8 +1,7 @@
-#tones.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Utilities to generate and play tones"""
 
@@ -15,16 +14,27 @@ from ctypes import create_string_buffer, byref
 
 SAMPLE_RATE = 44100
 
-try:
-	player = nvwave.WavePlayer(channels=2, samplesPerSec=int(SAMPLE_RATE), bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
-except:
-	log.warning("Failed to initialize audio for tones")
-	player = None
+player = None
+
+
+def initialize():
+	global player
+	try:
+		player = nvwave.WavePlayer(
+			channels=2,
+			samplesPerSec=int(SAMPLE_RATE),
+			bitsPerSample=16,
+			outputDevice=config.conf["speech"]["outputDevice"],
+			wantDucking=False
+		)
+	except Exception:
+		log.warning("Failed to initialize audio for tones", exc_info=True)
+		player = None
 
 # When exiting, ensure player is deleted before modules get cleaned up.
 # Otherwise, WavePlayer.__del__ will fail with an exception.
 @atexit.register
-def _cleanup():
+def terminate():
 	global player
 	player = None
 
@@ -38,7 +48,7 @@ def beep(hz,length,left=50,right=50):
 	@type left: integer
 	@param right: volume of the right channel (0 to 100)
 	@type right: integer
-	""" 
+	"""
 	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
 	if not player:
 		return

@@ -1,8 +1,7 @@
-#watchdog.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import sys
 import os
@@ -41,15 +40,36 @@ safeWindowClassSet=set([
 
 isRunning=False
 isAttemptingRecovery = False
+_coreIsAsleep = False
 
 _coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
 _suspended = False
 _watcherThread=None
 _cancelCallEvent = None
 
+
+def getFormattedStacksForAllThreads():
+	"""
+	Generates a string containing a call stack for every Python thread in this process, suitable for logging.
+	"""
+	# First collect the names of all threads that have actually been started by Python itself.
+	threadNamesByID = {x.ident: x.name for x in threading.enumerate()}
+	stacks = []
+	# If a Python function is entered by a thread that was not started by Python itself,
+	# It will have a frame, but won't be tracked by Python's threading module and therefore will have no name.
+	for ident, frame in sys._current_frames().items():
+		# The strings in the formatted stack all end with \n, so no join separator is necessary.
+		stack = "".join(traceback.format_stack(frame))
+		name = threadNamesByID.get(ident, "Unknown")
+		stacks.append(f"Python stack for thread {ident} ({name}):\n{stack}")
+	return "\n".join(stacks)
+
+
 def alive():
 	"""Inform the watchdog that the core is alive.
 	"""
+	global _coreIsAsleep
+	_coreIsAsleep = False
 	# Stop cancelling calls.
 	windll.kernel32.ResetEvent(_cancelCallEvent)
 	# Set the timer so the watcher will take action in MIN_CORE_ALIVE_TIMEOUT
@@ -61,11 +81,23 @@ def alive():
 def asleep():
 	"""Inform the watchdog that the core is going to sleep.
 	"""
-	# #5189: Reset in case the core was treated as dead.
+	global _coreIsAsleep
+# #5189: Reset in case the core was treated as dead.
 	alive()
 	# CancelWaitableTimer does not reset the signaled state; if it was signaled, it remains signaled.
 	# However, alive() calls SetWaitableTimer, which resets the timer to unsignaled.
 	windll.kernel32.CancelWaitableTimer(_coreDeadTimer)
+	_coreIsAsleep = True
+
+
+def isCoreAsleep():
+	"""
+	Finds out if the core is currently asleep (I.e. not in a core cycle).
+	Note that if the core is actually frozen, this function will return false
+	as it is frozen in a core cycle while awake.
+	"""
+	return _coreIsAsleep
+
 
 def _isAlive():
 	# #5189: If the watchdog has been terminated, treat the core as being alive.
@@ -91,8 +123,8 @@ def _watcher():
 		if _isAlive():
 			continue
 		if log.isEnabledFor(log.DEBUGWARNING):
-			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%
-				"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
+			stacks = getFormattedStacksForAllThreads()
+			log.debugWarning(f"Trying to recover from freeze. Listing stacks for Python threads:\n{stacks}")
 		lastTime=time.time()
 		isAttemptingRecovery = True
 		# Cancel calls until the core is alive.
@@ -103,8 +135,11 @@ def _watcher():
 			curTime=time.time()
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
-				log.warning("Core frozen in stack:\n%s"%
-					"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
+				# Core is completely frozen.
+				# Collect formatted stacks for all Python threads.
+				log.error("Core frozen in stack!")
+				stacks = getFormattedStacksForAllThreads()
+				log.info(f"Listing stacks for Python threads:\n{stacks}")
 			_recoverAttempt()
 			time.sleep(RECOVER_ATTEMPT_INTERVAL)
 			if _isAlive():
@@ -151,7 +186,7 @@ def _crashHandler(exceptionInfo):
 	ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, None)
 
 	# Write a minidump.
-	dumpPath = os.path.abspath(os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp"))
+	dumpPath = os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp")
 	try:
 		# Though we aren't using pythonic functions to write to the dump file,
 		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
@@ -174,12 +209,12 @@ def _crashHandler(exceptionInfo):
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
 
 	# Log Python stacks for every thread.
-	for logThread, logFrame in sys._current_frames().items():
-		log.info("Python stack for thread %d" % logThread,
-			stack_info=traceback.extract_stack(logFrame))
+	stacks = getFormattedStacksForAllThreads()
+	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
 	log.info("Restarting due to crash")
-	core.restart()
+	# if NVDA has crashed we cannot rely on the queue handler to start the new NVDA instance
+	core.restartUnsafely()
 	return 1 # EXCEPTION_EXECUTE_HANDLER
 
 @ctypes.WINFUNCTYPE(None)

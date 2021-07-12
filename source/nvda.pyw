@@ -1,31 +1,67 @@
 # -*- coding: UTF-8 -*-
-#nvda.pyw
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
-
+"""The NVDA launcher - main / entry point into NVDA.
+It can handle some command-line arguments (including help).
+It sets up logging, and then starts the core.
+"""
+import logging
 import sys
 import os
 
+import typing
+
+import globalVars
+import ctypes
+from ctypes import wintypes
+
+#: logger to use before the true NVDA log is initialised.
+# Ideally, all logging would be captured by the NVDA log, however this would introduce contention
+# when multiple NVDA processes run simultaneously.
+_log = logging.Logger(name="preStartup", level=logging.INFO)
+_log.addHandler(logging.NullHandler(level=logging.INFO))
+
+customVenvDetected = False
 if getattr(sys, "frozen", None):
 	# We are running as an executable.
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
-	os.chdir(sys.prefix)
+	appDir = sys.prefix
 else:
+	# we are running from source
+	# Ensure we are inside the NVDA build system's Python virtual environment.
+	nvdaVenv = os.getenv("NVDA_VENV")
+	virtualEnv = os.getenv("VIRTUAL_ENV")
+	if not virtualEnv or not os.path.isdir(virtualEnv):
+		ctypes.windll.user32.MessageBoxW(
+			0,
+			"NVDA cannot  detect the Python virtual environment. "
+			"To run NVDA from source, please use runnvda.bat in the root of this repository.",
+			"Error",
+			0,
+		)
+		sys.exit(1)
+	customVenvDetected = nvdaVenv != virtualEnv
 	import sourceEnv
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
-	os.chdir(os.path.normpath(os.path.dirname(__file__)))
+	appDir = os.path.normpath(os.path.dirname(__file__))
+appDir = os.path.abspath(appDir)
+os.chdir(appDir)
+globalVars.appDir = appDir
 
-import ctypes
+
 import locale
 import gettext
 
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
+	gettext.translation(
+		'nvda',
+		localedir=os.path.join(globalVars.appDir, 'locale'),
+		languages=[locale.getdefaultlocale()[0]]
+	).install(True)
 except:
 	gettext.install('nvda')
 
@@ -81,6 +117,7 @@ def stringToBool(string):
 	except ValidateError as e:
 		raise argparse.ArgumentTypeError(e.message)
 
+
 #Process option arguments
 parser=NoConsoleOptionParser()
 quitGroup = parser.add_mutually_exclusive_group()
@@ -104,6 +141,16 @@ parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,
 	help="When installing, enable NVDA's start on the logon screen")
+parser.add_argument(
+	'--copy-portable-config',
+	action="store_true",
+	dest='copyPortableConfig',
+	default=False,
+	help=(
+		"When installing, copy the portable configuration "
+		"from the provided path (--config-path, -c) to the current user account"
+	)
+)
 # This option is passed by Ease of Access so that if someone downgrades without uninstalling
 # (despite our discouragement), the downgraded copy won't be started in non-secure mode on secure desktops.
 # (Older versions always required the --secure option to start in secure mode.)
@@ -112,6 +159,18 @@ parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringTo
 # If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
+# Make any app args path values absolute
+# So as to not be affected by the current directory changing during process lifetime.
+pathAppArgs = [
+	"configPath",
+	"logFileName",
+	"portablePath",
+]
+for name in pathAppArgs:
+	origVal = getattr(globalVars.appArgs, name)
+	if isinstance(origVal, str):
+		newVal = os.path.abspath(origVal)
+		setattr(globalVars.appArgs, name, newVal)
 
 def terminateRunningNVDA(window):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
@@ -141,22 +200,33 @@ def terminateRunningNVDA(window):
 #Handle running multiple instances of NVDA
 try:
 	oldAppWindowHandle=winUser.FindWindow(u'wxWindowClassNR',u'NVDA')
-except:
+except WindowsError as e:
+	_log.info("Can't find existing NVDA via Window Class")
+	_log.debug(f"FindWindow error: {e}")
 	oldAppWindowHandle=0
 if not winUser.isWindow(oldAppWindowHandle):
 	oldAppWindowHandle=0
+
 if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
+	_log.debug(f"NVDA already running. OldAppWindowHandle: {oldAppWindowHandle}")
 	if globalVars.appArgs.check_running:
 		# NVDA is running.
+		_log.debug("Is running check complete: NVDA is running.")
+		_log.debug("Exiting")
 		sys.exit(0)
 	try:
+		_log.debug(f"Terminating oldAppWindowHandle: {oldAppWindowHandle}")
 		terminateRunningNVDA(oldAppWindowHandle)
-	except:
-		sys.exit(1)
+	except Exception as e:
+		parser.error(f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}")
+
 if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
+	_log.debug("Quitting")
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
 	# NVDA is not running.
+	_log.debug("Is running check: NVDA is not running")
+	_log.debug("Exiting")
 	sys.exit(1)
 
 UOI_NAME = 2
@@ -166,12 +236,82 @@ def getDesktopName():
 	ctypes.windll.user32.GetUserObjectInformationW(desktop, UOI_NAME, ctypes.byref(name), ctypes.sizeof(name), None)
 	return name.value
 
-#Ensure multiple instances are not fully started by using a mutex
-ERROR_ALREADY_EXISTS=0XB7
-desktopName=getDesktopName()
-mutex=ctypes.windll.kernel32.CreateMutexW(None,True,u"Local\\NVDA_%s"%desktopName)
-if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
-	if mutex: ctypes.windll.kernel32.CloseHandle(mutex)
+
+# Ensure multiple instances are not fully started by using a mutex
+desktopName = getDesktopName()
+_log.info(f"DesktopName: {desktopName}")
+
+
+def _acquireMutex(_desktopName: str) -> typing.Optional[wintypes.HANDLE]:
+	# From MS docs; "Multiple processes can have handles of the same mutex object"
+	# > Two or more processes can call CreateMutex to create the same named mutex.
+	# > The first process actually creates the mutex, and subsequent processes with sufficient access rights
+	# > simply open a handle to the existing mutex.
+	# > This enables multiple processes to get handles of the same mutex, while relieving the user of the
+	# > responsibility of ensuring that the creating process is started first.
+	# > When using this technique, you should set the bInitialOwner flag to FALSE; otherwise, it can be difficult
+	# > to be certain which process has initial ownership.
+	# > https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createmutexw
+	_mutex = ctypes.windll.kernel32.CreateMutexW(
+		None,  # lpMutexAttributes,
+		# Don't take initial ownership, use wait to acquire ownership instead.
+		# Allows waiting for a prior process to finish exiting.
+		False,  # bInitialOwner
+		f"Local\\NVDA_{_desktopName}"  # lpName
+	)
+	createMutexResult = ctypes.windll.kernel32.GetLastError()
+	if not _mutex:
+		_log.error(f"Unable to create mutex, last error: {createMutexResult}")
+		raise winUser.WinError(createMutexResult)
+	else:
+		if createMutexResult == winKernel.ERROR_ALREADY_EXISTS:
+			_log.debug("Waiting for prior NVDA to finish exiting")
+		# We didn't ask to be the initial owner,
+		waitResult = winKernel.waitForSingleObject(
+			_mutex,  # hHandle
+			2000  # dwMilliseconds
+		)
+
+		_log.debug(f"Wait result: {waitResult}")
+		if winKernel.WAIT_OBJECT_0 == waitResult:
+			_log.info("Prior NVDA has finished exiting")
+			return _mutex  # mutex ownership acquired
+		elif winKernel.WAIT_ABANDONED == waitResult:
+			_log.error(
+				"Prior NVDA exited without releasing mutex, taking ownership."
+				" Note: Restarting your system is recommended."
+				" This error indicates that NVDA previously did not exit correctly or was terminated"
+				" (perhaps by the task manager)."
+			)
+			return _mutex  # mutex ownership acquired
+		else:
+			exception = None
+			if winKernel.WAIT_TIMEOUT == waitResult:
+				exception = Exception("Timeout exceeded waiting for mutex")
+			elif winKernel.WAIT_FAILED == waitResult:
+				waitError = winUser.GetLastError()
+				_log.debug(f"Failed waiting for mutex, error: {waitError}")
+				exception = winUser.WinError(waitError)
+			releaseResult = ctypes.windll.kernel32.ReleaseMutex(_mutex)
+			if 0 == releaseResult:
+				releaseError = winUser.GetLastError()
+				_log.debug(f"Failed to release mutex, error: {releaseError}")
+			closeResult = ctypes.windll.kernel32.CloseHandle(_mutex)
+			if 0 == closeResult:
+				closeError = winUser.GetLastError()
+				_log.debug(f"Failed to close mutex handle, error: {closeError}")
+			if exception is not None:
+				raise exception
+	return None  # unable to acquire mutex, unknown reason.
+
+
+try:
+	mutex = _acquireMutex(desktopName)
+except Exception as e:
+	_log.error(f"Unable to acquire mutex: {e}")
+	sys.exit(1)
+if mutex is None:
+	_log.error(f"Unknown mutex acquisition error. Exiting")
 	sys.exit(1)
 
 isSecureDesktop = desktopName == "Winlogon"
@@ -193,18 +333,22 @@ if isSecureDesktop:
 #Initial logging and logging code
 # #8516: because config manager isn't ready yet, we must let start and exit messages be logged unless disabled via --no-logging switch.
 # However, do log things if debug logging or log level other than 0 (not set) is requested from command line switches.
-
+_log = None
 logHandler.initialize()
 if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 import buildVersion
 log.info("Starting NVDA version %s" % buildVersion.version)
 log.debug("Debug level logging enabled")
+if customVenvDetected:
+	log.warning("NVDA launched using a custom Python virtual environment.")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
-#Accept wm_quit from other processes, even if running with higher privilages
-if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
-	raise WinError()
+
+# Accept WM_QUIT from other processes, even if running with higher privileges
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.MSGFLT.ALLOW):
+	log.error("Unable to set the NVDA process to receive WM_QUIT messages from other processes")
+	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 if not isSecureDesktop and not config.isAppX:
@@ -221,7 +365,20 @@ finally:
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
-	ctypes.windll.kernel32.CloseHandle(mutex)
+
+	# From MS docs; "Multiple processes can have handles of the same mutex object"
+	# > Use the CloseHandle function to close the handle.
+	# > The system closes the handle automatically when the process terminates.
+	# > The mutex object is destroyed when its last handle has been closed.
+	# https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createmutexw
+	releaseResult = ctypes.windll.kernel32.ReleaseMutex(mutex)
+	if 0 == releaseResult:
+		releaseError = winUser.GetLastError()
+		log.debug(f"Failed to release mutex, error: {releaseError}")
+	res = ctypes.windll.kernel32.CloseHandle(mutex)
+	if 0 == res:
+		error = winUser.GetLastError()
+		log.error(f"Unable to close mutex handle, last error: {winUser.WinError(error)}")
 
 log.info("NVDA exit")
 sys.exit(globalVars.exitCode)

@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-# NVDAObjects/behaviors.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -12,7 +11,6 @@ Behaviors described in this mix-in include providing table navigation commands f
 import os
 import time
 import threading
-import difflib
 import tones
 import queueHandler
 import eventHandler
@@ -29,6 +27,10 @@ import api
 import ui
 import braille
 import nvwave
+import globalVars
+from typing import List
+import diffHandler
+
 
 class ProgressBar(NVDAObject):
 
@@ -169,6 +171,11 @@ class EditableText(editableText.EditableText, NVDAObject):
 			self.bindGesture("kb:enter","caret_newLine")
 			self.bindGesture("kb:numpadEnter","caret_newLine")
 
+	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		super()._caretScriptPostMovedHelper(speakUnit, gesture, info)
+
 class EditableTextWithAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
 	To have selection changes reported, the object must notify of selection changes via the caret event.
@@ -177,8 +184,12 @@ class EditableTextWithAutoSelectDetection(EditableText):
 	"""
 
 	def event_gainFocus(self):
-		super(EditableText, self).event_gainFocus()
+		super().event_gainFocus()
 		self.initAutoSelectDetection()
+
+	def event_loseFocus(self):
+		self.terminateAutoSelectDetection()
+		super().event_loseFocus()
 
 	def event_caret(self):
 		super(EditableText, self).event_caret()
@@ -254,15 +265,31 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _getTextLines(self):
-		"""Retrieve the text of this object in lines.
+	def _get_diffAlgo(self):
+		"""
+			This property controls which diffing algorithm should be used by
+			this object. Most subclasses should simply use the base
+			implementation, which returns DMP (character-based diffing).
+			
+			@Note: DMP is experimental, and can be disallowed via user
+			preference. In this case, the prior stable implementation, Difflib
+			(line-based diffing), will be used.
+		"""
+		return diffHandler.get_dmp_algo()
+
+	def _get_devInfo(self):
+		info = super().devInfo
+		info.append(f"diffing algorithm: {self.diffAlgo}")
+		return info
+
+	def _getText(self) -> str:
+		"""Retrieve the text of this object.
 		This will be used to determine the new text to speak.
 		The base implementation uses the L{TextInfo}.
 		However, subclasses should override this if there is a better way to retrieve the text.
-		@return: The current lines of text.
-		@rtype: list of str
 		"""
-		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
+		ti = self.makeTextInfo(textInfos.POSITION_ALL)
+		return self.diffAlgo._getText(ti)
 
 	def _reportNewLines(self, lines):
 		"""
@@ -280,10 +307,10 @@ class LiveText(NVDAObject):
 
 	def _monitor(self):
 		try:
-			oldLines = self._getTextLines()
+			oldText = self._getText()
 		except:
-			log.exception("Error getting initial lines")
-			oldLines = []
+			log.exception("Error getting initial text")
+			oldText = ""
 
 		while self._keepMonitoring:
 			self._event.wait()
@@ -298,9 +325,9 @@ class LiveText(NVDAObject):
 			self._event.clear()
 
 			try:
-				newLines = self._getTextLines()
+				newText = self._getText()
 				if config.conf["presentation"]["reportDynamicContentChanges"]:
-					outLines = self._calculateNewText(newLines, oldLines)
+					outLines = self._calculateNewText(newText, oldText)
 					if len(outLines) == 1 and len(outLines[0].strip()) == 1:
 						# This is only a single character,
 						# which probably means it is just a typed character,
@@ -308,61 +335,13 @@ class LiveText(NVDAObject):
 						del outLines[0]
 					if outLines:
 						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
-				oldLines = newLines
+				oldText = newText
 			except:
-				log.exception("Error getting lines or calculating new text")
+				log.exception("Error getting or calculating new text")
 
-	def _calculateNewText(self, newLines, oldLines):
-		outLines = []
+	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
+		return self.diffAlgo.diff(newText, oldText)
 
-		prevLine = None
-		for line in difflib.ndiff(oldLines, newLines):
-			if line[0] == "?":
-				# We're never interested in these.
-				continue
-			if line[0] != "+":
-				# We're only interested in new lines.
-				prevLine = line
-				continue
-			text = line[2:]
-			if not text or text.isspace():
-				prevLine = line
-				continue
-
-			if prevLine and prevLine[0] == "-" and len(prevLine) > 2:
-				# It's possible that only a few characters have changed in this line.
-				# If so, we want to speak just the changed section, rather than the entire line.
-				prevText = prevLine[2:]
-				textLen = len(text)
-				prevTextLen = len(prevText)
-				# Find the first character that differs between the two lines.
-				for pos in range(min(textLen, prevTextLen)):
-					if text[pos] != prevText[pos]:
-						start = pos
-						break
-				else:
-					# We haven't found a differing character so far and we've hit the end of one of the lines.
-					# This means that the differing text starts here.
-					start = pos + 1
-				# Find the end of the differing text.
-				if textLen != prevTextLen:
-					# The lines are different lengths, so assume the rest of the line changed.
-					end = textLen
-				else:
-					for pos in range(textLen - 1, start - 1, -1):
-						if text[pos] != prevText[pos]:
-							end = pos + 1
-							break
-
-				if end - start < 15:
-					# Less than 15 characters have changed, so only speak the changed chunk.
-					text = text[start:end]
-
-			if text and not text.isspace():
-				outLines.append(text)
-			prevLine = line
-
-		return outLines
 
 class Terminal(LiveText, EditableText):
 	"""An object which both accepts text input and outputs text which should be reported automatically.
@@ -385,17 +364,11 @@ class Terminal(LiveText, EditableText):
 		return False
 
 
-class KeyboardHandlerBasedTypedCharSupport(Terminal):
-	"""A Terminal object that also provides typed character support for
-	console applications via keyboardHandler events.
-	These events are queued from NVDA's global keyboard hook.
-	Therefore, an event is fired for every single character that is being typed,
-	even when a character is not written to the console (e.g. in read only console applications).
-	This approach is an alternative to monitoring the console output for
-	characters close to the caret, or injecting in-process with NVDAHelper.
-	This class relies on the toUnicodeEx Windows function, and in particular
-	the flag to preserve keyboard state available in Windows 10 1607
-	and later."""
+class EnhancedTermTypedCharSupport(Terminal):
+	"""A Terminal object with keyboard support enhancements for console applications.
+	Notably, it suppresses duplicate typed character announcements and can
+	hold typed characters in a queue and only dispatch once the screen updates.
+	This is useful for suppression of passwords, etc."""
 	#: Whether this object quickly and reliably sends textChange events
 	#: when its contents update.
 	#: Timely and reliable textChange events are required
@@ -414,9 +387,12 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 		if (
 			len(lines) == 1
 			and not self._hasTab
-			and len(lines[0].strip()) < max(len(speech.curWordChars) + 1, 3)
+			and len(lines[0].strip()) < max(len(speech.speech._curWordChars) + 1, 3)
 		):
 			return
+		# Clear the typed word buffer for new text lines.
+		speech.clearTypedWordBuffer()
+		self._queuedChars = []
 		super()._reportNewLines(lines)
 
 	def event_typedCharacter(self, ch):
@@ -460,16 +436,6 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 		speech.clearTypedWordBuffer()
 		gesture.send()
 
-	def _calculateNewText(self, newLines, oldLines):
-		hasNewLines = (
-			self._findNonBlankIndices(newLines)
-			!= self._findNonBlankIndices(oldLines)
-		)
-		if hasNewLines:
-			# Clear the typed word buffer for new text lines.
-			speech.clearTypedWordBuffer()
-			self._queuedChars = []
-		return super()._calculateNewText(newLines, oldLines)
 
 	def _dispatchQueue(self):
 		"""Sends queued typedCharacter events through to NVDA."""
@@ -477,12 +443,20 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 			ch = self._queuedChars.pop(0)
 			super().event_typedCharacter(ch)
 
-	def _findNonBlankIndices(self, lines):
-		"""
-		Given a list of strings, returns a list of indices where the strings
-		are not empty.
-		"""
-		return [index for index, line in enumerate(lines) if line]
+
+class KeyboardHandlerBasedTypedCharSupport(EnhancedTermTypedCharSupport):
+	"""An EnhancedTermTypedCharSupport object that provides typed character support for
+	console applications via keyboardHandler events.
+	These events are queued from NVDA's global keyboard hook.
+	Therefore, an event is fired for every single character that is being typed,
+	even when a character is not written to the console (e.g. in read only console applications).
+	This approach is an alternative to monitoring the console output for
+	characters close to the caret, or injecting in-process with NVDAHelper.
+	This class does not implement any specific functionality by itself.
+	Rather, it instructs keyboardHandler to use the toUnicodeEx Windows function, in particular
+	the flag to preserve keyboard state available in Windows 10 1607
+	and later."""
+	pass
 
 
 class CandidateItem(NVDAObject):
@@ -560,7 +534,7 @@ class RowWithFakeNavigation(NVDAObject):
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.
 			obj.parent = self
 		api.setNavigatorObject(obj)
-		speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
 
 	def _moveToColumnNumber(self, column):
 		child = column - 1
@@ -572,11 +546,14 @@ class RowWithFakeNavigation(NVDAObject):
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
-			new = self.simpleFirstChild
+			new = self.firstChild
 		elif cur.parent != self:
-			new = self
+			self._moveToColumn(self)
+			return
 		else:
-			new = cur.simpleNext
+			new = cur.next
+		while new and new.location and new.location.width == 0:
+			new = new.next
 		self._moveToColumn(new)
 	script_moveToNextColumn.canPropagate = True
 	# Translators: The description of an NVDA command.
@@ -586,10 +563,12 @@ class RowWithFakeNavigation(NVDAObject):
 		cur = api.getNavigatorObject()
 		if cur == self:
 			new = None
-		elif cur.parent != self or not cur.simplePrevious:
+		elif cur.parent != self or not cur.previous:
 			new = self
 		else:
-			new = cur.simplePrevious
+			new = cur.previous
+			while new and new.location and new.location.width == 0:
+				new = new.previous
 		self._moveToColumn(new)
 	script_moveToPreviousColumn.canPropagate = True
 	# Translators: The description of an NVDA command.
@@ -632,7 +611,8 @@ class RowWithFakeNavigation(NVDAObject):
 class RowWithoutCellObjects(NVDAObject):
 	"""An abstract class which creates cell objects for table rows which don't natively expose them.
 	Subclasses must override L{_getColumnContent} and can optionally override L{_getColumnHeader}
-	to retrieve information about individual columns.
+	to retrieve information about individual columns and L{_getColumnLocation} to support mouse or
+	magnification tracking or highlighting.
 	The parent (table) must support the L{columnCount} property.
 	"""
 
@@ -725,9 +705,11 @@ class _FakeTableCell(NVDAObject):
 
 	def _get_states(self):
 		states = self.parent.states.copy()
-		if not self.location or self.location.width == 0:
+		if self.location and self.location.width == 0:
 			states.add(controlTypes.STATE_INVISIBLE)
+		states.discard(controlTypes.STATE_CHECKED)
 		return states
+
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.
@@ -750,9 +732,9 @@ class ToolTip(NVDAObject):
 	def event_show(self):
 		if not config.conf["presentation"]["reportTooltips"]:
 			return
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
-		# Ideally, we wouldn't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
+		# Ideally, we wouldn't use getPropertiesBraille directly.
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 class Notification(NVDAObject):
 	"""Informs the user of non-critical information that does not require immediate action.
@@ -763,9 +745,9 @@ class Notification(NVDAObject):
 	def event_alert(self):
 		if not config.conf["presentation"]["reportHelpBalloons"]:
 			return
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
-		# Ideally, we wouldn't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
+		# Ideally, we wouldn't use getPropertiesBraille directly.
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 	event_show = event_alert
 
@@ -784,7 +766,7 @@ class EditableTextWithSuggestions(NVDAObject):
 		# Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 		braille.handler.message(_("Suggestions"))
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(r"waves\suggestionsOpened.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
 
 	def event_suggestionsClosed(self):
 		"""Called when suggestions list or container is closed.
@@ -792,7 +774,7 @@ class EditableTextWithSuggestions(NVDAObject):
 		By default NVDA will announce this via speech, braille or via a sound.
 		"""
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
 
 class WebDialog(NVDAObject):
 	"""

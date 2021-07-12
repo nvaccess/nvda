@@ -1,9 +1,8 @@
-# -*- coding: UTF-8 -*-
-#brailleDisplayDrivers/handyTech.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2008-2018 NV Access Limited, Bram Duvigneau, Leonard de Ruijter (Babbage B.V.), Felix Grützmacher (Handy Tech Elektronik GmbH)
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2021 NV Access Limited, Bram Duvigneau, Babbage B.V.,
+# Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
 
 """
 Braille display driver for Handy Tech braille displays.
@@ -11,7 +10,7 @@ Braille display driver for Handy Tech braille displays.
 
 from collections import OrderedDict
 from io import BytesIO
-import serial # pylint: disable=E0401
+import serial
 import weakref
 import hwIo
 from hwIo import intToByte, boolToByte
@@ -38,31 +37,37 @@ class InvisibleDriverWindow(windowUtils.CustomWindow):
 	HT_INCREMENT = 1
 	HT_DECREMENT = 0
 
-	def __init__(self, driver: Any):
-		super(InvisibleDriverWindow, self).__init__(u"Handy Tech Server")
+	def __init__(self):
+		super().__init__("Handy Tech Server")
 		# Register shared window message.
 		# Note: There is no corresponding unregister function.
 		# Still this does no harm if done repeatedly.
-		self.window_message=windll.user32.RegisterWindowMessageW(u"Handy_Tech_Server")
-		self.driver = weakref.ref(driver, lambda r: self.destroy())
+		self.window_message = windll.user32.RegisterWindowMessageW("Handy_Tech_Server")
 
 	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int):
 		if msg == self.window_message:
-			if wParam == self.HT_SLEEP and lParam == self.HT_INCREMENT:
-				d = self.driver()
-				if d is not None:
-					d.go_to_sleep()
-			elif wParam == self.HT_SLEEP and lParam == self.HT_DECREMENT:
-				d = self.driver()
-				if d is not None:
-					d.wake_up()
+			instanceCount = len(BrailleDisplayDriver._instances)
+			if instanceCount == 0:
+				log.error(
+					"Received Handy_Tech_Server window message while no driver instances are alive"
+				)
+				wx.CallAfter(BrailleDisplayDriver.destroyMessageWindow)
+			elif wParam == self.HT_SLEEP:
+				if instanceCount > 1:
+					log.error(
+						"Received Handy_Tech_Server window message while multiple driver instances are alive"
+					)
+				driver = next(d for d in BrailleDisplayDriver._instances)
+				if lParam == self.HT_INCREMENT:
+					driver.goToSleep()
+				elif lParam == self.HT_DECREMENT:
+					driver.wakeUp()
 			return 0  # success, bypass default window procedure
 
 
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
 
-# pylint: disable=C0330
 # Some older Handy Tech displays use a HID converter and an internal serial interface.
 # We need to keep these IDS around here to send additional data upon connection.
 USB_IDS_HID_CONVERTER = {
@@ -72,7 +77,6 @@ USB_IDS_HID_CONVERTER = {
 }
 
 # Model identifiers
-# pylint: disable=C0103
 MODEL_BRAILLE_WAVE = b"\x05"
 MODEL_MODULAR_EVOLUTION_64 = b"\x36"
 MODEL_MODULAR_EVOLUTION_88 = b"\x38"
@@ -168,7 +172,6 @@ class Model(AutoPropertyObject):
 		# self._displayRef is a weakref, call it to get the object
 		return self._displayRef()
 
-	# pylint: disable=R0201
 	def _get_keys(self):
 		"""Basic keymap
 
@@ -370,7 +373,6 @@ class ModularConnect88(TripleActionKeysMixin, Model):
 	numCells = 88
 
 
-# pylint: disable=C0111
 class ModularEvolution(AtcMixin, TripleActionKeysMixin, Model):
 	genericName = "Modular Evolution"
 
@@ -394,7 +396,7 @@ class EasyBraille(OldProtocolMixin, Model):
 	genericName = name = "Easy Braille"
 
 
-class ActiveBraille(TimeSyncFirmnessMixin, AtcMixin, TripleActionKeysMixin, Model):
+class ActiveBraille(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_BRAILLE
 	numCells = 40
 	genericName = name = 'Active Braille'
@@ -576,6 +578,7 @@ HT_HID_RPT_OutBaud = b"\xFD" # get baud rate of serial connection
 HT_HID_RPT_InBaud = b"\xFE" # set baud rate of serial connection
 HT_HID_CMD_FlushBuffers = b"\x01" # flush input and output buffers
 
+
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	name = "handyTech"
 	# Translators: The name of a series of braille displays.
@@ -583,6 +586,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	isThreadSafe = True
 	receivesAckPackets = True
 	timeout = 0.2
+	_sleepcounter = 0
+	_messageWindow = None
+	_instances = weakref.WeakSet()
 
 	@classmethod
 	def getManualPorts(cls):
@@ -590,8 +596,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	_dev: Optional[Union[hwIo.Hid, hwIo.Serial]]
 
+	def __new__(cls, *args, **kwargs):
+		obj = super().__new__(cls, *args, **kwargs)
+		cls._instances.add(obj)
+		return obj
+
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 		self._model = None
 		self._ignoreKeyReleases = False
@@ -600,7 +611,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._dotFirmness = 1
 		self._hidSerialBuffer = b""
 		self._atc = False
-		self._sleepcounter = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
@@ -637,28 +647,39 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._model.name, type=portType, port=port))
 				# Create the message window on the ui thread.
-				wx.CallAfter(self.create_message_window)
+				wx.CallAfter(self.createMessageWindow)
 				break
 			self._dev.close()
 
 		else:
 			raise RuntimeError("No Handy Tech display found")
 
-	def create_message_window(self):
+	@classmethod
+	def createMessageWindow(cls):
+		if cls._messageWindow:
+			return
 		try:
-			self._sleepcounter = 0
-			self._messageWindow = InvisibleDriverWindow(self)
+			cls._sleepcounter = 0
+			cls._messageWindow = InvisibleDriverWindow()
 		except WindowsError:
 			log.debugWarning("", exc_info=True)
 
-	def destroy_message_window(self):
+	@classmethod
+	def destroyMessageWindow(cls):
+		if len(cls._instances) > 1:
+			# When switching from automatic detection to manual display selection or vice versa,
+			# there could exist more than one driver instance at a time.
+			# Ensure that the message window won't be destroyed in these cases.
+			return
+		cls._sleepcounter = 0
 		try:
-			self._messageWindow.destroy()
+			cls._messageWindow.destroy()
 		except WindowsError:
 			log.debugWarning("", exc_info=True)
+		cls._messageWindow = None
 
-	def go_to_sleep(self):
-		self._sleepcounter += 1
+	def goToSleep(self):
+		BrailleDisplayDriver._sleepcounter += 1
 		if self._dev is not None:
 			# Must sleep before and after closing to ensure the device can be reconnected.
 			time.sleep(self.timeout)
@@ -666,10 +687,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev = None
 			time.sleep(self.timeout)
 
-	def wake_up(self):
-		if self._sleepcounter > 0:
-			self._sleepcounter -= 1
-		if self._sleepcounter > 0: # Still not zero after decrementing
+	def wakeUp(self):
+		if BrailleDisplayDriver._sleepcounter > 0:
+			BrailleDisplayDriver._sleepcounter -= 1
+		if BrailleDisplayDriver._sleepcounter > 0:  # Still not zero after decrementing
 			return
 		# Might throw if device no longer exists.
 		# We leave it to autodetection to grab it when it reappears.
@@ -688,8 +709,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def terminate(self):
 		try:
 			# Make sure this is called on the ui thread.
-			wx.CallAfter(self.destroy_message_window)
-			super(BrailleDisplayDriver, self).terminate()
+			wx.CallAfter(self.destroyMessageWindow)
+			super().terminate()
 		finally:
 			# We must sleep before closing the  connection as not doing this can leave the display in a bad state where it can not be re-initialized.
 			# This has been observed for Easy Braille displays.
@@ -738,7 +759,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._dotFirmness = value
 
 	def sendPacket(self, packetType: bytes, data:bytes = b""):
-		if self._sleepcounter > 0:
+		if BrailleDisplayDriver._sleepcounter > 0:
 			return
 		if self.isHid:
 			self._sendHidPacket(packetType+data)
@@ -746,7 +767,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev.write(packetType + data)
 
 	def sendExtendedPacket(self, packetType: bytes, data: bytes = b""):
-		if self._sleepcounter > 0:
+		if BrailleDisplayDriver._sleepcounter > 0:
 			log.debug("Packet discarded as driver was requested to sleep")
 			return
 		packetBytes: bytes = b"".join([
@@ -783,9 +804,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# being released, so they should be ignored.
 		self._ignoreKeyReleases = True
 
-
-	# pylint: disable=R0912
-	# Pylint complains about many branches, might be worth refactoring
 	def _hidOnReceive(self, data: bytes):
 		# data contains the entire packet.
 		stream = BytesIO(data)
@@ -984,7 +1002,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	})
 
 
-# pylint: disable=W0223, C0301
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
 	source = BrailleDisplayDriver.name

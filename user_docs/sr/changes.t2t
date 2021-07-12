@@ -3,6 +3,382 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.1 =
+Ova verzija sadrži opciju koja se može omogućiti za UIA podršku u programu Excel i Chromium pretraživačima .
+Ispravljeni su problemi vezani uz određene jezike, kao i  pristup linkovima na brajevom redu.
+Ažurirana je baza  Unicode CLDR kao i matematički simboli, eSpeak-NG i LibLouis.
+
+Puno ispravljenih grešaka i poboljšanja, uključujući paket Office, Visual Studio i nekoliko jezika.
+Napomena: Ovo je verzija koja zahteva ažuriranje dodataka za kompatibilnost uz novi API.
+Autori dodataka će morati da testiraju dodatke i ažuriraju Manifest.
+Ova verzija takođe ukida podršku za Adobe Flash.
+
+
+== Nove karakteristike ==
+- Prva faza podrške za UIA sa pretraživačima baziranim na Chromiumu  (kao što su Edge). (#12025)
+- Opciona eksperimentalna podrška za Microsoft Excel korišćenjem UI Automation. Preporučuje se samo uz Microsoft Excel verziju 16.0.13522.10000 ili novije. (#12210)
+- Lakša navigacija kroz izlazne rezultate NVDA Python konzole. (#9784)
+  - alt+strelice gore i dole  vas  pomeraju na prethodni i sledeći rezultat (dodajte šift da biste izabrali).
+  - control+l će obrisati okno sa izlazom.
+- NVDA će sada prijaviti kategorije koje su obeležene za obaveze u aplikaciji Microsoft Outlook, ako postoje. (#11598)
+
+
+== Promene ==
+- U režimu pretraživanja, kontrole se sada mogu aktivirati prebacivanjem kursora brajeve ćelije na njihov opis (na primer  "lnk" za link). Ovo je posebno korisno  za aktivaciju izbornih polja koja nemaju oznaku. (#7447)
+- NVDA će sada sprečiti korisnika da izvrši Windows 10 OCR ako je zatamnjivanje ekrana omogućeno. (#11911)
+- Ažurirana Unicode Common Locale  baza (CLDR) na verziju  38.1. (#11943)
+- Dodato još matematičkih simbola u rečnik sa simbolima. (#11467)
+- Korisničko uputstvo, datoteka sa listom promena, kao i lista komandi sada imaju osvežen izgled. (#12027)
+- "Nije podržano" će sada biti izgovoreno ako pokušate da promenite opciju koristi izgled ekrana u aplikacijama u kojima ovo nije moguće, kao što je Microsoft Word. (#7297)
+- Opcija "Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane" u panelu naprednih podešavanja sada je podrazumevano omogućena. (#10885)
+  - Ovakav način rada se može onemogućiti promenom ove opcije u "Ne".
+  - Sa ovom opcijom omogućenom, Web aplikacije (na primer Gmail) više ne izgovaraju nevažeće informacije kada brzo pomerate fokus.
+- Espeak-ng je ažuriran na 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
+- Ažuriran liblouis brajev prevodilac na [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - Nove brajeve tabele: Beloruski književni brajev kod, Beloruski kompjuterski kod, Urdu stepen 1, Urdu stepen 2.
+- Podrška za Adobe Flash sadržaj je uklonjena iz  NVDA budući da se korišćenje  Flash tehnologije ne preporučuje od strane  kompanije Adobe. (#11131)
+- NVDA će uspešno izaći čak i ako postoje otvoreni prozori, proces izlaska će sada zatvoriti sve druge NVDA procese i prozore. (#1740)
+- Preglednik govora se sada može zatvoriti prečicom ``alt+F4`` i ima standardno dugme za zatvaranje za lakšu interakciju korisnika sa uređajima sa jednim tasterom. (#12330)
+- Preglednik brajevog reda sada ima standardno dugme za zatvaranje za lakšu interakciju korisnika sa uređajima sa jednim tasterom. (#12328)
+- U dijalogu liste elemenata, prečica koja aktivira taster "Aktiviraj" je uklonjena u određenim  jezicima kako bi sprečila sukob sa oznakom radio dugmeta za tip elementa. Kada je dostupno, ovo dugme ostaje podrazumevano dugme u dijalogu i može se jednostavno aktivirati tasterom Enter iz liste elemenata. (#6167)
+
+
+== Ispravljene greške ==
+- Lista poruka u programu Outlook 2010 se ponovo može čitati. (#12241)
+- U Terminal aplikacijama na Windowsu 10 verziji 1607 i novijim, kada ubacujete ili brišete znakove u sredini reda, znakovi desno od kursora se više ne čitaju. (#3200)
+  - Ova eksperimentalna ispravljena opcija se mora ručno omogućiti u naprednim NVDA podešavanjima menjanjem opcije algoritam za razlikovanje teksta na Diff Match Patch.
+- U programu MS Outlook, beskorisno prijavljivanje udaljenosti kada koristite šift plus tab da se vratite iz polja poruke na polje predmeta više ne bi trebalo da bude izgovarano. (#10254)
+- U Python konzoli, opcije ubacivanja tabulatora za uvlačenje početka već popunjenog reda kao i izvršavanje automatskog dopunjavanja tasterom tab su sada podržane. (#11532)
+- Informacije o formatiranju kao i druge poruke u režimu pretraživanja više ne prikazuju neočekivane prazne redove kada je korišćenje izgleda ekrana omogućeno. (#12004)
+- Sada je moguće čitanje komentara u aplikaciji MS Word sa omogućenom UIA podrškom. (#9285)
+- Brzina interakcije u aplikaciji Visual Studio je poboljšana. (#12171)
+- Ispravljene grafičke greške kao što su nedostaci elemenata kada se NVDA koristi uz jezike koji se čitaju s desna na levo. (#8859)
+- Orijentacija grafičkog interfejsa je sada bazirana na NVDA jeziku, a ne sistemskom. (#638)
+  - Poznat je problem za ove jezike: Desna granica se spaja sa oznakama i kontrolama. (#12181)
+- Python lokalizacija će se sada uvek podudarati sa jezikom podešenim u podešavanjima, i takođe će raditi sa podrazumevanim jezikom. (#12214)
+- TextInfo.getTextInChunks neće više prestajati kada se primenjuje na obogaćene kontrole za uređivanje kao što je preglednik NVDA dnevnika. (#11613)
+- Ponovo je moguće koristiti NVDA na jezicima koji u svojim imenima sadrže donje crte kao što je de_CH na Windowsu 10 verziji  1803 i 1809. (#12250)
+- U programu WordPad, podešavanje prijavljivanja indeksa i eksponenata radi kako treba. (#12262)
+- NVDA više neće grešiti u izgovaranju novo fokusiranog sadržaja na Web stranicama ako se stari sadržaj ukloni i zameni novo fokusiranim na istoj poziciji. (#12147)
+- Precrtan sadržaj, formatiranje indeksa i eksponenata za celu Excel ćeliju će se sada prijaviti ako se omogući odgovarajuća opcija. (#12264)
+- Ispravljeno kopiranje podešavanja iz prenosne kopije u instalaciju kada je podrazumevani folder za podešavanja prazan. (#12071, #12205)
+- Ispravljeno neispravno izgovaranje nekih slova sa akcentom ili dijakritičkih znakova kada se omogući opcija "Izgovori reč veliko pre velikog slova ". (#11948)
+- Ispravljeno neispravno menjanje visine u sintetizatoru Sapi4. (#12311)
+- NVDA instalacija sada takođe uzima u obzir opciju ``--minimal`` na komandnoj liniji i neće reprodukovati zvuk za pokretanje, što prati opisan način rada u dokumentaciji za instalirane i prenosne kopije programa NVDA. (#12289)
+- U programima MS Word ili Outlook, taster za brzu navigaciju kroz tabele može da fokusira tabele za izgled ako je opcija "Uključi tabele za izgled" omogućena u podešavanjima režima pretraživanja. (#11899)
+- NVDA neće više izgovarati znakove "↑↑↑" za Emoji znakove u određenim jezicima. (#11963)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2020.4 =
+Ova verzija uključuje podršku za nove Kineske metode unosa, ažuriranje za Liblouis i lista elemenata (NVDA+f7) sada radi u režimu fokusiranja.
+Pomoć vezana za sadržaj je sada dostupna kada se pritisne F1 u NVDA dijalozima.
+Poboljšanja za pravila izgovaranja simbola, govorne rečnike, brajeve poruke i površno čitanje.
+Ispravljene greške i poboljšanja u aplikacijama Mail, Outlook, Teams, Visual Studio, Azure Data Studio, Foobar2000.
+Na Webu, poboljšanja u aplikaciji Google Docs, i bolja podrška za ARIA standard.
+Takođe puno drugih poboljšanja i ispravljenih grešaka.
+
+== Nove karakteristike ==
+- Pritiskanjem tastera F1 u NVDA dijalozima otvoriće se relevantna sekcija pomoći. (#7757)
+- Podrška za predloge automatskog dopunjavanja (IntelliSense) u programima Microsoft SQL Server Management Studio plus Visual Studio 2017 i novijim. (#7504)
+- Izgovor simbola interpunkcije: Podrška za grupisanja u definisanju kompleksnih simbola i podrška za prikazivanje ovih grupa u zamenama što ih čini jednostavnijim i korisnijim. (#11107)
+- Korisnici će biti obavešteni ako prave zamene u govornim rečnicima sa neispravnim regularnim izrazima. (#11407)
+  - Tačnije, greške u grupisanju se sada prepoznaju.
+- Dodata podrška za nove brzi Kineski tradicionalni i Pinyin metode unosa u Windowsu 10. (#11562)
+- Zaglavlja kartica se sada smatraju kao polja za unos u brzoj navigaciji tasterom F. (#10432)
+- Dodata skripta za prijavljivanje obeleženog (markiranog) teksta; nema podrazumevano podešene komande. (#11807)
+- Dodat --copy-portable-config parametar komandne linije koji vam omogućava da kopirate podešavanja u tihoj instalaciji programa NVDA. (#9676)
+- Prebacivanje na brajevu ćeliju je sada moguće za korisnike miša u pregledniku brajevog reda, prevlačite za prebacivanje na ćeliju. (#11804)
+- NVDA će sada automatski prepoznati brajeve redove Humanware Brailliant BI 40X i 20X preko USB i Bluetooth veze. (#11819)
+
+
+== Promene ==
+- Ažuriran liblouis brajev prevodilac na verziju 3.16.1:
+ - Rešava različita rušenja
+ - Dodaje brajevu tabelu Baškir stepen 1
+ - Dodaje brajevu tablu Koptski osmotačkasti brajev kod
+ - Dodaje tabele Ruski književni i Ruski književni (detaljniji)
+  - Dodaje brajevu tabelu Afrikanski stepen 2
+- Uklanja brajevu tabelu Ruski stepen 1
+- Kada čitate u režimu izgovori sve režima pretraživanja komande za pronalaženje sledeće i prethodne stavke više ne zaustavljaju čitanje ako je opcija dozvoli površno čitanje omogućena; režim izgovori sve će umesto toga nastaviti od pronađenog rezultata. (#11563)
+- Za HIMS brajeve redove F3 je promenjen u  razmak + tačke 148. (#11710)
+- Poboljšanja u korisničkom iskustvu opcija  "vreme isteka poruke" i "prikaži poruke". (#11602)
+- U Web pretraživačima i drugim aplikacijama koje podržavaju režim pretraživanja, dijalog liste elemenata (NVDA+F7) sada se može aktivirati iz režima fokusiranja. (#10453)
+- Ažuriranja ARIA live regiona se sada ne izgovaraju kada je prijavljivanje dinamičkih promena sadržaja onemogućeno. (#9077)
+- NVDA će sada izgovoriti "Kopirano u privremenu memoriju" pre kopiranog teksta. (#6757)
+- Predstavljanje grafičkog prikaza tabele u upravljaču diskovima je poboljšano. (#10048)
+- Oznake za kontrole su sada onemogućene (zatamnjene) kada je kontrola onemogućena. (#11809)
+- Ažurirana CLDR Emoji baza na verziju 38. (#11817)
+- Ugrađena opcija "Označavanje fokusa" je preimenovana u "vizuelno označavanje". (#11700)
+
+
+== Ispravljene greške ==
+- NVDA ponovo ispravno radi sa poljima za uređivanje kada se koristi aplikacija Fast Log Entry. (#8996)
+- Preostalo vreme u aplikaciji Foobar2000 će se prijaviti kada nema ukupnog vremena trajanja  (na primer kada se reprodukuje stream uživo). (#11337)
+- NVDA sada poštuje atribut aria-roledescription na elementima sa sadržajem koji se može urediti u Web pretraživačima. (#11607)
+- "Lista " se sada neće izgovarati na svakom redu liste u aplikaciji Google docs ili nekom drugom sadržaju koji se može urediti u pretraživaču Google chrome. (#7562)
+- Kada se strelicama krećete znak po znak ili reč po reč od jedne stavke liste ka drugoj u sadržaju koji se može urediti u Web pretraživačima, ulazak u novu stavku liste se sada izgovara. (#11569)
+- NVDA sada čita ispravan red kada se kursor postavi na kraj linka koji je na kraju stavke liste u aplikaciji Google docs ili drugom sadržaju koji se može urediti na Webu. (#11606)
+- Na Windowsu 7, otvaranje i zatvaranje start menija sa radne površine sada ispravno postavlja fokus. (#10567)
+- Kada je opcija " Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane " omogućena, naslov kartice se ponovo izgovara kada se menjaju kartice u programu Firefox. (#11397)
+- NVDA ponovo izgovara stavku liste kada pišete ime stavke korišćenjem  SAPI5 Ivona glasova. (#11651)
+- Ponovo je moguće koristiti režim pretraživanja kada se čitaju mailovi u aplikaciji Windows 10 Mail 16005.13110 i novijim. (#11439)
+- Kada koristite SAPI5 Ivona glasove sa lokacije harposoftware.com, NVDA sada može da čuva podešavanja, menja sintetizatore, i više neće gubiti govor nakon ponovnog pokretanja. (#11650)
+- Sada je moguće upisati broj 6 u kompjuterskom brajevom kodu sa brajeve tastature HIMS redova. (#11710)
+- Ogromna poboljšanja u brzini korišćenja aplikacije Azure Data Studio. (#11533, #11715)
+- Uz omogućenu opciju  "Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane " naslov NVDA dijaloga za pretragu se ponovo izgovara. (#11632)
+- NVDA više nebi trebao da prestaje sa radom kada se računar probudi i fokusira na Microsoft edge dokument. (#11576)
+- Više nije neophodno pritiskanje tastera Tab ili pomeranje fokusa nakon zatvaranja kontekstnog menija u pretraživaču Edge da bi režim pretraživanja ponovo radio. (#11202)
+- NVDA sada ispravno čita stavke liste u 64-bitnim aplikacijama kao što su Tortoise SVN. (#8175)
+- ARIA treegrids se sada prikazuju kao standardne tabele u režimu pretraživanja programa Firefox i Chrome. (#9715)
+- Obrnuta pretraga se sada može pokrenuti komandom "pronađi prethodnu stavku" prečicom NVDA+šift+F3 (#11770)
+- NVDA skripta se više neće ponašati kao da je ponovljena ako se neki drugi taster nevezan za tu skriptu pritisne pre pokretanja skripte. (#11388) 
+- Oznake naglašenog teksta se ponovo mogu onemogućiti u programu Internet explorer kada  se onemogući opcija naglašavanja u dijalogu formatiranja dokumenta NVDA podešavanja. (#11808)
+- Prestanak rada od nekoliko sekundi za neke korisnike više nebi trebalo da se dešava kada se krećete strelicama kroz ćelije u programu Excel. (#11818)
+- U aplikaciji Microsoft Teams sa verzijama kao što su 1.3.00.28xxx, NVDA više neće biti onemogućen da čita poruke ćaskanja zbog neispravno fokusiranog menija. (#11821)
+- Tekst koji je u isto vreme označen i kao pravopisna i kao gramatička greška u programu Google Chrome će ispravno biti prijavljen od strane programa NVDA kao pravopisna i gramatička greška. (#11787)
+- Kada koristite Outlook (Francuski jezik), prečica za opciju "Odgovori svima" (control+šift+R) ponovo radi. (#11196)
+- U aplikaciji Visual Studio, IntelliSense opisi alata koji pružaju dodatne detalje o trenutno izabranoj IntelliSense stavci se sada prijavljuju samo jednom. (#11611)
+- U aplikaciji Windows 10 Kalkulator, NVDA neće izgovarati napredak računanja ako je opcija izgovori ukucane znakove onemogućena. (#9428)
+- NVDA se više ne ruši kada se koristi tabela Engleski američki stepen 2 i opcija Proširi na kompjuterski brajev kod za reč na poziciji kursora je uključena, kada se prikazuje određen sadržaj kao što je Internet adresa. (#11754)
+- Ponovo je moguće prijaviti informacije o formatiranju za fokusiranu Excel ćeliju komandom NVDA+F. (#11914)
+- QWERTY unos na Papenmeier brajevim redovima koji ga podržavaju ponovo radi i više ne izaziva nasumična smrzavanja programa NVDA. (#11944)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2020.3 =
+Ova verzija uključuje značajna poboljšanja u stabilnosti i brzini posebno u Microsoft Office aplikacijama. Takođe su dodata nova podešavanja za podršku ekrana osetljivog na dodir i prijavljivanje slika.
+Postojanje obeleženog (markiranog) sadržaja se može prijaviti u pretraživačima, i takođe su dodate nove Nemačke brajeve tabele.
+
+== Nove karakteristike ==
+- Sada možete da omogućite ili onemogućite prijavljivanje  slika u panelu podešavanja formatiranja dokumenta. Napomena da čak i kada je ova opcija onemogućena, alternativni tekstovi za slike će se čitati. (#4837)
+- Sada možete da omogućite ili onemogućite NVDA podršku za ekrane osetljive na dodir. Dodata je opcija u panel za interakciju sa ekranima osetljivim na dodir u NVDA podešavanjima. Podrazumevana komanda je NVDA+control+alt+t. (#9682)
+- Dodate nove Nemačke brajeve tabele. (#11268)
+- NVDA sada prepoznaje tekstualne UIA kontrole koje se samo mogu čitati. (#10494)
+- Postojanje markiranog (obeleženog) sadržaja se sada izgovara i prijavljuje na brajevom redu u svim Web pretraživačima. (#11436)
+ - Ovo se može omogućiti ili onemogućiti novom opcijom za obeležen sadržaj u panelu formatiranja dokumenta.
+- Novi emulirani sistemski tasteri se mogu dodati u NVDA dijalogu za ulazne komande. (#6060)
+  - Da biste ovo uradili, pritisnite dugme dodaj nakon što ste izabrali kategoriju emulirani tasteri sistemske tastature.
+- Brajev red Handy Tech Active Braille sa džojstikom je sada podržan. (#11655)
+- Opcija "Automatski režim fokusiranja za pomeranje kursora" sada se može koristiti kada je onemogućena opcija "Automatski postavi sistemski fokus na elemente koji se mogu fokusirati". (#11663)
+
+
+== Promene ==
+- Skripta za prijavljivanje formatiranja (NVDA+f) je sada promenjena kako bi prijavljivala formatiranje na poziciji sistemskog kursora umesto preglednog kursora programa NVDA. Da biste dobili formatiranje za poziciju preglednog kursora sada koristite NVDA+šift+f. (#9505)
+- NVDA sada po podrazumevanim podešavanjima ne pomera sistemski  fokus na elemente koji se mogu fokusirati u režimu pretraživanja, što poboljšava brzinu i stabilnost. (#11190)
+- CLDR ažuriran sa verzije 36.1 na verziju 37. (#11303)
+- Ažuriran eSpeak-NG na 1.51-dev, commit 1fb68ffffea4
+- Sada možete da koristite navigaciju kroz tabele u listama sa elementima koji se mogu čekirati ako lista ima više kolona. (#8857)
+- U dijalogu za upravljanje dodacima, kada je neophodno da potvrdite uklanjanje dodatka, "ne" je sada podrazumevano dugme. (#10015)
+- U programu Microsoft Excel, lista elemenata sada prikazuje ispravno lokalizovane formule. (#9144)
+- NVDA sada prijavljuje ispravne termine za napomene u programu Excel. (#11311)
+- Kada koristite komandu "Prebaci pregledni kursor na fokus " u režimu pretraživanja, pregledni kursor se sada postavlja na poziciju virtuelnog kursora. (#9622)
+- Informacije koje se prijavljuju u režimu pretraživanja, kao što su informacije o formatiranju komandom NVDA+F, sada su prikazane u malo većem prozoru i centrirane su na ekranu. (#9910)
+
+
+== Ispravljene greške ==
+- NVDA sada uvek govori kada se krećete reč po reč i dođete do simbola koji je odvojen razmakom bez obzira na podešavanja. (#5133)
+- U aplikacijama koje koriste QT 5.11 ili noviji, opisi objekata se ponovo prijavljuju. (#8604)
+- Kada brišete reč prečicom control+delete, NVDA više neće biti bez izgovora. (#3298, #11029)
+  - Sada se reč desno od obrisane reči izgovara.
+- U panelu opštih podešavanja, lista jezika se sada ispravno sortira. (#10348)
+- U dijalogu za ulazne komande, bitno poboljšana brzina kada se komande filtriraju. (#10307)
+- Sada možete slati unikodne znakove veće od U+FFFF sa brajevog reda. (#10796)
+- NVDA će ispravno izgovarati dijaloge za otvaranje datoteka u Windows 10 May 2020 ažuriranju. (#11335)
+- Nova eksperimentalna opcija u naprednim podešavanjima (Omogući selektivno registrovanje za UI Automation događaje i promene svojstava) može da pruži ogromna poboljšanja u brzini programa Microsoft Visual Studio i drugim UIAutomation aplikacijama ako je omogućena. (#11077, #11209)
+- Za stavke u listama koje se mogu čekirati, status opcije koja je izabrana se više ne izgovara bespotrebno, i ako je to slučaj, umesto toga izgovoriće se kada stavka nije izabrana. (#8554)
+- Na Windows 10 May 2020 ažuriranju, NVDA sada prikazuje Microsoft Sound Mapper kada se prikazuju izlazni uređaji u dijalogu za izbor sintetizatora. (#11349)
+- U programu Internet Explorer, brojevi se ispravno izgovaraju za liste sa nabrajanjem ako lista ne počinje brojem 1. (#8438)
+- U programu Google chrome, NVDA će sada prijaviti nije označeno za sve kontrole koje se mogu označiti (ne samo izborna polja) koje trenutno nisu označene. (#11377)
+- Ponovo je moguće kretanje kroz različite kontrole kada je NVDA jezik podešen na Aragonski. (#11384)
+- NVDA više neće ponekad prestajati sa radom u programu Microsoft Word kada se brzo krećete strelicama ili pišete znakove uz brajev red. (#11431, #11425, #11414)
+- NVDA više ne dodaje nepostojeće razmake kada se navigacioni objekat kopira. (#11438)
+- NVDA više ne aktivira profil izgovori sve ako nema šta da se pročita. (#10899, #9947)
+- NVDA sada može da čita listu opcija u Internet Information Services (IIS) menadžeru. (#11468)
+- NVDA sada ne zatvara izlazni zvučni uređaj što će poboljšati brzinu na određenim zvučnim kartama (#5172, #10721)
+- NVDA više neće izlaziti ili prestajati sa radom kada držite control+šift+strelicu dole u programu Microsoft Word. (#9463)
+- Prošireno ili skupljeno stanje foldera u prikazu stabla navigacije na sajtu drive.google.com se sada uvek prijavljuje od strane NVDA. (#11520)
+- NVDA će automatski prepoznati NLS eReader Humanware brajev red putem Bluetooth veze budući da je njegovo Bluetooth ime sada "NLS eReader Humanware". (#11561)
+- Značajno poboljšana brzina korišćenja aplikacije Visual Studio Code. (#11533)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2020.2 =
+Glavne karakteristike ove verzije uključuju podršku za novi brajev red kompanije Nattiq, bolju podršku za ESET antivirus interfejs i Windows Terminal, poboljšanja u brzini korišćenja aplikacije 1Password, kao i uz Windows OneCore sintetizator. Uz puno dodatnih ispravljenih grešaka i poboljšanja.
+
+== Nove karakteristike ==
+- Podrška za nove brajeve redove:
+  - Nattiq nBraille (#10778)
+- Dodata skripta za otvaranje NVDA foldera sa podešavanjima (bez podrazumevane komande). (#2214)
+- Bolja podrška za interfejs programa ESET antivirus. (#10894)
+- Dodata podrška za Windows Terminal. (#10305)
+- Dodata skripta za prijavljivanje aktivnog profila podešavanja (bez podrazumevane komande). (#9325)
+- Dodata skripta za menjanje statusa prijavljivanja indeksa i eksponenata (bez podrazumevane komande). (#10985)
+- Web aplikacije (na primer Gmail) više ne izgovaraju nevažeće informacije kada se fokus menja brzo. (#10885)
+  - Ovo eksperimentalno podešavanje se mora ručno omogućiti korišćenjem opcije "Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane " u panelu sa naprednim podešavanjima.
+- Puno novih simbola je dodato u rečnik sa simbolima. (#11105)
+
+
+== Promene ==
+- Ažuriran liblouis brajev prevodilac sa 3.12 na [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
+- Prijavljivanje indeksa i eksponenata se sada može podesiti posebno od ostalih atributa fonta. (#10919)
+- Zbog promena u aplikaciji VS Code, NVDA više neće onemogućiti režim pretraživanja u Code po podrazumevanim podešavanjima. (#10888)
+- NVDA više ne izgovara "Vrh" i "Dno" kada se pregledni kursor direktno pomera na početak ili kraj  reda navigacionog objekta. (#9551)
+- NVDA više ne izgovara "Levo" i "Desno" kada se pregledni kursor direktno pomera na prvi ili poslednji znak reda navigacionog objekta. (#9551)
+
+
+== Ispravljene greške ==
+- NVDA se sada ispravno pokreće kada datoteka sa dnevnikom ne može da se kreira. (#6330)
+- U novijim verzijama aplikacije Microsoft Word 365, NVDA više neće izgovarati "obrisana reč u nazad" kada se pritisne ctrl plus backspace u toku uređivanja dokumenta. (#10851)
+- U programu Winamp, NVDA će ponovo izgovarati menjanje statusa funkcija nasumične reprodukcije i ponavljanja. (#10945)
+- NVDA više nije veoma spor kada se pomerate u listi stavki programa 1Password. (#10508)
+- Windows OneCore sintetizator govora više nema duže pauze između izgovorenih rečenica. (#10721)
+- NVDA više neće prestati sa radom kada otvorite kontekstni meni  za 1Password u sistemskoj traci za obaveštenja. (#11017)
+- U  Office paketu 2013 i starijim verzijama:
+  - Trake menija se izgovaraju kada se prvi put fokusirate na njih. (#4207)
+  - Stavke kontekstnog menija se ponovo ispravno prijavljuju. (#9252)
+  - Sekcije traka menija se ispravno prijavljuju kada se krećete kroz njih korišćenjem kombinacije ctrl plus strelice. (#7067)
+- U režimu pretraživanja aplikacija Mozilla Firefox i Google Chrome, sadržaj se neće neispravno prikazivati na posebnim redovima kada web autori koriste CSS display: inline-flex. (#11075)
+- U režimu pretraživanja sa onemogućenom opcijom  automatsko postavljanje fokusa na elemente koji se mogu fokusirati, moguće je aktivirati elemente koji se ne mogu fokusirati.
+- U režimu pretraživanja sa onemogućenom opcijom  automatsko postavljanje fokusa na elemente koji se mogu fokusirati, moguće je aktivirati elemente do kojih se dolazi tasterom tab. (#8528)
+- U režimu pretraživanja sa onemogućenom opcijom  automatsko postavljanje fokusa na elemente koji se mogu fokusirati, aktiviranje određenih elemenata više neće izazivati klik na neispravnoj lokaciji. (#9886)
+- NVDA neće više reprodukovati zvukove za grešku kada se pristupa tekstualnim DevExpress kontrolama. (#10918)
+- Opisi alata za ikonice na sistemskoj traci se više ne izgovaraju u toku navigacije ako je njihovo ime jednako imenu ikonice, kako bi se izbeglo dvostruko izgovaranje. (#6656)
+- U režimu pretraživanja sa onemogućenom opcijom "Automatsko postavljanje fokusa na elemente koji se mogu fokusirati", prebacivanje u režim fokusiranja komandom NVDA plus razmak fokusira element na poziciji kursora. (#11206)
+- Ponovo je moguće da proverite nova NVDA ažuriranja na nekim sistemima gde ovo nije ispravno radilo; na primer nove Windows instalacije. (#11253)
+- Fokus u Java aplikacijama se neće menjati kada se izbor promeni u tabelama, listama ili prikazima stabla koji nisu fokusirani. (#5989)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2020.1 =
+Glavne karakteristike ove verzije uključuju podršku za nove brajeve redove proizvođača HumanWare i APH, kao i puno drugih važnih ispravljenih grešaka kao što su mogućnost čitanja matematičkih izraza u programu Microsoft Word korišćenjem programa MathPlayer / MathType.
+
+== Nove karakteristike ==
+- Trenutno izabrana stavka liste se ponovo izgovara u režimu pretraživanja programa Chrome, slično kao u verziji NVDA 2019.1. (#10713)
+- Sada možete da izvršite desni klik miša ekranom osetljivim na dodir tako što jednim prstom dodirnete i zadržite. (#3886)
+- Podrška za nove brajeve redove: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, i NLS eReader. (#10830)
+
+
+== Promene ==
+- NVDA će sprečiti sistem da se zaključa ili ode u stanje spavanja u režimu izgovori sve. (#10643)
+- Podrška za okvire van procesa u programu Mozilla Firefox. (#10707)
+- Ažuriran liblouis brajev prevodilac na verziju 3.12. (#10161)
+
+
+== Ispravljene greške ==
+- Unikodni simbol za minus se sada ponovo izgovara (U+2212) (#10633)
+- Kada se instalira dodatak iz menadžera dodataka, imena datoteka i foldera u prozoru za pretragu se više ne izgovaraju dva puta. (#10620, #2395)
+- U programu Firefox, kada se učitava sajt Mastodon sa omogućenim naprednim Web interfejsom, sve vremenske linije se ispravno učitavaju u režimu pretraživanja. (#10776)
+- U režimu pretraživanja, NVDA sada ispravno prijavljuje "Nije označeno" za izborna polja koja nisu označena u situacijama u kojima se ovo nije izgovaralo. (#10781)
+- ARIA kontrole za prekidače Eng. Switch više ne prijavljuju zbunjujuće informacije kao što su "nije pritisnuto označeno" ili "pritisnuto označeno". (#9187)
+- SAPI4 glasovi više nebi trebalo da odbijaju da izgovaraju određene tekstove. (#10792)
+- NVDA ponovo može da čita i vrši interakciju sa matematičkim izrazima u programu Microsoft Word. (#10803)
+- NVDA će ponovo izgovoriti tekst koji više nije označen u režimu pretraživanja ako se pritisne neka od strelica nakon što se tekst označi. (#10731).
+- NVDA se više neće zatvarati ako je došlo do greške u inicijalizaciji sintetizatora eSpeak. (#10607)
+- Greške u prečicama koje su izazvane unikodnim prevodima više ne zaustavljaju instalaciju, ovo se rešava tako što se tekst prečica vraća na Engleski. (#5166, #6326)
+- Izlazak ili pomeranje iz liste i tabele u režimu pretraživanja  uz opciju izgovori sve i površno čitanje više neće neprekidno izgovarati izlazak iz tabele i liste. (#10706)
+- Ispravljeno praćenje miša za neke MSHTML elemente u  programu Internet Explorer. (#10736)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2019.3 =
+NVDA 2019.3 je veoma značajno ažuriranje koje uključuje puno promena u strukturi kao što su prelazak sa Python 2 na Python 3, kao i nove mogućnosti u kodu za govor programa NVDA.
+Iako ove promene izazivaju nekompatibilnosti starijih NVDA dodataka, ažuriranje na Python 3 je neophodno zbog bolje bezbednosti, a promene u govoru dozvoljavaju vrlo uzbudljive inovacije u bliskoj budućnosti.
+ Druge prednosti ove verzije uključuju podršku za 64 bitne Java aplikacije, funkcije zatamnjivanja ekrana i označavanja fokusa, podršku za nove brajeve redove i novi preglednik brajevog reda, i puno drugih ispravljenih grešaka.
+
+== Nove karakteristike ==
+- Preciznost komande postavi miš na navigacioni objekat je značajno poboljšana u tekstualnim poljima u Java aplikacijama. (#10157)
+- Dodata podrška za sledeće  Handy Tech brajeve redove (#8955):
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- Sve korisnički definisane komande se sada mogu ukloniti korišćenjem novog dugmeta "vrati na fabričke vrednosti"  u dijalogu ulazne komande. (#10293)
+- Prijavljivanje fonta u aplikaciji Microsoft Word sada uključuje da li je tekst označen kao skriven. (#8713)
+- Dodata komanda za premeštanje preglednog kursora na poziciju koja je prethodno označena za izbor ili kopiranje: NVDA+šift+F9. (#1969)
+- U  programima Internet Explorer, Microsoft Edge i novijim verzijama pretraživača Firefox i Chrome, orjentiri se sada prijavljuju u režimu fokusiranja i objektnoj navigaciji. (#10101)
+- U programima Internet Explorer, Google Chrome i Mozilla Firefox, možete se kretati kroz članke ili grupisanja korišćenjem komandi brze navigacije. Ove komande su podrazumevano nedodeljene i može im se dodeliti prečica ako se dijalog ulazne komande otvori kada ste u dokumentu režima pretraživanja. (#9485, #9227)
+ - Figure se takođe prijavljuju. One se smatraju objektima i samim tim se koristi slovo o za kretanje kroz njih.
+- U programima Internet Explorer, Google Chrome i Mozilla Firefox, elementi označeni kao  članak se sada prijavljuju u objektnoj navigaciji i režimu fokusiranja, i u režimu pretraživanja ako su uključeni u podešavanjima formatiranja dokumenta. (#10424)
+- Dodato zatamnjivanje ekrana, koje kada je omogućeno, čini da ceo ekran bude crn na Windowsu 8 i novijim. (#7857)
+ - Dodata komanda da se omogući zatamnjen ekran (do sledećeg ponovnog pokretanja kada se pritisne jednom, ili uvek dok je NVDA pokrenut ako se pritisne dva puta), nijedna prečica nije podrazumevano podešena.
+ - može se omogućiti i podesiti u novoj 'vid' kategoriji u dijalogu NVDA podešavanja.
+- Dodata funkcija oznake ekrana u program NVDA. (#971, #9064)
+ - Označavanje fokusa, navigacionog objekta, i kursora režima pretraživanja može se omogućiti i podesiti u kategoriji "vid" u dijalogu za NVDA podešavanja.
+ - Napomena: Ova opcija nije kompatibilna sa dodatkom  focus highlight, ali, dodatak se može koristiti dok je ugrađena funkcija onemogućena.
+- Dodat alat za pregled brajevog reda, dozvoljava pregled teksta brajevog reda putem prozora na ekranu. (#7788)
+
+
+== Promene ==
+- Korisničko uputstvo sada opisuje kako da koristite NVDA u Windows konzoli. (#9957)
+- Pokretanje  nvda.exe sada podrazumevano menja već pokrenutu kopiju programa NVDA. -r|--replace parametar komandne linije se i dalje prihvata, ali  se ignoriše. (#8320)
+- Na Windowsu 8 i novijim, NVDA će prijaviti ime proizvoda i verziju za aplikacije iz Microsoft prodavnice korišćenjem informacija koje pruža aplikacija. (#4259, #10108)
+- Kada se uključuje ili isključuje praćenje izmena u programu  Microsoft Word, NVDA će izgovoriti stanje podešavanja. (#942) 
+- Broj NVDA verzije se sada evidentira kao prva poruka u dnevniku. Ovo se dešava čak iako je evidentiranje onemogućeno u interfejsu. (#9803)
+- Dijalog za podešavanja više ne dozvoljava menjanje nivoa evidentiranja u dnevniku ako je promenjen iz komandne linije. (#10209)
+- U programu Microsoft Word, NVDA sada izgovara stanje prikaza znakova koji se štampaju kada koristite prečicu za menjanje statusa Ctrl+šift+8 . (#10241)
+- Ažuriran Liblouis brajev prevodilac na commit 58d67e63. (#10094)
+- Kada je omogućeno prijavljivanje CLDR znakova (što uključuje emoji), izgovaraju se u svim nivoima izgovora interpunkcije. (#8826)
+- Paketi drugih proizvođača koji su uključeni u NVDA, kao što su comtypes, sada evidentiraju svoja upozorenja i greške u NVDA dnevniku. (#10393)
+- Ažurirana baza Unicode znakova i emoji znakova na verziju  36.0. (#10426)
+- Kada se fokusira grupisanje u režimu pretraživanja, opis se sada takođe čita. (#10095)
+- Java Access Bridge se sada uključuje uz NVDA kako bi se omogućio pristup Java aplikacijama, uključujući 64 bitne java aplikacije. (#7724)
+- Ako Java Access Bridge nije omogućen za korisnika, NVDA će ga automatski omogućiti pri pokretanju. (#7952)
+- Ažuriran eSpeak-NG na 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
+
+
+== Ispravljene greške ==
+- Emoji i drugi 32 bit unicode znakovi sada zauzimaju manje mesta na brajevom redu kada se prikazuju  kao heksadecimalne vrednosti. (#6695)
+- U Windowsu 10, NVDA će izgovarati opise alata u univerzalnim aplikacijama ako je podešen da prijavi opise alata u dijalogu predstavljanje objekata. (#8118)
+- U Windowsu 10 Anniversary ažuriranju i novijim, ukucan tekst se sada prijavljuje u aplikaciji Mintty. (#1348)
+- Na Windowsu 10 Anniversary ažuriranje i novijim, izlazni tekst iz konzole koji se pojavljuje blizu kursora se više neće sricati. (#513)
+- Kontrole u Audacity dijalogu za kompresovanje se sada izgovaraju u toku navigacije. (#10103)
+- NVDA više neće smatrati razmake novim rečima u Scintilla uređivačima kao što je  Notepad++. (#8295)
+- NVDA će sprečiti sistem da uđe u režim spavanja kada se tekst pomera komandama na brajevom redu. (#9175)
+- Na Windowsu 10, brajev red će sada ispravno pratiti uređivanje ćelija u programu Microsoft Excel i drugim UIA tekstualnim kontrolama gde je često kasnio. (#9749)
+- NVDA će ponovo prijavljivati predloge u adresnoj traci programa  Microsoft Edge. (#7554)
+- NVDA više neće prestati sa govorom kada se fokusira HTML zaglavlje kontrola kartica u programu Internet explorer. (#8898)
+- U programu Microsoft Edge baziranom na tehnologiji EdgeHTML, NVDA više neće reprodukovati zvuk predloga za pretraživanje kada se prozor uveća. (#9110, #10002)
+- ARIA 1.1 izborni okviri su sada podržani u pretraživačima Mozilla Firefox i Google Chrome. (#9616)
+- NVDA više neće prijavljivati vizuelno skriven sadržaj u kolonama za stavke liste u kontrolama SysListView32. (#8268)
+- Dijalog za podešavanja više ne prikazuje "info" kao trenutni nivo evidentiranja u dnevniku kada ste na sigurnim ekranima. (#10209)
+- U start meniju Windowsa 10 Anniversary ažuriranje i novijim, NVDA će izgovarati detalje rezultata pretrage. (#10340)
+- U režimu pretraživanja, ako pomeranje kursora ili korišćenje brze navigacije izaziva promenu sadržaja, NVDA neće više neispravno izgovarati sadržaj u nekim slučajevima. (#8831, #10343)
+- Neka imena nabrajanja u programu Microsoft Word su ispravljena. (#10399)
+- U Windowsu 10 ažuriranje iz maja 2019 i novijim, NVDA će ponovo izgovarati prvu stavku istorije privremene memorije ili emoji panela kada se otvore. (#9204)
+- U programu Poedit, ponovo je moguće videti neke prevode za jezike koji se pišu s desna na levo. (#9931)
+- U aplikaciji za podešavanja Windowsa 10 ažuriranje iz aprila 2018 i novijim, NVDA više neće prijavljivati informacije o traci napredovanja za metar jačine u delu sistem/zvuk. (#10412)
+- Neispravni regularni izrazi u govornim rečnicima neće više potpuno eliminisati NVDA govor. (#10334)
+- Kada se čitaju stavke nabrajanja u programu Microsoft Word sa omogućenim UIA, nabrajanje iz sledeće liste se neće više neispravno izgovarati. (#9613)
+- Neke retke greške u prevođenju brajevog pisma sa alatom liblouis su ispravljene. (#9982)
+- Java aplikacije koje su pokrenute pre programa NVDA sada su pristupačne bez potrebe da ponovo pokrećete Java aplikaciju. (#10296)
+- U programu Mozilla Firefox, kada fokusirani element postane označen kao trenutni (aria-current), ova promena se više ne izgovara više puta. (#8960)
+- NVDA će sada smatrati određene unikodne znakove kao što su e-acute kao jedan znak kada se krećete kroz tekst. (#10550)
+- Spring Tool Suite verzija 4 je sada podržana. (#10001)
+- Sada se više neće dva puta izgovarati kada je aria-labelledby relation target   inner element. (#10552)
+- Na Windowsu 10 verziji 1607 i novijim, ukucani znakovi sa brajeve tastature se izgovaraju u više situacija. (#10569)
+- Kada se menja zvučni izlazni uređaj, tonovi koje NVDA reprodukuje će se reprodukovati na uređaju koji je izabran. (#2167)
+- U programu Mozilla Firefox, pomeranje fokusa u režimu pretraživanja je brže. Ovo čini pomeranje kursora u režimu pretraživanja brže u više slučajeva. (#10584)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
 = 2019.2.1 =
 Ovo je manje ažuriranje kako bi se ispravile neke nestabilnosti u verziji 2019.2. Ispravke uključuju:
 - Windows Explorer na  Windowsu 7 se više ne ruši kada se pristupa  poljima sa detaljima o podacima. (#5337) 
@@ -84,6 +460,7 @@ Ova manja verzija ispravlja sledeće greške:
 - Google Chrome se više ne ruši prilikom interakcije sa određenim listama. (#9364)
 - Greška je ispravljena koja je sprečavala kopiranje korisničkih podešavanja u profil sistemskih podešavanja. (#9448)
 - U programu Microsoft Excel, NVDA ponovo koristi prevedenu poruku kada prijavljuje lokacije spojenih ćelija. (#9471)
+
 
 = 2019.1 =
 Glavne karakteristike ove verzije uključuju poboljšanja u brzini kada koristite programe Microsoft word i Excel, poboljšanja u stabilnosti i sigurnosti kao što su podrška za dodatke koji mogu označiti informacije o kompatibilnosti sa različitim verzijama programa NVDA, i brojne druge ispravljene greške.

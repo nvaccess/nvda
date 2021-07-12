@@ -32,10 +32,9 @@ What this means for us:
   - Fixed indentation
   - Takes up more vertical space
 
-The Flake8 checkers don't know which style we intend, they allow for both. It guesses
-which one you want based on the location of the first token after the opening parenthesis.
-The expected indentation it suggests can cause confusion, especially if the indentation is
-as expected, but the first param/condition/item is on the same line as the opening parenthesis.
+Previously Flake8 checkers didn't know which style we intend, they allow for both.
+We now configure Flake8-tabs with the `continuation-style=hanging` option to enforce hanging indent
+and it will complain about code which seems to be using vertical alignment style (warning ET113).
 
 #### Preferred formatting for continuation lines
 
@@ -45,20 +44,20 @@ as expected, but the first param/condition/item is on the same line as the openi
 
 ```python
 # method with many parameters
-# use "hanging indent style" - start params on new line to avoid ET128
+# use "hanging indent style" - start params on new line to avoid ET113 and ET128
 def foo(
 		arg1,  # double indent to avoid ET121
 		arg2
 ):  # put the closing paren on a new line, reduce the diff when changing parameters.
 	# long expression
-	# use "hanging indent style" - start params on new line to avoid ET128
+	# use "hanging indent style" - start params on new line to avoid ET113 and ET128
 	if(
 		arg1 is not None  # not a function definition, no double indent required
 		and arg2 is None
 	):  # put the closing paren on a new line, reduce the diff when changing conditions
 		return None
 
-	# use "hanging indent style" - start params on new line to avoid ET128
+	# use "hanging indent style" - start params on new line to avoid EET113 and T128
 	values = [
 		"value1", # not a function definition, no double indent required
 		"value2",
@@ -67,18 +66,27 @@ def foo(
 
 ```
 
-Note: An inline comment on an opening parenthesis/bracket/brace causes an
-erroneous message from flake8-tabs. See https://gitlab.com/ntninja/flake8-tabs/issues/1
+Note: An inline comment on an opening parenthesis/bracket/brace does not cause an error
 EG:
 ```python
-def foo(  # a comment here causes error ET128
+def foo(  # a comment here is fine
 		arg1
 ):
-	items = [  # a comment here causes error ET128
+	items = [  # a comment here is fine
 		"item1",
 		"item2",
 	]
+	print(items)
 ```
+
+#### ET113 (flake8-tabs)
+
+Error messages:
+ - *Option continuation-style=hanging does not allow use of alignment as indentation*
+
+A parameter is on the same line as the opening paran/bracket/brace.
+Move this parameter to a new line to resolve this error.
+When triggered, it is likely that ET128 will be triggered for subsequent lines with parameters.
 
 #### ET128 (flake8-tabs)
 
@@ -87,13 +95,14 @@ Error messages:
 - *unexpected number of tabs and spaces at start of expression line*s
 
 Its likely that this is triggered because the linter is expecting "vertical alignment"
-style for the set of continuation lines, rather than "hanging indent" style. To change this,
-ensure that there is a newline after the opening paren/bracket/brace.
+style for the set of continuation lines, rather than "hanging indent" style.
+To confirm look for ET113 triggered on the same line.
+To change this, ensure that there is a newline after the opening paren/bracket/brace.
 
 An example cause:
 ```python
-def foo(arg1,
-	arg2,  # arg2 not vertically aligned with start of first parameter.
+def foo(arg1, # Triggers ET113
+	arg2,  # Triggers ET128: arg2 not vertically aligned with start of first parameter.
 ):
 	return None
 ```

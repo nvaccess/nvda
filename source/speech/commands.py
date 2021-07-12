@@ -1,21 +1,86 @@
-# -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited
+#  -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited
 
-"""Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running other callbacks."""
+"""
+Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running
+ other callbacks.
+"""
  
 from abc import ABCMeta, abstractmethod
+from typing import Optional, Callable
+
 import config
-import languageHandler
 from synthDriverHandler import getSynth
+from logHandler import log
 
 class SpeechCommand(object):
-	"""The base class for objects that can be inserted between strings of text to perform actions, change voice parameters, etc.
-	Note that some of these commands are processed by NVDA and are not directly passed to synth drivers.
+	"""The base class for objects that can be inserted between strings of text to perform actions,
+	change voice parameters, etc.
+
+	Note: Some of these commands are processed by NVDA and are not directly passed to synth drivers.
 	synth drivers will only receive commands derived from L{SynthCommand}.
 	"""
+
+
+class _CancellableSpeechCommand(SpeechCommand):
+	"""
+	A command that allows cancelling the utterance that contains it.
+	Support currently experimental and may be subject to change.
+	"""
+
+	def __init__(
+			self,
+			reportDevInfo=False
+	):
+		"""
+		@param reportDevInfo: If true, developer info is reported for repr implementation.
+		"""
+		self._isCancelled = False
+		self._utteranceIndex = None
+		self._reportDevInfo = reportDevInfo
+
+	@abstractmethod
+	def _checkIfValid(self):
+		raise NotImplementedError()
+
+	@abstractmethod
+	def _getDevInfo(self):
+		raise NotImplementedError()
+
+	def _checkIfCancelled(self):
+		if self._isCancelled:
+			return True
+		elif not self._checkIfValid():
+			self._isCancelled = True
+		return self._isCancelled
+
+	@property
+	def isCancelled(self):
+		return self._checkIfCancelled()
+
+	def cancelUtterance(self):
+		self._isCancelled = True
+
+	def _getFormattedDevInfo(self):
+
+		return "" if not self._reportDevInfo else (
+			f", devInfo<"
+			f" isCanceledCache: {self._isCancelled}"
+			f", isValidCallback: {self._checkIfValid()}"
+			f", isValidCallbackDevInfo: {self._getDevInfo()} >"
+		)
+
+	def __repr__(self):
+		return (
+			f"CancellableSpeech ("
+			f"{ 'cancelled' if self._checkIfCancelled() else 'still valid' }"
+			f"{self._getFormattedDevInfo()}"
+			f")"
+		)
+
 
 class SynthCommand(SpeechCommand):
 	"""Commands that can be passed to synth drivers.
@@ -69,12 +134,11 @@ class CharacterModeCommand(SynthParamCommand):
 class LangChangeCommand(SynthParamCommand):
 	"""A command to switch the language within speech."""
 
-	def __init__(self,lang):
+	def __init__(self, lang: Optional[str]):
 		"""
 		@param lang: the language to switch to: If None then the NVDA locale will be used.
-		@type lang: string
 		"""
-		self.lang=lang # if lang else languageHandler.getLanguage()
+		self.lang = lang
 		self.isDefault = not lang
 
 	def __repr__(self):
@@ -253,11 +317,17 @@ class CallbackCommand(BaseCallbackCommand):
 		otherwise it will block production of further speech and or other functionality in NVDA.
 	"""
 
-	def __init__(self, callback):
+	def __init__(self, callback, name: Optional[str] = None):
 		self._callback = callback
+		self._name = name if name else repr(callback)
 
 	def run(self,*args, **kwargs):
 		return self._callback(*args,**kwargs)
+
+	def __repr__(self):
+		return "CallbackCommand(name={name})".format(
+			name=self._name
+		)
 
 class BeepCommand(BaseCallbackCommand):
 	"""Produce a beep.

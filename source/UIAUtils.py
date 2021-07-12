@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2019 NV Access Limited, Bill Dengler
+# Copyright (C) 2015-2021 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -8,7 +8,10 @@ from comtypes import COMError
 import config
 import ctypes
 import UIAHandler
-from winVersion import isWin10
+import weakref
+from functools import lru_cache
+from logHandler import log
+
 
 def createUIAMultiPropertyCondition(*dicts):
 	"""
@@ -126,6 +129,11 @@ def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 		if pastEnd:
 			return
 		tempRange.MoveEndpointByRange(Endpoint_relativeStart,tempRange,Endpoint_relativeEnd)
+		delta = tempRange.CompareEndpoints(Endpoint_relativeStart, rangeObj, Endpoint_relativeEnd)
+		if relativeGTOperator(delta, -1):
+			# tempRange is now already entirely past the end of the given range.
+			# Can be seen with MS Word bullet points: #9613
+			return
 	# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
 	if relativeLTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0):
 		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
@@ -223,20 +231,106 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		return val
 
 
-def shouldUseUIAConsole(setting=None):
-	"""Determines whether to use UIA in the Windows Console.
-@param setting: the config value to base this check on (if not provided,
-it is retrieved from config).
+class FakeEventHandlerGroup:
 	"""
-	if not setting:
-		setting = config.conf['UIA']['winConsoleImplementation']
-	if setting == "legacy":
-		return False
-	elif setting == "UIA":
+	Mimics the behavior of UiAutomation 6+ Event Handler Groups for older versions.
+	"""
+
+	@property
+	def clientObject(self):
+		clientObject = self._clientObjectRef()
+		if not clientObject:
+			raise RuntimeError
+		return clientObject
+
+	def __init__(self, clientObject):
+		self._clientObjectRef = weakref.ref(clientObject)
+		self._automationEventHandlers = weakref.WeakValueDictionary()
+		self._notificationEventHandlers = weakref.WeakValueDictionary()
+		self._propertyChangedEventHandlers = weakref.WeakValueDictionary()
+
+	def AddAutomationEventHandler(self, eventId, scope, cacheRequest, handler):
+		self._automationEventHandlers[(eventId, scope, cacheRequest)] = handler
+
+	def AddNotificationEventHandler(self, scope, cacheRequest, handler):
+		if not isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
+			raise RuntimeError
+		self._notificationEventHandlers[(scope, cacheRequest)] = handler
+
+	def AddPropertyChangedEventHandler(self, scope, cacheRequest, handler, propertyArray, propertyCount):
+		properties = self.clientObject.IntNativeArrayToSafeArray(propertyArray, propertyCount)
+		self._propertyChangedEventHandlers[(scope, cacheRequest, properties)] = handler
+
+	def registerToClientObject(self, element):
+		try:
+			for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():
+				self.clientObject.AddAutomationEventHandler(eventId, element, scope, cacheRequest, handler)
+			if isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
+				for (scope, cacheRequest), handler in self._notificationEventHandlers.items():
+					self.clientObject.AddNotificationEventHandler(element, scope, cacheRequest, handler)
+			for (scope, cacheRequest, properties), handler in self._propertyChangedEventHandlers.items():
+				self.clientObject.AddPropertyChangedEventHandler(element, scope, cacheRequest, handler, properties)
+		except COMError as e:
+			try:
+				self.unregisterFromClientObject(element)
+			except COMError:
+				pass
+			raise e
+
+	def unregisterFromClientObject(self, element):
+		for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():
+			self.clientObject.RemoveAutomationEventHandler(eventId, element, handler)
+		if isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
+			for handler in self._notificationEventHandlers.values():
+				self.clientObject.RemoveNotificationEventHandler(element, handler)
+		for handler in self._propertyChangedEventHandlers.values():
+			self.clientObject.RemovePropertyChangedEventHandler(element, handler)
+
+
+def _shouldUseUIAConsole(hwnd: int) -> bool:
+	"""Determines whether to use UIA in the Windows Console."""
+	setting = config.conf['UIA']['winConsoleImplementation']
+	if setting == "UIA":
 		return True
-	# #7497: Windows 10 Fall Creators Update has an incomplete UIA
-	# implementation for console windows, therefore for now we should
-	# ignore it.
-	# It does not implement caret/selection, and probably has no
-	# new text events.
-	return isWin10(1809)
+	elif setting == "legacy":
+		return False
+	else:
+		# #7497: the UIA implementation in old conhost is incomplete, therefore we
+		# should ignore it.
+		# When the UIA implementation is improved, the below line will be replaced
+		# with a call to _isImprovedConhostTextRangeAvailable.
+		return False
+
+
+@lru_cache(maxsize=10)
+def _isImprovedConhostTextRangeAvailable(hwnd: int) -> bool:
+	"""This function determines whether microsoft/terminal#4495 and by extension
+	microsoft/terminal#4018 are present in this conhost.
+	In consoles before these PRs, a number of workarounds were needed
+	in our UIA implementation. However, these do not fix all bugs and are
+	problematic on newer console releases. This function is therefore used
+	to determine whether this console's UIA implementation is good enough to
+	use by default."""
+	# microsoft/terminal#4495: In newer consoles,
+	# IUIAutomationTextRange::getVisibleRanges returns one visible range.
+	# Therefore, if exactly one range is returned, it is almost definitely a newer console.
+	try:
+		UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
+			hwnd, UIAHandler.handler.baseCacheRequest
+		)
+		textAreaCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+		textAreaCacheRequest.TreeScope = UIAHandler.TreeScope_Children
+		textAreaCacheRequest.treeFilter = UIAHandler.handler.clientObject.createPropertyCondition(
+			UIAHandler.UIA_AutomationIdPropertyId,
+			"Text Area"
+		)
+		textArea = UIAElement.buildUpdatedCache(
+			textAreaCacheRequest
+		).getCachedChildren().GetElement(0)
+		UIATextPattern = textArea.GetCurrentPattern(
+			UIAHandler.UIA_TextPatternId
+		).QueryInterface(UIAHandler.IUIAutomationTextPattern)
+		return UIATextPattern.GetVisibleRanges().length == 1
+	except (COMError, ValueError):
+		log.exception()
+		return False

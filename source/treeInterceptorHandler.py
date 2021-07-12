@@ -1,8 +1,10 @@
-#treeInterceptorHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# treeInterceptorHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Davy Kager, Accessolutions, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+from typing import Optional, Dict
 
 from logHandler import log
 import baseObject
@@ -13,6 +15,8 @@ import textInfos
 import config
 import braille
 import vision
+from speech.types import SpeechSequence
+from controlTypes import OutputReason
 
 runningTable=set()
 
@@ -185,8 +189,8 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_locationText(self):
 		return self.innerTextInfo.locationText
 
-	def copyToClipboard(self):
-		return self.innerTextInfo.copyToClipboard()
+	def copyToClipboard(self, notify=False):
+		return self.innerTextInfo.copyToClipboard(notify)
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		return self.innerTextInfo.find(text,caseSensitive,reverse)
@@ -239,13 +243,27 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.innerTextInfo.focusableNVDAObjectAtStart
 
-	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=None):
-		if separator is None:
-			# #6749: The default for this argument is actually speech.CHUNK_SEPARATOR,
-			# but that can't be specified as a default argument because of circular import issues.
-			import speech
-			separator = speech.CHUNK_SEPARATOR
-		return self.innerTextInfo.getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
+	def getFormatFieldSpeech(
+			self,
+			attrs: textInfos.Field,
+			attrsCache: Optional[textInfos.Field] = None,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			reason: Optional[OutputReason] = None,
+			unit: Optional[str] = None,
+			extraDetail: bool = False,
+			initialFormat: bool = False,
+	) -> SpeechSequence:
+		sequence = self.innerTextInfo.getFormatFieldSpeech(
+			attrs,
+			attrsCache=attrsCache,
+			formatConfig=formatConfig,
+			reason=reason,
+			unit=unit,
+			extraDetail=extraDetail,
+			initialFormat=initialFormat
+		)
+		textInfos._logBadSequenceTypes(sequence)
+		return sequence
 
 	def _get_pointAtStart(self):
 		return self.innerTextInfo.pointAtStart

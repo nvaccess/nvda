@@ -21,7 +21,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <oleacc.h>
 #include <common/xml.h>
 #include <common/log.h>
-#include <boost/optional.hpp>
+#include <optional>
 #include "nvdaHelperRemote.h"
 #include "nvdaInProcUtils.h"
 #include "nvdaInProcUtils.h"
@@ -51,8 +51,10 @@ constexpr int formatConfig_reportRevisions = 0x8000;
 constexpr int formatConfig_reportParagraphIndentation = 0x10000;
 constexpr int formatConfig_includeLayoutTables = 0x20000;
 constexpr int formatConfig_reportLineSpacing = 0x40000;
+constexpr int formatConfig_reportSuperscriptsAndSubscripts = 0x80000;
+constexpr int formatConfig_reportGraphics = 0x100000;
 
-constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor);
+constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor|formatConfig_reportSuperscriptsAndSubscripts);
 constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
 
 constexpr wchar_t PAGE_BREAK_VALUE = L'\x0c';
@@ -635,11 +637,6 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_UNDERLINE,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"underline=\"1\" ";
 				}
-				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
-					formatAttribsStream<<L"text-position=\"super\" ";
-				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
-					formatAttribsStream<<L"text-position=\"sub\" ";
-				}
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_STRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"strikethrough=\"1\" ";
 				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_DOUBLESTRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
@@ -648,6 +645,13 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_HIDDEN,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"hidden=\"1\" ";
 				}			
+			}
+			if(formatConfig&formatConfig_reportSuperscriptsAndSubscripts) {
+			    if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"text-position=\"super\" ";
+				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"text-position=\"sub\" ";
+				}
 			}
 		}
 	}
@@ -714,7 +718,15 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostrin
 		SysFreeString(altText);
 	}
 	altText=NULL;
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":(shapeType==wdInlineShapeChart?L"chart":L"object"))<<L"\" value=\""<<altTextStr<<L"\"";
+	XMLStream<<L"<control _startOfNode=\"1\" ";
+	auto roleText = L"object";
+	if(shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture) {
+		roleText=L"graphic";
+	} else if(shapeType==wdInlineShapeChart) {
+		roleText=L"chart";
+	}
+	XMLStream<<L"role=\""<<roleText<<L"\" ";
+	XMLStream<<L"content=\""<<altTextStr<<L"\"";
 	if(shapeType==wdInlineShapeEmbeddedOLEObject) {
 		XMLStream<<L" shapeoffset=\""<<offset<<L"\"";
 		IDispatchPtr pOLEFormat=NULL;
@@ -751,7 +763,7 @@ inline bool generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream
 	return true;
 }
 
-std::experimental::optional<int> getSectionBreakType(IDispatchPtr pDispatchRange ) {
+std::optional<int> getSectionBreakType(IDispatchPtr pDispatchRange ) {
 	// The following case should handle where we have the page break character ('0x0c') shown with '|p|'
 	//	first section|p|
 	//	second section.
@@ -817,7 +829,7 @@ std::experimental::optional<int> getSectionBreakType(IDispatchPtr pDispatchRange
 	return type;
 }
 
-std::experimental::optional<float>
+std::optional<float>
 getStartOfRangeDistanceFromEdgeOfDocument(IDispatchPtr pDispatchRange) {
 	float rangePos = -1.0f;
 	auto res = _com_dispatch_raw_method( pDispatchRange, wdDISPID_RANGE_INFORMATION,
@@ -831,7 +843,7 @@ getStartOfRangeDistanceFromEdgeOfDocument(IDispatchPtr pDispatchRange) {
 	return rangePos;
 }
 
-std::experimental::optional< std::pair<float, float> >
+std::optional< std::pair<float, float> >
 calculatePreAndPostColumnOffsets(IDispatchPtr pDispatchPageSetup) {
 	float leftMargin = -1.0f;
 	auto res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_LEFTMARGIN,
@@ -1182,8 +1194,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		if(text) {
 			int noteCharOffset=-1;
 			bool isNoteChar=false;
-			std::experimental::optional<int> pageBreakCharIndex;
-			std::experimental::optional<int> columnBreakCharIndex;
+			std::optional<int> pageBreakCharIndex;
+			std::optional<int> columnBreakCharIndex;
 			if(!isFormField) {
 				//Force a new chunk before and after control+b (note characters)
 				for(int i=0;text[i]!=L'\0';++i) {

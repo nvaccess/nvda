@@ -1,14 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2018 NV Access Limited, Aleksey Sadovoy, James Teh, Joseph Lee, Tuukka Ojala
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.htmlimport appModuleHandler
+# Copyright (C) 2009-2020 NV Access Limited, Aleksey Sadovoy, James Teh, Joseph Lee, Tuukka Ojala,
+# Bram Duvigneau
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+import appModuleHandler
 import calendar
 import collections
 import time
-
 import api
-import appModuleHandler
 import ui
 
 # A named tuple for holding the elapsed and total playing times from Foobar2000's status bar
@@ -41,21 +41,28 @@ def parseIntervalToTimestamp(interval):
 	return calendar.timegm(time.strptime(interval.strip(), format))
 
 class AppModule(appModuleHandler.AppModule):
-	statusBar=None
+	_statusBar = None
 
 	def event_gainFocus(self, obj, nextHandler):
-		if not self.statusBar: self.statusBar=api.getStatusBar()
+		if not self._statusBar:
+			self._statusBar = api.getStatusBar()
 		nextHandler()
 
 	def getElapsedAndTotal(self):
 		empty = statusBarTimes(None, None)
-		if not self.statusBar: return empty
-		statusBarContents = self.statusBar.firstChild.name
+		if not self._statusBar:
+			return empty
+		statusBarContents = self._statusBar.firstChild.name
 		try:
 			playingTimes = statusBarContents.split("|")[4].split("/")
-			return statusBarTimes(playingTimes[0], playingTimes[1])
 		except IndexError:
 			return empty
+		elapsed = playingTimes[0]
+		if len(playingTimes) > 1:
+			total = playingTimes[1]
+		else:
+			total = None
+		return statusBarTimes(elapsed, total)
 
 	def getElapsedAndTotalIfPlaying(self):
 		elapsedAndTotalTime = self.getElapsedAndTotal()
@@ -66,12 +73,15 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_reportRemainingTime(self,gesture):
 		elapsedTime, totalTime = self.getElapsedAndTotalIfPlaying()
-		if elapsedTime is not None and totalTime is not None:
+		if elapsedTime is None or totalTime is None:
+			# Translators: Reported if the remaining time can not be calculated in Foobar2000
+			msg = _("Unable to determine remaining time")
+		else:
 			parsedElapsedTime = parseIntervalToTimestamp(elapsedTime)
 			parsedTotalTime = parseIntervalToTimestamp(totalTime)
 			remainingTime = parsedTotalTime - parsedElapsedTime
 			msg = time.strftime(getOutputFormat(remainingTime), time.gmtime(remainingTime))
-			ui.message(msg)
+		ui.message(msg)
 	# Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 	script_reportRemainingTime.__doc__ = _("Reports the remaining time of the currently playing track, if any")
 
@@ -86,6 +96,9 @@ class AppModule(appModuleHandler.AppModule):
 		totalTime = self.getElapsedAndTotalIfPlaying()[1]
 		if totalTime is not None:
 			ui.message(totalTime)
+		else:
+			# Translators: Reported if the total time is not available in Foobar2000
+			ui.message(_("Total time not available"))
 	# Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 	script_reportTotalTime.__doc__ = _("Reports the length of the currently playing track, if any")
 

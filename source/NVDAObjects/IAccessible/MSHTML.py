@@ -28,6 +28,7 @@ from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
 from locationHelper import RectLTRB
+from typing import Dict
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -100,7 +101,8 @@ class HTMLAttribCache(object):
 		self.containsCache[item]=contains
 		return contains
 
-nodeNamesToNVDARoles={
+
+nodeNamesToNVDARoles: Dict[str, int] = {
 	"FRAME":controlTypes.ROLE_FRAME,
 	"IFRAME":controlTypes.ROLE_INTERNALFRAME,
 	"FRAMESET":controlTypes.ROLE_DOCUMENT,
@@ -133,14 +135,22 @@ nodeNamesToNVDARoles={
 	"OBJECT":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"APPLET":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
-	"FIELDSET":controlTypes.ROLE_GROUPING,
+	"FIELDSET": controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
 	"MATH":controlTypes.ROLE_MATH,
-	"NAV":controlTypes.ROLE_SECTION,
-	"SECTION":controlTypes.ROLE_SECTION,
-	"ARTICLE":controlTypes.ROLE_DOCUMENT,
+	"NAV": controlTypes.ROLE_LANDMARK,
+	"HEADER": controlTypes.ROLE_LANDMARK,
+	"MAIN": controlTypes.ROLE_LANDMARK,
+	"ASIDE": controlTypes.ROLE_LANDMARK,
+	"FOOTER": controlTypes.ROLE_LANDMARK,
+	"SECTION": controlTypes.ROLE_REGION,
+	"ARTICLE": controlTypes.ROLE_ARTICLE,
+	"FIGURE": controlTypes.ROLE_FIGURE,
+	"FIGCAPTION": controlTypes.ROLE_CAPTION,
+	"MARK": controlTypes.ROLE_MARKED_CONTENT,
 }
+
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
 	try:
@@ -321,7 +331,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			else:
 				raise TypeError("Bookmark was for %s type, not for %s type"%(position.infoClass.__name__,self.__class__.__name__))
 		else:
-			raise NotImplementedError("position: %s"%position)
+			raise NotImplementedError("position: %s" % (position,))
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_PARAGRAPH:
@@ -519,7 +529,7 @@ class MSHTML(IAccessible):
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
 			super(MSHTML,self).findOverlayClasses(clsList)
 			if self.IAccessibleRole == oleacc.ROLE_SYSTEM_DIALOG:
-				ariaRoles = self.HTMLAttributes["role"].split(" ")
+				ariaRoles = (self.HTMLAttributes["role"] or "").split(" ")
 				if "dialog" in ariaRoles:
 					# #2390: Don't try to calculate text for ARIA dialogs.
 					try:
@@ -533,11 +543,24 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
 
-	def _get_isCurrent(self):
-		isCurrent = self.HTMLAttributes["aria-current"]
-		if isCurrent == "false":
-			isCurrent = None
-		return isCurrent
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
+		try:
+			isCurrent = self.HTMLAttributes["aria-current"]
+		except LookupError:
+			return controlTypes.IsCurrent.NO
+
+		# key may be in HTMLAttributes with a value of None
+		if isCurrent is None:
+			return controlTypes.IsCurrent.NO
+
+		try:
+			return controlTypes.IsCurrent(isCurrent)
+		except ValueError:
+			log.debugWarning(f"Unknown aria-current value: {isCurrent}")
+			return controlTypes.IsCurrent.NO
+
+	#: Typing for autoproperty _get_HTMLAttributes
+	HTMLAttributes: HTMLAttribCache
 
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
@@ -675,6 +698,19 @@ class MSHTML(IAccessible):
 			return ""
 		return super(MSHTML,self).name
 
+	def _get_landmark(self):
+		if self.HTMLNode:
+			ariaRoles = []
+			ariaRolesString = self.HTMLAttributes['role']
+			if ariaRolesString:
+				ariaRoles.append(ariaRolesString.split(" ")[0])
+			lRole = aria.htmlNodeNameToAriaRoles.get(self.HTMLNodeName.lower())
+			if lRole:
+				ariaRoles.append(lRole)
+			if ariaRoles and ariaRoles[0] in aria.landmarkRoles:
+				return ariaRoles[0]
+		return super().landmark
+
 	def _get_value(self):
 		if self.HTMLNodeHasAncestorIAccessible:
 			try:
@@ -719,7 +755,7 @@ class MSHTML(IAccessible):
 
 	def _get_role(self):
 		if self.HTMLNode:
-			ariaRole=self.HTMLAttributes['role']
+			ariaRole = (self.HTMLAttributes["role"] or "").split(" ")[0]
 			if ariaRole:
 				role=aria.ariaRolesToNVDARoles.get(ariaRole)
 				if role:
@@ -728,7 +764,17 @@ class MSHTML(IAccessible):
 			if nodeName:
 				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL","NAV","SECTION","ARTICLE"):
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in (
+					"BODY",
+					"FRAMESET",
+					"FRAME",
+					"IFRAME",
+					"LABEL",
+					"NAV",
+					"SECTION",
+					"ARTICLE",
+					"FIELDSET",
+				):
 					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_SECTION)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
@@ -1004,12 +1050,24 @@ class MSHTML(IAccessible):
 		except LookupError:
 			return None
 
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		politeness = self.HTMLAttributes["aria-live"] or "off"
+		try:
+			return aria.AriaLivePoliteness(politeness.lower())
+		except ValueError:
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
+			super().liveRegionPoliteness
+
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process
 		pass
 
 	def _get_roleText(self):
-		return self.HTMLAttributes['aria-roledescription']
+		roleText = self.HTMLAttributes['aria-roledescription']
+		if roleText:
+			return roleText
+		return super().roleText
+
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
