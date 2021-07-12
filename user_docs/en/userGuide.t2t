@@ -1403,6 +1403,10 @@ This option won't be available if your braille display only supports automatic p
 
 You may consult the documentation for your braille display in the section [Supported Braille Displays #SupportedBrailleDisplays] to check for more details on the supported types of communication and available ports.
 
+Please note: If you connect multiple Braille Displays to your machine at the same time which use the same driver (E.g. connecting two Seika displays),
+it is currently impossible to tell NVDA which display to use.
+Therefore it is recommended to only connect one Braille Display of a given type / manufacturer to your machine at a time.
+ 
 +++ Vision +++[VisionSettings]
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids #Vision].
 
@@ -2331,6 +2335,7 @@ The following displays support this automatic detection functionality.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
+- Any Display that supports the Standard HID Braille protocol
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -3155,6 +3160,37 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
+++ Standard HID Braille displays ++[HIDBraille]
+This is an experimental driver for the new Standard HID Braille Specification, agreed upon in 2018 by Microsoft, Google, Apple and several assistive technology companies including NV Access. 
+The hope is that all  future Braille Display models created by any manufacturer, will use this standard protocol which will remove the need for manufacturer-specific Braille drivers.
+
+NVDA's automatic braille display detection will also recognize any display that supports this protocol.
+ 
+Following are the current key assignments for these displays.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | pan left |
+| Scroll braille display forward | pan right |
+| Move braille display to previous line | space + dot1 |
+| Move braille display to next line | space + dot4 |
+| Route to braille cell | routing set 1|
+| Toggle braille tethered to | up+down |
+| upArrow key | joystick up |
+| downArrow key | joystick down |
+| leftArrow key | space+dot3 or joystick left |
+| rightArrow key | space+dot6 or joystick right |
+| shift+tab key | space+dot1+dot3 |
+| tab key | space+dot4+dot6 |
+| alt key | space+dot1+dot3+dot4 (space+m) |
+| escape key | space+dot1+dot5 (space+e) |
+| enter key | dot8 or joystick center |
+| windows key | space+dot3+dot4 |
+| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+%kc:endInclude
+ 
 + Advanced Topics +[AdvancedTopics]
 
 ++ Command Line Options ++[CommandLineOptions]
