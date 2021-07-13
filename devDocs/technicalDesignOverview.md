@@ -56,10 +56,10 @@ It handles command line arguments, performs some basic initialisation and starts
 
 ### Core
 The core (in the function `core.main`) loads the configuration, initialises all other components and then enters the main loop.
-The main loop keeps looping until NVDA is instructed to exit.
-In each iteration/tick, the core pumps the [API](#api-handlers) and [input](#input-handlers) handlers, [registered generators](#registered-generators) and the main queue.
+In each iteration of the main loop, the core pumps the [API](#api-handlers) and [input](#input-handlers) handlers, [registered generators](#registered-generators) and the main queue.
 All events, scripts, etc. are indirectly queued to this main queue by API and input handlers, so pumping the main queue causes these to be executed.
-The main loop is what "drives" NVDA or makes it "tick".
+At the end of the iteration, the core then goes to sleep until more work is added to the main queue, at which point the core will again wake and perform another iteration. 
+The main loop continues to iterate / sleep until NVDA is instructed to exit either by the user or a newly started copy of NVDA.
 Once NVDA is instructed to exit, the core terminates all other components, saves the configuration if appropriate and then exits.
 
 #### Event and Script Handling
