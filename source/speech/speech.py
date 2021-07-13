@@ -15,7 +15,7 @@ import time
 import colors
 import api
 import controlTypes
-from controlTypes import OutputReason
+from controlTypes import OutputReason, TextPosition
 import tones
 from synthDriverHandler import getSynth
 import re
@@ -2321,26 +2321,20 @@ def getFormatFieldSpeech(  # noqa: C901
 			)
 			textList.append(text)
 	if formatConfig["reportSuperscriptsAndSubscripts"]:
-		textPosition=attrs.get("text-position")
-		if textPosition:
-			textPosition = textPosition.lower()
-		if textPosition is not None and textPosition not in ['super', 'sub']:
-			log.warning(f'Unsupported text-position: {textPosition}')
-		textPosition = None
+		textPosition = attrs.get("text-position", TextPosition.UNDEFINED)
 		attrs["text-position"] = textPosition
-		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
-		if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
-			if textPosition=="super":
-				# Translators: Reported for superscript text.
-				text=_("superscript")
-			elif textPosition=="sub":
-				# Translators: Reported for subscript text.
-				text=_("subscript")
-			else:
-				# Translators: Reported for text which is at the baseline position;
-				# i.e. not superscript or subscript.
-				text=_("baseline")
-			textList.append(text)
+		oldTextPosition = attrsCache.get("text-position") if attrsCache is not None else None
+		if (
+			textPosition != oldTextPosition
+			and (
+				textPosition in [TextPosition.SUPERSCRIPT, TextPosition.SUBSCRIPT]
+				or (
+					textPosition == TextPosition.BASELINE
+					and (oldTextPosition is not None and oldTextPosition != TextPosition.UNDEFINED)
+				)
+			)
+		):
+			textList.append(textPosition.displayString)
 	if formatConfig["reportAlignment"]:
 		textAlign=attrs.get("text-align")
 		oldTextAlign=attrsCache.get("text-align") if attrsCache is not None else None

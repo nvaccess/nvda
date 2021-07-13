@@ -8,6 +8,7 @@ from comtypes import COMError
 import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
+from controlTypes import TextPosition
 import NVDAObjects.IAccessible.MSHTML
 import winUser
 import NVDAHelper
@@ -30,6 +31,14 @@ FORMATSTATE_EMPH=16
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
+	def _getTextPositionAttribute(self, attrs: dict) -> TextPosition:
+		textPositionValue = attrs.get('text-position')
+		try:
+			return TextPosition(textPositionValue)
+		except ValueError:
+			log.debug(f'textPositionValue={textPositionValue}')
+			return TextPosition.BASELINE
+
 	def _normalizeFormatField(self, attrs):
 		formatState=attrs.get('formatState',"0")
 		formatState=int(formatState)
@@ -45,9 +54,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		if language:
 			attrs['language']=languageHandler.normalizeLanguage(language)
 		textPosition = attrs.get('textPosition')
-		if textPosition and textPosition not in ['super', 'sub']:
-			del attrs['text-position']
-		log.debug(f'{attrs}')
+		textPosition = self._getTextPositionAttribute(attrs)
+		attrs['text-position'] = textPosition
 		return attrs
 
 	def _getIsCurrentAttribute(self, attrs: dict) -> controlTypes.IsCurrent:

@@ -10,6 +10,7 @@ import keyLabels
 import JABHandler
 import controlTypes
 import textUtils
+from controlTypes import TextPosition
 from ..window import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
@@ -168,9 +169,11 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		field["strikethrough"] = bool(attribs.strikethrough)
 		field["underline"] = bool(attribs.underline)
 		if attribs.superscript:
-			field["text-position"] = "super"
+			field["text-position"] = TextPosition.SUPERSCRIPT
 		elif attribs.subscript:
-			field["text-position"] = "sub"
+			field["text-position"] = TextPosition.SUBSCRIPT
+		else:
+			field["text-position"] = TextPosition.BASELINE
 		# TODO: Not sure how to interpret Java's alignment numbers.
 		return field, (offset, offset + length)
 

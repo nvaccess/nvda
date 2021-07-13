@@ -33,6 +33,7 @@ import braille
 import api
 import config
 import controlTypes
+from controlTypes import TextPosition
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
@@ -117,6 +118,10 @@ def normalizeIA2TextFormatField(formatField):
 	language=formatField.get('language')
 	if language:
 		formatField['language']=languageHandler.normalizeLanguage(language)
+	try:
+		formatField["text-position"] = TextPosition(formatField.pop("text-position"))
+	except KeyError:
+		formatField["text-position"] = TextPosition.UNDEFINED
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 

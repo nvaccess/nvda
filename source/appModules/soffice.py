@@ -9,6 +9,7 @@ from comInterfaces import IAccessible2Lib as IA2
 import IAccessibleHandler
 import appModuleHandler
 import controlTypes
+from controlTypes import TextPosition
 import textInfos
 import colors
 from compoundDocuments import CompoundDocument
@@ -99,9 +100,11 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		try:
 			escapement = int(formatField["CharEscapement"])
 			if escapement < 0:
-				formatField["text-position"] = "sub"
+				formatField["text-position"] = TextPosition.SUBSCRIPT
 			elif escapement > 0:
-				formatField["text-position"] = "super"
+				formatField["text-position"] = TextPosition.SUPERSCRIPT
+			else:
+				textPos = "baseline"
 		except KeyError:
 			pass
 		try:
