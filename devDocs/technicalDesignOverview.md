@@ -127,6 +127,13 @@ Each API provides a different way of querying and manipulating text.
 Just as NVDA objects provide an abstract representation of a widget, TextInfo objects provide an abstract representation of a range of text.
 These objects are derived from the `textInfos.TextInfo` base class.
 
+TextInfo objects contain properties and methods to:
+* Move or expand the range by units such as character, word, line and paragraph
+* compare the start and end of a range with itself or another range
+* Fetch the text and formatting of the range
+ 
+ You can fetch a TextInfo object from an NVDA object via its `makeTextInfo` method, passing in the particular `textInfos.POSITION_*` constant depending on whether you want to fetch a range representing the position of the caret, selection, start or end of the text, or the entire text.
+ 
 ### Global Commands
 The global commands object (`globalCommands.GlobalCommands`) contains built-in global scripts; i.e.
 they can be executed everywhere.
