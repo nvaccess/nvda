@@ -140,7 +140,7 @@ they can be executed everywhere.
 For example, the review, report current focus and date/time scripts are all located in global commands.
 
 ### Plugins
-NvDA allows third-parties to extend NvDA's functionality through plugins and add-ons.
+NVDA allows third-parties to extend NVDA's functionality through plugins and add-ons.
 These may define custom NVDA objects for specific applications, add global features and add support for new braille displays and speech synthesizers.
 There are three plugin types: appModules, globalPlugins and drivers, with drivers further divided between speech synthesizer and braille display support.
 
@@ -174,7 +174,7 @@ Tree interceptors are used mostly for web documents, where all events and script
 Complex documents such as web pages are very often not flat; i.e. information does not simply run from top to bottom.
 Because of this, complex document browsers often do not provide a way to navigate documents using the caret, and even when they do, it is often problematic.
 Therefore, screen readers need to create their own flat representation of a document from the object hierarchy provided by the browser and allow the user to navigate this flat representation.
-Browse mode documents are a subclass of `TreeInterceptor` that provide scripts that allow navigating the document in a linea fassion.
+Browse mode documents are a subclass of `TreeInterceptor` that provide scripts that allow navigating the document in a linear fashion.
 
 ##### Virtual buffers
 Due to the extreme slowness of performing large numbers of [out-of-process](#out-of-process-code) queries, some complex documents are accessed by NVDA by using [in-process code](#in-process-code), which collects all the content of a document in one go, and allows NVDA to search and fetch parts of this cached content on demand.
@@ -204,7 +204,7 @@ If an event is handled by one of these, meaning that an `event_*` method was fou
 
 The chain of handlers is as follows:
 * The first found global plugin
-* The next found global plugin...
+* The next found global plugin (until no more are found)
 * The app module containing the NVDA object the event is for, I.e. fetched from the NVDA object's `appModule` property. 
 * The tree interceptor containing the NVDA object the event is for. I.e. fetched from the NVDA object's `treeInterceptor` property if the property is not `None`
 * The NVDA object itself.
@@ -222,7 +222,7 @@ But unlike events, once an input gesture finds and executes a script, there is n
  
  The chain of handlers is as follows:
 * The first found global plugin 
-* The next found global plugin...
+* The next found global plugin (until no more are found)
 * The app module containing the currently focused NVDA object, I.e. fetched from the NVDA object's `appModule` property 
 * The tree interceptor containing the currently focused NVDA object, I.e. fetched from the NVDA object's `treeInterceptor` property if the property is not `None`
 * The currently focused NVDA object
