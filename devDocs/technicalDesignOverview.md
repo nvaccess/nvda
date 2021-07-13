@@ -158,6 +158,7 @@ For example, new global commands can be added, behaviour can be changed and new 
 This can be done using global plugins.
 A global plugin is derived from the `globalPluginHandler.GlobalPlugin` base class.
 Similar to [global commands](#global-commands), they can bind scripts which can be executed everywhere.
+More specifically, global plugins receive events for all [NVDA objects](#nvda-objects) in the Operating System and can bind scripts which can be executed anywhere.
 They can also implement their own global [NVDA Objects](#nvda-objects).
 
 ### Tree Interceptors
@@ -165,17 +166,20 @@ Sometimes, it is necessary to intercept events and scripts for an entire hierarc
 For example, this is necessary to seamlessly handle complex documents which consist of many objects.
 This can be done using a tree interceptor.
 A tree interceptor (TreeInterceptor) is derived from the `treeInterceptorHandler.TreeInterceptor` base class.
-It receives events and scripts for all [NVDA objects](#nvda-objects) beneath and including the root NVDA object.
+It receives events and scripts for all [NVDA objects](#nvda-objects) beneath and including the root NVDA object of the tree interceptor.
 Tree interceptors are created when a TreeInterceptor class is returned from the `treeInterceptorClass` property of an NVDA object.
+Tree interceptors are used mostly for web documents, where all events and scripts for NVDA objects within a document need to be handled by the document (root NVDA object) itself.
 
-### Virtual Buffers
-Complex documents such as web pages are very often not flat; i.e.
-information does not simply run from top to bottom.
+#### Browse mode documents
+Complex documents such as web pages are very often not flat; i.e. information does not simply run from top to bottom.
 Because of this, complex document browsers often do not provide a way to navigate documents using the caret, and even when they do, it is often problematic.
 Therefore, screen readers need to create their own flat representation of a document from the object hierarchy provided by the browser and allow the user to navigate this flat representation.
-NVDA calls these virtual buffers.
-Due to the extreme slowness of performing large numbers of [out-of-process](#out-of-process-code) queries, NVDA creates these with the help of [in-process code](#in-process-code).
-A virtual buffer (VirtualBuffer) in NVDA is derived from the `virtualBuffers.VirtualBuffer` base class and is a type of [tree interceptor](##tree-interceptors).
+Browse mode documents are a subclass of `TreeInterceptor` that provide scripts that allow navigating the document in a linea fassion.
+
+##### Virtual buffers
+Due to the extreme slowness of performing large numbers of [out-of-process](#out-of-process-code) queries, some complex documents are accessed by NVDA by using [in-process code](#in-process-code), which collects all the content of a document in one go, and allows NVDA to search and fetch parts of this cached content on demand.
+These are known as virtual buffers.
+A virtual buffer (VirtualBuffer) in NVDA is derived from the `virtualBuffers.VirtualBuffer` base class and is a type of [browse mode document](##browse-mode-documents).
 
 ### GUI
 NVDA has its own graphical user interface to allow for easy configuration and other user interaction.
@@ -188,21 +192,44 @@ The base configuration options, as well as routines that manage configuration pr
 ## Special Object Functions
 
 ### Events
-NVDA object, app module and virtual buffer instances can all contain special methods which handle events for NVDA Objects.
+NVDA object, global plugin, app module and tree interceptor instances can all contain special methods which handle events for NVDA Objects.
 These methods are all named beginning with "event_"; e.g. `event_gainFocus` and `event_nameChange`.
 These events are generally executed by a call to `eventHandler.executeEvent`, which is in turn generally called resultant to events queued by [API Handlers](#api-handlers).
 Most events do not take any additional arguments.
-App modules and virtual buffers are passed a handler function which should be called if the event should be handled by the next handler;
+Global plugins, app modules and tree interceptors are passed a handler function which should be called if the event should be handled by the next handler;
 e.g. the object itself.
 
+Although an event is always for a particular NVDA object, it first has a chance of being handled by global plugins, app modules or tree interceptors.
+If an event is handled by one of these, meaning that an `event_*` method was found and executed, the event stops there and does not go further, unless the method that handled it specifically calls the `nextHandler` function object passed to it. 
+
+The chain of handlers is as follows:
+* The first found global plugin
+* The next found global plugin...
+* The app module containing the NVDA object the event is for, I.e. fetched from the NVDA object's `appModule` property. 
+* The tree interceptor containing the NVDA object the event is for. I.e. fetched from the NVDA object's `treeInterceptor` property if the property is not `None`
+* The NVDA object itself.
+
 ### Scripts
-NVDA object, app module and virtual buffer instances can all contain special methods called scripts which are executed in response to [input gestures](#input-gestures) from the user.
+NVDA object, global plugin, app module and tree interceptor instances can all contain special methods called scripts which are executed in response to [input gestures](#input-gestures) from the user.
 These methods are all named beginning with "script_"; e.g. `script_reportCurrentFocus` and `script_dateTime`.
 Script methods are passed the input gesture that triggered them.
-Input gestures are bound to scripts in the class using a `__gestures` dict.
+Input gestures are bound to scripts in the class using a `scriptHandler.script` function decorator.
 They can also be bound at runtime using `bindGesture`.
 These are inherited from `baseObject.ScriptableObject`.
 
+Similar to events, input gestures have a chance to be handled by a script at one of many levels.
+But unlike events, once an input gesture finds and executes a script, there is no clean way to have the input gesture handled by a subsequent level.
+ 
+ The chain of handlers is as follows:
+* The first found global plugin 
+* The next found global plugin...
+* The app module containing the currently focused NVDA object, I.e. fetched from the NVDA object's `appModule` property 
+* The tree interceptor containing the currently focused NVDA object, I.e. fetched from the NVDA object's `treeInterceptor` property if the property is not `None`
+* The currently focused NVDA object
+* the first ancestor (parent) of the currently focused NVDAObject, if the found script's `canPropagate` property is True
+* the next ancestor of the currently focused NVDAObject, if the found script's `canPropagate` property is True...
+ * Global commands
+ 
 ## Inter-process Communication
 In general terms, every running application or service on a computer, including NVDA, is a separate process.
 No process can access data in another process except via special operating system mechanisms.
