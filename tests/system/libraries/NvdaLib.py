@@ -13,9 +13,16 @@ This is in contrast with the `SystemTestSpy/speechSpy*.py files,
 which provide library functions related to monitoring NVDA and asserting NVDA output.
 """
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-from os.path import join as _pJoin, abspath as _abspath, expandvars as _expandvars
+from datetime import datetime as _datetime
+from os.path import (
+	join as _pJoin,
+	abspath as _abspath,
+	expandvars as _expandvars,
+	exists as _exists,
+	splitext as _splitext,
+)
 import tempfile as _tempFile
-from typing import Optional
+from typing import Optional as _Optional
 from urllib.parse import quote as _quoteStr
 
 from robotremoteserver import (
@@ -70,7 +77,15 @@ class _NvdaLocationData:
 			"nvdaTestRunLogs"
 		)
 
-	def findInstalledNVDAPath(self) -> Optional[str]:
+	def getPy2exeBootLogPath(self) -> _Optional[str]:
+		if self.whichNVDA == "installed":
+			executablePath = _locations.findInstalledNVDAPath()
+			# py2exe names this log file after the executable, see py2exe/boot_common.py
+			return _splitext(executablePath)[0] + ".log"
+		elif self.whichNVDA == "source":
+			return None  # Py2exe not used for source.
+
+	def findInstalledNVDAPath(self) -> _Optional[str]:
 		NVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'nvda', 'nvda.exe')
 		legacyNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'NVDA', 'nvda.exe')
 		exeErrorMsg = f"Unable to find installed NVDA exe. Paths tried: {NVDAFilePath}, {legacyNVDAFilePath}"
@@ -104,8 +119,9 @@ class NvdaLib:
 	- NvdaLib.nvdaSpy is a library instance for getting speech and other information out of NVDA
 	"""
 	def __init__(self):
-		self.nvdaSpy = None  #: Optional[SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib]
-		self.nvdaHandle: Optional[int] = None
+		self.nvdaSpy = None  #: _Optional[SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib]
+		self.nvdaHandle: _Optional[int] = None
+		self.lastNVDAStart: _Optional[_datetime] = None
 
 	@staticmethod
 	def _createTestIdFileName(name):
@@ -116,7 +132,7 @@ class NvdaLib:
 		return outputFileName
 
 	@staticmethod
-	def setup_nvda_profile(configFileName, gesturesFileName: Optional[str] = None):
+	def setup_nvda_profile(configFileName, gesturesFileName: _Optional[str] = None):
 		configManager.setupProfile(
 			_locations.repoRoot,
 			configFileName,
@@ -241,6 +257,7 @@ class NvdaLib:
 		return remoteLib
 
 	def start_NVDAInstaller(self, settingsFileName):
+		self.lastNVDAStart = _datetime.utcnow()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName)
 		nvdaProcessHandle = self._startNVDAInstallerProcess()
@@ -250,7 +267,8 @@ class NvdaLib:
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
 
-	def start_NVDA(self, settingsFileName: str, gesturesFileName: Optional[str] = None):
+	def start_NVDA(self, settingsFileName: str, gesturesFileName: _Optional[str] = None):
+		self.lastNVDAStart = _datetime.utcnow()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		nvdaProcessHandle = self._startNVDAProcess()
@@ -269,11 +287,38 @@ class NvdaLib:
 		)
 		builtIn.log(f"Log saved to: {saveToPath}", level='DEBUG')
 
+	def save_py2exe_boot_log(self):
+		""" If a dialog shows: Errors in "nvda.exe", see the logfile at <path> for details.
+		This orginates from
+		py2exe boot logs are saved to
+		${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-py2exe-nvda.log
+		"""
+		copyFrom = _locations.getPy2exeBootLogPath()
+		if not copyFrom or not _exists(copyFrom):
+			builtIn.log("No py2exe log")
+			return
+		builtIn.log("Saving py2exe log")
+		saveToPath = self.create_preserved_test_output_filename("py2exe-nvda.log")
+		opSys.copy_file(
+			copyFrom,
+			saveToPath
+		)
+		builtIn.log(f"py2exe log saved to: {saveToPath}", level='DEBUG')
+
 	def create_preserved_test_output_filename(self, fileName):
 		"""EG for nvda.log path will become:
 			${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log
 		"""
 		return _pJoin(_locations.preservedLogsDir, self._createTestIdFileName(fileName))
+
+	def _quitNVDAProcessCleanup(self):
+		self.save_NVDA_log()
+		self.save_py2exe_boot_log()
+		crashDmpPath = self.save_crash_dump_if_exists()
+		# remove the spy so that if nvda is run manually against this config it does not interfere.
+		self.teardown_nvda_profile()
+		if crashDmpPath is not None:
+			raise AssertionError(f"NVDA crashed during this test. Crash dump saved to: {crashDmpPath}")
 
 	def quit_NVDA(self):
 		builtIn.log("Stopping nvdaSpy server: {}".format(self._spyServerURI))
@@ -287,9 +332,7 @@ class NvdaLib:
 		except Exception:
 			raise
 		finally:
-			self.save_NVDA_log()
-			# remove the spy so that if nvda is run manually against this config it does not interfere.
-			self.teardown_nvda_profile()
+			self._quitNVDAProcessCleanup()
 
 	def quit_NVDAInstaller(self):
 		builtIn.log("Stopping nvdaSpy server: {}".format(self._spyServerURI))
@@ -302,10 +345,39 @@ class NvdaLib:
 		except Exception:
 			raise
 		finally:
-			self.save_NVDA_log()
-			# remove the spy so that if nvda is run manually against this config it does not interfere.
-			self.teardown_nvda_profile()
+			self._quitNVDAProcessCleanup()
 
+	@staticmethod
+	def check_for_crash_dump(
+			since: _Optional[_datetime],
+			overridePath: _Optional[str] = None,
+	) -> _Optional[str]:
+		"""
+		Checks if a crash.dmp exits and returns the crash dmp path if so
+		"""
+		crashPath = overridePath or _pJoin(_locations.logPath, "..", "nvda_crash.dmp")
+		try:
+			opSys.file_should_not_exist(crashPath)
+		except Exception:
+			crashTime = opSys.get_modified_time(crashPath, format="epoch")
+			crashTime = _datetime.fromtimestamp(crashTime)
+			since = since.replace(microsecond=0)  # get_modified_time only reports seconds, not microseconds
+			if crashTime >= since:
+				return crashPath
+
+	def save_crash_dump_if_exists(self, deleteCachedAfter: bool = True) -> _Optional[str]:
+		crashPath = self.check_for_crash_dump(self.lastNVDAStart)
+		if crashPath is None:
+			return None
+		saveToPath = self.create_preserved_test_output_filename("nvda_crash.dmp")
+		opSys.copy_file(
+			crashPath,
+			saveToPath
+		)
+		if deleteCachedAfter:
+			opSys.remove_file(crashPath)
+			opSys.wait_until_removed(crashPath)
+		return saveToPath
 
 
 def getSpyLib():

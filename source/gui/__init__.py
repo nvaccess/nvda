@@ -201,7 +201,8 @@ class MainFrame(wx.Frame):
 			d.Show()
 			self.postPopup()
 		else:
-			core.triggerNVDAExit()
+			if not core.triggerNVDAExit():
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 	def onNVDASettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog)
@@ -347,11 +348,16 @@ class MainFrame(wx.Frame):
 			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
 		progressDialog.done()
 		del progressDialog
-		# Translators: The message displayed when the COM Registration Fixing tool completes.
-		gui.messageBox(_("COM Registration Fixing tool complete"),
+		messageBox(
+			_(
+				# Translators: The message displayed when the COM Registration Fixing tool completes.
+				"The COM Registration Fixing tool has finished. "
+				"It is highly recommended that you restart your computer now, to make sure the changes take full effect."
+			),
 			# Translators: The title of a dialog presented when the COM Registration Fixing tool is complete. 
 			_("COM Registration Fixing Tool"),
-			wx.OK)
+			wx.OK
+		)
 
 	def onConfigProfilesCommand(self, evt):
 		if isInMessageBox:
@@ -554,21 +560,8 @@ def initialize():
 		# otherwise the system default will be used
 		mainFrame.SetLayoutDirection(wxLang.LayoutDirection)
 	wx.GetApp().SetTopWindow(mainFrame)
-	# In wxPython >= 4.1,
-	# wx.CallAfter no longer executes callbacks while NVDA's main thread is within apopup menu or message box.
-	# To work around this,
-	# Monkeypatch wx.CallAfter to
-	# post a WM_NULL message to our top-level window after calling the original CallAfter,
-	# which causes wx's event loop to wake up enough to execute the callback.
-	old_wx_CallAfter = wx.CallAfter
-
-	def wx_CallAfter_wrapper(func, *args, **kwargs):
-		old_wx_CallAfter(func, *args, **kwargs)
-		# mainFrame may be None as NVDA could be terminating.
-		topHandle = mainFrame.Handle if mainFrame else None
-		if topHandle:
-			winUser.PostMessage(topHandle, winUser.WM_NULL, 0, 0)
-	wx.CallAfter = wx_CallAfter_wrapper
+	import monkeyPatches
+	monkeyPatches.applyWxMonkeyPatches(mainFrame, winUser, wx)
 
 
 def terminate():
@@ -693,7 +686,8 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
-			core.triggerNVDAExit()
+			if not core.triggerNVDAExit():
+				log.error("NVDA already in process of exiting, this indicates a logic error.")
 			return  # there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)

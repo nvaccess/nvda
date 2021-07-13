@@ -81,7 +81,7 @@ Ao executar o arquivo baixado, será iniciada uma cópia temporária do NVDA.
 Você será questionado se deseja instalá-lo, criar uma cópia portátil ou apenas continuar usando a cópia temporária.
 
 Caso pretenda usar constantemente o NVDA neste computador, deverá então optar por instalá-lo.
-O NVDA instalado lhe permitirá ter recursos adicionais, tais como inicialização automática após o login ""[início de sessão]"", a capacidade de ler as telas de entrada ""[credenciais]"" e segurança do Windows (que não podem ser feitas com cópias portáteis e temporárias) e a criação de atalhos no menu iniciar e na área de trabalho.
+O NVDA instalado lhe permitirá ter recursos adicionais, tais como inicialização automática após ingressar ""[login]"", a capacidade de ler as telas de credenciais e segurança do Windows (que não podem ser feitas com cópias portáteis e temporárias) e a criação de atalhos no menu iniciar e na área de trabalho.
 As cópias instaladas também permitem elas próprias criar uma cópia portátil a qualquer momento.
 
 Se você deseja levar o NVDA com você em um dispositivo USB ou em outros dispositivos de mídia portáteis, então deverá escolher criar uma cópia portátil.
@@ -92,7 +92,7 @@ A execução de cópias portáteis diretamente de dispositivos somente leitura n
 O Uso das cópias temporárias do NVDA é também uma opção (isto é, para propósitos de demonstração), todavia iniciá-lo a cada vez dessa forma pode lhe trazer um grande gasto de tempo.
 
 ++ Restrições das Cópias Portáteis e Temporárias ++[PortableAndTemporaryCopyRestrictions]
-Além da impossibilidade de iniciar automaticamente durante e/ou depois do logon ""[início de sessão]"", as cópias portáteis e temporárias do NVDA também sofrem as seguintes restrições:
+Além da impossibilidade de iniciar automaticamente durante e/ou depois do logon ""[entrada de credenciais]"", as cópias portáteis e temporárias do NVDA também sofrem as seguintes restrições:
 - Impossibilidade de interagir com aplicativos executados com privilégios administrativos, a menos que o próprio NVDA tenha sido executado também com esses privilégios (o que não é recomendado);
 - Impossibilidade de ler as telas do Controle de Conta do Usuário (UAC) ao tentar iniciar um aplicativo com privilégios administrativos;
 - Windows 8 e posteriores: impossibilidade de suportar entradas oriundas duma tela sensível ao toque;
@@ -116,8 +116,8 @@ Antes de poder pressionar o botão Continuar, você deverá usar a caixa de sele
 Haverá também um botão presente para analisar os complementos que serão desabilitados.
 Consulte a [seção de diálogo de complementos incompatíveis #incompatibleAddonsManager] para obter mais ajuda sobre este botão.
 
-+++ Usar o NVDA durante a entrada [tela de login] +++[StartAtWindowsLogon]
-Essa opção lhe permite escolher se o NVDA deverá ou não iniciar automaticamente enquanto estiver na tela de entrada ""[login]"" do Windows, antes de você inserir sua senha.
++++ Usar o NVDA nas credenciais [tela de login] +++[StartAtWindowsLogon]
+Esta opção lhe permite escolher se o NVDA deverá ou não iniciar automaticamente enquanto estiver na tela de credenciais ""[login]"" do Windows, antes de você inserir sua senha.
 Isso também inclui o Controle de Conta de Usuário e outras telas seguras.
 Essa opção está habilitada por padrão para instalações novas.
 
@@ -127,7 +127,7 @@ O atalho, se criado, também será atribuído uma tecla de atalho control+alt+n,
 
 +++ Copiar Configuração Portátil para a Conta de Usuário Atual +++[CopyPortableConfigurationToCurrentUserAccount]
 Essa opção lhe permite escolher se o NVDA deve ou não copiar as configurações do usuário oriundas da versão atualmente em execução para as configurações do usuário atualmente logado no Windows, no caso das cópias instaladas do NVDA.
-Isso não copiará a configuração para nenhum outro usuário deste sistema nem para a configuração do sistema para uso durante a entrada no Windows e outras telas seguras.
+Isso não copiará a configuração para nenhum outro usuário deste sistema nem para a configuração do sistema para uso nas credenciais ""[entrada]"" do Windows e outras telas seguras.
 Essa opção está disponível apenas quando se instala a partir de uma cópia portátil, não sendo possível ao instalar diretamente do pacote executável baixado.
 
 ++ Criando uma Cópia Portátil ++[CreatingAPortableCopy]
@@ -1084,15 +1084,15 @@ Os níveis de log disponíveis são:
  -
 -
 
-==== Iniciar o NVDA após entrar [após iniciar sessão] ====[GeneralSettingsStartAfterLogOn]
-Se essa opção estiver habilitada, o NVDA será executado automaticamente logo que entrar ""[iniciar sessão]"" no Windows.
+==== Iniciar o NVDA após eu ingressar ====[GeneralSettingsStartAfterLogOn]
+Se essa opção estiver habilitada, o NVDA será executado automaticamente logo que entrar ""[fizer login]"" no Windows.
 Essa opção só estará disponível para as cópias instaladas do NVDA.
 
-==== Usar o NVDA durante a entrada [tela de login] (requer privilégios administrativos) ====[GeneralSettingsStartOnLogOnScreen]
+==== Usar o NVDA nas credenciais [tela de login] (requer privilégios administrativos) ====[GeneralSettingsStartOnLogOnScreen]
 Se você entra no Windows fornecendo um nome de usuário e senha, habilitar essa opção fará o NVDA iniciar automaticamente na tela de login quando o Windows iniciar.
 Esta opção só estará disponível para as cópias instaladas do NVDA.
 
-==== Usar as configurações salvas atualmente durante o login e em telas seguras (requer privilégios administrativos) ====[GeneralSettingsCopySettings]
+==== Usar as configurações salvas atualmente nas credenciais e em telas seguras (requer privilégios administrativos) ====[GeneralSettingsCopySettings]
 Ao pressionar este botão, copiará as configurações atualmente salvas do usuário do NVDA para a pasta das configurações de sistema deste leitor de telas, de modo que o NVDA irá usá-las durante o login e quando executando no Controle de Conta de Usuário (UAC) e em outras telas de segurança do Windows.
 Para certificar-se de que todas as suas opções serão transferidas, verifique em primeiro lugar se salvou suas configurações com control+NVDA+c ou através do item respectivo do Menu do NVDA.
 Essa opção só estará disponível para as cópias instaladas do NVDA.
@@ -1881,7 +1881,7 @@ Além disso, pode estar disponível em outros terminais em versões anteriores d
 ==== Tentar cancelar a fala para eventos de foco expirados ====[CancelExpiredFocusSpeech]
 Essa opção habilita o comportamento que tenta cancelar a fala para eventos de foco expirados.
 Em particular, a movimentação rápida de mensagens no Gmail com o Chrome pode fazer com que o NVDA fale informações desatualizadas.
-Essa funcionalidade é experimental a partir do NVDA 2020.2.
+Esta funcionalidade está habilitada por padrão a partir do NVDA 2021.1.
 
 ==== Tempo limite de movimento do cursor (em MS) ====[AdvancedSettingsCaretMoveTimeout]
 Essa opção permite-lhe configurar o número de milissegundos que o NVDA irá aguardar até que o cursor (ponto de inserção) se mova em controles de texto editáveis.
@@ -2105,7 +2105,7 @@ Além de uma versão instalada, no menu iniciar pode ir aos programas -> NVDA ->
 
 As configurações para o NVDA ao executar durante a entrada ""[credenciais]"" ou nas telas do UAC ""[Controle de Conta do Usuário]"" são armazenadas na pasta systemConfig que se encontra na pasta de instalação do NVDA.
 Normalmente, não deve tocar nestas configurações.
-Para alterar a configuração do NVDA durante a entrada ou nas telas do UAC, configure o NVDA como desejar enquanto estiver conectado ao Windows, salve a configuração, e pressione o botão "usar configurações salvas atualmente durante o login e em telas seguras" na categoria Geral do diálogo [Configurações do NVDA #NVDASettings].
+Para alterar a configuração do NVDA nas credenciais ou nas telas do UAC, configure o NVDA como desejar enquanto estiver conectado ao Windows, salve a configuração, e pressione o botão "usar configurações salvas atualmente nas credenciais e em telas seguras" na categoria Geral do diálogo [Configurações do NVDA #NVDASettings].
 
 + Ferramentas Adicionais +[ExtraTools]
 
@@ -3183,7 +3183,7 @@ A seguir estão as opções de linha de comando para o NVDA:
 | Nenhuma | --no-sr-flag | Não altere o sinalizador ""[flag]"" de leitor de tela global do sistema |
 | Nenhuma | --install | Instala o NVDA (iniciando a cópia recém-instalada) |
 | Nenhuma | --install-silent | Instala silenciosamente o NVDA (não inicia a cópia recém-instalada) |
-| Nenhuma | --enable-start-on-logon=True|False | Ao instalar, habilita [Usar NVDA durante a entrada do Windows #StartAtWindowsLogon] do NVDA |
+| Nenhuma | --enable-start-on-logon=True|False | Ao instalar, habilita [Usar NVDA nas credenciais do Windows #StartAtWindowsLogon] do NVDA |
 | Nenhuma | --copy-portable-config | Ao instalar, copia a configuração portátil do caminho fornecido (--config-path, -c) para a conta de usuário atual |
 | Nenhuma | --create-portable | Cria uma cópia portátil do NVDA (iniciando a cópia recém criada). Requer --portable-path a ser especificado |
 | Nenhuma | --create-portable-silent | Cria uma cópia portátil do NVDA (não inicia a cópia recém-instalada). Requer --portable-path a ser especificado |

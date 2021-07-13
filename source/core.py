@@ -14,10 +14,6 @@ class CallCancelled(Exception):
 	"""Raised when a call is cancelled.
 	"""
 
-# Apply several monkey patches to comtypes
-# noinspection PyUnresolvedReferences
-import comtypesMonkeyPatches
-
 # Initialise comtypes.client.gen_dir and the comtypes.gen search path 
 # and Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes
@@ -115,16 +111,51 @@ def doStartupDialogs():
 
 @dataclass
 class NewNVDAInstance:
-	filePath: Optional[str] = None
+	filePath: str
 	parameters: Optional[str] = None
 	directory: Optional[str] = None
+
+
+def restartUnsafely():
+	"""Start a new copy of NVDA immediately.
+	Used as a last resort, in the event of a serious error to immediately restart NVDA without running any
+	cleanup / exit code.
+	There is no dependency on NVDA currently functioning correctly, which is in contrast with L{restart} which
+	depends on the internal queue processing (queueHandler).
+	Because none of NVDA's shutdown code is run, NVDA is likely to be left in an unclean state.
+	Some examples of clean up that may be skipped.
+	- Free NVDA's mutex (mutex prevents multiple NVDA instances), leaving it abandoned when this process ends.
+	  - However, this situation is handled during mutex acquisition.
+	- Remove icons (systray)
+	- Saving settings
+	"""
+	log.info("Restarting unsafely")
+	import subprocess
+	# Unlike a normal restart, see L{restart}:
+	# - if addons are disabled, leave them disabled
+	# - if debug logging is set, leave it set.
+	# The new instance should operate in the same way (as much as possible) as the old instance.
+	for paramToRemove in ("--ease-of-access"):
+		try:
+			sys.argv.remove(paramToRemove)
+		except ValueError:
+			pass
+	options = []
+	if not hasattr(sys, "frozen"):
+		options.append(os.path.basename(sys.argv[0]))
+	_startNewInstance(NewNVDAInstance(
+		sys.executable,
+		subprocess.list2cmdline(options + sys.argv[1:]),
+		globalVars.appDir
+	))
 
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
 		globalVars.exitCode=3
-		triggerNVDAExit()
+		if not triggerNVDAExit():
+			log.error("NVDA already in process of exiting, this indicates a logic error.")
 		return
 	import subprocess
 	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
@@ -140,11 +171,12 @@ def restart(disableAddons=False, debugLogging=False):
 	if debugLogging:
 		options.append('--debug-logging')
 
-	triggerNVDAExit(NewNVDAInstance(
+	if not triggerNVDAExit(NewNVDAInstance(
 		sys.executable,
 		subprocess.list2cmdline(options + sys.argv[1:]),
 		globalVars.appDir
-	))
+	)):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 def resetConfiguration(factoryDefaults=False):
@@ -263,10 +295,11 @@ def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
 		_startNewInstance(newNVDA)
 
 
-def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
+def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 	"""
 	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
 	instance information with `newNVDA`.
+	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
 	"""
 	import queueHandler
 	global _hasShutdownBeenTriggered
@@ -275,8 +308,11 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
 			# queue this so that the calling process can exit safely (eg a Popup menu)
 			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
 			_hasShutdownBeenTriggered = True
+			log.debug("_doShutdown has been queued")
+			return True
 		else:
-			log.warn("NVDA exit has already been triggered")
+			log.debug("NVDA has already been triggered to exit safely.")
+			return False
 
 
 def _closeAllWindows():
@@ -712,7 +748,12 @@ def main():
 	log.info("Exiting")
 	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
 	# triggerNVDAExit has not been called yet
-	triggerNVDAExit()
+	if triggerNVDAExit():
+		log.debug(
+			"NVDA not already exiting, hit catch-all exit trigger."
+			" This likely indicates NVDA is exiting due to WM_QUIT."
+		)
+		queueHandler.pumpAll()
 	_terminate(gui)
 	config.saveOnExit()
 

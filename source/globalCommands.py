@@ -889,11 +889,32 @@ class GlobalCommands(ScriptableObject):
 		else:
 			level = characterProcessing.SYMLVL_NONE
 		name = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[level]
-		config.conf["speech"]["symbolLevel"] = level
+		config.conf["speech"]["symbolLevel"] = level.value
 		# Translators: Reported when the user cycles through speech symbol levels
 		# which determine what symbols are spoken.
 		# %s will be replaced with the symbol level; e.g. none, some, most and all.
 		ui.message(_("Symbol level %s") % name)
+
+	@script(
+		# Translators: Input help mode message for a command.
+		description=_("Toggle the announcement of all punctuation and symbols when reviewing by word"),
+		category=SCRCAT_SPEECH
+	)
+	def script_toggleSpeechSymbolLevelWordAll(self, gesture):
+		symbolLevelWordAll = config.conf["speech"]["symbolLevelWordAll"]
+		if symbolLevelWordAll:
+			# Translators: Used to report the new state of a setting which is toggled via a command.
+			reportedState = pgettext("command toggle", "off")
+		else:
+			# Translators: Used to report the new state of a setting which is toggled via a command.
+			reportedState = pgettext("command toggle", "on")
+		config.conf["speech"]["symbolLevelWordAll"] = not symbolLevelWordAll
+		ui.message(
+			# Translators: Reported when toggling a speech setting
+			_("Speak all punctuation and symbols when reviewing by word: {state}").format(
+				state=reportedState
+			)
+		)
 
 	@script(
 		# Translators: Input help mode message for move mouse to navigator object command.
