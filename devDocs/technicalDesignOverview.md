@@ -115,6 +115,10 @@ Many methods are implemented on the base `NVDAObject` class and only need to be 
 Similarly, if a particular widget is non-standard, problematic, provides additional information using other mechanisms, etc., it can simply subclass another NVDA object and override methods as appropriate.
 NVDA objects that might be used in any application are contained in the NVDAObjects package. [App modules](#app-modules) may also define NVDA objects specific to an application.
 
+A part from properties such as a widget's name, role, states etc, NVDA objects also include relational properties such as parent, next, previous and first child.
+These allow both the user and code to navigate the entire Operating System and its applications in a tree-like structure.
+The root of the tree being the Desktop, whos children is all the top-level windows for all open applications, each containing further subtrees of more widgets representing an application's user interface.
+ 
 ### Text Ranges
 When working with editable text controls, NVDA needs to be able to obtain information about the text in the widget.
 Aside from just retrieving the entire text, proper navigation requires retrieval of specific units of text (e.g. paragraphs, lines, words and characters), as well as the ability to find and set the location of the caret and selection.
