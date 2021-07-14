@@ -53,10 +53,7 @@
 All the startup pathways execute nvda.pyw.
 
 1. *Start nvda.pyw* 
-1. MonkeyPatches are applied
-1. The virtual environment is checked
-1. Gettext is installed
-1. Starting arguments are parsed
+1. MonkeyPatches are applied, the virtual environment is checked, starting arguments are parsed
 1. We check for a running instance of NVDA by looking for a Message Window
     - terminate it if possible using `WM_QUIT` or forcing the process to exit. If this fails, abandon startup
 1. We try to acquire the NVDA mutex
@@ -64,11 +61,9 @@ All the startup pathways execute nvda.pyw.
 1. Initialise logging
 1. Set the process to allow `WM_QUIT` messages
 1. Start running `core.main()`
-    1. SetProcessDPIAware
     1. Initialize config
     1. Play startup sound
-    1. Set language
-    1. Initialize NVDA modules and wx GUI
+    1. Set language, initialize NVDA modules and wx GUI
     1. Create the Message Window (used for `WM_QUIT`)
     1. Start the core pump (the timer that is fired inside the main loop when there is work to do)
     1. Start watchdog
