@@ -458,7 +458,7 @@ def setSynth(name, isFallback=False):
 	except:  # noqa: E722 # Legacy bare except
 		log.error(f"setSynth failed for {name}", exc_info=True)
 	
-	if _curSynth and not _curSynth.availableVoices:
+	if _curSynth and _curSynth.name == "oneCore" and not _curSynth.availableVoices:
 		# This synth cannot be used without available voices
 		log.info(f"No available voices for synthDriver {name}")
 		_curSynth = None
