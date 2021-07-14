@@ -341,6 +341,47 @@ class GlyphTranslatorCache : protected LockableObject {
 
 GlyphTranslatorCache glyphTranslatorCache;
 
+std::vector<POINT> calcCharExtentsVec(
+	const int cbCount, const int* lpdx, const TEXTMETRIC& tm,
+	const UINT& fuOptions, const LPSIZE& resultTextSize, const bool fromGlyphs,
+	const HDC& hdc, const wchar_t* lpString, std::wstring& newText
+) {
+	//Calculate character extents array
+	std::vector<POINT> characterExtentsVec(cbCount);
+	POINT* characterExtents = characterExtentsVec.data();
+	if (lpdx) {
+		long acX = 0;
+		long acY = tm.tmHeight;
+		for (int i = 0; i<cbCount; ++i) {
+			characterExtents[i].x = (acX += lpdx[(fuOptions & ETO_PDY) ? (i * 2) : i]);
+			//if(fuOptions&ETO_PDY) characterExtents[i].y=(acY+=lpdx[(i*2)+1]);
+		}
+		resultTextSize->cx = acX;
+		resultTextSize->cy = acY;
+	}
+	else {
+		std::vector<int>characterExtentsXVec(cbCount);
+		int* characterExtentsX = characterExtentsXVec.data();
+		if(fromGlyphs) {
+			LPWORD lpwszString = reinterpret_cast<LPWORD>(const_cast<wchar_t*>(lpString));
+			GetTextExtentExPointI(
+				hdc, lpwszString, cbCount, 0, nullptr,
+				characterExtentsX, resultTextSize
+			);
+		} else {
+			GetTextExtentExPoint(
+				hdc, newText.data(), cbCount, 0, nullptr,
+				characterExtentsX, resultTextSize
+			);
+		}
+		for (int i = 0; i<cbCount; ++i) {
+			characterExtents[i].x = characterExtentsX[i];
+			characterExtents[i].y = tm.tmHeight;
+		}
+	}
+	return characterExtentsVec;
+}
+
 /**
  * Given a displayModel, this function clears a rectangle, and inserts a chunk, for the given text, using the given offsets and rectangle etc.
  * This function is used by many of the hook functions.
@@ -408,38 +449,9 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Fetch the text metrics for this font
 	TEXTMETRIC tm;
 	GetTextMetrics(hdc,&tm);
-	//Calculate character extents array
-	std::vector<POINT> characterExtentsVec(cbCount);
+	std::vector<POINT> characterExtentsVec = calcCharExtentsVec(cbCount, lpdx, tm, fuOptions, resultTextSize, fromGlyphs, hdc, lpString, newText);
 	POINT* characterExtents = characterExtentsVec.data();
-	if(lpdx) {
-		long acX=0;
-		long acY=tm.tmHeight;
-		for(int i=0;i<cbCount;++i) {
-			characterExtents[i].x=(acX+=lpdx[(fuOptions&ETO_PDY)?(i*2):i]);
-			//if(fuOptions&ETO_PDY) characterExtents[i].y=(acY+=lpdx[(i*2)+1]);
-		}
-		resultTextSize->cx=acX;
-		resultTextSize->cy=acY;
-	} else {
-		std::vector<int>characterExtentsXVec(cbCount);
-		int* characterExtentsX = characterExtentsXVec.data();
-		if(fromGlyphs) {
-			LPWORD lpwszString = reinterpret_cast<LPWORD>(const_cast<wchar_t*>(lpString));
-			GetTextExtentExPointI(
-				hdc, lpwszString, cbCount, 0, nullptr,
-				characterExtentsX, resultTextSize
-			);
-		} else {
-			GetTextExtentExPoint(
-				hdc, newText.data(), cbCount, 0, nullptr,
-				characterExtentsX, resultTextSize
-			);
-		}
-		for(int i=0;i<cbCount;++i) {
-			characterExtents[i].x=characterExtentsX[i];
-			characterExtents[i].y=tm.tmHeight;
-		}
-	}
+	
 	//Convert the character extents from logical to physical points, but keep them relative
 	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
 	//are we writing a transparent background?
