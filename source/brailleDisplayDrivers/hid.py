@@ -280,7 +280,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		except ValueError:
 			# An unknown usage ID within the braille usage page
 			# Return a generic name with the unknown ID included
-			return f"brailleUsage{usageID}" 
+			return f"brailleUsage{usageID}"
 		name = rawName.lower()
 		# Remove braille_keyboard or braille_ from the beginning of the name
 		if name.startswith('braille_keyboard_'):
