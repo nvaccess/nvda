@@ -452,7 +452,7 @@ def _getHidInfo(hwId, path):
 		winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
 	if handle == INVALID_HANDLE_VALUE:
 		if _isDebug():
-			log.debugWarning(u"Opening device {dev} to get additional info failed: {exc}".format(
+			log.debugWarning("Opening device {dev} to get additional info failed: {exc}".format(
 				dev=path, exc=ctypes.WinError()))
 		return info
 	try:
