@@ -274,13 +274,13 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		if usagePage != HID_USAGE_PAGE_BRAILLE:
 			# The usage ID is from another HID usage page
 			# Return a generic name with page and ID included
-			return "usagePage%d&usageID%d" % (usagePage, usageID)
+			return f"usagePage{usagePage}&usageID{usageID}"
 		try:
 			rawName = BraillePageUsageID(usageID).name
 		except ValueError:
 			# An unknown usage ID within the braille usage page
 			# Return a generic name with the unknown ID included
-			return "brailleUsage%d" % usageID
+			return f"brailleUsage{usageID}" 
 		name = rawName.lower()
 		# Remove braille_keyboard or braille_ from the beginning of the name
 		if name.startswith('braille_keyboard_'):
