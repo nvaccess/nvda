@@ -443,8 +443,8 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Convert the character extents from logical to physical points, but keep them relative
 	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
 	//are we writing a transparent background?
-	BOOL transparentBackground=!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT);
-	if(tm.tmCharSet!=SYMBOL_CHARSET&&transparentBackground) {
+	BOOL transparentBackground =! (fuOptions & ETO_OPAQUE) && (GetBkMode(hdc) == TRANSPARENT);
+	if(tm.tmCharSet != SYMBOL_CHARSET && transparentBackground) {
 		//Find out if the text we're writing is just whitespace
 		BOOL whitespace=TRUE;
 		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));++i);
@@ -504,7 +504,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.italic=logFont.lfItalic?true:false;
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
-		formatInfo.backgroundColor=GetBkColor(hdc)|(transparentBackground<<24);
+		formatInfo.backgroundColor = GetBkColor(hdc) | (transparentBackground << 24);
 		model->insertChunk(textRect,baselinePoint.y,newText,characterExtents,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		TextInsertionTracker::reportTextInsertion();
 		HWND hwnd=WindowFromDC(hdc);
