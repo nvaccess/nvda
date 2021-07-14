@@ -13,6 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <vector>
+#include <algorithm>
 #include <map>
 #include <set>
 #include <list>
@@ -341,45 +342,55 @@ class GlyphTranslatorCache : protected LockableObject {
 
 GlyphTranslatorCache glyphTranslatorCache;
 
-std::vector<POINT> calcCharExtentsVec(
+std::pair<std::vector<POINT>, SIZE> calcCharExtentsVecFromLpdx(
 	const int cbCount, const int* lpdx, const TEXTMETRIC& tm,
-	const UINT& fuOptions, const LPSIZE& resultTextSize, const bool fromGlyphs,
+	const UINT& fuOptions,
+	const HDC& hdc
+) {
+	const bool containsXandY = fuOptions & ETO_PDY; // does lpdx contain x and y or just x.
+	auto ret = std::make_pair(std::vector<POINT>(cbCount), SIZE());
+	auto& [characterExtentsVec, resultTextSize] = ret;
+
+	long acX = 0;
+	long acY = tm.tmHeight;
+	for (int i = 0; i < cbCount; ++i) {
+		const int lpdx_xIndex = containsXandY ? (i * 2) : i;
+		acX += lpdx[lpdx_xIndex];
+		characterExtentsVec[i].x = acX;
+	}
+	resultTextSize.cx = acX;
+	resultTextSize.cy = acY;
+	return ret;
+}
+
+std::pair<std::vector<POINT>, SIZE> calcCharExtentsVec(
+	const int cbCount, const TEXTMETRIC& tm, const bool fromGlyphs,
 	const HDC& hdc, const wchar_t* lpString, std::wstring& newText
 ) {
-	//Calculate character extents array
-	std::vector<POINT> characterExtentsVec(cbCount);
-	POINT* characterExtents = characterExtentsVec.data();
-	if (lpdx) {
-		long acX = 0;
-		long acY = tm.tmHeight;
-		for (int i = 0; i<cbCount; ++i) {
-			characterExtents[i].x = (acX += lpdx[(fuOptions & ETO_PDY) ? (i * 2) : i]);
-			//if(fuOptions&ETO_PDY) characterExtents[i].y=(acY+=lpdx[(i*2)+1]);
-		}
-		resultTextSize->cx = acX;
-		resultTextSize->cy = acY;
+	const long height = tm.tmHeight;
+	auto ret = std::make_pair(std::vector<POINT>(cbCount), SIZE());
+	auto& [characterExtentsVec, resultTextSize] = ret;
+
+	std::vector<int>characterExtentsXVec(cbCount);
+	int* characterExtentsX = characterExtentsXVec.data();
+	
+	if(fromGlyphs) {
+		LPWORD lpwszString = reinterpret_cast<LPWORD>(const_cast<wchar_t*>(lpString));
+		GetTextExtentExPointI(
+			hdc, lpwszString, cbCount, 0, nullptr,
+			characterExtentsX, &resultTextSize
+		);
+	} else {
+		GetTextExtentExPoint(
+			hdc, newText.data(), cbCount, 0, nullptr,
+			characterExtentsX, &resultTextSize
+		);
 	}
-	else {
-		std::vector<int>characterExtentsXVec(cbCount);
-		int* characterExtentsX = characterExtentsXVec.data();
-		if(fromGlyphs) {
-			LPWORD lpwszString = reinterpret_cast<LPWORD>(const_cast<wchar_t*>(lpString));
-			GetTextExtentExPointI(
-				hdc, lpwszString, cbCount, 0, nullptr,
-				characterExtentsX, resultTextSize
-			);
-		} else {
-			GetTextExtentExPoint(
-				hdc, newText.data(), cbCount, 0, nullptr,
-				characterExtentsX, resultTextSize
-			);
-		}
-		for (int i = 0; i<cbCount; ++i) {
-			characterExtents[i].x = characterExtentsX[i];
-			characterExtents[i].y = tm.tmHeight;
-		}
+	for (int i = 0; i<cbCount; ++i) {
+		characterExtentsVec[i].x = characterExtentsX[i];
+		characterExtentsVec[i].y = height;
 	}
-	return characterExtentsVec;
+	return ret;
 }
 
 /**
@@ -449,8 +460,14 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Fetch the text metrics for this font
 	TEXTMETRIC tm;
 	GetTextMetrics(hdc,&tm);
-	std::vector<POINT> characterExtentsVec = calcCharExtentsVec(cbCount, lpdx, tm, fuOptions, resultTextSize, fromGlyphs, hdc, lpString, newText);
+
+	//Calculate character extents array
+	auto[characterExtentsVec, textSize] = lpdx ?
+		calcCharExtentsVecFromLpdx(cbCount, lpdx, tm, fuOptions, hdc)
+		:
+		calcCharExtentsVec(cbCount, tm, fromGlyphs, hdc, lpString, newText);
 	POINT* characterExtents = characterExtentsVec.data();
+	*resultTextSize = textSize;
 	
 	//Convert the character extents from logical to physical points, but keep them relative
 	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
