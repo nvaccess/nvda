@@ -460,14 +460,14 @@ def setSynth(name, isFallback=False):
 	
 	if _curSynth and _curSynth.name == "oneCore" and not _curSynth.availableVoices:
 		# This synth cannot be used without available voices
-		log.info(f"No available voices for synthDriver {name}")
+		log.info(f"No available voices for synthDriver {_curSynth.name}")
 		_curSynth = None
 	
 	if _curSynth is not None:
 		_audioOutputDevice = config.conf["speech"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"] = name
-		log.info(f"Loaded synthDriver {name}")
+		log.info(f"Loaded synthDriver {_curSynth.name}")
 		return True
 	# As there was an error loading this synth:
 	elif prevSynthName:
