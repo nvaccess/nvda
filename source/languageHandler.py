@@ -1,6 +1,5 @@
-# languageHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2018 NV access Limited, Joseph Lee
+# Copyright (C) 2007-2021 NV access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -16,6 +15,7 @@ import locale
 import gettext
 import globalVars
 from logHandler import log
+from typing import Optional
 
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2
@@ -291,7 +291,8 @@ def setLocale(localeName: str) -> None:
 def getLanguage() -> str:
 	return curLang
 
-def normalizeLanguage(lang):
+
+def normalizeLanguage(lang) -> Optional[str]:
 	"""
 	Normalizes a  language-dialect string  in to a standard form we can deal with.
 	Converts  any dash to underline, and makes sure that language is lowercase and dialect is upercase.

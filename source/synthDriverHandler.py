@@ -1,12 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
 import pkgutil
 import importlib
-from typing import Optional
+from typing import Optional, OrderedDict, Set
 from locale import strxfrm
 
 import config
@@ -38,11 +38,10 @@ class VoiceInfo(StringParameterInfo):
 	"""Provides information about a single synthesizer voice.
 	"""
 
-	def __init__(self, id, displayName, language=None):
+	def __init__(self, id, displayName, language: Optional[str] = None):
 		"""
 		@param language: The ID of the language this voice speaks,
 			C{None} if not known or the synth implements language separate from voices.
-		@type language: str
 		"""
 		self.language = language
 		super(VoiceInfo, self).__init__(id, displayName)
@@ -71,10 +70,6 @@ class SynthDriver(driverHandler.Driver):
 	L{supportedNotifications} should specify what notifications the synthesizer provides.
 	Currently, the available notifications are L{synthIndexReached} and L{synthDoneSpeaking}.
 	Both of these must be supported.
-	@ivar voice: Unique string identifying the current voice.
-	@type voice: str
-	@ivar availableVoices: The available voices.
-	@type availableVoices: OrderedDict of L{VoiceInfo} keyed by VoiceInfo's ID
 	@ivar pitch: The current pitch; ranges between 0 and 100.
 	@type pitch: int
 	@ivar rate: The current rate; ranges between 0 and 100.
@@ -102,6 +97,18 @@ class SynthDriver(driverHandler.Driver):
 	#: @type: set of L{extensionPoints.Action} instances
 	supportedNotifications = frozenset()
 	_configSection = "speech"
+	# type information for auto property _get_voice
+	# Unique string identifying the current voice.
+	voice: str
+	# type information for auto property _get_availableVoices
+	# OrderedDict of L{VoiceInfo} keyed by VoiceInfo's ID
+	availableVoices: OrderedDict[str, VoiceInfo]
+	# type information for auto property _get_language
+	# the current voice's language
+	language: Optional[str]
+	# type information for auto property _get_availableLanguages
+	# the set of languages available in the availableVoices
+	availableLanguages: Set[Optional[str]]
 
 	@classmethod
 	def LanguageSetting(cls):
@@ -218,14 +225,14 @@ class SynthDriver(driverHandler.Driver):
 		"""Silence speech immediately.
 		"""
 
-	def _get_language(self):
+	def _get_language(self) -> Optional[str]:
 		return self.availableVoices[self.voice].language
 
 	def _set_language(self, language):
 		raise NotImplementedError
 
-	def _get_availableLanguages(self):
-		raise NotImplementedError
+	def _get_availableLanguages(self) -> Set[Optional[str]]:
+		return {self.availableVoices[v].language for v in self.availableVoices}
 
 	def _get_voice(self):
 		raise NotImplementedError
@@ -233,14 +240,13 @@ class SynthDriver(driverHandler.Driver):
 	def _set_voice(self, value):
 		pass
 
-	def _getAvailableVoices(self):
+	def _getAvailableVoices(self) -> OrderedDict[str, VoiceInfo]:
 		"""fetches an ordered dictionary of voices that the synth supports.
 		@returns: an OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
-		@rtype: OrderedDict
 		"""
 		raise NotImplementedError
 
-	def _get_availableVoices(self):
+	def _get_availableVoices(self) -> OrderedDict[str, VoiceInfo]:
 		if not hasattr(self, '_availableVoices'):
 			self._availableVoices = self._getAvailableVoices()
 		return self._availableVoices
@@ -449,28 +455,37 @@ def setSynth(name, isFallback=False):
 		prevSynthName = None
 	try:
 		_curSynth = getSynthInstance(name)
+	except:  # noqa: E722 # Legacy bare except
+		log.error(f"setSynth failed for {name}", exc_info=True)
+	
+	if _curSynth and not _curSynth.availableVoices:
+		# This synth cannot be used without available voices
+		log.info(f"No available voices for synthDriver {name}")
+		_curSynth = None
+	
+	if _curSynth is not None:
 		_audioOutputDevice = config.conf["speech"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"] = name
-		log.info("Loaded synthDriver %s" % name)
+		log.info(f"Loaded synthDriver {name}")
 		return True
-	except:  # noqa: E722 # Legacy bare except
-		log.error("setSynth", exc_info=True)
-		# As there was an error loading this synth:
-		if prevSynthName:
-			# There was a previous synthesizer, so switch back to that one.
-			setSynth(prevSynthName, isFallback=True)
-		else:
-			# There was no previous synth, so fallback to the next available default synthesizer
-			# that has not been tried yet.
-			try:
-				nextIndex = defaultSynthPriorityList.index(name) + 1
-			except ValueError:
-				nextIndex = 0
-			if nextIndex < len(defaultSynthPriorityList):
-				newName = defaultSynthPriorityList[nextIndex]
-				setSynth(newName, isFallback=True)
-		return False
+	# As there was an error loading this synth:
+	elif prevSynthName:
+		log.info(f"Falling back to previous synthDriver {prevSynthName}")
+		# There was a previous synthesizer, so switch back to that one.
+		setSynth(prevSynthName, isFallback=True)
+	else:
+		# There was no previous synth, so fallback to the next available default synthesizer
+		# that has not been tried yet.
+		try:
+			nextIndex = defaultSynthPriorityList.index(name) + 1
+		except ValueError:
+			nextIndex = 0
+		if nextIndex < len(defaultSynthPriorityList):
+			newName = defaultSynthPriorityList[nextIndex]
+			log.info(f"Falling back to next synthDriver {newName}")
+			setSynth(newName, isFallback=True)
+	return False
 
 
 def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
