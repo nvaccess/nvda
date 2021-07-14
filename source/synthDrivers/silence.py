@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from collections import OrderedDict
 import synthDriverHandler
 from speech.commands import IndexCommand
 
@@ -18,7 +19,8 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def check(cls):
 		return True
 
-	supportedSettings=[]
+	supportedSettings = frozenset()
+	_availableVoices = OrderedDict({name: synthDriverHandler.VoiceInfo(name, description)})
 
 	def speak(self, speechSequence):
 		self.lastIndex = None
@@ -28,3 +30,6 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	def cancel(self):
 		self.lastIndex = None
+
+	def _get_voice(self):
+		return self.name
