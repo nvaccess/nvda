@@ -1,6 +1,6 @@
 # NVDA Starting and Exiting outline
 
-## As a user, NVDA can be started by:
+## Ways to start NVDA:
 
 1. For an installed copy:
     1. Ctrl+Alt+N (Desktop shortcut)
@@ -13,7 +13,7 @@
     - test: `startupShutdownNVDA.Starts`
 1. For source: eg runnvda.bat
 
-## As a user, NVDA can be shutdown by:
+## NVDA can be shutdown by:
 
 1. UI within NVDA, with and without an ExitDialog prompt (uses `triggerNVDAExit`):
     1. NVDA+q
