@@ -3,8 +3,9 @@
 ## As a user, NVDA can be started by:
 
 1. For an installed copy:
-    1. Ctrl+Alt+N
-    1. Via secure desktop/ease of access
+    1. Ctrl+Alt+N (Desktop shortcut)
+    1. Automatically via Ease of Access on the Windows sign-in screen (at boot or signing out of a previous session)
+    1. Automatically via Ease of Access on User Account Control (UAC) screens
     1. Via startup
 1. For an installed copy, portable copy, installer:
     - By running the exe (see cli options too).
@@ -58,18 +59,18 @@ All the startup pathways execute nvda.pyw.
 1. Starting arguments are parsed
 1. We check for a running instance of NVDA by looking for a Message Window
     - terminate it if possible using `WM_QUIT` or forcing the process to exit. If this fails, abandon startup
-1. We try to acqure the NVDA mutex
+1. We try to acquire the NVDA mutex
     - abandon startup if we can't
 1. Initialise logging
 1. Set the process to allow `WM_QUIT` messages
 1. Start running `core.main()`
     1. SetProcessDPIAware
     1. Initialize config
-    1. Play statup sound
+    1. Play startup sound
     1. Set language
     1. Initialize NVDA modules and wx GUI
-    1. Start the Message Window (used for `WM_QUIT`)
-    1. Start the core pump
+    1. Create the Message Window (used for `WM_QUIT`)
+    1. Start the core pump (the timer that is fired inside the main loop when there is work to do)
     1. Start watchdog
     1. Notify postNvdaStartup
     1. Start the wx app main loop
