@@ -394,23 +394,36 @@ std::pair<std::vector<POINT>, SIZE> calcCharExtentsVec(
 }
 
 /**
- * Given a displayModel, this function clears a rectangle, and inserts a chunk, for the given text, using the given offsets and rectangle etc.
+ * Given a displayModel, this function clears a rectangle, and inserts a chunk, for the given text,
+ * using the given offsets and rectangle etc.
  * This function is used by many of the hook functions.
  * @param model a pointer to a displayModel
  * @param hdc a handle to the device context that was used to write the text originally.
- * @param x the x coordinate (in device units) where the text should start from (depending on textAlign flags, this could be the left, center, or right of the text).
- * @param y the y coordinate (in device units) where the text should start from (depending on textAlign flags, this could be the top, or bottom of the text).
- * @param lprc a pointer to the rectangle that should be cleared. If lprc is NULL, or ETO_OPAQUE is not in fuOptions, then only the rectangle bounding the text will be cleared.
- * @param fuOptions flags accepted by GDI32's ExtTextOut.
- * @param textAlign possible flags returned by GDI32's GetTextAlign.
- * @param lpString the string of unicode text you wish to record.
- * @param codePage not used in the unicode version
- * @param lpdx an optional array of x (or x and y paires if ETO_PDY is set) that describes where the next character starts relative to the origin of the current character. 
- * @param cbCount the length of the string in characters.
- * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
- * @param direction >0 for left to right, <0 for right to left, 0 for neutral or unknown. Text must still be passed in in visual order.
+ * @param[in] x the x coordinate (in device units) where the text should start from
+	(depending on textAlign flags, this could be the left, center, or right of the text).
+ * @param[in] y the y coordinate (in device units) where the text should start from
+	(depending on textAlign flags, this could be the top, or bottom of the text).
+ * @param[in] lprc a pointer to the rectangle that should be cleared.
+	If lprc is NULL, or ETO_OPAQUE is not in fuOptions, then only the rectangle
+	bounding the text will be cleared.
+ * @param[in] fuOptions flags accepted by GDI32's ExtTextOut.
+ * @param[in] textAlign possible flags returned by GDI32's GetTextAlign.
+ * @param[in] lpString the string of unicode text you wish to record.
+ * @param[in] codePage not used in the unicode version
+ * @param[in] lpdx an optional array of x (or x and y paires if ETO_PDY is set) that describes
+	where the next character starts relative to the origin of the current character.
+ * @param[in] cbCount the length of the string in characters.
+ * @param[out] resultTextSize An optional pointer to a SIZE structure that should be filled
+	with the size of the text.
+ * @param[in] direction >0 for left to right, <0 for right to left, 0 for neutral or unknown.
+	Text must still be passed in in visual order.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction) {
+void ExtTextOutHelper(
+	displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,
+	UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator,
+	const wchar_t* lpString, const int codePage, const int* lpdx,
+	int cbCount, LPSIZE resultTextSize, int direction
+) {
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
@@ -467,7 +480,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		:
 		calcCharExtentsVec(cbCount, tm, fromGlyphs, hdc, lpString, newText);
 	POINT* characterExtents = characterExtentsVec.data();
-	*resultTextSize = textSize;
+	*resultTextSize = textSize; // resultTextSize is an out-param and must be calculated before early exit.
 	
 	//Convert the character extents from logical to physical points, but keep them relative
 	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
