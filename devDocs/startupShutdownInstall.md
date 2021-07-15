@@ -6,7 +6,8 @@
     1. Ctrl+Alt+N (Desktop shortcut)
     1. Automatically via Ease of Access on the Windows sign-in screen (at boot or signing out of a previous session)
     1. Automatically via Ease of Access on User Account Control (UAC) screens
-    1. Via startup
+    1. Automatically by Ease of Access after signing in to Windows
+    1. An exiting instance of NVDA starting a new process (see shutting down procedures)
 1. For an installed copy, portable copy, installer:
     - By running the exe (see cli options too).
     This can be triggered by a user or external process such as an existing NVDA instance
@@ -46,7 +47,7 @@
 
 ### Out of process: `WM_QUIT`
 * a windows message which can be sent across processes which will force the main loop to exit and close most NVDA windows.
-* We subsequently run `triggerNVDAExit` to exit other required processes, and pump the queue to execute the shutdown.
+* We subsequently run `triggerNVDAExit` to ensure that clean up code isn't missed, and pump the queue to execute it.
 
 ## Technical startup and exit process
 
