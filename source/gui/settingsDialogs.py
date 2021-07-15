@@ -1592,7 +1592,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"]["autoDialectSwitching"] = self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"] = characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[
 			self.symbolLevelList.GetSelection()
-		]
+		].value
 		config.conf["speech"]["symbolLevelWordAll"] = self.symbolLevelWordAll.IsChecked()
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]

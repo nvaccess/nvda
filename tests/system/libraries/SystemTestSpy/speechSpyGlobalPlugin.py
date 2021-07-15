@@ -71,6 +71,14 @@ class NVDASpyLib:
 		from queueHandler import queueFunction, eventQueue
 		queueFunction(eventQueue, _crashNVDA)
 
+	def queueNVDABrailleThreadCrash(self):
+		from braille import _BgThread
+		_BgThread.queueApc(ctypes.windll.Kernel32.DebugBreak)
+
+	def queueNVDAUIAHandlerThreadCrash(self):
+		from UIAHandler import handler
+		handler.MTAThreadQueue.put(_crashNVDA)
+
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
 		self._isNvdaStartupComplete = True
