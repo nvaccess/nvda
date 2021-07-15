@@ -19,7 +19,7 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 
 	def _normalizeControlField(self, attrs):
 		attrs = super()._normalizeControlField(attrs)
-		if attrs['role'] == controlTypes.ROLE_TOGGLEBUTTON and controlTypes.STATE_CHECKABLE in attrs['states']:
+		if attrs['role'] == controlTypes.Role.TOGGLEBUTTON and controlTypes.STATE_CHECKABLE in attrs['states']:
 			# In Chromium, the checkable state is exposed erroneously on toggle buttons.
 			attrs['states'].discard(controlTypes.STATE_CHECKABLE)
 		return attrs
@@ -93,11 +93,11 @@ def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
-	if obj.role==controlTypes.ROLE_LISTITEM and obj.parent and obj.parent.parent and obj.parent.parent.role==controlTypes.ROLE_COMBOBOX:
+	if obj.role==controlTypes.Role.LISTITEM and obj.parent and obj.parent.parent and obj.parent.parent.role==controlTypes.Role.COMBOBOX:
 		clsList.append(ComboboxListItem)
-	elif obj.role == controlTypes.ROLE_TOGGLEBUTTON:
+	elif obj.role == controlTypes.Role.TOGGLEBUTTON:
 		clsList.append(ToggleButton)
-	elif obj.role == controlTypes.ROLE_LIST and obj.IA2Attributes.get('tag') in ('ul', 'dl', 'ol'):
+	elif obj.role == controlTypes.Role.LIST and obj.IA2Attributes.get('tag') in ('ul', 'dl', 'ol'):
 		clsList.append(PresentationalList)
 	ia2Web.findExtraOverlayClasses(obj, clsList,
 		documentClass=Document)

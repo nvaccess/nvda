@@ -126,7 +126,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 		return self._start.pointAtStart
 
 	def _isObjectEditableText(self, obj):
-		return obj.role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT)
+		return obj.role in (controlTypes.Role.PARAGRAPH, controlTypes.Role.EDITABLETEXT)
 
 	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
 		if ignoreEditableText and self._isObjectEditableText(obj):
@@ -134,7 +134,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 			return None
 		role = obj.role
 		states = obj.states
-		if role == controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
+		if role == controlTypes.Role.LINK and controlTypes.STATE_LINKED not in states:
 			# Named link destination, not a link that can be activated.
 			return None
 		field = textInfos.ControlField()
@@ -147,11 +147,11 @@ class CompoundTextInfo(textInfos.TextInfo):
 		field["states"] = states
 		field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
-		if role == controlTypes.ROLE_TABLE:
+		if role == controlTypes.Role.TABLE:
 			field["table-id"] = 1 # FIXME
 			field["table-rowcount"] = obj.rowCount
 			field["table-columncount"] = obj.columnCount
-		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
+		if role in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber

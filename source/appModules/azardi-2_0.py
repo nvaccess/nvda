@@ -15,7 +15,7 @@ from NVDAObjects.IAccessible.sysTreeView32 import TreeViewItem
 
 class AzardiDocument(Document):
 
-	role = controlTypes.ROLE_DOCUMENT
+	role = controlTypes.Role.DOCUMENT
 
 class AzardiTreeViewItem(TreeViewItem):
 	"""Scripts to perform common tasks for the selected book using the keyboard, so that mouse commands aren't required."""
@@ -42,7 +42,7 @@ class AzardiTreeViewItem(TreeViewItem):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_GROUPING or obj.role == controlTypes.ROLE_FRAME:
+		if obj.role == controlTypes.Role.GROUPING or obj.role == controlTypes.Role.FRAME:
 			clsList.insert(0, AzardiDocument)
-		elif obj.role == controlTypes.ROLE_TREEVIEWITEM:
+		elif obj.role == controlTypes.Role.TREEVIEWITEM:
 			clsList.insert(0, AzardiTreeViewItem)

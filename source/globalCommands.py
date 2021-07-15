@@ -3105,7 +3105,7 @@ class GlobalCommands(ScriptableObject):
 		mathMl = mathPres.getMathMlFromTextInfo(api.getReviewPosition())
 		if not mathMl:
 			obj = api.getNavigatorObject()
-			if obj.role == controlTypes.ROLE_MATH:
+			if obj.role == controlTypes.Role.MATH:
 				try:
 					mathMl = obj.mathMl
 				except (NotImplementedError, LookupError):

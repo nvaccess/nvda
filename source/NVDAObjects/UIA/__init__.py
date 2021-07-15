@@ -427,21 +427,21 @@ class UIATextInfo(textInfos.TextInfo):
 			field['name']=obj.name
 		field["description"] = obj.description
 		field["level"] = obj.positionInfo.get("level")
-		if role == controlTypes.ROLE_TABLE:
+		if role == controlTypes.Role.TABLE:
 			field["table-id"] = runtimeID
 			try:
 				field["table-rowcount"] = obj.rowCount
 				field["table-columncount"] = obj.columnCount
 			except NotImplementedError:
 				pass
-		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
+		if role in (controlTypes.Role.TABLECELL, controlTypes.Role.DATAITEM,controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER,controlTypes.Role.HEADERITEM):
 			try:
 				field["table-rownumber"] = obj.rowNumber
 				field["table-rowsspanned"] = obj.rowSpan
 				field["table-columnnumber"] = obj.columnNumber
 				field["table-columnsspanned"] = obj.columnSpan
 				field["table-id"] = obj.table.UIAElement.getRuntimeId()
-				field['role']=controlTypes.ROLE_TABLECELL
+				field['role']=controlTypes.Role.TABLECELL
 				field['table-columnheadertext']=obj.columnHeaderText
 				field['table-rowheadertext']=obj.rowHeaderText
 			except NotImplementedError:
@@ -875,17 +875,17 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
-		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.ROLE_PANE:
+		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.Role.PANE:
 			from .excel import BadExcelFormulaEdit
 			clsList.append(BadExcelFormulaEdit)
 		elif self.windowClassName == "EXCEL7":
-			if self.role in (controlTypes.ROLE_DATAITEM, controlTypes.ROLE_HEADERITEM):
+			if self.role in (controlTypes.Role.DATAITEM, controlTypes.Role.HEADERITEM):
 				from .excel import ExcelCell
 				clsList.append(ExcelCell)
-			elif self.role == controlTypes.ROLE_DATAGRID:
+			elif self.role == controlTypes.Role.DATAGRID:
 				from .excel import ExcelWorksheet
 				clsList.append(ExcelWorksheet)
-			elif self.role == controlTypes.ROLE_EDITABLETEXT:
+			elif self.role == controlTypes.Role.EDITABLETEXT:
 				from .excel import CellEdit
 				clsList.append(CellEdit)
 		elif self.TextInfo == UIATextInfo and (
@@ -894,7 +894,7 @@ class UIA(Window):
 			or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
 		):
 			from .wordDocument import WordDocument, WordDocumentNode
-			if self.role==controlTypes.ROLE_DOCUMENT:
+			if self.role==controlTypes.Role.DOCUMENT:
 				clsList.append(WordDocument)
 			else:
 				clsList.append(WordDocumentNode)
@@ -917,7 +917,7 @@ class UIA(Window):
 			and not self.appModule.appName == 'iexplore'
 		):
 			from . import spartanEdge
-			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
+			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.Role.PANE:
 				clsList.append(spartanEdge.EdgeHTMLRootContainer)
 			elif (
 				self.UIATextPattern
@@ -925,8 +925,8 @@ class UIA(Window):
 				# Edge normally gives its root node a controlType of pane, but ARIA role="document"
 				# changes the controlType to document
 				and self.role in (
-					controlTypes.ROLE_PANE,
-					controlTypes.ROLE_DOCUMENT
+					controlTypes.Role.PANE,
+					controlTypes.Role.DOCUMENT
 				)
 				and self.parent
 				and (
@@ -935,7 +935,7 @@ class UIA(Window):
 				)
 			): 
 				clsList.append(spartanEdge.EdgeHTMLRoot)
-			elif self.role==controlTypes.ROLE_LIST:
+			elif self.role==controlTypes.Role.LIST:
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
@@ -947,17 +947,17 @@ class UIA(Window):
 			from . import web
 			if (
 				self.UIATextPattern
-				and self.role == controlTypes.ROLE_DOCUMENT
+				and self.role == controlTypes.Role.DOCUMENT
 				and self.parent
-				and self.parent.role == controlTypes.ROLE_PANE
+				and self.parent.role == controlTypes.Role.PANE
 			):
 				clsList.append(chromium.ChromiumUIADocument)
 			else:
-				if self.role == controlTypes.ROLE_LIST:
+				if self.role == controlTypes.Role.LIST:
 					clsList.append(web.List)
 				clsList.append(chromium.ChromiumUIA)
 		elif (
-			self.role == controlTypes.ROLE_DOCUMENT
+			self.role == controlTypes.Role.DOCUMENT
 			and self.UIAElement.cachedAutomationId == "Microsoft.Windows.PDF.DocumentView"
 		):
 			# PDFs
@@ -1269,7 +1269,7 @@ class UIA(Window):
 		if self.UIATextPattern:
 			return self._TextInfo
 		textInfo = super(UIA, self).TextInfo
-		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.ROLE_WINDOW:
+		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.Role.WINDOW:
 			import displayModel
 			return displayModel.DisplayModelTextInfo
 		return textInfo
@@ -1349,17 +1349,17 @@ class UIA(Window):
 			return super().liveRegionPoliteness
 
 	def _get_role(self):
-		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
-		if role==controlTypes.ROLE_BUTTON:
+		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.Role.UNKNOWN)
+		if role==controlTypes.Role.BUTTON:
 			try:
 				s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
 			except COMError:
 				s=UIAHandler.handler.reservedNotSupportedValue
 			if s!=UIAHandler.handler.reservedNotSupportedValue:
-				role=controlTypes.ROLE_TOGGLEBUTTON
-		elif role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW) and self.windowHandle:
+				role=controlTypes.Role.TOGGLEBUTTON
+		elif role in (controlTypes.Role.UNKNOWN,controlTypes.Role.PANE,controlTypes.Role.WINDOW) and self.windowHandle:
 			superRole=super(UIA,self).role
-			if superRole!=controlTypes.ROLE_WINDOW:
+			if superRole!=controlTypes.Role.WINDOW:
 				role=superRole
 		return role
 
@@ -1426,9 +1426,9 @@ class UIA(Window):
 		role=None
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
 			role=self.role
-			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
+			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.Role.RADIOBUTTON else controlTypes.STATE_SELECTABLE)
 			if self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
-				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
+				states.add(controlTypes.STATE_CHECKED if role==controlTypes.Role.RADIOBUTTON else controlTypes.STATE_SELECTED)
 		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId,True):
 			states.add(controlTypes.STATE_UNAVAILABLE)
 		try:
@@ -1465,7 +1465,7 @@ class UIA(Window):
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role=self.role
-			if role==controlTypes.ROLE_TOGGLEBUTTON:
+			if role==controlTypes.Role.TOGGLEBUTTON:
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_PRESSED)
 			else:
@@ -1845,7 +1845,7 @@ class TreeviewItem(UIA):
 		while obj: 
 			level+=1
 			parent=obj.parent=obj.parent
-			if not parent or parent==obj or parent.role!=controlTypes.ROLE_TREEVIEWITEM:
+			if not parent or parent==obj or parent.role!=controlTypes.Role.TREEVIEWITEM:
 				return level
 			obj=parent
 		return level
@@ -1965,7 +1965,7 @@ class ListItem(UIA):
 		super(ListItem, self).event_stateChange()
 
 class Dialog(Dialog):
-	role=controlTypes.ROLE_DIALOG
+	role=controlTypes.Role.DIALOG
 
 class Toast_win8(Notification, UIA):
 
@@ -2026,7 +2026,7 @@ class SuggestionListItem(UIA):
 	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
 	"""
 
-	role=controlTypes.ROLE_LISTITEM
+	role=controlTypes.Role.LISTITEM
 
 	def event_UIA_elementSelected(self):
 		focusControllerFor=api.getFocusObject().controllerFor
@@ -2046,7 +2046,7 @@ class NetUIDropdownAnchor(UIA):
 		name=super(NetUIDropdownAnchor,self).name
 		# In MS Office 2010, these combo boxes had no name.
 		# However, the name can be found as the direct previous sibling label element. 
-		if not name and self.previous and self.previous.role==controlTypes.ROLE_STATICTEXT:
+		if not name and self.previous and self.previous.role==controlTypes.Role.STATICTEXT:
 			name=self.previous.name
 		return name
 
@@ -2061,7 +2061,7 @@ class PlaceholderNetUITWMenuItem(UIA):
 		for count in range(4):
 			if not parent:
 				return
-			if parent.role==controlTypes.ROLE_POPUPMENU:
+			if parent.role==controlTypes.Role.POPUPMENU:
 				return parent
 			parent=parent.parent
 

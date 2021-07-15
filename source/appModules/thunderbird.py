@@ -13,7 +13,7 @@ import winUser
 class AppModule(appModuleHandler.AppModule):
 
 	def event_gainFocus(self, obj, nextHandler):
-		if obj.role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_BUSY in obj.states and winUser.isWindowVisible(obj.windowHandle):
+		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.STATE_BUSY in obj.states and winUser.isWindowVisible(obj.windowHandle):
 			statusBar = api.getStatusBar()
 			if statusBar:
 				try:

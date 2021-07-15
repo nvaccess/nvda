@@ -37,7 +37,7 @@ class ImeCandidateUI(UIA):
 			eventHandler.queueEvent("UIA_elementSelected", candidateItem)
 		elif (
 			self.firstChild
-			and self.firstChild.role == controlTypes.ROLE_LIST
+			and self.firstChild.role == controlTypes.Role.LIST
 			and isinstance(self.firstChild.firstChild, ImeCandidateItem)
 		):
 			candidateItem = self.firstChild.firstChild
@@ -264,7 +264,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA):
-			if obj.role == controlTypes.ROLE_LISTITEM and (
+			if obj.role == controlTypes.Role.LISTITEM and (
 				(
 					obj.parent.UIAAutomationId in (
 						"ExpandedCandidateList",
@@ -275,7 +275,7 @@ class AppModule(appModuleHandler.AppModule):
 				or obj.parent.UIAAutomationId in ("IME_Candidate_Window", "IME_Prediction_Window")
 			):
 				clsList.insert(0, ImeCandidateItem)
-			elif obj.role == controlTypes.ROLE_PANE and obj.UIAAutomationId in (
+			elif obj.role == controlTypes.Role.PANE and obj.UIAAutomationId in (
 				"IME_Candidate_Window",
 				"IME_Prediction_Window"
 			):

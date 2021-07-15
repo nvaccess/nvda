@@ -45,5 +45,5 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, StartMenuSearchField)
 			# #10329: Since 2019, some suggestion items are grouped inside another suggestions list item.
 			# Because of this, result details will not be announced like in the past.
-			elif obj.role == controlTypes.ROLE_LISTITEM and isinstance(obj.parent, SuggestionListItem):
+			elif obj.role == controlTypes.Role.LISTITEM and isinstance(obj.parent, SuggestionListItem):
 				clsList.insert(0, SuggestionListItem)

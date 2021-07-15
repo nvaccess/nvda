@@ -62,7 +62,7 @@ class TreeView(IAccessible):
 class TreeViewItem(IAccessible):
 
 	def _get_role(self):
-		return controlTypes.ROLE_TREEVIEWITEM
+		return controlTypes.Role.TREEVIEWITEM
 
 	def _get_treeview_hItem(self):
 		if not hasattr(self,'_treeview_hItem'):
@@ -227,7 +227,7 @@ class BrokenCommctrl5Item(IAccessible):
 					log.error("Retrieving UIA focus failed", exc_info=True)
 
 	def _get_role(self):
-		return self._uiaObj.role if self._uiaObj else controlTypes.ROLE_UNKNOWN
+		return self._uiaObj.role if self._uiaObj else controlTypes.Role.UNKNOWN
 
 	def _get_name(self):
 		return self._uiaObj.name if self._uiaObj else None

@@ -29,7 +29,7 @@ class TestProcessStates(unittest.TestCase):
 
 	def setUp(self):
 		self.obj = PlaceholderNVDAObject()
-		self.obj.role = controlTypes.ROLE_CHECKBOX
+		self.obj.role = controlTypes.Role.CHECKBOX
 		self.obj.states = {
 			controlTypes.STATE_FOCUSABLE,
 			controlTypes.STATE_INVALID_ENTRY,
@@ -63,7 +63,7 @@ class TestStateOrder(unittest.TestCase):
 
 	def test_positiveMergedStatesOutput(self):
 		obj = PlaceholderNVDAObject()
-		obj.role = controlTypes.ROLE_CHECKBOX
+		obj.role = controlTypes.Role.CHECKBOX
 		obj.states = {
 			controlTypes.STATE_CHECKED,
 			controlTypes.STATE_FOCUSABLE,
@@ -84,7 +84,7 @@ class TestStateOrder(unittest.TestCase):
 
 	def test_negativeMergedStatesOutput(self):
 		obj = PlaceholderNVDAObject()
-		obj.role = controlTypes.ROLE_CHECKBOX
+		obj.role = controlTypes.Role.CHECKBOX
 		obj.states = {
 			controlTypes.STATE_FOCUSABLE,
 			controlTypes.STATE_FOCUSED,

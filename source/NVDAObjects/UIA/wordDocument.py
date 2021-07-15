@@ -148,20 +148,20 @@ class WordDocumentTextInfo(UIATextInfo):
 		if automationID.startswith('UIA_AutomationId_Word_Page_'):
 			field['page-number']=automationID.rsplit('_',1)[-1]
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_GroupControlTypeId and obj.name:
-			field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
+			field['role']=controlTypes.Role.EMBEDDEDOBJECT
 			field['alwaysReportName']=True
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_CustomControlTypeId and obj.name:
 			# Include foot note and endnote identifiers
 			field['content']=obj.name
-			field['role']=controlTypes.ROLE_LINK
-		if obj.role==controlTypes.ROLE_LIST or obj.role==controlTypes.ROLE_EDITABLETEXT:
+			field['role']=controlTypes.Role.LINK
+		if obj.role==controlTypes.Role.LIST or obj.role==controlTypes.Role.EDITABLETEXT:
 			field['states'].add(controlTypes.STATE_READONLY)
-			if obj.role==controlTypes.ROLE_LIST:
+			if obj.role==controlTypes.Role.LIST:
 				# To stay compatible with the older MS Word implementation, don't expose lists in word documents as actual lists. This suppresses announcement of entering and exiting them.
 				# Note that bullets and numbering are still announced of course.
 				# Eventually we'll want to stop suppressing this, but for now this is more confusing than good (as in many cases announcing of new bullets when pressing enter causes exit and then enter to be spoken).
-				field['role']=controlTypes.ROLE_EDITABLETEXT
-		if obj.role==controlTypes.ROLE_GRAPHIC:
+				field['role']=controlTypes.Role.EDITABLETEXT
+		if obj.role==controlTypes.Role.GRAPHIC:
 			# Label graphics with a description before name as name seems to be auto-generated (E.g. "rectangle")
 			field['content'] = (
 				field.pop('description', None)
@@ -237,7 +237,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		for index in range(len(fields)):
 			field=fields[index]
 			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
-				if field.field.get('role')==controlTypes.ROLE_LISTITEM and field.field.get('_startOfNode'):
+				if field.field.get('role')==controlTypes.Role.LISTITEM and field.field.get('_startOfNode'):
 					# We are in the start of a list item.
 					listItemStarted=True
 			elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
@@ -300,13 +300,13 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
-		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
+		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
 		return super(WordBrowseModeDocument,self).shouldSetFocusToObj(obj)
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
-		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
+		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
 		return super(WordBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
 
@@ -336,8 +336,8 @@ class WordDocumentNode(UIA):
 	def _get_role(self):
 		role=super(WordDocumentNode,self).role
 		# Footnote / endnote elements currently have a role of unknown. Force them to editableText so that theyr text is presented correctly
-		if role==controlTypes.ROLE_UNKNOWN:
-			role=controlTypes.ROLE_EDITABLETEXT
+		if role==controlTypes.Role.UNKNOWN:
+			role=controlTypes.Role.EDITABLETEXT
 		return role
 
 class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentBase):

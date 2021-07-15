@@ -431,7 +431,7 @@ the NVDAObject for IAccessible
 		windowClassName=self.windowClassName
 		role=self.IAccessibleRole
 
-		if self.role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG) and not self.isFocusable:
+		if self.role in (controlTypes.Role.APPLICATION, controlTypes.Role.DIALOG) and not self.isFocusable:
 			# Make unfocusable applications focusable.
 			# This is particularly useful for ARIA applications.
 			# We use the NVDAObject role instead of IAccessible role here
@@ -747,14 +747,14 @@ the NVDAObject for IAccessible
 
 	def _get_name(self):
 		#The edit field in a combo box should not have a label
-		if self.role==controlTypes.ROLE_EDITABLETEXT:
+		if self.role==controlTypes.Role.EDITABLETEXT:
 			# Make sure to cache the parents.
 			parent=self.parent=self.parent
-			if parent and parent.role==controlTypes.ROLE_WINDOW:
+			if parent and parent.role==controlTypes.Role.WINDOW:
 				# The parent of the edit field is a window, so try the next ancestor.
 				parent=self.parent.parent=self.parent.parent
 			# Only scrap the label on the edit field if the parent combo box has a label.
-			if parent and parent.role==controlTypes.ROLE_COMBOBOX and parent.name:
+			if parent and parent.role==controlTypes.Role.COMBOBOX and parent.name:
 				return ""
 
 		try:
@@ -842,12 +842,12 @@ the NVDAObject for IAccessible
 		IARole=self.IAccessibleRole
 		if IARole==oleacc.ROLE_SYSTEM_CLIENT:
 			superRole=super(IAccessible,self).role
-			if superRole!=controlTypes.ROLE_WINDOW:
+			if superRole!=controlTypes.Role.WINDOW:
 					return superRole
 		if isinstance(IARole,str):
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
-		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.ROLE_UNKNOWN)
+		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.Role.UNKNOWN)
 	# #2569: Don't cache role,
 	# as it relies on other properties which might change when overlay classes are applied.
 	_cache_role = False
@@ -1457,7 +1457,7 @@ the NVDAObject for IAccessible
 		return super(IAccessible, self).event_valueChange()
 
 	def event_alert(self):
-		if self.role != controlTypes.ROLE_ALERT:
+		if self.role != controlTypes.Role.ALERT:
 			# Ignore alert events on objects that aren't alerts.
 			return
 		if not self.name and not self.description and self.childCount == 0:
@@ -1647,7 +1647,7 @@ class ContentGenericClient(IAccessible):
 
 	TextInfo=displayModel.DisplayModelTextInfo
 	presentationType=IAccessible.presType_content
-	role=controlTypes.ROLE_UNKNOWN
+	role=controlTypes.Role.UNKNOWN
 
 	def _get_value(self):
 		val=self.displayText
@@ -1705,10 +1705,10 @@ class ShellDocObjectView(IAccessible):
 		if eventHandler.isPendingEvents("gainFocus") or self.childCount!=1:
 			return super(ShellDocObjectView,self).event_gainFocus()
 		child=self.firstChild
-		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.ROLE_PANE:
+		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.Role.PANE:
 			return super(ShellDocObjectView,self).event_gainFocus()
 		child=child.firstChild
-		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.ROLE_DOCUMENT:
+		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.Role.DOCUMENT:
 			return super(ShellDocObjectView,self).event_gainFocus()
 		eventHandler.queueEvent("gainFocus",child)
 
@@ -1731,7 +1731,7 @@ class JavaVMRoot(IAccessible):
 		return children
 
 class NUIDialogClient(Dialog):
-	role=controlTypes.ROLE_DIALOG
+	role=controlTypes.Role.DIALOG
 
 class Groupbox(IAccessible):
 
@@ -1740,18 +1740,18 @@ class Groupbox(IAccessible):
 		if res:
 			return res
 		res = obj.parent
-		if not res or res.role != controlTypes.ROLE_WINDOW:
+		if not res or res.role != controlTypes.Role.WINDOW:
 			return None
 		res = res.next
-		if not res or res.role != controlTypes.ROLE_WINDOW:
+		if not res or res.role != controlTypes.Role.WINDOW:
 			return None
 		return res.firstChild
 
 	def _get_description(self):
 		next=self._getNextSkipWindows(self)
-		if next and next.name==self.name and next.role==controlTypes.ROLE_GRAPHIC:
+		if next and next.name==self.name and next.role==controlTypes.Role.GRAPHIC:
 			next=self._getNextSkipWindows(next)
-		if next and next.role==controlTypes.ROLE_STATICTEXT:
+		if next and next.role==controlTypes.Role.STATICTEXT:
 			nextNext=self._getNextSkipWindows(next)
 			if nextNext and nextNext.name!=next.name:
 				return next.name
@@ -1775,8 +1775,8 @@ class TrayClockWClass(IAccessible):
 	def _get_role(self):
 		# On Windows 10 Anniversary update and later the text 'clock' is included in the name so having clock in the control type is redundant.
 		if super(TrayClockWClass, self).value is None:
-			return controlTypes.ROLE_BUTTON
-		return controlTypes.ROLE_CLOCK
+			return controlTypes.Role.BUTTON
+		return controlTypes.Role.CLOCK
 
 	def _get_name(self):
 	# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
@@ -1803,7 +1803,7 @@ class OutlineItem(IAccessible):
 class List(IAccessible):
 
 	def _get_role(self):
-		return controlTypes.ROLE_LIST
+		return controlTypes.Role.LIST
 
 class SysLinkClient(IAccessible):
 
@@ -1812,7 +1812,7 @@ class SysLinkClient(IAccessible):
 
 	def _get_role(self):
 		if self.childCount==0:
-			return controlTypes.ROLE_LINK
+			return controlTypes.Role.LINK
 		return super(SysLinkClient,self).role
 
 class SysLink(IAccessible):
@@ -1841,7 +1841,7 @@ class TaskListIcon(IAccessible):
 	allowIAccessibleChildIDAndChildCountForPositionInfo=True
 
 	def _get_role(self):
-		return controlTypes.ROLE_ICON
+		return controlTypes.Role.ICON
 
 	def reportFocus(self):
 		if controlTypes.STATE_INVISIBLE in self.states:
@@ -1936,7 +1936,7 @@ class ReBarWindow32Client(IAccessible):
 #Makes sure its available in simple review mode, and uses display model
 class ListviewPane(IAccessible):
 	presentationType=IAccessible.presType_content
-	role=controlTypes.ROLE_LIST
+	role=controlTypes.Role.LIST
 	TextInfo=displayModel.DisplayModelTextInfo
 	name=""
 
@@ -1950,14 +1950,14 @@ class IEFrameNotificationBar(IAccessible):
 #The Internet Explorer notification toolbar should be handled as an alert
 class IENotificationBar(Dialog,IAccessible):
 	name=""
-	role=controlTypes.ROLE_ALERT
+	role=controlTypes.Role.ALERT
 
 	def event_alert(self):
 		speech.cancelSpeech()
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		child=self.simpleFirstChild
 		while child:
-			if child.role!=controlTypes.ROLE_STATICTEXT:
+			if child.role!=controlTypes.Role.STATICTEXT:
 				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS)
 			child=child.simpleNext
 

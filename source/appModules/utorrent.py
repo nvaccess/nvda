@@ -28,8 +28,8 @@ class DuplicateFocusListView(IAccessible):
 		focusRole = focus.role
 		focusStates = focus.states
 		if (self == focus or
-			(focusRole == controlTypes.ROLE_MENUITEM and controlTypes.STATE_FOCUSED in focusStates) or
-			(focusRole == controlTypes.ROLE_POPUPMENU and controlTypes.STATE_INVISIBLE not in focusStates)
+			(focusRole == controlTypes.Role.MENUITEM and controlTypes.STATE_FOCUSED in focusStates) or
+			(focusRole == controlTypes.Role.POPUPMENU and controlTypes.STATE_INVISIBLE not in focusStates)
 		):
 			return False
 		return super(DuplicateFocusListView, self).shouldAllowIAccessibleFocusEvent
@@ -56,11 +56,11 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role = obj.role
-		if role == controlTypes.ROLE_WINDOW:
+		if role == controlTypes.Role.WINDOW:
 			return
 
 		if isinstance(obj, Window) and obj.windowClassName == "SysListView32":
-			if obj.windowControlID == 1206 and role == controlTypes.ROLE_LISTITEM:
+			if obj.windowControlID == 1206 and role == controlTypes.Role.LISTITEM:
 				clsList.insert(0, TorrentContentsListItem)
 			else:
 				clsList.insert(0, DuplicateFocusListView)
