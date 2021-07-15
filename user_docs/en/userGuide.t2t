@@ -1855,6 +1855,19 @@ The combo box has the following options:
 - No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
 -
 
+==== Only process MSAA/IA2 &events for specific objects (focus, etc.) ====[IAccessibleSpecificObjEvents]
+This option changes how NVDA handles WinEvents, i.e. events fire by the MSAA/IAccessible2 accessibility APIs.
+When this option is disabled, NVDA handles many events for object's that are not of interest to the user.
+This can either have impact on performance, or cause important events to be ignored by NVDA.
+Therefore, when this option is enabled, NVDA will ignore all WinEvents for MSAA/IAccessible2 objects that are not within the following list:
+
+- Focus object
+- Navigator object
+- Desktop object
+- Focus ancestry
+
+If you suffer from performance issues in one or more applications, We recommend you to try this functionality to see whether performance improves.
+
 ==== Enable Experimental ARIA annotations support ====[Annotations]
 Used to enable features which add experimental support for ARIA annotations.
 Some of these features may be incomplete.

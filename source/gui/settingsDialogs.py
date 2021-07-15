@@ -2667,6 +2667,7 @@ class AdvancedPanelControls(
 		#  Advanced settings panel.
 		label = _("Only process MSAA/IA2 &events for specific objects (focus, etc.)")
 		self.iaccessibleSpecificObjEventsCheckBox = iaccessibleGroup.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("IAccessibleSpecificObjEvents", self.iaccessibleSpecificObjEventsCheckBox)
 		self.iaccessibleSpecificObjEventsCheckBox.SetValue(config.conf["IAccessible"]["specificObjEvents"])
 		self.iaccessibleSpecificObjEventsCheckBox.defaultValue = (
 			self._getDefaultValue(["IAccessible", "specificObjEvents"])
