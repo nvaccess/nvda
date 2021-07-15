@@ -421,9 +421,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: Type definition for auto prop '_get_role'
 	role: int
 
-	def _get_role(self) -> int:
+	def _get_role(self) -> controlTypes.Role:
 		"""The role or type of control this object represents (example: button, list, dialog).
-		@return: a ROLE_* constant from L{controlTypes}
 		"""  
 		return controlTypes.Role.UNKNOWN
 

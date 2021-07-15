@@ -16,7 +16,7 @@ class TestLabels(unittest.TestCase):
 	def test_roleLabels(self):
 		"""Test to check whether every role has its own label in controlTypes.roleLabels"""
 		for name, const in vars(controlTypes).items():
-			if name.startswith("ROLE_"):
+			if name.startswith("Role."):
 				self.assertIsNotNone(controlTypes.roleLabels.get(const),msg="{name} has no label".format(name=name))
 
 	def test_positiveStateLabels(self):
