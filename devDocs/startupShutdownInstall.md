@@ -7,9 +7,9 @@
     1. Automatically via Ease of Access on the Windows sign-in screen (at boot or signing out of a previous session)
     1. Automatically via Ease of Access on User Account Control (UAC) screens
     1. Automatically by Ease of Access after signing in to Windows
-    1. An exiting instance of NVDA starting a new process (see shutting down procedures)
 1. For an installed copy, portable copy, installer:
-    - By running the exe (see cli options too).
+    1. An exiting instance of NVDA starting a new process (see shutting down procedures)
+    1. By running the exe (see cli options too).
     This can be triggered by a user or external process such as an existing NVDA instance
     - test: `startupShutdownNVDA.Starts`
 1. For source: eg runnvda.bat
