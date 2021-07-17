@@ -373,6 +373,7 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 
 
 class WatchdogObserver:
-	def _get_isAttemptingRecovery(self):
+	@property
+	def isAttemptingRecovery(self):
 		global isAttemptingRecovery
 		return isAttemptingRecovery
