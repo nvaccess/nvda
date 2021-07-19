@@ -71,9 +71,9 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 	def convertLangChangeCommand(self, command):
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
 		if lcid is languageHandler.LCID_NONE:
-			log.debugWarning("Invalid language: %s" % command.lang)
+			log.debugWarning(f"Invalid language: {command.lang}")
 			return None
-		return super(_OcSsmlConverter, self).convertLangChangeCommand(command)
+		return super().convertLangChangeCommand(command)
 
 class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 
@@ -485,9 +485,6 @@ class SynthDriver(SynthDriver):
 		for voice in voices.values():
 			return voice.id
 		raise RuntimeError("No voices available")
-
-	def _get_language(self):
-		return self._dll.ocSpeech_getCurrentVoiceLanguage(self._handle)
 
 	def pause(self, switch):
 		if self._player:
