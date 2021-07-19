@@ -24,12 +24,16 @@ _wordsToExpectedSymbolLevelAllSpeech = {
 	'(quietly)': 'left paren(quietly right paren)',
 	'"Hello,': 'quote Hello comma,',
 	'Jim".': 'Jim quote  dot.',
+	'➔': 'right-pointing arrow',
+	'👕': 't-shirt',  # fails, actual text:  "t dash shirt"
 }
 _wordsToExpectedSymbolLevelDefaultSpeech = {
 	'Say': 'Say',
 	'(quietly)': '(quietly)',
 	'"Hello,': 'Hello,',
 	'Jim".': 'Jim .',
+	'➔': 'right-pointing arrow',
+	'👕': 't-shirt',  # fails, actual text:  "t shirt"
 }
 
 
