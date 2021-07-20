@@ -490,27 +490,30 @@ class SynthDriver(SynthDriver):
 	def _getDefaultVoice(self) -> str:
 		"""
 		Finds the best available voice that can be used as a default.
-		It first tries finding a voice with the same language and country as the user's configured Windows language (E.g. en_AU), 
-		else one that matches just the language (E.g. en).
-		else one that matches the set lanuage for NVDA.
+		It first tries finding a voice with the same language as the user's configured NVDA language
+		else one that matches the system language.
+		Uses the Windows locale (eg en_AU) to provide country information for the voice where possible.
 		@returns: the ID of the voice, suitable for passing to self.voice for setting.
 		"""
 		voices = self.availableVoices
-		# Try matching to the system language
-		fullLanguage=languageHandler.getWindowsLanguage()
-		for voice in voices.values():
-			if voice.language==fullLanguage:
-				return voice.id
-		baseLanguage=fullLanguage.split('_')[0]
-		if baseLanguage!=fullLanguage:
-			for voice in voices.values():
-				if voice.language.startswith(baseLanguage):
-					return voice.id
-		# Try matching to the NVDA language
+		fullWindowsLanguage = languageHandler.getWindowsLanguage()
+		baseWindowsLanguage = fullWindowsLanguage.split('_')[0]
 		NVDALanguage = languageHandler.getLanguage()
-		if NVDALanguage != baseLanguage:
+		if NVDALanguage.startswith(baseWindowsLanguage):
+			# add country information if it matches
+			NVDALanguage = fullWindowsLanguage
+		# Try matching to the NVDA language
+		for voice in voices.values():
+			if voice.language.startswith(NVDALanguage):
+				return voice.id
+		# Try matching to the system language and country
+		if fullWindowsLanguage != NVDALanguage:
 			for voice in voices.values():
-				if voice.language.startswith(baseLanguage):
+				if voice.language == fullWindowsLanguage:
+					return voice.id
+		if baseWindowsLanguage not in {fullWindowsLanguage, NVDALanguage}:
+			for voice in voices.values():
+				if voice.language.startswith(baseWindowsLanguage):
 					return voice.id
 		raise RuntimeError("No voices available")
 

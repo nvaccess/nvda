@@ -152,7 +152,7 @@ def getWindowsLanguage():
 	"""
 	Fetches the locale name of the user's configured language in Windows.
 	"""
-	windowsLCID=ctypes.windll.kernel32.GetUserDefaultUILanguage()
+	windowsLCID = ctypes.windll.kernel32.GetUserDefaultLCID()
 	try:
 		localeName=locale.windows_locale[windowsLCID]
 	except KeyError:
@@ -198,9 +198,15 @@ def setLanguage(lang: str) -> None:
 		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
 		curLang = localeName
 	except IOError:
-		log.debugWarning(f"couldn't set the translation service locale to {localeName}")
-		trans = gettext.translation("nvda", fallback=True)
-		curLang = "en"
+		try:
+			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
+			localeName = localeName.split("_")[0]
+			trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
+			curLang = localeName
+		except IOError:
+			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
+			trans = gettext.translation("nvda", fallback=True)
+			curLang = "en"
 
 	trans.install()
 	setLocale(curLang)
