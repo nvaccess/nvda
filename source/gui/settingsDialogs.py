@@ -2778,6 +2778,27 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
+		label = _("Document Formatting")
+		docFormatting = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		docFormattingBox = docFormatting.GetStaticBox()
+		docFormattingGroup = guiHelper.BoxSizerHelper(self, sizer=docFormatting)
+		sHelper.addItem(docFormattingGroup)
+
+		# Translators: This is the label for a checkbox control in the
+		#  Advanced settings panel.
+		label = _("Report transparent color values")
+		self.reportTransparentColorCheckBox: wx.CheckBox = docFormattingGroup.addItem(
+			wx.CheckBox(docFormattingBox, label=label)
+		)
+		self.bindHelpEvent("ReportTransparentColors", self.reportTransparentColorCheckBox)
+		self.reportTransparentColorCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportTransparentColor"]
+		)
+		self.reportTransparentColorCheckBox.defaultValue = self._getDefaultValue(
+			["documentFormatting", "reportTransparentColor"])
+
+		# Translators: This is the label for a group of advanced options in the
+		# Advanced settings panel
 		label = _("Debug logging")
 		debugLogSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
@@ -2841,6 +2862,7 @@ class AdvancedPanelControls(
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
+			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and True  # reduce noise in diff when the list is extended.
@@ -2859,6 +2881,7 @@ class AdvancedPanelControls(
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
+		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
 
@@ -2881,6 +2904,9 @@ class AdvancedPanelControls(
 			self.diffAlgoVals[diffAlgoChoice]
 		)
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
+		config.conf["documentFormatting"]["reportTransparentColor"] = (
+			self.reportTransparentColorCheckBox.IsChecked()
+		)
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)

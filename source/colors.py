@@ -8,19 +8,55 @@ import math
 import colorsys
 from ctypes.wintypes import COLORREF
 import re
+from functools import lru_cache
 from typing import Union
+
+#: Flag to indicate color being decoded from displayModelFormatColor_t
+# is transparent.
+# See (displayModel.cpp in nvdaHelper) displayModelFormatColor_t::TRANSPARENT_BIT
+TRANSPARENT_BITFLAG = 0x01 << 24
 
 class RGB(namedtuple('RGB',('red','green','blue'))):
 	"""Represents a color as an RGB (red green blue) value"""
 
+	#: The transparency of the color.
+	# Note: may be useful for add-ons or app modules who wish to customize color reporting
+	# of background colors of applications that rely on the display model.
+	# These applications do not always reliably report their background color.
+	# The background color may be reported for text with transparent backgrounds.
+	# In other cases the background for the text is transparent, but the background color is
+	# visually correct and rendered in a different way EG via GDI filledRect.
+	alphaValue: int = 0xFF  # no transparency by default
+
 	@classmethod
-	def fromCOLORREF(cls,c) -> "RGB":
-		"""factory method to create an RGB from a COLORREF ctypes instance"""
+	def fromDisplayModelFormatColor_t(cls, c: int) -> "RGB":
+		"""factory method to create an RGB from a DisplayModelFormatColor_t
+			Color format is 4 bytes:  0xTTbbggrr
+			TT bit flags, only bit 1 used: set for transparent.
+			Encoding alpha in TT was considered (eg 0xFFbbggrr for opaque),
+			but this would break compatibility with code that continues to pass
+			0x00bbggrr for opaque, all usages would need to be fixed.
+		"""
+		rr = c & 0xFF
+		gg = (c >> 8) & 0xFF
+		bb = (c >> 16) & 0xFF
+		tt = c & TRANSPARENT_BITFLAG
+		rgb = cls(rr, gg, bb)
+		rgb.alphaValue = 0x00 if bool(tt) else 0xFF
+		return rgb
+
+	@classmethod
+	def fromCOLORREF(cls, c: Union[COLORREF, int]) -> "RGB":
+		"""factory method to create an RGB from a COLORREF ctypes instance
+		COLORREF format is 4 bytes: 0x00bbggrr
+		According to MSDN, COLORREF high order byte must be zero.
+		Handling of int is kept to maintain backwards compatibility.
+		"""
 		if isinstance(c, COLORREF):
 			c = c.value
-		if (c >> 24) & 0xff:
-			return cls(-1, -1, -1)
-		return cls(c & 0xff, (c >> 8) & 0xff, (c >> 16) & 0xff)
+		elif not isinstance(c, int):
+			raise TypeError(c)
+		return cls.fromDisplayModelFormatColor_t(c)
 
 	_re_RGBFunctionString=re.compile(r'rgb\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*\)',re.I)
 	_re_RGBAFunctionString=re.compile(r'rgba\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*\d+(\.\d+)?\s*\)',re.I)
@@ -82,46 +118,50 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 
 	@property
 	def name(self):
-		foundName=RGBToNamesCache.get(self,None)
-		if foundName:
-			return foundName
-		# If one of the RGB values is negative, return unknown
-		if self.red < 0 or self.green < 0 or self.blue < 0:
-			# Translators: an unknown color.
-			RGBToNamesCache[self] = unknownColor = _("unknown")
-			return unknownColor
-		# convert to hsv (hue, saturation, value)
-		h,s,v=colorsys.rgb_to_hsv(self.red/255.0,self.green/255.0,self.blue/255.0)
-		sv=s*v
-		if sv<0.02:
-			# There is not enough saturation to perceive a hue, therefore its on the scale from black to white.
-			v=v*100
-			nv=min(shadeNames,key=lambda i: abs(i-v))
-			closestName=shadeNames[nv]
-		else:
-			h*=360
-			s*=100
-			v*=100
-			# Find the closest named hue (red, orange, yellow...)
-			nh=min(hueNames,key=lambda i: 180-abs(abs(i-h)-180))
-			hueName=hueNames[nh]
-			ns=min(brightnessLabelsBySaturation,key=lambda i: abs(i-s))
-			brightnessLabels=brightnessLabelsBySaturation[ns]
-			nv=min(brightnessLabels,key=lambda i: abs(i-v))
-			if nh in brownHueNames:
-				brownNV=brownBrightnessRedirectionValues.get(nv)
-				if brownNV is not None:
-					nv=brownNV
-					hueName=brownHueNames[nh]
-			variationTemplate=brightnessLabels.get(nv)
-			if variationTemplate:
-				closestName=variationTemplate.format(color=hueName)
-			else:
-				closestName=hueName
-		RGBToNamesCache[self]=closestName
-		return closestName
+		import config
+		shouldReportTransparent = config.conf["documentFormatting"]["reportTransparentColor"]
+		return _calcColorName(self.red, self.green, self.blue, self.alphaValue, shouldReportTransparent)
 
-RGBToNamesCache={}
+
+@lru_cache(maxsize=5000)
+def _calcColorName(red: int, green: int, blue: int, alpha: int, reportTransparent: bool):
+	# convert to hsv (hue, saturation, value)
+	h, s, v = colorsys.rgb_to_hsv(red / 255.0, green / 255.0, blue / 255.0)
+	sv = s * v
+	if sv < 0.02:
+		# There is not enough saturation to perceive a hue, therefore its on the scale from black to white.
+		v = v * 100
+		nv = min(shadeNames, key=lambda i: abs(i - v))
+		closestName = shadeNames[nv]
+	else:
+		h *= 360
+		s *= 100
+		v *= 100
+		# Find the closest named hue (red, orange, yellow...)
+		nh = min(hueNames, key=lambda i: 180 - abs(abs(i - h) - 180))
+		hueName = hueNames[nh]
+		ns = min(brightnessLabelsBySaturation, key=lambda i: abs(i - s))
+		brightnessLabels = brightnessLabelsBySaturation[ns]
+		nv = min(brightnessLabels, key=lambda i: abs(i - v))
+		if nh in brownHueNames:
+			brownNV = brownBrightnessRedirectionValues.get(nv)
+			if brownNV is not None:
+				nv = brownNV
+				hueName = brownHueNames[nh]
+		variationTemplate = brightnessLabels.get(nv)
+		if variationTemplate:
+			closestName = variationTemplate.format(color=hueName)
+		else:
+			closestName = hueName
+	# the color is transparent report unknown.
+	if alpha < 0xFF and reportTransparent:
+		# Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
+		# transparent bright orange-yellow
+		closestName = pgettext(
+			'color variation',
+			'transparent {colorDescription}'
+		).format(colorDescription=closestName)
+	return closestName
 
 shadeNames={
 	# Translators: the color white (HSV saturation0%, value 100%)

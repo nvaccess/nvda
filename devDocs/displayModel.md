@@ -13,5 +13,5 @@ To test:
 Note:
 - For color reporting enable the option (via Document formatting panel) _"report color"_.
 
-There is a simple (MFC / C++) test application available at:
+There are several simple test applications available:
 https://github.com/nvaccess/testDisplayModel

@@ -1900,6 +1900,12 @@ This functionality is enabled by default as of NVDA 2021.1.
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
 If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
 
+==== Report transparency for colors ====[ReportTransparentColors]
+This option enables reporting when colors are transparent, useful for addon/appModule developers gathering information to improve user experience with a 3rd party application.
+Some GDI applications will highlight text with a background color, NVDA (via display model) attempts to report this color.
+In some situations, the text background may be entirely transparent, with the text layered on some other GUI element.
+With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
+
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
 Logging these messages can result in decreased performance and large log files.

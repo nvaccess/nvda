@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <vector>
 #include <algorithm>
+#include <optional>
 #include <map>
 #include <set>
 #include <list>
@@ -424,13 +425,16 @@ void ExtTextOutHelper(
 	const wchar_t* lpString, const int codePage, const int* lpdx,
 	int cbCount, LPSIZE resultTextSize, int direction
 ) {
+	const bool isOpaqueRequested = fuOptions & ETO_OPAQUE; // The current background color should be used to fill the rectangle.
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
 		clearRect=*lprc;
 		dcPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2,false);
 		//Also if opaquing is requested, clear this rectangle in the given display model
-		if(fuOptions&ETO_OPAQUE) model->clearRectangle(clearRect);
+		if (isOpaqueRequested) {
+			model->clearRectangle(clearRect);
+		}
 	}
 	//If there is no string given, then we don't need to go further
 	if(!lpString||cbCount<=0) return;
@@ -470,6 +474,7 @@ void ExtTextOutHelper(
 			cbCount--;
 		}
 	}
+
 	//Fetch the text metrics for this font
 	TEXTMETRIC tm;
 	GetTextMetrics(hdc,&tm);
@@ -482,11 +487,21 @@ void ExtTextOutHelper(
 	POINT* characterExtents = characterExtentsVec.data();
 	*resultTextSize = textSize; // resultTextSize is an out-param and must be calculated before early exit.
 	
+	
 	//Convert the character extents from logical to physical points, but keep them relative
 	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
-	//are we writing a transparent background?
-	BOOL transparentBackground =! (fuOptions & ETO_OPAQUE) && (GetBkMode(hdc) == TRANSPARENT);
-	if(tm.tmCharSet != SYMBOL_CHARSET && transparentBackground) {
+
+	// Are we writing a transparent background?
+	std::optional<bool> cached_transparentBackground;
+	// Prevent multiple calculations
+	auto isBackgroundTransparent = [&hdc, &cached_transparentBackground, isOpaqueRequested]() -> bool {
+		if (!cached_transparentBackground.has_value()) {
+			cached_transparentBackground = (!isOpaqueRequested) && GetBkMode(hdc) == TRANSPARENT;
+		}
+		return cached_transparentBackground.value();
+	};
+	
+	if(tm.tmCharSet != SYMBOL_CHARSET && isBackgroundTransparent()) {
 		//Find out if the text we're writing is just whitespace
 		BOOL whitespace=TRUE;
 		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));++i);
@@ -532,21 +547,27 @@ void ExtTextOutHelper(
 	//Make sure this is text, and that its not using the symbol charset (e.g. the tick for a checkbox)
 	//Before recording the text.
 	if(cbCount>0&&tm.tmCharSet!=SYMBOL_CHARSET) {
-		displayModelFormatInfo_t formatInfo;
 		LOGFONT logFont;
-		HGDIOBJ fontObj=GetCurrentObject(hdc,OBJ_FONT);
-		GetObject(fontObj,sizeof(LOGFONT),&logFont);
-		wcsncpy(formatInfo.fontName,logFont.lfFaceName,32);
-		if(logFont.lfHeight!=0) {
-			formatInfo.fontSize=(abs(logFont.lfHeight)*72)/GetDeviceCaps(hdc,LOGPIXELSY);
-		} else {
-			formatInfo.fontSize=0;
-		}
-		formatInfo.bold=(logFont.lfWeight>=700)?true:false;
-		formatInfo.italic=logFont.lfItalic?true:false;
-		formatInfo.underline=logFont.lfUnderline?true:false;
-		formatInfo.color=GetTextColor(hdc);
-		formatInfo.backgroundColor = GetBkColor(hdc) | (transparentBackground << 24);
+		HGDIOBJ fontObj = GetCurrentObject(hdc, OBJ_FONT);
+		GetObject(fontObj, sizeof(LOGFONT), &logFont);
+		
+		int fontSize = 0;
+		if (logFont.lfHeight != 0) {
+			const auto pixelsPerInchY = GetDeviceCaps(hdc, LOGPIXELSY);
+			fontSize = (abs(logFont.lfHeight) * 72) / pixelsPerInchY;
+		};
+		displayModelFormatInfo_t formatInfo = {
+			// lfFaceName will be NULL terminated
+			// https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfonta
+			std::wstring(logFont.lfFaceName), // fontName.
+			fontSize, // fontSize
+			bool(logFont.lfWeight >= 700), // bold
+			bool(logFont.lfItalic), // italic
+			bool(logFont.lfUnderline), // underline,
+			displayModelFormatColor_t(GetTextColor(hdc)), // color
+			displayModelFormatColor_t(GetBkColor(hdc), isBackgroundTransparent()) // backgroundColor
+		};
+		
 		model->insertChunk(textRect,baselinePoint.y,newText,characterExtents,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		TextInsertionTracker::reportTextInsertion();
 		HWND hwnd=WindowFromDC(hdc);
