@@ -492,6 +492,7 @@ class SynthDriver(SynthDriver):
 		Finds the best available voice that can be used as a default.
 		It first tries finding a voice with the same language and country as the user's configured Windows language (E.g. en_AU), 
 		else one that matches just the language (E.g. en).
+		else one that matches the set lanuage for NVDA.
 		@returns: the ID of the voice, suitable for passing to self.voice for setting.
 		"""
 		voices = self.availableVoices
@@ -502,6 +503,12 @@ class SynthDriver(SynthDriver):
 				return voice.id
 		baseLanguage=fullLanguage.split('_')[0]
 		if baseLanguage!=fullLanguage:
+			for voice in voices.values():
+				if voice.language.startswith(baseLanguage):
+					return voice.id
+		# Try matching to the NVDA language
+		NVDALanguage = languageHandler.getLanguage()
+		if NVDALanguage != baseLanguage:
 			for voice in voices.values():
 				if voice.language.startswith(baseLanguage):
 					return voice.id
