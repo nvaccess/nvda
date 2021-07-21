@@ -954,10 +954,17 @@ class OfficeChartElementLegendKey( OfficeChartElementBase):
 			# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 			return _( "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count )
 
+
 class OfficeChartElementDataTable( OfficeChartElementBase):
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartDataTable , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__(
+			windowHandle=windowHandle,
+			officeChartObject=officeChartObject,
+			elementID=elementID,
+			arg1=arg1,
+			arg2=arg2
+		)
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		#Translators: Data Table will be spoken when chart element Data Table is selected
