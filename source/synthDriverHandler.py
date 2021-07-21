@@ -388,7 +388,7 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 
-def _getSynthDriver(name):
+def _getSynthDriver(name) -> SynthDriver:
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 
@@ -424,8 +424,11 @@ def getSynth() -> Optional[SynthDriver]:
 	return _curSynth
 
 
-def getSynthInstance(name):
-	newSynth = _getSynthDriver(name)()
+def getSynthInstance(name, asDefault=True):
+	newSynth: SynthDriver = _getSynthDriver(name)()
+	if asDefault and newSynth.name == 'oneCore':
+		# Will raise an exception if oneCore does not support the system language
+		newSynth._getDefaultVoice(pickAny=False)
 	newSynth.initSettings()
 	return newSynth
 
@@ -439,12 +442,14 @@ if winVersion.getWinVer() >= winVersion.WIN10:
 
 
 def setSynth(name, isFallback=False):
+	asDefault = False
 	global _curSynth, _audioOutputDevice
 	if name is None:
 		_curSynth.terminate()
 		_curSynth = None
 		return True
 	if name == 'auto':
+		asDefault = True
 		name = defaultSynthPriorityList[0]
 	if _curSynth:
 		_curSynth.cancel()
@@ -454,7 +459,7 @@ def setSynth(name, isFallback=False):
 	else:
 		prevSynthName = None
 	try:
-		_curSynth = getSynthInstance(name)
+		_curSynth = getSynthInstance(name, asDefault)
 	except:  # noqa: E722 # Legacy bare except
 		log.error(f"setSynth failed for {name}", exc_info=True)
 	

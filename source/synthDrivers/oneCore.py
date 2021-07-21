@@ -487,11 +487,12 @@ class SynthDriver(SynthDriver):
 				return
 		raise LookupError("No such voice: %s"%id)
 
-	def _getDefaultVoice(self) -> str:
+	def _getDefaultVoice(self, pickAny: bool = True) -> str:
 		"""
 		Finds the best available voice that can be used as a default.
 		It first tries finding a voice with the same language as the user's configured NVDA language
 		else one that matches the system language.
+		else any voice if pickAny is True.
 		Uses the Windows locale (eg en_AU) to provide country information for the voice where possible.
 		@returns: the ID of the voice, suitable for passing to self.voice for setting.
 		"""
@@ -511,12 +512,21 @@ class SynthDriver(SynthDriver):
 			for voice in voices.values():
 				if voice.language == fullWindowsLanguage:
 					return voice.id
+		# Try matching to the system language
 		if baseWindowsLanguage not in {fullWindowsLanguage, NVDALanguage}:
 			for voice in voices.values():
 				if voice.language.startswith(baseWindowsLanguage):
 					return voice.id
-		raise RuntimeError("No voices available")
+		if pickAny:
+			for voice in voices.values():
+				return voice.id
+			raise VoiceUnsupportedError("No voices available")
+		raise VoiceUnsupportedError("No voices available that match the user language")
 
 	def pause(self, switch):
 		if self._player:
 			self._player.pause(switch)
+
+
+class VoiceUnsupportedError(RuntimeError):
+	pass

@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2021 NV Access Limited
 import typing
+from languageHandler import normalizeLanguage
 
 import queueHandler
 import synthDriverHandler
@@ -12,6 +13,7 @@ from .types import SpeechSequence, _IndexT
 from .commands import (
 	# Commands that are used in this file.
 	EndUtteranceCommand,
+	LangChangeCommand,
 	SynthParamCommand,
 	BaseCallbackCommand,
 	ConfigProfileTriggerCommand,
@@ -325,9 +327,19 @@ class SpeechManager(object):
 		enteredTriggers = []
 		outSeqs = []
 		paramsToReplay = []
+		currentSynth = getSynth()
+		currentSynthLanguages = currentSynth.availableLanguages
 
 		outSeq = []
 		for command in inSeq:
+			if isinstance(command, LangChangeCommand):
+				langCode = command.lang.split('_')[0]
+				langSupported = False
+				for lang in currentSynthLanguages:
+					if normalizeLanguage(lang).split('_')[0] == langCode:
+						langSupported = True
+				if not langSupported:
+					log.warning(f"Language {command.lang} not supported by {currentSynth.name} ({currentSynthLanguages})")
 			if isinstance(command, BaseCallbackCommand):
 				# When the synth reaches this point, we want to call the callback.
 				speechIndex = next(self._indexCounter)
