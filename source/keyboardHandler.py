@@ -11,6 +11,8 @@ import ctypes
 import sys
 import time
 import re
+import typing
+
 import wx
 import winVersion
 import winUser
@@ -29,7 +31,11 @@ import tones
 import core
 from contextlib import contextmanager
 import threading
-_watchdogObserver = None
+
+if typing.TYPE_CHECKING:
+	from watchdog import WatchdogObserver
+
+_watchdogObserver: typing.Optional["WatchdogObserver"] = None
 ignoreInjected=False
 
 # Fake vk codes.
@@ -282,7 +288,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 #Register internal key press event with  operating system
 
 
-def initialize(watchdogObserver):
+def initialize(watchdogObserver: "WatchdogObserver"):
 	"""Initialises keyboard support."""
 	global _watchdogObserver
 	_watchdogObserver = watchdogObserver

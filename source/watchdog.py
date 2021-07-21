@@ -39,7 +39,7 @@ safeWindowClassSet=set([
 ])
 
 isRunning=False
-isAttemptingRecovery = False
+isAttemptingRecovery: bool = False
 _coreIsAsleep = False
 
 _coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
@@ -374,6 +374,6 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 
 class WatchdogObserver:
 	@property
-	def isAttemptingRecovery(self):
+	def isAttemptingRecovery(self) -> bool:
 		global isAttemptingRecovery
 		return isAttemptingRecovery
