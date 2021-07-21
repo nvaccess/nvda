@@ -1,8 +1,7 @@
-#nvwave.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2021 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Provides a simple Python interface to playing audio using the Windows multimedia waveOut functions, as well as other useful utilities.
 """
@@ -31,11 +30,7 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from ctypes import *
-from ctypes.wintypes import *
-import time
 import atexit
-import wx
 import garbageHandler
 import winKernel
 import wave

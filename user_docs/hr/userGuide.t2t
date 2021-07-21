@@ -498,7 +498,6 @@ Ovo uključuje dokumente sljedećih aplikacija:
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - Podržane knjige u Amazon Kindle za osobna računala
 -
 
@@ -596,7 +595,7 @@ Za traženje teksta koristite sljedeće prečace:
 %kc:endInclude
 
 ++ Ugrađeni objekti ++[ImbeddedObjects]
-Web stranice mogu uključivati obogaćeni sadržaj koristeći tehnologije kao što su Adobe Flash, Oracle Java, i HTML5, kao i aplikacije i dijaloške okvire.
+Web stranice mogu uključivati obogaćeni sadržaj koristeći tehnologije kao što su Oracle Java i HTML5, kao i aplikacije i dijaloške okvire.
 NVDA će izgovoriti "ugrađeni objekt", "aplikacija" ili "dijaloški okvir" Gdje su takvi objekti otkriveni.
 Možete se brzo kretati po njima koristeći o i šift+o prečace za brzo kretanje po ugrađenim objektima.
 Kako biste ušli u interakciju s tim objektima, pritisnite tipku enter kad se nalazite na njima.
@@ -794,6 +793,8 @@ Zbog takvih situacija, NVDA sadrži funkciju "Ekranska zavjesa" koja se može uk
 
 Ekransku zavjesu možete uključiti u kategoriji [Vid #VisionSettings], u [NVDA Postavkama #NVDASettings].
 
+Kada je zaslonska zavjesa uključena, neki zadaci koji su bazirani na sadržaju ekrana kao što je to izvođenje [prepoznavanja teksta #Win10Ocr] ili slikanja zaslona ne mogu biti izvedeni.
+
 + Prepoznavanje sadržaja +[ContentRecognition]
 Kad autori ne daju dovoljno informacija korisniku čitača ekrana, kako bi mogao prepoznati informaciju, mogu se koristiti razni alati, kako bi se tekst mogao prepoznati sa slike.
 NVDA podržava funkciju za optičko prepoznavanje znakova (OCR), koja je ugrađena u Windowse 10 kako bi se tekst mogao prepoznati sa slika.
@@ -815,7 +816,9 @@ NVDA može to koristiti kako bi se prepoznavao tekst sa slike ili nedostupne apl
 Jezik prepoznavanja možete postaviti u [kategoriji Windows 10 OCR #Win10OcrSettings] [u dijaloškom okviru postavki #NVDASettings].
 Dodatni jezici se mogu instalirati putem izbornika Start>Postavke>Vrijeme i Jezik>Regija i jezik, a zatim Dodaj jezik.
 
-+%kc:beginInclude
+Funkcija Windows 10 OCR može biti djelomično ili u cijelosti nekompatibilna sa [NVDA poboljšanjima vida #Vision] ili drugim vanjskim vizualnim pomagalima. Prije poletk prepoznavanja, ta ćete pomagala trebait isključiti.
+
+%kc:beginInclude
 Za prepoznavanje teksta u navigacijskom objektu koristeći windows 10 ocr, pritisnite NVDA+r.
 %kc:endInclude
 
@@ -1743,7 +1746,7 @@ Možete podesiti izvještavanje o sljedećim elementima:
 - stranice i numeriranje
  - brojevi stranica
  - brojevi redaka
- - izvještavanje o uvlačenju retka [(Isključeno, Govor, Zvučni signali, Oboje Govor i zvučni signali) #lineIndentationOptions]
+ - izvještavanje o uvlačenju retka [(Isključeno, Govor, Zvučni signali, Oboje Govor i zvučni signali) #DocumentFormattingSettingsLineIndentation]
  - uvlačenje odlomka (npr. viseća uvlaka, samo prvi redak)
  - prored (jednostruki, dvostruki itd.)
  - poravnanje retka
@@ -1751,7 +1754,7 @@ Možete podesiti izvještavanje o sljedećim elementima:
  - tablice
  - zaglavlja redaka ili stupaca
  - koordinate ćelija
- - rubovi ćelija [(Isključeno, Stilovi, Boje i stilovi)
+ - rubovi ćelija (Isključeno, Stilovi, Boje i stilovi)
 - elementi
  - naslovi
  - poveznice
@@ -1836,6 +1839,24 @@ Kada je ova opcija uključena, NVDA će koristiti nove, u toku razvoja [unapređ
 ==== Izgovaraj lozinke u UIA naredbenim retcima ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Ova opcija regulira izgovor lozinki uz pomoć opcije [izgovori upisane znakove #KeyboardSettingsSpeakTypedCharacters] ili [izgovori upisane riječi #KeyboardSettingsSpeakTypedWords] u slučajevima kada se ekran ne osvježava (kao što je to upis lozinke) u naredbenim retcima s uključenim UIA. U cilju veće sigurnosti, preporučuje se isključivanje ove postavke. Međutim, možete ju uključiti ako osjećate nestabilnost pri korištenju nove podrške naredbenog retka.
 
+==== Koristi UIA u Microsoft Edgeu i drugim preglednicima baziranim na Chromium platformi kad je to moguće ====[ChromiumUIA]
+Omogućuje određivanje kada će se UIA koristiti kada je dostupna u preglednicima baziranim na Chromium platformi kao što je to Microsoft Edge.
+UIA podrška za preglednike bazirana na Chromium platformi je u ranom stadiju razvoja i može  manje biti funkcionalna od stare  IA2 implementacije.
+Odabirni okvir sadrđi sljedeće opcije:
+- Podrazumijevano (samo kada ej to potrebno): podrazumjevana opcija koju koristi NVDA, trenutno se koristi "samo kada je to potrebno". Ova se podrazumjevana opcija može promijeniti u budućnosti kada tehnologija bude zrela za široku uporabu.
+- Samo kada je to potrebno: kada NVDA ne može ući u proces preglednika kako bi koristio IA2 UIA će biti dostupna, te će se tada NVAD prebaciti na UIA.
+- Da: Ako će UIA biti dostupna u pregledniku, će ju koristiti.
+- ne: ne koristi UIA, čak ako NVDA nije u stanju ući u proces. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
+-
+
+==== Koristi UI automation za pristup Excel proračunskim tablicama kada je to moguće ====[UseUiaForExcel]
+Kada je ova opcija omogućena, NVDA će probati koristiti Microsoft UI Automation API za pristupačnost kako bi izvlačio informacije iz kontrola proračunskih tablica Microsoft Excela.
+To je eksperimentalna funkcija, i neke značajke Microsoft Excela mogu biti nedostupne koristeći taj modus.
+Na primjer, NVDA popis elemenata za popisivanej formula i komentara, i i brzo kretanje u modusu čitanje za preskakanje na polja obrazaca u proračunskoj tablici.
+Međutim, prilikom osnovnog kretanja po proračunskoj tablici ili uređivanja , ova opcija može donijeti značajno unapređenje u performansama.
+Još uvijek ne preporučujemo da većina korisnika uključuje ovo kao podrazumjevani način rada, ali pozivamo korisnike Microsoft Excela  koji koriste verziju 16.0.13522.10000 ili noviju da testiraju ovu funkciju i poišalju povratnu informaciju.
+Implementacija UIA u Microsoft excelu se mijenja od verzije do verzije, te  verzije Microsoft offoce paketa starije od 16.0.13522.10000 mogu pružati nedovoljno informacija na način da ova opcija bude od koristi.
+
 ==== Koristi novu podršku upisanih znakova u Windowsovom naredbenom retku kada je to podržano ====[AdvancedSettingsKeyboardSupportInLegacy]
 Ova opcija pruža alternativnu metodu otkrivanja upisanih znakova u Windowsovom naredbenom retku.
 Iako ova opcija  donosi unapređenja performansi i ispravlja problem slovkanja neželjenih stavki, ista može biti nekompatibilna s nekim programima naredbenog retka.
@@ -1843,10 +1864,24 @@ Ova je opcija dostupna i standardno je uključena u Windows 10 verzijama 1607, i
 Upozorenje: s uključenom ovom opcijom, izgovoreni znakovi koji se ne pokazuju na ekranu, poput lozinki, neće biti spriječeni u izgovoru.
 U nepovjerljivim okruženjima, možda biste trebali privremeno isključiti opcije [izgovor upisanih znakova #KeyboardSettingsSpeakTypedCharacters] i [Izgovor upisanih riječi #KeyboardSettingsSpeakTypedWords] pri upisivanju lozinki.
 
+==== Metoda praćenja izmjena sadržaja u konzolama ====[DiffAlgo]
+Ovom se opcijom određuje kako NVDA označuje novi tekst koji treba biti ozgovoren u programima koji koriste naredbeni redak.
+Odabirni okvir  metoda praćenja izmjena sadržaja u konzolama sadrži tri opcije:
+- Automatski: od NVDA 2021.1, ova je opcija ekvivalentna opciji Difflib.
+U budućoj novoj verziji, to može biti promijenjeno na Diff Match Patch ako će korisnička povratna informacija biti pozitivna.
+- Dozvoli Diff Match Patch: Ova opcija prouzrokuje da NVDA računa izmjene u tekstu naredbenog redka znak po znak.
+To može unaprediti performanse kada se zapisuju velike količine teksta u terminal te omogućuje točnije ozgovaranje novog teksta.
+Međutim, to može biti nekompatibilno sa većinom programa.
+Ova je značajka podržana u Windowsima 10 inačicama 1607 i novijim.
+Dodatno to može biti dostupn u starijim inačicama operacijskog sustava Windows.
+- prisilno koristi Difflib: prouzrokuje da NVDA izračunava promjene terminala redak po redak.
+To je istovjetno ponašanju NVDA u inačicama 2020.4 i starijim.
+-
+
 ==== Pokušaj zaustavljanja govora za događaje fokusa koji su istekli ====[CancelExpiredFocusSpeech]
 Ova opcija uključuje ponašanje koje omogućuje zaustavljanje govora za događaje fokusa koji su istekli.
 Uobičajeno kretanje kroz poruke u Gmailu sa Chromeom može prouzročiti da NVDA izgovara netočne informacije.
-Ova je funkcija eksperimentalna od  NVDA verzije 2020.2.
+Ova je funkcija podrazumjevano uključena od  NVDA verzije 2021.1.
 
 ==== Brzina micanja kursora sustava (u milisekundama) ====[AdvancedSettingsCaretMoveTimeout]
 Ova opcija omogućuje povećanje ogranićenja čekanja, u kojem NVDA čeka da se pojavi pokazivač u polju za uređivanje.
@@ -2250,10 +2285,20 @@ Za korištenje ovih glasova, potrebno je instalirati dvije komponente:
 
 ++ Windows OneCore glasovi ++[OneCore]
 U sustavu Windowse 10 su uključeni novi glasovi poznati pod "OneCore" ili "mobile" glasovi.
-Glasovi su dostupni za mnoge jezike i brži su od Microsoft glasova koji koriste Microsoft Speech API verzije 5. Bilješka prevoditelja: od Windows 10 verzija 1709, dostupan je hrvatski glas Matej.
+Glasovi su dostupni za mnoge jezike i brži su od Microsoft glasova koji koriste Microsoft Speech API verzije 5. Bilješka prevoditelja: od Windows 10 verzije 1709, dostupan je hrvatski glas Matej.
 U sustavu Windows 10, NVDA standardno koristi Windows OneCore glasove ([[eSpeak NG #eSpeakNG] se koristi u drugim izdanjima).
 
-Za informacije o instalaciji i popis glasova, pogledajte ovaj članak: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+Kako biste dodali nove Windows OneCore glasove, uđite u odjeljak  "postavke govora", koji se nalazi unutar Windowsovih postavki. 
+Aktivirajte opciju "Dodaj glasove" i potražite željeni jezik.
+Puno jezika na ovom popisu je viševarijantno, što znači da dolaze u više varijanata izgovora.
+"Engleski ujedinjeno kraljevstvo" i "australski engleski" su dvije varijante engleskog jezika.
+Francuski "francuska", "Kanada" i "Švicarska" su dostupne varijante francuskog jezika.
+Pronađite širi jezik poput engleskog ili francuskog, a onda pronađite jezik na popisu.
+Odaberite bilo koji željeni jezik i koristite gumb "Dodaj" kako biste ga dodali.
+Kada ste dodali jezik, ponovno pokrenite NVDA.
+
+
+Za popis dostupnih glasova, molimo pogledajte ovaj članak: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Podržani brajični redci +[SupportedBrailleDisplays]
 Ovo poglavlje sadrži informacije o brajičnim redcima koje podržava NVDA.

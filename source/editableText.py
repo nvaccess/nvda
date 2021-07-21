@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Davy Kager, Julien Cochuyt
+# Copyright (C) 2006-2021 NV Access Limited, Davy Kager, Julien Cochuyt
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -9,7 +9,7 @@
 """
 
 import time
-import sayAllHandler
+from speech import sayAll
 import api
 import review
 from baseObject import ScriptableObject
@@ -146,7 +146,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		review.handleCaretMove(info)
 		if speakUnit and not willSayAllResume(gesture):
 			info.expand(speakUnit)
-			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.OutputReason.CARET)
 		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self, gesture, unit):
@@ -200,7 +200,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 			onlyInitial=True
 		else:
 			onlyInitial=False
-		speech.speakTextInfo(lineInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,onlyInitialFields=onlyInitial,suppressBlanks=True)
+		speech.speakTextInfo(
+			lineInfo,
+			unit=textInfos.UNIT_LINE,
+			reason=controlTypes.OutputReason.CARET,
+			onlyInitialFields=onlyInitial,
+			suppressBlanks=True
+		)
 
 	def _caretMoveBySentenceHelper(self, gesture, direction):
 		if isScriptWaiting():
@@ -216,7 +222,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
-	script_caret_moveByLine.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_moveByLine.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_caret_moveByCharacter(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_CHARACTER)
@@ -226,15 +232,15 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	def script_caret_moveByParagraph(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH)
-	script_caret_moveByParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_moveByParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_caret_previousSentence(self,gesture):
 		self._caretMoveBySentenceHelper(gesture, -1)
-	script_caret_previousSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_previousSentence.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_caret_nextSentence(self,gesture):
 		self._caretMoveBySentenceHelper(gesture, 1)
-	script_caret_nextSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_nextSentence.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def _backspaceScriptHelper(self,unit,gesture):
 		try:
@@ -254,7 +260,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 		caretMoved,newInfo=self._hasCaretMoved(oldBookmark)
 		if not caretMoved:
 			return
-		if len(delChunk)>1:
+		delChunk = delChunk.replace("\r\n", "\n")  # Occurs with at least with Scintilla
+		if len(delChunk) > 1:
 			speech.speakMessage(delChunk)
 		else:
 			speech.speakSpelling(delChunk)

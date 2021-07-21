@@ -12,7 +12,7 @@ Library	NvdaLib.py
 Library	chromeTests.py
 Library	ScreenCapLibrary
 
-Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
+Test Setup	default setup
 Test Teardown	default teardown
 
 *** Keywords ***
@@ -21,6 +21,9 @@ default teardown
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	exit chrome
 	quit NVDA
+
+default setup
+	start NVDA	standard-dontShowWelcomeDialog.ini	chrome-gestures.ini
 
 *** Test Cases ***
 
@@ -47,3 +50,13 @@ ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
 	[Tags]	aria-at
 	test_ariaCheckbox_browseMode
+ARIA details
+	[Documentation]	Ensure a summary of aria-details is read on command.
+	[Tags]	annotations
+	test aria details
+i12147
+	[Documentation]	New focus target should be announced if the triggering element is removed when activated
+	test_i12147
+Table in style display: table
+	[Documentation]	Properly announce table row/column count and working table navigation for a HTML table in a div with style display: table
+	test_tableInStyleDisplayTable

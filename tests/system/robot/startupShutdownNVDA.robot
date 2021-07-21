@@ -11,7 +11,7 @@ Library	NvdaLib.py
 Library	startupShutdownNVDA.py
 Library	ScreenCapLibrary
 
-Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
+Test Setup	start NVDA	standard-doShowWelcomeDialog.ini
 Test Teardown	default teardown
 
 *** Keywords ***
@@ -23,14 +23,34 @@ default teardown
 *** Test Cases ***
 Starts
 	[Documentation]	Ensure that NVDA can start
+	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
 	NVDA_Starts	# run test
 
 Quits from keyboard
 	[Documentation]	Starts NVDA and ensures that it can be quit using the keyboard
-	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 	quits_from_keyboard	# run test
+
+Quits from menu
+	[Documentation]	Starts NVDA and ensures that it can be quit using the keyboard
+	[Setup]	start NVDA	standard-dontShowExitDialog.ini
+	quits from menu	False	# run test
 
 Read welcome dialog
 	[Documentation]	Ensure that the welcome dialog can be read in full
-	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 	read_welcome_dialog	# run test
+
+Restarts
+	[Documentation]	Ensure that NVDA can restart from keyboard
+	NVDA restarts
+
+Restarts on crash
+	[Documentation]	Ensure NVDA restarts on crash.
+	NVDA restarts on crash
+
+Restarts on braille crash
+	[Documentation]	Ensure NVDA restarts on a crash on the braille thread.
+	NVDA restarts on braille crash
+
+Restarts on UIAHandler crash
+	[Documentation]	Ensure NVDA restarts on crash on the UIAHandler thread.
+	NVDA restarts on UIAHandler crash

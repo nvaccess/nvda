@@ -1,8 +1,7 @@
-#watchdog.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import sys
 import os
@@ -40,7 +39,7 @@ safeWindowClassSet=set([
 ])
 
 isRunning=False
-isAttemptingRecovery = False
+isAttemptingRecovery: bool = False
 _coreIsAsleep = False
 
 _coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
@@ -214,7 +213,8 @@ def _crashHandler(exceptionInfo):
 	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
 	log.info("Restarting due to crash")
-	core.restart()
+	# if NVDA has crashed we cannot rely on the queue handler to start the new NVDA instance
+	core.restartUnsafely()
 	return 1 # EXCEPTION_EXECUTE_HANDLER
 
 @ctypes.WINFUNCTYPE(None)
@@ -370,3 +370,10 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	result = ctypes.wintypes.DWORD()
 	NVDAHelper.localLib.cancellableSendMessageTimeout(hwnd, msg, wParam, lParam, flags, timeout, ctypes.byref(result))
 	return result.value
+
+
+class WatchdogObserver:
+	@property
+	def isAttemptingRecovery(self) -> bool:
+		global isAttemptingRecovery
+		return isAttemptingRecovery

@@ -1,4 +1,3 @@
-# visionEnhancementProviders/NVDAHighlighter.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -8,6 +7,7 @@
 from typing import Optional, Tuple
 
 from autoSettingsUtils.autoSettings import SupportedSettingType
+from autoSettingsUtils.driverSetting import BooleanDriverSetting
 import vision
 from vision.constants import Context
 from vision.util import getContextRect
@@ -29,7 +29,6 @@ import winGDI
 import weakref
 from colors import RGB
 import core
-import driverHandler
 
 
 class HighlightStyle(
@@ -229,7 +228,7 @@ class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 
 	def _get_supportedSettings(self) -> SupportedSettingType:
 		return [
-			driverHandler.BooleanDriverSetting(
+			BooleanDriverSetting(
 				'highlight%s' % (context[0].upper() + context[1:]),
 				_contextOptionLabelsWithAccelerators[context],
 				defaultVal=True
