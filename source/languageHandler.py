@@ -168,10 +168,10 @@ def getWindowsLanguage():
 			pass
 		localeName=buf.value
 		if localeName:
-			localeName=normalizeLanguage(localeName)
+			localeName=localeName
 		else:
 			localeName="en"
-	return localeName
+	return normalizeLanguage(localeName)
 
 
 def setLanguage(lang: str) -> None:
