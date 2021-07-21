@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-18 00:01+0000\n"
-"PO-Revision-Date: 2021-06-20 11:47+0200\n"
+"POT-Creation-Date: 2021-06-25 00:01+0000\n"
+"PO-Revision-Date: 2021-07-01 23:15+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -103,22 +103,19 @@ msgid "grammar: {text}"
 msgstr "γραμματική: {text}"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "none"
-msgstr "χωρίς τύπο"
+msgstr "χωρίς γέμισμα"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "color"
-msgstr "{color}"
+msgstr "χρώμα"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "gradient"
-msgstr "γραμμική διαβάθμιση"
+msgstr "διαβάθμιση"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
@@ -126,10 +123,9 @@ msgid "picture"
 msgstr "εικόνα"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
-msgstr "Μοτίβο"
+msgstr "μοτίβο"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -750,15 +746,13 @@ msgstr "βεγγάλι βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian computer braille"
-msgstr "Ρωσικό braille υπολογιστών"
+msgstr "Λευκορωσικό braille υπολογιστών"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian literary braille"
-msgstr "Ρωσικό braille"
+msgstr "Λευκορωσικό braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1287,15 +1281,13 @@ msgstr "Ουκρανικό braille υπολογιστών"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 1"
-msgstr "Ιρλανδικά βαθμού 1"
+msgstr "Ουρντού βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 2"
-msgstr "Ιρλανδικά βαθμού 2"
+msgstr "Ουρντού βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1964,9 +1956,8 @@ msgstr ""
 "εγγράφου"
 
 #. Translators: The message reported for not supported toggling of screen layout
-#, fuzzy
 msgid "Not supported in this document."
-msgstr "Δεν υποστηρίζεται σε αυτό το έγγραφο"
+msgstr "Δεν υποστηρίζεται σε αυτό το έγγραφο."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4180,17 +4171,16 @@ msgid "Expanded symbol ({})"
 msgstr "Αναπτυγμένο σύμβολο ({})"
 
 #. Translators: Input help mode message for toggle speech mode command.
-#, fuzzy
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA will just speak normally."
 msgstr ""
-"Πραγματοποιεί εναλλαγή μεταξύ των λειτουργιών εκφώνησης: απενεργοποίηση, "
-"ήχοι μπιπ και ενεργοποίηση. Όταν ορίζεται απενεργοποίηση, το NVDA δεν "
-"εκφωνεί τίποτα. Με τους ήχους μπιπ, το NVDA απλά κάνει ένα μπιπ κάθε φορά "
-"που θα έπρεπε να εκφωνήσει κάτι. Με την ενεργοποίηση, το NVDA εκφωνεί "
-"κανονικά."
+"Πραγματοποιεί εναλλαγή μεταξύ των λειτουργιών εκφώνησης, απενεργοποίηση, "
+"ήχοι μπιπ και ενεργοποίηση. Όταν επιλεγεί η απενεργοποίηση, το NVDA δεν θα "
+"εκφωνεί τίποτα. Όταν επιλεγούν ήχοι μπιπ, το NVDA απλά κάνει ένα μπιπ κάθε "
+"φορά που θα έπρεπε να εκφωνήσει κάτι. Όταν επιλεγεί η ενεργοποίηση της "
+"εκφώνησης, το NVDA εκφωνεί κανονικά."
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -7326,36 +7316,31 @@ msgid "unread"
 msgstr "μη αναγνωσμένο"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Python Console"
-msgstr "Python console"
+msgstr "Python Console"
 
 #. Translators: Description of a command to clear the Python Console output pane
 msgid "Clear the output pane"
 msgstr "Καθαρίστε τον πίνακα εξόδου"
 
 #. Translators: Description of a command to move to the next result in the Python Console output pane
-#, fuzzy
 msgid "Move to the next result"
-msgstr "μετακινείται στην επόμενη λίστα"
+msgstr "Μετακινείται στο επόμενο αποτέλεσμα"
 
 #. Translators: Description of a command to move to the previous result
 #. in the Python Console output pane
-#, fuzzy
 msgid "Move to the previous result"
-msgstr "μετακινείται στην προηγούμενη λίστα"
+msgstr "Μετακινείται στο προηγούμενο αποτέλεσμα"
 
 #. Translators: Description of a command to select from the current caret position to the end
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the end of the current result"
-msgstr "Αναφέρει τη σημείωση στο τρέχον κελί"
+msgstr "Επιλέγει έως το τέλος του τρέχοντος αποτελέσματος"
 
 #. Translators: Description of a command to select from the current caret position to the start
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the start of the current result"
-msgstr "Αναφέρει τη σημείωση στο τρέχον κελί"
+msgstr "Επιλέγει έως την αρχή του τρέχοντος αποτελέσματος"
 
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
@@ -7417,9 +7402,9 @@ msgstr "{startTime} έως {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "categories {categories}"
-msgstr "Κατηγορία {categoryAxisData}: "
+msgstr "κατηγορίες {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7861,9 +7846,8 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Papenmeier BRAILLEX παλαιότερα μοντέλα"
 
 #. Translators: Names of braille displays.
-#, fuzzy
 msgid "Seika Braille Displays"
-msgstr "οθόνη braille Seika"
+msgstr "Οθόνες Braille Seika"
 
 #. Translators: Name of a braille display.
 msgid "Seika Notetaker"
@@ -9907,13 +9891,12 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid ""
 "Use UI Automation to access Microsoft &Excel spreadsheet controls when "
 "available"
 msgstr ""
-"Χρήση αυτοματοποίησης διεπαφής χρήστη για να αποκτήσετε πρόσβαση στα κουμπιά "
-"ελέγχου εγγράφων του access Microsoft &Word"
+"Χρήση της αυτοματοποίησης διεπαφής χρήστη για να αποκτήσετε πρόσβαση στα "
+"κουμπιά ελέγχου των λογιστικών φύλλων στο Microsoft &Excel όταν διατίθενται"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9951,13 +9934,11 @@ msgid "Only when necessary"
 msgstr "Μόνο όταν χρειαστεί"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "Ναι"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "Όχι"
@@ -9984,9 +9965,8 @@ msgstr "Αλγόριθμος &Diff:"
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#, fuzzy
 msgid "Automatic (Difflib)"
-msgstr "Αυτόματο"
+msgstr "Αυτόματα (Difflib)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
@@ -9998,13 +9978,12 @@ msgstr "Να επιτρέπεται το Diff Match Patch"
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 msgid "force Difflib"
-msgstr ""
+msgstr "επιβολή Difflib"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#, fuzzy
 msgid "Default (Yes)"
-msgstr "Προεπιλογή (Όχι)"
+msgstr "Προεπιλογή (Ναι)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -10438,7 +10417,6 @@ msgid "NVDA  Usage Data Collection"
 msgstr "Συλλογή δεδομένων για τη χρήση του NVDA"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
-#, fuzzy
 msgid ""
 "In order to improve NVDA in the future, NV Access wishes to collect usage "
 "data from running copies of NVDA.\n"
@@ -10456,11 +10434,11 @@ msgstr ""
 "δεδομένα χρήσης από τρέχοντα αντίγραφα του NVDA.\n"
 "\n"
 "Τα δεδομένα περιλαμβάνουν την έκδοση του λειτουργικού συστήματος, την έκδοση "
-"του NVDA, τη γλώσσα, τη χώρα προέλευσης, συν συγκεκριμένες ρυθμίσεις του "
-"NVDA όπως ο τρέχον συνθέτης φωνής, την οθόνη braille και τον πίνακα braille. "
-"Δε θα αποσταλεί ποτέ στην NV Access περιεχόμενο που έχει εκφωνηθεί ή είναι "
-"σε μορφή braille. Παρακαλούμε ανατρέξτε στο εγχειρίδιο χρήσης για την "
-"επικαιροποιημένη λίστα για τα δεδομένα που έχουν συλλεχθεί.\n"
+"του NVDA, τη γλώσσα, τη χώρα προέλευσης, καθώς και συγκεκριμένες ρυθμίσεις "
+"του NVDA όπως ο τρέχων συνθέτης φωνής, η οθόνη braille και ο πίνακας "
+"braille. Δε θα αποσταλεί ποτέ στην NV Access περιεχόμενο που έχει εκφωνηθεί "
+"ή είναι σε μορφή braille. Παρακαλούμε ανατρέξτε στο εγχειρίδιο χρήσης για "
+"την επικαιροποιημένη λίστα για όλα τα δεδομένα που συλλέγονται.\n"
 "\n"
 "Επιθυμείτε να επιτρέψετε στην NV Access να συλλέγει περιοδικά αυτά τα "
 "δεδομένα προκειμένου να βελτιώσει το NVDA;"
@@ -11111,24 +11089,27 @@ msgid ""
 "Shows a browseable message Listing information about a cell's appearance "
 "such as outline and fill colors, rotation and size"
 msgstr ""
+"Εμφανίζει ένα μήνυμα στο οποίο μπορείτε να περιηγηθείτε με πληροφορίες για "
+"την εμφάνιση του κελιού όπως το περίγραμμα και το γέμισμα με χρώμα, η "
+"περιστροφή και το μέγεθος."
 
 #. Translators: The width of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
-msgstr ""
+msgstr "Πλάτος κελιού: {0.x:.1f} στιγμές"
 
 #. Translators: The height of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
-msgstr ""
+msgstr "Ύψος κελιού: {0.y:.1f} στιγμές"
 
 #. Translators: The rotation in degrees of an Excel cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degrees"
-msgstr ""
+msgstr "Περιστροφή: {0} μοίρες"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #, python-brace-format
@@ -11136,89 +11117,87 @@ msgctxt "excel-UIA"
 msgid ""
 "Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
 msgstr ""
+"Χρώμα περιγράμματος: πάνω={0.name}, κάτω={1.name}, αριστερά={2.name}, "
+"δεξιά={3.name}"
 
 #. Translators: The outline (border) thickness values of an Excel cell.
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
-msgstr ""
+msgstr "Πάχος περιγράμματος: πάνω={0}, κάτω={1}, αριστερά={2}, δεξιά={3}"
 
 #. Translators: The fill color of an Excel cell
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill color: {0.name}"
-msgstr "Χρώμα φέτας: {colorName} "
+msgstr "Χρώμα γεμίσματος: {0.name}"
 
 #. Translators: The fill type (pattern, gradient etc) of an Excel Cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill type: {0}"
-msgstr ""
+msgstr "Τύπος γεμίσματος: {0}"
 
 #. Translators: the number format of an Excel cell
 #, python-brace-format
 msgid "Number format: {0}"
-msgstr ""
+msgstr "Μορφή αριθμού: {0}"
 
 #. Translators: If an excel cell has data validation set
-#, fuzzy
 msgid "Has data validation"
-msgstr "εφαρμογή %s"
+msgstr "Έχει επικύρωση δεδομένων"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #, python-brace-format
 msgid "Data validation prompt: {0}"
-msgstr ""
+msgstr "Ειδοποίηση επικύρωσης δεδομένων: {0}"
 
 #. Translators: If an excel cell has conditional formatting
-#, fuzzy
 msgid "Has conditional formatting"
-msgstr "Μορφοποίηση εγγράφου"
+msgstr "Έχει μορφοποίηση υπό όρους"
 
 #. Translators: If an excel cell has visible gridlines
-#, fuzzy
 msgid "Gridlines are visible"
-msgstr "μη ορατό"
+msgstr "Ορατές γραμμές πλέγματος"
 
 #. Translators: Title for a browsable message that describes the appearance of a cell in Excel
 msgctxt "excel-UIA"
 msgid "Cell Appearance"
-msgstr ""
+msgstr "Εμφάνιση Κελιού"
 
 #. Translators:  an error message on a cell in Microsoft Excel.
 #, python-brace-format
 msgid "Error: {errorText}"
-msgstr ""
+msgstr "Σφάλμα: {errorText}"
 
 #. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
 #, python-brace-format
 msgid "{author} is editing"
-msgstr ""
+msgstr "Επεξεργασία από {author}"
 
 #. Translators: Excel, report range of cell coordinates
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
-msgstr "{firstAddress} {firstContent} έως {lastAddress} {lastContent}"
+msgstr "{firstAddress} {firstValue} έως {lastAddress} {lastValue}"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Reports the note or comment thread on the current cell"
-msgstr "Αναφέρει τη σημείωση στο τρέχον κελί"
+msgstr "Αναφέρει τη σημείωση ή τα σχόλια στο τρέχον κελί"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment}  by {author}"
-msgstr "{comment} από {author} στις {date}"
+msgstr "{comment} από {author}"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment}  by {author} with {numReplies} replies"
-msgstr "{comment} από {author} στις {date}"
+msgstr "{comment} από {author} με {numReplies} απαντήσεις"
 
 #. Translators: A message in Excel when there is no note
 msgid "No note or comment thread on this cell"
-msgstr ""
+msgstr "Χωρίς σημείωση ή σχόλια σε αυτό το κελί"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11246,9 +11225,9 @@ msgid "track change: {text}"
 msgstr "παρακολούθηση αλλαγής: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author}"
-msgstr "Σχόλιο: {comment} από {author} στις {date}"
+msgstr "Σχόλιο: {comment} από {author}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format

@@ -4,14 +4,15 @@
 %!includeconf: ../changes.t2tconf
 
 = 2021.1 =
-Ova verzija sadrži opciju koja se može omogućiti za UIA podršku u programu Excel i Chromium pretraživačima .
-Ispravljeni su problemi vezani uz određene jezike, kao i  pristup linkovima na brajevom redu.
-Ažurirana je baza  Unicode CLDR kao i matematički simboli, eSpeak-NG i LibLouis.
+Ova verzija sadrži opciju koja se može omogućiti za UIA podršku u programu Excel i Chromium pretraživačima.
+Ispravljeni su problemi vezani za određene jezike, kao i  pristup linkovima na brajevom redu.
+Ažurirane su baze Unicode CLDR,  matematički simboli i LibLouis.
+Kao i puno ispravljenih grešaka i poboljšanja, uključujući u Office paketima, Visual Studiu, i nekoliko jezika.
 
-Puno ispravljenih grešaka i poboljšanja, uključujući paket Office, Visual Studio i nekoliko jezika.
-Napomena: Ovo je verzija koja zahteva ažuriranje dodataka za kompatibilnost uz novi API.
-Autori dodataka će morati da testiraju dodatke i ažuriraju Manifest.
-Ova verzija takođe ukida podršku za Adobe Flash.
+Napomena:
+ - Za ovu verziju, neophodno je ažuriranje dodataka kako bi bili kompatibilni.
+ - Ova verzija takođe ukida podršku za Adobe Flash.
+ -
 
 
 == Nove karakteristike ==
@@ -21,25 +22,25 @@ Ova verzija takođe ukida podršku za Adobe Flash.
   - alt+strelice gore i dole  vas  pomeraju na prethodni i sledeći rezultat (dodajte šift da biste izabrali).
   - control+l će obrisati okno sa izlazom.
 - NVDA će sada prijaviti kategorije koje su obeležene za obaveze u aplikaciji Microsoft Outlook, ako postoje. (#11598)
+- Podrška za Seika beležnicu kompanije Nippon Telesoft. (#11514)
 
 
 == Promene ==
 - U režimu pretraživanja, kontrole se sada mogu aktivirati prebacivanjem kursora brajeve ćelije na njihov opis (na primer  "lnk" za link). Ovo je posebno korisno  za aktivaciju izbornih polja koja nemaju oznaku. (#7447)
 - NVDA će sada sprečiti korisnika da izvrši Windows 10 OCR ako je zatamnjivanje ekrana omogućeno. (#11911)
-- Ažurirana Unicode Common Locale  baza (CLDR) na verziju  38.1. (#11943)
+- Ažurirana Unicode Common Locale  baza (CLDR) na verziju  39.0. (#11943)
 - Dodato još matematičkih simbola u rečnik sa simbolima. (#11467)
 - Korisničko uputstvo, datoteka sa listom promena, kao i lista komandi sada imaju osvežen izgled. (#12027)
 - "Nije podržano" će sada biti izgovoreno ako pokušate da promenite opciju koristi izgled ekrana u aplikacijama u kojima ovo nije moguće, kao što je Microsoft Word. (#7297)
 - Opcija "Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane" u panelu naprednih podešavanja sada je podrazumevano omogućena. (#10885)
   - Ovakav način rada se može onemogućiti promenom ove opcije u "Ne".
   - Sa ovom opcijom omogućenom, Web aplikacije (na primer Gmail) više ne izgovaraju nevažeće informacije kada brzo pomerate fokus.
-- Espeak-ng je ažuriran na 1.51-dev commit f6d092a9c13d864ede78c493f64a7d32cde41f09. (#12449, #12202, #12280)
 - Ažuriran liblouis brajev prevodilac na [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
   - Nove brajeve tabele: Beloruski književni brajev kod, Beloruski kompjuterski kod, Urdu stepen 1, Urdu stepen 2.
 - Podrška za Adobe Flash sadržaj je uklonjena iz  NVDA budući da se korišćenje  Flash tehnologije ne preporučuje od strane  kompanije Adobe. (#11131)
 - NVDA će uspešno izaći čak i ako postoje otvoreni prozori, proces izlaska će sada zatvoriti sve druge NVDA procese i prozore. (#1740)
-- Preglednik govora se sada može zatvoriti prečicom ``alt+F4`` i ima standardno dugme za zatvaranje za lakšu interakciju korisnika sa uređajima sa jednim tasterom. (#12330)
-- Preglednik brajevog reda sada ima standardno dugme za zatvaranje za lakšu interakciju korisnika sa uređajima sa jednim tasterom. (#12328)
+- Preglednik govora se sada može zatvoriti prečicom ``alt+F4`` i ima standardno dugme za zatvaranje za lakšu interakciju korisnika sa uređajima sa prekidačem. (#12330)
+- Preglednik brajevog reda sada ima standardno dugme za zatvaranje za lakšu interakciju korisnika sa uređajima sa prekidačem. (#12328)
 - U dijalogu liste elemenata, prečica koja aktivira taster "Aktiviraj" je uklonjena u određenim  jezicima kako bi sprečila sukob sa oznakom radio dugmeta za tip elementa. Kada je dostupno, ovo dugme ostaje podrazumevano dugme u dijalogu i može se jednostavno aktivirati tasterom Enter iz liste elemenata. (#6167)
 
 
@@ -63,10 +64,13 @@ Ova verzija takođe ukida podršku za Adobe Flash.
 - Precrtan sadržaj, formatiranje indeksa i eksponenata za celu Excel ćeliju će se sada prijaviti ako se omogući odgovarajuća opcija. (#12264)
 - Ispravljeno kopiranje podešavanja iz prenosne kopije u instalaciju kada je podrazumevani folder za podešavanja prazan. (#12071, #12205)
 - Ispravljeno neispravno izgovaranje nekih slova sa akcentom ili dijakritičkih znakova kada se omogući opcija "Izgovori reč veliko pre velikog slova ". (#11948)
-- Ispravljeno neispravno menjanje visine u sintetizatoru Sapi4. (#12311)
+- Ispravljeno menjanje visine u sintetizatoru Sapi4. (#12311)
 - NVDA instalacija sada takođe uzima u obzir opciju ``--minimal`` na komandnoj liniji i neće reprodukovati zvuk za pokretanje, što prati opisan način rada u dokumentaciji za instalirane i prenosne kopije programa NVDA. (#12289)
 - U programima MS Word ili Outlook, taster za brzu navigaciju kroz tabele može da fokusira tabele za izgled ako je opcija "Uključi tabele za izgled" omogućena u podešavanjima režima pretraživanja. (#11899)
-- NVDA neće više izgovarati znakove "↑↑↑" za Emoji znakove u određenim jezicima. (#11963)
+- NVDA neće više izgovarati znakove "↑↑↑" za Emoji znakove na određenim jezicima. (#11963)
+- Espeak Sada ponovo podržava Cantonese i Mandarinski. (#10418)
+- U novom pretraživaču Microsoft Edge baziranom na Chromium tehnologiji, polja za unos teksta kao što je traka za adresu se sada izgovaraju i kada su prazna. (#12474)
+- Ispravljen Seika brajev drajver. (#10787)
 
 
 == Promene za programere ==
