@@ -706,15 +706,15 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleReportCellBorders(self, gesture):
 		if (
-			not config.conf["documentFormatting"]["reportBorderStyle"] and
-			not config.conf["documentFormatting"]["reportBorderColor"]
+			not config.conf["documentFormatting"]["reportBorderStyle"]
+			and not config.conf["documentFormatting"]["reportBorderColor"]
 		):
 			# Translators: A message reported when cycling through cell borders settings.
 			ui.message(_("Report styles of cell borders"))
 			config.conf["documentFormatting"]["reportBorderStyle"] = True
 		elif (
-			config.conf["documentFormatting"]["reportBorderStyle"] and
-			not config.conf["documentFormatting"]["reportBorderColor"]
+			config.conf["documentFormatting"]["reportBorderStyle"]
+			and not config.conf["documentFormatting"]["reportBorderColor"]
 		):
 			# Translators: A message reported when cycling through cell borders settings.
 			ui.message(_("Report colors and styles of cell borders"))
