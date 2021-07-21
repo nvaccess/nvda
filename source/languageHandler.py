@@ -49,7 +49,8 @@ def localeNameToWindowsLCID(localeName):
 		LCID=LCID_NONE
 	return LCID
 
-def windowsLCIDToLocaleName(lcid):
+
+def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
 	"""
 	gets a normalized locale from a lcid
 	"""
@@ -153,9 +154,8 @@ def getWindowsLanguage():
 	Fetches the locale name of the user's configured language in Windows.
 	"""
 	windowsLCID = ctypes.windll.kernel32.GetUserDefaultLCID()
-	try:
-		localeName=locale.windows_locale[windowsLCID]
-	except KeyError:
+	localeName = windowsLCIDToLocaleName(windowsLCID)
+	if not localeName:
 		# #4203: some locale identifiers from Windows 8 do not exist in Python's list.
 		# Therefore use windows' own function to get the locale name.
 		# Eventually this should probably be used all the time.
@@ -168,10 +168,10 @@ def getWindowsLanguage():
 			pass
 		localeName=buf.value
 		if localeName:
-			localeName=localeName
+			localeName=normalizeLanguage(localeName)
 		else:
 			localeName="en"
-	return normalizeLanguage(localeName)
+	return localeName
 
 
 def setLanguage(lang: str) -> None:

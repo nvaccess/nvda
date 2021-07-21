@@ -336,7 +336,7 @@ class SpeechManager(object):
 				langCode = command.lang.split('_')[0]
 				langSupported = False
 				for lang in currentSynthLanguages:
-					if normalizeLanguage(lang).split('_')[0] == langCode:
+					if lang and normalizeLanguage(lang).split('_')[0] == langCode:
 						langSupported = True
 				if not langSupported:
 					log.warning(f"Language {command.lang} not supported by {currentSynth.name} ({currentSynthLanguages})")
