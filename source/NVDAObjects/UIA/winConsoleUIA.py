@@ -342,7 +342,8 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		needed in a given conhost instance.
 		See the comments on the WinConsoleAPILevel enum for details.
 		"""
-		return _getConhostAPILevel(self.windowHandle)
+		self.apiLevel = _getConhostAPILevel(self.windowHandle)
+		return self.apiLevel
 
 	def _get__caretMovementTimeoutMultiplier(self):
 		"On older consoles, the caret can take a while to move."
