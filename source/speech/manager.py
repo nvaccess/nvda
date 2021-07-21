@@ -328,13 +328,13 @@ class SpeechManager(object):
 		outSeqs = []
 		paramsToReplay = []
 		currentSynth = getSynth()
-		currentSynthLanguages = currentSynth.availableLanguages
 
 		outSeq = []
 		for command in inSeq:
-			if isinstance(command, LangChangeCommand):
+			if isinstance(command, LangChangeCommand) and currentSynth.name == 'oneCore':
 				langCode = command.lang.split('_')[0]
 				langSupported = False
+				currentSynthLanguages = currentSynth.availableLanguages
 				for lang in currentSynthLanguages:
 					if lang and normalizeLanguage(lang).split('_')[0] == langCode:
 						langSupported = True
