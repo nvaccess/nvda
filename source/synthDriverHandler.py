@@ -424,7 +424,7 @@ def getSynth() -> Optional[SynthDriver]:
 	return _curSynth
 
 
-def getSynthInstance(name, asDefault=True):
+def getSynthInstance(name, asDefault=False):
 	newSynth: SynthDriver = _getSynthDriver(name)()
 	if asDefault and newSynth.name == 'oneCore':
 		# Will raise an exception if oneCore does not support the system language
