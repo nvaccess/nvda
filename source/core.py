@@ -14,10 +14,6 @@ class CallCancelled(Exception):
 	"""Raised when a call is cancelled.
 	"""
 
-# Apply several monkey patches to comtypes
-# noinspection PyUnresolvedReferences
-import comtypesMonkeyPatches
-
 # Initialise comtypes.client.gen_dir and the comtypes.gen search path 
 # and Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes
@@ -757,6 +753,7 @@ def main():
 			"NVDA not already exiting, hit catch-all exit trigger."
 			" This likely indicates NVDA is exiting due to WM_QUIT."
 		)
+		queueHandler.pumpAll()
 	_terminate(gui)
 	config.saveOnExit()
 

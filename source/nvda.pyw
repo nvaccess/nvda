@@ -17,6 +17,9 @@ import typing
 import globalVars
 import ctypes
 from ctypes import wintypes
+import monkeyPatches
+
+monkeyPatches.applyMonkeyPatches()
 
 #: logger to use before the true NVDA log is initialised.
 # Ideally, all logging would be captured by the NVDA log, however this would introduce contention
