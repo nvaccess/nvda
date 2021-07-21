@@ -1,12 +1,9 @@
-# -*- coding: UTF-8 -*-
-#NVDAObjects/window/_msOfficeChartConstants.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2014-2017 NV Access Limited, NVDA India
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2014-2021 NV Access Limited, NVDA India, dineshkaushal
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import eventHandler
-import time
 import ui
 from . import Window
 import ctypes
@@ -16,6 +13,9 @@ import colors
 import inputCore
 import re
 from logHandler import log
+import browseMode
+from scriptHandler import script
+
 
 #This file contains chart constants common to Chart Object for Microsoft Office.
 
@@ -572,14 +572,23 @@ class OfficeChart(OfficeChartElementList):
 			text +=_("No Series defined.")
 		return text
 
-	def script_activatePosition(self,gesture):
+	@script(
+		description=_(
+			# Translators: Input help mode message for toggle focus and browse mode command
+			# in web browsing and other situations.
+			"Toggles between browse mode and focus mode."
+			" When in focus mode, keys will pass straight through to the application, "
+			"allowing you to interact directly with a control. "
+			"When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
+		),
+		category=inputCore.SCRCAT_BROWSEMODE,
+		gestures=("kb:enter", "kb(desktop):numpadEnter", "kb:space")
+	)
+	def script_activatePosition(self, gesture):
 		# Toggle browse mode pass-through.
 		self.passThrough = True
 		self.ignoreTreeInterceptorPassThrough=False
 		browseMode.reportPassThrough(self)
-	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
-	script_activatePosition.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
-	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
 
 	def script_disablePassThrough(self, gesture):
 		log.debugWarning("script_disablePassThrough")
@@ -589,9 +598,6 @@ class OfficeChart(OfficeChartElementList):
 	__gestures = {
 				"kb:upArrow":"previousElement",
 				"kb:downArrow":"nextElement",
-				"kb:enter": "activatePosition",
-				"kb(desktop):numpadEnter":"activatePosition",
-				"kb:space": "activatePosition",
 				"kb:escape": "disablePassThrough",
 	}
 
