@@ -406,10 +406,6 @@ class AppModule(appModuleHandler.AppModule):
 					if grandChild.role != controlTypes.ROLE_RADIOBUTTON
 				)
 			):
-				if index == 1:
-					# Translators: Reported when there is not indication of the number of
-					# selected files in the Windows explorer's status bar.
-					parts.append(_("No file selected"))
 				selected = next(iter(
 					grandChild for grandChild in child.children
 					if controlTypes.STATE_CHECKED in grandChild.states
