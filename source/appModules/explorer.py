@@ -375,10 +375,16 @@ class AppModule(appModuleHandler.AppModule):
 		statusBar = UIA(UIAElement=element)
 		return statusBar
 
-	def getStatusBarText(self, obj) -> str:
-		if not isinstance(obj, UIA) or obj.UIAElement.cachedClassname != "StatusBarModuleInner":
-			# This is not the file explorer status bar. Resort to standard behavior.
-			raise NotImplementedError
+	@staticmethod
+	def _getStatusBarTextWin7(obj) -> str:
+		"""For status bar in Windows 7 Windows Explorer we're interested only in the name of the first child
+		the rest are either empty or contain garbage."""
+		if obj.firstChild and obj.firstChild.name:
+			return obj.firstChild.name
+		raise NotImplementedError
+
+	@staticmethod
+	def _getStatusBarTextPostWin7(obj) -> str:
 		# The expected status bar, as of Windows 10 20H2 at least, contains:
 		#  - A grouping with a single static text child presenting the total number of elements
 		#  - Optionally, a grouping with a single static text child presenting the number of
@@ -423,6 +429,17 @@ class AppModule(appModuleHandler.AppModule):
 			# We couldn't retrieve anything. Resort to standard behavior.
 			raise NotImplementedError
 		return ", ".join(parts)
+
+	def getStatusBarText(self, obj) -> str:
+		if obj.windowClassName == "msctls_statusbar32":  # Windows 7
+			return self._getStatusBarTextWin7(obj)
+		if (
+			isinstance(obj, UIA) or obj.UIAElement.cachedClassname == "StatusBarModuleInner"
+		):  # Windows 8 or later
+			return self._getStatusBarTextPostWin7(obj)
+		else:
+			# This is not the file explorer status bar. Resort to standard behavior.
+			raise NotImplementedError
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
