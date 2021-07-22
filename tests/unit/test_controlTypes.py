@@ -1,23 +1,29 @@
-#tests/unit/test_controlTypes.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2021 NV Access Limited, Babbage B.V.
 
 """Unit tests for the controlTypes module.
 """
 
 import unittest
 import controlTypes
+import versionInfo
 from . import PlaceholderNVDAObject
 
-class TestLabels(unittest.TestCase):
 
-	def test_roleLabels(self):
+class TestLabels(unittest.TestCase):
+	@unittest.skipIf(versionInfo.version_year >= 2022, "Deprecated code")
+	def test_legacy_roleLabels(self):
 		"""Test to check whether every role has its own label in controlTypes.roleLabels"""
 		for name, const in vars(controlTypes).items():
-			if name.startswith("Role."):
+			if name.startswith("ROLE_"):
 				self.assertIsNotNone(controlTypes.roleLabels.get(const),msg="{name} has no label".format(name=name))
+
+	def test_roleLabels(self):
+		"""Test to check whether every role has its own display string"""
+		for role in controlTypes.Role:
+			role.displayString
 
 	def test_positiveStateLabels(self):
 		"""Test to check whether every state has its own label in controlTypes.stateLabels"""

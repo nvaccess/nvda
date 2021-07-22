@@ -419,7 +419,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		return ""
 
 	#: Type definition for auto prop '_get_role'
-	role: int
+	role: controlTypes.Role
 
 	def _get_role(self) -> controlTypes.Role:
 		"""The role or type of control this object represents (example: button, list, dialog).
@@ -1255,14 +1255,7 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("name: %s" % ret)
-		try:
-			ret = self.role
-			for name, const in controlTypes.__dict__.items():
-				if name.startswith("ROLE_") and ret == const:
-					ret = name
-					break
-		except Exception as e:
-			ret = "exception: %s" % e
+		ret = self.role
 		info.append("role: %s" % ret)
 		try:
 			ret = repr(self.roleText)
