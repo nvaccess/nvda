@@ -382,8 +382,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report font name command.
-		description=_("Toggles on and off the reporting of font name changes"),
-		category=SCRCAT_DOCUMENTFORMATTING,
+		description=_("Toggles on and off the reporting of font changes"),
+		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportFontName(self,gesture):
 		if config.conf["documentFormatting"]["reportFontName"]:
