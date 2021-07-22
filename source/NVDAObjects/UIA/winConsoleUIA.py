@@ -19,6 +19,7 @@ from ..window import Window
 
 
 class ConsoleUIATextInfo(UIATextInfo):
+	"A TextInfo implementation for consoles with an IMPROVED, but not FORMATTED, API level."
 	def __init__(self, obj, position, _rangeObj=None):
 		collapseToEnd = None
 		# We want to limit  textInfos to just the visible part of the console.
@@ -376,11 +377,12 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		ConsoleUIATextInfo bounds review to the visible text.
 		ConsoleUIATextInfoWorkaroundEndInclusive fixes expand/collapse and implements
 		word movement."""
-		return (
-			ConsoleUIATextInfo
-			if self.apiLevel >= WinConsoleAPILevel.IMPROVED
-			else ConsoleUIATextInfoWorkaroundEndInclusive
-		)
+		if self.apiLevel >= WinConsoleAPILevel.FORMATTED:
+			return UIATextInfo  # No TextInfo workarounds needed
+		elif self.apiLevel >= WinConsoleAPILevel.IMPROVED:
+			return ConsoleUIATextInfo
+		else:
+			return ConsoleUIATextInfoWorkaroundEndInclusive
 
 	def _get_devInfo(self):
 		info = super().devInfo
@@ -408,5 +410,4 @@ def findExtraOverlayClasses(obj, clsList):
 
 
 class WinTerminalUIA(EnhancedTermTypedCharSupport):
-	def _get_TextInfo(self):
-		return ConsoleUIATextInfo
+	pass
