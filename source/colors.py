@@ -15,6 +15,9 @@ from typing import Union
 # is transparent.
 # See (displayModel.cpp in nvdaHelper) displayModelFormatColor_t::TRANSPARENT_BIT
 TRANSPARENT_BITFLAG = 0x01 << 24
+ALPHA_OPAQUE: int = 0xFF  # no transparency.
+ALPHA_TRANSPARENT: int = 0x00  # completely transparent
+
 
 class RGB(namedtuple('RGB',('red','green','blue'))):
 	"""Represents a color as an RGB (red green blue) value"""
@@ -26,7 +29,7 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 	# The background color may be reported for text with transparent backgrounds.
 	# In other cases the background for the text is transparent, but the background color is
 	# visually correct and rendered in a different way EG via GDI filledRect.
-	alphaValue: int = 0xFF  # no transparency by default
+	alphaValue: int = ALPHA_OPAQUE  # no transparency by default
 
 	@classmethod
 	def fromDisplayModelFormatColor_t(cls, c: int) -> "RGB":
@@ -42,7 +45,7 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 		bb = (c >> 16) & 0xFF
 		tt = c & TRANSPARENT_BITFLAG
 		rgb = cls(rr, gg, bb)
-		rgb.alphaValue = 0x00 if bool(tt) else 0xFF
+		rgb.alphaValue = ALPHA_TRANSPARENT if bool(tt) else ALPHA_OPAQUE
 		return rgb
 
 	@classmethod
@@ -153,12 +156,12 @@ def _calcColorName(red: int, green: int, blue: int, alpha: int, reportTransparen
 			closestName = variationTemplate.format(color=hueName)
 		else:
 			closestName = hueName
-	# the color is transparent report unknown.
-	if alpha < 0xFF and reportTransparent:
+	# the color is transparent and expected to be reported.
+	if alpha < ALPHA_OPAQUE and reportTransparent:
 		closestName = pgettext(
 			'color variation',
 			# Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
-			# transparent bright orange-yellow
+			# "transparent bright orange-yellow"
 			'transparent {colorDescription}'
 		).format(colorDescription=closestName)
 	return closestName
