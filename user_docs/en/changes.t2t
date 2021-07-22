@@ -15,6 +15,10 @@ What's New in NVDA
 
 
 == Changes for Developers ==
+- ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been deprecated for removal in 2022.1. (#12660)
+  - Instead use ``apiLevel`` (see the comments at ``_UIAConstants.WinConsoleAPILevel`` for details).
+  -
+-
 
 
 = 2021.2 =
