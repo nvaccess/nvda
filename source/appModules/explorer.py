@@ -414,10 +414,11 @@ class AppModule(appModuleHandler.AppModule):
 					grandChild for grandChild in child.children
 					if controlTypes.STATE_CHECKED in grandChild.states
 				), None)
-				parts.append(" ".join(
-					[child.name]
-					+ ([selected.name] if selected is not None else [])
-				))
+				if selected is not None:
+					parts.append(" ".join(
+						[child.name]
+						+ ([selected.name] if selected is not None else [])
+					))
 			else:
 				# Unexpected child, try to retrieve something useful.
 				parts.append(" ".join(
