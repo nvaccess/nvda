@@ -11,7 +11,8 @@ import UIAHandler
 
 from comtypes import COMError
 from logHandler import log
-from UIAUtils import _isImprovedConhostTextRangeAvailable
+from UIAUtils import _getConhostAPILevel
+from _UIAConstants import WinConsoleAPILevel
 from . import UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
@@ -335,9 +336,21 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
 
+	def _get_apiLevel(self) -> WinConsoleAPILevel:
+		"""
+		This property shows which of several console UIA workarounds are
+		needed in a given conhost instance.
+		See the comments on the WinConsoleAPILevel enum for details.
+		"""
+		self.apiLevel = _getConhostAPILevel(self.windowHandle)
+		return self.apiLevel
+
 	def _get__caretMovementTimeoutMultiplier(self):
 		"On older consoles, the caret can take a while to move."
-		return 1 if self.isImprovedTextRangeAvailable else 1.5
+		return (
+			1 if self.apiLevel >= WinConsoleAPILevel.IMPROVED
+			else 1.5
+		)
 
 	def _get_windowThreadID(self):
 		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
@@ -351,15 +364,11 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		return threadID
 
 	def _get_isImprovedTextRangeAvailable(self):
-		"""This property determines whether microsoft/terminal#4495
-		and by extension microsoft/terminal#4018 are present in this conhost.
-		In consoles before these PRs, a number of workarounds were needed
-		in our UIA implementation. However, these do not fix all bugs and are
-		problematic on newer console releases. This property is therefore used
-		internally to determine whether to activate workarounds and as a
-		convenience when debugging.
-		"""
-		return _isImprovedConhostTextRangeAvailable(self.windowHandle)
+		log.warning(
+			"winConsole.isImprovedTextRangeAvailable is deprecated and will be "
+			"removed in NVDA 2022.1. Please use apiLevel instead."
+		)
+		return self.apiLevel >= WinConsoleAPILevel.IMPROVED
 
 	def _get_TextInfo(self):
 		"""Overriding _get_ConsoleUIATextInfo and thus the ConsoleUIATextInfo property
@@ -369,9 +378,14 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		word movement."""
 		return (
 			ConsoleUIATextInfo
-			if self.isImprovedTextRangeAvailable
+			if self.apiLevel >= WinConsoleAPILevel.IMPROVED
 			else ConsoleUIATextInfoWorkaroundEndInclusive
 		)
+
+	def _get_devInfo(self):
+		info = super().devInfo
+		info.append(f"API level: {self.apiLevel.name}")
+		return info
 
 	def detectPossibleSelectionChange(self):
 		try:
