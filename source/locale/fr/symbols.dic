@@ -31,8 +31,8 @@ symbols:
 
 # Complex symbols
 . sentence ending	point	# . fin de phrase
-! sentence ending	point d'exclamation	# ! fin de phrase
-? sentence ending	point d'interrogation	# ? fin de phrase
+! sentence ending	point dexclamation	# ! fin de phrase
+? sentence ending	point dinterrogation	# ? fin de phrase
 ... sentence ending	points de suspension	all	always	# ... fin de phrase
 … sentence ending	points de suspension	all	always	# … fin de phrase
 ; phrase ending	point virgule	# ; fin de phrase
@@ -59,7 +59,7 @@ n°	\1 \2 	most	norep	# numéro
  	espace insécable	char	# espace insécable
 
 # Standard punctuation/symbols
-!	point d'exclamation
+!	point dexclamation
 "	guillemet
 \#	dièse	none
 $	dollar
@@ -84,8 +84,7 @@ $	dollar
 ;	point virgule
 <	inférieur
 =	égal
-?	point d'interrogation
-¿	point d'interrogation renversé	some
+?	point dinterrogation
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
@@ -98,8 +97,8 @@ _	souligné
 |	barre verticale
 ¦	barre brisée	most
 ~	tilde	none
-¿	point d'interrogation renversé	all
-¡	point d'exclamation renversé	all
+¿	point dinterrogation renversé	all
+¡	point dexclamation renversé	all
 
 # Other characters
 •	puce
@@ -177,7 +176,7 @@ _	souligné
 ✓	coché
 ✔	coché
 ¶	paragraphe	all
-‰	pour-mille
+‰	pourmille
 „	double guillemet vers le bas	most
 ↔	flèche gauche droite	none
 ∞	infini	none
@@ -203,23 +202,23 @@ _	souligné
 ±	plus ou Moins
 
 #operations sur les ensembles
-∖	différence d'ensembles
+∖	différence densembles
 ⊍	multiplication de multiensemble
-𝒫	ensemble de pouvoirs de l'ensemble
-𝔓	ensemble de pouvoirs de l'ensemble
-℘	ensemble de pouvoirs de l'ensemble
+𝒫	ensemble de pouvoirs de lensemble
+𝔓	ensemble de pouvoirs de lensemble
+℘	ensemble de pouvoirs de lensemble
 ∁	complément
 
 #Définir les relations et définir les constructions
 ∅	ensemble vide
-⊂	sous-ensemble de
-⊄	pas un sous-ensemble de
-⊃	sur-ensemble de
-⊅	pas un sur-ensemble de
+⊂	sousensemble de
+⊄	pas un sousensemble de
+⊃	surensemble de
+⊅	pas un surensemble de
 ⊆	est inclus dans ou est égal à
-⊈	ni un sous-ensemble ni égal à
+⊈	ni un sousensemble ni égal à
 ⊇	contient ou est égal à
-⊉	ni un sur-ensemble ni égal à
+⊉	ni un surensemble ni égal à
 ⊌	multiensemble
 
 #Signes d'égalité
@@ -280,8 +279,8 @@ _	souligné
 #Opérateurs Mathématiques U+2200 to U+220F
 ∀	pour tout 
 ∃	il existe
-∄	il n'existe pas de
-⇏	n'implique pas
+∄	il nexiste pas de
+⇏	nimplique pas
 ∆	incrément
 ∈	élément de
 ∉	pas un élément de
@@ -290,8 +289,8 @@ _	souligné
 ∌	ne contient pas comme membre	none
 ∍	petit contient comme membre
 ∎	fin de preuve
-∑	somme n-aire
-∏	produit n-aire
+∑	somme n aire
+∏	produit n aire
 ∐	coproduit de la famille
 
 # Opérateurs Mathématiques Divers et lettres grecques
@@ -318,7 +317,7 @@ _	souligné
 ‡	double obel
 
 ≠	différent de
-­	Trait d'union conditionnel
+­	Trait dunion conditionnel
 ‚	Guillemet vers le bas	most
 ‹	Simple Guillemet ouvrant	most
 ›	Simple Guillemet fermant	most
@@ -445,9 +444,9 @@ _	souligné
 ≐	tend vers la limite
 ∙	opérateur puce
 ∣	est un diviseur de
-∤	n'est pas un diviseur de
-≔	deux-points égal
-≕	égal deux-points
+∤	nè pas un diviseur de
+≔	deux points égal
+≕	égal deux points
 ≺	précède
 ≻	suit
 ⊀	ne précède pas
@@ -476,13 +475,13 @@ _	souligné
 #Ensemble de nombres
 𝔸	nombres algébriques
 ℂ	nombres complexes
-ℑ	partie imaginaire d'un nombre complexe
+ℑ	partie imaginaire dun nombre complexe
 ℍ	quaternions
 ℕ	nombres naturels
 𝕁	nombres entiers non négatifs
 ℚ	nombres rationnels
 ℝ	nombres réels
-ℜ	partie réelle d'un nombre complexe
+ℜ	partie réelle dun nombre complexe
 ℤ	entiers
 ℵ	nombre aleph
 ℶ	nombre beth
