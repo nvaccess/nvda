@@ -1905,6 +1905,11 @@ Additionally, it may be available in other terminals on earlier Windows releases
 It is identical to NVDA's behaviour in versions 2020.4 and earlier.
 -
 
+==== Use events to detect caret movement ====[CaretEventsInConsoles]
+This option enables an alternative, experimental method of detecting movement of the text caret in terminals.
+It may improve performance in some scenarios, especially in newer version of the Windows Console and Windows Terminal.
+However, reporting of deleted characters may be less accurate, especially when text is quickly deleted.
+
 ==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
 This option enables behaviour which attempts to cancel speech for expired focus events.
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.

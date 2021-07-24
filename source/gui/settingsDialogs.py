@@ -2763,6 +2763,17 @@ class AdvancedPanelControls(
 			self._getDefaultValue(["terminals", "diffAlgo"])
 		)
 
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use events to detect caret &movement (may improve performance)")
+		self.caretEventsInConsolesCheckBox = terminalsGroup.addItem(wx.CheckBox(terminalsBox, label=label))
+		self.bindHelpEvent("CaretEventsInConsoles", self.caretEventsInConsolesCheckBox)
+		caretEventsDevMap = True if config.conf['terminals']['caretMovementShouldUseEvents'] == 'always' else False
+		self.caretEventsInConsolesCheckBox.SetValue(caretEventsDevMap)
+		self.caretEventsInConsolesCheckBox.defaultValue = self._getDefaultValue(
+			["terminals", "caretMovementShouldUseEvents"]
+		)
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Speech")
@@ -2916,6 +2927,9 @@ class AdvancedPanelControls(
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
+			and self.caretEventsInConsolesCheckBox.IsChecked() == (
+				self.caretEventsInConsolesCheckBox.defaultValue == 'always'
+			)
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
@@ -2935,6 +2949,7 @@ class AdvancedPanelControls(
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
+		self.caretEventsInConsolesCheckBox.SetValue(self.caretEventsInConsolesCheckBox.defaultValue == 'always')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
@@ -2960,6 +2975,10 @@ class AdvancedPanelControls(
 		config.conf['terminals']['diffAlgo'] = (
 			self.diffAlgoVals[diffAlgoChoice]
 		)
+		if self.caretEventsInConsolesCheckBox.IsChecked():
+			config.conf['terminals']['caretMovementShouldUseEvents'] = "always"
+		else:
+			config.conf['terminals']['caretMovementShouldUseEvents'] = "auto"
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		config.conf["documentFormatting"]["reportTransparentColor"] = (
 			self.reportTransparentColorCheckBox.IsChecked()
