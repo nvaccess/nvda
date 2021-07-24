@@ -28,9 +28,17 @@ from controlTypes import OutputReason
 import locationHelper
 from logHandler import log
 from typing import Union, List, Dict
+from enum import Enum, auto
 
-FieldSubQuery = Dict[str, Union[bool, List]]
+
+class ConditionMatch(Enum):
+	KEY_IN_FIELD = auto()
+	KEY_NOT_IN_FIELD = auto()
+
+
+FieldSubQuery = Dict[str, Union[ConditionMatch, List]]
 FieldQuery = List[FieldSubQuery]
+
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -42,7 +50,7 @@ class Field(dict):
 		The argument to this function is a list of dicts whose keys are field attributes,
 		and whose values are either:
 			* A list of possible values for the attribute.
-			* A boolean value, indicating that the condition for the key matches,
+			* A ConditionMatch value, indicating that the condition for the key matches,
 			i.e. whether or not the key is in the field.
 		The dicts are joined with 'or', the keys in each dict are joined with 'and',
 		and the values  for each key are joined with 'or'.
@@ -54,23 +62,22 @@ class Field(dict):
 		To create a query that matches on a format field with whatever foreground color,
 		you would provide the following query argument:
 
-			[{'color': True}]
+			[{'color': ConditionMatch.KEY_IN_FIELD}]
 
 		To create a query that matches on a format field without a foreground color,
 		you would provide the following query argument:
 
-			[{'color': False}]
+			[{'color': ConditionMatch.KEY_NOT_IN_FIELD}]
 		"""
 		for sub in query:
 			# Dicts are joined with or, therefore return early if a dict matches.
 			for key, values in sub.items():
 				if key not in self:
-					if values is False:
+					if values is ConditionMatch.KEY_NOT_IN_FIELD:
 						continue
-					else:
-						# Go to the next dict
-						break
-				elif values is True:
+					# Go to the next dict
+					break
+				elif values is ConditionMatch.KEY_IN_FIELD:
 					continue
 				if not isinstance(values, (list, set, tuple)):
 					values = [values]
