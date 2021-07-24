@@ -1,12 +1,11 @@
-#api.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
+# Davy Kager, Babbage B.V., Leonard de Ruijter, Joseph Lee, Accessolutions, Julien Cochuyt
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """General functions for NVDA"""
 
-import ctypes
 import config
 import textInfos
 import review
@@ -14,9 +13,7 @@ import globalVars
 from logHandler import log
 import ui
 import treeInterceptorHandler
-import virtualBuffers
 import NVDAObjects
-import NVDAObjects.IAccessible
 import winUser
 import controlTypes
 import eventHandler
@@ -25,7 +22,8 @@ import vision
 import watchdog
 import appModuleHandler
 import cursorManager
-from typing import Any
+from typing import Any, Optional
+
 
 #User functions
 
@@ -39,13 +37,23 @@ Gets the current object with focus.
 
 def getForegroundObject():
 	"""Gets the current foreground object.
+	This (cached) object is the (effective) top-level "window" (hwnd).
+	EG a Dialog rather than the focused control within the dialog.
+	The cache is updated as queued events are processed, as such there will be a delay between the winEvent
+	and this function matching. However, within NVDA this should be used in order to be in sync with other
+	functions such as "getFocusAncestors".
 @returns: the current foreground object
 @rtype: L{NVDAObjects.NVDAObject}
 """
 	return globalVars.foregroundObject
 
 def setForegroundObject(obj):
-	"""Stores the given object as the current foreground object. (Note: it does not physically change the operating system foreground window, but only allows NVDA to keep track of what it is).
+	"""Stores the given object as the current foreground object.
+	Note: does not cause the operating system to change the foreground window,
+		but simply allows NVDA to keep track of what the foreground window is.
+		Alternative names for this function may have been:
+		- setLastForegroundWindow
+		- setLastForegroundEventObject
 @param obj: the object that will be stored as the current foreground object
 @type obj: NVDAObjects.NVDAObject
 """
@@ -127,7 +135,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		try:
 			treeInterceptorObject=treeInterceptorHandler.update(o)
 		except:
-			log.exception("Error updating tree interceptor")
+			log.error("Error updating tree interceptor", exc_info=True)
 	#Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
 	#This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
 	if obj is o or obj in treeInterceptorObject:
@@ -292,21 +300,33 @@ def processPendingEvents(processEventQueue=True):
 	if processEventQueue:
 		queueHandler.flushQueue(queueHandler.eventQueue)
 
-def copyToClip(text):
+
+def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
 	"""Copies the given text to the windows clipboard.
-@returns: True if it succeeds, False otherwise.
-@rtype: boolean
-@param text: the text which will be copied to the clipboard
-@type text: string
-"""
-	if not isinstance(text,str) or len(text)==0:
+	@returns: True if it succeeds, False otherwise.
+	@param text: the text which will be copied to the clipboard
+	@param notify: whether to emit a confirmation message
+	"""
+	if not isinstance(text, str) or len(text) == 0:
 		return False
 	import gui
-	with winUser.openClipboard(gui.mainFrame.Handle):
-		winUser.emptyClipboard()
-		winUser.setClipboardData(winUser.CF_UNICODETEXT,text)
-	got=getClipData()
-	return got == text
+	try:
+		with winUser.openClipboard(gui.mainFrame.Handle):
+			winUser.emptyClipboard()
+			winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
+		got = getClipData()
+	except OSError:
+		if notify:
+			ui.reportTextCopiedToClipboard()  # No argument reports a failure.
+		return False
+	if got == text:
+		if notify:
+			ui.reportTextCopiedToClipboard(text)
+		return True
+	if notify:
+		ui.reportTextCopiedToClipboard()  # No argument reports a failure.
+	return False
+
 
 def getClipData():
 	"""Receives text from the windows clipboard.

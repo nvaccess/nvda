@@ -1,10 +1,10 @@
-# brailleViewer.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2019 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 from typing import List
 
+import globalVars
 from logHandler import log
 import os
 from ctypes import WinDLL
@@ -13,7 +13,7 @@ gdi32 = WinDLL("gdi32.dll")
 Loads custom fonts for use in NVDA.
 """
 
-fontsDir = os.path.abspath("fonts")
+fontsDir = os.path.join(globalVars.appDir, "fonts")
 
 
 def _isSupportedFontPath(f: str) -> bool:

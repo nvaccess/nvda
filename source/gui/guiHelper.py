@@ -45,7 +45,7 @@ class myDialog(class wx.Dialog):
 from contextlib import contextmanager
 
 import wx
-from wx.lib import scrolledpanel
+from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
 
 #: border space to be used around all controls in dialogs
@@ -159,17 +159,49 @@ class LabeledControlHelper(object):
 	the two controls together.
 	Relies on guiHelper.associateElements(), any limitations in guiHelper.associateElements() also apply here.
 	"""
-	def __init__(self, parent, labelText, wxCtrlClass, **kwargs):
+	
+	# When the control is enabled / disabled this event is raised.
+	# A handler is automatically added to the control to ensure the label is also enabled/disabled.
+	EnableChanged, EVT_ENABLE_CHANGED = newevent.NewEvent()
+
+	def __init__(self, parent: wx.Window, labelText: str, wxCtrlClass: wx.Control, **kwargs):
 		""" @param parent: An instance of the parent wx window. EG wx.Dialog
 			@param labelText: The text to associate with a wx control.
-			@type labelText: string
 			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
-			@type wxCtrlClass: class
 			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 		object.__init__(self)
-		self._label = wx.StaticText(parent, label=labelText)
-		self._ctrl = wxCtrlClass(parent, **kwargs)
+
+		class LabelEnableChangedListener(wx.StaticText):
+			isDestroyed = False
+			isListening = False
+
+			def _onDestroy(self, evt: wx.WindowDestroyEvent):
+				self.isDestroyed = True
+
+			def listenForEnableChanged(self, _ctrl: wx.Window):
+				self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
+				_ctrl.Bind(LabeledControlHelper.EVT_ENABLE_CHANGED, self._onEnableChanged)
+				self.isListening = True
+
+			def _onEnableChanged(self, evt: wx.Event):
+				if self.isListening and not self.isDestroyed:
+					self.Enable(evt.isEnabled)
+
+		class WxCtrlWithEnableEvnt(wxCtrlClass):
+			def Enable(self, enable=True):
+				evt = LabeledControlHelper.EnableChanged(isEnabled=enable)
+				wx.PostEvent(self, evt)
+				super().Enable(enable)
+
+			def Disable(self):
+				evt = LabeledControlHelper.EnableChanged(isEnabled=False)
+				wx.PostEvent(self, evt)
+				super().Disable()
+
+		self._label = LabelEnableChangedListener(parent, label=labelText)
+		self._ctrl = WxCtrlWithEnableEvnt(parent, **kwargs)
+		self._label.listenForEnableChanged(self._ctrl)
 		self._sizer = associateElements(self._label, self._ctrl)
 
 	@property
@@ -292,7 +324,10 @@ class BoxSizerHelper(object):
 			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
 			limitations from there.
 		"""
-		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
+		parent = self._parent
+		if isinstance(self.sizer, wx.StaticBoxSizer):
+			parent = self.sizer.GetStaticBox()
+		labeledControl = LabeledControlHelper(parent, labelText, wxCtrlClass, **kwargs)
 		if(isinstance(labeledControl.control, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl))):
 			self.addItem(labeledControl.sizer, flag=wx.EXPAND, proportion=1)
 		else:
@@ -313,6 +348,9 @@ class BoxSizerHelper(object):
 		  Should be set to L{False} for message or single input dialogs, L{True} otherwise.
 		@type separated: L{bool}
 		"""
+		parent = self._parent
+		if isinstance(self.sizer, wx.StaticBoxSizer):
+			parent = self.sizer.GetStaticBox()
 		if self.sizer.GetOrientation() != wx.VERTICAL:
 			raise NotImplementedError(
 				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented."
@@ -322,11 +360,11 @@ class BoxSizerHelper(object):
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
 		elif isinstance(buttons, int):
-			toAdd = self._parent.CreateButtonSizer(buttons)
+			toAdd = parent.CreateButtonSizer(buttons)
 		else:
 			raise NotImplementedError("Unknown type: {}".format(buttons))
 		if separated:
-			self.addItem(wx.StaticLine(self._parent), flag=wx.EXPAND)
+			self.addItem(wx.StaticLine(parent), flag=wx.EXPAND)
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons
@@ -334,4 +372,3 @@ class BoxSizerHelper(object):
 class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 	pass
-

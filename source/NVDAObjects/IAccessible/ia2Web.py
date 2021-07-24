@@ -10,7 +10,7 @@
 from ctypes import c_short
 from comtypes import COMError, BSTR
 import oleacc
-import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
@@ -34,11 +34,13 @@ class Ia2Web(IAccessible):
 				info['level']=level
 		return info
 
-	def _get_isCurrent(self):
-		current = self.IA2Attributes.get("current", None)
-		if current == "false":
-			current = None
-		return current
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
+		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
+		try:
+			return controlTypes.IsCurrent(ia2attrCurrent)
+		except ValueError:
+			log.debugWarning(f"Unknown 'current' IA2Attribute value: {ia2attrCurrent}")
+			return controlTypes.IsCurrent.NO
 
 	def _get_placeholder(self):
 		placeholder = self.IA2Attributes.get('placeholder', None)
@@ -73,7 +75,7 @@ class Ia2Web(IAccessible):
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if (
 			landmark
-			and self.IAccessibleRole != IAccessibleHandler.IA2_ROLE_LANDMARK
+			and self.IAccessibleRole != IA2.IA2_ROLE_LANDMARK
 			and landmark != xmlRoles[0]
 		):
 			# Ignore the landmark role
@@ -87,9 +89,20 @@ class Ia2Web(IAccessible):
 		if self is api.getFocusObject():
 			# Report aria-current if it changed.
 			speech.speakObjectProperties(
-				self, current=True, reason=controlTypes.REASON_CHANGE)
+				self,
+				current=True,
+				reason=controlTypes.OutputReason.CHANGE
+			)
 		# super calls event_stateChange which updates braille, so no need to
 		# update braille here.
+
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		politeness = self.IA2Attributes.get('live', "off")
+		try:
+			return aria.AriaLivePoliteness(politeness.lower())
+		except ValueError:
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
+			super().liveRegionPoliteness
 
 
 class Document(Ia2Web):
@@ -103,6 +116,10 @@ class Application(Document):
 
 class BlockQuote(Ia2Web):
 	role = controlTypes.ROLE_BLOCKQUOTE
+
+
+class Treegrid(Ia2Web):
+	role = controlTypes.ROLE_TABLE
 
 
 class Article(Ia2Web):
@@ -133,10 +150,12 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			# We support either IAccessibleTable or IAccessibleTable2 interfaces for locating table cells. 
 			# We will be able to get at least one of these.  
 			try:
-				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IA2.IAccessible2)
 			except AttributeError:
 				# No IAccessibleTable2, try IAccessibleTable instead.
-				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+				cell = table.IAccessibleTableObject.accessibleAt(
+					destRow - 1, destCol - 1
+				).QueryInterface(IA2.IAccessible2)
 			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
 			if cell.IA2Attributes.get('hidden'):
@@ -208,13 +227,15 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""
 	if not documentClass:
 		raise ValueError("documentClass cannot be None")
-	if not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
+	if not isinstance(obj.IAccessibleObject, IA2.IAccessible2):
 		return
 
 	iaRole = obj.IAccessibleRole
 	xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
-	if iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
+	if iaRole == IA2.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
 		clsList.append(BlockQuote)
+	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINE and "treegrid" in xmlRoles:
+		clsList.append(Treegrid)
 	elif iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and xmlRoles[0] == "article":
 		clsList.append(Article)
 	elif xmlRoles[0] == "region" and obj.name:
@@ -245,7 +266,7 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	):
 		clsList.append(documentClass)
 
-	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE:
+	if obj.IA2States & IA2.IA2_STATE_EDITABLE:
 		if obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
 			clsList.append(Editor)
 		else:

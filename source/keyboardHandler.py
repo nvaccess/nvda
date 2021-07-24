@@ -11,6 +11,8 @@ import ctypes
 import sys
 import time
 import re
+import typing
+
 import wx
 import winVersion
 import winUser
@@ -30,6 +32,10 @@ import core
 from contextlib import contextmanager
 import threading
 
+if typing.TYPE_CHECKING:
+	from watchdog import WatchdogObserver
+
+_watchdogObserver: typing.Optional["WatchdogObserver"] = None
 ignoreInjected=False
 
 # Fake vk codes.
@@ -107,7 +113,7 @@ def shouldUseToUnicodeEx(focus=None):
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 	return (
 		# This is only possible in Windows 10 1607 and above
-		winVersion.isWin10(1607)
+		winVersion.getWinVer() >= winVersion.WIN10_1607
 		and (  # Either of
 			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.
@@ -195,6 +201,10 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			currentModifiers.discard(stickyNVDAModifier)
 			stickyNVDAModifier = None
 
+		if _watchdogObserver.isAttemptingRecovery:
+			# When attempting recovery only process modifiers, but do not execute gesture.
+			return True
+
 		try:
 			inputCore.manager.executeGesture(gesture)
 			gestureExecuted=True
@@ -208,6 +218,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
 	finally:
+		if _watchdogObserver.isAttemptingRecovery:
+			return True
 		# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process 
 		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
 		focus=api.getFocusObject()
@@ -275,8 +287,11 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 
 #Register internal key press event with  operating system
 
-def initialize():
+
+def initialize(watchdogObserver: "WatchdogObserver"):
 	"""Initialises keyboard support."""
+	global _watchdogObserver
+	_watchdogObserver = watchdogObserver
 	winInputHook.initialize()
 	winInputHook.setCallbacks(keyDown=internal_keyDownEvent,keyUp=internal_keyUpEvent)
 
@@ -321,10 +336,6 @@ def canModifiersPerformAction(modifiers):
 class KeyboardInputGesture(inputCore.InputGesture):
 	"""A key pressed on the traditional system keyboard.
 	"""
-
-	#: the number of times this gesture instance has been sent as input
-	# I.e. Gesture.send was called.
-	sendCount = 0
 
 #: All normal modifier keys, where modifier vk codes are mapped to a more general modifier vk code
 # or C{None} if not applicable.
@@ -488,7 +499,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if self.vkCode==winUser.VK_RETURN and not config.conf['keyboard']['speechInterruptForEnter']:
 			return None
 		if self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT):
-			return self.SPEECHEFFECT_RESUME if speech.isPaused else self.SPEECHEFFECT_PAUSE
+			return self.SPEECHEFFECT_RESUME if speech.getState().isPaused else self.SPEECHEFFECT_PAUSE
 		return self.SPEECHEFFECT_CANCEL
 
 	def reportExtra(self):
@@ -503,17 +514,21 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			state=_("on") if toggleState else _("off")))
 
 	def executeScript(self, script):
-		super().executeScript(script)
-		if self.sendCount == 0 and canModifiersPerformAction(self.generalizedModifiers):
+		if canModifiersPerformAction(self.generalizedModifiers):
 			# #3472: These modifiers can perform an action if pressed alone
 			# and we've just totally consumed the main key.
 			# Send special reserved vkcode VK_NONE (0xff)
 			# to at least notify the app's key state that something happened.
 			# This allows alt and windows to be bound to scripts and
 			# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
+			# This must be done before executing the script,
+			# As if the script takes a long time and the user releases these modifier keys before the script finishes,
+			# it is already too late.
 			with ignoreInjection():
 				winUser.keybd_event(winUser.VK_NONE, 0, 0, 0)
 				winUser.keybd_event(winUser.VK_NONE, 0, winUser.KEYEVENTF_KEYUP, 0)
+		# Now actually execute the script.
+		super().executeScript(script)
 
 	def send(self):
 		keys = []
@@ -547,7 +562,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				# has been injected and NVDA has received and processed it.
 				time.sleep(0.01)
 				wx.Yield()
-		self.sendCount += 1
 
 	@classmethod
 	def fromName(cls, name):
@@ -652,16 +666,9 @@ def injectRawKeyboardInput(isPress, code, isExtended):
 		# Change what we pass to MapVirtualKeyEx, but don't change what NVDA gets.
 		mapScan |= 0xE000
 	vkCode = winUser.user32.MapVirtualKeyExW(mapScan, winUser.MAPVK_VSC_TO_VK_EX, getInputHkl())
-	if isPress:
-		shouldSend = internal_keyDownEvent(vkCode, code, isExtended, False)
-	else:
-		shouldSend = internal_keyUpEvent(vkCode, code, isExtended, False)
-	if shouldSend:
-		flags = 0
-		if not isPress:
-			flags |= 2
-		if isExtended:
-			flags |= 1
-		with ignoreInjection():
-			winUser.keybd_event(vkCode, code, flags, None)
-			wx.Yield()
+	flags = 0
+	if not isPress:
+		flags |= 2
+	if isExtended:
+		flags |= 1
+	winUser.keybd_event(vkCode, code, flags, None)

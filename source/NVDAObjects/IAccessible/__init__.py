@@ -9,9 +9,11 @@ from comtypes.hresult import S_OK, S_FALSE
 import ctypes
 import os
 import re
+import sys
 import itertools
 import importlib
 from comInterfaces.tom import ITextDocument
+from comInterfaces import IAccessible2Lib as IA2
 import tones
 import languageHandler
 import textInfos.offsets
@@ -85,10 +87,11 @@ def normalizeIA2TextFormatField(formatField):
 	except KeyError:
 		invalid=None
 	if invalid:
-		invalid=invalid.lower()
-		if invalid=="spelling":
+		# aria-invalid can contain multiple values separated by a comma.
+		invalidList = [x.lower().strip() for x in invalid.split(',')]
+		if "spelling" in invalidList:
 			formatField["invalid-spelling"]=True
-		elif invalid=="grammar":
+		if "grammar" in invalidList:
 			formatField["invalid-grammar"]=True
 	color=formatField.get('color')
 	if color:
@@ -123,7 +126,9 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		if self.obj.IAccessibleTextObject.nCharacters>0:
-			offset = self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			offset = self.obj.IAccessibleTextObject.OffsetAtPoint(
+				x, y, IA2.IA2_COORDTYPE_SCREEN_RELATIVE
+			)
 			# IA2 specifies that a result of -1 indicates that
 			# the point is invalid or there is no character under the point.
 			# Note that Chromium does not follow the spec and returns 0 for invalid or no character points.
@@ -137,7 +142,9 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	@classmethod
 	def _getBoundingRectFromOffsetInObject(cls,obj,offset):
 		try:
-			res=RectLTWH(*obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE))
+			res = RectLTWH(*obj.IAccessibleTextObject.characterExtents(
+				offset, IA2.IA2_COORDTYPE_SCREEN_RELATIVE
+			))
 		except COMError:
 			raise NotImplementedError
 		if not any(res[2:]):
@@ -258,7 +265,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
+			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(offset, IA2.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
 		if text and (textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text)):
@@ -274,7 +281,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)
+			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(offset, IA2.IA2_TEXT_BOUNDARY_WORD)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
 		if start>offset or offset>end:
@@ -284,7 +291,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getLineOffsets(self,offset):
 		try:
-			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
+			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(offset, IA2.IA2_TEXT_BOUNDARY_LINE)
 			return start,end
 		except COMError:
 			log.debugWarning("IAccessibleText::textAtOffset failed",exc_info=True)
@@ -297,7 +304,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_SENTENCE)
+			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(offset, IA2.IA2_TEXT_BOUNDARY_SENTENCE)
 			if start==end:
 				raise NotImplementedError
 			return start,end
@@ -311,7 +318,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_PARAGRAPH)
+			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(offset, IA2.IA2_TEXT_BOUNDARY_PARAGRAPH)
 			if start>=end:
 				raise RuntimeError("did not expand to paragraph correctly")
 			return start,end
@@ -484,20 +491,6 @@ the NVDAObject for IAccessible
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from .mozilla import GeckoPluginWindowRoot
 			clsList.append(GeckoPluginWindowRoot)
-		maybeFlash = False
-		if ((windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2))
-				or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen", "GeckoFPSandboxChildWindow")):
-			maybeFlash = True
-		elif windowClassName == "Internet Explorer_Server" and self.event_objectID is not None and self.event_objectID > 0:
-			# #2454: In Windows 8 IE, Flash is exposed in the same HWND as web content.
-			from .MSHTML import MSHTML
-			# This is only possibly Flash if it isn't MSHTML.
-			if not isinstance(self, MSHTML):
-				maybeFlash = True
-		if maybeFlash:
-			# This is possibly a Flash object.
-			from . import adobeFlash
-			adobeFlash.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith('Mozilla'):
 			from . import mozilla
 			mozilla.findExtraOverlayClasses(self, clsList)
@@ -577,7 +570,11 @@ the NVDAObject for IAccessible
 
 		clsList.append(IAccessible)
 
-		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if(
+			self.event_objectID == winUser.OBJID_CLIENT
+			and self.event_childID == 0
+			and not isinstance(self.IAccessibleObject, IA2.IAccessible2)
+		):
 			# This is the main (client) area of the window, so we can use other classes at the window level.
 			# #3872: However, don't do this for IAccessible2 because
 			# IA2 supersedes window level APIs and might conflict with them.
@@ -601,7 +598,7 @@ the NVDAObject for IAccessible
 		self.IAccessibleChildID=IAccessibleChildID
 
 		# Try every trick in the book to get the window handle if we don't have it.
-		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if not windowHandle and isinstance(IAccessibleObject, IA2.IAccessible2):
 			windowHandle=self.IA2WindowHandle
 		try:
 			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
@@ -627,7 +624,7 @@ the NVDAObject for IAccessible
 		if not windowHandle:
 			raise InvalidNVDAObject("Can't get a window handle from IAccessible")
 
-		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if isinstance(IAccessibleObject, IA2.IAccessible2):
 			try:
 				self.IA2UniqueID=IAccessibleObject.uniqueID
 			except COMError:
@@ -636,7 +633,7 @@ the NVDAObject for IAccessible
 		# Set the event params based on our calculated/construction info if we must.
 		if event_windowHandle is None:
 			event_windowHandle=windowHandle
-		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if event_objectID is None and isinstance(IAccessibleObject, IA2.IAccessible2):
 			event_objectID=winUser.OBJID_CLIENT
 		if event_childID is None:
 			if self.IA2UniqueID is not None:
@@ -650,18 +647,18 @@ the NVDAObject for IAccessible
 		super(IAccessible,self).__init__(windowHandle=windowHandle)
 
 		try:
-			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
+			self.IAccessibleActionObject = IAccessibleObject.QueryInterface(IA2.IAccessibleAction)
 		except COMError:
 			pass
 		try:
-			self.IAccessibleTable2Object=self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTable2)
+			self.IAccessibleTable2Object = self.IAccessibleObject.QueryInterface(IA2.IAccessibleTable2)
 		except COMError:
 			try:
-				self.IAccessibleTableObject=self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTable)
+				self.IAccessibleTableObject = self.IAccessibleObject.QueryInterface(IA2.IAccessibleTable)
 			except COMError:
 				pass
 		try:
-			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
+			self.IAccessibleTextObject = IAccessibleObject.QueryInterface(IA2.IAccessibleText)
 		except COMError:
 			pass
 		if None not in (event_windowHandle,event_objectID,event_childID):
@@ -694,6 +691,13 @@ the NVDAObject for IAccessible
 			return False
 		return True
 
+	def _get_shouldAllowIAccessibleMenuStartEvent(self) -> bool:
+		"""Determine whether an IAccessible menu start or menu popup start event should be allowed
+		for this object.
+		@return: C{True} if the event should be allowed.
+		"""
+		return True
+
 	def _get_TextInfo(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			return IA2TextTextInfo
@@ -704,7 +708,10 @@ the NVDAObject for IAccessible
 			return False
 		if self.IAccessibleObject==other.IAccessibleObject: 
 			return True
-		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if (
+			isinstance(self.IAccessibleObject, IA2.IAccessible2)
+			and isinstance(other.IAccessibleObject, IA2.IAccessible2)
+		):
 			# These are both IAccessible2 objects, so we can test unique ID.
 			# Unique ID is only guaranteed to be unique within a given window, so we must check window handle as well.
 			selfIA2Window=self.IA2WindowHandle
@@ -816,7 +823,7 @@ the NVDAObject for IAccessible
 		return self._IAccessibleIdentity
 
 	def _get_IAccessibleRole(self):
-		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			try:
 				role=self.IAccessibleObject.role()
 			except COMError:
@@ -863,7 +870,7 @@ the NVDAObject for IAccessible
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
 			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			# Not an IA2 object.
 			return states
 		IAccessible2States=self.IA2States
@@ -1082,7 +1089,7 @@ the NVDAObject for IAccessible
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0], IAccessibleChildID=child[1]))
 
 	def _get_IA2Attributes(self):
-		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return {}
 		try:
 			attribs = self.IAccessibleObject.attributes
@@ -1235,7 +1242,7 @@ the NVDAObject for IAccessible
 	def _get__IATableCell(self):
 		# Permanently cache the result.
 		try:
-			self._IATableCell = self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTableCell)
+			self._IATableCell = self.IAccessibleObject.QueryInterface(IA2.IAccessibleTableCell)
 		except COMError:
 			self._IATableCell = None
 		return self._IATableCell
@@ -1256,7 +1263,7 @@ the NVDAObject for IAccessible
 			# as it gets released when it gets garbage collected.
 			for i in range(nHeaders):
 				try:
-					text = headers[i].QueryInterface(IAccessibleHandler.IAccessible2).accName(0)
+					text = headers[i].QueryInterface(IA2.IAccessible2).accName(0)
 				except COMError:
 					continue
 				if not text:
@@ -1296,7 +1303,7 @@ the NVDAObject for IAccessible
 		# For our purposes, we can treat both S_OK and S_FALSE as success.
 		if res!=S_OK and res!=S_FALSE:
 			raise COMError(res,None,None)
-		return numItemsFetched.value if numItemsFetched.value<=maxCount else sys.maxsize
+		return numItemsFetched.value if numItemsFetched.value <= maxCount else sys.maxsize
 
 	def getSelectedItemsCount(self,maxCount):
 		# To fetch the number of selected items, we first try MSAA's accSelection, but if that fails in any way, we fall back to using IAccessibleTable2's nSelectedCells, if we are on an IAccessible2 table.
@@ -1318,7 +1325,7 @@ the NVDAObject for IAccessible
 
 
 	def _get_table(self):
-		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return None
 		table=getattr(self,'_table',None)
 		if table:
@@ -1362,9 +1369,9 @@ the NVDAObject for IAccessible
 			pass
 
 	def scrollIntoView(self):
-		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			try:
-				self.IAccessibleObject.scrollTo(IAccessibleHandler.IA2_SCROLL_TYPE_ANYWHERE)
+				self.IAccessibleObject.scrollTo(IA2.IA2_SCROLL_TYPE_ANYWHERE)
 			except COMError:
 				log.debugWarning("IAccessible2::scrollTo failed", exc_info=True)
 
@@ -1373,7 +1380,7 @@ the NVDAObject for IAccessible
 		return config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]
 
 	def _get_positionInfo(self):
-		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			try:
 				info={}
 				info["level"],info["similarItemsInGroup"],info["indexInGroup"]=self.IAccessibleObject.groupPosition
@@ -1403,7 +1410,7 @@ the NVDAObject for IAccessible
 		return {}
 
 	def _get_indexInParent(self):
-		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			try:
 				return self.IAccessibleObject.indexInParent
 			except COMError:
@@ -1411,7 +1418,7 @@ the NVDAObject for IAccessible
 		raise NotImplementedError
 
 	def _get__IA2Relations(self):
-		if not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			raise NotImplementedError
 		import ctypes
 		import comtypes.hresult
@@ -1421,7 +1428,7 @@ the NVDAObject for IAccessible
 			raise NotImplementedError
 		if size <= 0:
 			return ()
-		relations = (ctypes.POINTER(IAccessibleHandler.IAccessibleRelation) * size)()
+		relations = (ctypes.POINTER(IA2.IAccessibleRelation) * size)()
 		count = ctypes.c_int()
 		# The client allocated relations array is an [out] parameter instead of [in, out], so we need to use the raw COM method.
 		res = self.IAccessibleObject._IAccessible2__com__get_relations(size, relations, ctypes.byref(count))
@@ -1463,10 +1470,10 @@ the NVDAObject for IAccessible
 			api.processPendingEvents()
 		if self in api.getFocusAncestors():
 			return
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS, priority=speech.Spri.NOW)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
 		for child in self.recursiveDescendants:
 			if controlTypes.STATE_FOCUSABLE in child.states:
-				speech.speakObject(child, reason=controlTypes.REASON_FOCUS, priority=speech.Spri.NOW)
+				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
 
 	def event_caret(self):
 		focus = api.getFocusObject()
@@ -1550,7 +1557,7 @@ the NVDAObject for IAccessible
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("IAccessible accValue: %s" % ret)
-		if isinstance(iaObj, IAccessibleHandler.IAccessible2):
+		if isinstance(iaObj, IA2.IAccessible2):
 			try:
 				ret = iaObj.windowHandle
 			except Exception as e:
@@ -1563,7 +1570,7 @@ the NVDAObject for IAccessible
 			info.append("IAccessible2 uniqueID: %s" % ret)
 			try:
 				ret = iaObj.role()
-				for name, const in itertools.chain(oleacc.__dict__.items(), IAccessibleHandler.__dict__.items()):
+				for name, const in itertools.chain(oleacc.__dict__.items(), IA2.__dict__.items()):
 					if not name.startswith("ROLE_") and not name.startswith("IA2_ROLE_"):
 						continue
 					if ret == const:
@@ -1577,7 +1584,7 @@ the NVDAObject for IAccessible
 			try:
 				temp = iaObj.states
 				ret = ", ".join(
-					name for name, const in IAccessibleHandler.__dict__.items()
+					name for name, const in IA2.__dict__.items()
 					if name.startswith("IA2_STATE_") and temp & const
 				) + " (%d)" % temp
 			except Exception as e:
@@ -1602,13 +1609,13 @@ the NVDAObject for IAccessible
 		return None
 
 	def _get_iaHypertext(self):
-		ht = self.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
+		ht = self.IAccessibleTextObject.QueryInterface(IA2.IAccessibleHypertext)
 		self.iaHypertext = ht # Cache forever.
 		return ht
 
 	def _get_IA2WindowHandle(self):
 		window = None
-		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			try:
 				window = self.IAccessibleObject.windowHandle
 			except COMError as e:
@@ -1620,16 +1627,16 @@ the NVDAObject for IAccessible
 	_cache_IA2WindowHandle = False
 
 	def _get_IA2States(self):
-		if not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return 0
 		try:
 			return self.IAccessibleObject.states
 		except COMError:
 			log.debugWarning("could not get IAccessible2 states", exc_info=True)
-			return IAccessibleHandler.IA2_STATE_DEFUNCT
+			return IA2.IA2_STATE_DEFUNCT
 
 	def __contains__(self, obj):
-		if not isinstance(obj, IAccessible) or not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
+		if not isinstance(obj, IAccessible) or not isinstance(obj.IAccessibleObject, IA2.IAccessible2):
 			return False
 		try:
 			self.IAccessibleObject.accChild(obj.IA2UniqueID)
@@ -1948,11 +1955,11 @@ class IENotificationBar(Dialog,IAccessible):
 
 	def event_alert(self):
 		speech.cancelSpeech()
-		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		child=self.simpleFirstChild
 		while child:
 			if child.role!=controlTypes.ROLE_STATICTEXT:
-				speech.speakObject(child,reason=controlTypes.REASON_FOCUS)
+				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS)
 			child=child.simpleNext
 
 

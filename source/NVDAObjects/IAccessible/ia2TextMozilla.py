@@ -12,7 +12,7 @@ from comtypes import COMError
 import winUser
 import textInfos
 import controlTypes
-import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
 import api
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
@@ -50,12 +50,25 @@ def _getEmbedded(obj, offset):
 		hi = ht.hyperlinkIndex(offset)
 		if hi != -1:
 			hl = ht.hyperlink(hi)
-			return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
+			return IAccessible(IAccessibleObject=hl.QueryInterface(IA2.IAccessible2), IAccessibleChildID=0)
 	except COMError:
 		pass
 	return None
 
 class MozillaCompoundTextInfo(CompoundTextInfo):
+
+	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+		controlField = super()._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
+		if controlField is None:
+			return None
+		# Set the uniqueID of the controlField if we can get one
+		# which ensures that two controlFields with the same role and states etc are still treated differently
+		# if they are actually for different objects.
+		# E.g. two list items in a list.
+		uniqueID = obj.IA2UniqueID
+		if uniqueID is not None:
+			controlField["uniqueID"] = uniqueID
+		return controlField
 
 	def __init__(self, obj, position):
 		super(MozillaCompoundTextInfo, self).__init__(obj, position)
@@ -99,7 +112,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# The caret is at the end of an inline object.
 				# This will report "blank", but we want to report the character just after the caret.
 				try:
-					caretTi, caretObj = self._findNextContent(caretTi)
+					caretTi, caretObj = self._findNextContent(caretTi, limitToInline=True)
 				except LookupError:
 					pass
 			self._start = self._end = caretTi
@@ -181,7 +194,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			info._endOffset = info._startOffset + 1
 			return info
 		try:
-			hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
+			hl = obj.IAccessibleObject.QueryInterface(IA2.IAccessibleHyperlink)
 			hlOffset = hl.startIndex
 			info._startOffset = hlOffset
 			info._endOffset = hlOffset + 1
@@ -513,7 +526,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		self._end = end
 		self._endObj = endObj
 
-	def _findNextContent(self, origin, moveBack=False):
+	def _findNextContent(self, origin, moveBack=False, limitToInline=False):
 		if isinstance(origin, textInfos.TextInfo):
 			ti = origin
 			obj = ti.obj
@@ -529,6 +542,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			if obj == self.obj:
 				# We're at the root. Don't go any further.
 				raise LookupError
+			if limitToInline:
+				if obj.IA2Attributes.get('display') != 'inline':
+					# The caller requested to limit to inline objects.
+					# As this container is not inline,
+					# We cannot go above this container.
+					raise LookupError
 			ti = self._getEmbedding(obj)
 			if not ti:
 				raise LookupError

@@ -1,14 +1,11 @@
-# IAccessibleHandler.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Tuple
+import re
 import struct
 import weakref
-# Kept for backwards compatibility
-from ctypes import *  # noqa: F401, F403
 from ctypes import (
 	wintypes,
 	windll,
@@ -24,176 +21,28 @@ from ctypes.wintypes import HANDLE
 from comtypes import IUnknown, IServiceProvider, COMError
 import comtypes.client
 import oleacc
+import JABHandler
 import UIAHandler
 
-# Kept for backwards compatibility
-from comInterfaces.Accessibility import *  # noqa: F401, F403
-# Specific imports for items we know we use, hopefully in the future we can remove the import for this module.
-from comInterfaces.Accessibility import (
-	IAccessible,
-	IAccIdentity,
-	CAccPropServices,
-)
-# Kept for backwards compatibility
-from comInterfaces.IAccessible2Lib import *  # noqa: F401, F403
-# Specific imports for items we know we use, hopefully in the future we can remove the import for this module.
-from comInterfaces.IAccessible2Lib import (
-	IAccessibleText,
-	IAccessibleHypertext,
-	IAccessible2,
-	IA2_STATE_REQUIRED,
-	IA2_STATE_INVALID_ENTRY,
-	IA2_STATE_MODAL,
-	IA2_STATE_DEFUNCT,
-	IA2_STATE_SUPPORTS_AUTOCOMPLETION,
-	IA2_STATE_MULTI_LINE,
-	IA2_STATE_ICONIFIED,
-	IA2_STATE_EDITABLE,
-	IA2_STATE_PINNED,
-	IA2_STATE_CHECKABLE,
-	IA2_ROLE_UNKNOWN,
-	IA2_ROLE_CANVAS,
-	IA2_ROLE_CAPTION,
-	IA2_ROLE_CHECK_MENU_ITEM,
-	IA2_ROLE_COLOR_CHOOSER,
-	IA2_ROLE_DATE_EDITOR,
-	IA2_ROLE_DIRECTORY_PANE,
-	IA2_ROLE_DESKTOP_PANE,
-	IA2_ROLE_EDITBAR,
-	IA2_ROLE_EMBEDDED_OBJECT,
-	IA2_ROLE_ENDNOTE,
-	IA2_ROLE_FILE_CHOOSER,
-	IA2_ROLE_FONT_CHOOSER,
-	IA2_ROLE_FRAME,
-	IA2_ROLE_FOOTNOTE,
-	IA2_ROLE_FORM,
-	IA2_ROLE_GLASS_PANE,
-	IA2_ROLE_HEADER,
-	IA2_ROLE_HEADING,
-	IA2_ROLE_ICON,
-	IA2_ROLE_IMAGE_MAP,
-	IA2_ROLE_INPUT_METHOD_WINDOW,
-	IA2_ROLE_INTERNAL_FRAME,
-	IA2_ROLE_LABEL,
-	IA2_ROLE_LAYERED_PANE,
-	IA2_ROLE_NOTE,
-	IA2_ROLE_OPTION_PANE,
-	IA2_ROLE_PAGE,
-	IA2_ROLE_PARAGRAPH,
-	IA2_ROLE_RADIO_MENU_ITEM,
-	IA2_ROLE_REDUNDANT_OBJECT,
-	IA2_ROLE_ROOT_PANE,
-	IA2_ROLE_RULER,
-	IA2_ROLE_SCROLL_PANE,
-	IA2_ROLE_SECTION,
-	IA2_ROLE_SHAPE,
-	IA2_ROLE_SPLIT_PANE,
-	IA2_ROLE_TEAR_OFF_MENU,
-	IA2_ROLE_TERMINAL,
-	IA2_ROLE_TEXT_FRAME,
-	IA2_ROLE_TOGGLE_BUTTON,
-	IA2_ROLE_VIEW_PORT,
-	IA2_ROLE_CONTENT_DELETION,
-	IA2_ROLE_CONTENT_INSERTION,
-	IA2_ROLE_BLOCK_QUOTE,
-	IA2_ROLE_DESKTOP_ICON,
-	IA2_ROLE_FOOTER,
-	IA2_ROLE_MARK,
-)
-import config
-
-
-_winEventNameCache = {}
-
-
-def getWinEventName(eventID):
-	""" Looks up the name of an EVENT_* winEvent constant. """
-	global _winEventNameCache
-	if not _winEventNameCache:
-		_winEventNameCache = {y: x for x, y in vars(winUser).items() if x.startswith('EVENT_')}
-		_winEventNameCache.update({y: x for x, y in vars(IA2).items() if x.startswith('IA2_EVENT_')})
-	name = _winEventNameCache.get(eventID)
-	if not name:
-		name = "unknown event ({eventID})"
-	return name
-
-
-_objectIDNameCache = {}
-
-
-def getObjectIDName(objectID):
-	""" Looks up the name of an OBJID_* winEvent constant. """
-	global _objectIDNameCache
-	if not _objectIDNameCache:
-		_objectIDNameCache = {y: x for x, y in vars(winUser).items() if x.startswith('OBJID_')}
-	name = _objectIDNameCache.get(objectID)
-	if not name:
-		name = str(objectID)
-	return name
-
-
-def getWinEventLogInfo(window, objectID, childID, eventID=None, threadID=None):
-	"""
-	Formats the given winEvent parameters into a printable string.
-	window, objectID and childID are mandatory,
-	but eventID and threadID are optional.
-	"""
-	windowClassName = winUser.getClassName(window) or "unknown"
-	objectIDName = getObjectIDName(objectID)
-	processID = winUser.getWindowThreadProcessID(window)[0]
-	if processID:
-		processName = appModuleHandler.getAppModuleFromProcessID(processID).appName
-	else:
-		processName = "unknown application"
-	messageList = []
-	if eventID is not None:
-		eventName = getWinEventName(eventID)
-		messageList.append(f"{eventName}")
-	messageList.append(
-		f"window {window} ({windowClassName}), objectID {objectIDName}, childID {childID}, "
-		f"process {processID} ({processName})"
-	)
-	if threadID is not None:
-		messageList.append(f"thread {threadID}")
-	return ", ".join(messageList)
-
-
-def isMSAADebugLoggingEnabled():
-	""" Whether the user has configured NVDA to log extra information about MSAA events. """
-	return config.conf["debugLog"]["MSAA"]
-
-
-IAccessibleObjectIdentifierType = Tuple[
-	int,  # windowHandle
-	int,  # objectID
-	int,  # childID
-]
-
-from . import internalWinEventHandler
-# Imported for backwards compat
-from .internalWinEventHandler import (  # noqa: F401
-	winEventHookIDs,
-	winEventLimiter,
-	winEventIDsToNVDAEventNames,
-	_shouldGetEvents,
-)
+from comInterfaces import Accessibility as IA
 
 from comInterfaces import IAccessible2Lib as IA2
-from logHandler import log
-import JABHandler
-import eventHandler
-import winUser
 import api
+import appModuleHandler
+import controlTypes
+import core
+import eventHandler
+import keyboardHandler
+from logHandler import log
+import mouseHandler
 import NVDAObjects.IAccessible
 import NVDAObjects.window
-import appModuleHandler
-import mouseHandler
-import controlTypes
-import keyboardHandler
-import core
-import re
+import winUser
 
+from . import internalWinEventHandler
 from .orderedWinEventLimiter import MENU_EVENTIDS
+from .utils import getWinEventLogInfo, getWinEventName, isMSAADebugLoggingEnabled
+
 
 # Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABEL_FOR = 0x1002
@@ -276,55 +125,55 @@ IAccessibleRolesToNVDARoles = {
 	oleacc.ROLE_SYSTEM_OUTLINEBUTTON: controlTypes.ROLE_TREEVIEWBUTTON,
 	oleacc.ROLE_SYSTEM_CLOCK: controlTypes.ROLE_CLOCK,
 	# IAccessible2 roles
-	IA2_ROLE_UNKNOWN: controlTypes.ROLE_UNKNOWN,
-	IA2_ROLE_CANVAS: controlTypes.ROLE_CANVAS,
-	IA2_ROLE_CAPTION: controlTypes.ROLE_CAPTION,
-	IA2_ROLE_CHECK_MENU_ITEM: controlTypes.ROLE_CHECKMENUITEM,
-	IA2_ROLE_COLOR_CHOOSER: controlTypes.ROLE_COLORCHOOSER,
-	IA2_ROLE_DATE_EDITOR: controlTypes.ROLE_DATEEDITOR,
-	IA2_ROLE_DESKTOP_ICON: controlTypes.ROLE_DESKTOPICON,
-	IA2_ROLE_DESKTOP_PANE: controlTypes.ROLE_DESKTOPPANE,
-	IA2_ROLE_DIRECTORY_PANE: controlTypes.ROLE_DIRECTORYPANE,
-	IA2_ROLE_EDITBAR: controlTypes.ROLE_EDITBAR,
-	IA2_ROLE_EMBEDDED_OBJECT: controlTypes.ROLE_EMBEDDEDOBJECT,
-	IA2_ROLE_ENDNOTE: controlTypes.ROLE_ENDNOTE,
-	IA2_ROLE_FILE_CHOOSER: controlTypes.ROLE_FILECHOOSER,
-	IA2_ROLE_FONT_CHOOSER: controlTypes.ROLE_FONTCHOOSER,
-	IA2_ROLE_FOOTER: controlTypes.ROLE_FOOTER,
-	IA2_ROLE_FOOTNOTE: controlTypes.ROLE_FOOTNOTE,
-	IA2_ROLE_FORM: controlTypes.ROLE_FORM,
-	IA2_ROLE_FRAME: controlTypes.ROLE_FRAME,
-	IA2_ROLE_GLASS_PANE: controlTypes.ROLE_GLASSPANE,
-	IA2_ROLE_HEADER: controlTypes.ROLE_HEADER,
-	IA2_ROLE_HEADING: controlTypes.ROLE_HEADING,
-	IA2_ROLE_ICON: controlTypes.ROLE_ICON,
-	IA2_ROLE_IMAGE_MAP: controlTypes.ROLE_IMAGEMAP,
-	IA2_ROLE_INPUT_METHOD_WINDOW: controlTypes.ROLE_INPUTWINDOW,
-	IA2_ROLE_INTERNAL_FRAME: controlTypes.ROLE_INTERNALFRAME,
-	IA2_ROLE_LABEL: controlTypes.ROLE_LABEL,
-	IA2_ROLE_LAYERED_PANE: controlTypes.ROLE_LAYEREDPANE,
-	IA2_ROLE_NOTE: controlTypes.ROLE_NOTE,
-	IA2_ROLE_OPTION_PANE: controlTypes.ROLE_OPTIONPANE,
-	IA2_ROLE_PAGE: controlTypes.ROLE_PAGE,
-	IA2_ROLE_PARAGRAPH: controlTypes.ROLE_PARAGRAPH,
-	IA2_ROLE_RADIO_MENU_ITEM: controlTypes.ROLE_RADIOMENUITEM,
-	IA2_ROLE_REDUNDANT_OBJECT: controlTypes.ROLE_REDUNDANTOBJECT,
-	IA2_ROLE_ROOT_PANE: controlTypes.ROLE_ROOTPANE,
-	IA2_ROLE_RULER: controlTypes.ROLE_RULER,
-	IA2_ROLE_SCROLL_PANE: controlTypes.ROLE_SCROLLPANE,
-	IA2_ROLE_SECTION: controlTypes.ROLE_SECTION,
-	IA2_ROLE_SHAPE: controlTypes.ROLE_SHAPE,
-	IA2_ROLE_SPLIT_PANE: controlTypes.ROLE_SPLITPANE,
-	IA2_ROLE_TEAR_OFF_MENU: controlTypes.ROLE_TEAROFFMENU,
-	IA2_ROLE_TERMINAL: controlTypes.ROLE_TERMINAL,
-	IA2_ROLE_TEXT_FRAME: controlTypes.ROLE_TEXTFRAME,
-	IA2_ROLE_TOGGLE_BUTTON: controlTypes.ROLE_TOGGLEBUTTON,
-	IA2_ROLE_VIEW_PORT: controlTypes.ROLE_VIEWPORT,
-	IA2_ROLE_CONTENT_DELETION: controlTypes.ROLE_DELETED_CONTENT,
-	IA2_ROLE_CONTENT_INSERTION: controlTypes.ROLE_INSERTED_CONTENT,
-	IA2_ROLE_BLOCK_QUOTE: controlTypes.ROLE_BLOCKQUOTE,
+	IA2.IA2_ROLE_UNKNOWN: controlTypes.ROLE_UNKNOWN,
+	IA2.IA2_ROLE_CANVAS: controlTypes.ROLE_CANVAS,
+	IA2.IA2_ROLE_CAPTION: controlTypes.ROLE_CAPTION,
+	IA2.IA2_ROLE_CHECK_MENU_ITEM: controlTypes.ROLE_CHECKMENUITEM,
+	IA2.IA2_ROLE_COLOR_CHOOSER: controlTypes.ROLE_COLORCHOOSER,
+	IA2.IA2_ROLE_DATE_EDITOR: controlTypes.ROLE_DATEEDITOR,
+	IA2.IA2_ROLE_DESKTOP_ICON: controlTypes.ROLE_DESKTOPICON,
+	IA2.IA2_ROLE_DESKTOP_PANE: controlTypes.ROLE_DESKTOPPANE,
+	IA2.IA2_ROLE_DIRECTORY_PANE: controlTypes.ROLE_DIRECTORYPANE,
+	IA2.IA2_ROLE_EDITBAR: controlTypes.ROLE_EDITBAR,
+	IA2.IA2_ROLE_EMBEDDED_OBJECT: controlTypes.ROLE_EMBEDDEDOBJECT,
+	IA2.IA2_ROLE_ENDNOTE: controlTypes.ROLE_ENDNOTE,
+	IA2.IA2_ROLE_FILE_CHOOSER: controlTypes.ROLE_FILECHOOSER,
+	IA2.IA2_ROLE_FONT_CHOOSER: controlTypes.ROLE_FONTCHOOSER,
+	IA2.IA2_ROLE_FOOTER: controlTypes.ROLE_FOOTER,
+	IA2.IA2_ROLE_FOOTNOTE: controlTypes.ROLE_FOOTNOTE,
+	IA2.IA2_ROLE_FORM: controlTypes.ROLE_FORM,
+	IA2.IA2_ROLE_FRAME: controlTypes.ROLE_FRAME,
+	IA2.IA2_ROLE_GLASS_PANE: controlTypes.ROLE_GLASSPANE,
+	IA2.IA2_ROLE_HEADER: controlTypes.ROLE_HEADER,
+	IA2.IA2_ROLE_HEADING: controlTypes.ROLE_HEADING,
+	IA2.IA2_ROLE_ICON: controlTypes.ROLE_ICON,
+	IA2.IA2_ROLE_IMAGE_MAP: controlTypes.ROLE_IMAGEMAP,
+	IA2.IA2_ROLE_INPUT_METHOD_WINDOW: controlTypes.ROLE_INPUTWINDOW,
+	IA2.IA2_ROLE_INTERNAL_FRAME: controlTypes.ROLE_INTERNALFRAME,
+	IA2.IA2_ROLE_LABEL: controlTypes.ROLE_LABEL,
+	IA2.IA2_ROLE_LAYERED_PANE: controlTypes.ROLE_LAYEREDPANE,
+	IA2.IA2_ROLE_NOTE: controlTypes.ROLE_NOTE,
+	IA2.IA2_ROLE_OPTION_PANE: controlTypes.ROLE_OPTIONPANE,
+	IA2.IA2_ROLE_PAGE: controlTypes.ROLE_PAGE,
+	IA2.IA2_ROLE_PARAGRAPH: controlTypes.ROLE_PARAGRAPH,
+	IA2.IA2_ROLE_RADIO_MENU_ITEM: controlTypes.ROLE_RADIOMENUITEM,
+	IA2.IA2_ROLE_REDUNDANT_OBJECT: controlTypes.ROLE_REDUNDANTOBJECT,
+	IA2.IA2_ROLE_ROOT_PANE: controlTypes.ROLE_ROOTPANE,
+	IA2.IA2_ROLE_RULER: controlTypes.ROLE_RULER,
+	IA2.IA2_ROLE_SCROLL_PANE: controlTypes.ROLE_SCROLLPANE,
+	IA2.IA2_ROLE_SECTION: controlTypes.ROLE_SECTION,
+	IA2.IA2_ROLE_SHAPE: controlTypes.ROLE_SHAPE,
+	IA2.IA2_ROLE_SPLIT_PANE: controlTypes.ROLE_SPLITPANE,
+	IA2.IA2_ROLE_TEAR_OFF_MENU: controlTypes.ROLE_TEAROFFMENU,
+	IA2.IA2_ROLE_TERMINAL: controlTypes.ROLE_TERMINAL,
+	IA2.IA2_ROLE_TEXT_FRAME: controlTypes.ROLE_TEXTFRAME,
+	IA2.IA2_ROLE_TOGGLE_BUTTON: controlTypes.ROLE_TOGGLEBUTTON,
+	IA2.IA2_ROLE_VIEW_PORT: controlTypes.ROLE_VIEWPORT,
+	IA2.IA2_ROLE_CONTENT_DELETION: controlTypes.ROLE_DELETED_CONTENT,
+	IA2.IA2_ROLE_CONTENT_INSERTION: controlTypes.ROLE_INSERTED_CONTENT,
+	IA2.IA2_ROLE_BLOCK_QUOTE: controlTypes.ROLE_BLOCKQUOTE,
 	IA2.IA2_ROLE_LANDMARK: controlTypes.ROLE_LANDMARK,
-	IA2_ROLE_MARK: controlTypes.ROLE_MARKED_CONTENT,
+	IA2.IA2_ROLE_MARK: controlTypes.ROLE_MARKED_CONTENT,
 	# some common string roles
 	"frame": controlTypes.ROLE_FRAME,
 	"iframe": controlTypes.ROLE_INTERNALFRAME,
@@ -371,32 +220,32 @@ IAccessibleStatesToNVDAStates = {
 }
 
 IAccessible2StatesToNVDAStates = {
-	IA2_STATE_REQUIRED: controlTypes.STATE_REQUIRED,
-	IA2_STATE_DEFUNCT: controlTypes.STATE_DEFUNCT,
-	# IA2_STATE_STALE:controlTypes.STATE_DEFUNCT,
-	IA2_STATE_INVALID_ENTRY: controlTypes.STATE_INVALID_ENTRY,
-	IA2_STATE_MODAL: controlTypes.STATE_MODAL,
-	IA2_STATE_SUPPORTS_AUTOCOMPLETION: controlTypes.STATE_AUTOCOMPLETE,
-	IA2_STATE_MULTI_LINE: controlTypes.STATE_MULTILINE,
-	IA2_STATE_ICONIFIED: controlTypes.STATE_ICONIFIED,
-	IA2_STATE_EDITABLE: controlTypes.STATE_EDITABLE,
-	IA2_STATE_PINNED: controlTypes.STATE_PINNED,
-	IA2_STATE_CHECKABLE: controlTypes.STATE_CHECKABLE,
+	IA2.IA2_STATE_REQUIRED: controlTypes.STATE_REQUIRED,
+	IA2.IA2_STATE_DEFUNCT: controlTypes.STATE_DEFUNCT,
+	# IA2.IA2_STATE_STALE:controlTypes.STATE_DEFUNCT,
+	IA2.IA2_STATE_INVALID_ENTRY: controlTypes.STATE_INVALID_ENTRY,
+	IA2.IA2_STATE_MODAL: controlTypes.STATE_MODAL,
+	IA2.IA2_STATE_SUPPORTS_AUTOCOMPLETION: controlTypes.STATE_AUTOCOMPLETE,
+	IA2.IA2_STATE_MULTI_LINE: controlTypes.STATE_MULTILINE,
+	IA2.IA2_STATE_ICONIFIED: controlTypes.STATE_ICONIFIED,
+	IA2.IA2_STATE_EDITABLE: controlTypes.STATE_EDITABLE,
+	IA2.IA2_STATE_PINNED: controlTypes.STATE_PINNED,
+	IA2.IA2_STATE_CHECKABLE: controlTypes.STATE_CHECKABLE,
 }
 
 
 def normalizeIAccessible(pacc, childID=0):
-	if not isinstance(pacc, IAccessible):
+	if not isinstance(pacc, IA.IAccessible):
 		try:
-			pacc = pacc.QueryInterface(IAccessible)
+			pacc = pacc.QueryInterface(IA.IAccessible)
 		except COMError:
 			raise RuntimeError("%s Not an IAccessible" % pacc)
 	# #2558: IAccessible2 doesn't support simple children.
 	# Therefore, it doesn't make sense to use IA2 if the child ID is non-0.
-	if childID == 0 and not isinstance(pacc, IAccessible2):
+	if childID == 0 and not isinstance(pacc, IA2.IAccessible2):
 		try:
 			s = pacc.QueryInterface(IServiceProvider)
-			pacc2 = s.QueryService(IAccessible._iid_, IAccessible2)
+			pacc2 = s.QueryService(IA.IAccessible._iid_, IA2.IAccessible2)
 			if not pacc2:
 				# QueryService should fail if IA2 is not supported, but some applications such as AIM 7 misbehave
 				# and return a null COM pointer. Treat this as if QueryService failed.
@@ -595,7 +444,7 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 			f"Creating NVDA event from winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}, "
 			f"use cache {useCache}"
 		)
-	NVDAEventName = winEventIDsToNVDAEventNames.get(eventID, None)
+	NVDAEventName = internalWinEventHandler.winEventIDsToNVDAEventNames.get(eventID, None)
 	if not NVDAEventName:
 		log.debugWarning(f"No NVDA event name for {getWinEventName(eventID)}")
 		return None
@@ -990,6 +839,13 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	if obj.IAccessibleRole != oleacc.ROLE_SYSTEM_MENUPOPUP:
 		# menuStart on anything other than a menu is silly.
 		return
+	elif not obj.shouldAllowIAccessibleMenuStartEvent:
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Ignoring menuStart winEvent: {getWinEventLogInfo(window, objectID, childID)}, "
+				f"shouldAllowIAccessibleMenuStartEvent {obj.shouldAllowIAccessibleMenuStartEvent}"
+			)
+		return
 	processFocusNVDAEvent(obj, force=True)
 
 
@@ -1029,7 +885,7 @@ accPropServices = None
 def initialize():
 	global accPropServices
 	try:
-		accPropServices = comtypes.client.CreateObject(CAccPropServices)
+		accPropServices = comtypes.client.CreateObject(IA.CAccPropServices)
 	except (WindowsError, COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s" % e)
 	internalWinEventHandler.initialize(processDestroyWinEvent)
@@ -1037,7 +893,7 @@ def initialize():
 
 # C901 'pumpAll' is too complex
 def pumpAll():  # noqa: C901
-	if not _shouldGetEvents():
+	if not internalWinEventHandler._shouldGetEvents():
 		return
 	focusWinEvents = []
 	validFocus = False
@@ -1051,7 +907,7 @@ def pumpAll():  # noqa: C901
 		alwaysAllowedObjects.append((focus.event_windowHandle, focus.event_objectID, focus.event_childID))
 
 	# Receive all the winEvents from the limiter for this cycle
-	winEvents = winEventLimiter.flushEvents(alwaysAllowedObjects)
+	winEvents = internalWinEventHandler.winEventLimiter.flushEvents(alwaysAllowedObjects)
 
 	for winEvent in winEvents:
 		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET
@@ -1067,7 +923,7 @@ def pumpAll():  # noqa: C901
 			if not focus.shouldAcceptShowHideCaretEvent:
 				continue
 		elif not eventHandler.shouldAcceptEvent(
-			winEventIDsToNVDAEventNames[winEvent[0]],
+			internalWinEventHandler.winEventIDsToNVDAEventNames[winEvent[0]],
 			windowHandle=winEvent[1]
 		):
 			continue
@@ -1121,7 +977,7 @@ def terminate():
 
 
 def getIAccIdentity(pacc, childID):
-	IAccIdentityObject = pacc.QueryInterface(IAccIdentity)
+	IAccIdentityObject = pacc.QueryInterface(IA.IAccIdentity)
 	stringPtr, stringSize = IAccIdentityObject.getIdentityString(childID)
 	try:
 		if accPropServices:
@@ -1179,16 +1035,16 @@ def findGroupboxObject(obj):
 
 # C901 'getRecursiveTextFromIAccessibleTextObject'
 def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):  # noqa: C901
-	if not isinstance(obj, IAccessibleText):
+	if not isinstance(obj, IA2.IAccessibleText):
 		try:
-			textObject = obj.QueryInterface(IAccessibleText)
+			textObject = obj.QueryInterface(IA2.IAccessibleText)
 		except:  # noqa: E722 Bare except
 			textObject = None
 	else:
 		textObject = obj
-	if not isinstance(obj, IAccessible):
+	if not isinstance(obj, IA.IAccessible):
 		try:
-			accObject = obj.QueryInterface(IAccessible)
+			accObject = obj.QueryInterface(IA.IAccessible)
 		except:  # noqa: E722 Bare except
 			return ""
 	else:
@@ -1212,7 +1068,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):
 			description = None
 		return " ".join([x for x in [name, value, description] if x and not x.isspace()])
 	try:
-		hypertextObject = accObject.QueryInterface(IAccessibleHypertext)
+		hypertextObject = accObject.QueryInterface(IA2.IAccessibleHypertext)
 	except:  # noqa: E722 Bare except
 		return text
 	textList = []
@@ -1220,7 +1076,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):
 		if ord(t) == 0xFFFC:
 			try:
 				index = hypertextObject.hyperlinkIndex(i + startOffset)
-				childTextObject = hypertextObject.hyperlink(index).QueryInterface(IAccessible)
+				childTextObject = hypertextObject.hyperlink(index).QueryInterface(IA.IAccessible)
 				t = " %s " % getRecursiveTextFromIAccessibleTextObject(childTextObject)
 			except:  # noqa: E722 Bare except
 				pass
@@ -1315,7 +1171,7 @@ def isMarshalledIAccessible(IAccessibleObject):
 	"""Looks at the location of the first function in the IAccessible object's vtable (IUnknown::AddRef) to
 	see if it was implemented in oleacc.dll (its local) or ole32.dll (its marshalled).
 	"""
-	if not isinstance(IAccessibleObject, IAccessible):
+	if not isinstance(IAccessibleObject, IA.IAccessible):
 		raise TypeError("object should be of type IAccessible, not %s" % IAccessibleObject)
 	buf = create_unicode_buffer(1024)
 	addr = POINTER(c_void_p).from_address(

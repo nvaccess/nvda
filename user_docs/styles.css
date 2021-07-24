@@ -1,0 +1,57 @@
+body {
+  margin: 0 auto;
+  max-width: 50em;
+  font-family: "Helvetica", "Arial", sans-serif;
+  line-height: 1.5;
+  padding: 4em 1em;
+  color: #333;
+}
+
+h1 {
+  color:white;
+  background-color: #472F5F; /* NVDA purple */
+}
+
+h2 {
+  margin-top: 1em;
+  padding-top: 1em;
+}
+
+h2, h3, h4, a {
+  color: #472F5F; /* NVDA purple */
+}
+
+strong {
+  color: #000;
+}
+
+/* tables */
+table, td, th {
+  border:1px solid black;
+}
+table{
+  border-collapse: collapse;
+}
+td, th {
+  padding: 0.25em;
+}
+th {
+  color: #472F5F; /* NVDA purple */
+}
+
+/* code / pre */
+code,
+pre {
+  background: #f6f8fa;
+  border-bottom: 1px solid #d8dee9;
+  color: #33104e;
+}
+
+code {
+  padding: 2px 4px;
+  vertical-align: text-bottom;
+}
+pre {
+  padding: 1em;
+  border-left: 2px solid #69c;
+}

@@ -7,10 +7,9 @@ import os
 import tempfile
 import typing
 
-import gui
-import ui
 import wx
 from logHandler import log
+import documentationUtils
 
 
 def writeRedirect(helpId: str, helpFilePath: str, contextHelpPath: str):
@@ -28,17 +27,22 @@ def showHelp(helpId: str):
 	button in an NVDA dialog is pressed or the F1 key is pressed on a
 	recognized control.
 	"""
+
+	import ui
+	import queueHandler
 	if not helpId:
-		# Translators: Message indicating no context sensitive help is available.
-		noHelpMessage = _("No context sensitive help is available here at this time.")
-		ui.message(noHelpMessage)
-	helpFile = gui.getDocFilePath("userGuide.html")
-	if not os.path.exists(helpFile):
+		# Translators: Message indicating no context sensitive help is available for the control or dialog.
+		noHelpMessage = _("No help available here.")
+		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
+		return
+	helpFile = documentationUtils.getDocFilePath("userGuide.html")
+	if helpFile is None:
 		# Translators: Message shown when trying to display context sensitive help,
 		# indicating that	the user guide could not be found.
 		noHelpMessage = _("No user guide found.")
 		log.debugWarning("No user guide found: possible cause - running from source without building user docs")
-		ui.message(noHelpMessage)
+		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
+		return
 	log.debug(f"Opening help: helpId = {helpId}, userGuidePath: {helpFile}")
 
 	nvdaTempDir = os.path.join(tempfile.gettempdir(), "nvda")

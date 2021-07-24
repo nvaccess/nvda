@@ -13,16 +13,10 @@ from typing import Dict, Callable
 
 import core
 import winUser
-from . import getWinEventLogInfo
-from . import isMSAADebugLoggingEnabled
+from .utils import getWinEventLogInfo, isMSAADebugLoggingEnabled
 
+from comInterfaces import IAccessible2Lib as IA2
 
-from comInterfaces.IAccessible2Lib import (
-	IA2_EVENT_TEXT_CARET_MOVED,
-	IA2_EVENT_DOCUMENT_LOAD_COMPLETE,
-	IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED,
-	IA2_EVENT_PAGE_CHANGED,
-)
 
 from .orderedWinEventLimiter import OrderedWinEventLimiter, MENU_EVENTIDS
 from logHandler import log
@@ -61,10 +55,10 @@ winEventIDsToNVDAEventNames = {
 	winUser.EVENT_OBJECT_STATECHANGE: "stateChange",
 	winUser.EVENT_OBJECT_VALUECHANGE: "valueChange",
 	winUser.EVENT_OBJECT_LIVEREGIONCHANGED: "liveRegionChange",
-	IA2_EVENT_TEXT_CARET_MOVED: "caret",
-	IA2_EVENT_DOCUMENT_LOAD_COMPLETE: "documentLoadComplete",
-	IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED: "IA2AttributeChange",
-	IA2_EVENT_PAGE_CHANGED: "pageChange",
+	IA2.IA2_EVENT_TEXT_CARET_MOVED: "caret",
+	IA2.IA2_EVENT_DOCUMENT_LOAD_COMPLETE: "documentLoadComplete",
+	IA2.IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED: "IA2AttributeChange",
+	IA2.IA2_EVENT_PAGE_CHANGED: "pageChange",
 }
 
 _processDestroyWinEvent = None
@@ -129,6 +123,18 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			return
 
 		windowClassName = winUser.getClassName(window)
+		# Excel produces UI automation events
+		# Which are proxied by Windows into MSAA winEvents.
+		# However in certain builds of Excel 2016
+		# calling UIAHasServerSideProvider on the EXCEL7 window in responce to these events
+		# causes a freeze of several seconds.
+		# As we don't need these MSAA events for our Excel support, just ignore them early.
+		if windowClassName == "EXCEL7" and objectID > 0:
+			log.debug(
+				f"Dropping UIA proxied event for Excel7 window. "
+				f"WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+			)
+			return
 		if windowClassName == "ConsoleWindowClass":
 			# #10113: we need to use winEvents to track the real thread for console windows.
 			consoleWindowsToThreadIDs[window] = threadID

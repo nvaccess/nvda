@@ -25,6 +25,7 @@ import eventHandler
 import api
 from logHandler import log
 import gui
+import gui.contextHelp
 import winUser
 import mouseHandler
 from displayModel import DisplayModelTextInfo
@@ -575,6 +576,8 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
+	helpId = "ExcelElementsList"
+
 	ELEMENT_TYPES=(
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
@@ -592,6 +595,14 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# in the browse mode Elements List dialog.
 		("sheet", _("&Sheets")),
 	)
+
+
+class EditCommentDialog(
+		gui.contextHelp.ContextHelpMixin,
+		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ExcelReportingComments"
+
 
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
@@ -983,6 +994,12 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['italic']=fontObj.italic
 			underline=fontObj.underline
 			formatField['underline']=False if underline is None or underline==xlUnderlineStyleNone else True
+			formatField['strikethrough'] = fontObj.strikethrough
+		if formatConfig['reportSuperscriptsAndSubscripts']:
+			if fontObj.superscript:
+				formatField['text-position'] = 'super'
+			elif fontObj.subscript:
+				formatField['text-position'] = 'sub'
 		if formatConfig['reportStyle']:
 			try:
 				styleName=self.obj.excelCellObject.style.nameLocal
@@ -1433,7 +1450,7 @@ class ExcelCell(ExcelBase):
 		gesture="kb:shift+f2")
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
-		d = wx.TextEntryDialog(
+		d = EditCommentDialog(
 			gui.mainFrame,
 			# Translators: Dialog text for the note editing dialog
 			_("Editing note for cell {address}").format(address=self.cellCoordsText),
@@ -1460,7 +1477,7 @@ class ExcelCell(ExcelBase):
 				formatField.update(field.field)
 		if not hasattr(self.parent,'_formatFieldSpeechCache'):
 			self.parent._formatFieldSpeechCache = textInfos.Field()
-		if formatField:
+		if formatField or self.parent._formatFieldSpeechCache:
 			sequence = speech.getFormatFieldSpeech(
 				formatField,
 				attrsCache=self.parent._formatFieldSpeechCache,

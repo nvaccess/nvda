@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -31,6 +31,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# The synthesizer to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
+	# Speak all symbols when reviewing by word, uses editor specific implementation if false
+	symbolLevelWordAll = boolean(default=true)
 	trustVoiceLanguage = boolean(default=true)
 	includeCLDR = boolean(default=True)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
@@ -60,6 +62,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cursorShapeFocus = integer(default=192,min=1,max=255)
 	cursorShapeReview = integer(default=128,min=1,max=255)
 	noMessageTimeout = boolean(default=false)
+	# Timeout after the message will disappear from braille display
+	# 0 means that no message will be shown
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
 	autoTether = boolean(default=true)
@@ -124,6 +128,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [brailleViewer]
 	showBrailleViewerAtStartup = boolean(default=false)
+	shouldHoverRouteToCell = boolean(default=false)
+	secondsOfHoverToActivate = float(min=0.0, default=1.0)
+	# Devices with 40 cells are quite common.
+	defaultCellCount = integer(min=20, max=160, default=40)
 	autoPositionWindow = boolean(default=True)
 	# Values for positioning the window.
 	# Defaults are not used.
@@ -213,12 +221,19 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [UIA]
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
+	useInMSExcelWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
 	selectiveEventRegistration = boolean(default=false)
+	# 0:default, 1:Only when necessary, 2:yes, 3:no
+	allowInChromium = integer(0, 3, default=0)
+
+[annotations]
+	reportDetails = boolean(default=false)
 
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
+	diffAlgo = option("auto", "dmp", "difflib", default="auto")
 
 [update]
 	autoCheck = boolean(default=true)
@@ -244,6 +259,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	vision = boolean(default=false)
 	speech = boolean(default=false)
 	speechManager = boolean(default=false)
+	synthDriver = boolean(default=false)
+	nvwave = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")

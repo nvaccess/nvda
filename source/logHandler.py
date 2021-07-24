@@ -10,13 +10,13 @@ import os
 import ctypes
 import sys
 import warnings
-from encodings import utf_8
 import logging
 import inspect
 import winsound
 import traceback
-from types import MethodType, FunctionType
+from types import FunctionType
 import globalVars
+import winKernel
 import buildVersion
 from typing import Optional
 
@@ -249,7 +249,7 @@ class RemoteHandler(logging.Handler):
 
 	def __init__(self):
 		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		path=os.path.abspath(os.path.join(u"lib",buildVersion.version,u"nvdaHelperRemote.dll"))
+		path = os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll")
 		h=ctypes.windll.kernel32.LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH)
 		if not h:
 			raise OSError("Could not load %s"%path) 
@@ -276,7 +276,7 @@ class FileHandler(logging.FileHandler):
 		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
 			import nvwave
 			try:
-				nvwave.playWaveFile("waves\\error.wav")
+				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
 			except:
 				pass
 		return super().handle(record)
@@ -287,6 +287,19 @@ class Formatter(logging.Formatter):
 
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
+
+	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
+		"""Custom implementation of `formatTime` which avoids `time.localtime`
+		since it causes a crash under some versions of Universal CRT ( #12160, Python issue 36792)
+		"""
+		timeAsFileTime = winKernel.time_tToFileTime(record.created)
+		timeAsSystemTime = winKernel.SYSTEMTIME()
+		winKernel.FileTimeToSystemTime(timeAsFileTime, timeAsSystemTime)
+		timeAsLocalTime = winKernel.SYSTEMTIME()
+		winKernel.SystemTimeToTzSpecificLocalTime(None, timeAsSystemTime, timeAsLocalTime)
+		res = f"{timeAsLocalTime.wHour:02d}:{timeAsLocalTime.wMinute:02d}:{timeAsLocalTime.wSecond:02d}"
+		return self.default_msec_format % (res, record.msecs)
+
 
 class StreamRedirector(object):
 	"""Redirects an output stream to a logger.
@@ -333,7 +346,7 @@ def _getDefaultLogFilePath():
 		import tempfile
 		return os.path.join(tempfile.gettempdir(), "nvda.log")
 	else:
-		return ".\\nvda.log"
+		return os.path.join(globalVars.appDir, "nvda.log")
 
 def _excepthook(*exc_info):
 	log.exception(exc_info=exc_info, codepath="unhandled exception")
