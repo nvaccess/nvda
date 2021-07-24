@@ -38,7 +38,7 @@ class ConditionMatch(Enum):
 
 FieldSubQuery = Dict[str, Union[ConditionMatch, List]]
 FieldQuery = List[FieldSubQuery]
-
+SpeechSequence = List[Union[Any, str]]
 
 class Field(dict):
 	"""Provides information about a piece of text."""
