@@ -1,8 +1,7 @@
-#audioDucking.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015-2016 NV Access Limited 
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import threading
 from ctypes import *
@@ -10,6 +9,7 @@ from ctypes import oledll
 import time
 import config
 from logHandler import log
+import systemUtils
 
 def _isDebug():
 	return config.conf["debugLog"]["audioDucking"]
@@ -146,6 +146,7 @@ def isAudioDuckingSupported():
 			config.isInstalledCopy()
 			or config.isAppX
 		) and hasattr(oledll.oleacc, 'AccSetRunningUtilityState')
+		_isAudioDuckingSupported &= systemUtils.hasUiAccess()
 	return _isAudioDuckingSupported
 
 def handlePostConfigProfileSwitch():
@@ -171,7 +172,8 @@ class AudioDucker(object):
 		"""Tells NVDA that you require that background audio be ducked from now until you call disable.
 		This method may block for a short time while background audio ducks to a suitable level.
 		It is safe to call this method more than once.
-		@ returns: True if ducking was enabled, false if ducking was subsiquently disabled while waiting for the background audio to drop.
+		@returns: True if ducking was enabled,
+			false if ducking was subsiquently disabled while waiting for the background audio to drop.
 		"""
 		debug = _isDebug()
 		with self._lock:

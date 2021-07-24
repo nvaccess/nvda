@@ -1,4 +1,4 @@
-﻿#locale/vi/symbols.dic
+﻿﻿#locale/en/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -49,22 +49,21 @@ $	đô la	all	norep
 ¢	Xen	all	norep
 ¥	Yên	all	norep
 ₹	Ru pi	some	norep
+ƒ	đồng vàng Anh	all	norep
+¤	tiền tệ sign	all	norep
 %	phần trăm	some
+‰	phần ngàn	some
 &	và	some
 '	nháy đơn	all
 (	mở ngoặc tròn	most	always
 )	đóng ngoặc tròn	most	always
 *	sao	some
-+	cộng	some
-,	phẩy	all	always
+,	phảy	all	always
 -	gạch ngang	most
 .	chấm	some
 /	trên	some
 :	hai chấm	most	norep
-;	chấm phẩy	most
-<	nhỏ hơn	some
->	lớn hơn	some
-=	bằng	some
+;	chấm phảy	most
 ?	chấm hỏi	all
 @	a móc	some
 [	mở ngoặc vuông	most
@@ -76,10 +75,19 @@ _	gạch dưới	most
 {	mở ngoặc nhọn	most
 }	đóng ngoặc nhọn	most
 |	gạch đứng	most
+¦	xấp xỉ	most
 ~	ngã	most
+¡	chấm than ngược	some
+¿	chấm hỏi ngược	some
+·	chấm giữa	most
+‚	nháy đơn thấp	most
+„	nháy kép thấp	most
+′	nguyên tố	some
+″	nguyên tố kép	some
+‴	ba nguyên tố	some
 
 # Other characters
-•	bu lét	some
+•	bullet	some
 …	ba chấm	all	always
 ...	ba chấm	all	always
 “	mở ngoặc kép	most
@@ -88,90 +96,237 @@ _	gạch dưới	most
 ’	đóng ngoặc đơn	most
 –	gạch ngang	most	always
 —	gạch nối	most
-●	bu lét tròn	most
+­	gạch nối mềm	most
+⁃	bullet gạch nối	none
+●	bullet tròn	most
+○	vòng tròn trắng	most
 ¨	tách đôi	most
+¯	macron	most
+´	sắc	most
+¸	cedilla	most
 ‎	dấu trái qua phải	char
 ‏	dấu phải qua trái	char
+¶	đánh dấu đoạn	most
 ■	vuông đen	some
 ▪	vuông đen	some
 ◾	vuông đen	some
-◦	bu lét trắng	some
-⇒	mũi tên phải	some
-⇨	mũi tên phải	some
+□	vuông trắng	some
+◦	bullet trắng	some
+⇨	mũi tên phải trắng	some
+➔	mũi tên phải	some
 ➢	mũi tên phải	some
 ❖	black diamond minus white X	some
-♣	black club	some
-♦	black diamond	some
+♣	chuồn đen	some
+♦	rô đen	some
+◆	rô đen	some
 §	phần	all
 °	độ	some
-«	mở ngoặc vuông kép
-đóng ngoặc vuông kép	double right pointing angle bracket
+«	mở ngoặc vuông kép	none
+»	đóng ngoặc vuông kép	none
 µ	micro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
+⁰	chỉ số trên 0	some
+¹	chỉ số trên 1	some
+²	chỉ số trên 2	some
+³	chỉ số trên 3	some
+⁴	chỉ số trên 4	some
+⁵	chỉ số trên 5	some
+⁶	chỉ số trên 6	some
+⁷	chỉ số trên 7	some
+⁸	chỉ số trên 8	some
+⁹	chỉ số trên 9	some
+⁺	chỉ số trên cộng	some
+⁼	chỉ số trên bằng	some
+⁽	chỉ số trên mở ngoặc tròn	some
+⁾	chỉ số trên đóng ngoặc tròn	some
+ⁿ	chỉ số trên n	some
+₀	chỉ số dưới 0	some
+₁	chỉ số dưới 1	some
+₂	chỉ số dưới 2	some
+₃	chỉ số dưới 3	some
+₄	chỉ số dưới 4	some
+₅	chỉ số dưới 5	some
+₆	chỉ số dưới 6	some
+₇	chỉ số dưới 7	some
+₈	chỉ số dưới 8	some
+₉	chỉ số dưới 9	some
+₊	chỉ số dưới cộng	some
+₋	chỉ số dưới trừ	some
+₌	chỉ số dưới bằng	some
+₍	chỉ số dưới mở ngoặc tròn	some
+₎	chỉ số dưới đóng ngoặc tròn	some
 ®	đã đăng kí	some
-™	Thương hiệu	some
-©	CopyrightBản quyền	some
-±	cộng hoặc trừ	some
-×	lần	some
-÷	chia cho	some
+™	thương hiệu	some
+©	bản quyền	some
+℠	dấu dịch vụ	some
 ←	mũi tên trái	some
 ↑	mũi tên lên	some
 →	mũi tên phải	some
 ↓	mũi tên xuống	some
 ✓	dấu kiểm	some
 ✔	dấu kiểm	some
+🡺	mũi tên phải	some
+†	dagger	some
+‣	bullet tam giác	none
+✗	x-shaped bullet	none
+⊕	circled plus	none
+⊖	circled minus	none
+⇄	right arrow over left arrow	none
+⇒	double right arrow	none
 
-#Mathematical Operators U+2200 to U+220F
-∀	cho tất cả	none
-∁	Bù	none
-∂	Đạo hàm cục bộ	none
-∃	có tồn	none
-∄	Không có tồn	none
-∅	tập rỗng	none
-∆	số gia	none
-∇	nabla	none
-∈	Thuộc	none
-∉	Không thuộc	none
-∊	phần tử thuộc	none
-∋	Tập hợp con của	none
-∌	Không phải tập hợp con của	none
-∍	Tập hợp con nhỏ của	none
-∎	kết quả của sự chứng minh	none
-∏	Tích	none
+#Arithmetic operators
 
-# Miscellaneous Mathematical Operators
-∑	Tổng	none
-√	Căn bậc hai	none
-∛	Căn bậc ba	none
-∜	Căn bậc bốn	none
-∝	Tỷ lệ	none
-∞	Vô cực	none
-∟	góc vuông	none
++	cộng	some
+−	trừ	some
+×	nhân	some
+⋅	nhân	some
+⨯	nhân	none
+∕	chia	some
+⁄	chia	some
+÷	chia	some
+∓	cộng trừ	some
+±	cộng trừ	some
+
+#Set operations
+∖	set minus	none
+⊍	set union	none
+𝒫	power set of the set	none
+𝔓	power set of the set	none
+℘	power set of the set	none
+∁	complement of the set	none
+
+#Set relations and set constructions
+∅	empty set	none
+⊂	subset of	none
+⊄	not a subset of	none
+⊃	superset of	none
+⊅	not a superset of	none
+⊆	subset of or equal to	none
+⊈	neither a subset of nor equal to	none
+⊇	superset of or equal to	none
+⊉	neither a superset of nor equal to	none
+⊌	multiset	none
+
+#Equality signs
+=	bằng	some
+≃	asymptotically equal to	none
+≄	not asymptotically equal to	none
+≅	approximately equal to	none
+≆	approximately but not actually equal to	none
+≈	almost Equal to	none
+≌	all equal to	none
+≍	equivalent to	none
+≭	not equivalent to	none
+≎	geometrically equivalent to	none
+≑	geometrically equal to	none
+≚	equiangular to	none
+≬	between	none
+≠	not equal to	none
+≡	identical to	none
+≣	strictly identical to	none
+≢	not identical to	none
+∼	similar to	none
+≙	estimates	none
+≟	questioned equal to	none
+
+#comparison signs
+<	nhỏ hơn	some
+>	lớn hơn	some
+≤	nhỏ hơn hoặc bằng	none
+≦	less- than or equal to	none
+≪	much smaller than	none
+≥	greater-than or equal to	none
++≧	greater-than or equal to	none
+≫	much bigger than	none
+≶	lớn hơn hoặc bằng	none
+≷	lớn hơn hoặc nhỏ hơn	none
+≮	không nhỏ hơn	none
+≯	không lớn hơn	none
+
+Functions
+⁻	inverse	some
+∘	ring Operator	none
+∂	partial derivative	none
+∇	gradient of	none
+
+#Geometry and linear Algebra
+⃗	vector giữa	none
+△	tam giác	none
+▭	tam giác	none
+∟	góc phải	none
 ∠	góc	none
 ∥	song song với	none
 ∦	không song song với	none
-∧	log và	none
-∨	log hoặc	none
-∩	giao	none
+⊥	vuông góc với	none
+⟂	ortogonal to	none
+‖	norm of vector	none
+̂	normalizes	none
+∿	sine wave	none
+∡	measured Angle	none
+∢	spherical Angle	none
+
+#Logical operators
+∀	cho tất cả	none
+∃	có tồn tại	none
+∄	không tồn tại	none
+⇏	does not imply	none
+⇐	is implied by	none
+
+#Other mathematical Operators
+∈	thuộc	none
+∉	không thuộc	none
+∊	phần tử thuộc	none
+∋	tập hợp con của	none
+∌	Không phải tập hợp con của	none
+∍	tập hợp con nhỏ của	none
+∎	kết quả của sự chứng minh	none
+∏	tích	none
+∐	n-ary coproduct	none
+∑	n-ary summation	none
+√	Căn bậc hai	none
+∛	Căn bậc ba	none
+∜	căn bậc bốn	none
+∝	tỷ lệ	none
+∞	vô cực	none
+∧	và	none
+∨	hoặc	none
+¬	không	none
+∩	giao nhau	none
 ∪	hợp	none
 ∫	tích phân	none
+∬	double Integral	none
+∭	tripple Integral	none
+∮	contour Integral	none
+∯	surface Integral	none
+∰	volume Integral	none
+∱	clockwise Integral	none
+∲	clockwise contour Integral	none
+∳	anticlockwise Contour Integral	none
 ∴	kết luận	none
 ∵	vì	none
-∶	Tỉ suất	none
-∷	Tỉ lệ	none
-≤	Nhỏ hơn hoặc bằng	none
-≥	Lớn hơn hoặc bằng	none
-⊂	Tập con của	none
-⊃	Tập cha của	none
-⊆	Tập con bằng của	none
-⊇	Tập cha bằng của	none
+∶	tỉ suất	none
+∷	tỉ lệ	none
+∹	excess	none
+∺	geometric proportion	none
+≀	wreath product	none
+≏	difference between	none
+≐	approaches the limit	none
+∙	bullet Operator	none
+∣	divides	none
+∤	does not divide	none
+≔	colon equals	none
+≕	equals colon	none
+≺	precedes	none
+≻	succeeds	none
+⊀	does not precede	none
+⊁	does not succeed	none
 
 # Vulgur Fractions U+2150 to U+215E
-⅐	Một phần bảy	none
-⅑	Một phần chín	none
-⅒	Một phần mười	none
+¼	một phần tư	none
+½	một phần hai	none
+¾	ba phần tư	none
+⅐	một phần bảy	none
+⅑	một phần chín	none
+⅒	một phần mười	none
 ⅓	một phần ba	none
 ⅔	hai phần ba	none
 ⅕	một phần năm	none
@@ -179,11 +334,25 @@ _	gạch dưới	most
 ⅗	ba phần năm	none
 ⅘	bốn phần năm	none
 ⅙	một phần sáu	none
-⅚	năm phần sáu	none
+⅚	năm phầnn sáu	none
 ⅛	một phần tám	none
 ⅜	ba phần tám	none
 ⅝	năm phần tám	none
 ⅞	bảy phần tám	none
 
+#Number sets
+𝔸	algebraic numbers	none
+ℂ	số phức	none
+ℑ	imaginary part of complex number	none
+ℍ	quaternions	none
+ℕ	số tự nhiên	none
+𝕁	nonnegative (whole) numbers	none
+ℚ	rational numbers	none
+ℝ	số thực	none
+ℜ	real part of complex number	none
+ℤ	số nguyên	none
+ℵ	aleph number	none
+ℶ	beth number	none
+
 # Miscellaneous Technical
-⌘	Phím Mac Command	none
+⌘	phím mac Command	none

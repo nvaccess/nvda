@@ -1,8 +1,7 @@
-#editableText.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2021 NV Access Limited, Davy Kager, Julien Cochuyt
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -10,7 +9,7 @@
 """
 
 import time
-import sayAllHandler
+from speech import sayAll
 import api
 import review
 from baseObject import ScriptableObject
@@ -135,7 +134,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		return (False,newInfo)
 
 	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
-		if isScriptWaiting() or eventHandler.isPendingEvents("gainFocus"):
+		if isScriptWaiting():
 			return
 		if not info:
 			try:
@@ -147,7 +146,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		review.handleCaretMove(info)
 		if speakUnit and not willSayAllResume(gesture):
 			info.expand(speakUnit)
-			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.OutputReason.CARET)
 		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self, gesture, unit):
@@ -201,7 +200,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 			onlyInitial=True
 		else:
 			onlyInitial=False
-		speech.speakTextInfo(lineInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,onlyInitialFields=onlyInitial,suppressBlanks=True)
+		speech.speakTextInfo(
+			lineInfo,
+			unit=textInfos.UNIT_LINE,
+			reason=controlTypes.OutputReason.CARET,
+			onlyInitialFields=onlyInitial,
+			suppressBlanks=True
+		)
 
 	def _caretMoveBySentenceHelper(self, gesture, direction):
 		if isScriptWaiting():
@@ -217,7 +222,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
-	script_caret_moveByLine.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_moveByLine.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_caret_moveByCharacter(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_CHARACTER)
@@ -227,15 +232,15 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	def script_caret_moveByParagraph(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH)
-	script_caret_moveByParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_moveByParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_caret_previousSentence(self,gesture):
 		self._caretMoveBySentenceHelper(gesture, -1)
-	script_caret_previousSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_previousSentence.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_caret_nextSentence(self,gesture):
 		self._caretMoveBySentenceHelper(gesture, 1)
-	script_caret_nextSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_caret_nextSentence.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def _backspaceScriptHelper(self,unit,gesture):
 		try:
@@ -255,7 +260,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 		caretMoved,newInfo=self._hasCaretMoved(oldBookmark)
 		if not caretMoved:
 			return
-		if len(delChunk)>1:
+		delChunk = delChunk.replace("\r\n", "\n")  # Occurs with at least with Scintilla
+		if len(delChunk) > 1:
 			speech.speakMessage(delChunk)
 		else:
 			speech.speakSpelling(delChunk)
@@ -267,7 +273,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def script_caret_backspaceWord(self,gesture):
 		self._backspaceScriptHelper(textInfos.UNIT_WORD,gesture)
 
-	def script_caret_delete(self,gesture):
+	def _deleteScriptHelper(self, unit, gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
@@ -279,8 +285,14 @@ class EditableText(TextContainerObject,ScriptableObject):
 		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		caretMoved,newInfo=self._hasCaretMoved(bookmark,origWord=word)
-		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,gesture,newInfo)
+		self._caretScriptPostMovedHelper(unit, gesture, newInfo)
 		braille.handler.handleCaretMove(self)
+
+	def script_caret_deleteCharacter(self, gesture):
+		self._deleteScriptHelper(textInfos.UNIT_CHARACTER, gesture)
+
+	def script_caret_deleteWord(self, gesture):
+		self._deleteScriptHelper(textInfos.UNIT_WORD, gesture)
 
 	__gestures = {
 		"kb:upArrow": "caret_moveByLine",
@@ -299,11 +311,18 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"kb:end": "caret_moveByCharacter",
 		"kb:control+home": "caret_moveByLine",
 		"kb:control+end": "caret_moveByLine",
-		"kb:delete": "caret_delete",
-		"kb:numpadDelete": "caret_delete",
+		"kb:delete": "caret_deleteCharacter",
+		"kb:shift+delete": "caret_deleteCharacter",
+		"kb:numpadDelete": "caret_deleteCharacter",
+		"kb:shift+numpadDelete": "caret_deleteCharacter",
+		"kb:control+delete": "caret_deleteWord",
+		"kb:control+numpadDelete": "caret_deleteWord",
 		"kb:backspace": "caret_backspaceCharacter",
+		"kb:shift+backspace": "caret_backspaceCharacter",
 		"kb:control+backspace": "caret_backspaceWord",
 	}
+
+	_autoSelectDetectionEnabled = False
 
 	def initAutoSelectDetection(self):
 		"""Initialise automatic detection of selection changes.
@@ -315,10 +334,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 			self._lastSelectionPos=None
 		self.isTextSelectionAnchoredAtStart=True
 		self.hasContentChangedSinceLastSelection=False
+		self._autoSelectDetectionEnabled = True
 
 	def detectPossibleSelectionChange(self):
 		"""Detects if the selection has been changed, and if so it speaks the change.
 		"""
+		if not self._autoSelectDetectionEnabled:
+			return
 		try:
 			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
@@ -341,6 +363,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 			self.isTextSelectionAnchoredAtStart=False
 		elif newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
 			self.isTextSelectionAnchoredAtStart=True
+
+	def terminateAutoSelectDetection(self):
+		""" Terminate automatic detection of selection changes.
+		This should be called when the object loses focus.
+		"""
+		self._lastSelectionPos = None
+		self._autoSelectDetectionEnabled = False
 
 class EditableTextWithoutAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.

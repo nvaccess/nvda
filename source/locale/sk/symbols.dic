@@ -1,98 +1,120 @@
-#locale/sk/symbols.dic
+﻿#locale/sk/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'„“)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'„“)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'„“)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<![^\d -])[\.,](?=\d)
-negative number	(?<!\w)-(?=[$┬úÔéČ┬ą.]?\d)
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	bodka	all	always	# bodka na konci vety
-! sentence ending	výkričník	all	always	# výkričnik na konci vety
-? sentence ending	otáznik	all	always	# otáznik na konci vety
-; phrase ending	bodkočiarka	most	always	# bodkočiarka v prostriedku vety
-: phrase ending	dvojbodka	most	always	# dvojbodka v prostriedku vety
-decimal point		none	always	#desatinné číslo
-in-word '	apostrof	all	norep	# apostrof vo vnútri slova
-negative number	mínus	none	norep	# záporné číslo
+. sentence ending	bodka	all	always
+! sentence ending	výkričník	all	always
+? sentence ending	otáznik	all	always
+; phrase ending	bodkočiarka	most	always
+: phrase ending	dvojbodka	most	always
+decimal point		none	always
+in-word '	apostrof	all	norep
+negative number	mínus	none	norep
 
 # Whitespace
-\0	prázdny	char	# znak 0
-\t	tab	# tabulátor
-\v	vertikálny tab	# vertikálny tabulátor
-\n	nový riadok	char	# line feed
-\f	zlom strany	none	# zlom strany
-\r	koniec riadku	char	# carriage return
- 	medzera	char	# medzera
- 	medzera	char	# tvrdá medzera
+\0	prázdny	char	# null
+\t	tab
+\v	vertikálny tab
+\n	nový riadok	char
+\f	zlom strany	none
+\r	koniec riadku	char
+ 	medzera	char
+ 	medzera	char	# no-break space
 
 # Standard punctuation/symbols
 !	výkričník	all
 "	úvodzovky	most
-\#	krížik	most
+\#	krížik	some
 $	dolár	all	norep
 £	libra	all	norep
 €	euro	all	norep
 ¢	centov	all	norep
 ¥	jen	all	norep
-₹	Rupia	some	norep
+₹	rupia	some	norep
+ƒ	florén	all	norep
+¤	mena	all	norep
 %	percento	some
+‰	promile	some
 &	and	some
 '	apostrof	all
 (	zátvorka	most	always
 )	zatvoriť	most	always
 *	hviezda	some
-+	plus	some
 ,	čiarka	all	always
 -	spojovník	most
 .	bodka	some
 /	lomka	some
 :	dvojbodka	most	norep
 ;	bodkočiarka	most
-<	menší	some
->	väčší	some
-=	rovná sa	some
 ?	otáznik	all
 @	zavináč	some
 [	hranatá zátvorka	most
 ]	hranatá zatvoriť	most
-\\	opačná lomka	some
+\\	opačná lomka	most
 ^	vokáň	most
 _	podčiarkovník	most
 `	prízvuk	most
 {	zložená zátvorka	most
 }	zložená zatvoriť	most
 |	zvislá čiara	most
+¦	prerušená čiara	most
 ~	vlnovka	most
+¡	obrátený výkričník	some
+¿	obrátený otáznik	some
+·	bodka v prostriedku	most
+‚	dolné jednoduché úvodzovky	most
+„	dolné úvodzovky	most
+′	indexová čiarka	some
+″	dvojitá indexová čiarka	some
+‴	trojitá indexová čiarka	some
 
 # Other characters
 •	odrážka	some
 …	bodka bodka bodka	all	always
 ...	bodka bodka bodka	all	always
-„	dolné úvodzovky	most
 “	horné úvodzovky	most
-‚	dolné jednoduché úvodzovky	most
-‘	horné jednoduché úvodzovky	most
 ”	dvojitá horná opačná úvodzovka	most
+‘	horné jednoduché úvodzovky	most
 ’	odsuvník	most
 –	pomlčka	most	always
 —	dlhá pomlčka	most
+­	voliteľný rozdeľovník	most
+⁃	odrážka v tvare pomlčky	none
 ●	čierny kruh	most
+○	biely kruh	most
 ¨	prehláska	most
-‎	znak z ľava do prava 	char
-‏	znak z prava do ľava	char
+¯	pruh nad	most
+´	dĺžeň	most
+¸	cedila	most
+‎	znak z ľava do prava	char
++‏	right to left mark	char
+¶	označenie odseku	most
 ■	čierny štvorec	some
-◾	čierny štvorec	some
 ▪	čierny štvorec	some
+◾	čierny štvorec	some
+□	biely štvorec	some
 ◦	biela odrážka	some
-⇒	dvojitá šípka vpravo	some
 ⇨	biela šípka vpravo	some
+➔	šípka v pravo	some
 ➢	hrot šípky ukazujúcej vpravo	some
 ❖	čierny štvorec bez bieleho x	some
 ♠	pika	some
@@ -103,88 +125,241 @@ _	podčiarkovník	most
 ♥	srdce	some
 ♦	káro	some
 ♧	Biely kríž	some
+◆	čierny diamant	some
 §	paragraf	all
 °	stupňov	some
-«	dvojitá lomená zátvorka	most
-»	dvojitá lomená zatvoriť	most
+«	dvojitá lomená zátvorka	none
+»	dvojitá lomená zatvoriť	none
 µ	mí	some
+⁰	horný index 0	some
 ¹	horný index 1	some
 ²	horný index 2	some
 ³	horný index 3	some
+⁴	horný index 4	some
+⁵	horný index 5	some
+⁶	horný index 6	some
+⁷	horný index 7	some
+⁸	horný index 8	some
+⁹	horný index 9	some
+⁺	horný index plus	some
+⁼	horný index rovná sa	some
+⁽	horný index zátvorka	some
+⁾	horný index zatvoriť	some
+ⁿ	horný index n	some
+₀	dolný index 0	some
+₁	dolný index 1	some
+₂	dolný index 2	some
+₃	dolný index 3	some
+₄	dolný index 4	some
+₅	dolný index 5	some
+₆	dolný index 6	some
+₇	dolný index 7	some
+₈	dolný index 8	some
+₉	dolný index 9	some
+₊	dolný index plus	some
+₋	dolný index mínus	some
+₌	dolný index rovná sa	some
+₍	dolný index zátvorka	some
+₎	dolný index zatvoriť	some
 ®	registrované	some
 ™	ochranná známka	some
 ©	kopirajt	some
-±	plus mínus	some
-×	krát	some
-÷	deleno	some
+℠	servisná značka	some
 ←	šípka vľavo	some
 ↑	šípka hore	some
 →	šípka vpravo	some
 ↓	šípka dole	some
 ✓	začiarknutie	some
 ✔	tučné začiarknutie	some
+🡺	šípka vpravo	some
+†	krížik	some
+‡	dvojitý krížik	some
+‣	trojuholníková odrážka	none
+✗	Odrážka v tvare X	none
+⊕	plus v krúžku	none
+⊖	mínus v krúžku	none
+⇄	šípka vpravo cez šípku vľavo	none
+⇒	dvojitá šípka vpravo	none
 
-#Mathematical Operators U+2200 to U+220F
-∀	Pre všetky 	none
-∁	Doplnok	none
-∂	Parciálna derivácia	none
-∃	Existuje	none
-∄	Neexistuje	none
-∅	Prázdna množina	none
-∆	Prírastok	none
-∇	NABLA	none
-∈	je prvkom	none
-∉	Nie je prvkom	none
-∊	Malé je prvkom	none
-∋	obsahuje ako člen	none
-∌	Neobsahuje ako člen	none
-∍	Malé obsahuje ako člen	none
-∎	Koniec dôkazu	none
-∏	súčin	none
+#Arithmetic operators
++	plus	some
+−	mínus	some
+×	krát	some
+⋅	krát	some
+⨯	krát	none
+∕	deleno	some
+⁄	deleno	some
+÷	deleno	some
+∓	mínus plus	some
+±	plus mínus	some
 
-# Miscellaneous Mathematical Operators
-∑	súčet	none
-√	druhá odmocnina	none
-∛	Tretia odmocnina	none
-∜	Štvrtá odmocnina	none
-∝	Úmerné	none
-∞	Nekonečno	none
-∟	Pravý uhol	none
-∠	Uhol	none
-∥	Rovnobežka	none
-∦	Nerovnobežka	none
-∧	Logické a	none
-∨	Logické alebo	none
-∩	Prienik	none
-∪	Zjednotenie	none
-∫	Integrál	none
-∴	Preto	none
-∵	Pretože	none
-∶	Pomer	none
-∷	Proporcia	none
-≤	menšie ako alebo rovné	none
-≥	Väčšie ako alebo rovné	none
+#Set operations
+∖	množinové mínus	none
+⊍	násobenie multimnožín	none
+𝒫	potenčná množina množiny	none
+𝔓	potenčná množina množiny	none
+℘	potenčná množina množiny	none
+∁	doplnok	none
+
+#Set relations and set constructions
+∅	prázdna množina	none
 ⊂	je podmnožina	none
+⊄	nie je podmnožina	none
 ⊃	je nadmnožina	none
+⊅	nie je nadmnožina	none
 ⊆	podmnožina alebo sa rovná	none
-⊇	Nadmnožina alebo sa rovná	none
+⊈	ani podmnožina ani sa nerovná	none
+⊇	nadmnožina alebo sa rovná	none
+⊉	ani nadmnožina ani sa nerovná	none
+⊌	multimnožina	none
+
+#Equality signs
+=	rovná sa	some
+≃	asymptoticky sa rovná	none
+≄	asymptoticky sa nerovná	none
+≅	približne sa rovná	none
+≆	približne ale nie úplne sa rovná	none
+≈	takmer úplne sa rovná	none
+≌	všetko sa rovná	none
+≍	ekvivalentný	none
+≭	nie je ekvivalentný	none
+≎	geometricky ekvivalentný	none
+≑	geometricky sa rovná	none
+≚	má zhodné uhly	none
+≬	medzi	none
+≠	nerovná sa	none
+≡	totožné	none
+≣	presne totožné	none
+≢	nie je totožné	none
+∼	podobný	none
+≙	odhaduje sa	none
+≟	rovná sa s otáznikom	none
+
+#comparison signs
+<	menší	some
+>	väčší	some
+≤	menší alebo sa rovná	none
+≦	menší alebo sa rovná	none
+≪	omnoho menší	none
+≥	väčší alebo sa rovná	none
+≧	väčší alebo sa rovná	none
+≫	omnoho väčší	none
+≶	menší alebo väčší	none
+≷	väčší alebo menší	none
+≮	nie je menší	none
+≯	nie je väčší	none
+
+#Functions
+⁻	inverzná funkcia	some
+∘	operátor krúžok	none
+∂	parciálna derivácia	none
+∇	nabla	none
+
+#Geometry and linear Algebra
+⃗	vector between	none
+△	trojuholník	none
+▭	obdĺžnik	none
+∟	pravý uhol	none
+∠	uhol	none
+∥	rovnobežka	none
+∦	nerovnobežka	none
+⊥	kolmica	none
+⟂	ortogonálna	none
+‖	vektorová norma	none
+̂	normalizuje	none
+∿	sínusovka	none
+∡	meraný uhol	none
+∢	sférický uhol	none
+
+#Logical operators
+∀	pre všetky	none
+∃	existuje	none
+∄	neexistuje	none
+⇏	neimplikuje	none
+⇐	implikované	none
+
+#Other mathematical Operators
+∈	je prvkom	none
+∉	nie je prvkom	none
+∊	malé je prvkom	none
+∋	obsahuje ako člen	none
+∌	neobsahuje ako člen	none
+∍	malé obsahuje ako člen	none
+∎	koniec dôkazu	none
+∏	n-árny súčin	none
+∐	vedľajší súčin	none
+∑	n-árny súčet	none
+√	druhá odmocnina	none
+∛	tretia odmocnina	none
+∜	štvrta odmocnina	none
+∝	úmerné	none
+∞	nekonečno	none
+∧	logické a	none
+∨	logické alebo	none
+¬	logický zápor	none
+∩	prienik	none
+∪	zjednotenie	none
+∫	integrál	none
+∬	dvojitý integrál	none
+∭	trojitý integrál	none
+∮	krivkový integrál	none
+∯	plošný integrál	none
+∰	objemový integrál	none
+∱	integrál v smere hodinových ručičiek	none
+∲	krivkový integrál v smere hodinových ručičiek	none
+∳	krivkový integrál v proti smere hodinových ručičiek	none
+∴	preto	none
+∵	pretože	none
+∶	pomer	none
+∷	proporcia	none
+∹	prevyšuje	none
+∺	geometrická proporcia	none
+≀	wreath product	none
+≏	rozdiel oproti	none
+≐	približuje sa k limitu	none
+∙	operátor bodka	none
+∣	delí	none
+∤	nedelí	none
+≔	dvojbodka rovná sa	none
+≕	rovná sa dvojbodka	none
+≺	predchádza	none
+≻	nasleduje	none
+⊀	nepredchádza	none
+⊁	nenasleduje	none
 
 # Vulgur Fractions U+2150 to U+215E
-⅐	jedna sedmina	none
-⅑	jedna devätina	none
-⅒	jedna desatina	none
-⅓	jedna tretina	none
+¼	štvrtina	none
+½	polovica	none
+¾	tri štvrtiny	none
+⅐	sedmina	none
+⅑	devätina	none
+⅒	desatina	none
+⅓	tretina	none
 ⅔	dve tretiny	none
-⅕	jedna pätina	none
+⅕	pätina	none
 ⅖	dve pätiny	none
 ⅗	tri pätiny	none
 ⅘	štyri pätiny	none
-⅙	jedna šestina	none
+⅙	šestina	none
 ⅚	päť šestín	none
-⅛	jedna osmina	none
+⅛	osmina	none
 ⅜	tri osminy	none
 ⅝	päť osmín	none
 ⅞	sedem osmín	none
 
+#Number sets
+𝔸	algebrické čísla	none
+ℂ	komplexné čísla	none
+ℑ	imaginárna časť komplexného čísla	none
+ℍ	zlomky	none
+ℕ	prirodzené čísla	none
+𝕁	kladné (celé) čísla	none
+ℚ	racionálne čísla	none
+ℝ	reálne čísla	none
+ℜ	reálna časť komplexného čísla	none
+ℤ	celé čísla	none
+ℵ	aleph číslo	none
+ℶ	beth číslo	none
+
 # Miscellaneous Technical
-⌘	command	none
+⌘	kláves príkazov mac	none

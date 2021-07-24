@@ -1,34 +1,31 @@
-#UIAHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2018 NV Access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2018 NV Access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+from typing import Optional
 
 from comtypes import COMError
 import config
 from logHandler import log
+# Maintain backwards compatibility: F403 (unable to detect undefined names) flake8 warning.
+from _UIAHandler import *  # noqa: F403
+from _UIAHandler import UIAHandler
 
-handler=None
-isUIAAvailable=False
+# Make the _UIAHandler._isDebug function available to this module,
+# ignoring the fact that it is not used here directly.
+from _UIAHandler import _isDebug   # noqa: F401
 
-if config.conf and config.conf["UIA"]["enabled"]:
-	# Because Windows 7 SP1 (NT 6.1) or later is supported, just assume UIA can be used unless told otherwise.
-	try:
-		from _UIAHandler import *
-		isUIAAvailable=True
-	except ImportError:
-		log.debugWarning("Unable to import _UIAHandler",exc_info=True)
-		pass
+handler: Optional[UIAHandler] = None
 
 def initialize():
 	global handler
-	if not isUIAAvailable:
-		raise NotImplementedError
+	if not config.conf["UIA"]["enabled"]:
+		raise RuntimeError("UIA forcefully disabled in configuration")
 	try:
 		handler=UIAHandler()
 	except COMError:
 		handler=None
-		raise RuntimeError("UIA not available")
+		raise
 
 def terminate():
 	global handler

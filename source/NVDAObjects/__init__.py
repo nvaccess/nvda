@@ -8,8 +8,10 @@
 """Module that contains the base NVDA object type with dynamic class creation support,
 as well as the associated TextInfo class."""
 
+import os
 import time
 import re
+import typing
 import weakref
 from logHandler import log
 import review
@@ -31,6 +33,8 @@ import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
+import globalVars
+
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -305,7 +309,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	@staticmethod
 	def objectInForeground():
-		"""Retrieves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
+		"""Retrieves the object representing the current foreground control according to the
+		Operating System. This may differ from NVDA's cached foreground object.
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
@@ -413,10 +418,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return ""
 
-	def _get_role(self):
+	#: Type definition for auto prop '_get_role'
+	role: int
+
+	def _get_role(self) -> int:
 		"""The role or type of control this object represents (example: button, list, dialog).
 		@return: a ROLE_* constant from L{controlTypes}
-		@rtype: int
 		"""  
 		return controlTypes.ROLE_UNKNOWN
 
@@ -440,15 +447,20 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			return f"{braille.roleLabels[controlTypes.ROLE_LANDMARK]} {braille.landmarkLabels[self.landmark]}"
 		return self.roleText
 
-	def _get_value(self):
-		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
-		@rtype: str
+	#: Typing information for auto property _get_value
+	value: str
+
+	def _get_value(self) -> str:
+		"""The value of this object
+		(example: the current percentage of a scrollbar, the selected option in a combo box).
 		"""   
 		return ""
 
-	def _get_description(self):
+	#: Typing information for auto property _get_description
+	description: str
+
+	def _get_description(self) -> str:
 		"""The description or help text of this object.
-		@rtype: str
 		"""
 		return ""
 
@@ -492,10 +504,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		raise NotImplementedError
 
-	def _get_states(self):
+	# Type info for auto property:
+	states: typing.Set[int]
+
+	def _get_states(self) -> typing.Set[int]:
 		"""Retrieves the current states of this object (example: selected, focused).
 		@return: a set of  STATE_* constants from L{controlTypes}.
-		@rtype: set of int
 		"""
 		return set()
 
@@ -631,13 +645,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		raise NotImplementedError
 
-	def _get_cellCoordsText(self):
+	#: Typing information for auto-property: _get_cellCoordsText
+	cellCoordsText: typing.Optional[str]
+
+	def _get_cellCoordsText(self) -> typing.Optional[str]:
 		"""
 		An alternative text representation of cell coordinates e.g. "a1". Will override presentation of rowNumber and columnNumber.
 		Only implement if the representation is really different.
 		"""
 		return None
-		
 
 	def _get_rowCount(self):
 		"""Retrieves the number of rows this object contains if its a table.
@@ -744,8 +760,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		role = self.role
 		landmark = self.landmark
 		if (
-			role == controlTypes.ROLE_LANDMARK
-			or landmark
+			role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION) or landmark
 		) and not config.conf["documentFormatting"]["reportLandmarks"]:
 			return self.presType_layout
 
@@ -778,7 +793,18 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		name = self.name
 		description = self.description
 		if not name and not description:
-			if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
+			if role in (
+				controlTypes.ROLE_WINDOW,
+				controlTypes.ROLE_PANEL,
+				controlTypes.ROLE_PROPERTYPAGE,
+				controlTypes.ROLE_TEXTFRAME,
+				controlTypes.ROLE_GROUPING,
+				controlTypes.ROLE_OPTIONPANE,
+				controlTypes.ROLE_INTERNALFRAME,
+				controlTypes.ROLE_FORM,
+				controlTypes.ROLE_TABLEBODY,
+				controlTypes.ROLE_REGION,
+			):
 				return self.presType_layout
 			if role == controlTypes.ROLE_TABLE and not config.conf["documentFormatting"]["reportTables"]:
 				return self.presType_layout
@@ -958,12 +984,13 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	def _get_isCurrent(self):
+	isCurrent: controlTypes.IsCurrent  #: type info for auto property _get_isCurrent
+
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		"""Gets the value that indicates whether this object is the current element in a set of related 
-		elements. This maps to aria-current. Normally returns None. If this object is current
-		it will return one of the following values: "true", "page", "step", "location", "date", "time"
+		elements. This maps to aria-current.
 		"""
-		return None
+		return controlTypes.IsCurrent.NO
 
 	def _get_shouldAcceptShowHideCaretEvent(self):
 		"""Some objects/applications send show/hide caret events when we don't expect it, such as when the cursor is blinking.
@@ -975,7 +1002,7 @@ Tries to force this object to take the focus.
 	def reportFocus(self):
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
-		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 
 	def _get_placeholder(self):
 		"""If it exists for this object get the value of the placeholder text.
@@ -1017,15 +1044,33 @@ Tries to force this object to take the focus.
 			# No error.
 			return
 		import nvwave
-		nvwave.playWaveFile(r"waves\textError.wav")
+		nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		""" Retrieves the priority with which  updates to live regions should be treated.
+		The base implementation returns C{aria.AriaLivePoliteness.OFF},
+		indicating that the object isn't a live region.
+		Subclasses supporting live region events must implement this.
+		"""
+		return aria.AriaLivePoliteness.OFF
 
 	def event_liveRegionChange(self):
 		"""
 		A base implementation for live region change events.
 		"""
-		name=self.name
+		name = self.name
 		if name:
-			ui.message(name)
+			politeness = self.liveRegionPoliteness
+			if politeness == aria.AriaLivePoliteness.OFF:
+				log.debugWarning("Processing live region event for object with live politeness set to 'OFF'")
+			ui.message(
+				name,
+				speechPriority=(
+					speech.priorities.Spri.NEXT
+					if politeness == aria.AriaLivePoliteness.ASSERTIVE
+					else speech.priorities.Spri.NORMAL
+				)
+			)
 
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
@@ -1074,7 +1119,7 @@ Tries to force this object to take the focus.
 
 	def event_stateChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self,states=True, reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, states=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
 
@@ -1083,7 +1128,7 @@ Tries to force this object to take the focus.
 			speech.cancelSpeech()
 			return
 		if self.isPresentableFocusAncestor:
-			speech.speakObject(self,reason=controlTypes.REASON_FOCUSENTERED)
+			speech.speakObject(self, reason=controlTypes.OutputReason.FOCUSENTERED)
 
 	def event_gainFocus(self):
 		"""
@@ -1121,19 +1166,19 @@ This code is executed if a gain focus event is received by this object.
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, value=True, reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, value=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="value")
 
 	def event_nameChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, name=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="name")
 
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, description=True, reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, description=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="description")
 

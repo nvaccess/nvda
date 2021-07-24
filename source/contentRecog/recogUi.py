@@ -22,7 +22,8 @@ import eventHandler
 import textInfos
 from logHandler import log
 import queueHandler
-from . import RecogImageInfo
+from . import RecogImageInfo, BaseContentRecogTextInfo
+
 
 class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Window):
 	"""Fake NVDAObject used to present a recognition result in a cursor manager.
@@ -51,21 +52,7 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 			ti.collapse()
 		else:
 			ti = self.result.makeTextInfo(self, position)
-		return self._patchTextInfo(ti)
-
-	def _patchTextInfo(self, info):
-		# Patch TextInfos so that updateSelection/Caret updates our fake selection.
-		info.updateCaret = lambda: self._setSelection(info, True)
-		info.updateSelection = lambda: self._setSelection(info, False)
-		# Ensure any copies get patched too.
-		oldCopy = info.copy
-		info.copy = lambda: self._patchTextInfo(oldCopy())
-		return info
-
-	def _setSelection(self, textInfo, collapse):
-		self._selection = textInfo.copy()
-		if collapse:
-			self._selection.collapse()
+		return ti
 
 	def setFocus(self):
 		ti = self.parent.treeInterceptor
@@ -126,6 +113,8 @@ def recognizeNavigatorObject(recognizer):
 		ui.message(_("Already in a content recognition result"))
 		return
 	nav = api.getNavigatorObject()
+	if not recognizer.validateObject(nav):
+		return
 	# Translators: Reported when content recognition (e.g. OCR) is attempted,
 	# but the content is not visible.
 	notVisibleMsg = _("Content is not visible")
@@ -134,6 +123,8 @@ def recognizeNavigatorObject(recognizer):
 	except TypeError:
 		log.debugWarning("Object returned location %r" % nav.location)
 		ui.message(notVisibleMsg)
+		return
+	if not recognizer.validateCaptureBounds(nav.location):
 		return
 	try:
 		imgInfo = RecogImageInfo.createFromRecognizer(left, top, width, height, recognizer)

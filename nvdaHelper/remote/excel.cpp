@@ -1,6 +1,6 @@
 /*
 This file is a part of the NVDA project.
-Copyright 2019 NV Access Limited.
+Copyright 2019-2020 NV Access Limited, Accessolutions, Julien Cochuyt
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -326,7 +326,7 @@ HRESULT getCellInfo(HWND hwnd, IDispatch* pDispatchRange, long cellInfoFlags, EX
 		}
 	}
 	if(cellInfoFlags&NVCELLINFOFLAG_FORMULA) {
-		res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_FORMULA,VT_BSTR,&cellInfo->formula);
+		res = _com_dispatch_raw_propget(pDispatchRange, XLDISPID_RANGE_FORMULA_LOCAL, VT_BSTR, &cellInfo->formula);
 		if(FAILED(res)) {
 			LOG_DEBUGWARNING(L"range.formula failed with code "<<res);
 		}

@@ -13,8 +13,7 @@ from NVDAObjects.behaviors import Dialog
 import appModuleHandler
 import eventHandler
 import UIAHandler
-if UIAHandler.isUIAAvailable:
-	from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA import UIA
 
 """App module for the Windows Logon screen
 """
@@ -35,16 +34,17 @@ class LogonDialog(Dialog):
 
 		return super(LogonDialog, self).event_gainFocus()
 
-if UIAHandler.isUIAAvailable:
-	class Win8PasswordField(UIA):
 
-		#This UIA object has no invoke pattern, at least set focus.
-		# #6024: Affects both Windows 8.x and 10.
-		def doAction(self,index=None):
-			if not index:
-				self.setFocus()
-			else:
-				super(Win8PasswordField,self).doAction(index)
+class Win8PasswordField(UIA):
+
+	# This UIA object has no invoke pattern, at least set focus.
+	# #6024: Affects both Windows 8.x and 10.
+	def doAction(self, index=None):
+		if not index:
+			self.setFocus()
+		else:
+			super().doAction(index)
+
 
 class XPPasswordField(IAccessible):
 
@@ -82,7 +82,7 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 
-		if UIAHandler.isUIAAvailable:
+		if UIAHandler.handler:
 			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("TouchEditInner", "PasswordBox") and obj.role==controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0,Win8PasswordField)
 		# #6010: Allow Windows 10 version to be recognized as well.

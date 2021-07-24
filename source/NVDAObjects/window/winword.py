@@ -1,8 +1,8 @@
-#appModules/winword.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 
 import ctypes
 import time
@@ -14,7 +14,6 @@ import operator
 import locale
 import collections
 import colorsys
-import sayAllHandler
 import eventHandler
 import braille
 from scriptHandler import script
@@ -306,27 +305,29 @@ NVDAUnitsToWordUnits={
 	textInfos.UNIT_READINGCHUNK:wdSentence,
 }
 
-formatConfigFlagsMap={
-	"reportFontName":0x1,
-	"reportFontSize":0x2,
-	"reportFontAttributes":0x4,
-	"reportColor":0x8,
-	"reportAlignment":0x10,
-	"reportStyle":0x20,
-	"reportSpellingErrors":0x40,
-	"reportPage":0x80,
-	"reportLineNumber":0x100,
-	"reportTables":0x200,
-	"reportLists":0x400,
-	"reportLinks":0x800,
-	"reportComments":0x1000,
-	"reportHeadings":0x2000,
-	"autoLanguageSwitching":0x4000,
-	"reportRevisions":0x8000,
-	"reportParagraphIndentation":0x10000,
-	"reportLineSpacing":0x40000,
+formatConfigFlagsMap = {
+	"reportFontName": 0x1,
+	"reportFontSize": 0x2,
+	"reportFontAttributes": 0x4,
+	"reportColor": 0x8,
+	"reportAlignment": 0x10,
+	"reportStyle": 0x20,
+	"reportSpellingErrors": 0x40,
+	"reportPage": 0x80,
+	"reportLineNumber": 0x100,
+	"reportTables": 0x200,
+	"reportLists": 0x400,
+	"reportLinks": 0x800,
+	"reportComments": 0x1000,
+	"reportHeadings": 0x2000,
+	"autoLanguageSwitching": 0x4000,
+	"reportRevisions": 0x8000,
+	"reportParagraphIndentation": 0x10000,
+	"reportLineSpacing": 0x40000,
+	"reportSuperscriptsAndSubscripts": 0x80000,
+	"reportGraphics": 0x100000,
 }
-formatConfigFlag_includeLayoutTables=0x20000
+formatConfigFlag_includeLayoutTables = 0x20000
 
 # Map some characters from 0 to Unicode. Meant to be used with bullets only.
 # Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
@@ -444,7 +445,8 @@ class WinWordCollectionQuicknavIterator(object):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
 		@param rangeObj: a Microsoft Word range object where the collection should be fetched from.
-		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		@param includeCurrent: if true then any item at the initial position will be also emitted
+			rather than just further ones.
 		"""
 		self.document=document
 		self.itemType=itemType
@@ -541,8 +543,10 @@ class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator
 class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.tables
+
 	def filter(self,item):
-		return item.borders.enable
+		return config.conf["documentFormatting"]["includeLayoutTables"] or item.borders.enable
+
 
 class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentChartQuickNavItem
@@ -552,6 +556,31 @@ class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 
 	def filter(self,item):
 		return item.type==wdInlineShapeChart
+
+
+class LazyControlField_RowAndColumnHeaderText(textInfos.ControlField):
+
+	def __init__(self, ti):
+		self._ti = ti
+		super().__init__()
+
+	def get(self, name, default=None):
+		if name == "table-rowheadertext":
+			try:
+				cell = self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name, default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell, False)
+		elif name == "table-columnheadertext":
+			try:
+				cell = self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name, default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell, True)
+		else:
+			return super().get(name, default)
 
 class WordDocumentTextInfo(textInfos.TextInfo):
 
@@ -583,8 +612,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		textList.append(_("{distance} from top edge of page").format(distance=distance))
 		return ", ".join(textList)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify):
 		self._rangeObj.copy()
+		if notify:
+			ui.reportTextCopiedToClipboard(self.text)
 		return True
 
 	def find(self,text,caseSensitive=False,reverse=False):
@@ -642,7 +673,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self.updateCaret()
 			tiCopy = self.copy()
 			tiCopy.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 			return
 
@@ -792,26 +823,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['name']=name
 				field['alwaysReportName']=True
 				field['role']=controlTypes.ROLE_FRAME
-		# Hack support for lazy fetching of row and column header text values
-		class ControlField(textInfos.ControlField): 
-			def get(d,name,default=None):
-				if name=="table-rowheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,False)
-				elif name=="table-columnheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,True)
-				else:
-					return super(ControlField,d).get(name,default)
-		newField=ControlField()
+		newField = LazyControlField_RowAndColumnHeaderText(self)
 		newField.update(field)
 		return newField
 
@@ -832,8 +844,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				# Translators:  line spacing of 1.5 lines
 				field['line-spacing']=pgettext('line spacing value',"1.5 lines")
 			elif lineSpacingRule==wdLineSpaceExactly:
-				# Translators: exact (minimum) line spacing
-				field['line-spacing']=pgettext('line spacing value',"exact")
+				field['line-spacing'] = pgettext(
+					'line spacing value',
+					# Translators: line spacing of exactly x point
+					"exactly {space:.1f} pt"
+				).format(space=float(lineSpacingVal))
 			elif lineSpacingRule==wdLineSpaceAtLeast:
 				# Translators: line spacing of at least x point
 				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
@@ -932,7 +947,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			newEndOffset = self._rangeObj.end
 			# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
 			# a case where you called move end then collapse until the size of the range is no longer being reduced.
-			# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+			# For an example of this see sayAll (specifically readTextHelper_generator in sayAll.py)
 			if newEndOffset < oldEndOffset :
 				raise RuntimeError
 
@@ -1040,6 +1055,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			return mathType.getMathMl(obj)
 		except:
+			log.debugWarning("Error fetching math with mathType", exc_info=True)
 			raise LookupError("Couldn't get MathML from MathType")
 
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
@@ -1291,6 +1307,22 @@ class WordDocument(Window):
 		if msg:
 			ui.message(msg)
 
+	@script(gestures=["kb:control+m", "kb:control+shift+m", "kb:control+t", "kb:control+shift+t"])
+	def script_changeParagraphLeftIndent(self, gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		margin = self.WinwordDocumentObject.PageSetup.LeftMargin
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordSelectionObject.paragraphFormat.LeftIndent
+		)
+		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
+		ui.message(msg)
+
 	def script_toggleSuperscriptSubscript(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1360,24 +1392,6 @@ class WordDocument(Window):
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
-	def script_toggleChangeTracking(self, gesture):
-		if not self.WinwordDocumentObject:
-			# We cannot fetch the Word object model, so we therefore cannot report the status change.
-			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
-			# or it's within Windows Defender Application Guard.
-			# In this case, just let the gesture through and don't report anything.
-			return gesture.send()
-		val = self._WaitForValueChangeForAction(
-			lambda: gesture.send(),
-			lambda: self.WinwordDocumentObject.TrackRevisions
-		)
-		if val:
-			# Translators: a message when toggling change tracking in Microsoft word
-			ui.message(_("Change tracking on"))
-		else:
-			# Translators: a message when toggling change tracking in Microsoft word
-			ui.message(_("Change tracking off"))
-
 	@script(gesture="kb:control+shift+8")
 	def script_toggleDisplayNonprintingCharacters(self, gesture):
 		if not self.WinwordWindowObject:
@@ -1405,6 +1419,9 @@ class WordDocument(Window):
 		* If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
 		"""
 		gesture.send()
+		self.reportTab()
+
+	def reportTab(self):
 		selectionObj=self.WinwordSelectionObject
 		inTable=selectionObj.tables.count>0 if selectionObj else False
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -1413,7 +1430,7 @@ class WordDocument(Window):
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			isCollapsed=info.isCollapsed
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 		if selectionObj and isCollapsed:
 			offset=selectionObj.information(wdHorizontalPositionRelativeToPage)
@@ -1421,7 +1438,7 @@ class WordDocument(Window):
 			ui.message(msg)
 			if selectionObj.paragraphs[1].range.start==selectionObj.start:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	def getLocalizedMeasurementTextForPointSize(self,offset):
 		options=self.WinwordApplicationObject.options
@@ -1502,7 +1519,6 @@ class WordDocument(Window):
 		"kb:control+1":"changeLineSpacing",
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
-		"kb:control+shift+e": "toggleChangeTracking",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}

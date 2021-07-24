@@ -1,8 +1,7 @@
-#appModules/winamp.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -12,12 +11,12 @@ from scriptHandler import isScriptWaiting
 from NVDAObjects.IAccessible import IAccessible 
 import appModuleHandler
 import speech
-import locale
 import controlTypes
 import api
 import watchdog
 import braille
 import ui
+import textUtils
 
 # message used to sent many messages to winamp's main window. 
 # most all of the IPC_* messages involve sending the message in the form of:
@@ -57,7 +56,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		global hwndWinamp
-		hwndWinamp=windll.user32.FindWindowA("Winamp v1.x",None)
+		hwndWinamp = winUser.FindWindow("Winamp v1.x", None)
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
@@ -117,7 +116,7 @@ class winampPlaylistEditor(winampMainWindow):
 			winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
 		# file title is fetched in the current locale encoding.
 		# We need to decode it to unicode first. 
-		encoding=locale.getlocale()[1]
+		encoding = textUtils.USER_ANSI_CODE_PAGE
 		fileTitle=info.filetitle.decode(encoding,errors="replace")
 		return "%d.\t%s\t%s"%(curIndex+1,fileTitle,info.filelength)
 
@@ -128,7 +127,7 @@ class winampPlaylistEditor(winampMainWindow):
 		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
-			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleGainFocus(self)
 
 	def event_nameChange(self):

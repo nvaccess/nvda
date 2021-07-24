@@ -10,14 +10,16 @@
 from ctypes import c_short
 from comtypes import COMError, BSTR
 import oleacc
-import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
 from NVDAObjects.behaviors import Dialog, WebDialog 
-from . import IAccessible
+from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
+import api
+import speech
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -32,11 +34,13 @@ class Ia2Web(IAccessible):
 				info['level']=level
 		return info
 
-	def _get_isCurrent(self):
-		current = self.IA2Attributes.get("current", None)
-		if current == "false":
-			current = None
-		return current
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
+		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
+		try:
+			return controlTypes.IsCurrent(ia2attrCurrent)
+		except ValueError:
+			log.debugWarning(f"Unknown 'current' IA2Attribute value: {ia2attrCurrent}")
+			return controlTypes.IsCurrent.NO
 
 	def _get_placeholder(self):
 		placeholder = self.IA2Attributes.get('placeholder', None)
@@ -71,7 +75,7 @@ class Ia2Web(IAccessible):
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if (
 			landmark
-			and self.IAccessibleRole != IAccessibleHandler.IA2_ROLE_LANDMARK
+			and self.IAccessibleRole != IA2.IA2_ROLE_LANDMARK
 			and landmark != xmlRoles[0]
 		):
 			# Ignore the landmark role
@@ -79,6 +83,26 @@ class Ia2Web(IAccessible):
 		if landmark:
 			return landmark
 		return super().landmark
+
+	def event_IA2AttributeChange(self):
+		super().event_IA2AttributeChange()
+		if self is api.getFocusObject():
+			# Report aria-current if it changed.
+			speech.speakObjectProperties(
+				self,
+				current=True,
+				reason=controlTypes.OutputReason.CHANGE
+			)
+		# super calls event_stateChange which updates braille, so no need to
+		# update braille here.
+
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		politeness = self.IA2Attributes.get('live', "off")
+		try:
+			return aria.AriaLivePoliteness(politeness.lower())
+		except ValueError:
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
+			super().liveRegionPoliteness
 
 
 class Document(Ia2Web):
@@ -94,8 +118,20 @@ class BlockQuote(Ia2Web):
 	role = controlTypes.ROLE_BLOCKQUOTE
 
 
+class Treegrid(Ia2Web):
+	role = controlTypes.ROLE_TABLE
+
+
 class Article(Ia2Web):
 	role = controlTypes.ROLE_ARTICLE
+
+
+class Region(Ia2Web):
+	role = controlTypes.ROLE_REGION
+
+
+class Figure(Ia2Web):
+	role = controlTypes.ROLE_FIGURE
 
 
 class Editor(Ia2Web, DocumentWithTableNavigation):
@@ -114,10 +150,12 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			# We support either IAccessibleTable or IAccessibleTable2 interfaces for locating table cells. 
 			# We will be able to get at least one of these.  
 			try:
-				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IA2.IAccessible2)
 			except AttributeError:
 				# No IAccessibleTable2, try IAccessibleTable instead.
-				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+				cell = table.IAccessibleTableObject.accessibleAt(
+					destRow - 1, destCol - 1
+				).QueryInterface(IA2.IAccessible2)
 			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
 			if cell.IA2Attributes.get('hidden'):
@@ -128,6 +166,14 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			# Any of the above calls could throw a COMError, and sometimes a RuntimeError.
 			# Treet this as the cell not existing.
 			raise LookupError
+
+	def event_loseFocus(self):
+		# MozillaCompoundTextInfo caches the deepest object with the caret.
+		# But this can create a reference cycle if not removed.
+		# As we no longer need it once this object loses focus, we can delete it here.
+		self._lastCaretObj = None
+		super().event_loseFocus()
+
 
 class EditorChunk(Ia2Web):
 	beTransparentToMouse = True
@@ -160,6 +206,19 @@ class Math(Ia2Web):
 				"Not supported in this browser or ISimpleDOM COM proxy not registered.", exc_info=True)
 			raise LookupError
 
+
+class Switch(Ia2Web):
+	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
+	# checked state instead of pressed. The simplest way to deal with this
+	# identity crisis is to map it to a check box.
+	role = controlTypes.ROLE_CHECKBOX
+
+	def _get_states(self):
+		states = super().states
+		states.discard(controlTypes.STATE_PRESSED)
+		return states
+
+
 def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""Determine the most appropriate class if this is an IA2 web object.
 	This should be called after finding any classes for the specific web implementation.
@@ -168,19 +227,34 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""
 	if not documentClass:
 		raise ValueError("documentClass cannot be None")
-	if not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
+	if not isinstance(obj.IAccessibleObject, IA2.IAccessible2):
 		return
 
 	iaRole = obj.IAccessibleRole
 	xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
-	if iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
+	if iaRole == IA2.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
 		clsList.append(BlockQuote)
+	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINE and "treegrid" in xmlRoles:
+		clsList.append(Treegrid)
 	elif iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and xmlRoles[0] == "article":
 		clsList.append(Article)
+	elif xmlRoles[0] == "region" and obj.name:
+		clsList.append(Region)
+	elif xmlRoles[0] == "figure":
+		clsList.append(Figure)
 	elif iaRole == oleacc.ROLE_SYSTEM_ALERT:
 		clsList.append(Dialog)
 	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:
 		clsList.append(Math)
+	elif xmlRoles[0] == "switch":
+		clsList.append(Switch)
+	elif iaRole == oleacc.ROLE_SYSTEM_GROUPING:
+		try:
+			# The Groupbox class uses sibling text as the description. This is
+			# inappropriate for IA2 web browsers.
+			clsList.remove(Groupbox)
+		except ValueError:
+			pass
 
 	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)
@@ -192,7 +266,7 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	):
 		clsList.append(documentClass)
 
-	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE:
+	if obj.IA2States & IA2.IA2_STATE_EDITABLE:
 		if obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
 			clsList.append(Editor)
 		else:

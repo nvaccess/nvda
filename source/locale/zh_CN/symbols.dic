@@ -1,6 +1,6 @@
 ﻿symbols:
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2018 NVDA Simplified Chinese team All volunteers
+# Copyright (C) 2010-2020 NVDA Simplified Chinese team All volunteers
 # This file may be used under the terms of the GNU Lesser General Public License, version 2.1.
 # For more details see: https://www.gnu.org/licenses/lgpl-2.1.html
 $	美元
@@ -8,12 +8,16 @@ $	美元
 ;	分号
 \\	反斜杠
 |	竖线
+¦	间断条	most
+¡	倒置感叹号	some
+¿	倒置问号	some
 .	点
 :	冒号
 \0	空白	char
 \r	航尾
 \n	航首
 \t	制表符
+\f	分页符
  	空格	char
 ,	逗号
 ，	全角逗号	most	always
@@ -21,9 +25,10 @@ $	美元
 ...	省略号
 !	感叹号
 "	双引号
+@	at
 \#	井号
 %	百分号
-&	与号
+&	和号
 '	单引号
 (	左括号
 )	右括号
@@ -34,29 +39,30 @@ _	下划线
 =	等号
 [	左方括号
 ]	右方括号
-{	左花括号
-}	右花括号
+〖	左空方头括号	most	always
+〗	右空方头括号	most	always
+{	左花括号	some
+}	右花括号	some
 　	全角空格	all
-₹	印度卢比	some	norep
+₹	卢比	some	norep
 negative number	负
-✔	选择
-✓	选择
+✔	粗对钩
+✓	对钩
 # Other characters
 ©	版权所有
 ™	商标
-®	已注册
-³	注3
-²	注2
-¹	注1
+®	注册
 µ	百万分之一
 »	右双尖括号	most
 «	左双尖括号	most
 ➔	右箭头	most
+🡺	向右箭头	some
 ‏	右至左符号	most
 ‎	左至右符号	most
-¨	分音符	most
 –	短破折号	most	always
 ·	间隔号	most	always
+⁃	连字符	none
+­	软连字符	most
 •	着重号	most
 `	反撇号	most
 ^	脱字符	most
@@ -127,7 +133,12 @@ no-break space	空格	most
 ＆	全角与号	most
 ＊	全角星号	most
 ※	重点 符号	most
-§	章节号	most
+§	章节符	most
+¶	段落符	most
+¸	变音符	most
+´	重音符	most
+¯	长音符	most
+¨	分音符	most
 〃	同上符号	most
 ○	空心圆	most
 ●	实心圆	most
@@ -207,6 +218,7 @@ no-break space	空格	most
 ＼	全角反斜杠	most
 
 # 常用单位符号
+¤	货币符	all	norep
 ￥	人民币	none
 ￠	全形分币标记	none
 ￡	英鎊	none
@@ -298,6 +310,7 @@ no-break space	空格	most
 ⅽ	小写罗马数字一百	none
 ⅾ	小写罗马数字五百	none
 ⅿ	小写罗马数字一千	none
+
 # 特殊字母
 Ⓐ	圆圈大写字母A	none
 Ⓑ	圆圈大写字母B	none
@@ -448,6 +461,7 @@ no-break space	空格	most
 ∍	包含成员	none
 ∎	证明完毕	none
 ∏	pi	none
+
 # 各种各样的数学运算符
 ∑	求和	none
 √	开根号	some
@@ -461,6 +475,7 @@ no-break space	空格	most
 ∦	不平型	none
 ∧	逻辑「与」	none
 ∨	逻辑「或」	none
+¬	逻辑「非」	none
 ∩	交集	none
 ∪	并集	none
 ∫	积分	none
@@ -488,8 +503,6 @@ no-break space	空格	most
 ≹	不大於或小於	most
 ∓	減或加	most
 −	減號	most
-⁺	正數	most
-⁻	負數	most
 ℇ	歐拉常數	most
 ℒ	拉普拉斯变换	most
 ℱ	傅立叶变换	most
@@ -504,7 +517,6 @@ no-break space	空格	most
 ⇒	双线右箭头	some
 ⇨	空心右箭头	some
 ♣	黑桃	some
-➢	三维上光向右箭头尖	some
 ❖	四个菱形	some
 ♦	实心方块	some
 ⅐	七分之一	none
@@ -512,6 +524,9 @@ no-break space	空格	most
 ⅒	十分之一	none
 ⅓	三分之一	none
 ⅔	三分之二	none
+¾	四分之三	none
+½	二分之一	none
+¼	四分之一	none
 ⅕	五分之一	none
 ⅖	五分之二	none
 ⅗	五分之三	none
@@ -522,5 +537,196 @@ no-break space	空格	most
 ⅜	八分之三	none
 ⅝	八分之五	none
 ⅞	八分之七	none
+
+# Unicode 盲文点位 (Add 64braille symbols) 
+⠀	空方	some
+⠁	一点	some
+⠂	二点	some
+⠃	一二点	some
+⠄	三点	some
+⠅	一三点	some
+⠆	二三点	some
+⠇	一二三点	some
+⠈	四点	some
+⠉	一四点	some
+⠊	二四点	some
+⠋	一二四点	some
+⠌	三四点	some
+⠍	一三四点	some
+⠎	二三四点	some
+⠏	一二三四点	some
+⠐	五点	some
+⠑	一五点	some
+⠒	二五点	some
+⠓	一二五点	some
+⠔	三五点	some
+⠕	一三五点	some
+⠖	二三五点	some
+⠗	一二三五点	some
+⠘	四五点	some
+⠙	一四五点	some
+⠚	二四五点	some
+⠛	一二四五点	some
+⠜	三四五点	some
+⠝	一三四五点	some
+⠞	二三四五点	some
+⠟	一二三四五点	some
+⠠	六点	some
+⠡	一六点	some
+⠢	二六点	some
+⠣	一二六点	some
+⠤	三六点	some
+⠥	一三六点	some
+⠦	二三六点	some
+⠧	一二三六点	some
+⠨	四六点	some
+⠩	一四六点	some
+⠪	二四六点	some
+⠫	一二四六点	some
+⠬	三四六点	some
+⠭	一三四六点	some
+⠮	二三四六点	some
+⠯	一二三四六点	some
+⠰	五六点	some
+⠱	一五六点	some
+⠲	二五六点	some
+⠳	一二五六点	some
+⠴	三五六点	some
+⠵	一三五六点	some
+⠶	二三五六点	some
+⠷	一二三五六点	some
+⠸	四五六点	some
+⠹	一四五六点	some
+⠺	二四五六点	some
+⠻	一二四五六点	some
+⠼	三四五六点	some
+⠽	一三四五六点	some
+⠾	二三四五六点	some
+⠿	一二三四五六点	some
+
+# 上下标
+º	阳性顺序指示符	some
+ª	阴性顺序指示符	some
+⁰	上标0	some
+¹	上标1	some
+²	上标2	some
+³	上标3	some
+⁴	上标4	some
+⁵	上标五	some
+⁶	上标6	some
+⁷	上标7	some
+⁸	上标8	some
+⁹	上标9	some
+⁺	上标加号	some
+⁻	上标减号	some
+⁼	上标等号	some
+⁽	上标左圆括号	some
+⁾	上标右圆括号	some
+ⁿ	上标n	some
+₀	下标 0	some
+₁	下标 1	some
+₂	下标 2	some
+₃	下标 3	some
+₄	下标 4	some
+₅	下标 5	some
+₆	下标 6	some
+₇	下标 7	some
+₈	下标 8	some
+₉	下标 9	some
+₊	下标加号	some
+₋	下标减号	some
+₌	下标等号	some
+₍	下标左圆括号	some
+₎	下标右圆括号	some
+
 # 杂项符号
 ⌘	Mac Command键	none
+′	撇号	some
+″	双撇号	some
+‴	三撇号	some
+⮚	三維向右上方發光的等邊箭頭	some
+➢	三维上光向右箭头尖	some
+‚	单引用符	most
+„	双引用符	most
+‡	双剑标	some
+†	箭标	some
+◦	空心着重号	some
+‣	三角着重号	none
+✗	X-形 着重号	none
+￼	对象替换符	none
+ƒ	弗罗林	all	norep
+‰	千分之	some
+®	注册	some
+™	商标	some
+©	版权所有	some
+℠	服务标记	some
+±	正负号	some
+×	乘号	some
+÷	除号	some
+
+
+# GBK盲文字符
+	一点	some
+	二点	some
+	一二点	some
+	三点	some
+	一三点	some
+	二三点	some
+	一二三点	some
+	四点	some
+	一四点	some
+	二四点	some
+	一二四点	some
+	三四点	some
+	一三四点	some
+	二三四点	some
+	一二三四点	some
+	五点	some
+	一五点	some
+	二五点	some
+	一二五点	some
+	三五点	some
+	一三五点	some
+	二三五点	some
+	一二三五点	some
+	四五点	some
+	一四五点	some
+	二四五点	some
+	一二四五点	some
+	三四五点	some
+	一三四五点	some
+	二三四五点	some
+	一二三四五点	some
+	六点	some
+	一六点	some
+	二六点	some
+	一二六点	some
+	三六点	some
+	一三六点	some
+	二三六点	some
+	一二三六点	some
+	四六点	some
+	一四六点	some
+	二四六点	some
+	一二四六点	some
+	三四六点	some
+	一三四六点	some
+	二三四六点	some
+	一二三四六点	some
+	五六点	some
+	一五六点	some
+	二五六点	some
+	一二五六点	some
+	三五六点	some
+	一三五六点	some
+	二三五六点	some
+	一二三五六点	some
+	四五六点	some
+	一四五六点	some
+	二四五六点	some
+	一二四五六点	some
+	三四五六点	some
+	一三四五六点	some
+	二三四五六点	some
+	一二三四五六点	some
+	空方	some

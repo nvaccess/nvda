@@ -1,17 +1,14 @@
-# scriptHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2007-2020 NV Access Limited, Babbage B.V., Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import List, Optional
 import time
 import weakref
-import inspect
 import types
 import config
-import speech
-import sayAllHandler
-import appModuleHandler
+from speech import sayAll
 import api
 import queueHandler
 from logHandler import log
@@ -19,7 +16,6 @@ import inputCore
 import globalPluginHandler
 import braille
 import vision
-import keyLabels
 import baseObject
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
@@ -54,8 +50,11 @@ def _getObjScript(obj, gesture, globalMapScripts):
 			except AttributeError:
 				pass
 
-	# Search the object itself for in-built bindings.
-	return obj.getScript(gesture)
+	try:
+		# Search the object itself for in-built bindings.
+		return obj.getScript(gesture)
+	except Exception:  # Prevent a faulty add-on from breaking script handling altogether (#5446)
+		log.exception()
 
 def findScript(gesture):
 	focus = api.getFocusObject()
@@ -103,7 +102,7 @@ def findScript(gesture):
 			return func
 
 	# Vision enhancement provider level
-	for provider in vision.handler.providers.values():
+	for provider in vision.handler.getActiveProviderInstances():
 		if isinstance(provider, baseObject.ScriptableObject):
 			func = _getObjScript(provider, gesture, globalMapScripts)
 			if func:
@@ -160,7 +159,7 @@ def _isInterceptedCommandScript(script):
 def _queueScriptCallback(script,gesture):
 	global _numScriptsQueued, _numIncompleteInterceptedCommandScripts
 	_numScriptsQueued-=1
-	executeScript(script,gesture)
+	gesture.executeScript(script)
 	if _isInterceptedCommandScript(script):
 		_numIncompleteInterceptedCommandScripts-=1
 
@@ -172,7 +171,11 @@ def queueScript(script,gesture):
 	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,gesture)
 
 def willSayAllResume(gesture):
-	return config.conf['keyboard']['allowSkimReadingInSayAll']and gesture.wasInSayAll and getattr(gesture.script,'resumeSayAllMode',None)==sayAllHandler.lastSayAllMode
+	return (
+		config.conf['keyboard']['allowSkimReadingInSayAll']
+		and gesture.wasInSayAll
+		and getattr(gesture.script, 'resumeSayAllMode', None) == sayAll.SayAllHandler.lastSayAllMode
+	)
 
 def executeScript(script,gesture):
 	"""Executes a given script (function) passing it the given gesture.
@@ -192,7 +195,7 @@ def executeScript(script,gesture):
 	_isScriptRunning=True
 	resumeSayAllMode=None
 	if willSayAllResume(gesture):
-		resumeSayAllMode=sayAllHandler.lastSayAllMode
+		resumeSayAllMode = sayAll.SayAllHandler.lastSayAllMode
 	try:
 		scriptTime=time.time()
 		scriptRef=weakref.ref(scriptFunc)
@@ -208,7 +211,7 @@ def executeScript(script,gesture):
 	finally:
 		_isScriptRunning=False
 		if resumeSayAllMode is not None:
-			sayAllHandler.readText(resumeSayAllMode)
+			sayAll.SayAllHandler.readText(resumeSayAllMode)
 
 def getLastScriptRepeatCount():
 	"""The count of how many times the most recent script has been executed.
@@ -221,61 +224,44 @@ def getLastScriptRepeatCount():
 	else:
 		return _lastScriptCount
 
+
+def clearLastScript():
+	"""Clears the variables that keeps track of the execution of duplicate scripts with in a certain amount of
+	time, so that next script execution will always be detected as a first execution of this script.
+	This function should only be called from the main thread.
+	"""
+
+	global _lastScriptTime, _lastScriptRef, _lastScriptCount
+	_lastScriptTime = 0
+	_lastScriptRef = None
+	_lastScriptCount = 0
+
+
 def isScriptWaiting():
 	return bool(_numScriptsQueued)
 
-def isCurrentScript(scriptFunc):
-	"""Finds out if the given script is equal to the script that L{isCurrentScript} is being called from.
-	@param scriptFunc: the script retreaved from ScriptableObject.getScript(gesture)
-	@type scriptFunc: Instance method
-	@returns: True if they are equal, False otherwise
-	@rtype: boolean
-	"""
-	try:
-	 	givenFunc=getattr(scriptFunc.im_self.__class__,scriptFunc.__name__)
-	except AttributeError:
-		log.debugWarning("Could not get unbound method from given script",exc_info=True) 
-		return False
-	parentFrame=inspect.currentframe().f_back
-	try:
-		realObj=parentFrame.f_locals['self']
-	except KeyError:
-		log.debugWarning("Could not get self instance from parent frame instance method",exc_info=True)
-		return False
-	try:
-		realFunc=getattr(realObj.__class__,parentFrame.f_code.co_name)
-	except AttributeError:
-		log.debugWarning("Could not get unbound method from parent frame instance",exc_info=True)
-		return False
-	return givenFunc==realFunc
-
 def script(
-	description="",
-	category=None,
-	gesture=None,
-	gestures=None,
-	canPropagate=False,
-	bypassInputHelp=False,
-	resumeSayAllMode=None
+		description: str = "",
+		category: Optional[str] = None,
+		gesture: Optional[str] = None,
+		gestures: Optional[List[str]] = None,
+		canPropagate: bool = False,
+		bypassInputHelp: bool = False,
+		allowInSleepMode: bool = False,
+		resumeSayAllMode: Optional[int] = None
 ):
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
 	It can only decorate methods which name start swith "script_"
 	@param description: A short translatable description of the script to be used in the gesture editor, etc.
-	@type description: string 
 	@param category: The category of the script displayed in the gesture editor.
-	@type category: string
 	@param gesture: A gesture associated with this script.
-	@type gesture: string
 	@param gestures: A list of gestures associated with this script
-	@type gestures: list(string)
 	@param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
-	@type canPropagate: bool
 	@param bypassInputHelp: Whether this script should run when input help is active.
-	@type bypassInputHelp: bool
+	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
 	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
-		One of the C{sayAllHandler.CURSOR_*} constants.
-	@type resumeSayAllMode: int
+	One of the C{sayAll.CURSOR_*} constants.
 	"""
 	if gestures is None:
 		gestures = []
@@ -304,6 +290,6 @@ def script(
 		decoratedScript.bypassInputHelp = bypassInputHelp
 		if resumeSayAllMode is not None:
 			decoratedScript.resumeSayAllMode = resumeSayAllMode
+		decoratedScript.allowInSleepMode = allowInSleepMode
 		return decoratedScript
 	return script_decorator
-
