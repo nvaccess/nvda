@@ -1,13 +1,17 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2016 NV Access Limited
+# Copyright (C) 2015-2021 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import operator
 from comtypes import COMError
+import config
 import ctypes
 import UIAHandler
 import weakref
+from functools import lru_cache
+from logHandler import log
+from _UIAConstants import WinConsoleAPILevel
 
 
 def createUIAMultiPropertyCondition(*dicts):
@@ -282,3 +286,62 @@ class FakeEventHandlerGroup:
 				self.clientObject.RemoveNotificationEventHandler(element, handler)
 		for handler in self._propertyChangedEventHandlers.values():
 			self.clientObject.RemovePropertyChangedEventHandler(element, handler)
+
+
+def _shouldUseUIAConsole(hwnd: int) -> bool:
+	"""Determines whether to use UIA in the Windows Console."""
+	setting = config.conf['UIA']['winConsoleImplementation']
+	if setting == "UIA":
+		return True
+	elif setting == "legacy":
+		return False
+	else:
+		# #7497: the UIA implementation in old conhost is incomplete, therefore we
+		# should ignore it.
+		# When the UIA implementation is improved, the below line will be replaced
+		# with a check that _getConhostAPILevel >= FORMATTED.
+		return False
+
+
+@lru_cache(maxsize=10)
+def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
+	"""
+	This function determines which of several console UIA workarounds are
+	needed in a given conhost instance.
+	See the comments on the WinConsoleAPILevel enum for details.
+	"""
+	# microsoft/terminal#4495: In IMPROVED consoles,
+	# IUIAutomationTextRange::getVisibleRanges returns one visible range.
+	# Therefore, if exactly one range is returned, it is almost definitely an IMPROVED console.
+	try:
+		UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
+			hwnd, UIAHandler.handler.baseCacheRequest
+		)
+		textAreaCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+		textAreaCacheRequest.TreeScope = UIAHandler.TreeScope_Children
+		textAreaCacheRequest.treeFilter = UIAHandler.handler.clientObject.createPropertyCondition(
+			UIAHandler.UIA_AutomationIdPropertyId,
+			"Text Area"
+		)
+		textArea = UIAElement.buildUpdatedCache(
+			textAreaCacheRequest
+		).getCachedChildren().GetElement(0)
+		UIATextPattern = textArea.GetCurrentPattern(
+			UIAHandler.UIA_TextPatternId
+		).QueryInterface(UIAHandler.IUIAutomationTextPattern)
+		visiRanges = UIATextPattern.GetVisibleRanges()
+		if visiRanges.length == 1:
+			# Microsoft/terminal#2161: FORMATTED consoles expose text formatting
+			# information to UIA.
+			if isinstance(
+				visiRanges.GetElement(0).GetAttributeValue(UIAHandler.UIA_FontNameAttributeId),
+				str
+			):
+				return WinConsoleAPILevel.FORMATTED
+			else:
+				return WinConsoleAPILevel.IMPROVED
+		else:
+			return WinConsoleAPILevel.END_INCLUSIVE
+	except (COMError, ValueError):
+		log.exception()
+		return WinConsoleAPILevel.END_INCLUSIVE

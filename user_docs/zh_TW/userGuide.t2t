@@ -68,8 +68,8 @@ NVDA 同時也包含並使用了那些受其他免費且開放板權的組件。
 + 系統需求 +[SystemRequirements]
 - 作業系統：32或64位元的微軟 Windows 7、Windows 8、Windows 8.1 及 Window 10，及 Windows Server 2008 R2 以上所有的伺服器作業系統。
  - 使用 Windows 7，NVDA 需要 SP 1以上的等級。
- - 使用Windows Server 2008 R2，NVDA 需要 SP 1以上的等級。
- - 最少 150 MB 以上的內存空間
+ - 使用 Windows Server 2008 R2，NVDA 需要 SP 1以上的版本。
+- 最少 150 MB 以上的內存空間
 -
 
 + 取得並設定 NVDA +[GettingAndSettingUpNVDA]
@@ -307,7 +307,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 
 利用 NVDA 在視窗作業系統上進行導航，最常用到的操作方式是使用標準的視窗鍵盤指令來移動系統焦點，例如按 Tab 或 Shift+Tab 在各控制項間向前或向後移動；利用按 Alt 跳到功能表列及以方向鍵在功能表內的項目間移動、或是使用 Alt+Tab 在已開啟的不同視窗間切換。
 當您這樣操作時，NVDA 通常會讀出焦點所在物件的相關資訊，如：名稱、類型、數值、狀態、說明、便捷鍵及位置等。
-當有啟用[焦點醒目提示 #VisionFocusHighlight]時，當前系統焦點所在的位置會在螢幕上呈現出來。
+當有啟用[視覺醒目提示 #VisionFocusHighlight]時，當前系統焦點所在的位置會在螢幕上呈現出來。
 
 以下是幾個用來移動系統焦點很有用的指令：
 %kc:beginInclude
@@ -364,7 +364,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 
 處於目前檢閱的物件稱為「導航器物件」。
 當在 [物件檢閱 #ObjectReview] 時，進到一個物件後，您可以使用 [文字檢閱指令 #ReviewingText] 來檢閱此物件。
-當有啟用[焦點醒目提示 #VisionFocusHighlight]時，當前導航器物件所在的位置會在螢幕上呈現出來。
+當有啟用[視覺醒目提示 #VisionFocusHighlight]時，當前導航器物件所在的位置會在螢幕上呈現出來。
 預設狀況下，「導航器物件」會跟隨系統焦點移動，這個功能可以來回切換成開或關的狀態。
 
 附註：點字游標跟隨物件導航的設定可至[點字游標跟隨 #BrailleTether]中進行調整。
@@ -498,7 +498,6 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - 適用於電腦閱讀的 Amazon Kindle 電子書
 -
 
@@ -506,7 +505,7 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 
 在「瀏覽模式」狀態下，文件的內容是以平面形式呈現，利用按鍵來移動游標的操作，就如同在讀一般文字文件那樣，可檢閱其內容。
 所有 NVDA 的[系統游標 #SystemCaret] 按鍵指令皆可用於此模式，例如全文報讀、讀出格式資訊及在表格上的導航等指令。
-當啟用[焦點醒目提示 #VisionFocusHighlight]時，在瀏覽模式下，當前的檢閱游標所在的位置會以視覺強調的方式在螢幕上呈現。
+當啟用[視覺醒目提示 #VisionFocusHighlight]時，在瀏覽模式下，當前的檢閱游標所在的位置會以視覺強調的方式在螢幕上呈現。
 而不管是連結或標題等的資訊，均會如同在朗讀一般文字那樣，隨游標的移動而讀出。
 
 在讀取這些文件時，有時需要與頁面上的某些控制元件作直接的互動，
@@ -596,7 +595,7 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 %kc:endInclude
 
 ++ 嵌入式物件 ++[ImbeddedObjects]
-有些網頁像 Adobe Flash、Oracle Java 或 HTML5 採用了一些嵌入式物件的技術，以豐富其頁面的呈現。
+有些網頁像 、Oracle Java 或 HTML5 採用了一些嵌入式物件的技術，以豐富其頁面的呈現。
 當在瀏覽模式時，游標遇到這些元件，NVDA 會分別讀出「嵌入式物件」、「應用程式」或「對話框」等的提示。
 若要快速的移到這些物件，您可使用 o 及 shift+o，單鍵導航的操作
 要進入並與這些項目互動，您可在移到後，接著按 Enter。
@@ -776,8 +775,8 @@ NVDA 提供了一些內建的視覺加強器，說明如下：
 
 NVDA 的視覺相關設定可以從[NVDA 設定 #NVDASettings]對話框中的[視覺類別 #VisionSettings]中進行調整。
 
-++ 焦點醒目提示 ++[VisionFocusHighlight]
-「焦點醒目提示」可以用來提示畫面上的[系統焦點 #SystemFocus]、[導航器物件 #ObjectNavigation]及[瀏覽模式 #BrowseMode]中的所在位置。
+++ 視覺醒目提示 ++[VisionFocusHighlight]
+「視覺醒目提示」可以用來提示畫面上的[系統焦點 #SystemFocus]、[導航器物件 #ObjectNavigation]及[瀏覽模式 #BrowseMode]中的所在位置。
 它是使用一個帶有顏色的長方形外框來標示焦點的所在位置。
 - 藍色實線代表系統焦點結合導航器物件同在的位置，（這是因為[導航器物件是跟隨系統焦點。 #ReviewCursorFollowFocus]）
 - 藍色虛線僅代表系統焦點的位置。
@@ -785,7 +784,7 @@ NVDA 的視覺相關設定可以從[NVDA 設定 #NVDASettings]對話框中的[�
 - 黃色實線用來標示在瀏覽模式中的虛擬游標，例如在瀏覽器中。
 -
 
-當您在[NVDA 設定 #NVDASettings]對話框中的[視覺類別 #VisionSettings]內啟用了焦點醒目提示後，您便可以[更改是否醒目提示系統焦點、瀏覽器物件或瀏覽模式游標 #VisionSettingsFocusHighlight]。
+當您在[NVDA 設定 #NVDASettings]對話框中的[視覺類別 #VisionSettings]內啟用了視覺醒目提示後，您便可以[更改是否醒目提示系統焦點、瀏覽器物件或瀏覽模式游標 #VisionSettingsFocusHighlight]。
 
 ++ 螢幕簾幕 ++[VisionScreenCurtain]
 對於全盲或低視力的使用者，時常不需要看畫面上的內容。
@@ -793,6 +792,8 @@ NVDA 的視覺相關設定可以從[NVDA 設定 #NVDASettings]對話框中的[�
 針對這樣的情形，NVDA 提供了一個名為「螢幕簾幕」的功能，啟用後可以將畫面變成黑色。
 
 您可以在[NVDA 設定 #NVDASettings]對話框中的.[視覺類別 #VisionSettings]中啟用該功能。
+
+當啟用螢幕簾幕時，一些需查看螢幕畫面的動作，如[OCR #Win10Ocr]或螢幕截圖會無法執行。
 
 + 內容辨識 +[ContentRecognition]
 當作者沒有為螢幕報讀軟體的用戶提供足夠資訊，以確認其內容時，可以使用各種工具來嘗試從圖像中辨識其內容。
@@ -814,6 +815,8 @@ NVDA 可利用這個功能從圖像或某些系統焦點不可及的地方來辨
 
 您可以在 [NVDA 設定 #NVDASettings] 對話框中 [Windows 10 OCR 類別 #Win10OcrSettings]設定文字辨識的語言。
 利用開啟「開始功能表」，選擇設定，接著選「時間與語言」，再到「地區與語言」，最後選擇「新增語言」來安裝額外的語言。
+
+Windows 10 OCR 可能部分或完全無法與[NVDA 視覺增強 #Vision]或其他額外針對視覺輔助的附加元件相容，若要進行辨識前，需先將這些視覺設定關閉。
 
 %kc:beginInclude
 要從目前導航器物件來使用 Windows 10光學字元辨識的功能，可按 NVDA+r。
@@ -1052,7 +1055,7 @@ NVDA 設定對話框包含許多組態參數可以修改。
 NVDA 將套用您目前電腦系統所使用的語言。
 
 附註：若變更語言設定，您需要重新啟動 NVDA。
-當確認對話框出現時，您可以依照自己的需要選擇「立即重新啟動」或「稍候重新啟動」。當選擇「稍候重新啟動」，無論您是否有勾選「關閉時儲存設定」，NVDA 皆會自動儲存該設定。
+當確認對話框出現時，您可以依照自己的需要選擇「立即重新啟動」或「稍候重新啟動」。若選擇「稍候重新啟動」，該設定必須被儲存才會再下一次啟動時生效（無論是手動儲存或使用關閉時儲存）。
 
 ==== 關閉時儲存設定 ====[GeneralSettingsSaveConfig]
 此為一核取方塊，勾選後，在關閉 NVDA時，會自動儲存此次所做的變更設定。
@@ -1146,6 +1149,9 @@ ESpeak NG 的變聲聽起來像似原來的語音，僅是發音方式有些微�
 ==== 速度 ====[SpeechSettingsRate]
 這是一個以滑桿呈現的控制選項，其範圍介於 0% 至 100%，
 數值愈小速度愈慢，反之愈大則報讀的速度愈快。
+
+==== 加快語速 ====[SpeechSettingsRateBoost]
+若目前使用的語音合成器有支援此功能，啟用此選項可大幅加快語速。
 
 ==== 音調 ====[SpeechSettingsPitch]
 這是一個以滑桿呈現的控制選項，其範圍介於 0% 至 100%，
@@ -1298,14 +1304,14 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 當點字游標跟隨檢閱游標時，此選項允許使用者選擇以不同的凸點形狀來呈現。
 這種選用的方式並不會影響點字內容的呈現，它總是以不跳動的第7及第8點來代表。
 
-==== 訊息顯示的時間(以秒計 ====[BrailleSettingsMessageTimeout]
+==== 顯示訊息 ====[BrailleSettingsShowMessages]
+這是一個下拉式方塊，可用來讓您設定是否顯示點字訊息，以及訊息顯示的時間長度。
+
+==== 訊息顯示時間(以秒計 ====[BrailleSettingsMessageTimeout]
 此為一個可編輯的數字方塊，可設定 NVDA 訊息在點顯器上顯示的時間長短，以秒為單位。
-當輸入 0 可以完全關閉這些訊息的顯示。
 當按下點顯器上的游標定位鍵時，NVDA 的訊息會立即消失，直到按下其他會觸發訊息的按鍵才會再次顯示。
-
-==== 持續顯示訊息 ====[BrailleSettingsNoMessageTimeout]
-此選項允許點顯器可持續顯示 NVDA 訊息。
-
++This option is shown only if "Show Messages" is set to "Use timeout".
+此選項唯有在「顯示訊息」選擇「設定逾時」的情況下才會出現。
 %kc:setting
 ==== 點字游標跟隨 ====[BrailleTether]
 快速鍵: NVDA+Ctrl+t
@@ -1397,10 +1403,10 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 這部分的設定可由某些 [NVDA 附加元件 #AddonsManager]提供更多延伸的功能選項。
 預設情況下，此設定類別包含以下選項：
 
-==== 焦點醒目提示 ====[VisionSettingsFocusHighlight]
-在「焦點醒目提示」群組中的核取方塊，用來設定 NVDA 內建的[醒目提示 #VisionFocusHighlight]功能。
+==== 視覺醒目提示 ====[VisionSettingsFocusHighlight]
+在「視覺醒目提示」群組中的核取方塊，用來設定 NVDA 內建的[醒目提示 #VisionFocusHighlight]功能。
 
-- 啟用醒目提示器：切換焦點醒目提示的開關
+- 啟用醒目提示器：切換視覺醒目提示的開關
 - 醒目提示系統焦點：切換是否讓[系統焦點 #SystemFocus]的位置被標示出來。
 - 醒目提示導航器物件：切換是否讓[導航器物件 #ObjectNavigation]的位置被標示出來。
 - 醒目提示瀏覽模式游標：切換是否讓[瀏覽模式中的虛擬游標 #BrowseMode]的位置被標示出來。
@@ -1740,7 +1746,7 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 - 「頁碼及段落間距」群組
  - 頁碼
  - 行號
- - 讀出行縮排 [（有4種不同的選項，包括：關、語音、提示音、語音及提示音） #lineIndentationOptions]
+ - 讀出行縮排 [（包括關、語音、提示音、語音及提示音） #DocumentFormattingSettingsLineIndentation]
  - 段落縮排 （例如：凸排縮排、第一行縮排）
  - 行距 （單行間距、兩倍行高等）
  - 對齊
@@ -1748,7 +1754,7 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
  - 表格
  - 列及欄標題
  - 儲存格座標
- - 儲存格框線 [(關, 樣式, 色彩與樣式)
+ - 儲存格框線 （關, 樣式, 色彩與樣式）
 - 「元件」群組
  - 標題
  - 連結
@@ -1820,8 +1826,8 @@ NVDA 會偵測到編輯游標／檢閱游標所在位置的格式，在某些情
 因此，若啟用此選項，NVDA 可限制大多數來自系統焦點的記錄事件。
 若您在使用一個或更多的應用程式時，覺得操作效能不佳，我們建議您啟用此選項，看是否可以改善效能。
 
-==== 使用 UI Automation 抓取微軟 Word 中的控制項資訊 (若有支援) ====[AdvancedSettingsUseUiaForWord]
-當啟用此選項，NVDA 會嘗試使用微軟 UI Automation 無障礙介面來抓取微軟 Word 文件的控制元件資訊。
+==== 使用 UI Automation 處理微軟 Word 文件中的控制項 (若有支援) ====[AdvancedSettingsUseUiaForWord]
+當啟用此選項，NVDA 會嘗試使用微軟 UI Automation 無障礙介面來處理微軟 Word 文件中的控制項。
 這包括微軟 Word 本身，以及 Outlook 的檢視及撰寫郵件。
 對於在 Windows 10中執行最新版的微軟 Office 2016/365 ，其本身的 UI Automation 所提供的無障礙支援幾乎已等同 NVDA 現有對於微軟 Word 的無障礙支援，這個好處能夠使操作的反應更加快速。
 然而在某些微軟 Office 中的一些資訊可能沒有顯示或顯示錯誤，因此 UI automation 目前還不能算是完全可靠。
@@ -1832,6 +1838,24 @@ NVDA 會偵測到編輯游標／檢閱游標所在位置的格式，在某些情
 
 ==== 在 UIA 主控台中讀出密碼 ====[AdvancedSettingsWinConsoleSpeakPasswords]
 此項設定用於輸入字元（如輸入密碼）時螢幕不會隨著變化的情況，例如在支援 UI Automation 的 Windows 主控台，此設定會依據[讀出輸入字元 #KeyboardSettingsSpeakTypedCharacters]或[讀出輸入字詞 #KeyboardSettingsSpeakTypedWords]的設定是開或關，而切換是否讀出所輸入的字元或字詞。為了隱私安全，此選項應該保持關閉，但當您發現在使用 NVDA 新嘗試支援主控台的功能時，輸入文字時的效能或穩定性有問題，則可以開啟該功能來報讀密碼
+ 
+==== 在微軟 Edge 及其他以 Chromium 為基礎的瀏覽器中使用 UIA (若有支援) ====[ChromiumUIA]
+允許在使用以 Chromium 為基礎的瀏覽器時（如微軟 Edge），指定是否使用 UIA。
+支援以 Chromium 為基礎瀏覽器的 UIA 仍在初期開發階段，它的效果可能比不上 IA2。
+此下拉方塊有以下選項：
+- 預設 (必要時使用):NVDA 的預設選項，目前為「必要時使用」，未來待此技術更加成熟後此預設選項可能會修改。
+- 必要時使用：若 NVDA 無法支援瀏覽器使用 IA2，而瀏覽器仍支援 UIA 的情況下，NVDA 會回到使用 UIA。
+- 一律使用：若瀏覽器允許使用 UIA，NVDA 便會使用它
+- 不使用：不使用 UIA，即使 NVDA 無法載入瀏覽器內容。此選項適合讓開發者在強迫其不要使用 UIA 時，測試 NVDA 使用 IA2 時的情況。
+-
+
+==== 使用 UI Automation 處理微軟 Excel 工作表中的控制項 (若有支援) ====[UseUiaForExcel]
+當啟用此選項，NVDA 會嘗試使用微軟 UI Automation 無障礙介面來處理微軟 Excel 工作表中的控制項。
+此為實驗性功能，在此模式下，一些微軟 Excel 的功能可能還無法使用。
+例如，在 NVDA 的元件清單中列出公式和附註，在瀏覽模式中使用單鍵導航跳到表單項目等功能會無法使用。
+然而，對於基本的工作表瀏覽及編輯動作，此選項或許可提供最佳的效能之改善。
+我們仍不建議分使用者預設啟用此選項，但我們歡迎使用微軟 Excel  build 16.0.13522.10000 或更高版本的使用者測試此選項，並提供我們使用回饋。
+微軟 Excel 的 UI automation 內容會時時更新，而微軟 Office 版本低於 16.0.13522.10000 可能尚未開放這些功能，若啟用此選項，並沒有太大用處。
 
 ==== 在 Windows 主控台中使用新的輸入支援 (若有支援) ====[AdvancedSettingsKeyboardSupportInLegacy]
 此選項會啟用一個替代的方式來偵側在 Windows 主控台輸入的文字。
@@ -1840,10 +1864,24 @@ NVDA 會偵測到編輯游標／檢閱游標所在位置的格式，在某些情
 警告：當開啟此選項後，輸入的字元不會顯示在螢幕上 (如密碼) 也同樣會被報讀出來。
 若要在比較沒有隱私的環境下輸入密碼，您可以暫時停用「[讀出輸入字元 #KeyboardSettingsSpeakTypedCharacters]」及「[讀出輸入字詞 #KeyboardSettingsSpeakTypedWords]」兩個選項。
 
+==== 內容差異分析 ====[DiffAlgo]
+此設定用來決定 NVDA 如何報讀在終端程式中的新增文字。
+「內容差異分析」包含三個選項：
+- 自動：在 NVDA 2021.1 中，此選項等同於「單行分析」。
+在未來，若使用者的測試及反應佳，此自動選項可能會改成等同於「字元分析」。
+- 字元分析：此選項讓 NVDA 以逐字的方式來分析終端程式中，文字內容的改變。
+此選項在當有大量文字填入主控台時，可能會提高效能，以及當在一行文字的中間有文字改變時能夠更精準地報讀。
+然而，這可能與某些應用程式不相容。
+此功能支援 Windows 10 1607 以上版本的 Windows 主控台。
+此外，它可能也支援部分較舊  Windows 版本上的終端程式。
+- 單行分析：此選項讓 NVDA 以逐行的方式來分析終端程式中內容的改變。
+此選項與 NVDA 2020.4 及以前版本的預設作法相同。
+-
+
 ==== 嘗試將已過期焦點事件的語音取消 ====[CancelExpiredFocusSpeech]
 此選項會啟用一個功能來嘗試將已過期的焦點事件之語音取消。
 尤其是以 Chrome 瀏覽 Gmail 中快速移動的訊息，常引發 NVDA 報讀過時的資訊。
-這是 NVDA 2020.2 的實驗性功能。
+此功能在 NVDA 2021.1 預設是啟用的。
 
 ==== 等待游標移動時間 (以毫秒計) ====[AdvancedSettingsCaretMoveTimeout]
 此選項用來讓您設定 NVDA 等待游標（插入點）在可編輯的文字元件中移動的時間（以毫秒計）。
@@ -1923,6 +1961,9 @@ NVDA 提供的功能遠超過僅將該字串的讀音改變而已。
 
 當完成前述的編輯時，您可按「確認」按鈕，以確認此次的變更，或按「取消」，而不做任何變更。
 
++In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
++Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
++
 +++ 輸入手勢 +++[InputGestures]
 此對話框允許您變更那些對應到某些像點顯器等設備之 NVDA 指令的手勢。
 
@@ -2104,6 +2145,14 @@ NVDA 允許您使用修改「組態設定檔」來達成前述的功能。
 若勾選，當 NVDA 啟動時，也會啟用點字檢視器。
 點字檢視器視窗在每次啟動時，其大小與位置會與前一次關閉時相同。
 
+在點字檢視器中有個名為「停留鼠標以定位點字方」的核取方塊，預設是未啟用。
+若勾選，當鼠標停留於某個點字方上時，會觸發該點字方的游標定位功能。
+通常這是用來移動游標到該點字方上，或在該處觸發執行某動作。
+此功能適用於測試 NVDA 是否可正確地從點字方對應到所顯示的點字上。
+為了預防不小心觸發游標定位功能，此功能設計會稍微延遲些。
+鼠標必須停留在點字方上直到它變為綠色。
+點字方將從原先的淺黃色，轉換到橘色，最後再變為綠色才表示觸發。
+
 ++ Python 主控台 ++[PythonConsole]
 在 NVDA 功能表內「工具」子功能表內的「Python 主控台」是一個很有用的開發工具，它可以供做為除錯、NVDA 內部的一般檢視，或是供某些應用程式的可及性階層架構的檢視。
 若要了解更詳細的資訊，請參見 [NVDA 開發者指南 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]。
@@ -2238,11 +2287,21 @@ SAPI 5 是微軟語音合成器的標準版本。
 Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語音。
 該語音提供了多種語系，且與微軟 SAPI 5合成器對接的語音相比，較之來的反應更快速。
 在 Windows 10 中，NVDA 預設使用 Windows OneCore。（在其它版本中則預設是使用[eSpeak NG #eSpeakNG]）
+要新增 Windows OneCore 語音，請前往 Windows 系統設定中的「輕鬆存取」，接著在清單中選擇「朗讀程式」，並選擇「新增其他語音」。
+接著找到「新增語音」按鈕來添加新的語音。
 
-請參照微軟此篇文章之內容來安裝: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+許多語言會包含多種不同地區使用的語音。
+例如「英國」、「加拿大」、「印度」等都是英文可選擇的不同語音。
+又例如「法國」、「加拿大」、「瑞士」等都是法文可使用的不同語音。
+您可以使用大範圍的語言來搜尋，例如輸入「英文」、「法文」等，清單便會列出該語言的不同地區語音。
+選擇想要的語言後，按下「新增」按鈕來加入。
+新增完成後，重新啟動 NVDA。
+
+
+請參考微軟此篇文章來查看可使用的語音清單: https://support.microsoft.com/zh-tw/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + 支援的點顯器 +[SupportedBrailleDisplays]
-這一節的內容包含 NVDA 支援的點顯器的資訊。
+這一節的內容包含 NVDA 可支援點顯器的資訊。
 
 ++ 支援背景自動偵測功能的點顯器之相關資訊 ++[AutomaticDetection]
 無論是使用 USB 或藍牙連接，NVDA 均能夠在背景自動偵測到許多點顯器。
@@ -2505,7 +2564,7 @@ NVDA可以支援由 [hedo Reha-Technik https://www.hedo.de/] 出品的點顯器 
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B 系列 / BrailleNote Touch  ++[HumanWareBrailliant]
-當透過 USB 或藍牙連接時，NVDA 可以支援 [HumanWare https://www.humanware.com/] 公司的 The Brailliant BI 及 B 系列點顯器，包括 BI 14, BI 32, BI 40及 B 80等。
+當透過 USB 或藍牙連接時，NVDA 可以支援 [HumanWare https://www.humanware.com/] 公司的 The Brailliant BI 及 B 系列點顯器，包括 BI 14, BI 32, BI 20X, BI 40, BI 40X 及 B 80 等。
 如果以協定透過 USB 連接到 HumanWare 點顯器，您應先使用廠商所提供的驅動程式。
 如果連接協定的設定是對點顯器開啟，則 USB 驅動程式並非必要。
 
@@ -2625,7 +2684,7 @@ NVDA 透過 USB 或藍芽連結時，支援 Braille Sense、Braille EDGE、Smart
 | escape key | dot1+dot5+space, f4, brailleedge:f1 |
 | delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
-| f3 key | dot1+dot2+dot4+dot8 |
+| f3 key | dot1+dot4+dot8 |
 | f4 key | dot7+f3 |
 | windows+b key | dot1+dot2+f1 |
 | windows+d key | dot1+dot4+dot5+f1 |
@@ -3125,6 +3184,7 @@ nvda -q
 | None | --install | 安裝 NVDA（啟動新安裝的版本） |
 | None | --install-silent | 靜默安裝 NVDA（不啟動新安裝的版本） |
 | None | --enable-start-on-logon=True|False | 當安裝時，啟用 [在登入畫面使用 NVDA #StartAtWindowsLogon] |
+| None | --copy-portable-config | 安裝時，將所指定路徑下的可攜式版組態 (--config-path, -c) 複製到目前的使用者帳戶中 |
 | None | --create-portable | 建立可攜式版 NVDA（啟動新建立的版本）。 需求 --可攜式路徑需要指定 |
 | None | --create-portable-silent | 建立可攜式版 NVDA（啟動新安裝的版本）。 需求 --可攜式路徑需要指定 |
 | None | --portable-path=PORTABLEPATH | 可攜式版的路徑將被建立 |

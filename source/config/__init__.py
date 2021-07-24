@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
+# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
 # Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -34,7 +33,7 @@ from fileUtils import FaultTolerantFile
 import extensionPoints
 from . import profileUpgrader
 from .configSpec import confspec
-from typing import Optional, List
+from typing import Any, Dict, List, Optional, Set
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
@@ -191,8 +190,10 @@ def initConfigPath(configPath=None):
 RUN_REGKEY = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():
-	if (easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch
-			and easeOfAccess.willAutoStart(winreg.HKEY_CURRENT_USER)):
+	if (
+		easeOfAccess.canConfigTerminateOnDesktopSwitch
+		and easeOfAccess.willAutoStart(winreg.HKEY_CURRENT_USER)
+	):
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY)
@@ -204,7 +205,7 @@ def getStartAfterLogon():
 def setStartAfterLogon(enable):
 	if getStartAfterLogon() == enable:
 		return
-	if easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch:
+	if easeOfAccess.canConfigTerminateOnDesktopSwitch:
 		easeOfAccess.setAutoStart(winreg.HKEY_CURRENT_USER, enable)
 		if enable:
 			return
@@ -222,10 +223,6 @@ def setStartAfterLogon(enable):
 		except WindowsError:
 			pass
 
-def canStartOnSecureScreens():
-	# No more need to check for the NVDA service nor presence of Ease of Access, as only Windows 7 SP1 and higher is supported.
-	# This function will be transformed into a flag in a future release.
-	return isInstalledCopy()
 
 
 SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
@@ -235,7 +232,7 @@ SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
 NVDA_REGKEY = r"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
-	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
+	if easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
@@ -244,13 +241,7 @@ def getStartOnLogonScreen():
 		return False
 
 def _setStartOnLogonScreen(enable):
-	if easeOfAccess.isSupported:
-		# The installer will have migrated service config to EoA if appropriate,
-		# so we only need to deal with EoA here.
-		easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, enable)
-	else:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, winreg.KEY_WRITE)
-		winreg.SetValueEx(k, u"startOnLogonScreen", None, winreg.REG_DWORD, int(enable))
+	easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, enable)
 
 def setSystemConfigToCurrentConfig():
 	fromPath = globalVars.appArgs.configPath
@@ -310,18 +301,6 @@ def setStartOnLogonScreen(enable):
 		) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
-def getConfigDirs(subpath=None):
-	"""Retrieve all directories that should be used when searching for configuration.
-	IF C{subpath} is provided, it will be added to each directory returned.
-	@param subpath: The path to be added to each directory, C{None} for none.
-	@type subpath: str
-	@return: The configuration directories in the order in which they should be searched.
-	@rtype: list of str
-	"""
-	log.warning("getConfigDirs is deprecated. Use globalVars.appArgs.configPath instead")
-	return [os.path.join(dir, subpath) if subpath else dir
-		for dir in (globalVars.appArgs.configPath,)
-	]
 
 def addConfigDirsToPythonPackagePath(module, subdir=None):
 	"""Add the configuration directories to the module search path (__path__) of a Python package.
@@ -1179,16 +1158,3 @@ class ProfileTrigger(object):
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
 
-# The below functions are moved to systemUtils module.
-# They are kept here for backwards compatibility.
-# They would be removed from the config module in NVDA 2021.1.
-
-
-def execElevated(*args, **kwargs):
-	import systemUtils
-	systemUtils.execElevated(*args, **kwargs)
-
-
-def hasUiAccess(*args, **kwargs):
-	import systemUtils
-	systemUtils.hasUiAccess(*args, **kwargs)

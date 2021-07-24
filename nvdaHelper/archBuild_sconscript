@@ -93,18 +93,8 @@ env.Append(
 	]
 )
 env.Append(CCFLAGS=[
-	'/W3',
-	'/WX',
-	'/std:c++17'
+	'/std:c++17',
 ])
-if 'analyze' in debug:
-	env.Append(CCFLAGS=['/analyze'])
-	# Disable: Inconsistent annotation for 'x': this instance has no annotations.
-	# Seems all MIDL-generated code from idl files don't add annotations 
-	env.Append(CCFLAGS='/wd28251')
-	# Disable: 'x': unreferenced formal parameter
-	# We use a great deal of hook functions where we have no need for various parameters 
-	env.Append(CCFLAGS='/wd4100')
 
 env.Append(CXXFLAGS=['/EHsc'])
 
@@ -157,6 +147,22 @@ if 'debugCRT' in debug:
 else:
 	env.Append(CCFLAGS=['/MT'])
 
+# Don't enable warnings and warnings as errors or analysis to 3rd party code.
+thirdPartyEnv = env.Clone()
+env.Append(CCFLAGS=[
+	'/W3',
+	'/WX',
+])
+if 'analyze' in debug:
+	env.Append(CCFLAGS=['/analyze'])
+	# Disable: Inconsistent annotation for 'x': this instance has no annotations.
+	# Seems all MIDL-generated code from idl files don't add annotations
+	env.Append(CCFLAGS='/wd28251')
+	# Disable: 'x': unreferenced formal parameter
+	# We use a great deal of hook functions where we have no need for various parameters
+	env.Append(CCFLAGS='/wd4100')
+
+Export('thirdPartyEnv')
 Export('env')
 
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
@@ -220,5 +226,5 @@ if TARGET_ARCH in ('x86_64', 'arm64'):
 	env.Install(libInstallDir,remoteLoaderProgram)
 
 if TARGET_ARCH=='x86':
-	env.SConscript('espeak/sconscript')
-	env.SConscript('liblouis/sconscript')
+	thirdPartyEnv.SConscript('espeak/sconscript')
+	thirdPartyEnv.SConscript('liblouis/sconscript')

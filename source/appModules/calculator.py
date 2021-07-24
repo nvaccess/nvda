@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited, Joseph Lee
+# Copyright (C) 2020-2021 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,6 +11,7 @@ from NVDAObjects.UIA import UIA
 import queueHandler
 import ui
 import scriptHandler
+import braille
 
 # #9428: do not announce current values until calculations are done in order to avoid repetitions.
 noCalculatorEntryAnnouncements = [
@@ -64,7 +65,10 @@ class AppModule(appModuleHandler.AppModule):
 		self._shouldAnnounceResult = False
 		nextHandler()
 
-	def event_UIA_notification(self, obj, nextHandler, activityId=None, **kwargs):
+	def event_UIA_notification(self, obj, nextHandler, displayString=None, activityId=None, **kwargs):
+		# #12268: for "DisplayUpdated", announce display strings in braille and move on.
+		if activityId == "DisplayUpdated":
+			braille.handler.message(displayString)
 		try:
 			shouldAnnounceNotification = (
 				obj.previous.UIAAutomationId in
@@ -86,7 +90,13 @@ class AppModule(appModuleHandler.AppModule):
 			nextHandler()
 
 	# A list of native commands to handle calculator result announcement.
-	_calculatorResultGestures = ("kb:enter", "kb:numpadEnter", "kb:escape")
+	_calculatorResultGestures = (
+		"kb:enter",
+		"kb:numpadEnter",
+		"kb:escape",
+		"kb:delete",
+		"kb:numpadDelete"
+	)
 
 	@scriptHandler.script(gestures=_calculatorResultGestures)
 	def script_calculatorResult(self, gesture):
@@ -100,9 +110,9 @@ class AppModule(appModuleHandler.AppModule):
 		# In redstone, pressing enter does not move focus to equals button.
 		if isinstance(focus, UIA):
 			if focus.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
-				queueHandler.queueFunction(queueHandler.eventQueue, focus.reportFocus)
+				queueHandler.queueFunction(queueHandler.eventQueue, ui.message, focus.name)
 			else:
 				resultsScreen = api.getForegroundObject().children[1].lastChild
 				if isinstance(resultsScreen, UIA) and resultsScreen.UIAElement.cachedClassName == "LandmarkTarget":
 					# And no, do not allow focus to move.
-					queueHandler.queueFunction(queueHandler.eventQueue, resultsScreen.firstChild.reportFocus)
+					queueHandler.queueFunction(queueHandler.eventQueue, ui.message, resultsScreen.firstChild.name)

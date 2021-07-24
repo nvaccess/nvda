@@ -16,6 +16,8 @@ from unittest.mock import (
 )
 import speech.manager
 from speech.commands import (
+	BeepCommand,
+	WaveFileCommand,
 	PitchCommand,
 	ConfigProfileTriggerCommand,
 	_CancellableSpeechCommand,
@@ -144,13 +146,13 @@ class TestSpeechIndexComparison(unittest.TestCase):
 
 class TestExpectedClasses(unittest.TestCase):
 	def test_expectedProsodyEqualsMatching(self):
-		p = speech.PitchCommand(offset=2)
-		e = ExpectedProsody(speech.PitchCommand(offset=2))
+		p = PitchCommand(offset=2)
+		e = ExpectedProsody(PitchCommand(offset=2))
 		self.assertEqual(p, e)
 
 	def test_expectedProsodyNotMatching(self):
-		p = speech.PitchCommand(offset=2)
-		e = ExpectedProsody(speech.PitchCommand(offset=5))
+		p = PitchCommand(offset=2)
+		e = ExpectedProsody(PitchCommand(offset=5))
 		self.assertNotEqual(p, e)
 
 
@@ -361,7 +363,7 @@ class SayAllEmulatedTests(unittest.TestCase):
 		callBack = smi.create_CallBackCommand
 		expectIndex = smi.create_ExpectedIndex
 
-		# First sayAllHandler queues up a number of utterances.
+		# First sayAll queues up a number of utterances.
 		with smi.expectation():
 			seqNum = smi.speak([
 				callBack(expectedToBecomeIndex=1),
@@ -399,7 +401,7 @@ class SayAllEmulatedTests(unittest.TestCase):
 
 		with smi.expectation():
 			smi.pumpAll()
-			# no side effect, sayAllHandler does not send more speech until the final callback index is hit.
+			# no side effect, sayAll does not send more speech until the final callback index is hit.
 			smi.expect_indexReachedCallback(forIndex=1, sideEffect=None)
 
 		with smi.expectation():
@@ -483,7 +485,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		the features they test.
 		Manual test steps are kept in unit tests doc string, they can be run in the NVDA python console after
 		the following imports:
-			import sayAllHandler, appModuleHandler
+			from speech import sayAll, appModuleHandler
 	"""
 
 	def setUp(self):
@@ -491,17 +493,17 @@ class InitialDevelopmentTests(unittest.TestCase):
 		speechDictHandler.initialize()  # setting the synth depends on dictionary["voice"]
 		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 2  # no
 
-	@patch.object(speech.commands.WaveFileCommand, 'run')
-	@patch.object(speech.commands.BeepCommand, 'run')
+	@patch.object(WaveFileCommand, 'run')
+	@patch.object(BeepCommand, 'run')
 	def test_1(self, mock_BeepCommand_run, mock_WaveFileCommand_run):
 		r"""Text, beep, beep, sound, text.
 		Manual Test (in NVDA python console):
 			wx.CallLater(500, speech.speak, [
-				u"This is some speech and then comes a", speech.BeepCommand(440, 10),
-				u"beep. If you liked that, let's ", speech.BeepCommand(880, 10),
-				u"beep again. I'll speak the rest of this in a ", speech.PitchCommand(offset=50),
+				u"This is some speech and then comes a", BeepCommand(440, 10),
+				u"beep. If you liked that, let's ", BeepCommand(880, 10),
+				u"beep again. I'll speak the rest of this in a ", PitchCommand(offset=50),
 				u"higher pitch. And for the finale, let's ",
-				speech.WaveFileCommand(r"waves\browseMode.wav"), u"play a sound."
+				WaveFileCommand(r"waves\browseMode.wav"), u"play a sound."
 				])
 		"""
 		smi = SpeechManagerInteractions(self)
@@ -514,7 +516,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			"beep. If you liked that, let's ",
 			_beepCommand(880, 10, expectedToBecomeIndex=2),
 			"beep again. I'll speak the rest of this in a ",
-			speech.PitchCommand(offset=50),
+			PitchCommand(offset=50),
 			"higher pitch. And for the finale, let's ",
 			_waveFileCommand(r"waves\browseMode.wav", expectedToBecomeIndex=3),
 			"play a sound.",
@@ -537,7 +539,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		"""Text, end utterance, text.
 		Manual Test (in NVDA python console):
 			wx.CallLater(500, speech.speak, [
-				u"This is the first utterance", speech.EndUtteranceCommand(), u"And this is the second"
+				u"This is the first utterance", EndUtteranceCommand(), u"And this is the second"
 			])
 		"""
 		smi = SpeechManagerInteractions(self)
@@ -558,20 +560,20 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test3(self):
 		"""Change pitch, text, end utterance, text.
 			wx.CallLater(500, speech.speak, [
-				speech.PitchCommand(offset=50),
+				PitchCommand(offset=50),
 				u"This is the first utterance in a higher pitch",
-				speech.EndUtteranceCommand(), u"And this is the second"
+				EndUtteranceCommand(), u"And this is the second"
 			])
 		Expected: All should be higher pitch.
 		"""
 		smi = SpeechManagerInteractions(self)
 		sequence = [
-			speech.PitchCommand(offset=50),
+			PitchCommand(offset=50),
 			u"This is the first utterance in a higher pitch",
 			# EndUtterance effectively splits the sequence, two sequence numbers are returned
 			# from smi.speak for ease of adding expectations.
 			smi.create_EndUtteranceCommand(expectedToBecomeIndex=1),
-			smi.create_ExpectedProsodyCommand(speech.PitchCommand(offset=50)),
+			smi.create_ExpectedProsodyCommand(PitchCommand(offset=50)),
 			u"And this is the second",
 			smi.create_ExpectedIndex(expectedToBecomeIndex=2),
 		]
@@ -587,7 +589,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		"""Two utterances at SPRI_NORMAL in same sequence. Two separate sequences at SPRI_NEXT.
 		Manual Test (in NVDA python console):
 			wx.CallLater(500, speech.speak, [
-				u"1 2 3 ", u"4 5", speech.EndUtteranceCommand(), u"16 17 18 19 20"
+				u"1 2 3 ", u"4 5", EndUtteranceCommand(), u"16 17 18 19 20"
 			])
 			wx.CallLater(510, speech.speak, [u"6 7 8 9 10"], priority=speech.SPRI_NEXT)
 			wx.CallLater(520, speech.speak, [u"11 12 13 14 15"], priority=speech.SPRI_NEXT)
@@ -634,12 +636,12 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.pumpAll()
 			smi.expect_synthSpeak(fin)
 
-	@patch.object(speech.commands.BeepCommand, 'run')
+	@patch.object(BeepCommand, 'run')
 	def test_7_SPRI(self, mock_BeepCommand_run):
 		"""Utterance at SPRI_NORMAL including a beep. Utterance at SPRI_NOW.
 		Manual Test (in NVDA python console):
 			wx.CallLater(500, speech.speak, [
-				u"Text before the beep ", speech.BeepCommand(440, 10),
+				u"Text before the beep ", BeepCommand(440, 10),
 				u"text after the beep, text, text, text, text"
 			])
 			wx.CallLater(1500, speech.speak, [u"This is an interruption"], priority=speech.SPRI_NOW)
@@ -731,7 +733,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.pumpAll()
 			smi.expect_synthSpeak(second)
 
-	@patch.object(speech.commands.BeepCommand, 'run')
+	@patch.object(BeepCommand, 'run')
 	def test_13_SPRI_interruptBeforeIndexReached(self, mock_BeepCommand_run):
 		"""The same as the other test_13, but the first index is not reached before the interruption.
 		In this cases speech manager is expected to finish the first utterance before interrupting.
@@ -767,14 +769,14 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.pumpAll()
 			smi.expect_synthSpeak(first)
 
-	@patch.object(speech.commands.BeepCommand, 'run')
+	@patch.object(BeepCommand, 'run')
 	def test_13_SPRI_interruptAfterIndexReached(self, mock_BeepCommand_run):
 		"""Utterance at SPRI_NORMAL including a pitch change and beep. Utterance at SPRI_NOW.
 		Manual Test (in NVDA python console):
 			wx.CallLater(500, speech.speak, [
-			speech.PitchCommand(offset=100),
+			PitchCommand(offset=100),
 			u"Text before the beep ",
-			speech.BeepCommand(440, 10),
+			BeepCommand(440, 10),
 			u"text after the beep, text, text, text, text"
 			])
 			wx.CallLater(1500, speech.speak, [u"This is an interruption"], priority=speech.SPRI_NOW)
@@ -832,13 +834,13 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_4_profiles(self):
 		"""Text, pitch, text, enter profile1, enter profile2, text, exit profile1, text.
 		Manual Test (in NVDA python console):
-			import sayAllHandler, appModuleHandler
-			t1 = sayAllHandler.SayAllProfileTrigger()
+			from speech import sayAll, appModuleHandler
+			t1 = sayAll.SayAllProfileTrigger()
 			t2 = appModuleHandler.AppProfileTrigger("notepad")
 			wx.CallLater(500, speech.speak, [
-				u"Testing testing ", speech.PitchCommand(offset=100), "1 2 3 4",
-				speech.ConfigProfileTriggerCommand(t1, True), speech.ConfigProfileTriggerCommand(t2, True),
-				u"5 6 7 8", speech.ConfigProfileTriggerCommand(t1, False), u"9 10 11 12"
+				u"Testing testing ", PitchCommand(offset=100), "1 2 3 4",
+				ConfigProfileTriggerCommand(t1, True), ConfigProfileTriggerCommand(t2, True),
+				u"5 6 7 8", ConfigProfileTriggerCommand(t1, False), u"9 10 11 12"
 			])
 		Expected:
 			All text after 1 2 3 4 should be higher pitch.
@@ -851,7 +853,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		smi.addMockCallMonitoring([t1.enter, t1.exit, t2.enter, t2.exit])
 		seq = [
 			"Testing testing ",
-			speech.PitchCommand(offset=100),
+			PitchCommand(offset=100),
 			"1 2 3 4",
 			smi.create_ExpectedIndex(1),
 			# The preceeding index is expected,
@@ -910,11 +912,11 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_5_profiles(self):
 		"""Enter profile, text, exit profile.
 		Manual Test (in NVDA python console):
-			import sayAllHandler
-			trigger = sayAllHandler.SayAllProfileTrigger()
+			from speech import sayAll
+			trigger = sayAll.SayAllProfileTrigger()
 			wx.CallLater(500, speech.speak, [
-				speech.ConfigProfileTriggerCommand(trigger, True), u"5 6 7 8",
-				speech.ConfigProfileTriggerCommand(trigger, False),
+				ConfigProfileTriggerCommand(trigger, True), u"5 6 7 8",
+				ConfigProfileTriggerCommand(trigger, False),
 				u"9 10 11 12"
 			])
 		Expected: 5 6 7 8 in different profile, 9 10 11 12 with base config.
@@ -952,10 +954,10 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_10_SPRI_profiles(self):
 		"""Utterance at SPRI_NORMAL. Utterance at SPRI_NOW with profile switch.
 		Manual Test (in NVDA python console):
-			import sayAllHandler;
-			trigger = sayAllHandler.SayAllProfileTrigger();
+			from speech import sayAll;
+			trigger = sayAll.SayAllProfileTrigger();
 			wx.CallLater(500, speech.speak, [
-				speech.ConfigProfileTriggerCommand(trigger, True),
+				ConfigProfileTriggerCommand(trigger, True),
 				u"This is a normal utterance with a different profile"
 			])
 			wx.CallLater(1000, speech.speak, [u"This is an interruption"], priority=speech.SPRI_NOW)
@@ -975,7 +977,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		# before the first utterance can finish, it is interrupted.
 		with smi.expectation():
 			interrupt = [
-				speech.ConfigProfileTriggerCommand(t1, True),
+				ConfigProfileTriggerCommand(t1, True),
 				"This is an interruption with a different profile",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=2)
 			]
@@ -998,10 +1000,10 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_11_SPRI_Profile(self):
 		"""Utterance at SPRI_NORMAL with profile switch. Utterance at SPRI_NOW.
 		Manual Test (in NVDA python console):
-			import sayAllHandler
-			trigger = sayAllHandler.SayAllProfileTrigger()
+			from speech import sayAll
+			trigger = sayAll.SayAllProfileTrigger()
 			wx.CallLater(500, speech.speak, [
-				speech.ConfigProfileTriggerCommand(trigger, True),
+				ConfigProfileTriggerCommand(trigger, True),
 				u"This is a normal utterance with a different profile"
 				])
 			wx.CallLater(1000, speech.speak, [u"This is an interruption"], priority=speech.SPRI_NOW)
@@ -1015,7 +1017,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		smi.addMockCallMonitoring([t1.enter, t1.exit])
 		with smi.expectation():
 			first = [
-				speech.ConfigProfileTriggerCommand(t1, True),
+				ConfigProfileTriggerCommand(t1, True),
 				"This is a normal utterance with a different profile",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=1)
 			]
@@ -1062,15 +1064,15 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_12_SPRI_profile(self):
 		"""Utterance at SPRI_NORMAL with profile 1. Utterance at SPRI_NOW with profile 2.
 		Manual Test (in NVDA python console):
-			import sayAllHandler, appModuleHandler
-			t1 = sayAllHandler.SayAllProfileTrigger()
+			from speech import sayAll, appModuleHandler
+			t1 = sayAll.SayAllProfileTrigger()
 			t2 = appModuleHandler.AppProfileTrigger("notepad")
 			wx.CallLater(500, speech.speak, [
-				speech.ConfigProfileTriggerCommand(t1, True),
+				ConfigProfileTriggerCommand(t1, True),
 				u"This is a normal utterance with profile 1"
 			])
 			wx.CallLater(1000, speech.speak, [
-				speech.ConfigProfileTriggerCommand(t2, True),
+				ConfigProfileTriggerCommand(t2, True),
 				u"This is an interruption with profile 2"
 			], priority=speech.SPRI_NOW)
 		Expected: Normal speaks with profile 1 but gets interrupted, interruption speaks with profile 2,
@@ -1082,7 +1084,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		smi.addMockCallMonitoring([t1.enter, t1.exit, t2.enter, t2.exit])
 		with smi.expectation():
 			first = [
-				speech.ConfigProfileTriggerCommand(t1, True),
+				ConfigProfileTriggerCommand(t1, True),
 				"This is a normal utterance with profile 1",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=1)
 			]
@@ -1094,7 +1096,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		# Before the first index is reached, there is an interruption
 		with smi.expectation():
 			interrupt = [
-				speech.ConfigProfileTriggerCommand(t2, True),
+				ConfigProfileTriggerCommand(t2, True),
 				"This is an interruption with profile 2",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=2)
 			]

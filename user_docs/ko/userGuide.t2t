@@ -173,12 +173,12 @@ NVDA가 시작하면 곧바로 맨처음에 점차 높은 음으로 띠리링 �
 두번째 체크박스는 윈도우 로그인 후 NVDA를 실행할것인지를 묻습니다(설치 버전에만 적용됨).
 세번째 체크박스는 NVDA가 실행될 때마다 이 대화상자를 보여줄것인지를 묻습니다 (체크시 보여줍니다).
 
-+++ Data usage statistics dialog +++[UsageStatsDialog]
-Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future. 
-When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
-You can read more info about the data gathered by NV Access in the general settings section, [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
-Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
-However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
++++ 데이터 사용 통계 대화창 +++[UsageStatsDialog]
+NVDA 2018.3 버전에서부터는 사용자에게 사용 데이터를 NV Access로 보내서 향후 NVDA를 개선하는 데 쓰이도록 하겠는지를 물어봅니다.
+NVDA를 처음 시작할 때, NVDA를 쓰는 동안 NV Access로 데이터를 보내는 것을 허용할지를 묻는 대화창이 나타납니다.
+NV Access가 수집하는 데이터에 대한 더 자세한 정보는 일반 설정 영역의 [NVDA 프로젝트가 NVDA 사용 통계를 수집하도록 허용 #GeneralSettingsGatherUsageStats]
+참고: "예"나 "아니오" 버튼을 누르면 이 설정이 저장되며, NVDA를 다시 설치하지 않는 한 이 대화창은 다시 나타나지 않습니다.
+하지만, 데이터 수집 과정은 나중에 NVDA의 일반 설정 패널에서 직접 활성화시키거나 비활성화시킬 수 있습니다. 설정을 바꾸려면 [NVDA 프로젝트가 NVDA 사용 통계를 수집하도록 허용 #GeneralSettingsGatherUsageStats] 체크박스를 조작하면 됩니다.
 
 ++ NVDA 단축키에 관하여 ++[AboutNVDAKeyboardCommands]
 
@@ -1575,6 +1575,7 @@ This setting can also be toggled using NVDA+control+alt+t.
 이 체크박스가 체크되면 NVDA는 도움말 표시란(풍선 도움말 또는 토스트)이 나타날 때마다 그것을 읽습니다.
 - 풍선 도움말은 툴팁과 비슷합니다. 그러나 툴팁보다 크기가 더 크고 같은 시스템 이벤트들과 연결되어 있습니다. 예를 들면, 네트워크가 끊어졌다거나 윈도우즈 보안 이슈에 관하여 경고하기 등입니다.
 - 토스트는 윈도우 8 이상에서 나타나는 알림창으로 여러 이벤트 관련 알림을 보여줍니다(예: 업데이트 다운로드, 이메일 도착 등).
+-
 
 ====  객체 핫키 알림 ====[ObjectPresentationShortcutKeys]
 이 체크박스가 체크되면, 특정한 객체나 컨트롤이 핫키를 지원하는 경우 NVDA는 그 객체나 컨트롤과 연결된 핫키를 함께 알려줍니다.
