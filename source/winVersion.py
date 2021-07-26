@@ -218,4 +218,6 @@ if version_year < 2022:
 
 
 def isFullScreenMagnificationAvailable():
-	return getWinVer() >= WIN8
+	currentWinVersion = getWinVer()
+	lastTestedWin10 = WIN10_21H2  # Windows 10 insiders and Windows 11 has broken screen curtain, fix TBA
+	return currentWinVersion >= WIN8 and currentWinVersion <= lastTestedWin10
