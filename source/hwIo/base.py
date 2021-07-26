@@ -1,8 +1,8 @@
-#hwIo.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2015-2018 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2015-2018 NV Access Limited, Babbage B.V.
+
 
 """Raw input/output for braille displays via serial and HID.
 See the L{Serial} and L{Hid} classes.
@@ -13,7 +13,7 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 import sys
 import ctypes
 from ctypes import byref
-from ctypes.wintypes import DWORD, USHORT
+from ctypes.wintypes import DWORD
 from typing import Optional, Any, Union, Tuple, Callable
 
 import serial
@@ -50,8 +50,8 @@ class IoBase(object):
 		@param onReceiveSize: The size (in bytes) of the data with which to call C{onReceive}.
 		"""
 		self._file = fileHandle
-		self._writeFile = writeFileHandle if writeFileHandle is not None else fileHandle
 		self._onReceive = onReceive
+		self._writeFile = writeFileHandle if writeFileHandle is not None else fileHandle
 		self._readSize = onReceiveSize
 		self._readBuf = ctypes.create_string_buffer(onReceiveSize)
 		self._readOl = OVERLAPPED()
@@ -235,144 +235,6 @@ class Serial(IoBase):
 				timeouts.WriteTotalTimeoutConstant = max(int(self._ser._write_timeout * 1000), 1)
 		SetCommTimeouts(self._ser._port_handle, ctypes.byref(timeouts))
 
-class HIDP_CAPS (ctypes.Structure):
-	_fields_ = (
-		("Usage", USHORT),
-		("UsagePage", USHORT),
-		("InputReportByteLength", USHORT),
-		("OutputReportByteLength", USHORT),
-		("FeatureReportByteLength", USHORT),
-		("Reserved", USHORT * 17),
-		("NumberLinkCollectionNodes", USHORT),
-		("NumberInputButtonCaps", USHORT),
-		("NumberInputValueCaps", USHORT),
-		("NumberInputDataIndices", USHORT),
-		("NumberOutputButtonCaps", USHORT),
-		("NumberOutputValueCaps", USHORT),
-		("NumberOutputDataIndices", USHORT),
-		("NumberFeatureButtonCaps", USHORT),
-		("NumberFeatureValueCaps", USHORT),
-		("NumberFeatureDataIndices", USHORT)
-	)
-
-class Hid(IoBase):
-	"""Raw I/O for HID devices.
-	"""
-	_featureSize: int
-
-	def __init__(self, path: str, onReceive: Callable[[bytes], None], exclusive: bool = True):
-		"""Constructor.
-		@param path: The device path.
-			This can be retrieved using L{hwPortUtils.listHidDevices}.
-		@param onReceive: A callable taking a received input report as its only argument.
-		@param exclusive: Whether to block other application's access to this device.
-		"""
-		if _isDebug():
-			log.debug("Opening device %s" % path)
-		handle = CreateFile(
-			path,
-			winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
-			0 if exclusive else winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,
-			None,
-			winKernel.OPEN_EXISTING,
-			FILE_FLAG_OVERLAPPED,
-			None
-		)
-		if handle == INVALID_HANDLE_VALUE:
-			if _isDebug():
-				log.debug("Open failed: %s" % ctypes.WinError())
-			raise ctypes.WinError()
-		pd = ctypes.c_void_p()
-		if not ctypes.windll.hid.HidD_GetPreparsedData(handle, byref(pd)):
-			raise ctypes.WinError()
-		caps = HIDP_CAPS()
-		ctypes.windll.hid.HidP_GetCaps(pd, byref(caps))
-		ctypes.windll.hid.HidD_FreePreparsedData(pd)
-		if _isDebug():
-			log.debug("Report byte lengths: input %d, output %d, feature %d"
-				% (caps.InputReportByteLength, caps.OutputReportByteLength,
-					caps.FeatureReportByteLength))
-		self._featureSize = caps.FeatureReportByteLength
-		self._writeSize = caps.OutputReportByteLength
-		# Reading any less than caps.InputReportByteLength is an error.
-		super(Hid, self).__init__(handle, onReceive,
-			onReceiveSize=caps.InputReportByteLength
-		)
-
-	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
-		""" For HID devices, the buffer to be written must match the
-		OutputReportByteLength fetched from HIDP_CAPS, to ensure this is the case
-		we create a buffer of that size. We also check that data is not bigger than
-		the write size, which we do not currently support. If it becomes necessary to
-		support this, we could split the data and send it several chunks.
-		"""
-		# On Windows 7, writing any less than caps.OutputReportByteLength is also an error.
-		# See also: http://www.onarm.com/forum/20152/
-		if len(data) > self._writeSize:
-			log.error(u"Attempting to send a buffer larger than supported.")
-			raise RuntimeError("Unable to send buffer of: %d", len(data))
-		return (
-			self._writeSize,
-			ctypes.create_string_buffer(data, self._writeSize)
-		)
-
-	def getFeature(self, reportId: bytes) -> bytes:
-		"""Get a feature report from this device.
-		@param reportId: The report id.
-		@return: The report, including the report id.
-		"""
-		buf = ctypes.create_string_buffer(reportId, size=self._featureSize)
-		if not ctypes.windll.hid.HidD_GetFeature(self._file, buf, self._featureSize):
-			if _isDebug():
-				log.debug("Get feature %r failed: %s"
-					% (reportId, ctypes.WinError()))
-			raise ctypes.WinError()
-		if _isDebug():
-			log.debug("Get feature: %r" % buf.raw)
-		return buf.raw
-
-	def setFeature(self, report: bytes) -> None:
-		"""Send a feature report to this device.
-		@param report: The report, including its id.
-		"""
-		buf = ctypes.create_string_buffer(report, size=len(report))
-		bufSize = ctypes.sizeof(buf)
-		if _isDebug():
-			log.debug("Set feature: %r" % report)
-		result = ctypes.windll.hid.HidD_SetFeature(
-			self._file,
-			buf,
-			bufSize
-		)
-		if not result:
-			if _isDebug():
-				log.debug("Set feature failed: %s" % ctypes.WinError())
-			raise ctypes.WinError()
-
-	def setOutputReport(self, report: bytes) -> None:
-		"""
-		Write the given report to the device using HidD_SetOutputReport.
-		This is instead of using the standard WriteFile which may freeze with some USB HID implementations.
-		@param report: The report, including its id.
-		"""
-		buf = ctypes.create_string_buffer(report, size=len(report))
-		bufSize = ctypes.sizeof(buf)
-		if _isDebug():
-			log.debug("Set output report: %r" % report)
-		result = ctypes.windll.hid.HidD_SetOutputReport(
-			self._writeFile,
-			buf,
-			bufSize
-		)
-		if not result:
-			if _isDebug():
-				log.debug("Set output report failed: %s" % ctypes.WinError())
-			raise ctypes.WinError()
-
-	def close(self):
-		super(Hid, self).close()
-		winKernel.closeHandle(self._file)
-		self._file = None
 
 class Bulk(IoBase):
 	"""Raw I/O for bulk USB devices.
