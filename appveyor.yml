@@ -1,8 +1,6 @@
 os: Visual Studio 2019
 version: "{branch}-{build}"
 
-skip_non_tags: true
-
 branches:
  only:
   - master
@@ -16,7 +14,7 @@ environment:
  secure_authenticode_pass:
   secure: Way+hJyhbiLG/cmCo4+dHHzS5DiSvk/45o6frnIQ27GBX6nVDsh7jwQ7fSnqxBRP
  secure_ssh_pass:
-  secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
+  secure: Iql/RhSathGacONacsyr6gis+rjL75UFZ/R+nPAJpo3asAzQSQQd8hfxq0iv8+Th
  mozillaSymsAuthToken:
   secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe

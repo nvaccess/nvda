@@ -3,6 +3,29 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3 =
+
+== New Features ==
+- Adds an input gesture for toggling settings for reporting the style of cell borders. (#10408)
+-
+
+== Changes ==
+- Espeak-ng has been updated to 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+-
+
+
+== Bug Fixes ==
+- Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
+-
+
+
+== Changes for Developers ==
+- ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been deprecated for removal in 2022.1. (#12660)
+  - Instead use ``apiLevel`` (see the comments at ``_UIAConstants.WinConsoleAPILevel`` for details).
+  -
+-
+
+
 = 2021.2 =
 
 == New Features ==
@@ -10,7 +33,8 @@ What's New in NVDA
   - adds a command to read a summary of details of an object with aria-details. (#12364)
   - adds an option in advanced to report if an object has details in browse mode. (#12439) 
   -
-- In Windows 10 Version 1909, NVDA will announce suggestion count when performing searches in File Explorer. (#10231)
+- In Windows 10 Version 1909 and later (including Windows 11), NVDA will announce suggestion count when performing searches in File Explorer. (#10341, #12628)
+- In Microsoft Word, NVDA now announces the result of indent and hanging indent shortcuts when executed. (#6269)
 -
 
 
@@ -42,13 +66,13 @@ This can be toggled in the Preferences dialog or with a new (unassigned) command
 
 
 == Changes for Developers ==
-- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SYMLVL.*`` before 2022.1. (#11856)
+- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SymbolLevel.*`` before 2022.1. (#11856, #12636)
 - ``controlTypes`` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
   - ``ROLE_*`` and ``STATE_*`` constants should be replaced to their equivalent ``Role.*`` and ``State.*``.
   - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` have been deprecated, usages such as ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
   - ``processPositiveStates`` and ``processNegativeStates`` have been deprecated for removal.
   -
-- On Windows 10 Version 1511 and later (including Insider Preview builds), current Windows feature update release name is obtained from Windows Registry. (#12509)
+- On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
 - Deprecated: winVersion.WIN10_RELEASE_NAME_TO_BUILDS will be removed in 2022.1, there is no direct replacement. (#12544)
 -
 

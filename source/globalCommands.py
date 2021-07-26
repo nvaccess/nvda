@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt
+# Julien Cochuyt, Jakub Lukowicz
 
 import itertools
 from typing import Optional
@@ -700,6 +700,32 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for toggle report cell borders command.
+		description=_("Cycles through the cell border reporting settings"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportCellBorders(self, gesture):
+		if (
+			not config.conf["documentFormatting"]["reportBorderStyle"]
+			and not config.conf["documentFormatting"]["reportBorderColor"]
+		):
+			# Translators: A message reported when cycling through cell borders settings.
+			ui.message(_("Report styles of cell borders"))
+			config.conf["documentFormatting"]["reportBorderStyle"] = True
+		elif (
+			config.conf["documentFormatting"]["reportBorderStyle"]
+			and not config.conf["documentFormatting"]["reportBorderColor"]
+		):
+			# Translators: A message reported when cycling through cell borders settings.
+			ui.message(_("Report colors and styles of cell borders"))
+			config.conf["documentFormatting"]["reportBorderColor"] = True
+		else:
+			# Translators: A message reported when cycling through cell borders settings.
+			ui.message(_("Report cell borders off."))
+			config.conf["documentFormatting"]["reportBorderStyle"] = False
+			config.conf["documentFormatting"]["reportBorderColor"] = False
+
+	@script(
 		# Translators: Input help mode message for toggle report links command.
 		description=_("Toggles on and off the reporting of links"),
 		category=SCRCAT_DOCUMENTFORMATTING
@@ -889,7 +915,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			level = characterProcessing.SYMLVL_NONE
 		name = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[level]
-		config.conf["speech"]["symbolLevel"] = level
+		config.conf["speech"]["symbolLevel"] = level.value
 		# Translators: Reported when the user cycles through speech symbol levels
 		# which determine what symbols are spoken.
 		# %s will be replaced with the symbol level; e.g. none, some, most and all.
