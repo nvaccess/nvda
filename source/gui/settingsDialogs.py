@@ -2815,6 +2815,20 @@ class AdvancedPanelControls(
 					self._getDefaultValue(['debugLog', x])
 			)
 		]
+		
+		# Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+		label = _("Play a sound for logged e&rrors:")
+		playErrorSoundChoices = (
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings panel.
+			pgettext("advanced.playErrorSound", "Only in NVDA test versions"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings panel.
+			pgettext("advanced.playErrorSound", "Yes"),
+		)
+		self.playErrorSoundCombo = debugLogGroup.addLabeledControl(label, wx.Choice, choices=playErrorSoundChoices)
+		self.bindHelpEvent("PlayErrorSound", self.playErrorSoundCombo)
+		self.playErrorSoundCombo.SetSelection(config.conf["featureFlag"]["playErrorSound"])
+		self.playErrorSoundCombo.defaultValue = self._getDefaultValue(["featureFlag", "playErrorSound"])
+		
 		self.Layout()
 
 	def onOpenScratchpadDir(self,evt):
@@ -2884,6 +2898,7 @@ class AdvancedPanelControls(
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
+		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
 
 class AdvancedPanel(SettingsPanel):
 	enableControlsCheckBox = None  # type: wx.CheckBox

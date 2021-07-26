@@ -18,6 +18,7 @@ from types import FunctionType
 import globalVars
 import winKernel
 import buildVersion
+import config
 from typing import Optional
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
@@ -266,8 +267,12 @@ class RemoteHandler(logging.Handler):
 class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
-		# Only play the error sound if this is a test version.
-		shouldPlayErrorSound =  buildVersion.isTestVersion
+		# Only play the error sound if this is a test version or if the config states it explicitely.
+		shouldPlayErrorSound = (
+			buildVersion.isTestVersion
+			# Play error sound: 1 = Yes
+			or config.conf["featureFlag"]["playErrorSound"] == 1
+		)
 		if record.levelno>=logging.CRITICAL:
 			try:
 				winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
