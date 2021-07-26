@@ -19,3 +19,4 @@ from .base import (  # noqa: F401
 	intToByte,
 	getByte
 )
+from .hid import Hid  # noqa: F401
