@@ -18,7 +18,6 @@ from types import FunctionType
 import globalVars
 import winKernel
 import buildVersion
-import config
 from typing import Optional
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
@@ -267,6 +266,7 @@ class RemoteHandler(logging.Handler):
 class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
+		import config
 		# Only play the error sound if this is a test version or if the config states it explicitely.
 		shouldPlayErrorSound = (
 			buildVersion.isTestVersion
