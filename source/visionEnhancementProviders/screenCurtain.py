@@ -4,7 +4,8 @@
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
-This implementation only works on Windows 8 and above.
+This implementation only works between Windows 8 and tested Windows 10 builds.
+The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
 """
 
 import os
