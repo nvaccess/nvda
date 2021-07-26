@@ -11,7 +11,7 @@ import os
 import vision
 from vision import providerBase
 import winVersion
-from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
+from ctypes import windll, c_float, POINTER, WINFUNCTYPE, WinError
 from ctypes.wintypes import BOOL
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from autoSettingsUtils.autoSettings import SupportedSettingType
@@ -23,14 +23,9 @@ import nvwave
 import globalVars
 
 
-class MAGCOLOREFFECT(Structure):
-	_fields_ = (("transform", c_float * 5 * 5),)
-
-
-# homogeneous matrix for a 4-space transformation (red, green, blue, opacity).
-# https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
-TRANSFORM_BLACK = MAGCOLOREFFECT()
-TRANSFORM_BLACK.transform[4][4] = 1.0
+PMAGCOLOREFFECT = c_float * 25
+MAGCOLOREFFECT = POINTER(PMAGCOLOREFFECT)
+TRANSFORM_BLACK = (PMAGCOLOREFFECT)(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1)
 
 
 def _errCheck(result, func, args):
@@ -45,11 +40,11 @@ class Magnification:
 	_magnification = windll.Magnification
 
 	# Set full screen color effect
-	_MagSetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
+	_MagSetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, MAGCOLOREFFECT)
 	_MagSetFullscreenColorEffectArgTypes = ((1, "effect"),)
 
 	# Get full screen color effect
-	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
+	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, MAGCOLOREFFECT)
 	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
 
 	# show system cursor
