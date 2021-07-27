@@ -647,8 +647,9 @@ def main():
 	import inputCore
 	inputCore.initialize()
 	import keyboardHandler
+	import watchdog
 	log.debug("Initializing keyboard handler")
-	keyboardHandler.initialize()
+	keyboardHandler.initialize(watchdog.WatchdogObserver())
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
@@ -688,7 +689,6 @@ def main():
 	# Queue the handling of initial focus,
 	# as API handlers might need to be pumped to get the first focus event.
 	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
-	import watchdog
 	import baseObject
 
 	# Doing this here is a bit ugly, but we don't want these modules imported

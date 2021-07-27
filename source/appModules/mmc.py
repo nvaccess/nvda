@@ -22,7 +22,7 @@ class MMCTable(IAccessible):
 class MMCTableCell(IAccessible):
 	""" Cell and rowheader makes no sense for these controls. Mapping them to list items has added benefit
 	of suppressing selected. """
-	role = controlTypes.ROLE_LISTITEM
+	role = controlTypes.Role.LISTITEM
 
 	def event_selection(self):
 		if self.parent.hasFocus and api.getFocusObject() != self:
@@ -54,10 +54,10 @@ class toolTipWithEmptyName(ToolTip):
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "AfxWnd42u":
-			if obj.role == controlTypes.ROLE_TABLE:
+			if obj.role == controlTypes.Role.TABLE:
 				clsList.insert(0, MMCTable)
-			elif obj.role in (controlTypes.ROLE_TABLECELL,
-			controlTypes.ROLE_TABLEROWHEADER):
+			elif obj.role in (controlTypes.Role.TABLECELL,
+			controlTypes.Role.TABLEROWHEADER):
 				clsList.insert(0, MMCTableCell)
 		if obj.windowClassName == "tooltips_class32" and obj.name is None:
 			clsList.insert(0, toolTipWithEmptyName)

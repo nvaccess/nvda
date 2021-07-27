@@ -38,11 +38,11 @@ u'المحفوظات',
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
+		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.Role.EDITABLETEXT and obj.name in possibleHistoryWindowNames:
 			from NVDAObjects.window import DisplayModelEditableText 
 			clsList.remove(DisplayModelEditableText)
 			clsList.insert(0, OldMSNHistory)
-		elif obj.windowClassName==u'WLXDUI' and obj.role==controlTypes.ROLE_ALERT and obj.IAccessibleStates&oleacc.STATE_SYSTEM_ALERT_MEDIUM:
+		elif obj.windowClassName==u'WLXDUI' and obj.role==controlTypes.Role.ALERT and obj.IAccessibleStates&oleacc.STATE_SYSTEM_ALERT_MEDIUM:
 			clsList.insert(0, MSNHistory)
 
 class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):

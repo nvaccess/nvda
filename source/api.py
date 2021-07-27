@@ -357,7 +357,7 @@ def getStatusBar():
 	obj = getDesktopObject().objectFromPoint(left, bottom)
 
 	# We may have landed in a child of the status bar, so search the ancestry for a status bar.
-	while obj and not obj.role == controlTypes.ROLE_STATUSBAR:
+	while obj and not obj.role == controlTypes.Role.STATUSBAR:
 		obj = obj.parent
 
 	return obj

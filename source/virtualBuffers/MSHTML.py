@@ -79,12 +79,12 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		#Priority is aria role -> HTML tag name -> IAccessible role
 		role = next(
 			(aria.ariaRolesToNVDARoles[ar] for ar in ariaRoles if ar in aria.ariaRolesToNVDARoles),
-			controlTypes.ROLE_UNKNOWN
+			controlTypes.Role.UNKNOWN
 		)
-		if role == controlTypes.ROLE_UNKNOWN and nodeName:
-			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
-		if role == controlTypes.ROLE_UNKNOWN:
-			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
+		if role == controlTypes.Role.UNKNOWN and nodeName:
+			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.Role.UNKNOWN)
+		if role == controlTypes.Role.UNKNOWN:
+			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
 		roleText=attrs.get('HTMLAttrib::aria-roledescription')
 		if roleText:
 			attrs['roleText']=roleText
@@ -92,8 +92,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		if attrs.get('HTMLAttrib::longdesc'):
 			states.add(controlTypes.STATE_HASLONGDESC)
 		#IE exposes destination anchors as links, this is wrong
-		if nodeName=="A" and role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
-			role=controlTypes.ROLE_TEXTFRAME
+		if nodeName=="A" and role==controlTypes.Role.LINK and controlTypes.STATE_LINKED not in states:
+			role=controlTypes.Role.TEXTFRAME
 		if 'IHTMLElement::isContentEditable' in attrs:
 			states.add(controlTypes.STATE_EDITABLE)
 		if 'HTMLAttrib::onclick' in attrs or 'HTMLAttrib::onmousedown' in attrs or 'HTMLAttrib::onmouseup' in attrs:
@@ -152,9 +152,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			level=nodeName[1:]
 		if nodeName in ("UL","OL","DL"):
 			states.add(controlTypes.STATE_READONLY)
-		if role==controlTypes.ROLE_UNKNOWN:
-			role=controlTypes.ROLE_TEXTFRAME
-		if role==controlTypes.ROLE_GRAPHIC:
+		if role==controlTypes.Role.UNKNOWN:
+			role=controlTypes.Role.TEXTFRAME
+		if role==controlTypes.Role.GRAPHIC:
 			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
 			# This is rather annoying and irrelevant to our users, so discard it.
 			states.discard(controlTypes.STATE_UNAVAILABLE)
@@ -186,7 +186,7 @@ class MSHTML(VirtualBuffer):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
 		# As virtualBuffers must be created at all times for MSHTML to support live regions,
 		# Force focus mode for applications, and dialogs with no parent treeInterceptor (E.g. a dialog embedded in an application)  
-		if rootNVDAObject.role==controlTypes.ROLE_APPLICATION or (rootNVDAObject.role==controlTypes.ROLE_DIALOG and (not rootNVDAObject.parent or not rootNVDAObject.parent.treeInterceptor or rootNVDAObject.parent.treeInterceptor.passThrough)):
+		if rootNVDAObject.role==controlTypes.Role.APPLICATION or (rootNVDAObject.role==controlTypes.Role.DIALOG and (not rootNVDAObject.parent or not rootNVDAObject.parent.treeInterceptor or rootNVDAObject.parent.treeInterceptor.passThrough)):
 			self.disableAutoPassThrough=True
 			self.passThrough=True
 

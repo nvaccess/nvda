@@ -35,7 +35,7 @@ class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return super(FakeEmbeddingTextInfo,self)._getUnitOffsets(unit,offset)
 
 def _getRawTextInfo(obj):
-	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLEROW):
+	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.Role.TABLE, controlTypes.Role.TABLEROW):
 		return FakeEmbeddingTextInfo
 	elif obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
@@ -127,7 +127,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
 		elif isinstance(position, locationHelper.Point):
 			startObj = api.getDesktopObject().objectFromPoint(position.x, position.y)
-			while startObj and startObj.role == controlTypes.ROLE_STATICTEXT:
+			while startObj and startObj.role == controlTypes.Role.STATICTEXT:
 				# Skip text leaf nodes.
 				startObj = startObj.parent
 			if not startObj:

@@ -27,7 +27,7 @@ def reportSelectedCandidate(candidateObject,allowDuplicate=False,newList=False):
 
 class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 
-	role=controlTypes.ROLE_LISTITEM
+	role=controlTypes.Role.LISTITEM
 	keyboardShortcut=""
 
 	def _get_candidateNumber(self):
@@ -152,7 +152,7 @@ class MSCandUI21(IAccessible):
 		candidateList=self.simpleFirstChild
 		if not candidateList: return
 		role=candidateList.role
-		if role==controlTypes.ROLE_LIST:
+		if role==controlTypes.Role.LIST:
 			item=candidateList.firstChild
 			while item and controlTypes.STATE_SELECTED not in item.states:
 				item=item.next
@@ -161,7 +161,7 @@ class MSCandUI21(IAccessible):
 				return
 			elif config.conf["reviewCursor"]["followFocus"]:
 				api.setNavigatorObject(candidateList, isFocus=True)
-		elif role==controlTypes.ROLE_MENUBUTTON:
+		elif role==controlTypes.Role.MENUBUTTON:
 			item=candidateList.firstChild.next.next
 			item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
 			if item and isinstance(item.candidateNumber,int) and item.name:
@@ -201,7 +201,7 @@ class MSCandUIWindow(IAccessible):
 
 	# Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 	name=_("Candidate")
-	role=controlTypes.ROLE_LIST
+	role=controlTypes.Role.LIST
 
 	def _get_states(self):
 		states=super(MSCandUIWindow,self).states
@@ -262,8 +262,8 @@ def findExtraOverlayClasses(obj,clsList):
 	if (
 		windowClassName=="Microsoft.IME.CandidateWindow.View"
 		and (
-			obj.role==controlTypes.ROLE_BUTTON
-			or obj.role==controlTypes.ROLE_LISTITEM
+			obj.role==controlTypes.Role.BUTTON
+			or obj.role==controlTypes.Role.LISTITEM
 	)):
 			clsList.append(ModernCandidateUICandidateItem)
 	elif windowClassName=="MSCandUIWindow_Candidate":

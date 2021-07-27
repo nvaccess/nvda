@@ -12,65 +12,65 @@ from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
 
 JABRolesToNVDARoles={
-	"alert":controlTypes.ROLE_DIALOG,
-	"column header":controlTypes.ROLE_TABLECOLUMNHEADER,
-	"canvas":controlTypes.ROLE_CANVAS,
-	"combo box":controlTypes.ROLE_COMBOBOX,
-	"desktop icon":controlTypes.ROLE_DESKTOPICON,
-	"internal frame":controlTypes.ROLE_INTERNALFRAME,
-	"desktop pane":controlTypes.ROLE_DESKTOPPANE,
-	"option pane":controlTypes.ROLE_OPTIONPANE,
-	"window":controlTypes.ROLE_WINDOW,
-	"frame":controlTypes.ROLE_FRAME,
-	"dialog":controlTypes.ROLE_DIALOG,
-	"color chooser":controlTypes.ROLE_COLORCHOOSER,
-	"directory pane":controlTypes.ROLE_DIRECTORYPANE,
-	"file chooser":controlTypes.ROLE_FILECHOOSER,
-	"filler":controlTypes.ROLE_FILLER,
-	"hyperlink":controlTypes.ROLE_LINK,
-	"icon":controlTypes.ROLE_ICON,
-	"label":controlTypes.ROLE_LABEL,
-	"root pane":controlTypes.ROLE_PANEL,
-	"glass pane":controlTypes.ROLE_PANEL,
-	"layered pane":controlTypes.ROLE_PANEL,
-	"list":controlTypes.ROLE_LIST,
-	"list item":controlTypes.ROLE_LISTITEM,
-	"menu bar":controlTypes.ROLE_MENUBAR,
-	"popup menu":controlTypes.ROLE_POPUPMENU,
-	"menu":controlTypes.ROLE_MENU,
-	"menu item":controlTypes.ROLE_MENUITEM,
-	"separator":controlTypes.ROLE_SEPARATOR,
-	"page tab list":controlTypes.ROLE_TABCONTROL,
-	"page tab":controlTypes.ROLE_TAB,
-	"panel":controlTypes.ROLE_PANEL,
-	"progress bar":controlTypes.ROLE_PROGRESSBAR,
-	"password text":controlTypes.ROLE_PASSWORDEDIT,
-	"push button":controlTypes.ROLE_BUTTON,
-	"toggle button":controlTypes.ROLE_TOGGLEBUTTON,
-	"check box":controlTypes.ROLE_CHECKBOX,
-	"radio button":controlTypes.ROLE_RADIOBUTTON,
-	"row header":controlTypes.ROLE_TABLEROWHEADER,
-	"scroll pane":controlTypes.ROLE_SCROLLPANE,
-	"scroll bar":controlTypes.ROLE_SCROLLBAR,
-	"view port":controlTypes.ROLE_VIEWPORT,
-	"slider":controlTypes.ROLE_SLIDER,
-	"split pane":controlTypes.ROLE_SPLITPANE,
-	"table":controlTypes.ROLE_TABLE,
-	"text":controlTypes.ROLE_EDITABLETEXT,
-	"tree":controlTypes.ROLE_TREEVIEW,
-	"tool bar":controlTypes.ROLE_TOOLBAR,
-	"tool tip":controlTypes.ROLE_TOOLTIP,
-	"status bar":controlTypes.ROLE_STATUSBAR,
-	"statusbar":controlTypes.ROLE_STATUSBAR,
-	"date editor":controlTypes.ROLE_DATEEDITOR,
-	"spin box":controlTypes.ROLE_SPINBUTTON,
-	"font chooser":controlTypes.ROLE_FONTCHOOSER,
-	"group box":controlTypes.ROLE_GROUPING,
-	"header":controlTypes.ROLE_HEADER,
-	"footer":controlTypes.ROLE_FOOTER,
-	"paragraph":controlTypes.ROLE_PARAGRAPH,
-	"ruler":controlTypes.ROLE_RULER,
-	"edit bar":controlTypes.ROLE_EDITBAR,
+	"alert":controlTypes.Role.DIALOG,
+	"column header":controlTypes.Role.TABLECOLUMNHEADER,
+	"canvas":controlTypes.Role.CANVAS,
+	"combo box":controlTypes.Role.COMBOBOX,
+	"desktop icon":controlTypes.Role.DESKTOPICON,
+	"internal frame":controlTypes.Role.INTERNALFRAME,
+	"desktop pane":controlTypes.Role.DESKTOPPANE,
+	"option pane":controlTypes.Role.OPTIONPANE,
+	"window":controlTypes.Role.WINDOW,
+	"frame":controlTypes.Role.FRAME,
+	"dialog":controlTypes.Role.DIALOG,
+	"color chooser":controlTypes.Role.COLORCHOOSER,
+	"directory pane":controlTypes.Role.DIRECTORYPANE,
+	"file chooser":controlTypes.Role.FILECHOOSER,
+	"filler":controlTypes.Role.FILLER,
+	"hyperlink":controlTypes.Role.LINK,
+	"icon":controlTypes.Role.ICON,
+	"label":controlTypes.Role.LABEL,
+	"root pane":controlTypes.Role.PANEL,
+	"glass pane":controlTypes.Role.PANEL,
+	"layered pane":controlTypes.Role.PANEL,
+	"list":controlTypes.Role.LIST,
+	"list item":controlTypes.Role.LISTITEM,
+	"menu bar":controlTypes.Role.MENUBAR,
+	"popup menu":controlTypes.Role.POPUPMENU,
+	"menu":controlTypes.Role.MENU,
+	"menu item":controlTypes.Role.MENUITEM,
+	"separator":controlTypes.Role.SEPARATOR,
+	"page tab list":controlTypes.Role.TABCONTROL,
+	"page tab":controlTypes.Role.TAB,
+	"panel":controlTypes.Role.PANEL,
+	"progress bar":controlTypes.Role.PROGRESSBAR,
+	"password text":controlTypes.Role.PASSWORDEDIT,
+	"push button":controlTypes.Role.BUTTON,
+	"toggle button":controlTypes.Role.TOGGLEBUTTON,
+	"check box":controlTypes.Role.CHECKBOX,
+	"radio button":controlTypes.Role.RADIOBUTTON,
+	"row header":controlTypes.Role.TABLEROWHEADER,
+	"scroll pane":controlTypes.Role.SCROLLPANE,
+	"scroll bar":controlTypes.Role.SCROLLBAR,
+	"view port":controlTypes.Role.VIEWPORT,
+	"slider":controlTypes.Role.SLIDER,
+	"split pane":controlTypes.Role.SPLITPANE,
+	"table":controlTypes.Role.TABLE,
+	"text":controlTypes.Role.EDITABLETEXT,
+	"tree":controlTypes.Role.TREEVIEW,
+	"tool bar":controlTypes.Role.TOOLBAR,
+	"tool tip":controlTypes.Role.TOOLTIP,
+	"status bar":controlTypes.Role.STATUSBAR,
+	"statusbar":controlTypes.Role.STATUSBAR,
+	"date editor":controlTypes.Role.DATEEDITOR,
+	"spin box":controlTypes.Role.SPINBUTTON,
+	"font chooser":controlTypes.Role.FONTCHOOSER,
+	"group box":controlTypes.Role.GROUPING,
+	"header":controlTypes.Role.HEADER,
+	"footer":controlTypes.Role.FOOTER,
+	"paragraph":controlTypes.Role.PARAGRAPH,
+	"ruler":controlTypes.Role.RULER,
+	"edit bar":controlTypes.Role.EDITBAR,
 }
 
 JABStatesToNVDAStates={
@@ -232,7 +232,7 @@ class JAB(Window):
 		return self.jabContext.getAccessibleContextInfo()
 
 	def _get_TextInfo(self):
-		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
+		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.Role.BUTTON,controlTypes.Role.MENUITEM,controlTypes.Role.MENU,controlTypes.Role.LISTITEM]:
 			return JABTextInfo
 		return super(JAB,self).TextInfo
 
@@ -254,7 +254,7 @@ class JAB(Window):
 				continue
 			keyList=[]
 			# We assume alt  if there are no modifiers at all and its not a menu item as this is clearly a nmonic
-			if (binding.modifiers&JABHandler.ACCESSIBLE_ALT_KEYSTROKE) or (not binding.modifiers and self.role!=controlTypes.ROLE_MENUITEM):
+			if (binding.modifiers&JABHandler.ACCESSIBLE_ALT_KEYSTROKE) or (not binding.modifiers and self.role!=controlTypes.Role.MENUITEM):
 				keyList.append(keyLabels.localizedKeyLabels['alt'])
 			if binding.modifiers&JABHandler.ACCESSIBLE_CONTROL_KEYSTROKE:
 				keyList.append(keyLabels.localizedKeyLabels['control'])
@@ -271,15 +271,15 @@ class JAB(Window):
 		return self._JABAccContextInfo.role_en_US
 
 	def _get_role(self):
-		role = JABRolesToNVDARoles.get(self.JABRole,controlTypes.ROLE_UNKNOWN)
-		if role in ( controlTypes.ROLE_LABEL, controlTypes.ROLE_PANEL) and self.parent:
+		role = JABRolesToNVDARoles.get(self.JABRole,controlTypes.Role.UNKNOWN)
+		if role in ( controlTypes.Role.LABEL, controlTypes.Role.PANEL) and self.parent:
 			parentRole = self.parent.role
-			if parentRole == controlTypes.ROLE_LIST:
-				return controlTypes.ROLE_LISTITEM
-			elif parentRole in (controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM):
-				return controlTypes.ROLE_TREEVIEWITEM
-		if role==controlTypes.ROLE_LABEL:
-			return controlTypes.ROLE_STATICTEXT
+			if parentRole == controlTypes.Role.LIST:
+				return controlTypes.Role.LISTITEM
+			elif parentRole in (controlTypes.Role.TREEVIEW, controlTypes.Role.TREEVIEWITEM):
+				return controlTypes.Role.TREEVIEWITEM
+		if role==controlTypes.Role.LABEL:
+			return controlTypes.Role.STATICTEXT
 		return role
 
 	def _get_JABStates(self):
@@ -302,7 +302,7 @@ class JAB(Window):
 		return stateSet
 
 	def _get_value(self):
-		if self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_BUTTON] and self._JABAccContextInfo.accessibleValue and not self._JABAccContextInfo.accessibleText:
+		if self.role not in [controlTypes.Role.CHECKBOX,controlTypes.Role.MENU,controlTypes.Role.MENUITEM,controlTypes.Role.RADIOBUTTON,controlTypes.Role.BUTTON] and self._JABAccContextInfo.accessibleValue and not self._JABAccContextInfo.accessibleText:
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
@@ -321,7 +321,7 @@ class JAB(Window):
 		info=super(JAB,self).positionInfo or {}
 
 		# If tree view item, try to retrieve the level via JAB
-		if self.role==controlTypes.ROLE_TREEVIEWITEM:
+		if self.role==controlTypes.Role.TREEVIEWITEM:
 			try:
 				tree=self.jabContext.getAccessibleParentWithRole("tree")
 				if tree:
@@ -340,7 +340,7 @@ class JAB(Window):
 				return info
 
 		parent=self.parent
-		if isinstance(parent,JAB) and self.role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM):
+		if isinstance(parent,JAB) and self.role in (controlTypes.Role.TREEVIEWITEM,controlTypes.Role.LISTITEM):
 			index=self._JABAccContextInfo.indexInParent+1
 			childCount=parent._JABAccContextInfo.childrenCount
 			info['indexInGroup']=index
@@ -478,7 +478,7 @@ class JAB(Window):
 
 	def reportFocus(self):
 		parent=self.parent
-		if self.role in [controlTypes.ROLE_LIST] and isinstance(parent,JAB) and parent.role==controlTypes.ROLE_COMBOBOX:
+		if self.role in [controlTypes.Role.LIST] and isinstance(parent,JAB) and parent.role==controlTypes.Role.COMBOBOX:
 			return
 		super(JAB,self).reportFocus()
 
@@ -544,7 +544,7 @@ class ComboBox(JAB):
 	def _get_states(self):
 		states=super(ComboBox,self).states
 		if controlTypes.STATE_COLLAPSED not in states and controlTypes.STATE_EXPANDED not in states:
-			if self.childCount==1 and self.firstChild and self.firstChild.role==controlTypes.ROLE_POPUPMENU:
+			if self.childCount==1 and self.firstChild and self.firstChild.role==controlTypes.Role.POPUPMENU:
 				if controlTypes.STATE_INVISIBLE in self.firstChild.states:
 					states.add(controlTypes.STATE_COLLAPSED)
 				else:
@@ -585,7 +585,7 @@ class Table(JAB):
 
 class TableCell(JAB):
 
-	role=controlTypes.ROLE_TABLECELL
+	role=controlTypes.Role.TABLECELL
 
 	def _get_table(self):
 		if self.parent and isinstance(self.parent,Table):

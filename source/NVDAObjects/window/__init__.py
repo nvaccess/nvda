@@ -175,7 +175,7 @@ An NVDAObject for a window
 		return winUser.getWindowText(self.windowHandle)
 
 	def _get_role(self):
-		return controlTypes.ROLE_WINDOW
+		return controlTypes.Role.WINDOW
 
 	def _get_windowClassName(self):
 		if hasattr(self,"_windowClassName"):
@@ -393,7 +393,7 @@ class Desktop(Window):
 
 class DisplayModelEditableText(EditableTextWithoutAutoSelectDetection, Window):
 
-	role=controlTypes.ROLE_EDITABLETEXT
+	role=controlTypes.Role.EDITABLETEXT
 	TextInfo = displayModel.EditableTextDisplayModelTextInfo
 
 	def event_valueChange(self):

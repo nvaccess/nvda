@@ -174,9 +174,9 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				yield subObj
 
 	NODE_TYPES_TO_ROLES = {
-		"link": {controlTypes.ROLE_LINK, controlTypes.ROLE_FOOTNOTE},
-		"graphic": {controlTypes.ROLE_GRAPHIC},
-		"table": {controlTypes.ROLE_TABLE},
+		"link": {controlTypes.Role.LINK, controlTypes.Role.FOOTNOTE},
+		"graphic": {controlTypes.Role.GRAPHIC},
+		"table": {controlTypes.Role.TABLE},
 	}
 
 	def _iterNodesByType(self, nodeType, direction="next", pos=None):
@@ -185,7 +185,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		obj = pos.innerTextInfo._startObj
 		if nodeType=="container":
 			while obj!=self.rootNVDAObject:
-				if obj.role==controlTypes.ROLE_TABLE:
+				if obj.role==controlTypes.Role.TABLE:
 					ti=self.makeTextInfo(obj)
 					yield browseMode.TextInfoQuickNavItem(nodeType, self, ti)
 					return
@@ -347,7 +347,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 
 	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
 		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
-		if field and field["role"] == controlTypes.ROLE_MATH:
+		if field and field["role"] == controlTypes.Role.MATH:
 			try:
 				field["mathMl"] = obj.mathMl
 			except LookupError:
@@ -419,7 +419,7 @@ class AppModule(appModuleHandler.AppModule):
 				or (hasattr(obj,'IAccessibleTextObject') and obj.name=="Book Page View")
 			):
 				clsList.insert(0,BookPageView)
-			elif obj.role == controlTypes.ROLE_MATH:
+			elif obj.role == controlTypes.Role.MATH:
 				clsList.insert(0, Math)
 		return clsList
 
@@ -427,8 +427,8 @@ class AppModule(appModuleHandler.AppModule):
 		if (
 			isinstance(obj, IAccessible)
 			and isinstance(obj.IAccessibleObject, IA2.IAccessible2)
-			and obj.role == controlTypes.ROLE_LINK
+			and obj.role == controlTypes.Role.LINK
 		):
 			xRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
 			if "kindle-footnoteref" in xRoles:
-				obj.role = controlTypes.ROLE_FOOTNOTE
+				obj.role = controlTypes.Role.FOOTNOTE

@@ -400,7 +400,7 @@ class EdgeHTMLRoot(EdgeNode):
 	treeInterceptorClass = EdgeHTMLTreeInterceptor
 
 	def _get_shouldCreateTreeInterceptor(self):
-		return self.role == controlTypes.ROLE_DOCUMENT
+		return self.role == controlTypes.Role.DOCUMENT
 
 	def _isIframe(self):
 		"""Override, the root node is never an iFrame"""
@@ -408,6 +408,6 @@ class EdgeHTMLRoot(EdgeNode):
 
 	def _get_role(self):
 		role = super().role
-		if role == controlTypes.ROLE_PANE:
-			role = controlTypes.ROLE_DOCUMENT
+		if role == controlTypes.Role.PANE:
+			role = controlTypes.Role.DOCUMENT
 		return role
