@@ -100,7 +100,6 @@ Additionally, the following build time dependencies are included in the miscDeps
 * [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
 * [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
-* [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
 * To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
