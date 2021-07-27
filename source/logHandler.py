@@ -267,7 +267,7 @@ class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
 		import config
-		# Only play the error sound if this is a test version or if the config states it explicitely.
+		# Only play the error sound if this is a test version or if the config states it explicitly.
 		shouldPlayErrorSound = (
 			buildVersion.isTestVersion
 			# Play error sound: 1 = Yes
