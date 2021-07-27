@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2021 NV Access Limited, Julien Nabet
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -24,6 +24,21 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "displayModel.h"
 
 using namespace std;
+
+
+std::wostream& operator<<(std::wostream& out, displayModelFormatColor_t const& color) {
+	// pack into a 4 byte DWORD: 0xTTbbggrr
+	// TT bit flags, only bit 1 used: set for transparent.
+	// Encoding alpha in TT was considered (eg 0xaabbggrr for aa == 0xFF for opaque),
+	// but this would break compatibility with code that continues to pass
+	// 0x00bbggrr for opaque, all usages would need to be fixed.
+	COLORREF packed = RGB(color.red, color.green, color.blue);
+	packed |= color.isTransparent ?
+		displayModelFormatColor_t::TRANSPARENT_BIT
+		:
+		0;
+	return out << packed;
+}
 
 void displayModelChunk_t::generateXML(wstring& text) {
 	wstringstream s;
@@ -234,8 +249,8 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 		//Copy the chunk
 		displayModelChunk_t* chunk=new displayModelChunk_t(*(i->second));
 		if(srcInvert) {
-			chunk->formatInfo.color=(0xffffff-chunk->formatInfo.color);
-			chunk->formatInfo.backgroundColor=(0xffffff-chunk->formatInfo.backgroundColor);
+			chunk->formatInfo.color = chunk->formatInfo.color.inverted();
+			chunk->formatInfo.backgroundColor = chunk->formatInfo.backgroundColor.inverted();
 		}
 		//Tweek its rectangle coordinates to match where its going in the destination model
 		transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,chunk->rect.left);
