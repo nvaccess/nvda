@@ -255,7 +255,7 @@ class GroupingItem(Window):
 	def _get_name(self):
 		return self.groupInfo['header']
 
-	role = controlTypes.ROLE_GROUPING
+	role = controlTypes.Role.GROUPING
 
 	def _get_value(self):
 		return self.groupInfo['footer']

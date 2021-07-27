@@ -66,15 +66,15 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs['placeholder']= placeholder
 		accRole=attrs['IAccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
-		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
+		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
 		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
-			role=controlTypes.ROLE_BLOCKQUOTE
+			role=controlTypes.Role.BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
-		if role == controlTypes.ROLE_EDITABLETEXT and not (controlTypes.STATE_FOCUSABLE in states or controlTypes.STATE_UNAVAILABLE in states or controlTypes.STATE_EDITABLE in states):
+		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.STATE_FOCUSABLE in states or controlTypes.STATE_UNAVAILABLE in states or controlTypes.STATE_EDITABLE in states):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
-			role = controlTypes.ROLE_STATICTEXT
+			role = controlTypes.Role.STATICTEXT
 		if attrs.get("detailsSummary") is not None:
 			states.add(controlTypes.STATE_HAS_ARIA_DETAILS)
 		if attrs.get("IAccessibleAction_showlongdesc") is not None:
@@ -98,26 +98,26 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs['roleText']=roleText
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.STATE_DROPTARGET)
-		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
+		if role==controlTypes.Role.LINK and controlTypes.STATE_LINKED not in states:
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
-			role=controlTypes.ROLE_TEXTFRAME
+			role=controlTypes.Role.TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
 		xmlRoles = attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
-		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
+		if landmark and role != controlTypes.Role.LANDMARK and landmark != xmlRoles[0]:
 			# Ignore the landmark role
 			landmark = None
-		if role == controlTypes.ROLE_DOCUMENT and xmlRoles[0] == "article":
-			role = controlTypes.ROLE_ARTICLE
-		elif role == controlTypes.ROLE_GROUPING and xmlRoles[0] == "figure":
-			role = controlTypes.ROLE_FIGURE
-		elif role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_SECTION) and xmlRoles[0] == "region":
-			role = controlTypes.ROLE_REGION
+		if role == controlTypes.Role.DOCUMENT and xmlRoles[0] == "article":
+			role = controlTypes.Role.ARTICLE
+		elif role == controlTypes.Role.GROUPING and xmlRoles[0] == "figure":
+			role = controlTypes.Role.FIGURE
+		elif role in (controlTypes.Role.LANDMARK, controlTypes.Role.SECTION) and xmlRoles[0] == "region":
+			role = controlTypes.Role.REGION
 		elif xmlRoles[0] == "switch":
 			# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
 			# checked state instead of pressed. The simplest way to deal with this
 			# identity crisis is to map it to a check box.
-			role = controlTypes.ROLE_CHECKBOX
+			role = controlTypes.Role.CHECKBOX
 			states.discard(controlTypes.STATE_PRESSED)
 		attrs['role']=role
 		attrs['states']=states
@@ -271,7 +271,7 @@ class Gecko_ia2(VirtualBuffer):
 		return docHandle,ID
 
 	def _shouldIgnoreFocus(self, obj):
-		if obj.role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE not in obj.states:
+		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.STATE_EDITABLE not in obj.states:
 			return True
 		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
 
@@ -282,7 +282,7 @@ class Gecko_ia2(VirtualBuffer):
 		super(Gecko_ia2, self)._postGainFocus(obj)
 
 	def _shouldSetFocusToObj(self, obj):
-		if obj.role == controlTypes.ROLE_GRAPHIC and controlTypes.STATE_LINKED in obj.states:
+		if obj.role == controlTypes.Role.GRAPHIC and controlTypes.STATE_LINKED in obj.states:
 			return True
 		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj)
 

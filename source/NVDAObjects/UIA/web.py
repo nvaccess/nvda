@@ -202,12 +202,12 @@ class UIAWebTextInfo(UIATextInfo):
 		# Fields should be treated as block for certain roles.
 		# This can affect whether the field is presented as a container (e.g.  announcing entering and exiting)
 		if role in (
-			controlTypes.ROLE_GROUPING,
-			controlTypes.ROLE_SECTION,
-			controlTypes.ROLE_PARAGRAPH,
-			controlTypes.ROLE_ARTICLE,
-			controlTypes.ROLE_LANDMARK,
-			controlTypes.ROLE_REGION,
+			controlTypes.Role.GROUPING,
+			controlTypes.Role.SECTION,
+			controlTypes.Role.PARAGRAPH,
+			controlTypes.Role.ARTICLE,
+			controlTypes.Role.LANDMARK,
+			controlTypes.Role.REGION,
 		):
 			field['isBlock'] = True
 		ariaProperties = splitUIAElementAttribs(
@@ -218,7 +218,7 @@ class UIAWebTextInfo(UIATextInfo):
 		# provide landmarks
 		field['landmark'] = obj.landmark
 		# Combo boxes with a text pattern are editable
-		if obj.role == controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
+		if obj.role == controlTypes.Role.COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
 		# report if the field is 'current'
 		field['current'] = obj.isCurrent
@@ -246,14 +246,14 @@ class UIAWebTextInfo(UIATextInfo):
 				field['content'] = content
 		elif isEmbedded:
 			field['content'] = obj.value
-			if field['role'] == controlTypes.ROLE_GROUPING:
-				field['role'] = controlTypes.ROLE_EMBEDDEDOBJECT
+			if field['role'] == controlTypes.Role.GROUPING:
+				field['role'] = controlTypes.Role.EMBEDDEDOBJECT
 				if not obj.value:
 					field['content'] = obj.name
 		elif hasAriaLabel or hasAriaLabelledby:
 			field['alwaysReportName'] = True
 		# Give lists an item count
-		if obj.role == controlTypes.ROLE_LIST:
+		if obj.role == controlTypes.Role.LIST:
 			child = UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
 			if child:
 				field['_childcontrolcount'] = child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
@@ -344,13 +344,13 @@ class UIAWeb(UIA):
 	def _isIframe(self):
 		role = super().role
 		return (
-			role == controlTypes.ROLE_PANE
+			role == controlTypes.Role.PANE
 			and self.UIATextPattern
 		)
 
 	def _get_role(self):
 		if self._isIframe():
-			return controlTypes.ROLE_INTERNALFRAME
+			return controlTypes.Role.INTERNALFRAME
 		ariaRole = self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# The role used is the first role in the list that has an associated NVDA role in aria.ariaRolesToNVDARoles
@@ -363,10 +363,10 @@ class UIAWeb(UIA):
 	def _get_states(self):
 		states = super().states
 		if self.role in (
-			controlTypes.ROLE_STATICTEXT,
-			controlTypes.ROLE_GROUPING,
-			controlTypes.ROLE_SECTION,
-			controlTypes.ROLE_GRAPHIC,
+			controlTypes.Role.STATICTEXT,
+			controlTypes.Role.GROUPING,
+			controlTypes.Role.SECTION,
+			controlTypes.Role.GRAPHIC,
 		) and self.UIAInvokePattern:
 			states.add(controlTypes.STATE_CLICKABLE)
 		return states
@@ -498,7 +498,7 @@ class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocu
 		# Enter focus mode for selectable list items (<select> and role=listbox)
 		if (
 			reason == controlTypes.OutputReason.FOCUS
-			and obj.role == controlTypes.ROLE_LISTITEM
+			and obj.role == controlTypes.Role.LISTITEM
 			and controlTypes.STATE_SELECTABLE in obj.states
 		):
 			return True

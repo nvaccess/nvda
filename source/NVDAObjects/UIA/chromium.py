@@ -44,10 +44,10 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 			endOfNode=endOfNode
 		)
 		# use the value of comboboxes as content.
-		if obj.role == controlTypes.ROLE_COMBOBOX:
+		if obj.role == controlTypes.Role.COMBOBOX:
 			field['content'] = obj.value
 		# Layout tables do not have the UIA table pattern
-		if field['role'] == controlTypes.ROLE_TABLE:
+		if field['role'] == controlTypes.Role.TABLE:
 			if not obj._getUIACacheablePropertyValue(UIAHandler.UIA_IsTablePatternAvailablePropertyId):
 				field['table-layout'] = True
 		# Currently no way to tell if author has explicitly set name.
@@ -74,4 +74,4 @@ class ChromiumUIADocument(ChromiumUIA):
 	treeInterceptorClass = ChromiumUIATreeInterceptor
 
 	def _get_shouldCreateTreeInterceptor(self):
-		return self.role == controlTypes.ROLE_DOCUMENT
+		return self.role == controlTypes.Role.DOCUMENT

@@ -807,7 +807,7 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 		return None
 
 	def _get_role(self):
-		return controlTypes.ROLE_EDITABLETEXT
+		return controlTypes.Role.EDITABLETEXT
 
 	def event_caret(self):
 		global selOffsetsAtLastCaretEvent

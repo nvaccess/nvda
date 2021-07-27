@@ -196,7 +196,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			# Interactive list/combo box/tree view descendants aren't rendered into the buffer, even though they are still considered part of it.
 			# Use the container in this case.
 			obj = obj.parent
-			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_GROUPING, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM):
+			if not obj or obj.role not in (controlTypes.Role.LIST, controlTypes.Role.COMBOBOX, controlTypes.Role.GROUPING, controlTypes.Role.TREEVIEW, controlTypes.Role.TREEVIEWITEM):
 				break
 		raise LookupError
 
@@ -331,7 +331,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
 			attrs["table-%sheadertext" % axis] = "\n".join(textList)
 
-		if attrs.get("role") in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION):
+		if attrs.get("role") in (controlTypes.Role.LANDMARK, controlTypes.Role.REGION):
 			attrs['alwaysReportName'] = True
 
 		# Expose a unique ID on the controlField for quick and safe comparison using the virtualBuffer field's docHandle and ID
