@@ -271,7 +271,7 @@ class FileHandler(logging.FileHandler):
 		shouldPlayErrorSound = (
 			buildVersion.isTestVersion
 			# Play error sound: 1 = Yes
-			or config.conf["featureFlag"]["playErrorSound"] == 1
+			or (config.conf is not None and config.conf["featureFlag"]["playErrorSound"] == 1)
 		)
 		if record.levelno>=logging.CRITICAL:
 			try:
