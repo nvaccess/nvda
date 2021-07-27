@@ -4,8 +4,8 @@
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
-This implementation only works between Windows 8 and tested Windows 10 builds.
 The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
+This module has been tested on Windows versions specified by winVersion.isFullScreenMagnificationAvailable.
 """
 
 import os
@@ -30,8 +30,9 @@ class MAGCOLOREFFECT(Structure):
 
 # homogeneous matrix for a 4-space transformation (red, green, blue, opacity).
 # https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
-TRANSFORM_BLACK = MAGCOLOREFFECT()
-TRANSFORM_BLACK.transform[4][4] = 1.0
+TRANSFORM_BLACK = MAGCOLOREFFECT()  # empty transformation
+TRANSFORM_BLACK.transform[4][4] = 1.0  # retain as an affine transformation
+TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while subtracting other colours (#12491)
 
 
 def _errCheck(result, func, args):

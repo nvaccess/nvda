@@ -795,11 +795,8 @@ You can enable the Screen Curtain in the [vision category #VisionSettings] of th
 
 When the screen curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
 
-NVDA Screen Curtain is not supported on builds of Windows later than Windows 10 21H2.
-This includes Windows 10 Insiders and Windows 11.
-This is due to a breaking change in the Windows Magnification API.
-When using NVDA releases older than 2021.2 and Windows later than Windows 10 21H2, screen curtain may fail to work without warning.
-Screen Curtain support for newer versions of Windows is a high priority for NV Access.
+To ensure security, confirm that the screen curtain works properly with new or experimental versions of Windows.
+When using NVDA releases older than 2021.2 and Windows newer than Windows 10 21H2, screen curtain may fail to work without warning.
 
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.

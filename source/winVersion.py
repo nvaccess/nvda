@@ -217,11 +217,9 @@ if version_year < 2022:
 	}
 
 
-def isFullScreenMagnificationAvailable():
-	# Technically this is always False:
-	# The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA.
-	# For our usages, Windows 8 and tested Windows 10 builds support this.
-	# Windows 10 insiders and Windows 11 has broken screen curtain, fix TBA. (#12491)
-	currentWinVersion = getWinVer()
-	lastTestedWin10 = WIN10_21H2
-	return currentWinVersion >= WIN8 and currentWinVersion <= lastTestedWin10
+def isFullScreenMagnificationAvailable() -> bool:
+	"""
+	Technically this is always False. The Magnification API has been marked by MS as unsupported for
+	WOW64 applications such as NVDA. For our usages, support has been added since Windows 8.
+	"""
+	return getWinVer() >= WIN8
