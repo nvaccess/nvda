@@ -5,6 +5,17 @@ What's New in NVDA
 
 = 2021.2 =
 
+== Important notes ==
+- NVDA Screen Curtain is not supported on builds of Windows later than Windows 10 21H2.
+This includes Windows 10 Insiders and Windows 11.
+This is due to a breaking change in the Windows Magnification API.
+This release prevents activating screen curtain on untested Windows versions.
+When using previous NVDA releases and Windows later than Windows 10 21H2, screen curtain may fail to work without warning.
+Screen Curtain support for newer versions of Windows is a high priority for NV Access.
+(#12491, #12684)
+-
+
+
 == New Features ==
 - Support for ARIA annotations:
   - adds a command to read a summary of details of an object with aria-details. (#12364)
