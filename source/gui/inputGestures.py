@@ -432,7 +432,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 
 	def OnGetChildrenCount(self, index: Tuple[int, ...]) -> int:
 		filteredGesturesVM = self.gesturesVM.filteredGestures
-		if not index:  # Root node
+		if not index or not len(filteredGesturesVM):  # An empty index indicates the root node is requested
 			return len(filteredGesturesVM)
 		catIndex = index[0]
 		categoryVM = filteredGesturesVM[catIndex]
@@ -452,7 +452,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 	def OnGetItemText(self, index: Tuple[int, ...], column: int = 0) -> str:
 		filteredGesturesVM = self.gesturesVM.filteredGestures
 
-		assert len(index) >= 1
+		assert len(index) >= 1 and len(filteredGesturesVM) >= 1
 		catIndex = index[0]
 		catVM = filteredGesturesVM[catIndex]
 		if len(index) == 1:  # Get the display name of a category
@@ -480,7 +480,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 		gesture = scriptVm.gestures[gestureIndex]
 		return gesture.displayName
 
-	def getSelectedItemData(self) -> _VmSelection:
+	def getSelectedItemData(self) -> Optional[_VmSelection]:
 		selection = self.GetSelection()
 		selIdx: Tuple[int, ...] = self.GetIndexOfItem(selection)
 		# ensure that the length of tuple is 3, missing elements replaced with None
@@ -491,8 +491,11 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 	def getData(
 			self,
 			index: Tuple[int, Optional[int], Optional[int]]
-	) -> _VmSelection:
+	) -> Optional[_VmSelection]:
 		assert 3 == len(index) and index[0] is not None
+		if len(self.gesturesVM.filteredGestures) == 0:
+			log.debug("No filtered gestures available.")
+			return None
 		catIndex, scriptIndex, gestureIndex = index
 		log.debug(f"Getting data for item indexes {index}")
 		try:
@@ -640,8 +643,11 @@ class InputGesturesDialog(SettingsDialog):
 
 	def _refreshButtonState(self):
 		selectedItems = self.tree.getSelectedItemData()
-		# get the leaf of the selection
-		item = next((item for item in reversed(selectedItems) if item is not None), None)
+		if selectedItems is None:
+			item = None
+		else:
+			# get the leaf of the selection
+			item = next((item for item in reversed(selectedItems) if item is not None), None)
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
 		self.addButton.Enabled = bool(item and item.canAdd and not pendingAdd)
 		self.removeButton.Enabled = bool(item and item.canRemove and not pendingAdd)
@@ -651,7 +657,9 @@ class InputGesturesDialog(SettingsDialog):
 			# don't add while already in process of adding.
 			return
 
-		catVM, scriptVM, gestureVM = self.tree.getSelectedItemData()
+		selectedItems = self.tree.getSelectedItemData()
+		assert selectedItems is not None
+		catVM, scriptVM, gestureVM = selectedItems
 		log.debug(f"selection: {catVM}, {scriptVM}, {gestureVM}")
 
 		if scriptVM is None and isinstance(catVM, _EmuCategoryVM):
@@ -740,7 +748,9 @@ class InputGesturesDialog(SettingsDialog):
 		self._refreshButtonState()
 
 	def onRemove(self, evt):
-		catVM, scriptVM, gestureVM = self.tree.getSelectedItemData()
+		selectedItems = self.tree.getSelectedItemData()
+		assert selectedItems is not None
+		catVM, scriptVM, gestureVM = selectedItems
 		if gestureVM is not None:  # removing a gesture
 			scriptVM.removeGesture(gestureVM)
 		elif isinstance(scriptVM, _EmulatedGestureVM):  # removing a emulated KB gesture
