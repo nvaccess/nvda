@@ -66,7 +66,7 @@ For further details, you can [view the full license. https://www.gnu.org/license
 For details regarding exceptions, access the license document from the NVDA menu under the "help" section.
 
 + System Requirements +[SystemRequirements]
-- Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
+- Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2008 R2.
  - For Windows 7, NVDA requires Service Pack 1 or higher.
  - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
 - at least 150 MB of storage space.
@@ -797,7 +797,7 @@ When the screen curtain is active some tasks directly based on what appears on t
 
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
-NVDA supports the optical character recognition (OCR) functionality built into Windows 10 to recognize text from images.
+NVDA supports the optical character recognition (OCR) functionality built into Windows 10 and later to recognize text from images.
 Additional content recognizers can be provided in NVDA add-ons.
 
 When you use a content recognition command, NVDA recognizes content from the current [navigator object #ObjectNavigation].
@@ -810,7 +810,7 @@ Pressing enter or space will activate (normally click) the text at the cursor if
 Pressing escape dismisses the recognition result.
 
 ++ Windows OCR ++[Win10Ocr]
-Windows 10 includes OCR for many languages.
+Windows 10 and later includes OCR for many languages.
 NVDA can use this to recognize text from images or inaccessible applications.
 
 You can set the language to use for text recognition in the [Windows OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
@@ -1835,7 +1835,7 @@ If you suffer from performance issues in one or more applications, We recommend 
 ==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
 When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls.
 This includes Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
- For the most recent versions of Microsoft Office 2016/365 running on windows 10, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
+ For the most recent versions of Microsoft Office 2016/365 running on Windows 10 and later, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
 However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
 
@@ -2263,7 +2263,7 @@ For an even more extensive list of  free and commercial synthesizers that you ca
 
 ++ eSpeak NG ++[eSpeakNG]
 The [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-On Windows 7, 8 and 8.1, NVDA uses eSpeak NG by default ([Windows OneCore #OneCore] is used in Windows 10 by default).
+On Windows 7, 8 and 8.1, NVDA uses eSpeak NG by default ([Windows OneCore #OneCore] is used in Windows 10 and later by default).
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak NG speaks a different language.
@@ -2297,9 +2297,9 @@ To use these voices, you will need to install two components:
 -
 
 ++ Windows OneCore Voices ++[OneCore]
-Windows 10 includes new voices known as "OneCore" or "mobile" voices.
+Windows 10 and later includes voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
-On Windows 10, NVDA uses Windows OneCore voices by default ([eSpeak NG #eSpeakNG] is used in other releases).
+On Windows 10 and later, NVDA uses Windows OneCore voices by default ([eSpeak NG #eSpeakNG] is used in other releases).
 
 To add new Windows OneCore voices, go to "Speech Settings", within Windows system settings. 
 Use the "Add voices" option and search for the desired language.
@@ -2516,7 +2516,7 @@ If connecting via USB to displays which do not use HID, you must first install t
 The VarioUltra and Pronto! use HID.
 The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
 
-The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10.
+The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10 and later.
 USB HID should generally be used instead.
 
 Following are the key assignments for these displays with NVDA.
@@ -3119,7 +3119,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]
 NVDA supports displays from [Nattiq Technologies https://www.nattiq.com/] when connected via USB.
-Windows 10 detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
+Windows 10 and later detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
 You can get them from the manufacturer's website.
 
 Following are the key assignments for Nattiq Technologies displays with NVDA.
