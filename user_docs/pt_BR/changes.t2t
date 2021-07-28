@@ -753,7 +753,7 @@ Os destaques desta versão incluem melhorias de desempenho em versões recentes 
 
 
 == Alterações ==
-- "Anunciar balões de ajuda" na caixa de diálogo "Apresentações de objetos" foi renomeado para "Anunciar notificações" para incluir anúncios de notificações do sistema no Windows 8 e versões posteriores. (#5789)
+- "Anunciar balões de ajuda" na caixa de diálogo "Apresentações de objetos" foi renomeado para "Anunciar notificações" para incluir anúncios de notificações do sistema ""[toast]"" no Windows 8 e versões posteriores. (#5789)
 - Nas configurações do teclado do NVDA, as caixas de seleção para ativar ou desativar as teclas modificadoras do NVDA agora são exibidas em uma lista e não como caixas de seleção separadas.
 - O NVDA não apresentará mais informações redundantes ao ler o relógio da bandeja do sistema ""[system tray]"" em algumas versões do Windows. (#4364)
 - Atualizado o transcritor braille liblouis para a versão 3.7.0. (#8697)
@@ -1134,7 +1134,7 @@ Os destaques desta versão incluem a entrada de braille abreviado, suporte para 
 - Em texto editável, ao mover o cursor (por exemplo, com as teclas de cursor ou backspace), a resposta falada do NVDA é agora mais precisa em muitos casos, especialmente no Chrome e nos aplicativos de terminal. (#6424)
 - O conteúdo do editor de assinaturas no Microsoft Outlook 2016 agora pode ser lido. (#7253)
 - Nos aplicativos Java Swing, o NVDA não faz mais o aplicativo falhar ao navegar nas tabelas. (#6992)
-- No Windows 10 atualização para Criadores, o NVDA não anunciará mais as notificações toast várias vezes. (#7128)
+- No Windows 10 atualização para Criadores, o NVDA não anunciará mais as notificações do sistema ""[toast]"" várias vezes. (#7128)
 - No menu Iniciar em Windows 10, pressionar Enter para fechar o menu Iniciar depois de uma pesquisa não faz mais com que o NVDA anuncie caixa de pesquisa ""[search text]"". (#7370)
 - Executar uma navegação rápida por cabeçalhos no Microsoft Edge agora é significativamente mais rápido. (#7343)
 - No Microsoft Edge, a navegação em modo de navegação já não ignora partes grandes de determinadas páginas da web, como o tema 2015 do Wordpress. (#7143)
@@ -1571,7 +1571,7 @@ Os destaques desta versão incluem o suporte inicial ao Windows 10; a possibilid
 - Em Modo de Navegação no Microsoft Word, a navegação por caractere agora atualiza a linha braille e o cursor de exploração como é esperado. (#4968)
 - Em braille, espaços estranhos já não são mostrados entre ou depois de indicadores para controles e formatação. (#5043)
 - Quando um aplicativo está demorando a responder e você alterna dele para outro, o NVDA responde bem mais rápido em outros aplicativos em muitos casos. (#3831)
-- As notificações do Windows 10 agora são anunciadas como é esperado. (#5136)
+- As Notificações de Sistema do Windows 10 agora são anunciadas como é esperado. (#5136)
 - Os valores agora são anunciados quando alterados em certas caixas de combinação (UI Automation) onde tal não era possível anteriormente.
 - No modo de navegação em navegadores web, agora move-se com tab como é esperado depois de mover-se para uma frame. (#5227)
 - Agora pode-se sair da tela de bloqueio do Windows 10 usando um dispositivo de tela tátil. (#5220)
@@ -2111,7 +2111,7 @@ Entre os destaques desta versão estão inclusos o suporte para entrada de carac
 - Quando a função de teclas de aderência estiver ativada no Windows, a tecla modificadora do NVDA agora se comportará como outras teclas modificadoras. Isto lhe permite usar a tecla modificadora do NVDA sem que precise mantê-la pressionada enquanto pressiona outras teclas. (#230)
 - O anúncio automático dos cabeçalhos das linhas e colunas agora é suportado no Microsoft Excel. Pressione NVDA+shift+c para selecionar a linha que contém os cabeçalhos das colunas e NVDA+shift+r para selecionar a coluna que contém os cabeçalhos das linhas. Pressione esses mesmos comandos duas vezes em rápida sucessão se pretender limpar a configuração feita. (#1519)
 - Suporte para as linhas Braille Sense, Braille EDGE e SyncBraille da HIMS. (#1266, #1267)
-- Quando as notificações no Windows 8 aparecem, o NVDA as anuncia e move a navegação de objetos para o local, permitindo uma interação adicional. (#2143)
+- Quando as Notificações do Sistema no Windows 8 aparecem, o NVDA as anuncia e move a navegação de objetos para o local, permitindo uma interação adicional. (#2143)
 - Suporte experimental para Touch screens no Windows 8, incluindo:
  - Leitura de textos diretamente por onde você move seus dedos
  - Vários gestos para executar a navegação de objetos, revisão de textos, e outros comandos do NVDA.
