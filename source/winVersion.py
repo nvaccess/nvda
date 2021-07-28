@@ -157,6 +157,7 @@ WINSERVER_2022 = WinVersion(major=10, minor=0, build=20348)
 WIN11 = WIN11_21H2 = WinVersion(major=10, minor=0, build=22000)
 
 
+@functools.lru_cache(maxsize=1)
 def getWinVer():
 	"""Returns a record of current Windows version NVDA is running on.
 	"""
