@@ -42,6 +42,13 @@ def initialize():
 
 
 def _collectionCallback(action, info):
+	try:
+		_collectionCallback_helper(action, info)
+	except RecursionError:
+		log.error("Hit recursion depth in gc callback", stack_info=True, exc_info=True)
+
+
+def _collectionCallback_helper(action, info):
 	global _collectionThreadID, _reportCountDuringCollection
 	if action == "start":
 		_collectionThreadID = threading.currentThread().ident
