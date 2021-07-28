@@ -482,7 +482,15 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 
 	def getSelectedItemData(self) -> Optional[_VmSelection]:
 		selection = self.GetSelection()
-		selIdx: Tuple[int, ...] = self.GetIndexOfItem(selection)
+		try:
+			selIdx: Tuple[int, ...] = self.GetIndexOfItem(selection)
+		except AssertionError:
+			# If item.IsOK() fails on this item or any parents indexed, an assertion error is thrown. (#12673)
+			log.debugWarning(
+				"",
+				exc_info=True,
+			)
+			return None
 		# ensure that the length of tuple is 3, missing elements replaced with None
 		nonesForMissingElements = ((None, ) * (3 - len(selIdx)))
 		selIdx: Tuple[int, Optional[int], Optional[int]] = selIdx + nonesForMissingElements
