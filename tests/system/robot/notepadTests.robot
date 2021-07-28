@@ -27,11 +27,11 @@ default setup
 	start NVDA	standard-dontShowWelcomeDialog.ini
 
 *** Test Cases ***
-symbolLevelWord
+moveByWord with symbolLevelWord
 	# Disabled due to revert of PR #11856 is: "Speak all symbols when moving by words (#11779)
 	[Tags]	excluded_from_build
-	[Documentation]	Ensure all symbols are read when navigating by word. 
-	test symbolLevelWord all
-symbolLevelWord off
-	[Documentation]	Use default behaviour of reading symbols when navigating by word.
-	test symbolLevelWord default
+	[Documentation]	Ensure all symbols are read when navigating by word.
+	test_moveByWord_symbolLevelWord
+moveByWord
+	[Documentation]	Ensure symbols announced as expected when navigating by word.
+	test_moveByWord
