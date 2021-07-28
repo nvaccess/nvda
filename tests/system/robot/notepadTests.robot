@@ -31,5 +31,4 @@ symbolLevelWord
 	test symbolLevelWord all
 symbolLevelWord off
 	[Documentation]	Use default behaviour of reading symbols when navigating by word.
-	[Setup]	start NVDA	symbolLevelWordOff.ini
 	test symbolLevelWord default

@@ -39,6 +39,9 @@ _wordsToExpectedSymbolLevelDefaultSpeech = {
 
 
 def test_symbolLevelWord_all():
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(["speech", "symbolLevelWordAll"], True)
+
 	textStr = ' '.join(_wordsToExpectedSymbolLevelAllSpeech.keys())
 	_notepad.prepareNotepad(f"Test: {textStr}")
 	for expectedWord in _wordsToExpectedSymbolLevelAllSpeech.values():
@@ -47,6 +50,9 @@ def test_symbolLevelWord_all():
 
 
 def test_symbolLevelWord_default():
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(["speech", "symbolLevelWordAll"], False)
+
 	textStr = ' '.join(_wordsToExpectedSymbolLevelDefaultSpeech.keys())
 	_notepad.prepareNotepad(f"Test: {textStr}")
 	for expectedWord in _wordsToExpectedSymbolLevelDefaultSpeech.values():
