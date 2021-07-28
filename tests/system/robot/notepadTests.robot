@@ -28,6 +28,8 @@ default setup
 
 *** Test Cases ***
 symbolLevelWord
+	# Disabled due to revert of PR #11856 is: "Speak all symbols when moving by words (#11779)
+	[Tags]	excluded_from_build
 	[Documentation]	Ensure all symbols are read when navigating by word. 
 	test symbolLevelWord all
 symbolLevelWord off

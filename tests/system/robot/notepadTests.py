@@ -25,20 +25,22 @@ _wordsToExpectedSymbolLevelAllSpeech = {
 	'(quietly)': 'left paren(quietly right paren)',
 	'"Hello,': 'quote Hello comma,',
 	'Jim".': 'Jim quote  dot.',
-	'➔': 'right-pointing arrow',
-	'👕': 't-shirt',  # fails, actual text:  "t dash shirt"
+	'➔': 'right pointing arrow',  # Speech for symbols shouldn't change
+	'👕': 't shirt',  # Speech for symbols shouldn't change
 }
 _wordsToExpectedSymbolLevelDefaultSpeech = {
 	'Say': 'Say',
 	'(quietly)': '(quietly)',
 	'"Hello,': 'Hello,',
 	'Jim".': 'Jim .',
-	'➔': 'right-pointing arrow',
-	'👕': 't-shirt',  # fails, actual text:  "t shirt"
+	'➔': 'right pointing arrow',
+	'👕': 't shirt',
 }
 
 
 def test_symbolLevelWord_all():
+	"""Disabled due to revert of PR #11856 is: "Speak all symbols when moving by words (#11779)
+	"""
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(["speech", "symbolLevelWordAll"], True)
 
