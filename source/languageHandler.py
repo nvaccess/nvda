@@ -153,7 +153,7 @@ def getWindowsLanguage():
 	"""
 	Fetches the locale name of the user's configured language in Windows.
 	"""
-	windowsLCID = ctypes.windll.kernel32.GetUserDefaultLCID()
+	windowsLCID=ctypes.windll.kernel32.GetUserDefaultUILanguage()
 	localeName = windowsLCIDToLocaleName(windowsLCID)
 	if not localeName:
 		# #4203: some locale identifiers from Windows 8 do not exist in Python's list.
