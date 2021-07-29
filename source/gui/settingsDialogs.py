@@ -1493,16 +1493,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel)
 		)
 
-		self.symbolLevelWordAll = settingsSizerHelper.addItem(
-			wx.CheckBox(
-				self,
-				# Translators: The label for a setting in the Speech category
-				label=_("Speak all punctuation and symbols when reviewing by &word"),
-			)
-		)
-		self.bindHelpEvent("SpeechSettingsSymbolLevelWord", self.symbolLevelWordAll)
-		self.symbolLevelWordAll.SetValue(config.conf["speech"]["symbolLevelWordAll"])
-
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel (if checked, text will be read using the voice for the language of the text).
 		trustVoiceLanguageText = _("Trust voice's language when processing characters and symbols")
@@ -1593,7 +1583,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"]["symbolLevel"] = characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[
 			self.symbolLevelList.GetSelection()
 		].value
-		config.conf["speech"]["symbolLevelWordAll"] = self.symbolLevelWordAll.IsChecked()
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
 		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
