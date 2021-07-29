@@ -103,6 +103,7 @@ def _getMoveByCharTestSample() -> str:
 def test_moveByWord():
 	"""Move by word with symbol level 'all' then with symbol level 'none'
 	"""
+	_setMoveByWordReportAllSymbols(False)  # don't override: do observe symbolLevel setting
 	_notepad.prepareNotepad(_getMoveByWordTestSample())
 	_doTest(
 		navKey=Move.WORD,
@@ -110,15 +111,17 @@ def test_moveByWord():
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
 			'Say',
-			'(quietly)', 'Hello,', 'Jim', '.',  # no symbols named
-			"don't",  # mid-word symbol
-			'right pointing arrow', 't shirt',
+			# symbols shouldn't be named:
+			'(quietly)', 'Hello,', 'Jim', '.',
+			"don't",  # mid-word symbol, tick shouldn't be substituted at level NONE
+			'', 't-shirt',  # right arrow is not spoken!
 			# end of first line
 			'blank',  # single space and newline
 			'',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'right pointing arrow',
-			't shirt',  # no space before or after symbol
+			'',  # right arrow is not spoken!
+			't-shirt',  # no space before or after symbol
+			# note different result with no space character
 			't shirt',  # no character before or after symbol (no newline)
 			'blank',  # end of doc
 		],
@@ -135,20 +138,76 @@ def test_moveByWord():
 			'left paren(quietly right paren)',  # parenthesis are named
 			'quote Hello comma,', 'Jim', 'quote  dot.',  # quote, comma and dot are named
 			'don tick t',  # mid-word symbol
-			'right dash pointing arrow', 't dash shirt',
+			'right-pointing arrow', 't-shirt',
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'right dash pointing arrow',  # no space before or after symbol
-			't dash shirt',  # no space before or after symbol
+			'right-pointing arrow',  # no space before or after symbol
+			# note different result with no space character
+			't-shirt',  # no space before or after symbol
 			't dash shirt',  # no character before or after symbol (no newline)
 			'blank'  # end of doc
 		]
 	)
 
 
+def test_moveByWord_speakAllSymbols():
+	"""With speakAllSymbols enabled for move by word,
+	check output with symbol level 'all' then with symbol level 'none'
+	"""
+	# when true, symbolLevel setting is expected to be overridden to ALL when moving by word.
+	_setMoveByWordReportAllSymbols(True)
+	_notepad.prepareNotepad(_getMoveByWordTestSample())
+	_doTest(
+		navKey=Move.WORD,
+		reportedAfterLast=EndSpeech.BOTTOM,
+		symbolLevel=SymLevel.NONE,  # NONE overridden by _setMoveByWordReportAllSymbols
+		expectedSpeech=[
+			'Say',
+			# symbols should be named, symbol level overridden, now ALL
+			'left paren(quietly right paren)', 'quote Hello comma,', 'Jim', 'quote  dot.',
+			"don tick t",  # mid-word symbol, tick should be substituted
+			'right-pointing arrow', 't-shirt',
+			# end of first line
+			'blank',  # single space and newline
+			'tab',  # tab and newline
+			'blank',  # 4 spaces and newline
+			'right-pointing arrow',
+			't-shirt',  # no space before or after symbol
+			# note different result with no space character
+			't dash shirt',  # no character before or after symbol (no newline)
+			'blank',  # end of doc
+		],
+	)
+
+	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position
+
+	_doTest(
+		navKey=Move.WORD,
+		reportedAfterLast=EndSpeech.BOTTOM,
+		symbolLevel=SymLevel.ALL,
+		expectedSpeech=[
+			'Say',
+			# symbols should be named, symbol level overridden, now ALL
+			'left paren(quietly right paren)', 'quote Hello comma,', 'Jim', 'quote  dot.',
+			"don tick t",  # mid-word symbol, tick should be substituted
+			'right-pointing arrow', 't-shirt',
+			# end of first line
+			'blank',  # single space and newline
+			'tab',  # tab and newline
+			'blank',  # 4 spaces and newline
+			'right-pointing arrow',
+			't-shirt',  # no space before or after symbol
+			# note different result with no space character
+			't dash shirt',  # no character before or after symbol (no newline)
+			'blank',  # end of doc
+		]
+	)
+
+
 def test_moveByLine():
+	_setMoveByWordReportAllSymbols(False)  # should have no impact here, included for completeness
 	_notepad.prepareNotepad(_getMoveByLineTestSample())
 	_doTest(
 		navKey=Move.LINE,
@@ -191,6 +250,7 @@ def test_moveByLine():
 
 
 def test_moveByChar():
+	_setMoveByWordReportAllSymbols(False)  # should have no impact here, included for completeness
 	_notepad.prepareNotepad(_getMoveByCharTestSample())
 	# Symbol level should not affect move by character
 	# use the same expected speech with symbol level none and all.
@@ -206,7 +266,7 @@ def test_moveByChar():
 			'left paren', 'right paren',
 			'quote', 'tick',
 			'e', 'comma',
-			'right pointing arrow', 't shirt',   # note no dash, sym level All has
+			'right dash pointing arrow', 't dash shirt',   # Should be no 'dash', only if sym level All
 			'tab',
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
@@ -224,7 +284,7 @@ def test_moveByChar():
 			'left paren', 'right paren',
 			'quote', 'tick',
 			'e', 'comma',
-			'right dash pointing arrow', 't dash shirt',  # note has dash, sym level None doesn't
+			'right dash pointing arrow', 't dash shirt',  # Note 'dash', not if sym level None
 			'tab',
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
@@ -233,6 +293,7 @@ def test_moveByChar():
 
 
 def test_symbolInSpeechUI():
+	_setMoveByWordReportAllSymbols(False)  # should have no impact here, included for completeness
 	_notepad.prepareNotepad((
 		"t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
 	))
@@ -277,6 +338,13 @@ def _setSymbolLevel(symbolLevel: SymLevel) -> None:
 	SYMBOL_LEVEL_KEY = ["speech", "symbolLevel"]
 	spy.set_configValue(SYMBOL_LEVEL_KEY, symbolLevel.value)
 	_builtIn.log(message=f"Doing test at symbol level: {symbolLevel}")
+
+
+def _setMoveByWordReportAllSymbols(shouldReportAllSyms: bool) -> None:
+	spy = _NvdaLib.getSpyLib()
+	MOVE_BY_WORD_ALL_SYMBOLS_KEY = ["speech", "symbolLevelWordAll"]
+	spy.set_configValue(MOVE_BY_WORD_ALL_SYMBOLS_KEY, shouldReportAllSyms)
+	_builtIn.log(message=f"Doing test at with report all symbols for move by word: {shouldReportAllSyms}")
 
 
 def _doTest(

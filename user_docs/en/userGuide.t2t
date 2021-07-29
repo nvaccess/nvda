@@ -1212,6 +1212,12 @@ This allows you to choose the amount of punctuation and other symbols that shoul
 For example, when set to all, all symbols will be spoken as words.
 This option applies to all synthesizers, not just the currently active synthesizer.
 
+==== Speak all punctuation and symbols when reviewing by word ====[SpeechSettingsSymbolLevelWord]
+
+When reviewing text by word, it is often desirable to get more details than when reading a whole sentence.
+When checked (by default), NVDA speaks the name of all punctuation and other symbols when reviewing by word, as if the above level was set to "all".
+Note: In any case, when reviewing text by character, NVDA always reports the name of punctuation and other symbols.
+
 ==== Trust voice's language when processing characters and symbols ====[SpeechSettingsTrust]
 On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
 If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.

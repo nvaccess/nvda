@@ -41,3 +41,7 @@ moveByLine
 moveByCharacter
 	[Documentation]	Ensure symbols announced as expected when navigating by character (numpad 3).
 	test_moveByChar
+
+moveByWordWithSpeakAllSymbols
+	[Documentation]	With speak all symbols for move by word, check symbols reported with word nav (numpad 6).
+	test_moveByWord_speakAllSymbols
