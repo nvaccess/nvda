@@ -15,6 +15,8 @@ What's New in NVDA
 
 == Changes ==
 - Espeak-ng has been updated to 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+- NVDA will default to eSpeak if no installed OneCore voices support the NVDA preferred language. (#10451)
+- If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)
 -
 
 

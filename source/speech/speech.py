@@ -182,7 +182,7 @@ def speakMessage(
 		speak(seq, symbolLevel=None, priority=priority)
 
 
-def getCurrentLanguage():
+def getCurrentLanguage() -> str:
 	synth = getSynth()
 	language=None
 	if  synth:
