@@ -441,7 +441,7 @@ if winVersion.getWinVer() >= winVersion.WIN10:
 	defaultSynthPriorityList.insert(0, 'oneCore')
 
 
-def setSynth(name, isFallback=False):
+def setSynth(name: Optional[str], isFallback: bool = False):
 	asDefault = False
 	global _curSynth, _audioOutputDevice
 	if name is None:
