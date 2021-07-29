@@ -43,9 +43,6 @@ def _getRunningVersionNameFromWinReg() -> str:
 	"""Returns the Windows release name defined in Windows Registry.
 	This is applicable on Windows 10 Version 1511 (build 10586) and later.
 	"""
-	# Release name is recorded in Windows Registry from Windows 10 Version 1511 (build 10586) onwards.
-	if getWinVer() < WIN10_1511:
-		raise RuntimeError("Release name is not recorded in Windows Registry on this version of Windows")
 	# Cache the version in use on the system.
 	with winreg.OpenKey(
 		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
@@ -58,7 +55,9 @@ def _getRunningVersionNameFromWinReg() -> str:
 			try:
 				releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
 			except OSError:
-				releaseId = ""
+				raise RuntimeError(
+					"Release name is not recorded in Windows Registry on this version of Windows"
+				) from None
 	return releaseId
 
 
@@ -158,6 +157,7 @@ WINSERVER_2022 = WinVersion(major=10, minor=0, build=20348)
 WIN11 = WIN11_21H2 = WinVersion(major=10, minor=0, build=22000)
 
 
+@functools.lru_cache(maxsize=1)
 def getWinVer():
 	"""Returns a record of current Windows version NVDA is running on.
 	"""
