@@ -42,7 +42,7 @@ class JAB_OOTable(JAB):
 
 class JAB_OOTableCell(JAB):
 
-	role=controlTypes.ROLE_TABLECELL
+	role=controlTypes.Role.TABLECELL
 
 	def _get_name(self):
 		name=super(JAB_OOTableCell,self).name
@@ -245,30 +245,30 @@ class AppModule(appModuleHandler.AppModule):
 		role=obj.role
 		windowClassName=obj.windowClassName
 		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME", "SALFRAME"):
-			if role==controlTypes.ROLE_TABLECELL:
+			if role==controlTypes.Role.TABLECELL:
 				clsList.insert(0, SymphonyTableCell)
-			elif role==controlTypes.ROLE_TABLE:
+			elif role==controlTypes.Role.TABLE:
 				clsList.insert(0, SymphonyTable)
 			elif hasattr(obj, "IAccessibleTextObject"):
 				clsList.insert(0, SymphonyText)
-			if role==controlTypes.ROLE_PARAGRAPH:
+			if role==controlTypes.Role.PARAGRAPH:
 				clsList.insert(0, SymphonyParagraph)
 		if isinstance(obj, JAB) and windowClassName == "SALFRAME":
-			if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_LABEL):
+			if role in (controlTypes.Role.PANEL,controlTypes.Role.LABEL):
 				parent=obj.parent
-				if parent and parent.role==controlTypes.ROLE_TABLE:
+				if parent and parent.role==controlTypes.Role.TABLE:
 					clsList.insert(0,JAB_OOTableCell)
-			elif role==controlTypes.ROLE_TABLE:
+			elif role==controlTypes.Role.TABLE:
 				clsList.insert(0,JAB_OOTable)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
 		if isinstance(obj, JAB) and windowClass == "SALFRAME":
 			# OpenOffice.org has some strange role mappings due to its use of JAB.
-			if obj.role == controlTypes.ROLE_CANVAS:
-				obj.role = controlTypes.ROLE_DOCUMENT
+			if obj.role == controlTypes.Role.CANVAS:
+				obj.role = controlTypes.Role.DOCUMENT
 
-		if windowClass in ("SALTMPSUBFRAME", "SALFRAME") and obj.role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_TEXTFRAME) and obj.description:
+		if windowClass in ("SALTMPSUBFRAME", "SALFRAME") and obj.role in (controlTypes.Role.DOCUMENT,controlTypes.Role.TEXTFRAME) and obj.description:
 			# This is a word processor document.
 			obj.description = None
 			obj.treeInterceptorClass = CompoundDocument

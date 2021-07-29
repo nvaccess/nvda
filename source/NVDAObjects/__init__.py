@@ -419,13 +419,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		return ""
 
 	#: Type definition for auto prop '_get_role'
-	role: int
+	role: controlTypes.Role
 
-	def _get_role(self) -> int:
+	def _get_role(self) -> controlTypes.Role:
 		"""The role or type of control this object represents (example: button, list, dialog).
-		@return: a ROLE_* constant from L{controlTypes}
 		"""  
-		return controlTypes.ROLE_UNKNOWN
+		return controlTypes.Role.UNKNOWN
 
 	def _get_roleText(self):
 		"""
@@ -434,7 +433,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		Examples of where this property might be overridden are shapes in Powerpoint, or ARIA role descriptions.
 		"""
 		if self.landmark and self.landmark in aria.landmarkRoles:
-			return f"{aria.landmarkRoles[self.landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
+			return f"{aria.landmarkRoles[self.landmark]} {controlTypes.roleLabels[controlTypes.Role.LANDMARK]}"
 		return None
 
 	def _get_roleTextBraille(self):
@@ -444,7 +443,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		By default, NVDA falls back to using roleText.
 		"""
 		if self.landmark and self.landmark in braille.landmarkLabels:
-			return f"{braille.roleLabels[controlTypes.ROLE_LANDMARK]} {braille.landmarkLabels[self.landmark]}"
+			return f"{braille.roleLabels[controlTypes.Role.LANDMARK]} {braille.landmarkLabels[self.landmark]}"
 		return self.roleText
 
 	#: Typing information for auto property _get_value
@@ -760,7 +759,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		role = self.role
 		landmark = self.landmark
 		if (
-			role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION) or landmark
+			role in (controlTypes.Role.LANDMARK, controlTypes.Role.REGION) or landmark
 		) and not config.conf["documentFormatting"]["reportLandmarks"]:
 			return self.presType_layout
 
@@ -770,45 +769,45 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			return self.presType_content
 
 		#Static text should be content only if it really use usable text
-		if role==controlTypes.ROLE_STATICTEXT:
+		if role==controlTypes.Role.STATICTEXT:
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
 		if role in (
-			controlTypes.ROLE_UNKNOWN,
-			controlTypes.ROLE_PANE,
-			controlTypes.ROLE_TEXTFRAME,
-			controlTypes.ROLE_ROOTPANE,
-			controlTypes.ROLE_LAYEREDPANE,
-			controlTypes.ROLE_SCROLLPANE,
-			controlTypes.ROLE_SPLITPANE,
-			controlTypes.ROLE_SECTION,
-			controlTypes.ROLE_PARAGRAPH,
-			controlTypes.ROLE_TITLEBAR,
-			controlTypes.ROLE_LABEL,
-			controlTypes.ROLE_WHITESPACE,
-			controlTypes.ROLE_BORDER
+			controlTypes.Role.UNKNOWN,
+			controlTypes.Role.PANE,
+			controlTypes.Role.TEXTFRAME,
+			controlTypes.Role.ROOTPANE,
+			controlTypes.Role.LAYEREDPANE,
+			controlTypes.Role.SCROLLPANE,
+			controlTypes.Role.SPLITPANE,
+			controlTypes.Role.SECTION,
+			controlTypes.Role.PARAGRAPH,
+			controlTypes.Role.TITLEBAR,
+			controlTypes.Role.LABEL,
+			controlTypes.Role.WHITESPACE,
+			controlTypes.Role.BORDER
 		):
 			return self.presType_layout
 		name = self.name
 		description = self.description
 		if not name and not description:
 			if role in (
-				controlTypes.ROLE_WINDOW,
-				controlTypes.ROLE_PANEL,
-				controlTypes.ROLE_PROPERTYPAGE,
-				controlTypes.ROLE_TEXTFRAME,
-				controlTypes.ROLE_GROUPING,
-				controlTypes.ROLE_OPTIONPANE,
-				controlTypes.ROLE_INTERNALFRAME,
-				controlTypes.ROLE_FORM,
-				controlTypes.ROLE_TABLEBODY,
-				controlTypes.ROLE_REGION,
+				controlTypes.Role.WINDOW,
+				controlTypes.Role.PANEL,
+				controlTypes.Role.PROPERTYPAGE,
+				controlTypes.Role.TEXTFRAME,
+				controlTypes.Role.GROUPING,
+				controlTypes.Role.OPTIONPANE,
+				controlTypes.Role.INTERNALFRAME,
+				controlTypes.Role.FORM,
+				controlTypes.Role.TABLEBODY,
+				controlTypes.Role.REGION,
 			):
 				return self.presType_layout
-			if role == controlTypes.ROLE_TABLE and not config.conf["documentFormatting"]["reportTables"]:
+			if role == controlTypes.Role.TABLE and not config.conf["documentFormatting"]["reportTables"]:
 				return self.presType_layout
-			if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and (not config.conf["documentFormatting"]["reportTables"] or not config.conf["documentFormatting"]["reportTableCellCoords"]):
+			if role in (controlTypes.Role.TABLEROW,controlTypes.Role.TABLECOLUMN,controlTypes.Role.TABLECELL) and (not config.conf["documentFormatting"]["reportTables"] or not config.conf["documentFormatting"]["reportTableCellCoords"]):
 				return self.presType_layout
 		return self.presType_content
 
@@ -934,7 +933,7 @@ Tries to force this object to take the focus.
 		@rtype: boolean
 		"""
 		# Objects with the protected state, or with a role of passWordEdit should always be protected.
-		isProtected=(controlTypes.STATE_PROTECTED in self.states or self.role==controlTypes.ROLE_PASSWORDEDIT)
+		isProtected=(controlTypes.STATE_PROTECTED in self.states or self.role==controlTypes.Role.PASSWORDEDIT)
 		# #7908: If this object is currently protected, keep it protected for the rest of its lifetime.
 		# The most likely reason it would lose its protected state is because the object is dying.
 		# In this case it is much more secure to assume it is still protected, thus the end of PIN codes will not be accidentally reported. 
@@ -973,7 +972,7 @@ Tries to force this object to take the focus.
 		"""
 		if self.presentationType in (self.presType_layout, self.presType_unavailable):
 			return False
-		if self.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
+		if self.role in (controlTypes.Role.TREEVIEWITEM, controlTypes.Role.LISTITEM, controlTypes.Role.PROGRESSBAR, controlTypes.Role.EDITABLETEXT):
 			return False
 		return True
 
@@ -1124,7 +1123,7 @@ Tries to force this object to take the focus.
 		vision.handler.handleUpdate(self, property="states")
 
 	def event_focusEntered(self):
-		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
+		if self.role in (controlTypes.Role.MENUBAR,controlTypes.Role.POPUPMENU,controlTypes.Role.MENUITEM):
 			speech.cancelSpeech()
 			return
 		if self.isPresentableFocusAncestor:
@@ -1256,14 +1255,7 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("name: %s" % ret)
-		try:
-			ret = self.role
-			for name, const in controlTypes.__dict__.items():
-				if name.startswith("ROLE_") and ret == const:
-					ret = name
-					break
-		except Exception as e:
-			ret = "exception: %s" % e
+		ret = self.role
 		info.append("role: %s" % ret)
 		try:
 			ret = repr(self.roleText)
@@ -1351,7 +1343,7 @@ This code is executed if a gain focus event is received by this object.
 	def _get_mathMl(self):
 		"""Obtain the MathML markup for an object containing math content.
 		This will only be called (and thus only needs to be implemented) for
-		objects with a role of L{controlTypes.ROLE_MATH}.
+		objects with a role of L{controlTypes.Role.MATH}.
 		@raise LookupError: If MathML can't be retrieved for this object.
 		"""
 		raise NotImplementedError
@@ -1366,7 +1358,7 @@ This code is executed if a gain focus event is received by this object.
 			return False
 		role = self.role
 		states = self.states
-		if role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL,controlTypes.ROLE_DOCUMENT):
+		if role in (controlTypes.Role.EDITABLETEXT,controlTypes.Role.TERMINAL,controlTypes.Role.DOCUMENT):
 			# Edit fields, terminals and documents  are always navigable
 			return True
 		elif controlTypes.STATE_EDITABLE in states:

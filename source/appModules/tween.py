@@ -52,15 +52,15 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(obj, Window):
 			return
 		role = obj.role
-		if role == controlTypes.ROLE_WINDOW:
+		if role == controlTypes.Role.WINDOW:
 			return
 		wclass = Window.normalizeWindowClassName(obj.windowClassName)
 
-		if wclass == "Window.8" and role == controlTypes.ROLE_PANE:
+		if wclass == "Window.8" and role == controlTypes.Role.PANE:
 			# optimisation: There are quite a lot of these, so let's not instantiate parent NVDAObjects unnecessarily.
 			parentWindow = winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
 			if parentWindow and Window.normalizeWindowClassName(winUser.getClassName(parentWindow)) == "SysTabControl32":
-				obj.role = controlTypes.ROLE_PROPERTYPAGE
+				obj.role = controlTypes.Role.PROPERTYPAGE
 
 		elif wclass == "SysTabControl32":
 			obj.isPresentableFocusAncestor = False

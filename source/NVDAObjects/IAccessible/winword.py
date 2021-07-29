@@ -56,7 +56,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		super(WordDocument,self).event_caret()
 
 	def _get_role(self):
-		return controlTypes.ROLE_EDITABLETEXT
+		return controlTypes.Role.EDITABLETEXT
 
 	def _get_states(self):
 		states=super(WordDocument,self).states
@@ -303,7 +303,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		formatConfig=config.conf['documentFormatting'].copy()
 		formatConfig['reportTables']=True
 		commandList=info.getTextWithFields(formatConfig)
-		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.ROLE_TABLE or commandList[2].field.get('role',None)!=controlTypes.ROLE_TABLECELL:
+		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.Role.TABLE or commandList[2].field.get('role',None)!=controlTypes.Role.TABLECELL:
 			# Translators: The message reported when a user attempts to use a table movement command
 			# when the cursor is not withnin a table.
 			ui.message(_("Not in table"))

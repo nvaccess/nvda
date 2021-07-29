@@ -102,7 +102,7 @@ class ExcelCell(ExcelObject):
 	shouldAllowDuplicateUIAFocusEvent = True
 
 	name = ""
-	role = controlTypes.ROLE_TABLECELL
+	role = controlTypes.Role.TABLECELL
 	rowHeaderText = None
 	columnHeaderText = None
 
@@ -113,7 +113,7 @@ class ExcelCell(ExcelObject):
 		parent = self.parent
 		# There will be at least one grid element between the cell and the sheet.
 		# There could be multiple as there might be a data table defined on the sheet.
-		while parent and parent.role == controlTypes.ROLE_TABLE:
+		while parent and parent.role == controlTypes.Role.TABLE:
 			parent = parent.parent
 		if parent:
 			return parent._getUIACacheablePropertyValue(self._UIAExcelCustomProps.areGridLinesVisible.id)
@@ -438,7 +438,7 @@ class ExcelCell(ExcelObject):
 
 
 class ExcelWorksheet(ExcelObject):
-	role = controlTypes.ROLE_TABLE
+	role = controlTypes.Role.TABLE
 
 	# The grid UIAElement dies each time the sheet is scrolled.
 	# Therefore this grid would be announced in the focus ancestory each time which is bad.
