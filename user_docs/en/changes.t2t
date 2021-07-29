@@ -33,6 +33,16 @@ What's New in NVDA
 
 = 2021.2 =
 
+== Important notes ==
+- Screen Curtain on previous releases of NVDA is no longer compatible with versions of Windows newer than Windows 10 21H2 (10.0.19044).
+This includes Windows 10 Insiders and Windows 11.
+This is due to a change in the Windows Magnification API.
+When using previous NVDA releases and Windows newer than Windows 10 21H2, screen curtain may fail to work without warning.
+To ensure security, confirm that screen curtain works properly with new or experimental versions of Windows.
+(#12491, #12684)
+-
+
+
 == New Features ==
 - Support for ARIA annotations:
   - adds a command to read a summary of details of an object with aria-details. (#12364)
@@ -44,8 +54,6 @@ What's New in NVDA
 
 
 == Changes ==
-- NVDA now speaks by default every symbol when navigating by word.
-This can be toggled in the Preferences dialog or with a new (unassigned) command. (#11779)
 - Espeak-ng has been updated to 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
 - If article is enabled in the user preferences for document formatting, NVDA announces "article" after the content. (#11103)
 - Updated liblouis braille translator to [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
@@ -67,6 +75,7 @@ This can be toggled in the Preferences dialog or with a new (unassigned) command
 - NVDA exits safely when a new process is started. (#12605)
 - Reselecting the Handy Tech braille display driver from the Select Braille Display dialog no longer causes errors. (#12618)
 - Windows version 10.0.22000 or later is recognized as Windows 11, not Windows 10. (#12626)
+- Screen curtain support has been fixed and tested for Windows versions up until 10.0.22000. (#12684)
 - If no results are shown when filtering input gestures, the input gesture configuration dialog continues to work as expected. (#12673)
 -
 
