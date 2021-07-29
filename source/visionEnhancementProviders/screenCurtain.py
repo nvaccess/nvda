@@ -32,7 +32,7 @@ class MAGCOLOREFFECT(Structure):
 # https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
 TRANSFORM_BLACK = MAGCOLOREFFECT()  # empty transformation
 TRANSFORM_BLACK.transform[4][4] = 1.0  # retain as an affine transformation
-TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while subtracting other colours (#12491)
+TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other colours to zero (#12491)
 
 
 def _errCheck(result, func, args):
@@ -305,6 +305,12 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 
 	@classmethod
 	def canStart(cls):
+		"""
+		While the Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA.
+		ScreenCurtain's specific usage of the API has been tested to confirm the approach works in released
+		versions of Windows, this may not continue to be true in the future. The Magnification API was
+		introduced by Microsoft with Windows 8.
+		"""
 		return winVersion.isFullScreenMagnificationAvailable()
 
 	@classmethod

@@ -220,6 +220,7 @@ if version_year < 2022:
 def isFullScreenMagnificationAvailable() -> bool:
 	"""
 	Technically this is always False. The Magnification API has been marked by MS as unsupported for
-	WOW64 applications such as NVDA. For our usages, support has been added since Windows 8.
+	WOW64 applications such as NVDA. For our usages, support has been added since Windows 8, relying on our
+	testing our specific usage of the API with each Windows version since Windows 8
 	"""
 	return getWinVer() >= WIN8
