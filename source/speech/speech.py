@@ -364,8 +364,10 @@ def getSpellingSpeech(
 	yield from seq
 
 
-def getCharDescListFromText(text,locale):
-	"""This method prepares a list, which contains character and its description for all characters the text is made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale for all possible combination of consecutive characters in the text.
+def getCharDescListFromText(text: str, locale: str) -> List[Tuple[str, List[str]]]:
+	"""This method prepares a list, which contains character and its description for all characters the text is
+	made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale
+	for all possible combination of consecutive characters in the text.
 	This is done to take care of conjunct characters present in several languages such as Hindi, Urdu, etc.
 	"""
 	charDescList = []

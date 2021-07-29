@@ -3,6 +3,8 @@
 # Hong Kong Blind Union, Babbage B.V., Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+import typing
+from typing import Optional
 
 from enum import IntEnum
 import os
@@ -13,17 +15,20 @@ from logHandler import log
 import globalVars
 import config
 
-class LocaleDataMap(object):
+FetchLocalDataReturnType = typing.TypeVar("FetchLocalDataReturnType")
+
+
+class LocaleDataMap(typing.Generic[FetchLocalDataReturnType]):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
-	def __init__(self,localeDataFactory):
+	def __init__(self, localeDataFactory: typing.Callable[[str], FetchLocalDataReturnType]):
 		"""
 		@param localeDataFactory: the factory to create data objects for the requested locale.
-		""" 
-		self._localeDataFactory=localeDataFactory
+		"""
+		self._localeDataFactory = localeDataFactory
 		self._dataMap={}
 
-	def fetchLocaleData(self,locale,fallback=True):
+	def fetchLocaleData(self, locale: str, fallback=True) -> FetchLocalDataReturnType:
 		"""
 		Fetches a data object for the given locale. 
 		This may mean that the data object is first created and stored if it does not yet exist in the map.
@@ -77,7 +82,7 @@ class CharacterDescriptions(object):
 		@param locale: The characterDescriptions.dic file will be found by using this locale.
 		@type locale: string
 		"""
-		self._entries = {}
+		self._entries: typing.Dict[str, typing.List[str]] = {}
 		fileName = os.path.join(globalVars.appDir, 'locale', locale, 'characterDescriptions.dic')
 		if not os.path.isfile(fileName): 
 			raise LookupError(fileName)
@@ -85,7 +90,7 @@ class CharacterDescriptions(object):
 		for line in f:
 			if line.isspace() or line.startswith('#'):
 				continue
-			line=line.rstrip('\r\n')
+			line: str = line.rstrip('\r\n')
 			temp=line.split("\t")
 			if len(temp) > 1:
 				key=temp.pop(0)
@@ -95,31 +100,34 @@ class CharacterDescriptions(object):
 		log.debug("Loaded %d entries." % len(self._entries))
 		f.close()
 
-	def getCharacterDescription(self, character):
+	def getCharacterDescription(self, character) -> typing.List[str]:
 		"""
 		Looks up the given character and returns a list containing all the description strings found.
 		"""
 		return self._entries.get(character)
 
-_charDescLocaleDataMap=LocaleDataMap(CharacterDescriptions)
 
-def getCharacterDescription(locale,character):
+class CharDescLocalDataMap(LocaleDataMap[CharacterDescriptions]):
+	pass
+
+
+_charDescLocaleDataMap = CharDescLocalDataMap(CharacterDescriptions)
+
+
+def getCharacterDescription(locale: str, character: str) -> typing.List[str]:
 	"""
 	Finds a description or examples for the given character, which makes sence in the given locale.
 	@param locale: the locale (language[_COUNTRY]) the description should be for.
-	@type locale: string
 	@param character: the character  who's description should be retreaved.
-	@type character: string
 	@return:  the found description for the given character
-	@rtype: list of strings
 	"""
 	try:
-		l=_charDescLocaleDataMap.fetchLocaleData(locale)
+		localData = _charDescLocaleDataMap.fetchLocaleData(locale)
 	except LookupError:
 		if not locale.startswith('en'):
 			return getCharacterDescription('en',character)
 		raise LookupError("en")
-	desc=l.getCharacterDescription(character)
+	desc = localData.getCharacterDescription(character)
 	if not desc and not locale.startswith('en'):
 		desc=getCharacterDescription('en',character)
 	return desc
@@ -172,11 +180,12 @@ class SpeechSymbol(object):
 
 	def __init__(self, identifier, pattern=None, replacement=None, level=None, preserve=None, displayName=None):
 		self.identifier = identifier
-		self.pattern = pattern
-		self.replacement = replacement
-		self.level = level
-		self.preserve = preserve
-		self.displayName = displayName
+		self.pattern: Optional[str] = pattern
+		self.replacement: Optional[str] = replacement
+		self.level: Optional[SymbolLevel] = level
+		#: one of the values in SPEECH_SYMBOL_PRESERVES
+		self.preserve: Optional[int] = preserve
+		self.displayName: Optional[str] = displayName
 
 	def __repr__(self):
 		attrs = []
@@ -394,6 +403,14 @@ def _getSpeechSymbolsForLocale(locale):
 		pass
 	return builtin, user
 
+
+GetSpeechSymbolsFunctionReturnType = typing.Tuple[SpeechSymbols, SpeechSymbols]
+
+
+class FunctionBasedLocaleDataMap(LocaleDataMap[GetSpeechSymbolsFunctionReturnType]):
+	pass
+
+
 class SpeechSymbolProcessor(object):
 	"""
 	Handles processing of symbol pronunciation for a locale.
@@ -401,7 +418,7 @@ class SpeechSymbolProcessor(object):
 	"""
 
 	#: Caches symbol data for locales.
-	localeSymbols = LocaleDataMap(_getSpeechSymbolsForLocale)
+	localeSymbols = FunctionBasedLocaleDataMap(_getSpeechSymbolsForLocale)
 
 	def __init__(self, locale):
 		"""Constructor.
@@ -592,7 +609,7 @@ class SpeechSymbolProcessor(object):
 			else:
 				return suffix
 
-	def processText(self, text, level):
+	def processText(self, text, level) -> str:
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
 
@@ -666,29 +683,28 @@ class SpeechSymbolProcessor(object):
 _localeSpeechSymbolProcessors = LocaleDataMap(SpeechSymbolProcessor)
 
 
-def processSpeechSymbols(locale: str, text: str, level: SymbolLevel):
+def processSpeechSymbols(locale: str, text: str, level: SymbolLevel) -> str:
 	"""Process some text, converting symbols according to desired pronunciation.
 	@param locale: The locale of the text.
 	@param text: The text to process.
 	@param level: The symbol level to use.
 	"""
 	try:
-		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
+		ss: SpeechSymbolProcessor = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
 	except LookupError:
 		if not locale.startswith("en_"):
 			return processSpeechSymbols("en", text, level)
 		raise
 	return ss.processText(text, level)
 
-def processSpeechSymbol(locale, symbol):
+
+def processSpeechSymbol(locale: str, symbol: str) -> str:
 	"""Process a single symbol according to desired pronunciation.
 	@param locale: The locale of the symbol.
-	@type locale: str
 	@param symbol: The symbol.
-	@type symbol: str
 	"""
 	try:
-		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
+		ss: SpeechSymbolProcessor = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
 	except LookupError:
 		if not locale.startswith("en_"):
 			return processSpeechSymbol("en", symbol)
