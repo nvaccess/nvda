@@ -31,8 +31,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# The synthesizer to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
-	# Speak all symbols when reviewing by word, uses editor specific implementation if false
-	symbolLevelWordAll = boolean(default=true)
 	trustVoiceLanguage = boolean(default=true)
 	includeCLDR = boolean(default=True)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
