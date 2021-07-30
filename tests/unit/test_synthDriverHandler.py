@@ -8,6 +8,7 @@
 import config
 import languageHandler
 import synthDriverHandler
+from synthDrivers.oneCore import SynthDriver as OneCoreSynthDriver
 from typing import Callable
 import unittest
 
@@ -31,8 +32,7 @@ class MockSynth:
 
 	def _getDefaultVoice(self, pickAny: bool = True):
 		assert self.name == "oneCore"  # this should only be used when mocking the oneCore synth
-		from synthDrivers import oneCore
-		return oneCore.SynthDriver._getDefaultVoice(self, pickAny)
+		return OneCoreSynthDriver._getDefaultVoice(self, pickAny)
 
 
 class test_synthDriverHandler(unittest.TestCase):
@@ -94,23 +94,31 @@ class test_synthDriverHandler(unittest.TestCase):
 			self.assertEqual(synthName, synthDriverHandler.getSynth().name)
 			self.assertEqual(FAKE_DEFAULT_LANG, config.conf["speech"]["synth"])
 
-	def test_setSynth_auto_usesOneCore_ifSupportsDefaultLangauge(self):
+	def test_setSynth_auto_usesOneCore_ifSupportsDefaultLanguage(self):
 		"""
-		Ensures that if oneCore supports the current language, setSynth("auto") uses "oneCore".
+		Ensures that if oneCore supports the current language, setSynth("auto") uses "oneCore" on versions
+		of Windows where oneCore is the default - else eSpeak is used regardless of the language  support.
 		"""
 		# test setup ensures curLang is supported for oneCore
 		synthDriverHandler.setSynth(None)  # reset the synth so there is no fallback
 		synthDriverHandler.setSynth("auto")
-		self.assertEqual(synthDriverHandler.getSynth().name, "oneCore")
+		if OneCoreSynthDriver.check():
+			self.assertEqual(synthDriverHandler.getSynth().name, "oneCore")
+		else:
+			self.assertEqual(synthDriverHandler.getSynth().name, "espeak")
 
-	def test_setSynth_auto_fallback_ifOneCoreDoesntSupportDefaultLangauge(self):
+	def test_setSynth_auto_fallback_ifOneCoreDoesntSupportDefaultLanguage(self):
 		"""
-		Ensures that if oneCore doesn't support the current language, setSynth("auto") falls back to the
+		Ensures that if oneCore is supported under the currently running version of Windows
+		yet it doesn't support the current language, setSynth("auto") falls back to the
 		current synth, or espeak if there is no current synth.
 		"""
 		languageHandler.curLang = "bar"  # set the lang so it is not supported
 		synthDriverHandler.setSynth("auto")
-		self.assertEqual(synthDriverHandler.getSynth().name, FAKE_DEFAULT_SYNTH_NAME)
+		if OneCoreSynthDriver.check():  # OneCore failed to initialize so current synth unchanged
+			self.assertEqual(synthDriverHandler.getSynth().name, FAKE_DEFAULT_SYNTH_NAME)
+		else:  # OneCore unsupported - there are  no checks for the current language being supported by eSpeak
+			self.assertEqual(synthDriverHandler.getSynth().name, "espeak")
 		synthDriverHandler.setSynth(None)  # reset the synth so there is no fallback
 		synthDriverHandler.setSynth("auto")
 		self.assertEqual(synthDriverHandler.getSynth().name, "espeak")
