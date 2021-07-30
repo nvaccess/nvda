@@ -300,6 +300,40 @@ class ScreenCurtainGuiPanel(
 			return res == wx.YES
 
 
+def isScreenFullyBlack() -> bool:
+	"""
+	Uses wx screen capture to check that the screen is currently fully black.
+	"""
+	screen = wx.ScreenDC()
+	screenSize = screen.GetSize()
+	bmp: wx.Bitmap = wx.Bitmap(screenSize[0], screenSize[1])
+	mem = wx.MemoryDC(bmp)
+	mem.Blit(0, 0, screenSize[0], screenSize[1], screen, 0, 0)  # copy screen over
+	del mem  # Release bitmap
+	# https://docs.wxwidgets.org/3.0/classwx_image.html#a7c9d557cd7ad577ed76e4337b1fd843a
+	hist = wx.ImageHistogram()
+	img: wx.Image = bmp.ConvertToImage()
+	numberOfColours = img.ComputeHistogram(hist)
+	# Cannot access numberOfBlackPixels due to wxImageHistogram not fully supported in wxPython,
+	# the histogram is not subscriptable, and thus the key value cannot be accessed.
+	# this function could be improved in the future using the following logic
+	# numberOfBlackPixelsKey = hist.MakeKey(255, 255, 255)
+	# numberOfBlackPixels = hist[numberOfBlackPixelsKey]
+	# numberOfDisplayPixels = screenSize[0] * screenSize[1]
+	# log.debug(f"""Screen Capture:
+	#  - number of colours: {numberOfColours}
+	#  - number of black pixels: {numberOfBlackPixels}
+	#  - number of total pixels: {numberOfDisplayPixels}
+	# """)
+	# return numberOfColours == 1 and numberOfBlackPixels == numberOfDisplayPixels
+	firstPixelIsBlack = img.GetRed(0, 0) == 0 and img.GetBlue(0, 0) == 0 and img.GetGreen(0, 0) == 0
+	return numberOfColours == 1 and firstPixelIsBlack
+
+
+class ScreenCurtainFail(RuntimeError):
+	pass
+
+
 class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 	_settings = ScreenCurtainSettings()
 
@@ -332,7 +366,13 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		try:
 			Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 			Magnification.MagShowSystemCursor(False)
+			if not isScreenFullyBlack():
+				raise ScreenCurtainFail("Screen curtain not activated properly")
 		except Exception as e:
+			try:
+				Magnification.MagShowSystemCursor(True)
+			except Exception:
+				log.error(f"Could not restore cursor after screen curtain failure.", exc_info=True)
 			Magnification.MagUninitialize()
 			raise e
 		if self.getSettings().playToggleSounds:
