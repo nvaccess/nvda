@@ -3,6 +3,49 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
++
+== Tính năng mới ==
+- Hỗ trợ cho các ghi chú ARIA:
+  - Thêm một lệnh để đọc tổng quan các chi tiết của một đối tượng với aria-details. (#12364)
+  - Thêm một tùy chọn trong cài đặt mở rộng để thông báo nếu một đối tượng có các thông tin chi tiết trong chế độ duyệt. (#12439) 
+  -
+- Trong Windows 10 phiên bản 1909 và cao hơn (bao gồm Windows 11), NVDA sẽ đọc số đếm các gợi ý khi thực hiện tìm kiếm trong File Explorer. (#10341, #12628)
+- Trong Microsoft Word, NVDA giờ đây sẽ đọc kết quả của việc thụt lề và thụt lề đoạn khi thực hiện bằng phím tắt. (#6269)
+-
+
+
+== Các thay đổi ==
+- NVDA giờ đây sẽ mặc định đọc mọi kí hiệu khi điều hướng theo từng từ.
+Điều này có thể bật / tắt trong  hộp thoại Tùy chọn hoặc với một lệnh mới (chưa gán thao tác). (#11779)
+- Đã cập nhật Espeak-ng lên 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Nếu bài viết được bật trong thiết lập của người dùng cho định dạng tài liệu, NVDA sẽ đọc là "bài viết" sau nội dung. (#11103)
+-
+
+
+== Sửa lỗi ==
+- Trong ứng dụng Calculator của Windows 10, NVDA sẽ thể hiện biểu thức tính toán trên màn hình chữ nổi. (#12268)
+- Trong các chương trình terminal trên Windows 10 phiên bản 1607 trở lên, khi thêm hay xóa các kí tự ở giữa một dòng, kí tự bên phải dấu nháy không còn bị đọc lên. (#3200)
+  - Diff Match Patch giờ đây mặc định được bật. (#12485)
+  -
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Các bản chữ nổi mới: Bun-ga-ri cấp 1, Burmese (Myanmar) cấp 1, Burmese cấp 2, Kazakhstan cấp 1, Khmer cấp 1, Bắc Kurdish cấp 0, Sepedi cấp 1, Sepedi cấp 2, Sesotho cấp 1, Sesotho cấp 2, Setswana cấp 1, Setswana cấp 2, Tatar cấp 1, Việt Nam cấp 0, Việt Nam cấp 2, Miền Nam Việt Nam cấp 1, Xhosa cấp 1, Xhosa cấp 2, Yakut cấp 1, Zulu cấp 1, Zulu cấp 2
+  -
+- Đầu vào chữ nổi đã hoạt động tốt với các bản chữ nổi viết tắt sau: Ả rập cấp 2, Tây Ban Nha cấp 2, Urdu cấp 2, Trung Quốc (Đài Loan, Quan Thoại) cấp 2. (#12541)
+- Công cụ sửa lỗi đăng kí COM  giờ đây sửa được nhiều lỗi hơn, đặc biệt là trên Windows 64 bit. (#1256)
+- cải thiện việc quản lý các nút cho máy đọc chữ nổi Seika Notetaker của Nippon Telesoft. (#12598)
+- Cải thiện việc đọc trong bản biểu tượng cảm xúc và lịch sử bộ nhớ tạm. (#11485)
+- Đã cập nhật mô tả ký tự bảng chữ cái tiếng Bengal. (#12502)
+- NVDA sẽ được tắt một cách an toàn khi có một bản mới được gọi chạy. (#12605)
+- Việc chọn lại trình điều khiển cho màn hình nổi Handy Tech  từ hộp thoại Chọn Màn Hình Nổi không còn xảy ra lỗi. (#12618)
+- Windows phiên bản 10.0.22000 hay cao hơn được nhận dạng là Windows 11, không phải Windows 10. (#12626)
+-
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2021.1 =
 Bản phát hành này bao gồm tùy chọn hỗ trợ thử nghiệm cho UIA trong Excel và các trình duyệt trên nền Chromium.
 Sửa các lỗi cho vài ngôn ngữ và lỗi  truy cập các liên kết trong chữ nổi.
