@@ -3,6 +3,49 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+
+== Uudet ominaisuudet ==
+- Tuki ARIA-selitteille:
+ - Lisää komennon objektin ARIA-lisätietojen yhteenvedon lukemiseen. (#12364)
+ - Lisää Lisäasetukset-paneeliin asetuksen objektin lisätiedoista ilmoittamiseen selaustilassa. (#12439) 
+ -
+- NVDA kertoo ehdotusten lukumäärän resurssienhallinnassa hakuja suoritettaessa Windows 10:n versiossa 1909 ja uudemmissa (Windows 11 mukaan lukien). (#10341, #12628)
+- NVDA kertoo nyt painettaessa tavallisen ja riippuvan sisennyksen näppäinkomentojen tulokset Microsoft Wordissa. (#6269)
+-
+
+
+== Muutokset ==
+- NVDA puhuu nyt oletusarvoisesti kaikki symbolit sanoittain liikuttaessa.
+  Tätä voidaan muuttaa Asetukset-valintaikkunasta tai uudella määrittämättömällä komennolla. (#11779)
+- eSpeak-NG on päivitetty versioksi 1.51-dev muutos ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- NVDA sanoo "artikkeli" sisällön jälkeen, jos artikkeli-valintaruutu on valittu asetusvalintaikkunan Asiakirjojen muotoilu -paneelissa. (#11103)
+-
+
+
+== Bugikorjaukset ==
+- NVDA näyttää laskutoimitukset pistenäytöllä Windows 10:n Laskimessa. (#12268)
+- Kun pääteohjelmissa lisätään tai poistetaan merkkejä rivin keskellä, kohdistimen oikealla puolella olevia merkkejä ei enää lueta Windows 10:n versiossa 1607 ja uudemmissa. (#3200)
+ - Diff Match Patch on nyt käytössä oletusarvoisesti. (#12485)
+ -
+- Päivitetty liblouis-pistekirjoituskääntäjä versioksi [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+ - Uusia pistetaulukoita: bulgarialainen taso 1, burmalainen taso 1, burmalainen taso 2, kazakkilainen taso 1, khmeriläinen taso 1, pohjoiskurdilainen taso 0, sepediläinen taso 1, sepediläinen taso 2, sesotholainen taso 1, sesotholainen taso 2, setswanalainen taso 1, setswanalainen taso 2, tataarilainen taso 1, vietnamilainen taso 0, vietnamilainen taso 2, etelävietnamilainen taso 1, xhosalainen taso 1, xhosalainen taso 2, jakuuttilainen taso 1, zululainen taso 1, zululainen taso 2.
+ -
+- Pistekirjoituksen syöttö toimii oikein seuraavilla lyhennepistetaulukoilla: arabialainen taso 2, espanjalainen taso 2, urdulainen taso 2, mandariinikiina (Kiina) taso 2. (#12541)
+- COM-rekisteröintien korjaustyökalu ratkaisee nyt useampia ongelmia, erityisesti 64-bittisessä Windowsissa. (#1256)
+- Parannuksia Nippon Telesoftin Seika Notetaker -pistenäytön näppäinten käsittelyyn. (#12598)
+- Parannuksia Windowsin emojipaneelin ja leikepöydän historian puhumiseen. (#11485)
+- Päivitetty bengalilaisten aakkosten merkkikuvaukset. (#12502)
+- NVDA sulkeutuu turvallisesti, kun uusi prosessi käynnistetään. (#12605)
+- Handy Tech -pistenäyttöajurin uudelleenvalitseminen Valitse pistenäyttö -valintaikkunasta ei aiheuta enää virheitä. (#12618)
+- Windowsin versio 10.0.22000 ja uudemmat tunnistetaan Windows 11:ksi, ei Windows 10:ksi. (#12626)
+-
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2021.1 =
 Tämä versio sisältää valinnaisen kokeellisen UIA-tuen Excelille ja Chromium-pohjaisille selaimille.
 Korjauksia useille kielille sekä linkkien käyttämiseen pistenäytöltä.

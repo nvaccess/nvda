@@ -1180,6 +1180,12 @@ Cho phép bạn chọn chế độ đọc dấu câu và ký hiệu.
 Ví dụ, nếu bạn chọn tất cả thì tất cả các dấu và ký hiệu trong văn bản sẽ được đọc.
 Tùy chọn này áp dụng cho tất cả các bộ đọc chứ không chỉ riêng cho bộ đọc hiện tại.
 
+==== Đọc tất cả dấu câu và kí hiệu khi duyệt qua từng từ ====[SpeechSettingsSymbolLevelWord]
+
+Khi duyệt văn bản theo từng từ, đôi khi lại có  nhiều thông tin chi tiết hơn là đọc cả câu.
+Khi tùy chọn này mặc định được bật, NVDA sẽ đọc tên của tất cả dấu câu và các kí hiệu khác khi duyệt qua từng từ, giống như mức độ đọc dấu câu và kí hiệu đã được thiết lập là  "tất cả".
+Lưu ý: trong mọi trường hợp, khi duyệt văn bản theo kí tự, NVDA luôn đọc tên của dấu câu và các kí hiệu khác.
+
 ==== Sử dụng giọng đọc của ngôn ngữ để xử lý kí hiệu và ký tự ====[SpeechSettingsTrust]
 Mặc định, tùy chọn này được bật, để chọn có thể sử dụng giọng đọc để đọc các ký tự và ký hiệu hay không.
 Nếu bạn thấy NVDA đọc dấu câu không đúng cho một ngôn ngữ với bộ đọc hoặc giọng đọc đang dùng, bạn có thể tắt tùy chọn này để NVDA dùng các thiết lập ngôn ngữ chung.
@@ -1849,6 +1855,14 @@ Hộp xổ có các tùy chọn sau:
 - Không: không dùng UIA, thậm chí khi NVDA không thể can thiệp vào tiến trình. Điều này có thể hữu dụng cho những nhà phát triển đang dò lỗi với IA2 và muốn chắc chắn rằng NVDA không quay trở lại dùng UIA.
 -
 
+==== Bật hỗ trợ ghi chú thử nghiệm ARIA ====[Annotations]
+Dùng để bật tính năng hỗ trợ thử nghiệm cho các ghi chú ARIA.
+Một trong những tính năng thuộc nhóm này có thể chưa được hoàn thiện.
+Hiện có các tùy chọn sau: 
+- "Thông báo các chi tiết trong chế độ duyệt": bật thông báo nếu một đối tượng có các thông tin chi tiết trong chế độ duyệt.
+Việc thông báo tổng quan các chi tiết này có thể thực hiện bằng cách gán một thao tác thông qua hộp thoại [Quản lý thao tác #InputGestures].
+-
+
 ==== Sử dụng UI Automation để truy cập các điều khiển của bảng tính trong Microsoft Excel khi có thể ====[UseUiaForExcel]
 Khi bật tùy chọn này, NVDA sẽ nỗ lực sử dụng Microsoft UI Automation accessibility API để lấy thông tin từ các điều khiển của bảng tính trong Microsoft Excel.
 Đây là một tính năng thử nghiệm, và vài tính năng của Microsoft Excel có thể không dùng được trong chế độ này.
@@ -1867,11 +1881,10 @@ Trong những môi trường không an toàn, bạn có thể tạm thời vô h
 ==== Thuật toán Diff ====[DiffAlgo]
 Thiết lập này điều khiển cách NVDA xác định công cụ chuyển văn bản sang giọng nói mới trong terminal.
 Hộp xổ thuật toán diff có ba tùy chọn:
-- Tự động: với NVDA 2021.1, tùy chọn này tương đương với Difflib.
-Ở các bản phát hành trong tương lai, nó có thể được đổi thành Diff Match Patch đang chờ người dùng thử nghiệm.
+- Tự động: với NVDA 2021.2, tùy chọn này tương đương với "cho phép Diff Match Patch".
 - cho phép Diff Match Patch: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng kí tự.
 Nó có thể cải thiện khả năng vận hành khi số lượng lớn nội dung văn bản được viết vào console và cho phép nhiều thông báo  chính xác hơn cho các thay đổi tạo ra ở giữa các dòng.
-Tuy nhiên, nó có thể không tương thích với vài ứng dụng.
+Tuy nhiên, nó có thể không tương thích với vài ứng dụng nên Diff Match Patch không phải lúc nào cũng được dùng.
 Tính năng này đã hỗ trợ trong Windows Console trên Windows 10 phiên bản 1607 trở lên.
 Ngoài ra, nó có thể khả dụng trong các ứng dụng terminal khác trên các bản phát hành cũ hơn của Windows.
 - buộc dùng Difflib: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng dòng.
