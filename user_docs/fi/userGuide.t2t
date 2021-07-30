@@ -1180,6 +1180,11 @@ Tästä valitaan sanoina luettavien välimerkkien ja muiden symboleiden määrä
 Esim. kun tasoksi on valittu kaikki, kaikki merkit luetaan sanoina.
 Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
 
+==== Puhu kaikki välimerkit ja symbolit sanoittain luettaessa ====[SpeechSettingsSymbolLevelWord]
+Tekstiä sanoittain luettaessa on usein toivottavaa saada enemmän yksityiskohtia kuin kokonaista virkettä luettaessa.
+Kun tämä on valittuna (oletusarvoisesti), NVDA puhuu sanoittain luettaessa kaikki välimerkit ja muut symbolit ikään kuin välimerkkitasoksi olisi määritetty "kaikki".
+Huom: NVDA puhuu aina kaikki välimerkit ja muut symbolit tekstiä merkeittäin luettaessa.
+
 ==== Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä ====[SpeechSettingsTrust]
 Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symboleiden puhumiseen.
 Mikäli välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai ääntä käytettäessä, tämän asetuksen käytöstä poistaminen pakottaa NVDA:n käyttämään yleistä kieliasetusta.
@@ -1849,6 +1854,14 @@ Yhdistelmäruudussa on seuraavat vaihtoehdot:
 - Ei: Älä käytä UIA:ta, vaikka NVDA ei pysty toimimaan selainprosessin sisällä. Tästä voi olla hyötyä kehittäjille, jotka selvittävät IA2:n ongelmia ja haluavat varmistaa, ettei NVDA ala käyttää UIA:ta.
 -
 
+==== Ota käyttöön kokeellinen ARIA-selitteiden tuki ====[Annotations]
+Tällä otetaan käyttöön ominaisuudet, jotka lisäävät kokeellisen tuen ARIA-selitteille.
+Jotkin näistä ominaisuuksista voivat olla keskeneräisiä.
+Seuraavat vaihtoehdot ovat käytettävissä:
+- Ilmoita lisätiedoista selaustilassa: ilmoittaa, mikäli objektilla on selaustilassa lisätietoja.
+Lisätietojen yhteenvedon ilmoittaminen on mahdollista liittämällä kyseiseen toimintoon syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+-
+
 ==== Käytä UI Automation -rajapintaa Microsoft  Excelin laskentataulukkosäätimissä, kun käytettävissä ====[UseUiaForExcel]
 Kun tämä asetus on käytössä, NVDA yrittää käyttää Microsoft UI Automation -esteettömyysrajapintaa tietojen hakemiseen Microsoft Excelin laskentataulukkosäätimistä.
 Tämä on kokeellinen ominaisuus, eivätkä jotkin Microsoft Excelin toiminnot välttämättä ole käytettävissä tässä tilassa.
@@ -1867,11 +1880,10 @@ Epäluotettavissa ympäristöissä voit salasanoja kirjoittaessasi poistaa väli
 ==== Muutosten havaitsemismenetelmä ====[DiffAlgo]
 Tämä asetus määrittää, miten NVDA havaitsee uuden puhuttavan tekstin päätteissä.
 Tässä yhdistelmäruudussa on kolme vaihtoehtoa:
-- Automaattinen: NVDA 2021.1:stä lähtien tämä asetus on sama kuin Difflib.
-Tulevassa versiossa se saatetaan muuttaa Diff Match Patchiksi.
+- Automaattinen: NVDA 2021.2:sta lähtien tämä asetus on sama kuin "Salli Diff Match Patch".
 - Salli Diff Match Patch: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset merkeittäin.
 Tämä saattaa parantaa suorituskykyä, kun konsolille kirjoitetaan suuria tekstimääriä, ja mahdollistaa rivien keskellä tehtyjen muutosten tarkemman ilmoittamisen.
-Tämä voi kuitenkin olla yhteensopimaton joidenkin sovellusten kanssa.
+Tämä voi kuitenkin olla yhteensopimaton joidenkin sovellusten kanssa, joten Diff Match Patchia ei aina käytetä.
 Tätä ominaisuutta tuetaan Windows-konsolissa Windows 10:n versioissa 1607 ja uudemmissa.
 Se voi olla käytettävissä myös muissa päätteissä aiemmissa Windows-versioissa.
 - Pakota Difflib: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset riveittäin.
