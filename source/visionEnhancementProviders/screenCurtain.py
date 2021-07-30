@@ -333,7 +333,7 @@ def isScreenFullyBlack() -> bool:
 	return numberOfColours == 1 and firstPixelIsBlack
 
 
-class ScreenCurtainFail(RuntimeError):
+class ScreenCurtainInitializationError(RuntimeError):
 	pass
 
 
@@ -370,7 +370,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 			Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 			Magnification.MagShowSystemCursor(False)
 			if not isScreenFullyBlack():
-				raise ScreenCurtainFail("Screen curtain not activated properly")
+				raise ScreenCurtainInitializationError("Screen curtain not activated properly")
 		except Exception as e:
 			try:
 				Magnification.MagShowSystemCursor(True)
