@@ -3,6 +3,49 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+
+== Nove značajke ==
+- Podrška za ARIA zabilješke:
+  - Dodaje prečac za čitanje detalja objekta koji sadrži aria-details. (#12364)
+  - Dodaje opciju u naprednim postavkama za izgovaranje postojanja detalja u načinu pregleda. (#12439) 
+  -
+- U Windowsima 10 verziji 1909 i novijim (uključujući Windows 11), NVDA će izgovarati broj prijedloga prilikom izvođenja pretrage u eksploreru za datoteke. (#10341, #12628)
+- U Microsoft Wordu, NVDA sada čita rezultat prečaca za normalnu i viseću uvlaku pri izvršavanju. (#6269)
+-
+
+
+== Izmjene ==
+- Podrazumijevano NVDA izgovara svaki simbol prilikom kretanja po riječima.
+Ovo može biti uključeno ili isključeno u postavkama ili uz pomoć novog (nedodijeljenog) prečaca. (#11779)
+- Espeak-ng je nadograđen na inačicu 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Ako je članak uključen u korisničkim postavkama oblikovanja dokumenata, NVDA izgovara "članak" poslje sadržaja. (#11103)
+-
+
+
+== Ispravke grešaka ==
+- U Windows 10 kalkulatoru, NVDA će prikazivati izraze kalkulatora na brajičnom redku. (#12268)
+- U programima terminala u Windowsima 10 inačica 1607 i novijim, prilikom umetanja ili brisanja teksta u sredini redka, znakovi desno od brisanog znaka nisu više čitani. (#3200)
+  - Diff Match Patch sada je uključn podrazumijevano. (#12485)
+  -
+- Nadograđen Liblouis brajični prevoditelj na inačicu [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nove brajične tablice: Bugarski puno pismo, Burmanski puno pismo, Burmanski kratkopis, Kazaško puno pismo, Khmersko puno pismo, Sjeverni kurdski osnovno pismo, Sjeverni sotho puno pismo, Sjeverni sotho kratkopis, Južni sotho puno pismo, Južni sotho kratkopis, Setswana puno pismo, Setswana kratkopis, Tatarsko puno pismo, Vijetnamski puno pismo, Vijetnamski kratkopis, Južni vijetnamski puno pismo, Xhosa puno pismo, Xhosa kratkopis, Jakutski puno pismo, Zulu puno pismo, Zulu kratkopis
+  -
+- Unos brajičnih znakova ponovno radi sa sljedećim tablicama: Arapski kratkopis, Španjolski kratkopis, urdski kratkopis, Kineski (Kina, mandarinski) kratkopis. (#12541)
+- Alat za ispravljanje pogrešaka com registracija sada ispravlja više pogrešaka, posebno na 64-bitnim Windowsima. (#1256)
+- Ispravke upravljanja gumbima za Seika brajične bilježnice braille tvrtke Nippon Telesoft. (#12598)
+- Unapređenja u čitanju  Windows panela emoji i povijesti međuspremnika. (#11485)
+- Nadograđeni opisi znakova bengalske abecede. (#12502)
+- NVDAizlazi sigurno kada se pokreće novi proces. (#12605)
+- Ponovno označavanje Handy Tech upravljačkog progama za brajične redke iz dijaloškog okvira odabira brajičnog redka više ne prouzrokuje greške. (#12618)
+- Inačice Windowsa 10.0.22000 ili novije sada se prepoznaju kao Windows 11, a ne kao Windows 10. (#12626)
+-
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2021.1 =
 Ova inačica sadrži opcionalnu eksperimentalnu podršku za UIA u Excelu i preglednicima baziranima na Chromium platformi.
 Dodane su ispravke za neke jezike, te je popravljen način interakciej sa poveznicama koristeći brajični redak.
