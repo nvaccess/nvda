@@ -1180,6 +1180,12 @@ Bu, noktalama ya da başka işaretlerin ne kadarının sözcük olarak seslendir
 Örneğin, Tümü olarak ayarladığınızda işaretlerin hepsi sözcük olarak seslendirilir.
 Bu ayardan sadece halihazırda kullanılan sentezleyici değil; tüm sentezleyiciler etkilenir.
 
+==== Kelime bazında dolaşırken tüm noktalama işaretlerini ve sembolleri seslendir ====[SpeechSettingsSymbolLevelWord]
+
+Metni kelime bazında incelerken, genellikle cümlenin tümünü okurkenkinden daha fazla ayrıntı öğrenilmesi istenir.
+İşaretlendiğinde (varsayılan olarak), NVDA, noktalama  seviyesi "tümü" olarak ayarlanmışcasına, kelime bazında dolaşırken tüm noktalama işaretlerinin ve diğer sembollerin adını söyler.
+Not: Metni karakter bazında incelerken NVDA noktalama işaretlerinin ve diğer simgelerin adını her durumda bildirir.
+
 ==== Karakter ve sembolleri işlerken sentezleyici ve sesin dilini dikkate al ====[SpeechSettingsTrust]
 Bu seçenek varsayılan olarak etkindir ve NVDA'ya karakter ve semboller seslendirilirken seçili sesin dilinin dikkate alınıp alınmayacağını söyler.
 NVDA'nın noktalama işaretlerini herhangi bir sentezleyici ya da ses için yanlış dilde seslendirdiğini fark ederseniz, bu seçeneği NVDA global ayarlarının kullanılmasını sağlamak için kapatabilirsiniz.
@@ -1849,6 +1855,14 @@ Seçim kutusunda aşağıdaki seçenekler vardır:
 - Hayır: NVDA işlem sırasında enjekte edemese bile UIA'yı kullanmaz. Bu, geliştiriciler için IA2 ile ilgili sorunları gidermek için yararlı olabilir ve NVDA'nın UIA'ya geri dönmediğinden emin olmak isteyebilirler.
 -
 
+==== Deneysel ARIA bilgi notları desteğini etkinleştir ====[Annotations]
+ARIA bilgi notları için deneysel destek ekleyen özellikleri etkinleştirmek için kullanılır.
+Bu özelliklerden bazıları eksik sunuluyor olabilir.
+Aşağıdaki seçenekler mevcuttur: 
+- "Tarama kipinde ayrıntıları bildir": Varsa,tarama kipinde üzerine bulunulan nesne ayrıntıları gösterilir.
+Bu ayrıntıların özeti [girdi hareketleri iletişim kutusu #InputGestures] altından atanabilecek bir kısayol tuşu ile de alınabilir.
+-
+
 ==== mevcut olduğunda Microsoft Excel elektronik tablo kontrollerine erişmek için UI otomasyonunu kullan ====[UseUiaForExcel]
 Bu seçenek etkinleştirildiğinde, NVDA, Microsoft Excel Elektronik Tablo kontrollerinden bilgi almak için Microsoft UI Otomasyon erişilebilirlik API'sini kullanmayı deneyecektir.
 Bu geliştirilmekte olan deneysel bir özelliktir ve Microsoft Excel'in bazı özellikleri bu modda kullanılamayabilir.
@@ -1867,11 +1881,10 @@ Güvensiz ortamlarda, parola girerken [karakterleri seslendir #KeyboardSettingsS
 ==== Diff algoritması ====[DiffAlgo]
 Bu ayar, NVDA'nın terminallerde  yeni metni nasıl konuşacağını kontrol eder.
 diff algoritması seçim kutusunda üç seçenek vardır:
-- Otomatik: NVDA 2021.1'den itibaren bu seçenek Difflib'e eşdeğerdir.
-Gelecekteki bir sürümde, pozitif kullanıcı testi yapılıncaya kadar Diff Match Patch olarak değiştirilebilir.
+- Otomatik: NVDA 2021.2'den itibaren, bu seçenek "Diff Match Patch'e izin ver" ile eş değerdir.
 - Diff Match Patch'e izin ver: Bu seçenek, NVDA'nın terminal metnindeki değişiklikleri karakter karakter hesaplamasına neden olur.
 Konsola büyük hacimlerde metin girildiğinde  performansı artırabilir ve satırların ortasında yapılan değişikliklerin daha doğru raporlanmasına olanak tanır.
-Ancak bazı uygulamalarla uyumsuz olabilir.
+Ancak bazı uygulamalarla uyumsuz olabilir, bu nedenle Diff Match Patch her zaman kullanılmaz.
 Bu özellik, Windows 10'un 1607 ve sonraki sürümlerinde Windows Konsolunda desteklenir.
 Ek olarak, önceki Windows sürümlerindeki diğer terminallerde de mevcut olabilir.
 - Difflib'e zorla: bu seçenek NVDA'nın terminal metnindeki değişiklikleri satır satır hesaplamasına neden olur.
