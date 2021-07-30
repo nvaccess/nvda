@@ -3,6 +3,57 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+
+== Neue Features ==
+- Unterstützung für ARIA-Anmerkungen:
+  - Fügt einen Befehl hinzu, um eine Zusammenfassung der Details eines Objekts mit "aria-details" zu lesen. (#12364)
+  - Fügt eine Option im erweiterten Bericht hinzu, wenn ein Objekt Details im Lesemodus enthält. (#12439)
+  -
+- In Windows 10 Version 1909 und neuer (einschließlich Windows 11) gibt NVDA die Anzahl der Vorschläge an, wenn Suchvorgänge im Datei-Explorer durchgeführt werden. (#10341, #12628)
+- In Microsoft Word gibt NVDA nun bei der Ausführung das Ergebnis von Einrückungen und hängenden Absätzen  an. (#6269)
+-
+
+
+== Änderungen ==
+- NVDA spricht nun standardmäßig jedes Symbol beim Navigieren wortweise.
+Dies kann im Einstellungsdialog oder mit einem neuen (nicht zugewiesenen) Befehl umgeschaltet werden. (#11779)
+- eSpeak NG wurde auf 1.51-dev Commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb`` aktualisiert. (#12449, #12202, #12280, #12568)
+- Wenn Artikel in den Benutzereinstellungen für die Dokumentformatierung aktiviert ist, teilt NVDA "Artikel" nach dem Inhalt mit. (#11103)
+-
+
+
+== Fehlerbehebung ==
+- In Windows 10 Rechner teilt NVDA Rechenausdrücke auf der Braillezeile mit. (#12268)
+- In Terminal-Anwendungen unter Windows 10 ab Version 1607 werden beim Einfügen oder Löschen von Zeichen in der Mitte einer Zeile die Zeichen rechts neben der Einfügemarke nicht mehr vorgelesen. (#3200)
+  - Diff Match Patch jetzt standardmäßig aktiviert. (#12485)
+  -
+- Der Liblouis-Braille-Übersetzer wurde auf [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0] aktualisiert. (#12526)
+  - Neue Braille-Tabellen: Bulgarische Vollschrift, Burmesische Vollschrift, Burmesische Kurzschrift, Kasachische Vollschrift, Indische Vollschrift (Khmer), Nordkurdische Basisschrift, Vollschrift (Sepedi), Kurzschrift (Sepedi), Vollschrift (Sesotho), Kurzschrift (Sesotho), Vollschrift (Setswana), Kurzschrift (Setswana), Vollschrift (Tatar), Vietnamesische Basisschrift, Vietnamesische Kurzschrift, Südvietnamesische Vollschrift, Vollschrift (Xhosa), Kurzschrift (Xhosa), Vollschrift (Jakut), Vollschrift (Zulu), Kurzschrift (Zulu)
+  -
+- Die Braille-Eingabe funktioniert einwandfrei mit den folgenden Kurzschrift-Tabellen: Arabisch, Spanisch, Urdu, Chinesisch (China, Mandarin). (#12541)
+- Das Tool zur Behebung für die COM-Registrierung behebt jetzt mehr Probleme, insbesondere unter 64-Bit-Windows. (#1256)
+- Verbesserungen bei der Tastenbedienung für das Braillegerät Seika Notetaker von Nippon Telesoft. (#12598)
+- Verbesserungen bei der Ankündigung des Windows-Emoji-Bedienfelds und des Zwischenablageverlaufs. (#11485)
+- Die Zeichen-Beschreibungen des bengalischen Alphabets wurden aktualisiert. (#12502)
+- NVDA wird sicher beendet, wenn ein neuer Prozess gestartet wird. (#12605)
+- Die erneute Auswahl des Braillezeilen-Treibers von HandyTech aus dem Dialogfeld der Braillezeilen auswählen führt nicht mehr zu Fehlern. (#12618)
+- Windows Version 10.0.22000 oder höher wird als Windows 11 erkannt, nicht als Windows 10. (#12626)
+-
+
+
+== Änderungen für Entwickler ==
+- ``characterProcessing.SYMLVL_*``-Konstanten sollten vor 2022.1 durch deren Äquivalent ``SymbolLevel.*`` ersetzt werden. (#11856, #12636)
+- ``controlTypes`` wurde in verschiedene Submodule aufgeteilt, als veraltet markierte Symbole müssen vor 2022.1 ersetzt werden. (#12510)
+  - Die Konstanten ``ROLE_*`` und ``STATE_*`` sollten durch entsprechende ``Role.*`` und ``State.*`` ersetzt werden.
+  - ``roleLabels``, ``stateLabels`` und ``negativeStateLabels`` sind veraltet, Verwendungen wie ``roleLabels[ROLE_*]`` sollten durch ihre entsprechenden ``Role.*.displayString`` ersetzt werden oder ``State.*.negativeDisplayString``.
+  - ``processPositiveStates`` und ``processNegativeStates`` sind zum Entfernen veraltet.
+  -
+- Unter Windows 10 Version 1511 und neuer (einschließlich Insider-Builds) wird der aktuelle Versionsname des Windows-Feature-Updates aus der Windows-Registrierung abgerufen. (#12509)
+- Veraltet: winVersion.WIN10_RELEASE_NAME_TO_BUILDS wird in 2022.1 entfernt, es gibt keinen direkten Ersatz. (#12544)
+-
+
+
 = 2021.1 =
 Diese Version enthält optionale experimentelle Unterstützung für UIA in Microsoft Excel und Chromium-basierte Browser.
 Viele Korrekturen für mehrere Sprachen und für den Zugriff auf Links in Braille-Schrift wurden durchgeführt.
