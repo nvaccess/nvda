@@ -3,6 +3,57 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+
+== Nouvelles fonctionnalités ==
+- Support des annotations ARIA :
+  - ajout d'une commande pour lire le résumé d'un objet comportant des détails avec aria-details. (#12364)
+  - ajout d'une option dans les paramètres avancés pour annoncer si un objet contient des détails en mode navigation. (#12439) 
+  -
+- Sous Windows 10 version 1909 et supérieures (Windows 11 y compris), NVDA annoncera le nombre de suggestions lors d'une recherche dans l'explorateur de fichiers. (#10341, #12628)
+- Dans Microsoft Word, NVDA annonce maintenant le résultat des raccourcis clavier de retrait et de retrait négatif lors de leur exécution. (#6269)
+-
+
+
+== Changements ==
+- NVDA annonce maintenant par défaut tous les symboles lors de la navigation par mot.
+Ceci peut être changé dans le dialogue de préférences ou par un nouveau geste (non assigné). (#11779)
+- Espeak-ng a été mis à jour à la version 1.51-dev révision ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Si "Article" est activé dans le dialogue de "Mise en forme des documents", NVDA annonce maintenant "Article" après le contenu. (#11103)
+-
+
+
+== Corrections de bogues ==
+- Dans la calculatrice de Windows 10, NVDA affichera l'expression d'un calcul sur les afficheurs Braille. (#12268)
+- Dans les programmes de terminal sous Windows 10 version 1607 et au-delà, lors de l'insertion ou de la suppression d'un caractère au milieu d'une ligne, le caractère à droite du curseur n'est plus lu. (#3200)
+  - Diff Match Patch maintenant activé par défaut. (#12485)
+  -
+- Mise à jour du transcripteur Braille Liblouis à la version [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nouvelles tables Braille : Bulgare intégral, Birman intégral, Birman abrégé, kazakhe intégral, khmer intégral, Kurde du Nord grade 0, Sepedi intégral, Sepedi abrégé, Sésotho intégral, Sésotho abrégé, Setswana intégral, Setswana abrégé, Tatare intégral, Vietnamien grade 0, Vietnamien abrégé, Vietnamien du sud intégral, Xhosa intégral, Xhosa abrégé, Yakoute intégral, Zoulou intégral, Zoulou abrégé
+  -
+- La saisie Braille fonctionne correctement avec les tables abrégées suivantes : Arabe abrégé, Espagnol abrégé, Urdu abrégé, Chinois (Chine, Mandarin) abrégé. (#12541)
+- L'outil de correction des enregistrements COM résout maintenant davantage de problèmes, particulièrement sous les versions 64 bits de Windows. (#1256)
+- Amélioration de la gestion des boutons pour l'afficheur Braille Seika Notetaker de Nippon Telesoft. (#12598)
+- Améliorations dans l'annonce du paneau d'emojis Windows et l'historique du presse-papiers. (#11485)
+- Mise à jour de la description des caractères pour l'alphabet Bengali. (#12502)
+- NVDA se ferme proprement lorsqu'un nouveau processus est démarré. (#12605)
+- Resélectionner le pilote d'afficheur Braille Handy Tech depuis le dialogue "Sélectionner un afficheur Braille" ne cause plus d'erreur. (#12618)
+- Windows version 10.0.22000 ou supérieur est reconnu comme Windows 11, et non Windows 10. (#12626)
+-
+
+
+== Changements pour les Développeurs ==
+- L'utilisation des constantes ``characterProcessing.SYMLVL_*`` devra être remplacée par leur équivalent ``SymbolLevel.*`` avant 2022.1. (#11856, #12636)
+- ``controlTypes`` a été séparé en plusieurs sous-modules, les symboles marqués comme dépréciés devront être remplacés avant 2022.1. (#12510)
+  - Les constantes ``ROLE_*`` et ``STATE_*`` devront être remplacées par leurs équivalents ``Role.*`` et ``State.*``.
+  - ``roleLabels``, ``stateLabels`` et ``negativeStateLabels`` ont été dépréciés, des usages tel que ``roleLabels[ROLE_*]`` devront être remplacés par leurs équivalents ``Role.*.displayString`` ou ``State.*.negativeDisplayString``.
+  - ``processPositiveStates`` et ``processNegativeStates`` ont été dépréciés pour suppression.
+  -
+- Sous Windows 10 version 1511 et au-delà (builds insider y compris), le nom de la mise à jour de fonctionnalités actuelle est obtenu depuis le registre. (#12509)
+- Déprécié : winVersion.WIN10_RELEASE_NAME_TO_BUILDS sera supprimé dans 2022.1, aucun remplaçant direct n'existe. (#12544)
+-
+
+
 = 2021.1 =
 Cette version inclut un support expérimental d'UIA dans Microsoft Excel et les navigateurs basés sur Chromium.
 Elle contient également des correctifs pour de nombreuses langues, et pour l'accès aux liens en Braille.
