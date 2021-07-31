@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2020 NV Access Limited, James Teh, Ethan Holliger, Dinesh Kaushal, Leonard de Ruijter, Joseph Lee, Reef Turner, Julien Cochuyt  # noqa: E501 line too long
+# Copyright (C) 2017-2021 NV Access Limited, Ethan Holliger, Dinesh Kaushal, Leonard de Ruijter,
+# Joseph Lee, Julien Cochuyt, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -7,6 +8,8 @@
 """
 
 import sys
+from typing import Set
+
 
 # Existing messages that we know don't have translator comments yet.
 # Ideally, all of these should get translator comments,
@@ -128,6 +131,7 @@ def checkPot(fileName):
 	errors = 0
 	expectedErrors = 0
 	unexpectedSuccesses = 0
+	foundMessagesWithOutComments: Set[str] = set()
 	with open(fileName, "rt") as pot:
 		passedHeader = False
 		for line in pot:
@@ -186,6 +190,8 @@ def checkPot(fileName):
 				else:
 					message = msgid
 				isExpectedError = message in EXPECTED_MESSAGES_WITHOUT_COMMENTS
+				if isExpectedError:
+					foundMessagesWithOutComments.add(message)
 				if not hasComment and isExpectedError:
 					expectedErrors += 1
 					continue
@@ -203,9 +209,19 @@ def checkPot(fileName):
 					"Message: {message}\n"
 					.format(error=error, lines=" ".join(sourceLines), message=message))
 				continue
-	print("{errors} errors, {unexpectedSuccesses} unexpected successes, {expectedErrors} expected errors"
-		.format(errors=errors, unexpectedSuccesses=unexpectedSuccesses, expectedErrors=expectedErrors))
-	return errors + unexpectedSuccesses
+	removedTranslatableMessages = EXPECTED_MESSAGES_WITHOUT_COMMENTS - foundMessagesWithOutComments
+	if removedTranslatableMessages:
+		print(
+			"The following messages arre no longer present in the source code "
+			"and should be removed from `EXPECTED_MESSAGES_WITHOUT_COMMENTS`:"
+		)
+		print('\n'.join(removedTranslatableMessages))
+	print(
+		f"{errors} errors, {unexpectedSuccesses} unexpected successes, {expectedErrors} expected errors, "
+		f"{len(removedTranslatableMessages)} messages marked as expected failures removed from the source code"
+	)
+	return errors + unexpectedSuccesses + len(removedTranslatableMessages)
+
 
 def getStringFromLine(line):
 	if line.startswith('"'):

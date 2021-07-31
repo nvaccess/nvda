@@ -46,7 +46,13 @@ class TestCheckPot(unittest.TestCase):
 		"""Test that no error is reported when every message has translators comment."""
 		self.assertEqual(
 			self.doCheckPot("allOk.pot"),
-			(0, "0 errors, 0 unexpected successes, 0 expected errors"),
+			(
+				2,
+				(
+					"0 errors, 0 unexpected successes, 0 expected errors, "
+					"2 messages marked as expected failures removed from the source code"
+				)
+			),
 			"checkPot error count and/or status message do not meet expectations."
 		)
 
@@ -54,7 +60,13 @@ class TestCheckPot(unittest.TestCase):
 		"""Test that missing translators comment on the first message are reported."""
 		self.assertEqual(
 			self.doCheckPot("firstMessage.pot"),
-			(1, "1 errors, 0 unexpected successes, 0 expected errors"),
+			(
+				3,
+				(
+					"1 errors, 0 unexpected successes, 0 expected errors, "
+					"2 messages marked as expected failures removed from the source code"
+				)
+			),
 			"checkPot error count and/or status message do not meet expectations."
 		)
 
@@ -62,7 +74,13 @@ class TestCheckPot(unittest.TestCase):
 		"""Test that missing translators comment on the last message are reported."""
 		self.assertEqual(
 			self.doCheckPot("lastMessage.pot"),
-			(1, "1 errors, 0 unexpected successes, 0 expected errors"),
+			(
+				3,
+				(
+					"1 errors, 0 unexpected successes, 0 expected errors, "
+					"2 messages marked as expected failures removed from the source code"
+				)
+			),
 			"checkPot error count and/or status message do not meet expectations."
 		)
 
@@ -70,7 +88,13 @@ class TestCheckPot(unittest.TestCase):
 		"""Test that missing translators comment on short messages are reported."""
 		self.assertEqual(
 			self.doCheckPot("shortMessages.pot"),
-			(3, "3 errors, 0 unexpected successes, 0 expected errors"),
+			(
+				5,
+				(
+					"3 errors, 0 unexpected successes, 0 expected errors, "
+					"2 messages marked as expected failures removed from the source code"
+				)
+			),
 			"checkPot error count and/or status message do not meet expectations."
 		)
 
@@ -78,14 +102,26 @@ class TestCheckPot(unittest.TestCase):
 		"""Test that missing translators comment on long messages are reported."""
 		self.assertEqual(
 			self.doCheckPot("longMessages.pot"),
-			(3, "3 errors, 0 unexpected successes, 0 expected errors")
+			(
+				5,
+				(
+					"3 errors, 0 unexpected successes, 0 expected errors, "
+					"2 messages marked as expected failures removed from the source code"
+				)
+			)
 		)
 
 	def test_checkPot_expectedErrors(self):
 		"""Test that expected errors are reported as such."""
 		self.assertEqual(
 			self.doCheckPot("expectedErrors.pot"),
-			(0, "0 errors, 0 unexpected successes, 2 expected errors"),
+			(
+				1,
+				(
+					"0 errors, 0 unexpected successes, 2 expected errors, "
+					"1 messages marked as expected failures removed from the source code"
+				)
+			),
 			"checkPot error count and/or status message do not meet expectations."
 		)
 
@@ -93,6 +129,12 @@ class TestCheckPot(unittest.TestCase):
 		"""Test that unexpected successes are reported as such."""
 		self.assertEqual(
 			self.doCheckPot("unexpectedSuccesses.pot"),
-			(2, "0 errors, 2 unexpected successes, 0 expected errors"),
+			(
+				3,
+				(
+					"0 errors, 2 unexpected successes, 0 expected errors, "
+					"1 messages marked as expected failures removed from the source code"
+				)
+			),
 			"checkPot error count and/or status message do not meet expectations."
 		)
