@@ -8,6 +8,7 @@
 import config
 import languageHandler
 import synthDriverHandler
+from synthDrivers.oneCore import SynthDriver as OneCoreSynthDriver
 from typing import Callable
 import unittest
 
@@ -31,8 +32,7 @@ class MockSynth:
 
 	def _getDefaultVoice(self, pickAny: bool = True):
 		assert self.name == "oneCore"  # this should only be used when mocking the oneCore synth
-		from synthDrivers import oneCore
-		return oneCore.SynthDriver._getDefaultVoice(self, pickAny)
+		return OneCoreSynthDriver._getDefaultVoice(self, pickAny)
 
 
 class test_synthDriverHandler(unittest.TestCase):
@@ -94,7 +94,8 @@ class test_synthDriverHandler(unittest.TestCase):
 			self.assertEqual(synthName, synthDriverHandler.getSynth().name)
 			self.assertEqual(FAKE_DEFAULT_LANG, config.conf["speech"]["synth"])
 
-	def test_setSynth_auto_usesOneCore_ifSupportsDefaultLangauge(self):
+	@unittest.skipUnless(OneCoreSynthDriver.check(), "Requires oneCore being supported under current OS")
+	def test_setSynth_auto_usesOneCore_ifSupportsDefaultLanguage(self):
 		"""
 		Ensures that if oneCore supports the current language, setSynth("auto") uses "oneCore".
 		"""
@@ -103,7 +104,8 @@ class test_synthDriverHandler(unittest.TestCase):
 		synthDriverHandler.setSynth("auto")
 		self.assertEqual(synthDriverHandler.getSynth().name, "oneCore")
 
-	def test_setSynth_auto_fallback_ifOneCoreDoesntSupportDefaultLangauge(self):
+	@unittest.skipUnless(OneCoreSynthDriver.check(), "Requires oneCore being supported under current OS")
+	def test_setSynth_auto_fallback_ifOneCoreDoesntSupportDefaultLanguage(self):
 		"""
 		Ensures that if oneCore doesn't support the current language, setSynth("auto") falls back to the
 		current synth, or espeak if there is no current synth.
