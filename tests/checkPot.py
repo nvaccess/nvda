@@ -200,13 +200,13 @@ def checkPot(fileName):
 	removedTranslatableMessages = EXPECTED_MESSAGES_WITHOUT_COMMENTS - foundMessagesWithOutComments
 	if removedTranslatableMessages:
 		print(
-			"The following messages arre no longer present in the source code "
+			"The following messages are no longer present in the source code "
 			"and should be removed from `EXPECTED_MESSAGES_WITHOUT_COMMENTS`:"
 		)
 		print('\n'.join(removedTranslatableMessages))
 	print(
 		f"{errors} errors, {unexpectedSuccesses} unexpected successes, {expectedErrors} expected errors, "
-		f"{len(removedTranslatableMessages)} messages marked as expected failures removed from the source code"
+		f"{len(removedTranslatableMessages)} messages marked as expected errors not present in the source code"
 	)
 	return errors + unexpectedSuccesses + len(removedTranslatableMessages)
 

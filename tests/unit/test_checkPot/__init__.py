@@ -50,7 +50,7 @@ class TestCheckPot(unittest.TestCase):
 				2,
 				(
 					"0 errors, 0 unexpected successes, 0 expected errors, "
-					"2 messages marked as expected failures removed from the source code"
+					"2 messages marked as expected errors not present in the source code"
 				)
 			),
 			"checkPot error count and/or status message do not meet expectations."
@@ -64,7 +64,7 @@ class TestCheckPot(unittest.TestCase):
 				3,
 				(
 					"1 errors, 0 unexpected successes, 0 expected errors, "
-					"2 messages marked as expected failures removed from the source code"
+					"2 messages marked as expected errors not present in the source code"
 				)
 			),
 			"checkPot error count and/or status message do not meet expectations."
@@ -78,7 +78,7 @@ class TestCheckPot(unittest.TestCase):
 				3,
 				(
 					"1 errors, 0 unexpected successes, 0 expected errors, "
-					"2 messages marked as expected failures removed from the source code"
+					"2 messages marked as expected errors not present in the source code"
 				)
 			),
 			"checkPot error count and/or status message do not meet expectations."
@@ -92,7 +92,7 @@ class TestCheckPot(unittest.TestCase):
 				5,
 				(
 					"3 errors, 0 unexpected successes, 0 expected errors, "
-					"2 messages marked as expected failures removed from the source code"
+					"2 messages marked as expected errors not present in the source code"
 				)
 			),
 			"checkPot error count and/or status message do not meet expectations."
@@ -106,7 +106,7 @@ class TestCheckPot(unittest.TestCase):
 				5,
 				(
 					"3 errors, 0 unexpected successes, 0 expected errors, "
-					"2 messages marked as expected failures removed from the source code"
+					"2 messages marked as expected errors not present in the source code"
 				)
 			)
 		)
@@ -119,7 +119,7 @@ class TestCheckPot(unittest.TestCase):
 				1,
 				(
 					"0 errors, 0 unexpected successes, 2 expected errors, "
-					"1 messages marked as expected failures removed from the source code"
+					"1 messages marked as expected errors not present in the source code"
 				)
 			),
 			"checkPot error count and/or status message do not meet expectations."
@@ -133,7 +133,7 @@ class TestCheckPot(unittest.TestCase):
 				3,
 				(
 					"0 errors, 2 unexpected successes, 0 expected errors, "
-					"1 messages marked as expected failures removed from the source code"
+					"1 messages marked as expected errors not present in the source code"
 				)
 			),
 			"checkPot error count and/or status message do not meet expectations."
