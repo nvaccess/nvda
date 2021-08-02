@@ -306,8 +306,10 @@ def isScreenFullyBlack() -> bool:
 	- there is only one colour used in the image
 	- the first pixel of the screen capture is black
 
-	Having to iterate over a large bitmap image in python is slow (~4s depending on machine, number of pixels).
-	Using this method to calculate a histogram in native code takes ~0.4s comparably.
+	Iterating over a large bitmap image in python is slow (~4s depending on machine, number of pixels).
+	Due to no native support for calculating the number of black pixels, the screenBitmap module is avoided.
+	wxWidgets has native support for calculating the usage of colours within an image.
+	Using this method to calculate a colour usage histogram in native code takes ~0.4s comparably.
 	"""
 	screen = wx.ScreenDC()
 	screenSize = screen.GetSize()
@@ -319,7 +321,7 @@ def isScreenFullyBlack() -> bool:
 	# https://docs.wxwidgets.org/3.0/classwx_image.html#a7c9d557cd7ad577ed76e4337b1fd843a
 	hist = wx.ImageHistogram()
 	numberOfColours = img.ComputeHistogram(hist)
-	# Due to wxImageHistogram not fully supported in wxPython, the histogram is not subscriptable,
+	# Due to wxImageHistogram not being fully supported in wxPython, the histogram is not subscriptable,
 	# and thus the key value cannot be accessed for colours.
 	# https://github.com/wxWidgets/Phoenix/issues/1991
 	# This function could be improved in the future using the following logic:
