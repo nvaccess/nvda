@@ -305,6 +305,9 @@ def isScreenFullyBlack() -> bool:
 	Uses wx to check that the screen is currently fully black by taking a screen capture and checking:
 	- there is only one colour used in the image
 	- the first pixel of the screen capture is black
+
+	Having to iterate over a large bitmap image in python is slow (~4s depending on machine, number of pixels).
+	Using this method to calculate a histogram in native code takes ~0.4s comparably.
 	"""
 	screen = wx.ScreenDC()
 	screenSize = screen.GetSize()
