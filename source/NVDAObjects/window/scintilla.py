@@ -260,7 +260,7 @@ class Scintilla(EditableTextWithAutoSelectDetection, Window):
 
 #The role of the object should be editable text
 	def _get_role(self):
-		return controlTypes.ROLE_EDITABLETEXT
+		return controlTypes.Role.EDITABLETEXT
 
 	def _get_states(self):
 		states = super(Scintilla, self)._get_states()

@@ -182,7 +182,7 @@ def speakMessage(
 		speak(seq, symbolLevel=None, priority=priority)
 
 
-def getCurrentLanguage():
+def getCurrentLanguage() -> str:
 	synth = getSynth()
 	language=None
 	if  synth:
@@ -603,7 +603,7 @@ def getObjectSpeech(  # noqa: C901
 				reason=OutputReason.CARET,
 			)
 			sequence.extend(_flattenNestedSequences(speechGen))
-	elif role == controlTypes.ROLE_MATH:
+	elif role == controlTypes.Role.MATH:
 		import mathPres
 		mathPres.ensureInit()
 		if mathPres.speechProvider:
@@ -1264,7 +1264,7 @@ def getTextInfoSpeech(  # noqa: C901
 			if fieldSequence:
 				speechSequence.extend(fieldSequence)
 				shouldConsiderTextInfoBlank = False
-			if field.get("role")==controlTypes.ROLE_MATH:
+			if field.get("role")==controlTypes.Role.MATH:
 				shouldConsiderTextInfoBlank = False
 				_extendSpeechSequence_addMathForTextInfo(speechSequence, info, field)
 
@@ -1293,7 +1293,7 @@ def getTextInfoSpeech(  # noqa: C901
 		if fieldSequence:
 			speechSequence.extend(fieldSequence)
 			shouldConsiderTextInfoBlank = False
-		if field.get("role")==controlTypes.ROLE_MATH:
+		if field.get("role")==controlTypes.Role.MATH:
 			shouldConsiderTextInfoBlank = False
 			_extendSpeechSequence_addMathForTextInfo(speechSequence, info, field)
 		commonFieldCount+=1
@@ -1433,7 +1433,7 @@ def getTextInfoSpeech(  # noqa: C901
 						relativeSpeechSequence.append(LangChangeCommand(None))
 						lastLanguage=None
 					relativeSpeechSequence.extend(fieldSequence)
-				if command.command=="controlStart" and command.field.get("role")==controlTypes.ROLE_MATH:
+				if command.command=="controlStart" and command.field.get("role")==controlTypes.Role.MATH:
 					_extendSpeechSequence_addMathForTextInfo(relativeSpeechSequence, info, command.field)
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
@@ -1519,14 +1519,14 @@ def getPropertiesSpeech(  # noqa: C901
 		role=propertyValues['_role']
 	else:
 		speakRole=False
-		role=controlTypes.ROLE_UNKNOWN
+		role=controlTypes.Role.UNKNOWN
 	value: Optional[str] = propertyValues.get('value') if role not in controlTypes.silentValuesForRoles else None
 	cellCoordsText: Optional[str] = propertyValues.get('cellCoordsText')
 	rowNumber = propertyValues.get('rowNumber')
 	columnNumber = propertyValues.get('columnNumber')
 	includeTableCellCoords = propertyValues.get('includeTableCellCoords', True)
 
-	if role == controlTypes.ROLE_CHARTELEMENT:
+	if role == controlTypes.Role.CHARTELEMENT:
 		speakRole = False
 	roleText: Optional[str] = propertyValues.get('roleText')
 	if (
@@ -1548,7 +1548,7 @@ def getPropertiesSpeech(  # noqa: C901
 			or role not in controlTypes.silentRolesOnFocus
 		)
 		and (
-			role != controlTypes.ROLE_MATH
+			role != controlTypes.Role.MATH
 			or reason not in (
 				OutputReason.CARET,
 				OutputReason.SAYALL
@@ -1682,7 +1682,7 @@ def getPropertiesSpeech(  # noqa: C901
 			# Translators: Speaks the item level in treeviews (example output: level 2).
 			levelTranslation: str = _('level %s') % level
 			if (
-				role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM)
+				role in (controlTypes.Role.TREEVIEWITEM, controlTypes.Role.LISTITEM)
 				and level != _speechState.oldTreeLevel
 			):
 				textList.insert(0, levelTranslation)
@@ -1706,19 +1706,19 @@ def _shouldSpeakContentFirst(
 	Helper function for getControlFieldSpeech.
 	"""
 	_neverSpeakContentFirstRoles = (
-		controlTypes.ROLE_EDITABLETEXT,
-		controlTypes.ROLE_COMBOBOX,
-		controlTypes.ROLE_TREEVIEW,
-		controlTypes.ROLE_LIST,
-		controlTypes.ROLE_LANDMARK,
-		controlTypes.ROLE_REGION,
+		controlTypes.Role.EDITABLETEXT,
+		controlTypes.Role.COMBOBOX,
+		controlTypes.Role.TREEVIEW,
+		controlTypes.Role.LIST,
+		controlTypes.Role.LANDMARK,
+		controlTypes.Role.REGION,
 	)
 	return (
 		reason == OutputReason.FOCUS
 		and (
 			# the category is not a container, unless it's an article (#11103)
 			presCat != attrs.PRESCAT_CONTAINER
-			or role == controlTypes.ROLE_ARTICLE
+			or role == controlTypes.Role.ARTICLE
 		)
 		and not (role in _neverSpeakContentFirstRoles)
 		and not tableID
@@ -1749,7 +1749,7 @@ def getControlFieldSpeech(  # noqa: C901
 		extraDetail=extraDetail
 	)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
-	role = attrs.get('role', controlTypes.ROLE_UNKNOWN)
+	role = attrs.get('role', controlTypes.Role.UNKNOWN)
 	if (
 		reason == OutputReason.FOCUS
 		or attrs.get('alwaysReportName', False)
@@ -1777,9 +1777,9 @@ def getControlFieldSpeech(  # noqa: C901
 	landmark = attrs.get("landmark")
 	if roleText:
 		roleTextSequence = [roleText, ]
-	elif role == controlTypes.ROLE_LANDMARK and landmark:
+	elif role == controlTypes.Role.LANDMARK and landmark:
 		roleTextSequence = [
-			f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}",
+			f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.Role.LANDMARK]}",
 		]
 	else:
 		roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
@@ -1816,7 +1816,7 @@ def getControlFieldSpeech(  # noqa: C901
 		speakEntry=True
 		speakExitForLine = bool(
 			attrs.get('roleText')
-			or role != controlTypes.ROLE_LANDMARK
+			or role != controlTypes.Role.LANDMARK
 		)
 		speakExitForOther=True
 
@@ -1824,7 +1824,7 @@ def getControlFieldSpeech(  # noqa: C901
 	# speakContentFirst: Speak the content before the control field info.
 	speakContentFirst = _shouldSpeakContentFirst(reason, role, presCat, attrs, tableID, states)
 	# speakStatesFirst: Speak the states before the role.
-	speakStatesFirst=role==controlTypes.ROLE_LINK
+	speakStatesFirst=role==controlTypes.Role.LINK
 
 	containerContainsText="" #: used for item counts for lists
 
@@ -1833,7 +1833,7 @@ def getControlFieldSpeech(  # noqa: C901
 	if(
 		childControlCount
 		and fieldType == "start_addedToControlFieldStack"
-		and role == controlTypes.ROLE_LIST
+		and role == controlTypes.Role.LIST
 		and controlTypes.STATE_READONLY in states
 	):
 		# List.
@@ -1842,7 +1842,7 @@ def getControlFieldSpeech(  # noqa: C901
 		# This ensures that properties such as name, states and level etc still get reported appropriately.
 		# Translators: Number of items in a list (example output: list with 5 items).
 		containerContainsText=_("with %s items")%childControlCount
-	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
+	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.Role.TABLE and tableID:
 		# Table.
 		rowCount=(attrs.get("table-rowcount-presentational") or attrs.get("table-rowcount"))
 		columnCount=(attrs.get("table-columncount-presentational") or attrs.get("table-columncount"))
@@ -1862,7 +1862,7 @@ def getControlFieldSpeech(  # noqa: C901
 		nameSequence
 		and reason == OutputReason.FOCUS
 		and fieldType == "start_addedToControlFieldStack"
-		and role in (controlTypes.ROLE_GROUPING, controlTypes.ROLE_PROPERTYPAGE)
+		and role in (controlTypes.Role.GROUPING, controlTypes.Role.PROPERTYPAGE)
 	):
 		# #10095, #3321, #709: Report the name and description of groupings (such as fieldsets) and tab pages
 		nameAndRole = nameSequence[:]
@@ -1872,9 +1872,9 @@ def getControlFieldSpeech(  # noqa: C901
 	elif (
 		fieldType in ("start_addedToControlFieldStack", "start_relative")
 		and role in (
-			controlTypes.ROLE_TABLECELL,
-			controlTypes.ROLE_TABLECOLUMNHEADER,
-			controlTypes.ROLE_TABLEROWHEADER
+			controlTypes.Role.TABLECELL,
+			controlTypes.Role.TABLECOLUMNHEADER,
+			controlTypes.Role.TABLEROWHEADER
 		)
 		and tableID
 	):
@@ -1980,7 +1980,7 @@ def getControlFieldSpeech(  # noqa: C901
 		if isCurrent != controlTypes.IsCurrent.NO:
 			out.extend(isCurrentSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
-		if role == controlTypes.ROLE_TREEVIEWITEM:
+		if role == controlTypes.Role.TREEVIEWITEM:
 			if controlTypes.STATE_EXPANDED in states:
 				out.extend(
 					getPropertiesSpeech(reason=reason, states={controlTypes.STATE_EXPANDED}, _role=role)
@@ -1991,7 +1991,7 @@ def getControlFieldSpeech(  # noqa: C901
 				)
 			if levelSequence:
 				out.extend(levelSequence)
-		if role == controlTypes.ROLE_GRAPHIC and content:
+		if role == controlTypes.Role.GRAPHIC and content:
 			out.append(content)
 		types.logBadSequenceTypes(out)
 		return out

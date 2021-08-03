@@ -47,7 +47,7 @@ class Ia2Web(IAccessible):
 		return placeholder
 
 	def _get_isPresentableFocusAncestor(self):
-		if self.role==controlTypes.ROLE_TABLEROW:
+		if self.role==controlTypes.Role.TABLEROW:
 			# It is not useful to present IAccessible2 table rows in the focus ancestry as  cells contain row and column information anyway.
 			# Also presenting the rows would cause duplication of information
 			return False
@@ -115,23 +115,23 @@ class Application(Document):
 	shouldCreateTreeInterceptor = False
 
 class BlockQuote(Ia2Web):
-	role = controlTypes.ROLE_BLOCKQUOTE
+	role = controlTypes.Role.BLOCKQUOTE
 
 
 class Treegrid(Ia2Web):
-	role = controlTypes.ROLE_TABLE
+	role = controlTypes.Role.TABLE
 
 
 class Article(Ia2Web):
-	role = controlTypes.ROLE_ARTICLE
+	role = controlTypes.Role.ARTICLE
 
 
 class Region(Ia2Web):
-	role = controlTypes.ROLE_REGION
+	role = controlTypes.Role.REGION
 
 
 class Figure(Ia2Web):
-	role = controlTypes.ROLE_FIGURE
+	role = controlTypes.Role.FIGURE
 
 
 class Editor(Ia2Web, DocumentWithTableNavigation):
@@ -211,7 +211,7 @@ class Switch(Ia2Web):
 	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
 	# checked state instead of pressed. The simplest way to deal with this
 	# identity crisis is to map it to a check box.
-	role = controlTypes.ROLE_CHECKBOX
+	role = controlTypes.Role.CHECKBOX
 
 	def _get_states(self):
 		states = super().states

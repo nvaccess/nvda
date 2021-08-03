@@ -71,9 +71,9 @@ class AppModule(appModuleHandler.AppModule):
 			obj.editValueUnit=textInfos.UNIT_STORY
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if obj.windowClassName=="SysListView32" and obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
+		if obj.windowClassName=="SysListView32" and obj.windowControlID in (128,129,130) and obj.role==controlTypes.Role.LISTITEM:
 			clsList.insert(0,MessageRuleListItem)
-		elif "SysListView32" in obj.windowClassName and obj.role==controlTypes.ROLE_LISTITEM and obj.parent.name=="Outlook Express Message List":
+		elif "SysListView32" in obj.windowClassName and obj.role==controlTypes.Role.LISTITEM and obj.parent.name=="Outlook Express Message List":
 			clsList.insert(0,MessageListItem)
 
 	def event_gainFocus(self,obj,nextHandler):
@@ -87,7 +87,7 @@ class AppModule(appModuleHandler.AppModule):
 class MessageRuleListItem(sysListView32.ListItem):
 	"""Used for the checkbox list items used to select message rule types in in message filters"""
 
-	role=controlTypes.ROLE_CHECKBOX
+	role=controlTypes.Role.CHECKBOX
 
 	def _get_states(self):
 		states=super(MessageRuleListItem,self).states

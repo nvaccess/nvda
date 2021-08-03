@@ -44,7 +44,7 @@ class Client(IAccessible):
 			return widget
 
 		try:
-			if wnext.firstChild.role == controlTypes.ROLE_SCROLLBAR:
+			if wnext.firstChild.role == controlTypes.Role.SCROLLBAR:
 				# There is only one child plus a scrollbar, so this is probably a widget container.
 				return widget
 		except AttributeError:
@@ -120,7 +120,7 @@ class Menu(IAccessible):
 class LayeredPane(IAccessible):
 	# QT < 4.6 uses ROLE_SYSTEM_IPADDRESS for layered pane.
 	# See QT task 258413.
-	role = controlTypes.ROLE_LAYEREDPANE
+	role = controlTypes.Role.LAYEREDPANE
 
 class Application(IAccessible):
 	# QT sets the path of the application in the description, which is irrelevant to the user.

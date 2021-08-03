@@ -1,6 +1,5 @@
-# languageHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2018 NV access Limited, Joseph Lee
+# Copyright (C) 2007-2021 NV access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -16,6 +15,7 @@ import locale
 import gettext
 import globalVars
 from logHandler import log
+from typing import Optional
 
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2
@@ -49,7 +49,8 @@ def localeNameToWindowsLCID(localeName):
 		LCID=LCID_NONE
 	return LCID
 
-def windowsLCIDToLocaleName(lcid):
+
+def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
 	"""
 	gets a normalized locale from a lcid
 	"""
@@ -153,9 +154,8 @@ def getWindowsLanguage():
 	Fetches the locale name of the user's configured language in Windows.
 	"""
 	windowsLCID=ctypes.windll.kernel32.GetUserDefaultUILanguage()
-	try:
-		localeName=locale.windows_locale[windowsLCID]
-	except KeyError:
+	localeName = windowsLCIDToLocaleName(windowsLCID)
+	if not localeName:
 		# #4203: some locale identifiers from Windows 8 do not exist in Python's list.
 		# Therefore use windows' own function to get the locale name.
 		# Eventually this should probably be used all the time.
@@ -198,9 +198,15 @@ def setLanguage(lang: str) -> None:
 		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
 		curLang = localeName
 	except IOError:
-		log.debugWarning(f"couldn't set the translation service locale to {localeName}")
-		trans = gettext.translation("nvda", fallback=True)
-		curLang = "en"
+		try:
+			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
+			localeName = localeName.split("_")[0]
+			trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
+			curLang = localeName
+		except IOError:
+			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
+			trans = gettext.translation("nvda", fallback=True)
+			curLang = "en"
 
 	trans.install()
 	setLocale(curLang)
@@ -291,7 +297,8 @@ def setLocale(localeName: str) -> None:
 def getLanguage() -> str:
 	return curLang
 
-def normalizeLanguage(lang):
+
+def normalizeLanguage(lang) -> Optional[str]:
 	"""
 	Normalizes a  language-dialect string  in to a standard form we can deal with.
 	Converts  any dash to underline, and makes sure that language is lowercase and dialect is upercase.

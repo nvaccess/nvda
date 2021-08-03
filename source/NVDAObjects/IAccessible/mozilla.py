@@ -26,7 +26,7 @@ class Mozilla(ia2Web.Ia2Web):
 	def _get_presentationType(self):
 		presType=super(Mozilla,self).presentationType
 		if presType==self.presType_content:
-			if self.role==controlTypes.ROLE_TABLE and self.IA2Attributes.get('layout-guess')=='true':
+			if self.role==controlTypes.Role.TABLE and self.IA2Attributes.get('layout-guess')=='true':
 				presType=self.presType_layout
 			elif self.table and self.table.presentationType==self.presType_layout:
 				presType=self.presType_layout
@@ -89,7 +89,7 @@ class GeckoPluginWindowRoot(WindowRoot):
 		return parent
 
 class TextLeaf(Mozilla):
-	role = controlTypes.ROLE_STATICTEXT
+	role = controlTypes.Role.STATICTEXT
 	beTransparentToMouse = True
 
 def findExtraOverlayClasses(obj, clsList):

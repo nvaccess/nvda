@@ -27,17 +27,17 @@ class SDM(IAccessible):
 
 	def _get_name(self):
 		name=super(SDM,self).name
-		if not name and self.role==controlTypes.ROLE_LISTITEM:
+		if not name and self.role==controlTypes.Role.LISTITEM:
 			name=self.displayText
 		return name
 
 	def _get_positionInfo(self):
-		if self.role!=controlTypes.ROLE_LISTITEM:
+		if self.role!=controlTypes.Role.LISTITEM:
 			return {}
 		return super(SDM,self).positionInfo
 
 	def _get_parent(self):
-		if self.IAccessibleChildID == 0 and self.role not in (controlTypes.ROLE_DIALOG, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_WINDOW):
+		if self.IAccessibleChildID == 0 and self.role not in (controlTypes.Role.DIALOG, controlTypes.Role.PROPERTYPAGE, controlTypes.Role.WINDOW):
 			# SDM child IAccessible objects have a broken accParent.
 			# The parent should be the dialog.
 			return getNVDAObjectFromEvent(self.windowHandle, winUser.OBJID_CLIENT, 0)
@@ -77,7 +77,7 @@ class SDM(IAccessible):
 class MSOUNISTAT(IAccessible):
 
 	def _get_role(self):
-		return controlTypes.ROLE_STATICTEXT
+		return controlTypes.Role.STATICTEXT
 
 class MsoCommandBarToolBar(IAccessible):
 
@@ -164,7 +164,7 @@ class SDMSymbols(SDM):
 		# static text labels for these lists seem to have a keyboardShortcut, therefore we can skip over those.
 		next=self.next
 		while next:
-			if not next.keyboardShortcut and next.role==controlTypes.ROLE_STATICTEXT:
+			if not next.keyboardShortcut and next.role==controlTypes.Role.STATICTEXT:
 				return next.name
 			next=next.next
 
@@ -191,9 +191,9 @@ Fortunately accValue contains "status bar" and is not localized.
 """
 		accValue = self.IAccessibleObject.accValue(self.IAccessibleChildID)
 		if accValue == 'Ribbon Tab':
-			return controlTypes.ROLE_TAB
+			return controlTypes.Role.TAB
 		if accValue == 'Status Bar':
-			return controlTypes.ROLE_STATUSBAR
+			return controlTypes.Role.STATUSBAR
 		return super()._get_role()
 
 	def _get_description(self):
@@ -211,5 +211,5 @@ class RibbonSection (IAccessible):
 	def _get_role(self):
 		accValue = self.IAccessibleObject.accValue(self.IAccessibleChildID)
 		if accValue == "Group":
-			return controlTypes.ROLE_GROUPING
+			return controlTypes.Role.GROUPING
 		return super()._get_role()

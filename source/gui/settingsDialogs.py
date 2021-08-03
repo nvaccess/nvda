@@ -1,8 +1,11 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
-# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers
+# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
+# Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
+# Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
+# jakubl7545, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -1579,8 +1582,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		config.conf["speech"]["autoLanguageSwitching"] = self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"] = self.autoDialectSwitchingCheckbox.IsChecked()
-		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
-		config.conf["speech"]["trustVoiceLanguage"]=self.trustVoiceLanguageCheckbox.IsChecked()
+		config.conf["speech"]["symbolLevel"] = characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[
+			self.symbolLevelList.GetSelection()
+		].value
+		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
 		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
 		if currentIncludeCLDR is not newIncludeCldr:
@@ -2764,6 +2769,27 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
+		label = _("Document Formatting")
+		docFormatting = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		docFormattingBox = docFormatting.GetStaticBox()
+		docFormattingGroup = guiHelper.BoxSizerHelper(self, sizer=docFormatting)
+		sHelper.addItem(docFormattingGroup)
+
+		# Translators: This is the label for a checkbox control in the
+		#  Advanced settings panel.
+		label = _("Report transparent color values")
+		self.reportTransparentColorCheckBox: wx.CheckBox = docFormattingGroup.addItem(
+			wx.CheckBox(docFormattingBox, label=label)
+		)
+		self.bindHelpEvent("ReportTransparentColors", self.reportTransparentColorCheckBox)
+		self.reportTransparentColorCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportTransparentColor"]
+		)
+		self.reportTransparentColorCheckBox.defaultValue = self._getDefaultValue(
+			["documentFormatting", "reportTransparentColor"])
+
+		# Translators: This is the label for a group of advanced options in the
+		# Advanced settings panel
 		label = _("Debug logging")
 		debugLogSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
@@ -2827,6 +2853,7 @@ class AdvancedPanelControls(
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
+			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and True  # reduce noise in diff when the list is extended.
@@ -2845,6 +2872,7 @@ class AdvancedPanelControls(
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
+		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
 
@@ -2867,6 +2895,9 @@ class AdvancedPanelControls(
 			self.diffAlgoVals[diffAlgoChoice]
 		)
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
+		config.conf["documentFormatting"]["reportTransparentColor"] = (
+			self.reportTransparentColorCheckBox.IsChecked()
+		)
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)

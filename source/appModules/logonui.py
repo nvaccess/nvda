@@ -20,7 +20,7 @@ from NVDAObjects.UIA import UIA
 
 class LogonDialog(Dialog):
 
-	role = controlTypes.ROLE_DIALOG
+	role = controlTypes.Role.DIALOG
 	isPresentableFocusAncestor = True
 
 	def event_gainFocus(self):
@@ -83,7 +83,7 @@ class AppModule(appModuleHandler.AppModule):
 		windowClass = obj.windowClassName
 
 		if UIAHandler.handler:
-			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("TouchEditInner", "PasswordBox") and obj.role==controlTypes.ROLE_EDITABLETEXT:
+			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("TouchEditInner", "PasswordBox") and obj.role==controlTypes.Role.EDITABLETEXT:
 				clsList.insert(0,Win8PasswordField)
 		# #6010: Allow Windows 10 version to be recognized as well.
 		if ((windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and obj.parent.parent and not obj.parent.parent.parent)
@@ -93,15 +93,15 @@ class AppModule(appModuleHandler.AppModule):
 
 		if windowClass == "Edit" and not obj.name:
 			parent = obj.parent
-			if parent and parent.role == controlTypes.ROLE_WINDOW:
+			if parent and parent.role == controlTypes.Role.WINDOW:
 				clsList.insert(0, XPPasswordField)
 				return
 
 	def event_gainFocus(self,obj,nextHandler):
 		# #6010: Windows 10 version uses a different window class name.
-		if obj.windowClassName in ("DirectUIHWND", "LogonUI Logon Window") and obj.role==controlTypes.ROLE_BUTTON and not obj.next:
+		if obj.windowClassName in ("DirectUIHWND", "LogonUI Logon Window") and obj.role==controlTypes.Role.BUTTON and not obj.next:
 			prev=obj.previous
-			if prev and prev.role in (controlTypes.ROLE_STATICTEXT, controlTypes.ROLE_PANE):
+			if prev and prev.role in (controlTypes.Role.STATICTEXT, controlTypes.Role.PANE):
 				# This is for a popup message in the logon dialog.
 				# Present the dialog again so the message will be reported.
 				speech.speakObjectProperties(api.getForegroundObject(),name=True,role=True,description=True)
