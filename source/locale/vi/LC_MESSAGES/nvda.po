@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-23 00:01+0000\n"
-"PO-Revision-Date: 2021-07-25 00:01+0700\n"
+"POT-Creation-Date: 2021-07-30 00:01+0000\n"
+"PO-Revision-Date: 2021-07-30 14:40+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -3044,26 +3044,6 @@ msgstr "Duyệt qua các chế độ đọc ký hiệu"
 msgid "Symbol level %s"
 msgstr "Cấp độ ký hiệu %s"
 
-#. Translators: Input help mode message for a command.
-msgid ""
-"Toggle the announcement of all punctuation and symbols when reviewing by word"
-msgstr "bật / tắt việc đọc tất cả dấu câu và kí hiệu khi duyệt qua từng từ"
-
-#. Translators: Used to report the new state of a setting which is toggled via a command.
-msgctxt "command toggle"
-msgid "off"
-msgstr "tắt"
-
-#. Translators: Used to report the new state of a setting which is toggled via a command.
-msgctxt "command toggle"
-msgid "on"
-msgstr "bật"
-
-#. Translators: Reported when toggling a speech setting
-#, python-brace-format
-msgid "Speak all punctuation and symbols when reviewing by word: {state}"
-msgstr "Đọc tất cả dấu câu và kí hiệu khi duyệt qua từng từ: {state}"
-
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Di chuyển con trỏ chuột đến đối tượng hiện tại"
@@ -4156,17 +4136,16 @@ msgid "Not math"
 msgstr "Không phải toán"
 
 #. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "Nhận dạng nội dung tại đối tượng điều hướng bằng Windows 10 OCR"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
+msgstr "Nhận dạng nội dung tại đối tượng điều hướng bằng Windows OCR"
 
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "Không có Windows 10 OCR"
+#. Translators: Reported when Windows OCR is not available.
+msgid "Windows OCR not available"
+msgstr "Không có Windows OCR"
 
 #. Translators: Reported when screen curtain is enabled.
-msgid "Please disable screen curtain before using Windows 10 OCR."
-msgstr "Vui lòng tắt chế độ che màn hình trước khi sử dụng Windows 10 OCR."
+msgid "Please disable screen curtain before using Windows OCR."
+msgstr "Vui lòng tắt chế độ che màn hình trước khi sử dụng Windows OCR."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -9158,10 +9137,6 @@ msgstr "Tự động chuyển giọng theo vùng miền (nếu có hỗ trợ)"
 msgid "Punctuation/symbol &level:"
 msgstr "&Mức độ đọc dấu câu và ký hiệu:"
 
-#. Translators: The label for a setting in the Speech category
-msgid "Speak all punctuation and symbols when reviewing by &word"
-msgstr "Đọc tất cả dấu câu và kí hiệu khi duyệt qua từng từ"
-
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
@@ -9709,11 +9684,11 @@ msgstr "Bật hỗ trợ tương tác cảm ứng"
 msgid "&Touch typing mode"
 msgstr "Chế độ gọ &cảm ứng"
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr "Windows 10 OCR"
+#. Translators: The title of the Windows OCR panel.
+msgid "Windows OCR"
+msgstr "Windows OCR"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "&Ngôn ngữ nhận dạng:"
 
@@ -12433,6 +12408,25 @@ msgstr "Phân cách dòng đôi"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Phân cách dòng 1.5"
+
+#~ msgid ""
+#~ "Toggle the announcement of all punctuation and symbols when reviewing by "
+#~ "word"
+#~ msgstr "bật / tắt việc đọc tất cả dấu câu và kí hiệu khi duyệt qua từng từ"
+
+#~ msgctxt "command toggle"
+#~ msgid "off"
+#~ msgstr "tắt"
+
+#~ msgctxt "command toggle"
+#~ msgid "on"
+#~ msgstr "bật"
+
+#~ msgid "Speak all punctuation and symbols when reviewing by word: {state}"
+#~ msgstr "Đọc tất cả dấu câu và kí hiệu khi duyệt qua từng từ: {state}"
+
+#~ msgid "Speak all punctuation and symbols when reviewing by &word"
+#~ msgstr "Đọc tất cả dấu câu và kí hiệu khi duyệt qua từng từ"
 
 #~ msgid "Israeli 8 dot computer braille"
 #~ msgstr "Tiếng Israel chữ nổi máy tính 8 chấm"
