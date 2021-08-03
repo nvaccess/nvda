@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2021 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
 The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
@@ -302,14 +302,25 @@ class ScreenCurtainGuiPanel(
 
 def isScreenFullyBlack() -> bool:
 	"""
-	Uses wx to check that the screen is currently fully black by taking a screen capture and checking:
+	Takes a screen capture of all displays, through wxPython, which uses the winGDI API and checks:
 	- there is only one colour used in the image
 	- the first pixel of the screen capture is black
-
+	"""
+	"""
 	Iterating over a large bitmap image in python is slow (~4s depending on machine, number of pixels).
-	Due to no native support for calculating the number of black pixels, the screenBitmap module is avoided.
+	Due to no native support for calculating the number of black pixels, NVDA's screenBitmap module is avoided.
 	wxWidgets has native support for calculating the usage of colours within an image.
 	Using this method to calculate a colour usage histogram in native code takes ~0.4s comparably.
+
+	An example of iterating over a screen bitmap, using NVDA's screenBitmap module.
+	from screenBitmap import ScreenBitmap
+	from itertools import chain
+	from winGDI import RGBQUAD
+	screenCapture = ScreenBitmap(screenSize[0], screenSize[1]).captureImage(0, 0, screenSize[0], screenSize[1])
+	def _isPixelBlack(pixel: RGBQUAD) -> bool:
+		return pixel.rgbRed == 0 and pixel.rgbGreen == 0 and pixel.rgbBlue == 0
+	numNonBlackPixels = len(list(filter(lambda p: not _isPixelBlack(p), chain.from_iterable(screenCapture))))
+	return numNonBlackPixels == 0
 	"""
 	screen = wx.ScreenDC()
 	screenSize = screen.GetSize()
@@ -321,19 +332,21 @@ def isScreenFullyBlack() -> bool:
 	# https://docs.wxwidgets.org/3.0/classwx_image.html#a7c9d557cd7ad577ed76e4337b1fd843a
 	hist = wx.ImageHistogram()
 	numberOfColours = img.ComputeHistogram(hist)
-	# Due to wxImageHistogram not being fully supported in wxPython, the histogram is not subscriptable,
-	# and thus the key value cannot be accessed for colours.
-	# https://github.com/wxWidgets/Phoenix/issues/1991
-	# This function could be improved in the future using the following logic:
-	# numberOfBlackPixelsKey = hist.MakeKey(255, 255, 255)
-	# numberOfBlackPixels = hist[numberOfBlackPixelsKey]
-	# numberOfDisplayPixels = screenSize[0] * screenSize[1]
-	# log.debug(f"""Screen Capture:
-	#  - number of colours: {numberOfColours}
-	#  - number of black pixels: {numberOfBlackPixels}
-	#  - number of total pixels: {numberOfDisplayPixels}
-	# """)
-	# return numberOfColours == 1 and numberOfBlackPixels == numberOfDisplayPixels
+	"""
+	Due to wxImageHistogram not being fully supported in wxPython, the histogram is not subscriptable,
+	and thus the key value cannot be accessed for colours.
+	https://github.com/wxWidgets/Phoenix/issues/1991
+	This function could be improved in the future using the following logic:
+	numberOfBlackPixelsKey = hist.MakeKey(255, 255, 255)
+	numberOfBlackPixels = hist[numberOfBlackPixelsKey]
+	numberOfDisplayPixels = screenSize[0] * screenSize[1]
+	log.debug(f'''Screen Capture:
+	- number of colours: {numberOfColours}
+	- number of black pixels: {numberOfBlackPixels}
+	- number of total pixels: {numberOfDisplayPixels}
+	''')
+	return numberOfColours == 1 and numberOfBlackPixels == numberOfDisplayPixels
+	"""
 	firstPixelIsBlack = img.GetRed(0, 0) == 0 and img.GetBlue(0, 0) == 0 and img.GetGreen(0, 0) == 0
 	return numberOfColours == 1 and firstPixelIsBlack
 
