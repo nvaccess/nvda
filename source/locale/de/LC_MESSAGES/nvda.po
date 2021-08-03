@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-23 00:01+0000\n"
+"POT-Creation-Date: 2021-07-30 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -3069,27 +3069,6 @@ msgstr ""
 msgid "Symbol level %s"
 msgstr "Symbolebene: %s"
 
-#. Translators: Input help mode message for a command.
-msgid ""
-"Toggle the announcement of all punctuation and symbols when reviewing by word"
-msgstr ""
-"Schaltet die Ansage aller Satzzeichen und Symbole bei der Wortüberprüfung ein"
-
-#. Translators: Used to report the new state of a setting which is toggled via a command.
-msgctxt "command toggle"
-msgid "off"
-msgstr "ausgeschaltet"
-
-#. Translators: Used to report the new state of a setting which is toggled via a command.
-msgctxt "command toggle"
-msgid "on"
-msgstr "eingeschaltet"
-
-#. Translators: Reported when toggling a speech setting
-#, python-brace-format
-msgid "Speak all punctuation and symbols when reviewing by word: {state}"
-msgstr "Alle Satzzeichen und Symbole bei der Wortüberprüfung ansagen: {state}"
-
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Zieht den Mauszeiger zum Objekt, auf dem sich der Navigator befindet"
@@ -4235,20 +4214,19 @@ msgid "Not math"
 msgstr "Kein mathematischer Inhalt"
 
 #. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr ""
-"Erkennt den Inhalt des aktuellen Navigator-Objekts (NVDA-Cursor) mit Hilfe "
-"der Windows 10-Texterkennung"
+"Erkennt den Inhalt des aktuellen Navigator-Objekts mit der Windows-"
+"Texterkennung"
 
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "Die Windows 10-Texterkennung ist nicht verfügbar"
+#. Translators: Reported when Windows OCR is not available.
+msgid "Windows OCR not available"
+msgstr "Die Windows-Texterkennung nicht verfügbar"
 
 #. Translators: Reported when screen curtain is enabled.
-msgid "Please disable screen curtain before using Windows 10 OCR."
+msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
-"Bitte deaktivieren Sie den Bildschirmvorhang, bevor sie die Windows 10 "
+"Bitte deaktivieren Sie den Bildschirmvorhang, bevor Sie die Windows-"
 "Texterkennung verwenden."
 
 #. Translators: Input help mode message for toggle report CLDR command.
@@ -9328,10 +9306,6 @@ msgstr "Dialekte automatisch wechseln (falls unterstützt)"
 msgid "Punctuation/symbol &level:"
 msgstr "&Zeichenausführlichkeit:"
 
-#. Translators: The label for a setting in the Speech category
-msgid "Speak all punctuation and symbols when reviewing by &word"
-msgstr "Alle Satzzeichen und Symbole bei der Wortüberprüfung ansagen"
-
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
@@ -9889,11 +9863,11 @@ msgstr "Unterstützung der Touch-Interaktion aktivieren"
 msgid "&Touch typing mode"
 msgstr "&Touch-Eingabemodus"
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr "Windows 10-Texterkennung"
+#. Translators: The title of the Windows OCR panel.
+msgid "Windows OCR"
+msgstr "Windows-Texterkennung"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "Erkennungs&sprache:"
 
@@ -12657,6 +12631,28 @@ msgstr "Doppelter Zeilenabstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 Zeilenabstand"
+
+#~ msgid ""
+#~ "Toggle the announcement of all punctuation and symbols when reviewing by "
+#~ "word"
+#~ msgstr ""
+#~ "Schaltet die Ansage aller Satzzeichen und Symbole bei der Wortüberprüfung "
+#~ "ein"
+
+#~ msgctxt "command toggle"
+#~ msgid "off"
+#~ msgstr "ausgeschaltet"
+
+#~ msgctxt "command toggle"
+#~ msgid "on"
+#~ msgstr "eingeschaltet"
+
+#~ msgid "Speak all punctuation and symbols when reviewing by word: {state}"
+#~ msgstr ""
+#~ "Alle Satzzeichen und Symbole bei der Wortüberprüfung ansagen: {state}"
+
+#~ msgid "Speak all punctuation and symbols when reviewing by &word"
+#~ msgstr "Alle Satzzeichen und Symbole bei der Wortüberprüfung ansagen"
 
 #~ msgid "Israeli 8 dot computer braille"
 #~ msgstr "Israelisches Computerbraille, 8-Punkt"
