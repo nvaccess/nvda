@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-23 00:01+0000\n"
-"PO-Revision-Date: 2021-07-26 18:29+0200\n"
+"POT-Creation-Date: 2021-07-30 00:01+0000\n"
+"PO-Revision-Date: 2021-07-30 10:09+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -3078,28 +3078,6 @@ msgstr "Vaihtaa symbolitasoa, joka määrittää, mitkä symbolit puhutaan."
 msgid "Symbol level %s"
 msgstr "Symbolitaso %s"
 
-#. Translators: Input help mode message for a command.
-msgid ""
-"Toggle the announcement of all punctuation and symbols when reviewing by word"
-msgstr ""
-"Ota käyttöön tai poista käytöstä kaikkien välimerkkien ja symboleiden "
-"puhuminen sanoittain luettaessa."
-
-#. Translators: Used to report the new state of a setting which is toggled via a command.
-msgctxt "command toggle"
-msgid "off"
-msgstr "ei käytössä"
-
-#. Translators: Used to report the new state of a setting which is toggled via a command.
-msgctxt "command toggle"
-msgid "on"
-msgstr "käytössä"
-
-#. Translators: Reported when toggling a speech setting
-#, python-brace-format
-msgid "Speak all punctuation and symbols when reviewing by word: {state}"
-msgstr "Puhu kaikki välimerkit ja symbolit sanoittain luettaessa: {state}"
-
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Siirtää hiiren nykyiseen navigointiobjektiin."
@@ -4224,20 +4202,19 @@ msgid "Not math"
 msgstr "Ei matemaattista sisältöä"
 
 #. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr ""
-"Tunnistaa nykyisen navigointiobjektin sisällön Windows 10:n "
+"Tunnistaa nykyisen navigointiobjektin sisällön Windowsin "
 "tekstintunnistuksella."
 
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "Windows 10:n tekstintunnistus ei ole käytettävissä"
+#. Translators: Reported when Windows OCR is not available.
+msgid "Windows OCR not available"
+msgstr "Windowsin tekstintunnistus ei ole käytettävissä"
 
 #. Translators: Reported when screen curtain is enabled.
-msgid "Please disable screen curtain before using Windows 10 OCR."
+msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
-"Poista näyttöverho käytöstä ennen Windows 10:n tekstintunnistuksen käyttöä."
+"Poista näyttöverho käytöstä ennen Windowsin tekstintunnistuksen käyttöä."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -9244,10 +9221,6 @@ msgstr "Vaihda murretta automaattisesti (jos mahdollista)"
 msgid "Punctuation/symbol &level:"
 msgstr "Välimerkki- ja symboli&taso:"
 
-#. Translators: The label for a setting in the Speech category
-msgid "Speak all punctuation and symbols when reviewing by &word"
-msgstr "Puhu kaikki välimerkit ja symbolit sa&noittain luettaessa"
-
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
@@ -9800,11 +9773,11 @@ msgstr "Ota käyttöön kosketusvuorovaikutuksen tuki"
 msgid "&Touch typing mode"
 msgstr "&Kosketuskirjoitustila"
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr "Tekstintunnistus (Windows 10)"
+#. Translators: The title of the Windows OCR panel.
+msgid "Windows OCR"
+msgstr "Windowsin tekstintunnistus"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "Tunnistuksen &kieli:"
 
@@ -12529,6 +12502,27 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#~ msgid ""
+#~ "Toggle the announcement of all punctuation and symbols when reviewing by "
+#~ "word"
+#~ msgstr ""
+#~ "Ota käyttöön tai poista käytöstä kaikkien välimerkkien ja symboleiden "
+#~ "puhuminen sanoittain luettaessa."
+
+#~ msgctxt "command toggle"
+#~ msgid "off"
+#~ msgstr "ei käytössä"
+
+#~ msgctxt "command toggle"
+#~ msgid "on"
+#~ msgstr "käytössä"
+
+#~ msgid "Speak all punctuation and symbols when reviewing by word: {state}"
+#~ msgstr "Puhu kaikki välimerkit ja symbolit sanoittain luettaessa: {state}"
+
+#~ msgid "Speak all punctuation and symbols when reviewing by &word"
+#~ msgstr "Puhu kaikki välimerkit ja symbolit sa&noittain luettaessa"
 
 #~ msgid "Israeli 8 dot computer braille"
 #~ msgstr "israelilainen 8-pisteen tietokonemerkistö"

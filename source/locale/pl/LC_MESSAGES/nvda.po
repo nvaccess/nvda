@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-23 00:01+0000\n"
-"PO-Revision-Date: 2021-07-23 11:43+0200\n"
+"POT-Creation-Date: 2021-07-30 00:01+0000\n"
+"PO-Revision-Date: 2021-07-31 15:53+0200\n"
 "Last-Translator: Zvonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -3056,28 +3056,6 @@ msgstr ""
 msgid "Symbol level %s"
 msgstr "Poziom  symboli %s"
 
-#. Translators: Input help mode message for a command.
-msgid ""
-"Toggle the announcement of all punctuation and symbols when reviewing by word"
-msgstr ""
-"Włącza i wyłącza czytanie wszystkich znaków interpunkcyjnych i symboli "
-"podczas czytania po słowach"
-
-#. Translators: Used to report the new state of a setting which is toggled via a command.
-msgctxt "command toggle"
-msgid "off"
-msgstr "Wyłączone"
-
-#. Translators: Used to report the new state of a setting which is toggled via a command.
-msgctxt "command toggle"
-msgid "on"
-msgstr "Włączone"
-
-#. Translators: Reported when toggling a speech setting
-#, python-brace-format
-msgid "Speak all punctuation and symbols when reviewing by word: {state}"
-msgstr "Czytaj interpunkcję i symbole podczas czytania po słowach: {state}"
-
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Przesuwa wskaźnik myszy do bieżącego obiektu nawigacyjnego"
@@ -4191,19 +4169,17 @@ msgid "Not math"
 msgstr "Ten element nie jest treścią matematyczną"
 
 #. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr ""
-"Rozpoznaje treść aktualnego obiektu nawigatora za pomocą silnika OCR Windows "
-"10 "
+"Rozpoznaje treść aktualnego obiektu nawigatora za pomocą silnika Windows OCR"
 
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "Windows 10 OCR niedostępny"
+#. Translators: Reported when Windows OCR is not available.
+msgid "Windows OCR not available"
+msgstr "Windows OCR niedostępny"
 
 #. Translators: Reported when screen curtain is enabled.
-msgid "Please disable screen curtain before using Windows 10 OCR."
-msgstr "Proszę wyłączyć kurtynę przed użyciem Windows 10 OCR."
+msgid "Please disable screen curtain before using Windows OCR."
+msgstr "Proszę wyłączyć kurtynę przed użyciem Windows OCR."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -8008,7 +7984,7 @@ msgstr "Z&darzenia wejścia..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "&Ustawienia"
+msgstr "&Opcje"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -9222,11 +9198,6 @@ msgstr "Automatycznie zmień dia&lekt, gdy wspierane"
 msgid "Punctuation/symbol &level:"
 msgstr "Poziom &interpunkcji/symboli"
 
-#. Translators: The label for a setting in the Speech category
-msgid "Speak all punctuation and symbols when reviewing by &word"
-msgstr ""
-"Czytaj wszystkie znaki interpunkcyjne i symbole podczas czytania po &słowach"
-
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
@@ -9774,11 +9745,11 @@ msgstr "Włącz wsparcie ekranów dotykowych"
 msgid "&Touch typing mode"
 msgstr "&Tryb pisania dotykowego"
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr "Windows 10 OCR"
+#. Translators: The title of the Windows OCR panel.
+msgid "Windows OCR"
+msgstr "Windows OCR"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "&Język rozpoznawania:"
 
@@ -10094,11 +10065,11 @@ msgstr "Błąd monitora brajlowskiego"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
-msgstr "Tabela w&yjścia:"
+msgstr "Tablica w&yjścia:"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 msgid "&Input table:"
-msgstr "Tabela &wprowadzania:"
+msgstr "Tablica &wprowadzania:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
@@ -12511,6 +12482,29 @@ msgstr "Interlinia podwójna"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interlinia 1.5"
+
+#~ msgid ""
+#~ "Toggle the announcement of all punctuation and symbols when reviewing by "
+#~ "word"
+#~ msgstr ""
+#~ "Włącza i wyłącza czytanie wszystkich znaków interpunkcyjnych i symboli "
+#~ "podczas czytania po słowach"
+
+#~ msgctxt "command toggle"
+#~ msgid "off"
+#~ msgstr "Wyłączone"
+
+#~ msgctxt "command toggle"
+#~ msgid "on"
+#~ msgstr "Włączone"
+
+#~ msgid "Speak all punctuation and symbols when reviewing by word: {state}"
+#~ msgstr "Czytaj interpunkcję i symbole podczas czytania po słowach: {state}"
+
+#~ msgid "Speak all punctuation and symbols when reviewing by &word"
+#~ msgstr ""
+#~ "Czytaj wszystkie znaki interpunkcyjne i symbole podczas czytania po "
+#~ "&słowach"
 
 #~ msgid "Israeli 8 dot computer braille"
 #~ msgstr "Hebrajski brajl komputerowy"
