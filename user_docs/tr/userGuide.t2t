@@ -66,7 +66,7 @@ Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. https://www.gnu.o
 İstisnalarla ilgili ayrıntılar için "yardım" bölümünün altındaki NVDA menüsünden lisans belgesine erişin.
 
 + Sistem Gereksinimleri +[SystemRequirements]
-- İşletim Sistemleri: Windows 7, windows 8, Windows 8.1, Windows 10 ve Windows Server 2008 R2'den itibaren Server işletim sistemleri dahil, işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
+- İşletim Sistemleri: Windows 7, windows 8, Windows 8.1, Windows 10, Windows 11 ve Windows Server 2008 R2'den itibaren Server işletim sistemleri dahil, işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
 - Windows 7 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
 - Windows Server 2008 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
 - en az 150 MB depolama alanı.
@@ -795,9 +795,12 @@ Bu tür durumlar için  NVDA, ekranı karartmak için etkinleştirilebilen "ekra
 
 Ekran perdesi etkinse, [OCR #Win10Ocr] veya  ekran görüntüsü almak gibi doğrudan ekranda görünenle ilgili işlemler gerçekleştirilemez.
 
+Güvenliği garanti etmek için, ekran perdesinin Windows'un yeni veya deneysel sürümleriyle düzgün çalıştığından emin olun.
+2021.2'den eski NVDA sürümleri ve Windows 10 21H2'den daha yeni bir Windows sürümü kullanılıyorsa, ekran perdesi uyarı vermeksizin çalışmayabilir.
+
 + Görsel İçerik Tanıma +[ContentRecognition]
 Yazarlar bir şeyin içeriğiyle ilgili ekran okuyucuların algılayabileceği tarzda yeterli bilgi sunmadıklarında, bir görüntünün içeriğinin tanınması için çeşitli araçlar kullanılabilir.
-NVDA görüntülerin içerisindeki metnin tanınması için Windows 10'la sunulan (OCR) işlevini optik karakter tanımayı destekler.
+NVDA görüntülerin içerisindeki metnin tanınması için Windows 10 ve sonraki  windows sürümleriyle sunulan (OCR) işlevini optik karakter tanımayı destekler.
 Başka içerik tanıma araçları NVDA eklentisi olarak sunulmaktadır.
 
 İçerik tanıma (OCR) komutu kullandığınızda, NVDA [nesne sunucusu #ObjectNavigation] tarafından odaklanan nesne içeriğini tanımaya çalışır.
@@ -809,17 +812,17 @@ Tanıma işlemi tamamlandıktan sonra, sonuç tarama kipinde gösterilir ve yön
 Enter ya da aralığa basarsanız, mümkünse üzerinde bulunduğunuz metnin işaret ettiği kontrolü etkinleştirebilirsiniz.
 Escape tuşuyla tanıma sonucunu kapatabilirsiniz.
 
-++ Windows 10 OCR ++[Win10Ocr]
-Windows 10 birçok dil için OCR içerir.
+++ Windows OCR ++[Win10Ocr]
+Windows 10 ve sonrası birçok dil için OCR içerir.
 NVDA bu aracı imajlardaki metni ya da erişilebilir olmayan uygulamalardaki kontrolleri tanımak için kullanabilir.
 
-[NVDA ayarları #NVDASettings] iletişim kutusundaki [Windows 10 OCR kategorisi #Win10OcrSettings] altından metin tanıma için kullanılacak dili seçebilirsiniz.
+[NVDA ayarları #NVDASettings] iletişim kutusundaki [Windows OCR kategorisi #Win10OcrSettings] altından metin tanıma için kullanılacak dili seçebilirsiniz.
 başlat menüsü, ayarlar, zaman ve dil, bölge ve dil altında dil ekle düğmesi kullanılarak ek diller yüklenebilir.
 
-Windows 10 OCR, [NVDA görsel geliştirmeleri #Vision] ya da  diğer harici görsel yardımcılarla  kısmen veya tamamen uyumsuz olabilir. Tanıma işlemine geçmeden önce bu araçları devre dışı bırakmanız gerekecektir.
+Windows OCR, [NVDA görsel geliştirmeleri #Vision] ya da  diğer harici görsel yardımcılarla  kısmen veya tamamen uyumsuz olabilir. Tanıma işlemine geçmeden önce bu araçları devre dışı bırakmanız gerekecektir.
 
 %kc:beginInclude
-Windows 10 OCR kullanarak geçerli nesne içindeki metni tanımak için, NVDA+r tuşlarına basın.
+Windows OCR kullanarak geçerli nesne içindeki metni tanımak için, NVDA+r tuşlarına basın.
 %kc:endInclude
 
 + Uygulamaya Özgü Özellikler +[ApplicationSpecificFeatures]
@@ -1179,12 +1182,6 @@ Kısayol tuşu: NVDA+p
 Bu, noktalama ya da başka işaretlerin ne kadarının sözcük olarak seslendirileceğiyle ilgili ayarı değiştirmenizi sağlar.
 Örneğin, Tümü olarak ayarladığınızda işaretlerin hepsi sözcük olarak seslendirilir.
 Bu ayardan sadece halihazırda kullanılan sentezleyici değil; tüm sentezleyiciler etkilenir.
-
-==== Kelime bazında dolaşırken tüm noktalama işaretlerini ve sembolleri seslendir ====[SpeechSettingsSymbolLevelWord]
-
-Metni kelime bazında incelerken, genellikle cümlenin tümünü okurkenkinden daha fazla ayrıntı öğrenilmesi istenir.
-İşaretlendiğinde (varsayılan olarak), NVDA, noktalama  seviyesi "tümü" olarak ayarlanmışcasına, kelime bazında dolaşırken tüm noktalama işaretlerinin ve diğer sembollerin adını söyler.
-Not: Metni karakter bazında incelerken NVDA noktalama işaretlerinin ve diğer simgelerin adını her durumda bildirir.
 
 ==== Karakter ve sembolleri işlerken sentezleyici ve sesin dilini dikkate al ====[SpeechSettingsTrust]
 Bu seçenek varsayılan olarak etkindir ve NVDA'ya karakter ve semboller seslendirilirken seçili sesin dilinin dikkate alınıp alınmayacağını söyler.
@@ -1795,8 +1792,8 @@ Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 - Konuşarak ve ses çalarak: Bu seçenek girintinin yukarıdaki iki yolla da bildirimini sağlar.
 -
 
-+++ Windows 10 OCR Ayarları +++[Win10OcrSettings]
-Bu kategori altındaki seçenekler [Windows 10 OCR ayarlarını #Win10Ocr] yapılandırmanızı sağlar.
++++ Windows OCR Ayarları +++[Win10OcrSettings]
+Bu kategori altındaki seçenekler [Windows OCR ayarlarını #Win10Ocr] yapılandırmanızı sağlar.
 Kategori aşağıdaki seçenekleri içerir:
 
 ==== Tanıma dili ====[Win10OcrSettingsRecognitionLanguage]
@@ -1835,7 +1832,7 @@ Bir veya daha fazla uygulamada performans sorunları yaşıyorsanız, performans
 ==== Varsa Microsoft Word belge denetimlerine erişmek için UI otomasyonunu kullanın ====[AdvancedSettingsUseUiaForWord]
 Bu seçenek etkinleştirildiğinde, NVDA Microsoft Word belge denetimlerinden bilgi almak için Microsoft UI Automation erişilebilirlik api'sini kullanmaya çalışacaktır.
 Buna, Microsoft Word’ün yanı sıra,  Microsoft Outlook mesaj görüntüleyicisi ve oluşturucusu dahildir.
- Windows 10'da çalışan Microsoft Office 2016/365'in en yeni sürümleri için, UI Automation desteği, NVDA'nın mevcut Microsoft Word desteğine neredeyse eşit olan Microsoft Word belgelerine erişim sağlayacak kadar eksiksizdir ve yanıt verme kabiliyetinin büyük oranda artması avantajını sağlar.
+ Windows 10 ve sonraki windows sürümlerinde çalışan Microsoft Office 2016/365'in en yeni sürümleri için, UI Automation desteği, NVDA'nın mevcut Microsoft Word desteğine neredeyse eşit olan Microsoft Word belgelerine erişim sağlayacak kadar eksiksizdir ve yanıt verme kabiliyetinin büyük oranda artması avantajını sağlar.
 Ancak, Microsoft Office'in bazı sürümlerinde ya açığa çıkmamış ya da yanlış açıklanmış bazı bilgiler olabilir; bu, bu UI otomasyon desteğinin her zaman güvenilemeyeceği anlamına gelir.
 Kullanıcıların çoğunun varsayılan olarak bunu açmasını önermiyoruz, ancak Office 2016/365 kullanıcılarının bu özelliği test etmesini ve geri bildirimde bulunmasını memnuniyetle karşılarız.
 
@@ -2263,7 +2260,7 @@ NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın 
 
 ++ eSpeak NG ++[eSpeakNG]
  [eSpeak NG https://github.com/espeak-ng/espeak-ng] sentezleyicisi Doğrudan NVDA içinde gömülüdür ve başka bir sürücü ya da bileşenin yüklenmesini gerektirmez.
-Windows 7, 8 ve 8.1'de NVDA varsayılan olarak eSpeak NG'yi kullanırken (windows 10 için varsayılan olarak [Windows OneCore #OneCore] kullanır).
+Windows 7, 8 ve 8.1'de NVDA varsayılan olarak eSpeak NG'yi kullanırken (windows 10 ve sonraki windows sürümlerinde  varsayılan olarak [Windows OneCore #OneCore] kullanır).
 Bu sentezleyici NVDA içine gömülü olduğundan, NVDA'yı USB bellek vb medyalar üzerinden başka sistemlerde çalıştırmak için harika bir seçenektir.
 
 ESpeak NG ile gelen her ses farklı bir dilde konuşmaktadır.
@@ -2297,9 +2294,9 @@ Bu sesleri kullanabilmek için iki bileşeni indirip kurmanız gerekmektedir:
 -
 
 ++ Windows OneCore Sesleri ++[OneCore]
-Windows 10 "OneCore" ya da "mobile" sesler olarak bilinen yeni sesler içerir.
+Windows 10 ve sonraki windows sürümleri "OneCore" ya da "mobile" sesler olarak bilinen yeni sesler içerir.
 Bir çok dil için sesler mevcuttur, dahası Sapi 5 kullanan önceki Microsoft seslerine kıyasla daha hızlı tepki vermektedirler.
-Windows 10'da, NVDA varsayılan olarak Windows OneCore seslerini kullanır ([[eSpeak NG #eSpeakNG] diğer sürümlerde kullanılır).
+Windows 10 ve sonraki windows sürümlerinde, NVDA varsayılan olarak Windows OneCore seslerini kullanır ([[eSpeak NG #eSpeakNG] diğer sürümlerde kullanılır).
 
 Yeni Windows OneCore sesleri eklemek için, Windows sistem ayarlarında "Konuşma Ayarları"na gidin.
 "Ses ekle" seçeneğini kullanın ve istediğiniz dili arayın.
@@ -2526,7 +2523,7 @@ If connecting via USB to displays which do not use HID, you must first install t
 The VarioUltra and Pronto! use HID.
 The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
 
-The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10.
+The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10 and later.
 USB HID should generally be used instead.
 
 Following are the key assignments for these displays with NVDA.
@@ -3129,7 +3126,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]
 NVDA, USB ile bağlandığında, [Nattiq Technologies https://www.nattiq.com/] tarafından üretilen ekranları destekler.
-Windows 10, bağlandıktan sonra Braille Ekranlarını algılar, Windows'un eski sürümlerini kullanıyorsanız (Win10'un altında) USB sürücülerini yüklemeniz gerekebilir.
+Windows 10 ve sonraki sürümleri, bağlandıktan sonra Braille Ekranlarını algılar, Windows'un eski sürümlerini kullanıyorsanız (Win10'un altında) USB sürücülerini yüklemeniz gerekebilir.
 Bunları üreticinin web sitesinden edinebilirsiniz.
 
 Aşağıda, NVDA ile Nattiq Technologies ekranları için temel atamalar verilmiştir.
