@@ -66,7 +66,7 @@ Voit [tarkastella lisenssiä https://www.gnu.org/licenses/old-licenses/gpl-2.0.h
 Saat lisätietoja poikkeuksista lisenssidokumentista, jonka voit avata NVDA-valikon Ohje-alivalikosta.
 
 + Järjestelmävaatimukset +[SystemRequirements]
-- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows 7:n, Windows 8:n, Windows 8.1:n ja Windows 10:n versiot sekä palvelinversiot Windows Server 2008 R2:sta alkaen.
+- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows 7:n, Windows 8:n, Windows 8.1:n, Windows 10:n ja Windows 11:n versiot sekä palvelinversiot Windows Server 2008 R2:sta alkaen.
  - Windows 7:ssä on oltava asennettuna Service Pack 1 tai uudempi.
  - Windows Server 2008 R2:ssa on oltava asennettuna Service Pack 1 tai uudempi.
 - Vähintään 150 Mt tallennustilaa.
@@ -795,9 +795,12 @@ Voit ottaa näyttöverhon käyttöön [NVDA:n asetusvalintaikkunan #NVDASettings
 
 Kun näyttöverho on aktiivisena, jotkin näytöllä näkyvään tietoon perustuvat tehtävät, kuten [tekstintunnistuksen #Win10Ocr] suorittaminen tai kuvakaappauksen ottaminen, eivät onnistu.
 
+Varmista turvallisuutesi varmistamalla, että näyttöverho toimii oikein uusissa tai kokeellisissa Windowsin versioissa.
+Näyttöverho ei välttämättä toimi ilman varoitusta käytettäessä NVDA 2021.2:ta vanhempia versioita ja uudempaa Windowsin versiota kuin 10 21H2.
+
 + Sisällöntunnistus +[ContentRecognition]
 Kun tekijät eivät tarjoa riittävästi tietoa ruudunlukuohjelman käyttäjälle sisällön määrittämiseen, sitä voidaan yrittää tunnistaa kuvasta eri työkaluja käyttäen.
-NVDA tukee Windows 10:n sisäänrakennettua tekstintunnistustoimintoa kuvissa olevan tekstin tunnistamiseen.
+NVDA tukee Windowsin sisäänrakennettua tekstintunnistustoimintoa kuvissa olevan tekstin tunnistamiseen.
 Lisää sisällöntunnistimia voidaan tarjota NVDA:n lisäosina.
 
 Kun sisällöntunnistuskomentoa käytetään, NVDA tunnistaa nykyisen [navigointiobjektin #ObjectNavigation] sisällön.
@@ -809,17 +812,17 @@ Kun tunnistus on suoritettu, tulokset näytetään selaustilaa vastaavassa asiak
 Enterin tai Välilyönnin painaminen aktivoi (yleensä napsauttaa) kohdistimen kohdalla olevan tekstin, mikäli mahdollista.
 Escin painaminen hylkää tunnistuksen tulokset.
 
-++ Tekstintunnistus Windows 10:ssä ++[Win10Ocr]
-Windows 10 sisältää tekstintunnistuksen useille kielille.
+++ Windowsin tekstintunnistus ++[Win10Ocr]
+Windows 10 ja uudemmat sisältävät tekstintunnistuksen useille kielille.
 NVDA voi käyttää sitä kuvissa olevan tekstin tai esteellisten sovellusten tunnistamiseen.
 
-Tekstintunnistuksen kieli Voidaan määrittää [Asetukset #NVDASettings]-valintaikkunan [Tekstintunnistus (Windows 10) -kategoriasta #Win10OcrSettings].
+Tekstintunnistuksen kieli Voidaan määrittää [Asetukset #NVDASettings]-valintaikkunan [Windowsin tekstintunnistus -kategoriasta #Win10OcrSettings].
 Lisäkieliä on mahdollista asentaa avaamalla Käynnistä-valikko, valitsemalla Asetukset -> Aika ja kieli -> Alue ja kieli, ja valitsemalla sitten Lisää kieli.
 
-Windows 10:n tekstintunnistus voi olla osittain tai täysin yhteensopimaton [NVDA:n näönparannusten  #Vision] tai muiden ulkoisten aputoimintojen kanssa. Sinun on poistettava käytöstä tällaiset aputoiminnot ennen tunnistuksen suorittamista.
+Windowsin tekstintunnistus voi olla osittain tai täysin yhteensopimaton [NVDA:n näönparannusten  #Vision] tai muiden ulkoisten aputoimintojen kanssa. Sinun on poistettava käytöstä tällaiset aputoiminnot ennen tunnistuksen suorittamista.
 
 %kc:beginInclude
-Nykyisen navigointiobjektin teksti tunnistetaan Windows 10:n tekstintunnistusta käyttäen painamalla NVDA+R.
+Tunnista nykyisen navigointiobjektin teksti Windowsin tekstintunnistusta käyttäen painamalla NVDA+R.
 %kc:endInclude
 
 + Sovelluskohtaiset ominaisuudet +[ApplicationSpecificFeatures]
@@ -1179,11 +1182,6 @@ Pikanäppäin: NVDA+P
 Tästä valitaan sanoina luettavien välimerkkien ja muiden symboleiden määrä.
 Esim. kun tasoksi on valittu kaikki, kaikki merkit luetaan sanoina.
 Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
-
-==== Puhu kaikki välimerkit ja symbolit sanoittain luettaessa ====[SpeechSettingsSymbolLevelWord]
-Tekstiä sanoittain luettaessa on usein toivottavaa saada enemmän yksityiskohtia kuin kokonaista virkettä luettaessa.
-Kun tämä on valittuna (oletusarvoisesti), NVDA puhuu sanoittain luettaessa kaikki välimerkit ja muut symbolit ikään kuin välimerkkitasoksi olisi määritetty "kaikki".
-Huom: NVDA puhuu aina kaikki välimerkit ja muut symbolit tekstiä merkeittäin luettaessa.
 
 ==== Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä ====[SpeechSettingsTrust]
 Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symboleiden puhumiseen.
@@ -1794,12 +1792,12 @@ Ilmaise rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 - puheella ja äänimerkeillä: Tämän ollessa valittuna sisennykset ilmoitetaan molempia yllä olevia vaihtoehtoja käyttäen.
 -
 
-+++ Windows 10:n tekstintunnistusasetukset +++[Win10OcrSettings]
-Tämän kategorian asetuksilla voidaan määrittää [Windows 10:n tekstintunnistuksen #Win10Ocr] toimintaa.
++++ Windowsin tekstintunnistusasetukset +++[Win10OcrSettings]
+Tämän kategorian asetuksilla voit vaikuttaa [Windowsin tekstintunnistuksen #Win10Ocr] toimintaan.
 Kategoria sisältää seuraavat asetukset:
 
 ==== Tunnistuksen kieli ====[Win10OcrSettingsRecognitionLanguage]
-Tästä yhdistelmäruudusta voidaan valita tekstintunnistuksen käyttämä kieli.
+Tästä yhdistelmäruudusta voit valita tekstintunnistuksen käyttämän kielen.
 
 +++ Lisäasetukset +++[AdvancedSettings]
 Varoitus! Tämän kategorian asetukset on tarkoitettu vain edistyneille käyttäjille, ja voivat saada väärin muutettuina NVDA:n toimimaan virheellisesti.
@@ -1834,7 +1832,7 @@ Mikäli sinulla on suorituskykyongelmia yhdessä tai useammassa sovelluksessa, s
 ==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
 Kun tämä asetus on käytössä, NVDA yrittää käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseksi Microsoft Wordin asiakirjasäätimistä.
 Tällaisia ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
-Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 10:ssä käytettäessä riittävän kattava tarjotakseen lähes nykyisen kaltaisen tuen Microsoft Word -asiakirjoille, jossa on lisäetuna huomattavasti lisääntynyt reagoivuus.
+Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 10:ssä ja uudemmissa käytettäessä riittävän kattava tarjotakseen lähes nykyisen kaltaisen tuen Microsoft Word -asiakirjoille, jossa on lisäetuna huomattavasti lisääntynyt reagoivuus.
 Joissakin Microsoft Officen versioissa ei ehkä kuitenkaan ole saatavilla kaikkea tietoa tai ne ilmaistaan väärin, minkä vuoksi UI automation -tukeen ei voi aina luottaa.
 Tämän asetuksen käyttöön ottamista ei vielä suositella, mutta Office 2016/365 -käyttäjien palaute on kuitenkin tervetullutta.
 
@@ -2262,7 +2260,7 @@ Vielä kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joit
 
 ++ eSpeak NG ++[eSpeakNG]
 [ESpeak NG https://github.com/espeak-ng/espeak-ng] -puhesyntetisaattori on sisäänrakennettu NVDA:han, joten sen asentamiseksi ja käyttämiseksi ei tarvita muita erikoisajureita tai komponentteja.
-NVDA käyttää oletusarvoisesti tätä syntetisaattoria Windows 7:ssä, 8:ssa ja 8.1:ssä (Windows 10:ssä [Windows OneCorea #OneCore]).
+NVDA käyttää oletusarvoisesti tätä syntetisaattoria Windows 7:ssä, 8:ssa ja 8.1:ssä (Windows 10:ssä ja uudemmissa [Windows OneCorea #OneCore]).
 Tämä on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta.
 
 Jokainen eSpeak NG:n mukana tuleva ääni puhuu eri kieltä.
@@ -2296,9 +2294,9 @@ Niiden käyttämiseksi on asennettava seuraavat kaksi osaa:
 -
 
 ++ Windows OneCore ++[OneCore]
-Windows 10 sisältää uusia ääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
+Windows 10 ja uudemmat sisältävät uusia ääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
 Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
-NVDA käyttää Windows 10:ssä oletusarvoisesti OneCore-ääniä ( muissa Windows-versioissa [eSpeak NG:tä #eSpeakNG]).
+NVDA käyttää Windows 10:ssä ja uudemmissa oletusarvoisesti OneCore-ääniä ( muissa versioissa [eSpeak NG:tä #eSpeakNG]).
 
 Lisää uusia OneCore-ääniä menemällä Windowsin järjestelmäasetuksiin (Win+I) ja valitsemalla sieltä ensin "Aika ja kieli" ja sitten "Puhe".
 Paina "Lisää ääniä" -painiketta ja etsi haluamaasi kieltä kirjoittamalla se avautuvaan hakukenttään.
@@ -2509,13 +2507,13 @@ Näitä ovat:
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
-Muutkin Baum:in valmistamat pistenäytöt voivat toimia, vaikkei niitä olekaan testattu.
+Muutkin Baumin valmistamat pistenäytöt voivat toimia, vaikkei niitä olekaan testattu.
 
 Mikäli sellainen pistenäyttö, joka ei käytä HID:tä, yhdistetään tietokoneeseen USB:llä, sinun on ensin asennettava valmistajan toimittamat ajurit.
 VarioUltra ja Pronto! käyttävät HID:tä.
-Refreshabraille ja Orbit Reader 20 voivat käyttää HID:tä, mikäli ne on määritelty siten.
+Refreshabraille ja Orbit Reader 20 voivat käyttää HID:tä, mikäli ne on siten määritelty.
 
-Orbit Reader 20:n USB-sarjaporttitilaa tuetaan tällä hetkellä vain Windows 10:ssä.
+Orbit Reader 20:n USB-sarjaporttitilaa tuetaan tällä hetkellä vain Windows 10:ssä ja uudemmissa.
 Sen asemesta tulisi useimmiten käyttää USB-HID:tä.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
@@ -3118,7 +3116,7 @@ Katso kuvaukset näppäinten paikoista laitteen käyttöohjeesta.
 
 ++ Nattiq nBraille ++[NattiqTechnologies]
 NVDA tukee [Nattiq Technologiesin https://www.nattiq.com/] pistenäyttöjä USB-liitäntää käytettäessä.
-Windows 10 tunnistaa näytöt tietokoneeseen yhdistettäessä, mutta vanhempia Windows-versioita käytettäessä saatat joutua asentamaan USB-ajurit.
+Windows 10 ja uudemmat tunnistavat näytön tietokoneeseen yhdistettäessä, mutta vanhempia Windows-versioita käytettäessä saatat joutua asentamaan USB-ajurit.
 Voit hakea ne valmistajan kotisivulta.
 
 Seuraavassa ovat Nattiq Technologiesin pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
