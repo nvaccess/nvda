@@ -27,12 +27,11 @@ from typing import Any, Optional
 
 #User functions
 
-def getFocusObject():
+def getFocusObject() -> NVDAObjects.NVDAObject:
 	"""
-Gets the current object with focus.
-@returns: the object with focus
-@rtype: L{NVDAObjects.NVDAObject}
-"""
+	Gets the current object with focus.
+	@returns: the object with focus
+	"""
 	return globalVars.focusObject
 
 def getForegroundObject():
