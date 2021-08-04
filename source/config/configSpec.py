@@ -38,7 +38,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	#  ALL = 300
 	#  CHAR = 1000
 	#  UNCHANGED = -1
-	symbolLevel = integer(default=100)
+	symbolLevel = integer(default=100) # default: SOME
 	# Speak all symbols when reviewing by word, uses editor specific implementation if false
 	symbolLevelWordAll = boolean(default=true)
 	trustVoiceLanguage = boolean(default=true)
