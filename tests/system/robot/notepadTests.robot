@@ -19,7 +19,7 @@ Test Teardown	default teardown
 default teardown
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
-	Run Keyword If Test Failed	dump_speech_to_log
+	dump_speech_to_log
 	exit notepad
 	quit NVDA
 
@@ -32,6 +32,21 @@ moveByWord with symbolLevelWord
 	[Tags]	excluded_from_build
 	[Documentation]	Ensure all symbols are read when navigating by word.
 	test_moveByWord_symbolLevelWord
+moveByLine with symbolLevelWord
+	[Documentation]	Ensure all symbols are read when navigating by line.
+	[Tags]	excluded_from_build
+	test_moveByLine_symbolLevelWord
+moveByCharacter with symbolLevelWord
+	[Documentation]	Ensure all symbols are read when navigating by character.
+	[Tags]	excluded_from_build
+	test_moveByChar_symbolLevelWord
+
 moveByWord
-	[Documentation]	Ensure symbols announced as expected when navigating by word.
+	[Documentation]	Ensure symbols announced as expected when navigating by word (numpad 6).
 	test_moveByWord
+moveByLine
+	[Documentation]	Ensure symbols announced as expected when navigating by line (numpad 9).
+	test_moveByLine
+moveByCharacter
+	[Documentation]	Ensure symbols announced as expected when navigating by character (numpad 3).
+	test_moveByChar
