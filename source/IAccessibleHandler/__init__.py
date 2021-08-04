@@ -423,7 +423,10 @@ def accNavigate(pacc, childID, direction):
 		return None
 
 
-def winEventToNVDAEvent(
+# C901 'winEventToNVDAEvent' is too complex
+# Note: when working on winEventToNVDAEvent, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def winEventToNVDAEvent(  # noqa: C901
 		eventID: int,
 		window: int,
 		objectID: int,
