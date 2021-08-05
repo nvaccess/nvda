@@ -418,9 +418,9 @@ class UIATextInfo(textInfos.TextInfo):
 		field["role"] = obj.role
 		states = obj.states
 		# The user doesn't care about certain states, as they are obvious.
-		states.discard(controlTypes.STATE_EDITABLE)
-		states.discard(controlTypes.STATE_MULTILINE)
-		states.discard(controlTypes.STATE_FOCUSED)
+		states.discard(controlTypes.State.EDITABLE)
+		states.discard(controlTypes.State.MULTILINE)
+		states.discard(controlTypes.State.FOCUSED)
 		field["states"] = states
 		field['nameIsContent']=nameIsContent=obj.UIAElement.cachedControlType in self.UIAControlTypesWhereNameIsContent
 		if not nameIsContent:
@@ -1417,37 +1417,37 @@ class UIA(Window):
 		except COMError:
 			hasKeyboardFocus=False
 		if hasKeyboardFocus:
-			states.add(controlTypes.STATE_FOCUSED)
+			states.add(controlTypes.State.FOCUSED)
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsKeyboardFocusablePropertyId):
-			states.add(controlTypes.STATE_FOCUSABLE)
+			states.add(controlTypes.State.FOCUSABLE)
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsPasswordPropertyId):
-			states.add(controlTypes.STATE_PROTECTED)
+			states.add(controlTypes.State.PROTECTED)
 		# Don't fetch the role unless we must, but never fetch it more than once.
 		role=None
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
 			role=self.role
-			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.Role.RADIOBUTTON else controlTypes.STATE_SELECTABLE)
+			states.add(controlTypes.State.CHECKABLE if role==controlTypes.Role.RADIOBUTTON else controlTypes.State.SELECTABLE)
 			if self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
-				states.add(controlTypes.STATE_CHECKED if role==controlTypes.Role.RADIOBUTTON else controlTypes.STATE_SELECTED)
+				states.add(controlTypes.State.CHECKED if role==controlTypes.Role.RADIOBUTTON else controlTypes.State.SELECTED)
 		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId,True):
-			states.add(controlTypes.STATE_UNAVAILABLE)
+			states.add(controlTypes.State.UNAVAILABLE)
 		try:
 			isOffScreen = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsOffscreenPropertyId)
 		except COMError:
 			isOffScreen = False
 		if isOffScreen:
-			states.add(controlTypes.STATE_OFFSCREEN)
+			states.add(controlTypes.State.OFFSCREEN)
 		try:
 			isDataValid=self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
 		except COMError:
 			isDataValid=UIAHandler.handler.reservedNotSupportedValue
 		if not isDataValid:
-			states.add(controlTypes.STATE_INVALID_ENTRY)
+			states.add(controlTypes.State.INVALID_ENTRY)
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
-			states.add(controlTypes.STATE_REQUIRED)
+			states.add(controlTypes.State.REQUIRED)
 
 		if self._getReadOnlyState():
-			states.add(controlTypes.STATE_READONLY)
+			states.add(controlTypes.State.READONLY)
 
 		try:
 			s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
@@ -1455,9 +1455,9 @@ class UIA(Window):
 			s=UIAHandler.handler.reservedNotSupportedValue
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if s==UIAHandler.ExpandCollapseState_Collapsed:
-				states.add(controlTypes.STATE_COLLAPSED)
+				states.add(controlTypes.State.COLLAPSED)
 			elif s==UIAHandler.ExpandCollapseState_Expanded:
-				states.add(controlTypes.STATE_EXPANDED)
+				states.add(controlTypes.State.EXPANDED)
 		try:
 			s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
 		except COMError:
@@ -1467,11 +1467,11 @@ class UIA(Window):
 				role=self.role
 			if role==controlTypes.Role.TOGGLEBUTTON:
 				if s==UIAHandler.ToggleState_On:
-					states.add(controlTypes.STATE_PRESSED)
+					states.add(controlTypes.State.PRESSED)
 			else:
-				states.add(controlTypes.STATE_CHECKABLE)
+				states.add(controlTypes.State.CHECKABLE)
 				if s==UIAHandler.ToggleState_On:
-					states.add(controlTypes.STATE_CHECKED)
+					states.add(controlTypes.State.CHECKED)
 		try:
 			annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
 		except COMError:
@@ -1479,7 +1479,7 @@ class UIA(Window):
 			annotationTypes = None
 		if annotationTypes:
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
-				states.add(controlTypes.STATE_HASCOMMENT)
+				states.add(controlTypes.State.HASCOMMENT)
 		return states
 
 	def _getReadOnlyState(self) -> bool:

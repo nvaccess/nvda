@@ -81,7 +81,7 @@ class AppModule(appModuleHandler.AppModule):
 		#Force focus to move to something sane when landing on an outlook express message window
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==winUser.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
-			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
+			if obj==api.getFocusObject() and controlTypes.State.FOCUSED in obj.states:
 				return KeyboardInputGesture.fromName("shift+tab").send()
 
 class MessageRuleListItem(sysListView32.ListItem):
@@ -92,7 +92,7 @@ class MessageRuleListItem(sysListView32.ListItem):
 	def _get_states(self):
 		states=super(MessageRuleListItem,self).states
 		if (watchdog.cancellableSendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12)==8:
-			states.add(controlTypes.STATE_CHECKED)
+			states.add(controlTypes.State.CHECKED)
 		return states
 
 class MessageListItem(sysListView32.ListItem):
@@ -119,9 +119,9 @@ class MessageListItem(sysListView32.ListItem):
 		nameList=[]
 		imageState=watchdog.cancellableSendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12
 		if imageState==5:
-			nameList.append(controlTypes.stateLabels[controlTypes.STATE_COLLAPSED])
+			nameList.append(controlTypes.stateLabels[controlTypes.State.COLLAPSED])
 		elif imageState==6:
-			nameList.append(controlTypes.stateLabels[controlTypes.STATE_EXPANDED])
+			nameList.append(controlTypes.stateLabels[controlTypes.State.EXPANDED])
 		if self.isUnread:
 			# Translators: Displayed in outlook or live mail to indicate an email is unread
 			nameList.append(_("unread"))

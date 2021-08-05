@@ -190,53 +190,53 @@ roleLabels = {
 
 positiveStateLabels = {
 	# Translators: Displayed in braille when an object is selected.
-	controlTypes.STATE_SELECTED: _("sel"),
+	controlTypes.State.SELECTED: _("sel"),
 	# Displayed in braille when an object (e.g. a toggle button) is pressed.
-	controlTypes.STATE_PRESSED: u"⢎⣿⡱",
+	controlTypes.State.PRESSED: u"⢎⣿⡱",
 	# Displayed in braille when an object (e.g. a check box) is checked.
-	controlTypes.STATE_CHECKED: u"⣏⣿⣹",
+	controlTypes.State.CHECKED: u"⣏⣿⣹",
 	# Displayed in braille when an object (e.g. a check box) is half checked.
-	controlTypes.STATE_HALFCHECKED: u"⣏⣸⣹",
+	controlTypes.State.HALFCHECKED: u"⣏⣸⣹",
 	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-	controlTypes.STATE_READONLY: _("ro"),
+	controlTypes.State.READONLY: _("ro"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-	controlTypes.STATE_EXPANDED: _("-"),
+	controlTypes.State.EXPANDED: _("-"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-	controlTypes.STATE_COLLAPSED: _("+"),
+	controlTypes.State.COLLAPSED: _("+"),
 	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-	controlTypes.STATE_HASPOPUP: _("submnu"),
+	controlTypes.State.HASPOPUP: _("submnu"),
 	# Translators: Displayed in braille when a protected control or a document is encountered.
-	controlTypes.STATE_PROTECTED: _("***"),
+	controlTypes.State.PROTECTED: _("***"),
 	# Translators: Displayed in braille when a required form field is encountered.
-	controlTypes.STATE_REQUIRED: _("req"),
+	controlTypes.State.REQUIRED: _("req"),
 	# Translators: Displayed in braille when an invalid entry has been made.
-	controlTypes.STATE_INVALID_ENTRY: _("invalid"),
+	controlTypes.State.INVALID_ENTRY: _("invalid"),
 	# Translators: Displayed in braille when an object supports autocompletion.
-	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	controlTypes.State.AUTOCOMPLETE: _("..."),
 	# Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
-	controlTypes.STATE_MULTILINE: _("mln"),
+	controlTypes.State.MULTILINE: _("mln"),
 	# Translators: Displayed in braille when an object is clickable.
-	controlTypes.STATE_CLICKABLE: _("clk"),
+	controlTypes.State.CLICKABLE: _("clk"),
 	# Translators: Displayed in braille when an object is sorted ascending.
-	controlTypes.STATE_SORTED_ASCENDING: _("sorted asc"),
+	controlTypes.State.SORTED_ASCENDING: _("sorted asc"),
 	# Translators: Displayed in braille when an object is sorted descending.
-	controlTypes.STATE_SORTED_DESCENDING: _("sorted desc"),
+	controlTypes.State.SORTED_DESCENDING: _("sorted desc"),
 	# Translators: Displayed in braille when an object has additional details (such as a comment section).
-	controlTypes.STATE_HAS_ARIA_DETAILS: _("details"),
+	controlTypes.State.HAS_ARIA_DETAILS: _("details"),
 	# Translators: Displayed in braille when an object (usually a graphic) has a long description.
-	controlTypes.STATE_HASLONGDESC: _("ldesc"),
+	controlTypes.State.HASLONGDESC: _("ldesc"),
 	# Translators: Displayed in braille when there is a formula on a spreadsheet cell.
-	controlTypes.STATE_HASFORMULA: _("frml"),
+	controlTypes.State.HASFORMULA: _("frml"),
 	# Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
-	controlTypes.STATE_HASCOMMENT: _("cmnt"),
+	controlTypes.State.HASCOMMENT: _("cmnt"),
 }
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
-	controlTypes.STATE_SELECTED: _("nsel"),
+	controlTypes.State.SELECTED: _("nsel"),
 	# Displayed in braille when an object (e.g. a toggle button) is not pressed.
-	controlTypes.STATE_PRESSED: u"⢎⣀⡱",
+	controlTypes.State.PRESSED: u"⢎⣀⡱",
 	# Displayed in braille when an object (e.g. a check box) is not checked.
-	controlTypes.STATE_CHECKED: u"⣏⣀⣹",
+	controlTypes.State.CHECKED: u"⣏⣀⣹",
 }
 
 landmarkLabels = {
@@ -511,9 +511,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			# %s is replaced with the level.
 			roleText = _("h%s") % level
 			level = None
-		elif role == controlTypes.Role.LINK and states and controlTypes.STATE_VISITED in states:
+		elif role == controlTypes.Role.LINK and states and controlTypes.State.VISITED in states:
 			states = states.copy()
-			states.discard(controlTypes.STATE_VISITED)
+			states.discard(controlTypes.State.VISITED)
 			# Translators: Displayed in braille for a link which has been visited.
 			roleText = _("vlnk")
 		elif (name or cellCoordsText or rowNumber or columnNumber) and role in controlTypes.silentRolesOnFocus:
@@ -806,7 +806,7 @@ class TextInfoRegion(Region):
 		# Terminals and documents are inherently multiline, so they don't have the multiline state.
 		return (
 			self.obj.role in (controlTypes.Role.TERMINAL,controlTypes.Role.DOCUMENT)
-			or controlTypes.STATE_MULTILINE in self.obj.states
+			or controlTypes.State.MULTILINE in self.obj.states
 		)
 
 	def _getSelection(self):
@@ -906,12 +906,12 @@ class TextInfoRegion(Region):
 						textList=[]
 						if not inClickable and formatConfig['reportClickable']:
 							states=field.get('states')
-							if states and controlTypes.STATE_CLICKABLE in states:
+							if states and controlTypes.State.CLICKABLE in states:
 								# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
 								# Report it if there is nothing else interesting about the field
 								field._presCat=presCat=field.getPresentationCategory(ctrlFields,formatConfig)
 								if not presCat or presCat is field.PRESCAT_LAYOUT:
-									textList.append(positiveStateLabels[controlTypes.STATE_CLICKABLE])
+									textList.append(positiveStateLabels[controlTypes.State.CLICKABLE])
 								inClickable=True
 						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
 						if text:

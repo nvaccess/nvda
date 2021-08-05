@@ -19,9 +19,9 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 
 	def _normalizeControlField(self, attrs):
 		attrs = super()._normalizeControlField(attrs)
-		if attrs['role'] == controlTypes.Role.TOGGLEBUTTON and controlTypes.STATE_CHECKABLE in attrs['states']:
+		if attrs['role'] == controlTypes.Role.TOGGLEBUTTON and controlTypes.State.CHECKABLE in attrs['states']:
 			# In Chromium, the checkable state is exposed erroneously on toggle buttons.
-			attrs['states'].discard(controlTypes.STATE_CHECKABLE)
+			attrs['states'].discard(controlTypes.State.CHECKABLE)
 		return attrs
 
 
@@ -48,7 +48,7 @@ class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self):
 		states = self.states
-		if controlTypes.STATE_EDITABLE not in states and controlTypes.STATE_BUSY not in states:
+		if controlTypes.State.EDITABLE not in states and controlTypes.State.BUSY not in states:
 			return ChromeVBuf
 		return super(Document, self).treeInterceptorClass
 
@@ -60,7 +60,7 @@ class ComboboxListItem(IAccessible):
 	def _get_focusRedirect(self):
 		# Chrome 68 and below fires focus on the active list item of combo boxes even when the combo box is collapsed.
 		# We get around this by redirecting focus back up to the combo box itself if the list inside is invisible (I.e. the combo box is collapsed).
-		if self.parent and controlTypes.STATE_INVISIBLE in self.parent.states:
+		if self.parent and controlTypes.State.INVISIBLE in self.parent.states:
 			return self.parent.parent
 
 
@@ -69,7 +69,7 @@ class ToggleButton(ia2Web.Ia2Web):
 	def _get_states(self):
 		# In Chromium, the checkable state is exposed erroneously on toggle buttons.
 		states = super().states
-		states.discard(controlTypes.STATE_CHECKABLE)
+		states.discard(controlTypes.State.CHECKABLE)
 		return states
 
 
@@ -85,7 +85,7 @@ class PresentationalList(ia2Web.Ia2Web):
 
 	def _get_states(self):
 		states = super().states
-		states.add(controlTypes.STATE_READONLY)
+		states.add(controlTypes.State.READONLY)
 		return states
 
 

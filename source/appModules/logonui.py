@@ -25,7 +25,7 @@ class LogonDialog(Dialog):
 
 	def event_gainFocus(self):
 		child = self.firstChild
-		if child and controlTypes.STATE_FOCUSED in child.states and not eventHandler.isPendingEvents("gainFocus"):
+		if child and controlTypes.State.FOCUSED in child.states and not eventHandler.isPendingEvents("gainFocus"):
 			# UIA reports that focus is on the top level pane, even when it's actually on the frame below.
 			# This causes us to incorrectly use UIA for the top level pane, which causes this pane to be spoken again when the focus moves.
 			# Therefore, bounce the focus to the correct object.
@@ -67,7 +67,7 @@ class XPPasswordField(IAccessible):
 		oldName = self.name
 		gesture.send()
 		self.invalidateCache()
-		if oldName == self.name or controlTypes.STATE_FOCUSED not in self.states:
+		if oldName == self.name or controlTypes.State.FOCUSED not in self.states:
 			return
 		self.event_gainFocus()
 

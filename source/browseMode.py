@@ -209,7 +209,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def moveTo(self):
 		if self.document.passThrough and getattr(self, "obj", False):
-			if controlTypes.STATE_FOCUSABLE in self.obj.states:
+			if controlTypes.State.FOCUSABLE in self.obj.states:
 				self.obj.setFocus()
 				return
 			self.document.passThrough = False
@@ -345,18 +345,18 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			return False
 		states = obj.states
 		role = obj.role
-		if controlTypes.STATE_EDITABLE in states and controlTypes.STATE_UNAVAILABLE not in states:
+		if controlTypes.State.EDITABLE in states and controlTypes.State.UNAVAILABLE not in states:
 			return True
 		# Menus sometimes get focus due to menuStart events even though they don't report as focused/focusable.
-		if not obj.isFocusable and controlTypes.STATE_FOCUSED not in states and role != controlTypes.Role.POPUPMENU:
+		if not obj.isFocusable and controlTypes.State.FOCUSED not in states and role != controlTypes.Role.POPUPMENU:
 			return False
 		# many controls that are read-only should not switch to passThrough. 
 		# However, certain controls such as combo boxes and readonly edits are read-only but still interactive.
 		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
-		if controlTypes.STATE_READONLY in states and role not in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.COMBOBOX, controlTypes.Role.TABLEROW, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER):
+		if controlTypes.State.READONLY in states and role not in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.COMBOBOX, controlTypes.Role.TABLEROW, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER):
 			return False
 		# Any roles or states for which we always switch to passThrough
-		if role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or controlTypes.STATE_EDITABLE in states:
+		if role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or controlTypes.State.EDITABLE in states:
 			return True
 		# focus is moving to this control. Perhaps after pressing tab or clicking a button that brings up a menu (via javascript)
 		if reason == OutputReason.FOCUS:
@@ -1213,7 +1213,7 @@ class ElementsListDialog(
 					self.document.passThrough
 					and getattr(item, "obj", False)
 					and item.obj != prevFocus
-					and controlTypes.STATE_FOCUSABLE in item.obj.states
+					and controlTypes.State.FOCUSABLE in item.obj.states
 				):
 					# #8831: Report before moving because moving might change the focus, which
 					# might mutate the document, potentially invalidating info if it is
@@ -1390,7 +1390,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		for field in reversed(info.getTextWithFields()):
 			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
 				states=field.field.get('states')
-				if states and controlTypes.STATE_HASLONGDESC in states:
+				if states and controlTypes.State.HASLONGDESC in states:
 					self._activateLongDesc(field.field)
 					break
 		else:
@@ -1411,7 +1411,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		for field in reversed(info.getTextWithFields()):
 			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
 				states = field.field.get('states')
-				if states and controlTypes.STATE_HAS_ARIA_DETAILS in states:
+				if states and controlTypes.State.HAS_ARIA_DETAILS in states:
 					ui.message(field.field['detailsSummary'])
 					return
 
@@ -1449,7 +1449,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
-		if controlTypes.STATE_COLLAPSED in oldFocusStates:
+		if controlTypes.State.COLLAPSED in oldFocusStates:
 			self.passThrough = True
 			# When a control (such as a combo box) is expanded, we expect that its descendants will be classed as being outside the browseMode document.
 			# We save off the expanded control so that the next focus event within the browseMode document can see if it is for the control,
@@ -1483,7 +1483,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		#Only check that the caret is within the focus for things that ar not documents
 		#As for documents we should always override
-		if focus.role!=controlTypes.Role.DOCUMENT or controlTypes.STATE_EDITABLE in focus.states:
+		if focus.role!=controlTypes.Role.DOCUMENT or controlTypes.State.EDITABLE in focus.states:
 			# Expand to one character, as isOverlapping() doesn't yield the desired results with collapsed ranges.
 			caretInfo.expand(textInfos.UNIT_CHARACTER)
 			if focusInfo.isOverlapping(caretInfo):
@@ -1589,7 +1589,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if self._lastFocusObj:
 			try:
 				states = self._lastFocusObj.states
-				previousFocusObjIsDefunct = controlTypes.STATE_DEFUNCT in states
+				previousFocusObjIsDefunct = controlTypes.State.DEFUNCT in states
 			except Exception:
 				log.debugWarning(
 					"Error fetching states when checking for defunct object. Treating object as defunct anyway.",

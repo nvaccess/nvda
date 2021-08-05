@@ -219,7 +219,7 @@ class UIAWebTextInfo(UIATextInfo):
 		field['landmark'] = obj.landmark
 		# Combo boxes with a text pattern are editable
 		if obj.role == controlTypes.Role.COMBOBOX and obj.UIATextPattern:
-			field['states'].add(controlTypes.STATE_EDITABLE)
+			field['states'].add(controlTypes.State.EDITABLE)
 		# report if the field is 'current'
 		field['current'] = obj.isCurrent
 		if obj.placeholder and obj._isTextEmpty:
@@ -275,8 +275,8 @@ class UIAWebTextInfo(UIATextInfo):
 			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
 				states = field.field['states']
 				if clickableField:
-					states.discard(controlTypes.STATE_CLICKABLE)
-				elif controlTypes.STATE_CLICKABLE in states:
+					states.discard(controlTypes.State.CLICKABLE)
+				elif controlTypes.State.CLICKABLE in states:
 					clickableField = field.field
 			elif (
 				clickableField
@@ -368,7 +368,7 @@ class UIAWeb(UIA):
 			controlTypes.Role.SECTION,
 			controlTypes.Role.GRAPHIC,
 		) and self.UIAInvokePattern:
-			states.add(controlTypes.STATE_CLICKABLE)
+			states.add(controlTypes.State.CLICKABLE)
 		return states
 
 	def _get_ariaProperties(self):
@@ -425,8 +425,8 @@ class List(UIAWeb):
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
 	def _get_states(self):
 		states = super().states
-		if controlTypes.STATE_FOCUSABLE not in states:
-			states.add(controlTypes.STATE_READONLY)
+		if controlTypes.State.FOCUSABLE not in states:
+			states.add(controlTypes.State.READONLY)
 		return states
 
 
@@ -499,7 +499,7 @@ class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocu
 		if (
 			reason == controlTypes.OutputReason.FOCUS
 			and obj.role == controlTypes.Role.LISTITEM
-			and controlTypes.STATE_SELECTABLE in obj.states
+			and controlTypes.State.SELECTABLE in obj.states
 		):
 			return True
 		return super().shouldPassThrough(obj, reason=reason)

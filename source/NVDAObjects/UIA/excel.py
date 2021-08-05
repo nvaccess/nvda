@@ -352,13 +352,13 @@ class ExcelCell(ExcelObject):
 		states = super().states
 		if self._isContentTooLargeForCell:
 			if not self._nextCellHasContent:
-				states.add(controlTypes.STATE_OVERFLOWING)
+				states.add(controlTypes.State.OVERFLOWING)
 			else:
-				states.add(controlTypes.STATE_CROPPED)
+				states.add(controlTypes.State.CROPPED)
 		if self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.cellFormula.id):
-			states.add(controlTypes.STATE_HASFORMULA)
+			states.add(controlTypes.State.HASFORMULA)
 		if self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.hasDataValidationDropdown.id):
-			states.add(controlTypes.STATE_HASPOPUP)
+			states.add(controlTypes.State.HASPOPUP)
 		return states
 
 	def _get_cellCoordsText(self):
@@ -454,7 +454,7 @@ class ExcelWorksheet(ExcelObject):
 		# and identifying it by one of its children would be more costly than the current approach.
 		parent.isPresentableFocusAncestor = True
 		# However, the selection state on the sheet is not useful, so remove it.
-		parent.states.discard(controlTypes.STATE_SELECTED)
+		parent.states.discard(controlTypes.State.SELECTED)
 		return parent
 
 

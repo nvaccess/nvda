@@ -134,16 +134,16 @@ class CompoundTextInfo(textInfos.TextInfo):
 			return None
 		role = obj.role
 		states = obj.states
-		if role == controlTypes.Role.LINK and controlTypes.STATE_LINKED not in states:
+		if role == controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
 			# Named link destination, not a link that can be activated.
 			return None
 		field = textInfos.ControlField()
 		field["role"] = role
 		field['roleText'] = obj.roleText
 		# The user doesn't care about certain states, as they are obvious.
-		states.discard(controlTypes.STATE_EDITABLE)
-		states.discard(controlTypes.STATE_MULTILINE)
-		states.discard(controlTypes.STATE_FOCUSED)
+		states.discard(controlTypes.State.EDITABLE)
+		states.discard(controlTypes.State.MULTILINE)
+		states.discard(controlTypes.State.FOCUSED)
 		field["states"] = states
 		field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
@@ -220,11 +220,11 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			self._startObj = self._endObj = self.obj.caretObject
 			# Find the objects which start and end the selection.
 			tempObj = self._startObj
-			while tempObj and controlTypes.STATE_SELECTED in tempObj.states:
+			while tempObj and controlTypes.State.SELECTED in tempObj.states:
 				self._startObj = tempObj
 				tempObj = tempObj.flowsFrom
 			tempObj = self._endObj
-			while tempObj and controlTypes.STATE_SELECTED in tempObj.states:
+			while tempObj and controlTypes.State.SELECTED in tempObj.states:
 				self._endObj = tempObj
 				tempObj = tempObj.flowsTo
 			self._start = self._startObj.makeTextInfo(position)
@@ -236,7 +236,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			raise NotImplementedError
 
 	def _findContentDescendant(self, obj):
-		while obj and controlTypes.STATE_FOCUSABLE not in obj.states:
+		while obj and controlTypes.State.FOCUSABLE not in obj.states:
 			obj = obj.firstChild
 		return obj
 

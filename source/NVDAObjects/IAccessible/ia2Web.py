@@ -64,10 +64,10 @@ class Ia2Web(IAccessible):
 		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
 		# This is necessary for other code that calculates how selection of cells should be spoken.
 		if 'gridcell' in self.IA2Attributes.get('xml-roles','').split(' '):
-			states.add(controlTypes.STATE_FOCUSABLE)
+			states.add(controlTypes.State.FOCUSABLE)
 		# Google has a custom ARIA attribute to force a node's editable state off (such as in Google Slides).
 		if self.IA2Attributes.get('goog-editable')=="false":
-			states.discard(controlTypes.STATE_EDITABLE)
+			states.discard(controlTypes.State.EDITABLE)
 		return states
 
 	def _get_landmark(self):
@@ -109,7 +109,7 @@ class Document(Ia2Web):
 	value = None
 
 	def _get_shouldCreateTreeInterceptor(self):
-		return controlTypes.STATE_READONLY in self.states
+		return controlTypes.State.READONLY in self.states
 
 class Application(Document):
 	shouldCreateTreeInterceptor = False
@@ -215,7 +215,7 @@ class Switch(Ia2Web):
 
 	def _get_states(self):
 		states = super().states
-		states.discard(controlTypes.STATE_PRESSED)
+		states.discard(controlTypes.State.PRESSED)
 		return states
 
 

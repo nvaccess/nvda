@@ -35,7 +35,7 @@ class TweetListItem(ListItem):
 		return super(TweetListItem, self)._getColumnHeaderRaw(index)
 
 	def _getColumnContentRaw(self, index):
-		if controlTypes.STATE_INVISIBLE not in self.states and index == 3:
+		if controlTypes.State.INVISIBLE not in self.states and index == 3:
 			# This is the date column.
 			# Its content is overridden on screen,
 			# so use display model.

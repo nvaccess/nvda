@@ -800,9 +800,9 @@ class Shape(PpObject):
 	def _get_states(self):
 		states=super(Shape,self).states
 		if self._overlapInfo[1] is not None:
-			states.add(controlTypes.STATE_OBSCURED)
+			states.add(controlTypes.State.OBSCURED)
 		if any(x for x in self._edgeDistances if x<0):
-			states.add(controlTypes.STATE_OFFSCREEN)
+			states.add(controlTypes.State.OFFSCREEN)
 		return states
 
 	def _get_mathMl(self):
@@ -984,7 +984,7 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 
 	name=None
 	role=controlTypes.Role.EDITABLETEXT
-	states = {controlTypes.STATE_MULTILINE}
+	states = {controlTypes.State.MULTILINE}
 
 	def _get_parent(self):
 		parent=self.ppObject.parent
@@ -1335,7 +1335,7 @@ class AppModule(appModuleHandler.AppModule):
 		return m
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if obj.windowClassName in objectModelWindowClasses and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
+		if obj.windowClassName in objectModelWindowClasses and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.State.FOCUSED in obj.states:
 			m=self.fetchPpObjectModel(windowHandle=obj.windowHandle)
 			if not m:
 				log.debugWarning("no object model")

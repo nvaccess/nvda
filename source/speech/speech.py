@@ -486,17 +486,17 @@ def getObjectPropertiesSpeech(  # noqa: C901
 	states=newPropertyValues.get('states')
 	if states is not None and reason == OutputReason.FOCUS:
 		if (
-			controlTypes.STATE_SELECTABLE in states 
-			and controlTypes.STATE_FOCUSABLE in states
-			and controlTypes.STATE_SELECTED in states
+			controlTypes.State.SELECTABLE in states 
+			and controlTypes.State.FOCUSABLE in states
+			and controlTypes.State.SELECTED in states
 			and obj.selectionContainer 
 			and obj.selectionContainer.getSelectedItemsCount(2)==1
 		):
 			# We must copy the states set and  put it back in newPropertyValues otherwise mutating the original states set in-place will wrongly change the cached states.
 			# This would then cause 'selected' to be announced as a change when any other state happens to change on this object in future.
 			states=states.copy()
-			states.discard(controlTypes.STATE_SELECTED)
-			states.discard(controlTypes.STATE_SELECTABLE)
+			states.discard(controlTypes.State.SELECTED)
+			states.discard(controlTypes.State.SELECTABLE)
 			newPropertyValues['states']=states
 	#Get the speech text for the properties we want to speak, and then speak it
 	speechSequence = getPropertiesSpeech(reason=reason, **newPropertyValues)
@@ -1275,11 +1275,11 @@ def getTextInfoSpeech(  # noqa: C901
 		field=newControlFieldStack[count]
 		if not inClickable and formatConfig['reportClickable']:
 			states=field.get('states')
-			if states and controlTypes.STATE_CLICKABLE in states:
+			if states and controlTypes.State.CLICKABLE in states:
 				# We entered the most outer clickable, so announce it, if we won't be announcing anything else interesting for this field
 				presCat=field.getPresentationCategory(newControlFieldStack[0:count],formatConfig,reason)
 				if not presCat or presCat is field.PRESCAT_LAYOUT:
-					speechSequence.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
+					speechSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
 					shouldConsiderTextInfoBlank = False
 				inClickable=True
 		fieldSequence = info.getControlFieldSpeech(
@@ -1378,12 +1378,12 @@ def getTextInfoSpeech(  # noqa: C901
 				fieldSequence = []
 				if not inClickable and formatConfig['reportClickable']:
 					states=command.field.get('states')
-					if states and controlTypes.STATE_CLICKABLE in states:
+					if states and controlTypes.State.CLICKABLE in states:
 						# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
 						# Announce it if there is nothing else interesting about the field, but not if the user turned it off. 
 						presCat=command.field.getPresentationCategory(newControlFieldStack[0:],formatConfig,reason)
 						if not presCat or presCat is command.field.PRESCAT_LAYOUT:
-							fieldSequence.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
+							fieldSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
 						inClickable=True
 				fieldSequence.extend(info.getControlFieldSpeech(
 					command.field,
@@ -1722,7 +1722,7 @@ def _shouldSpeakContentFirst(
 		)
 		and not (role in _neverSpeakContentFirstRoles)
 		and not tableID
-		and controlTypes.STATE_EDITABLE not in states
+		and controlTypes.State.EDITABLE not in states
 	)
 
 
@@ -1834,7 +1834,7 @@ def getControlFieldSpeech(  # noqa: C901
 		childControlCount
 		and fieldType == "start_addedToControlFieldStack"
 		and role == controlTypes.Role.LIST
-		and controlTypes.STATE_READONLY in states
+		and controlTypes.State.READONLY in states
 	):
 		# List.
 		# #7652: containerContainsText variable is set here, but the actual generation of all other output is
@@ -1981,13 +1981,13 @@ def getControlFieldSpeech(  # noqa: C901
 			out.extend(isCurrentSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
 		if role == controlTypes.Role.TREEVIEWITEM:
-			if controlTypes.STATE_EXPANDED in states:
+			if controlTypes.State.EXPANDED in states:
 				out.extend(
-					getPropertiesSpeech(reason=reason, states={controlTypes.STATE_EXPANDED}, _role=role)
+					getPropertiesSpeech(reason=reason, states={controlTypes.State.EXPANDED}, _role=role)
 				)
-			elif controlTypes.STATE_COLLAPSED in states:
+			elif controlTypes.State.COLLAPSED in states:
 				out.extend(
-					getPropertiesSpeech(reason=reason, states={controlTypes.STATE_COLLAPSED}, _role=role)
+					getPropertiesSpeech(reason=reason, states={controlTypes.State.COLLAPSED}, _role=role)
 				)
 			if levelSequence:
 				out.extend(levelSequence)

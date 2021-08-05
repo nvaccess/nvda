@@ -186,7 +186,7 @@ class ObjectsTreeItem(IAccessible):
 		Returns the correct focused item in the object explorer trees
 		"""
 
-		if controlTypes.STATE_FOCUSED not in self.states:
+		if controlTypes.State.FOCUSED not in self.states:
 			# Object explorer tree views have a bad IAccessible implementation.
 			# When expanding a primary node and going to secondary node, the
 			# focus is placed to the next root node, so we need to redirect

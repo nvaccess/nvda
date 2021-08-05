@@ -440,7 +440,7 @@ the NVDAObject for IAccessible
 			clsList.insert(0, FocusableUnfocusableContainer)
 
 		if hasattr(self, "IAccessibleTextObject"):
-			if role==oleacc.ROLE_SYSTEM_TEXT or controlTypes.STATE_EDITABLE in self.states:
+			if role==oleacc.ROLE_SYSTEM_TEXT or controlTypes.State.EDITABLE in self.states:
 				clsList.append(EditableTextWithAutoSelectDetection)
 
 		# Use window class name and role to search for a class match in our static map.
@@ -495,7 +495,7 @@ the NVDAObject for IAccessible
 			from . import mozilla
 			mozilla.findExtraOverlayClasses(self, clsList)
 		elif self.event_objectID in (None,winUser.OBJID_CLIENT) and windowClassName.startswith('bosa_sdm'):
-			if role==oleacc.ROLE_SYSTEM_GRAPHIC and controlTypes.STATE_FOCUSED in self.states:
+			if role==oleacc.ROLE_SYSTEM_GRAPHIC and controlTypes.State.FOCUSED in self.states:
 				from .msOffice import SDMSymbols
 				clsList.append(SDMSymbols)
 			else:
@@ -681,7 +681,7 @@ the NVDAObject for IAccessible
 		#this object or one of its ancestors must have state_focused.
 		testObj = self
 		while testObj:
-			if controlTypes.STATE_FOCUSED in testObj.states:
+			if controlTypes.State.FOCUSED in testObj.states:
 				break
 			parent = testObj.parent
 			# Cache the parent.
@@ -876,8 +876,8 @@ the NVDAObject for IAccessible
 		IAccessible2States=self.IA2States
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
 		# Readonly should override editable
-		if controlTypes.STATE_READONLY in states:
-			states.discard(controlTypes.STATE_EDITABLE)
+		if controlTypes.State.READONLY in states:
+			states.discard(controlTypes.State.EDITABLE)
 		try:
 			IA2Attribs=self.IA2Attributes
 		except COMError:
@@ -886,22 +886,22 @@ the NVDAObject for IAccessible
 		if IA2Attribs:
 			grabbed = IA2Attribs.get("grabbed")
 			if grabbed == "false":
-				states.add(controlTypes.STATE_DRAGGABLE)
+				states.add(controlTypes.State.DRAGGABLE)
 			elif grabbed == "true":
-				states.add(controlTypes.STATE_DRAGGING)
+				states.add(controlTypes.State.DRAGGING)
 			if IA2Attribs.get("dropeffect", "none") != "none":
-				states.add(controlTypes.STATE_DROPTARGET)
+				states.add(controlTypes.State.DROPTARGET)
 			sorted = IA2Attribs.get("sort")
 			if sorted=="ascending":
-				states.add(controlTypes.STATE_SORTED_ASCENDING)
+				states.add(controlTypes.State.SORTED_ASCENDING)
 			elif sorted=="descending":
-				states.add(controlTypes.STATE_SORTED_DESCENDING)
+				states.add(controlTypes.State.SORTED_DESCENDING)
 			elif sorted=="other":
-				states.add(controlTypes.STATE_SORTED)
-		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
-			states.remove(controlTypes.STATE_HASPOPUP)
-		if controlTypes.STATE_HALFCHECKED in states:
-			states.discard(controlTypes.STATE_CHECKED)
+				states.add(controlTypes.State.SORTED)
+		if controlTypes.State.HASPOPUP in states and controlTypes.State.AUTOCOMPLETE in states:
+			states.remove(controlTypes.State.HASPOPUP)
+		if controlTypes.State.HALFCHECKED in states:
+			states.discard(controlTypes.State.CHECKED)
 		return states
 
 	re_positionInfoEncodedAccDescription=re.compile(r"L(?P<level>\d+)(?:, (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+))?")
@@ -1472,7 +1472,7 @@ the NVDAObject for IAccessible
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
 		for child in self.recursiveDescendants:
-			if controlTypes.STATE_FOCUSABLE in child.states:
+			if controlTypes.State.FOCUSABLE in child.states:
 				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
 
 	def event_caret(self):
@@ -1674,7 +1674,7 @@ class WindowRoot(GenericWindow):
 
 	def _get_presentationType(self):
 		states=self.states
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+		if controlTypes.State.INVISIBLE in states or controlTypes.State.UNAVAILABLE in states:
 			return self.presType_unavailable
 		if not self.windowHasExtraIAccessibles(self.windowHandle):
 			return self.presType_layout
@@ -1845,7 +1845,7 @@ class TaskListIcon(IAccessible):
 		return controlTypes.Role.ICON
 
 	def reportFocus(self):
-		if controlTypes.STATE_INVISIBLE in self.states:
+		if controlTypes.State.INVISIBLE in self.states:
 			return
 		super(TaskListIcon,self).reportFocus()
 

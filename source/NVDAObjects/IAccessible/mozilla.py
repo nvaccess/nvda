@@ -20,7 +20,7 @@ class Mozilla(ia2Web.Ia2Web):
 	def _get_states(self):
 		states = super(Mozilla, self).states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
-			states.add(controlTypes.STATE_CHECKABLE)
+			states.add(controlTypes.State.CHECKABLE)
 		return states
 
 	def _get_presentationType(self):
@@ -50,7 +50,7 @@ class Document(ia2Web.Document):
 		return IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
 
 	def _get_treeInterceptorClass(self):
-		if controlTypes.STATE_EDITABLE not in self.states:
+		if controlTypes.State.EDITABLE not in self.states:
 			import virtualBuffers.gecko_ia2
 			return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass
@@ -78,7 +78,7 @@ class GeckoPluginWindowRoot(WindowRoot):
 		if res:
 			obj = IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
 			if obj:
-				if controlTypes.STATE_OFFSCREEN not in obj.states:
+				if controlTypes.State.OFFSCREEN not in obj.states:
 					return obj
 				else:
 					log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
