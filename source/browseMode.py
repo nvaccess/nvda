@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Union
+from typing import Any, Callable, Union
 import os
 import itertools
 import collections
@@ -223,7 +223,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		caret=self.document.makeTextInfo(textInfos.POSITION_CARET)
 		return self.textInfo.compareEndPoints(caret, "startToStart") > 0
 
-	def _getLabelForProperties(self, labelPropertyGetter):
+	def _getLabelForProperties(self, labelPropertyGetter: Callable[[str], Optional[Any]]):
 		"""
 		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
 		This can be used by subclasses to implement the L{label} property.
@@ -245,8 +245,9 @@ class TextInfoQuickNavItem(QuickNavItem):
 			# Example output: main menu; navigation
 			labelParts = (name, landmark)
 		else: 
-			role = labelPropertyGetter("role")
-			roleText = controlTypes.roleLabels[role]
+			role: Union[controlTypes.Role, int] = labelPropertyGetter("role")
+			role = controlTypes.Role(role)
+			roleText = role.displayString
 			# Translators: Reported label in the elements list for an element which which has no name and value
 			unlabeled = _("Unlabeled")
 			realStates = labelPropertyGetter("states")

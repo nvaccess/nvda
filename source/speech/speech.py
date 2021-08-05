@@ -1516,10 +1516,11 @@ def getPropertiesSpeech(  # noqa: C901
 		speakRole=True
 	elif '_role' in propertyValues:
 		speakRole=False
-		role=propertyValues['_role']
+		role: int = propertyValues['_role']
 	else:
 		speakRole=False
 		role=controlTypes.Role.UNKNOWN
+	role = controlTypes.Role(role)
 	value: Optional[str] = propertyValues.get('value') if role not in controlTypes.silentValuesForRoles else None
 	cellCoordsText: Optional[str] = propertyValues.get('cellCoordsText')
 	rowNumber = propertyValues.get('rowNumber')
@@ -1554,7 +1555,7 @@ def getPropertiesSpeech(  # noqa: C901
 				OutputReason.SAYALL
 			)
 	)):
-		textList.append(roleText if roleText else controlTypes.roleLabels[role])
+		textList.append(roleText if roleText else role.displayString)
 	if value:
 		textList.append(value)
 	states = propertyValues.get('states')
@@ -1779,7 +1780,7 @@ def getControlFieldSpeech(  # noqa: C901
 		roleTextSequence = [roleText, ]
 	elif role == controlTypes.Role.LANDMARK and landmark:
 		roleTextSequence = [
-			f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.Role.LANDMARK]}",
+			f"{aria.landmarkRoles[landmark]} {controlTypes.Role.LANDMARK.displayString}",
 		]
 	else:
 		roleTextSequence = getPropertiesSpeech(reason=reason, role=role)

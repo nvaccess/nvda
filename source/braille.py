@@ -491,7 +491,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	name = propertyValues.get("name")
 	if name:
 		textList.append(name)
-	role = propertyValues.get("role")
+	role: Optional[Union[controlTypes.Role, int]] = propertyValues.get("role")
 	roleText = propertyValues.get('roleText')
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
@@ -506,6 +506,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	columnSpan = propertyValues.get("columnSpan") or 1
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
 	if role is not None and not roleText:
+		role = controlTypes.Role(role)
 		if role == controlTypes.Role.HEADING and level:
 			# Translators: Displayed in braille for a heading with a level.
 			# %s is replaced with the level.
@@ -519,7 +520,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		elif (name or cellCoordsText or rowNumber or columnNumber) and role in controlTypes.silentRolesOnFocus:
 			roleText = None
 		else:
-			roleText = roleLabels.get(role, controlTypes.roleLabels[role])
+			roleText = roleLabels.get(role, role.displayString)
 	elif role is None: 
 		role = propertyValues.get("_role")
 	value = propertyValues.get("value")
@@ -674,7 +675,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
-		roleText = f"{roleLabels[controlTypes.Role.LANDMARK]} {landmarkLabels[landmark]}"
+		roleText = f"{controlTypes.Role.LANDMARK.displayString} {landmarkLabels[landmark]}"
 	content = field.get("content")
 
 	if presCat == field.PRESCAT_LAYOUT:
