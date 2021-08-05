@@ -504,11 +504,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		raise NotImplementedError
 
 	# Type info for auto property:
-	states: typing.Set[int]
+	states: typing.Set[controlTypes.State]
 
-	def _get_states(self) -> typing.Set[int]:
+	def _get_states(self) -> typing.Set[controlTypes.State]:
 		"""Retrieves the current states of this object (example: selected, focused).
-		@return: a set of  STATE_* constants from L{controlTypes}.
+		@return: a set of State constants from L{controlTypes}.
 		"""
 		return set()
 
@@ -1263,10 +1263,7 @@ This code is executed if a gain focus event is received by this object.
 			ret = f"exception: {e}"
 		info.append(f"roleText: {ret}")
 		try:
-			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.items() if name.startswith("STATE_"))
-			ret = ", ".join(
-				stateConsts.get(state) or str(state)
-				for state in self.states)
+			ret = ", ".join(str(state) for state in self.states)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("states: %s" % ret)
@@ -1369,7 +1366,7 @@ This code is executed if a gain focus event is received by this object.
 
 	def _get_hasIrrelevantLocation(self):
 		"""Returns whether the location of this object is irrelevant for mouse or magnification tracking or highlighting,
-		either because it is programatically hidden (STATE_INVISIBLE), off screen or the object has no location."""
+		either because it is programatically hidden (State.INVISIBLE), off screen or the object has no location."""
 		states = self.states
 		return controlTypes.State.INVISIBLE in states or controlTypes.State.OFFSCREEN in states or not self.location or not any(self.location)
 

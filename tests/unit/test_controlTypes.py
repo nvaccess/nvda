@@ -25,11 +25,19 @@ class TestLabels(unittest.TestCase):
 		for role in controlTypes.Role:
 			role.displayString
 
-	def test_positiveStateLabels(self):
+	@unittest.skipIf(versionInfo.version_year >= 2022, "Deprecated code")
+	def test_legacy_positiveStateLabels(self):
 		"""Test to check whether every state has its own label in controlTypes.stateLabels"""
 		for name, const in vars(controlTypes).items():
 			if name.startswith("STATE_"):
 				self.assertIsNotNone(controlTypes.stateLabels.get(const),msg="{name} has no label".format(name=name))
+
+	def test_stateLabels(self):
+		"""Test to check whether every state has its own display string and negative display string"""
+		for state in controlTypes.State:
+			state.displayString
+			state.negativeDisplayString
+
 
 class TestProcessStates(unittest.TestCase):
 

@@ -678,7 +678,7 @@ the NVDAObject for IAccessible
 		@return: C{True} if the focus event should be allowed.
 		@rtype: bool
 		"""
-		#this object or one of its ancestors must have state_focused.
+		#this object or one of its ancestors must have State.FOCUSED.
 		testObj = self
 		while testObj:
 			if controlTypes.State.FOCUSED in testObj.states:

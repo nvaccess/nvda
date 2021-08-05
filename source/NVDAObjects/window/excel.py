@@ -1376,9 +1376,9 @@ class ExcelCell(ExcelBase):
 		if not cellInfo:
 			return states
 		stateBits=cellInfo.states
-		for k,v in vars(controlTypes).items():
-			if k.startswith('STATE_') and stateBits&v:
-				states.add(v)
+		for state in controlTypes.State:
+			if stateBits & state.value:
+				states.add(state)
 		return states
 
 	def event_typedCharacter(self,ch):
