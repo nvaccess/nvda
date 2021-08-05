@@ -13,6 +13,8 @@ builtIn: BuiltIn = BuiltIn()
 class AssertsLib:
 	@staticmethod
 	def strings_match(actual, expected, ignore_case=False):
+		# Include expected text in robot test report so that the actual behavior
+		# can be determined entirely from the report, even when the test passes.
 		builtIn.log(
 			f"assert string matches (ignore case: {ignore_case}):  '{expected}'",
 			level="INFO"
@@ -25,6 +27,7 @@ class AssertsLib:
 				ignore_case=ignore_case
 			)
 		except AssertionError:
+			# Occasionally on assert failure the repr of the string makes it easier to determine the differences.
 			builtIn.log(
 				"repr of actual vs expected (ignore_case={}):\n{}\nvs\n{}".format(
 					ignore_case,

@@ -28,9 +28,11 @@ class Mozilla(ia2Web.Ia2Web):
 		is complete. However, a primary use-case can be supported via the IA2attribute
 		'description' which is exposed by Firefox and tells us the value of the "aria-description"
 		attribute. If the value of accDescription matches, we can infer that the source
-		of accDescription is 'aria-description'. Note: At the time of development not all
-		HTML elements result in the IA2attribute 'description' being exposed. EG on a 'span'
-		element it is not exposed.
+		of accDescription is 'aria-description'.
+		Note:
+			At the time of development some 'generic HTML elements' (E.G. 'span') may not be exposed by Firefox,
+			even if the element has an aria-description attribute.
+			Other more significant ARIA attributes such as role may cause the element to be exposed.
 		"""
 		log.debug("Getting mozilla descriptionFrom")
 		ariaDesc = self.IA2Attributes.get("description", "")
