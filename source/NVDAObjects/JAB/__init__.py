@@ -1,9 +1,15 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 import ctypes
 import re
 import eventHandler
 import keyLabels
 import JABHandler
 import controlTypes
+import textUtils
 from ..window import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
@@ -174,7 +180,7 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# We need to count the embedded objects to determine which child to use.
 		# This could possibly be optimised by caching.
 		text = self._getTextRange(0, offset + 1)
-		childIndex = text.count(u"\uFFFC") - 1
+		childIndex = text.count(textUtils.OBJ_REPLACEMENT_CHAR) - 1
 		jabContext=self.obj.jabContext.getAccessibleChildFromContext(childIndex)
 		if jabContext:
 			return JAB(jabContext=jabContext)

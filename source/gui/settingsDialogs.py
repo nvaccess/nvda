@@ -8,6 +8,7 @@
 # jakubl7545, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -2661,6 +2662,15 @@ class AdvancedPanelControls(
 		self.annotationsDetailsCheckBox.SetValue(config.conf["annotations"]["reportDetails"])
 		self.annotationsDetailsCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportDetails"])
 
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Report aria-description always:")
+		self.ariaDescCheckBox: wx.CheckBox = AnnotationsGroup.addItem(
+			wx.CheckBox(AnnotationsBox, label=label)
+		)
+		self.ariaDescCheckBox.SetValue(config.conf["annotations"]["reportAriaDescription"])
+		self.ariaDescCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportAriaDescription"])
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Terminal programs")
@@ -2856,6 +2866,7 @@ class AdvancedPanelControls(
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
+			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
@@ -2872,6 +2883,7 @@ class AdvancedPanelControls(
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
+		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
@@ -2899,6 +2911,7 @@ class AdvancedPanelControls(
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
+		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 
