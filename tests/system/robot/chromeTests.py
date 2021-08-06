@@ -514,14 +514,7 @@ def test_ariaDescription_focusMode():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	# description-from hasn't reached Chrome stable yet.
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
-	_builtIn.run_keyword_and_expect_error(
-		# expected_error
-		"Actual speech != Expected speech:"
-		" Here is a sentence that is being edited by someone else."
-		"  Multiple can edit this. != *",
-		# keyword
-		"strings_match",
-		# args
+	_asserts.strings_match(
 		actualSpeech,
 		f"{annotation}  Here is a sentence that is being edited by someone else."
 		"  Multiple authors can edit this."
