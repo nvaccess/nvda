@@ -5,6 +5,16 @@ Was ist neu in NVDA
 
 = 2021.2 =
 
+== Wichtige Hinweise ==
+- Der Bildschirmvorhang in älteren NVDA-Versionen ist nicht mehr mit Windows-Versionen kompatibel, die nach Windows 10 Version 21H2 (10.0.19044) erschienen.
+Dazu gehören Windows 10-Insider und Windows 11.
+Dies ist auf eine Änderung in der API der Windows-Lupe zurückzuführen.
+Bei Verwendung älterer NVDA-Versionen und Windows nach Windows 10 Version 21H2 funktioniert der Bildschirmvorhang möglicherweise ohne Warnung nicht.
+Um die Sicherheit zu gewährleisten, vergewissern Sie sich, dass der Bildschirmvorhang mit neuen oder experimentellen Versionen von Windows ordnungsgemäß funktioniert.
+(#12491, #12684)
+-
+
+
 == Neue Features ==
 - Unterstützung für ARIA-Anmerkungen:
   - Fügt einen Befehl hinzu, um eine Zusammenfassung der Details eines Objekts mit "aria-details" zu lesen. (#12364)
@@ -16,10 +26,12 @@ Was ist neu in NVDA
 
 
 == Änderungen ==
-- NVDA spricht nun standardmäßig jedes Symbol beim Navigieren wortweise.
-Dies kann im Einstellungsdialog oder mit einem neuen (nicht zugewiesenen) Befehl umgeschaltet werden. (#11779)
 - eSpeak NG wurde auf 1.51-dev Commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb`` aktualisiert. (#12449, #12202, #12280, #12568)
 - Wenn Artikel in den Benutzereinstellungen für die Dokumentformatierung aktiviert ist, teilt NVDA "Artikel" nach dem Inhalt mit. (#11103)
+- Der Liblouis-Braille-Übersetzer wurde auf [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0] aktualisiert. (#12526)
+  - Neue Braille-Tabellen: Bulgarische Vollschrift, Burmesische Vollschrift, Burmesische Kurzschrift, Kasachische Vollschrift, Vollschrift für Khmer, Nordkurdische Basisschrift, Voll- und Kurzschrift für Sepedi, Voll- und Kurzschrift für Sesotho, Voll- und Kurzschrift für Setswana, Vollschrift für Tatar, Vietnamesische Basisschrift, Vietnamesische Kurzschrift, Südvietnamesische Vollschrift, Voll- und Kurzschrift für Xhosa, Vollschrift für Yakut, Voll und Kurzschrift fürZulu.
+  -
+- Der Eintrag "Windows 10-Texterkennung" in den NVDA-Einstellungen wurde in "Windows-Texterkennung" umbenannt. (#12690)
 -
 
 
@@ -28,17 +40,16 @@ Dies kann im Einstellungsdialog oder mit einem neuen (nicht zugewiesenen) Befehl
 - In Terminal-Anwendungen unter Windows 10 ab Version 1607 werden beim Einfügen oder Löschen von Zeichen in der Mitte einer Zeile die Zeichen rechts neben der Einfügemarke nicht mehr vorgelesen. (#3200)
   - Diff Match Patch jetzt standardmäßig aktiviert. (#12485)
   -
-- Der Liblouis-Braille-Übersetzer wurde auf [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0] aktualisiert. (#12526)
-  - Neue Braille-Tabellen: Bulgarische Vollschrift, Burmesische Vollschrift, Burmesische Kurzschrift, Kasachische Vollschrift, Indische Vollschrift (Khmer), Nordkurdische Basisschrift, Vollschrift (Sepedi), Kurzschrift (Sepedi), Vollschrift (Sesotho), Kurzschrift (Sesotho), Vollschrift (Setswana), Kurzschrift (Setswana), Vollschrift (Tatar), Vietnamesische Basisschrift, Vietnamesische Kurzschrift, Südvietnamesische Vollschrift, Vollschrift (Xhosa), Kurzschrift (Xhosa), Vollschrift (Jakut), Vollschrift (Zulu), Kurzschrift (Zulu)
-  -
 - Die Braille-Eingabe funktioniert einwandfrei mit den folgenden Kurzschrift-Tabellen: Arabisch, Spanisch, Urdu, Chinesisch (China, Mandarin). (#12541)
-- Das Tool zur Behebung für die COM-Registrierung behebt jetzt mehr Probleme, insbesondere unter 64-Bit-Windows. (#1256)
+- Das Tool zur Behebung für die COM-Registrierung behebt jetzt mehr Probleme, insbesondere unter 64-Bit-Windows. (#12560)
 - Verbesserungen bei der Tastenbedienung für das Braillegerät Seika Notetaker von Nippon Telesoft. (#12598)
 - Verbesserungen bei der Ankündigung des Windows-Emoji-Bedienfelds und des Zwischenablageverlaufs. (#11485)
 - Die Zeichen-Beschreibungen des bengalischen Alphabets wurden aktualisiert. (#12502)
 - NVDA wird sicher beendet, wenn ein neuer Prozess gestartet wird. (#12605)
 - Die erneute Auswahl des Braillezeilen-Treibers von HandyTech aus dem Dialogfeld der Braillezeilen auswählen führt nicht mehr zu Fehlern. (#12618)
 - Windows Version 10.0.22000 oder höher wird als Windows 11 erkannt, nicht als Windows 10. (#12626)
+- Die Unterstützung für den Bildschirmvorhang wurde behoben und für Windows-Versionen bis 10.0.22000 getestet. (#12684)
+- Wenn beim Filtern von Tastenbefehle keine Ergebnisse angezeigt werden, funktioniert das Dialogfeld für diese Konfiguration für die Tastenbefehle weiterhin wie erwartet. (#12673)
 -
 
 
