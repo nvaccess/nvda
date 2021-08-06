@@ -69,7 +69,7 @@ Voor verdere bijzonderheden kunt u  de volledige licentie [raadplegen. https://w
 Voor details betreffende uitzonderingen kunt u het licentiedocument raadplegen in het NVDA-menu onder "help".
 
 + Systeemvereisten +[SystemRequirements]
-- Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
+- Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
 - Voor Windows 7, heeft NVDA Service Pack 1 of hoger nodig.
 - Voor Windows Server 2008 R2, heeft NVDA Service Pack 1 of hoger nodig.
 - tenminste 150 mb aan opslagruimte.
@@ -804,9 +804,12 @@ U kunt Scherm dimmen inschakelen in de categorie [zicht #VisionSettings] in het 
 
 Wanneer Schermdimmen is ingeschakeld, zijn taken die rechtstreeks te maken hebben met wat er op het scherm verschijnt, niet uitvoerbaar.
 
+Om zeker te zijn van een veilige werkomgeving dient u na te gaan of het schermgordijn correct werkt met nieuwe of experimentele versies van Windows.
+Bij gebruik van NVDA-versies ouder dan  2021.2 en Windows-versies die  nieuwer zijn dan Windows 10 21H2, werkt Scherm Dimmen mogelijk niet, zonder dat hiervoor gewaarschuwd wordt.
+
 + Inhoudherkenning +[ContentRecognition]
 Wanneer auteurs onvoldoende informatie verschaffen waarmee een gebruiker van een schermleesprogramma kan bepalen om welke inhoud het gaat, kunnen verscheidene hulpprogramma's worden gebruikt om de inhoud te herkennen uit een afbeelding.
-NVDA ondersteunt de OCR Optical Character Recognition, meestal 'tekstherkenning' genoemd in het nederlands, ) functionaliteit die in Windows 10 is ingebouwd om tekst uit afbeeldingen te herkennen.
+NVDA ondersteunt de OCR Optical Character Recognition, meestal 'tekstherkenning' genoemd in het nederlands, ) functionaliteit die in Windows 10 en later is ingebouwd om tekst uit afbeeldingen te herkennen.
 In andere inhoudherkenningsprogramma's kan worden voorzien met behulp van NVDA add-ons.
 
 Bij gebruik van een inhoudherkenningscommando herkent NVDA inhoud uit het huidige [navigatorobject #ObjectNavigation].
@@ -818,17 +821,17 @@ Zodra de herkenning is uitgevoerd, wordt het resultaat gepresenteerd in een blad
 Door op Enter of Spatie te drukken zal, zo mogelijk, de tekst bij de cursor op de gebruikelijke manier (klikken) worden geactiveerd.
 Door op Escape te drukken wordt het herkenningsresultaat geannuleerd.
 
-++ Windows 10 OCR ++[Win10Ocr]
-De OCR-functionaliteit van Windows 10 biedt ondersteuning voor veel talen.
+++ Windows OCR ++[Win10Ocr]
+De OCR-functionaliteit van Windows 10 en later biedt ondersteuning voor veel talen.
 NVDA kan hiervan gebruik maken om tekst uit afbeeldingen en ontoegankelijke toepassingen te herkennen.
 
-In de categorie [Windows 10 OCR #Win10OcrSettings] van het dialoogvenster [Instellingen van NVDA #NVDASettings] kunt u de tekstherkenningstaal opgeven.
+In de categorie [Windows OCR #Win10OcrSettings] van het dialoogvenster [Instellingen van NVDA #NVDASettings] kunt u de tekstherkenningstaal opgeven.
 U kunt extra talen toevoegen door in het menu Start, (of met linker Windows-toets +i) Instellingen te kiezen, Tijd en Taal -> Regio & Taal te selecteren en dan Een taal toevoegen te kiezen.
 
-Het kan voorkomen dat Windows 10 OCR gedeeltelijk of in het geheel niet compatibel is met [zicht-gerelateerde toepassingen van NVDA #Vision] of andere externe visuele hulpmiddelen. U zult deze hulpprogramma's dan ook uit moeten schakelen voordat u verder gaat met herkennen.
+Het kan voorkomen dat Windows OCR gedeeltelijk of in het geheel niet compatibel is met [zicht-gerelateerde toepassingen van NVDA #Vision] of andere externe visuele hulpmiddelen. U zult deze hulpprogramma's dan ook uit moeten schakelen voordat u verder gaat met herkennen.
 
 %kc:beginInclude
-Om de tekst in het huidige navigatorobject te herkennen met behulp van Windows 10 OCR drukt u op NVDA+r.
+Om de tekst in het huidige navigatorobject te herkennen met behulp van Windows OCR drukt u op NVDA+r.
 %kc:endInclude
 
 + Applicatie-specifieke kenmerken +[ApplicationSpecificFeatures]
@@ -1806,8 +1809,8 @@ De toonhoogte stijgtvoor elke spatie, en voor een tab, gaat de toon evenveel omh
 - Zowel spraak als pieptonen: Deze optie is een combinatie van de twee hiervoor genoemde mogelijkheden.
 -
 
-+++ Windows 10 OCR +++[Win10OcrSettings]
-Aan de hand van de instellingen in deze categorie kunt u[Windows 10 OCR #Win10Ocr] configureren.
++++ Windows OCR +++[Win10OcrSettings]
+Aan de hand van de instellingen in deze categorie kunt u[Windows OCR #Win10Ocr] configureren.
 In deze categorie zijn de volgende keuzemogelijkheden beschikbaar:
 
 ==== Herkenningstaal ====[Win10OcrSettingsRecognitionLanguage]
@@ -1847,7 +1850,7 @@ Als u te kampen hebt met prestatieproblemen bij één of meer toepassingen, rade
 ==== UI automation gebruiken voor toegang tot besturingselementen van Microsoft Word-documenten voor zover beschikbaar ====[AdvancedSettingsUseUiaForWord]
 Wanneer  deze optie is ingeschakeld zal NVDA proberen de Microsoft UI (= User Interface) Automation accessibility API te gebruiken om informatie op te halen van besturingselementen van Microsoft Word-documenten.
 Dit betreft Microsoft Word zelf, en ook de Microsoft Outlook message viewer alsmede  de composer.
-Voor de meest recente versies van Microsoft Office 2016/365 die onder windows 10, draaien, is de ondersteuning  van UI Automation voldoende om toegang te kunnen bieden tot Microsoft Word-documenten. De ondersteuning is nagenoeg gelijk aan die welke NVDA reeds biedt voor Microsoft Word maar met het bijkomende voordeel dat de reactiegevoeligheid substantieel wordt verhoogd.
+Voor de meest recente versies van Microsoft Office 2016/365 die onder windows 10 en later, draaien, is de ondersteuning  van UI Automation voldoende om toegang te kunnen bieden tot Microsoft Word-documenten. De ondersteuning is nagenoeg gelijk aan die welke NVDA reeds biedt voor Microsoft Word maar met het bijkomende voordeel dat de reactiegevoeligheid substantieel wordt verhoogd.
 Het kan echter voorkomen dat informatie of niet of onjuist wordt weergegeven in sommige versies van Microsoft Office, waardoor  men niet in alle gevallen kan vertrouwen op deze UI automation ondersteuning.
 Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Office 2016/365 de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
 
@@ -1865,6 +1868,14 @@ Het keuzemenu heeft de volgende opties:
 - Alleen indien nodig: Als NVDA niet in staat is in te breken inhet browserproces om IA2 te gebruiken en UIA beschikbaar is, dan zal NVDA terugvallen op UIA.
 - Ja: Als de browser over UIA kan beschikken zal NVDA UIA gebruiken.
 - Nee: UIA, niet gebruiken, zelfs niet als NVDA de toegang tot het browserproces wordt ontzegd. Dit kan nuttig zijn voor ontwikkelaars die bugs in / met IA2 proberen op te lossen en er zeker van willen zijn dat NVDA niet op UIA terugvalt.
+-
+
+==== Ondersteuning experimentele ARIA annotaties inschakelen ====[Annotations]
+Wordt gebruikt om opties toe te voegen die experimentele ondersteuning bieden voor ARIA  annotaties  (ARIA = Accessible Rich Internet Applications).
+Enkele van deze opties zijn mogelijk incompleet.
+De opties zijn: 
+- "Details in bladermodus melden": activeert een melding als er bij een object sprake is van details in bladermodus.
+Melding van een samenvatting van die details kan worden gerealiseerd door er een gebaar aan toe te kennen in het dialoogvenster [Invoerhandelingen InputGestures].
 -
 
 ==== UI automation gebruiken voor toegang tot Microsoft  Excel spreadsheet-besturingselementen indien beschikbaar ====[UseUiaForExcel]
@@ -1885,11 +1896,10 @@ In een omgeving die u niet vertrouwt kunt u [Getypte karakters uitspreken #Keybo
 ==== Diff algoritme ====[DiffAlgo]
 Deze instelling bepaalt hoe NVDA moet omgaan met de nieuwe in spraak om te zetten tekst in terminals.
 Het diff algorithm keuzemenu heeft drie opties:
-- Automatisch: met ingang van NVDA 2021.1, is deze optie gelijk aan Difflib.
-In een later te verschijnen versie kan de optie mogelijk gewijzigd worden in  Diff Match Patch afhankelijk van positieve gebruikerservaringen.
+- Automatisch: met ingang van NVDA 2021.2, is deze optie gelijk aan "Diff Match Patch toestaan".
 - Diff Match Patch toestaan: Deze optie zorgt ervoor dat  NVDA wijzigingen aan de terminal-tekst per  teken berekent.
 Dit kan de prestatie verbeteren wanneer er grote tekstvolumes  naar het console worden weggeschreven en maakt een nauwkeurigere melding van wijzigingen midden in regels mogelijk.
-De optie is mogelijk niet compatibel met sommige toepassingen.
+De optie is mogelijk niet compatibel met sommige toepassingen, dus wordt Diff Match Patch niet altijd gebruikt.
 Deze feature wordt ondersteund in Windows Console van Windows 10 versies 1607 en later.
 Voorts kan er wellicht gebruik van worden gemaakt in andere terminals in eerder uitgebrachte versies van Windows.
 - force Difflib: Deze optie zorgt ervoor dat  NVDA wijzigingen aan terminaltekst per regel berekent.
@@ -2267,7 +2277,7 @@ Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA 
 
 ++ eSpeak NG ++[eSpeakNG]
 De [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
-In Windows 7, 8 en 8.1 start NVDA  standaard op met de eSpeak NG spraaksynthesizer. In Windows 10 wordt standaard ([Windows OneCore gebruikt. 
+In Windows 7, 8 en 8.1 start NVDA  standaard op met de eSpeak NG spraaksynthesizer. In Windows 10 en later wordt standaard ([Windows OneCore gebruikt. 
 Bij gebruik van de draagbare versie van NVDA is de ingebouwde eSpeak NG synthesizer de ideale optie.
 
 Voor elk van de stemmen die in eSpeak NG is opgenomen, is een andere taal beschikbaar.
@@ -2301,7 +2311,7 @@ Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
 -
 
 ++ Windows OneCore-stemmen ++[OneCore]
-In Windows 10 zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of "mobiele" stemmen.
+In Windows 10 en later zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of "mobiele" stemmen.
 Deze stemmen zijn er voor vele talen en ze reageren sneller dan de Microsoft-stemmen die beschikbaar zijn bij gebruik van Microsoft Speech API versie 5.
 In Windows 10 gebruikt NVDA standaard de Windows OneCore stemmen ([eSpeak NG #eSpeakNG] wordt in andere versies gebruikt).
 
@@ -2524,7 +2534,7 @@ Als u leesregels die geen gebruik maken van HID via USB aansluit , moett u eerst
 De VarioUltra en Pronto! gebruiken HID.
 De Refreshabraille en Orbit Reader 20 kunnen van HID gebruik maken als ze op de juiste manier worden geconfigureerd.
 
-De USB seriële modus van de Orbit Reader 20 wordt momenteel alleen in Windows 10 ondersteund.
+De USB seriële modus van de Orbit Reader 20 wordt momenteel alleen in Windows 10 en later ondersteund.
 Doorgaans moet in plaats daarvan de USB HID-modus worden gebruikt.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing.
@@ -3127,7 +3137,7 @@ Hieronder volgen de toetscommando's voor deze leesregels met NVDA. Raadpleeg de 
 
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]
 NVDA ondersteunt de leesregels van [Nattiq Technologies https://www.nattiq.com/] wanneer ze via USB worden aangesloten.
-Windows 10 detecteert  the brailleleesregels zodra ze zijn verbonden.  Voor oudere versies van Windows (lager dan  Win10) moet u wellicht USB-drivers installeren.
+Windows 10 en later detecteert  the brailleleesregels zodra ze zijn verbonden.  Voor oudere versies van Windows (lager dan  Win10) moet u wellicht USB-drivers installeren.
 U vindt ze op de website van de fabrikant.
 
 Hieronder volgen de geldende toetscommando's van de leesregels van Nattiq Technologies bij gebruik met NVDA.
