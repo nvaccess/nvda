@@ -13,11 +13,10 @@ There are also various bug fixes and improvements, notably for braille support a
 
 
 == Important notes ==
-Screen Curtain is no longer compatible when using versions of NVDA older than 2021.2 with Windows 10 21H2 (10.0.19044) or later.
+Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
+Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
 This includes Windows 10 Insiders and Windows 11.
-This is due to a change in the Windows Magnification API.
-For security purposes, get visual confirmation that the Screen Curtain works properly when using a new version of Windows for the first time.
-(#12491, #12684)
+For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
 
 
 == New Features ==

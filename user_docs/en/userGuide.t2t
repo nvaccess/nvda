@@ -795,8 +795,9 @@ You can enable the Screen Curtain in the [vision category #VisionSettings] of th
 
 When the Screen Curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
 
-Screen Curtain is no longer compatible when using versions of NVDA older than 2021.2 with Windows 10 21H2 (10.0.19044) or later.
-For security purposes, get visual confirmation that the Screen Curtain works properly when using a new version of Windows for the first time.
+Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
+Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
+For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
 
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
