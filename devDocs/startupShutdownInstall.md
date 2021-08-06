@@ -20,7 +20,7 @@
     1. NVDA+q
         - test: `startupShutdownNVDA.Quits from keyboard, Restarts`
     1. An input gesture to restart
-    1. A prompt to restart from changing certain settings
+    1. After changing some settings (eg installed add-ons or UI language), user prompted on dialog exit.
     1. Via the NVDA menu -> Exit
         - test: `startupShutdownNVDA.Quits from menu`
 1. A process sending `WM_QUIT`, eg a new NVDA process starting (uses `WM_QUIT`)
@@ -40,7 +40,7 @@
     1. the updateCheck is terminated
     1. watchdog is terminated
     1. addons and the brailleViewer are terminated, so we can close all windows safely
-    1. All NVDA windows are closed
+    1. All wx windows are closed
     1. Now that windows are closed, a new NVDA instance is started if requested
 
 ### Out of process: `WM_QUIT`
@@ -59,7 +59,7 @@
 
 The Windows API allows us to find a process by searching for a named window. To make the NVDA process searchable, NVDA creates a message window with a specific name.
 
-Starting up is blocked by checking for an existing NVDA window and sending `WM_QUIT`.
+Starting up is blocked by checking for an existing NVDA window (via a named custom Window) and sending `WM_QUIT`.
 We then set the NVDA process to allow the `WM_QUIT` to be sent from other processes (see [WM_QUIT](#Out-of-process-WM_QUIT)). 
 
 The message window is created late during the start up, and destroyed early in exit and is not perfectly indicative of whether or not an NVDA process is running. As such, we have a [MutEx](#MutEx) that is checked as well.
