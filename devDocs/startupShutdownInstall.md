@@ -58,10 +58,12 @@
 ## The Message Window
 
 So that a new NVDA process can end a running NVDA process, NVDA accepts [WM_QUIT](#Out-of-process-WM_QUIT) messages from other processes and creates a window that can be discovered.
-The Windows API allows us to find a process by searching for a named window, NVDA creates a custom Window for accepting messages named "NVDA".
+The Windows API allows us to find a process by searching for a named window.
+NVDA creates a custom Window for accepting messages named "NVDA".
 
-Starting up is blocked by checking for an existing NVDA window and sending `WM_QUIT`.
-The message window is created late during the start up, and destroyed early in exit and is not perfectly indicative of whether or not an NVDA process is running. As such, we have a [MutEx](#MutEx) that ensures a newly started process blocks until any previous NVDA has finished exiting.
+Starting up is blocked by checking for an existing NVDA window and sending `WM_QUIT` to the process.
+The message window is created late during the start up, and destroyed early in exit and is not perfectly indicative of whether or not an NVDA process is running.
+As such, we have a [MutEx](#MutEx) that ensures a newly started process blocks until any previous NVDA has finished exiting.
 
 ## MutEx
 
