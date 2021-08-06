@@ -517,7 +517,7 @@ def test_ariaDescription_focusMode():
 	_asserts.strings_match(
 		actualSpeech,
 		f"{annotation}  Here is a sentence that is being edited by someone else."
-		"  Multiple authors can edit this."
+		f"  Multiple can edit this."
 	)
 
 	linkRole = "link"
@@ -555,7 +555,7 @@ def test_ariaDescription_browseMode():
 	_asserts.strings_match(
 		actualSpeech,
 		f"{annotation}  Here is a sentence that is being edited by someone else."
-		"  Multiple authors can edit this."
+		"  Multiple can edit this."
 	)
 
 	linkRole = "link"
@@ -594,7 +594,7 @@ def test_ariaDescription_sayAll():
 			"Test page load complete",
 			"edit  multi line  This is a line with no annotation",
 			f"{annotation}  Here is a sentence that is being edited by someone else.",
-			"Multiple authors can edit this.",
+			"Multiple can edit this.",
 			"An element with a role, "  # no comma, concat these two long strings.
 			f"follow  {linkRole}  {linkDescription}  {linkName}  website",
 			# 'title' attribute for link ("conduct a search") should not be announced.
