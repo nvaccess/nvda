@@ -593,8 +593,7 @@ def test_ariaDescription_sayAll():
 		"\n".join([
 			"Test page load complete",
 			"edit  multi line  This is a line with no annotation",
-			f"{annotation}  Here is a sentence that is being edited by someone else.",
-			"Multiple can edit this.",
+			f"{annotation}  Here is a sentence that is being edited by someone else.  Multiple can edit this.",
 			"An element with a role, "  # no comma, concat these two long strings.
 			f"follow  {linkRole}  {linkDescription}  {linkName}  website",
 			# 'title' attribute for link ("conduct a search") should not be announced.
