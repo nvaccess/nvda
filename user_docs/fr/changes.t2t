@@ -5,6 +5,16 @@ Quoi de Neuf dans NVDA
 
 = 2021.2 =
 
+== Notes importantes ==
+- Le rideau d'écran des précédentes versions de NVDA n'est maintenant plus compatile avec les versions de Windows supérieures à Windows 10 21H2 (10.0.19044).
+Cela inclu Windows 10 Insider et Windows 11.
+Cela est dû à un changement dans l'API de loupe de Windows.
+Lorsque vous utilisez une ancienne version de NVDA et une version de Windows supérieure à Windows 10 21H2, le rideau d'écran peut ne pas fonctionner sans avertissement.
+Pour garantir la sécurité, vérifiez que le rideau d'écran fonctionne correctement avec les versions nouvelles ou expérimentales de Windows.
+(#12491, #12684)
+-
+
+
 == Nouvelles fonctionnalités ==
 - Support des annotations ARIA :
   - ajout d'une commande pour lire le résumé d'un objet comportant des détails avec aria-details. (#12364)
@@ -16,10 +26,12 @@ Quoi de Neuf dans NVDA
 
 
 == Changements ==
-- NVDA annonce maintenant par défaut tous les symboles lors de la navigation par mot.
-Ceci peut être changé dans le dialogue de préférences ou par un nouveau geste (non assigné). (#11779)
 - Espeak-ng a été mis à jour à la version 1.51-dev révision ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
 - Si "Article" est activé dans le dialogue de "Mise en forme des documents", NVDA annonce maintenant "Article" après le contenu. (#11103)
+- Mise à jour du transcripteur Braille Liblouis à la version [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nouvelles tables Braille : Bulgare intégral, Birman intégral, Birman abrégé, kazakhe intégral, khmer intégral, Kurde du Nord grade 0, Sepedi intégral, Sepedi abrégé, Sésotho intégral, Sésotho abrégé, Setswana intégral, Setswana abrégé, Tatare intégral, Vietnamien grade 0, Vietnamien abrégé, Vietnamien du sud intégral, Xhosa intégral, Xhosa abrégé, Yakoute intégral, Zoulou intégral, Zoulou abrégé
+  -
+- "Reconnaissances optique de caractères de Windows 10" a été renommé en "Reconnaissance optique de caractères de Windows". (#12690)
 -
 
 
@@ -28,17 +40,16 @@ Ceci peut être changé dans le dialogue de préférences ou par un nouveau gest
 - Dans les programmes de terminal sous Windows 10 version 1607 et au-delà, lors de l'insertion ou de la suppression d'un caractère au milieu d'une ligne, le caractère à droite du curseur n'est plus lu. (#3200)
   - Diff Match Patch maintenant activé par défaut. (#12485)
   -
-- Mise à jour du transcripteur Braille Liblouis à la version [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
-  - Nouvelles tables Braille : Bulgare intégral, Birman intégral, Birman abrégé, kazakhe intégral, khmer intégral, Kurde du Nord grade 0, Sepedi intégral, Sepedi abrégé, Sésotho intégral, Sésotho abrégé, Setswana intégral, Setswana abrégé, Tatare intégral, Vietnamien grade 0, Vietnamien abrégé, Vietnamien du sud intégral, Xhosa intégral, Xhosa abrégé, Yakoute intégral, Zoulou intégral, Zoulou abrégé
-  -
 - La saisie Braille fonctionne correctement avec les tables abrégées suivantes : Arabe abrégé, Espagnol abrégé, Urdu abrégé, Chinois (Chine, Mandarin) abrégé. (#12541)
-- L'outil de correction des enregistrements COM résout maintenant davantage de problèmes, particulièrement sous les versions 64 bits de Windows. (#1256)
+- L'outil de correction des enregistrements COM résout maintenant davantage de problèmes, particulièrement sous les versions 64 bits de Windows. (#12560)
 - Amélioration de la gestion des boutons pour l'afficheur Braille Seika Notetaker de Nippon Telesoft. (#12598)
 - Améliorations dans l'annonce du paneau d'emojis Windows et l'historique du presse-papiers. (#11485)
 - Mise à jour de la description des caractères pour l'alphabet Bengali. (#12502)
 - NVDA se ferme proprement lorsqu'un nouveau processus est démarré. (#12605)
 - Resélectionner le pilote d'afficheur Braille Handy Tech depuis le dialogue "Sélectionner un afficheur Braille" ne cause plus d'erreur. (#12618)
 - Windows version 10.0.22000 ou supérieur est reconnu comme Windows 11, et non Windows 10. (#12626)
+- Le support du rideau d'écran a été corrigé et testé pour les versions de Windows jusqu'à 10.0.22000. (#12684)
+- Si aucun résultat n'est affiché lors du filtrage dans les gestes de commandes, le dialogue de configuration des gestes de commandes continu de fonctionner correctement. (#12673)
 -
 
 

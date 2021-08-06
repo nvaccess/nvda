@@ -66,7 +66,7 @@ Pour plus de détails, vous pouvez [lire l'intégralité de la licence. https://
 Pour les détails concernant les exceptions, veuillez consulter le document de licence depuis le menu NVDA dans la section "Aide".
 
 + Configuration Système Requise +[SystemRequirements]
-- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows 7, Windows 8, Windows 8.1 et Windows 10 (y compris les versions serveur).
+- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows 7, Windows 8, Windows 8.1, Windows 10 et Windows 11 (y compris les versions serveur).
  - Pour Windows 7, NVDA requiert le Service Pack 1 ou au-delà.
  - Pour Windows Server 2008 R2, NVDA requiert le Service Pack 1 ou au-delà.
 - Au moins 150 MO d'espace mémoire.
@@ -795,9 +795,12 @@ Vous pouvez activer le Rideau d'Écran dans la [catégorie vision #VisionSetting
 
 Quand le rideau d'écran est activé, certaines tâches directement liées à ce qui apparaît sur l'écran telles que [la reconnaissance optique de caractères #Win10Ocr] ou la prise d'une copie d'écran ne peuvent pas être effectuées.
 
+Pour garantir la sécurité, vérifiez que le rideau d'écran fonctionne correctement avec les versions nouvelles ou expérimentales de Windows.
+Lorsque vous utilisez des versions de NVDA antérieures à 2021.2 et de Windows plus récentes que Windows 10 21H2, le rideau d'écran peut ne pas fonctionner sans avertissement.
+
 + Reconnaissance de Contenu +[ContentRecognition]
 Quand les auteurs ne fournissent pas assez d'informations pour qu'un utilisateur de revue d'écran puisse déterminer le contenu de quelque chose, divers outils peuvent être utilisés pour tenter de reconnaître le contenu à partir d'une image.
-NVDA supporte la fonctionnalité de reconnaissance optique de caractères (OCR) disponible sous Windows 10 pour reconnaître le texte dans les images.
+NVDA supporte la fonctionnalité de reconnaissance optique de caractères (OCR) disponible sous Windows 10 et versions ultérieures pour reconnaître le texte dans les images.
 Des outils de reconnaissance de contenu additionnels peuvent être fournis dans des extensions de NVDA.
 
 Quand vous utilisez une commande de reconnaissance de contenu, NVDA reconnaît le contenu de [l'objet navigateur courant #ObjectNavigation].
@@ -809,17 +812,17 @@ Une fois la reconnaissance terminée, le résultat sera présenté dans un docum
 L'appui sur la touche Entrée ou Espace activera (clic normal) le texte sous le curseur si possible.
 L'appui sur échap quitte et efface le résultat de reconnaissance.
 
-++ Reconnaissance Optique de Caractères de Windows 10 ++[Win10Ocr]
-Windows 10 inclut la reconnaissance optique de caractères pour beaucoup de langues.
+++ Reconnaissance Optique de Caractères de Windows ++[Win10Ocr]
+Windows 10 et les versions ultérieures incluent la reconnaissance optique de caractères pour beaucoup de langues.
 NVDA peut l'utiliser pour extraire le texte d'images ou d'applications inaccessibles.
 
-Vous pouvez définir la langue à utiliser pour la reconnaissance de texte dans la catégorie [Reconnaissance Optique De Caractères de Windows 10 #Win10OcrSettings] du dialogue [Paramètres #NVDASettings].
+Vous pouvez définir la langue à utiliser pour la reconnaissance de texte dans la catégorie [Reconnaissance Optique De Caractères de Windows #Win10OcrSettings] du dialogue [Paramètres #NVDASettings].
 Des langues additionnelles peuvent être installées en ouvrant le menu Démarrer, choisir Paramètres, Sélectionner Heure et Langue -> Région & Langue puis choisir Ajouter une langue.
 
-La reconnaissance optique de caractères de Windows 10 peut être partiellement ou totalement incompatible avec [les améliorations visuelles de NVDA #Vision] ou autres aides visuelles externes. Vous devrez désactiver ces aides avant de procéder à une reconnaissance.
+La reconnaissance optique de caractères de Windows peut être partiellement ou totalement incompatible avec [les améliorations visuelles de NVDA #Vision] ou autres aides visuelles externes. Vous devrez désactiver ces aides avant de procéder à une reconnaissance.
 
 %kc:beginInclude
-Pour reconnaître le texte dans l'objet navigateur courant en utilisant la reconnaissance optique de caractères de Windows 10, pressez NVDA+r.
+Pour reconnaître le texte dans l'objet navigateur courant en utilisant la reconnaissance optique de caractères de Windows, pressez NVDA+r.
 %kc:endInclude
 
 + Fonctionnalités Spécifiques à Certaines Applications +[ApplicationSpecificFeatures]
@@ -1179,12 +1182,6 @@ Raccourci clavier : NVDA+p
 Ceci vous permet de choisir la quantité de ponctuations et autres symboles qui seront prononcés.
 Par exemple, si vous choisissez "Tous", tous les symboles seront annoncés.
 Cette option s'applique à tous les synthétiseurs, pas uniquement au synthétiseur courant.
-
-==== Annoncer tous les symboles et ponctuations lors de la révision par mot ====[SpeechSettingsSymbolLevelWord]
-
-Lors de la révision de texte par mot, il est souvent souhaitable d'obtenir plus de détails que lors de la lecture d'une phrase entière.
-Lorsque cette case est cochée (par défaut), NVDA prononce le nom de tous les signes de ponctuation et autres symboles lors de la révision par mot, comme si le niveau de ponctuation était défini sur "tous".
-Remarque : Dans tous les cas, lors de la révision du texte par caractère, NVDA rapporte toujours le nom des ponctuations et autres symboles.
 
 ==== Se baser sur la langue de la voix pour le traitement des symboles et caractères ====[SpeechSettingsTrust]
 Activée par défaut, cette option indique à NVDA si la langue de la voix en cours peut être utilisée pour le traitement des symboles et caractères.
@@ -1795,8 +1792,8 @@ La hauteur du son montera pour chaque espace, et pour une tabulation, la hauteur
 - Parole et sons : Cette option indique les retraits en utilisant les deux méthodes ci-dessus.
 -
 
-+++ Reconnaissance Optique de Caractères de Windows 10 +++[Win10OcrSettings]
-Les paramètres de cette catégorie vous permettent de configurer la [Reconnaissance de Caractères de Windows 10 #Win10Ocr].
++++ Reconnaissance Optique de Caractères de Windows +++[Win10OcrSettings]
+Les paramètres de cette catégorie vous permettent de configurer la [Reconnaissance de Caractères de Windows #Win10Ocr].
 Elle contient les options suivantes :
 
 ==== Langue de Reconnaissance ====[Win10OcrSettingsRecognitionLanguage]
@@ -1835,7 +1832,7 @@ Si vous rencontrez des problèmes de performances dans une ou plusieurs applicat
 ==== Utiliser UI automation pour accéder aux contrôles des documents Microsoft Word quand disponible ====[AdvancedSettingsUseUiaForWord]
 Quand cette option est activée, NVDA essaie d'utiliser l'API d'accessibilité Microsoft UI Automation pour récupérer les informations des contrôles de documents Microsoft Word.
 Ceci inclut Microsoft Word lui-même, et aussi l'afficheur et le composeur de message de Microsoft Outlook.
-Pour les versions les plus récentes de Microsoft Office 2016/365 exécutées sous Windows 10, le support UI Automation est assez complet pour fournir un accès aux documents Microsoft Word presque égal au support existant de Microsoft Word par NVDA, avec l'avantage que la réactivité est nettement accrue.
+Pour les versions les plus récentes de Microsoft Office 2016/365 exécutées sous Windows 10 et versions ultérieures, le support UI Automation est assez complet pour fournir un accès aux documents Microsoft Word presque égal au support existant de Microsoft Word par NVDA, avec l'avantage que la réactivité est nettement accrue.
 Cependant, il peut exister certaines informations qui ne sont pas exposées, ou exposées incorrectement sous certaines versions de Microsoft Office, ce qui signifie qu'on ne peut pas toujours se fier à ce support UI automation.
 Nous ne recommandons pas encore à la majorité des utilisateurs d'activer cette option par défaut, bien que nous encouragions les utilisateurs d'Office 2016/365 à tester cette fonctionnalité et à nous faire des retours d'expérience.
 
@@ -2263,7 +2260,7 @@ Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce 
 
 ++ eSpeak NG ++[eSpeakNG]
 Le synthétiseur [eSpeak nG https://github.com/espeak-ng/espeak-ng] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
-Sous Windows 7, 8 et 8.1, NVDA utilise eSpeak NG par défaut ([Windows OneCore #OneCore] est utilisé sous Windows 10 par défaut).
+Sous Windows 7, 8 et 8.1, NVDA utilise eSpeak NG par défaut ([Windows OneCore #OneCore] est utilisé sous Windows 10 et versions ultérieures par défaut).
 Comme ce synthétiseur est intégré dans NVDA, il est le plus indiqué quand vous voulez exécuter NVDA depuis une clé USB sur un autre système.
 
 Chaque voix fournie avec eSpeak NG correspond à une langue différente.
@@ -2297,9 +2294,9 @@ Pour utiliser ces voix, vous devrez installer deux composants :
 -
 
 ++ Voix Windows OneCore ++[OneCore]
-Windows 10 inclut de nouvelles voix appelées "OneCore" ou voix "mobile".
+Windows 10 et les versions ultérieures incluent de nouvelles voix appelées "OneCore" ou voix "mobile".
 Des voix sont fournies pour beaucoup de langues, et elles sont plus réactives que les voix Microsoft disponibles en utilisant Microsoft Speech API version 5.
-Sous Windows 10, NVDA utilise les voix Windows OneCore par défaut ([eSpeak NG #eSpeakNG] est utilisé dans les autres versions).
+Sous Windows 10 et versions ultérieures, NVDA utilise les voix Windows OneCore par défaut ([eSpeak NG #eSpeakNG] est utilisé dans les autres versions).
 
 Pour ajouter de nouvelles voix Windows OneCore, rendez-vous à  "Voix", dans les paramètres système de Windows. 
 Utilisez l'option "Ajouter des voix" et recherchez la langue désirée.
@@ -2516,7 +2513,7 @@ Si vous connectez via USB des terminaux qui n'utilisent pas le mode HID, vous de
 Le VarioUltra et le Pronto! utilisent HID.
 Le Refreshabraille et l'Orbit Reader 20 peuvent utiliser HID si configurés de manière appropriée.
 
-Le mode USB série de l'Orbit Reader 20 n'est actuellement pris en charge que sous Windows 10.
+Le mode USB série de l'Orbit Reader 20 n'est actuellement pris en charge que sous Windows 10 et versions ultérieures.
 USB HID devrait en général être utilisé à la place.
 
 Voici les assignations de touches pour ces terminaux avec NVDA.
@@ -3119,7 +3116,7 @@ Veuillez consulter la documentation du terminal pour connaître la position de c
 
 ++ Afficheurs Nattiq nBraille ++[NattiqTechnologies]
 NVDA supporte les afficheurs de [Nattiq Technologies https://www.nattiq.com/] quand ils sont connectés via USB.
-Windows 10 détecte les afficheurs Braille à la connexion, il peut être nécessaire d'installer des pilotes USB si vous utilisez des versions plus anciennes de Windows (antérieures à Win10).
+Windows 10 et les versions ultérieures détectent les afficheurs Braille à la connexion, il peut être nécessaire d'installer des pilotes USB si vous utilisez des versions plus anciennes de Windows (antérieures à Win10).
 Vous pouvez les obtenir sur le site du fabriquant.
 
 Voici les assignations de touches pour les afficheurs Nattiq Technologies sous NVDA.
