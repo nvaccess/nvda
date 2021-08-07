@@ -114,15 +114,15 @@ def test_moveByWord():
 			# symbols shouldn't be named:
 			'(quietly)', 'Hello,', 'Jim', '.',
 			"don't",  # mid-word symbol, tick shouldn't be substituted at level NONE
-			'', 't-shirt',  # right arrow is not spoken!
+			'right pointing arrow', 't shirt',
 			# end of first line
 			'blank',  # single space and newline
 			'',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'',  # right arrow is not spoken!
-			't-shirt',  # no space before or after symbol
+			'right pointing arrow',  # right arrow is not spoken!
+			't shirt',  # no space before or after symbol
 			# note different result with no space character
-			't-shirt',  # no character before or after symbol (no newline)
+			't shirt',  # no character before or after symbol (no newline)
 			'blank',  # end of doc
 		],
 	)
@@ -138,15 +138,15 @@ def test_moveByWord():
 			'left paren(quietly right paren)',  # parenthesis are named
 			'quote Hello comma,', 'Jim', 'quote  dot.',  # quote, comma and dot are named
 			'don tick t',  # mid-word symbol
-			'right-pointing arrow', 't-shirt',
+			'right pointing arrow', 't shirt',
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'right-pointing arrow',  # no space before or after symbol
+			'right pointing arrow',  # no space before or after symbol
 			# note different result with no space character
-			't-shirt',  # no space before or after symbol
-			't-shirt',  # no character before or after symbol (no newline)
+			't shirt',  # no space before or after symbol
+			't shirt',  # no character before or after symbol (no newline)
 			'blank'  # end of doc
 		]
 	)
@@ -168,15 +168,15 @@ def test_moveByWord_speakAllSymbols():
 			# symbols should be named, symbol level overridden, now ALL
 			'left paren(quietly right paren)', 'quote Hello comma,', 'Jim', 'quote  dot.',
 			"don tick t",  # mid-word symbol, tick should be substituted
-			'right-pointing arrow', 't-shirt',
+			'right pointing arrow', 't shirt',
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'right-pointing arrow',
-			't-shirt',  # no space before or after symbol
+			'right pointing arrow',
+			't shirt',  # no space before or after symbol
 			# note different result with no space character
-			't-shirt',  # no character before or after symbol (no newline)
+			't shirt',  # no character before or after symbol (no newline)
 			'blank',  # end of doc
 		],
 	)
@@ -192,15 +192,15 @@ def test_moveByWord_speakAllSymbols():
 			# symbols should be named, symbol level overridden, now ALL
 			'left paren(quietly right paren)', 'quote Hello comma,', 'Jim', 'quote  dot.',
 			"don tick t",  # mid-word symbol, tick should be substituted
-			'right-pointing arrow', 't-shirt',
+			'right pointing arrow', 't shirt',
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'right-pointing arrow',
-			't-shirt',  # no space before or after symbol
+			'right pointing arrow',
+			't shirt',  # no space before or after symbol
 			# note different result with no space character
-			't-shirt',  # no character before or after symbol (no newline)
+			't shirt',  # no character before or after symbol (no newline)
 			'blank'  # end of doc
 		]
 	)
@@ -266,7 +266,7 @@ def test_moveByChar():
 			'left paren', 'right paren',
 			'quote', 'tick',
 			'e', 'comma',
-			'right-pointing arrow', 't-shirt',   # Should be no 'dash', only if sym level All
+			'right pointing arrow', 't shirt',   # Should be no word 'dash'
 			'tab',
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
@@ -284,7 +284,7 @@ def test_moveByChar():
 			'left paren', 'right paren',
 			'quote', 'tick',
 			'e', 'comma',
-			'right-pointing arrow', 't-shirt',  # Note 'dash', not if sym level None
+			'right pointing arrow', 't shirt',  # Note no word 'dash', or dash single dash character
 			'tab',
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
