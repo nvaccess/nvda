@@ -789,14 +789,15 @@ When Visual Highlight is enabled in the [vision category #VisionSettings] of the
 ++ Screen Curtain ++[VisionScreenCurtain]
 As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
 Furthermore, it might be hard to ensure that there isn't someone looking over your shoulder.
-For this situation, NVDA contains a feature called "screen curtain" which can be enabled to make the screen black.
+For this situation, NVDA contains a feature called "Screen Curtain" which can be enabled to make the screen black.
 
 You can enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
-When the screen curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
+When the Screen Curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
 
-To ensure security, confirm that the screen curtain works properly with new or experimental versions of Windows.
-When using NVDA releases older than 2021.2 and Windows newer than Windows 10 21H2, screen curtain may fail to work without warning.
+Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
+Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
+For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
 
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
