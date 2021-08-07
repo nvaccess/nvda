@@ -19,7 +19,7 @@ from speech.commands import (
 	CharacterModeCommand,
 	PitchCommand,
 	BeepCommand,
-	LangChangeCommand
+	LangChangeCommand, UserInterface, Symbol,
 )
 
 
@@ -125,7 +125,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 	
 	def test_noNotifications(self):
 		expected = repr([
-			'A',
+			Symbol('A'),
 		])
 		output = _getSpellingCharAddCapNotification(
 			speakCharAs='A',
@@ -138,7 +138,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 	def test_pitchNotifications(self):
 		expected = repr([
 			PitchCommand(offset=30),
-			'A',
+			Symbol('A'),
 			PitchCommand()
 		])
 		output = _getSpellingCharAddCapNotification(
@@ -152,7 +152,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 	def test_beepNotifications(self):
 		expected = repr([
 			BeepCommand(2000, 50, left=50, right=50),
-			'A',
+			Symbol('A'),
 		])
 		output = _getSpellingCharAddCapNotification(
 			speakCharAs='A',
@@ -164,8 +164,8 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	def test_capNotifications(self):
 		expected = repr([
-			'cap ',
-			'A',
+			UserInterface('cap '),
+			Symbol('A'),
 		])
 		output = _getSpellingCharAddCapNotification(
 			speakCharAs='A',
@@ -177,7 +177,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	def test_capNotificationsWithPlaceHolderBefore(self):
 		self.translationsFake.translationResults["cap %s"] = "%s cap"
-		expected = repr(['A', ' cap', ])  # for English this would be "cap A"
+		expected = repr([Symbol('A'), UserInterface(' cap'), ])  # for English this would be "cap A"
 		output = _getSpellingCharAddCapNotification(
 			speakCharAs='A',
 			sayCapForCapitals=True,
@@ -190,8 +190,8 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 		expected = repr([
 			PitchCommand(offset=30),
 			BeepCommand(2000, 50, left=50, right=50),
-			'cap ',
-			'A',
+			UserInterface('cap '),
+			Symbol('A'),
 			PitchCommand()
 		])
 		output = _getSpellingCharAddCapNotification(
@@ -216,11 +216,11 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 	
 	def test_simpleSpelling(self):
 		expected = repr([
-			'a',
+			Symbol('a'),
 			EndUtteranceCommand(),
-			'b',
+			Symbol('b'),
 			EndUtteranceCommand(),
-			'c',
+			Symbol('c'),
 			EndUtteranceCommand(),
 		])
 		output = _getSpellingSpeechWithoutCharMode(
@@ -237,8 +237,8 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		expected = repr([
 			PitchCommand(offset=30),
 			BeepCommand(2000, 50, left=50, right=50),
-			'cap ',
-			'A',
+			UserInterface('cap '),
+			Symbol('A'),
 			PitchCommand(),
 			EndUtteranceCommand(),
 		])
@@ -254,7 +254,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 	
 	def test_characterMode(self):
 		expected = repr([
-			'Alfa',
+			Symbol('Alfa'),
 			EndUtteranceCommand(),
 		])
 		output = _getSpellingSpeechWithoutCharMode(
@@ -269,7 +269,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 
 	def test_blank(self):
 		expected = repr([
-			'blank',
+			UserInterface('blank'),
 		])
 		output = _getSpellingSpeechWithoutCharMode(
 			text='',
@@ -283,9 +283,9 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 
 	def test_onlySpaces(self):
 		expected = repr([
-			'space',
+			Symbol('space'),
 			EndUtteranceCommand(),
-			'tab',
+			Symbol('tab'),
 			EndUtteranceCommand(),
 		])
 		output = _getSpellingSpeechWithoutCharMode(
@@ -300,7 +300,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 
 	def test_trimRightSpace(self):
 		expected = repr([
-			'a',
+			Symbol('a'),
 			EndUtteranceCommand(),
 		])
 		output = _getSpellingSpeechWithoutCharMode(
@@ -315,7 +315,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 
 	def test_symbol(self):
 		expected = repr([
-			'bang',
+			Symbol('bang'),
 			EndUtteranceCommand(),
 		])
 		output = _getSpellingSpeechWithoutCharMode(
@@ -332,7 +332,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		config.conf['speech']['autoLanguageSwitching'] = True
 		expected = repr([
 			LangChangeCommand('fr_FR'),
-			'a',
+			Symbol('a'),
 			EndUtteranceCommand(),
 		])
 		output = _getSpellingSpeechWithoutCharMode(

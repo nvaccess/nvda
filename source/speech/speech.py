@@ -32,6 +32,9 @@ from .commands import (
 	BeepCommand,
 	EndUtteranceCommand,
 	CharacterModeCommand,
+	Atomic,
+	UserInterface,
+	Symbol,
 )
 
 from . import types
@@ -279,10 +282,10 @@ def _getSpellingCharAddCapNotification(
 	if beepForCapitals:
 		yield BeepCommand(2000, 50)
 	if capMsgBefore:
-		yield capMsgBefore
-	yield speakCharAs
+		yield UserInterface(capMsgBefore)
+	yield Symbol(speakCharAs)
 	if capMsgAfter:
-		yield capMsgAfter
+		yield UserInterface(capMsgAfter)
 	if capPitchChange:
 		yield PitchCommand()
 
@@ -302,13 +305,13 @@ def _getSpellingSpeechWithoutCharMode(
 
 	if not text:
 		# Translators: This is spoken when NVDA moves to an empty line.
-		yield _("blank")
+		yield UserInterface(_("blank"))
 		return
 	if not text.isspace():
 		text=text.rstrip()
 
 	textLength=len(text)
-	count = 0
+
 	localeHasConjuncts = True if locale.split('_',1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
 	charDescList = getCharDescListFromText(text,locale) if localeHasConjuncts else text
 	for item in charDescList:
@@ -320,7 +323,7 @@ def _getSpellingSpeechWithoutCharMode(
 			# item is just a character.
 			speakCharAs = item
 			if useCharacterDescriptions:
-				charDesc=characterProcessing.getCharacterDescription(locale,speakCharAs.lower())
+				charDesc = characterProcessing.getCharacterDescription(locale, speakCharAs.lower())
 		uppercase=speakCharAs.isupper()
 		if useCharacterDescriptions and charDesc:
 			IDEOGRAPHIC_COMMA = u"\u3001"
@@ -836,7 +839,7 @@ def speak(  # noqa: C901
 			curLanguage=item.lang
 			if not curLanguage or (not autoDialectSwitching and curLanguage.split('_')[0]==defaultLanguageRoot):
 				curLanguage=defaultLanguage
-		elif isinstance(item,str):
+		elif isinstance(item, (str, Atomic)):
 			if not item: continue
 			if autoLanguageSwitching and curLanguage!=prevLanguage:
 				speechSequence.append(LangChangeCommand(curLanguage))

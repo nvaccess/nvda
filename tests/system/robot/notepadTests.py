@@ -122,7 +122,7 @@ def test_moveByWord():
 			'',  # right arrow is not spoken!
 			't-shirt',  # no space before or after symbol
 			# note different result with no space character
-			't shirt',  # no character before or after symbol (no newline)
+			't-shirt',  # no character before or after symbol (no newline)
 			'blank',  # end of doc
 		],
 	)
@@ -146,7 +146,7 @@ def test_moveByWord():
 			'right-pointing arrow',  # no space before or after symbol
 			# note different result with no space character
 			't-shirt',  # no space before or after symbol
-			't dash shirt',  # no character before or after symbol (no newline)
+			't-shirt',  # no character before or after symbol (no newline)
 			'blank'  # end of doc
 		]
 	)
@@ -176,7 +176,7 @@ def test_moveByWord_speakAllSymbols():
 			'right-pointing arrow',
 			't-shirt',  # no space before or after symbol
 			# note different result with no space character
-			't dash shirt',  # no character before or after symbol (no newline)
+			't-shirt',  # no character before or after symbol (no newline)
 			'blank',  # end of doc
 		],
 	)
@@ -200,8 +200,8 @@ def test_moveByWord_speakAllSymbols():
 			'right-pointing arrow',
 			't-shirt',  # no space before or after symbol
 			# note different result with no space character
-			't dash shirt',  # no character before or after symbol (no newline)
-			'blank',  # end of doc
+			't-shirt',  # no character before or after symbol (no newline)
+			'blank'  # end of doc
 		]
 	)
 
@@ -266,7 +266,7 @@ def test_moveByChar():
 			'left paren', 'right paren',
 			'quote', 'tick',
 			'e', 'comma',
-			'right dash pointing arrow', 't dash shirt',   # Should be no 'dash', only if sym level All
+			'right-pointing arrow', 't-shirt',   # Should be no 'dash', only if sym level All
 			'tab',
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
@@ -284,7 +284,7 @@ def test_moveByChar():
 			'left paren', 'right paren',
 			'quote', 'tick',
 			'e', 'comma',
-			'right dash pointing arrow', 't dash shirt',  # Note 'dash', not if sym level None
+			'right-pointing arrow', 't-shirt',  # Note 'dash', not if sym level None
 			'tab',
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n

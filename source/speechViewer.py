@@ -15,6 +15,9 @@ import gui.contextHelp
 # We have to manually add a wx.Panel to get correct tab ordering behaviour.
 # wx.Dialog causes a crash on destruction when multiple were created at the same time (brailleViewer
 # may start at the same time)
+from speech.commands import Atomic
+
+
 class SpeechViewerFrame(
 		gui.contextHelp.ContextHelpMixin,
 		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
@@ -164,6 +167,8 @@ def appendSpeechSequence(sequence: SpeechSequence) -> None:
 	if _guiFrame.FindFocus() == _guiFrame.textCtrl:
 		return
 
+	# convert text wrapper commands to str
+	sequence = (item.text if isinstance(item, Atomic) else item for item in sequence)
 	# to make the speech easier to read, we must separate the items.
 	text = SPEECH_ITEM_SEPARATOR.join(
 		speech for speech in sequence if isinstance(speech, str)

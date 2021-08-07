@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited
+# Copyright (C) 2019-2021 NV Access Limited
 
 """
 Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running
@@ -14,7 +14,7 @@ from typing import Optional, Callable
 
 import config
 from synthDriverHandler import getSynth
-from logHandler import log
+
 
 class SpeechCommand(object):
 	"""The base class for objects that can be inserted between strings of text to perform actions,
@@ -23,6 +23,35 @@ class SpeechCommand(object):
 	Note: Some of these commands are processed by NVDA and are not directly passed to synth drivers.
 	synth drivers will only receive commands derived from L{SynthCommand}.
 	"""
+	pass
+
+
+class Atomic(SpeechCommand):
+	""" Text that should not be subdivided further. Typically this text is not replaced.
+	"""
+	def __init__(self, text: str):
+		"""
+		@param text: The text to speak.
+		"""
+		self._text = text
+
+	@property
+	def text(self) -> str:
+		return self._text
+
+	def __repr__(self):
+		return f"{self.__class__.__name__} ({self.text})"
+
+
+class Symbol(Atomic):
+	""" Replacement text to represent a symbol.
+	"""
+	pass
+
+
+class UserInterface(Atomic):
+	""" Speech commands for NVDA's speech UI"""
+	pass
 
 
 class _CancellableSpeechCommand(SpeechCommand):

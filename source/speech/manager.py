@@ -19,6 +19,7 @@ from .commands import (
 	ConfigProfileTriggerCommand,
 	IndexCommand,
 	_CancellableSpeechCommand,
+	Atomic,
 )
 
 from .priorities import Spri, SPEECH_PRIORITIES
@@ -372,6 +373,8 @@ class SpeechManager(object):
 				continue
 			if isinstance(command, SynthParamCommand):
 				paramTracker.update(command)
+			if isinstance(command, Atomic):
+				command = command.text
 			outSeq.append(command)
 		# Add the last sequence and make sure the sequence ends the utterance.
 		self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
