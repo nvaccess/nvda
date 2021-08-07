@@ -535,10 +535,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 		return _("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight)
 
-	def _get_parent(self):
+	#: Typing information for auto-property: _get_parent
+	parent: typing.Optional['NVDAObject']
+
+	def _get_parent(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves this object's parent (the object that contains this object).
 		@return: the parent object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
