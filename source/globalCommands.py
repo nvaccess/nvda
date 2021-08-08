@@ -3124,13 +3124,13 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes a command.
-		description=_("Recognizes the content of the current navigator object with Windows 10 OCR"),
+		description=_("Recognizes the content of the current navigator object with Windows OCR"),
 		gesture="kb:NVDA+r"
 	)
 	def script_recognizeWithUwpOcr(self, gesture):
 		if not winVersion.isUwpOcrAvailable():
-			# Translators: Reported when Windows 10 OCR is not available.
-			ui.message(_("Windows 10 OCR not available"))
+			# Translators: Reported when Windows OCR is not available.
+			ui.message(_("Windows OCR not available"))
 			return
 		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
 		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
@@ -3138,7 +3138,7 @@ class GlobalCommands(ScriptableObject):
 		isScreenCurtainRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
 		if isScreenCurtainRunning:
 			# Translators: Reported when screen curtain is enabled.
-			ui.message(_("Please disable screen curtain before using Windows 10 OCR."))
+			ui.message(_("Please disable screen curtain before using Windows OCR."))
 			return
 		from contentRecog import uwpOcr, recogUi
 		recog = uwpOcr.UwpOcr()
