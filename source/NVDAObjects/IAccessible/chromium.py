@@ -13,9 +13,27 @@ import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
+from logHandler import log
 
 
 class ChromeVBufTextInfo(GeckoVBufTextInfo):
+
+	def _calculateDescriptionFrom(self, attrs) -> controlTypes.DescriptionFrom:
+		"""Overridable calculation of DescriptionFrom
+		@param attrs: source attributes for the TextInfo
+		@return: the origin for accDescription.
+		@note: Chrome provides 'IAccessible2::attribute_description-from' which declares the origin used for
+			accDescription. Chrome also provides `IAccessible2::attribute_description` to maintain compatibility
+			with FireFox.
+		"""
+		ia2attrDescriptionFrom = attrs.get("IAccessible2::attribute_description-from")
+		try:
+			return controlTypes.DescriptionFrom(ia2attrDescriptionFrom)
+		except ValueError:
+			if ia2attrDescriptionFrom:
+				log.debugWarning(f"Unknown 'description-from' IA2Attribute value: {ia2attrDescriptionFrom}")
+		# fallback to Firefox approach
+		return super()._calculateDescriptionFrom(attrs)
 
 	def _normalizeControlField(self, attrs):
 		attrs = super()._normalizeControlField(attrs)

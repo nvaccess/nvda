@@ -141,10 +141,15 @@ class WordDocumentTextInfo(UIATextInfo):
 	def _get_controlFieldNVDAObjectClass(self):
 		return WordDocumentNode
 
-	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+	def _getControlFieldForUIAObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		automationID=obj.UIAElement.cachedAutomationID
-		field=super(WordDocumentTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		field = super(WordDocumentTextInfo, self)._getControlFieldForUIAObject(
+			obj,
+			isEmbedded=isEmbedded,
+			startOfNode=startOfNode,
+			endOfNode=endOfNode
+		)
 		if automationID.startswith('UIA_AutomationId_Word_Page_'):
 			field['page-number']=automationID.rsplit('_',1)[-1]
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_GroupControlTypeId and obj.name:

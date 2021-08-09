@@ -789,14 +789,15 @@ When Visual Highlight is enabled in the [vision category #VisionSettings] of the
 ++ Screen Curtain ++[VisionScreenCurtain]
 As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
 Furthermore, it might be hard to ensure that there isn't someone looking over your shoulder.
-For this situation, NVDA contains a feature called "screen curtain" which can be enabled to make the screen black.
+For this situation, NVDA contains a feature called "Screen Curtain" which can be enabled to make the screen black.
 
 You can enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
-When the screen curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
+When the Screen Curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
 
-To ensure security, confirm that the screen curtain works properly with new or experimental versions of Windows.
-When using NVDA releases older than 2021.2 and Windows newer than Windows 10 21H2, screen curtain may fail to work without warning.
+Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
+Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
+For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
 
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
@@ -812,17 +813,17 @@ Once recognition is complete, the result will be presented in a document similar
 Pressing enter or space will activate (normally click) the text at the cursor if possible.
 Pressing escape dismisses the recognition result.
 
-++ Windows 10 OCR ++[Win10Ocr]
+++ Windows OCR ++[Win10Ocr]
 Windows 10 and later includes OCR for many languages.
 NVDA can use this to recognize text from images or inaccessible applications.
 
-You can set the language to use for text recognition in the [Windows 10 OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
+You can set the language to use for text recognition in the [Windows OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
 Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
 
-Windows 10 OCR may be partially or fully incompatible with [NVDA vision enhancements #Vision] or other external visual aids. You will need to disable these aids before proceeding to a recognition.
+Windows OCR may be partially or fully incompatible with [NVDA vision enhancements #Vision] or other external visual aids. You will need to disable these aids before proceeding to a recognition.
 
 %kc:beginInclude
-To recognize the text in the current navigator object using Windows 10 OCR, press NVDA+r.
+To recognize the text in the current navigator object using Windows OCR, press NVDA+r.
 %kc:endInclude
 
 + Application Specific Features +[ApplicationSpecificFeatures]
@@ -1796,8 +1797,8 @@ The tone will increase in pitch every space, and for a tab, it will increase in 
 - Both Speech and Tones: This option reads indentation using both of the above methods.
 -
 
-+++ Windows 10 OCR Settings +++[Win10OcrSettings]
-The settings in this category allow you to configure [Windows 10 OCR #Win10Ocr].
++++ Windows OCR Settings +++[Win10OcrSettings]
+The settings in this category allow you to configure [Windows OCR #Win10Ocr].
 This category contains the following options:
 
 ==== Recognition language ====[Win10OcrSettingsRecognitionLanguage]
@@ -1862,6 +1863,15 @@ Some of these features may be incomplete.
 The following options exist: 
 - "Report details in browse mode": enables reporting if an object has details in browse mode.
 Reporting the summary of those details can be done by assigning a gesture using the [Input Gestures dialog #InputGestures].
+- "Report aria-description always":
+  When the source of ``accDescription`` is aria-description, the description is reported.
+  This is useful for annotations on the web.
+  Note:
+  - There are many sources for ``accDescription`` several have mixed or unreliable semantics.
+    Historically AT has not been able to differentiate sources of ``accDescription`` typically it wasn't spoken due to the mixed semantics.
+  - This option is in very early development, it relies on browser features not yet widely available.
+  - Expected to work with Chromium 92.0.4479.0+
+  -
 -
 
 ==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]

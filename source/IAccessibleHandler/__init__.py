@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2021 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import re
 import struct
+from typing import Optional, Tuple
 import weakref
 from ctypes import (
 	wintypes,
@@ -23,6 +24,7 @@ import comtypes.client
 import oleacc
 import JABHandler
 import UIAHandler
+import textUtils
 
 from comInterfaces import Accessibility as IA
 
@@ -422,22 +424,25 @@ def accNavigate(pacc, childID, direction):
 		return None
 
 
-def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
-	"""Tries to convert a win event ID to an NVDA event name, and instanciate or fetch an NVDAObject for
+# C901 'winEventToNVDAEvent' is too complex
+# Note: when working on winEventToNVDAEvent, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def winEventToNVDAEvent(  # noqa: C901
+		eventID: int,
+		window: int,
+		objectID: int,
+		childID: int,
+		useCache: bool = True
+) -> Optional[Tuple[str, NVDAObjects.IAccessible.IAccessible]]:
+	"""Tries to convert a win event ID to an NVDA event name, and instantiate or fetch an NVDAObject for
 	 the win event parameters.
 	@param eventID: the win event ID (type)
-	@type eventID: integer
 	@param window: the win event's window handle
-	@type window: integer
 	@param objectID: the win event's object ID
-	@type objectID: integer
 	@param childID: the win event's childID
-	@type childID: the win event's childID
 	@param useCache: C{True} to use the L{liveNVDAObjectTable} cache when
 	 retrieving an NVDAObject, C{False} if the cache should not be used.
-	@type useCache: boolean
 	@returns: the NVDA event name and the NVDAObject the event is for
-	@rtype: tuple of string and L{NVDAObjects.IAccessible.IAccessible}
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -1073,7 +1078,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):
 		return text
 	textList = []
 	for i, t in enumerate(text):
-		if ord(t) == 0xFFFC:
+		if ord(t) == ord(textUtils.OBJ_REPLACEMENT_CHAR):
 			try:
 				index = hypertextObject.hyperlinkIndex(i + startOffset)
 				childTextObject = hypertextObject.hyperlink(index).QueryInterface(IA.IAccessible)

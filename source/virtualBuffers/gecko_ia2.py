@@ -1,9 +1,9 @@
-# virtualBuffers/gecko_ia2.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2021 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
+import typing
 import weakref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -24,6 +24,21 @@ import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 
 IA2_RELATION_CONTAINING_DOCUMENT = "containingDocument"
+
+
+def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
+	valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
+	try:
+		isCurrent = controlTypes.IsCurrent(valForCurrent)
+	except ValueError:
+		log.debugWarning(f"Unknown isCurrent value: {valForCurrent}")
+		isCurrent = controlTypes.IsCurrent.NO
+	if isCurrent != controlTypes.IsCurrent.NO:
+		return {
+			'current': isCurrent
+		}
+	return {}
+
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -47,20 +62,38 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
 		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
 
-	def _normalizeControlField(self,attrs):
+	def _calculateDescriptionFrom(self, attrs: textInfos.ControlField) -> controlTypes.DescriptionFrom:
+		"""Overridable calculation of DescriptionFrom
+		Match behaviour of NVDAObjects.IAccessible.mozilla.Mozilla._get_descriptionFrom
+		@param attrs: source attributes for the TextInfo
+		@return: the origin for accDescription.
+		@remarks: Firefox does not yet have a 'IAccessible2::attribute_description-from'
+			(IA2 attribute "description-from").
+			We can infer that the origin of accDescription is 'aria-description' because Firefox will include
+			a 'IAccessible2::attribute_description' (IA2 attribute "description") when the aria-description
+			HTML attribute is used.
+			If 'IAccessible2::attribute_description' matches the accDescription value, we can infer that
+			aria-description was the original source.
+		"""
+		IA2Attr_desc = attrs.get("IAccessible2::attribute_description")
+		accDesc = attrs.get("description")
+		if not IA2Attr_desc or accDesc != IA2Attr_desc:
+			return controlTypes.DescriptionFrom.UNKNOWN
+		else:
+			return controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+
+	# C901 '_normalizeControlField' is too complex
+	# Note: when working on _normalizeControlField, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _normalizeControlField(self, attrs):  # noqa: C901
 		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
 			attrVal=attrs.get(attr)
 			if attrVal is not None:
 				attrs[attr]=int(attrVal)
 
-		valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
-		try:
-			isCurrent = controlTypes.IsCurrent(valForCurrent)
-		except ValueError:
-			log.debugWarning(f"Unknown isCurrent value: {valForCurrent}")
-			isCurrent = controlTypes.IsCurrent.NO
-		if isCurrent != controlTypes.IsCurrent.NO:
-			attrs['current'] = isCurrent
+		attrs["_description-from"] = self._calculateDescriptionFrom(attrs)
+		attrs.update(_getNormalizedCurrentAttrs(attrs))
+
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
 			attrs['placeholder']= placeholder

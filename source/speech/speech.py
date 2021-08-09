@@ -8,6 +8,7 @@
 """ 
 
 import itertools
+import typing
 import weakref
 import unicodedata
 import time
@@ -59,6 +60,8 @@ from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
 
+if typing.TYPE_CHECKING:
+	import NVDAObjects
 
 _speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
@@ -406,7 +409,7 @@ def speakObjectProperties(  # noqa: C901
 # Note: when working on getObjectPropertiesSpeech, look for opportunities to simplify
 # and move logic out into smaller helper functions.
 def getObjectPropertiesSpeech(  # noqa: C901
-		obj,
+		obj: "NVDAObjects.NVDAObject",
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		**allowedProperties
@@ -425,6 +428,11 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			# getPropertiesSpeech names this "current", but the NVDAObject property is
 			# named "isCurrent", it's type should always be controltypes.IsCurrent
 			newPropertyValues['current'] = obj.isCurrent
+		elif value and name == "descriptionFrom" and (
+			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+		):
+			newPropertyValues['_description-from'] = obj.descriptionFrom
+			newPropertyValues['description'] = obj.description
 		elif value:
 			# Certain properties such as row and column numbers have presentational versions, which should be used for speech if they are available.
 			# Therefore redirect to those values first if they are available, falling back to the normal properties if not.
@@ -624,6 +632,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'states': True,
 		'value': True,
 		'description': True,
+		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
 		'positionInfo_indexInGroup': True,
@@ -1762,10 +1771,34 @@ def getControlFieldSpeech(  # noqa: C901
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
-	if reason == OutputReason.FOCUS or attrs.get('alwaysReportDescription', False):
-		description=attrs.get('description',"")
-	else:
-		description=""
+
+	description: Optional[str] = None
+	_descriptionFrom = attrs.get('_description-from', controlTypes.DescriptionFrom.UNKNOWN)
+	if (
+		(
+			config.conf["presentation"]["reportObjectDescriptions"]
+			and (
+				reason == OutputReason.FOCUS
+				# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
+				# Not used internally, but may be used by addons.
+				or attrs.get('alwaysReportDescription', False)
+			)
+		)
+		or (
+			# Don't report other sources of description like "title" all the time
+			# The usages of these is not consistent and often does not seem to have
+			# Screen Reader users in mind
+			config.conf["annotations"]["reportAriaDescription"]
+			and controlTypes.DescriptionFrom.ARIA_DESCRIPTION == _descriptionFrom
+			and reason in (
+				OutputReason.FOCUS,
+				OutputReason.CARET,
+				OutputReason.SAYALL,
+			)
+		)
+	):
+		description = attrs.get('description')
+
 	level=attrs.get('level',None)
 
 	if presCat != attrs.PRESCAT_LAYOUT:
@@ -1794,7 +1827,7 @@ def getControlFieldSpeech(  # noqa: C901
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
 	valueSequence = getPropertiesSpeech(reason=reason, value=value)
 	descriptionSequence = []
-	if config.conf["presentation"]["reportObjectDescriptions"]:
+	if description is not None:
 		descriptionSequence = getPropertiesSpeech(
 			reason=reason, description=description
 		)
@@ -1979,6 +2012,8 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if isCurrent != controlTypes.IsCurrent.NO:
 			out.extend(isCurrentSequence)
+		if descriptionSequence:
+			out.extend(descriptionSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
 		if role == controlTypes.Role.TREEVIEWITEM:
 			if controlTypes.State.EXPANDED in states:

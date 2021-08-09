@@ -394,20 +394,20 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_SplitButtonControlTypeId
 	}
 
-
-	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+	def _getControlFieldForUIAObject(
+			self,
+			obj: "UIA",
+			isEmbedded=False,
+			startOfNode=False,
+			endOfNode=False
+	) -> textInfos.ControlField:
 		"""
 		Fetch control field information for the given UIA NVDAObject.
 		@param obj: the NVDAObject the control field is for.
-		@type obj: L{UIA}
 		@param isEmbedded: True if this NVDAObject is for a leaf node (has no useful children).
-		@type isEmbedded: bool
 		@param startOfNode: True if the control field represents the very start of this object.
-		@type startOfNode: bool
 		@param endOfNode: True if the control field represents the very end of this object.
-		@type endOfNode: bool
 		@return: The control field for this object
-		@rtype: textInfos.ControlField containing NVDA control field data.
 		"""
 		role = obj.role
 		field = textInfos.ControlField()
@@ -592,7 +592,13 @@ class UIATextInfo(textInfos.TextInfo):
 			endOfNode=not parentClipped[1]
 			try:
 				obj=controlFieldNVDAObjectClass(windowHandle=windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
-				field=self._getControlFieldForObject(obj,isEmbedded=(index==0 and not recurseChildren),startOfNode=startOfNode,endOfNode=endOfNode)
+				objIsEmbedded = (index == 0 and not recurseChildren)
+				field = self._getControlFieldForUIAObject(
+					obj,
+					isEmbedded=objIsEmbedded,
+					startOfNode=startOfNode,
+					endOfNode=endOfNode
+				)
 			except LookupError:
 				if debug:
 					log.debug("Failed to fetch controlField data for parentElement. Breaking")

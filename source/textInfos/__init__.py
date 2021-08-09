@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -12,6 +12,7 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 from abc import abstractmethod
 import weakref
 import re
+import typing
 from typing import (
 	Any,
 	Union,
@@ -28,6 +29,8 @@ from controlTypes import OutputReason
 import locationHelper
 from logHandler import log
 
+if typing.TYPE_CHECKING:
+	import NVDAObjects
 
 SpeechSequence = List[Union[Any, str]]
 
@@ -199,7 +202,6 @@ class FieldCommand(object):
 			"controlEnd", indicating the end of a L{ControlField}; or
 			"formatChange", indicating a L{FormatField} change.
 		@param field: The field associated with this command; may be C{None} for controlEnd.
-		@type field: L{Field}
 		"""
 		if command not in ("controlStart","controlEnd","formatChange"):
 			raise ValueError("Unknown command: %s"%command)
@@ -333,19 +335,25 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _set_end(self, otherEndpoint: "TextInfoEndpoint"):
 		self.end.moveTo(otherEndpoint)
 
-	def _get_obj(self):
+	#: Typing information for auto-property: _get_obj
+	obj: "NVDAObjects.NVDAObject"
+
+	def _get_obj(self) -> "NVDAObjects.NVDAObject":
 		"""The object containing the range of text being represented."""
 		return self._obj()
 
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
+	#: Typing information for auto-property: _get_text
+	text: str
+
 	_abstract_text = True
-	def _get_text(self):
+
+	def _get_text(self) -> str:
 		"""The text with in this range.
 		Subclasses must implement this.
 		@return: The text.
-		@rtype: str
 		@note: The text is not guaranteed to be the exact length of the range in offsets.
 		"""
 		raise NotImplementedError
