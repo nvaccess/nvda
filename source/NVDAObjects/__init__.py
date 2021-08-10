@@ -517,11 +517,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		raise NotImplementedError
 
 	# Type info for auto property:
-	states: typing.Set[int]
+	states: typing.Set[controlTypes.State]
 
-	def _get_states(self) -> typing.Set[int]:
+	def _get_states(self) -> typing.Set[controlTypes.State]:
 		"""Retrieves the current states of this object (example: selected, focused).
-		@return: a set of  STATE_* constants from L{controlTypes}.
+		@return: a set of State constants from L{controlTypes}.
 		"""
 		return set()
 
@@ -778,7 +778,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_presentationType(self):
 		states=self.states
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+		if controlTypes.State.INVISIBLE in states or controlTypes.State.UNAVAILABLE in states:
 			return self.presType_unavailable
 		role = self.role
 		landmark = self.landmark
@@ -912,13 +912,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""Whether this object is focusable.
 		@rtype: bool
 		"""
-		return controlTypes.STATE_FOCUSABLE in self.states
+		return controlTypes.State.FOCUSABLE in self.states
 
 	def _get_hasFocus(self):
 		"""Whether this object has focus.
 		@rtype: bool
 		"""
-		return controlTypes.STATE_FOCUSED in self.states
+		return controlTypes.State.FOCUSED in self.states
 
 	def setFocus(self):
 		"""
@@ -957,7 +957,7 @@ Tries to force this object to take the focus.
 		@rtype: boolean
 		"""
 		# Objects with the protected state, or with a role of passWordEdit should always be protected.
-		isProtected=(controlTypes.STATE_PROTECTED in self.states or self.role==controlTypes.Role.PASSWORDEDIT)
+		isProtected=(controlTypes.State.PROTECTED in self.states or self.role==controlTypes.Role.PASSWORDEDIT)
 		# #7908: If this object is currently protected, keep it protected for the rest of its lifetime.
 		# The most likely reason it would lose its protected state is because the object is dying.
 		# In this case it is much more secure to assume it is still protected, thus the end of PIN codes will not be accidentally reported. 
@@ -1287,10 +1287,7 @@ This code is executed if a gain focus event is received by this object.
 			ret = f"exception: {e}"
 		info.append(f"roleText: {ret}")
 		try:
-			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.items() if name.startswith("STATE_"))
-			ret = ", ".join(
-				stateConsts.get(state) or str(state)
-				for state in self.states)
+			ret = ", ".join(str(state) for state in self.states)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("states: %s" % ret)
@@ -1385,7 +1382,7 @@ This code is executed if a gain focus event is received by this object.
 		if role in (controlTypes.Role.EDITABLETEXT,controlTypes.Role.TERMINAL,controlTypes.Role.DOCUMENT):
 			# Edit fields, terminals and documents  are always navigable
 			return True
-		elif controlTypes.STATE_EDITABLE in states:
+		elif controlTypes.State.EDITABLE in states:
 			# Anything that is specifically editable is navigable
 			return True
 		else:
@@ -1393,9 +1390,9 @@ This code is executed if a gain focus event is received by this object.
 
 	def _get_hasIrrelevantLocation(self):
 		"""Returns whether the location of this object is irrelevant for mouse or magnification tracking or highlighting,
-		either because it is programatically hidden (STATE_INVISIBLE), off screen or the object has no location."""
+		either because it is programatically hidden (State.INVISIBLE), off screen or the object has no location."""
 		states = self.states
-		return controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states or not self.location or not any(self.location)
+		return controlTypes.State.INVISIBLE in states or controlTypes.State.OFFSCREEN in states or not self.location or not any(self.location)
 
 	def _get_selectionContainer(self):
 		""" An ancestor NVDAObject which manages the selection for this object and other descendants."""

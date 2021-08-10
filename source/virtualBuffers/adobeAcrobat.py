@@ -58,10 +58,10 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 
-		if role == controlTypes.Role.EDITABLETEXT and {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:
+		if role == controlTypes.Role.EDITABLETEXT and {controlTypes.State.READONLY, controlTypes.State.FOCUSABLE, controlTypes.State.LINKED} <= states:
 			# HACK: Acrobat sets focus states on text nodes beneath links,
 			# making them appear as read only editable text fields.
-			states.difference_update({controlTypes.STATE_FOCUSABLE, controlTypes.STATE_FOCUSED})
+			states.difference_update({controlTypes.State.FOCUSABLE, controlTypes.State.FOCUSED})
 
 		attrs['role']=role
 		attrs['states']=states

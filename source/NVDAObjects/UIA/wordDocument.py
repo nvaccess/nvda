@@ -160,7 +160,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			field['content']=obj.name
 			field['role']=controlTypes.Role.LINK
 		if obj.role==controlTypes.Role.LIST or obj.role==controlTypes.Role.EDITABLETEXT:
-			field['states'].add(controlTypes.STATE_READONLY)
+			field['states'].add(controlTypes.State.READONLY)
 			if obj.role==controlTypes.Role.LIST:
 				# To stay compatible with the older MS Word implementation, don't expose lists in word documents as actual lists. This suppresses announcement of entering and exiting them.
 				# Note that bullets and numbering are still announced of course.

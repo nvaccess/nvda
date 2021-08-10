@@ -14,7 +14,7 @@ class MMCTable(IAccessible):
 	def _get_focusRedirect(self):
 		# #1486: workaround to read tables in MMC, such as the disk management graphical view.
 		for child in self.children:
-			if controlTypes.STATE_SELECTED in child.states:
+			if controlTypes.State.SELECTED in child.states:
 				return child
 		return None
 

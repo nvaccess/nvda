@@ -157,9 +157,9 @@ class mirandaIMContactList(IAccessible):
 		hItem=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
 		state=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETEXPAND,hItem,0)
 		if state==CLE_EXPAND:
-			newStates.add(controlTypes.STATE_EXPANDED)
+			newStates.add(controlTypes.State.EXPANDED)
 		elif state==CLE_COLLAPSE:
-			newStates.add(controlTypes.STATE_COLLAPSED)
+			newStates.add(controlTypes.State.COLLAPSED)
 		return newStates
 
 	def script_changeItem(self,gesture):
@@ -194,12 +194,12 @@ class mirandaIMButton(IAccessible):
 		return controlTypes.Role.BUTTON
 
 	def getActionName(self):
-		if controlTypes.STATE_FOCUSED not in self.states:
+		if controlTypes.State.FOCUSED not in self.states:
 			return
 		return "Click"
 
 	def doAction(self):
-		if controlTypes.STATE_FOCUSED not in self.states:
+		if controlTypes.State.FOCUSED not in self.states:
 			return
 		KeyboardInputGesture.fromName("space").send()
 
@@ -226,7 +226,7 @@ class MPropertyPage(Dialog,IAccessible):
 			if tc and tc.role==controlTypes.Role.TABCONTROL:
 				children=tc.children
 				for index in range(len(children)):
-					if (children[index].role==controlTypes.Role.TAB) and (controlTypes.STATE_SELECTED in children[index].states):
+					if (children[index].role==controlTypes.Role.TAB) and (controlTypes.State.SELECTED in children[index].states):
 						name=children[index].name
 						break
 		return name
@@ -256,8 +256,8 @@ class DuplicateFocusListBox(IAccessible):
 		focusRole = focus.role
 		focusStates = focus.states
 		if (self == focus or
-			(focusRole == controlTypes.Role.MENUITEM and controlTypes.STATE_FOCUSED in focusStates) or
-			(focusRole == controlTypes.Role.POPUPMENU and controlTypes.STATE_INVISIBLE not in focusStates)
+			(focusRole == controlTypes.Role.MENUITEM and controlTypes.State.FOCUSED in focusStates) or
+			(focusRole == controlTypes.Role.POPUPMENU and controlTypes.State.INVISIBLE not in focusStates)
 		):
 			return False
 		return super(DuplicateFocusListBox, self).shouldAllowIAccessibleFocusEvent

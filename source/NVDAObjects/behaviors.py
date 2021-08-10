@@ -39,7 +39,7 @@ class ProgressBar(NVDAObject):
 	def event_valueChange(self):
 		pbConf=config.conf["presentation"]["progressBarUpdates"]
 		states=self.states
-		if pbConf["progressBarOutputMode"]=="off" or controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
+		if pbConf["progressBarOutputMode"]=="off" or controlTypes.State.INVISIBLE in states or controlTypes.State.OFFSCREEN in states:
 			return super(ProgressBar,self).event_valueChange()
 		val=self.value
 		try:
@@ -85,7 +85,7 @@ class Dialog(NVDAObject):
 			childStates=child.states
 			childRole=child.role
 			#We don't want to handle invisible or unavailable objects
-			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
+			if controlTypes.State.INVISIBLE in childStates or controlTypes.State.UNAVAILABLE in childStates: 
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (
@@ -108,14 +108,14 @@ class Dialog(NVDAObject):
 					return None
 				continue
 			#If the child is focused  we should just stop and return None
-			if not allowFocusedDescendants and controlTypes.STATE_FOCUSED in child.states:
+			if not allowFocusedDescendants and controlTypes.State.FOCUSED in child.states:
 				return None
 			# We only want text from certain controls.
 			if not (
 				 # Static text, labels and links
 				 childRole in (controlTypes.Role.STATICTEXT,controlTypes.Role.LABEL,controlTypes.Role.LINK)
 				# Read-only, non-multiline edit fields
-				or (childRole==controlTypes.Role.EDITABLETEXT and controlTypes.STATE_READONLY in childStates and controlTypes.STATE_MULTILINE not in childStates)
+				or (childRole==controlTypes.Role.EDITABLETEXT and controlTypes.State.READONLY in childStates and controlTypes.State.MULTILINE not in childStates)
 			):
 				continue
 			#We should ignore a text object directly after a grouping object, as it's probably the grouping's description
@@ -507,12 +507,12 @@ class CandidateItem(NVDAObject):
 	def _get_visibleCandidateItemsText(self):
 		obj=self
 		textList=[]
-		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.STATE_INVISIBLE not in obj.states:
+		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.State.INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.previous
 		textList.reverse()
 		obj=self.next
-		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.STATE_INVISIBLE not in obj.states:
+		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.State.INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.next
 		if len(textList)<=1: return None
@@ -706,8 +706,8 @@ class _FakeTableCell(NVDAObject):
 	def _get_states(self):
 		states = self.parent.states.copy()
 		if self.location and self.location.width == 0:
-			states.add(controlTypes.STATE_INVISIBLE)
-		states.discard(controlTypes.STATE_CHECKED)
+			states.add(controlTypes.State.INVISIBLE)
+		states.discard(controlTypes.State.CHECKED)
 		return states
 
 

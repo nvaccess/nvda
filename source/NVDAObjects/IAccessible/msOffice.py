@@ -62,7 +62,7 @@ class SDM(IAccessible):
 		return child
 
 	def _get_SDMChild(self):
-		if controlTypes.STATE_FOCUSED in self.states:
+		if controlTypes.State.FOCUSED in self.states:
 			hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
 			if hwndFocus and hwndFocus!=self.windowHandle and winUser.isDescendantWindow(self.windowHandle,hwndFocus) and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
 				obj=getNVDAObjectFromEvent(hwndFocus,winUser.OBJID_CLIENT,0)

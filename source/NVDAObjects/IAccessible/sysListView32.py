@@ -263,9 +263,9 @@ class GroupingItem(Window):
 	def _get_states(self):
 		states=set()
 		if self.groupInfo['state']&1:
-			states.add(controlTypes.STATE_COLLAPSED)
+			states.add(controlTypes.State.COLLAPSED)
 		else:
-			states.add(controlTypes.STATE_EXPANDED)
+			states.add(controlTypes.State.EXPANDED)
 		return states
 
 	def script_collapseOrExpand(self,gesture):

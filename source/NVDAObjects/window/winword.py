@@ -794,7 +794,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			if fieldType!=-1:
 				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.Role.UNKNOWN)
 				if fieldType==wdFieldFormCheckBox and int(field.get('wdFieldResult','0'))>0:
-					field['states']=set([controlTypes.STATE_CHECKED])
+					field['states']=set([controlTypes.State.CHECKED])
 				elif fieldType==wdFieldFormDropDown:
 					field['value']=field.get('wdFieldResult',None)
 			fieldStatusText=field.pop('wdFieldStatusText',None)
@@ -808,14 +808,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					if role==controlTypes.Role.CHECKBOX:
 						fieldChecked=bool(int(field.get('wdContentControlChecked','0')))
 						if fieldChecked:
-							field['states']=set([controlTypes.STATE_CHECKED])
+							field['states']=set([controlTypes.State.CHECKED])
 					fieldTitle=field.get('wdContentControlTitle',None)
 					if fieldTitle:
 						field['name']=fieldTitle
 						field['alwaysReportName']=True
 		if role is not None: field['role']=role
 		if role==controlTypes.Role.TABLE and field.get('longdescription'):
-			field['states']=set([controlTypes.STATE_HASLONGDESC])
+			field['states']=set([controlTypes.State.HASLONGDESC])
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)

@@ -890,7 +890,7 @@ class ExcelWorksheet(ExcelBase):
 	def _get_states(self):
 		states=super(ExcelWorksheet,self).states
 		if self.excelWorksheetObject.ProtectContents:
-			states.add(controlTypes.STATE_PROTECTED)
+			states.add(controlTypes.State.PROTECTED)
 		return states
 
 	@scriptHandler.script(gestures=(
@@ -1297,7 +1297,7 @@ class ExcelCell(ExcelBase):
 		return self.excelCellObject
 
 	def _get_role(self):
-		if controlTypes.STATE_LINKED in self.states:
+		if controlTypes.State.LINKED in self.states:
 			return controlTypes.Role.LINK
 		return controlTypes.Role.TABLECELL
 
@@ -1376,16 +1376,16 @@ class ExcelCell(ExcelBase):
 		if not cellInfo:
 			return states
 		stateBits=cellInfo.states
-		for k,v in vars(controlTypes).items():
-			if k.startswith('STATE_') and stateBits&v:
-				states.add(v)
+		for state in controlTypes.State:
+			if stateBits & state.value:
+				states.add(state)
 		return states
 
 	def event_typedCharacter(self,ch):
 		# #6570: You cannot type into protected cells.
 		# Apart from speaking characters being miss-leading, Office 2016 protected view doubles characters as well.
 		# Therefore for any character from space upwards (not control characters)  on protected cells, play the default sound rather than speaking the character
-		if ch>=" " and controlTypes.STATE_UNLOCKED not in self.states and controlTypes.STATE_PROTECTED in self.parent.states: 
+		if ch>=" " and controlTypes.State.UNLOCKED not in self.states and controlTypes.State.PROTECTED in self.parent.states: 
 			winsound.PlaySound("Default",winsound.SND_ALIAS|winsound.SND_NOWAIT|winsound.SND_ASYNC)
 			return
 		super(ExcelCell,self).event_typedCharacter(ch)
@@ -1497,7 +1497,7 @@ class ExcelSelection(ExcelBase):
 
 	def _get_states(self):
 		states=super(ExcelSelection,self).states
-		states.add(controlTypes.STATE_SELECTED)
+		states.add(controlTypes.State.SELECTED)
 		return states
 
 	def _get_name(self):
@@ -1586,11 +1586,11 @@ class ExcelDropdown(Window):
 		states=set()
 		for item in DisplayModelTextInfo(self,textInfos.POSITION_ALL).getTextWithFields():
 			if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange":
-				states=set([controlTypes.STATE_SELECTABLE])
+				states=set([controlTypes.State.SELECTABLE])
 				foreground=item.field.get('color',None)
 				background=item.field.get('background-color',None)
 				if (background,foreground)==self._highlightColors:
-					states.add(controlTypes.STATE_SELECTED)
+					states.add(controlTypes.State.SELECTED)
 			if isinstance(item,str):
 				obj=ExcelDropdownItem(parent=self,name=item,states=states,index=index)
 				children.append(obj)
@@ -1607,7 +1607,7 @@ class ExcelDropdown(Window):
 		return self.children[0]
 	def _get_selection(self):
 		for child in self.children:
-			if controlTypes.STATE_SELECTED in child.states:
+			if controlTypes.State.SELECTED in child.states:
 				return child
 
 	@script(
@@ -1684,15 +1684,15 @@ class ExcelFormControl(ExcelBase):
 	def _get_states(self):
 		states=super(ExcelFormControl,self).states
 		if self is api.getFocusObject():
-			states.add(controlTypes.STATE_FOCUSED)
+			states.add(controlTypes.State.FOCUSED)
 		newState=None
 		if self.role==controlTypes.Role.RADIOBUTTON:
-			newState=controlTypes.STATE_CHECKED if self.excelOLEFormatObject.Value==checked else None
+			newState=controlTypes.State.CHECKED if self.excelOLEFormatObject.Value==checked else None
 		elif self.role==controlTypes.Role.CHECKBOX:
 			if self.excelOLEFormatObject.Value==checked:
-				newState=controlTypes.STATE_CHECKED
+				newState=controlTypes.State.CHECKED
 			elif self.excelOLEFormatObject.Value==mixed:
-				newState=controlTypes.STATE_HALFCHECKED
+				newState=controlTypes.State.HALFCHECKED
 		if newState:
 			states.add(newState)
 		return states
@@ -1898,9 +1898,9 @@ class ExcelFormControlListBox(ExcelFormControl):
 
 	def getChildAtIndex(self,index):
 		name=str(self.excelOLEFormatObject.List(index+1))
-		states=set([controlTypes.STATE_SELECTABLE])
+		states=set([controlTypes.State.SELECTABLE])
 		if self.excelOLEFormatObject.Selected[index+1]==True:
-			states.add(controlTypes.STATE_SELECTED)
+			states.add(controlTypes.State.SELECTED)
 		return ExcelDropdownItem(parent=self,name=name,states=states,index=index)
 
 	def _get_childCount(self):
