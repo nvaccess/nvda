@@ -91,9 +91,9 @@ There are 3 ways that the NVDA exit process:
 
 ### Replacing an existing NVDA instance
 
-To ensure only one NVDA instance is running, we need to be able to find and end a running process.
-So that a new NVDA process can find a running NVDA process, a named [message window](https://docs.microsoft.com/en-us/windows/win32/learnwin32/creating-a-window#creating-the-window) is created.
-A running NVDA process can be found by using the Windows API to search for the named window.
+With the requirement to only allow a single instance of NVDA, a new NVDA process must be able to replace an existing NVDA process.
+NVDA will exit correctly in response to a `[`WM_QUIT`](#When-exiting-from-WM_QUIT) Windows message, but the process must first be detected / identified in order to send the message.
+For new NVDA process to detect an existing NVDA process, a named [message window](https://docs.microsoft.com/en-us/windows/win32/learnwin32/creating-a-window#creating-the-window) is used.
 A new NVDA process searches for an existing NVDA window, and if it is detected, sends `WM_QUIT`.
 The message window is created late during the start up, and destroyed early in exit and is not perfectly indicative of whether or not an NVDA process is running.
 As such, we have a [MutEx](#MutEx) that ensures a newly started process blocks until any previous NVDA has finished exiting.
