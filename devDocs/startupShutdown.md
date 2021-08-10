@@ -74,11 +74,15 @@ There are 3 ways that the NVDA exit process:
     1. Now that windows are closed, a new NVDA instance is started if requested
 
 ### When exiting from `WM_QUIT`
-* [A Windows Message](https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-quit) received from an external process, such another NVDA process.
+* [A Windows Message](https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-quit) received from an external process, such as another NVDA process.
 * NVDA accepts `WM_QUIT` messages from other processes and creates a [named window](https://docs.microsoft.com/en-us/windows/win32/learnwin32/creating-a-window#creating-the-window) that can be discovered.
 * Will force the main loop to exit and close most wx Windows.
 * We subsequently run `triggerNVDAExit` to ensure that clean up code isn't missed, and pump the queue to execute it.
-* Changing to using a custom message, which would allow a custom handling (eg just `triggerNVDAExit`), requires compatibility with messaging older NVDA versions that are only aware of `WM_QUIT`.
+* Using a custom message has been considered:
+  - Would allow custom handling (eg just `triggerNVDAExit`)
+  - Unfortunately, older NVDA versions will only be aware of `WM_QUIT`, so we'd need to send `WM_QUIT` to these versions.
+  - Sending the custom message, waiting for a timeout, then sending `WM_QUIT` adds a significant wait time
+  - Identifying the running version (to selectively send the message) requires maintaining 2 message windows in NVDA (one for legacy behaviour) and adds complexity
 
 ### When exiting from `wx.EVT_END_SESSION`
 * This is a [wxCloseEvent](https://docs.wxwidgets.org/3.0/classwx_close_event.html) triggered by a Windows session ending.
