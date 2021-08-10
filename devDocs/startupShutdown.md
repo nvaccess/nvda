@@ -4,14 +4,23 @@
 
 1. For an installed copy:
     1. Ctrl+Alt+N (Desktop shortcut)
+        - can be tested by:
+            1. Set the NVDA config to ensure the welcome dialog loads on startup
+            1. Have an existing NVDA process running with a known handle
+            1. Press (or emulate) Ctrl+Alt+N
+            1. Ensure the known process ends
+            1. Wait until the welcome dialog loads
     1. Automatically via Ease of Access on the Windows sign-in screen (at boot or signing out of a previous session)
+        - manual testing required
     1. Automatically via Ease of Access on User Account Control (UAC) screens
+        - manual testing required
     1. Automatically by Ease of Access after signing in to Windows
+        - manual testing required
 1. For an installed copy, portable copy, installer:
     1. An exiting instance of NVDA starting a new process (see shutting down procedures)
     1. By running the exe (see cli options too).
     This can be triggered by a user or external process such as an existing NVDA instance
-    - test: `startupShutdownNVDA.Starts`
+        - test: `startupShutdownNVDA.Starts`
 1. For source: eg runnvda.bat
 
 ## NVDA can be shutdown by:
@@ -20,13 +29,20 @@
     1. NVDA+q
         - test: `startupShutdownNVDA.Quits from keyboard, Restarts`
     1. An input gesture to restart
+        - to test:
+            1. Configure NVDA to load the Welcome dialog on start
+            1. assign the input gesture to restart
+            1. trigger the input gesture
+            1. if the exit dialog is turned on, ensure it loads and is accepted
+            1. ensure the existing process is killed and the Welcome dialog loads
     1. After changing some settings (eg installed add-ons or UI language), user prompted on dialog exit.
     1. Via the NVDA menu -> Exit
         - test: `startupShutdownNVDA.Quits from menu`
-1. A process sending `WM_QUIT`, eg a new NVDA process starting (uses `WM_QUIT`)
+1. A process sending `WM_QUIT`, eg a new NVDA process starting
 1. A handled crash (directly causes a new process to start, terminates unsafely)
     - test: `startupShutdownNVDA.Restarts on crash, Restarts on braille crash`
 1. An unhandled crash (terminates unsafely)
+    - requires manual testing/confirmation
 1. An external command which kills the process (terminates unsafely) 
 1. Windows shutting down (terminates unsafely) (uses `wx.EVT_END_SESSION`)
 
