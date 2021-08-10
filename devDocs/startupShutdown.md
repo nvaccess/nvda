@@ -55,11 +55,11 @@ These notes are aimed at developers, wishing to understand technical aspects of 
 
 ### Exit hooks/triggers
 
-There are 3 ways that the NVDA exit process:
+There are 3 ways that NVDA receives a request to exit:
 
-- [triggerNVDAExit](#When-exiting-from-triggerNVDAExit)
-- [WM_QUIT](#When-exiting-from-WM_QUIT)
-- [wx.EVT_END_SESSION](#When-exiting-from-wxEVT_END_SESSION)
+- From internally calling [triggerNVDAExit](#When-exiting-from-triggerNVDAExit)
+- Receiving [WM_QUIT](#When-exiting-from-WM_QUIT) Windows message
+- Receiving [wx.EVT_END_SESSION](#When-exiting-from-wxEVT_END_SESSION) due to Windows session ending
 
 ### When exiting from `triggerNVDAExit`
 * Called from within NVDA.
