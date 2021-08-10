@@ -43,7 +43,7 @@ There are 3 ways that the NVDA exit process:
 
 - [triggerNVDAExit](#When-exiting-from-triggerNVDAExit)
 - [WM_QUIT](#When-exiting-from-WM_QUIT)
-- [wx.EVT_END_SESSION](#When-exiting-from-wx.EVT_END_SESSION)
+- [wx.EVT_END_SESSION](#When-exiting-from-wxEVT_END_SESSION)
 
 ### When exiting from `triggerNVDAExit`
 * Called from within NVDA.
@@ -59,7 +59,7 @@ There are 3 ways that the NVDA exit process:
 
 ### When exiting from `WM_QUIT`
 * [A Windows Message](https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-quit) received from an external process, such another NVDA process.
-* NVDA accepts [WM_QUIT](#When-exiting-from-WM_QUIT) messages from other processes and creates a [named window](https://docs.microsoft.com/en-us/windows/win32/learnwin32/creating-a-window#creating-the-window) that can be discovered.
+* NVDA accepts `WM_QUIT` messages from other processes and creates a [named window](https://docs.microsoft.com/en-us/windows/win32/learnwin32/creating-a-window#creating-the-window) that can be discovered.
 * Will force the main loop to exit and close most wx Windows.
 * We subsequently run `triggerNVDAExit` to ensure that clean up code isn't missed, and pump the queue to execute it.
 * Changing to using a custom message, which would allow a custom handling (eg just `triggerNVDAExit`), requires compatibility with messaging older NVDA versions that are only aware of `WM_QUIT`.
