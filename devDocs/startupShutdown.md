@@ -30,9 +30,23 @@
 1. An external command which kills the process (terminates unsafely) 
 1. Windows shutting down (terminates unsafely) (uses `wx.EVT_END_SESSION`)
 
-## Exit hooks/triggers
+## Technical notes
 
-### In process: `triggerNVDAExit`
+These notes are aimed at developers, wishing to understand technical aspects of the NVDA start and exit.
+
+1. We want only one NVDA instance running at a time, so that it can't interact with itself.
+2. As such, we want to be able to detect running instances, cause them to exit, and confirm they have exited.
+
+### Exit hooks/triggers
+
+There are 3 ways that the NVDA exit process:
+
+- [triggerNVDAExit](#When-exiting-from-triggerNVDAExit)
+- [WM_QUIT](#When-exiting-from-WM_QUIT)
+- [wx.EVT_END_SESSION](#When-exiting-from-wx.EVT_END_SESSION)
+
+### When exiting from `triggerNVDAExit`
+* Called from within NVDA.
 * A function in the core module
 * Only executes the code once, uses a lock and flag to ensure this
 * Uses a queue on the main thread to queue a safe shutdown
@@ -43,41 +57,35 @@
     1. All wx windows are closed
     1. Now that windows are closed, a new NVDA instance is started if requested
 
-### Out of process: `WM_QUIT`
-* [a windows message](https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-quit) which can be sent across processes which will force the main loop to exit and close most NVDA windows.
+### When exiting from `WM_QUIT`
+* [A Windows Message](https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-quit) received from an external process, such another NVDA process.
+* NVDA accepts [WM_QUIT](#When-exiting-from-WM_QUIT) messages from other processes and creates a [named window](https://docs.microsoft.com/en-us/windows/win32/learnwin32/creating-a-window#creating-the-window) that can be discovered.
+* Will force the main loop to exit and close most wx Windows.
 * We subsequently run `triggerNVDAExit` to ensure that clean up code isn't missed, and pump the queue to execute it.
 * Changing to using a custom message, which would allow a custom handling (eg just `triggerNVDAExit`), requires compatibility with messaging older NVDA versions that are only aware of `WM_QUIT`.
 
-### Out of process: `wx.EVT_END_SESSION`
-- This is a [wxCloseEvent](https://docs.wxwidgets.org/3.0/classwx_close_event.html) triggered by a Windows session ending.
-- On `wx.EVT_END_SESSION`, we save the config and play the exit sound.
-- Other actions are not performed as we have limited time to perform an action for this event. With NVDA being killed off very last, Windows may include NVDA in the Block shutdown dialog, but the user won't be able to read it if we are shutting down.
+### When exiting from `wx.EVT_END_SESSION`
+* This is a [wxCloseEvent](https://docs.wxwidgets.org/3.0/classwx_close_event.html) triggered by a Windows session ending.
+* On `wx.EVT_END_SESSION`, we save the config and play the exit sound.
+* Other actions are not performed as we have limited time to perform an action for this event. With NVDA being killed off very last, Windows may include NVDA in the Block shutdown dialog, but the user won't be able to read it if we are shutting down.
 
-## Technical startup and exit notes
+### Replacing an existing NVDA instance
 
-## The Message Window
-
-So that a new NVDA process can end a running NVDA process, NVDA accepts [WM_QUIT](#Out-of-process-WM_QUIT) messages from other processes and creates a window that can be discovered.
-The Windows API allows us to find a process by searching for a named window.
-NVDA creates a custom Window for accepting messages named "NVDA".
-
-Starting up is blocked by checking for an existing NVDA window and sending `WM_QUIT` to the process.
+To ensure only one NVDA instance is running, we need to be able to find and end a running process.
+So that a new NVDA process can find a running NVDA process, a named [message window](https://docs.microsoft.com/en-us/windows/win32/learnwin32/creating-a-window#creating-the-window) is created.
+A running NVDA process can be found by using the Windows API to search for the named window.
+A new NVDA process searches for an existing NVDA window, and if it is detected, sends `WM_QUIT`.
 The message window is created late during the start up, and destroyed early in exit and is not perfectly indicative of whether or not an NVDA process is running.
 As such, we have a [MutEx](#MutEx) that ensures a newly started process blocks until any previous NVDA has finished exiting.
 
-## MutEx
+### MutEx
 
-Preventing multiple copies. Note detects unusual shutdown of prior instance via "abandoned" mutex.
+To confirm that another NVDA process is not running,
+a [MutEx](https://docs.microsoft.com/en-us/windows/win32/sync/mutex-objects) is owned by the NVDA process.
+Note detects unusual shutdown of prior instance via 
+This is acquired as soon as possible and released by NVDA as late as possible.
+When the NVDA process exits abnormally, Windows will release the MutEx.
 
-## Unsafe restart
+### Unsafe restart
 
 Called in the event of a crash. Exiting NVDA safely in the event of a crash could be improved, but it is limited as we cannot rely on other threads running or the state of NVDA.
-
-### As a user, NVDA can be updated or installed:
-
-1. Via a downloaded installer exe
-1. Via the NVDA updater
-
-### Technical installer/updater process:
-
-1. 
