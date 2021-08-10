@@ -98,7 +98,8 @@ As such, we have a [MutEx](#MutEx) that ensures a newly started process blocks u
 
 To confirm that another NVDA process is not running,
 a [MutEx](https://docs.microsoft.com/en-us/windows/win32/sync/mutex-objects) is owned by the NVDA process.
-Note detects unusual shutdown of prior instance via 
+NVDA will be blocked from starting until it can acquire the MutEx.
+If it can not acquire the MutEx within a timeout, startup is aborted.
 This is acquired as soon as possible and released by NVDA as late as possible.
 When the NVDA process exits abnormally, Windows will release the MutEx.
 
