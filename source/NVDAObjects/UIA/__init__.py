@@ -1182,6 +1182,14 @@ class UIA(Window):
 		self.UIAGridPattern=self._getUIAPattern(UIAHandler.UIA_GridPatternId,UIAHandler.IUIAutomationGridPattern)
 		return self.UIAGridPattern
 
+	def _get_UIARangeValuePattern(self):
+		self.UIARangeValuePattern=self._getUIAPattern(UIAHandler.UIA_RangeValuePatternId,UIAHandler.IUIAutomationRangeValuePattern)
+		return self.UIARangeValuePattern
+
+	def _get_UIAValuePattern(self):
+		self.UIAValuePattern=self._getUIAPattern(UIAHandler.UIA_ValuePatternId,UIAHandler.IUIAutomationValuePattern)
+		return self.UIAValuePattern
+
 	def _get_UIATogglePattern(self):
 		self.UIATogglePattern=self._getUIAPattern(UIAHandler.UIA_TogglePatternId,UIAHandler.IUIAutomationTogglePattern)
 		return self.UIATogglePattern
@@ -1713,18 +1721,17 @@ class UIA(Window):
 		return locationHelper.RectLTWH.fromFloatCollection(*r)
 
 	def _get_value(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
-			minVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId,False)
-			maxVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId,False)
-			if minVal==maxVal:
-				# There is no range.
-				return "0"
-			val=((val-minVal)/(maxVal-minVal))*100.0
-			return "%d"%round(val,4)
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueValuePropertyId,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_ValueValuePropertyId, True)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
 			return val
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueValuePropertyId, True)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			minVal= self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueMinimumPropertyId, False)
+			maxVal = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueMaximumPropertyId, False)
+			if minVal != maxVal:
+				# There is a range.
+				val= ((val - minVal) / (maxVal - minVal)) * 100.0
+			return "%d" % round(val, 4)
 
 	def _get_actionCount(self):
 		if self.UIAInvokePattern:
