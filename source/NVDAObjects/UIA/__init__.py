@@ -1720,18 +1720,29 @@ class UIA(Window):
 		# r is a tuple of floats representing left, top, width and height.
 		return locationHelper.RectLTWH.fromFloatCollection(*r)
 
-	def _get_value(self):
+	def _get_UIAValue(self) -> typing.Optional[str]:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_ValueValuePropertyId, True)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
 			return val
+		return None
+
+	def _get_UIARangeValue(self) -> typing.Optional[float]:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueValuePropertyId, True)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
 			minVal= self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueMinimumPropertyId, False)
 			maxVal = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueMaximumPropertyId, False)
 			if minVal != maxVal:
 				# There is a range.
-				val= ((val - minVal) / (maxVal - minVal)) * 100.0
-			return "%d" % round(val, 4)
+				val = ((val - minVal) / (maxVal - minVal)) * 100.0
+			return val
+		return None
+
+	def _get_value(self)  -> typing.Optional[str]:
+		if self.UIAValue:
+			return self.UIAValue
+		if self.UIARangeValue:
+			return "%d" % round(self.UIARangeValue, 4)
+		return None
 
 	def _get_actionCount(self):
 		if self.UIAInvokePattern:
