@@ -81,8 +81,6 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_GridColumnCountPropertyId,
 		UIAHandler.UIA_GridItemContainingGridPropertyId,
 		UIAHandler.UIA_RangeValueValuePropertyId,
-		UIAHandler.UIA_RangeValueMinimumPropertyId,
-		UIAHandler.UIA_RangeValueMaximumPropertyId,
 		UIAHandler.UIA_ValueValuePropertyId,
 		UIAHandler.UIA_PositionInSetPropertyId,
 		UIAHandler.UIA_SizeOfSetPropertyId,
@@ -1729,11 +1727,6 @@ class UIA(Window):
 	def _get_UIARangeValue(self) -> typing.Optional[float]:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueValuePropertyId, True)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
-			minVal= self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueMinimumPropertyId, False)
-			maxVal = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueMaximumPropertyId, False)
-			if minVal != maxVal:
-				# There is a range.
-				val = ((val - minVal) / (maxVal - minVal)) * 100.0
 			return val
 		return None
 
@@ -1741,7 +1734,7 @@ class UIA(Window):
 		if self.UIAValue:
 			return self.UIAValue
 		if self.UIARangeValue:
-			return "%d" % round(self.UIARangeValue, 4)
+			return f"{round(self.UIARangeValue)}"
 		return None
 
 	def _get_actionCount(self):
