@@ -876,7 +876,17 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 						s << chunkStart;
 						previousNode->addAttribute(L"ia2TextStartOffset", s.str());
 						s.str(L"");
+						// Also add IA2 windowHandle and ID on the text node
+						// To make fetching IA2Ranges for selecting much easier.
+						s << docHandle;
+						previousNode->addAttribute(L"ia2WindowHandle", s.str());
+						s.str(L"");
+						s << ID;
+						previousNode->addAttribute(L"ia2UniqueID", s.str());
+						s.str(L"");
 						// Add text attributes.
+						// Add text attributes.
+
 						for(map<wstring,wstring>::const_iterator it=textAttribs.begin();it!=textAttribs.end();++it)
 							previousNode->addAttribute(it->first,it->second);
 						#define copyObjectAttribute(attr) if ((IA2AttribsMapIt = IA2AttribsMap.find(attr)) != IA2AttribsMap.end()) \

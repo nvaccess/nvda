@@ -162,11 +162,17 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)
-		ia2TextStartOffset = attrs.get("ia2TextStartOffset")
-		if ia2TextStartOffset is not None:
-			assert ia2TextStartOffset.isdigit(), "ia2TextStartOffset isn't a digit, %r" % ia2TextStartOffset
-			attrs["ia2TextStartOffset"] = int(ia2TextStartOffset)
+		# convert some IAccessible2 values to integers
+		for name in (
+			"ia2WindowHandle",
+			"ia2UniqueID",
+			"ia2TextStartOffset",
+		):
+			val = attrs.get(name, None)
+			if val is not None:
+				attrs[name] = int(val)
 		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
+
 
 class Gecko_ia2(VirtualBuffer):
 
