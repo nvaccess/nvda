@@ -57,8 +57,10 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019 Community, Version 16.11:
-	* Download from https://visualstudio.microsoft.com/vs/
+* Microsoft Visual Studio 2019, Version 16.11:
+	* Download from https://visualstudio.microsoft.com/downloads/
+		* When you do not use the Visual Studio IDE itself, you can download the build tools under the Tools for Visual Studio 2019 expandable heading
+		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download the community version under the Visual Studio 2019 expandable heading
 	* When installing Visual Studio, you need to enable the following:
 		* In the list  on the Workloads tab
 			* in the Windows grouping:
