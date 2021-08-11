@@ -516,3 +516,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 		except LookupError:
 			return False
 		return True
+
+	def updateAppSelection(self):
+		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		selInfo._rangeObj.select()

@@ -1263,6 +1263,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# The app module died.
 				pass
 
+	def updateAppSelection(self):
+		""" 
+		Instructs the underlying application to update its own selection to match that of the current browse mode selection to as near as possible.
+		E.g. in a browser updates the DOM selection.
+		"""
+		raise NotImplementedError
+
 	def _get_currentNVDAObject(self):
 		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart
 
@@ -1398,6 +1405,19 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			ui.message(_("No long description"))
 	# Translators: the description for the activateLongDescription script on browseMode documents.
 	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
+
+	@script(
+		gesture="kb:shift+space",
+	)
+	def script_updateAppSelection(self, gesture):
+		try:
+			self.updateAppSelection()
+		except NotImplementedError:
+			log.warning("Cannot set application selection", exc_info=True)
+			ui.message(
+				# Translators: an error message when updating the application selection is not supported.
+				_("Updating application selection not supported")
+			)
 
 	@script(
 		description=_(
