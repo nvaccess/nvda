@@ -1181,11 +1181,17 @@ class UIA(Window):
 		return self.UIAGridPattern
 
 	def _get_UIARangeValuePattern(self):
-		self.UIARangeValuePattern=self._getUIAPattern(UIAHandler.UIA_RangeValuePatternId,UIAHandler.IUIAutomationRangeValuePattern)
+		self.UIARangeValuePattern = self._getUIAPattern(
+			UIAHandler.UIA_RangeValuePatternId,
+			UIAHandler.IUIAutomationRangeValuePattern
+		)
 		return self.UIARangeValuePattern
 
 	def _get_UIAValuePattern(self):
-		self.UIAValuePattern=self._getUIAPattern(UIAHandler.UIA_ValuePatternId,UIAHandler.IUIAutomationValuePattern)
+		self.UIAValuePattern = self._getUIAPattern(
+			UIAHandler.UIA_ValuePatternId,
+			UIAHandler.IUIAutomationValuePattern
+		)
 		return self.UIAValuePattern
 
 	def _get_UIATogglePattern(self):
@@ -1730,7 +1736,7 @@ class UIA(Window):
 			return val
 		return None
 
-	def _get_value(self)  -> typing.Optional[str]:
+	def _get_value(self) -> typing.Optional[str]:
 		if self.UIAValue is not None:
 			return self.UIAValue
 		if self.UIARangeValue is not None:
