@@ -42,6 +42,14 @@ class XMLTextParser(object):
 			newAttrs["_endOfNode"] = newAttrs["_endOfNode"] == "1"
 		except KeyError:
 			pass
+		try:
+			newAttrs["_offsetFromStartOfNode"] = int(newAttrs["_offsetFromStartOfNode"])
+		except KeyError:
+			pass
+		try:
+			newAttrs["_offsetFromEndOfNode"] = int(newAttrs["_offsetFromEndOfNode"])
+		except KeyError:
+			pass
 
 	def _EndElementHandler(self,tagName):
 		if tagName=="control":
