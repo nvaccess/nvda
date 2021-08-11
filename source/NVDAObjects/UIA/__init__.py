@@ -1731,9 +1731,9 @@ class UIA(Window):
 		return None
 
 	def _get_value(self)  -> typing.Optional[str]:
-		if self.UIAValue:
+		if self.UIAValue is not None:
 			return self.UIAValue
-		if self.UIARangeValue:
+		if self.UIARangeValue is not None:
 			return f"{round(self.UIARangeValue)}"
 		return None
 
