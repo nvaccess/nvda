@@ -2100,6 +2100,7 @@ class DevExpressXtraRichEdit(UIA):
 			return super().TextInfo
 		return super(UIA, self).TextInfo
 
+
 class ProgressBar(UIA, ProgressBar):
 	"""#12727: In the past, UIA progress bars could have a different range than what could be expected
 	from a progress bar, i.e. a percentage from 0 to 100.
@@ -2112,7 +2113,7 @@ class ProgressBar(UIA, ProgressBar):
 			return self.UIAValue
 		minVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId, False)
 		maxVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId, False)
-		if minVal==maxVal:
+		if minVal == maxVal:
 			# There is no range, use the raw value from the pattern, it might be incorrect.
 			pass
 		else:
