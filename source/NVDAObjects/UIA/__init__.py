@@ -973,7 +973,7 @@ class UIA(Window):
 		):
 			clsList.insert(0, DevExpressXtraRichEdit)
 		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
-			clsList.append(ProgressBar)
+			clsList.insert(0, ProgressBar)
 		if UIAClassName=="ControlPanelLink":
 			clsList.append(ControlPanelLink)
 		if UIAClassName=="UIColumnHeader":
@@ -2099,3 +2099,22 @@ class DevExpressXtraRichEdit(UIA):
 		if self.UIATextPattern and self.UIATextPattern.DocumentRange:
 			return super().TextInfo
 		return super(UIA, self).TextInfo
+
+class ProgressBar(UIA, ProgressBar):
+	"""#12727: In the past, UIA progress bars could have a different range than what could be expected
+	from a progress bar, i.e. a percentage from 0 to 100.
+	This overlay class ensures that the reported value wil be between the accepted range of progress bar values.
+	"""
+
+	def _get_value(self) -> typing.Optional[str]:
+		val = self.UIARangeValue
+		if val is None:
+			return self.UIAValue
+		minVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId, False)
+		maxVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId, False)
+		if minVal==maxVal:
+			# There is no range, use the raw value from the pattern, it might be incorrect.
+			pass
+		else:
+			val = ((val - minVal) / (maxVal - minVal)) * 100.0
+		return f"{round(val)}%"
