@@ -215,10 +215,15 @@ class WordDocumentTextInfo(UIATextInfo):
 				self.setEndPoint(docInfo,"endToEnd")
 
 	def getTextWithFields(self,formatConfig=None):
-		if self.isCollapsed:
-			# #7652: We cannot fetch fields on collapsed ranges otherwise we end up with repeating controlFields in braille (such as list list list). 
-			return []
-		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
+		fields = None
+		if not self.isCollapsed:
+			rawText = self._rangeObj.GetText(2)
+			if not rawText or rawText == '\x07':
+				r = self.copy()
+				r.end = r.start
+				fields = super(WordDocumentTextInfo, r).getTextWithFields(formatConfig=formatConfig)
+		if fields is None:
+			fields = super(WordDocumentTextInfo, self).getTextWithFields(formatConfig=formatConfig)
 		if len(fields)==0: 
 			# Nothing to do... was probably a collapsed range.
 			return fields
