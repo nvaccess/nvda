@@ -226,15 +226,12 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		The object tree in this case (menu item > submenu (not keyboard focusable) > submenu item).
 		The focus event order after activating the menu item's sub menu is (submenu item, submenu).
 		"""
-		from NVDAObjects import IAccessible
 		lastFocus = api.getFocusObject()
 		_isMenuItemOfCurrentFocus = (
 			self._obj.parent
-			and isinstance(self._obj, IAccessible.IAccessible)
-			and isinstance(lastFocus, IAccessible.IAccessible)
-			and self._obj.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUITEM
-			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
 			and self._obj.parent == lastFocus
+			and self._obj.role == controlTypes.Role.MENUITEM
+			and lastFocus.role == controlTypes.Role.POPUPMENU
 		)
 		if _isMenuItemOfCurrentFocus:
 			# Change this to log.error for easy debugging
