@@ -6,10 +6,10 @@ Quoi de Neuf dans NVDA
 = 2021.2 =
 
 == Notes importantes ==
-- Le rideau d'écran des précédentes versions de NVDA n'est maintenant plus compatile avec les versions de Windows supérieures à Windows 10 21H2 (10.0.19044).
-Cela inclu Windows 10 Insider et Windows 11.
+- Le rideau d'écran des précédentes versions de NVDA n'est maintenant plus compatible avec les versions de Windows supérieures à Windows 10 21H2 (10.0.19044).
+Cela inclut Windows 10 Insider et Windows 11.
 Cela est dû à un changement dans l'API de loupe de Windows.
-Lorsque vous utilisez une ancienne version de NVDA et une version de Windows supérieure à Windows 10 21H2, le rideau d'écran peut ne pas fonctionner sans avertissement.
+Lorsque vous utilisez une ancienne version de NVDA et une version de Windows supérieure à Windows 10 21H2, le rideau d'écran peut ne pas fonctionner sans que vous en soyez averti.
 Pour garantir la sécurité, vérifiez que le rideau d'écran fonctionne correctement avec les versions nouvelles ou expérimentales de Windows.
 (#12491, #12684)
 -
@@ -21,7 +21,7 @@ Pour garantir la sécurité, vérifiez que le rideau d'écran fonctionne correct
   - ajout d'une option dans les paramètres avancés pour annoncer si un objet contient des détails en mode navigation. (#12439) 
   -
 - Sous Windows 10 version 1909 et supérieures (Windows 11 y compris), NVDA annoncera le nombre de suggestions lors d'une recherche dans l'explorateur de fichiers. (#10341, #12628)
-- Dans Microsoft Word, NVDA annonce maintenant le résultat des raccourcis clavier de retrait et de retrait négatif lors de leur exécution. (#6269)
+- Sous Microsoft Word, NVDA annonce maintenant le résultat des raccourcis clavier de retrait et de retrait négatif lors de leur exécution. (#6269)
 -
 
 
@@ -38,7 +38,7 @@ Pour garantir la sécurité, vérifiez que le rideau d'écran fonctionne correct
 == Corrections de bogues ==
 - Dans la calculatrice de Windows 10, NVDA affichera l'expression d'un calcul sur les afficheurs Braille. (#12268)
 - Dans les programmes de terminal sous Windows 10 version 1607 et au-delà, lors de l'insertion ou de la suppression d'un caractère au milieu d'une ligne, le caractère à droite du curseur n'est plus lu. (#3200)
-  - Diff Match Patch maintenant activé par défaut. (#12485)
+  - Diff Match Patch est maintenant activé par défaut. (#12485)
   -
 - La saisie Braille fonctionne correctement avec les tables abrégées suivantes : Arabe abrégé, Espagnol abrégé, Urdu abrégé, Chinois (Chine, Mandarin) abrégé. (#12541)
 - L'outil de correction des enregistrements COM résout maintenant davantage de problèmes, particulièrement sous les versions 64 bits de Windows. (#12560)
