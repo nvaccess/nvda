@@ -23,6 +23,9 @@ from scriptHandler import script
 
 """Support for Microsoft Word via UI Automation."""
 
+#: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
+END_OF_ROW_MARK = '\x07'
+
 class ElementsListDialog(browseMode.ElementsListDialog):
 
 	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
@@ -183,7 +186,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			# Really better as carage returns
 			t=t.replace('\v','\r')
 			# Remove end-of-row markers from the text - they are not useful
-			t=t.replace('\x07','')
+			t = t.replace(END_OF_ROW_MARK, '')
 		return t
 
 	def _isEndOfRow(self):
@@ -218,7 +221,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		fields = None
 		if not self.isCollapsed:
 			rawText = self._rangeObj.GetText(2)
-			if not rawText or rawText == '\x07':
+			if not rawText or rawText == END_OF_ROW_MARK:
 				r = self.copy()
 				r.end = r.start
 				fields = super(WordDocumentTextInfo, r).getTextWithFields(formatConfig=formatConfig)
