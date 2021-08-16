@@ -50,7 +50,10 @@
 
 These notes are aimed at developers, wishing to understand technical aspects of the NVDA start and exit.
 
-1. We want only one NVDA instance running at a time, so that it can't interact with itself.
+1. No more than one NVDA process instance should be running time. Interactions with itself could cause severe issues, some (non-exhaustive list) examples of sub-systems where this would be a problem:
+   - NVDA config files
+   - Global (OS level) keyboard hook
+   - Changed / incompatible in-process code
 2. As such, we want to be able to detect running instances, cause them to exit, and confirm they have exited.
 
 ### Exit hooks/triggers
