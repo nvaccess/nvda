@@ -4,18 +4,9 @@
 
 1. For an installed copy:
     1. Ctrl+Alt+N (Desktop shortcut)
-        - can be tested by:
-            1. Set the NVDA config to ensure the welcome dialog loads on startup
-            1. Have an existing NVDA process running with a known handle
-            1. Press (or emulate) Ctrl+Alt+N
-            1. Ensure the known process ends
-            1. Wait until the welcome dialog loads
     1. Automatically via Ease of Access on the Windows sign-in screen (at boot or signing out of a previous session)
-        - manual testing required
     1. Automatically via Ease of Access on User Account Control (UAC) screens
-        - manual testing required
     1. Automatically by Ease of Access after signing in to Windows
-        - manual testing required
 1. For an installed copy, portable copy, installer:
     1. An exiting instance of NVDA starting a new process (see shutting down procedures)
     1. By running the exe (see cli options too).
@@ -29,12 +20,6 @@
     1. NVDA+q
         - test: `startupShutdownNVDA.Quits from keyboard, Restarts`
     1. An input gesture to restart
-        - to test:
-            1. Configure NVDA to load the Welcome dialog on start
-            1. assign the input gesture to restart
-            1. trigger the input gesture
-            1. if the exit dialog is turned on, ensure it loads and is accepted
-            1. ensure the existing process is killed and the Welcome dialog loads
     1. After changing some settings (eg installed add-ons or UI language), user prompted on dialog exit.
     1. Via the NVDA menu -> Exit
         - test: `startupShutdownNVDA.Quits from menu`
@@ -45,6 +30,71 @@
     - requires manual testing/confirmation
 1. An external command which kills the process (terminates unsafely) 
 1. Windows shutting down (terminates unsafely) (uses `wx.EVT_END_SESSION`)
+
+## Manual testing
+Instructions for testing startup / shutdown.
+
+### Start from shortcut
+Prerequisites:
+ - NVDA installed
+ - Shortcut enabled during installation
+
+Steps:
+ 1. Press (or emulate) Ctrl+Alt+N, observe NVDA starts up
+
+Variation:
+- At step 1. A version of NVDA is already running. Observe running version exists before installed version starts up.
+
+### Windows Sign-in screen, automatic start
+Prerequisites:
+ - NVDA installed
+ - Enable "Use NVDA during sign-in"
+
+Steps:
+ 1. Start Windows
+ 1. Observe NVDA announces the Windows sign-in screen
+
+### UAC, automatic start
+Prerequisites:
+ - NVDA installed
+
+Steps:
+
+### Windows Successful sign-in, automatic start
+Prerequisites:
+ - NVDA installed
+ - Enable "Start NVDA after I sign in"
+
+Steps:
+ 1. Start Windows
+ 1. Sign in
+ 1. Observe NVDA starts
+
+### Running the *.exe
+
+Steps:
+ 1. Run the NVDA exe from cmd
+ 1. Observe NVDA starts
+
+Variation:
+- installed copy, portable copy, or installer
+- CLI options
+
+### Running from source (runnvda.bat)
+
+Steps:
+ 1. Run `runnvda.bat` from cmd
+ 1. Observe NVDA starts
+
+### An input gesture to restart
+
+Prerequisite:
+- Input gesture to restart is assigned to a key
+
+Steps:
+ 1. Press (or emulate) the input gesture
+ 1. Observe that NVDA exits
+ 1. Observe that a new instance is started
 
 ## Technical notes
 
