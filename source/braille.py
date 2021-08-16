@@ -880,7 +880,13 @@ class TextInfoRegion(Region):
 		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
 		# When true, we are inside a clickable field, and should therefore not report any more new clickable fields
 		inClickable=False
-		for command in info.getTextWithFields(formatConfig=formatConfig):
+		# Collapsed ranges should never produce text and fields,
+		# But later on we may still need to draw the cursor at this position.
+		if not info.isCollapsed:
+			commands = info.getTextWithFields(formatConfig=formatConfig)
+		else:
+			commands = []
+		for command in commands:
 			if isinstance(command, str):
 				# Text should break a run of clickables
 				inClickable=False
