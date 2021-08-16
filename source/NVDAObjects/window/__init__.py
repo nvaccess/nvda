@@ -278,9 +278,9 @@ An NVDAObject for a window
 		states=super(Window,self)._get_states()
 		style=self.windowStyle
 		if not style&winUser.WS_VISIBLE:
-			states.add(controlTypes.STATE_INVISIBLE)
+			states.add(controlTypes.State.INVISIBLE)
 		if style&winUser.WS_DISABLED:
-			states.add(controlTypes.STATE_UNAVAILABLE)
+			states.add(controlTypes.State.UNAVAILABLE)
 		return states
 
 	def _get_windowStyle(self):

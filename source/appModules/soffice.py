@@ -63,7 +63,7 @@ class JAB_OOTableCell(JAB):
 
 	def _get_states(self):
 		states=super(JAB_OOTableCell,self).states
-		states.discard(controlTypes.STATE_EDITABLE)
+		states.discard(controlTypes.State.EDITABLE)
 		return states
 
 	def _get_rowNumber(self):
@@ -215,15 +215,15 @@ class SymphonyTableCell(IAccessible):
 
 	def _get_states(self):
 		states=super(SymphonyTableCell,self).states
-		states.discard(controlTypes.STATE_MULTILINE)
-		states.discard(controlTypes.STATE_EDITABLE)
-		if controlTypes.STATE_SELECTED not in states and {controlTypes.STATE_FOCUSED, controlTypes.STATE_SELECTABLE}.issubset(states):
+		states.discard(controlTypes.State.MULTILINE)
+		states.discard(controlTypes.State.EDITABLE)
+		if controlTypes.State.SELECTED not in states and {controlTypes.State.FOCUSED, controlTypes.State.SELECTABLE}.issubset(states):
 			# #8988: Cells in Libre Office do not have the selected state when a single cell is selected (i.e. has focus).
 			# Since #8898, the negative selected state is announced for table cells with the selectable state.
-			states.add(controlTypes.STATE_SELECTED)
+			states.add(controlTypes.State.SELECTED)
 		if self.IA2Attributes.get('Formula'):
 			# #860: Recent versions of Calc expose has formula state via IAccessible 2.
-			states.add(controlTypes.STATE_HASFORMULA)
+			states.add(controlTypes.State.HASFORMULA)
 		return states
 
 class SymphonyTable(IAccessible):

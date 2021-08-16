@@ -203,7 +203,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.name=versionInfo.name
 
 	def event_gainFocus(self, obj, nextHandler):
-		if obj.role == controlTypes.Role.UNKNOWN and controlTypes.STATE_INVISIBLE in obj.states:
+		if obj.role == controlTypes.Role.UNKNOWN and controlTypes.State.INVISIBLE in obj.states:
 			return
 		nextHandler()
 

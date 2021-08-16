@@ -23,10 +23,14 @@ What's New in NVDA
 
 == Bug Fixes ==
 - Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
+- It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
+- NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
 -
 
 
 == Changes for Developers ==
+- Building NVDA now requires Visual Studio 2019 16.10.4 or later.
+To match the production build environment, update Visual Studio to keep in sync with the [current version AppVeyor is using https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019]. (#12728)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been deprecated for removal in 2022.1. (#12660)
   - Instead use ``apiLevel`` (see the comments at ``_UIAConstants.WinConsoleAPILevel`` for details).
   -
@@ -35,21 +39,25 @@ What's New in NVDA
 
 
 = 2021.2 =
+This release introduces preliminary Windows 11 support.
+While Windows 11 is yet to be released, this release has been tested on preview versions of Windows 11.
+This includes an important fix for Screen Curtain (see important notes).
+The COM Registration Fixing Tool can now resolve more problems when running NVDA.
+There are updates to the synthesizer eSpeak and braille translator LibLouis.
+There are also various bug fixes and improvements, notably for braille support and Windows terminals, calculator, emoji panel and clipboard history.
+
 
 == Important notes ==
-- Screen Curtain on previous releases of NVDA is no longer compatible with versions of Windows newer than Windows 10 21H2 (10.0.19044).
+Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
+Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
 This includes Windows 10 Insiders and Windows 11.
-This is due to a change in the Windows Magnification API.
-When using previous NVDA releases and Windows newer than Windows 10 21H2, screen curtain may fail to work without warning.
-To ensure security, confirm that screen curtain works properly with new or experimental versions of Windows.
-(#12491, #12684)
--
+For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
 
 
 == New Features ==
-- Support for ARIA annotations:
+- Experimental support for ARIA annotations:
   - adds a command to read a summary of details of an object with aria-details. (#12364)
-  - adds an option in advanced to report if an object has details in browse mode. (#12439) 
+  - adds an option in advanced preferences to report if an object has details in browse mode. (#12439) 
   -
 - In Windows 10 Version 1909 and later (including Windows 11), NVDA will announce suggestion count when performing searches in File Explorer. (#10341, #12628)
 - In Microsoft Word, NVDA now announces the result of indent and hanging indent shortcuts when executed. (#6269)
@@ -62,6 +70,7 @@ To ensure security, confirm that screen curtain works properly with new or exper
 - Updated liblouis braille translator to [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
   - New braille tables: Bulgarian grade 1, Burmese grade 1, Burmese grade 2, Kazakh grade 1, Khmer grade 1, Northern Kurdish grade 0, Sepedi grade 1, Sepedi grade 2, Sesotho grade 1, Sesotho grade 2, Setswana grade 1, Setswana grade 2, Tatar grade 1, Vietnamese grade 0, Vietnamese grade 2, Southern Vietnamese grade 1, Xhosa grade 1, Xhosa grade 2, Yakut grade 1, Zulu grade 1, Zulu grade 2
   -
+- Windows 10 OCR was renamed to Windows OCR. (#12690)
 -
 
 
@@ -80,6 +89,7 @@ To ensure security, confirm that screen curtain works properly with new or exper
 - Windows version 10.0.22000 or later is recognized as Windows 11, not Windows 10. (#12626)
 - Screen curtain support has been fixed and tested for Windows versions up until 10.0.22000. (#12684)
 - If no results are shown when filtering input gestures, the input gesture configuration dialog continues to work as expected. (#12673)
+- Fixed a bug where the first menu item of a submenu is not announced in some contexts. (#12624)
 -
 
 
@@ -91,7 +101,7 @@ To ensure security, confirm that screen curtain works properly with new or exper
   - ``processPositiveStates`` and ``processNegativeStates`` have been deprecated for removal.
   -
 - On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
-- Deprecated: winVersion.WIN10_RELEASE_NAME_TO_BUILDS will be removed in 2022.1, there is no direct replacement. (#12544)
+- Deprecated: ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` will be removed in 2022.1, there is no direct replacement. (#12544)
 -
 
 

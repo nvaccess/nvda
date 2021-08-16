@@ -17,5 +17,5 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
-		if windowClass == "Edit" and controlTypes.STATE_READONLY in obj.states:
+		if windowClass == "Edit" and controlTypes.State.READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)

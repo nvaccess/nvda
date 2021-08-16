@@ -265,5 +265,5 @@ class Scintilla(EditableTextWithAutoSelectDetection, Window):
 	def _get_states(self):
 		states = super(Scintilla, self)._get_states()
 		# Scintilla controls are always multiline.
-		states.add(controlTypes.STATE_MULTILINE)
+		states.add(controlTypes.State.MULTILINE)
 		return states

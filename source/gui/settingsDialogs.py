@@ -2496,8 +2496,8 @@ class TouchInteractionPanel(SettingsPanel):
 
 
 class UwpOcrPanel(SettingsPanel):
-	# Translators: The title of the Windows 10 OCR panel.
-	title = _("Windows 10 OCR")
+	# Translators: The title of the Windows OCR panel.
+	title = _("Windows OCR")
 	helpId = "Win10OcrSettings"
 
 	def makeSettings(self, settingsSizer):
@@ -2508,7 +2508,7 @@ class UwpOcrPanel(SettingsPanel):
 		languageChoices = [
 			languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang))
 			for lang in self.languageCodes]
-		# Translators: Label for an option in the Windows 10 OCR dialog.
+		# Translators: Label for an option in the Windows OCR dialog.
 		languageLabel = _("Recognition &language:")
 		self.languageChoice = sHelper.addLabeledControl(languageLabel, wx.Choice, choices=languageChoices)
 		self.bindHelpEvent("Win10OcrSettingsRecognitionLanguage", self.languageChoice)

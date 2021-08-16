@@ -104,34 +104,34 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role=controlTypes.Role.BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
-		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.STATE_FOCUSABLE in states or controlTypes.STATE_UNAVAILABLE in states or controlTypes.STATE_EDITABLE in states):
+		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.State.FOCUSABLE in states or controlTypes.State.UNAVAILABLE in states or controlTypes.State.EDITABLE in states):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
 			role = controlTypes.Role.STATICTEXT
 		if attrs.get("detailsSummary") is not None:
-			states.add(controlTypes.STATE_HAS_ARIA_DETAILS)
+			states.add(controlTypes.State.HAS_ARIA_DETAILS)
 		if attrs.get("IAccessibleAction_showlongdesc") is not None:
-			states.add(controlTypes.STATE_HASLONGDESC)
+			states.add(controlTypes.State.HASLONGDESC)
 		if "IAccessibleAction_click" in attrs:
-			states.add(controlTypes.STATE_CLICKABLE)
+			states.add(controlTypes.State.CLICKABLE)
 		grabbed = attrs.get("IAccessible2::attribute_grabbed")
 		if grabbed == "false":
-			states.add(controlTypes.STATE_DRAGGABLE)
+			states.add(controlTypes.State.DRAGGABLE)
 		elif grabbed == "true":
-			states.add(controlTypes.STATE_DRAGGING)
+			states.add(controlTypes.State.DRAGGING)
 		sorted = attrs.get("IAccessible2::attribute_sort")
 		if sorted=="ascending":
-			states.add(controlTypes.STATE_SORTED_ASCENDING)
+			states.add(controlTypes.State.SORTED_ASCENDING)
 		elif sorted=="descending":
-			states.add(controlTypes.STATE_SORTED_DESCENDING)
+			states.add(controlTypes.State.SORTED_DESCENDING)
 		elif sorted=="other":
-			states.add(controlTypes.STATE_SORTED)
+			states.add(controlTypes.State.SORTED)
 		roleText=attrs.get("IAccessible2::attribute_roledescription")
 		if roleText:
 			attrs['roleText']=roleText
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
-			states.add(controlTypes.STATE_DROPTARGET)
-		if role==controlTypes.Role.LINK and controlTypes.STATE_LINKED not in states:
+			states.add(controlTypes.State.DROPTARGET)
+		if role==controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.Role.TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
@@ -151,7 +151,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# checked state instead of pressed. The simplest way to deal with this
 			# identity crisis is to map it to a check box.
 			role = controlTypes.Role.CHECKBOX
-			states.discard(controlTypes.STATE_PRESSED)
+			states.discard(controlTypes.State.PRESSED)
 		attrs['role']=role
 		attrs['states']=states
 		if level != "" and level is not None:
@@ -310,7 +310,7 @@ class Gecko_ia2(VirtualBuffer):
 		return docHandle,ID
 
 	def _shouldIgnoreFocus(self, obj):
-		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.STATE_EDITABLE not in obj.states:
+		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.State.EDITABLE not in obj.states:
 			return True
 		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
 
@@ -321,7 +321,7 @@ class Gecko_ia2(VirtualBuffer):
 		super(Gecko_ia2, self)._postGainFocus(obj)
 
 	def _shouldSetFocusToObj(self, obj):
-		if obj.role == controlTypes.Role.GRAPHIC and controlTypes.STATE_LINKED in obj.states:
+		if obj.role == controlTypes.Role.GRAPHIC and controlTypes.State.LINKED in obj.states:
 			return True
 		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj)
 

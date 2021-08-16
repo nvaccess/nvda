@@ -64,9 +64,9 @@ ariaRolesToNVDARoles: Dict[str, int] = {
 }
 
 ariaSortValuesToNVDAStates: Dict[str, int] = {
-	'descending':controlTypes.STATE_SORTED_DESCENDING,
-	'ascending':controlTypes.STATE_SORTED_ASCENDING,
-	'other':controlTypes.STATE_SORTED,
+	'descending':controlTypes.State.SORTED_DESCENDING,
+	'ascending':controlTypes.State.SORTED_ASCENDING,
+	'other':controlTypes.State.SORTED,
 }
 
 landmarkRoles: Dict[str, str] = {
