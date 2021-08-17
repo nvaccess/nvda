@@ -4,6 +4,7 @@
 
 1. For an installed copy:
     1. Ctrl+Alt+N (Desktop shortcut)
+        - test: `startupShutdownNVDA.Starts from desktop shortcut`
     1. Automatically via Ease of Access on the Windows sign-in screen (at boot or signing out of a previous session)
     1. Automatically via Ease of Access on User Account Control (UAC) screens
     1. Automatically by Ease of Access after signing in to Windows
