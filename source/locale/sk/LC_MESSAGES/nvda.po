@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-11 00:01+0000\n"
-"PO-Revision-Date: 2021-01-30 15:03+0100\n"
+"POT-Creation-Date: 2021-06-25 00:01+0000\n"
+"PO-Revision-Date: 2021-07-01 14:56+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <https://nvda.venik.org>\n"
 "Language: sk\n"
@@ -4077,7 +4077,7 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA will just speak normally."
 msgstr ""
-"Prepína režimy reči medzi ticho, pípanie a reč. Ak je nastavené ticho nvda "
+"Prepína režimy reči medzi ticho, pípanie a reč. Ak je nastavené ticho, nvda "
 "nebude hovoriť. Ak pípanie, NVDA zapípa vždy, keď by mal niečo povedať. Reč "
 "znamená hlasový výstup."
 
@@ -4878,7 +4878,8 @@ msgstr "Služba rozpoznávania textu Windows 10 nie je dostupná"
 
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows 10 OCR."
-msgstr "Pred použitím OCR systému Windows 10 prosím vypnite tienenie obrazovky."
+msgstr ""
+"Pred použitím OCR systému Windows 10 prosím vypnite tienenie obrazovky."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -7124,12 +7125,12 @@ msgstr "Vymaže text výstupu"
 
 #. Translators: Description of a command to move to the next result in the Python Console output pane
 msgid "Move to the next result"
-msgstr "Prejde na nasledujúci výsledok."
+msgstr "Prejde na nasledujúci výsledok"
 
 #. Translators: Description of a command to move to the previous result
 #. in the Python Console output pane
 msgid "Move to the previous result"
-msgstr "Prejde na predchádzajúci výsledok."
+msgstr "Prejde na predchádzajúci výsledok"
 
 #. Translators: Description of a command to select from the current caret position to the end
 #. of the current result in the Python Console output pane
@@ -9632,14 +9633,16 @@ msgstr "&Sledovať zmeny a udalosti UI Automation len pre zamerané prvky"
 #. Advanced settings panel.
 msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
-msgstr "Na sprístupnenie prvkov v dokumentoch Microsoft &Word používať UI Automation"
+msgstr ""
+"Na sprístupnenie prvkov v dokumentoch Microsoft &Word používať UI Automation"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
 "Use UI Automation to access Microsoft &Excel spreadsheet controls when "
 "available"
-msgstr "Na sprístupnenie prvkov v zošitoch Microsoft &Excel používať UI Automation"
+msgstr ""
+"Na sprístupnenie prvkov v zošitoch Microsoft &Excel používať UI Automation"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10166,8 +10169,8 @@ msgstr ""
 "Zaujímajú nás informácie o verzii vášho operačného systému, verzii NVDA, "
 "aktuálny jazyk, krajina v ktorej sa nachádzate a ktorý braillovský riadok a "
 "hlasový výstup používate. Na náš server nikdy neodosielame to, čo NVDA "
-"hovorí a zobrazuje na braillovskom riadku.\n"
-"Podrobný zoznam nájdete v používateľskej príručke.\n"
+"hovorí a zobrazuje na braillovskom riadku. Podrobný zoznam nájdete v "
+"používateľskej príručke.\n"
 "\n"
 "Želáte si povoliť zasielanie údajov z tohto počítača?"
 
@@ -10808,20 +10811,20 @@ msgid ""
 "Shows a browseable message Listing information about a cell's appearance "
 "such as outline and fill colors, rotation and size"
 msgstr ""
-"Zobrazí informačnú správu  o vzhľade bunky "
-"ako napríklad farbu obrysu a výplne, otočenie a veľkosť"
+"V režime prehliadania zobrazí informačnú správu  o vzhľade bunky ako "
+"napríklad farbu obrysu a výplne, otočenie a veľkosť"
 
 #. Translators: The width of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
-msgstr "Šírka bunky: {0.x:.1f} b"
+msgstr "Šírka bunky: {0.x:.1f} bodov"
 
 #. Translators: The height of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
-msgstr "Výška bunky: {0.y:.1f} b"
+msgstr "Výška bunky: {0.y:.1f} bodov"
 
 #. Translators: The rotation in degrees of an Excel cell
 #, python-brace-format
@@ -10862,7 +10865,7 @@ msgstr "Formát čísla: {0}"
 
 #. Translators: If an excel cell has data validation set
 msgid "Has data validation"
-msgstr "Overenie údajov"
+msgstr "Obsahuje overenie údajov"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #, python-brace-format
@@ -10871,7 +10874,7 @@ msgstr "Výzva overenia údajov: {0}"
 
 #. Translators: If an excel cell has conditional formatting
 msgid "Has conditional formatting"
-msgstr "Podmienené formátovanie"
+msgstr "obsahuje Podmienené formátovanie"
 
 #. Translators: If an excel cell has visible gridlines
 msgid "Gridlines are visible"

@@ -1,8 +1,7 @@
-#synthDrivers/oneCore.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2019 Tyler Spivey, NV Access Limited, James Teh, Leonard de Ruijter
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 Tyler Spivey, NV Access Limited, James Teh, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Synth driver for Windows OneCore voices.
 """
@@ -13,12 +12,19 @@ from collections import OrderedDict
 import ctypes
 import winreg
 import wave
-from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
-from synthDriverHandler import isDebugForSynthDriver
+from synthDriverHandler import (
+	findAndSetNextSynth,
+	isDebugForSynthDriver,
+	SynthDriver,
+	synthDoneSpeaking,
+	synthIndexReached,
+	VoiceInfo,
+)
 import io
 from logHandler import log
 import config
 import nvwave
+import queueHandler
 import speech
 import speechXml
 import languageHandler
@@ -71,9 +77,9 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 	def convertLangChangeCommand(self, command):
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
 		if lcid is languageHandler.LCID_NONE:
-			log.debugWarning("Invalid language: %s" % command.lang)
+			log.debugWarning(f"Invalid language: {command.lang}")
 			return None
-		return super(_OcSsmlConverter, self).convertLangChangeCommand(command)
+		return super().convertLangChangeCommand(command)
 
 class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 
@@ -111,6 +117,7 @@ class SynthDriver(SynthDriver):
 	MIN_RATE = 0.5
 	DEFAULT_MAX_RATE = 1.5
 	BOOSTED_MAX_RATE = 6.0
+	MAX_CONSECUTIVE_SPEECH_FAILURES = 5
 
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
@@ -178,6 +185,7 @@ class SynthDriver(SynthDriver):
 		self._isProcessing = False
 		# Initialize the voice to a sane default
 		self.voice=self._getDefaultVoice()
+		self._consecutiveSpeechFailures = 0
 
 	def _maybeInitPlayer(self, wav):
 		"""Initialize audio playback based on the wave header provided by the synthesizer.
@@ -303,6 +311,11 @@ class SynthDriver(SynthDriver):
 		self.rate = rate
 
 	def _processQueue(self):
+		if not self._queuedSpeech and self._player is None:
+			# If oneCore speech has not been successful yet the player will not have initialised. (#11544)
+			# We can't sync the player in this instance.
+			log.debugWarning("Cannot process speech queue as player not set and no speech queued")
+			return
 		if not self._queuedSpeech:
 			# There are no more queued utterances at this point, so call sync.
 			# This blocks while waiting for the final chunk to play,
@@ -344,12 +357,25 @@ class SynthDriver(SynthDriver):
 			log.debug("Queue empty, done processing")
 		self._isProcessing = False
 
+	def _handleSpeechFailure(self):
+		# The C++ code will log an error with details.
+		log.error("OneCore synthesizer failed to speak")  # so a warning beep is played when speech fails
+		try:
+			self._processQueue()
+		finally:
+			self._consecutiveSpeechFailures += 1
+			if self._consecutiveSpeechFailures >= self.MAX_CONSECUTIVE_SPEECH_FAILURES:
+				log.debugWarning("Too many consecutive speech failures, changing synth")
+				queueHandler.queueFunction(queueHandler.eventQueue, findAndSetNextSynth, self.name)
+				self._consecutiveSpeechFailures = 0
+
 	def _callback(self, bytes, len, markers):
 		if len == 0:
-			# The C++ code will log an error with details.
-			log.debugWarning("ocSpeech_speak failed!")
-			self._processQueue()
+			# Speech failed
+			self._handleSpeechFailure()
 			return
+		else:
+			self._consecutiveSpeechFailures = 0
 		# This gets called in a background thread.
 		stream = io.BytesIO(ctypes.string_at(bytes, len))
 		wav = wave.open(stream, "r")
@@ -461,34 +487,46 @@ class SynthDriver(SynthDriver):
 				return
 		raise LookupError("No such voice: %s"%id)
 
-	def _getDefaultVoice(self):
+	def _getDefaultVoice(self, pickAny: bool = True) -> str:
 		"""
 		Finds the best available voice that can be used as a default.
-		It first tries finding a voice with the same language and country as the user's configured Windows language (E.g. en_AU), 
-		else one that matches just the language (E.g. en), 
-		else simply the first available.
+		It first tries finding a voice with the same language as the user's configured NVDA language
+		else one that matches the system language.
+		else any voice if pickAny is True.
+		Uses the Windows locale (eg en_AU) to provide country information for the voice where possible.
 		@returns: the ID of the voice, suitable for passing to self.voice for setting.
-		@rtype: string
 		"""
 		voices = self.availableVoices
-		# Try matching to NVDA language
-		fullLanguage=languageHandler.getWindowsLanguage()
+		fullWindowsLanguage = languageHandler.getWindowsLanguage()
+		baseWindowsLanguage = fullWindowsLanguage.split('_')[0]
+		NVDALanguage = languageHandler.getLanguage()
+		if NVDALanguage.startswith(baseWindowsLanguage):
+			# add country information if it matches
+			NVDALanguage = fullWindowsLanguage
+		# Try matching to the NVDA language
 		for voice in voices.values():
-			if voice.language==fullLanguage:
+			if voice.language.startswith(NVDALanguage):
 				return voice.id
-		baseLanguage=fullLanguage.split('_')[0]
-		if baseLanguage!=fullLanguage:
+		# Try matching to the system language and country
+		if fullWindowsLanguage != NVDALanguage:
 			for voice in voices.values():
-				if voice.language.startswith(baseLanguage):
+				if voice.language == fullWindowsLanguage:
 					return voice.id
-		# Just use the first available
-		for voice in voices.values():
-			return voice.id
-		raise RuntimeError("No voices available")
-
-	def _get_language(self):
-		return self._dll.ocSpeech_getCurrentVoiceLanguage(self._handle)
+		# Try matching to the system language
+		if baseWindowsLanguage not in {fullWindowsLanguage, NVDALanguage}:
+			for voice in voices.values():
+				if voice.language.startswith(baseWindowsLanguage):
+					return voice.id
+		if pickAny:
+			for voice in voices.values():
+				return voice.id
+			raise VoiceUnsupportedError("No voices available")
+		raise VoiceUnsupportedError("No voices available that match the user language")
 
 	def pause(self, switch):
 		if self._player:
 			self._player.pause(switch)
+
+
+class VoiceUnsupportedError(RuntimeError):
+	pass

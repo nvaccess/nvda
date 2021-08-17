@@ -1,5 +1,8 @@
 ﻿#locale/ZH-TW/symbols.dic
-#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2019/5/24
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2017 NVDA Contributors
+#This file is covered by the GNU General Public License.
+#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2021/5/21
 # 在本檔案內，當一個符號的解釋出現多音字（或破音字）時，為使其報讀正確，得用另一同音字代替，以避免混淆。
 
 complexSymbols:
@@ -34,7 +37,7 @@ negative number	負	none	norep
 \t	tab
 \n	航尾	char	# 取行尾同音
 \f	分頁符號	none
-\r	carriage return	char
+\r	航尾	char
  	空格	char
  	space	char	# no-break space
 
@@ -57,17 +60,12 @@ $	錢號	all	norep
 (	半形左括號	most	always
 )	半形右括號	most	always
 *	star	some
-+	plus	some
-−	minus	some
 ,	comma	all	always
 -	dash	most
 .	dot	some
 /	slash	some
 :	colon	most	norep
 ;	semi	most
-<	less	some
->	greater	some
-=	equals	some
 ?	question	all
 @	小老鼠	some
 [	半形左中括號	most	always
@@ -114,8 +112,7 @@ _	半形底線	most
 ▪	實心小方形	most
 ◾	空心小方形	most
 ◦	白色項目符號	most
-⇒	右向雙箭頭	some
-⇨	右向粗箭頭	some
+⇨	向右粗箭頭	some
 ➔	向右鍵頭	some
 ➢	right arrowhead	some
 ❖	black diamond minus white X	some
@@ -139,7 +136,6 @@ _	半形底線	most
 ⁸	上標8	some
 ⁹	上標9	some
 ⁺	上標加號	some
-⁻	上標減號	some
 ⁼	上標等號	some
 ⁽	上標左小括號	some
 ⁾	上標右小括號	some
@@ -163,70 +159,208 @@ _	半形底線	most
 ™	商標	some
 ©	Copyright	some
 ℠	ServiceMark	some
-±	正負號	some
-×	乘號	some
-÷	除號	some
 ←	左箭頭	some
+↑	上箭頭	some
 →	右箭頭	some
+↓	下箭頭	some
 ✓	勾選	some
-✔	勾選	some
 🡺	右箭頭	some
-†	dagger	some
-‡	double dagger	some
+✔	勾選	some
+†	拉丁十字	some
+‡	雙拉丁十字	some
 ‣	三角形項目符號	none
 ✗	x形項目符號	none
-￼	object replacement character	none
+￼	物件替代字元	none
+⊕	圓圈加號	none
+⊖	圓圈減號	none
+⇄	向右箭頭在上，向左箭頭在下	none
+⇒	向右雙箭頭	none
 
-#Mathematical Operators U+2200 to U+220F
-∀	For All 	none
+#Arithmetic operators
++	plus	some
+−	minus	some
+×	乘以	some
+⋅	乘以	some
+⨯	乘以	none
+∕	除以	some
+⁄	除以	some
+÷	除以	some
+∓	減加	some
+±	加減	some
+
+#Set operations
+∖	差集	none
+⊍	多重集乘積	none
+𝒫	積集合	none
+𝔓	積集合	none
+℘	積集合	none
 ∁	補集	none
-∂	偏微分	none
-∃	存在有	none
-∄	不存在有	none
+
+#Set relations and set constructions
 ∅	空集合	none
-∆	增量符號	none
-∇	NABLA	none
-∈	屬於	none
-∉	不屬於	none
-∊	SMALL ELEMENT OF	none
-∋	CONTAINS AS MEMBER	none
-∌	DOES NOT CONTAIN AS MEMBER	none
-∍	SMALL CONTAINS AS MEMBER	none
-∎	證明完畢	none
-∏	N-ARY PRODUCT	none
+⊂	包含於	none
+⊄	不包含於	none
+⊃	包含	none
+⊅	不包含	none
+⊆	包含於或等於	none
+⊈	不包含於也不等於	none
+⊇	包含或等於	none
+⊉	不包含也不等於	none
+⊌	多重集合	none
 
-# Miscellaneous Mathematical Operators
+#Equality signs
+=	equals	some
+≃	漸近於	none
+≄	非漸近於	none
+≅	約等於	none
+≆	約等於但不等於	none
+≈	約等於none
+≌	全等於	none
+≍	等價於	none
+≭	非等價於	none
+≎	幾何上等價於	none
+≑	幾何上等於	none
+≚	等角於	none
+≬	介於	none
+≠	不等於	none
+≡	同餘	none
+≣	恆等於	none
+≢	非同餘	none
+∼	近似於	none
+≙	估計為	none
+≟	問號等於	none
 
-∑	N-ARY SUMMATION	none
-√	開根號	some
-∛	開立方根號	none
-∜	開四次方根號	none
-∝	正比於	none
-∞	無窮大	some
+#comparison signs
+<	less	some
+>	greater	some
+≤	小於等於	none
+≦	小於等於	none
+≪	遠小於	none
+≥	大於等於	none
+≧	大於等於	none
+≫	遠大於	none
+≶	小於或大於	none
+≷	大於或小於	none
+≮	不小於	none
+≯	不大於	none
+
+#Functions
+⁻	上標減號	some
+∘	圓圈算符	none
+∂	偏微分	none
+∇	梯度	none
+
+#Geometry and linear Algebra
+⃗	向量	none
+△	三角形	none
+▭	矩形	none
 ∟	直角	none
 ∠	角	none
 ∥	平行	none
-∦	不平型	none
-∧	邏輯「與」	none
-∨	邏輯「或」	none
-¬	邏輯非	none
+∦	不平行	none
+⊥	垂直	none
+⟂	正交於	none
+‖	向量範數	none
+̂	正規化	none
+∿	正弦波	none
+∡	測量角	none
+∢	球面角	none
+
+#Logical operators
+∀	對於所有	none
+∃	存在	none
+∄	不存在	none
+⇏	被斜線撇過的向右雙箭頭	none
+⇐	向左雙箭頭	none
+
+#Other mathematical Operators
+∈	屬於	none
+∉	不屬於	none
+∊	小型元素	none
+∋	包含元素	none
+∌	不包含元素	none
+∍	包含小型元素	none
+∎	證明完畢	none
+∏	連續乘積	none
+∐	連續餘積	none
+∑	加總	none
+√	根號	none
+∛	立方根	none
+∜	四次方根	none
+∝	正比於	none
+∞	無限	none
+∧	且	none
+∨	或	none
+¬	非	none
 ∩	交集	none
 ∪	聯集	none
 ∫	積分	none
-∵	因為	none
+∬	雙重積分	none
+∭	三重積分	none
+∮	曲線積分	none
+∯	表面積分	none
+∰	體積積分	none
+∱	順時鐘方向積分	none
+∲	順時鐘方向封閉積分	none
+∳	逆時鐘方向封閉積分	none
 ∴	所以	none
+∵	因為	none
 ∶	比	none
-∷	PROPORTION	none
-≤	小於等於	none
-≥	大於等於	none
-⊂	包含於	none
-⊃	包含	none
-⊆	包含於等於	none
-⊇	包含等於	none
+∷	正比	none
+∹	減號冒號	none
+∺	幾何比例	none
+≀	圈積	none
+≏	差異	none
+≐	接近極線值	none
+∙	圓點算符	none
+∣	整除	none
+∤	不整除	none
+≔	冒號等於	none
+≕	等號冒號	none
+≺	precedes	none
+≻	succeeds	none
+⊀	does not precede	none
+⊁	does not succeed	none
 
+#Number sets
+𝔸	代數數	none
+ℂ	複數	none
+ℑ	複數中的虛數部分	none
+ℍ	四元數	none
+ℕ	自然數	none
+𝕁	非複數	none
+ℚ	有理數	none
+ℝ	實數	none
+ℜ	複數中的實數部分	none
+ℤ	整數	none
+ℵ	aleph number	none
+ℶ	beth number	none
+
+# Vulgur Fractions U+2150 to U+215E
+½	二分之一	none
+⅓	三分之一	none
+⅔	三分之二	none
+¼	四分之一	none
+¾	四分之三	none
+⅕	五分之一	none
+⅖	五分之二	none
+⅗	五分之三	none
+⅘	五分之四	none
+⅙	六分之一	none
+⅚	六分之五	none
+⅛	八分之一	none
+⅜	八分之三	none
+⅝	八分之五	none
+⅞	八分之七	none
+⅐	七分之一	none
+⅑	九分之一	none
+⅒	十分之一	none
+
+# Miscellaneous Technical
+⌘	Mac Command 鍵	none
+
+# 中文標點
 　	全形空格	all
-\r	航尾	char
-negative number	負
 ·	間隔號	most
 ，	逗號	all	always
 、	頓號	all	always
@@ -236,7 +370,6 @@ negative number	負
 ？	問號	all	always
 ！	驚嘆號	all	always
 ：	冒號	all	always
-…	省略號	most
 ‥	刪節號	most
 ︱	直破折號	most
 ─	破折號	most
@@ -284,10 +417,8 @@ negative number	負
 ＆	連接號	most
 ＊	星號	most
 ※	重點符號	most
-§	章節符號	most
 〃	同上符號	most
 ○	0	none
-△	三角形	some
 ▲	上實心三角形	some
 ◎	雙圓圈	most
 ☆	空心星號	most
@@ -303,32 +434,19 @@ negative number	負
 ＜	小於	some
 ＞	大於	some
 ＝	等於	some
-≦	小於等於	some
-≧	大於等於	some
-≠	不等於	some
-≒	約等於	some
-≌	全等於	some
 ﹢	正號	some
-†	拉丁十字	some
 ﹣	負號	some
 ～	波浪號	some
-⊥	垂直	some
-∟	直角	some
 ⊿	直角三角形	some
 ㏒	常用對數	some
 ㏑	自然對數	some
-∮	線積分	some
 ♀	女性符號	some
 ♂	男性符號	some
-⊕	十字圓	most
 ⊙	中心點圓	most
-↑	上箭頭	some
-↓	下箭頭	some
-↖	左上箭頭	most
-↗	右上箭頭	most
-↙	左下箭頭	most
-↘	右下箭頭	most
-∣	直線	some
+↖	左上箭頭	some
+↗	右上箭頭	some
+↙	左下箭頭	some
+↘	右下箭頭	some
 ／	斜線	some
 ＼	反斜線	some
 ￥	人民幣	none
@@ -337,7 +455,6 @@ negative number	負
 ＠	全形小老鼠	some
 ℃	度C	none
 ℉	度F	none
-∘	度	none
 ㏕	百分之一英吋	none
 ㎜	毫米	none
 ㎝	公分	none
@@ -351,6 +468,7 @@ negative number	負
 嗧	加侖	none
 瓩	千瓦	none
 糎	公分	none
+
 # 選擇題選項
 ①	圓圈數字1	none
 ②	圓圈數字2	none
@@ -378,33 +496,35 @@ negative number	負
 	選項B	none
 	選項C	none
 	選項D	none
+
 # 全形英文大寫字母
-Ａ	a	none
-Ｂ	b	none
-Ｃ	c	none
-Ｄ	d	none
-Ｅ	e	none
-Ｆ	f	none
-Ｇ	g	none
-Ｈ	h	none
-Ｉ	i	none
-Ｊ	j	none
-Ｋ	k	none
-Ｌ	l	none
-Ｍ	m	none
-Ｎ	n	none
-Ｏ	o	none
-Ｐ	p	none
-Ｑ	q	none
-Ｒ	r	none
-Ｓ	s	none
-Ｔ	t	none
-Ｕ	u	none
-Ｖ	v	none
-Ｗ	w	none
-Ｘ	x	none
-Ｙ	y	none
-Ｚ	z	none
+Ａ	A	none
+Ｂ	B	none
+Ｃ	C	none
+Ｄ	D	none
+Ｅ	E	none
+Ｆ	F	none
+Ｇ	G	none
+Ｈ	H	none
+ＩI		none
+Ｊ	J	none
+Ｋ	K	none
+Ｌ	L	none
+Ｍ	M	none
+Ｎ	N	none
+Ｏ	O	none
+Ｐ	P	none
+Ｑ	Q	none
+Ｒ	R	none
+Ｓ	S	none
+Ｔ	T	none
+Ｕ	U	none
+Ｖ	V	none
+Ｗ	W	none
+Ｘ	X	none
+Ｙ	Y	none
+Ｚ	Z	none
+
 # 不成字部首
 辶	綽	none
 # 點字符號 (Add 64braille symbols) 
@@ -472,29 +592,6 @@ negative number	負
 ⠽	點字一、三、四、五、六點	all
 ⠾	點字二、三、四、五、六點	all
 ⠿	點字一、二、三、四、五、六點	all
-# Vulgur Fractions U+2150 to U+215E
-⅐	七分之一	none
-⅑	九分之一	none
-⅒	十分之一	none
-⅓	三分之一	none
-⅔	三分之二	none
-⅕	五分之一	none
-⅖	五分之二	none
-⅗	五分之三	none
-⅘	五分之四	none
-⅙	六分之一	none
-⅚	六分之五	none
-⅛	八分之一	none
-⅜	八分之三	none
-⅝	八分之五	none
-⅞	八分之七	none
-¼	四分之一	none
-½	二分之一	none
-¾	四分之三	none
-
-
-# Miscellaneous Technical
-⌘	Mac Command 鍵	none
 
 # 以下的「中日韓相容表意文字」，每個字的外觀與該字的詞解字相同，或近似，但內碼不同。
 # 了解這些字僅是因為目前微軟的TTS無法讀出，目前暫時加入，未來（2020/12/31問題解決後，將會移除

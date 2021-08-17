@@ -39,7 +39,7 @@ class ProgressBar(NVDAObject):
 	def event_valueChange(self):
 		pbConf=config.conf["presentation"]["progressBarUpdates"]
 		states=self.states
-		if pbConf["progressBarOutputMode"]=="off" or controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
+		if pbConf["progressBarOutputMode"]=="off" or controlTypes.State.INVISIBLE in states or controlTypes.State.OFFSCREEN in states:
 			return super(ProgressBar,self).event_valueChange()
 		val=self.value
 		try:
@@ -85,19 +85,19 @@ class Dialog(NVDAObject):
 			childStates=child.states
 			childRole=child.role
 			#We don't want to handle invisible or unavailable objects
-			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
+			if controlTypes.State.INVISIBLE in childStates or controlTypes.State.UNAVAILABLE in childStates: 
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (
-					controlTypes.ROLE_PROPERTYPAGE,
-					controlTypes.ROLE_PANE,
-					controlTypes.ROLE_PANEL,
-					controlTypes.ROLE_WINDOW,
-					controlTypes.ROLE_GROUPING,
-					controlTypes.ROLE_PARAGRAPH,
-					controlTypes.ROLE_SECTION,
-					controlTypes.ROLE_TEXTFRAME,
-					controlTypes.ROLE_UNKNOWN
+					controlTypes.Role.PROPERTYPAGE,
+					controlTypes.Role.PANE,
+					controlTypes.Role.PANEL,
+					controlTypes.Role.WINDOW,
+					controlTypes.Role.GROUPING,
+					controlTypes.Role.PARAGRAPH,
+					controlTypes.Role.SECTION,
+					controlTypes.Role.TEXTFRAME,
+					controlTypes.Role.UNKNOWN
 			):
 				#Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
 				#Stops double reporting when focus is in a property page in a dialog
@@ -108,27 +108,27 @@ class Dialog(NVDAObject):
 					return None
 				continue
 			#If the child is focused  we should just stop and return None
-			if not allowFocusedDescendants and controlTypes.STATE_FOCUSED in child.states:
+			if not allowFocusedDescendants and controlTypes.State.FOCUSED in child.states:
 				return None
 			# We only want text from certain controls.
 			if not (
 				 # Static text, labels and links
-				 childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL,controlTypes.ROLE_LINK)
+				 childRole in (controlTypes.Role.STATICTEXT,controlTypes.Role.LABEL,controlTypes.Role.LINK)
 				# Read-only, non-multiline edit fields
-				or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates and controlTypes.STATE_MULTILINE not in childStates)
+				or (childRole==controlTypes.Role.EDITABLETEXT and controlTypes.State.READONLY in childStates and controlTypes.State.MULTILINE not in childStates)
 			):
 				continue
 			#We should ignore a text object directly after a grouping object, as it's probably the grouping's description
-			if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
+			if index>0 and children[index-1].role==controlTypes.Role.GROUPING:
 				continue
 			#Like the last one, but a graphic might be before the grouping's description
-			if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
+			if index>1 and children[index-1].role==controlTypes.Role.GRAPHIC and children[index-2].role==controlTypes.Role.GROUPING:
 				continue
 			childName=child.name
-			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE,controlTypes.ROLE_BUTTON) and children[index+1].name==childName:
+			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.Role.GRAPHIC,controlTypes.Role.STATICTEXT,controlTypes.Role.SEPARATOR,controlTypes.Role.WINDOW,controlTypes.Role.PANE,controlTypes.Role.BUTTON) and children[index+1].name==childName:
 				# This is almost certainly the label for the next object, so skip it.
 				continue
-			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole in (controlTypes.ROLE_LABEL,controlTypes.ROLE_STATICTEXT)
+			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole in (controlTypes.Role.LABEL,controlTypes.Role.STATICTEXT)
 			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo is not NVDAObjectTextInfo:
 				childText=child.basicText
@@ -348,7 +348,7 @@ class Terminal(LiveText, EditableText):
 	This is an L{EditableText} object,
 	as well as a L{liveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
 	"""
-	role = controlTypes.ROLE_TERMINAL
+	role = controlTypes.Role.TERMINAL
 
 	def event_gainFocus(self):
 		super(Terminal, self).event_gainFocus()
@@ -507,12 +507,12 @@ class CandidateItem(NVDAObject):
 	def _get_visibleCandidateItemsText(self):
 		obj=self
 		textList=[]
-		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.STATE_INVISIBLE not in obj.states:
+		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.State.INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.previous
 		textList.reverse()
 		obj=self.next
-		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.STATE_INVISIBLE not in obj.states:
+		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.State.INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.next
 		if len(textList)<=1: return None
@@ -661,7 +661,7 @@ class RowWithoutCellObjects(NVDAObject):
 
 class _FakeTableCell(NVDAObject):
 
-	role = controlTypes.ROLE_TABLECELL
+	role = controlTypes.Role.TABLECELL
 
 	def __init__(self, parent=None, column=None):
 		super(_FakeTableCell, self).__init__()
@@ -706,8 +706,8 @@ class _FakeTableCell(NVDAObject):
 	def _get_states(self):
 		states = self.parent.states.copy()
 		if self.location and self.location.width == 0:
-			states.add(controlTypes.STATE_INVISIBLE)
-		states.discard(controlTypes.STATE_CHECKED)
+			states.add(controlTypes.State.INVISIBLE)
+		states.discard(controlTypes.State.CHECKED)
 		return states
 
 
@@ -727,7 +727,7 @@ class ToolTip(NVDAObject):
 	"""Provides information about an item over which the user is hovering a cursor.
 	The object should fire a show event when it appears.
 	"""
-	role = controlTypes.ROLE_TOOLTIP
+	role = controlTypes.Role.TOOLTIP
 
 	def event_show(self):
 		if not config.conf["presentation"]["reportTooltips"]:

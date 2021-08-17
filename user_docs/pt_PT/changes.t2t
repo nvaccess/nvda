@@ -16,6 +16,7 @@ Notas importantes:
 - Esta versão exige uma mudança na API de compatibilidade dos extras.
 Os extras terão de ser testados e, pelo menos, reflectir esta mudança no manifest.ini.
 - Esta versão termina com o suporte ao Adobe Flash.
+-
 
 
 == Novas Funcionalidades ==
@@ -25,6 +26,7 @@ Os extras terão de ser testados e, pelo menos, reflectir esta mudança no manif
   - alt+seta acima/abaixo salta para o anterior/próximo resultado (juntar shift para seleccionar);
   - control+l limpa o painel de resultados;
 - O NVDA passa a anunciar as categorias associadas a um compromisso no Microsoft Outlook, se houver algum. (#11598)
+- Suporte para os dispositivos Braille Seika da Nippon Telesoft. (#11514)
 
 
 == Alterações ==
@@ -72,7 +74,7 @@ Os extras terão de ser testados e, pelo menos, reflectir esta mudança no manif
 - O NVDA já não anunciará "↑↑↑" para emojis em alguns idiomas. (#11963)
 
 
-== Changes for Developers ==
+== Alterações para desenvolvedores ==
 - Note: this is an Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
   - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons`` is no longer supported, and ``scons.py`` has also been removed.

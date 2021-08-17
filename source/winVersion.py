@@ -32,6 +32,8 @@ _BUILDS_TO_RELEASE_NAMES = {
 	19041: "Windows 10 2004",
 	19042: "Windows 10 20H2",
 	19043: "Windows 10 21H1",
+	19044: "Windows 10 21H2",
+	20348: "Windows Server 2022",
 	22000: "Windows 11 21H2",
 }
 
@@ -41,9 +43,6 @@ def _getRunningVersionNameFromWinReg() -> str:
 	"""Returns the Windows release name defined in Windows Registry.
 	This is applicable on Windows 10 Version 1511 (build 10586) and later.
 	"""
-	# Release name is recorded in Windows Registry from Windows 10 Version 1511 (build 10586) onwards.
-	if getWinVer() < WIN10_1511:
-		raise RuntimeError("Release name is not recorded in Windows Registry on this version of Windows")
 	# Cache the version in use on the system.
 	with winreg.OpenKey(
 		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
@@ -56,7 +55,9 @@ def _getRunningVersionNameFromWinReg() -> str:
 			try:
 				releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
 			except OSError:
-				releaseId = ""
+				raise RuntimeError(
+					"Release name is not recorded in Windows Registry on this version of Windows"
+				) from None
 	return releaseId
 
 
@@ -151,9 +152,12 @@ WIN10_1909 = WinVersion(major=10, minor=0, build=18363)
 WIN10_2004 = WinVersion(major=10, minor=0, build=19041)
 WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
 WIN10_21H1 = WinVersion(major=10, minor=0, build=19043)
+WIN10_21H2 = WinVersion(major=10, minor=0, build=19044)
+WINSERVER_2022 = WinVersion(major=10, minor=0, build=20348)
 WIN11 = WIN11_21H2 = WinVersion(major=10, minor=0, build=22000)
 
 
+@functools.lru_cache(maxsize=1)
 def getWinVer():
 	"""Returns a record of current Windows version NVDA is running on.
 	"""
@@ -213,5 +217,10 @@ if version_year < 2022:
 	}
 
 
-def isFullScreenMagnificationAvailable():
+def isFullScreenMagnificationAvailable() -> bool:
+	"""
+	Technically this is always False. The Magnification API has been marked by MS as unsupported for
+	WOW64 applications such as NVDA. For our usages, support has been added since Windows 8, relying on our
+	testing our specific usage of the API with each Windows version since Windows 8
+	"""
 	return getWinVer() >= WIN8

@@ -66,7 +66,7 @@ For yderligere oplysninger, kan du [læse den fulde licens https://www.gnu.org/l
 For oplysninger om, hvilke undtagelser gør sig gældende, læs licensvilkårene under "Licens" under NVDA-menu>Hjælp.
 
 + Systemkrav +[SystemRequirements]
-- Operativsystemer: alle 32-bit og 64-bit versioner af Windows 7, Windows 8, Windows 8.1 og Windows 10, samt alle serverstyresystemer fra Server 2008 R2.
+- Operativsystemer: alle 32-bit og 64-bit versioner af Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 samt alle serverstyresystemer fra Server 2008 R2.
  - For Windows 7 kræver NVDA Service Pack 1 eller højere.
  - For Windows Server 2008  R2 kræver NVDA Service Pack 1 eller højere.
 - Mindst 150 MB lagerplads.
@@ -795,9 +795,12 @@ Du kan aktivere funktionen ved at gå til [indstillingskategorien "Syn" #VisionS
 
 Vær opmærksom på at du ikke kan udføre nogle handlinger, der tager udgangspunkt i noget visuelt på skærmen såsom at tage et skærmbillede eller benytte [Windows 10 tekstgenkendelse #Win10Ocr], hvis denne funktion er aktiveret.
 
+For at sikre sikkerheden, bekræft at skærmtæppet virker korrekt med nye eller eksperimentelle versioner af Windows.
+Hvis du bruger en ældre version af NVDA end 2021.2 og en nyere Windows-udgave end Windows 10 21H2, kan skærmtæppet muligvis holde op med at fungere uden varsel.
+
 + Indholdsgenkendelse +[ContentRecognition]
-Når forfattere ikke giver tilstrækkelig information til en skærmlæserbruger til at bestemme indholdet af noget, kan forskellige værktøjer bruges til at forsøge at genkende indholdet fra et billede.
-NVDA understøtter den optiske tegngenkendelse (OCR) -funktionalitet indbygget i Windows 10 til at genkende tekst fra billeder.
+Når forfattere ikke giver tilstrækkelig information til en skærmlæserbruger til at bestemme indholdet af noget, kan forskellige værktøjer bruges til at forsøge at genkende indholdet på et billede.
+NVDA understøtter den optiske tegngenkendelse (OCR) -funktionalitet indbygget i Windows 10 og nyere til at genkende tekst fra billeder.
 Yderligere indholdsgenkendelse kan leveres i tilføjelser til NVDA.
 
 Når du bruger en kommando til genkendelse af indhold, genkender NVDA indhold fra det aktuelle [navigatorobjekt #ObjectNavigation].
@@ -809,17 +812,17 @@ Når tekstgenkendelsen er udført, vil resultatet blive præsenteret i et dokume
 Et tryk på Enter eller mellemrum vil aktivere (normalt klikke) teksten ved markøren, hvis det er muligt.
 Et tryk på escape afviser genkendelsesresultatet.
 
-++ Windows 10 Tekstgenkendelse ++[Win10Ocr]
-Windows 10 indeholder tekstgenkendelsesfunktionalitet til mange sprog.
+++ Windows Tekstgenkendelse ++[Win10Ocr]
+Windows 10 og nyere indeholder tekstgenkendelsesfunktionalitet til mange sprog.
 NVDA kan bruge denne funktionalitet til at genkende tekst fra billeder eller utilgængelige applikationer.
 
-Du kan indstille det sprog, der skal bruges til tekstgenkendelse ved brug af indstillingskategorien [Windows 10 Tekstgenkendelse #Win10OcrSettings] i [NVDAs indstillinger #NVDASettings].
+Du kan indstille det sprog, der skal bruges til tekstgenkendelse ved brug af indstillingskategorien [Windows Tekstgenkendelse #Win10OcrSettings] i [NVDAs indstillinger #NVDASettings].
 Yderligere sprog kan installeres ved at åbne startmenuen, vælge Indstillinger, vælge Tid og sprog, Område og sprog og derefter vælge Tilføj et sprog.
 
-Bemærk at Windows 10 tekstgenkendelsen kan forekomme delvist eller fuldkommen inkompatibel med [synshjælpemidler i NVDA #Vision] eller andre eksterne visuelle hjælpemidler. Disse skal deaktiveres, før du fortsætter.
+Bemærk at Windows tekstgenkendelsen kan forekomme delvist eller fuldkommen inkompatibel med [synshjælpemidler i NVDA #Vision] eller andre eksterne visuelle hjælpemidler. Disse skal deaktiveres, før du fortsætter.
 
 %Kc:beginInclude
-For at genkende teksten af det aktuelle navigatorobjekt ved hjælp af Windows 10 Tekstgenkendelse, skal du trykke på NVDA + r.
+For at genkende teksten af det aktuelle navigatorobjekt ved hjælp af Windows Tekstgenkendelse, skal du trykke på NVDA + r.
 %Kc:endInclude
 
 + Programspecifikke NVDA-kommandoer +[ApplicationSpecificFeatures]
@@ -1177,8 +1180,13 @@ Denne indstilling er slået fra som standard.
 Tast: NVDA+p
 
 Her kan du vælge, hvor mange sætningstegn og andre symboler, der skal udtales som ord.
-Hvis du fx. sætter niveauet til "alt", vil alle symboler blive udtalt.
-Denne indstilling gælder for alle talesynteser, ikke kun den, som er aktiv i øjeblikket.
+Hvis du f.eks. sætter niveauet til "alt", vil alle symboler blive udtalt.
+Denne indstilling gælder for alle talesynteser og ikke kun den, der er aktiv i øjeblikket.
+
+==== Læs alle sætningstegn og symboler, når du gennemgår tekst ord for ord ====[SpeechSettingsSymbolLevelWord]
+Når man gennemgår en tekst ord for ord, er det ofte ønskeligt at få flere detaljer, end når man læser en hel sætning.
+Når denne indstilling er markeret (som standard), udtaler NVDA navnet på al tegnsætning og andre symboler, når det gennemgås ord for ord, som om ovenstående tegnsætningsniveau var sat til "alle".
+Bemærk: Under alle omstændigheder, ved gennemgang af en tekst tegn for tegn, rapporterer NVDA altid tegnsætningen og andre symboler.
 
 ==== Brug stemmens aktuelle sprog til behandling af specialtegn og symboler ====[SpeechSettingsTrust]
 Med den indstilling, som er slået til som standard, kan du vælge om du vil benytte sproget for den aktuelle stemme til udtale af tegn og symboler.
@@ -1789,8 +1797,8 @@ Tonens toneleje vil forøges ved hvert mellemrum, og for tab vil tonen forøges 
 - Både Tale og Toner: Denne mulighed vil læse indrykningen ved brug af begge metoder.
 -
 
-+++ Windows 10 tekstgenkendelse +++[Win10OcrSettings]
-Indstillingerne i denne kategori lader dig konfigurere [Windows 10 Tekstgenkendelse #Win10Ocr].
++++ Windows Tekstgenkendelse +++[Win10OcrSettings]
+Indstillingerne i denne kategori lader dig konfigurere [Windows Tekstgenkendelse #Win10Ocr].
 Denne kategori indeholder følgende indstillinger:
 
 ==== Sprog til tekstgenkendelse ====[Win10OcrSettingsRecognitionLanguage]
@@ -1829,7 +1837,7 @@ Hvis du oplever at NVDA forekommer langsom, kan du forsøge dig med denne indsti
 ==== Benyt UI Automation til at få adgang til kontrolelementer for Microsoft &Word-dokumenter, når disse er tilgængelige ====
 Når denne indstilling er aktiveret, vil NVDA forsøge at benytte Microsoft UI Automation Accessibility API for at indfange information om diverse kontrolelementer i Microsoft Word-dokumenter.
 Dette omfatter selve Microsoft Word, samt under skrivning og læsning af meddelelser i Microsoft Outlook.
-For de seneste versioner af Microsoft Office 2016/365 kørende på windows 10 er understøttelse af UI Automation komplet nok til næsten at give samme oplevelse, der allerede leveres med NVDA. Denne indstilling har også den fordel, at reaktionshastigheden er øget markant.
+For de seneste versioner af Microsoft Office 2016/365 kørende på windows 10 og nyere er understøttelse af UI Automation komplet nok til næsten at give samme oplevelse, der allerede leveres med NVDA. Denne indstilling har også den fordel, at reaktionshastigheden er øget markant.
 Vær dog opmærksom på, at dette også kan betyde at noget information ikke er synligt, eller vises forkert, hvilket betyder at denne understøttelse ikke altid kan forekomme pålidelig.
 Vi anbefaler ikke at størstedelen af brugere slår denne indstilling til, men vi ønsker gerne henvendelser fra brugere af Office 2016/365.
 
@@ -1849,6 +1857,14 @@ Du kan vælge følgende indstillinger:
 - Nej: Brug ikke UIA, selv hvis NVDA ikke kan forbinde sig selv med processen. Dette kan være nyttigt, hvis udviklere er i færd med at problemløse IA2 og vil sikre sig, at NVDA ikke benytter UIA.
 -
 
+==== Aktivér eksperimentel understøttelse for ARIA-annotationer ====[Annotations]
+Denne indstilling bruges til at aktivere funktioner, der er afhængige af ARIA-annotationer.
+Nogle af disse funktioner er ufuldstændige.
+Følgende indstillinger er tilgængelige:
+- "Rapportér detaljer i gennemsynstilstand": Denne indstilling giver besked, hvis et objekt har yderligere detaljer i gennemsynstilstand.
+Du kan få en oversigt over detaljerne, hvis du tildeler en kommando til funktionen via [dialogen "Håndtér Kommandoer" #InputGestures].
+-
+
 ==== Benyt UI Automation til at få adgang til kontrolelementer for Microsoft &Excel-regneark, når disse er tilgængelige ====[UseUiaForExcel]
 Når denne indstilling er aktiveret, vil NVDA forsøge at benytte Microsoft UI Automation Accessibility API til at få informationer fra kontrolelementer for Microsoft Excel-regneark.
 Dette er en eksperimental funktion, og nogle funktioner vil ikke være tilgængelig i denne tilstand.
@@ -1863,14 +1879,14 @@ Selvom denne indstilling kan forbedre ydeevnen og forhindre at noget konsolindho
 Denne funktion kan aktiveres i Windows 10 version 1607 og nyere versioner af Windows 10, hvor UI Automation ikke er tilgængelig.
 Advarsel: Med denne indstilling aktiveret vil indtastede tegn, der ikke vises på skærmen såsom adgangskoder ikke blive undertrykket.
 I usikre miljøer, kan du midlertidigt deaktivere [sig indtastede tegn #KeyboardSettingsSpeakTypedCharacters] og [sig indtastede ord #KeyboardSettingsSpeakTypedWords] under indtastning af adgangskoder.
+
 ==== Diff-algoritme ====[DiffAlgo]
 Denne indstilling styrer, hvordan NVDA skal bestemme teksten, der skal udtales i terminalmiljøer.
 Der er følgende indstillinger:
-- Automatisk: Fra og med NVDA 2021.1,vil denne indstilling være svarende til Difflib.
-Dette vil muligvis blive ændret til Diff Match Patch i en fremtidig version af NVDA, afhængigt af positivt feedback fra brugere, der har testet indstillingen.
+- Automatisk: Fra og med NVDA 2021.2, vil denne indstilling være svarende til "Tillad Diff Match Patch".
 - Tillad Diff Match Patch: Denne mulighed får NVDA til at beregne ændringer i terminaltekst efter tegn. 
 Det kan forbedre ydelsen, når der skrives store mængder tekst til konsollen og muliggøre mere nøjagtig rapportering af ændringer foretaget midt på linierne. 
-Indstillingen er muligvis inkompatibel med nogle applikationer.
+Indstillingen er muligvis inkompatibel med nogle applikationer, så Diff Match Patch bruges ikke hver gang.
 Indstillingen understøttes i Windows-konsoller med Windows version 1607 og nyere.
 Desuden vil indstillingen muligvis være tilgængelig i andre terminalprogrammer for tidligere Windows-udgaver.
 - Gennemtving Difflib: Denne indstilling får NVDA til at beregne ændringer til terminalens tekst pr. linje.
@@ -1946,8 +1962,8 @@ Dette kan være nyttigt, hvis tegnet får talesyntesen til at holde en pause ell
 F.eks., et komma kan få talesyntesen til at holde en pause.
 Der er tre muligheder:
  - Aldrig: Send aldrig selve symbolet til talesyntesen.
-  - Altid: Send altid selve symbolet til talesyntesen.
-   - Kun under symbolets niveau: Send kun det aktuelle symbol, hvis det indstillede symbolniveau er lavere end symbolets niveau.
+ - Altid: Send altid selve symbolet til talesyntesen.
+ - Kun under symbolets niveau: Send kun det aktuelle symbol, hvis det indstillede symbolniveau er lavere end symbolets niveau.
     Du kan f.eks. bruge dette til at få erstatningsteksten for et symbol udtalt uden pause ved højtesymbolniveauer og stadig få indikeret symbolet ved hjælp af en pause på lavere niveauer.
  -
 -
@@ -2199,7 +2215,7 @@ Hvis du benytter en ældre version af NVDA, kan det også være, at nyere tilfø
 Hvis du forsøger at installere en inkompatibel tilføjelsespakke, vil der fremkomme en fejl samt en beskrivelse af hvorfor pakken ikke kunne installeres.
 For at gennemgå disse inkompatible tilføjelser, kan du bruge knappen "Vis inkompatible tilføjelser...".
 
-Hvis du gerne vil kunne nå dialogen til styring af tilføjelsesprogrammer fra hvor som helst på computeren, kan du tilknytte en bevægelse eller et tastetryk med [dialogen Håndter kommandoer" [InputGestures].
+Hvis du gerne vil kunne nå dialogen til styring af tilføjelsesprogrammer fra hvor som helst på computeren, kan du tilknytte en bevægelse eller et tastetryk med [dialogen Håndter kommandoer" #InputGestures].
 
 +++ Styring af inkompatible tilføjelser +++[incompatibleAddonsManager]
 Knappen "Vis inkompatible tilføjelser...", der kan tilgåes fra dialogen til styring af tilføjelsesprogrammer, vil åbne en dialog, hvorfra du kan administrere og gennemse inkompatible tilføjelser, samt hvorfor disse anses for at være inkompatible med din version af NVDA.
@@ -2249,7 +2265,7 @@ For en endnu mere omfattende list over gratis og kommercielt tilgængelige synte
 
 ++ eSpeak NG ++[eSpeakNG]
 Talesyntesen [eSpeak NG https://github.com/espeak-ng/espeak-ng] er bygget direkte ind i NVDA og kræver ingen installation af særskilte drivere eller komponenter for at fungere.
-I Windows 7, 8 og 8.1, vil NVDA benytte eSpeak NG som standard ([Windows OneCore #OneCore] benyttes i Windows 10).
+I Windows 7, 8 og 8.1, vil NVDA benytte eSpeak NG som standard ([Windows OneCore #OneCore] benyttes i Windows 10 og nyere).
 Eftersom denne talesyntese er bygget ind i NVDA, er den et godt valg til de situationer, hvor NVDA skal afvikles fra en USB-pen eller fra en cd på flere forskellige systemer.
 
 Hver af de stemmer, som følger med eSpeak NG, taler forskellige sprog. 
@@ -2283,9 +2299,9 @@ For a tbruge disse stemmer, er det nødvendigt at installere to komponenter:
 -
 
 ++ Windows OneCore Stemmer ++[OneCore]
-Windows 10 indeholder nu stemmer kendt som "OneCore" eller" Mobile."
+Windows 10 og nyere indeholder nu stemmer kendt som "OneCore" eller" Mobile."
 Der er stemmer tilgængelige på mange sprog, og disse stemmer er hurtigere til at reagere end de tilgængelige Microsoft-stemmer der benytter Microsoft Speech API version 5.
-NVDA vil benytte Windows OneCore som standardtalesyntese i windows 10 ([eSpeak NG #eSpeakNG] benyttes i andre versioner af Windows).
+NVDA vil benytte Windows OneCore som standardtalesyntese i windows 10 og nyere ([eSpeak NG #eSpeakNG] benyttes i andre versioner af Windows).
 
 For at tilføje nye Windows OneCore-stemmer, skal du gå til "Tid og sprog" under Windows-indstillinger (Windows+I), og vælge "Tale".
 Vælg "Tilføj stemmer" og søg efter det ønskede sprog.
@@ -2502,7 +2518,7 @@ Hvis du kobler til displayes med USB som ikke bruger HID, skal du først install
 VarioUltra og Pronto! bruger HID.
 Refreshabraille og Orbit Reader 20 kan bruge HID hvis konfigueret korrekt.
 
-USB serieltilstand af Orbit Reader 20 er på nuværende tidspunkt kun understøttet i Windows 10.
+USB serieltilstand af Orbit Reader 20 er på nuværende tidspunkt kun understøttet i Windows 10 og nyere.
 USB HID skal som udgangspunkt bruges i stedet.
 
 Dette er tastekombinationerne til dette display til brug med NVDA.
@@ -3105,7 +3121,7 @@ Læs venligst dokumentationen for det pågældende display der beskriver, hvor d
 
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]
 NVDA understøtter punktdisplays fra [Nattiq Technologies https://www.nattiq.com/] når de forbindes via USB.
-Windows 10 vil automatisk forbinde til punktdisplayet. Hvis du bruger ældre versioner af Windows (f.eks. Windows 7) skal du installere driveren.
+Windows 10 og nyere vil automatisk forbinde til punktdisplayet. Hvis du bruger ældre versioner af Windows (f.eks. Windows 7) skal du installere driveren.
 Disse kan hentes fra producentens hjemmeside.
 
 Følgende er tastekombinationerne til  Nattiq Technologies displays ved brug af NVDA.

@@ -13,37 +13,50 @@ from SystemTestSpy import (
 # Imported for type information
 from NotepadLib import NotepadLib as _NotepadLib
 from AssertsLib import AssertsLib as _AssertsLib
+import NvdaLib as _NvdaLib
 
 _notepad: _NotepadLib = _getLib("NotepadLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 
-# unlike other symbols used, symbols.dic doesn't preserve quote symbols with SYMPRES_ALWAYS
-_wordsToExpectedSymbolLevelAllSpeech = {
-	'Say': 'Say',
-	'(quietly)': 'left paren(quietly right paren)',
-	'"Hello,': 'quote Hello comma,',
-	'Jim".': 'Jim quote  dot.',
-}
-_wordsToExpectedSymbolLevelDefaultSpeech = {
-	'Say': 'Say',
-	'(quietly)': '(quietly)',
-	'"Hello,': 'Hello,',
-	'Jim".': 'Jim .',
-}
+def test_moveByWord_symbolLevelWord():
+	"""Disabled due to revert of PR #11856 is: "Speak all symbols when moving by words (#11779)
+	"""
+	# unlike other symbols used, symbols.dic doesn't preserve quote symbols with SYMPRES_ALWAYS
+	_wordsToExpected = {
+		'Say': 'Say',
+		'(quietly)': 'left paren(quietly right paren)',
+		'"Hello,': 'quote Hello comma,',
+		'Jim".': 'Jim quote  dot.',
+		'➔': 'right-pointing arrow',  # Speech for symbols shouldn't change
+		'👕': 't-shirt',  # Speech for symbols shouldn't change
+	}
 
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(["speech", "symbolLevelWordAll"], True)
 
-def test_symbolLevelWord_all():
-	textStr = ' '.join(_wordsToExpectedSymbolLevelAllSpeech.keys())
+	textStr = ' '.join(_wordsToExpected.keys())
 	_notepad.prepareNotepad(f"Test: {textStr}")
-	for expectedWord in _wordsToExpectedSymbolLevelAllSpeech.values():
-		wordSpoken = _notepad.getSpeechAfterKey("numpad6")  # navigate to next word
+	for expectedWord in _wordsToExpected.values():
+		wordSpoken = _NvdaLib.getSpeechAfterKey("numpad6")  # navigate to next word
 		_asserts.strings_match(wordSpoken, expectedWord)
 
 
-def test_symbolLevelWord_default():
-	textStr = ' '.join(_wordsToExpectedSymbolLevelDefaultSpeech.keys())
+def test_moveByWord():
+	_wordsToExpected = {
+		'Say': 'Say',
+		'(quietly)': '(quietly)',
+		'"Hello,': 'Hello,',
+		'Jim".': 'Jim .',
+		'➔': 'right pointing arrow',
+		'👕': 't shirt',
+	}
+
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(["speech", "symbolLevelWordAll"], False)
+
+	textStr = ' '.join(_wordsToExpected.keys())
 	_notepad.prepareNotepad(f"Test: {textStr}")
-	for expectedWord in _wordsToExpectedSymbolLevelDefaultSpeech.values():
-		wordSpoken = _notepad.getSpeechAfterKey("numpad6")  # navigate to next word
+	for expectedWord in _wordsToExpected.values():
+		wordSpoken = _NvdaLib.getSpeechAfterKey("numpad6")  # navigate to next word
 		_asserts.strings_match(wordSpoken, expectedWord)
