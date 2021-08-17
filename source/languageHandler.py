@@ -277,72 +277,47 @@ def setLanguage(lang: str) -> None:
 	# Install our pgettext function.
 	builtins.pgettext = makePgettext(trans)
 
+
+def localeStringFromLocaleCode(localeCode: str) -> str:
+	normalizedLocaleCode = normalizeLocaleForWin32(localeCode)
+	langName = englishLanguageNameFromNVDALocale(normalizedLocaleCode)
+	if langName is None:
+		raise ValueError(f"Locale code {localeCode} not supported by Windows")
+	countryName = englishCountryNameFromNVDALocale(normalizedLocaleCode)
+	codePage = ansiCodePageFromNVDALocale(normalizedLocaleCode)
+	return f"{langName}_{countryName}.{codePage}"
+
+
 def setLocale(localeName: str) -> None:
 	'''
 	Set python's locale using a `localeName` such as "en", "ru_RU", or "es-ES".
 	Will fallback on `curLang` if it cannot be set and finally fallback to the system locale.
 	'''
-
-	r'''
-	Python 3.8's locale system allows you to set locales that you cannot get
-	so we must test for both ValueErrors and locale.Errors
-
-	>>> import locale
-	>>> locale.setlocale(locale.LC_ALL, 'foobar')
-	Traceback (most recent call last):
-	File "<stdin>", line 1, in <module>
-	File "Python38-32\lib\locale.py", line 608, in setlocale
-		return _setlocale(category, locale)
-	locale.Error: unsupported locale setting
-	>>> locale.setlocale(locale.LC_ALL, 'en-GB')
-	'en-GB'
-	>>> locale.getlocale()
-	Traceback (most recent call last):
-	File "<stdin>", line 1, in <module>
-	File "Python38-32\lib\locale.py", line 591, in getlocale
-		return _parse_localename(localename)
-	File "Python38-32\lib\locale.py", line 499, in _parse_localename
-		raise ValueError('unknown locale: %s' % localename)
-	ValueError: unknown locale: en-GB
-	'''
 	originalLocaleName = localeName
-	# Try setting Python's locale to localeName
+	localeString = ""
 	try:
-		locale.setlocale(locale.LC_ALL, localeName)
-		locale.getlocale()
-		log.debug(f"set python locale to {localeName}")
-		return
-	except locale.Error:
-		log.debugWarning(f"python locale {localeName} could not be set")
+		localeString = localeStringFromLocaleCode(localeName)
+		log.debug(f"Win32 locale string from locale code is {localeString}")
 	except ValueError:
-		log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
-
-	if '-' in localeName:
-		# Python couldn't support the language-country locale, try language_country.
+		log.debugWarning(f"Locale {localeName} not supported by Windows")
+		# Try just with a language name
+		if "-" in localeName:
+			localeName = localeName.split("-")[0]
+			try:
+				localeString = localeStringFromLocaleCode(localeName)
+				log.debug(f"Win32 locale string from locale code is {localeString}")
+			except ValueError:
+				log.debugWarning(f"Locale {localeName} not supported by Windows")
+	if localeString:
 		try:
-			localeName = localeName.replace('-', '_')
-			locale.setlocale(locale.LC_ALL, localeName)
+			locale.setlocale(locale.LC_ALL, localeString)
 			locale.getlocale()
-			log.debug(f"set python locale to {localeName}")
+			log.debug(f"set python locale to {localeString}")
 			return
 		except locale.Error:
-			log.debugWarning(f"python locale {localeName} could not be set")
+			log.debugWarning(f"python locale {localeString} could not be set")
 		except ValueError:
-			log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
-
-	if '_' in localeName:
-		# Python couldn't support the language_country locale, just try language.
-		try:
-			localeName = localeName.split('_')[0]
-			locale.setlocale(locale.LC_ALL, localeName)
-			locale.getlocale()
-			log.debug(f"set python locale to {localeName}")
-			return
-		except locale.Error:
-			log.debugWarning(f"python locale {localeName} could not be set")
-		except ValueError:
-			log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
-
+			log.debugWarning(f"python locale {localeString} could not be retrieved with getlocale")
 	try:
 		locale.getlocale()
 	except ValueError:
