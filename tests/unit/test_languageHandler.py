@@ -45,6 +45,70 @@ class TestLocaleNameToWindowsLCID(unittest.TestCase):
 		self.assertEqual(lcid, LCID_NONE)
 
 
+class Test_Normalization(unittest.TestCase):
+
+	def test_isNormalizedWin32LocaleNormalizedLocale(self):
+		self.assertTrue(languageHandler.isNormalizedWin32Locale("en"))
+		self.assertTrue(languageHandler.isNormalizedWin32Locale("ro"))
+		self.assertTrue(languageHandler.isNormalizedWin32Locale("so"))
+		self.assertTrue(languageHandler.isNormalizedWin32Locale("ckb"))
+		self.assertTrue(languageHandler.isNormalizedWin32Locale("de-CH"))
+		self.assertTrue(languageHandler.isNormalizedWin32Locale("pl-PL"))
+		self.assertTrue(languageHandler.isNormalizedWin32Locale("de-DE_phoneb"))
+		self.assertTrue(languageHandler.isNormalizedWin32Locale("mn-Mong-CN"))
+
+	def test_isNormalizedWin32LocaleInvalidLocales(self):
+		self.assertFalse(languageHandler.isNormalizedWin32Locale("pl_PL"))
+		self.assertFalse(languageHandler.isNormalizedWin32Locale("de_CH"))
+		self.assertFalse(languageHandler.isNormalizedWin32Locale("ru_RU"))
+
+	def test_localeNormalizationForWin32(self):
+		self.assertEqual(languageHandler.normalizeLocaleForWin32("en"), "en")
+		self.assertEqual(languageHandler.normalizeLocaleForWin32("en-US"), "en-US")
+		self.assertEqual(languageHandler.normalizeLocaleForWin32("en_US"), "en-US")
+		self.assertEqual(languageHandler.normalizeLocaleForWin32("de-DE_phoneb"), "de-DE_phoneb")
+		self.assertEqual(languageHandler.normalizeLocaleForWin32("de_DE_phoneb"), "de-DE_phoneb")
+
+
+class Test_GetLocaleInfoEx_Wrappers(unittest.TestCase):
+	"""Set of tests for wrappers around `GetLocaleInfoEx` from `languageHandler`"""
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self._ansiCP = str(ctypes.windll.kernel32.GetACP())
+
+	def test_ValidEnglishLangNamesAreReturned(self):
+		"""Smoke tests `languageHandler.englishLanguageNameFromNVDALocale` with some known locale names"""
+		self.assertEqual(languageHandler.englishLanguageNameFromNVDALocale("en"), "English")
+		self.assertEqual(languageHandler.englishLanguageNameFromNVDALocale("de"), "German")
+		self.assertEqual(languageHandler.englishLanguageNameFromNVDALocale("ne"), "Nepali")
+		self.assertEqual(languageHandler.englishLanguageNameFromNVDALocale("pt-BR"), "Portuguese")
+		self.assertEqual(languageHandler.englishLanguageNameFromNVDALocale("de_CH"), "German")
+
+	def test_ValidEnglishCountryNamesAreReturned(self):
+		"""Smoke tests `languageHandler.englishCountryNameFromNVDALocale` with some known locale names"""
+		self.assertEqual(languageHandler.englishCountryNameFromNVDALocale("en"), "United States")
+		self.assertEqual(languageHandler.englishCountryNameFromNVDALocale("de"), "Germany")
+		self.assertEqual(languageHandler.englishCountryNameFromNVDALocale("ne"), "Nepal")
+		self.assertEqual(languageHandler.englishCountryNameFromNVDALocale("pt-BR"), "Brazil")
+		self.assertEqual(languageHandler.englishCountryNameFromNVDALocale("pt-PT"), "Portugal")
+		self.assertEqual(languageHandler.englishCountryNameFromNVDALocale("de_CH"), "Switzerland")
+
+	def test_validAnsiCodePagesAreReturned(self):
+		"""Smoke tests `languageHandler.ansiCodePageFromNVDALocale` with some known 
+		not Unicode only locale names"""
+		self.assertEqual(languageHandler.ansiCodePageFromNVDALocale("en"), "1252")
+		self.assertEqual(languageHandler.ansiCodePageFromNVDALocale("pl_PL"), "1250")
+		self.assertEqual(languageHandler.ansiCodePageFromNVDALocale("ja_JP"), "932")
+		self.assertEqual(languageHandler.ansiCodePageFromNVDALocale("de-CH"), "1252")
+
+	def test_validAnsiCodePagesAreReturnedUnicodeOnlyLocales(self):
+		"""Smoke tests `languageHandler.ansiCodePageFromNVDALocale` with some known
+		Unicode only locale names"""
+		self.assertEqual(languageHandler.ansiCodePageFromNVDALocale("hi"), self._ansiCP)
+		self.assertEqual(languageHandler.ansiCodePageFromNVDALocale("Ne"), self._ansiCP)
+
+
 class Test_languageHandler_setLocale(unittest.TestCase):
 	"""Tests for the function languageHandler.setLocale"""
 

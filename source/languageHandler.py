@@ -15,6 +15,7 @@ import locale
 import gettext
 import globalVars
 from logHandler import log
+import winKernel
 from typing import Optional
 
 #a few Windows locale constants
@@ -23,6 +24,12 @@ LOCALE_SLIST = 0xC
 LOCALE_SLANGDISPLAYNAME=0x6f
 LOCALE_USER_DEFAULT = 0x400
 LOCALE_CUSTOM_UNSPECIFIED = 0x1000
+LOCALE_SENGLISHLANGUAGENAME = 0x00001001
+LOCALE_SENGLISHCOUNTRYNAME = 0x00001002
+LOCALE_IDEFAULTANSICODEPAGE = 0x00001004
+
+CP_ACP = "0"
+
 #: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
 #: This might be because Windows doesn't know about the locale (e.g. "an"),
 #: because it is not a standardized locale name anywhere (e.g. "zz")
@@ -30,6 +37,23 @@ LOCALE_CUSTOM_UNSPECIFIED = 0x1000
 LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
 
 curLang="en"
+
+
+def isNormalizedWin32Locale(localeName: str) -> bool:
+	hyphensCount = localeName.count("-")
+	underscoresCount = localeName.count("_")
+	if not hyphensCount and not underscoresCount:
+		return True
+	if hyphensCount:
+		return True
+	return False
+
+
+def normalizeLocaleForWin32(localeName: str) -> str:
+	if not isNormalizedWin32Locale(localeName):
+		localeName = localeName.replace('_', '-', 1)
+	return localeName
+
 
 def localeNameToWindowsLCID(localeName):
 	"""Retreave the Windows locale identifier (LCID) for the given locale name
@@ -40,7 +64,7 @@ def localeNameToWindowsLCID(localeName):
 	""" 
 	# Windows Vista (NT 6.0) and later is able to convert locale names to LCIDs.
 	# Because NVDA supports Windows 7 (NT 6.1) SP1 and later, just use it directly.
-	localeName=localeName.replace('_','-')
+	localeName = normalizeLocaleForWin32(localeName)
 	LCID=ctypes.windll.kernel32.LocaleNameToLCID(localeName,0)
 	# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
 	# This was observed for Aragonese ("an").
@@ -92,6 +116,46 @@ def getLanguageDescription(language):
 			"so":pgettext("languageName","Somali"),
 		}.get(language,None)
 	return desc
+
+
+def englishLanguageNameFromNVDALocale(localeName: str) -> Optional[str]:
+	"""Returns either English name of the given language  using `GetLocaleInfoEx` or None
+	if the given locale is not known to Windows."""
+	localeName = normalizeLocaleForWin32(localeName)
+	buffLength = winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE_SENGLISHLANGUAGENAME, None, 0)
+	if buffLength:
+		buf = ctypes.create_unicode_buffer(buffLength)
+		winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE_SENGLISHLANGUAGENAME, buf, buffLength)
+		return buf.value
+	return None
+
+
+def englishCountryNameFromNVDALocale(localeName: str) -> Optional[str]:
+	"""Returns either English name of the given country using GetLocaleInfoEx or None
+	if the given locale is not known to Windows."""
+	localeName = normalizeLocaleForWin32(localeName)
+	buffLength = winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE_SENGLISHCOUNTRYNAME, None, 0)
+	if buffLength:
+		buf = ctypes.create_unicode_buffer(buffLength)
+		winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE_SENGLISHCOUNTRYNAME, buf, buffLength)
+		return buf.value
+	return None
+
+
+def ansiCodePageFromNVDALocale(localeName: str) -> Optional[str]:
+	"""Returns either English name of the given country using GetLocaleInfoEx or None
+	if the given locale is not known to Windows."""
+	localeName = normalizeLocaleForWin32(localeName)
+	buffLength = winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE_IDEFAULTANSICODEPAGE, None, 0)
+	if buffLength:
+		buf = ctypes.create_unicode_buffer(buffLength)
+		winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE_IDEFAULTANSICODEPAGE, buf, buffLength)
+		codePage =  buf.value
+		if codePage == CP_ACP:
+			codePage = str(winKernel.kernel32.GetACP())
+		return codePage
+	return None
+
 
 def getAvailableLanguages(presentational=False):
 	"""generates a list of locale names, plus their full localized language and country names.
