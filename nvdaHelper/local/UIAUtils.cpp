@@ -18,3 +18,9 @@ PROPERTYID registerUIAProperty(GUID* guid, LPCWSTR programmaticName, UIAutomatio
 	registrar->Release();
 	return propertyId;
 }
+
+int registerUIAAnnotationType(GUID* guid) {
+	winrt::Windows::UI::UIAutomation::Core::CoreAutomationRegistrar registrar {};
+	auto res = registrar.RegisterAnnotationType(*guid);
+	return res.LocalId;
+}
