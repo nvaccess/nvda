@@ -122,7 +122,21 @@ class BrailleInputHandler(AutoPropertyObject):
 	useContractedForCurrentFocus: bool
 
 	def _get_useContractedForCurrentFocus(self):
-		return self._table.contracted and self.currentFocusIsTextObj and not self.currentModifiers
+		return self._table.contracted and not self.inputKeysUsingEmulation
+
+	# Provided by auto property: L{_get_inputKeysUsingEmulation}
+	inputKeysUsingEmulation: bool
+
+	def _get_inputKeysUsingEmulation(self):
+		"""
+		Returns whether keyboard gesture emulation should be used to input keyboard keys.
+		If this is C{False}, L{sendChars} is used.
+		This should only apply when:
+			* No modifiers are pressed
+			* We are in a text field
+		"""
+		return not self.currentFocusIsTextObj or self.currentModifiers
+
 
 	def _translate(self, endWord: bool) -> bool:
 		"""Translate buffered braille up to the cursor.
@@ -138,7 +152,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		pos = self.untranslatedStart + self.untranslatedCursorPos
 		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		mode = louis.dotsIO | louis.noUndefinedDots
-		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
+		if self.inputKeysUsingEmulation and self._table.contracted:
 			mode |=  louis.partialTrans
 		self.bufferText = louis.backTranslate(
 			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
@@ -164,7 +178,7 @@ class BrailleInputHandler(AutoPropertyObject):
 				log.debug(
 					f"currentModifiers = {self.currentModifiers}, currentFocusIsTextObj = {self.currentFocusIsTextObj}"
 				)
-			if self.currentModifiers or not self.currentFocusIsTextObj:
+			if self.inputKeysUsingEmulation:
 				if len(newText)>1:
 					# Emulation of multiple characters at once is unsupported
 					# Clear newText, so this function returns C{False} if not at end of word
