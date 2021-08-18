@@ -52,7 +52,7 @@ Prerequisites:
  - Enable "Use NVDA during sign-in"
 
 Steps:
- 1. Start Windows
+ 1. Sign out (not lock) Windows
  1. Observe NVDA announces the Windows sign-in screen
 
 ### UAC, automatic start
@@ -146,7 +146,9 @@ There are 3 ways that NVDA receives a request to exit:
 ### When exiting from `wx.EVT_END_SESSION`
 * This is a [wxCloseEvent](https://docs.wxwidgets.org/3.0/classwx_close_event.html) triggered by a Windows session ending.
 * On `wx.EVT_END_SESSION`, we save the config and play the exit sound.
-* Other actions are not performed as we have limited time to perform an action for this event. With NVDA being killed off very last, Windows may include NVDA in the Block shutdown dialog, but the user won't be able to read it if we are shutting down.
+* Other actions are not performed as we have limited time to perform an action for this event.
+NVDA is expected to run as long as possible during the sign out process.
+With NVDA being killed off very last, Windows may include NVDA in the Block shutdown dialog, but the user won't be able to read it if we are shutting down.
 
 ### Replacing an existing NVDA instance
 
