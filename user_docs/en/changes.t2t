@@ -23,6 +23,7 @@ What's New in NVDA
 
 == Bug Fixes ==
 - Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
+- NVDA no longer fails to translate braille input when multiple characters are typed that consist of multiple braille patterns (e.g. (1) in UEB). (#12667)
 - It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
 - NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
 -
