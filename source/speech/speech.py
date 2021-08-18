@@ -1355,11 +1355,12 @@ def getTextInfoSpeech(  # noqa: C901
 	def isControlEndFieldCommand(x):
 		return isinstance(x, textInfos.FieldCommand) and x.command == "controlEnd"
 
-	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
+	# Moving by character, ensure character is spelled out. Particularly important for newline
+	# (carriage return and line feed) characters.
 	if onlyInitialFields or (
-		isWordOrCharUnit
+		unit == textInfos.UNIT_CHARACTER
 		and len(textWithFields) > 0
-		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
+		and len(textWithFields[0]) == 1
 		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if not onlyCache:
