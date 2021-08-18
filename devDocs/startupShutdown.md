@@ -74,14 +74,19 @@ Steps:
 ### Running the *.exe
 
 Steps:
- 1. Run the NVDA exe from cmd
+ 1. Press `win+r`
+ 1. Enter <path to nvda.exe>
+ 1. Press enter
  1. Observe NVDA starts
 
 Variation:
-- installed copy, portable copy, or installer
+- using an installer .exe, an installed copy .exe, or a portable copy .exe
+   - the installer allows you to create an installed copy and a portable copy
 - CLI options
 
 ### Running from source (runnvda.bat)
+Prerequisites
+- clone project and build NVDA (see [project readme](https://github.com/nvaccess/nvda/blob/master/readme.md#getting-the-source-code)).
 
 Steps:
  1. Run `runnvda.bat` from cmd
