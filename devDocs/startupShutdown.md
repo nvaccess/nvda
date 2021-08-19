@@ -153,6 +153,7 @@ There are 3 ways that NVDA receives a request to exit:
 * On `wx.EVT_END_SESSION`, we save the config and play the exit sound.
 * Other actions are not performed as we have limited time to perform an action for this event.
 NVDA is expected to run as long as possible during the sign out process.
+This is achieved through the Windows API, using [SHUTDOWN_NORETRY](https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setprocessshutdownparameters)
 With NVDA being killed off very last, Windows may include NVDA in the Block shutdown dialog, but the user won't be able to read it if we are shutting down.
 
 ### Replacing an existing NVDA instance
