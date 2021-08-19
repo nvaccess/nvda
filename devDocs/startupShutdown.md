@@ -80,9 +80,13 @@ Steps:
  1. Observe NVDA starts
 
 Variation:
-- using an installer .exe, an installed copy .exe, or a portable copy .exe
+- using an installer (launcher)
+   -  eg: `C:\Users\username\Downloads\nvda_2021.1.exe`
+- using an installed copy
+   - just type `nvda` in place of the .exe
+- using a portable copy
+   - find and use the path to `nvda.exe`, located within the portable copy directory
    - the installer allows you to create an installed copy and a portable copy
-- CLI options
 
 ### Running from source (runnvda.bat)
 Prerequisites
@@ -135,7 +139,8 @@ There are 3 ways that NVDA receives a request to exit:
 ### When exiting from `WM_QUIT`
 * [A Windows Message](https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-quit) received from an external process, such as another NVDA process.
 * NVDA accepts `WM_QUIT` messages from other processes and creates a [named window](https://docs.microsoft.com/en-us/windows/win32/learnwin32/creating-a-window#creating-the-window) that can be discovered.
-* `WM_QUIT` is handled by `wx`, which force closes all wx windows (other UI features like the systray icon are not windows, and remain) and then exits the main loop. `triggerNVDAExit` is a more expansive check than how wxWidgets handles `WM_QUIT````
+* `WM_QUIT` is handled by `wx`, which force closes all wx windows (other UI features like the systray icon are not windows, and remain) and then exits the main loop.
+`triggerNVDAExit` is a more expansive check than how wxWidgets handles `WM_QUIT`
 * We subsequently run `triggerNVDAExit` to ensure that clean up code isn't missed, and pump the queue to execute it.
 * Using a custom message has been considered:
   - Would allow custom handling (eg just `triggerNVDAExit`)
