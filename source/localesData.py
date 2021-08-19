@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 
-"""Contains informations about various languages supported by NVDA.
+"""Contains information about various languages supported by NVDA.
 As there are localizable strings at module level,
 this can only be imported once localization is set up via `languageHandler.initialize`.
 """
@@ -14,7 +14,7 @@ from typing import Dict
 
 
 # Maps names of languages supported by NVDA to their translated names
-# for langs  for which Windows does not contain a translated description.
+# for langs for which Windows does not contain a translated description.
 LANG_NAMES_TO_LOCALIZED_DESCS: Dict[str, str] = {
 	# Translators: The name of a language supported by NVDA.
 	"an": pgettext("languageName", "Aragonese"),

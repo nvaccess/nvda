@@ -202,12 +202,13 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 				languageHandler.setLocale(localeName)
 				current_locale = locale.setlocale(locale.LC_ALL)
 				# check that the language codes are correctly set for python
-				# They can be set to the exact locale that was requested, or to the locale gotten
-				# from the language name if language_country cannot be set.
+				# They can be set to the exact locale that was requested, to the locale gotten
+				# from the language name if language_country cannot be set
+				# or just to English name of the language.
 				lang_country = languageHandler.localeStringFromLocaleCode(localeName)
 				possibleVariants = {lang_country}
 				if "65001" in lang_country:
-					# Python replaces Unicode Windows code page with 'utf8'
+					# Python normalizes Unicode Windows code page to 'utf8'
 					possibleVariants.add(lang_country.replace("65001", "utf8"))
 				if "_" in lang_country:
 					possibleVariants.add(languageHandler.localeStringFromLocaleCode(localeName.split("_")[0]))
@@ -222,6 +223,11 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 		"""
 		We don't know whether python supports a specific windows locale so just ensure locale isn't
 		broken after testing these values.
+		Even though we cannot use `locale.getlocale` when checking if the correct locale has been set
+		in all other tests since it normalizes locale making it impossible to do comparisons
+		it is important that whatever is being set can be retrieved with `getlocale`
+		since some parts of Python standard library such as `time.strptime` relies on `getlocale`
+		being able to return current locale.
 		"""
 		for localeName in WINDOWS_LANGS:
 			with self.subTest(localeName=localeName):
@@ -291,12 +297,13 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 					self.assertEqual(self._defaultPythonLocale, python_locale)
 				else:
 					# check that the language codes are correctly set for python
-					# They can be set to the exact locale that was requested, or to the locale gotten
-					# from the language name if language_country cannot be set.
+					# They can be set to the exact locale that was requested, to the locale gotten
+					# from the language name if language_country cannot be set
+					# or just to English name of the language.
 					lang_country = languageHandler.localeStringFromLocaleCode(localeName)
 					possibleVariants = {lang_country}
 					if "65001" in lang_country:
-						# Python replaces Unicode Windows code page with 'utf8'
+						# Python normalizes Unicode Windows code page to 'utf8'
 						possibleVariants.add(lang_country.replace("65001", "utf8"))
 					if "_" in lang_country:
 						possibleVariants.add(languageHandler.localeStringFromLocaleCode(localeName.split("_")[0]))
