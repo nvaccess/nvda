@@ -28,6 +28,8 @@ LOCALE_SENGLISHLANGUAGENAME = 0x00001001
 LOCALE_SENGLISHCOUNTRYNAME = 0x00001002
 LOCALE_IDEFAULTANSICODEPAGE = 0x00001004
 
+# A constant returned when asking Windows for a default code page for a given locale
+# and its code page is the default code page for non Unicode programs set in Windows.
 CP_ACP = "0"
 
 #: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
