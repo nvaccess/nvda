@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-06 00:01+0000\n"
-"PO-Revision-Date: 2021-08-02 12:04+0900\n"
+"POT-Creation-Date: 2021-08-13 00:01+0000\n"
+"PO-Revision-Date: 2021-08-17 10:03+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -7822,9 +7822,9 @@ msgid ""
 "make changes to the System registry and therefore requires administrative "
 "access. Are you sure you wish to proceed?"
 msgstr ""
-"COM 登録の修復を行います。このツールは Firefox や Internet Explorer などのア"
-"プリで NVDA が正常に利用できなくなる問題の解決を試みます。システムのレジスト"
-"リを変更するために、管理者権限が必要です。続行しますか？"
+"COM 登録修復ツールは Firefox や Internet Explorer などのアプリで NVDA が正常"
+"に利用できなくなる問題の解決を試みます。システムのレジストリを変更するため"
+"に、管理者権限が必要です。続行しますか？"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -7840,14 +7840,14 @@ msgstr "COM 登録修復ツール"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
 msgid "Please wait while NVDA tries to fix your system's COM registrations."
-msgstr "COM 登録が修復されるまでお待ちください。"
+msgstr "COM 登録修復ツールが終了するまでお待ちください。"
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
 msgid ""
 "The COM Registration Fixing tool has finished. It is highly recommended that "
 "you restart your computer now, to make sure the changes take full effect."
 msgstr ""
-"COM 登録の修正ツールが終了しました。変更が完全に有効になるように、今すぐコン"
+"COM 登録修復ツールが終了しました。変更が完全に有効になるように、今すぐコン"
 "ピュータを再起動することを強くお勧めします。"
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
@@ -7935,7 +7935,7 @@ msgstr "NVDAのインストール(&I)..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr "COM 登録の修復を実行..."
+msgstr "COM 登録修復ツール..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -12215,7 +12215,7 @@ msgstr "固定値 {space:.1f} pt"
 #, python-format
 msgctxt "line spacing value"
 msgid "at least %.1f pt"
-msgstr "最低 %.1f pt"
+msgstr "最小値 %.1f pt"
 
 #. Translators: line spacing of x lines
 #, python-format

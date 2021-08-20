@@ -4,21 +4,25 @@
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
+Tämä versio esittelee alustavan Windows 11 -tuen.
+Testaus on suoritettu käyttöjärjestelmän esiversioilla, koska lopullista versiota ei ole vielä julkaistu.
+Tähän sisältyy tärkeä näyttöverhon korjaus (katso tärkeät huomautukset).
+COM-rekisteröintien korjaustyökalu voi ratkaista useampia NVDA:n käytössä ilmeneviä ongelmia.
+eSpeak-syntetisaattoria ja LibLouis-pistekirjoituskääntäjää on päivitetty.
+Lisäksi useita bugikorjauksia ja parannuksia erityisesti pistekirjoitustukeen, Windows-päätteisiin, laskimeen, emojipaneeliin sekä leikepöydän historiaan.
+
 
 == Tärkeitä huomautuksia ==
-- Aiempien NVDA-versioiden näyttöverho ei enää ole yhteensopiva Uudempien Windows-versioiden kuin 10:n 21H2 (10.0.19044) kanssa.
+Windowsin suurennusrajapintaan tehdyn muutoksen takia näyttöverho oli päivitettävä tukemaan uusimpia Windows-versioita.
+Käytä NVDA 2021.2:ta aktivoidaksesi näyttöverhon Windows 10:n versiossa 21H2 (10.0.19044) tai uudemmissa.
 Näihin kuuluvat Windows 10:n Insider-versiot sekä Windows 11.
-Tämä johtuu Windowsin suurennusrajapintaan tehdystä muutoksesta.
-Näyttöverho ei välttämättä toimi ilman varoitusta käytettäessä aiempia NVDA-versioita uudemmassa Windowsin versiossa kuin 10:n 21H2.
-Varmista turvallisuutesi varmistamalla, että näyttöverho toimii oikein uusissa tai kokeellisissa Windowsin versioissa.
-(#12491, #12684)
--
+Turvallisuussyistä uutta Windows-versiota käytettäessä näytetäänvahvistusviesti siitä, että näyttöverho pimentää ruudun kokonaan.
 
 
 == Uudet ominaisuudet ==
-- Tuki ARIA-selitteille:
+- Kokeellinen tuki ARIA-selitteille:
  - Lisää komennon objektin ARIA-lisätietojen yhteenvedon lukemiseen. (#12364)
- - Lisää Lisäasetukset-paneeliin asetuksen objektin lisätiedoista ilmoittamiseen selaustilassa. (#12439) 
+ - Lisää Lisäasetukset-paneeliin asetuksen objektin lisätiedoista ilmoittamiseen selaustilassa. (#12439)
  -
 - NVDA kertoo ehdotusten lukumäärän resurssienhallinnassa hakuja suoritettaessa Windows 10:n versiossa 1909 ja uudemmissa (Windows 11 mukaan lukien). (#10341, #12628)
 - NVDA kertoo nyt painettaessa tavallisen ja riippuvan sisennyksen näppäinkomentojen tulokset Microsoft Wordissa. (#6269)
@@ -50,6 +54,7 @@ Varmista turvallisuutesi varmistamalla, että näyttöverho toimii oikein uusiss
 - Windowsin versio 10.0.22000 ja uudemmat tunnistetaan Windows 11:ksi, ei Windows 10:ksi. (#12626)
 - Näyttöverhon tuki on korjattu ja testattu Windowsin versioon 10.0.22000 asti. (#12684)
 - Syötekomentojen valintaikkuna toimii odotetusti, mikäli hakutuloksia ei näytetä syötekomentoja suodatettaessa. (#12673)
+- Korjattu bugi, jossa alivalikon ensimmäistä kohdetta ei puhuta joissakin tilanteissa. (#12624)
 -
 
 

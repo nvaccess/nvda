@@ -789,14 +789,15 @@ Khi bật chức năng Làm Nổi  trực quan trong [phân loại hỗ trợ nh
 ++ Che màn hình ++[VisionScreenCurtain]
 Là người mù hay nhìn kém, thường sẽ không thể hoặc không cần nhìn những gì trên màn hình.
 Hơn nữa, cũng có thể khó để biết có ai đó nhìn màn hình của bạn từ đằng sau hay không.
-Tình huống này, NVDA có một tính năng tên gọi "che màn hình", có thể bật lên để làm đen màn hình.
+Tình huống này, NVDA có một tính năng tên gọi "Che Màn Hình", có thể bật lên để làm đen màn hình.
 
 Bạn có thể bật tính năng này trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings].
 
-Khi bật tính năng che màn hình, vài thao tác dựa vào những gì hiển thị trên màn hình như [Nhận dạng văn bản #Win10Ocr] hay chụp màn hình không thể thực hiện.
+Khi bật tính năng Che Màn Hình, vài thao tác dựa vào những gì hiển thị trên màn hình như [Nhận dạng văn bản #Win10Ocr] hay chụp màn hình không thể thực hiện được.
 
-Để đảm bảo tính bảo mật, hãy xác nhận rằng tính năng che màn hình hoạt động được với các phiên bản Windows mới, kể cả bản thử nghiệm.
-Khi sử dụng các bản phát hành NVDA cũ hơn 2021.2 và Windows mới hơn Windows 10 21H2, tính năng che màn hình có thể không hoạt động được mà chẳng có cảnh báo gì.
+Do một thay đổi trong Windows Magnification API, tính năng Che Màn Hình phải được cập nhật để hỗ trợ phiên bản mới nhất của Windows.
+Hãy dùng NVDA 2021.2 để bật tính năng Che Mànn Hình với Windows 10 21H2 (10.0.19044) trở lên.
+Vì mục tiêu bảo mật, khi sử dụng một phiên bản mới của Windows, hãy tìm sự xác nhận trực quan rằng tính năng Che Màn Hình có làm cho màn hình đen toàn bộ.
 
 + Nhận Dạng Nội Dung +[ContentRecognition]
 Khi tác giả không cung cấp đầy đủ thông tin của ứng dụng cho trình đọc màn hình, sẽ có nhiều công cụ khác nhau hỗ trợ để có thể nhận dạng nội dung của một hình ảnh chẳng hạn.
@@ -1043,7 +1044,7 @@ Nếu muốn lưu thiết lập và đóng hộp thoại cấu hình NVDA, bạn
 
 Một số phân loại có thể gọi bằng phím tắt.
 Nếu bấm phím tắt, hộp thoại cấu hình NVDA sẽ được mở và con trỏ sẽ đi đến phân loại đó.
-Mặc định, không phải tất cả phân loại đều mở được bằng phím tắt.
+Mặc định, không phải tất cả phân loại đều có thể mở được bằng phím tắt.
 Nếu muốn mở phân loại nào không được gán phím tắt, hãy dùng [hộp thoại quản lý thao tác #InputGestures] để gán phím lệnh hay thao tác cảm ứng cho phân loại đó.
 
 Dưới đây là các phân loại trong hộp thoại cấu hình NVDA:
@@ -1392,7 +1393,7 @@ Vui lòng xem phần [Các màn hình nổi được hỗ trợ #SupportedBraill
 Tùy chọn này, nếu có, cho phép bạn chọn cổng hoặc loại kết nối sử dụng để giao tiếp với màn hình nổi được chọn.
 Nó là một hộp xổ gồm các lựa chọn có sẵn cho màn hình nổi đó.
 
-Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là, việc kết nối màn hình nổi với máy tính sẽ được tự động thiết lập bằng cách chương trình tự quét cổng USB và bluetooth trên hệ thống.
+Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là việc kết nối màn hình nổi với máy tính sẽ được tự động thiết lập bằng cách chương trình tự quét cổng USB và bluetooth trên hệ thống.
 Tuy nhiên, với một số màn hình nổi, bạn có thể chỉ định cổng kết nối cho nó.
 Một số lựa chọn thường gặp là: "tự động" (yêu cầu NVDA tự động hóa quá trình nhận dạng và kết nối), "USB", "bluetooth" và giao tiếp qua cổng serial nếu màn hình nổi bạn có hỗ trợ kiểu giao tiếp này.
 
@@ -2099,7 +2100,7 @@ Bạn có thể làm điều đó bằng cách chọn hộp kiểm "tạm thời
 
 +++ Kích hoạt một hồ sơ bằng thao tác +++[ConfigProfileGestures]
 Với mọi hồ sơ được thêm vào, bạn có thể gán một hay nhiều thao tác để kích hoạt nó.
-Mặc định, hồ sơ cấu hình không được gán thao tác.
+Mặc định, hồ sơ cấu hình không được gán sẵn thao tác.
 Bạn có thể gán thao tác để kích hoạt một hồ sơ bằng [Hộp thoại quản lý thao tác #InputGestures].
 Mỗi hồ sơ sẽ tồn tại trong phân loại hồ sơ cấu hình.
 Khi bạn đổi tên một hồ sơ, các thao tác được gán trước đó vẫn hoạt động.

@@ -789,14 +789,15 @@ Cuando Resaltado Visual esté habilitado en la [categoría visión #VisionSettin
 ++ Cortina de Pantalla ++[VisionScreenCurtain]
 Como usuario ciego o con problemas de visión, a menudo no es posible o necesario ver el contenido de la pantalla.
 Además, puede ser difícil asegurarte de que no haya nadie mirando por encima de tu hombro.
-Para esta situación, NVDA contiene una característica llamada "cortina de pantalla" que puede activarse para hacer que la pantalla sea negra.
+Para esta situación, NVDA contiene una característica llamada "Cortina de Pantalla" que puede activarse para hacer que la pantalla sea negra.
 
 Puedes habilitar la Cortina de Pantalla en la [categoría visión #VisionSettings] del diálogo [Opciones de NVDA #NVDASettings].
 
-Cuando la cortina de pantalla esté activa algunas tareas basadas directamente en lo que aparece sobre la pantalla como la realización del [OCR #Win10Ocr] o la toma de una captura no se pueden conseguir.
+Cuando la Cortina de Pantalla esté activa algunas tareas basadas directamente en lo que aparece sobre la pantalla como la realización del [OCR #Win10Ocr] o la toma de una captura no se pueden conseguir.
 
-Para garantizar la seguridad, confirma que la cortina de pantalla funciona adecuadamente con versiones nuevas o experimentales de Windows.
-Cuando se utilicen versiones de NVDA anteriores a la 2021.2 y Windows posteriores a Windows 10 21H2, la cortina de pantalla puede dejar de funcionar sin previo aviso.
+Debido a un cambio en la API Windows Magnification, la Cortina de Pantalla tuvo que actualizarse para admitir las versiones más nuevas de Windows.
+Utiliza NVDA 2021.2 para activar la Cortina de Pantalla con Windows 10 21H2 (10.0.19044) o posteriores.
+Por razones de seguridad, al utilizar una versión nueva de Windows, obtén una confirmación visual de que la Cortina de Pantalla haga a ésta totalmente negra.
 
 + Reconocimiento de Contenidos +[ContentRecognition]
 Cuando los autores no proporcionan suficiente información para que un usuario de lector de pantalla determine el contenido de algo, pueden utilizarse varias herramientas para intentar reconocer el contenido desde una imagen.

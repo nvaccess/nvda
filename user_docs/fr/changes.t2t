@@ -4,19 +4,22 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
+Cette version intègre un support préliminaire de Windows 11.
+Comme Windows 11 n'est pas encore publié, cette version a été testée sur des versions béta de Windows 11.
+Cela inclut un correctif important pour le rideau d'écran (voir notes importantes).
+L'outil de correction des inscriptions COM peut maintenant résoudre plus de problèmes lors de l'exécution de NVDA.
+Des mises à jour du synthétiseur eSpeak et du transcripteur Braille Liblouis sont présentes.
+Il y a également beaucoup de correctifs et améliorations, notamment pour le support du Braille, le terminal Windows, la calculatrice, le panneau d'emojis et l'historique du presse-papiers.
+
 
 == Notes importantes ==
-- Le rideau d'écran des précédentes versions de NVDA n'est maintenant plus compatible avec les versions de Windows supérieures à Windows 10 21H2 (10.0.19044).
-Cela inclut Windows 10 Insider et Windows 11.
-Cela est dû à un changement dans l'API de loupe de Windows.
-Lorsque vous utilisez une ancienne version de NVDA et une version de Windows supérieure à Windows 10 21H2, le rideau d'écran peut ne pas fonctionner sans que vous en soyez averti.
-Pour garantir la sécurité, vérifiez que le rideau d'écran fonctionne correctement avec les versions nouvelles ou expérimentales de Windows.
-(#12491, #12684)
--
+En raison d'un changement dans l'API d'agrandissement de Windows, le rideau d'écran a dû être mis à jour pour supporter les nouvelles versions de Windows.
+Utilisez NVDA 2021.2 pour activer le rideau d'écran sous Windows 10 21H2 (10.0.19044) ou supérieur.
+Pour des raisons de sécurité, lors de l'utilisation d'une nouvelle version de Windows, veuillez obtenir une confirmation visuelle que le rideau d'écran rend l'écran entièrement noir.
 
 
 == Nouvelles fonctionnalités ==
-- Support des annotations ARIA :
+- Support expérimental des annotations ARIA :
   - ajout d'une commande pour lire le résumé d'un objet comportant des détails avec aria-details. (#12364)
   - ajout d'une option dans les paramètres avancés pour annoncer si un objet contient des détails en mode navigation. (#12439) 
   -
@@ -43,13 +46,14 @@ Pour garantir la sécurité, vérifiez que le rideau d'écran fonctionne correct
 - La saisie Braille fonctionne correctement avec les tables abrégées suivantes : Arabe abrégé, Espagnol abrégé, Urdu abrégé, Chinois (Chine, Mandarin) abrégé. (#12541)
 - L'outil de correction des enregistrements COM résout maintenant davantage de problèmes, particulièrement sous les versions 64 bits de Windows. (#12560)
 - Amélioration de la gestion des boutons pour l'afficheur Braille Seika Notetaker de Nippon Telesoft. (#12598)
-- Améliorations dans l'annonce du paneau d'emojis Windows et l'historique du presse-papiers. (#11485)
+- Améliorations dans l'annonce du panneau d'emojis Windows et l'historique du presse-papiers. (#11485)
 - Mise à jour de la description des caractères pour l'alphabet Bengali. (#12502)
 - NVDA se ferme proprement lorsqu'un nouveau processus est démarré. (#12605)
 - Resélectionner le pilote d'afficheur Braille Handy Tech depuis le dialogue "Sélectionner un afficheur Braille" ne cause plus d'erreur. (#12618)
 - Windows version 10.0.22000 ou supérieur est reconnu comme Windows 11, et non Windows 10. (#12626)
 - Le support du rideau d'écran a été corrigé et testé pour les versions de Windows jusqu'à 10.0.22000. (#12684)
 - Si aucun résultat n'est affiché lors du filtrage dans les gestes de commandes, le dialogue de configuration des gestes de commandes continu de fonctionner correctement. (#12673)
+- Correction d'un bogue où le premier élément de menu d'un sous-menu n'était pas annoncé dans certains cas. (#12624)
 -
 
 
@@ -61,7 +65,7 @@ Pour garantir la sécurité, vérifiez que le rideau d'écran fonctionne correct
   - ``processPositiveStates`` et ``processNegativeStates`` ont été dépréciés pour suppression.
   -
 - Sous Windows 10 version 1511 et au-delà (builds insider y compris), le nom de la mise à jour de fonctionnalités actuelle est obtenu depuis le registre. (#12509)
-- Déprécié : winVersion.WIN10_RELEASE_NAME_TO_BUILDS sera supprimé dans 2022.1, aucun remplaçant direct n'existe. (#12544)
+- Déprécié : ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` sera supprimé dans 2022.1, sans remplaçant direct. (#12544)
 -
 
 
@@ -540,7 +544,7 @@ Bien que ces changements rendent incompatibles certaines extensions anciennes, l
 - Dans le menu Démarrer de Windows 10 version anniversaire et supérieur, NVDA annonce maintenant le détail des résultats de recherche. (#10340)
 - En mode navigation, si le déplacement du curseur ou l'utilisation de la navigation rapide entraîne la modification du document, NVDA n'indiquera plus un contenu incorrect dans certains cas. (#8831, #10343)
 - Certains noms de puces dans Microsoft Word ont été corrigés. (#10399)
-- Dans la mise à jour de Mai de Windows 10 et supérieur, NVDA annonce maintenant correctement le premier emoji ou le premier élément dans l'historique du presse-papiers lorsque le paneau d'emoji et le dialogue d'historique du presse-papiers sont ouverts, respectivement. (#9204)
+- Dans la mise à jour de Mai de Windows 10 et supérieur, NVDA annonce maintenant correctement le premier emoji ou le premier élément dans l'historique du presse-papiers lorsque le panneau d'emoji et le dialogue d'historique du presse-papiers sont ouverts, respectivement. (#9204)
 - Dans Poedit, il est à nouveau possible de voir les traductions pour les langues se lisant de droite à gauche. (#9931)
 - Dans l'application Paramètres de la mise à jour de Windows 10 avril 2018 et ultérieure, NVDA n'annoncera plus les informations de la barre de progression de volume qui se trouve dans ll'onglet Système / Son. (#10412)
 - Des expressions régulières invalides dans les dictionaires de parole n'entraînent plus l'arrêt complet de la parole. (#10334)
