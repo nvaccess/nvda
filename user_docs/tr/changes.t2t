@@ -3,6 +3,73 @@ NVDA'daki Yenilikler
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+Bu sürüm, ön Windows 11 desteği sunar.
+Windows 11 henüz piyasaya sürülmemiş olsa da, bu sürüm Windows 11'in önizleme sürümlerinde test edilmiştir.
+Bu, Ekran Perdesi için önemli bir düzeltme de içeriyor, (önemli notlara bakın).
+COM Kayıt Düzeltme Aracı artık NVDA çalışırken daha fazla sorunu çözebiliyor.
+Sentezleyici eSpeak ve braille çevirmeni LibLouis için güncellemeler var.
+Özellikle braille desteği ve Windows terminalleri, hesap makinesi, emoji paneli ve pano geçmişi için çeşitli hata düzeltmeleri ve iyileştirmeler de var.
+
+
+== Önemli notlar ==
+Windows Büyüteç API'sindeki bir değişiklik nedeniyle, Ekran Perdesi, Windows'un en yeni sürümlerini destekleyecek şekilde güncellenmek zorunda kaldı.
+Windows 10 21H2 (10.0.19044) veya sonraki sürümlerde Ekran Perdesini etkinleştirmek için NVDA 2021.2'yi kullanın.
+Buna Windows 10 Insider ve Windows 11 dahildir.
+Güvenliği gözeterek Windows'un yeni bir sürümünü kullanırken Ekran Perdesinin ekranı tamamen kararttığına dair görsel onay alın.
+
+
+== Yeni özellikler ==
+- ARIA bilgi notları için deneysel destek::
+  - aria-detayları ile bir nesnenin ayrıntılarının özetinin okunması için bir komut ekler. (#12364)
+  - Gelişmiş ayarlar kategorisine nesnenin detaylarının bildirimi için bir ayar ekler. (#12439) 
+  -
+- Windows 10 Sürüm 1909 ve sonraki sürümlerde (Windows 11 dahil), NVDA, Dosya Gezgini'nde arama yaparken öneri sayısını duyurur. (#10341, #12628)
+- Microsoft Word'de, NVDA artık basıldığında girinti ve asılı girinti kısayollarının sonucunu bildirir. (#6269)
+-
+
+
+== Değişiklikler ==
+- Espeak-ng güncellendi, 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Belge formatları kategorisinde kullanıcı tercihlerinde makaleler etkinleştirilmişse, NVDA içerikten sonra "makale" der. (#11103)
+- liblouis braille çevirmeni güncellendi, [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Yeni braille tabloları: Bulgarca 1. derece, Birmanca 1. derece, Birmanca 2. derece, Kazakça 1. derece, Kmerce 1. derece, Kuzey Kürtçe 1. derece, Sepedi derece 1, Sepedi derece 2, Sesotho derece 1, Sesotho derece 2, Setsvana derece 1, Setsvana 2. derece, Tatar derece 1, Vietnam derece 0, Vietnam derece 2, Güney Vietnam derece 1, Xhosa derece 1, Xhosa derece 2, Yakut derece 1, Zulu derece 1, Zulu derece 2
+  -
+- Windows 10 OCR, Windows OCR olarak yeniden adlandırıldı. (#12690)
+-
+
+
+== Hata düzeltmeleri ==
+- Windows 10 Hesap Makinesi'nde NVDA, braille ekranında hesap makinesi ifadelerini bildirir.(#12268)
+- Windows 10 sürüm 1607 ve sonraki sürümlerdeki terminal programlarında, bir satırın ortasına karakter eklerken veya silerken, düzenleme imlecinin sağındaki karakterler artık okunmaz. (#3200)
+  - Diff Match Patch artık varsayılan olarak etkin. (#12485)
+  -
+- Braille girişi, aşağıdaki kısaltmalı tablolarla düzgün çalışır: Arapça, İspanyolca, Urduca, Çince (Çin, Mandarin). (#12541)
+- COM Kayıt Düzeltme Aracı artık özellikle 64 bit Windows'ta daha fazla sorunu çözmektedir. (#12560)
+- Nippon Telesoft'tan Seika Notetaker braille cihazı için düğme kullanımında iyileştirmeler. (#12598)
+- Windows emoji paneli ve pano geçmişi bildirimlerinde iyileştirmeler. (#11485)
+- Bengal alfabesi karakter açıklamaları güncellendi. (#12502)
+- Yeni bir NVDA işlemi başlatıldığında NVDA güvenli bir şekilde sonlandırılır. (#12605)
+- Braille Ekranını Seç iletişim kutusundan Handy Tech braille ekran sürücüsünün yeniden seçilmesi artık hatalara neden olmaz. (#12618)
+- Windows sürüm 10.0.22000 veya üstü, Windows 10 olarak değil, Windows 11 olarak tanınır. (#12626)
+- Ekran perdesi desteği, 10.0.22000'e kadar olan Windows sürümleri için düzeltildi ve sınandı. (#12684)
+- Girdi hareketlerini filtrelerken hiçbir sonuç gösterilmiyorsa, girdi hareketi yapılandırma iletişim kutusu beklendiği gibi çalışmaya devam eder. (#12673)
+- Bazı bağlamlarda bir alt menünün ilk menü öğesinin duyurulmamasına  neden olan bir hata düzeltildi. (#12624)
+-
+
+
+== Changes for Developers ==
+- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SymbolLevel.*`` before 2022.1. (#11856, #12636)
+- ``controlTypes`` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
+  - ``ROLE_*`` and ``STATE_*`` constants should be replaced to their equivalent ``Role.*`` and ``State.*``.
+  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` have been deprecated, usages such as ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+  - ``processPositiveStates`` and ``processNegativeStates`` have been deprecated for removal.
+  -
+- On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
+- Deprecated: ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` will be removed in 2022.1, there is no direct replacement. (#12544)
+-
+
+
 = 2021.1 =
 Bu sürüm, Excel ve Chromium tarayıcılarda UIA için isteğe bağlı deneysel destek içerir.
 Çeşitli diller ve bağlantılara Braille erişimi  için düzeltmelere sahip.
