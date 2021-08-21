@@ -288,6 +288,18 @@ class Formatter(logging.Formatter):
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
 
+	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
+		"""Custom implementation of `formatTime` which avoids `time.localtime`
+		since it causes a crash under some versions of Universal CRT ( #12160, Python issue 36792)
+		"""
+		timeAsFileTime = winKernel.time_tToFileTime(record.created)
+		timeAsSystemTime = winKernel.SYSTEMTIME()
+		winKernel.FileTimeToSystemTime(timeAsFileTime, timeAsSystemTime)
+		timeAsLocalTime = winKernel.SYSTEMTIME()
+		winKernel.SystemTimeToTzSpecificLocalTime(None, timeAsSystemTime, timeAsLocalTime)
+		res = f"{timeAsLocalTime.wHour:02d}:{timeAsLocalTime.wMinute:02d}:{timeAsLocalTime.wSecond:02d}"
+		return self.default_msec_format % (res, record.msecs)
+
 
 class StreamRedirector(object):
 	"""Redirects an output stream to a logger.
