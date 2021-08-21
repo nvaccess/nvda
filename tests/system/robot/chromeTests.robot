@@ -69,3 +69,6 @@ ARIA description Browse Mode
 ARIA description Say All
 	[Documentation]	Say all, contents includes aria-description
 	test_ariaDescription_sayAll
+i10840
+	[Documentation]	The name of table header cells should only be conveyed once when navigating directly to them in browse mode (chrome self-references a header cell as its own header, which used to cause the name to be announced twice)
+	test_i10840
