@@ -316,7 +316,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"row 1  Subject  column 1  Subject"
+		"row 1  column 1  Subject"
 	)
 	# Navigate to row 2 column 1 with NVDA table navigation command
 	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
@@ -461,7 +461,7 @@ def test_tableInStyleDisplayTable():
 	actualSpeech = _chrome.getSpeechAfterKey("t")
 	_asserts.strings_match(
 		actualSpeech,
-		"table  with 2 rows and 2 columns  row 1  First heading  column 1  First heading"
+		"table  with 2 rows and 2 columns  row 1  column 1  First heading"
 	)
 	nextActualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
 	_asserts.strings_match(
