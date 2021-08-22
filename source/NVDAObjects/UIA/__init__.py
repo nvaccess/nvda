@@ -17,6 +17,7 @@ import colors
 import languageHandler
 import UIAHandler
 import _UIACustomProps
+import _UIACustomAnnotations
 import globalVars
 import eventHandler
 import controlTypes
@@ -818,6 +819,7 @@ class UIATextInfo(textInfos.TextInfo):
 
 class UIA(Window):
 	_UIACustomProps = _UIACustomProps.CustomPropertiesCommon.get()
+	_UIACustomAnnotationTypes = _UIACustomAnnotations.CustomAnnotationTypesCommon.get()
 
 	shouldAllowDuplicateUIAFocusEvent = False
 
