@@ -4,6 +4,8 @@
 # Copyright (C) 2018-2021 NV Access Limited
 
 from typing import Optional, Tuple
+from comtypes import COMError
+import winVersion
 import UIAHandler
 import _UIAHandler
 import _UIAConstants
@@ -15,6 +17,9 @@ import locationHelper
 import controlTypes
 from _UIACustomProps import (
 	CustomPropertyInfo,
+)
+from _UIACustomAnnotations import (
+	CustomAnnotationTypeInfo,
 )
 from comtypes import GUID
 from scriptHandler import script
@@ -90,10 +95,35 @@ class ExcelCustomProperties:
 		)
 
 
+class ExcelCustomAnnotationTypes:
+	""" UIA 'custom annotation types' specific to Excel.
+	Once registered, all subsequent registrations will return the same ID value.
+	This class should be used as a singleton via ExcelCustomAnnotationTypes.get()
+	to prevent unnecessary work by repeatedly interacting with UIA.
+	"""
+	#: Singleton instance
+	_instance: "Optional[ExcelCustomAnnotationTypes]" = None
+
+	@classmethod
+	def get(cls) -> "ExcelCustomAnnotationTypes":
+		"""Get the singleton instance or initialise it.
+		"""
+		if cls._instance is None:
+			cls._instance = cls()
+		return cls._instance
+
+	def __init__(self):
+		self.note = CustomAnnotationTypeInfo(
+			guid=GUID("{4E863D9A-F502-4A67-808F-9E711702D05E}"),
+		)
+
+
 class ExcelObject(UIA):
 	"""Common base class for all Excel UIA objects
 	"""
 	_UIAExcelCustomProps = ExcelCustomProperties.get()
+	_UIAExcelCustomAnnotationTypes = ExcelCustomAnnotationTypes.get()
+
 
 
 class ExcelCell(ExcelObject):
@@ -359,6 +389,15 @@ class ExcelCell(ExcelObject):
 			states.add(controlTypes.State.HASFORMULA)
 		if self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.hasDataValidationDropdown.id):
 			states.add(controlTypes.State.HASPOPUP)
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			try:
+				annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
+			except COMError:
+				# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
+				annotationTypes = None
+			if annotationTypes:
+				if self._UIAExcelCustomAnnotationTypes.note.id in annotationTypes:
+					states.add(controlTypes.State.HASNOTE)
 		return states
 
 	def _get_cellCoordsText(self):
@@ -413,6 +452,17 @@ class ExcelCell(ExcelObject):
 		description=_("Reports the note or comment thread on the current cell"),
 		gesture="kb:NVDA+alt+c")
 	def script_reportComment(self, gesture):
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			noteElement = self.UIAAnnotationObjects.get(self._UIAExcelCustomAnnotationTypes.note.id)
+			if noteElement:
+				name = noteElement.CurrentName
+				desc = noteElement.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
+				# Translators: a note on a cell in Microsoft excel.
+				text = _("{name}: {desc}").format(name=name, desc=desc)
+				ui.message(text)
+			else:
+				# Translators: message when a cell in Excel contains no note
+				ui.message(_("No note on this cell"))
 		commentsElement = self.UIAAnnotationObjects.get(UIAHandler.AnnotationType_Comment)
 		if commentsElement:
 			comment = commentsElement.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
@@ -420,21 +470,21 @@ class ExcelCell(ExcelObject):
 			numReplies = commentsElement.GetCurrentPropertyValue(self._UIAExcelCustomProps.commentReplyCount.id)
 			if numReplies == 0:
 				# Translators: a comment on a cell in Microsoft excel.
-				text = _("{comment}  by {author}").format(
+				text = _("Comment thread: {comment}  by {author}").format(
 					comment=comment,
 					author=author
 				)
 			else:
 				# Translators: a comment on a cell in Microsoft excel.
-				text = _("{comment}  by {author} with {numReplies} replies").format(
+				text = _("Comment thread: {comment}  by {author} with {numReplies} replies").format(
 					comment=comment,
 					author=author,
 					numReplies=numReplies
 				)
 			ui.message(text)
 		else:
-			# Translators: A message in Excel when there is no note
-			ui.message(_("No note or comment thread on this cell"))
+			# Translators: A message in Excel when there is no comment thread
+			ui.message(_("No comment thread on this cell"))
 
 
 class ExcelWorksheet(ExcelObject):
