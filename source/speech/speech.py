@@ -498,7 +498,7 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			and controlTypes.State.FOCUSABLE in states
 			and controlTypes.State.SELECTED in states
 			and obj.selectionContainer 
-			and obj.selectionContainer.getSelectedItemsCount(2)==1
+			and obj.selectionContainer.getSelectedItemsCount(2) <= 1
 		):
 			# We must copy the states set and  put it back in newPropertyValues otherwise mutating the original states set in-place will wrongly change the cached states.
 			# This would then cause 'selected' to be announced as a change when any other state happens to change on this object in future.
