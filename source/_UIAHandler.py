@@ -759,8 +759,8 @@ class UIAHandler(COMObject):
 				# An MS Office app before build 13901
 				isOfficeApp
 				and int(appModule.productVersion.split('.')[2]) < 13901
-				# An MS Word document window 
-				and windowClass=="_WwG" 
+				# An MS Word document window
+				and windowClass == "_WwG"
 				# Disabling is only useful if we can inject in-process (and use our older code)
 				and canUseOlderInProcessApproach
 				# Allow the user to explicitly force UIA support on or off for MS Word documents
