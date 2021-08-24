@@ -1,17 +1,19 @@
-#versionInfo.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# versionInfo.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Quin Marilyn
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """
 This module contains localizable version information such as description, copyright and About messages etc.
-As there are localizable strings at module level, this can only be imported once localization is set up via languageHandler.initialize.
-To access version information for programmatic version checks before languageHandler.initialize, use the buildVersion module which contains all the non-localizable version information such as major and minor version, and version string etc.
+As there are localizable strings at module level, this can only be imported
+once localization is set up via languageHandler.initialize.
+To access version information for programmatic version checks before languageHandler.initialize,
+use the buildVersion module which contains all the non-localizable version information
+such as major and minor version, and version string etc.
 """
 
-import os
-from buildVersion import *
+from buildVersion import *  # noqa: F403, F401
 
 longName = _("NonVisual Desktop Access")
 description = _("A free and open source screen reader for Microsoft Windows")
