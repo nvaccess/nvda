@@ -1,15 +1,18 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited
+# Copyright (C) 2006-2021 NV Access Limited, Quin Marilyn
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import os
 
 """
-This module contains non-localizable version information for NVDA such as the version string and major and minor numbers etc.
+This module contains non-localizable version information for NVDA such as the version string
+and major and minor numbers etc.
 Any localizable version information should be placed in the versionInfo module, not this one.
-This module exists separately so that it can be imported for version checks before localization is initialized.
+This module exists separately so that it can be imported for version checks
+before localization is initialized.
 """
+
 
 def _updateVersionFromVCS():
 	"""Update the version from version control system metadata if possible.
@@ -31,7 +34,7 @@ def _updateVersionFromVCS():
 		version = "source-%s-%s" % (
 			os.path.basename(ref),
 			commit[:7])
-	except:
+	except:  # noqa: E722
 		pass
 
 
@@ -69,11 +72,11 @@ version_year = 2021
 version_major = 3
 version_minor = 0
 version_build = 0  # Should not be set manually. Set in 'sconscript' provided by 'appVeyor.yml'
-version=_formatDevVersionString()
-publisher="unknown"
-updateVersionType=None
+version = _formatDevVersionString()
+publisher = "unknown"
+updateVersionType = None
 try:
-	from _buildVersion import version, publisher, updateVersionType, version_build
+	from _buildVersion import version, publisher, updateVersionType, version_build  # noqa: F401
 except ImportError:
 	_updateVersionFromVCS()
 
