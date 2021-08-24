@@ -748,19 +748,22 @@ class UIAHandler(COMObject):
 		if res:
 			# The window does support UIA natively, but MS Word documents now
 			# have a fairly usable UI Automation implementation.
-			# However, builds of MS Office 2016 before build 9000 or so had bugs which
+			# However, builds of MS Office 2016 before build 13901 or so had bugs which
 			# we cannot work around.
-			# And even current builds of Office 2016 are still missing enough info from
-			# UIA that it is still impossible to switch to UIA completely.
-			# Therefore, if we can inject in-process, refuse to use UIA and instead
+			# Therefore for less recent versions of Office,
+			# if we can inject in-process, refuse to use UIA and instead
 			# fall back to the MS Word object model.
 			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
+			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
 			if (
+				# An MS Office app before build 13901
+				isOfficeApp
+				and int(appModule.productVersion.split('.')[2]) < 13901
 				# An MS Word document window 
-				windowClass=="_WwG" 
+				and windowClass=="_WwG" 
 				# Disabling is only useful if we can inject in-process (and use our older code)
 				and canUseOlderInProcessApproach
-				# Allow the user to explicitly force UIA support for MS Word documents
+				# Allow the user to explicitly force UIA support on or off for MS Word documents
 				# no matter the Office version
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
 			):

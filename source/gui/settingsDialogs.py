@@ -2593,7 +2593,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Use UI Automation to access Microsoft &Word document controls when available")
+		label = _("Always use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
 		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
