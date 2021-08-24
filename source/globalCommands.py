@@ -1889,22 +1889,17 @@ class GlobalCommands(ScriptableObject):
 		else:
 			ui.message(_("No focus"))
 
-	@script(
-		description=_(
-			# Translators: Input help mode message for report status line text command.
-			"Reads the current application status bar and moves the navigator to it. "
-			"If pressed twice, spells the information. "
-			"If pressed three times, copies the status bar to the clipboard"
-		),
-		category=SCRCAT_FOCUS,
-		gestures=("kb(desktop):NVDA+end", "kb(laptop):NVDA+shift+end")
-	)
-	def script_reportStatusLine(self,gesture):
+	@staticmethod
+	def _getStatusBarText(setReviewCursor: bool = False) -> Optional[str]:
+		"""Returns text of the current status bar and optionally sets review cursor to it.
+		If no status bar has been found `None` is returned and this fact is announced in speech and braille.
+		"""
 		obj = api.getStatusBar()
-		found=False
+		found = False
 		if obj:
 			text = api.getStatusBarText(obj)
-			api.setNavigatorObject(obj)
+			if setReviewCursor:
+				api.setNavigatorObject(obj)
 			found = True
 		else:
 			foreground = api.getForegroundObject()
@@ -1919,30 +1914,104 @@ class GlobalCommands(ScriptableObject):
 			if info:
 				text = info.text
 				info.collapse()
-				api.setReviewPosition(info)
+				if setReviewCursor:
+					api.setReviewPosition(info)
 				found = True
 		if not found:
 			# Translators: Reported when there is no status line for the current program or window.
 			ui.message(_("No status line found"))
+			return None
+		return text
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for command which reads content of the status bar.
+			"Reads the current application status bar."
+		),
+		category=SCRCAT_FOCUS,
+	)
+	def script_readStatusLine(self, gesture):
+		text = self._getStatusBarText()
+		if text is None:
 			return
-		if scriptHandler.getLastScriptRepeatCount()==0:
-			if not text.strip():
-				# Translators: Reported when status line exist, but is empty.
-				ui.message(_("no status bar information"))
-			else:
-				ui.message(text)
-		elif scriptHandler.getLastScriptRepeatCount()==1:
-			if not  text.strip():
-				# Translators: Reported when status line exist, but is empty.
-				ui.message(_("no status bar information"))
-			else:
-				speech.speakSpelling(text)
+		if not text.strip():
+			# Translators: Reported when status line exist, but is empty.
+			ui.message(_("no status bar information"))
 		else:
-			if not text.strip():
-				# Translators: Reported when user attempts to copy content of the empty status line.
-				ui.message(_("unable to copy status bar content to clipboard"))
-			else:
-				api.copyToClip(text, notify=True)
+			ui.message(text)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for command which spells content of the status bar.
+			"spells the current application status bar."
+		),
+		category=SCRCAT_FOCUS,
+	)
+	def script_spellStatusLine(self, gesture):
+		text = self._getStatusBarText()
+		if text is None:
+			return
+		if not text.strip():
+			# Translators: Reported when status line exist, but is empty.
+			ui.message(_("no status bar information"))
+		else:
+			speech.speakSpelling(text)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for command which copies status bar content to the clipboard.
+			"copies content of the status bar  of current application to the clipboard."
+		),
+		category=SCRCAT_FOCUS,
+	)
+	def script_copyStatusLine(self, gesture):
+		text = self._getStatusBarText()
+		if text is None:
+			return
+		if not text.strip():
+			# Translators: Reported when user attempts to copy content of the empty status line.
+			ui.message(_("unable to copy status bar content to clipboard"))
+		else:
+			api.copyToClip(text, notify=True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for Command which moves review cursor to the status bar.
+			"Reads the current application status bar and moves navigator object into it."
+		),
+		category=SCRCAT_OBJECTNAVIGATION,
+	)
+	def script_reviewCursorToStatusLine(self, gesture):
+		text = self._getStatusBarText(setReviewCursor=True)
+		if text is None:
+			return
+		if not text.strip():
+			# Translators: Reported when status line exist, but is empty.
+			ui.message(_("no status bar information"))
+		else:
+			ui.message(text)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for report status line text command.
+			"Reads the current application status bar. "
+			"If pressed twice, spells the information. "
+			"If pressed three times, copies the status bar to the clipboard"
+		),
+		category=SCRCAT_FOCUS,
+		gestures=("kb(desktop):NVDA+end", "kb(laptop):NVDA+shift+end")
+	)
+	def script_reportStatusLine(self, gesture):
+		text = self._getStatusBarText()
+		if text is None:
+			return
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			self.script_readStatusLine(gesture)
+		elif repeats == 1:
+			self.script_spellStatusLine(gesture)
+		else:
+			self.script_copyStatusLine(gesture)
 
 	@script(
 		# Translators: Input help mode message for toggle mouse tracking command.
