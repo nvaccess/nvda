@@ -10,7 +10,7 @@
     1. Automatically by Ease of Access after signing in to Windows
 1. For an installed copy, portable copy, installer:
     1. An exiting instance of NVDA starting a new process (see shutting down procedures)
-    1. By running the exe (see cli options too).
+    1. By running the exe
     This can be triggered by a user or external process such as an existing NVDA instance
         - test: `startupShutdownNVDA.Starts`
 1. For source: eg runnvda.bat
@@ -110,7 +110,7 @@ Steps:
 
 These notes are aimed at developers, wishing to understand technical aspects of the NVDA start and exit.
 
-1. No more than one NVDA process instance should be running time. Interactions with itself could cause severe issues, some (non-exhaustive list) examples of sub-systems where this would be a problem:
+1. No more than one NVDA process instance should be running at the same time. Interactions with itself could cause severe issues, some (non-exhaustive list) examples of sub-systems where this would be a problem:
    - NVDA config files
    - Global (OS level) keyboard hook
    - Changed / incompatible in-process code
@@ -132,7 +132,7 @@ There are 3 ways that NVDA receives a request to exit:
 * Once the queued shutdown starts:
     1. the updateCheck is terminated
     1. watchdog is terminated
-    1. addons and the brailleViewer are terminated, so we can close all windows safely
+    1. globalPlugins and the brailleViewer are terminated, so we can close all windows safely
     1. All wx windows are closed
     1. Now that windows are closed, a new NVDA instance is started if requested
 
