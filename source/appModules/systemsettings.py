@@ -1,10 +1,9 @@
-# appModules/systemsettings.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019 NV Access Limited, Joseph Lee
+# Copyright (C) 2019-2021 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""App module for Windows 10 Settings app (aka Immersive Control Panel)."""
+"""App module for Settings app on Windows 10 and later (aka Immersive Control Panel)."""
 
 import appModuleHandler
 from NVDAObjects.UIA import UIA
