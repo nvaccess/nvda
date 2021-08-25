@@ -1943,7 +1943,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for command which spells content of the status bar.
-			"spells the current application status bar."
+			"Spells the current application status bar."
 		),
 		category=SCRCAT_FOCUS,
 	)
@@ -1960,7 +1960,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for command which copies status bar content to the clipboard.
-			"copies content of the status bar  of current application to the clipboard."
+			"Copies content of the status bar  of current application to the clipboard."
 		),
 		category=SCRCAT_FOCUS,
 	)
@@ -1970,7 +1970,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		if not text.strip():
 			# Translators: Reported when user attempts to copy content of the empty status line.
-			ui.message(_("unable to copy status bar content to clipboard"))
+			ui.message(_("Unable to copy status bar content to clipboard"))
 		else:
 			api.copyToClip(text, notify=True)
 
