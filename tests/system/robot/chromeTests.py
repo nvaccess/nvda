@@ -316,7 +316,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"row 1  Subject  column 1  Subject"
+		"row 1  column 1  Subject"
 	)
 	# Navigate to row 2 column 1 with NVDA table navigation command
 	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
@@ -461,7 +461,7 @@ def test_tableInStyleDisplayTable():
 	actualSpeech = _chrome.getSpeechAfterKey("t")
 	_asserts.strings_match(
 		actualSpeech,
-		"table  with 2 rows and 2 columns  row 1  First heading  column 1  First heading"
+		"table  with 2 rows and 2 columns  row 1  column 1  First heading"
 	)
 	nextActualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
 	_asserts.strings_match(
@@ -602,4 +602,50 @@ def test_ariaDescription_sayAll():
 			"  out of edit",
 			"After Test Case Marker"
 		])
+	)
+
+
+def test_i10840():
+	"""
+	The name of table header cells should only be conveyed once when navigating directly to them in browse mode
+	Chrome self-references a header cell as its own header, which used to cause the name to be announced twice
+	"""
+	_chrome.prepareChrome(
+		f"""
+			<table>
+				<thead>
+					<tr>
+						<th>Month</th>
+						<th>items</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>January</td>
+						<td>100</td>
+					</tr>
+					<tr>
+						<td>February</td>
+						<td>80</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>Sum</td>
+						<td>180</td>
+					</tr>
+				</tfoot>
+				</table>
+		"""
+	)
+	# Jump to the table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(
+		actualSpeech,
+		"table  with 4 rows and 2 columns  row 1  column 1  Month"
+	)
+	nextActualSpeech = _chrome.getSpeechAfterKey("control+alt+rightArrow")
+	_asserts.strings_match(
+		nextActualSpeech,
+		"column 2  items"
 	)

@@ -327,6 +327,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			# Get the text for the header cells.
 			textList = []
 			for docHandle, ID in cellIdentifiers:
+				if attrs.get("controlIdentifier_docHandle") == docHandle and attrs.get("controlIdentifier_ID") == ID:
+					# This is a self-reference to a column or row header
+					# Do not double up the cell header name. This is happening in Chrome.
+					continue
 				try:
 					start, end = self._getOffsetsFromFieldIdentifier(int(docHandle), int(ID))
 				except (LookupError, ValueError):

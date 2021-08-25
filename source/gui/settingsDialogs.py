@@ -2664,7 +2664,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Report aria-description always:")
+		label = _("Report aria-description always")
 		self.ariaDescCheckBox: wx.CheckBox = AnnotationsGroup.addItem(
 			wx.CheckBox(AnnotationsBox, label=label)
 		)
