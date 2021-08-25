@@ -291,7 +291,7 @@ class Formatter(logging.Formatter):
 	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
 		"""Custom implementation of `formatTime` which avoids `time.localtime`
 		since it causes a crash under some versions of Universal CRT when Python locale
-		is set to a Unicode one ( #12160, Python issue 36792)
+		is set to a Unicode one (#12160, Python issue 36792)
 		"""
 		timeAsFileTime = winKernel.time_tToFileTime(record.created)
 		timeAsSystemTime = winKernel.SYSTEMTIME()

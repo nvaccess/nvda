@@ -390,35 +390,32 @@ def setLocale(localeName: str) -> None:
 		log.debugWarning(f"Locale {localeName} not supported by Windows")
 	if localeString and _setPythonLocale(localeString):
 		return
-	else:
-		# The full form langName_country either cannot be retrieved from Windows
-		# or Python cannot be set to that locale.
-		# Try just with the language name.
-		if "_" in localeName:
-			localeName = localeName.split("_")[0]
-			try:
-				localeString = localeStringFromLocaleCode(localeName)
-				log.debug(f"Win32 locale string from locale code is {localeString}")
-			except ValueError:
-				log.debugWarning(f"Locale {localeName} not supported by Windows")
+	# The full form langName_country either cannot be retrieved from Windows
+	# or Python cannot be set to that locale.
+	# Try just with the language name.
+	if "_" in localeName:
+		localeName = localeName.split("_")[0]
+		try:
+			localeString = localeStringFromLocaleCode(localeName)
+			log.debug(f"Win32 locale string from locale code is {localeString}")
+		except ValueError:
+			log.debugWarning(f"Locale {localeName} not supported by Windows")
 	if localeString and _setPythonLocale(localeString):
 		return
+	# As a final fallback try setting locale just to the English name of the given language.
+	localeFromLang = englishLanguageNameFromNVDALocale(localeName)
+	if localeFromLang and _setPythonLocale(localeFromLang):
+		return
+	# Either Windows does not know the locale, or Python is unable to handle it.
+	# reset to default locale
+	if originalLocaleName == curLang:
+		# reset to system locale default if we can't set the current lang's locale
+		locale.setlocale(locale.LC_ALL, "")
+		log.debugWarning(f"set python locale to system default")
 	else:
-		# As a final fallback try setting locale just to the English name of the given language.
-		localeFromLang = englishLanguageNameFromNVDALocale(localeName)
-		if localeFromLang and _setPythonLocale(localeFromLang):
-			return
-		else:
-			# Either Windows does not know the locale, or Python is unable to handle it.
-			# reset to default locale
-			if originalLocaleName == curLang:
-				# reset to system locale default if we can't set the current lang's locale
-				locale.setlocale(locale.LC_ALL, "")
-				log.debugWarning(f"set python locale to system default")
-			else:
-				log.debugWarning(f"setting python locale to the current language {curLang}")
-				# fallback and try to reset the locale to the current lang
-				setLocale(curLang)
+		log.debugWarning(f"setting python locale to the current language {curLang}")
+		# fallback and try to reset the locale to the current lang
+		setLocale(curLang)
 
 
 def getLanguage() -> str:
