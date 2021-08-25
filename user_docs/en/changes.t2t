@@ -27,6 +27,8 @@ What's New in NVDA
 - It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
 - NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
 - When reading a header cell of a table in Chrome, fix the column name being announced twice. (#10840)
+- NVDA no longer reports a numerical value for UIA sliders that have a textual representation of their value defined. (UIA ValuePattern is now preferred over RangeValuePattern). (#12724)
+- NVDA no longer treats the value of UIA sliders as always percentage based.
 -
 
 
