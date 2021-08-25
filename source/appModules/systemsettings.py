@@ -6,8 +6,7 @@
 """App module for Settings app on Windows 10 and later (aka Immersive Control Panel)."""
 
 import appModuleHandler
-from NVDAObjects.UIA import UIA
-from NVDAObjects.behaviors import ProgressBar
+from NVDAObjects.UIA import UIA, ProgressBar
 
 
 class AppModule(appModuleHandler.AppModule):
