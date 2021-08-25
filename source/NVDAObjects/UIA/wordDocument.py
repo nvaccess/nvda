@@ -23,6 +23,9 @@ from scriptHandler import script
 
 """Support for Microsoft Word via UI Automation."""
 
+#: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
+END_OF_ROW_MARK = '\x07'
+
 class ElementsListDialog(browseMode.ElementsListDialog):
 
 	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
@@ -183,7 +186,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			# Really better as carage returns
 			t=t.replace('\v','\r')
 			# Remove end-of-row markers from the text - they are not useful
-			t=t.replace('\x07','')
+			t = t.replace(END_OF_ROW_MARK, '')
 		return t
 
 	def _isEndOfRow(self):
@@ -215,10 +218,25 @@ class WordDocumentTextInfo(UIATextInfo):
 				self.setEndPoint(docInfo,"endToEnd")
 
 	def getTextWithFields(self,formatConfig=None):
-		if self.isCollapsed:
-			# #7652: We cannot fetch fields on collapsed ranges otherwise we end up with repeating controlFields in braille (such as list list list). 
-			return []
-		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
+		fields = None
+		# #11043: when a non-collapsed text range is positioned within a blank table cell
+		# MS Word does not return the table  cell as an enclosing element,
+		# Thus NVDa thinks the range is not inside the cell.
+		# This can be detected by asking for the first 2 characters of the range's text,
+		# Which will either be an empty string, or the single end-of-row mark.
+		# Anything else means it is not on an empty table cell,
+		# or the range really does span more than the cell itself.
+		# If this situation is detected,
+		# copy and collapse the range, and fetch the content from that instead,
+		# As a collapsed range on an empty cell does correctly return the table cell as its first enclosing element.
+		if not self.isCollapsed:
+			rawText = self._rangeObj.GetText(2)
+			if not rawText or rawText == END_OF_ROW_MARK:
+				r = self.copy()
+				r.end = r.start
+				fields = super(WordDocumentTextInfo, r).getTextWithFields(formatConfig=formatConfig)
+		if fields is None:
+			fields = super().getTextWithFields(formatConfig=formatConfig)
 		if len(fields)==0: 
 			# Nothing to do... was probably a collapsed range.
 			return fields

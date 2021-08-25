@@ -2818,6 +2818,7 @@ class AdvancedPanelControls(
 			"speechManager",
 			"synthDriver",
 			"nvwave",
+			"brailleInput",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel

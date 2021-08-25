@@ -57,13 +57,16 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019 Community, Version 16.3 or later:
-	* Download from https://visualstudio.microsoft.com/vs/
+* Microsoft Visual Studio 2019:
+	* To replicate the production build environment, use the [version of Visual Studio that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
+	* Download from https://visualstudio.microsoft.com/downloads/
+		* When you do not use the Visual Studio IDE itself, you can download the build tools under the Tools for Visual Studio 2019 expandable heading
+		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download the community version under the Visual Studio 2019 expandable heading
 	* When installing Visual Studio, you need to enable the following:
-		* On the Workloads tab
-			* in the Windows group:
+		* In the list  on the Workloads tab
+			* in the Windows grouping:
 				* Desktop development with C++
-			* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
+			* Then in the Installation details tree view, under Desktop for C++, Optional, ensure the following are selected:
 				* MSVC v142 - VS 2019 C++ x64/x86 build tools
 				* Windows 10 SDK (10.0.19041.0)
 				* C++ ATL for v142 build tools (x86 & x64)

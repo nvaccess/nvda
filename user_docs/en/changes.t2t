@@ -23,10 +23,16 @@ What's New in NVDA
 
 == Bug Fixes ==
 - Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
+- NVDA no longer fails to translate braille input when multiple characters are typed that consist of multiple braille patterns (e.g. (1) in UEB). (#12667)
+- It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
+- NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
+- When reading a header cell of a table in Chrome, fix the column name being announced twice. (#10840)
 -
 
 
 == Changes for Developers ==
+- Building NVDA now requires Visual Studio 2019 16.10.4 or later.
+To match the production build environment, update Visual Studio to keep in sync with the [current version AppVeyor is using https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019]. (#12728)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been deprecated for removal in 2022.1. (#12660)
   - Instead use ``apiLevel`` (see the comments at ``_UIAConstants.WinConsoleAPILevel`` for details).
   -
