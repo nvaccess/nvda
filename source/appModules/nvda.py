@@ -191,7 +191,7 @@ class AppModule(appModuleHandler.AppModule):
 		if nvdaMenuIaIdentity is not True:
 			return False
 		# nvdaMenuIaIdentity is True, so the next menu we encounter is the NVDA menu.
-		if obj.role == controlTypes.ROLE_POPUPMENU:
+		if obj.role == controlTypes.Role.POPUPMENU:
 			nvdaMenuIaIdentity = obj.IAccessibleIdentity
 			return True
 		return False
@@ -203,7 +203,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.name=versionInfo.name
 
 	def event_gainFocus(self, obj, nextHandler):
-		if obj.role == controlTypes.ROLE_UNKNOWN and controlTypes.STATE_INVISIBLE in obj.states:
+		if obj.role == controlTypes.Role.UNKNOWN and controlTypes.State.INVISIBLE in obj.states:
 			return
 		nextHandler()
 
@@ -243,7 +243,7 @@ class AppModule(appModuleHandler.AppModule):
 		return obj.windowHandle == consoleUI.outputCtrl.GetHandle()
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "#32770" and obj.role == controlTypes.ROLE_DIALOG:
+		if obj.windowClassName == "#32770" and obj.role == controlTypes.Role.DIALOG:
 			clsList.insert(0, NvdaDialog)
 			if self.isNvdaSettingsDialog(obj):
 				clsList.insert(0, NvdaDialogEmptyDescription)

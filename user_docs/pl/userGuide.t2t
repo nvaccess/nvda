@@ -752,10 +752,10 @@ Zdefiniowane zostały poniższe skróty dla punktów orientacyjnych:
 | obszar | obszar |
 
 ++ Wprowadzanie brajla ++[BrailleInput]
-NVDA obsługuje wprowadzanie brajla skrótami lub w wersji nieskróconej przy użyciu klawiatury brajlowskiej.
+NVDA obsługuje wprowadzanie brajla skrótami lub w za pomocy pisma pełnego przy użyciu klawiatury brajlowskiej.
 Możesz wybrać tablicę tłumaczenia wprowadzanego brajla na tekst przy użyciu opcji [Tablica wejścia #BrailleSettingsInputTable] w kategorii ustawień brajla w oknie [Preferencji NVDA #NVDASettings], znajdującym się w podmenu Ustawienia w menu NVDA.
 
-Jeśli używany jest brajl nieskrócony, tekst jest wstawiany od razu po wprowadzeniu.
+Jeśli używane jest pismo pełne, tekst jest wstawiany od razu po wprowadzeniu.
 Jeśli używane są skróty brajlowskie, tekst jest wstawiany po naciśnięciu spacji lub Entera na końcu słowa.
 Tłumaczenie może uwzględniać tylko wpisywane słowo i nie bierze pod uwagę istniejącego tekstu.
 Dla przykładu, jeśli używasz kodu brajlowskiego, który rozpoczyna liczby znakiem cyfry i naciśniesz Backspace kasując początek liczby, będziesz musiał wpisać znak cyfry ponownie aby wprowadzić następne cyfry.
@@ -784,10 +784,10 @@ Podświetlacz fokusu może pomóc w identyfikacji pozycji [kursora systemowego #
 - Kolor żółty zaś sygnalizuje pozycję wirtualnego kursora przeglądania.
 -
 
-Kiedy podświetlacz fokusu jest włączone w [ustawieniach widoczności #VisionSettings] w [oknie głównym programu #NVDASettings] dialog, możesz [zmienić co ma być podświetlane. #VisionSettingsFocusHighlight]
+Kiedy podświetlacz fokusu jest włączony w [ustawieniach widoczności #VisionSettings] w [oknie głównym programu #NVDASettings] dialog, możesz [zmienić co ma być podświetlane. #VisionSettingsFocusHighlight]
 
 ++ Kurtyna ++[VisionScreenCurtain]
-Jako użytkownik niewidomy, nie zawsze wymagana jest widoczność ekranu.
+Użytkownikowi niewidomemu nie zawsze wymagana jest widoczność ekranu.
 Co więcej, nie zawsze wiadomo czy ktoś nie patrzy przez twoje ramie.
 Specjalnie na takie sytuacje, NVDA posiada funkcję kurtyny, która powoduje że ekran staje się czarny.
 
@@ -1023,34 +1023,34 @@ Następujące skróty wbudowane w system Windows mogą być przydatne podczas [n
 %kc:endInclude
 
 + Konfigurowanie NVDA +[ConfiguringNVDA]
-Większość ustawień NVDA może być zmieniona za pomocą okien dialogowych dostępnych poprzez podmenu Ustawienia z menu NVDA.
-Dużą część tych ustawień można znaleźć w wielostronicowym [oknie preferencji NVDA #NVDASettings].
+Większość ustawień NVDA może być zmieniona za pomocą okien dialogowych dostępnych poprzez menu rozwijane opcje z menu NVDA.
+Dużą część tych ustawień można znaleźć w wielostronicowym [oknie ustawień NVDA #NVDASettings].
 W oknach dialogowych wszystkich ustawień NVDA, naciśnij przycisk OK, aby zaakceptować zmiany, jakie zostały wprowadzone.
 Aby anulować zmiany, naciśnij przycisk Anuluj lub klawisz Escape.
 W niektórych oknach można nacisnąć przycisk Zastosuj, aby zmiany zostały uwzględnione natychmiastowo, a okno pozostało otwarte.
 Niektóre ustawienia można zmienić również za pomocą klawiszy skrótu, które są wymienione w stosownych rozdziałach poniżej.
 
-++ Preferencje NVDA ++[NVDASettings]
+++ Ustawienia NVDA ++[NVDASettings]
 %kc:settingsSection: || Działanie | Skróty Klawiszowe Desktopa | Skróty Klawiszowe Laptopa | Opis |
-Okno preferencji NVDA zawiera wiele parametrów konfiguracyjnych, które mogą zostać zmienione.
+Okno ustawień NVDA zawiera wiele parametrów konfiguracyjnych, które mogą zostać zmienione.
 To okno zawiera listę kilku kategorii ustawień, z której można wybierać.
 Po wybraniu kategorii, ustawienia związane z tą kategorią zostaną wyświetlone w tym oknie.
 Mogą one być zastosowane przy użyciu przycisku Zastosuj, a okno pozostanie wówczas otwarte.
-Aby zapisać ustawienia i zamknąć okno preferencji NVDA, użyj przycisku OK.
+Aby zapisać ustawienia i zamknąć okno ustawień NVDA, użyj przycisku OK.
 
 Niektóre kategorie ustawień mają przypisane klawisze skrótu.
-Po ich naciśnięciu, otwarte zostanie okno preferencji NVDA z wybraną odpowiednią kategorią ustawień.
-Domyślnie nie wszystkie kategorie posiadają przypisany skrót klawiaturowy.
+Po ich naciśnięciu, otwarte zostanie okno ustawień NVDA z wybraną odpowiednią kategorią ustawień.
+Domyślnie nie wszystkie kategorie posiadają przypisany skrót klawiszowy.
 Jeśli chcesz uzyskać dostęp do okien nie posiadających klawisza skrótu, użyj [Okna zdarzenia wejścia #InputGestures] aby zdefiniować własne zdarzenie wejścia otwierające to okno.
 
-Kategorie w oknie preferencji NVDA zostaną opisane poniżej.
+Kategorie w oknie ustawień NVDA zostaną opisane poniżej.
 
 +++ Ogólne (NVDA+Ctrl+G) +++[GeneralSettings]
-Ta kategoria preferencji NVDA  pozwala określić ogólne zachowanie NVDA takie jak język interfejsu i automatyczne sprawdzanie aktualizacji.
+Ta kategoria ustawień NVDA  pozwala określić ogólne zachowanie NVDA takie jak język interfejsu i automatyczne sprawdzanie aktualizacji.
 Zawiera następujące opcje:
 
 ==== Język ====[GeneralSettingsLanguage]
-Pole rozwijalne służące do wyboru języka komunikatów oraz interfejsu użytkownika NVDA.
+Lista rozwijana służąca do wyboru języka komunikatów oraz interfejsu użytkownika NVDA.
 Dostępnych jest wiele języków, jednak domyślnie wybrana jest opcja "Domyślne". 
 Opcja ta powoduje, że NVDA automatycznie wybiera język interfejsu systemu Windows.
 
@@ -1128,7 +1128,7 @@ Można ręcznie zainstalować oczekującą aktualizację w oknie opcji wyjścia 
 ustawienia mowy w oknie głównym programu NVDA zawierają zarówno opcje zmiany syntezatora jak i jego parametrów.
 Szybszy alternatywny sposób regulacji parametrów mowy z dowolnego miejsca, możesz znaleźć w rozdziale [Szybka zmiana ustawień syntezatora #SynthSettingsRing].
 
-Ta kategoria preferencji, zawiera następujące ustawienia:
+Ta kategoria ustawień, zawiera następujące ustawienia:
 
 ==== Zmień syntezator ====[SpeechSettingsChange]
 Pierwsza opcja w kategorii ustawień mowy, to przycisk "Zmień...". Przycisk aktywuje [okno wyboru syntezatora #SelectSynthesizer], pozwalające wybrać aktywny syntezator mowy i urządzenie wyjściowe.
@@ -1259,7 +1259,7 @@ Jeśli chcesz szybko zmienić ustawienia mowy bez wchodzenia do kategorii Mowa o
 %kc:endInclude
 
 +++ Brajl +++[BrailleSettings]
-Kategoria brajl w oknie preferencji NVDA zawiera opcje umożliwiające zmianę kilku aspektów wprowadzania i wyświetlania brajla.
+Kategoria brajl w oknie ustawień NVDA zawiera opcje umożliwiające zmianę kilku aspektów wprowadzania i wyświetlania brajla.
 Ta kategoria zawiera następujące ustawienia:
 
 ==== Zmień monitor brajlowski ====[BrailleSettingsChange]
@@ -1267,13 +1267,13 @@ Pierwsza opcja w kategorii ustawień brajla, to przycisk "Zmień...". Przycisk a
 Okno otwiera się na oknie preferencji NVDA.
 Zapisanie lub anulowanie wyboru, spowoduje powrót do okna preferencji NVDA.
 
-==== Tabela wyjścia ====[BrailleSettingsOutputTable]
+==== Tablica wyjścia ====[BrailleSettingsOutputTable]
 Następną opcją, na którą natrafisz w tej kategorii preferencji NVDA, jest lista rozwijana "Tabela wyjścia".
 Możesz tu znaleźć tablice brajlowskie dla różnych języków, standardów i skrótów brajlowskich.
 Wybrana tablica będzie używana do translacji tekstu przed jego wyświetleniem na twoim monitorze brajlowskim.
 Między elementami tej listy przełączaj się przy użyciu klawiszy strzałek.
 
-==== Tabela wprowadzania ====[BrailleSettingsInputTable]
+==== Tablica wprowadzania ====[BrailleSettingsInputTable]
 W uzupełnieniu do poprzedniego ustawienia, następnym znajdującym się po nim jest lista rozwijana "Tabela wprowadzania".
 Wybrana tablica będzie używana do translacji na postać tekstu komputerowego znaków wprowadzanych na klawiaturze twojego monitora brajlowskiego.
 Między elementami tej listy przełączaj się przy użyciu klawiszy strzałek.
@@ -1436,7 +1436,7 @@ Jeżeli mają one swoje własne ustawienia można je edytować w osobnych dla ni
 Po więcej informacji prosimy zajrzeć do pomocy danego rozszerzenia.
 
 +++ Klawiatura (NVDA+Ctrl+K) +++[KeyboardSettings]
-Kategoria klawiatura w oknie preferencji NVDA pozwala ustawić zachowanie NVDA w trakcie używania klawiatury.
+Kategoria klawiatura w oknie ustawień NVDA pozwala ustawić zachowanie NVDA w trakcie używania klawiatury.
 Zawiera następujące ustawienia:
 
 ==== Układ klawiatury ====[KeyboardSettingsLayout]
@@ -1494,7 +1494,7 @@ Ta opcja pozwala kontrolować, czy naciśnięcia klawiszy generowane przez aplik
 Opcja jest domyślnie włączona, aczkolwiek niektórzy użytkownicy mogą chcieć ją wyłączyć, np. aby pisać w języku wietnamskim przy użyciu programu UniKey. Pozostawienie jej wówczas włączonej powodowałoby wprowadzanie nieprawidłowych znaków.
 
 +++ Mysz (NVDA+Ctrl+M) +++[MouseSettings]
-W tej kategorii preferencji można ustawić m.in. sposób śledzenia myszy przez NVDA, informowanie dźwiękiem o położeniu wskaźnika myszy.
+W tej kategorii ustawień można ustawić m.in. sposób śledzenia myszy przez NVDA, informowanie dźwiękiem o położeniu wskaźnika myszy.
 Zawiera następujące ustawienia:
 
 ==== Informuj o zmianach kształtu wskaźnika ====[MouseSettingsShape]
@@ -1531,7 +1531,7 @@ Opcja domyślnie wyłączona.
 Jeśli ją włączysz i masz włączoną opcję  śledzenia myszy, NVDA nie będzie oznajmiać co jest pod myszą jeśli zostanie ona przesunięta przez inną aplikację.
 
 +++ Interakcja dotykowa +++[TouchInteraction]
-Ta kategoria preferencji, , dostępna tylko na komputerach z systemem Windows 8 i nowszymi z ekranem dotykowym, pozwala skonfigurować w jaki sposób NVDA obsługuje ekrany dotykowe.
+Ta kategoria ustawień, , dostępna tylko na komputerach z systemem Windows 8 i nowszymi z ekranem dotykowym, pozwala skonfigurować w jaki sposób NVDA obsługuje ekrany dotykowe.
 Zawiera następujące ustawienia:
 
 ====Włącz wsparcie dotykowe ====[TouchSupportEnable]
@@ -1546,7 +1546,7 @@ Jeśli jest zaznaczone, to gdy zlokalizujesz klawisz na klawiaturze ekranowej, m
 Gdy nie jest oznaczone, należy dwukrotnie stuknąć klawisz na klawiaturze ekranowej aby go nacisnąć.
 
 +++ Kursor przeglądu +++[ReviewCursorSettings]
-W tej kategorii preferencji, można określić działanie kursora przeglądu.
+W tej kategorii ustawień, można określić działanie kursora przeglądu.
 Zawiera następujące ustawienia:
 
 %kc:setting
@@ -1570,7 +1570,7 @@ Gdy opcja jest włączona, NVDA będzie filtrować hierarchię obiektów, który
 Aby przełączać ten tryb z każdego miejsca, proszę przypisać własne zdarzenie wejścia przy użyciu [okna zdarzeń wejścia #InputGestures].
 
 +++ Prezentacja obiektów (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
-Ta kategoria preferencji NVDA  pozwala określić ilość informacji prezentowanych przez NVDA na temat kontrolek takich jak opis, informacje o położeniu itd.
+Ta kategoria ustawień NVDA  pozwala określić ilość informacji prezentowanych przez NVDA na temat kontrolek takich jak opis, informacje o położeniu itd.
 Zawiera następujące ustawienia:
 
 ==== Czytaj dymki podpowiedzi ====[ObjectPresentationReportToolTips]
@@ -1629,7 +1629,7 @@ Dla niektórych pól edycyjnych takich jak pola wyszukiwania w różnych aplikac
 Lista podpowiedzi zostanie zamknięta po wyjściu z pola edycji i dla niektórych pól, NVDA może również o tym powiadomić.
 
 +++ Układ wprowadzania +++[InputCompositionSettings]
-Ta kategoria preferencji pozwala określić w jaki sposób NVDA kontroluje wprowadzanie znaków azjatyckich za pomocą  IME lub  usług tekstowych.
+Ta kategoria opcji pozwala określić w jaki sposób NVDA kontroluje wprowadzanie znaków azjatyckich za pomocą  IME lub  usług tekstowych.
 Ponieważ metody wprowadzania bardzo się różnią dostępnymi właściwościami oraz sposobem przekazywania informacji, najprawdopodobniej będzie konieczne skonfigurowanie tych opcji indywidualnie dla każdej metody wprowadzania, aby uzyskać największą wygodę pisania.
 
 ==== Automatycznie zgłaszaj wszystkie dostępne znaki kandydujące ====[InputCompositionReportAllCandidates]
@@ -1696,7 +1696,7 @@ Ta opcja jest domyślnie wyłączona.
 Aby przełączać dołączanie tabel układu treści z każdego miejsca, należy przypisać temu poleceniu własne zdarzenie wejścia przy użyciu okna [Zdarzenia wejścia #InputGestures].
 
 ==== Konfiguracja ogłaszania pól, takich jak linki i nagłówki ====[BrowseModeLinksAndHeadings]
-Proszę przejrzeć opcje w [kategorii formatowania dokumentu #DocumentFormattingSettings] w oknie [Preferencji NVDA #NVDASettings], aby skonfigurować informacje, które są ogłaszane w trakcie nawigacji, takie jak linki, nagłówki i tabele.
+Proszę przejrzeć opcje w [kategorii formatowania dokumentu #DocumentFormattingSettings] w oknie [ustawień NVDA #NVDASettings], aby skonfigurować informacje, które są ogłaszane w trakcie nawigacji, takie jak linki, nagłówki i tabele.
 
 ==== Automatyczny tryb formularza przy zmianie fokusa ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Ta opcja pozwala na wywołanie trybu formularza z trybu czytania, gdy zmieni się fokus. 
@@ -1790,7 +1790,7 @@ Wysokość dźwięku będzie wzrastać dla każdej spacji, a dla tabulatora przy
 -
 
 +++ Ustawienia Windows 10 OCR +++[Win10OcrSettings]
-Ta kategoria preferencji NVDA pozwala skonfigurować [Windows 10 OCR #Win10Ocr].
+Ta kategoria ustawień NVDA pozwala skonfigurować [Windows 10 OCR #Win10Ocr].
 Zawiera następujące ustawienia:
 
 ==== Język rozpoznawania ====[Win10OcrSettingsRecognitionLanguage]
@@ -1893,7 +1893,7 @@ Zapisywanie tych informacji może zmniejszyć wydajność i zwiększyć rozmiar 
 Włącz określone kategorie tylko, gdy zostaniesz poinstruowany przez programistę NVDA np. w trakcie badania, dlaczego sterownik linijki brajlowskiej nie pracuje prawidłowo.
 
 ++ Różne ustawienia ++[MiscSettings]
-Oprócz okna [preferencji NVDA #NVDASettings], podmenu Ustawienia w menu NVDA zawiera kilka innych elementów, omówionych poniżej.
+Oprócz okna [ustawień NVDA #NVDASettings], podmenu opcje w menu NVDA zawiera kilka innych elementów, omówionych poniżej.
 
 +++ Słowniki wymowy +++[SpeechDictionaries]
 Menu słowniki wymowy (znajdujące się w menu Ustawienia) zawiera polecenia otwierające okna dialogowe, które pozwalają zarządzać sposobem w jaki NVDA wypowiada określone słowa lub frazy.

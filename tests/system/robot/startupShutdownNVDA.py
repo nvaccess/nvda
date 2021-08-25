@@ -92,6 +92,13 @@ def quits_from_keyboard():
 	_process.process_should_be_stopped(_nvdaProcessAlias)
 
 
+def test_desktop_shortcut():
+	spy = _nvdaLib.getSpyLib()
+	spy.emulateKeyPress("control+alt+n")
+	# Takes some time to exit a running process and start a new one
+	waitUntilWindowFocused("Welcome to NVDA", timeoutSecs=7)
+
+
 def read_welcome_dialog():
 	spy = _nvdaLib.getSpyLib()
 	welcomeTitleIndex = spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present.

@@ -498,7 +498,6 @@ Ixo inclui documentos en as siguients aplicacions:
 - Lo Microsoft Edge
 - L'Adobe Reader
 - Lo Foxit Reader
-- L'Adobe Flash.
 - Los libros suportaus en l'Amazon Kindle pa PC 
 -
 
@@ -596,7 +595,7 @@ Fe servir las siguients teclas pa rializar  buscas:
 %kc:endInclude
 
 ++ Obchectos Integraus ++[ImbeddedObjects]
-As pachinas pueden incluir conteniu enriquiu emplegando tecnolochías tals como l'Adobe Flash, l'Oracle Java u l'HTML 5, asinas como aplicacions y dialogos. 
+Las pachinas pueden incluir conteniu enriquiu emplegando tecnolochías tals como l'Oracle Java u l'HTML 5, asinas como aplicacions y dialogos. 
 Do istas se troben en un modo de Navegación, o NVDA anunciará "obchecto integrau", "aplicación" u "dialogo", respectivament.
 Tu puetz mover-te-ne a escape t'a ells fendo servir as teclas de navegación d'una sola letra pa obchectos integraus; o y mayus+o.
 Pa interactuar con ixos obchectos puetz pretar l'intro en ells.
@@ -794,6 +793,8 @@ Pa ixa situgación, lo NVDA contiene una caracteristica clamada "cortina de pant
 
 Puetz enchegar la Cortina de Pantalla en a [categoría de visión #VisionSettings] d'o dialogo d'[opcions d'o NVDA #NVDASettings].
 
+Quan la cortina de pantalla ye enchegada bellas fainasbasadas directament en lo que amaneix en a pantalla como la rialización de l'[OCR #Win10Ocr] u prener una captrua de pantalla no se puet aconseguir.
+
 + Reconoixencia de Contenius +[ContentRecognition]
 Quan os autors no furnen prau información pa que un usuario de lector de pantalla determine o conteniu de bella cosa, pueden fer-se servir bellas ferramientas pa mirar de reconoixer o conteniu dende una imachen.
 O NVDA suporta a funcionalidat de reconoixencia optica de caracters (OCR) integrada en o Windows 10 pa reconoixer texto dende imachens.
@@ -809,11 +810,13 @@ Pretando l'intro u lo espacio activará (normalment un clic) o texto en o cursor
 Pretando lo escape escartas o resultau d'a reconoixencia.
 
 ++ OCR d'o Windows 10 ++[Win10Ocr]
-O Windows 10 inclui un OCR pa muitos idiomas.
-O NVDA puet fer-lo servir pa reconoixer texto dende imachens u aplicacions inaccesibles.
+Lo Windows 10 inclui un OCR pa muitos idiomas.
+Lo NVDA puet fer-lo servir pa reconoixer texto dende imachens u aplicacions inaccesibles.
 
 Puetz configurar l'idioma a emplegar pa la reconoixencia de texto en a [categoría d'OCR d'o Windows 10 #Win10OcrSettings]d'o dialogo d'[opcions d'o NVDA #NVDASettings].
 Puet instalar-se idiomas adicionals ubrindo lo menú d'inicio, esleyindo configuración, seleccionando hora y Idioma -> rechión y Idioma y dimpués esleyindo adhibir un Idioma.
+
+L'OCR d'o Windows 10 puet estar en parti u de raso incompatible con as [milloras d'a visión d'o NVDA #Vision] u atras aduyas visuals externas. Puetz haber de desenchegar ixas aduyas antis de no proceder con un reconoiximiento.
 
 %kc:beginInclude
 Pa reconoixer o texto en l'actual navegador d'obchectos fendo servir l'OCR d'o Windows 10, preta NVDA+r.
@@ -1743,7 +1746,7 @@ Puetz configurar l'anunciau de:
 - Pachinas y espaciau
  - Numers de pachina
  - Numers de linia
- - Anunciau d'a sangría de linia (desenchegau, fabla, tons, todas dos fabla y tons)
+ - Anunciau d'a sangría de linia (desenchegau, fabla, tons, todas dos fabla y tons) #DocumentFormattingSettingsLineIndentation
  - Sangría de paragrafo (por eixemplo: sangría francesa, sangría d'a primera linia)
  - Espaciau de linia (simple, dople, etc.)
  - Aliniación
@@ -1823,7 +1826,7 @@ Ixo tien un mayor impacto negativo en o rendimiento, especialment en as aplicaci
 Por lo tanto, quan s'enchega ista opción, lo NVDA limitará lo rechistro d'eventos a lo foco d'o sistema pa la mayoría d'os eventos.
 Si sufres problemas de rendimiento en una u mas aplicacions, te recomendamos que prebes ista funcionalidat a mirar si lo rendimiento amillora.
 
-==== Utilizar l'UI automation pa acceder ta controls de documento d'o Microsoft Word quan siga disponible ====[AdvancedSettingsUseUiaForWord]
+==== Fer servir l'UI automation pa acceder ta controls de documento d'o Microsoft Word quan siga disponible ====[AdvancedSettingsUseUiaForWord]
 Quan ista opción siga activada, lo NVDA intentará utilizar l'API d'accesibilidat de Microsoft UI Automation pa obtener información d'os controls de documentos d'o Microsoft Word.
 Ixo incluye lo mesmo Microsoft Word, y tamién lo visor de mensaches y la redacción d'o Microsoft Outlook.
  Pa las versions mas recients d'o Microsoft Office 2016/365 que s'executa en o Windows 10, la compatibilidat con l'UI Automation  ye prou completa como pa furnir acceso ta documentos d'o Microsoft Word quasi igual como la compatibilidat con o Microsoft Word existent d'o NVDA, con l'avantalla anyadida que la capacidat de respuesta aumenta considerablement.
@@ -1836,6 +1839,24 @@ Quan ista opción siga enchegada, lo NVDA fará servir una nueva versión en pro
 ==== Verbalizar as Claus en as consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Ista opción controla si los caracters se charran por [charrar los caracters en escribir-los #KeyboardSettingsSpeakTypedCharacters] u [charrar las parolas en escribir-las #KeyboardSettingsSpeakTypedWords] en situgacions en que la pantalla no s'actualice (tal como la dentrada de contraseñas) en a consola d'o Windows con a compatibilidat con l'UI automation enchegada. Por razons de seguridat, ixa opción ha de deixar-se desenchegada. Manimenos, ye posible que deseyes enchegar-la si experimentas problemas de rendimiento u inestabilidat con l'anunciau d'os caracters y/u las parolas escritas mientras s'emplegue lo nuevo suporte experimental pa consolas d'o NVDA.
 
+==== Fer servir l'UIA con o Microsoft Edge y atros navegadors basaus en o Chromium quan siga disponible ====[ChromiumUIA]
+Permite especificar que s'utilizará l'UIA quan siga disponible en os navegadors basaus en o Chromium tals como lo Microsoft Edge.
+Lo suporte UIA pa los navegadors basaus en o Chromium ye en una fase temprana de desembolique y puet estar que no ufra lo mesmo libel d'acceso que IA2.
+Lo quadro combinau tiene las siguients opcions:
+- Por defecto (Nomás quan ye necesario): La valor por defecto d'o NVDA, actualment ye "Nomás quan siga necesario". Ixa valor por defecto puet cambear en o futuro a mida que la tecnolochía madure.
+- Nomás quan siga necesario: Quan lo NVDA no pueda inyectar en o proceso d'o navegador pa usar IA2 y UIA siga disponible, allora lo NVDA tornará a usar UIA.
+- Sí: si lo navegador fa accesible a UIA, lo NVDA lo utilizará.
+- No: no utiliza UIA, mesmo si lo NVDA no puet inyectar en o proceso. Esto puede estar util pa los desembolicadors que depuren problemas con IA2 y quieren asegurar-se que lo NVDA no torne a utilizar UIA.
+-
+
+==== Fer servir l'UI automation pa acceder ta controls en fuellas de calculo d'o Microsoft  Excel quan siga disponible ====[UseUiaForExcel]
+Quan ista opción ye enchegada, lo NVDA mirará d'emplegar l'API d'accesibilidat Microsoft UI Automation  pa obtener información d'os controls d'as fuellas de calculo d'o Microsoft Excel.
+Ista ye una funcionalidat experimental y qualques caracteristicas d'o Microsoft Excel pueden no estar disponibles en iste modo.
+Por eixemplo, las caracteristicas d'a Lista d'Elementos d'o NVDA pa enumerar formulas y comentarios y la tecla rapida de navegación d'o modo de navegación pa blincar campos de formulario en una fuella de calculo no son disponibles.
+Manimenos, pa la navegación y edición basica d'as fuellas de calculo, ista opción puet furnir una gran millora de rendimiento.
+Encara no recomendamos que la mayoría d'os usuarios encheguen ista opción por defecto, encara que convidamos a los usuarios d'o Microsoft Excel  compilación 16.0.13522.10000 u superior a que preben ista función y nos den la suya opinión.
+La implementación de UI automation d'o Microsoft Excel cambea constantment y ye posible que las versions d'o Microsoft Office anteriors a la 16.0.13522.10000 puedan no exposar prou información pa que ista opción siga util.
+
 ==== Fer servir lo suporte nuevo de caracters escritos en a consola d'o Windows quan siga disponible ====[AdvancedSettingsKeyboardSupportInLegacy]
 Ista opción enchega un metodo alternativo pa detectar caracters en escribir en as consolas de comandos d'o Windows.
 Encara que amillora lo rendimiento y priva que s'especifique la salida d'a consola, puede estar incompatible con qualques programas de terminal.
@@ -1843,10 +1864,24 @@ Ista caracteristica ye disponible y enchegada por defecto en versions d'o Window
 Alvertencia: con ista opción enchegada, los caracters escritos que no amaneixcan en a pantalla, tals como las claus, no se suprimirán.
 En entornos no confidables, podrás desenchegar temporalment lo [charrar los caracters en escribir-los #KeyboardSettingsSpeakTypedCharacters] y lo [charrar las parolas en escribir-las #KeyboardSettingsSpeakTypedWords] en ficar claus.
 
+==== Algorismo Diff ====[DiffAlgo]
+Ista opción controla la forma en a quala lo NVDA determina lo nuevo texto pa charrar en as terminals.
+Lo quadro combinau de l'algorismo diff tiene tres opcions:
+- Automatico: a partir d'o NVDA 2021.1, ista opción equivale a Difflib.
+En bella versión futura, puet cambear-se ta Diff Match Patch a l'aspera que los usuarios lo preben.
+- Permitir Diff Match Patch: Ista opción fa que lo NVDA calcule los cambeos por caracters en o texto d'a terminal.
+Puet amillorar lo rendimiento quan s'escriba grans volumens de texto en a consola y permite un anunciau mas preciso d'os cambeos rializaus en o meyo d'as linias.
+Manimenos puet estar incompatible con qualques aplicacions.
+Ista función ye compatible con a consola d'o Windows en o Windows 10 versión 1607 y posteriors.
+Amás, puet estar disponible en atras terminals en versions anteriors d'o Windows.
+- Aforzar lo Difflib: Ista opción fa que lo NVDA calcule los cambeos en o texto d'a terminal por linias.
+Ye identico a lo comportamiento d'o NVDA en a versión 2020.4 y anteriors.
+-
+
 ==== Mirar de cancelar la voz pa eventos d'expiración d'o foco ====[CancelExpiredFocusSpeech]
 Ista opción enchega lo comportamiento que mira de cancelar la voz pa eventos d'expiración d'o foco.
 Concretament mover-se rapedament a traviés de mensaches en o Gmail con o Chrome puet causar que lo NVDA charre información aviellada.
-Ista funcionalidat ye experimental dende lo NVDA 2020.2.
+Ista funcionalidat ye enchegada por defecto dende lo NVDA 2021.1.
 
 ==== Tiempo d'aspera pa lo movimiento d'o cursor (en MS) ====[AdvancedSettingsCaretMoveTimeout]
 Ista opción te permite configurar lo numero de milisegundos que lo NVDA asperará a que lo cursor (punto d'inserción) se mueva en os controls de texto editables.

@@ -2,10 +2,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2020.4beta4\n"
+"Project-Id-Version: 2021.1beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-22 00:02+1000\n"
-"PO-Revision-Date: 2021-01-29 13:56+0800\n"
+"POT-Creation-Date: 2021-06-25 00:01+0000\n"
+"PO-Revision-Date: 2021-06-28 15:07+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <ericyip@hkbu.org.hk>\n"
 "Language: zh_HK\n"
@@ -98,6 +98,31 @@ msgstr "拼字：{text}"
 #, python-brace-format
 msgid "grammar: {text}"
 msgstr "文法：{text}"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "沒有"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "顏色"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "漸層"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr "圖片"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "模式"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -718,6 +743,16 @@ msgstr "孟加拉語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Belarusian computer braille"
+msgstr "白俄罗斯语電腦點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Belarusian literary braille"
+msgstr "白俄罗斯書面語點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
 msgstr "保加利亞語八點電腦點字"
 
@@ -1240,6 +1275,16 @@ msgstr "烏克蘭語一級點字"
 #. braille settings dialog.
 msgid "Ukrainian computer braille"
 msgstr "烏克蘭語電腦點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Urdu grade 1"
+msgstr "烏爾都語一級點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Urdu grade 2"
+msgstr "烏爾都語二級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1847,10 +1892,12 @@ msgstr "種類"
 msgid "Filter b&y:"
 msgstr "篩選(&Y)："
 
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "啟動(&A)"
+#. Translators: The label of a button to activate an element in the browse mode Elements List dialog.
+#. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
+#. element type radio label.
+#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+msgid "Activate"
+msgstr "啟動"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
@@ -1878,12 +1925,25 @@ msgstr "移到清單或表格等的開頭位置"
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+#. Translators: Reported when attempting to move to the next result in the Python Console
+#. output pane while there is no next result.
 msgid "Bottom"
 msgstr "到了底部"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "移到清單或表格之後位置"
+
+#. Translators: the description for the toggleScreenLayout script.
+#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+msgstr "在虛擬文件內切換是否呈現頁面實際布局"
+
+#. Translators: The message reported for not supported toggling of screen layout
+msgid "Not supported in this document."
+msgstr "指令在本文件無效"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2387,7 +2447,7 @@ msgstr "圖示"
 msgid "directory pane"
 msgstr "目錄窗格"
 
-#. Translators: Identifies an embedded object such as flash content on webpages.
+#. Translators: Identifies an object that is embedded in a document.
 msgid "embedded object"
 msgstr "嵌入式物件"
 
@@ -3139,15 +3199,21 @@ msgstr "I 輸入"
 msgid "Document formatting"
 msgstr "D 文件格式"
 
-#. Translators: a message when audio ducking is not supported on this machine
-msgid "Audio ducking not supported"
-msgstr "不支援降低其他音量功能"
-
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 msgstr "循環切換降低其他音量模式"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "不支援降低其他音量功能"
+
+#. Translators: Input help mode message for toggle input help command.
+msgid ""
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
+msgstr "切換學習模式開始或結束，開始之後每按下按鍵會讀出相對應的功能"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -3157,11 +3223,9 @@ msgstr "學習模式開始"
 msgid "input help off"
 msgstr "學習模式結束"
 
-#. Translators: Input help mode message for toggle input help command.
-msgid ""
-"Turns input help on or off. When on, any input such as pressing a key on the "
-"keyboard will tell you what script is associated with that input, if any."
-msgstr "切換學習模式開始或結束，開始之後每按下按鍵會讀出相對應的功能"
+#. Translators: Input help mode message for toggle sleep mode command.
+msgid "Toggles sleep mode on and off for the active application."
+msgstr "在目前應用程式開啟或關閉睡眠模式"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -3170,10 +3234,6 @@ msgstr "睡眠模式結束"
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
 msgstr "睡眠模式開始"
-
-#. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles sleep mode on and off for the active application."
-msgstr "在目前應用程式開啟或關閉睡眠模式"
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3184,21 +3244,25 @@ msgstr ""
 "讀出系統焦點所在的一行，連按兩次則把這一行的字元拼讀出來，連按三次則讀出整行"
 "的配詞解釋。"
 
+#. Translators: Input help mode message for left mouse click command.
+msgid "Clicks the left mouse button once at the current mouse position"
+msgstr "在目前鼠標位置點擊滑鼠左鍵一次"
+
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
 msgstr "左擊"
 
-#. Translators: Input help mode message for left mouse click command.
-msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "在目前鼠標位置點擊滑鼠左鍵一次"
+#. Translators: Input help mode message for right mouse click command.
+msgid "Clicks the right mouse button once at the current mouse position"
+msgstr "在目前鼠標位置點擊滑鼠右鍵一次"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
 msgstr "右擊"
 
-#. Translators: Input help mode message for right mouse click command.
-msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "在目前鼠標位置點擊滑鼠右鍵一次"
+#. Translators: Input help mode message for left mouse lock/unlock toggle command.
+msgid "Locks or unlocks the left mouse button"
+msgstr "將滑鼠左鍵鎖定或解鎖"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
@@ -3208,9 +3272,9 @@ msgstr "滑鼠左鍵解鎖"
 msgid "Left mouse button lock"
 msgstr "滑鼠左鍵鎖定"
 
-#. Translators: Input help mode message for left mouse lock/unlock toggle command.
-msgid "Locks or unlocks the left mouse button"
-msgstr "將滑鼠左鍵鎖定或解鎖"
+#. Translators: Input help mode message for right mouse lock/unlock command.
+msgid "Locks or unlocks the right mouse button"
+msgstr "將滑鼠右鍵鎖定或解鎖"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
@@ -3219,10 +3283,6 @@ msgstr "滑鼠右鍵解鎖"
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 msgid "Right mouse button lock"
 msgstr "滑鼠右鍵鎖定"
-
-#. Translators: Input help mode message for right mouse lock/unlock command.
-msgid "Locks or unlocks the right mouse button"
-msgstr "將滑鼠右鍵鎖定或解鎖"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3236,13 +3296,13 @@ msgid ""
 "current date"
 msgstr "讀出現在時間和日期，按一下讀出時間，連按兩下讀出日期"
 
-#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
-msgid "No settings"
-msgstr "沒有設定"
-
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "增加目前語音選項的設定值"
+
+#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
+msgid "No settings"
+msgstr "沒有設定"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
@@ -3256,6 +3316,10 @@ msgstr "切換到下一個語音控制選項"
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "切換到上一個語音控制選項"
 
+#. Translators: Input help mode message for toggle speaked typed characters command.
+msgid "Toggles on and off the speaking of typed characters"
+msgstr "切換讀出輸入字元開關"
+
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
 msgstr "不讀出輸入字元"
@@ -3264,9 +3328,9 @@ msgstr "不讀出輸入字元"
 msgid "speak typed characters on"
 msgstr "讀出輸入字元"
 
-#. Translators: Input help mode message for toggle speaked typed characters command.
-msgid "Toggles on and off the speaking of typed characters"
-msgstr "切換讀出輸入字元開關"
+#. Translators: Input help mode message for toggle speak typed words command.
+msgid "Toggles on and off the speaking of typed words"
+msgstr "切換讀出輸入字詞開關"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -3276,9 +3340,11 @@ msgstr "不讀出輸入字詞"
 msgid "speak typed words on"
 msgstr "讀出輸入字詞"
 
-#. Translators: Input help mode message for toggle speak typed words command.
-msgid "Toggles on and off the speaking of typed words"
-msgstr "切換讀出輸入字詞開關"
+#. Translators: Input help mode message for toggle speak command keys command.
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
+msgstr "切換讀出指令鍵開關"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -3288,11 +3354,9 @@ msgstr "不讀出指令鍵"
 msgid "speak command keys on"
 msgstr "讀出指令鍵"
 
-#. Translators: Input help mode message for toggle speak command keys command.
-msgid ""
-"Toggles on and off the speaking of typed keys, that are not specifically "
-"characters"
-msgstr "切換讀出指令鍵開關"
+#. Translators: Input help mode message for toggle report font name command.
+msgid "Toggles on and off the reporting of font changes"
+msgstr "切換是否讀出字體名稱"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -3302,9 +3366,9 @@ msgstr "不讀出字體名稱"
 msgid "report font name on"
 msgstr "讀出字體名稱"
 
-#. Translators: Input help mode message for toggle report font name command.
-msgid "Toggles on and off the reporting of font changes"
-msgstr "切換是否讀出字體名稱"
+#. Translators: Input help mode message for toggle report font size command.
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "切換是否讀出字體大小"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
@@ -3314,9 +3378,9 @@ msgstr "不讀出字體大小"
 msgid "report font size on"
 msgstr "讀出字體大小"
 
-#. Translators: Input help mode message for toggle report font size command.
-msgid "Toggles on and off the reporting of font size changes"
-msgstr "切換是否讀出字體大小"
+#. Translators: Input help mode message for toggle report font attributes command.
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "切換是否讀出字體屬性"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
@@ -3325,10 +3389,6 @@ msgstr "不讀出字體屬性"
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
 msgstr "讀出字體屬性"
-
-#. Translators: Input help mode message for toggle report font attributes command.
-msgid "Toggles on and off the reporting of font attributes"
-msgstr "切換是否讀出字體屬性"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 msgid "Toggles on and off the reporting of superscripts and subscripts"
@@ -3344,6 +3404,10 @@ msgstr "讀出上標及下標"
 msgid "report superscripts and subscripts off"
 msgstr "不讀出上標及下標"
 
+#. Translators: Input help mode message for toggle report revisions command.
+msgid "Toggles on and off the reporting of revisions"
+msgstr "切換是否讀出編修檔版本"
+
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
 msgstr "不讀出編修檔版本"
@@ -3352,9 +3416,9 @@ msgstr "不讀出編修檔版本"
 msgid "report revisions on"
 msgstr "讀出編修檔版本"
 
-#. Translators: Input help mode message for toggle report revisions command.
-msgid "Toggles on and off the reporting of revisions"
-msgstr "切換是否讀出編修檔版本"
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "切換是否讀出強調"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
@@ -3363,10 +3427,6 @@ msgstr "不讀出強調"
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
 msgstr "讀出強調"
-
-#. Translators: Input help mode message for toggle report emphasis command.
-msgid "Toggles on and off the reporting of emphasis"
-msgstr "切換是否讀出強調"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
 msgid "Toggles on and off the reporting of marked text"
@@ -3380,6 +3440,10 @@ msgstr "讀出標記文字"
 msgid "report marked off"
 msgstr "不讀出標記文字"
 
+#. Translators: Input help mode message for toggle report colors command.
+msgid "Toggles on and off the reporting of colors"
+msgstr "切換是否讀出顏色"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "不讀出顏色("
@@ -3388,9 +3452,9 @@ msgstr "不讀出顏色("
 msgid "report colors on"
 msgstr "讀出顏色"
 
-#. Translators: Input help mode message for toggle report colors command.
-msgid "Toggles on and off the reporting of colors"
-msgstr "切換是否讀出顏色"
+#. Translators: Input help mode message for toggle report alignment command.
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "切換是否讀出對齊方式"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
@@ -3400,9 +3464,9 @@ msgstr "不讀出對齊方式"
 msgid "report alignment on"
 msgstr "讀出對齊方式"
 
-#. Translators: Input help mode message for toggle report alignment command.
-msgid "Toggles on and off the reporting of text alignment"
-msgstr "切換是否讀出對齊方式"
+#. Translators: Input help mode message for toggle report style command.
+msgid "Toggles on and off the reporting of style changes"
+msgstr "切換是否讀出文字樣式"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
@@ -3412,9 +3476,9 @@ msgstr "不讀出文字樣式"
 msgid "report style on"
 msgstr "讀出文字樣式"
 
-#. Translators: Input help mode message for toggle report style command.
-msgid "Toggles on and off the reporting of style changes"
-msgstr "切換是否讀出文字樣式"
+#. Translators: Input help mode message for toggle report spelling errors command.
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "切換是否讀出拼錯字"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
@@ -3424,9 +3488,9 @@ msgstr "不讀出拼錯字"
 msgid "report spelling errors on"
 msgstr "讀出拼錯字"
 
-#. Translators: Input help mode message for toggle report spelling errors command.
-msgid "Toggles on and off the reporting of spelling errors"
-msgstr "切換是否讀出拼錯字"
+#. Translators: Input help mode message for toggle report pages command.
+msgid "Toggles on and off the reporting of pages"
+msgstr "切換是否讀出頁碼"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -3436,9 +3500,9 @@ msgstr "不讀出頁碼"
 msgid "report pages on"
 msgstr "讀出頁碼"
 
-#. Translators: Input help mode message for toggle report pages command.
-msgid "Toggles on and off the reporting of pages"
-msgstr "切換是否讀出頁碼"
+#. Translators: Input help mode message for toggle report line numbers command.
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "切換是否讀出行數"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
@@ -3448,9 +3512,9 @@ msgstr "不讀出行數"
 msgid "report line numbers on"
 msgstr "讀出行數"
 
-#. Translators: Input help mode message for toggle report line numbers command.
-msgid "Toggles on and off the reporting of line numbers"
-msgstr "切換是否讀出行數"
+#. Translators: Input help mode message for toggle report line indentation command.
+msgid "Cycles through line indentation settings"
+msgstr "循環切換行縮排的設定"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
@@ -3468,9 +3532,9 @@ msgstr "讀出行縮排及播放提示音"
 msgid "Report line indentation off"
 msgstr "不讀出行縮排"
 
-#. Translators: Input help mode message for toggle report line indentation command.
-msgid "Cycles through line indentation settings"
-msgstr "循環切換行縮排的設定"
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "切換是否讀出段落縮排"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3480,9 +3544,9 @@ msgstr "不讀出段落縮排"
 msgid "report paragraph indentation on"
 msgstr "讀出段落縮排"
 
-#. Translators: Input help mode message for toggle report paragraph indentation command.
-msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "切換是否讀出段落縮排"
+#. Translators: Input help mode message for toggle report line spacing command.
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "切換是否讀出行距"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -3492,9 +3556,9 @@ msgstr "不讀出行距"
 msgid "report line spacing on"
 msgstr "讀出行距"
 
-#. Translators: Input help mode message for toggle report line spacing command.
-msgid "Toggles on and off the reporting of line spacing"
-msgstr "切換是否讀出行距"
+#. Translators: Input help mode message for toggle report tables command.
+msgid "Toggles on and off the reporting of tables"
+msgstr "切換是否讀出表格"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3504,9 +3568,9 @@ msgstr "不讀出表格"
 msgid "report tables on"
 msgstr "讀出表格"
 
-#. Translators: Input help mode message for toggle report tables command.
-msgid "Toggles on and off the reporting of tables"
-msgstr "切換是否讀出表格"
+#. Translators: Input help mode message for toggle report table row/column headers command.
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr "切換是否讀出表格的列及欄標題"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
@@ -3516,9 +3580,9 @@ msgstr "不讀出表格的列及欄標題"
 msgid "report table row and column headers on"
 msgstr "讀出表格的列及欄標題"
 
-#. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "切換是否讀出表格的列及欄標題"
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "切換是否讀出表格座標"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
@@ -3528,9 +3592,9 @@ msgstr "不讀出表格座標"
 msgid "report table cell coordinates on"
 msgstr "讀出表格座標"
 
-#. Translators: Input help mode message for toggle report table cell coordinates command.
-msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "切換是否讀出表格座標"
+#. Translators: Input help mode message for toggle report links command.
+msgid "Toggles on and off the reporting of links"
+msgstr "切換是否讀出連結"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -3539,10 +3603,6 @@ msgstr "不讀出連結"
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
 msgstr "讀出連結"
-
-#. Translators: Input help mode message for toggle report links command.
-msgid "Toggles on and off the reporting of links"
-msgstr "切換是否讀出連結"
 
 #. Translators: Input help mode message for toggle report graphics command.
 msgid "Toggles on and off the reporting of graphics"
@@ -3556,6 +3616,10 @@ msgstr "不讀出圖片"
 msgid "report graphics on"
 msgstr "讀出圖片"
 
+#. Translators: Input help mode message for toggle report comments command.
+msgid "Toggles on and off the reporting of comments"
+msgstr "切換是否讀出註解"
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
 msgstr "不讀出註解"
@@ -3564,9 +3628,9 @@ msgstr "不讀出註解"
 msgid "report comments on"
 msgstr "讀出註解"
 
-#. Translators: Input help mode message for toggle report comments command.
-msgid "Toggles on and off the reporting of comments"
-msgstr "切換是否讀出註解"
+#. Translators: Input help mode message for toggle report lists command.
+msgid "Toggles on and off the reporting of lists"
+msgstr "切換是否讀出清單"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
@@ -3576,9 +3640,9 @@ msgstr "不讀出清單"
 msgid "report lists on"
 msgstr "讀出清單"
 
-#. Translators: Input help mode message for toggle report lists command.
-msgid "Toggles on and off the reporting of lists"
-msgstr "切換是否讀出清單"
+#. Translators: Input help mode message for toggle report headings command.
+msgid "Toggles on and off the reporting of headings"
+msgstr "切換是否讀出標題"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
@@ -3587,10 +3651,6 @@ msgstr "不讀出標題"
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
 msgstr "讀出標題"
-
-#. Translators: Input help mode message for toggle report headings command.
-msgid "Toggles on and off the reporting of headings"
-msgstr "切換是否讀出標題"
 
 #. Translators: Input help mode message for toggle report groupings command.
 msgid "Toggles on and off the reporting of groupings"
@@ -3604,6 +3664,10 @@ msgstr "不讀出群組"
 msgid "report groupings on"
 msgstr "讀出群組"
 
+#. Translators: Input help mode message for toggle report block quotes command.
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "切換是否讀出引述區"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "不讀出引述區"
@@ -3612,9 +3676,9 @@ msgstr "不讀出引述區"
 msgid "report block quotes on"
 msgstr "讀出引述區"
 
-#. Translators: Input help mode message for toggle report block quotes command.
-msgid "Toggles on and off the reporting of block quotes"
-msgstr "切換是否讀出引述區"
+#. Translators: Input help mode message for toggle report landmarks command.
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "切換是否讀出地標"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions off"
@@ -3623,10 +3687,6 @@ msgstr "不讀出地標及區域"
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions on"
 msgstr "讀出地標及區域"
-
-#. Translators: Input help mode message for toggle report landmarks command.
-msgid "Toggles on and off the reporting of landmarks"
-msgstr "切換是否讀出地標"
 
 #. Translators: Input help mode message for toggle report articles command.
 msgid "Toggles on and off the reporting of articles"
@@ -3640,6 +3700,10 @@ msgstr "不讀出文章"
 msgid "report articles on"
 msgstr "讀出文章"
 
+#. Translators: Input help mode message for toggle report frames command.
+msgid "Toggles on and off the reporting of frames"
+msgstr "切換是否讀出頁框"
+
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
 msgstr "不讀出頁框"
@@ -3648,9 +3712,9 @@ msgstr "不讀出頁框"
 msgid "report frames on"
 msgstr "讀出頁框"
 
-#. Translators: Input help mode message for toggle report frames command.
-msgid "Toggles on and off the reporting of frames"
-msgstr "切換是否讀出頁框"
+#. Translators: Input help mode message for toggle report if clickable command.
+msgid "Toggles on and off reporting if clickable"
+msgstr "切換是否讀出可點擊"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
@@ -3660,9 +3724,10 @@ msgstr "不讀出可點擊"
 msgid "report if clickable on"
 msgstr "讀出可點擊"
 
-#. Translators: Input help mode message for toggle report if clickable command.
-msgid "Toggles on and off reporting if clickable"
-msgstr "切換是否讀出可點擊"
+#. Translators: Input help mode message for cycle speech symbol level command.
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr "設定報讀多少標點符號"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3671,22 +3736,13 @@ msgstr "切換是否讀出可點擊"
 msgid "Symbol level %s"
 msgstr "符號等級%s"
 
-#. Translators: Input help mode message for cycle speech symbol level command.
-msgid ""
-"Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr "設定報讀多少標點符號"
-
-#. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "Object has no location"
-msgstr "找不到物件的所在位置"
-
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "將鼠標移到目前物件"
 
-#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
-msgid "Move navigator object to mouse"
-msgstr "物件游標移到鼠標"
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "Object has no location"
+msgstr "找不到物件的所在位置"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 msgid ""
@@ -3694,9 +3750,9 @@ msgid ""
 "speaks it"
 msgstr "將物件游標移到鼠標所指物件並讀出"
 
-#. Translators: reported when there are no other available review modes for this object
-msgid "No next review mode"
-msgstr "沒有下一個閱讀模式了"
+#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
+msgid "Move navigator object to mouse"
+msgstr "物件游標移到鼠標"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
@@ -3705,14 +3761,22 @@ msgid ""
 msgstr "選用下一個閱讀模式，可選用的模式包括物件、文件和螢幕三個模式"
 
 #. Translators: reported when there are no other available review modes for this object
-msgid "No previous review mode"
-msgstr "沒有上一個閱讀模式了"
+msgid "No next review mode"
+msgstr "沒有下一個閱讀模式了"
 
 #. Translators: Script help message for previous review mode command.
 msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr "選用上一個閱讀模式，可選用的模式包括物件、文件和螢幕模式"
+
+#. Translators: reported when there are no other available review modes for this object
+msgid "No previous review mode"
+msgstr "沒有上一個閱讀模式了"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "切換開關簡易閱讀模式"
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
@@ -3721,15 +3785,6 @@ msgstr "簡易閱讀模式關"
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
 msgstr "簡易閱讀模式開"
-
-#. Translators: Input help mode message for toggle simple review mode command.
-msgid "Toggles simple review mode on and off"
-msgstr "切換開關簡易閱讀模式"
-
-#. Translators: Reported when the user tries to perform a command related to the navigator object
-#. but there is no current navigator object.
-msgid "No navigator object"
-msgstr "沒有目前物件"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -3740,15 +3795,20 @@ msgstr ""
 "讀出目前物件的資訊，連按兩次拼讀出該資訊，連按三次則把物件名稱和值複製到剪貼"
 "簿"
 
-#. Translators: message when there is no location information for the review cursor
-msgid "No location information"
-msgstr "沒有位置資訊"
+#. Translators: Reported when the user tries to perform a command related to the navigator object
+#. but there is no current navigator object.
+msgid "No navigator object"
+msgstr "沒有目前物件"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr "讀出易讀游標所在的文字或物件的位置資訊。按兩下可進一步提供詳細的內容。"
+
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "沒有位置資訊"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3759,6 +3819,12 @@ msgstr "讓焦點所在的物件成為目前物件，可能的話並將易讀游
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
 msgstr "移到焦點"
+
+#. Translators: Input help mode message for move focus to current navigator object command.
+msgid ""
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr "按一次將系統焦點移到目前物件，連按兩次將編輯游標移到易讀游標"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3775,53 +3841,39 @@ msgstr "移動焦點"
 msgid "No caret"
 msgstr "沒有游標"
 
-#. Translators: Input help mode message for move focus to current navigator object command.
-msgid ""
-"Pressed once sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
-msgstr "按一次將系統焦點移到目前物件，連按兩次將編輯游標移到易讀游標"
+#. Translators: Input help mode message for move to parent object command.
+msgid "Moves the navigator object to the object containing it"
+msgstr "移到目前物件的母物件"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
 msgstr "沒有母物件了"
 
-#. Translators: Input help mode message for move to parent object command.
-msgid "Moves the navigator object to the object containing it"
-msgstr "移到目前物件的母物件"
+#. Translators: Input help mode message for move to next object command.
+msgid "Moves the navigator object to the next object"
+msgstr "將物件游標移到下一個物件"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "沒有下一個物件了"
 
-#. Translators: Input help mode message for move to next object command.
-msgid "Moves the navigator object to the next object"
-msgstr "將物件游標移到下一個物件"
+#. Translators: Input help mode message for move to previous object command.
+msgid "Moves the navigator object to the previous object"
+msgstr "將物件游標移到上一個物件"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "沒有上一個物件了"
 
-#. Translators: Input help mode message for move to previous object command.
-msgid "Moves the navigator object to the previous object"
-msgstr "將物件游標移到上一個物件"
-
-#. Translators: Reported when there is no contained (first child) object such as inside a document.
-msgid "No objects inside"
-msgstr "沒有子物件了"
-
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
 msgstr "將物件游標移到目前的第一個子物件"
 
-#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "Activate"
-msgstr "啟動"
-
-#. Translators: the message reported when there is no action to perform on the review position or navigator object.
-msgid "No action"
-msgstr "沒有動作"
+#. Translators: Reported when there is no contained (first child) object such as inside a document.
+msgid "No objects inside"
+msgstr "沒有子物件了"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
@@ -3829,21 +3881,27 @@ msgid ""
 "presses it if it is a button)."
 msgstr "執行目前物件的預設動作，例如物件若是按鈕就按下"
 
+#. Translators: the message reported when there is no action to perform on the review position or navigator object.
+msgid "No action"
+msgstr "沒有動作"
+
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr "在目前物件中將易讀游標移到並讀出第一行文字"
 
-#. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "Top"
-msgstr "到了頂端"
-
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr "在目前物件中將易讀游標移到並讀出上一行文字"
+
+#. Translators: a message reported when review cursor is at the top line of the current navigator object.
+#. Translators: Reported when attempting to move to the previous result in the Python Console
+#. output pane while there is no previous result.
+msgid "Top"
+msgstr "到了頂端"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
@@ -3893,15 +3951,15 @@ msgid ""
 "situated in the current navigator object and speaks it"
 msgstr "在目前物件中將易讀游標移到並讀出目前這一行的第一個字元"
 
-#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-msgid "Left"
-msgstr "到了左端"
-
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
 msgstr "在目前物件中將易讀游標移到並讀出上一個字元"
+
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "到了左端"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
@@ -3913,15 +3971,15 @@ msgstr ""
 "在目前物件中讀出易讀游標所在的一個字元，連按兩次則讀出字元或單字的配詞解釋，"
 "連按三次則讀出字元的十進位或十六進位值"
 
-#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-msgid "Right"
-msgstr "到了右端"
-
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr "在目前物件中將易讀游標移到並讀出下一個字元"
+
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "到了右端"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
@@ -3951,6 +4009,15 @@ msgstr ""
 msgid "Expanded symbol ({})"
 msgstr "延伸符號 ({})"
 
+#. Translators: Input help mode message for toggle speech mode command.
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA will just speak normally."
+msgstr ""
+"切換語音模式為關閉、嗶嗶聲或朗讀三個模式，切換成關閉的時候 NVDA 不會朗讀，切"
+"換成嗶嗶聲則以嗶嗶聲代替朗讀，切換成朗讀則進行一般的語音朗讀"
+
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
 msgstr "語音關閉"
@@ -3963,19 +4030,13 @@ msgstr "用嗶嗶聲代替語音"
 msgid "Speech mode talk"
 msgstr "語音開啟"
 
-#. Translators: Input help mode message for toggle speech mode command.
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it "
-"its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr ""
-"切換語音模式為關閉、發出嗶嗶聲或開啟三個模式，切換成關閉的時候 NVDA 不會播出"
-"聲音，切換成發出嗶嗶聲則以嗶嗶聲代替語音，切換成開啟則進行一般的語音報讀"
-
-#. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
+#. Translators: Input help mode message for move to next document with focus command,
+#. mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "把焦點移到下一個最接近的文件"
 
+#. Translators: Input help mode message for toggle focus and browse mode command
+#. in web browsing and other situations.
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
@@ -4054,6 +4115,15 @@ msgstr "讀出游標所在字元的格式資訊，連按兩次在瀏覽模式顯
 msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr "讀出目前有焦點的物件，連按兩次拼讀出來。"
 
+#. Translators: Input help mode message for report status line text command.
+msgid ""
+"Reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
+msgstr ""
+"將物件游標移到並讀出目前應用程式的狀態列，連按兩次拼讀出來，連按三次複製到剪"
+"貼簿"
+
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "找不到狀態列"
@@ -4066,14 +4136,9 @@ msgstr "狀態列沒有文字資訊"
 msgid "unable to copy status bar content to clipboard"
 msgstr "狀態列沒有文字資訊可複製"
 
-#. Translators: Input help mode message for report status line text command.
-msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
-msgstr ""
-"將物件游標移到並讀出目前應用程式的狀態列，連按兩次拼讀出來，連按三次複製到剪"
-"貼簿"
+#. Translators: Input help mode message for toggle mouse tracking command.
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr "切換鼠標移動時讀出指向的物件或文字的開關"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4083,9 +4148,9 @@ msgstr "不讀出鼠標移動"
 msgid "Mouse tracking on"
 msgstr "讀出鼠標移動"
 
-#. Translators: Input help mode message for toggle mouse tracking command.
-msgid "Toggles the reporting of information as the mouse moves"
-msgstr "切換鼠標移動時讀出指向的物件或文字的開關"
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "切換鼠標移動時讀出的文字範圍"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
@@ -4093,14 +4158,6 @@ msgstr "切換鼠標移動時讀出指向的物件或文字的開關"
 #, python-format
 msgid "Mouse text unit resolution %s"
 msgstr "讀出鼠標所指的 %s"
-
-#. Translators: Input help mode message for toggle mouse text unit resolution command.
-msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "切換鼠標移動時讀出的文字範圍"
-
-#. Translators: Reported when there is no title text for current program or window.
-msgid "No title"
-msgstr "沒有標題"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -4110,6 +4167,10 @@ msgid ""
 msgstr ""
 "讀出目前應用程式的視窗標題，連按兩次則把標題拼讀出來，連按三次則把標題複製到"
 "剪貼簿"
+
+#. Translators: Reported when there is no title text for current program or window.
+msgid "No title"
+msgstr "沒有標題"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Reads all controls in the active window"
@@ -4121,7 +4182,9 @@ msgid ""
 "state of GUI components."
 msgstr "開啟WX GUI檢驗工具，以便獲得更多關於GUI的資訊。"
 
-#. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
+#. Translators: Input help mode message for developer info for current navigator object command,
+#. used by developers to examine technical info on navigator object.
+#. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -4163,6 +4226,14 @@ msgstr "無法複製"
 msgid "Opens NVDA configuration directory for the current user."
 msgstr "開啟目前使用者的 NVDA 設定檔資料夾"
 
+#. Translators: Input help mode message for toggle progress bar output command.
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"切換每當進度列改變時的表示選項，選項有四個，依序是：每隔百分之十讀出、發出嗶"
+"嗶聲、兩者皆開啟以及沒有表示"
+
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
 msgstr "進度列改變時沒有表示"
@@ -4179,13 +4250,11 @@ msgstr "進度列改變時發出嗶嗶聲"
 msgid "Beep and speak progress bar updates"
 msgstr "進度列改變時發出嗶嗶聲並讀出來。"
 
-#. Translators: Input help mode message for toggle progress bar output command.
+#. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting "
-"progress bar updates"
-msgstr ""
-"切換每當進度列改變時的表示選項，選項有四個，依序是：每隔百分之十讀出、發出嗶"
-"嗶聲、兩者皆開啟以及沒有表示"
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr "切換讀出已改變的動態內容開關，動態內容包括在命令提示字元模式下的文字"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -4195,11 +4264,10 @@ msgstr "不讀出已變化的動態內容"
 msgid "report dynamic content changes on"
 msgstr "讀出已變化的動態內容"
 
-#. Translators: Input help mode message for toggle dynamic content changes command.
+#. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new "
-"text in dos console windows"
-msgstr "切換讀出已改變的動態內容開關，動態內容包括在命令提示字元模式下的文字"
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr "切換是否讓易讀游標跟隨編輯游標移動"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -4209,10 +4277,10 @@ msgstr "易讀游標不跟隨編輯游標移動"
 msgid "caret moves review cursor on"
 msgstr "易讀游標跟隨編輯游標移動"
 
-#. Translators: Input help mode message for toggle caret moves review cursor command.
+#. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
-"Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "切換是否讓易讀游標跟隨編輯游標移動"
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr "切換是否讓物件游標跟隨系統焦點移動"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -4222,10 +4290,11 @@ msgstr "物件游標不跟隨系統焦點移動"
 msgid "focus moves navigator object on"
 msgstr "物件游標跟隨系統焦點移動"
 
-#. Translators: Input help mode message for toggle focus moves navigator object command.
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
 msgid ""
-"Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "切換是否讓物件游標跟隨系統焦點移動"
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr "切換在瀏覽模式下系統焦點是否跟隨游標移動"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements off"
@@ -4235,11 +4304,9 @@ msgstr "系統焦點不跟隨游標移動"
 msgid "Automatically set system focus to focusable elements on"
 msgstr "系統焦點跟隨游標移動"
 
-#. Translators: Input help mode message for toggle auto focus focusable elements command.
-msgid ""
-"Toggles on and off automatic movement of the system focus due to browse mode "
-"commands"
-msgstr "切換在瀏覽模式下系統焦點是否跟隨游標移動"
+#. Translators: Input help mode message for report battery status command.
+msgid "Reports battery status and time remaining if AC is not plugged in"
+msgstr "當沒有接上交流電源時讀出電池狀態和可用多久"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4259,19 +4326,21 @@ msgstr "交流電源已接通"
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "還可用 {hours:d} 小時 {minutes:d} 分鐘"
 
-#. Translators: Input help mode message for report battery status command.
-msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr "當沒有接上交流電源時讀出電池狀態和可用多久"
-
-#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
-msgid "Pass next key through"
-msgstr "忽略下一個按鍵指令"
-
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr "忽略下一個 NVDA 按鍵指令，讓它直接操作目前的應用程式"
+
+#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
+msgid "Pass next key through"
+msgstr "忽略下一個按鍵指令"
+
+#. Translators: Input help mode message for report current program name and app module name command.
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr "讀出目前應用程式所屬檔名和載入模組名稱"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
@@ -4285,12 +4354,6 @@ msgstr "載入了 %s 模組。 "
 #, python-format
 msgid " %s is currently running."
 msgstr " %s 執行中。"
-
-#. Translators: Input help mode message for report current program name and app module name command.
-msgid ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
-msgstr "讀出目前應用程式所屬檔名和載入模組名稱"
 
 #. Translators: Input help mode message for go to general settings command.
 msgid "Shows NVDA's general settings"
@@ -4396,6 +4459,12 @@ msgid ""
 "for NVDA"
 msgstr "打開附加組件管理器來安裝或移除 NVDA 附加組件"
 
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr "開關 NVDA 報讀檢視器，那就是一個浮動視窗顯示 NVDA 現時讀出的內容"
+
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
 msgstr "關閉報讀檢視器"
@@ -4404,11 +4473,10 @@ msgstr "關閉報讀檢視器"
 msgid "speech viewer enabled"
 msgstr "開啟報讀檢視器"
 
-#. Translators: Input help mode message for toggle speech viewer command.
-msgid ""
-"Toggles the NVDA Speech viewer, a floating window that allows you to view "
-"all the text that NVDA is currently speaking"
-msgstr "開關 NVDA 報讀檢視器，那就是一個浮動視窗顯示 NVDA 現時讀出的內容"
+#. Translators: Input help mode message for toggle braille tether to command
+#. (tethered means connected to or follows).
+msgid "Toggle tethering of braille between the focus and the review position"
+msgstr "切換點字顯示跟隨系統焦點或物件游標移動"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
@@ -4416,9 +4484,9 @@ msgstr "開關 NVDA 報讀檢視器，那就是一個浮動視窗顯示 NVDA 現
 msgid "Braille tethered %s"
 msgstr "點字顯示%s"
 
-#. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
-msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "切換點字顯示跟隨系統焦點或物件游標移動"
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "切換上下文點字顯示方式"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4427,9 +4495,9 @@ msgstr "切換點字顯示跟隨系統焦點或物件游標移動"
 msgid "Braille focus context presentation: %s"
 msgstr "上下文點字顯示方式： %s"
 
-#. Translators: Input help mode message for toggle braille focus context presentation command.
-msgid "Toggle the way context information is presented in braille"
-msgstr "切換上下文點字顯示方式"
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "切換顯示或隱藏點字游標"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -4439,9 +4507,9 @@ msgstr "隱藏點字游標"
 msgid "Braille cursor on"
 msgstr "顯示點字游標"
 
-#. Translators: Input help mode message for toggle braille cursor command.
-msgid "Toggle the braille cursor on and off"
-msgstr "切換顯示或隱藏點字游標"
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "循環切換點字游標型態"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
@@ -4452,9 +4520,9 @@ msgstr "點字游標已隱藏"
 msgid "Braille cursor %s"
 msgstr "點字游標為%s"
 
-#. Translators: Input help mode message for cycle braille cursor shape command.
-msgid "Cycle through the braille cursor shapes"
-msgstr "循環切換點字游標型態"
+#. Translators: Input help mode message for report clipboard text command.
+msgid "Reports the text on the Windows clipboard"
+msgstr "讀出剪貼簿內的文字"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4467,19 +4535,16 @@ msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "有大量文字在剪貼簿內，共有 %s 個字元"
 
-#. Translators: Input help mode message for report clipboard text command.
-msgid "Reports the text on the Windows clipboard"
-msgstr "讀出剪貼簿內的文字"
-
-#. Translators: Indicates start of review cursor text to be copied to clipboard.
-msgid "Start marked"
-msgstr "標記複製文字起點"
-
-#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command
+#. (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr "把易讀游標目前的所在位置作為複製或選擇文字的起點"
+
+#. Translators: Indicates start of review cursor text to be copied to clipboard.
+msgid "Start marked"
+msgstr "標記複製文字起點"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
@@ -4493,6 +4558,16 @@ msgstr "將易讀游標移到選取或複製文字的標記起點"
 msgid "No start marker set"
 msgstr "沒有標記起點位置"
 
+#. Translators: Input help mode message for the select then copy command.
+#. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+msgid ""
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
+msgstr ""
+"按一下，將先前設定的文字起點到易讀游標所在位置之間的文字選取，連按兩下，則這"
+"段文字複製到剪貼簿。"
+
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
 msgstr "連按兩下複製文字，或是重設起點"
@@ -4504,15 +4579,6 @@ msgstr "沒有文字可複製"
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
 msgstr "不能選取文字，連按兩下複製文字"
-
-#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-msgid ""
-"If pressed once, the text from the previously set start marker up to and "
-"including the current position of the review cursor is selected. If pressed "
-"twice, the text is copied to the clipboard"
-msgstr ""
-"按一下，將先前設定的文字起點到易讀游標所在位置之間的文字選取，連按兩下，則這"
-"段文字複製到剪貼簿。"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -4588,16 +4654,16 @@ msgid ""
 "input"
 msgstr "點字書入時模擬按住或放開 NVDA 鍵"
 
-#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
-msgid "Plugins reloaded"
-msgstr "外掛程式已重新載入"
-
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
 "不需重啟NVDA即可重新載入應用程式模組及通用外掛程式，以便於 NVDA 程式開發者"
+
+#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
+msgid "Plugins reloaded"
+msgstr "外掛程式已重新載入"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4627,14 +4693,14 @@ msgstr "啟用觸控互動"
 msgid "Touch interaction disabled"
 msgstr "停用觸控互動"
 
+#. Translators: Input help mode message for a touchscreen gesture.
+msgid "Cycles between available touch modes"
+msgstr "在可用的觸碰模式之間撤換"
+
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
 msgid "%s mode"
 msgstr "%s 模式"
-
-#. Translators: Input help mode message for a touchscreen gesture.
-msgid "Cycles between available touch modes"
-msgstr "在可用的觸碰模式之間撤換"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4646,19 +4712,25 @@ msgid ""
 "your finger was last"
 msgstr "報出指尖摸到新的物件和內容"
 
-#. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
-msgstr "找不到物件的所在位置"
-
 #. Translators: Input help mode message for touch right click command.
 msgid ""
 "Clicks the right mouse button at the current touch position. This is "
 "generally used to activate a context menu."
 msgstr "在目前觸控位置點擊滑鼠右鍵，一般都可打開右鍵選單"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "找不到物件的所在位置"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "開啟 NVDA 組態設定對話方塊"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr "切換開關全部組態設定檔觸發，關閉會維持直至重開 NVDA 為止"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
 msgid "Configuration profile triggers disabled"
@@ -4668,11 +4740,9 @@ msgstr "關閉組態設定檔觸發"
 msgid "Configuration profile triggers enabled"
 msgstr "開啟組態設定檔觸發"
 
-#. Translators: Input help mode message for toggle configuration profile triggers command.
-msgid ""
-"Toggles disabling of all configuration profile triggers. Disabling remains "
-"in effect until NVDA is restarted"
-msgstr "切換開關全部組態設定檔觸發，關閉會維持直至重開 NVDA 為止"
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr "開始署理算式"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4680,17 +4750,17 @@ msgid "Not math"
 msgstr "不是算式"
 
 #. Translators: Describes a command.
-msgid "Begins interaction with math content"
-msgstr "開始署理算式"
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr "利用 Windows 10 光學字元辨識辨認出目前物件中的文字"
 
 #. Translators: Reported when Windows 10 OCR is not available.
 msgid "Windows 10 OCR not available"
 msgstr "Windows 10光學字元辨識不可用"
 
-#. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "利用 Windows 10 光學字元辨識辨認出目前物件中的文字"
+#. Translators: Reported when screen curtain is enabled.
+msgid "Please disable screen curtain before using Windows 10 OCR."
+msgstr "請先停用螢幕變黑，才啟用 Windows 10 光學字元辨識功能"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6909,6 +6979,33 @@ msgstr "密件副本："
 msgid "unread"
 msgstr "未讀"
 
+#. Translators: The name of a category of NVDA commands.
+msgid "Python Console"
+msgstr "Python 主控台"
+
+#. Translators: Description of a command to clear the Python Console output pane
+msgid "Clear the output pane"
+msgstr "清除輸出窗格"
+
+#. Translators: Description of a command to move to the next result in the Python Console output pane
+msgid "Move to the next result"
+msgstr "移到下一個結果"
+
+#. Translators: Description of a command to move to the previous result
+#. in the Python Console output pane
+msgid "Move to the previous result"
+msgstr "移到上一個結果"
+
+#. Translators: Description of a command to select from the current caret position to the end
+#. of the current result in the Python Console output pane
+msgid "Select until the end of the current result"
+msgstr "選取到結果的末尾"
+
+#. Translators: Description of a command to select from the current caret position to the start
+#. of the current result in the Python Console output pane
+msgid "Select until the start of the current result"
+msgstr "選取到結果的開頭"
+
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
@@ -6967,7 +7064,13 @@ msgstr "{date} (全天)"
 msgid "{startTime} to {endTime}"
 msgstr "從 {startTime} 到 {endTime}"
 
-#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#. Translators: Part of a message reported when on a calendar appointment with one or more categories
+#. in Microsoft Outlook.
+#, python-brace-format
+msgid "categories {categories}"
+msgstr "類別 {categories}"
+
+#. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "約會，{subject}，{time}"
@@ -7402,8 +7505,12 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Papenmeier BRAILLEX 舊型號"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
+msgid "Seika Braille Displays"
 msgstr "Seika 點字顯示器"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr "Seika 記事簿"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -7710,79 +7817,6 @@ msgstr "結束(&X)"
 msgid "Exit NVDA"
 msgstr "結束 NVDA"
 
-#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
-msgid ""
-"Most commands for controlling NVDA require you to hold down the NVDA key "
-"while pressing other keys.\n"
-"By default, the numpad Insert and main Insert keys may both be used as the "
-"NVDA key.\n"
-"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-"Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA "
-"functions."
-msgstr ""
-"NVDA 的許多按鍵指令都需要按住一個 NVDA 鍵，然後同時按下其它的按鍵。\n"
-"所謂的 NVDA 鍵是指主鍵盤上的 insert 鍵和數字鍵盤的0，(它也是 insert 鍵)，其預"
-"設均為啟用。\n"
-"您也可將 Caps Locks 設定為 NVDA 鍵。\n"
-"你可隨時按 NVDA+n 開啟 NVDA 選單。\n"
-"此選單可讓你設定 NVDA 的各種選項、閱讀說明或啟用其他功能。"
-
-#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
-msgid "Welcome to NVDA"
-msgstr "歡迎使用 NVDA"
-
-#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
-#. bold lettering
-msgid "Welcome to NVDA!"
-msgstr "歡迎使用 NVDA！"
-
-#. Translators: The label for a group box containing the NVDA welcome dialog options.
-#. Translators: The label for a group box containing the NVDA installation dialog options.
-msgid "Options"
-msgstr "選項"
-
-#. Translators: The label of a combobox in the Welcome dialog.
-#. Translators: This is the label for a combobox in the
-#. keyboard settings panel.
-msgid "&Keyboard layout:"
-msgstr "鍵盤配置(&K):"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "將 Caps Lock 鍵設為 NVDA 鍵(&U)"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
-#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
-#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-msgid "St&art NVDA after I sign in"
-msgstr "登入 Windows 後啟動 NVDA(&A)"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-msgid "&Show this dialog when NVDA starts"
-msgstr "每當 NVDA 啟動時顯示此對話方塊(&S)"
-
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "許可協議"
-
-#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-msgid "I &agree"
-msgstr "我同意(&A)"
-
-#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
-msgid "&Install NVDA on this computer"
-msgstr "安裝 NVDA 到電腦(&I)"
-
-#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
-msgid "Create &portable copy"
-msgstr "建立可攜版(&P)"
-
-#. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
-msgid "&Continue running"
-msgstr "繼續執行 暫存版(&C)"
-
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -7817,48 +7851,6 @@ msgstr "安裝已經下載的更新"
 msgid "Please wait"
 msgstr "請等候"
 
-#. Translators: The title of the dialog asking if usage data can be collected
-msgid "NVDA  Usage Data Collection"
-msgstr "NVDA 使用資料收集"
-
-#. Translators: A message asking the user if they want to allow usage stats gathering
-msgid ""
-"In order to improve NVDA in the future, NV Access wishes to collect usage "
-"data from running copies of NVDA.\n"
-"\n"
-"Data includes Operating System version, NVDA version, language, country of "
-"origin, plus certain NVDA configuration such as current synthesizer, braille "
-"display and braille table. No spoken or braille content will be ever sent to "
-"NV Access.  Please refer to the User Guide for a current list of all data "
-"collected.\n"
-"\n"
-"Do you wish to allow NV Access to periodically collect this data in order to "
-"improve NVDA?"
-msgstr ""
-"為了持續改進 NVDA，NV Access 希望利用執行中的 NVDA 收集使用狀況資料。\n"
-"\n"
-"這些資料包括作業系統和 NVDA 版本、語言、所在地區，以及一些 NVDA 的設定，如使"
-"用中的語音合成器、點字顯示器和轉換表，但不會將語音或點字內容傳送到 NV "
-"Access。請參閱用戶指南以獲取目前所有收集的資料之列表。\n"
-"\n"
-"您是否允許 NV Access 收集這些資料以改進其功能？"
-
-#. Translators: The label of a Yes button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
-#. the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. agree to enabling the curtain.
-msgid "&Yes"
-msgstr "是(&Y)"
-
-#. Translators: The label of a No button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
-#. install the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. disagree to enabling the curtain.
-msgid "&No"
-msgstr "否(&N)"
-
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -7875,6 +7867,22 @@ msgstr "重開 NVDA"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "關於(&A)"
+
+#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+#. the add-on
+#. Translators: The label of a Yes button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
+msgid "&Yes"
+msgstr "是(&Y)"
+
+#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
+#. install the add-on
+#. Translators: The label of a No button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
+msgid "&No"
+msgstr "否(&N)"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -8494,6 +8502,11 @@ msgid ""
 "{path}"
 msgstr "NVDA 的安裝路徑已經改變，程式會被安裝到 {path}"
 
+#. Translators: The label for a group box containing the NVDA installation dialog options.
+#. Translators: The label for a group box containing the NVDA welcome dialog options.
+msgid "Options"
+msgstr "選項"
+
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA during sign-in"
 msgstr "登入 Windows 前啟動 NVDA(&U)"
@@ -8694,6 +8707,13 @@ msgstr "NVDA 啟動或結束時播放聲音(&P)"
 msgid "L&ogging level:"
 msgstr "事件記錄等級(&O):"
 
+#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
+#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
+#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "St&art NVDA after I sign in"
+msgstr "登入 Windows 後啟動 NVDA(&A)"
+
 #. Translators: The label for a setting in general settings to
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
@@ -8883,6 +8903,12 @@ msgstr "有支援時啟用拼字功能(&S)"
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
 msgstr "K 鍵盤"
+
+#. Translators: This is the label for a combobox in the
+#. keyboard settings panel.
+#. Translators: The label of a combobox in the Welcome dialog.
+msgid "&Keyboard layout:"
+msgstr "鍵盤配置(&K):"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
@@ -9426,6 +9452,13 @@ msgstr "盡量利用自動化技術來存取 Microsoft Word 文件的控制項(&
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid ""
+"Use UI Automation to access Microsoft &Excel spreadsheet controls when "
+"available"
+msgstr "盡量利用自動化技術來存取 Microsoft Excel 試算表的控制項(&E)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr "盡量在 Windows 主控台中使用自動化技術(&O)"
 
@@ -9433,6 +9466,37 @@ msgstr "盡量在 Windows 主控台中使用自動化技術(&O)"
 #. Advanced settings panel.
 msgid "Speak &passwords in UIA consoles (may improve performance)"
 msgstr "在 UIA 主控台讀出密碼(可能提高效能)(&P)"
+
+#. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
+#. Note the '\n' is used to split this long label approximately in half.
+msgctxt "advanced.uiaWithChromium"
+msgid ""
+"Use UIA with Microsoft Edge and other \n"
+"&Chromium based browsers when available:"
+msgstr ""
+"可以的話在微軟 Edge 及其他以 Chromium\n"
+"核心的瀏覽器中啟用 UIA(&C):"
+
+#. Translators: Label for the default value of the Use UIA with Chromium combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Default (Only when necessary)"
+msgstr "預設 (需要時啟用)"
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Only when necessary"
+msgstr "需要時啟用"
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Yes"
+msgstr "啟用"
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "No"
+msgstr "停用"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9444,10 +9508,35 @@ msgstr "終端程式"
 msgid "Use the new t&yped character support in Windows Console when available"
 msgstr "盡量在 Windows 主控台中使用新的輸入支援(&Y)"
 
+#. Translators: This is the label for a combo box for selecting a
+#. method of detecting changed content in terminals in the advanced
+#. settings panel.
+#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+msgid "&Diff algorithm:"
+msgstr "內容差異分析(&D):"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine the method of detecting changed
+#. content in terminals automatically.
+msgid "Automatic (Difflib)"
+msgstr "自動 (單行分析)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by character when supported, using the diff match patch algorithm.
+msgid "allow Diff Match Patch"
+msgstr "字元分析"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by line, using the difflib algorithm.
+msgid "force Difflib"
+msgstr "單行分析"
+
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-msgid "Default (No)"
-msgstr "預設 (否)"
+msgid "Default (Yes)"
+msgstr "預設 (是)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -9803,6 +9892,88 @@ msgstr "移除(&M)"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "\"%s\" 已經存在"
+
+#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+msgid ""
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad Insert and main Insert keys may both be used as the "
+"NVDA key.\n"
+"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions."
+msgstr ""
+"NVDA 的許多按鍵指令都需要按住一個 NVDA 鍵，然後同時按下其它的按鍵。\n"
+"所謂的 NVDA 鍵是指主鍵盤上的 insert 鍵和數字鍵盤的0，(它也是 insert 鍵)，其預"
+"設均為啟用。\n"
+"您也可將 Caps Locks 設定為 NVDA 鍵。\n"
+"你可隨時按 NVDA+n 開啟 NVDA 選單。\n"
+"此選單可讓你設定 NVDA 的各種選項、閱讀說明或啟用其他功能。"
+
+#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
+msgid "Welcome to NVDA"
+msgstr "歡迎使用 NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time.
+#. This is in larger, bold lettering
+msgid "Welcome to NVDA!"
+msgstr "歡迎使用 NVDA！"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "將 Caps Lock 鍵設為 NVDA 鍵(&U)"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr "每當 NVDA 啟動時顯示此對話方塊(&S)"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "許可協議"
+
+#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
+msgid "I &agree"
+msgstr "我同意(&A)"
+
+#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
+msgid "&Install NVDA on this computer"
+msgstr "安裝 NVDA 到電腦(&I)"
+
+#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
+msgid "Create &portable copy"
+msgstr "建立可攜版(&P)"
+
+#. Translators: The label of the button in NVDA installation program
+#. to continue using the installation program as a temporary copy of NVDA.
+msgid "&Continue running"
+msgstr "繼續執行 暫存版(&C)"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "NVDA 使用資料收集"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access. Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"為了持續改進 NVDA，NV Access 希望利用執行中的 NVDA 收集使用狀況資料。\n"
+"\n"
+"這些資料包括作業系統和 NVDA 版本、語言、所在地區，以及一些 NVDA 的設定，如使"
+"用中的語音合成器、點字顯示器和轉換表，但不會將語音或點字內容傳送到 NV "
+"Access。請參閱用戶指南以獲取目前所有收集的資料之列表。\n"
+"\n"
+"您是否允許 NV Access 定期收集這些資料以改進其功能？"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10266,12 +10437,6 @@ msgstr "呈現頁面布局"
 msgid "Use screen layout off"
 msgstr "不呈現頁面布局"
 
-#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
-msgid ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-msgstr "在虛擬文件內切換是否呈現頁面實際布局"
-
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 msgid "Highlight system fo&cus"
@@ -10407,6 +10572,7 @@ msgid "No comments"
 msgstr "沒有註解"
 
 #. Translators: a description for a script
+#. Translators: a description for a script that reports the comment at the caret.
 msgid "Reports the text of the comment where the System caret is located."
 msgstr "讀出游標所在的註解文字"
 
@@ -10417,6 +10583,117 @@ msgstr "不在表格中"
 
 msgid "invoke"
 msgstr "啟用"
+
+#. Translators: the description of a script
+msgctxt "excel-UIA"
+msgid ""
+"Shows a browseable message Listing information about a cell's appearance "
+"such as outline and fill colors, rotation and size"
+msgstr "顯示儲存格外觀資訊，包括框線、填滿顏色、旋轉及大小"
+
+#. Translators: The width of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell width: {0.x:.1f} pt"
+msgstr "儲存格寬度: {0.x:.1f} 點"
+
+#. Translators: The height of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell height: {0.y:.1f} pt"
+msgstr "儲存格高度: {0.y:.1f} 點"
+
+#. Translators: The rotation in degrees of an Excel cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Rotation: {0} degrees"
+msgstr "旋轉: {0} 度"
+
+#. Translators: The outline (border) colors of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid ""
+"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
+msgstr "框線顏色: 上={0.name}, 下={1.name}, 左={2.name}, 右={3.name}"
+
+#. Translators: The outline (border) thickness values of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
+msgstr "框線粗幼: 上={0}, 下={1}, 左={2}, 右={3}"
+
+#. Translators: The fill color of an Excel cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill color: {0.name}"
+msgstr "填滿顏色: {0.name}"
+
+#. Translators: The fill type (pattern, gradient etc) of an Excel Cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill type: {0}"
+msgstr "填滿類型: {0}"
+
+#. Translators: the number format of an Excel cell
+#, python-brace-format
+msgid "Number format: {0}"
+msgstr "數字格式: {0}"
+
+#. Translators: If an excel cell has data validation set
+msgid "Has data validation"
+msgstr "具有資料驗證"
+
+#. Translators: the data validation prompt (input message) for an Excel cell
+#, python-brace-format
+msgid "Data validation prompt: {0}"
+msgstr "資料驗證提示: {0}"
+
+#. Translators: If an excel cell has conditional formatting
+msgid "Has conditional formatting"
+msgstr "具有條件格式設定"
+
+#. Translators: If an excel cell has visible gridlines
+msgid "Gridlines are visible"
+msgstr "格線可見"
+
+#. Translators: Title for a browsable message that describes the appearance of a cell in Excel
+msgctxt "excel-UIA"
+msgid "Cell Appearance"
+msgstr "儲存格外觀"
+
+#. Translators:  an error message on a cell in Microsoft Excel.
+#, python-brace-format
+msgid "Error: {errorText}"
+msgstr "錯誤: {errorText}"
+
+#. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
+#, python-brace-format
+msgid "{author} is editing"
+msgstr "{author} 正在編輯"
+
+#. Translators: Excel, report range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "{firstAddress} {firstValue} 到 {lastAddress} {lastValue}"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the note or comment thread on the current cell"
+msgstr "報出目前儲存格的附註"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "{comment}  by {author}"
+msgstr "{comment} 由 {author} 加註"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "{comment}  by {author} with {numReplies} replies"
+msgstr "{comment} 由 {author} 加註包含 {numReplies} 則回覆"
+
+#. Translators: A message in Excel when there is no note
+msgid "No note or comment thread on this cell"
+msgstr "儲存格沒有註解"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10445,13 +10722,13 @@ msgstr "追蹤修訂：{text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
-msgid "Comment: {comment} by {author} on {date}"
-msgstr "註解：{comment} 由 {author} 於 {date} 加註"
+msgid "Comment: {comment} by {author}"
+msgstr "註解: {comment} 由 {author} 加註"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
-msgid "{comment} by {author} on {date}"
-msgstr "{comment} 由 {author} 於 {date} 加註"
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "註解：{comment} 由 {author} 於 {date} 加註"
 
 msgid "Desktop"
 msgstr "桌面"
@@ -11806,6 +12083,14 @@ msgstr "2倍行高"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行高"
+
+#, fuzzy
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "類別(&C)："
+
+#~ msgid "&Activate"
+#~ msgstr "啟動(&A)"
 
 #~ msgctxt "line spacing value"
 #~ msgid "exact"

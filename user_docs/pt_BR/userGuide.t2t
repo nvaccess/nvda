@@ -1173,12 +1173,18 @@ Isto é, caso esteja lendo com um sintetizador de voz em Inglês Americano mas o
 Por padrão, essa opção está desabilitada.
 
 %kc:setting
-==== Grau de Pontuação/Sinais ====[SpeechSettingsSymbolLevel]
+==== Grau de Pontuação/Símbolos ====[SpeechSettingsSymbolLevel]
 Tecla: NVDA+p
 
-Essa opção permite-lhe escolher a quantidade de pontuação e outros sinais ""[símbolos]"" que devem ser falados como palavras.
+Essa opção permite-lhe escolher a quantidade de pontuação e outros símbolos que devem ser falados como palavras.
 Por exemplo, quando selecionado tudo, todos os símbolos serão falados como palavras.
 Isso é aplicado a todos os sintetizadores, não apenas ao que está atualmente em uso.
+
+==== Falar toda a pontuação e símbolos ao explorar por palavra ====[SpeechSettingsSymbolLevelWord]
+
+Ao explorar ""[revisar]"" o texto por palavra, geralmente é desejável obter mais detalhes do que ao ler uma frase inteira.
+Quando marcado (por padrão), o NVDA fala o nome de todas as pontuações e outros símbolos ao explorar por palavra, como se o grau acima estivesse definido para "tudo".
+Nota: Em qualquer caso, ao explorar o texto por caractere, o NVDA sempre relata o nome da pontuação e outros símbolos.
 
 ==== Confiar no idioma da voz ao processar caracteres e símbolos ====[SpeechSettingsTrust]
 Por padrão, esta opção diz ao NVDA se o idioma da voz atual pode ser confiável ao processar símbolos e caracteres.
@@ -1578,9 +1584,9 @@ Uma caixa de seleção que quando marcada informa ao NVDA para anunciar as dicas
 Muitas janelas e controles mostram uma pequena mensagem (ou dica de ferramenta) quando move o ponteiro do mouse sobre elas, ou às vezes quando move o foco para elas.
 
 ==== Anunciar notificações ====[ObjectPresentationReportNotifications]
-Essa caixa de seleção, quando marcada, informa ao NVDA para anunciar balões de ajuda e notificações toast ""[brinde]"" à medida que apareçam.
+Essa caixa de seleção, quando marcada, informa ao NVDA para anunciar balões de ajuda e notificações de sistema ""[toast]"" à medida que apareçam.
 - Os Balões de Ajuda são como pequenas dicas de ferramentas, mas comumente são maiores em tamanho e estão associados com os eventos do sistema, tal como o cabo de rede ser desconectado, ou talvez para alertá-lo sobre problemas de segurança do Windows.
-- As notificações toast foram introduzidas no Windows 10 e aparecem na central de notificação na bandeja do sistema, informando sobre vários eventos (por exemplo, se uma atualização foi baixada, um novo e-mail chegou na sua caixa de entrada, etc.).
+- As notificações de sistema ""[toast]"" foram introduzidas no Windows 10 e aparecem na central de notificação na bandeja do sistema, informando sobre vários eventos (por exemplo, se uma atualização foi baixada, um novo e-mail chegou na sua caixa de entrada, etc.).
 -
 
 ==== Anunciar Teclas de Atalho dos Objetos ====[ObjectPresentationShortcutKeys]
@@ -1849,6 +1855,14 @@ A caixa de combinação tem as seguintes opções:
 - Não: Não use UIA, mesmo se o NVDA não puder injetar no processo. Isso pode ser útil para desenvolvedores que estão depurando problemas com IA2 e desejam garantir que o NVDA não volte ao UIA.
 -
 
+==== Habilitar suporte Experimental para anotações ARIA ====[Annotations]
+Usado para habilitar recursos que adicionam suporte experimental para anotações ARIA ""[Accessible Rich Internet Applications — Aplicativos de Internet Ricos e Acessíveis]"".
+Alguns desses recursos podem estar incompletos.
+Existem as seguintes opções:
+- "Relatar detalhes no modo de navegação": possibilita informar se um objeto tem detalhes no modo de navegação.
+A comunicação do resumo desses detalhes pode ser feita atribuindo um comando usando o [diálogo Definir Comandos #InputGestures].
+-
+
 ==== Use UI automation para acessar os controles de planilha no Microsoft Excel quando disponível ====[UseUiaForExcel]
 Quando esta opção está habilitada, o NVDA tentará usar a API de acessibilidade Microsoft UI Automation para buscar informações dos controles da planilha no Microsoft Excel.
 Este é um recurso experimental e alguns recursos do Microsoft Excel podem não estar disponíveis neste modo.
@@ -1867,11 +1881,10 @@ Em ambientes não confiáveis, você pode desabilitar temporariamente [falar car
 ==== Algoritmo diff [Algoritmo de comparação] ====[DiffAlgo]
 esta configuração controla como o NVDA determina o novo texto a falar nos terminais.
 A caixa de combinação do algoritmo diff tem três opções:
-- Automático: a partir do NVDA 2021.1, esta opção é equivalente ao Difflib.
-Em uma versão futura, ele pode ser alterado para Diff Match Patch aguardando testes positivos do usuário.
+- Automático: a partir do NVDA 2021.2, esta opção é equivalente a "permitir Diff Match Patch".
 - permitir Diff Match Patch: Esta opção faz com que o NVDA calcule as alterações no texto do terminal por caractere.
 Isso pode melhorar o desempenho quando grandes volumes de texto são gravados no console e permitir relatórios mais precisos das alterações feitas no meio das linhas.
-No entanto, pode ser incompatível com alguns aplicativos.
+No entanto, pode ser incompatível com alguns aplicativos, por isso o Diff Match Patch nem sempre é usado.
 Este recurso é compatível com o Console do Windows nas versões 1607 e posteriores do Windows 10.
 Além disso, pode estar disponível em outros terminais em versões anteriores do Windows.
 - forçar Difflib: esta opção faz com que o NVDA calcule as mudanças no texto do terminal por linha.
