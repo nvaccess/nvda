@@ -758,10 +758,13 @@ class UIAHandler(COMObject):
 			if (
 				(
 					winVersion.getWinVer() < winVersion.WIN10
-					# An MS Office app before build 13901
 					or (
+						# An MS Office app before build 13901
 						isOfficeApp
-						and int(appModule.productVersion.split('.')[2]) < 13901
+						and (
+							tuple(int(x) for x in appModule.productVersion.split('.')[:3])
+							< (16, 0, 13901)
+						)
 					)
 				)
 				# An MS Word document window
