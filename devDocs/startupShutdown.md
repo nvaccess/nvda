@@ -44,7 +44,7 @@ Steps:
  1. Press (or emulate) Ctrl+Alt+N, observe NVDA starts up
 
 Variation:
-- At step 1. A version of NVDA is already running. Observe running version exists before installed version starts up.
+- At step 1. A version of NVDA is already running. Observe running version exits before installed version starts up.
 
 ### Windows Sign-in screen, automatic start
 Prerequisites:
@@ -58,8 +58,14 @@ Steps:
 ### UAC, automatic start
 Prerequisites:
  - NVDA installed
+ - An active Windows session (i.e. not signed out, locked)
+ - The NVDA installed copy is running
 
 Steps:
+ 1. Open the Start menu
+ 1. Type notepad
+ 1. Open context menu for notepad and choose `Run as Administrator`.
+ 1. When the UAC dialog appears, verify that NVDA launches on this secure desktop and reports the dialog.
 
 ### Windows Successful sign-in, automatic start
 Prerequisites:
@@ -99,7 +105,7 @@ Steps:
 ### An input gesture to restart
 
 Prerequisite:
-- Input gesture to restart is assigned to a key
+- Input gesture for "Restarts NVDA!" is assigned
 
 Steps:
  1. Press (or emulate) the input gesture
@@ -154,7 +160,8 @@ There are 3 ways that NVDA receives a request to exit:
 * Other actions are not performed as we have limited time to perform an action for this event.
     * NVDA is expected to run as long as possible during the sign out process.
     * This is achieved through the [Windows API](https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setprocessshutdownparameters), by setting the shutdown priority to the lowest reserved value for non-system applications, `0x100`.
-    * With NVDA being killed off very last, Windows may include NVDA in the Block shutdown dialog, but the user won't be able to read it if we are shutting down.
+    * [SHUTDOWN_NORETRY](https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setprocessshutdownparameters) ensures that NVDA does not show up in the blocked shutdown list dialog.
+    If it were, the user would have no way of reading the dialog and fixing the issue.
 
 ### Replacing an existing NVDA instance
 
