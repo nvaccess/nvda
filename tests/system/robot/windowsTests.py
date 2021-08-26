@@ -27,7 +27,7 @@ EMOJI_PANNEL_PATTERNS = [
 
 
 def _open_clipboard_history() -> str:
-	return _notepad.getSpeechAfterKey("leftWindows+v")
+	return _nvdaLib.getSpeechAfterKey("leftWindows+v")
 
 
 def open_clipboard_history() -> str:
@@ -68,7 +68,7 @@ def open_emoji_panel() -> str:
 	"""
 	Returns the first read emoji after opening the emoji panel.
 	"""
-	lastSpeech = _notepad.getSpeechAfterKey("leftWindows+.")
+	lastSpeech = _nvdaLib.getSpeechAfterKey("leftWindows+.")
 	for pattern in EMOJI_PANNEL_PATTERNS:
 		emojiMatch = _re.match(pattern, lastSpeech)
 		if emojiMatch is not None:
