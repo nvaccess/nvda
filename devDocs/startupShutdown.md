@@ -10,8 +10,8 @@
     1. Automatically by Ease of Access after signing in to Windows
 1. For an installed copy, portable copy, installer:
     1. An exiting instance of NVDA starting a new process (see shutting down procedures)
-    1. By running the exe
-    This can be triggered by a user or external process such as an existing NVDA instance
+    1. By running the exe. 
+        - This can be triggered by a user or external process such as an existing NVDA instance
         - test: `startupShutdownNVDA.Starts`
 1. For source: eg runnvda.bat
 
