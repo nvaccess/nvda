@@ -20,7 +20,6 @@ class AppModule(appModuleHandler.AppModule):
 		# as this happens on a broken object sometimes after getting a valid UIA focus event on the document
 		# This would cause "Web runtime component" to be spoken twice,
 		# And browse mode to be come unusable as this object is outside the document.
-		if isinstance(obj,IAccessible) and obj.windowClassName=='Windows.UI.Core.CoreComponentInputSource' and obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0 and obj.role==controlTypes.ROLE_PANE:
+		if isinstance(obj,IAccessible) and obj.windowClassName=='Windows.UI.Core.CoreComponentInputSource' and obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0 and obj.role==controlTypes.Role.PANE:
 			clsList.insert(0,CoreComponentInputSourcePane)
 		return clsList
-

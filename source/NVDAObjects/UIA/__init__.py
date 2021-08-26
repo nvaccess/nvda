@@ -81,8 +81,6 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_GridColumnCountPropertyId,
 		UIAHandler.UIA_GridItemContainingGridPropertyId,
 		UIAHandler.UIA_RangeValueValuePropertyId,
-		UIAHandler.UIA_RangeValueMinimumPropertyId,
-		UIAHandler.UIA_RangeValueMaximumPropertyId,
 		UIAHandler.UIA_ValueValuePropertyId,
 		UIAHandler.UIA_PositionInSetPropertyId,
 		UIAHandler.UIA_SizeOfSetPropertyId,
@@ -394,20 +392,20 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_SplitButtonControlTypeId
 	}
 
-
-	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+	def _getControlFieldForUIAObject(
+			self,
+			obj: "UIA",
+			isEmbedded=False,
+			startOfNode=False,
+			endOfNode=False
+	) -> textInfos.ControlField:
 		"""
 		Fetch control field information for the given UIA NVDAObject.
 		@param obj: the NVDAObject the control field is for.
-		@type obj: L{UIA}
 		@param isEmbedded: True if this NVDAObject is for a leaf node (has no useful children).
-		@type isEmbedded: bool
 		@param startOfNode: True if the control field represents the very start of this object.
-		@type startOfNode: bool
 		@param endOfNode: True if the control field represents the very end of this object.
-		@type endOfNode: bool
 		@return: The control field for this object
-		@rtype: textInfos.ControlField containing NVDA control field data.
 		"""
 		role = obj.role
 		field = textInfos.ControlField()
@@ -418,30 +416,30 @@ class UIATextInfo(textInfos.TextInfo):
 		field["role"] = obj.role
 		states = obj.states
 		# The user doesn't care about certain states, as they are obvious.
-		states.discard(controlTypes.STATE_EDITABLE)
-		states.discard(controlTypes.STATE_MULTILINE)
-		states.discard(controlTypes.STATE_FOCUSED)
+		states.discard(controlTypes.State.EDITABLE)
+		states.discard(controlTypes.State.MULTILINE)
+		states.discard(controlTypes.State.FOCUSED)
 		field["states"] = states
 		field['nameIsContent']=nameIsContent=obj.UIAElement.cachedControlType in self.UIAControlTypesWhereNameIsContent
 		if not nameIsContent:
 			field['name']=obj.name
 		field["description"] = obj.description
 		field["level"] = obj.positionInfo.get("level")
-		if role == controlTypes.ROLE_TABLE:
+		if role == controlTypes.Role.TABLE:
 			field["table-id"] = runtimeID
 			try:
 				field["table-rowcount"] = obj.rowCount
 				field["table-columncount"] = obj.columnCount
 			except NotImplementedError:
 				pass
-		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
+		if role in (controlTypes.Role.TABLECELL, controlTypes.Role.DATAITEM,controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER,controlTypes.Role.HEADERITEM):
 			try:
 				field["table-rownumber"] = obj.rowNumber
 				field["table-rowsspanned"] = obj.rowSpan
 				field["table-columnnumber"] = obj.columnNumber
 				field["table-columnsspanned"] = obj.columnSpan
 				field["table-id"] = obj.table.UIAElement.getRuntimeId()
-				field['role']=controlTypes.ROLE_TABLECELL
+				field['role']=controlTypes.Role.TABLECELL
 				field['table-columnheadertext']=obj.columnHeaderText
 				field['table-rowheadertext']=obj.rowHeaderText
 			except NotImplementedError:
@@ -592,7 +590,13 @@ class UIATextInfo(textInfos.TextInfo):
 			endOfNode=not parentClipped[1]
 			try:
 				obj=controlFieldNVDAObjectClass(windowHandle=windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
-				field=self._getControlFieldForObject(obj,isEmbedded=(index==0 and not recurseChildren),startOfNode=startOfNode,endOfNode=endOfNode)
+				objIsEmbedded = (index == 0 and not recurseChildren)
+				field = self._getControlFieldForUIAObject(
+					obj,
+					isEmbedded=objIsEmbedded,
+					startOfNode=startOfNode,
+					endOfNode=endOfNode
+				)
 			except LookupError:
 				if debug:
 					log.debug("Failed to fetch controlField data for parentElement. Breaking")
@@ -875,17 +879,17 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
-		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.ROLE_PANE:
+		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.Role.PANE:
 			from .excel import BadExcelFormulaEdit
 			clsList.append(BadExcelFormulaEdit)
 		elif self.windowClassName == "EXCEL7":
-			if self.role in (controlTypes.ROLE_DATAITEM, controlTypes.ROLE_HEADERITEM):
+			if self.role in (controlTypes.Role.DATAITEM, controlTypes.Role.HEADERITEM):
 				from .excel import ExcelCell
 				clsList.append(ExcelCell)
-			elif self.role == controlTypes.ROLE_DATAGRID:
+			elif self.role == controlTypes.Role.DATAGRID:
 				from .excel import ExcelWorksheet
 				clsList.append(ExcelWorksheet)
-			elif self.role == controlTypes.ROLE_EDITABLETEXT:
+			elif self.role == controlTypes.Role.EDITABLETEXT:
 				from .excel import CellEdit
 				clsList.append(CellEdit)
 		elif self.TextInfo == UIATextInfo and (
@@ -894,7 +898,7 @@ class UIA(Window):
 			or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
 		):
 			from .wordDocument import WordDocument, WordDocumentNode
-			if self.role==controlTypes.ROLE_DOCUMENT:
+			if self.role==controlTypes.Role.DOCUMENT:
 				clsList.append(WordDocument)
 			else:
 				clsList.append(WordDocumentNode)
@@ -917,7 +921,7 @@ class UIA(Window):
 			and not self.appModule.appName == 'iexplore'
 		):
 			from . import spartanEdge
-			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
+			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.Role.PANE:
 				clsList.append(spartanEdge.EdgeHTMLRootContainer)
 			elif (
 				self.UIATextPattern
@@ -925,8 +929,8 @@ class UIA(Window):
 				# Edge normally gives its root node a controlType of pane, but ARIA role="document"
 				# changes the controlType to document
 				and self.role in (
-					controlTypes.ROLE_PANE,
-					controlTypes.ROLE_DOCUMENT
+					controlTypes.Role.PANE,
+					controlTypes.Role.DOCUMENT
 				)
 				and self.parent
 				and (
@@ -935,7 +939,7 @@ class UIA(Window):
 				)
 			): 
 				clsList.append(spartanEdge.EdgeHTMLRoot)
-			elif self.role==controlTypes.ROLE_LIST:
+			elif self.role==controlTypes.Role.LIST:
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
@@ -947,17 +951,17 @@ class UIA(Window):
 			from . import web
 			if (
 				self.UIATextPattern
-				and self.role == controlTypes.ROLE_DOCUMENT
+				and self.role == controlTypes.Role.DOCUMENT
 				and self.parent
-				and self.parent.role == controlTypes.ROLE_PANE
+				and self.parent.role == controlTypes.Role.PANE
 			):
 				clsList.append(chromium.ChromiumUIADocument)
 			else:
-				if self.role == controlTypes.ROLE_LIST:
+				if self.role == controlTypes.Role.LIST:
 					clsList.append(web.List)
 				clsList.append(chromium.ChromiumUIA)
 		elif (
-			self.role == controlTypes.ROLE_DOCUMENT
+			self.role == controlTypes.Role.DOCUMENT
 			and self.UIAElement.cachedAutomationId == "Microsoft.Windows.PDF.DocumentView"
 		):
 			# PDFs
@@ -969,7 +973,7 @@ class UIA(Window):
 		):
 			clsList.insert(0, DevExpressXtraRichEdit)
 		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
-			clsList.append(ProgressBar)
+			clsList.insert(0, ProgressBar)
 		if UIAClassName=="ControlPanelLink":
 			clsList.append(ControlPanelLink)
 		if UIAClassName=="UIColumnHeader":
@@ -1176,6 +1180,20 @@ class UIA(Window):
 		self.UIAGridPattern=self._getUIAPattern(UIAHandler.UIA_GridPatternId,UIAHandler.IUIAutomationGridPattern)
 		return self.UIAGridPattern
 
+	def _get_UIARangeValuePattern(self):
+		self.UIARangeValuePattern = self._getUIAPattern(
+			UIAHandler.UIA_RangeValuePatternId,
+			UIAHandler.IUIAutomationRangeValuePattern
+		)
+		return self.UIARangeValuePattern
+
+	def _get_UIAValuePattern(self):
+		self.UIAValuePattern = self._getUIAPattern(
+			UIAHandler.UIA_ValuePatternId,
+			UIAHandler.IUIAutomationValuePattern
+		)
+		return self.UIAValuePattern
+
 	def _get_UIATogglePattern(self):
 		self.UIATogglePattern=self._getUIAPattern(UIAHandler.UIA_TogglePatternId,UIAHandler.IUIAutomationTogglePattern)
 		return self.UIATogglePattern
@@ -1269,7 +1287,7 @@ class UIA(Window):
 		if self.UIATextPattern:
 			return self._TextInfo
 		textInfo = super(UIA, self).TextInfo
-		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.ROLE_WINDOW:
+		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.Role.WINDOW:
 			import displayModel
 			return displayModel.DisplayModelTextInfo
 		return textInfo
@@ -1349,17 +1367,17 @@ class UIA(Window):
 			return super().liveRegionPoliteness
 
 	def _get_role(self):
-		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
-		if role==controlTypes.ROLE_BUTTON:
+		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.Role.UNKNOWN)
+		if role==controlTypes.Role.BUTTON:
 			try:
 				s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
 			except COMError:
 				s=UIAHandler.handler.reservedNotSupportedValue
 			if s!=UIAHandler.handler.reservedNotSupportedValue:
-				role=controlTypes.ROLE_TOGGLEBUTTON
-		elif role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW) and self.windowHandle:
+				role=controlTypes.Role.TOGGLEBUTTON
+		elif role in (controlTypes.Role.UNKNOWN,controlTypes.Role.PANE,controlTypes.Role.WINDOW) and self.windowHandle:
 			superRole=super(UIA,self).role
-			if superRole!=controlTypes.ROLE_WINDOW:
+			if superRole!=controlTypes.Role.WINDOW:
 				role=superRole
 		return role
 
@@ -1417,37 +1435,37 @@ class UIA(Window):
 		except COMError:
 			hasKeyboardFocus=False
 		if hasKeyboardFocus:
-			states.add(controlTypes.STATE_FOCUSED)
+			states.add(controlTypes.State.FOCUSED)
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsKeyboardFocusablePropertyId):
-			states.add(controlTypes.STATE_FOCUSABLE)
+			states.add(controlTypes.State.FOCUSABLE)
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsPasswordPropertyId):
-			states.add(controlTypes.STATE_PROTECTED)
+			states.add(controlTypes.State.PROTECTED)
 		# Don't fetch the role unless we must, but never fetch it more than once.
 		role=None
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
 			role=self.role
-			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
+			states.add(controlTypes.State.CHECKABLE if role==controlTypes.Role.RADIOBUTTON else controlTypes.State.SELECTABLE)
 			if self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
-				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
+				states.add(controlTypes.State.CHECKED if role==controlTypes.Role.RADIOBUTTON else controlTypes.State.SELECTED)
 		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId,True):
-			states.add(controlTypes.STATE_UNAVAILABLE)
+			states.add(controlTypes.State.UNAVAILABLE)
 		try:
 			isOffScreen = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsOffscreenPropertyId)
 		except COMError:
 			isOffScreen = False
 		if isOffScreen:
-			states.add(controlTypes.STATE_OFFSCREEN)
+			states.add(controlTypes.State.OFFSCREEN)
 		try:
 			isDataValid=self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
 		except COMError:
 			isDataValid=UIAHandler.handler.reservedNotSupportedValue
 		if not isDataValid:
-			states.add(controlTypes.STATE_INVALID_ENTRY)
+			states.add(controlTypes.State.INVALID_ENTRY)
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
-			states.add(controlTypes.STATE_REQUIRED)
+			states.add(controlTypes.State.REQUIRED)
 
 		if self._getReadOnlyState():
-			states.add(controlTypes.STATE_READONLY)
+			states.add(controlTypes.State.READONLY)
 
 		try:
 			s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
@@ -1455,9 +1473,9 @@ class UIA(Window):
 			s=UIAHandler.handler.reservedNotSupportedValue
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if s==UIAHandler.ExpandCollapseState_Collapsed:
-				states.add(controlTypes.STATE_COLLAPSED)
+				states.add(controlTypes.State.COLLAPSED)
 			elif s==UIAHandler.ExpandCollapseState_Expanded:
-				states.add(controlTypes.STATE_EXPANDED)
+				states.add(controlTypes.State.EXPANDED)
 		try:
 			s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
 		except COMError:
@@ -1465,13 +1483,13 @@ class UIA(Window):
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role=self.role
-			if role==controlTypes.ROLE_TOGGLEBUTTON:
+			if role==controlTypes.Role.TOGGLEBUTTON:
 				if s==UIAHandler.ToggleState_On:
-					states.add(controlTypes.STATE_PRESSED)
+					states.add(controlTypes.State.PRESSED)
 			else:
-				states.add(controlTypes.STATE_CHECKABLE)
+				states.add(controlTypes.State.CHECKABLE)
 				if s==UIAHandler.ToggleState_On:
-					states.add(controlTypes.STATE_CHECKED)
+					states.add(controlTypes.State.CHECKED)
 		try:
 			annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
 		except COMError:
@@ -1479,7 +1497,7 @@ class UIA(Window):
 			annotationTypes = None
 		if annotationTypes:
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
-				states.add(controlTypes.STATE_HASCOMMENT)
+				states.add(controlTypes.State.HASCOMMENT)
 		return states
 
 	def _getReadOnlyState(self) -> bool:
@@ -1706,19 +1724,24 @@ class UIA(Window):
 		# r is a tuple of floats representing left, top, width and height.
 		return locationHelper.RectLTWH.fromFloatCollection(*r)
 
-	def _get_value(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
-			minVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId,False)
-			maxVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId,False)
-			if minVal==maxVal:
-				# There is no range.
-				return "0"
-			val=((val-minVal)/(maxVal-minVal))*100.0
-			return "%d"%round(val,4)
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueValuePropertyId,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
+	def _get_UIAValue(self) -> typing.Optional[str]:
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_ValueValuePropertyId, True)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
 			return val
+		return None
+
+	def _get_UIARangeValue(self) -> typing.Optional[float]:
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueValuePropertyId, True)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			return val
+		return None
+
+	def _get_value(self) -> typing.Optional[str]:
+		if self.UIAValue is not None:
+			return self.UIAValue
+		if self.UIARangeValue is not None:
+			return f"{round(self.UIARangeValue)}"
+		return None
 
 	def _get_actionCount(self):
 		if self.UIAInvokePattern:
@@ -1845,7 +1868,7 @@ class TreeviewItem(UIA):
 		while obj: 
 			level+=1
 			parent=obj.parent=obj.parent
-			if not parent or parent==obj or parent.role!=controlTypes.ROLE_TREEVIEWITEM:
+			if not parent or parent==obj or parent.role!=controlTypes.Role.TREEVIEWITEM:
 				return level
 			obj=parent
 		return level
@@ -1965,7 +1988,7 @@ class ListItem(UIA):
 		super(ListItem, self).event_stateChange()
 
 class Dialog(Dialog):
-	role=controlTypes.ROLE_DIALOG
+	role=controlTypes.Role.DIALOG
 
 class Toast_win8(Notification, UIA):
 
@@ -2026,7 +2049,7 @@ class SuggestionListItem(UIA):
 	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
 	"""
 
-	role=controlTypes.ROLE_LISTITEM
+	role=controlTypes.Role.LISTITEM
 
 	def event_UIA_elementSelected(self):
 		focusControllerFor=api.getFocusObject().controllerFor
@@ -2046,7 +2069,7 @@ class NetUIDropdownAnchor(UIA):
 		name=super(NetUIDropdownAnchor,self).name
 		# In MS Office 2010, these combo boxes had no name.
 		# However, the name can be found as the direct previous sibling label element. 
-		if not name and self.previous and self.previous.role==controlTypes.ROLE_STATICTEXT:
+		if not name and self.previous and self.previous.role==controlTypes.Role.STATICTEXT:
 			name=self.previous.name
 		return name
 
@@ -2061,7 +2084,7 @@ class PlaceholderNetUITWMenuItem(UIA):
 		for count in range(4):
 			if not parent:
 				return
-			if parent.role==controlTypes.ROLE_POPUPMENU:
+			if parent.role==controlTypes.Role.POPUPMENU:
 				return parent
 			parent=parent.parent
 
@@ -2076,3 +2099,23 @@ class DevExpressXtraRichEdit(UIA):
 		if self.UIATextPattern and self.UIATextPattern.DocumentRange:
 			return super().TextInfo
 		return super(UIA, self).TextInfo
+
+
+class ProgressBar(UIA, ProgressBar):
+	"""#12727: In the past, UIA progress bars could have a different range than what could be expected
+	from a progress bar, i.e. a percentage from 0 to 100.
+	This overlay class ensures that the reported value wil be between the accepted range of progress bar values.
+	"""
+
+	def _get_value(self) -> typing.Optional[str]:
+		val = self.UIARangeValue
+		if val is None:
+			return self.UIAValue
+		minVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId, False)
+		maxVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId, False)
+		if minVal == maxVal:
+			# There is no range, use the raw value from the pattern, it might be incorrect.
+			pass
+		else:
+			val = ((val - minVal) / (maxVal - minVal)) * 100.0
+		return f"{round(val)}%"

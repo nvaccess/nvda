@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt
+# Julien Cochuyt, Jakub Lukowicz
 
 import itertools
 from typing import Optional
@@ -700,6 +700,32 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for toggle report cell borders command.
+		description=_("Cycles through the cell border reporting settings"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportCellBorders(self, gesture):
+		if (
+			not config.conf["documentFormatting"]["reportBorderStyle"]
+			and not config.conf["documentFormatting"]["reportBorderColor"]
+		):
+			# Translators: A message reported when cycling through cell borders settings.
+			ui.message(_("Report styles of cell borders"))
+			config.conf["documentFormatting"]["reportBorderStyle"] = True
+		elif (
+			config.conf["documentFormatting"]["reportBorderStyle"]
+			and not config.conf["documentFormatting"]["reportBorderColor"]
+		):
+			# Translators: A message reported when cycling through cell borders settings.
+			ui.message(_("Report colors and styles of cell borders"))
+			config.conf["documentFormatting"]["reportBorderColor"] = True
+		else:
+			# Translators: A message reported when cycling through cell borders settings.
+			ui.message(_("Report cell borders off."))
+			config.conf["documentFormatting"]["reportBorderStyle"] = False
+			config.conf["documentFormatting"]["reportBorderColor"] = False
+
+	@script(
 		# Translators: Input help mode message for toggle report links command.
 		description=_("Toggles on and off the reporting of links"),
 		category=SCRCAT_DOCUMENTFORMATTING
@@ -889,32 +915,11 @@ class GlobalCommands(ScriptableObject):
 		else:
 			level = characterProcessing.SYMLVL_NONE
 		name = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[level]
-		config.conf["speech"]["symbolLevel"] = level
+		config.conf["speech"]["symbolLevel"] = level.value
 		# Translators: Reported when the user cycles through speech symbol levels
 		# which determine what symbols are spoken.
 		# %s will be replaced with the symbol level; e.g. none, some, most and all.
 		ui.message(_("Symbol level %s") % name)
-
-	@script(
-		# Translators: Input help mode message for a command.
-		description=_("Toggle the announcement of all punctuation and symbols when reviewing by word"),
-		category=SCRCAT_SPEECH
-	)
-	def script_toggleSpeechSymbolLevelWordAll(self, gesture):
-		symbolLevelWordAll = config.conf["speech"]["symbolLevelWordAll"]
-		if symbolLevelWordAll:
-			# Translators: Used to report the new state of a setting which is toggled via a command.
-			reportedState = pgettext("command toggle", "off")
-		else:
-			# Translators: Used to report the new state of a setting which is toggled via a command.
-			reportedState = pgettext("command toggle", "on")
-		config.conf["speech"]["symbolLevelWordAll"] = not symbolLevelWordAll
-		ui.message(
-			# Translators: Reported when toggling a speech setting
-			_("Speak all punctuation and symbols when reviewing by word: {state}").format(
-				state=reportedState
-			)
-		)
 
 	@script(
 		# Translators: Input help mode message for move mouse to navigator object command.
@@ -3038,7 +3043,7 @@ class GlobalCommands(ScriptableObject):
 	def script_touch_rightClick(self, gesture):
 		obj = api.getNavigatorObject()
 		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
-		if controlTypes.STATE_INVISIBLE in obj.states or controlTypes.STATE_OFFSCREEN in obj.states:
+		if controlTypes.State.INVISIBLE in obj.states or controlTypes.State.OFFSCREEN in obj.states:
 			return
 		try:
 			p = api.getReviewPosition().pointAtStart
@@ -3105,7 +3110,7 @@ class GlobalCommands(ScriptableObject):
 		mathMl = mathPres.getMathMlFromTextInfo(api.getReviewPosition())
 		if not mathMl:
 			obj = api.getNavigatorObject()
-			if obj.role == controlTypes.ROLE_MATH:
+			if obj.role == controlTypes.Role.MATH:
 				try:
 					mathMl = obj.mathMl
 				except (NotImplementedError, LookupError):
@@ -3119,13 +3124,13 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes a command.
-		description=_("Recognizes the content of the current navigator object with Windows 10 OCR"),
+		description=_("Recognizes the content of the current navigator object with Windows OCR"),
 		gesture="kb:NVDA+r"
 	)
 	def script_recognizeWithUwpOcr(self, gesture):
 		if not winVersion.isUwpOcrAvailable():
-			# Translators: Reported when Windows 10 OCR is not available.
-			ui.message(_("Windows 10 OCR not available"))
+			# Translators: Reported when Windows OCR is not available.
+			ui.message(_("Windows OCR not available"))
 			return
 		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
 		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
@@ -3133,7 +3138,7 @@ class GlobalCommands(ScriptableObject):
 		isScreenCurtainRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
 		if isScreenCurtainRunning:
 			# Translators: Reported when screen curtain is enabled.
-			ui.message(_("Please disable screen curtain before using Windows 10 OCR."))
+			ui.message(_("Please disable screen curtain before using Windows OCR."))
 			return
 		from contentRecog import uwpOcr, recogUi
 		recog = uwpOcr.UwpOcr()

@@ -14,10 +14,6 @@ class CallCancelled(Exception):
 	"""Raised when a call is cancelled.
 	"""
 
-# Apply several monkey patches to comtypes
-# noinspection PyUnresolvedReferences
-import comtypesMonkeyPatches
-
 # Initialise comtypes.client.gen_dir and the comtypes.gen search path 
 # and Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes
@@ -471,11 +467,16 @@ def main():
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
 
 		def InitLocale(self):
-			# Backport of `InitLocale` from wx Python 4.1.2 as the current version tries to set a Python
-			# locale to an nonexistent one when creating an instance of `wx.App`.
-			# This causes a crash when running under a particular version of Universal CRT (#12160)
-			import locale
-			locale.setlocale(locale.LC_ALL, "C")
+			"""Custom implementation of `InitLocale` which ensures that wxPython does not change the locale.
+			The current wx implementation (as of wxPython 4.1.1) sets Python locale to an invalid one
+			which triggers Python issue 36792 (#12160).
+			The new implementation (wxPython 4.1.2) sets locale to "C" (basic Unicode locale).
+			While this is not wrong as such NVDA manages locale themselves using `languageHandler`
+			and it is better to remove wx from the equation so this method is a No-op.
+			This code may need to be revisited when we update Python / wxPython.
+			"""
+			pass
+
 
 	app = App(redirect=False)
 	# We support queryEndSession events, but in general don't do anything for them.
@@ -651,8 +652,9 @@ def main():
 	import inputCore
 	inputCore.initialize()
 	import keyboardHandler
+	import watchdog
 	log.debug("Initializing keyboard handler")
-	keyboardHandler.initialize()
+	keyboardHandler.initialize(watchdog.WatchdogObserver())
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
@@ -692,7 +694,6 @@ def main():
 	# Queue the handling of initial focus,
 	# as API handlers might need to be pumped to get the first focus event.
 	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
-	import watchdog
 	import baseObject
 
 	# Doing this here is a bit ugly, but we don't want these modules imported

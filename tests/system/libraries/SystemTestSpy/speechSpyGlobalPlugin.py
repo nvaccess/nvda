@@ -67,9 +67,27 @@ class NVDASpyLib:
 		from synthDrivers.speechSpySynthDriver import post_speech
 		post_speech.register(self._onNvdaSpeech)
 
+	def set_configValue(self, keyPath: typing.List[str], val: typing.Union[str, bool, int]):
+		import config
+		if not keyPath or len(keyPath) < 1:
+			raise ValueError("Key path not provided")
+		penultimateConf = config.conf
+		for key in keyPath[:-1]:
+			penultimateConf = penultimateConf[key]
+		ultimateKey = keyPath[-1]
+		penultimateConf[ultimateKey] = val
+
 	def queueNVDAMainThreadCrash(self):
 		from queueHandler import queueFunction, eventQueue
 		queueFunction(eventQueue, _crashNVDA)
+
+	def queueNVDABrailleThreadCrash(self):
+		from braille import _BgThread
+		_BgThread.queueApc(ctypes.windll.Kernel32.DebugBreak)
+
+	def queueNVDAUIAHandlerThreadCrash(self):
+		from UIAHandler import handler
+		handler.MTAThreadQueue.put(_crashNVDA)
 
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):

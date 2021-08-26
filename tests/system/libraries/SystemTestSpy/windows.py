@@ -79,9 +79,9 @@ def GetForegroundWindowTitle() -> str:
 	return _GetWindowTitle(hwnd)
 
 
-def waitUntilWindowFocused(targetWindowTitle: str):
+def waitUntilWindowFocused(targetWindowTitle: str, timeoutSecs: int = 5):
 	_blockUntilConditionMet(
 		getValue=lambda: GetForegroundWindowTitle() == targetWindowTitle,
-		giveUpAfterSeconds=5,
+		giveUpAfterSeconds=timeoutSecs,
 		errorMessage=f"Timed out waiting {targetWindowTitle} to focus",
 	)

@@ -60,3 +60,15 @@ i12147
 Table in style display: table
 	[Documentation]	Properly announce table row/column count and working table navigation for a HTML table in a div with style display: table
 	test_tableInStyleDisplayTable
+ARIA description Focus Mode
+	[Documentation]	Navigate to a span with aria-description in focus mode
+	test_ariaDescription_focusMode
+ARIA description Browse Mode
+	[Documentation]	Navigate to a span with aria-description in browse mode
+	test_ariaDescription_browseMode
+ARIA description Say All
+	[Documentation]	Say all, contents includes aria-description
+	test_ariaDescription_sayAll
+i10840
+	[Documentation]	The name of table header cells should only be conveyed once when navigating directly to them in browse mode (chrome self-references a header cell as its own header, which used to cause the name to be announced twice)
+	test_i10840

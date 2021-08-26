@@ -23,6 +23,9 @@ from scriptHandler import script
 
 """Support for Microsoft Word via UI Automation."""
 
+#: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
+END_OF_ROW_MARK = '\x07'
+
 class ElementsListDialog(browseMode.ElementsListDialog):
 
 	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
@@ -141,27 +144,32 @@ class WordDocumentTextInfo(UIATextInfo):
 	def _get_controlFieldNVDAObjectClass(self):
 		return WordDocumentNode
 
-	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+	def _getControlFieldForUIAObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		automationID=obj.UIAElement.cachedAutomationID
-		field=super(WordDocumentTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		field = super(WordDocumentTextInfo, self)._getControlFieldForUIAObject(
+			obj,
+			isEmbedded=isEmbedded,
+			startOfNode=startOfNode,
+			endOfNode=endOfNode
+		)
 		if automationID.startswith('UIA_AutomationId_Word_Page_'):
 			field['page-number']=automationID.rsplit('_',1)[-1]
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_GroupControlTypeId and obj.name:
-			field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
+			field['role']=controlTypes.Role.EMBEDDEDOBJECT
 			field['alwaysReportName']=True
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_CustomControlTypeId and obj.name:
 			# Include foot note and endnote identifiers
 			field['content']=obj.name
-			field['role']=controlTypes.ROLE_LINK
-		if obj.role==controlTypes.ROLE_LIST or obj.role==controlTypes.ROLE_EDITABLETEXT:
-			field['states'].add(controlTypes.STATE_READONLY)
-			if obj.role==controlTypes.ROLE_LIST:
+			field['role']=controlTypes.Role.LINK
+		if obj.role==controlTypes.Role.LIST or obj.role==controlTypes.Role.EDITABLETEXT:
+			field['states'].add(controlTypes.State.READONLY)
+			if obj.role==controlTypes.Role.LIST:
 				# To stay compatible with the older MS Word implementation, don't expose lists in word documents as actual lists. This suppresses announcement of entering and exiting them.
 				# Note that bullets and numbering are still announced of course.
 				# Eventually we'll want to stop suppressing this, but for now this is more confusing than good (as in many cases announcing of new bullets when pressing enter causes exit and then enter to be spoken).
-				field['role']=controlTypes.ROLE_EDITABLETEXT
-		if obj.role==controlTypes.ROLE_GRAPHIC:
+				field['role']=controlTypes.Role.EDITABLETEXT
+		if obj.role==controlTypes.Role.GRAPHIC:
 			# Label graphics with a description before name as name seems to be auto-generated (E.g. "rectangle")
 			field['content'] = (
 				field.pop('description', None)
@@ -178,7 +186,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			# Really better as carage returns
 			t=t.replace('\v','\r')
 			# Remove end-of-row markers from the text - they are not useful
-			t=t.replace('\x07','')
+			t = t.replace(END_OF_ROW_MARK, '')
 		return t
 
 	def _isEndOfRow(self):
@@ -210,10 +218,25 @@ class WordDocumentTextInfo(UIATextInfo):
 				self.setEndPoint(docInfo,"endToEnd")
 
 	def getTextWithFields(self,formatConfig=None):
-		if self.isCollapsed:
-			# #7652: We cannot fetch fields on collapsed ranges otherwise we end up with repeating controlFields in braille (such as list list list). 
-			return []
-		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
+		fields = None
+		# #11043: when a non-collapsed text range is positioned within a blank table cell
+		# MS Word does not return the table  cell as an enclosing element,
+		# Thus NVDa thinks the range is not inside the cell.
+		# This can be detected by asking for the first 2 characters of the range's text,
+		# Which will either be an empty string, or the single end-of-row mark.
+		# Anything else means it is not on an empty table cell,
+		# or the range really does span more than the cell itself.
+		# If this situation is detected,
+		# copy and collapse the range, and fetch the content from that instead,
+		# As a collapsed range on an empty cell does correctly return the table cell as its first enclosing element.
+		if not self.isCollapsed:
+			rawText = self._rangeObj.GetText(2)
+			if not rawText or rawText == END_OF_ROW_MARK:
+				r = self.copy()
+				r.end = r.start
+				fields = super(WordDocumentTextInfo, r).getTextWithFields(formatConfig=formatConfig)
+		if fields is None:
+			fields = super().getTextWithFields(formatConfig=formatConfig)
 		if len(fields)==0: 
 			# Nothing to do... was probably a collapsed range.
 			return fields
@@ -237,7 +260,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		for index in range(len(fields)):
 			field=fields[index]
 			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
-				if field.field.get('role')==controlTypes.ROLE_LISTITEM and field.field.get('_startOfNode'):
+				if field.field.get('role')==controlTypes.Role.LISTITEM and field.field.get('_startOfNode'):
 					# We are in the start of a list item.
 					listItemStarted=True
 			elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
@@ -300,13 +323,13 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
-		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
+		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
 		return super(WordBrowseModeDocument,self).shouldSetFocusToObj(obj)
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
-		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
+		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
 		return super(WordBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
 
@@ -336,8 +359,8 @@ class WordDocumentNode(UIA):
 	def _get_role(self):
 		role=super(WordDocumentNode,self).role
 		# Footnote / endnote elements currently have a role of unknown. Force them to editableText so that theyr text is presented correctly
-		if role==controlTypes.ROLE_UNKNOWN:
-			role=controlTypes.ROLE_EDITABLETEXT
+		if role==controlTypes.Role.UNKNOWN:
+			role=controlTypes.Role.EDITABLETEXT
 		return role
 
 class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentBase):

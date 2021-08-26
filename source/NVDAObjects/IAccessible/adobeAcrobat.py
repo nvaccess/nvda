@@ -20,27 +20,27 @@ SID_GetPDDomNode = GUID("{C0A1D5E9-1142-4cf3-B607-82FC3B96A4DF}")
 
 stdNamesToRoles = {
 	# Part? Art?
-	"Sect": controlTypes.ROLE_SECTION,
-	"Div": controlTypes.ROLE_SECTION,
-	"BlockQuote": controlTypes.ROLE_BLOCKQUOTE,
-	"Caption": controlTypes.ROLE_CAPTION,
+	"Sect": controlTypes.Role.SECTION,
+	"Div": controlTypes.Role.SECTION,
+	"BlockQuote": controlTypes.Role.BLOCKQUOTE,
+	"Caption": controlTypes.Role.CAPTION,
 	# Toc? Toci? Index? Nonstruct? Private? 
 	# Table, TR, TH, TD covered by IAccessible
-	"L": controlTypes.ROLE_LIST,
-	"LI": controlTypes.ROLE_LISTITEM,
-	"Lbl": controlTypes.ROLE_LABEL,
+	"L": controlTypes.Role.LIST,
+	"LI": controlTypes.Role.LISTITEM,
+	"Lbl": controlTypes.Role.LABEL,
 	# LBody
-	"P": controlTypes.ROLE_PARAGRAPH,
-	"H": controlTypes.ROLE_HEADING,
+	"P": controlTypes.Role.PARAGRAPH,
+	"H": controlTypes.Role.HEADING,
 	# H1 to H6 handled separately
 	# Span, Quote, Note, Reference, BibEntry, Code, Figure
-	"Formula": controlTypes.ROLE_MATH,
-	"Form": controlTypes.ROLE_FORM,
+	"Formula": controlTypes.Role.MATH,
+	"Form": controlTypes.Role.FORM,
 }
 
 def normalizeStdName(stdName):
 	if stdName and "H1" <= stdName <= "H6":
-		return controlTypes.ROLE_HEADING, stdName[1]
+		return controlTypes.Role.HEADING, stdName[1]
 
 	try:
 		return stdNamesToRoles[stdName], None
@@ -88,9 +88,9 @@ class AcrobatNode(IAccessible):
 			pass
 
 		role = super(AcrobatNode, self).role
-		if role == controlTypes.ROLE_PANE:
+		if role == controlTypes.Role.PANE:
 			# Pane doesn't make sense for nodes in a document.
-			role = controlTypes.ROLE_TEXTFRAME
+			role = controlTypes.Role.TEXTFRAME
 		return role
 
 	def scrollIntoView(self):
@@ -224,7 +224,7 @@ class BadFocusStates(AcrobatNode):
 
 	def _get_states(self):
 		states = super(BadFocusStates, self).states
-		states.difference_update({controlTypes.STATE_FOCUSABLE, controlTypes.STATE_FOCUSED})
+		states.difference_update({controlTypes.State.FOCUSABLE, controlTypes.State.FOCUSED})
 		return states
 
 def findExtraOverlayClasses(obj, clsList):
@@ -233,21 +233,21 @@ def findExtraOverlayClasses(obj, clsList):
 	"""
 	role = obj.role
 	states = obj.states
-	if role == controlTypes.ROLE_DOCUMENT or (role == controlTypes.ROLE_PAGE and controlTypes.STATE_READONLY in states):
+	if role == controlTypes.Role.DOCUMENT or (role == controlTypes.Role.PAGE and controlTypes.State.READONLY in states):
 		clsList.append(Document)
 	elif obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT:
 		# Other root node.
-		if role == controlTypes.ROLE_EDITABLETEXT:
+		if role == controlTypes.Role.EDITABLETEXT:
 			clsList.append(RootTextNode)
 		else:
 			clsList.append(RootNode)
 
-	elif role == controlTypes.ROLE_EDITABLETEXT:
-		if {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:
+	elif role == controlTypes.Role.EDITABLETEXT:
+		if {controlTypes.State.READONLY, controlTypes.State.FOCUSABLE, controlTypes.State.LINKED} <= states:
 			# HACK: Acrobat sets focus states on text nodes beneath links,
 			# making them appear as read only editable text fields.
 			clsList.append(BadFocusStates)
-		elif controlTypes.STATE_FOCUSABLE in states:
+		elif controlTypes.State.FOCUSABLE in states:
 			clsList.append(EditableTextNode)
 
 	clsList.append(AcrobatNode)

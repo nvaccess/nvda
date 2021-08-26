@@ -26,6 +26,12 @@ Starts
 	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
 	NVDA_Starts	# run test
 
+Starts from desktop shortcut
+	[Documentation]	Ensure that NVDA can start from desktop shortcut
+	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
+	Pass Execution If	"${whichNVDA}"!="installed"	Desktop shortcut only exists on installed copies
+	test desktop shortcut
+
 Quits from keyboard
 	[Documentation]	Starts NVDA and ensures that it can be quit using the keyboard
 	quits_from_keyboard	# run test
@@ -46,3 +52,11 @@ Restarts
 Restarts on crash
 	[Documentation]	Ensure NVDA restarts on crash.
 	NVDA restarts on crash
+
+Restarts on braille crash
+	[Documentation]	Ensure NVDA restarts on a crash on the braille thread.
+	NVDA restarts on braille crash
+
+Restarts on UIAHandler crash
+	[Documentation]	Ensure NVDA restarts on crash on the UIAHandler thread.
+	NVDA restarts on UIAHandler crash

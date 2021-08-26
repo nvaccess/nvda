@@ -625,7 +625,7 @@ def event_gainFocus(vmID,accContext,hwnd):
 	if (isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext):
 		return 
 	obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-	if obj.role==controlTypes.ROLE_UNKNOWN:
+	if obj.role==controlTypes.Role.UNKNOWN:
 		return
 	eventHandler.queueEvent("gainFocus",obj)
 
@@ -700,7 +700,7 @@ def event_stateChange(vmID,accContext,oldState,newState):
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if not obj:
 			return
-		if focus!=obj and eventHandler.lastQueuedFocusObject!=obj and obj.role in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU):
+		if focus!=obj and eventHandler.lastQueuedFocusObject!=obj and obj.role in (controlTypes.Role.MENUITEM,controlTypes.Role.TAB,controlTypes.Role.MENU):
 			eventHandler.queueEvent("gainFocus",obj)
 			return
 	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:

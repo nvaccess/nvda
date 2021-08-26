@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Utilities for converting NVDA speech sequences to XML.
 Several synthesizers accept XML, either SSML or their own schemas.
@@ -13,6 +13,7 @@ L{SsmlConverter} is an implementation for conversion to SSML.
 from collections import namedtuple, OrderedDict
 import re
 import speech
+import textUtils
 from speech.commands import SpeechCommand
 from logHandler import log
 
@@ -46,8 +47,7 @@ def _buildInvalidXmlRegexp():
 			trailing=trailingSurrogate))
 
 RE_INVALID_XML_CHARS = _buildInvalidXmlRegexp()
-# The Unicode replacement character. See https://en.wikipedia.org/wiki/Specials_(Unicode_block)#Replacement_character
-REPLACEMENT_CHAR = u"\uFFFD"
+REPLACEMENT_CHAR = textUtils.REPLACEMENT_CHAR
 
 def toXmlLang(nvdaLang):
 	"""Convert an NVDA language to an XML language.

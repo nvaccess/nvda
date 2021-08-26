@@ -18,10 +18,9 @@ class NVDAObjectWithRole(PlaceholderNVDAObject):
 	The name of the object will be set with the associated role label.
 	This class can be used to quickly create objects for a fake focus ancestry."""
 
-	def __init__(self, role=controlTypes.ROLE_UNKNOWN,**kwargs):
+	def __init__(self, role=controlTypes.Role.UNKNOWN,**kwargs):
 		super(NVDAObjectWithRole,self).__init__(**kwargs)
 		self.role=role
 
 	def _get_name(self):
-		return controlTypes.roleLabels.get(self.role,controlTypes.ROLE_UNKNOWN)
-
+		return controlTypes.roleLabels.get(self.role,controlTypes.Role.UNKNOWN)
