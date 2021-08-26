@@ -1,9 +1,9 @@
-# virtualBuffers/gecko_ia2.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2021 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
+import typing
 import weakref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -24,6 +24,21 @@ import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 
 IA2_RELATION_CONTAINING_DOCUMENT = "containingDocument"
+
+
+def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
+	valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
+	try:
+		isCurrent = controlTypes.IsCurrent(valForCurrent)
+	except ValueError:
+		log.debugWarning(f"Unknown isCurrent value: {valForCurrent}")
+		isCurrent = controlTypes.IsCurrent.NO
+	if isCurrent != controlTypes.IsCurrent.NO:
+		return {
+			'current': isCurrent
+		}
+	return {}
+
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -47,20 +62,38 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
 		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
 
-	def _normalizeControlField(self,attrs):
+	def _calculateDescriptionFrom(self, attrs: textInfos.ControlField) -> controlTypes.DescriptionFrom:
+		"""Overridable calculation of DescriptionFrom
+		Match behaviour of NVDAObjects.IAccessible.mozilla.Mozilla._get_descriptionFrom
+		@param attrs: source attributes for the TextInfo
+		@return: the origin for accDescription.
+		@remarks: Firefox does not yet have a 'IAccessible2::attribute_description-from'
+			(IA2 attribute "description-from").
+			We can infer that the origin of accDescription is 'aria-description' because Firefox will include
+			a 'IAccessible2::attribute_description' (IA2 attribute "description") when the aria-description
+			HTML attribute is used.
+			If 'IAccessible2::attribute_description' matches the accDescription value, we can infer that
+			aria-description was the original source.
+		"""
+		IA2Attr_desc = attrs.get("IAccessible2::attribute_description")
+		accDesc = attrs.get("description")
+		if not IA2Attr_desc or accDesc != IA2Attr_desc:
+			return controlTypes.DescriptionFrom.UNKNOWN
+		else:
+			return controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+
+	# C901 '_normalizeControlField' is too complex
+	# Note: when working on _normalizeControlField, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _normalizeControlField(self, attrs):  # noqa: C901
 		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
 			attrVal=attrs.get(attr)
 			if attrVal is not None:
 				attrs[attr]=int(attrVal)
 
-		valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
-		try:
-			isCurrent = controlTypes.IsCurrent(valForCurrent)
-		except ValueError:
-			log.debugWarning(f"Unknown isCurrent value: {valForCurrent}")
-			isCurrent = controlTypes.IsCurrent.NO
-		if isCurrent != controlTypes.IsCurrent.NO:
-			attrs['current'] = isCurrent
+		attrs["_description-from"] = self._calculateDescriptionFrom(attrs)
+		attrs.update(_getNormalizedCurrentAttrs(attrs))
+
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
 			attrs['placeholder']= placeholder
@@ -71,34 +104,34 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role=controlTypes.Role.BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
-		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.STATE_FOCUSABLE in states or controlTypes.STATE_UNAVAILABLE in states or controlTypes.STATE_EDITABLE in states):
+		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.State.FOCUSABLE in states or controlTypes.State.UNAVAILABLE in states or controlTypes.State.EDITABLE in states):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
 			role = controlTypes.Role.STATICTEXT
 		if attrs.get("detailsSummary") is not None:
-			states.add(controlTypes.STATE_HAS_ARIA_DETAILS)
+			states.add(controlTypes.State.HAS_ARIA_DETAILS)
 		if attrs.get("IAccessibleAction_showlongdesc") is not None:
-			states.add(controlTypes.STATE_HASLONGDESC)
+			states.add(controlTypes.State.HASLONGDESC)
 		if "IAccessibleAction_click" in attrs:
-			states.add(controlTypes.STATE_CLICKABLE)
+			states.add(controlTypes.State.CLICKABLE)
 		grabbed = attrs.get("IAccessible2::attribute_grabbed")
 		if grabbed == "false":
-			states.add(controlTypes.STATE_DRAGGABLE)
+			states.add(controlTypes.State.DRAGGABLE)
 		elif grabbed == "true":
-			states.add(controlTypes.STATE_DRAGGING)
+			states.add(controlTypes.State.DRAGGING)
 		sorted = attrs.get("IAccessible2::attribute_sort")
 		if sorted=="ascending":
-			states.add(controlTypes.STATE_SORTED_ASCENDING)
+			states.add(controlTypes.State.SORTED_ASCENDING)
 		elif sorted=="descending":
-			states.add(controlTypes.STATE_SORTED_DESCENDING)
+			states.add(controlTypes.State.SORTED_DESCENDING)
 		elif sorted=="other":
-			states.add(controlTypes.STATE_SORTED)
+			states.add(controlTypes.State.SORTED)
 		roleText=attrs.get("IAccessible2::attribute_roledescription")
 		if roleText:
 			attrs['roleText']=roleText
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
-			states.add(controlTypes.STATE_DROPTARGET)
-		if role==controlTypes.Role.LINK and controlTypes.STATE_LINKED not in states:
+			states.add(controlTypes.State.DROPTARGET)
+		if role==controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.Role.TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
@@ -118,7 +151,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# checked state instead of pressed. The simplest way to deal with this
 			# identity crisis is to map it to a check box.
 			role = controlTypes.Role.CHECKBOX
-			states.discard(controlTypes.STATE_PRESSED)
+			states.discard(controlTypes.State.PRESSED)
 		attrs['role']=role
 		attrs['states']=states
 		if level != "" and level is not None:
@@ -271,7 +304,7 @@ class Gecko_ia2(VirtualBuffer):
 		return docHandle,ID
 
 	def _shouldIgnoreFocus(self, obj):
-		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.STATE_EDITABLE not in obj.states:
+		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.State.EDITABLE not in obj.states:
 			return True
 		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
 
@@ -282,7 +315,7 @@ class Gecko_ia2(VirtualBuffer):
 		super(Gecko_ia2, self)._postGainFocus(obj)
 
 	def _shouldSetFocusToObj(self, obj):
-		if obj.role == controlTypes.Role.GRAPHIC and controlTypes.STATE_LINKED in obj.states:
+		if obj.role == controlTypes.Role.GRAPHIC and controlTypes.State.LINKED in obj.states:
 			return True
 		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj)
 

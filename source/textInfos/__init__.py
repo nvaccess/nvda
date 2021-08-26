@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -12,6 +12,7 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 from abc import abstractmethod
 import weakref
 import re
+import typing
 from typing import (
 	Any,
 	Union,
@@ -28,6 +29,8 @@ from controlTypes import OutputReason
 import locationHelper
 from logHandler import log
 
+if typing.TYPE_CHECKING:
+	import NVDAObjects
 
 SpeechSequence = List[Union[Any, str]]
 
@@ -92,7 +95,7 @@ class ControlField(Field):
 			or (role == controlTypes.Role.BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
 			or (role == controlTypes.Role.GROUPING and (not name or not formatConfig["reportGroupings"]))
 			or (role in (controlTypes.Role.TABLE, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER) and not formatConfig["reportTables"])
-			or (role in (controlTypes.Role.LIST, controlTypes.Role.LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+			or (role in (controlTypes.Role.LIST, controlTypes.Role.LISTITEM) and controlTypes.State.READONLY in states and not formatConfig["reportLists"])
 			or (role == controlTypes.Role.ARTICLE and not formatConfig["reportArticles"])
 			or (role == controlTypes.Role.MARKED_CONTENT and not formatConfig["reportHighlight"])
 			or (role in (controlTypes.Role.FRAME, controlTypes.Role.INTERNALFRAME) and not formatConfig["reportFrames"])
@@ -130,8 +133,8 @@ class ControlField(Field):
 				controlTypes.Role.RADIOMENUITEM,
 				controlTypes.Role.CAPTION,
 			)
-			or (role == controlTypes.Role.EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
-			or (role == controlTypes.Role.LIST and controlTypes.STATE_READONLY not in states)
+			or (role == controlTypes.Role.EDITABLETEXT and controlTypes.State.MULTILINE not in states and (controlTypes.State.READONLY not in states or controlTypes.State.FOCUSABLE in states))
+			or (role == controlTypes.Role.LIST and controlTypes.State.READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
 		elif (
@@ -168,12 +171,12 @@ class ControlField(Field):
 				controlTypes.Role.MARKED_CONTENT,
 			)
 			or (role == controlTypes.Role.EDITABLETEXT and (
-				controlTypes.STATE_READONLY not in states
-				or controlTypes.STATE_FOCUSABLE in states
-			) and controlTypes.STATE_MULTILINE in states)
-			or (role == controlTypes.Role.LIST and controlTypes.STATE_READONLY in states)
+				controlTypes.State.READONLY not in states
+				or controlTypes.State.FOCUSABLE in states
+			) and controlTypes.State.MULTILINE in states)
+			or (role == controlTypes.Role.LIST and controlTypes.State.READONLY in states)
 			or (role == controlTypes.Role.LANDMARK or landmark)
-			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
+			or (controlTypes.State.FOCUSABLE in states and controlTypes.State.EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER
 
@@ -199,7 +202,6 @@ class FieldCommand(object):
 			"controlEnd", indicating the end of a L{ControlField}; or
 			"formatChange", indicating a L{FormatField} change.
 		@param field: The field associated with this command; may be C{None} for controlEnd.
-		@type field: L{Field}
 		"""
 		if command not in ("controlStart","controlEnd","formatChange"):
 			raise ValueError("Unknown command: %s"%command)
@@ -333,19 +335,25 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _set_end(self, otherEndpoint: "TextInfoEndpoint"):
 		self.end.moveTo(otherEndpoint)
 
-	def _get_obj(self):
+	#: Typing information for auto-property: _get_obj
+	obj: "NVDAObjects.NVDAObject"
+
+	def _get_obj(self) -> "NVDAObjects.NVDAObject":
 		"""The object containing the range of text being represented."""
 		return self._obj()
 
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
+	#: Typing information for auto-property: _get_text
+	text: str
+
 	_abstract_text = True
-	def _get_text(self):
+
+	def _get_text(self) -> str:
 		"""The text with in this range.
 		Subclasses must implement this.
 		@return: The text.
-		@rtype: str
 		@note: The text is not guaranteed to be the exact length of the range in offsets.
 		"""
 		raise NotImplementedError

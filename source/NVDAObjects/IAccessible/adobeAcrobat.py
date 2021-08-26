@@ -224,7 +224,7 @@ class BadFocusStates(AcrobatNode):
 
 	def _get_states(self):
 		states = super(BadFocusStates, self).states
-		states.difference_update({controlTypes.STATE_FOCUSABLE, controlTypes.STATE_FOCUSED})
+		states.difference_update({controlTypes.State.FOCUSABLE, controlTypes.State.FOCUSED})
 		return states
 
 def findExtraOverlayClasses(obj, clsList):
@@ -233,7 +233,7 @@ def findExtraOverlayClasses(obj, clsList):
 	"""
 	role = obj.role
 	states = obj.states
-	if role == controlTypes.Role.DOCUMENT or (role == controlTypes.Role.PAGE and controlTypes.STATE_READONLY in states):
+	if role == controlTypes.Role.DOCUMENT or (role == controlTypes.Role.PAGE and controlTypes.State.READONLY in states):
 		clsList.append(Document)
 	elif obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT:
 		# Other root node.
@@ -243,11 +243,11 @@ def findExtraOverlayClasses(obj, clsList):
 			clsList.append(RootNode)
 
 	elif role == controlTypes.Role.EDITABLETEXT:
-		if {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:
+		if {controlTypes.State.READONLY, controlTypes.State.FOCUSABLE, controlTypes.State.LINKED} <= states:
 			# HACK: Acrobat sets focus states on text nodes beneath links,
 			# making them appear as read only editable text fields.
 			clsList.append(BadFocusStates)
-		elif controlTypes.STATE_FOCUSABLE in states:
+		elif controlTypes.State.FOCUSABLE in states:
 			clsList.append(EditableTextNode)
 
 	clsList.append(AcrobatNode)

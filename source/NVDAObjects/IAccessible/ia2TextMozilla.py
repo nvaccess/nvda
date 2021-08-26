@@ -1,16 +1,17 @@
-#NVDAObjects/IAccessible/ia2TextMozilla.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2015-2019 NV Access Limited, Mozilla Corporation
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2015-2021 NV Access Limited, Mozilla Corporation
 
 """Support for the IAccessible2 rich text model first implemented by Mozilla.
 This is now used by other applications as well.
 """
+import typing
 
 from comtypes import COMError
 import winUser
 import textInfos
+from textInfos import offsets
 import controlTypes
 from comInterfaces import IAccessible2Lib as IA2
 import api
@@ -20,28 +21,35 @@ from compoundDocuments import CompoundTextInfo
 import locationHelper
 from logHandler import log
 
-class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+class FakeEmbeddingTextInfo(offsets.OffsetsTextInfo):
 	encoding = None
 
 	def _getStoryLength(self):
 		return self.obj.childCount
 
-	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
-		return range(self._startOffset, self._endOffset)
+	def _iterTextWithEmbeddedObjects(
+			self,
+			withFields,
+			formatConfig=None
+	) -> typing.Generator[int, None, None]:
+		yield from range(self._startOffset, self._endOffset)
 
 	def _getUnitOffsets(self,unit,offset):
 		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
 			unit=textInfos.UNIT_CHARACTER
 		return super(FakeEmbeddingTextInfo,self)._getUnitOffsets(unit,offset)
 
-def _getRawTextInfo(obj):
+
+def _getRawTextInfo(obj) -> type(offsets.OffsetsTextInfo):
 	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.Role.TABLE, controlTypes.Role.TABLEROW):
 		return FakeEmbeddingTextInfo
 	elif obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
 	return IA2TextTextInfo
 
-def _getEmbedded(obj, offset):
+
+def _getEmbedded(obj, offset) -> typing.Optional[IAccessible]:
 	if not hasattr(obj, "IAccessibleTextObject"):
 		return obj.getChild(offset)
 	# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
@@ -57,8 +65,8 @@ def _getEmbedded(obj, offset):
 
 class MozillaCompoundTextInfo(CompoundTextInfo):
 
-	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
-		controlField = super()._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
+	def _getControlFieldForObject(self, obj):
+		controlField = super()._getControlFieldForObject(obj)
 		if controlField is None:
 			return None
 		# Set the uniqueID of the controlField if we can get one
@@ -179,7 +187,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			return ti, obj
 		raise RuntimeError("No selection or caret")
 
-	def _makeRawTextInfo(self, obj, position):
+	def _makeRawTextInfo(self, obj, position) -> offsets.OffsetsTextInfo:
 		return _getRawTextInfo(obj)(obj, position)
 
 	def _getEmbedding(self, obj):
@@ -244,7 +252,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		ti._startOffset=ti._endOffset=descendantOffset.value
 		return ti,obj
 
-	def _iterRecursiveText(self, ti, controlStack, formatConfig):
+	def _iterRecursiveText(self, ti: offsets.OffsetsTextInfo, controlStack, formatConfig):
 		if ti.obj == self._endObj:
 			end = True
 			ti.setEndPoint(self._end, "endToEnd")
@@ -257,9 +265,15 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			elif isinstance(item, str):
 				yield item
 			elif isinstance(item, int): # Embedded object.
-				embedded = _getEmbedded(ti.obj, item)
+				embedded: typing.Optional[IAccessible] = _getEmbedded(ti.obj, item)
 				notText = _getRawTextInfo(embedded) is NVDAObjectTextInfo
-				if controlStack is not None:
+				if (
+					controlStack is not None
+					and not (
+						self._isObjectEditableText(embedded)
+						or self._isNamedlinkDestination(embedded)
+					)
+				):
 					controlField = self._getControlFieldForObject(embedded)
 					controlStack.append(controlField)
 					if controlField:
@@ -272,8 +286,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					# Note #11291:
 					# Using a space character (EG " ") causes 'space' to be announced after objects like graphics.
 					# If this is replaced with an empty string, routing to cell becomes innaccurate.
-					# Using the OBJECT REPLACEMENT CHARACTER (EG "\uFFFC") results in '"0xFFFC' being displayed on
-					# the braille device.
+					# Using the textUtils.OBJ_REPLACEMENT_CHAR which is the
+					# "OBJECT REPLACEMENT CHARACTER" (EG "\uFFFC")
+					# results in '"0xFFFC' being displayed on the braille device.
 					yield " "
 				else:
 					for subItem in self._iterRecursiveText(self._makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
@@ -304,8 +319,11 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			ti = self._start
 			cannotBeStart = False
 			while obj and obj != rootObj:
-				field = self._getControlFieldForObject(obj)
-				if field:
+				if not (
+					self._isObjectEditableText(obj)
+					or self._isNamedlinkDestination(obj)
+				):
+					field = self._getControlFieldForObject(obj)
 					if ti._startOffset == 0:
 						if not cannotBeStart:
 							field["_startOfNode"] = True
@@ -313,7 +331,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 						# We're not at the start of this object, which also means we're not at the start of any ancestors.
 						cannotBeStart = True
 					fields.insert(0, textInfos.FieldCommand("controlStart", field))
-				controlStack.insert(0, field)
+					controlStack.insert(0, field)
 				ti = self._getEmbedding(obj)
 				if not ti:
 					log.debugWarning(
@@ -332,7 +350,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# (We already handled collapsed above.)
 			return fields
 		obj = self._startObj
-		while fields[-1] is not None:
+		while fields[-1] is not None and controlStack:
 			# The end hasn't yet been reached, which means it isn't a descendant of obj.
 			# Therefore, continue from where obj was embedded.
 			if withFields:
@@ -345,10 +363,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					# range is invalid, so just return nothing.
 					log.debugWarning("Tried to walk up past the root. Objects probably dead.")
 					return []
-				if field:
-					# This object had a control field.
-					field["_endOfNode"] = True
-					fields.append(textInfos.FieldCommand("controlEnd", None))
+				# This object had a control field.
+				field["_endOfNode"] = True
+				fields.append(textInfos.FieldCommand("controlEnd", None))
 			ti = self._getEmbedding(obj)
 			if not ti:
 				log.debugWarning(
@@ -368,13 +385,11 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# Determine whether the range covers the end of any ancestors of endObj.
 			obj = self._endObj
 			ti = self._end
-			while obj and obj != rootObj:
+			while obj and obj != rootObj and controlStack:
 				field = controlStack.pop()
-				if field:
-					fields.append(textInfos.FieldCommand("controlEnd", None))
+				fields.append(textInfos.FieldCommand("controlEnd", None))
 				if ti.compareEndPoints(self._makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd") == 0:
-					if field:
-						field["_endOfNode"] = True
+					field["_endOfNode"] = True
 				else:
 					# We're not at the end of this object, which also means we're not at the end of any ancestors.
 					break

@@ -1180,6 +1180,12 @@ Ova opcija omogućuje određivanje količine interpunkcijskih znakova i drugih s
 Na primjer, kad je ova opcija postavljena na sve, svi će se simboli izgovoriti kao riječi.
 Ova se opcija primjenjuje na sve govorne jedinice, ne samo na trenutačno aktivnu.
 
+==== Izgovaraj svu interpunkciju i simbole prilikom čitanja riječ po riječ ====[SpeechSettingsSymbolLevelWord]
+
+Prilikom čitanja teksta riječ po riječ, poželjno je dobivati više detalja u usporedbi sa čitanjem po rečenicama.
+Kada je opcija odabrana (podrazumjevano), NVDA izgovara sve znakove interpunkcije i simbole prilikom čitanja riječ po riječ, kao da je razina čitanja interpunkcije postavljena na "sve".
+Imajte na umu, da u bilo kojem slučaju, NVDA čita interpunkciju i simbole kada čitate znak po znak.
+
 ==== Vjeruj jeziku glasa za čitanje opisa znakova i simbola ====[SpeechSettingsTrust]
 Standardno je uključena. Ova opcija govori programu NVDA da se jeziku trenutačno odabranog glasa može vjerovati, kad se procesiraju simboli i znakovi.
 Ako shvatite da NVDA čita interpunkciju koristeći krivi jezik za određenu govornu jedinicu ili glas, možda biste ovu opciju željeli isključiti kako biste prisilili NVDA da umjesto toga koristi glavnu jezičnu postavku.
@@ -1846,8 +1852,15 @@ Odabirni okvir sadrđi sljedeće opcije:
 - Podrazumijevano (samo kada ej to potrebno): podrazumjevana opcija koju koristi NVDA, trenutno se koristi "samo kada je to potrebno". Ova se podrazumjevana opcija može promijeniti u budućnosti kada tehnologija bude zrela za široku uporabu.
 - Samo kada je to potrebno: kada NVDA ne može ući u proces preglednika kako bi koristio IA2 UIA će biti dostupna, te će se tada NVAD prebaciti na UIA.
 - Da: Ako će UIA biti dostupna u pregledniku, će ju koristiti.
-- ne: ne koristi UIA, čak ako NVDA nije u stanju ući u proces. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
+- ne: ne koristi UIA, čak ako NVDA nije u stanju ući u proces. Ovo može biti zanimljivo za razvojne programere koji otklanjaju pogreške sa IA2, i žele osigurati da se NVDA ne vraća na korištenje UIA.
 -
+
+==== Uključi eksperimentalnu podršku Aria zabilješki ====[Annotations]
+Koristi se za omogućavanje značajki koje uključuju izgovor Aria zabilješki.
+Neke od ovih značajki može biti nekompletno.
+Postoje sljedeće opcije: 
+- "Izgovori detalje u modusu čitanja": izgovara detalje ako objekt posjeduje iste u modusu čitanja.
+Čitanje skraćenog pregleda tih detalja može se učiniti pridjeljivanjem gesti koristeći [dijaloški okvir ulaznih gesti #InputGestures].
 
 ==== Koristi UI automation za pristup Excel proračunskim tablicama kada je to moguće ====[UseUiaForExcel]
 Kada je ova opcija omogućena, NVDA će probati koristiti Microsoft UI Automation API za pristupačnost kako bi izvlačio informacije iz kontrola proračunskih tablica Microsoft Excela.
@@ -1867,11 +1880,10 @@ U nepovjerljivim okruženjima, možda biste trebali privremeno isključiti opcij
 ==== Metoda praćenja izmjena sadržaja u konzolama ====[DiffAlgo]
 Ovom se opcijom određuje kako NVDA označuje novi tekst koji treba biti ozgovoren u programima koji koriste naredbeni redak.
 Odabirni okvir  metoda praćenja izmjena sadržaja u konzolama sadrži tri opcije:
-- Automatski: od NVDA 2021.1, ova je opcija ekvivalentna opciji Difflib.
-U budućoj novoj verziji, to može biti promijenjeno na Diff Match Patch ako će korisnička povratna informacija biti pozitivna.
+- Automatski: Od verzije NVDA 2021.2, Ova je opcija istovjetan sa opcijom "dozvoli Diff Match Patch".
 - Dozvoli Diff Match Patch: Ova opcija prouzrokuje da NVDA računa izmjene u tekstu naredbenog redka znak po znak.
 To može unaprediti performanse kada se zapisuju velike količine teksta u terminal te omogućuje točnije ozgovaranje novog teksta.
-Međutim, to može biti nekompatibilno sa većinom programa.
+Međutim, to može biti nekompatibilno sa većinom programa, tako da se diff match patch neće uvijek koristiti.
 Ova je značajka podržana u Windowsima 10 inačicama 1607 i novijim.
 Dodatno to može biti dostupn u starijim inačicama operacijskog sustava Windows.
 - prisilno koristi Difflib: prouzrokuje da NVDA izračunava promjene terminala redak po redak.

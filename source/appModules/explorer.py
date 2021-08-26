@@ -210,7 +210,7 @@ class StartButton(IAccessible):
 		# #5178: Selection announcement should be suppressed.
 		# Borrowed from Mozilla objects in NVDAObjects/IAccessible/Mozilla.py.
 		states = super(StartButton, self).states
-		states.discard(controlTypes.STATE_SELECTED)
+		states.discard(controlTypes.State.SELECTED)
 		return states
 		
 CHAR_LTR_MARK = u'\u200E'
@@ -297,7 +297,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, ExplorerToolTip)
 			return
 
-		if windowClass == "Edit" and controlTypes.STATE_READONLY in obj.states:
+		if windowClass == "Edit" and controlTypes.State.READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
@@ -389,13 +389,18 @@ class AppModule(appModuleHandler.AppModule):
 			return
 
 		if windowClass == "DirectUIHWND" and role == controlTypes.Role.LIST:
-			if obj.parent and obj.parent.parent:
-				parent = obj.parent.parent.parent
-				if parent is not None and parent.windowClassName == "Desktop Search Open View":
-					# List containing search results in Windows 7 start menu.
-					# Its name is not useful so discard it.
-					obj.name = None
-					return
+			# Is this a list containing search results in Windows 7 start menu?
+			isWin7SearchResultsList = False
+			try:
+				if obj.parent and obj.parent.parent:
+					parent = obj.parent.parent.parent
+					isWin7SearchResultsList = parent is not None and parent.windowClassName == "Desktop Search Open View"
+			except AttributeError:
+				isWin7SearchResultsList = False
+			if isWin7SearchResultsList:
+				# Namae of this list is not useful and should be  discarded.
+				obj.name = None
+				return
 
 	def event_gainFocus(self, obj, nextHandler):
 		wClass = obj.windowClassName

@@ -1,10 +1,11 @@
-#virtualBuffers/webKit.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2011-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import ctypes
+import typing
+
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufRemote_nodeHandle_t
 import controlTypes
 import NVDAObjects.IAccessible
@@ -18,7 +19,7 @@ import NVDAHelper
 
 class WebKit_TextInfo(VirtualBufferTextInfo):
 
-	def _normalizeControlField(self,attrs):
+	def _normalizeControlField(self, attrs: typing.Dict[str, typing.Any]):
 		accRole=attrs['IAccessible::role']
 		role = level = None
 		if accRole.isdigit():
@@ -33,7 +34,14 @@ class WebKit_TextInfo(VirtualBufferTextInfo):
 		if not role:
 			role = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole, controlTypes.Role.UNKNOWN)
 
-		states = set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1 << y for y in range(32)] if int(attrs.get('IAccessible::state_%s' % x, 0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states = set(
+			IAccessibleHandler.IAccessibleStatesToNVDAStates[x]
+			for x in [1 << y for y in range(32)]
+			if (
+				int(attrs.get('IAccessible::state_%s' % x, 0))
+				and x in IAccessibleHandler.IAccessibleStatesToNVDAStates
+			)
+		)
 
 		attrs["role"] = role
 		attrs["states"] = states

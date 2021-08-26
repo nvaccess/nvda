@@ -162,7 +162,7 @@ class AppModule(appModuleHandler.AppModule):
 		super(AppModule,self).__init__(processID,appName)
 
 	def event_NVDAObject_init(self, obj):
-		if obj.windowClassName == "SysTreeView32" and obj.role in (controlTypes.Role.TREEVIEWITEM, controlTypes.Role.CHECKBOX) and controlTypes.STATE_FOCUSED not in obj.states:
+		if obj.windowClassName == "SysTreeView32" and obj.role in (controlTypes.Role.TREEVIEWITEM, controlTypes.Role.CHECKBOX) and controlTypes.State.FOCUSED not in obj.states:
 			# Eclipse tree views seem to fire a focus event on the previously focused item before firing focus on the new item (EclipseBug:315339).
 			# Try to filter this out.
 			obj.shouldAllowIAccessibleFocusEvent = False

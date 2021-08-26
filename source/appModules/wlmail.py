@@ -48,5 +48,5 @@ class AppModule(appModuleHandler.AppModule):
 				return
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==winUser.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
-			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
+			if obj==api.getFocusObject() and controlTypes.State.FOCUSED in obj.states:
 				return KeyboardInputGesture.fromName("shift+tab").send()

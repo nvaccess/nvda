@@ -90,16 +90,16 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs['roleText']=roleText
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if attrs.get('HTMLAttrib::longdesc'):
-			states.add(controlTypes.STATE_HASLONGDESC)
+			states.add(controlTypes.State.HASLONGDESC)
 		#IE exposes destination anchors as links, this is wrong
-		if nodeName=="A" and role==controlTypes.Role.LINK and controlTypes.STATE_LINKED not in states:
+		if nodeName=="A" and role==controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
 			role=controlTypes.Role.TEXTFRAME
 		if 'IHTMLElement::isContentEditable' in attrs:
-			states.add(controlTypes.STATE_EDITABLE)
+			states.add(controlTypes.State.EDITABLE)
 		if 'HTMLAttrib::onclick' in attrs or 'HTMLAttrib::onmousedown' in attrs or 'HTMLAttrib::onmouseup' in attrs:
-			states.add(controlTypes.STATE_CLICKABLE)
+			states.add(controlTypes.State.CLICKABLE)
 		if 'HTMLAttrib::required' in attrs or attrs.get('HTMLAttrib::aria-required','false')=='true':
-			states.add(controlTypes.STATE_REQUIRED)
+			states.add(controlTypes.State.REQUIRED)
 		description=None
 		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
 		if ariaDescribedBy:
@@ -127,37 +127,37 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(state)
 		ariaSelected=attrs.get('HTMLAttrib::aria-selected')
 		if ariaSelected=="true":
-			states.add(controlTypes.STATE_SELECTED)
+			states.add(controlTypes.State.SELECTED)
 		elif ariaSelected=="false":
-			states.discard(controlTypes.STATE_SELECTED)
+			states.discard(controlTypes.State.SELECTED)
 		ariaExpanded=attrs.get('HTMLAttrib::aria-expanded')
 		if ariaExpanded=="true":
-			states.add(controlTypes.STATE_EXPANDED)
+			states.add(controlTypes.State.EXPANDED)
 		elif ariaExpanded=="false":
-			states.add(controlTypes.STATE_COLLAPSED)
+			states.add(controlTypes.State.COLLAPSED)
 		if attrs.get('HTMLAttrib::aria-invalid','false')=='true':
-			states.add(controlTypes.STATE_INVALID_ENTRY)
+			states.add(controlTypes.State.INVALID_ENTRY)
 		if attrs.get('HTMLAttrib::aria-multiline','false')=='true':
-			states.add(controlTypes.STATE_MULTILINE)
+			states.add(controlTypes.State.MULTILINE)
 		if attrs.get('HTMLAttrib::aria-dropeffect','none')!='none':
-			states.add(controlTypes.STATE_DROPTARGET)
+			states.add(controlTypes.State.DROPTARGET)
 		ariaGrabbed=attrs.get('HTMLAttrib::aria-grabbed',None)
 		if ariaGrabbed=='false':
-			states.add(controlTypes.STATE_DRAGGABLE)
+			states.add(controlTypes.State.DRAGGABLE)
 		elif ariaGrabbed=='true':
-			states.add(controlTypes.STATE_DRAGGING)
+			states.add(controlTypes.State.DRAGGING)
 		if nodeName=="TEXTAREA":
-			states.add(controlTypes.STATE_MULTILINE)
+			states.add(controlTypes.State.MULTILINE)
 		if "H1"<=nodeName<="H6":
 			level=nodeName[1:]
 		if nodeName in ("UL","OL","DL"):
-			states.add(controlTypes.STATE_READONLY)
+			states.add(controlTypes.State.READONLY)
 		if role==controlTypes.Role.UNKNOWN:
 			role=controlTypes.Role.TEXTFRAME
 		if role==controlTypes.Role.GRAPHIC:
 			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
 			# This is rather annoying and irrelevant to our users, so discard it.
-			states.discard(controlTypes.STATE_UNAVAILABLE)
+			states.discard(controlTypes.State.UNAVAILABLE)
 		lRole = aria.htmlNodeNameToAriaRoles.get(nodeName.lower())
 		if lRole:
 			ariaRoles.append(lRole)
@@ -234,7 +234,7 @@ class MSHTML(VirtualBuffer):
 			# Otherwise, we'll keep querying it on every focus change and freezing.
 			return False
 		states=root.states
-		if controlTypes.STATE_EDITABLE in states:
+		if controlTypes.State.EDITABLE in states:
 			return False
 		return True
 

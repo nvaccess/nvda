@@ -10,6 +10,7 @@ import threading
 import ctypes
 import collections
 import itertools
+import typing
 import weakref
 import wx
 import review
@@ -263,14 +264,16 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
 		if not text:
 			return ""
-		commandList=XMLFormatting.XMLTextParser().parse(text)
-		for index in range(len(commandList)):
-			if isinstance(commandList[index],textInfos.FieldCommand):
-				field=commandList[index].field
-				if isinstance(field,textInfos.ControlField):
-					commandList[index].field=self._normalizeControlField(field)
-				elif isinstance(field,textInfos.FormatField):
-					commandList[index].field=self._normalizeFormatField(field)
+		commandList: typing.List[textInfos.FieldCommand] = XMLFormatting.XMLTextParser().parse(text)
+		for command in commandList:
+			if not isinstance(command, textInfos.FieldCommand):
+				continue  # no need to normalize str or None
+
+			field = command.field
+			if isinstance(field, textInfos.ControlField):
+				command.field = self._normalizeControlField(field)
+			elif isinstance(field, textInfos.FormatField):
+				command.field = self._normalizeFormatField(field)
 		return commandList
 
 	def getTextWithFields(self,formatConfig=None):
@@ -300,7 +303,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		NVDAHelper.localLib.VBuf_getLineOffsets(self.obj.VBufHandle,offset,0,True,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		return lineStart.value,lineEnd.value
 
-	def _normalizeControlField(self,attrs):
+	def _normalizeControlField(self, attrs: textInfos.ControlField):
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
@@ -324,6 +327,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			# Get the text for the header cells.
 			textList = []
 			for docHandle, ID in cellIdentifiers:
+				if attrs.get("controlIdentifier_docHandle") == docHandle and attrs.get("controlIdentifier_ID") == ID:
+					# This is a self-reference to a column or row header
+					# Do not double up the cell header name. This is happening in Chrome.
+					continue
 				try:
 					start, end = self._getOffsetsFromFieldIdentifier(int(docHandle), int(ID))
 				except (LookupError, ValueError):
@@ -342,7 +349,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 
 		return attrs
 
-	def _normalizeFormatField(self, attrs):
+	def _normalizeFormatField(self, attrs: textInfos.FormatField):
 		strippedCharsFromStart = attrs.get("strippedCharsFromStart")
 		if strippedCharsFromStart is not None:
 			assert strippedCharsFromStart.isdigit(), "strippedCharsFromStart isn't a digit, %r" % strippedCharsFromStart

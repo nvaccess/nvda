@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
 # Davy Kager
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -13,6 +13,8 @@ import time
 import re
 import typing
 import weakref
+
+import textUtils
 from logHandler import log
 import review
 import eventHandler
@@ -412,9 +414,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		else:
 			return self._appModuleRef()
 
-	def _get_name(self):
+	#: Type definition for auto prop '_get_name'
+	name: str
+
+	def _get_name(self) -> str:
 		"""The name or label of this object (example: the text of a button).
-		@rtype: str
 		"""
 		return ""
 
@@ -426,7 +430,10 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""  
 		return controlTypes.Role.UNKNOWN
 
-	def _get_roleText(self):
+	#: Type definition for auto prop '_get_roleText'
+	roleText: typing.Optional[str]
+
+	def _get_roleText(self) -> typing.Optional[str]:
 		"""
 		A custom role string for this object, which is used for braille and speech presentation, which will override the standard label for this object's role property.
 		No string is provided by default, meaning that NVDA will fall back to using role.
@@ -462,6 +469,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""The description or help text of this object.
 		"""
 		return ""
+
+	#: Typing information for auto property _get_descriptionFrom
+	descriptionFrom: controlTypes.DescriptionFrom
+
+	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
+		return controlTypes.DescriptionFrom.UNKNOWN
 
 	def _get_controllerFor(self):
 		"""Retrieves the object/s that this object controls."""
@@ -504,11 +517,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		raise NotImplementedError
 
 	# Type info for auto property:
-	states: typing.Set[int]
+	states: typing.Set[controlTypes.State]
 
-	def _get_states(self) -> typing.Set[int]:
+	def _get_states(self) -> typing.Set[controlTypes.State]:
 		"""Retrieves the current states of this object (example: selected, focused).
-		@return: a set of  STATE_* constants from L{controlTypes}.
+		@return: a set of State constants from L{controlTypes}.
 		"""
 		return set()
 
@@ -534,10 +547,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 		return _("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight)
 
-	def _get_parent(self):
+	#: Typing information for auto-property: _get_parent
+	parent: typing.Optional['NVDAObject']
+
+	def _get_parent(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves this object's parent (the object that contains this object).
 		@return: the parent object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
@@ -564,24 +579,35 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return None
 
-	def _get_firstChild(self):
+	#: Type definition for auto prop '_get_firstChild'
+	firstChild: typing.Optional["NVDAObject"]
+
+	def _get_firstChild(self) -> typing.Optional["NVDAObject"]:
 		"""Retrieves the first object that this object contains.
 		@return: the first child object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
-	def _get_lastChild(self):
+	#: Type definition for auto prop '_get_lastChild'
+	lastChild: typing.Optional["NVDAObject"]
+
+	def _get_lastChild(self) -> typing.Optional["NVDAObject"]:
 		"""Retrieves the last object that this object contains.
 		@return: the last child object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
+
+	#: Type definition for auto prop '_get_children'
+	children: typing.List["NVDAObject"]
 
 	def _get_children(self):
 		"""Retrieves a list of all the objects directly contained by this object (who's parent is this object).
 		@rtype: list of L{NVDAObject}
 		"""
+		log.debugWarning(
+			"Base implementation used."
+			" Relies on child.next which is error prone in many IA2 implementations."
+		)
 		children=[]
 		child=self.firstChild
 		while child:
@@ -589,14 +615,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			child=child.next
 		return children
 
-	def getChild(self, index):
+	def getChild(self, index: int) -> "NVDAObject":
 		"""Retrieve a child by index.
 		@note: Subclasses may override this if they have an efficient way to retrieve a single, arbitrary child.
 			The base implementation uses L{children}.
 		@param index: The 0-based index of the child to retrieve.
-		@type index: int
 		@return: The child.
-		@rtype: L{NVDAObject}
 		"""
 		return self.children[index]
 
@@ -754,7 +778,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_presentationType(self):
 		states=self.states
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+		if controlTypes.State.INVISIBLE in states or controlTypes.State.UNAVAILABLE in states:
 			return self.presType_unavailable
 		role = self.role
 		landmark = self.landmark
@@ -888,13 +912,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""Whether this object is focusable.
 		@rtype: bool
 		"""
-		return controlTypes.STATE_FOCUSABLE in self.states
+		return controlTypes.State.FOCUSABLE in self.states
 
 	def _get_hasFocus(self):
 		"""Whether this object has focus.
 		@rtype: bool
 		"""
-		return controlTypes.STATE_FOCUSED in self.states
+		return controlTypes.State.FOCUSED in self.states
 
 	def setFocus(self):
 		"""
@@ -933,7 +957,7 @@ Tries to force this object to take the focus.
 		@rtype: boolean
 		"""
 		# Objects with the protected state, or with a role of passWordEdit should always be protected.
-		isProtected=(controlTypes.STATE_PROTECTED in self.states or self.role==controlTypes.Role.PASSWORDEDIT)
+		isProtected=(controlTypes.State.PROTECTED in self.states or self.role==controlTypes.Role.PASSWORDEDIT)
 		# #7908: If this object is currently protected, keep it protected for the rest of its lifetime.
 		# The most likely reason it would lose its protected state is because the object is dying.
 		# In this case it is much more secure to assume it is still protected, thus the end of PIN codes will not be accidentally reported. 
@@ -1109,7 +1133,7 @@ Tries to force this object to take the focus.
 			notBlank=False
 			if text:
 				for ch in text:
-					if not ch.isspace() and ch!=u'\ufffc':
+					if not ch.isspace() and ch != textUtils.OBJ_REPLACEMENT_CHAR:
 						notBlank=True
 			if notBlank:
 				if not speechWasCanceled:
@@ -1263,10 +1287,7 @@ This code is executed if a gain focus event is received by this object.
 			ret = f"exception: {e}"
 		info.append(f"roleText: {ret}")
 		try:
-			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.items() if name.startswith("STATE_"))
-			ret = ", ".join(
-				stateConsts.get(state) or str(state)
-				for state in self.states)
+			ret = ", ".join(str(state) for state in self.states)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("states: %s" % ret)
@@ -1361,7 +1382,7 @@ This code is executed if a gain focus event is received by this object.
 		if role in (controlTypes.Role.EDITABLETEXT,controlTypes.Role.TERMINAL,controlTypes.Role.DOCUMENT):
 			# Edit fields, terminals and documents  are always navigable
 			return True
-		elif controlTypes.STATE_EDITABLE in states:
+		elif controlTypes.State.EDITABLE in states:
 			# Anything that is specifically editable is navigable
 			return True
 		else:
@@ -1369,9 +1390,9 @@ This code is executed if a gain focus event is received by this object.
 
 	def _get_hasIrrelevantLocation(self):
 		"""Returns whether the location of this object is irrelevant for mouse or magnification tracking or highlighting,
-		either because it is programatically hidden (STATE_INVISIBLE), off screen or the object has no location."""
+		either because it is programatically hidden (State.INVISIBLE), off screen or the object has no location."""
 		states = self.states
-		return controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states or not self.location or not any(self.location)
+		return controlTypes.State.INVISIBLE in states or controlTypes.State.OFFSCREEN in states or not self.location or not any(self.location)
 
 	def _get_selectionContainer(self):
 		""" An ancestor NVDAObject which manages the selection for this object and other descendants."""

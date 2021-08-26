@@ -66,7 +66,7 @@ Für weitere Informationen lesen Sie [die vollständige Lizenz https://www.gnu.o
 
 
 + Systemvoraussetzungen +[SystemRequirements]
-- Betriebssystem: Microsoft Windows 7, Windows 8, Windows 8.1 und Windows 10 (32- und 64-Bit, inkl. Server-Betriebssysteme).
+- Betriebssystem: Alle 32-Bit- und 64-Bit-Editionen von Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 und alle Server-Versionen ab Windows Server 2008 R2.
  - Für Windows 7 wird mindestens Service Pack 1 benötigt.
  - Für Windows Server 2008 R2 wird mindestens Service Pack 1 benötigt.
 - Mindestens 150 MB Speicherplatz.
@@ -795,9 +795,12 @@ Sie können den Bildschirmvorhang in den [NVDA-Einstellungen #NVDASettings], in 
 
 Wenn der Bildschirmvorhang aktiv ist, können einige Aufgaben, die sich direkt auf das beziehen, was auf dem Bildschirm angezeigt wird, wie z. B. die Durchführung von [OCR #Win10Ocr] oder das Erstellen eines Screenshots, nicht ausgeführt werden.
 
+Um die Sicherheit zu gewährleisten, vergewissern Sie sich, dass der Bildschirmvorhang mit neuen oder experimentellen Versionen von Windows ordnungsgemäß funktioniert.
+Bei Verwendung von NVDA-Versionen älter als 2021.2 und Windows neuer als Windows 10 21H2 funktioniert der Bildschirmvorhang möglicherweise nicht ohne Warnung.
+
 + Inhaltserkennung +[ContentRecognition]
 Wenn Entwickler von Anwendungen unzureichende Informationen zur Zugänglichkeit bereitstellen, können Sie zahlreiche Werkzeuge verwenden, um z. B. Text aus einem Bild auszulesen.
-NVDA unterstützt die in Windows 10 enthaltene Texterkennung, um Text aus Bildern auszulesen.
+NVDA unterstützt die in Windows 10 und neuer enthaltene Texterkennung, um Text aus Bildern auszulesen.
 Über NVDA-Erweiterungen können zusätzliche Werkzeuge zur Inhaltserkennung bereitgestellt werden.
 
 Wenn Sie ein Werkzeug zur Inhaltserkennung verwenden, bezieht sich die Erkennung grundsätzlich auf das aktuelle [Navigator-Objekt #ObjectNavigation].
@@ -809,17 +812,17 @@ Wenn die Erkennung abgeschlossen ist, wird das Erkennungsergebnis in einem Dokum
 Drücken Sie die Leertaste oder die Eingabetaste, um den Text (üblicherweise durch Klicken) zu aktivieren.
 Drücken Sie Escape, um das Erkennungsergebnis zu schließen.
 
-++ Windows 10-Texterkennung ++[Win10Ocr]
-Windows 10 enthält eine optische Zeichenerkennung für viele Sprachen.
+++ Windows-Texterkennung ++[Win10Ocr]
+Windows 10 und neuer enthält eine optische Zeichenerkennung für viele Sprachen.
 Sie können diese Zeichenerkennung verwenden, um Text aus Grafiken oder unzugänglichen Anwendungen auszulesen.
 
-Sie können die Erkennungssprache einstellen, indem Sie die Kategorie [Windows 10-Texterkennung #Win10OcrSettings] in den NVDA-Einstellungen unter dem Menü "Optionen" aufrufen.
+Sie können die Sprache für die Texterkennung in der Kategorie "[Windows-Texterkennung #Win10OcrSettings]" in den [NVDA-Einstellungen #NVDASettings] konfigurieren.
 Zusätzliche Sprachen können Sie in den Einstellungen von Windows unter Zeit und Sprache -> Region und Sprache -> Sprache hinzufügen installieren.
 
-Die integrierte Texterkennung in Windows 10 kann teilweise oder ganz inkompatibel mit [NVDA-Sehhilfen #Vision] oder anderen externen Sehhilfen sein. Sie müssen diese Hilfen deaktivieren, bevor Sie mit einer Erkennung fortfahren.
+Die integrierte Texterkennung in Windows kann teilweise oder ganz inkompatibel mit [NVDA-Sehhilfen #Vision] oder anderen externen Sehhilfen sein. Sie müssen diese Hilfen deaktivieren, bevor Sie mit einer Erkennung fortfahren.
 
 %kc:beginInclude
-Drücken Sie NVDA+R, um den Text im aktuellen NAvigator-Objekt mit Hilfe der Windows 10-Texterkennung zu erkennen.
+Drücken Sie NVDA+R, um den Text im aktuellen NAvigator-Objekt mit Hilfe der Windows-Texterkennung zu erkennen.
 %kc:endInclude
 
 + Anwendungsspezifische Funktionen +[ApplicationSpecificFeatures]
@@ -1178,7 +1181,7 @@ Tastenkombination: NVDA+P
 
 Hier kann eingestellt werden, ob und wie viele Satz- und Sonderzeichen NVDA als Wort aussprechen soll.
 Wenn hier "Alle" ausgewählt ist, spricht NVDA alle Symbole, als wären diese ausgeschrieben.
-Diese Option gilt für alle Sprachausgaben, nicht nur für die aktuell gewählte.
+Diese Option gilt für alle Sprachausgaben, nicht nur für die aktuell ausgewählte.
 
 ==== Beim Vorlesen von Symbolen und Sonderzeichen die Sprache der Stimme berücksichtigen ====[SpeechSettingsTrust]
 Mit dieser standardmäßig aktivierten Option legen Sie fest, ob beim Vorlesen von Symbolen und Sonderzeichen immer die Sprache der momentan eingestellten Stimme berücksichtigt werden soll.
@@ -1789,8 +1792,9 @@ Die Einrückung um einen Tabulator entspricht hierbei der Einrückung um vier Le
 - Beides: Dies ist eine Kombination der beiden obigen Optionen.
 -
 
-+++ Windows 10-Texterkennung +++[Win10OcrSettings]
-Die Optionen dieser Kategorie erlauben die Konfiguration der [Optischen Zeichenerkennung für Windows 10 #Win10Ocr].
++++ Einstellungen der Windows-Texterkennung +++[Win10OcrSettings]
+Mit den Einstellungen in dieser Kategorie können Sie die [Windows-Texterkennung #Win10Ocr] konfigurieren.
+Die Optionen in dieser Kategorie ermöglichen die Konfiguration der [Optischen Zeichenerkennung für Windows 10 und neuer #Win10Ocr].
 Folgende Optionen sind enthalten:
 
 ==== Erkennungssprache ====[Win10OcrSettingsRecognitionLanguage]
@@ -1829,8 +1833,8 @@ Wenn Sie in einer oder mehreren Anwendungen damit probleme haben sollten, empfeh
 ==== UIA für Steuerelemente in Microsoft Word verwenden (falls verfügbar) ====[AdvancedSettingsUseUiaForWord]
 Wenn diese Option aktiviert ist, versucht NVDA, die Microsoft-API für die Zugänglichkeit der UIA zu verwenden, um Informationen von Steuerelementen in Microsoft Word-Dokumenten abzurufen.
 Dazu gehört Microsoft Word selbst, aber auch die Nachrichtenansicht und das Verfassen von Nachrichten in Microsoft Outlook.
- Für die neuesten Versionen von Microsoft Office 2016 / 365 unter Windows 10 ist die Unterstützung der Benutzeroberfläche vollständig genug, um den Zugriff auf Microsoft Word-Dokumente zu ermöglichen, die nahezu der bestehenden Microsoft Word-Unterstützung von NVDA entsprechen, mit dem zusätzlichen Vorteil, dass die Reaktionsfähigkeit erheblich beschleunigt wird.
-Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, sodass man sich nicht immer auf diese Unterstützung der UIA verlassen kann.
+ Für die neuesten Versionen von Microsoft Office 2016 / 365, die unter Windows 10 und neuer ausgeführt werden, ist die Unterstützung für die  UIA vollständig genug, um den Zugriff auf Microsoft Word-Dokumente nahezu gleich der bestehenden Microsoft Word-Unterstützung von NVDA zu ermöglichen, mit dem zusätzlichen Vorteil, dass die Reaktionsfähigkeit erheblich verbessert wird.
+Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, sodass man sich nicht immer auf diese Unterstützung dieser UIA verlassen kann.
 Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerdings ist ausdrücklich erwünscht, dass Benutzer von Office 2016 / 365 diese Funktion testen und Rückmeldung geben können.
 
 ==== Für den Zugriff auf die Windows-Konsole UIA verwenden (falls verfügbar) ====[AdvancedSettingsConsoleUIA]
@@ -1847,6 +1851,14 @@ Das Kombinationsfeld hat die folgenden Optionen:
 - Nur wenn nötig: Wenn NVDA nicht in der Lage ist, in den Browser-Prozess einzugreifen, um IA2 zu verwenden, und UIA verfügbar ist, greift NVDA auf die Verwendung von UIA zurück.
 - Ja: Wenn der Browser UIA zur Verfügung stellt, wird NVDA es verwenden.
 - Nein: UIA wird nicht verwendet, auch wenn NVDA nicht in den Prozess injizieren kann. Dies kann für Entwickler nützlich sein, die Probleme mit IA2 debuggen und sicherstellen wollen, dass NVDA nicht auf UIA zurückgreift.
+-
+
+==== Unterstützung für experimentelle ARIA-Anmerkungen aktivieren ====[Annotations]
+Dies wird verwendet, um Funktionen zu aktivieren, die experimentelle Unterstützung für ARIA-Anmerkungen hinzufügen.
+Einige dieser Funktionen sind möglicherweise noch nicht vollständig.
+Es gibt folgende Möglichkeiten:
+- "Details im Lesemodus mitteilen": Ermöglicht die Berichterstellung, wenn ein Objekt Details im Browse-Modus hat.
+Die Zusammenfassung dieser Details kann durch Zuweisen eines Tastenbefehls mit dem Dialogfeld der [Tastenbefehle #InputGestures] gemeldet werden.
 -
 
 ==== UIA verwenden, um auf die Steuerelemente der Microsoft Excel-Tabelle zuzugreifen, sofern verfügbar ====[UseUiaForExcel]
@@ -1867,11 +1879,10 @@ In Umgebungen, die nicht unterstützt werden, können Sie vorübergehend [Zeiche
 ==== Diff-Algorithmus ====[DiffAlgo]
 Diese Einstellung steuert, wie NVDA neuen Text in Terminals vorgelesen werden sollen.
 Das Kombinationsfeld "Diff-Algorithmus" hat drei Optionen:
-- Automatisch: Mit NVDA 2021.1 ist diese Option gleichbedeutend mit Difflib.
-In einer zukünftigen Version wird er möglicherweise in Diff Match Patch geändert, sofern die Anwendertests positiv ausfallen.
+- Automatisch: Ab NVDA 2021.2 entspricht diese Option "Diff Match Patch zulassen".
 - Diff Match Patch zulassen: Diese Option veranlasst NVDA, Änderungen am Terminaltext zeichenweise zu berechnen.
 Dies kann die Leistung verbessern, wenn große Textmengen in die Konsole geschrieben werden, und ermöglicht eine genauere Meldung von Änderungen, die in der Mitte von Zeilen vorgenommen wurden.
-Sie kann jedoch mit einigen Anwendungen inkompatibel sein.
+Es kann jedoch mit einigen Anwendungen inkompatibel sein, sodass Diff Match Patch nicht immer verwendet wird.
 Diese Funktion wird in der Windows-Konsole auf Windows 10 Versionen 1607 und neuer unterstützt.
 Zusätzlich kann es in anderen Terminals auf ältere Windows-Versionen verfügbar sein.
 - Difflib erzwingen: Diese Option veranlasst NVDA, Änderungen am Terminaltext zeilenweise zu berechnen.
@@ -2248,7 +2259,7 @@ Eine ausführliche Liste freier und kommerzieller Sprachausgaben, die zusammen m
 
 ++ eSpeak NG ++[eSpeakNG]
 Die in NVDA integrierte Sprachausgabe [eSpeak NG https://github.com/espeak-ng/espeak-ng] benötigt keine speziellen Treiber oder andere extra installierten Komponenten.
-Die Sprachausgabe eSpeak wird unter Windows 7, 8 und 8.1 von NVDA standardmäßig verwendet, während unter Windows 10 [Windows OneCore #OneCore] standardmäßig verwendet wird.
+Die Sprachausgabe eSpeak wird unter Windows 7, 8 und 8.1 von NVDA standardmäßig verwendet, während unter Windows 10 und neuer [Windows OneCore #OneCore] standardmäßig verwendet wird.
 Das hat den enormen Vorteil, dass NVDA auf einen Betriebssystemen mit einem USB-Stick ohne weiteres betrieben werden kann.
 
 Jede Stimme, die mit eSpeak NG ausgeliefert wird, spricht eine andere Sprache.
@@ -2281,10 +2292,10 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
  -
 -
 
-++ Windows OneCore-Stimmen ++[OneCore]
-Windows 10 enthält Stimmen, die als "Mobile" oder "OneCore"-Stimmen allgemein bekannt sind.
+++ Stimmen für Windows OneCore ++[OneCore]
+Windows 10 und neuer enthält Stimmen, die als "Mobile" oder "OneCore" allgemein bekannt sind.
 Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft SAPI 5-Stimmen in früheren Windows-Versionen.
-Unter Windows 10 verwendet NVDA standardmäßig Windows OneCore-Stimmen ([eSpeak-NG #eSpeakNG] wird in anderen Windows-Versionen, wie z. B. windows 7 oder 8 bzw. 8.1, verwendet).
+Unter Windows 10 und neuer verwendet NVDA standardmäßig Windows OneCore-Stimmen ([eSpeak-NG #eSpeakNG] wird in anderen Windows-Versionen, wie z. B. windows 7 oder 8 bzw. 8.1, verwendet).
 
 Um neue Windows OneCore-Stimmen hinzuzufügen, gehen Sie in die Windows-Einstellungen und dort zu den Spracheinstellungen.
 Verwenden Sie die Option "Stimmen hinzufügen" und suchen Sie die gewünschte Sprache aus.
@@ -2501,8 +2512,8 @@ Wenn Sie die Braillezeile über USB angeschlossen und den Usb-Modus nicht auf HI
 die Braillezeilenmodelle VarioUltra und Pronto! verwenden das HID-Protokoll.
 Die Braillezeilen Refreshabraille und Orbit Reader 20 können so eingestellt werden, dass sie das HID-Protokoll verwenden.
 
-Der serielle Modus des orbit Readers 20 wird momentan nur unter Windows 10 unterstützt.
-Sie sollten stattdessen das HID-Protokoll verwenden.
+Der serielle Modus des orbit Readers 20 wird momentan nur unter Windows 10 und neuer unterstützt.
+Sie sollten stattdessen das HID-Protokoll über USB verwenden.
 
 Folgende Tastenzuweisungen sind in NVDA bei diesen Zeilen verfügbar:
 Bitte lesen Sie in der Dokumentation zu Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
@@ -3104,7 +3115,7 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 
 ++ Nattiq nBraille ++[NattiqTechnologies]
 NVDA unterstützt Braillezeilen von [Nattiq Technologies https://www.nattiq.com/], wenn sie über USB angeschlossen sind.
-Windows 10 erkennt die Braillezeilen, sobald sie angeschlossen sind. Wenn Sie ältere Windows-Versionen (unter Win10) verwenden, müssen Sie eventuell USB-Treiber nachinstallieren.
+Windows 10 und neuer erkennt die Braillezeilen, sobald sie angeschlossen sind. Wenn Sie ältere Windows-Versionen (unter Win10) verwenden, müssen Sie eventuell USB-Treiber nachinstallieren.
 Diese können Sie von der Website des Herstellers beziehen.
 
 Nachfolgend finden Sie die wichtigsten Zuordnungen für die Braillezeilen von Nattiq Technologies mit NVDA.

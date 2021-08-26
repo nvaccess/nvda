@@ -8,6 +8,7 @@
 """ 
 
 import itertools
+import typing
 import weakref
 import unicodedata
 import time
@@ -59,6 +60,8 @@ from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
 
+if typing.TYPE_CHECKING:
+	import NVDAObjects
 
 _speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
@@ -182,7 +185,7 @@ def speakMessage(
 		speak(seq, symbolLevel=None, priority=priority)
 
 
-def getCurrentLanguage():
+def getCurrentLanguage() -> str:
 	synth = getSynth()
 	language=None
 	if  synth:
@@ -406,7 +409,7 @@ def speakObjectProperties(  # noqa: C901
 # Note: when working on getObjectPropertiesSpeech, look for opportunities to simplify
 # and move logic out into smaller helper functions.
 def getObjectPropertiesSpeech(  # noqa: C901
-		obj,
+		obj: "NVDAObjects.NVDAObject",
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		**allowedProperties
@@ -425,6 +428,11 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			# getPropertiesSpeech names this "current", but the NVDAObject property is
 			# named "isCurrent", it's type should always be controltypes.IsCurrent
 			newPropertyValues['current'] = obj.isCurrent
+		elif value and name == "descriptionFrom" and (
+			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+		):
+			newPropertyValues['_description-from'] = obj.descriptionFrom
+			newPropertyValues['description'] = obj.description
 		elif value:
 			# Certain properties such as row and column numbers have presentational versions, which should be used for speech if they are available.
 			# Therefore redirect to those values first if they are available, falling back to the normal properties if not.
@@ -486,17 +494,17 @@ def getObjectPropertiesSpeech(  # noqa: C901
 	states=newPropertyValues.get('states')
 	if states is not None and reason == OutputReason.FOCUS:
 		if (
-			controlTypes.STATE_SELECTABLE in states 
-			and controlTypes.STATE_FOCUSABLE in states
-			and controlTypes.STATE_SELECTED in states
+			controlTypes.State.SELECTABLE in states 
+			and controlTypes.State.FOCUSABLE in states
+			and controlTypes.State.SELECTED in states
 			and obj.selectionContainer 
 			and obj.selectionContainer.getSelectedItemsCount(2)==1
 		):
 			# We must copy the states set and  put it back in newPropertyValues otherwise mutating the original states set in-place will wrongly change the cached states.
 			# This would then cause 'selected' to be announced as a change when any other state happens to change on this object in future.
 			states=states.copy()
-			states.discard(controlTypes.STATE_SELECTED)
-			states.discard(controlTypes.STATE_SELECTABLE)
+			states.discard(controlTypes.State.SELECTED)
+			states.discard(controlTypes.State.SELECTABLE)
 			newPropertyValues['states']=states
 	#Get the speech text for the properties we want to speak, and then speak it
 	speechSequence = getPropertiesSpeech(reason=reason, **newPropertyValues)
@@ -624,6 +632,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'states': True,
 		'value': True,
 		'description': True,
+		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
 		'positionInfo_indexInGroup': True,
@@ -1126,14 +1135,8 @@ def speakTextInfo(
 	)
 
 	speechGen = GeneratorWithReturn(speechGen)
-	symbolLevel: Optional[characterProcessing.SymbolLevel] = None
-	if unit == textInfos.UNIT_CHARACTER:
-		symbolLevel = characterProcessing.SymbolLevel.ALL
-	elif unit == textInfos.UNIT_WORD:
-		if config.conf["speech"]["symbolLevelWordAll"]:
-			symbolLevel = characterProcessing.SymbolLevel.ALL
 	for seq in speechGen:
-		speak(seq, symbolLevel=symbolLevel, priority=priority)
+		speak(seq, priority=priority)
 	return speechGen.returnValue
 
 
@@ -1281,11 +1284,11 @@ def getTextInfoSpeech(  # noqa: C901
 		field=newControlFieldStack[count]
 		if not inClickable and formatConfig['reportClickable']:
 			states=field.get('states')
-			if states and controlTypes.STATE_CLICKABLE in states:
+			if states and controlTypes.State.CLICKABLE in states:
 				# We entered the most outer clickable, so announce it, if we won't be announcing anything else interesting for this field
 				presCat=field.getPresentationCategory(newControlFieldStack[0:count],formatConfig,reason)
 				if not presCat or presCat is field.PRESCAT_LAYOUT:
-					speechSequence.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
+					speechSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
 					shouldConsiderTextInfoBlank = False
 				inClickable=True
 		fieldSequence = info.getControlFieldSpeech(
@@ -1329,7 +1332,7 @@ def getTextInfoSpeech(  # noqa: C901
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
-		and len(textWithFields[0]) == 1
+		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
 		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if not onlyCache:
@@ -1384,12 +1387,12 @@ def getTextInfoSpeech(  # noqa: C901
 				fieldSequence = []
 				if not inClickable and formatConfig['reportClickable']:
 					states=command.field.get('states')
-					if states and controlTypes.STATE_CLICKABLE in states:
+					if states and controlTypes.State.CLICKABLE in states:
 						# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
 						# Announce it if there is nothing else interesting about the field, but not if the user turned it off. 
 						presCat=command.field.getPresentationCategory(newControlFieldStack[0:],formatConfig,reason)
 						if not presCat or presCat is command.field.PRESCAT_LAYOUT:
-							fieldSequence.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
+							fieldSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
 						inClickable=True
 				fieldSequence.extend(info.getControlFieldSpeech(
 					command.field,
@@ -1728,7 +1731,7 @@ def _shouldSpeakContentFirst(
 		)
 		and not (role in _neverSpeakContentFirstRoles)
 		and not tableID
-		and controlTypes.STATE_EDITABLE not in states
+		and controlTypes.State.EDITABLE not in states
 	)
 
 
@@ -1768,10 +1771,34 @@ def getControlFieldSpeech(  # noqa: C901
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
-	if reason == OutputReason.FOCUS or attrs.get('alwaysReportDescription', False):
-		description=attrs.get('description',"")
-	else:
-		description=""
+
+	description: Optional[str] = None
+	_descriptionFrom = attrs.get('_description-from', controlTypes.DescriptionFrom.UNKNOWN)
+	if (
+		(
+			config.conf["presentation"]["reportObjectDescriptions"]
+			and (
+				reason == OutputReason.FOCUS
+				# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
+				# Not used internally, but may be used by addons.
+				or attrs.get('alwaysReportDescription', False)
+			)
+		)
+		or (
+			# Don't report other sources of description like "title" all the time
+			# The usages of these is not consistent and often does not seem to have
+			# Screen Reader users in mind
+			config.conf["annotations"]["reportAriaDescription"]
+			and controlTypes.DescriptionFrom.ARIA_DESCRIPTION == _descriptionFrom
+			and reason in (
+				OutputReason.FOCUS,
+				OutputReason.CARET,
+				OutputReason.SAYALL,
+			)
+		)
+	):
+		description = attrs.get('description')
+
 	level=attrs.get('level',None)
 
 	if presCat != attrs.PRESCAT_LAYOUT:
@@ -1800,7 +1827,7 @@ def getControlFieldSpeech(  # noqa: C901
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
 	valueSequence = getPropertiesSpeech(reason=reason, value=value)
 	descriptionSequence = []
-	if config.conf["presentation"]["reportObjectDescriptions"]:
+	if description is not None:
 		descriptionSequence = getPropertiesSpeech(
 			reason=reason, description=description
 		)
@@ -1840,7 +1867,7 @@ def getControlFieldSpeech(  # noqa: C901
 		childControlCount
 		and fieldType == "start_addedToControlFieldStack"
 		and role == controlTypes.Role.LIST
-		and controlTypes.STATE_READONLY in states
+		and controlTypes.State.READONLY in states
 	):
 		# List.
 		# #7652: containerContainsText variable is set here, but the actual generation of all other output is
@@ -1985,15 +2012,17 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if isCurrent != controlTypes.IsCurrent.NO:
 			out.extend(isCurrentSequence)
+		if descriptionSequence:
+			out.extend(descriptionSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
 		if role == controlTypes.Role.TREEVIEWITEM:
-			if controlTypes.STATE_EXPANDED in states:
+			if controlTypes.State.EXPANDED in states:
 				out.extend(
-					getPropertiesSpeech(reason=reason, states={controlTypes.STATE_EXPANDED}, _role=role)
+					getPropertiesSpeech(reason=reason, states={controlTypes.State.EXPANDED}, _role=role)
 				)
-			elif controlTypes.STATE_COLLAPSED in states:
+			elif controlTypes.State.COLLAPSED in states:
 				out.extend(
-					getPropertiesSpeech(reason=reason, states={controlTypes.STATE_COLLAPSED}, _role=role)
+					getPropertiesSpeech(reason=reason, states={controlTypes.State.COLLAPSED}, _role=role)
 				)
 			if levelSequence:
 				out.extend(levelSequence)

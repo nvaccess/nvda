@@ -1,12 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2015-2020 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2015-2021 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
 from ctypes import byref
 
+import textUtils
 from . import (
 	UIATextInfo,
 	UIA,
@@ -190,8 +191,8 @@ class UIAWebTextInfo(UIATextInfo):
 				self.setEndPoint(tempInfo, "endToEnd" if endPoint == "end" else "startToStart")
 			return res
 
-	def _getControlFieldForObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
-		field = super()._getControlFieldForObject(
+	def _getControlFieldForUIAObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
+		field = super()._getControlFieldForUIAObject(
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
@@ -219,7 +220,7 @@ class UIAWebTextInfo(UIATextInfo):
 		field['landmark'] = obj.landmark
 		# Combo boxes with a text pattern are editable
 		if obj.role == controlTypes.Role.COMBOBOX and obj.UIATextPattern:
-			field['states'].add(controlTypes.STATE_EDITABLE)
+			field['states'].add(controlTypes.State.EDITABLE)
 		# report if the field is 'current'
 		field['current'] = obj.isCurrent
 		if obj.placeholder and obj._isTextEmpty:
@@ -239,7 +240,7 @@ class UIAWebTextInfo(UIATextInfo):
 				# embedded object characters (which can appear in Edgium)
 				# should also be treated as whitespace
 				# allowing to be replaced by an overridden label
-				text = text.replace('\ufffc', '')
+				text = text.replace(textUtils.OBJ_REPLACEMENT_CHAR, '')
 				if not text or text.isspace():
 					content = obj.name or field.pop('description', None)
 			if content:
@@ -275,8 +276,8 @@ class UIAWebTextInfo(UIATextInfo):
 			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
 				states = field.field['states']
 				if clickableField:
-					states.discard(controlTypes.STATE_CLICKABLE)
-				elif controlTypes.STATE_CLICKABLE in states:
+					states.discard(controlTypes.State.CLICKABLE)
+				elif controlTypes.State.CLICKABLE in states:
 					clickableField = field.field
 			elif (
 				clickableField
@@ -368,7 +369,7 @@ class UIAWeb(UIA):
 			controlTypes.Role.SECTION,
 			controlTypes.Role.GRAPHIC,
 		) and self.UIAInvokePattern:
-			states.add(controlTypes.STATE_CLICKABLE)
+			states.add(controlTypes.State.CLICKABLE)
 		return states
 
 	def _get_ariaProperties(self):
@@ -425,8 +426,8 @@ class List(UIAWeb):
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
 	def _get_states(self):
 		states = super().states
-		if controlTypes.STATE_FOCUSABLE not in states:
-			states.add(controlTypes.STATE_READONLY)
+		if controlTypes.State.FOCUSABLE not in states:
+			states.add(controlTypes.State.READONLY)
 		return states
 
 
@@ -499,7 +500,7 @@ class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocu
 		if (
 			reason == controlTypes.OutputReason.FOCUS
 			and obj.role == controlTypes.Role.LISTITEM
-			and controlTypes.STATE_SELECTABLE in obj.states
+			and controlTypes.State.SELECTABLE in obj.states
 		):
 			return True
 		return super().shouldPassThrough(obj, reason=reason)

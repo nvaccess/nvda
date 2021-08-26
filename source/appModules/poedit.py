@@ -120,7 +120,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0,PoeditListItem)
 
 	def event_NVDAObject_init(self, obj):
-		if obj.role == controlTypes.Role.EDITABLETEXT and controlTypes.STATE_MULTILINE in obj.states and obj.isInForeground:
+		if obj.role == controlTypes.Role.EDITABLETEXT and controlTypes.State.MULTILINE in obj.states and obj.isInForeground:
 			# Oleacc often gets the name wrong.
 			# The label object is positioned just above the field on the screen.
 			l, t, w, h = obj.location
