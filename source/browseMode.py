@@ -324,6 +324,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		controlTypes.Role.MENUITEM,
 		controlTypes.Role.RADIOMENUITEM,
 		controlTypes.Role.CHECKMENUITEM,
+		controlTypes.Role.TABLECELL,
 		})
 
 	def shouldPassThrough(self, obj, reason: Optional[OutputReason] = None):
