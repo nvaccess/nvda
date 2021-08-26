@@ -25,7 +25,23 @@ import queueHandler
 from . import RecogImageInfo, BaseContentRecogTextInfo
 
 
-class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Window):
+class RecogResult():
+	"""Base class for showing recog results.
+	Sub-classes must implement:
+	- showResult()
+	- hideResults()
+	"""
+	def showResult(self):
+		"""Display the results to the user. Acquire resources required for displaying the results.
+		"""
+		raise NotImplementedError
+
+	def hideResults(self):
+		"""Hide the results and destroy any resources required for displaying the results.
+		"""
+		raise NotImplementedError
+
+class RecogResultNVDAObject(RecogResult, cursorManager.CursorManager, NVDAObjects.window.Window):
 	"""Fake NVDAObject used to present a recognition result in a cursor manager.
 	This allows the user to read the result with cursor keys, etc.
 	Pressing enter will activate (e.g. click) the text at the cursor.
@@ -42,6 +58,12 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 		self.result = result
 		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
 		super(RecogResultNVDAObject, self).__init__(windowHandle=parent.windowHandle)
+
+	def showResult(self):
+		self.setFocus()
+
+	def hideResults(self):
+		pass # perhaps this should call script_exit?
 
 	def makeTextInfo(self, position):
 		# Maintain our own fake selection/caret.
@@ -121,7 +143,11 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 
 #: Keeps track of the recognition in progress, if any.
 _activeRecog = None
-def recognizeNavigatorObject(recognizer):
+
+#: Keeps track of the recognition result last created, if any.
+_activeRecogResult = None
+
+def recognizeNavigatorObject(recognizer: ContentRecog):
 	"""User interface function to recognize content in the navigator object.
 	This should be called from a script or in response to a GUI action.
 	@param recognizer: The content recognizer to use.
@@ -159,9 +185,10 @@ def recognizeNavigatorObject(recognizer):
 	sb = screenBitmap.ScreenBitmap(imgInfo.recogWidth, imgInfo.recogHeight)
 	pixels = sb.captureImage(left, top, width, height)
 	_activeRecog = recognizer
+	# onResult function is necessary to clear the `_activeRecog` global variable.
 	recognizer.recognize(pixels, imgInfo, _recogOnResult)
 
-def _recogOnResult(result):
+def _recogOnResult(result: RecogResult):
 	global _activeRecog
 	# Store a copy of the active recognition so the result can be presented and set original to None,
 	# allowing new recognition processes to start.
@@ -176,5 +203,5 @@ def _recogOnResult(result):
 		return
 	# Ensure a copy of the recognizer exists and call it's getResultHandler method to present the result
 	# the returned handler returned can be used for any further processing.
-	if recognizer:
-		recognizer.getResultHandler(result)
+	if result is not None:
+		result
