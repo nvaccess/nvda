@@ -218,7 +218,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		Checks if the current object is a menu item of the current focus.
 		The only known case where this returns True is the following (see #12624):
 		
-		When opening a submenu in certain applications (like Thunderbird 78.12),
+		When opening a submenu in certain applications (like Thunderbird 78.12, Outlook 2016),
 		NVDA can process a menu start event after the first item in the menu is focused.
 		The menu start event causes a focus event on the menu, taking NVDA's focus from the menu item.
 		Additionally, the "menu" parent of the submenu item is not keyboard focusable, and is separate from
@@ -227,14 +227,22 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		The focus event order after activating the menu item's sub menu is (submenu item, submenu).
 		"""
 		from NVDAObjects import IAccessible
+		from appModules.outlook import AutoCompleteListItem
 		lastFocus = api.getFocusObject()
-		_isMenuItemOfCurrentFocus = (
-			self._obj.parent
-			and isinstance(self._obj, IAccessible.IAccessible)
-			and isinstance(lastFocus, IAccessible.IAccessible)
-			and self._obj.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUITEM
-			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
-			and self._obj.parent == lastFocus
+		_parentIsLastFocus = self._obj.parent and self._obj.parent == lastFocus
+		_isMenuItemOfCurrentFocus = _parentIsLastFocus and (
+			(
+				# Case for Thunderbird 78.12
+				isinstance(self._obj, IAccessible.IAccessible)
+				and isinstance(lastFocus, IAccessible.IAccessible)
+				and self._obj.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUITEM
+				and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
+			)
+			or (
+				# Case for Outlook 2016 version 16.0.5182.1000
+				isinstance(self._obj, AutoCompleteListItem)
+				and lastFocus.role == controlTypes.Role.POPUPMENU
+			)
 		)
 		if _isMenuItemOfCurrentFocus:
 			# Change this to log.error for easy debugging
