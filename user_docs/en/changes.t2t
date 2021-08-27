@@ -19,6 +19,8 @@ What's New in NVDA
 - Espeak-ng has been updated to 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
 - NVDA will default to eSpeak if no installed OneCore voices support the NVDA preferred language. (#10451)
 - If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)
+- When reading status bar with ``NVDA+end``, the review cursor is no longer moved to its location.
+If you need this functionality please assign a gesture to the appropriate script in the Object Navigation category in the Input Gestures dialog. (#8600)
 -
 
 
