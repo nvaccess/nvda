@@ -81,8 +81,6 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_GridColumnCountPropertyId,
 		UIAHandler.UIA_GridItemContainingGridPropertyId,
 		UIAHandler.UIA_RangeValueValuePropertyId,
-		UIAHandler.UIA_RangeValueMinimumPropertyId,
-		UIAHandler.UIA_RangeValueMaximumPropertyId,
 		UIAHandler.UIA_ValueValuePropertyId,
 		UIAHandler.UIA_PositionInSetPropertyId,
 		UIAHandler.UIA_SizeOfSetPropertyId,
@@ -975,7 +973,7 @@ class UIA(Window):
 		):
 			clsList.insert(0, DevExpressXtraRichEdit)
 		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
-			clsList.append(ProgressBar)
+			clsList.insert(0, ProgressBar)
 		if UIAClassName=="ControlPanelLink":
 			clsList.append(ControlPanelLink)
 		if UIAClassName=="UIColumnHeader":
@@ -1181,6 +1179,20 @@ class UIA(Window):
 	def _get_UIAGridPattern(self):
 		self.UIAGridPattern=self._getUIAPattern(UIAHandler.UIA_GridPatternId,UIAHandler.IUIAutomationGridPattern)
 		return self.UIAGridPattern
+
+	def _get_UIARangeValuePattern(self):
+		self.UIARangeValuePattern = self._getUIAPattern(
+			UIAHandler.UIA_RangeValuePatternId,
+			UIAHandler.IUIAutomationRangeValuePattern
+		)
+		return self.UIARangeValuePattern
+
+	def _get_UIAValuePattern(self):
+		self.UIAValuePattern = self._getUIAPattern(
+			UIAHandler.UIA_ValuePatternId,
+			UIAHandler.IUIAutomationValuePattern
+		)
+		return self.UIAValuePattern
 
 	def _get_UIATogglePattern(self):
 		self.UIATogglePattern=self._getUIAPattern(UIAHandler.UIA_TogglePatternId,UIAHandler.IUIAutomationTogglePattern)
@@ -1712,19 +1724,24 @@ class UIA(Window):
 		# r is a tuple of floats representing left, top, width and height.
 		return locationHelper.RectLTWH.fromFloatCollection(*r)
 
-	def _get_value(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
-			minVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId,False)
-			maxVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId,False)
-			if minVal==maxVal:
-				# There is no range.
-				return "0"
-			val=((val-minVal)/(maxVal-minVal))*100.0
-			return "%d"%round(val,4)
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueValuePropertyId,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
+	def _get_UIAValue(self) -> typing.Optional[str]:
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_ValueValuePropertyId, True)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
 			return val
+		return None
+
+	def _get_UIARangeValue(self) -> typing.Optional[float]:
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueValuePropertyId, True)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			return val
+		return None
+
+	def _get_value(self) -> typing.Optional[str]:
+		if self.UIAValue is not None:
+			return self.UIAValue
+		if self.UIARangeValue is not None:
+			return f"{round(self.UIARangeValue)}"
+		return None
 
 	def _get_actionCount(self):
 		if self.UIAInvokePattern:
@@ -2082,3 +2099,23 @@ class DevExpressXtraRichEdit(UIA):
 		if self.UIATextPattern and self.UIATextPattern.DocumentRange:
 			return super().TextInfo
 		return super(UIA, self).TextInfo
+
+
+class ProgressBar(UIA, ProgressBar):
+	"""#12727: In the past, UIA progress bars could have a different range than what could be expected
+	from a progress bar, i.e. a percentage from 0 to 100.
+	This overlay class ensures that the reported value wil be between the accepted range of progress bar values.
+	"""
+
+	def _get_value(self) -> typing.Optional[str]:
+		val = self.UIARangeValue
+		if val is None:
+			return self.UIAValue
+		minVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId, False)
+		maxVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId, False)
+		if minVal == maxVal:
+			# There is no range, use the raw value from the pattern, it might be incorrect.
+			pass
+		else:
+			val = ((val - minVal) / (maxVal - minVal)) * 100.0
+		return f"{round(val)}%"
