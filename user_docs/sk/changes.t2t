@@ -3,6 +3,61 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+Prednosti tejto verzie zahŕňajú prvotnú podporu pre operačný systém Windows 11.
+NVDA bolo testované s aktuálne dostupnými verziami Windows 11.
+Táto verzia tiež zahŕňa opravu tienenia obrazovky (pozri dôležité poznámky).
+Opravný nástroj COM aktuálne dokáže vyriešiť oveľa viac problémov.
+Boli tiež aktualizované dáta hlasovej syntézy eSpeak a prekladovej tabuľky LibLouis.
+Vylepšili sme podporu pre kalkulačku, okná terminálov, históriu schránky, panel s emotikonmi a braillovské riadky.
+
+
+== Dôležité poznámky ==
+Keďže v najnovších verziách systému Windows došlo k úpravám v API na zväčšovanie, bolo potrebné v NVDA aktualizovať spôsob, akým sa zabezpečuje tienenie obrazovky.
+Použite NVDA od verzie 2021.2 v kombinácii s Windows od verzie 10 21H2 (10.0.19044).
+Toto zahŕňa aj verzie Windows 10 insider a Windows 11.
+Z bezpečnostných dôvodov odporúčame, aby ste sa pri prvom použití tienenia obrazovky uistili vlastným zrakom, alebo prostredníctvom vidiacej osoby, či je obrazovka skutočne čierna.
+
+
+== Nové vlastnosti ==
+- Pridaná experimentálna podpora pre aria revízie:
+  - Pridaná možnosť asociovať klávesovú skratku, ktorá prečíta aria podrobnosti zameraného prvku. (#12364)
+  - V pokročilých nastaveniach pribudla možnosť zapnúť oznamovanie situácií, keď prvok obsahuje podrobnosti. (#12439)
+  -
+- V systémoch Windows od verzie 10 1909 (vrátane Windows 11) NVDA oznamuje počet možných návrhov pri vyhľadávaní cez prieskumníka Windows. (#10341, #12628)
+- NVDA odteraz v aplikácii MS Word oznamuje pridanie zarážky a opakovanej zarážky pri použití príslušnej klávesovej skratky. (#6269)
+-
+
+
+== Zmeny ==
+- Rečová syntéza Espeak-ng aktualizovaná na verziu 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Ak je v nastaveniach čítania textu aktivované oznamovanie článkov, NVDA oznamuje "článok" až po vyslovení obsahu. (#11103)
+- Braillovská prekladová tabuľka liblouis aktualizovaná na verziu [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nové tabuľky: Maďarčina plnopis, Barmčina plnopis a skratkopis, Kazachčina plnopis, Khmérčina plnopis, Severná Kurdčina počítačový kód, severná sothčina plnopis a skratkopis, sothčina plnopis a skratkopis, Čwančina plnopis a skratkopis, Tatárčina plnopis, Vietnamčina počítačový kód a skratkopis, Južná Vietnamčina plnopis, xhoština plnopis a skratkopis, Jakutčina plnopis, zuluština plnopis a skratkopis.
+  -
+- Rozpoznávanie textu Windows 10 bolo premenované na rozpoznávanie textu Windows. (#12690)
+-
+
+
+== Opravy ==
+- Výrazy z kalkulačky Windows sa teraz zobrazujú aj na braillovských riadkoch. (#12268)
+- pri pridávaní alebo mazaní znakov uprostred riadka v konzolách Windows od verzie Windows 10 1607 NVDA viac nečíta znaky napravo od kurzora. (#3200)
+  - Odteraz sa predvolene používa algoritmus Diff Match Patch. (#12485)
+  -
+- Písanie v skratkopise cez klávesnicu braillovských riadkov funguje správne aj s týmito tabuľkami: Arabčina, Španielčina, Urdčina, Čínština (Čínština a Mandarínčina). (#12541)
+- Opravný nástroj COM odteraz dokáže vyriešiť omnoho viac problémov, hlavne na 64-bitových verziách systému Windows. (#12560)
+- Vylepšené spracovanie príkazov zo zariadení Seika od Nippon Telesoft. (#12598)
+- Vylepšené oznamovanie v panely emotikonov a histórii schránky Windows. (#11485)
+- Aktualizované fonetické hláskovanie v Bengálčine. (#12502)
+- Ak je spustený nový proces NVDA, pôvodný sa automaticky správne ukončí. (#12605)
+- Opätovné vybratie ovládača braillovského riadka Handy Tech v zozname riadkov viac nespôsobuje chyby. (#12618)
+- Windows od verzie 10.0.22000 je už rozpoznávaný ako Windows 11. (#12626)
+- Tienenie obrazovky bolo testované a opravené pre Windows 10.0.22000. (#12684)
+- Ak filtrovanie v dialógu klávesové skratky nezobrazí žiadne výsledky, dialóg sa správa štandardne a nespôsobuje problémy. (#12673)
+- Prvá položka podmenu je odteraz vždy správne oznamovaná. (#12624)
+-
+
+
 = 2021.1 =
 Prednosti tejto verzie zahŕňajú voliteľnú experimentálnu podporu rozhrania UIA v aplikácii MS Excel a prehliadačoch postavených na jadre Chromium.
 Takisto boli opravené niektoré preklady a pridaná možnosť aktivovať odkazy z braillovských riadkov.
