@@ -262,7 +262,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	speechManager = boolean(default=false)
 	synthDriver = boolean(default=false)
 	nvwave = boolean(default=false)
-	brailleInput = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
