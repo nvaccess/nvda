@@ -2077,6 +2077,7 @@ class SuggestionsList(UIA):
 
 class SuggestionListItem(UIA):
 	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+	Unlike suggestions list class, top suggestion is automatically selected.
 	"""
 
 	role=controlTypes.Role.LISTITEM
