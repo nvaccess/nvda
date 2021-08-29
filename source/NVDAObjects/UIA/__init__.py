@@ -2045,6 +2045,30 @@ class SearchField(EditableTextWithSuggestions, UIA):
 			self.event_suggestionsClosed()
 
 
+class SuggestionsList(UIA):
+	"""A list of suggestions in response to search terms being entered.
+	This list shows suggestions without selecting the top suggestion.
+	Examples include suggestions lists in modern apps such as Settings app in Windows 10 and later.
+	"""
+
+	def event_UIA_layoutInvalidated(self):
+		# #12790: announce number of items found
+		if self.childCount == 0:
+			return
+		# In some cases, suggestions list fires layout invalidated event repeatedly.
+		# This is the case with Microsoft Store's search field.
+		speech.cancelSpeech()
+		# Item count must be the last one spoken.
+		suggestionsCount: int = self.childCount
+		suggestionsMessage = (
+			# Translators: part of the suggestions count message for one suggestion.
+			_("1 suggestion")
+			# Translators: part of the suggestions count message (for example: 2 suggestions).
+			if suggestionsCount == 1 else _("{} suggestions").format(suggestionsCount)
+		)
+		ui.message(suggestionsMessage)
+
+
 class SuggestionListItem(UIA):
 	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
 	"""
