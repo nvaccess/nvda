@@ -2080,11 +2080,11 @@ class SuggestionListItem(UIA):
 	Unlike suggestions list class, top suggestion is automatically selected.
 	"""
 
-	role=controlTypes.Role.LISTITEM
+	role = controlTypes.Role.LISTITEM
 
 	def event_UIA_elementSelected(self):
-		focusControllerFor=api.getFocusObject().controllerFor
-		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
+		focusControllerFor = api.getFocusObject().controllerFor
+		if len(focusControllerFor) > 0 and focusControllerFor[0].appModule is self.appModule and self.name:
 			speech.cancelSpeech()
 			api.setNavigatorObject(self, isFocus=True)
 			self.reportFocus()

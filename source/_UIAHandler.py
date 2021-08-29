@@ -177,18 +177,18 @@ UIALandmarkTypeIdsToLandmarkNames: Dict[int, str] = {
 	UIA.UIA_SearchLandmarkTypeId: "search",
 }
 
-UIAEventIdsToNVDAEventNames={
-	UIA_LiveRegionChangedEventId:"liveRegionChange",
-	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
-	UIA_MenuOpenedEventId:"gainFocus",
-	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
-	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
+UIAEventIdsToNVDAEventNames: Dict[int, str] = {
+	UIA.UIA_LiveRegionChangedEventId: "liveRegionChange",
+	UIA.UIA_SelectionItem_ElementSelectedEventId: "UIA_elementSelected",
+	UIA.UIA_MenuOpenedEventId: "gainFocus",
+	UIA.UIA_SelectionItem_ElementAddedToSelectionEventId: "stateChange",
+	UIA.UIA_SelectionItem_ElementRemovedFromSelectionEventId: "stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
-	UIA_ToolTipOpenedEventId:"UIA_toolTipOpened",
+	UIA.UIA_ToolTipOpenedEventId: "UIA_toolTipOpened",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
-	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
-	UIA_SystemAlertEventId:"UIA_systemAlert",
+	UIA.UIA_Window_WindowOpenedEventId: "UIA_window_windowOpen",
+	UIA.UIA_SystemAlertEventId: "UIA_systemAlert",
 	UIA.UIA_LayoutInvalidatedEventId: "UIA_layoutInvalidated",
 }
 
