@@ -189,6 +189,7 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_ToolTipClosedEventId:"hide",
 	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
 	UIA_SystemAlertEventId:"UIA_systemAlert",
+	UIA.UIA_LayoutInvalidatedEventId: "UIA_layoutInvalidated",
 }
 
 localEventHandlerGroupUIAEventIds = set()
