@@ -1013,6 +1013,12 @@ class UIA(Window):
 				clsList.append(SearchField)
 		except COMError:
 			log.debug("Failed to locate UIA search field", exc_info=True)
+		# #12790: detect suggestions list views firing layout invalidated event.
+		try:
+			if UIAAutomationId == "SuggestionsList":
+				clsList.append(SuggestionsList)
+		except COMError:
+			log.debug("Could not detect suggestions list", exc_info=True)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
