@@ -4445,3 +4445,43 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
+
+
+class myDialog(wx.Dialog):
+
+	def __init__(self, parent):
+		super().__init__(parent, title='Usage example of guiHelper')
+
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		sHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
+
+		# Adding controls with their associated label
+		# according on the control type, they are associated horizontally or vertically.
+		filterElement = sHelper.addLabeledControl("Filter:", wx.TextCtrl)
+		symbols = sHelper.addLabeledControl("Select a row:", wx.ListCtrl)
+
+		# A control with its associated label
+		choice = sHelper.addLabeledControl("Choose option", wx.Choice, choices=["1", "2", "3"])
+
+		# A single button
+		button = sHelper.addItem(wx.Button(self, label="Does stuff"))
+
+		# for general items
+		checkbox = sHelper.addItem(wx.CheckBox(self, label="always do something"))
+
+		# for groups of buttons
+		buttonGroup = gui.guiHelper.ButtonHelper(wx.VERTICAL)
+		oneButton = buttonGroup.addButton(self, label="one")
+		twoButton = buttonGroup.addButton(self, label="two")
+		threeButton = buttonGroup.addButton(self, label="three")
+		sHelper.addItem(buttonGroup)
+
+		mainSizer.Add(sHelper.sizer, border=10, flag=wx.ALL)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+	...
+
+
+print(f'{SynthesizerSelectionDialog}')
+SynthesizerSelectionDialog = myDialog
