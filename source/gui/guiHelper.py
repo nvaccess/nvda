@@ -9,32 +9,34 @@
 """ Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
 Example usage:
 
-class myDialog(class wx.Dialog):
+class myDialog(wx.Dialog):
 
-	def __init__(self,parent):
-		super(SettingsDialog, self).__init__(parent, title=self.title)
-		dialog = self
+	def __init__(self, parent):
+		super().__init__(parent, title='Usage example of guiHelper')
 
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-		sHelper = guiHelper.BoxSizerHelper( wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
 
-		filterElement = guiHelper.LabeledControlHelper(dialog, "Filter:", wx.TextCtrl)
-		symbols = wx.ListCtrl()
-		sHelper.addItem(guiHelper.associateElement(filterElement, symbols)
+		# Adding controls with their associated label
+		# according on the control type, they are associated horizontally or vertically.
+		filterElement = sHelper.addLabeledControl("Filter:", wx.TextCtrl)
+		symbols = sHelper.addLabeledControl("Select a row:", wx.ListCtrl)
 
-		sHelper.addItem(guiHelper.LabeledControlHelper(dialog, "Choose option", wx.Choice, choices=[1,2,3]))
+		# A control with its associated label
+		choice = sHelper.addLabeledControl("Choose option", wx.Choice, choices=["1", "2", "3"])
 
-		button = sHelper.addItem( wx.Button("Does stuff"))
+		# A single button
+		button = sHelper.addItem(wx.Button(self, label="Does stuff"))
 
 		# for general items
-		checkbox = sHelper.addItem(wx.CheckBox("always do something"))
+		checkbox = sHelper.addItem(wx.CheckBox(self, label="always do something"))
 
 		# for groups of buttons
-		buttonGroup = guiHelper.ButtonHelper(wx.VERTICAL)
-		oneButton = buttonHelper.addButton(wx.Button("one"))
-		twoButton = buttonHelper.addButton(wx.Button("one"))
-		threeButton = buttonHelper.addButton(wx.Button("three")
+		buttonGroup = gui.guiHelper.ButtonHelper(wx.VERTICAL)
+		oneButton = buttonGroup.addButton(self, label="one")
+		twoButton = buttonGroup.addButton(self, label="two")
+		threeButton = buttonGroup.addButton(self, label="three")
 		sHelper.addItem(buttonGroup)
 
 		mainSizer.Add(sHelper.sizer, border=10, flag=wx.ALL)
