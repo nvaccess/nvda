@@ -70,7 +70,7 @@ Example:
 Are there any known issues or downsides of this approach.
 For instance: _Will not work with python 3_
 
-### Change log entry:
+### Change log entries:
 An entry intended to explain changes in NVDA to end users.
 Your proposed entry will be added to the `changes.t2t` file which is converted to html and used as a
 what's changed / change log document.
@@ -124,39 +124,38 @@ Most items in the checklist have a section in the PR template where you can add 
 so may preempt questions from the reviewer ensuring you are on the same page, and speed up the
 review process.
 
-### Pull Request description is up to date.
-Authors must keep the PR description up to date.
-- Even if changes to the approach are described in the comments for the PR.
-- Future developers need a concise explanation of a change.
-After each modification, check that the PR description is still accurate.
+### Pull Request description:
+- description is up to date.
+  Authors must keep the PR description up to date.
+  - Even if changes to the approach are described in the comments for the PR.
+  - Future developers need a concise explanation of a change.
+  After each modification, check that the PR description is still accurate.
+- change log entries
+  Has an appropriate change log entry been supplied.
+  As a reviewer, please review it.
 
-### Unit tests
-- Discuss under "testing strategy" heading.
-- Describe the coverage of automated unit tests?
-- Is the changed code already, or can it be covered by automated unit tests?
+## Testing
+- Unit tests
+  - Discuss under "testing strategy" heading.
+  - Describe the coverage of automated unit tests?
+  - Is the changed code already, or can it be covered by automated unit tests?
+- System tests
+  - Discuss under "testing strategy" heading.
+  - Describe the coverage of automated system tests?
+  - Is the changed code already, or can it be covered by automated unit tests?
+- Manual tests
+  - Discuss under "testing strategy" heading. 
+  - How did you manually test the change?
+  - Be clear on steps another user can take to replicate your testing.
+  - Is the described manual testing appropriate for the change?
+  - Clearly describing this helps alpha testers, and future developers.
+  - As a reviewer, please use this description to replicate the testing (if possible).
 
-### System tests
-- Discuss under "testing strategy" heading.
-- Describe the coverage of automated system tests?
-- Is the changed code already, or can it be covered by automated unit tests?
-
-### Manual tests
-- Discuss under "testing strategy" heading. 
-- How did you manually test the change?
-- Be clear on steps another user can take to replicate your testing.
-- Is the described manual testing appropriate for the change?
-- Clearly describing this helps alpha testers, and future developers.
-- As a reviewer, please use this description to replicate the testing (if possible).
-
-### User Documentation
-- Does the user documentation need updating?
-
-### Change log entry
-Has an appropriate change log entry been supplied.
-As a reviewer, please review it.
-
-### Context sensitive help for GUI changes.
-- New GUI options require context sensitive help assignment.
+### Documentation
+- User Documentation
+  Does the user documentation need updating?
+- Context sensitive help for GUI changes.
+  New GUI options require context sensitive help assignment.
 
 ### UX of all users considered
 - Users of NVDA are diverse, and rely on different parts of NVDA.
@@ -165,5 +164,6 @@ As a reviewer, please review it.
   - Braille
   - Low Vision
   - Different web browsers (Firefox, Chrome, Edge)
+  - Localization in other languages / culture than English
 - When one of these can not be supported with this change,
   highlight it under the "Known issues" heading

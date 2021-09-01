@@ -168,7 +168,7 @@ Please feel free to add more information here to tell us about what you have tri
 
 Restarting your computer will help to ensure that software is in a fresh state.
 
-#### Have you tried any other versions of NVDA?
+#### Have you tried any other versions of NVDA? If so, please report their behaviors.
 
 Knowing whether this issue occurs in previous releases helps us to understand if this is a newly
 introduced issue.
@@ -178,14 +178,14 @@ It can help us determine if changes in NVDA or other software introduced the pro
 > * NVDA 2018.1 - no error sound
 > * NVDA 2018.2 - has error sound
 
-#### If addons are disabled, is your problem still occurring?
+#### If NVDA add-ons are disabled, is your problem still occurring?
 
 In many cases issues could be caused by an addon not working correctly or conflicting with other
 features already integrated in NVDA itself.
 Therefore, it is recommended to reproduce issues with all addons disabled.
 In case the issue is caused by an addon, it is recommended to contact the author of the addon first.
 
-#### Did you try to run the COM registry fixing tool in NVDA menu / tools?
+#### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
 
 COM DLL files, which i.e. the IAccessible COM interface depends on, can get unregistered after
 installing and uninstalling different programs on a computer.
