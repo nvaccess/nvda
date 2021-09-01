@@ -197,18 +197,23 @@ def _getAvailableAddonsFromPath(path, isFirstLoad=False):
 				try:
 					a = Addon(addon_path)
 					name = a.manifest['name']
-					if(
+					if (
 						isFirstLoad
-						and (name in state["pendingInstallsSet"] or a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX))
+						and name in state["pendingRemovesSet"]
+						and not a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
 					):
-						newPath = a.completeInstall()
-						a = Addon(newPath)
-					if isFirstLoad and name in state["pendingRemovesSet"]:
 						try:
 							a.completeRemove()
 						except RuntimeError:
 							log.exception(f"Failed to remove {name} add-on")
 						continue
+					if(
+						isFirstLoad
+						and (name in state["pendingInstallsSet"] or a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX))
+					):
+						newPath = a.completeInstall()
+						if newPath:
+							a = Addon(newPath)
 					log.debug(
 						"Found add-on {name} - {a.version}."
 						" Requires API: {a.minimumNVDAVersion}."
@@ -334,7 +339,6 @@ class Addon(AddonBase):
 			return newPath
 		except OSError:
 			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
-			raise
 
 	def requestRemove(self):
 		"""Markes this addon for removal on NVDA restart."""
@@ -391,7 +395,7 @@ class Addon(AddonBase):
 		"""
 		# #3090: Ensure that we don't add disabled / blocked add-ons to package path.
 		# By returning here the addon does not "run"/ become active / registered.
-		if self.isDisabled or self.isBlocked:
+		if self.isDisabled or self.isBlocked or self.isPendingInstall:
 			return
 
 		extension_path = os.path.join(self.path, package.__name__)
