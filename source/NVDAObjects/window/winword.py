@@ -888,6 +888,15 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			field['line-prefix']=mapPUAToUnicode.get(bullet,bullet)
 		return field
 
+	def scrollIntoView(self):
+		try:
+			self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj, True)
+		except COMError:
+			log.exception("Can't scroll")
+			pass
+
+
+
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE: 
 			try:

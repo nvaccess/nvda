@@ -186,6 +186,9 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _set__rangeObj(self,r):
 		self.innerTextInfo._rangeObj=r
 
+	def scrollIntoView(self):
+		self.innerTextInfo.scrollIntoView()
+
 	def _get_locationText(self):
 		return self.innerTextInfo.locationText
 

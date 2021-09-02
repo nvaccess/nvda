@@ -1237,6 +1237,7 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 			return self.obj.rootNVDAObject
 		return item.obj
 
+
 class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation,cursorManager.CursorManager,BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
 
 	programmaticScrollMayFireEvent = False
@@ -1354,13 +1355,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		else:
 			self._lastCaretMoveWasFocus = False
 			focusObj=info.focusableNVDAObjectAtStart
-			obj=info.NVDAObjectAtStart
-			if not obj:
-				log.debugWarning("Invalid NVDAObjectAtStart")
-				return
-			if obj==self.rootNVDAObject:
-				return
-			obj.scrollIntoView()
+			info.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
 		if focusObj:
