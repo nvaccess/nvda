@@ -89,15 +89,15 @@ class Dialog(NVDAObject):
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (
-					controlTypes.Role.PROPERTYPAGE,
-					controlTypes.Role.PANE,
-					controlTypes.Role.PANEL,
-					controlTypes.Role.WINDOW,
-					controlTypes.Role.GROUPING,
-					controlTypes.Role.PARAGRAPH,
-					controlTypes.Role.SECTION,
-					controlTypes.Role.TEXTFRAME,
-					controlTypes.Role.UNKNOWN
+				controlTypes.Role.PROPERTYPAGE,
+				controlTypes.Role.PANE,
+				controlTypes.Role.PANEL,
+				controlTypes.Role.WINDOW,
+				controlTypes.Role.GROUPING,
+				controlTypes.Role.PARAGRAPH,
+				controlTypes.Role.SECTION,
+				controlTypes.Role.TEXTFRAME,
+				controlTypes.Role.UNKNOWN
 			):
 				#Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
 				#Stops double reporting when focus is in a property page in a dialog
