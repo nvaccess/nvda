@@ -640,6 +640,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	def scrollIntoView(self):
+		"""
+		Scrolls the window to ensure that this text range is visible.
+		"""
+		raise NotImplementedError
+
+
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
 	"""Convert a string so that it contains only CRLF line endings.
