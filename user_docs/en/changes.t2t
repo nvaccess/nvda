@@ -21,6 +21,7 @@ What's New in NVDA
 - If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)
 - When reading status bar with ``NVDA+end``, the review cursor is no longer moved to its location.
 If you need this functionality please assign a gesture to the appropriate script in the Object Navigation category in the Input Gestures dialog. (#8600)
+- When opening a settings dialog which is already open, NVDA sets focus on the existing dialog rather than raise an error. (#5383)
 -
 
 
