@@ -89,6 +89,7 @@ class Dialog(NVDAObject):
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (
+				controlTypes.ROLE_OPTIONPANE,
 				controlTypes.Role.PROPERTYPAGE,
 				controlTypes.Role.PANE,
 				controlTypes.Role.PANEL,
