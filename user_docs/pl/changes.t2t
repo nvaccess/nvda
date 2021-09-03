@@ -4,57 +4,57 @@
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
-This release introduces preliminary Windows 11 support.
-While Windows 11 is yet to be released, this release has been tested on preview versions of Windows 11.
-This includes an important fix for Screen Curtain (see important notes).
-The COM Registration Fixing Tool can now resolve more problems when running NVDA.
-There are updates to the synthesizer eSpeak and braille translator LibLouis.
-There are also various bug fixes and improvements, notably for braille support and Windows terminals, calculator, emoji panel and clipboard history.
+W tej wersji wprowadzono wstępne wsparcie dla systemu Windows 11.
+W związku z tym, że system Windows 11 nie został jeszcze oficjalnie wydany, ta wersja NVDA została przetestowana na wersjach z niejawnego programu testów systemu Windows 11.
+Ta wersja zawiera ważną poprawkę dla Kurtyny (Patrz ważne uwagi).
+Narzędzie naprawy błędów rejestracji COM od teraz potrafi rozwiązać więcej problemów podczas uruchamiania NVDA.
+Zaktualizowano syntezator mowy eSpeak i translator brajla LibLouis.
+Naprawiono również liczne błędy i ulepszono m.in. wsparcie brajla, wiersze poleceń systemu Windows, kalkulator, panel emoji oraz historię schowka.
 
 
-== Important notes ==
-Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
-Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
-This includes Windows 10 Insiders and Windows 11.
-For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
+== Ważne uwagi ==
+Z powodu zmiany w API Lupy Systemu Windows, należało zaktualizować Kurtynę, aby wspierała najnowsze wersje systemu Windows.
+Użyj NVDA 2021.2 aby włączyć Kurtynę w systemie Windows 10 21H2 (10.0.19044) lub nowszych.
+To wydanie zawiera wersje niejawnego programu testów systemu Windows 10 i Windows 11.
+Jeśli używasz nowej wersji systemu Windows, dla bezpieczeństwa upewnij się, że przy włączonej Kurtynie ekran jest zupełnie czarny.
 
 
-== New Features ==
-- Experimental support for ARIA annotations:
-  - adds a command to read a summary of details of an object with aria-details. (#12364)
-  - adds an option in advanced preferences to report if an object has details in browse mode. (#12439) 
+== Nowe funkcje ==
+- Eksperymentalne wsparcie dla adnotacji ARIA:
+  - Dodaje polecenie służące do odczytu podsumowania szczegółów obiektu z aria-details. (#12364)
+  - Dodaje do ustawień zaawansowanych opcję ogłaszania, czy obiekt posiada szczegóły w trybie przeglądu. (#12439) 
   -
-- In Windows 10 Version 1909 and later (including Windows 11), NVDA will announce suggestion count when performing searches in File Explorer. (#10341, #12628)
-- In Microsoft Word, NVDA now announces the result of indent and hanging indent shortcuts when executed. (#6269)
+- W systemie Windows 10 w Wersji 1909 i nowszych (włącznie z systemem Windows 11), NVDA będzie ogłaszać liczbę sugestii podczas wyszukiwania w Eksploratorze Plików. (#10341, #12628)
+- W programie Microsoft Word od teraz NVDA ogłasza wynik wcięcia i skróty wysunięcia gdy zostaną naciśnięte. (#6269)
 -
 
 
-== Changes ==
-- Espeak-ng has been updated to 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
-- If article is enabled in the user preferences for document formatting, NVDA announces "article" after the content. (#11103)
-- Updated liblouis braille translator to [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
-  - New braille tables: Bulgarian grade 1, Burmese grade 1, Burmese grade 2, Kazakh grade 1, Khmer grade 1, Northern Kurdish grade 0, Sepedi grade 1, Sepedi grade 2, Sesotho grade 1, Sesotho grade 2, Setswana grade 1, Setswana grade 2, Tatar grade 1, Vietnamese grade 0, Vietnamese grade 2, Southern Vietnamese grade 1, Xhosa grade 1, Xhosa grade 2, Yakut grade 1, Zulu grade 1, Zulu grade 2
+== Zmiany ==
+- Espeak-ng został zaktualizowany do wersji 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Jeśli włączona została opcja "artykuły" w ustawieniach użytkownika dotyczących formatowania dokumentów, NVDA ogłasza "artykuł" po odczytaniu treści. (#11103)
+- Zaktualizowano liblouis braille translator do wersji [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nowe tablice brajlowskie: Bułgarski pismo pełne, Birmański pismo pełne, Birmański skróty, Kazachski pismo pełne, Khmerski pismo pełne, Północnokurdyjski pismo podstawowe, Północny Sotho pismo pełne, Północny Sotho skróty, Południowy Sotho pismo pełne, Południowy Sotho skróty, Setswana pismo pełne, Setswana skróty, Tatarski pismo pełne, Wietnamski pismo podstawowe, Wietnamski skróty, Południowy wietnamski pismo pełne, Xhosa pismo pełne, Xhosa skróty, Jakucki pismo pełne, Zulu pismo pełne, Zulu skróty
   -
-- Windows 10 OCR was renamed to Windows OCR. (#12690)
+- Windows 10 OCR zmienił nazwę na Windows OCR. (#12690)
 -
 
 
-== Bug Fixes ==
-- In Windows 10 Calculator, NVDA will announce calculator expressions on a braille display. (#12268)
-- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
-  - Diff Match Patch now enabled by default. (#12485)
+== Poprawki błędów ==
+- W Kalkulatorze systemu Windows 10 NVDA będzie wyświetlać wyrażenia kalkulatora na monitorze brajlowskim. (#12268)
+- Podczas wprowadzania lub usuwania znaków ze środka linii w programach konsolowych, znaki po prawej stronie kursora systemowego nie będą już czytane w systemie Windows 10 od wersji 1607 i nowszych. (#3200)
+  - Diff Match Patch jest od teraz domyślnie włączony. (#12485)
   -
-- The braille input works properly with the following contracted tables: Arabic grade 2, Spanish grade 2, Urdu grade 2, Chinese (China, Mandarin) grade 2. (#12541)
-- The COM Registration Fixing Tool now resolves more issues, especially on 64 bit Windows. (#12560)
-- Improvements to button handling for the Seika Notetaker braille device from Nippon Telesoft. (#12598)
-- Improvements to announcing the Windows emoji panel and clipboard history. (#11485)
-- Updated the Bengali alphabet character descriptions. (#12502)
-- NVDA exits safely when a new process is started. (#12605)
-- Reselecting the Handy Tech braille display driver from the Select Braille Display dialog no longer causes errors. (#12618)
-- Windows version 10.0.22000 or later is recognized as Windows 11, not Windows 10. (#12626)
-- Screen curtain support has been fixed and tested for Windows versions up until 10.0.22000. (#12684)
-- If no results are shown when filtering input gestures, the input gesture configuration dialog continues to work as expected. (#12673)
-- Fixed a bug where the first menu item of a submenu is not announced in some contexts. (#12624)
+- Wprowadzanie brajla działa prawidłowo z następującymi tablicami skrótów: Arabski skróty, Hiszpański skróty, Urdu skróty, Chiński (Chiny, Mandaryński) bez tonów. (#12541)
+- Narzędzie naprawy błędów rejestracji COM od teraz rozwiązuje więcej problemów, zwłaszcza w 64 bitowym systemie Windows. (#12560)
+- Poprawa zarządzania przyciskami dla monitorów brajlowskich Seika Notetaker braille device firmy Nippon Telesoft. (#12598)
+- Poprawa ogłaszania panelu emoji i historii schowka w systemie Windows. (#11485)
+- Zaktualizowano opisy znaków alfabetu bengalskiego. (#12502)
+- NVDA zamyka się bezpiecznie podczas uruchamiania nowego procesu. (#12605)
+- Ponowne wybranie sterownika monitora brajlowskiego Handy Tech z dialogu "Wybór monitora brajlowskiego" nie powoduje już błędów. (#12618)
+- System Windows w wersji 10.0.22000 lub nowszych jest rozpoznawany jako Windows 11, a nie Windows 10. (#12626)
+- Wsparcie Kurtyny zostało naprawione i przetestowane dla systemu Windows w wersjach do 10.0.22000. (#12684)
+- Jeśli podczas filtrowania zdarzeń wejścia nie wyświetlają się żadne wyniki, ustawienia zdarzeń wejścia nadal działają tak jak powinny. (#12673)
+- Naprawiono błąd, przez który pierwszy element w menu rozwijanym nie jest ogłaszany w niektórych kontekstach. (#12624)
 -
 
 

@@ -795,8 +795,9 @@ Ekransku zavjesu možete uključiti u kategoriji [Vid #VisionSettings], u [NVDA 
 
 Kada je zaslonska zavjesa uključena, neki zadaci koji su bazirani na sadržaju ekrana kao što je to izvođenje [prepoznavanja teksta #Win10Ocr] ili slikanja zaslona ne mogu biti izvedeni.
 
-Kako biste bili sigurni, provjerit da zaslonska zavjesa radi ispravno sa novim ili eksperimentalnim inačicama operacijskog sustava Windows.
-Prilikom korištenja  NVDA inačica starijih od 2021.2 i Windows novijih od Windowsa 10 21H2, zaslonska zavjesa može prestati raditi bez upozorenja.
+Zbog izmjena u Api-ju lupe sustava windows, značajka zaslonska zavjesa  je obnovljena kako bi radila sa novijim verzijama operacijskog sustava Windows.
+Koristite NVDA 2021.2 kako biste aktivirali zaslonsku zavjesu u operacijskom sustavu Windows 10 21H2 (10.0.19044) i novijim.
+Iz sigurnosnih razloga, kada koristite noviju inačicu sustava Windows, trebali biste pitati čovjeka koji normalno vidi radi li ova funkcija.
 
 + Prepoznavanje sadržaja +[ContentRecognition]
 Kad autori ne daju dovoljno informacija korisniku čitača ekrana, kako bi mogao prepoznati informaciju, mogu se koristiti razni alati, kako bi se tekst mogao prepoznati sa slike.
