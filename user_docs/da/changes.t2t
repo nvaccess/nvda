@@ -5,21 +5,25 @@ Nyheder i NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
+Denne udgave indeholder foreløbig understøttelse af Windows 11.
+Selvom Windows 11 ikke er udgivet endnu, har man testet med forhåndsversioner af Windows 11.
+Versionen af NVDA indeholder også en vigtig rettelse til skærmtæppefunktionen (læs vigtige bemærkninger).
+Værktøjet til løsning af almindelige problemer kan nu også løse yderligere problemer med NVDA.
+Der er opdateringer til talesyntesen eSpeak-NG og punktoversættelsen LibLouis.
+Der er desuden mange fejlrettelser, bl.a. til Windows-terminalprogrammer, emoji-panelet, udklipshistorik og lommeregner, samt punktskriftsunderstøttelse i NVDA.
+
 
 == Vigtige bemærkninger ==
-- Skærmtæppefunktionen i tidligere versioner af NVDA er ikke længere kompatible med versioner af Windows nyere end Windows 10 21H2 (10.0.19044).
-Dette gælder også Windows 10 Insider og Windows 11.
-Dette skyldes en ændring i Windows Magnification API.
-Funktionen vil muligvis holde op med at virke uden varsel, hvis du bruger en kombination af ovennævnte versioner.
-For at sikre sikkerheden, bekræft at skærmtæppet virker korrekt med nye eller eksperimentelle versioner af Windows.
-(#12491, #12684)
--
+Pga. ændringer i Windows Magnification API, var det nødvendigt at opdatere skærmtæppefunktionen for at understøtte de nyeste versioner af Windows.
+Benyt NVDA 2021.2 til at aktivere skærmtæppet med Windows 10 21H2 (10.0.19044) eller nyere.
+Dette gælder også Windows 10 Insiders og Windows 11.
+Af sikkerhedsmæssige årsager kan det være en god idé at få bekræftet af en seende person, hvorvidt skærmtæppefunktionen er aktiv og gør skærmen fuldstændigt sort, når denne benyttes med nyere versioner af Windows.
 
 
 == Nye funktioner ==
-- Understøttelse for ARIA-annotationer:
+- Eksperimentel understøttelse for ARIA-annotationer:
   - Tilføjet en kommando, der giver en oversigt over detaljerne for et objekt med ARIA-detaljer. (#12364)
-  - Tilføjet en indstilling under "Avanceret" der bestemmer om NVDA skal oplyse, når et objekt har yderligere detaljer i gennemsynstilstand. (#12439) 
+  - Tilføjet en indstilling under "Avanceret" i NVDAs indstillinger, der bestemmer om NVDA skal oplyse, når et objekt har yderligere detaljer i gennemsynstilstand. (#12439) 
   -
 - NVDA vil nu oplyse antallet af søgeforslag i Stifinder i Windows 10 Version 1909 og nyere, samt Windows 11. (#10341, #12628)
 - NVDA vil nu oplyse, når du bruger kommandoerne til indrykning og hængende indrykning i Microsoft Word. (#6269)
@@ -51,6 +55,7 @@ For at sikre sikkerheden, bekræft at skærmtæppet virker korrekt med nye eller
 - Windows version 10.0.22000 eller nyere genkendes nu som Windows 11 og ikke Windows 10. (#12626)
 - Understøttelse for skærmtæppefunktionen er rettet og testet med Windows versioner  op til 10.0.22000. (#12684)
 - Hvis ingen søgeresultater vises, når du filtrerer kommandoer, vil dialogen fortsætte med at virke som forventet. (#12673)
+- Rettede en fejl, hvor første menupunkt i en undermenu ikke blev oplæst i nogle tilfælde. (#12624)
 -
 
 
