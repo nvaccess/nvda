@@ -410,7 +410,17 @@ class WavePlayer(garbageHandler.TrackedObject):
 			with self._waveout_lock:
 				assert self._waveout, "waveOut None after wait"
 				with self._global_waveout_lock:
-					winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
+					try:
+						winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
+					except WindowsError:
+						# The device may have become unavailable.
+						# It is uncertain if this buffer was actually finished, assume that it
+						# did finish the worst case is dropped audio which is better than repeating audio.
+						# Log the error, close the device and set _waveout to None. A new device will be opened when
+						# required.
+						# Don't return early, let the wave header (_prev_whdr) to be reset and
+						# allow _prevOnDone to be called.
+						self._handleWinmmError(message="UnprepareHeader")
 			self._prev_whdr = None
 			if self._prevOnDone not in (None, self.STOPPING):
 				try:
@@ -485,13 +495,15 @@ class WavePlayer(garbageHandler.TrackedObject):
 			self._prevOnDone = self.STOPPING
 			with self._global_waveout_lock:
 				# Pausing first seems to make waveOutReset respond faster on some systems.
-				self._safe_winmm_call(winmm.waveOutPause, "Pause")
-				self._safe_winmm_call(winmm.waveOutReset, "Reset")
+				success = self._safe_winmm_call(winmm.waveOutPause, "Pause")
+				success &= self._safe_winmm_call(winmm.waveOutReset, "Reset")
 				# Allow fall through to idleUnbuffered if either pause or reset fail.
 
 				# The documentation is not explicit about whether waveOutReset will signal the event,
 				# so trigger it to be sure that sync isn't blocking on 'waitForSingleObject'.
 				windll.kernel32.SetEvent(self._waveout_event)
+				if not success:
+					return
 		# Unprepare the previous buffer and close the output device if appropriate.
 		self._idleUnbuffered()
 		self._prevOnDone = None
@@ -541,6 +553,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 			winmmCall: Callable[[Optional[int]], None],
 			messageOnFailure: str
 	) -> bool:
+		if not self._waveout:
+			return False
 		try:
 			winmmCall(self._waveout)
 			return True
