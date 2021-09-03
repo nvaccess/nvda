@@ -66,7 +66,7 @@ Za više detalja, možete[videti celu licencu. https://www.gnu.org/licenses/old-
 Za detalje o izuzecima, pristupite dokumentu licence u NVDA meniju u sekciji "pomoć".
 
 + Sistemski zahtevi +[SystemRequirements]
- - Operativni sistemi: sve 32-bitne i 64-bitne verzije operativnih  sistema Windows 7, Windows 8, Windows 8.1, Windows 10, i sve server verzije Windows operativnog sistema počevši od  Windows Server 2008 R2.
+ - Operativni sistemi: sve 32-bitne i 64-bitne verzije operativnih  sistema Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, i sve server verzije Windows operativnog sistema počevši od  Windows Server 2008 R2.
  - za Windows 7, NVDA zahteva Service Pack 1 ili noviji.
  - za Windows Server 2008 R2, NVDA zahteva Service Pack 1 ili noviji.
 Oba bi trebalo da budu instalirana ako su primenjena sva ažuriranja koristeći Windows Update.
@@ -274,24 +274,24 @@ Kada se meni pojavi, možete koristiti strelice da se krećete kroz meni, i tast
 
 ++ Osnovne NVDA komande ++[BasicNVDACommands]
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir| Opis |
+|| Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir | Opis |
 | Pokreće ili restartuje NVDA | Control+alt+n | Control+alt+n | Nema | Pokreće ili restartuje NVDA sa radne površine, ako je ova Windows prečica omogućena u procesu instalacije programa NVDA. Ovo je Windows prečica i zato se ne može promeniti u dijalogu ulazne komande. |
-| Zaustavi govor | Kontrol | Kontrol | dodir sa dva prsta| govor prestaje|
-| Pauziraj govor | Šift| Šift| Nema komande| pauzira govor. Ako se pritisne ponovo govor se nastavlja gde je stao(ako trenutni sintetizator podržava pauziranje) |
-| NVDA meni | NVDA+n | NVDA+n | dvostruki dodir sa dva prsta| otvara NVDA meni kako biste pristupili podešavanjima, alatima, dobili pomoć, i tako dalje. |
-| Prebaci režim govora| NVDA+s | NVDA+s | Nema komande | Prebacuje režime govora između govor, pištanja i isključen. |
-| Uključuje i isključuje pomoć za unos| NVDA+1 | NVDA+1 | Nema komande | pritiskanje bilo kog tastera u ovom režimu prijavljuje ime tastera, i opis komande koju NVDA koristi|
-| Izlaz iz NVDA| NVDA+q | NVDA+q | Nema komande | izlazi iz NVDA|
-| Ignoriši sledeći taster| NVDA+f2 | NVDA+f2 | Nema komande | govori NVDA-u da sledeći taster pošalje kroz aplikaciju, čak i ako je to NVDA komanda|
-| Uključuje i isključuje režim spavanja za trenutnu aplikaciju| NVDA+šift+s | NVDA+šift+z | Nema komande | Režim spavanja isključuje sav govor ili brajev izlaz za trenutnu aplikaciju. Ovo je najviše korisno u aplikacijama koje već imaju karakteristike čitanja ekrana. Ponovo pritisnite ovu komandu da isključite režim spavanja. |
+| Zaustavi govor | Kontrol | Kontrol | dodir sa dva prsta | govor prestaje |
+| Pauziraj govor | Šift | Šift | Nema komande | pauzira govor. Ako se pritisne ponovo govor se nastavlja gde je stao(ako trenutni sintetizator podržava pauziranje) |
+| NVDA meni | NVDA+n | NVDA+n | dvostruki dodir sa dva prsta | otvara NVDA meni kako biste pristupili podešavanjima, alatima, dobili pomoć, i tako dalje. |
+| Prebaci režim govora | NVDA+s | NVDA+s | Nema komande | Prebacuje režime govora između govor, pištanja i isključen. |
+| Uključuje i isključuje pomoć za unos | NVDA+1 | NVDA+1 | Nema komande | pritiskanje bilo kog tastera u ovom režimu prijavljuje ime tastera, i opis komande koju NVDA koristi |
+| Izlaz iz NVDA | NVDA+q | NVDA+q | Nema komande | izlazi iz NVDA |
+| Ignoriši sledeći taster | NVDA+f2 | NVDA+f2 | Nema komande | govori NVDA-u da sledeći taster pošalje kroz aplikaciju, čak i ako je to NVDA komanda |
+| Uključuje i isključuje režim spavanja za trenutnu aplikaciju | NVDA+šift+s | NVDA+šift+z | Nema komande | Režim spavanja isključuje sav govor ili brajev izlaz za trenutnu aplikaciju. Ovo je najviše korisno u aplikacijama koje već imaju karakteristike čitanja ekrana. Ponovo pritisnite ovu komandu da isključite režim spavanja. |
 %kc:endInclude
 
 ++ Prijavljivanje sistemskih informacija++[ReportingSystemInformation]
 %kc:beginInclude
 || Ime | Komanda | Opis |
-| Prijavi datum/vreme| NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme|
-| Prijavi stanje baterije| NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutni procenat. |
-| Prijavi tekst privremene memorije| NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
+| Prijavi datum/vreme | NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme |
+| Prijavi stanje baterije | NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutni procenat. |
+| Prijavi tekst privremene memorije | NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
 %kc:endInclude
 
 + Navigacija sa NVDA-om +[NavigatingWithNVDA]
@@ -312,10 +312,10 @@ Kada je [Vizuelno označavanje  #VisionFocusHighlight] omogućeno, lokacija sist
 Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim fokusom:
 %kc:beginInclude
 || Ime | Desktop komanda | Laptop komanda | Opis |
-| Prijavi trenutni fokus| NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče|
-| Prijavi naslov| NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju|
-| Čitaj aktivan prozor| NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
-| Prijavi statusnu traku| NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju|
+| Prijavi trenutni fokus | NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče |
+| Prijavi naslov | NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju |
+| Čitaj aktivan prozor | NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
+| Prijavi statusnu traku | NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju |
 %kc:endInclude
 
 ++ Navigacija sa sistemskim kursorom++[SystemCaret]
@@ -328,19 +328,19 @@ NVDA će izgovarati kada se krećete znak po znak, reč i red, i takođe će izg
 NVDA Pruža sledeće komande za sistemski kursor:
 %kc:beginInclude
 || Ime | Desktop komanda | Laptop komanda | opis |
-| Izgovori sve | NVDA+Strelica dole | NVDA+a | Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita|
-| Pročitaj trenutni red| NVDA+Strelica gore| NVDA+l | Čita red na kom se sistemski kursor nalazi. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta sriče red koristeći opise znakova. |
-| Pročitaj trenutni izbor teksta| NVDA+šift+strelica gore | NVDA+šift+s | Čita trenutno odabran tekst|
+| Izgovori sve | NVDA+Strelica dole | NVDA+a | Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita |
+| Pročitaj trenutni red | NVDA+Strelica gore | NVDA+l | Čita red na kom se sistemski kursor nalazi. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta sriče red koristeći opise znakova. |
+| Pročitaj trenutni izbor teksta | NVDA+šift+strelica gore | NVDA+šift+s | Čita trenutno odabran tekst |
 | Prijavi formatiranje teksta | NVDA+f | NVDA+f | Prijavljuje formatiranje teksta na trenutnoj poziciji kursora. Ako se pritisne dva puta prikazuje informaciju u režimu pretraživanja |
 | Sledeća rečenica | alt+strelica dole | alt+strelica dole | Pomera kursor na sledeću rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook) |
 | Prethodna rečenica | alt+strelica gore | alt+Strelica gore | Pomera kursor na prethodnu rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook)  |
 
 Kada ste u tabeli, Sledeće komande su takođe dostupne:
 || Ime | Komanda | Opis |
-| Pomeri na prethodnu kolonu| Kontrol+alt+strelica levo | Pomera sistemski kursor na prethodnu kolonu(ostajete u istom redu) |
-| Pomeri na sledeću kolonu| Kontrol+alt+strelica desno | Pomera sistemski kursor na sledeću kolonu(ostajete u istom redu) |
+| Pomeri na prethodnu kolonu | Kontrol+alt+strelica levo | Pomera sistemski kursor na prethodnu kolonu(ostajete u istom redu) |
+| Pomeri na sledeću kolonu | Kontrol+alt+strelica desno | Pomera sistemski kursor na sledeću kolonu(ostajete u istom redu) |
 | Pomeri na prethodni red | control+alt+strelica gore | Pomera sistemski kursor na prethodni red(ostajete u istoj koloni) |
-| Pomeri na sledeći red| control+alt+strelica dole | Pomera sistemski kursor na sledeći red(ostajete u istoj koloni) |
+| Pomeri na sledeći red | control+alt+strelica dole | Pomera sistemski kursor na sledeći red(ostajete u istoj koloni) |
 %kc:endInclude
 
 ++ Navigacija objekata ++[ObjectNavigation]
@@ -371,16 +371,16 @@ Napomena: Praćenje objektne navigacije brajevim redom može se podesiti koriš�
 Za navigaciju između objekata, koristite sledeće komande:
 
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | Pokret| Opis |
-| Prijavi trenutni objekat| NVDA+numeričko5 | NVDA+šift+o | Nema komande | Prijavljuje trenutni navigacioni objekat. Ako se pritisne dva puta informacija se sriče, i pritiskanjem 3 puta informacija i vrednost se kopira u privremenu memoriju. |
-| Premesti se na sadržani objekat | NVDA+numeričko8 | NVDA+šift+strelica gore | prevuci nagore(režim objekata) | premešta se na objekat koji sadrži trenutni navigacioni objekat|
-| Premesti se na prethodni objekat | NVDA+numeričko4 | NVDA+šift+strelica levo | prevlačenje nalevo(režim objekata) | pomera se na objekat pre trenutnog navigacionog objekta|
-| Premesti na sledeći objekat | NVDA+numeričko6 | NVDA+šift+strelica desno | prevlačenje nadesno(režim objekata) | premešta se na objekat posle trenutnog navigacionog objekta|
-| Premesti se na prvi sadržan objekat| NVDA+numeričko2 | NVDA+šift+strelica dole | prevlačenje nadole (režim objekata) | Premešta se na prvi objekat sadržan od strane navigacionog objekta|
-| Premesti se na fokusiran objekat| NVDA+numerički minus | NVDA+taster za brisanje unazad | Nema komande | Premešta se na objekat koji trenutno ima sistemski fokus, i takođe postavlja pregledni kursor na poziciju sistemskog kursora, ako je prikazan|
-| Aktiviraj trenutni navigacioni objekat| NVDA+numerički enter | NVDA+enter | dupli dodir | aktivira trenutni navigacioni objekat(slično kliku mišem ili pritiskanju tastera razmak kada ima sistemski fokus) |
-| Premesti sistemski fokus ili kursor na poziciju pregleda| NVDA+šift+numerički minus | NVDA+šift+taster za brisanje unazad | Nema komande | Ako se pritisne jednom pomera sistemski fokus na mesto navigacionog objekta, ako se pritisne dva puta pomera sistemski kursor na poziciju preglednog kursora|
-| Prijavi lokaciju preglednog kursora| NVDA+numerički taster za brisanje | NVDA+taster za brisanje | nema komande | Prijavljuje informacije o lokaciji teksta ispod preglednog kursora. Na primer, ovo može uključiti procente u dokumentu, daljina od ivica strana ili poziciju na ekranu. Ako se pritisne dva puta može se dobiti više informacija. |
+|| Ime | Desktop komanda | Laptop komanda | Pokret | Opis |
+| Prijavi trenutni objekat | NVDA+numeričko5 | NVDA+šift+o | Nema komande | Prijavljuje trenutni navigacioni objekat. Ako se pritisne dva puta informacija se sriče, a  pritiskanjem 3 puta informacija i vrednost se kopiraju u privremenu memoriju. |
+| Premesti se na sadržani objekat | NVDA+numeričko8 | NVDA+šift+strelica gore | prevuci nagore(režim objekata) | premešta se na objekat koji sadrži trenutni navigacioni objekat |
+| Premesti se na prethodni objekat | NVDA+numeričko4 | NVDA+šift+strelica levo | prevlačenje nalevo(režim objekata) | pomera se na objekat pre trenutnog navigacionog objekta |
+| Premesti na sledeći objekat | NVDA+numeričko6 | NVDA+šift+strelica desno | prevlačenje nadesno(režim objekata) | premešta se na objekat posle trenutnog navigacionog objekta |
+| Premesti se na prvi sadržan objekat | NVDA+numeričko2 | NVDA+šift+strelica dole | prevlačenje nadole (režim objekata) | Premešta se na prvi objekat sadržan od strane navigacionog objekta |
+| Premesti se na fokusiran objekat | NVDA+numerički minus | NVDA+taster za brisanje unazad | Nema komande | Premešta se na objekat koji trenutno ima sistemski fokus, i takođe postavlja pregledni kursor na poziciju sistemskog kursora, ako je prikazan |
+| Aktiviraj trenutni navigacioni objekat | NVDA+numerički enter | NVDA+enter | dupli dodir | aktivira trenutni navigacioni objekat(slično kliku mišem ili pritiskanju tastera razmak kada ima sistemski fokus) |
+| Premesti sistemski fokus ili kursor na poziciju pregleda | NVDA+šift+numerički minus | NVDA+šift+taster za brisanje unazad | Nema komande | Ako se pritisne jednom pomera sistemski fokus na mesto navigacionog objekta, ako se pritisne dva puta pomera sistemski kursor na poziciju preglednog kursora |
+| Prijavi lokaciju preglednog kursora | NVDA+numerički taster za brisanje | NVDA+taster za brisanje | nema komande | Prijavljuje informacije o lokaciji teksta ispod preglednog kursora. Na primer, ovo može uključiti procente u dokumentu, daljinu od ivica strana ili poziciju na ekranu. Ako se pritisne dva puta može se dobiti više informacija. |
 %kc:endInclude
 
 Napomena: Komande sa numeričke tastature zahtevaju da num lock taster  bude isključen kako bi ispravno radile.
@@ -795,9 +795,13 @@ Možete omogućiti zatamnjivanje ekrana u [kategoriji vid #VisionSettings] dijal
 
 Kada je zatamnjivanje ekrana omogućeno neki zadaci koji zavise od sadržaja vidljivog na ekranu kao što su izvršavanje funkcije [OCR #Win10Ocr] ili slikanje ekrana nisu mogući.
 
+Zbog promene u API-u za Windows lupu, zatamnjivanje ekrana je ažurirano kako bi podržavalo najnovije Windows verzije.
+Koristite  NVDA 2021.2 da aktivirate zatamnjivanje ekrana na Windowsu 10 21H2 (10.0.19044) ili novijim.
+Kako biste se uverili u vašu privatnost, kada koristite novu verziju Windowsa, vizuelno potvrdite da zatamnjivanje ekrana čini ekran potpuno crnim.
+
 + Prepoznavanje sadržaja +[ContentRecognition]
 Kada autori ne pruže dovoljno informacija za korisnike čitača ekrana o sadržaju, razni alati se mogu koristiti za pokušaj prepoznavanja sadržaja sa slike.
-NVDA podržava optičko prepoznavanje znakova (eng. OCR) funkciju koja je ugrađena u Windows 10 za prepoznavanje teksta sa slike.
+NVDA podržava optičko prepoznavanje znakova (eng. OCR) funkciju koja je ugrađena u Windows 10 i noviji za prepoznavanje teksta sa slike.
 Dodatni pružaoci prepoznavanja se mogu dobiti instaliranjem NVDA dodataka.
 
 Kada koristite komandu za prepoznavanje sadržaja, NVDA prepoznaje sadržaj trenutnog [navigacionog objekta #ObjectNavigation].
@@ -809,17 +813,17 @@ Kada je prepoznavanje završeno, rezultat će biti prikazan u dokumentu koji je 
 Pritiskanje tastera enter aktivira (izvršava klik miša ) tekst na poziciji kursora ako je moguće.
 Pritiskanje tastera ESC odbacuje rezultat prepoznavanja.
 
-++ Windows 10 OCR ++[Win10Ocr]
-Windows 10 uključuje  OCR za puno jezika.
+++ Windows OCR ++[Win10Ocr]
+Windows 10 i novije verzije  uključuju  OCR za puno jezika.
 NVDA može da koristi ovo za prepoznavanje teksta sa slika ili nepristupačnih aplikacija.
 
-Možete podesiti jezik koji ćese koristiti za prepoznavanje u [Windows 10 OCR kategoriji #Win10OcrSettings] [NVDA podešavanja #NVDASettings].
+Možete podesiti jezik koji ćese koristiti za prepoznavanje u [Windows OCR kategoriji #Win10OcrSettings] [NVDA podešavanja #NVDASettings].
 Dodatni jezici se mogu instalirati otvaranjem start menija, biranjem opcije podešavanja, zatim opcije vreme i jezik -> region i jezik a nakon toga izabrati opciju dodaj jezik.
 
-Windows 10 OCR može biti delimično ili potpuno nekompatibilan sa [NVDA vizuelnim poboljšanjima #Vision] ili drugim vizuelnim pomoćnim alatima. Morate onemogućiti ove alate pre nego što započnete proces prepoznavanja.
+Windows OCR može biti delimično ili potpuno nekompatibilan sa [NVDA vizuelnim poboljšanjima #Vision] ili drugim vizuelnim pomoćnim alatima. Morate onemogućiti ove alate pre nego što započnete proces prepoznavanja.
 +
 %kc:beginInclude
-Da prepoznate tekst trenutnog navigacionog objekta koristeći Windows 10 OCR, pritisnite NVDA+r.
+Da prepoznate tekst trenutnog navigacionog objekta koristeći Windows OCR, pritisnite NVDA+r.
 %kc:endInclude
 
 + Posebne karakteristike za aplikacije+[ApplicationSpecificFeatures]
@@ -1789,8 +1793,8 @@ Ton će povećati visinu za svaki razmak, a za tabulator, povećaće visinu jedn
 - Govor i tonovi: Ova opcija čita uvlačenja koristeći obe opcije.
 -
 
-+++ Windows 10 OCR podešavanja +++[Win10OcrSettings]
-Podešavanja u ovoj kategoriji vam dozvoljavaju  da podesite [Windows 10 OCR #Win10Ocr].
++++ Windows OCR podešavanja +++[Win10OcrSettings]
+Podešavanja u ovoj kategoriji vam dozvoljavaju  da podesite [Windows OCR #Win10Ocr].
 Ova kategorija sadrži sledeće opcije:
 
 ==== Jezik prepoznavanja ====[Win10OcrSettingsRecognitionLanguage]
@@ -1829,7 +1833,7 @@ Ako imate probleme u brzini jedne ili više aplikacija, preporučujemo da probat
 ==== Koristi UI automation za pristup Microsoft Word kontrolama kada je dostupan====[AdvancedSettingsUseUiaForWord]
 Kada je ova opcija omogućena, NVDA će pokušati da koristi Microsoft UI Automation API za pristupačnost kako bi preuzeo informacije iz Microsoft Word kontrola.
 Ovo uključuje sam Microsoft Word, kao i pregledač poruka i pisanje poruka u programu Microsoft Outlook.
- Za najnovije verzije aplikacije Microsoft Office 2016/365 na windowsu 10, UI Automation podrška je dovoljno kompletna za pružanje pristupa Microsoft Word dokumentima skoro identično već postojećoj NVDA Microsoft Word podršci, uz dodatu prednost velikog poboljšanja u brzini.
+ Za najnovije verzije aplikacije Microsoft Office 2016/365 na windowsu 10 i novijim, UI Automation podrška je dovoljno kompletna za pružanje pristupa Microsoft Word dokumentima skoro identično već postojećoj NVDA Microsoft Word podršci, uz dodatu prednost velikog poboljšanja u brzini.
 Ali, moguće je da postoje određene informacije koje ili nisu pružene, ili su neispravne u određenim verzijama aplikacije Microsoft Office, što znači da se na ovu UI automation podršku ne može uvek u potpunosti osloniti.
 I dalje ne preporučujemo većini korisnika da ovo uključe, ali preporučujemo korisnicima aplikacije Office 2016/365 da testiraju ovu opciju i pruže dodatne informacije.
 
@@ -1844,6 +1848,14 @@ Izborni okvir ima sledeće opcije:
 - Samo kada je neophodna: Kada NVDA ne može da ima direktan pristup procesu pretraživača i koristi IA2 a UIA podrška je dostupna, NVDA će koristiti ovu podršku.
 - Da: Ako pretraživač učini da UIA podrška bude dostupna, NVDA će je koristiti.
 - Ne: Ne koristi UIA podršku, čak iako NVDA nema pristup procesu. Ovo može biti korisno za programere koji žele da otkriju problem u podršci IA2 i žele da budu sigurni da NVDA neće koristiti UIA podršku.
+-
+
+==== Omogući eksperimentalnu podršku za ARIA napomene  ====[Annotations]
+Koristi se da bi se omogućile opcije koje dodaju eksperimentalnu podršku za ARIA napomene.
+Neke od ovih opcija mogu biti nepotpune.
+Sledeće opcije su dostupne: 
+- "Prijavi detalje u režimu pretraživanja": Omogućava prijavljivanje kada objekat sadrži detalje u režimu pretraživanja.
+Prijavljivanje kratkog opisa ovih detalja se može izvršiti dodavanjem prečice u dijalogu [ulaznih komandi  #InputGestures].
 -
 
 ==== koristi UI automation za pristup Microsoft Excel kontrolama ćelija kada je dostupan ====[UseUiaForExcel]
@@ -1867,11 +1879,10 @@ U nesigurnim okruženjima, možete privremeno onemogućiti [izgovor ukucanih zna
 ==== Algoritam razlikovanja teksta ====[DiffAlgo]
 Ovo podešavanje određuje kako će NVDA razlikovati novi tekst koji treba da se izgovori u Terminalu.
 Ovaj izborni okvir ima sledeće opcije:
-- Automatski: Od NVDA verzije 2021.1, ova opcija ima istu funkciju kao i opcija Difflib.
-U budućim nadogradnjama, možda će biti promenjena u Diff Match Patch nakon uspešnog testiranja od strane korisnika.
+- Automatski: Od NVDA verzije 2021.2, ova opcija ima istu funkciju kao i opcija Dozvoli algoritam Diff Match Patch.
 - Dozvoli algoritam Diff Match Patch: Ova opcija izaziva da NVDA računa razlike u tekstu po znakovima.
 Možda će poboljšati brzinu kada se veći delovi teksta pojavljuju u konzoli kao i poboljšati preciznost prijavljivanja promenjenih znakova u sredini reda.
-Ali, možda je nekompatibilna sa nekim aplikacijama.
+Ali, možda je nekompatibilna sa nekim aplikacijama, tako da se DiffMatchPatch ne koristi uvek.
 Ova opcija je podržana u Windows konzoli na Windowsu 10 verziji 1607 i novijim.
 Takođe, možda će biti dostupna na drugim terminalima na starijim verzijama Windowsa.
 - Nateraj korišćenje algoritma Difflib: Ova opcija izaziva da NVDA računa razlike u tekstu u zavisnosti od reda.
@@ -2251,7 +2262,7 @@ Za opširniju listu besplatnih i komercionalnih sintetizatora koje možete preuz
 
 ++ eSpeak NG ++[eSpeakNG]
 [eSpeak NG https://github.com/espeak-ng/espeak-ng] je ugrađen u NVDA i ne zahteva posebne komponente ili drajvere.
-Na Windowsu 7, 8 i 8.1, NVDA koristi eSpeak NG po podrazumevanim podešavanjima  ([Windows OneCore #OneCore] se koristi na Windowsu 10 po podrazumevanim podešavanjima).
+Na Windowsu 7, 8 i 8.1, NVDA koristi eSpeak NG po podrazumevanim podešavanjima  ([Windows OneCore #OneCore] se koristi na Windowsu 10 i novijim po podrazumevanim podešavanjima).
 Budući da je ovaj sintetizator ugrađen u NVDA, ovo je odličan izbor kada se NVDA pokreće sa USB memorije na drugim sistemima.
 
 Svaki glas koji dolazi sa sintezom Espeak NG govori drugi jezik.
@@ -2285,9 +2296,9 @@ Da biste koristili ove glasove, morate da instalirate dve komponente:
 -
 
 ++ Windows OneCore glasovi ++[OneCore]
-Windows 10 uključuje nove glasove poznati i kao "OneCore" ili  "Mobilni" glasovi.
+Windows 10 i noviji uključuju nove glasove poznati i kao "OneCore" ili  "Mobilni" glasovi.
 Glasovi su ponuđeni za puno jezika, i oni su brži od Microsoft glasova dostupni korišćenjem opcije Microsoft Speech API verzija  5.
-Na Windowsu 10, NVDA koristi Windows OneCore glasove po podrazumevanim podešavanjima ([eSpeak NG #eSpeakNG] se koristi na drugim verzijama).
+Na Windowsu 10 i novijim, NVDA koristi Windows OneCore glasove po podrazumevanim podešavanjima ([eSpeak NG #eSpeakNG] se koristi na drugim verzijama).
 
 Da biste dodali nove Windows OneCore glasove, posetite "podešavanja govora", u Windows podešavanjima sistema. 
 Koristite opciju "Dodaj glasove" i pretražite željene jezike.
@@ -2504,7 +2515,7 @@ Ako povezujete brajeve redove koji ne koriste hid preko usb veze, morate instali
 VarioUltra i Pronto! brajični redovi koriste HID.
 Refreshabraille i Orbit Reader 20 mogu koristiti HID ako su podešeni na određeni način.
 
- USB serijski način u Orbit Reader 20 brajevom redu, trenutno je podržan samo u Windows 10 operativnom sistemu.
+ USB serijski način u Orbit Reader 20 brajevom redu, trenutno je podržan samo na  Windows 10 operativnom sistemu i novijim.
 Umesto toga, trebali biste koristiti USB HID.
 
 Slede prečice za ovaj brajev red za korišćenje uz pomoć NVDA.
@@ -3107,7 +3118,7 @@ Molimo pogledajte dokumentaciju brajevog reda za opis i raspored ovih tastera.
 
 ++ Nattiq nBraille redovi ++[NattiqTechnologies]
 NVDA podržava redove kompanije [Nattiq Technologies https://www.nattiq.com/] kada se povežu putem USB-a.
-Windows 10 prepoznaje redove kada se povežu, možda ćete morati da instalirate drajvere ako koristite starije verzije Windowsa (starije od Win10).
+Windows 10 i noviji prepoznaju redove kada se povežu, možda ćete morati da instalirate drajvere ako koristite starije verzije Windowsa (starije od Win10).
 Možete ih preuzeti sa sajta proizvođača.
 
 Slede komande za Nattiq Technologies redove uz NVDA.
