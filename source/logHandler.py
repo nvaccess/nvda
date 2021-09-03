@@ -106,9 +106,13 @@ def getCodePath(f):
 def shouldPlayErrorSound() -> bool:
 	"""Indicates if an error sound should be played when an error is logged.
 	"""
-	
+	import nvwave
+	if not not nvwave.isInError:
+		if nvwave._isDebugForNvWave():
+			log.debug("No beep for log; nvwave is in error state")
+		return False
+
 	import config
-	
 	# Only play the error sound if this is a test version or if the config states it explicitly.
 	return (
 		buildVersion.isTestVersion

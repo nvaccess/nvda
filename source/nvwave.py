@@ -130,6 +130,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 	When not using the preferred device, when idle devices will be checked to see if the preferred
 	device has become available again. If so, it will be re-instated.
 	"""
+	#: Static variable, if any one WavePlayer instance is in error due to a missing / changing audio device
+	# the error applies to all instances
+	audioDeviceError_static: bool = False
 	#: Minimum length of buffer (in ms) before audio is played.
 	MIN_BUFFER_MS = 300
 	#: Flag used to signal that L{stop} has been called.
@@ -307,10 +310,12 @@ class WavePlayer(garbageHandler.TrackedObject):
 					self.open()
 				else:
 					log.warning(f"Unable to open WAVE_MAPPER device, there may be no audio devices.")
+					WavePlayer.audioDeviceError_static = True
 					raise  # can't open the default device.
 				return
 			self._waveout: typing.Optional[int] = waveout.value
 			self._prev_whdr = None
+			WavePlayer.audioDeviceError_static = False
 
 	def feed(
 			self,
@@ -528,6 +533,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 				f" with id: {self._outputDeviceID}",
 				stack_info=True
 			)
+		WavePlayer.audioDeviceError_static = True
 		self._close()
 
 	def _safe_winmm_call(
@@ -602,8 +608,11 @@ def outputDeviceNameToID(name: str, useDefaultIfInvalid=False) -> int:
 	else:
 		raise LookupError("No such device name")
 
-fileWavePlayer = None
-fileWavePlayerThread=None
+
+fileWavePlayer: Optional[WavePlayer] = None
+fileWavePlayerThread = None
+
+
 def playWaveFile(fileName, asynchronous=True):
 	"""plays a specified wave file.
 	@param asynchronous: whether the wave file should be played asynchronously
@@ -640,3 +649,8 @@ def _cleanup():
 	global fileWavePlayer, fileWavePlayerThread
 	fileWavePlayer = None
 	fileWavePlayerThread = None
+
+
+@property
+def isInError() -> bool:
+	return WavePlayer.audioDeviceError_static
