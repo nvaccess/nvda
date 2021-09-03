@@ -60,6 +60,17 @@ NVDA 中的COM 注册修复工具现在能够解决更多的系统问题。
 -
 
 
+== 简体中文翻译条目更改 ==
+为持续优化 NVDA 的简体中文用户体验，我们在本版对相关翻译条目进行了以下更改，现将重要更改条目列举如下：
+
+
+添加了以下默认快捷键：
+| 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
+| 移动导航对象到上一个对象 | NVDA + 小键盘数字9 | NVDA + Shift + 上翻页 | 移动导航对象到上一个对象（跨越对象层级） |
+| 移动导航对象到下一个对象 | NVDA + 小键盘数字3 | NVDA + Shift + 下翻页 | 移动导航对象到下一个对象（跨越对象层级） |
+| 在键盘上模拟按下 Application 键 | NVDA + 单引号 | NVDA + 单引号 | 用于缺少该按键的个别键盘（“单引号”一般位于回车键左侧） |
+
+
 == Changes for Developers ==
 - ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SymbolLevel.*`` before 2022.1. (#11856, #12636)
 - ``controlTypes`` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
