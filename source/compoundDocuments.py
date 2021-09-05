@@ -142,7 +142,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 			return None
 		role = obj.role
 		states = obj.states
-		if role == controlTypes.Role.LINK and controlTypes.STATE_LINKED not in states:
+		if role == controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
 			# Named link destination, not a link that can be activated.
 			return None
 		field = textInfos.ControlField()
