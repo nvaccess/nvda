@@ -892,10 +892,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj, True)
 		except COMError:
-			log.exception("Can't scroll")
-			pass
-
-
+			log.debugWarning("Can't scroll", exc_info=True)
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE: 
