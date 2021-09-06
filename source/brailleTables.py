@@ -419,10 +419,10 @@ addTable("ro.ctb", _("Romanian"))
 addTable("ru.ctb", _("Russian computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ru-litbrl.ctb", _("Russian literary braille"), input=False)
+addTable("ru-litbrl.ctb", _("Russian literary braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ru-litbrl-detailed.utb", _("Russian literary braille (detailed)"), input=False)
+addTable("ru-litbrl-detailed.utb", _("Russian literary braille (detailed)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ru-ru-g1.ctb", _("Russian contracted braille"), contracted=True, input=False)
