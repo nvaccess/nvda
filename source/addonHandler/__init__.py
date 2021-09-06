@@ -16,6 +16,7 @@ import shutil
 from io import StringIO
 import pickle
 from six import string_types
+import typing
 import globalVars
 import zipfile
 from configobj import ConfigObj
@@ -237,17 +238,18 @@ def _getAvailableAddonsFromPath(path, isFirstLoad=False):
 _availableAddons = collections.OrderedDict()
 
 
-def getAvailableAddons(refresh=False, filterFunc=None, isFirstLoad=False):
+def getAvailableAddons(
+		refresh: bool = False,
+		filterFunc: typing.Optional[typing.Callable[["Addon"], bool]] = None,
+		isFirstLoad: bool = False
+) -> typing.Generator["Addon", None, None]:
 	""" Gets all available addons on the system.
 	@param refresh: Whether or not to query the file system for available add-ons.
-	@type refresh: bool
 	@param filterFunc: A function that allows filtering of add-ons.
-		It takes an L{Addon} as its only argument
-		and returns a C{bool} indicating whether the add-on matches the provided filter.
-	@type filterFunc: callable
+	It takes an L{Addon} as its only argument
+	and returns a C{bool} indicating whether the add-on matches the provided filter.
 	: isFirstLoad: Should add-ons that are pending installations / removal from the file system
 	be installed / removed.
-	@rtype generator of Addon instances.
 	"""
 	if filterFunc and not callable(filterFunc):
 		raise TypeError("The provided filterFunc is not callable")
