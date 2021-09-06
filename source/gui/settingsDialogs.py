@@ -85,6 +85,13 @@ class SettingsDialog(
 
 	class MultiInstanceError(RuntimeError): pass
 
+	class MultiInstanceErrorWithDialog(MultiInstanceError):
+		dialog: 'SettingsDialog'
+
+		def __init__(self, dialog: 'SettingsDialog', *args: object) -> None:
+			self.dialog = dialog
+			super().__init__(*args)
+
 	class DialogState(IntEnum):
 		CREATED = 0
 		DESTROYED = 1
@@ -110,7 +117,10 @@ class SettingsDialog(
 				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
 			)
 		if state is cls.DialogState.CREATED and not multiInstanceAllowed:
-			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+			raise SettingsDialog.MultiInstanceErrorWithDialog(
+				firstMatchingInstance,
+				"Only one instance of SettingsDialog can exist at a time",
+			)
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
 			# keeping it alive.
