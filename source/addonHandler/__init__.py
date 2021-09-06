@@ -28,6 +28,8 @@ import winKernel
 import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
+import buildVersion
+
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -105,8 +107,10 @@ class AddonsState(collections.UserDict):
 state = AddonsState()
 
 
-def saveState():
-	state.save()
+# Deprecated - use `state.save` instead.
+if buildVersion.version_year < 2022:
+	def saveState():
+		state.save()
 
 
 def getRunningAddons():
@@ -156,7 +160,7 @@ def initialize():
 	disableAddonsIfAny()
 	getAvailableAddons(refresh=True, isFirstLoad=True)
 	state.cleanupRemovedDisabledAddons()
-	saveState()
+	state.save()
 
 
 def terminate():
@@ -270,7 +274,7 @@ def installAddonBundle(bundle):
 		addon.completeRemove(runUninstallTask=False)
 		raise AddonError("Installation failed")
 	state['pendingInstallsSet'].add(bundle.manifest['name'])
-	saveState()
+	state.save()
 	return addon
 
 class AddonError(Exception):
@@ -353,7 +357,7 @@ class Addon(AddonBase):
 			# However, if the addon is disabled, then it needs to remain disabled so that
 			# the status in addonsManager continues to say "disabled"
 			state['pendingDisableSet'].discard(self.name)
-		saveState()
+		state.save()
 
 	def completeRemove(self,runUninstallTask=True):
 		if runUninstallTask:
@@ -380,7 +384,7 @@ class Addon(AddonBase):
 		state["disabledAddons"].discard(self.name)
 		state['pendingRemovesSet'].discard(self.name)
 		_blockedAddons.discard(self.name)
-		saveState()
+		state.save()
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
@@ -436,7 +440,7 @@ class Addon(AddonBase):
 			elif self.name not in state["disabledAddons"]:
 				state["pendingDisableSet"].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
-		saveState()
+		state.save()
 
 	@property
 	def isRunning(self):
