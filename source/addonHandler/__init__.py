@@ -94,7 +94,7 @@ class AddonsState(collections.UserDict):
 			self.removeStateFile()
 
 	def cleanupRemovedDisabledAddons(self) -> None:
-		"""Versions of NVDA before 2021.3 failed to remove add-on from list of disabled add-ons
+		"""Versions of NVDA before #12792 failed to remove add-on from list of disabled add-ons
 		during uninstallation. As a result after reinstalling add-on with the same name it was disabled
 		by default confusing users. Fix this by removing all add-ons no longer present in the config
 		from the list of disabled add-ons in the state."""
