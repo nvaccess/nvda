@@ -68,8 +68,12 @@ class AddonsState(collections.UserDict):
 			with open(self.statePath, "rb") as f:
 				state = pickle.load(f)
 				self.update(state)
-		except (IOError, pickle.UnpicklingError):
-			pass
+		except FileNotFoundError:
+			pass  # Clean config - no point logging in this case
+		except IOError:
+			log.debug("Error when reading state file", exc_info=True)
+		except pickle.UnpicklingError:
+			log.debugWarning("Failed to unpickle state", exc_info=True)
 
 	def removeStateFile(self) -> None:
 		try:
