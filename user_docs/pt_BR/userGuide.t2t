@@ -66,7 +66,7 @@ Para mais detalhes, pode [ver a licença completa ""[em inglês]"" https://www.g
 Para detalhes sobre exceções, acesse o documento de licença no menu do NVDA na seção "ajuda".
 
 + Requisitos de Sistema +[SystemRequirements]
-- Sistemas Operacionais: todas as edições de 32-bit e 64-bit do Windows 7, Windows 8, Windows 8.1, Windows 10 e todos os sistemas operacionais de servidor a partir do Windows Server 2008 R2;
+- Sistemas Operacionais: todas as edições de 32-bit e 64-bit do Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, e todos os sistemas operacionais de servidor a partir do Windows Server 2008 R2;
  - Para o Windows 7, o NVDA requer Service Pack 1 ou superior;
  - Para o Windows Server 2008 R2, é requerido o Service Pack 1 ou superior.
 - pelo menos 150 MB de espaço de armazenamento.
@@ -789,15 +789,19 @@ Quando o Realce Visual está habilitado na [categoria visão #VisionSettings] do
 ++ Cortina de Tela ++[VisionScreenCurtain]
 Como usuário cego ou com deficiência visual, normalmente não é possível ou necessário ver o conteúdo da tela.
 Além disso, pode ser difícil garantir que não haja alguém olhando por cima do seu ombro.
-Para essa situação, o NVDA contém um recurso chamado "cortina de tela", que pode ser habilitado para tornar a tela preta.
+Para essa situação, o NVDA contém um recurso chamado "Cortina de Tela", que pode ser habilitado para tornar a tela preta.
 
 Pode habilitar a Cortina de Tela na [categoria visão #VisionSettings] do diálogo [Configurações do NVDA #NVDASettings].
 
-Quando a cortina de tela está ativa, algumas tarefas diretamente baseadas no que aparece na tela, como executar [OCR #Win10Ocr] ou tirar uma captura de tela, não podem ser realizadas.
+Quando a Cortina de Tela está ativa, algumas tarefas diretamente baseadas no que aparece na tela, como executar [OCR #Win10Ocr] ou tirar uma captura de tela, não podem ser realizadas.
+
+Devido a uma alteração na API ""[Interface de Programação de Aplicativos]"" de Ampliação do Windows, a Cortina de Tela teve que ser atualizada para oferecer suporte às versões mais recentes do Windows.
+Use o NVDA 2021.2 para ativar a Cortina de Tela com o Windows 10 21H2 (10.0.19044) ou posterior.
+Por motivos de segurança, ao usar uma nova versão do Windows, obtenha a confirmação visual de que a Cortina de Tela torna a tela totalmente preta.
 
 + Reconhecimento de Conteúdo +[ContentRecognition]
 Quando os autores não fornecem informações suficientes para os usuários de leitores de telas com vistas a determinar o conteúdo de alguma coisa, várias ferramentas podem ser usadas para tentar reconhecer o conteúdo de uma imagem.
-O NVDA suporta a funcionalidade de reconhecimento óptico de caracteres (OCR) integrada no Windows 10 para reconhecer textos oriundos de imagens.
+O NVDA suporta a funcionalidade de reconhecimento óptico de caracteres (OCR) integrada no Windows 10 e posterior para reconhecer textos oriundos de imagens.
 Reconhecedores adicionais de conteúdo podem ser fornecidos através de complementos para o NVDA.
 
 Quando você usa um comando de reconhecimento de conteúdo, o NVDA reconhece o conteúdo do [objeto de navegação #ObjectNavigation] atual.
@@ -809,17 +813,17 @@ Uma vez que o reconhecimento esteja completo, o resultado será apresentado num 
 Pressionando enter ou espaço, ativará (clica normalmente) se possível, o texto sob o cursor.
 Pressionando escape descarta o resultado do reconhecimento.
 
-++ OCR do Windows 10 ++[Win10Ocr]
-O Windows 10 inclui OCR para vários idiomas.
+++ OCR do Windows ++[Win10Ocr]
+O Windows 10 e posterior inclui OCR para vários idiomas.
 O NVDA pode usá-lo para reconhecer textos contidos em imagens ou aplicativos inacessíveis.
 
-É possível definir o idioma a ser usado para o reconhecimento de textos na [categoria OCR do Windows 10 #Win10OcrSettings] do diálogo [Configurações do NVDA #NVDASettings].
+É possível definir o idioma a ser usado para o reconhecimento de textos na [categoria OCR do Windows #Win10OcrSettings] do diálogo [Configurações do NVDA #NVDASettings].
 Idiomas Adicionais podem ser instalados abrindo o menu Iniciar, escolhendo Configurações, selecionando Hora & Idioma -> Região & Idioma e em seguida, selecionando Adicionar um idioma.
 
-O OCR do Windows 10 pode ser parcial ou totalmente incompatível com os [aprimoramentos de visão do NVDA #Vision] ou outros recursos visuais externos. Você precisará desativar esses recursos antes de prosseguir com o reconhecimento.
+O OCR do Windows pode ser parcial ou totalmente incompatível com os [aprimoramentos de visão do NVDA #Vision] ou outros recursos visuais externos. Você precisará desativar esses recursos antes de prosseguir com o reconhecimento.
 
 %kc:beginInclude
-Para reconhecer o texto no objeto de navegação atual usando o OCR do Windows 10, pressione NVDA+r.
+Para reconhecer o texto no objeto de navegação atual usando o OCR do Windows, pressione NVDA+r.
 %kc:endInclude
 
 + Recursos do NVDA para Aplicações Específicas +[ApplicationSpecificFeatures]
@@ -1179,12 +1183,6 @@ Tecla: NVDA+p
 Essa opção permite-lhe escolher a quantidade de pontuação e outros símbolos que devem ser falados como palavras.
 Por exemplo, quando selecionado tudo, todos os símbolos serão falados como palavras.
 Isso é aplicado a todos os sintetizadores, não apenas ao que está atualmente em uso.
-
-==== Falar toda a pontuação e símbolos ao explorar por palavra ====[SpeechSettingsSymbolLevelWord]
-
-Ao explorar ""[revisar]"" o texto por palavra, geralmente é desejável obter mais detalhes do que ao ler uma frase inteira.
-Quando marcado (por padrão), o NVDA fala o nome de todas as pontuações e outros símbolos ao explorar por palavra, como se o grau acima estivesse definido para "tudo".
-Nota: Em qualquer caso, ao explorar o texto por caractere, o NVDA sempre relata o nome da pontuação e outros símbolos.
 
 ==== Confiar no idioma da voz ao processar caracteres e símbolos ====[SpeechSettingsTrust]
 Por padrão, esta opção diz ao NVDA se o idioma da voz atual pode ser confiável ao processar símbolos e caracteres.
@@ -1795,8 +1793,8 @@ O som aumentará de tom a cada espaço e, para um tab, ele aumentará o tom de f
 - Fala e sons: esta opção fará anunciar a indentação usando os 2 métodos citados acima.
 -
 
-+++ Configurações de OCR do Windows 10 +++[Win10OcrSettings]
-As opções nessa categoria permitem configurar o [OCR do Windows 10 #Win10Ocr].
++++ Configurações de OCR do Windows +++[Win10OcrSettings]
+As opções nessa categoria permitem configurar o [OCR do Windows #Win10Ocr].
 Essa categoria contém as seguintes opções:
 
 ==== Idioma de reconhecimento ====[Win10OcrSettingsRecognitionLanguage]
@@ -1835,7 +1833,7 @@ Se você tiver problemas de desempenho em um ou mais aplicativos, recomendamos q
 ==== Use UI automation [Automação da Interface do Usuário] para acessar os controles de documentos do Microsoft Word quando disponíveis ====[AdvancedSettingsUseUiaForWord]
 Quando essa opção está habilitada, o NVDA tentará utilizar a API ""[Interface de Programação de Aplicativos]"" de acessibilidade da Microsoft UI Automation ""[Automação da Interface do Usuário]"" para obter informações dos controles de documentos do Microsoft Word.
 Isso inclui o próprio Microsoft Word, e também o visualizador e compositor de mensagens do Microsoft Outlook.
- Para as versões mais recentes do Microsoft Office 2016/365 em execução no Windows 10, o suporte de UI Automation está completo o suficiente para fornecer acesso a documentos do Microsoft Word quase iguais ao suporte do Microsoft Word existente do NVDA, com a vantagem adicional de aumentar significativamente a capacidade de resposta.
+ Para as versões mais recentes do Microsoft Office 2016/365 em execução no Windows 10 e posterior, o suporte de UI Automation está completo o suficiente para fornecer acesso a documentos do Microsoft Word quase iguais ao suporte do Microsoft Word existente do NVDA, com a vantagem adicional de aumentar significativamente a capacidade de resposta.
 No entanto, pode haver algumas informações que não são expostas ou expostas incorretamente em algumas versões do Microsoft Office, o que significa que esse suporte de UI automation nem sempre pode ser invocado.
 Ainda não recomendamos que a maioria dos usuários ative isso por padrão, embora acolhemos os usuários do Office 2016/365 para testar esse recurso e fornecer retroinformação ""[feedback]"".
 
@@ -2263,7 +2261,7 @@ Se deseja uma lista mais extensa de sintetizadores gratuitos e comerciais que vo
 
 ++ eSpeak NG ++[eSpeakNG]
 O sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng] é embutido diretamente no NVDA e não requer para ser instalado nenhum outro driver ou componente especial.
-No Windows 7, 8 e 8.1, o NVDA usa o eSpeak NG por padrão ([Windows OneCore #OneCore] é usado no Windows 10 por padrão).
+No Windows 7, 8 e 8.1, o NVDA usa o eSpeak NG por padrão ([Windows OneCore #OneCore] é usado no Windows 10 e posterior por padrão).
 Por ter sido integrado ao NVDA, ele é uma boa escolha para quando se executa o NVDA num dispositivo de armazenamento USB em outros sistemas.
 
 Cada voz que vem com o eSpeak NG fala um idioma diferente.
@@ -2297,9 +2295,9 @@ Para usá-las, você necessitará instalar dois componentes:
 -
 
 ++ Vozes Windows OneCore ++[OneCore]
-O Windows 10 inclui novas vozes conhecidas como "OneCore" ou vozes "mobile" ""[móveis]"".
+O Windows 10 e posterior inclui vozes conhecidas como "OneCore" ou vozes "mobile" ""[móveis]"".
 As vozes são fornecidas para vários idiomas e são mais responsivas do que as vozes da Microsoft disponíveis via Microsoft Speech API versão 5.
-No Windows 10, o NVDA usa as vozes Windows OneCore por padrão ([eSpeak NG #eSpeakNG] é usado em outras versões).
+No Windows 10 e posterior, o NVDA usa as vozes Windows OneCore por padrão ([eSpeak NG #eSpeakNG] é usado em outras versões).
 
 Para adicionar novas vozes Windows OneCore, vá para "Configurações de fala", nas configurações do sistema do Windows.
 Use a opção "Adicionar vozes" e procure o idioma desejado.
@@ -2516,7 +2514,7 @@ Caso queira conectar via USB a linhas que não usam HID ""[Dispositivos de Inter
 A VarioUltra e Pronto! usam HID.
 A Refreshabraille e a Orbit Reader 20 podem usar o HID se configurado apropriadamente.
 
-O modo serial USB da Orbit Reader 20 atualmente é suportado apenas no Windows 10.
+O modo serial USB da Orbit Reader 20 atualmente é suportado apenas no Windows 10 e posterior.
 USB HID geralmente deve ser usado em vez disso.
 
 A seguir estão as teclas de comando dessas linhas para o NVDA.
@@ -3119,7 +3117,7 @@ Por favor, consulte a documentação da linha para descrições de onde essas te
 
 ++ Linhas Nattiq nBraille ++[NattiqTechnologies]
 O NVDA suporta linhas da [Nattiq Technologies https://www.nattiq.com/] quando conectada via USB.
-O Windows 10 detecta as Linhas Braille depois de conectada, pode ser necessário instalar controladores ""[drivers]"" USB se você estiver usando versões mais antigas do Windows (abaixo do Win10).
+O Windows 10 e posterior detecta as Linhas Braille depois de conectada, pode ser necessário instalar controladores ""[drivers]"" USB se você estiver usando versões mais antigas do Windows (abaixo do Win10).
 Você pode obtê-los no site do fabricante.
 
 A seguir estão as atribuições de teclas das linhas da Nattiq Technologies com o NVDA.
