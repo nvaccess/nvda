@@ -113,10 +113,13 @@ class AddonsState(collections.UserDict):
 state = AddonsState()
 
 
-# Deprecated - use `state.save` instead.
+# Deprecated - use `state.save` and `state.load` instead.
 if buildVersion.version_year < 2022:
 	def saveState():
 		state.save()
+
+	def loadState():
+		state.load()
 
 
 def getRunningAddons():
