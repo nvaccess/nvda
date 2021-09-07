@@ -45,7 +45,7 @@ _blockedAddons=set()
 
 
 class AddonsState(collections.UserDict):
-	"""Subclasses `collections.UserDict` to preserver backwards compatibility."""
+	"""Subclasses `collections.UserDict` to preserve backwards compatibility."""
 
 	_DEFAULT_STATE_CONTENT = {
 		"pendingRemovesSet": set(),
