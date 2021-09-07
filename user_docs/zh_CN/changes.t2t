@@ -10,7 +10,7 @@ NVDA更新日志
 这包括对“黑屏”功能 的重要修复（详细的请参阅“重要说明”部分）。
 NVDA 中的COM 注册修复工具现在能够解决更多的系统问题。
 内置的语音合成器 eSpeak 和盲文翻译器 LibLouis 也得到了更新。
-此外是一些错误修复和更新，主要是在盲文支持、 Windows 命令终端、计算器、表情符号面板和剪贴板历史记录等方面。
+此外是一些错误修复和改进，主要是在盲文支持、 Windows 命令终端、计算器、表情符号面板和剪贴板历史记录等方面。
 
 
 == 重要说明 ==
@@ -22,64 +22,69 @@ NVDA 中的COM 注册修复工具现在能够解决更多的系统问题。
 
 
 == 新特性 ==
-- Experimental support for ARIA annotations:
-  - adds a command to read a summary of details of an object with aria-details. (#12364)
-  - adds an option in advanced preferences to report if an object has details in browse mode. (#12439) 
+
+- 对 ARIA 注释的实验性支持：
+  - 为拥有 aria-details 属性的对象增加可朗读其详细信息摘要的命令 (#12364)
+  - “高级”选项中增加“在浏览模式下读出对象的详细信息”的选项。 (#12439) 
   -
-- In Windows 10 Version 1909 and later (including Windows 11), NVDA will announce suggestion count when performing searches in File Explorer. (#10341, #12628)
-- In Microsoft Word, NVDA now announces the result of indent and hanging indent shortcuts when executed. (#6269)
+- 在 Windows 10 版本 1909 或其后更新 (包括 Windows 11)中， NVDA 在文件浏览器搜索时将朗读搜索建议数量。 (#10341, #12628)
+- 在Microsoft Word中， 在执行缩进或手型缩进命令时，NVDA 将朗读其结果。  (#6269)
 -
 
 
-== Changes ==
-- Espeak-ng has been updated to 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
-- If article is enabled in the user preferences for document formatting, NVDA announces "article" after the content. (#11103)
-- Updated liblouis braille translator to [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
-  - New braille tables: Bulgarian grade 1, Burmese grade 1, Burmese grade 2, Kazakh grade 1, Khmer grade 1, Northern Kurdish grade 0, Sepedi grade 1, Sepedi grade 2, Sesotho grade 1, Sesotho grade 2, Setswana grade 1, Setswana grade 2, Tatar grade 1, Vietnamese grade 0, Vietnamese grade 2, Southern Vietnamese grade 1, Xhosa grade 1, Xhosa grade 2, Yakut grade 1, Zulu grade 1, Zulu grade 2
+== 改进 ==
+
+- Espeak-ng 更新到1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- 如果选项中的“文档格式”里启用了“文章”选项， NVDA 会在内容前提示“文章”。 (#11103)
+- 更新 liblouis 盲文翻译器到[3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]。 (#12526)
+  - 
+  - 新增盲文表：保加利亚语 1 级盲文，缅甸语 1 级盲文，缅甸语 2 级盲文，哈萨克语 1 级盲文，高棉语 1 级盲文，北库尔德语 0 级盲文，塞佩迪语 1 级盲文，塞佩迪语 2 级盲文，塞索托语 1 级盲文，塞索托语 2 级盲文，塞茨瓦纳语 1 级盲文，塞茨瓦纳语 2 级盲文，鞑靼语 1 级盲文，越南语 0 级盲文，越南语 2 级盲文，南越语 1 级盲文，科萨语 1 级盲文，科萨语 2 级盲文，雅库特语 1 级盲文，祖鲁语 1 级盲文，祖鲁语 2 级盲文。
   -
-- Windows 10 OCR was renamed to Windows OCR. (#12690)
+- Windows 10 OCR 已重命名为 Windows OCR. (#12690)
 -
 
 
-== Bug Fixes ==
-- In Windows 10 Calculator, NVDA will announce calculator expressions on a braille display. (#12268)
-- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
-  - Diff Match Patch now enabled by default. (#12485)
-  -
-- The braille input works properly with the following contracted tables: Arabic grade 2, Spanish grade 2, Urdu grade 2, Chinese (China, Mandarin) grade 2. (#12541)
-- The COM Registration Fixing Tool now resolves more issues, especially on 64 bit Windows. (#12560)
-- Improvements to button handling for the Seika Notetaker braille device from Nippon Telesoft. (#12598)
-- Improvements to announcing the Windows emoji panel and clipboard history. (#11485)
-- Updated the Bengali alphabet character descriptions. (#12502)
-- NVDA exits safely when a new process is started. (#12605)
-- Reselecting the Handy Tech braille display driver from the Select Braille Display dialog no longer causes errors. (#12618)
-- Windows version 10.0.22000 or later is recognized as Windows 11, not Windows 10. (#12626)
-- Screen curtain support has been fixed and tested for Windows versions up until 10.0.22000. (#12684)
-- If no results are shown when filtering input gestures, the input gesture configuration dialog continues to work as expected. (#12673)
-- Fixed a bug where the first menu item of a submenu is not announced in some contexts. (#12624)
+== 错误修复 ==
+
+- 在 Windows 10 计算器中，NVDA 可以在盲文点显器上显示计算表达式。 (#12268)
+- 在 Windows 10 版本1607 及更高版本的命令行终端内删除中间字符时，不再朗读其后面的字符。 (#3200)
+  - Diff Match Patch 现在默认启用。 (#12485)
+- 盲文输入适用于以下盲文表： 阿拉伯语 2 级盲文，西班牙语 2 级盲文，乌尔都语 2 级盲文，中文中国汉语双拼盲文。(#12541)
+- COM注册修复工具现在可以解决更多的问题，尤其是在 64 位的 Windows 上。(#12560)
+- 对 Seika Notetaker （国内的清华 Mini 点显器）的按钮处理进行了改进。(#12598)
+- 改进了 Windows 表情符号面板和剪贴板历史的朗读。(#11485)
+- 更新了孟加拉语字母的字符描述。(#12502)
+- 当一个新进程启动时，NVDA 可安全退出。(#12605)
+- 从 “选择盲文点显器”对话框中重新选择 Handy Tech 盲文点显器驱动程序不再导致错误。(#12618)
+- Windows版本10.0.22000或更高版本被识别为Windows 11，而不是Windows 10。(#12626)
+- 对黑屏功能的支持已经得到修复，并对10.0.22000之前的Windows版本进行了测试。(#12684)
+- 即使在过滤按键或手势时没有显示结果，按键与手势配置对话框将继续按预期工作。(#12673)
+- 修正了在某些情况下，上下文菜单的第一个子菜单菜单项不会被正常朗读的错误。(#12624)
 -
 
 
 == 简体中文翻译条目更改 ==
+
 为持续优化 NVDA 的简体中文用户体验，我们在本版对相关翻译条目进行了以下更改，现将重要更改条目列举如下：
 
-
-添加了以下默认快捷键：
+- 统一了所有盲文表的数字格式（如： 西班牙语 2 级盲文）。
+- 对升级日志中的“插件以及NVDA核心开发者需要了解的变动”部分进行了翻译。
+- 添加了以下默认快捷键：
 | 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
 | 移动导航对象到上一个对象 | NVDA + 小键盘数字9 | NVDA + Shift + 上翻页 | 移动导航对象到上一个对象（跨越对象层级） |
 | 移动导航对象到下一个对象 | NVDA + 小键盘数字3 | NVDA + Shift + 下翻页 | 移动导航对象到下一个对象（跨越对象层级） |
-| 在键盘上模拟按下 Application 键 | NVDA + 单引号 | NVDA + 单引号 | 用于缺少该按键的个别键盘（“单引号”一般位于回车键左侧） |
+| 在键盘上模拟按下 Application 键 | NVDA + 单引号 | NVDA + 单引号 | 用于缺少该按键的个别键盘（“单引号”一般位于分号键右侧） |
 
 
-== Changes for Developers ==
-- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SymbolLevel.*`` before 2022.1. (#11856, #12636)
-- ``controlTypes`` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
-  - ``ROLE_*`` and ``STATE_*`` constants should be replaced to their equivalent ``Role.*`` and ``State.*``.
-  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` have been deprecated, usages such as ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
-  - ``processPositiveStates`` and ``processNegativeStates`` have been deprecated for removal.
+== 插件以及NVDA核心开发者需要了解的变动 ==
+- ``characterProcessing.SYMLVL_*``常量应该在2022.1之前使用其等价的``SymbolLevel.*``来替换。(#11856, #12636)
+- `controlTypes'已经被分割成不同的子模块，标记为 deprecation  的必须在2022.1之前替换。(#12510)
+  - `ROLE_*`和`STATE_*`常量应该被替换为其对应的`Role.*`和`State.*`。
+  - ``roleLabels``, ``stateLabels`` 和``negativeStateLabels`` 已经被弃用， 用法如 ``roleLabels[ROLE_*]`` 应该用 ``Role.*.displayString`` 或 ``State.*.negativeDisplayString`` 代替。
+  - `processPositiveStates'和`processNegativeStates'已经被弃用删除。
   -
-- On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
-- Deprecated: ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` will be removed in 2022.1, there is no direct replacement. (#12544)
+- 在Windows 10版本1511及以后的版本（包括Insider Preview构建），当前的Windows功能更新版本名称从Windows注册表获得。(#12509)
+- 弃用：``winVersion.WIN10_RELEASE_NAME_TO_BUILDS``将在2022.1中被移除，没有直接的替代函数。(#12544)
 -
 
 
@@ -131,7 +136,13 @@ NVDA 中的COM 注册修复工具现在能够解决更多的系统问题。
 - 恢复了对 Outlook 2010 消息列表的朗读支持。 (#12241)
 - 在 Windows 10 版本1607 及更高版本的命令行终端内删除中间字符时，不再朗读其后面的字符。 (#3200)
   - 译者注： VIM 编辑器下此特性可能尤其重要。
+<<<<<<< .mine
+  - 此实验性特性紧可通过 NVDA 的“高级设置”面板把差分算法设置为“diff match pattern”启用。
+||||||| .r62419
+  - 此实验性特性紧可通过 NVDA 的“高级设置”面板把差分算法设置为“差异匹配修补”启用。
+=======
   - 此实验性特性需要在 NVDA 的“高级设置”面板将“Diff 算法”设置为“允许 Diff Match Patch”来启用。
+>>>>>>> .r62604
 - 当在 Microsoft Outlook 中，使用 shift+tab 从“消息”切换到“主题”时不在朗读冗余的缩进距离。 (#10254)
 - 在 Python 控制台中， 现在可为非空行增加制表符做行首缩进，也可在中间的行使用 tab 键进行自动缩进。 (#11532)
 - 在关闭“屏幕布局”的情况下，格式信息和其他可浏览的信息中不再出现多余的空行。 (#12004)
