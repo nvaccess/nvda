@@ -34,6 +34,7 @@ A detailed explanation of this checklist is available here:
 https://github.com/nvaccess/nvda/blob/master/devDocs/githubPullRequestTemplateExplanationAndExamples.md#code-review-checklist
 -->
 
+<<<<<<< HEAD
 - [ ] Pull Request description:
   - description is up to date
   - change log entries
@@ -41,6 +42,7 @@ https://github.com/nvaccess/nvda/blob/master/devDocs/githubPullRequestTemplateEx
   - Unit tests
   - System (end to end) tests
   - Manual testing
+- [ ] API is compatible with existing addons.
 - [ ] Documentation:
   - User Documentation
   - Context sensitive help for GUI changes
