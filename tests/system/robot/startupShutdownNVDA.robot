@@ -26,6 +26,12 @@ Starts
 	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
 	NVDA_Starts	# run test
 
+Starts from desktop shortcut
+	[Documentation]	Ensure that NVDA can start from desktop shortcut
+	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
+	Pass Execution If	"${whichNVDA}"!="installed"	Desktop shortcut only exists on installed copies
+	test desktop shortcut
+
 Quits from keyboard
 	[Documentation]	Starts NVDA and ensures that it can be quit using the keyboard
 	quits_from_keyboard	# run test

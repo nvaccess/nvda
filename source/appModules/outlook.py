@@ -278,7 +278,7 @@ class MessageItem(Window):
 		return controlTypes.Role.LISTITEM
 
 	def _get_states(self):
-		return frozenset([controlTypes.STATE_SELECTED])
+		return frozenset([controlTypes.State.SELECTED])
 
 class AddressBookEntry(IAccessible):
 
@@ -303,7 +303,7 @@ class AutoCompleteListItem(Window):
 	def event_stateChange(self):
 		states=self.states
 		focus=api.getFocusObject()
-		if (focus.role==controlTypes.Role.EDITABLETEXT or focus.role==controlTypes.Role.BUTTON) and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
+		if (focus.role==controlTypes.Role.EDITABLETEXT or focus.role==controlTypes.Role.BUTTON) and controlTypes.State.SELECTED in states and controlTypes.State.INVISIBLE not in states and controlTypes.State.UNAVAILABLE not in states and controlTypes.State.OFFSCREEN not in states:
 			speech.cancelSpeech()
 			text=self.name
 			# Some newer versions of Outlook don't put the contact as the name of the listItem, rather it is on the parent 
@@ -348,7 +348,7 @@ class CalendarView(IAccessible):
 		separatorBuf = ctypes.create_unicode_buffer(bufLength)
 		if ctypes.windll.kernel32.GetLocaleInfoW(
 			languageHandler.LOCALE_USER_DEFAULT,
-			languageHandler.LOCALE_SLIST,
+			languageHandler.LOCALE.SLIST,
 			separatorBuf,
 			bufLength
 		) == 0:
@@ -438,10 +438,10 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 
 	def _get_name(self):
 		textList=[]
-		if controlTypes.STATE_EXPANDED in self.states:
-			textList.append(controlTypes.stateLabels[controlTypes.STATE_EXPANDED])
-		elif controlTypes.STATE_COLLAPSED in self.states:
-			textList.append(controlTypes.stateLabels[controlTypes.STATE_COLLAPSED])
+		if controlTypes.State.EXPANDED in self.states:
+			textList.append(controlTypes.stateLabels[controlTypes.State.EXPANDED])
+		elif controlTypes.State.COLLAPSED in self.states:
+			textList.append(controlTypes.stateLabels[controlTypes.State.COLLAPSED])
 		selection=None
 		if self.appModule.nativeOm:
 			try:
@@ -648,7 +648,7 @@ class OutlookUIAWordDocument(UIAWordDocument, BaseOutlookWordDocument):
 	""" Forces browse mode to be used on the UI Automation Outlook message viewer if the message is being read)."""
 
 	def _get_isReadonlyViewer(self):
-		return controlTypes.STATE_READONLY in self.states
+		return controlTypes.State.READONLY in self.states
 
 	def _get_shouldCreateTreeInterceptor(self):
 		return self.isReadonlyViewer

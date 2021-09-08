@@ -31,7 +31,7 @@ class NotesRichText(IAccessible):
 		return super(NotesRichText,self).shouldAllowIAccessibleFocusEvent
 
 	def _get_treeInterceptorClass(self):
-		if controlTypes.STATE_READONLY in self.states:
+		if controlTypes.State.READONLY in self.states:
 			return virtualBuffers.lotusNotes.LotusNotesRichText
 		raise NotImplementedError
 

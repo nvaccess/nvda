@@ -1,9 +1,15 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 import ctypes
 import re
 import eventHandler
 import keyLabels
 import JABHandler
 import controlTypes
+import textUtils
 from ..window import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
@@ -74,18 +80,18 @@ JABRolesToNVDARoles={
 }
 
 JABStatesToNVDAStates={
-	"busy":controlTypes.STATE_BUSY,
-	"checked":controlTypes.STATE_CHECKED,
-	"focused":controlTypes.STATE_FOCUSED,
-	"selected":controlTypes.STATE_SELECTED,
-	"pressed":controlTypes.STATE_PRESSED,
-	"expanded":controlTypes.STATE_EXPANDED,
-	"collapsed":controlTypes.STATE_COLLAPSED,
-	"iconified":controlTypes.STATE_ICONIFIED,
-	"modal":controlTypes.STATE_MODAL,
-	"multi_line":controlTypes.STATE_MULTILINE,
-	"focusable":controlTypes.STATE_FOCUSABLE,
-	"editable":controlTypes.STATE_EDITABLE,
+	"busy":controlTypes.State.BUSY,
+	"checked":controlTypes.State.CHECKED,
+	"focused":controlTypes.State.FOCUSED,
+	"selected":controlTypes.State.SELECTED,
+	"pressed":controlTypes.State.PRESSED,
+	"expanded":controlTypes.State.EXPANDED,
+	"collapsed":controlTypes.State.COLLAPSED,
+	"iconified":controlTypes.State.ICONIFIED,
+	"modal":controlTypes.State.MODAL,
+	"multi_line":controlTypes.State.MULTILINE,
+	"focusable":controlTypes.State.FOCUSABLE,
+	"editable":controlTypes.State.EDITABLE,
 }
 
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
@@ -174,7 +180,7 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# We need to count the embedded objects to determine which child to use.
 		# This could possibly be optimised by caching.
 		text = self._getTextRange(0, offset + 1)
-		childIndex = text.count(u"\uFFFC") - 1
+		childIndex = text.count(textUtils.OBJ_REPLACEMENT_CHAR) - 1
 		jabContext=self.obj.jabContext.getAccessibleChildFromContext(childIndex)
 		if jabContext:
 			return JAB(jabContext=jabContext)
@@ -294,11 +300,11 @@ class JAB(Window):
 			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
 		if "visible" not in stateStrings:
-			stateSet.add(controlTypes.STATE_INVISIBLE)
+			stateSet.add(controlTypes.State.INVISIBLE)
 		if "showing" not in stateStrings:
-			stateSet.add(controlTypes.STATE_OFFSCREEN)
+			stateSet.add(controlTypes.State.OFFSCREEN)
 		if "expandable" not in stateStrings:
-			stateSet.discard(controlTypes.STATE_COLLAPSED)
+			stateSet.discard(controlTypes.State.COLLAPSED)
 		return stateSet
 
 	def _get_value(self):
@@ -312,7 +318,7 @@ class JAB(Window):
 		return RectLTWH(self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
 
 	def _get_hasFocus(self):
-		if controlTypes.STATE_FOCUSED in self.states:
+		if controlTypes.State.FOCUSED in self.states:
 			return True
 		else:
 			return False
@@ -543,16 +549,16 @@ class ComboBox(JAB):
 
 	def _get_states(self):
 		states=super(ComboBox,self).states
-		if controlTypes.STATE_COLLAPSED not in states and controlTypes.STATE_EXPANDED not in states:
+		if controlTypes.State.COLLAPSED not in states and controlTypes.State.EXPANDED not in states:
 			if self.childCount==1 and self.firstChild and self.firstChild.role==controlTypes.Role.POPUPMENU:
-				if controlTypes.STATE_INVISIBLE in self.firstChild.states:
-					states.add(controlTypes.STATE_COLLAPSED)
+				if controlTypes.State.INVISIBLE in self.firstChild.states:
+					states.add(controlTypes.State.COLLAPSED)
 				else:
-					states.add(controlTypes.STATE_EXPANDED)
+					states.add(controlTypes.State.EXPANDED)
 		return states
 
 	def _get_activeDescendant(self):
-		if controlTypes.STATE_COLLAPSED in self.states:
+		if controlTypes.State.COLLAPSED in self.states:
 			return None
 		return super(ComboBox,self).activeDescendant
 

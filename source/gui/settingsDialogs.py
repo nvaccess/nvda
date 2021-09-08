@@ -8,6 +8,7 @@
 # jakubl7545, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -84,6 +85,13 @@ class SettingsDialog(
 
 	class MultiInstanceError(RuntimeError): pass
 
+	class MultiInstanceErrorWithDialog(MultiInstanceError):
+		dialog: 'SettingsDialog'
+
+		def __init__(self, dialog: 'SettingsDialog', *args: object) -> None:
+			self.dialog = dialog
+			super().__init__(*args)
+
 	class DialogState(IntEnum):
 		CREATED = 0
 		DESTROYED = 1
@@ -109,7 +117,10 @@ class SettingsDialog(
 				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
 			)
 		if state is cls.DialogState.CREATED and not multiInstanceAllowed:
-			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+			raise SettingsDialog.MultiInstanceErrorWithDialog(
+				firstMatchingInstance,
+				"Only one instance of SettingsDialog can exist at a time",
+			)
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
 			# keeping it alive.
@@ -2495,8 +2506,8 @@ class TouchInteractionPanel(SettingsPanel):
 
 
 class UwpOcrPanel(SettingsPanel):
-	# Translators: The title of the Windows 10 OCR panel.
-	title = _("Windows 10 OCR")
+	# Translators: The title of the Windows OCR panel.
+	title = _("Windows OCR")
 	helpId = "Win10OcrSettings"
 
 	def makeSettings(self, settingsSizer):
@@ -2507,7 +2518,7 @@ class UwpOcrPanel(SettingsPanel):
 		languageChoices = [
 			languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang))
 			for lang in self.languageCodes]
-		# Translators: Label for an option in the Windows 10 OCR dialog.
+		# Translators: Label for an option in the Windows OCR dialog.
 		languageLabel = _("Recognition &language:")
 		self.languageChoice = sHelper.addLabeledControl(languageLabel, wx.Choice, choices=languageChoices)
 		self.bindHelpEvent("Win10OcrSettingsRecognitionLanguage", self.languageChoice)
@@ -2660,6 +2671,15 @@ class AdvancedPanelControls(
 		self.annotationsDetailsCheckBox = AnnotationsGroup.addItem(wx.CheckBox(AnnotationsBox, label=label))
 		self.annotationsDetailsCheckBox.SetValue(config.conf["annotations"]["reportDetails"])
 		self.annotationsDetailsCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportDetails"])
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Report aria-description always")
+		self.ariaDescCheckBox: wx.CheckBox = AnnotationsGroup.addItem(
+			wx.CheckBox(AnnotationsBox, label=label)
+		)
+		self.ariaDescCheckBox.SetValue(config.conf["annotations"]["reportAriaDescription"])
+		self.ariaDescCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportAriaDescription"])
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2827,6 +2847,20 @@ class AdvancedPanelControls(
 					self._getDefaultValue(['debugLog', x])
 			)
 		]
+		
+		# Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+		label = _("Play a sound for logged e&rrors:")
+		playErrorSoundChoices = (
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			pgettext("advanced.playErrorSound", "Only in NVDA test versions"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			pgettext("advanced.playErrorSound", "Yes"),
+		)
+		self.playErrorSoundCombo = debugLogGroup.addLabeledControl(label, wx.Choice, choices=playErrorSoundChoices)
+		self.bindHelpEvent("PlayErrorSound", self.playErrorSoundCombo)
+		self.playErrorSoundCombo.SetSelection(config.conf["featureFlag"]["playErrorSound"])
+		self.playErrorSoundCombo.defaultValue = self._getDefaultValue(["featureFlag", "playErrorSound"])
+		
 		self.Layout()
 
 	def onOpenScratchpadDir(self,evt):
@@ -2856,6 +2890,7 @@ class AdvancedPanelControls(
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
+			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
@@ -2872,6 +2907,7 @@ class AdvancedPanelControls(
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
+		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
@@ -2899,8 +2935,10 @@ class AdvancedPanelControls(
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
+		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
+		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
 
 class AdvancedPanel(SettingsPanel):
 	enableControlsCheckBox = None  # type: wx.CheckBox

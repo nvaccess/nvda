@@ -60,7 +60,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 
 	def _get_states(self):
 		states=super(WordDocument,self).states
-		states.add(controlTypes.STATE_MULTILINE)
+		states.add(controlTypes.State.MULTILINE)
 		return states
 
 	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):

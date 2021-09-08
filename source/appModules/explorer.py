@@ -210,7 +210,7 @@ class StartButton(IAccessible):
 		# #5178: Selection announcement should be suppressed.
 		# Borrowed from Mozilla objects in NVDAObjects/IAccessible/Mozilla.py.
 		states = super(StartButton, self).states
-		states.discard(controlTypes.STATE_SELECTED)
+		states.discard(controlTypes.State.SELECTED)
 		return states
 		
 CHAR_LTR_MARK = u'\u200E'
@@ -297,7 +297,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, ExplorerToolTip)
 			return
 
-		if windowClass == "Edit" and controlTypes.STATE_READONLY in obj.states:
+		if windowClass == "Edit" and controlTypes.State.READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 

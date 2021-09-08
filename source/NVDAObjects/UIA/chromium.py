@@ -36,8 +36,8 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 			pass
 		return formatField
 
-	def _getControlFieldForObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
-		field = super()._getControlFieldForObject(
+	def _getControlFieldForUIAObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
+		field = super()._getControlFieldForUIAObject(
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,

@@ -214,7 +214,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 							UIAElement=parentElement,
 							initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs
 						)
-						field = self._getControlFieldForObject(obj)
+						field = self._getControlFieldForUIAObject(obj)
 					except LookupError:
 						log.debug("Failed to fetch controlField data for parentElement. Breaking")
 						break

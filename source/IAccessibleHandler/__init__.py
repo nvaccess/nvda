@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2021 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import re
 import struct
+from typing import Optional, Tuple
 import weakref
 from ctypes import (
 	wintypes,
@@ -23,6 +24,7 @@ import comtypes.client
 import oleacc
 import JABHandler
 import UIAHandler
+import textUtils
 
 from comInterfaces import Accessibility as IA
 
@@ -198,39 +200,39 @@ IAccessibleRolesToNVDARoles = {
 }
 
 IAccessibleStatesToNVDAStates = {
-	oleacc.STATE_SYSTEM_TRAVERSED: controlTypes.STATE_VISITED,
-	oleacc.STATE_SYSTEM_UNAVAILABLE: controlTypes.STATE_UNAVAILABLE,
-	oleacc.STATE_SYSTEM_FOCUSED: controlTypes.STATE_FOCUSED,
-	oleacc.STATE_SYSTEM_SELECTED: controlTypes.STATE_SELECTED,
-	oleacc.STATE_SYSTEM_BUSY: controlTypes.STATE_BUSY,
-	oleacc.STATE_SYSTEM_PRESSED: controlTypes.STATE_PRESSED,
-	oleacc.STATE_SYSTEM_CHECKED: controlTypes.STATE_CHECKED,
-	oleacc.STATE_SYSTEM_MIXED: controlTypes.STATE_HALFCHECKED,
-	oleacc.STATE_SYSTEM_READONLY: controlTypes.STATE_READONLY,
-	oleacc.STATE_SYSTEM_EXPANDED: controlTypes.STATE_EXPANDED,
-	oleacc.STATE_SYSTEM_COLLAPSED: controlTypes.STATE_COLLAPSED,
-	oleacc.STATE_SYSTEM_OFFSCREEN: controlTypes.STATE_OFFSCREEN,
-	oleacc.STATE_SYSTEM_INVISIBLE: controlTypes.STATE_INVISIBLE,
-	oleacc.STATE_SYSTEM_TRAVERSED: controlTypes.STATE_VISITED,
-	oleacc.STATE_SYSTEM_LINKED: controlTypes.STATE_LINKED,
-	oleacc.STATE_SYSTEM_HASPOPUP: controlTypes.STATE_HASPOPUP,
-	oleacc.STATE_SYSTEM_PROTECTED: controlTypes.STATE_PROTECTED,
-	oleacc.STATE_SYSTEM_SELECTABLE: controlTypes.STATE_SELECTABLE,
-	oleacc.STATE_SYSTEM_FOCUSABLE: controlTypes.STATE_FOCUSABLE,
+	oleacc.STATE_SYSTEM_TRAVERSED: controlTypes.State.VISITED,
+	oleacc.STATE_SYSTEM_UNAVAILABLE: controlTypes.State.UNAVAILABLE,
+	oleacc.STATE_SYSTEM_FOCUSED: controlTypes.State.FOCUSED,
+	oleacc.STATE_SYSTEM_SELECTED: controlTypes.State.SELECTED,
+	oleacc.STATE_SYSTEM_BUSY: controlTypes.State.BUSY,
+	oleacc.STATE_SYSTEM_PRESSED: controlTypes.State.PRESSED,
+	oleacc.STATE_SYSTEM_CHECKED: controlTypes.State.CHECKED,
+	oleacc.STATE_SYSTEM_MIXED: controlTypes.State.HALFCHECKED,
+	oleacc.STATE_SYSTEM_READONLY: controlTypes.State.READONLY,
+	oleacc.STATE_SYSTEM_EXPANDED: controlTypes.State.EXPANDED,
+	oleacc.STATE_SYSTEM_COLLAPSED: controlTypes.State.COLLAPSED,
+	oleacc.STATE_SYSTEM_OFFSCREEN: controlTypes.State.OFFSCREEN,
+	oleacc.STATE_SYSTEM_INVISIBLE: controlTypes.State.INVISIBLE,
+	oleacc.STATE_SYSTEM_TRAVERSED: controlTypes.State.VISITED,
+	oleacc.STATE_SYSTEM_LINKED: controlTypes.State.LINKED,
+	oleacc.STATE_SYSTEM_HASPOPUP: controlTypes.State.HASPOPUP,
+	oleacc.STATE_SYSTEM_PROTECTED: controlTypes.State.PROTECTED,
+	oleacc.STATE_SYSTEM_SELECTABLE: controlTypes.State.SELECTABLE,
+	oleacc.STATE_SYSTEM_FOCUSABLE: controlTypes.State.FOCUSABLE,
 }
 
 IAccessible2StatesToNVDAStates = {
-	IA2.IA2_STATE_REQUIRED: controlTypes.STATE_REQUIRED,
-	IA2.IA2_STATE_DEFUNCT: controlTypes.STATE_DEFUNCT,
-	# IA2.IA2_STATE_STALE:controlTypes.STATE_DEFUNCT,
-	IA2.IA2_STATE_INVALID_ENTRY: controlTypes.STATE_INVALID_ENTRY,
-	IA2.IA2_STATE_MODAL: controlTypes.STATE_MODAL,
-	IA2.IA2_STATE_SUPPORTS_AUTOCOMPLETION: controlTypes.STATE_AUTOCOMPLETE,
-	IA2.IA2_STATE_MULTI_LINE: controlTypes.STATE_MULTILINE,
-	IA2.IA2_STATE_ICONIFIED: controlTypes.STATE_ICONIFIED,
-	IA2.IA2_STATE_EDITABLE: controlTypes.STATE_EDITABLE,
-	IA2.IA2_STATE_PINNED: controlTypes.STATE_PINNED,
-	IA2.IA2_STATE_CHECKABLE: controlTypes.STATE_CHECKABLE,
+	IA2.IA2_STATE_REQUIRED: controlTypes.State.REQUIRED,
+	IA2.IA2_STATE_DEFUNCT: controlTypes.State.DEFUNCT,
+	# IA2.IA2_STATE_STALE:controlTypes.State.DEFUNCT,
+	IA2.IA2_STATE_INVALID_ENTRY: controlTypes.State.INVALID_ENTRY,
+	IA2.IA2_STATE_MODAL: controlTypes.State.MODAL,
+	IA2.IA2_STATE_SUPPORTS_AUTOCOMPLETION: controlTypes.State.AUTOCOMPLETE,
+	IA2.IA2_STATE_MULTI_LINE: controlTypes.State.MULTILINE,
+	IA2.IA2_STATE_ICONIFIED: controlTypes.State.ICONIFIED,
+	IA2.IA2_STATE_EDITABLE: controlTypes.State.EDITABLE,
+	IA2.IA2_STATE_PINNED: controlTypes.State.PINNED,
+	IA2.IA2_STATE_CHECKABLE: controlTypes.State.CHECKABLE,
 }
 
 
@@ -422,22 +424,25 @@ def accNavigate(pacc, childID, direction):
 		return None
 
 
-def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
-	"""Tries to convert a win event ID to an NVDA event name, and instanciate or fetch an NVDAObject for
+# C901 'winEventToNVDAEvent' is too complex
+# Note: when working on winEventToNVDAEvent, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def winEventToNVDAEvent(  # noqa: C901
+		eventID: int,
+		window: int,
+		objectID: int,
+		childID: int,
+		useCache: bool = True
+) -> Optional[Tuple[str, NVDAObjects.IAccessible.IAccessible]]:
+	"""Tries to convert a win event ID to an NVDA event name, and instantiate or fetch an NVDAObject for
 	 the win event parameters.
 	@param eventID: the win event ID (type)
-	@type eventID: integer
 	@param window: the win event's window handle
-	@type window: integer
 	@param objectID: the win event's object ID
-	@type objectID: integer
 	@param childID: the win event's childID
-	@type childID: the win event's childID
 	@param useCache: C{True} to use the L{liveNVDAObjectTable} cache when
 	 retrieving an NVDAObject, C{False} if the cache should not be used.
-	@type useCache: boolean
 	@returns: the NVDA event name and the NVDAObject the event is for
-	@rtype: tuple of string and L{NVDAObjects.IAccessible.IAccessible}
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -1073,7 +1078,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):
 		return text
 	textList = []
 	for i, t in enumerate(text):
-		if ord(t) == 0xFFFC:
+		if ord(t) == ord(textUtils.OBJ_REPLACEMENT_CHAR):
 			try:
 				index = hypertextObject.hyperlinkIndex(i + startOffset)
 				childTextObject = hypertextObject.hyperlink(index).QueryInterface(IA.IAccessible)

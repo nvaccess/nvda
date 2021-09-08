@@ -40,7 +40,7 @@ class AppModule(appModuleHandler.AppModule):
 			# Brightness control is now a slider in build 18277.
 			if obj.UIAElement.cachedAutomationID == "Microsoft.QuickAction.Brightness":
 				obj.role = controlTypes.Role.BUTTON
-				obj.states.discard(controlTypes.STATE_CHECKABLE)
+				obj.states.discard(controlTypes.State.CHECKABLE)
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if isinstance(obj, IAccessible):

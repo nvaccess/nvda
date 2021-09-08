@@ -1,13 +1,16 @@
-#XMLFormatting.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2019 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2021 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+import typing
 from xml.parsers import expat
 import textInfos
+import textUtils
 from logHandler import log
 from textUtils import WCHAR_ENCODING, isLowSurrogate
+
+CommandListT = typing.List[typing.Union[textInfos.FieldCommand, typing.Optional[str]]]
 
 class XMLTextParser(object): 
 
@@ -18,7 +21,7 @@ class XMLTextParser(object):
 				try:
 					data=chr(int(data))
 				except ValueError:
-					data=u'\ufffd'
+					data = textUtils.REPLACEMENT_CHAR
 				self._CharacterDataHandler(data, processBufferedSurrogates=isLowSurrogate(data))
 			return
 		elif tagName=='control':
@@ -48,8 +51,11 @@ class XMLTextParser(object):
 		else:
 			raise ValueError("unknown tag name: %s"%tagName)
 
-	def _CharacterDataHandler(self,data, processBufferedSurrogates=False):
+	def _CharacterDataHandler(self, data: typing.Optional[str], processBufferedSurrogates=False):
 		cmdList=self._commandList
+		if not isinstance(data, str):
+			dataStr = repr(data)
+			log.warning(f"unknown type for data: {dataStr}")
 		if cmdList and isinstance(cmdList[-1],str):
 			cmdList[-1] += data
 			if processBufferedSurrogates:
@@ -57,12 +63,12 @@ class XMLTextParser(object):
 		else:
 			cmdList.append(data)
 
-	def parse(self,XMLText):
+	def parse(self, XMLText) -> CommandListT:
 		parser = expat.ParserCreate('utf-8')
 		parser.StartElementHandler = self._startElementHandler
 		parser.EndElementHandler = self._EndElementHandler
 		parser.CharacterDataHandler = self._CharacterDataHandler
-		self._commandList = []
+		self._commandList: XMLTextParser.CommandListT = []
 		try:
 			parser.Parse(XMLText)
 		except Exception:

@@ -15,7 +15,7 @@ def _getActiveChild(obj):
 	child = obj.firstChild
 	for i in range(obj.childCount):
 		states = child.states
-		if controlTypes.STATE_FOCUSED in states or controlTypes.STATE_SELECTED in states:
+		if controlTypes.State.FOCUSED in states or controlTypes.State.SELECTED in states:
 			return child
 		oldChild = child
 		child = child.next
@@ -27,7 +27,7 @@ def _getActiveChild(obj):
 		return None				
 	for child in obj.children:
 		states = child.states
-		if controlTypes.STATE_FOCUSED in states or controlTypes.STATE_SELECTED in states:
+		if controlTypes.State.FOCUSED in states or controlTypes.State.SELECTED in states:
 			return child
 	return None
 
@@ -88,14 +88,14 @@ class TableCell(IAccessible):
 		gesture.send()
 		if not isScriptWaiting():
 			next=self.next
-			if next and controlTypes.STATE_FOCUSED in next.states:
+			if next and controlTypes.State.FOCUSED in next.states:
 				eventHandler.executeEvent("gainFocus", next)
 
 	def script_previousColumn(self,gesture):
 		gesture.send()
 		if not isScriptWaiting():
 			previous=self.previous
-			if previous and controlTypes.STATE_FOCUSED in previous.states:
+			if previous and controlTypes.State.FOCUSED in previous.states:
 				eventHandler.executeEvent("gainFocus", previous)
 
 	__gestures = {
@@ -130,5 +130,5 @@ class Application(IAccessible):
 		states = super(Application, self)._get_states()
 		# The application should not have the focused state.
 		# Otherwise, checks for the focused state will always hit the application and assume the focus is valid.
-		states.discard(controlTypes.STATE_FOCUSED)
+		states.discard(controlTypes.State.FOCUSED)
 		return states
