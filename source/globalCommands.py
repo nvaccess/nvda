@@ -1285,8 +1285,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_review_previousLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
+		info.expand(textInfos.UNIT_LINE)
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1326,8 +1326,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
+		info.expand(textInfos.UNIT_LINE)
 		res=info.move(textInfos.UNIT_LINE,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1357,8 +1357,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_review_previousWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
 		info.collapse()
+		info.expand(textInfos.UNIT_WORD)
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1397,8 +1397,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_review_nextWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
 		info.collapse()
+		info.expand(textInfos.UNIT_WORD)
 		res=info.move(textInfos.UNIT_WORD,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
