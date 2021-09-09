@@ -178,8 +178,7 @@ class WordDocumentTextInfo(UIATextInfo):
 				or obj.name
 			)
 		# #11430: Read-only tables, such as in the Outlook message viewer
-		# should be treated as layout tables
-		# If they only contain 1 column or 1 row.
+		# should be treated as layout tables.
 		if (
 			obj.appModule.appName == 'outlook'
 			and obj.role == controlTypes.Role.TABLE
