@@ -145,10 +145,8 @@ class MainFrame(wx.Frame):
 		self.prePopup()
 		try:
 			dialog(self, *args, **kwargs).Show()
-		except SettingsDialog.MultiInstanceError:
-			# Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-			# (example: when trying to open keyboard settings when general settings dialog is open).
-			messageBox(_("An NVDA settings dialog is already open. Please close it first."),_("Error"),style=wx.OK | wx.ICON_ERROR)
+		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
+			errorWithDialog.dialog.SetFocus()
 		except MultiCategorySettingsDialog.CategoryUnavailableError:
 			# Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 			# (example: when trying to open touch interaction settings on an unsupported system).

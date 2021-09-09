@@ -85,6 +85,13 @@ class SettingsDialog(
 
 	class MultiInstanceError(RuntimeError): pass
 
+	class MultiInstanceErrorWithDialog(MultiInstanceError):
+		dialog: 'SettingsDialog'
+
+		def __init__(self, dialog: 'SettingsDialog', *args: object) -> None:
+			self.dialog = dialog
+			super().__init__(*args)
+
 	class DialogState(IntEnum):
 		CREATED = 0
 		DESTROYED = 1
@@ -110,7 +117,10 @@ class SettingsDialog(
 				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
 			)
 		if state is cls.DialogState.CREATED and not multiInstanceAllowed:
-			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+			raise SettingsDialog.MultiInstanceErrorWithDialog(
+				firstMatchingInstance,
+				"Only one instance of SettingsDialog can exist at a time",
+			)
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
 			# keeping it alive.
@@ -2664,7 +2674,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Report aria-description always:")
+		label = _("Report aria-description always")
 		self.ariaDescCheckBox: wx.CheckBox = AnnotationsGroup.addItem(
 			wx.CheckBox(AnnotationsBox, label=label)
 		)
@@ -2818,7 +2828,6 @@ class AdvancedPanelControls(
 			"speechManager",
 			"synthDriver",
 			"nvwave",
-			"brailleInput",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -2838,6 +2847,20 @@ class AdvancedPanelControls(
 					self._getDefaultValue(['debugLog', x])
 			)
 		]
+		
+		# Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+		label = _("Play a sound for logged e&rrors:")
+		playErrorSoundChoices = (
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			pgettext("advanced.playErrorSound", "Only in NVDA test versions"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			pgettext("advanced.playErrorSound", "Yes"),
+		)
+		self.playErrorSoundCombo = debugLogGroup.addLabeledControl(label, wx.Choice, choices=playErrorSoundChoices)
+		self.bindHelpEvent("PlayErrorSound", self.playErrorSoundCombo)
+		self.playErrorSoundCombo.SetSelection(config.conf["featureFlag"]["playErrorSound"])
+		self.playErrorSoundCombo.defaultValue = self._getDefaultValue(["featureFlag", "playErrorSound"])
+		
 		self.Layout()
 
 	def onOpenScratchpadDir(self,evt):
@@ -2915,6 +2938,7 @@ class AdvancedPanelControls(
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
+		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
 
 class AdvancedPanel(SettingsPanel):
 	enableControlsCheckBox = None  # type: wx.CheckBox

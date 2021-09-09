@@ -348,7 +348,7 @@ class CalendarView(IAccessible):
 		separatorBuf = ctypes.create_unicode_buffer(bufLength)
 		if ctypes.windll.kernel32.GetLocaleInfoW(
 			languageHandler.LOCALE_USER_DEFAULT,
-			languageHandler.LOCALE_SLIST,
+			languageHandler.LOCALE.SLIST,
 			separatorBuf,
 			bufLength
 		) == 0:

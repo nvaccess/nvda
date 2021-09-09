@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Union
+from typing import Any, Callable, Union
 import os
 import itertools
 import collections
@@ -223,7 +223,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		caret=self.document.makeTextInfo(textInfos.POSITION_CARET)
 		return self.textInfo.compareEndPoints(caret, "startToStart") > 0
 
-	def _getLabelForProperties(self, labelPropertyGetter):
+	def _getLabelForProperties(self, labelPropertyGetter: Callable[[str], Optional[Any]]):
 		"""
 		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
 		This can be used by subclasses to implement the L{label} property.
@@ -245,8 +245,9 @@ class TextInfoQuickNavItem(QuickNavItem):
 			# Example output: main menu; navigation
 			labelParts = (name, landmark)
 		else: 
-			role = labelPropertyGetter("role")
-			roleText = controlTypes.roleLabels[role]
+			role: Union[controlTypes.Role, int] = labelPropertyGetter("role")
+			role = controlTypes.Role(role)
+			roleText = role.displayString
 			# Translators: Reported label in the elements list for an element which which has no name and value
 			unlabeled = _("Unlabeled")
 			realStates = labelPropertyGetter("states")
@@ -324,6 +325,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		controlTypes.Role.MENUITEM,
 		controlTypes.Role.RADIOMENUITEM,
 		controlTypes.Role.CHECKMENUITEM,
+		controlTypes.Role.TABLECELL,
 		})
 
 	def shouldPassThrough(self, obj, reason: Optional[OutputReason] = None):
@@ -1236,6 +1238,7 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 			return self.obj.rootNVDAObject
 		return item.obj
 
+
 class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation,cursorManager.CursorManager,BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
 
 	programmaticScrollMayFireEvent = False
@@ -1353,13 +1356,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		else:
 			self._lastCaretMoveWasFocus = False
 			focusObj=info.focusableNVDAObjectAtStart
-			obj=info.NVDAObjectAtStart
-			if not obj:
-				log.debugWarning("Invalid NVDAObjectAtStart")
-				return
-			if obj==self.rootNVDAObject:
-				return
-			obj.scrollIntoView()
+			info.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
 		if focusObj:

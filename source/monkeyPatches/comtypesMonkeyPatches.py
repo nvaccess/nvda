@@ -59,7 +59,13 @@ from comtypes import COMError
 from comtypes.hresult import *
 
 #Monkey patch comtypes to support byref in variants
-from comtypes.automation import VARIANT, VT_BYREF, IDispatch
+from comtypes.automation import (  # noqa: E402
+	VARIANT,
+	_vartype_to_ctype,
+	VT_BYREF,
+	VT_R8,
+	IDispatch
+)
 from ctypes import cast, c_void_p
 from _ctypes import _Pointer
 oldVARIANT_value_fset=VARIANT.value.fset
@@ -163,3 +169,11 @@ def new_my_import(fullname):
 
 
 comtypes.client._generate._my_import = new_my_import
+
+# Correctly map VT_R8 to c_double.
+# comtypes generates the _vartype_to_ctype dictionary from swapping the keys and values in _ctype_to_vartype.
+# Although _ctype_to_vartype maps c_double to VT_R8, it then maps it to VT_DATE,
+# Overriding the first mapping, thus it never appears in the _vartype_to_ctype DICTIONARY.
+# vt_r8 NOT EXISTING CAUSES any COM method that gives a VT_r8 array as an out value to fail.
+# For example, the cellSize UIA custom property in Excel.
+_vartype_to_ctype[VT_R8] = ctypes.c_double
