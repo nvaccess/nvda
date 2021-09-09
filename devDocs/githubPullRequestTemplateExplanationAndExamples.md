@@ -148,6 +148,11 @@ After each modification, check that the PR description is still accurate.
 - Clearly describing this helps alpha testers, and future developers.
 - As a reviewer, please use this description to replicate the testing (if possible).
 
+### API is compatible with existing addons.
+- If this is not a `.1` breaking release, ensure that all API changes are backwards compatible with existing addons.
+- Ensure proposed API changes are included in the change log (Changes for Developers).
+- See [Deprecations](./deprecations.md) for more information.
+
 ### User Documentation
 - Does the user documentation need updating?
 
