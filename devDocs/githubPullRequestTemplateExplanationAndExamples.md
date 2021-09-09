@@ -134,17 +134,15 @@ review process.
   Has an appropriate change log entry been supplied?
   As a reviewer, please review it.
 
-### Testing
+### Testing:
+Discuss under "testing strategy" heading:
 - Unit tests
-  - Discuss under "testing strategy" heading.
   - Describe the coverage of automated unit tests?
   - Is the changed code already, or can it be covered by automated unit tests?
 - System tests
-  - Discuss under "testing strategy" heading.
   - Describe the coverage of automated system tests?
   - Is the changed code already, or can it be covered by automated system tests?
 - Manual tests
-  - Discuss under "testing strategy" heading. 
   - How did you manually test the change?
   - Be clear on steps another user can take to replicate your testing.
   - Is the described manual testing appropriate for the change?

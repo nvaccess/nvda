@@ -34,7 +34,6 @@ A detailed explanation of this checklist is available here:
 https://github.com/nvaccess/nvda/blob/master/devDocs/githubPullRequestTemplateExplanationAndExamples.md#code-review-checklist
 -->
 
-<<<<<<< HEAD
 - [ ] Pull Request description:
   - description is up to date
   - change log entries
