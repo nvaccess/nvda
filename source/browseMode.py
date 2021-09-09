@@ -1340,11 +1340,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		"""
 		Ensures the document is scrolled such that the given textInfo is visible on screen.
 		"""
-		obj=info.NVDAObjectAtStart
+		obj = info.NVDAObjectAtStart
 		if not obj:
 			log.debugWarning("Invalid NVDAObjectAtStart")
 			return
-		if obj==self.rootNVDAObject:
+		if obj == self.rootNVDAObject:
 			return
 		obj.scrollIntoView()
 		if self.programmaticScrollMayFireEvent:
