@@ -37,6 +37,7 @@ If you need this functionality please assign a gesture to the appropriate script
 - NVDA no longer sets invalid Python locales. (#12753)
 - If a disabled addon is uninstalled and then re-installed it is re-enabled. (#12792)
 - Fixed bugs around updating and removing addons where the addon folder has been renamed or has files opened. (#12792, #12629)
+- Reading / navigating with browse mode in Microsoft Word via UI automation now ensures the document is always scrolled so that current browse mode position is visible, and that the caret position in focus mode correctly reflects the browse mode position. (#9611)
 -
 
 
