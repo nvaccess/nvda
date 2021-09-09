@@ -131,7 +131,7 @@ review process.
   - Future developers need a concise explanation of a change.
   After each modification, check that the PR description is still accurate.
 - change log entries
-  Has an appropriate change log entry been supplied.
+  Has an appropriate change log entry been supplied?
   As a reviewer, please review it.
 
 ### Testing
@@ -142,7 +142,7 @@ review process.
 - System tests
   - Discuss under "testing strategy" heading.
   - Describe the coverage of automated system tests?
-  - Is the changed code already, or can it be covered by automated unit tests?
+  - Is the changed code already, or can it be covered by automated system tests?
 - Manual tests
   - Discuss under "testing strategy" heading. 
   - How did you manually test the change?
