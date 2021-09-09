@@ -398,6 +398,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		# Scroll the deepest object at this point into view.
 		obj = self.NVDAObjectAtStart
 		if not obj:
+			log.debugWarning("Invalid NVDAObjectAtStart")
 			return
 		if obj == self.obj.rootNVDAObject:
 			# However never scroll to the  document itself
