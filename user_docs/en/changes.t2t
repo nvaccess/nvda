@@ -35,6 +35,9 @@ If you need this functionality please assign a gesture to the appropriate script
 - NVDA no longer treats the value of UIA sliders as always percentage based.
 - Reporting the location of a cell in Microsoft Excel when accessed via UI Automation again works correctly on Windows 11. (#12782)
 - NVDA no longer sets invalid Python locales. (#12753)
+- When reading emails in Outlook  via UI Automation, reporting of tables is now suppressed by default. (#11430)
+ - If the user needs to temporarily have tables reported when reading an email, the Include Layout Tables option in Browse Mode settings can be turned on.
+ -
 -
 
 
