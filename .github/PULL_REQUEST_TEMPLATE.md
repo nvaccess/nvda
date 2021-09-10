@@ -41,7 +41,7 @@ https://github.com/nvaccess/nvda/blob/master/devDocs/githubPullRequestTemplateEx
   - Unit tests
   - System (end to end) tests
   - Manual testing
-- [ ] API is compatible with existing addons.
+- [ ] API is compatible with existing add-ons.
 - [ ] Documentation:
   - User Documentation
   - Context sensitive help for GUI changes

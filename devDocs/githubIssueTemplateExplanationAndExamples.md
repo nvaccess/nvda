@@ -180,10 +180,10 @@ It can help us determine if changes in NVDA or other software introduced the pro
 
 #### If NVDA add-ons are disabled, is your problem still occurring?
 
-In many cases issues could be caused by an addon not working correctly or conflicting with other
+In many cases issues could be caused by an add-on not working correctly or conflicting with other
 features already integrated in NVDA itself.
-Therefore, it is recommended to reproduce issues with all addons disabled.
-In case the issue is caused by an addon, it is recommended to contact the author of the addon first.
+Therefore, it is recommended to reproduce issues with all add-ons disabled.
+In case the issue is caused by an add-on, it is recommended to contact the author of the add-on first.
 
 #### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
 
