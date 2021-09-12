@@ -12,15 +12,10 @@ import sys
 import os
 import globalVars
 import winKernel
+import monkeyPatches.comtypesMonkeyPatches
 
-
-# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
-# and Append our comInterfaces directory to the comtypes.gen search path.
-import comtypes
-import comtypes.client
-import comtypes.gen
-import comInterfaces
-comtypes.gen.__path__.append(comInterfaces.__path__[0])
+# Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
+monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
 
 
 if hasattr(sys, "frozen"):

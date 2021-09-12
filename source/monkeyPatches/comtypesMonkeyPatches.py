@@ -210,6 +210,15 @@ def vt_R8_to_c_double() -> None:
 	_vartype_to_ctype[VT_R8] = ctypes.c_double
 
 
+def appendComInterfacesToGenSearchPath() -> None:
+	# Initialise comtypes.client.gen_dir and the comtypes.gen search path
+	# and append our comInterfaces directory to the comtypes.gen search path.
+	import comtypes.client
+	import comtypes.gen
+	import comInterfaces
+	comtypes.gen.__path__.append(comInterfaces.__path__[0])
+
+
 def applyMonkeyPatches() -> None:
 	# Ensure no comtypes modules were imported
 	# before we had a chance to replace `ctypes.WINFUNCTYPE` with our custom version.
@@ -225,3 +234,4 @@ def applyMonkeyPatches() -> None:
 	replace_check_version()
 	replace_my_import()
 	vt_R8_to_c_double()
+	appendComInterfacesToGenSearchPath()
