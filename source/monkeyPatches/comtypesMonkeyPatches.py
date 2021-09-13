@@ -104,7 +104,7 @@ def new__call__(self,*args,**kwargs):
 
 def support_invoke_zero() -> None:
 	# Monkeypatch comtypes to allow its basic dynamic Dispatch support
-	# to  support invoke 0 (calling the actual IDispatch object itself)
+	# to support invoke 0 (calling the actual IDispatch object itself)
 	import comtypes.client
 	comtypes.client.dynamic._Dispatch.__call__ = new__call__
 
