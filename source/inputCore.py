@@ -553,7 +553,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		speech.speakText(
 			textList[0],
 			reason=controlTypes.OutputReason.MESSAGE,
-			symbolLevel=characterProcessing.SYMLVL_ALL
+			symbolLevel=characterProcessing.SymbolLevel.ALL
 		)
 		for text in textList[1:]:
 			speech.speakMessage(text)

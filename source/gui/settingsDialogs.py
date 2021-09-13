@@ -4394,7 +4394,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			pass
 		addedSymbol.displayName = identifier
 		addedSymbol.replacement = ""
-		addedSymbol.level = characterProcessing.SYMLVL_ALL
+		addedSymbol.level = characterProcessing.SymbolLevel.ALL
 		addedSymbol.preserve = characterProcessing.SYMPRES_NEVER
 		self.symbols.append(addedSymbol)
 		self.symbolsList.ItemCount = len(self.symbols)
