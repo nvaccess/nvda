@@ -14,14 +14,7 @@ class CallCancelled(Exception):
 	"""Raised when a call is cancelled.
 	"""
 
-# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
-# and Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes
-import comtypes.client
-import comtypes.gen
-import comInterfaces
-comtypes.gen.__path__.append(comInterfaces.__path__[0])
-
 import sys
 import winVersion
 import threading
