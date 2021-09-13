@@ -14,14 +14,7 @@ class CallCancelled(Exception):
 	"""Raised when a call is cancelled.
 	"""
 
-# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
-# and Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes
-import comtypes.client
-import comtypes.gen
-import comInterfaces
-comtypes.gen.__path__.append(comInterfaces.__path__[0])
-
 import sys
 import winVersion
 import threading
@@ -252,16 +245,16 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 	import languageHandler
 	import wx
 	lang = languageHandler.getLanguage()
-	locale = wx.Locale()
-	wxLang = locale.FindLanguageInfo(lang)
+	wxLocaleObj = wx.Locale()
+	wxLang = wxLocaleObj.FindLanguageInfo(lang)
 	if not wxLang and '_' in lang:
-		wxLang = locale.FindLanguageInfo(lang.split('_')[0])
+		wxLang = wxLocaleObj.FindLanguageInfo(lang.split('_')[0])
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
 	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
 	# In this case, wxLang is already set to None.
 	# Therefore treat these situations like wx not knowing the language at all.
-	if wxLang and not locale.IsAvailable(wxLang.Language):
+	if wxLang and not wxLocaleObj.IsAvailable(wxLang.Language):
 		wxLang = None
 	if not wxLang:
 		log.debugWarning("wx does not support language %s" % lang)
@@ -420,13 +413,10 @@ def main():
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
-	try:
-		lang = config.conf["general"]["language"]
-		import languageHandler
-		log.debug("setting language to %s"%lang)
-		languageHandler.setLanguage(lang)
-	except:
-		log.warning("Could not set language to %s"%lang)
+	lang = config.conf["general"]["language"]
+	import languageHandler
+	log.debug(f"setting language to {lang}")
+	languageHandler.setLanguage(lang)
 	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
@@ -601,13 +591,13 @@ def main():
 	messageWindow = MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support
-	locale = wx.Locale()
+	wxLocaleObj = wx.Locale()
 	wxLang = getWxLangOrNone()
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
+		wxLocaleObj.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
 		try:
-			locale.Init(wxLang.Language)
+			wxLocaleObj.Init(wxLang.Language)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
 		finally:

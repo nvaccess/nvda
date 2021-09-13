@@ -177,6 +177,14 @@ class WordDocumentTextInfo(UIATextInfo):
 				or field.pop('name', None)
 				or obj.name
 			)
+		# #11430: Read-only tables, such as in the Outlook message viewer
+		# should be treated as layout tables.
+		if (
+			obj.appModule.appName == 'outlook'
+			and obj.role == controlTypes.Role.TABLE
+			and controlTypes.State.READONLY in obj.states
+		):
+			field['table-layout'] = True
 		return field
 
 	def _getTextFromUIARange(self, textRange):

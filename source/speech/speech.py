@@ -1288,7 +1288,7 @@ def getTextInfoSpeech(  # noqa: C901
 				# We entered the most outer clickable, so announce it, if we won't be announcing anything else interesting for this field
 				presCat=field.getPresentationCategory(newControlFieldStack[0:count],formatConfig,reason)
 				if not presCat or presCat is field.PRESCAT_LAYOUT:
-					speechSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
+					speechSequence.append(controlTypes.State.CLICKABLE.displayString)
 					shouldConsiderTextInfoBlank = False
 				inClickable=True
 		fieldSequence = info.getControlFieldSpeech(
@@ -1392,7 +1392,7 @@ def getTextInfoSpeech(  # noqa: C901
 						# Announce it if there is nothing else interesting about the field, but not if the user turned it off. 
 						presCat=command.field.getPresentationCategory(newControlFieldStack[0:],formatConfig,reason)
 						if not presCat or presCat is command.field.PRESCAT_LAYOUT:
-							fieldSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
+							fieldSequence.append(controlTypes.State.CLICKABLE.displayString)
 						inClickable=True
 				fieldSequence.extend(info.getControlFieldSpeech(
 					command.field,
@@ -1525,10 +1525,11 @@ def getPropertiesSpeech(  # noqa: C901
 		speakRole=True
 	elif '_role' in propertyValues:
 		speakRole=False
-		role=propertyValues['_role']
+		role: int = propertyValues['_role']
 	else:
 		speakRole=False
 		role=controlTypes.Role.UNKNOWN
+	role = controlTypes.Role(role)
 	value: Optional[str] = propertyValues.get('value') if role not in controlTypes.silentValuesForRoles else None
 	cellCoordsText: Optional[str] = propertyValues.get('cellCoordsText')
 	rowNumber = propertyValues.get('rowNumber')
@@ -1563,7 +1564,7 @@ def getPropertiesSpeech(  # noqa: C901
 				OutputReason.SAYALL
 			)
 	)):
-		textList.append(roleText if roleText else controlTypes.roleLabels[role])
+		textList.append(roleText if roleText else role.displayString)
 	if value:
 		textList.append(value)
 	states = propertyValues.get('states')
@@ -1812,7 +1813,7 @@ def getControlFieldSpeech(  # noqa: C901
 		roleTextSequence = [roleText, ]
 	elif role == controlTypes.Role.LANDMARK and landmark:
 		roleTextSequence = [
-			f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.Role.LANDMARK]}",
+			f"{aria.landmarkRoles[landmark]} {controlTypes.Role.LANDMARK.displayString}",
 		]
 	else:
 		roleTextSequence = getPropertiesSpeech(reason=reason, role=role)

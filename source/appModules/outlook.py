@@ -439,9 +439,9 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 	def _get_name(self):
 		textList=[]
 		if controlTypes.State.EXPANDED in self.states:
-			textList.append(controlTypes.stateLabels[controlTypes.State.EXPANDED])
+			textList.append(controlTypes.State.EXPANDED.displayString)
 		elif controlTypes.State.COLLAPSED in self.states:
-			textList.append(controlTypes.stateLabels[controlTypes.State.COLLAPSED])
+			textList.append(controlTypes.State.COLLAPSED.displayString)
 		selection=None
 		if self.appModule.nativeOm:
 			try:
