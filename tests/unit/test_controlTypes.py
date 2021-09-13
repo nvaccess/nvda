@@ -10,6 +10,7 @@ import unittest
 import controlTypes
 import versionInfo
 from . import PlaceholderNVDAObject
+from controlTypes.processAndLabelStates import _processNegativeStates, _processPositiveStates
 
 
 class TestLabels(unittest.TestCase):
@@ -53,7 +54,7 @@ class TestProcessStates(unittest.TestCase):
 
 	def test_positiveStates(self):
 		self.assertSetEqual(
-			controlTypes.processPositiveStates(
+			_processPositiveStates(
 				self.obj.role,
 				self.obj.states,
 				controlTypes.OutputReason.FOCUS,
@@ -64,7 +65,7 @@ class TestProcessStates(unittest.TestCase):
 
 	def test_negativeStates(self):
 		self.assertSetEqual(
-			controlTypes.processNegativeStates(
+			_processNegativeStates(
 				self.obj.role,
 				self.obj.states,
 				controlTypes.OutputReason.FOCUS,
