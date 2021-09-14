@@ -21,6 +21,7 @@ What's New in NVDA
 - If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)
 - When reading status bar with ``NVDA+end``, the review cursor is no longer moved to its location.
 If you need this functionality please assign a gesture to the appropriate script in the Object Navigation category in the Input Gestures dialog. (#8600)
+- When opening a settings dialog which is already open, NVDA sets focus on the existing dialog rather than raise an error. (#5383)
 -
 
 
@@ -34,6 +35,13 @@ If you need this functionality please assign a gesture to the appropriate script
 - NVDA no longer treats the value of UIA sliders as always percentage based.
 - Reporting the location of a cell in Microsoft Excel when accessed via UI Automation again works correctly on Windows 11. (#12782)
 - NVDA no longer sets invalid Python locales. (#12753)
+- When reading emails in Outlook  via UI Automation, reporting of tables is now suppressed by default. (#11430)
+ - If the user needs to temporarily have tables reported when reading an email, the Include Layout Tables option in Browse Mode settings can be turned on.
+ -
+- If a disabled addon is uninstalled and then re-installed it is re-enabled. (#12792)
+- Fixed bugs around updating and removing addons where the addon folder has been renamed or has files opened. (#12792, #12629)
+- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA no longer redundantly announces when a single cell is selected. (#12530)
+- More dialog text is automatically read in LibreOffice Writer, such as in confirmation dialogs. (#11687)
 - A rare error when changing audio devices has been fixed. (#12620)
 -
 
@@ -47,6 +55,7 @@ To match the production build environment, update Visual Studio to keep in sync 
 - Transparency of text background color sourced from GDI applications (via the display model), is now exposed for add-ons or appModules. (#12658)
 - ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` and ``LOCALE_SLANGDISPLAYNAME`` are moved to the ``LOCALE`` enum in languageHandler.
 They are still available at the module level but are deprecated and to be removed in NVDA 2022.1. (#12753)
+- The usage of functions ``addonHandler.loadState`` and ``addonHandler.saveState`` should be replaced with their equivalents ``addonHandler.state.save`` and ``addonHandler.state.load`` before 2022.1. (#12792)
 -
 
 

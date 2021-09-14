@@ -795,8 +795,9 @@ Bu tür durumlar için  NVDA, ekranı karartmak için etkinleştirilebilen "ekra
 
 Ekran perdesi etkinse, [OCR #Win10Ocr] veya  ekran görüntüsü almak gibi doğrudan ekranda görünenle ilgili işlemler gerçekleştirilemez.
 
-Güvenliği garanti etmek için, ekran perdesinin Windows'un yeni veya deneysel sürümleriyle düzgün çalıştığından emin olun.
-2021.2'den eski NVDA sürümleri ve Windows 10 21H2'den daha yeni bir Windows sürümü kullanılıyorsa, ekran perdesi uyarı vermeksizin çalışmayabilir.
+Windows Büyüteç API'sindeki bir değişiklik nedeniyle, Ekran Perdesi, Windows'un en yeni sürümlerini destekleyecek şekilde güncellenmek zorunda kaldı.
+Windows 10 21H2 (10.0.19044) veya sonraki sürümlerde Ekran Perdesini etkinleştirmek için NVDA 2021.2'yi kullanın.
+Güvenliği gözeterek, Windows'un yeni bir sürümünü kullanırken Ekran Perdesinin ekranı tamamen kararttığına dair görsel onay alın.
 
 + Görsel İçerik Tanıma +[ContentRecognition]
 Yazarlar bir şeyin içeriğiyle ilgili ekran okuyucuların algılayabileceği tarzda yeterli bilgi sunmadıklarında, bir görüntünün içeriğinin tanınması için çeşitli araçlar kullanılabilir.
@@ -1852,7 +1853,7 @@ Seçim kutusunda aşağıdaki seçenekler vardır:
 - Hayır: NVDA işlem sırasında enjekte edemese bile UIA'yı kullanmaz. Bu, geliştiriciler için IA2 ile ilgili sorunları gidermek için yararlı olabilir ve NVDA'nın UIA'ya geri dönmediğinden emin olmak isteyebilirler.
 -
 
-==== Deneysel ARIA bilgi notları desteğini etkinleştir ====[Annotations]
+==== Bİlgi notları ====[Annotations]
 ARIA bilgi notları için deneysel destek ekleyen özellikleri etkinleştirmek için kullanılır.
 Bu özelliklerden bazıları eksik sunuluyor olabilir.
 Aşağıdaki seçenekler mevcuttur: 
