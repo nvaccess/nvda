@@ -44,6 +44,7 @@ https://github.com/nvaccess/nvda/blob/master/devDocs/githubPullRequestTemplateEx
 - [ ] API is compatible with existing add-ons.
 - [ ] Documentation:
   - User Documentation
+  - Developer / Technical Documentation
   - Context sensitive help for GUI changes
 - [ ] UX of all users considered:
   - Speech 
