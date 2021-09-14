@@ -393,22 +393,22 @@ class AppModule(appModuleHandler.AppModule):
 		parts = []
 		for index, child in enumerate(obj.children):
 			if (
-				child.role == controlTypes.ROLE_GROUPING
+				child.role == controlTypes.Role.GROUPING
 				and child.childCount == 1
-				and child.firstChild.role == controlTypes.ROLE_STATICTEXT
+				and child.firstChild.role == controlTypes.Role.STATICTEXT
 			):
 				parts.append(child.firstChild.name)
 			elif (
-				child.role == controlTypes.ROLE_GROUPING
+				child.role == controlTypes.Role.GROUPING
 				and child.childCount > 1
 				and not any(
 					grandChild for grandChild in child.children
-					if grandChild.role != controlTypes.ROLE_RADIOBUTTON
+					if grandChild.role != controlTypes.Role.RADIOBUTTON
 				)
 			):
 				selected = next(iter(
 					grandChild for grandChild in child.children
-					if controlTypes.STATE_CHECKED in grandChild.states
+					if controlTypes.State.CHECKED in grandChild.states
 				), None)
 				if selected is not None:
 					parts.append(" ".join(
