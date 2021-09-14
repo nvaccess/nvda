@@ -5,22 +5,38 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
 = 2021.2 =
+Esta versão introduz suporte preliminar ao Windows 11.
+Embora o Windows 11 ainda não tenha sido lançado, esta versão foi testada em versões de pré-lançamento ""[preview]"" do Windows 11.
+Isso inclui uma correção importante para a cortina de tela (consulte as notas importantes).
+A Ferramenta de Correção de Registro COM agora pode resolver mais problemas ao executar o NVDA.
+Há atualizações para o sintetizador eSpeak e o transcritor braille LibLouis.
+Existem também várias correções de falhas e melhorias, principalmente para suporte a braille e terminais Windows, calculadora, painel de emojis e histórico da área de transferência.
+
+
+== Notas importantes ==
+Devido a uma alteração na API de Ampliação do Windows, a Cortina de Tela teve que ser atualizada para oferecer suporte às versões mais recentes do Windows.
+Use o NVDA 2021.2 para ativar a Cortina de Tela com o Windows 10 21H2 (10.0.19044) ou posterior.
+Isso inclui Windows 10 Insiders e Windows 11.
+Por motivos de segurança, ao usar uma nova versão do Windows, tente obter confirmação visual de que a Cortina de Tela torna a tela totalmente preta.
+
 
 == Novas Características ==
-- Suporte para anotações ARIA ""[Accessible Rich Internet Applications — Aplicativos de Internet Ricos e Acessíveis]"":
+- Suporte experimental para anotações ARIA ""[Accessible Rich Internet Applications — Aplicativos de Internet Ricos e Acessíveis]"":
   - adiciona um comando para ler um resumo dos detalhes de um objeto com aria-details. (#12364)
-  - adiciona uma opção em avançado para informar se um objeto tem detalhes no modo de navegação. (#12439)
+  - adiciona uma opção nas preferências avançadas para informar se um objeto tem detalhes no modo de navegação. (#12439)
   -
 - No Windows 10 Versão 1909 e posteriores (incluindo Windows 11), o NVDA anunciará a contagem de sugestões ao realizar pesquisas no Explorador de Arquivos. (#10341, #12628)
-- No Microsoft Word, o NVDA agora anuncia o resultado dos atalhos de recuo e recuo deslocado quando executados. (#6269)
+- No Microsoft Word, o NVDA agora anuncia o resultado dos atalhos de recuo e recuo deslocado ""[deslocamento no parágrafo]"" quando executados. (#6269)
 -
 
 
 == Alterações ==
-- O NVDA agora fala por padrão todos os símbolos ao navegar por palavra.
-Isso pode ser alternado na caixa de diálogo Preferências ou com um novo comando (não atribuído). (#11779)
 - Espeak-ng foi atualizado para 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
 - Se artigo estiver habilitado nas preferências do usuário para formatação de documento, o NVDA anuncia "artigo" após o conteúdo. (#11103)
+- Transcritor braille liblouis atualizado para [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Novas tabelas braille: Búlgaro grau 1, Birmanês grau 1, Birmanês grau 2, Cazaque grau 1, Quemer grau 1, Curdo Setentrional grau 0, Sepedi grau 1, Sepedi grau 2, Sesoto grau 1, Sesoto grau 2, Setswana grau 1, Setswana grau 2, Tártaro grau 1, Vietnamita grau 0, Vietnamita grau 2, Vietnamita Meridional grau 1, Xhosa grau 1, Xhosa grau 2, Iacuto grau 1, Zulu grau 1, Zulu grau 2
+  -
+- O OCR do Windows 10 foi renomeado para OCR do Windows. (#12690)
 -
 
 
@@ -29,17 +45,17 @@ Isso pode ser alternado na caixa de diálogo Preferências ou com um novo comand
 - Em programas de terminal no Windows 10 versão 1607 e posteriores, ao inserir ou excluir caracteres no meio de uma linha, os caracteres à direita do cursor não são mais lidos. (#3200)
   - Diff Match Patch agora habilitado por padrão. (#12485)
   -
-- Transcritor braille liblouis atualizado para [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
-  - Novas tabelas braille: Búlgaro grau 1, Birmanês grau 1, Birmanês grau 2, Cazaque grau 1, Quemer grau 1, Curdo Setentrional grau 0, Sepedi grau 1, Sepedi grau 2, Sesoto grau 1, Sesoto grau 2, Setswana grau 1, Setswana grau 2, Tártaro grau 1, Vietnamita grau 0, Vietnamita grau 2, Vietnamita Meridional grau 1, Xhosa grau 1, Xhosa grau 2, Iacuto grau 1, Zulu grau 1, Zulu grau 2
-  -
 - A inserção de braille funciona corretamente com as seguintes tabelas estenografadas: Árabe grau 2, Espanhol grau 2, Urdu grau 2, Chinês (China, Mandarim) grau 2. (#12541)
-- A Ferramenta de Correção de Registro COM agora resolve mais problemas, especialmente no Windows de 64 bit. (#1256)
+- A Ferramenta de Correção de Registro COM agora resolve mais problemas, especialmente no Windows de 64 bit. (#12560)
 - Melhorias no manuseio de botões da linha braille Seika Notetaker da Nippon Telesoft. (#12598)
-- Melhorias no anúncio do painel de emoji do Windows e do histórico da área de transferência. (#11485)
+- Melhorias no anúncio do painel de emojis do Windows e do histórico da área de transferência. (#11485)
 - Atualizadas as descrições dos caracteres do alfabeto bengali. (#12502)
 - O NVDA sai com segurança quando um novo processo é iniciado. (#12605)
 - Resselecionar o driver ""[controlador]"" de linha braille da Handy Tech no diálogo Selecionar Linha Braille não causa mais erros. (#12618)
 - O Windows versão 10.0.22000 ou posterior é reconhecido como Windows 11, não Windows 10. (#12626)
+- O suporte para cortina de tela foi corrigido e testado para versões do Windows até 10.0.22000. (#12684)
+- Se nenhum resultado for mostrado ao filtrar os comandos ""[gestos]"" de entrada, o diálogo de configuração de Definir comando ""[gesto de entrada]"" continua a funcionar conforme o esperado. (#12673)
+- Corrigido uma falha onde o primeiro item de menu de um submenu não é anunciado em alguns contextos. (#12624)
 -
 
 
@@ -51,7 +67,7 @@ Isso pode ser alternado na caixa de diálogo Preferências ou com um novo comand
   - ``processPositiveStates`` e ``processNegativeStates`` foram descontinuados para remoção.
   -
 - No Windows 10 Versão 1511 e posteriores (incluindo compilações do Insider Preview), o nome da versão de atualização de recurso do Windows em vigor é obtido no Registro do Windows. (#12509)
-- Preterido: winVersion.WIN10_RELEASE_NAME_TO_BUILDS será removido em 2022.1, não há substituição direta. (#12544)
+- Preterido: ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` será removido em 2022.1, não há substituição direta. (#12544)
 -
 
 
