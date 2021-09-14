@@ -159,6 +159,8 @@ Discuss under "testing strategy" heading:
   Does the user documentation need updating?
 - Context sensitive help for GUI changes.
   New GUI options require context sensitive help assignment.
+- Developer / Technical Documentation
+  Does the developer or technical documentation need updating?
 
 ### UX of all users considered
 - Users of NVDA are diverse, and rely on different parts of NVDA.
