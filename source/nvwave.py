@@ -665,6 +665,5 @@ def _cleanup():
 	fileWavePlayerThread = None
 
 
-@property
 def isInError() -> bool:
 	return WavePlayer.audioDeviceError_static

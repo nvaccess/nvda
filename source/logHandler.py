@@ -107,7 +107,7 @@ def shouldPlayErrorSound() -> bool:
 	"""Indicates if an error sound should be played when an error is logged.
 	"""
 	import nvwave
-	if not not nvwave.isInError:
+	if nvwave.isInError():
 		if nvwave._isDebugForNvWave():
 			log.debug("No beep for log; nvwave is in error state")
 		return False
