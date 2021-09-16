@@ -226,7 +226,7 @@ class SymphonyIATableCell(SymphonyTableCell):
 			lastAccessible = lastCellUnknown.QueryInterface(IAccessibleHandler.IA2.IAccessible2)
 			lastAddress = lastAccessible.accName(0)
 			# Translators: LibreOffice, report range of cell coordinates
-			return _("{firstAddress} throuhg {lastAddress}").format(
+			return _("{firstAddress} through {lastAddress}").format(
 				firstAddress=self._get_name(),
 				lastAddress=lastAddress
 			)
