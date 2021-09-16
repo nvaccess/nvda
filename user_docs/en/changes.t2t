@@ -42,8 +42,8 @@ If you need this functionality please assign a gesture to the appropriate script
 - Fixed bugs around updating and removing addons where the addon folder has been renamed or has files opened. (#12792, #12629)
 - When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA no longer redundantly announces when a single cell is selected. (#12530)
 - More dialog text is automatically read in LibreOffice Writer, such as in confirmation dialogs. (#11687)
-- Reading / navigating with browse mode in Microsoft Word via UI automation now ensures the document is always scrolled so that current browse mode position is visible, and that the caret position in focus mode correctly reflects the browse mode position. (#9611)
-- when performing Say all in Microsoft Word via UI automation, the document is now automatically scrolled, and the caret position is correctly updated. (#9611)
+- Reading / navigating with browse mode in Microsoft Word via UI automation now ensures the document is always scrolled so that the current browse mode position is visible, and that the caret position in focus mode correctly reflects the browse mode position. (#9611)
+- When performing Say all in Microsoft Word via UI automation, the document is now automatically scrolled, and the caret position is correctly updated. (#9611)
 -
 
 
