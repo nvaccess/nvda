@@ -14,8 +14,6 @@ from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
 from logHandler import log
 import speech
-import ui
-import time
 import api
 import braille
 import vision
@@ -94,7 +92,9 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
-			if obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IA2.IAccessibleHypertext).hyperlinkIndex(offset) != -1:
+			if obj.IAccessibleTextObject.QueryInterface(
+				IAccessibleHandler.IA2.IAccessibleHypertext
+			).hyperlinkIndex(offset) != -1:
 				formatField["link"] = True
 		except COMError:
 			pass
@@ -176,7 +176,7 @@ class SymphonyTableCell(IAccessible):
 				# We assume our focus is in the selection.
 				states.add(controlTypes.State.SELECTED)
 			else:
-				# Remove the selectable state, since that ensures the negative selected state isn't spoken for focused cells.
+				# Remove SELECTABLE to ensure the negative SELECTED state isn't spoken for focused cells.
 				states.discard(controlTypes.State.SELECTABLE)
 		if self.IA2Attributes.get('Formula'):
 			# #860: Recent versions of Calc expose has formula state via IAccessible 2.
@@ -197,7 +197,12 @@ class SymphonyIATableCell(SymphonyTableCell):
 
 	def announceSelectionChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, states=True, cellCoordsText=True, reason=controlTypes.OutputReason.CHANGE)
+			speech.speakObjectProperties(
+				self,
+				states=True,
+				cellCoordsText=True,
+				reason=controlTypes.OutputReason.CHANGE
+			)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
 
@@ -256,19 +261,19 @@ class AppModule(appModuleHandler.AppModule):
 		role=obj.role
 		windowClassName=obj.windowClassName
 		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME", "SALFRAME"):
-			if role==controlTypes.Role.TABLECELL:
+			if role == controlTypes.Role.TABLECELL:
 				if obj._IATableCell:
 					clsList.insert(0, SymphonyIATableCell)
 				else:
 					clsList.insert(0, SymphonyTableCell)
-			elif role==controlTypes.Role.TABLE and (
+			elif role == controlTypes.Role.TABLE and (
 				hasattr(obj, "IAccessibleTable2Object")
 				or hasattr(obj, "IAccessibleTableObject")
 			):
 				clsList.insert(0, SymphonyTable)
 			elif hasattr(obj, "IAccessibleTextObject"):
 				clsList.insert(0, SymphonyText)
-			if role==controlTypes.Role.PARAGRAPH:
+			if role == controlTypes.Role.PARAGRAPH:
 				clsList.insert(0, SymphonyParagraph)
 
 	def event_NVDAObject_init(self, obj):
