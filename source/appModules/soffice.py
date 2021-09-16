@@ -4,7 +4,7 @@
 # Copyright (C) 2006-2021 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
 from comtypes import COMError
-import IAccessibleHandler
+from IAccessibleHandler import IA2, splitIA2Attribs
 import appModuleHandler
 import controlTypes
 import textInfos
@@ -35,7 +35,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 			except COMError:
 				pass
 		if attribsString:
-			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
+			formatField.update(splitIA2Attribs(attribsString))
 
 		try:
 			escapement = int(formatField["CharEscapement"])
@@ -93,7 +93,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
 			if obj.IAccessibleTextObject.QueryInterface(
-				IAccessibleHandler.IA2.IAccessibleHypertext
+				IA2.IAccessibleHypertext
 			).hyperlinkIndex(offset) != -1:
 				formatField["link"] = True
 		except COMError:
@@ -209,10 +209,10 @@ class SymphonyIATableCell(SymphonyTableCell):
 	def _get_cellCoordsText(self):
 		if self.hasSelection and controlTypes.State.FOCUSED in self.states:
 			selected, count = self.table.IAccessibleTable2Object.selectedCells
-			firstAccessible = selected[0].QueryInterface(IAccessibleHandler.IA2.IAccessible2)
+			firstAccessible = selected[0].QueryInterface(IA2.IAccessible2)
 			firstAddress = firstAccessible.accName(0)
 			firstValue = firstAccessible.accValue(0) or ''
-			lastAccessible = selected[count - 1].QueryInterface(IAccessibleHandler.IA2.IAccessible2)
+			lastAccessible = selected[count - 1].QueryInterface(IA2.IAccessible2)
 			lastAddress = lastAccessible.accName(0)
 			lastValue = lastAccessible.accValue(0) or ''
 			# Translators: LibreOffice, report selected range of cell coordinates with their values
@@ -228,7 +228,7 @@ class SymphonyIATableCell(SymphonyTableCell):
 				(self.columnNumber - 1) + (self.columnSpan - 1)
 			)
 			lastCellUnknown = self.table.IAccessibleTable2Object.cellAt(*lastSelected)
-			lastAccessible = lastCellUnknown.QueryInterface(IAccessibleHandler.IA2.IAccessible2)
+			lastAccessible = lastCellUnknown.QueryInterface(IA2.IAccessible2)
 			lastAddress = lastAccessible.accName(0)
 			# Translators: LibreOffice, report range of cell coordinates
 			return _("{firstAddress} through {lastAddress}").format(
