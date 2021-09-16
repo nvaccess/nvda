@@ -756,7 +756,9 @@ class UIAHandler(COMObject):
 			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
 			if (
-				(
+				# An MS Word document window
+				windowClass == "_WwG"
+				and (
 					winVersion.getWinVer() < winVersion.WIN10
 					or (
 						# An MS Office app before build 13901
@@ -767,8 +769,6 @@ class UIAHandler(COMObject):
 						)
 					)
 				)
-				# An MS Word document window
-				and windowClass == "_WwG"
 				# Disabling is only useful if we can inject in-process (and use our older code)
 				and canUseOlderInProcessApproach
 				# Allow the user to still explicitly force UIA support
