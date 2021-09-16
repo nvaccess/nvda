@@ -118,6 +118,28 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 
 class WordDocumentTextInfo(UIATextInfo):
 
+	def _ensureRangeVisibility(self):
+		try:
+			inView = self.pointAtStart in self.obj.location
+		except LookupError:
+			inView = False
+		if not inView:
+			self._rangeObj.ScrollIntoView(True)
+
+	def updateSelection(self):
+		# #9611: The document must be scrolled so that the range is visible on screen
+		# Otherwise trying to set the selection to the range
+		# may cause the selection to remain on the wrong page.
+		self._ensureRangeVisibility()
+		super().updateSelection()
+
+	def updateCaret(self):
+		# #9611: The document must be scrolled so that the range is visible on screen
+		# Otherwise trying to set the caret to the range
+		# may cause the caret to remain on the wrong page.
+		self._ensureRangeVisibility()
+		super().updateCaret()
+
 	def _get_locationText(self):
 		point = self.pointAtStart
 		# UIA has no good way yet to convert coordinates into user-configured distances such as inches or centimetres.
