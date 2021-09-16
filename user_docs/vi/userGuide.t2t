@@ -789,18 +789,19 @@ Khi bật chức năng Làm Nổi  trực quan trong [phân loại hỗ trợ nh
 ++ Che màn hình ++[VisionScreenCurtain]
 Là người mù hay nhìn kém, thường sẽ không thể hoặc không cần nhìn những gì trên màn hình.
 Hơn nữa, cũng có thể khó để biết có ai đó nhìn màn hình của bạn từ đằng sau hay không.
-Tình huống này, NVDA có một tính năng tên gọi "che màn hình", có thể bật lên để làm đen màn hình.
+Tình huống này, NVDA có một tính năng tên gọi "Che Màn Hình", có thể bật lên để làm đen màn hình.
 
 Bạn có thể bật tính năng này trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings].
 
-Khi bật tính năng che màn hình, vài thao tác dựa vào những gì hiển thị trên màn hình như [Nhận dạng văn bản #Win10Ocr] hay chụp màn hình không thể thực hiện.
+Khi bật tính năng Che Màn Hình, vài thao tác dựa vào những gì hiển thị trên màn hình như [Nhận dạng văn bản #Win10Ocr] hay chụp màn hình không thể thực hiện được.
 
-Để đảm bảo tính bảo mật, hãy xác nhận rằng tính năng che màn hình hoạt động được với các phiên bản Windows mới, kể cả bản thử nghiệm.
-Khi sử dụng các bản phát hành NVDA cũ hơn 2021.2 và Windows mới hơn Windows 10 21H2, tính năng che màn hình có thể không hoạt động được mà chẳng có cảnh báo gì.
+Do một thay đổi trong Windows Magnification API, tính năng Che Màn Hình phải được cập nhật để hỗ trợ phiên bản mới nhất của Windows.
+Hãy dùng NVDA 2021.2 để bật tính năng Che Màn Hình với Windows 10 21H2 (10.0.19044) trở lên.
+Vì mục tiêu bảo mật, khi sử dụng một phiên bản mới của Windows, hãy tìm sự xác nhận trực quan rằng tính năng Che Màn Hình có làm cho màn hình đen toàn bộ.
 
 + Nhận Dạng Nội Dung +[ContentRecognition]
 Khi tác giả không cung cấp đầy đủ thông tin của ứng dụng cho trình đọc màn hình, sẽ có nhiều công cụ khác nhau hỗ trợ để có thể nhận dạng nội dung của một hình ảnh chẳng hạn.
-NVDA hỗ trợ sử dụng chức năng nhận dạng văn bản từ hình ảnh - optical character recognition (OCR) là chức năng có sẵn trong Windows 10 trở lên để nhận dạng văn bản từ hình ảnh.
+NVDA hỗ trợ sử dụng chức năng nhận dạng kí tự quang học - optical character recognition (OCR) là chức năng có sẵn trong Windows 10 trở lên để nhận dạng văn bản từ hình ảnh.
 Cũng có thêm những trình nhận dạng văn bản khác cho NVDA dưới dạng add-on.
 
 Khi thực hiện lệnh nhận dạng nội dung, NVDA sẽ tiến hành nhận dạng tại [đối tượng điều hướng #ObjectNavigation].
@@ -813,7 +814,7 @@ Bấm enter hoặc phím khoảng trắng để kích hoạt văn bản tại v�
 Bấm escape để bỏ qua kết quả nhận dạng.
 
 ++ Windows OCR ++[Win10Ocr]
-Windows 10 trở lên đã bao gồm hỗ trợ nhận dạng văn bản (OCR) cho nhiều ngôn ngữ khác nhau.
+Windows 10 trở lên đã bao gồm hỗ trợ nhận dạng kí tự quang học (OCR) cho nhiều ngôn ngữ khác nhau.
 NVDA có thể dùng công cụ này để nhận dạng văn bản trong hình ảnh và những ứng dụng không tiếp cận.
 
 Bạn có thể chọn ngôn ngữ nhận dạng trong phân loại [Windows OCR #Win10OcrSettings] trong [hộp thoại cấu hình NVDA #NVDASettings].
@@ -822,7 +823,7 @@ Có thể cài đặt thêm ngôn ngữ nhận dạng bằng cách mở start me
 Windows OCR có thể không tương thích một phần hay toàn phần với [hỗ trợ nhìn của NVDA #Vision] hoặc các tiện ích hỗ trợ nhìn bên ngoài. Bạn sẽ phải tắt các tiện ích này trước khi thực hiện nhận dạng.
 
 %kc:beginInclude
-Bấm NVDA+r để nhận dạng với Windows OCR.
+Bấm NVDA+r để nhận dạng văn bản ở đối tượng điều hướng hiện tại với Windows OCR.
 %kc:endInclude
 
 + Tính năng cụ thể cho một số ứng dụng +[ApplicationSpecificFeatures]
@@ -1041,9 +1042,9 @@ Khi bạn chọn một phân loại, hộp thoại sẽ hiển thị  vài thi�
 Các thiết lập này có thể được áp dụng bằng cách bấm nút Áp dụng. trường hợp này, hộp thoại không bị đóng lại.
 Nếu muốn lưu thiết lập và đóng hộp thoại cấu hình NVDA, bạn có thể dùng nút Đồng ý.
 
-Một số phân loại có thể gọi bằng phím tắt.
+Một số phân loại có phím tắt để mở.
 Nếu bấm phím tắt, hộp thoại cấu hình NVDA sẽ được mở và con trỏ sẽ đi đến phân loại đó.
-Mặc định, không phải tất cả phân loại đều mở được bằng phím tắt.
+Mặc định, không phải tất cả phân loại đều có thể mở được bằng phím tắt.
 Nếu muốn mở phân loại nào không được gán phím tắt, hãy dùng [hộp thoại quản lý thao tác #InputGestures] để gán phím lệnh hay thao tác cảm ứng cho phân loại đó.
 
 Dưới đây là các phân loại trong hộp thoại cấu hình NVDA:
@@ -1392,7 +1393,7 @@ Vui lòng xem phần [Các màn hình nổi được hỗ trợ #SupportedBraill
 Tùy chọn này, nếu có, cho phép bạn chọn cổng hoặc loại kết nối sử dụng để giao tiếp với màn hình nổi được chọn.
 Nó là một hộp xổ gồm các lựa chọn có sẵn cho màn hình nổi đó.
 
-Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là, việc kết nối màn hình nổi với máy tính sẽ được tự động thiết lập bằng cách chương trình tự quét cổng USB và bluetooth trên hệ thống.
+Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là việc kết nối màn hình nổi với máy tính sẽ được tự động thiết lập bằng cách chương trình tự quét cổng USB và bluetooth trên hệ thống.
 Tuy nhiên, với một số màn hình nổi, bạn có thể chỉ định cổng kết nối cho nó.
 Một số lựa chọn thường gặp là: "tự động" (yêu cầu NVDA tự động hóa quá trình nhận dạng và kết nối), "USB", "bluetooth" và giao tiếp qua cổng serial nếu màn hình nổi bạn có hỗ trợ kiểu giao tiếp này.
 
@@ -2099,7 +2100,7 @@ Bạn có thể làm điều đó bằng cách chọn hộp kiểm "tạm thời
 
 +++ Kích hoạt một hồ sơ bằng thao tác +++[ConfigProfileGestures]
 Với mọi hồ sơ được thêm vào, bạn có thể gán một hay nhiều thao tác để kích hoạt nó.
-Mặc định, hồ sơ cấu hình không được gán thao tác.
+Mặc định, hồ sơ cấu hình không được gán sẵn thao tác.
 Bạn có thể gán thao tác để kích hoạt một hồ sơ bằng [Hộp thoại quản lý thao tác #InputGestures].
 Mỗi hồ sơ sẽ tồn tại trong phân loại hồ sơ cấu hình.
 Khi bạn đổi tên một hồ sơ, các thao tác được gán trước đó vẫn hoạt động.
@@ -2293,7 +2294,7 @@ Các giọng đọc này cũng có thể được sử dụng với NVDA.
  -
 -
 
-++ Giọn Windows OneCore ++[OneCore]
+++ Giọng Windows OneCore ++[OneCore]
 Windows 10 trở lên đi kèm với những giọng đọc mới, được gọi là OneCore hoặc còn gọi là "Mobil voices" (giọng Mobile).
 Những giọng đọc mới hỗ trợ cho khá nhiều ngôn ngữ khác nhau và  phản hồi nhanh hơn so với những giọng theo chuân SAPI-5.
 Trên Windows 10 trở lên, NVDA mặc định dùng các giọng Windows OneCore ([eSpeak NG #eSpeakNG] thì dùng cho các bản phát hành khác).
@@ -3139,7 +3140,7 @@ Khi cấu hình cổng và màn hình để sử dụng, bạn hãy đọc kỹ 
 Đối với những màn hình có bàn phím chữ nổi, hiện BRLTTY bản thân nó cũng hỗ trợ nhập liệu kiểu chữ nổi.
 Vì vậy, sẽ không cần bảng mã chữ nổi đầu vào của NVDA.
 
-BRLTTY không liên quan đến việc hỗ trợ tính năng  ngầm tự nhận biết của NVDA.
+BRLTTY không được bao gồm trong tính năng  ngầm tự nhận biết màn hình của NVDA.
 
 Sau đây là các lệnh của BRLTTY được gán cho NVDA.
 Vui lòng xem [Danh sách phím kết hợp của BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] để biết thêm thông tin về cách thức các lệnh của BRLTTY kết hợp với các điều khiển trên màn hình nổi.

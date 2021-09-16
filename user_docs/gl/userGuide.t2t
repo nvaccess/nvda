@@ -789,14 +789,15 @@ Cando Resaltado Visual estea activado na [categoría visión #VisionSettings] do
 ++ Cortina de Pantalla ++[VisionScreenCurtain]
 Como usuario cego ou con problemas de visión, a menudo non é posible ou necesario ver o contido da pantalla.
 Ademáis, pode seren difícil asegurarte de que non haxa ninguén mirando por enriba do teu hombro.
-Para esta situación, o NVDA contén unha característica chamada "cortina de pantalla" que pode activarse para facer que a pantalla sexa negra.
+Para esta situación, o NVDA contén unha característica chamada "Cortina de Pantalla" que pode activarse para facer que a pantalla sexa negra.
 
 Podes activar a Cortina de Pantalla na [categoría visión #VisionSettings] do diálogo [Opcións do NVDA #NVDASettings].
 
-Cando a cortina de pantalla estea activa algunhas tarefas baseadas directamente no que aparece sobre a pantalla como a realización do [OCR #Win10Ocr] ou a toma dunha captura non se poden lograr.
+Cando a Cortina de Pantalla estea activa algunhas tarefas baseadas directamente no que aparece sobre a pantalla como a realización do [OCR #Win10Ocr] ou a toma dunha captura non se poden lograr.
 
-Para garantir a seguridade, confirma que a cortina de pantalla funciona adecuadamente con versións novas ou experimentais de Windows.
-Cando se usen versións do NVDA anteriores á 2021.2 e Windows posteriores a Windows 10 21H2, a cortina de pantalla pode deixar de funcionar sen previo aviso.
+Debido a un cambio na API Windows Magnification, a Cortina de Pantalla tivo que actualizarse para admitir as versións máis novas de Windows.
+Usa o NVDA 2021.2 para activar a Cortina de Pantalla con Windows 10 21H2 (10.0.19044) ou posteriores.
+Por razóns de seguridade, ao usar unha versión nova de Windows, obtén unha confirmación visual de que a Cortina de Pantalla faga a esta totalmente negra.
 
 + Recoñecemento de Contidos +[ContentRecognition]
 Cando os autores non proporcionan suficiente información para que un usuario de lector de pantalla determine o contido de algo, poden usarse varias ferramentas para tentar recoñecer o contido dende unha imaxe.

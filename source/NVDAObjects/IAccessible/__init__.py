@@ -122,12 +122,6 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	detectFormattingAfterCursorMaybeSlow=False
 
-	def scrollIntoView(self):
-		self.obj.IAccessibleTextObject.scrollSubstringTo(
-			self._startOffset, self._endOffset,
-			IA2.IA2_SCROLL_TYPE_TOP_LEFT
-		)
-
 	def _get_encoding(self):
 		return super().encoding
 

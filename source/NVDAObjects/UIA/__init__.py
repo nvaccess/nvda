@@ -45,9 +45,6 @@ import winVersion
 
 class UIATextInfo(textInfos.TextInfo):
 
-	def scrollIntoView(self):
-		self._rangeObj.scrollIntoView(True)
-
 	_cache_controlFieldNVDAObjectClass=True
 	def _get_controlFieldNVDAObjectClass(self):
 		"""

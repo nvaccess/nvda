@@ -4,6 +4,74 @@ Novità in NVDA
 %!includeconf: ../changes.t2tconf
 
 
+= 2021.2 =
+Questa versione introduce il supporto preliminare per Windows 11!
+Nonostante tale sistema operativo non sia ancora stato rilasciato, sono stati effettuati numerosi test con la versione 2021.2 di NVDA per le edizioni in sviluppo di Windows11.
+Ciò comprende la risoluzione di un bug molto importante inerente la tenda schermo (si vedano le note di seguito).
+L'utility di risoluzione registrazione Com di sistema è in grado di sistemare un numero molto più ampio di problemi quando NVDA è in esecuzione.
+Ci sono aggiornamenti al sintetizzatore eSpeak e alle tabelle di braille LibLouis.
+Inoltre, varie correzioni di bug e miglioramenti, in particolare per il supporto braille, terminali Windows, calcolatrice, pannello emoji e cronologia degli appunti.
+
+
+== Note importanti ==
+A causa di alcuni cambiamenti nelle api dell'ingranditore di Windows, è risultato necessario aggiornare la tenda schermo in modo che potesse funzionare correttamente.
+Perciò, è obbligatorio servirsi di NVDA 2021.2 per attivare la tenda schermo con versioni di Windows 10 21H2 (10.0.19044) o successive.
+Ciò comprende anche Windows 10 Insiders e Windows 11.
+Per sicurezza, sarebbe meglio avere una conferma da una persona vedente che lo schermo sia effettivamente oscurato quando si aggiorna Windows ad una nuova versione.
+
+
+== Novità ==
+- Supporto sperimentale per le annotazioni ARIA:
+  - aggiunto un comando che consente di ottenere un riepilogo dei dettagli di un oggetto contenente aria-details. (#12364)
+  - aggiunta un'opzione nella sezione avanzate delle preferenze per annunciare se un oggetto contiene dettagli in modalità navigazione. (#12439) 
+  -
+- In Windows 10 Versione 1909 e successive (incluso Windows 11), NVDA annuncerà il conteggio dei suggerimenti durante l'esecuzione di ricerche in Esplora file. (#10341, #12628)
+- In Microsoft Word, NVDA ora annuncia ciò che accade dopo aver premuto le combinazioni di tasti relative ai rientri ed ai rientri sporgenti (non in italiano a causa della mancanza di questi tasti rapidi nella versione italiana di Word. (#6269)
+-
+
+
+== Cambiamenti ==
+- Espeak-ng è stata aggiornata alla versione 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Se nelle impostazioni di formattazione documento viene abilitata la casella di controllo articoli, NVDA annuncerà "articolo" dopo il contenuto. (#11103)
+- Aggiornato liblouis braille translator alla versione [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nuove tabelle braille: Bulgaro grado 1, Burmese grado 1, Burmese grado 2, Kazako grado 1, Khmer grado 1, curdo del nord grado 0, Sepedi grado 1, Sepedi grado 2, Sesotho grado 1, Sesotho grado 2, Setswana grado 1, Setswana grado 2, Tatar grado 1, Vietnamita grado 0, Vietnamita grado 2, vietnamita del sud  grado1, Xhosa grado 1, Xhosa grado 2, Yakut grado 1, Zulu grado 1, Zulu grado 2
+  -
+- L'OCR di Windows10  è stato rinominato in OCR Windows. (#12690)
+-
+
+
+== Bug Corretti ==
+- Nella calcolatrice di Windows 10, NVDA visualizzerà correttamente il risultato delle espressioni anche su display braille. (#12268)
+- Nei programmi terminale su Windows 10 versione 1607 e successive, quando si inseriscono o si eliminano caratteri nel mezzo di una riga, i caratteri a destra del cursore non vengono più letti. (#3200)
+  - Diff Match Patch ora abilitata di default. (#12485)
+  -
+- L'immissione braille funziona correttamente con le seguenti tabelle contratte: Arabo grado 2, Spagnolo grado 2, Urdu grado 2, Cinese (Cina, Mandarino) grado 2. (#12541)
+- L'utility di risoluzione registrazione Com di sistema è in grado di sistemare un numero molto più ampio di problemi quando NVDA è in esecuzione. (#12560)
+- Miglioramenti nella gestione dei pulsanti dei notetaker braille Seika di Nippon Telesoft. (#12598)
+- Miglioramenti nella lettura del pannello emoji di Windows e della cronologia appunti. (#11485)
+- Aggiornate le descrizioni per l'alfabeto Bengali. (#12502)
+- NVDA si chiude in sicurezza quando viene avviato un nuovo processo. (#12605)
+- Non ci sono più errori nel riselezionare il driver del display braille Handy Tech dalla finestra di dialogo Seleziona display braille. (#12618)
+- Le versioni di Windows 10.0.22000 o successive vengono riconosciute come Windows11, non Windows 10. (#12626)
+- La funzionalità di tenda schermo è stata sistemata e testata fino alla versione Windows 10.0.22000. (#12684)
+- Se non vengono mostrati risultati  durante il filtraggio dei gesti di immissione, la finestra di configurazione gesti continua a funzionare regolarmente. (#12673)
+- Risolto un bug per cui la prima voce di menu di un sottomenu non veniva annunciata in alcuni contesti. (#12624)
+-
+
+
+== Changes for Developers ==
+- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SymbolLevel.*`` before 2022.1. (#11856, #12636)
+- ``controlTypes`` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
+  - ``ROLE_*`` and ``STATE_*`` constants should be replaced to their equivalent ``Role.*`` and ``State.*``.
+  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` have been deprecated, usages such as ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+  - ``processPositiveStates`` and ``processNegativeStates`` have been deprecated for removal.
+  -
+- On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
+- Deprecated: ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` will be removed in 2022.1, there is no direct replacement. (#12544)
+-
+
+
+
 = 2021.1 =
 Questa versione include un supporto sperimentale opzionale per la tecnologia UIA in Excel e nei browser basati su Chromium.
 Sono state effettuate numerose correzioni su diverse lingue e per l'accesso ai collegamenti in Braille.

@@ -789,14 +789,15 @@ Når "Visuel Fremhævning" er aktiveret i [indstillingskategorien Syn #VisionSet
 ++ Skærmtæppe ++[VisionScreenCurtain]
 Som en blind eller svagtseende bruger er det ofte ikke muligt eller nødvendigt at se indholdet på skærmen.
 Derudover kan det være svært at sikre, at der ikke er nogen, der kigger dig over skulderen.
-I denne situation indeholder NVDA en funktion kaldet "skærmtæppe", der kan aktiveres for at gøre skærmen sort.
+I denne situation indeholder NVDA en funktion kaldet "Skærmtæppe", der kan aktiveres for at gøre skærmen sort.
 
 Du kan aktivere funktionen ved at gå til [indstillingskategorien "Syn" #VisionSettings] i [NVDAs indstillinger #NVDASettings].
 
 Vær opmærksom på at du ikke kan udføre nogle handlinger, der tager udgangspunkt i noget visuelt på skærmen såsom at tage et skærmbillede eller benytte [Windows 10 tekstgenkendelse #Win10Ocr], hvis denne funktion er aktiveret.
 
-For at sikre sikkerheden, bekræft at skærmtæppet virker korrekt med nye eller eksperimentelle versioner af Windows.
-Hvis du bruger en ældre version af NVDA end 2021.2 og en nyere Windows-udgave end Windows 10 21H2, kan skærmtæppet muligvis holde op med at fungere uden varsel.
+Pga. ændringer i Windows Magnification API, var det nødvendigt at opdatere skærmtæppefunktionen for at understøtte de nyeste versioner af Windows.
+Benyt NVDA 2021.2 til at aktivere skærmtæppet med Windows 10 21H2 (10.0.19044) eller nyere.
+Af sikkerhedsmæssige årsager kan det være en god idé at få bekræftet af en seende person, hvorvidt skærmtæppefunktionen er aktiv og gør skærmen fuldstændigt sort, når denne benyttes med nyere versioner af Windows.
 
 + Indholdsgenkendelse +[ContentRecognition]
 Når forfattere ikke giver tilstrækkelig information til en skærmlæserbruger til at bestemme indholdet af noget, kan forskellige værktøjer bruges til at forsøge at genkende indholdet på et billede.

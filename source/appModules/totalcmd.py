@@ -42,7 +42,7 @@ class TCList(IAccessible):
 		if self.name:
 			speakList=[]
 			if controlTypes.State.SELECTED in self.states:
-				speakList.append(controlTypes.stateLabels[controlTypes.State.SELECTED])
+				speakList.append(controlTypes.State.SELECTED.displayString)
 			speakList.append(self.name.split("\\")[-1])
 			speech.speakMessage(" ".join(speakList))
 		else:

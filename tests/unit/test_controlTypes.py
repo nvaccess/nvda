@@ -10,6 +10,7 @@ import unittest
 import controlTypes
 import versionInfo
 from . import PlaceholderNVDAObject
+from controlTypes.processAndLabelStates import _processNegativeStates, _processPositiveStates
 
 
 class TestLabels(unittest.TestCase):
@@ -20,7 +21,7 @@ class TestLabels(unittest.TestCase):
 			if name.startswith("ROLE_"):
 				self.assertIsNotNone(controlTypes.roleLabels.get(const),msg="{name} has no label".format(name=name))
 
-	def test_roleLabels(self):
+	def test_role_displayString(self):
 		"""Test to check whether every role has its own display string"""
 		for role in controlTypes.Role:
 			role.displayString
@@ -32,7 +33,7 @@ class TestLabels(unittest.TestCase):
 			if name.startswith("STATE_"):
 				self.assertIsNotNone(controlTypes.stateLabels.get(const),msg="{name} has no label".format(name=name))
 
-	def test_stateLabels(self):
+	def test_state_displayString(self):
 		"""Test to check whether every state has its own display string and negative display string"""
 		for state in controlTypes.State:
 			state.displayString
@@ -53,7 +54,7 @@ class TestProcessStates(unittest.TestCase):
 
 	def test_positiveStates(self):
 		self.assertSetEqual(
-			controlTypes.processPositiveStates(
+			_processPositiveStates(
 				self.obj.role,
 				self.obj.states,
 				controlTypes.OutputReason.FOCUS,
@@ -64,7 +65,7 @@ class TestProcessStates(unittest.TestCase):
 
 	def test_negativeStates(self):
 		self.assertSetEqual(
-			controlTypes.processNegativeStates(
+			_processNegativeStates(
 				self.obj.role,
 				self.obj.states,
 				controlTypes.OutputReason.FOCUS,
@@ -93,7 +94,7 @@ class TestStateOrder(unittest.TestCase):
 				obj.states,
 				None
 			),
-			[controlTypes.stateLabels[controlTypes.State.CHECKED]]
+			[controlTypes.State.CHECKED.displayString]
 		)
 
 	def test_negativeMergedStatesOutput(self):
@@ -113,5 +114,5 @@ class TestStateOrder(unittest.TestCase):
 				obj.states,
 				None
 			),
-			[controlTypes.negativeStateLabels[controlTypes.State.CHECKED]]
+			[controlTypes.State.CHECKED.negativeDisplayString]
 		)

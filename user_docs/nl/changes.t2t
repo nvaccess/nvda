@@ -3,6 +3,65 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+Deze release introduceert voorlopige ondersteuning voor Windows 11.
+Hoewel Windows 11 nog moet worden uitgebracht, is deze release getest op preview-versies van Windows 11.
+Dit omvat een belangrijke oplossing voor Schermgordijn (zie belangrijke opmerkingen).
+De Probleemoplosser voor COM-registratie kan nu meer problemen oplossen terwijl NVDA wordt uitgevoerd.
+Er zijn updates voor de synthesizer eSpeak en braillevertaler LibLouis.
+Er zijn ook verschillende bugfixes en verbeteringen, met name voor brailleondersteuning en Windows-terminals, rekenmachine, emoji-paneel en klembordgeschiedenis.
+
+
+== Belangrijke opmerkingen ==
+Vanwege een wijziging in de Windows Magnification API moest Schermgordijn worden bijgewerkt om de nieuwste versies van Windows te ondersteunen.
+Gebruik NVDA 2021.2 om Schermgordijn te activeren met Windows 10 21H2 (10.0.19044) of hoger.
+Dit omvat Windows 10 Insiders en Windows 11.
+Als u een nieuwe versie van Windows gebruikt, moet u om veiligheidsredenen om een bevestiging vragen van iemand die kan zien dat het schermgordijn het scherm volledig zwart maakt.
+
+
+== Nieuwe functies ==
+- Experimentele ondersteuning voor ARIA-annotaties:
+  - voegt een commando toe om een ​​samenvatting van details van een object met aria-details te lezen. (#12364)
+  - voegt een optie toe in geavanceerde instellingen om te melden of een object details heeft in bladermodus. (#12439)
+  -
+- In Windows 10 versie 1909 en later (inclusief Windows 11) zal NVDA het aantal suggesties aankondigen bij het uitvoeren van zoekopdrachten in Verkenner. (#10341, #12628)
+- In Microsoft Word kondigt NVDA nu het resultaat aan van sneltoetsen voor inspringen en verkeerd-om inspringen wanneer ze worden uitgevoerd. (#6269)
+-
+
+
+== Veranderingen ==
+- Espeak-ng is bijgewerkt naar 1.51-dev commit `` ab11439b18238b7a08b965d1d5a6ef31cbb05cbb ''. (#12449, #12202, #12280, #12568)
+- Als artikel is ingeschakeld in de gebruikersinstellingen voor documentopmaak, kondigt NVDA "artikel" aan na de inhoud. (#11103)
+- Liblouis braillevertaler bijgewerkt naar [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nieuwe brailletabellen: Bulgaars graad 1, Birmees graad 1, Birmees graad 2, Kazachs graad 1, Khmer graad 1, Noord-Koerdische graad 0, Sepedi graad 1, Sepedi graad 2, Sesotho graad 1, Sesotho graad 2, Setswana graad 1, Setswana graad 2, Tatar graad 1, Vietnamees graad 0, Vietnamees graad 2, Zuid-Vietnamees graad 1, Xhosa graad 1, Xhosa graad 2, Yakut graad 1, Zulu graad 1, Zulu graad 2
+  -
+- Windows 10 OCR is hernoemd naar Windows OCR. (#12690)
+-
+
+
+== Opgeloste problemen ==
+- In Windows 10 Rekenmachine toont NVDA rekenmachine-uitdrukkingen op een brailleleesregel. (#12268)
+- In terminalprogramma's in Windows 10 versie 1607 en later worden bij het invoegen of verwijderen van tekens in het midden van een regel de tekens rechts van de cursor niet meer voorgelezen. (#3200)
+  - Diff Match Patch nu standaard ingeschakeld. (#12485)
+  -
+- De braille-invoer werkt correct met de volgende gecontracteerde tabellen: Arabisch graad 2, Spaans graad 2, Urdu graad 2, Chinees (China, Mandarijn) graad 2. (#12541)
+- Het COM-registratiehulpprogramma lost nu meer problemen op, vooral op 64-bits Windows. (#12560)
+- Verbeteringen aan het gebruik van de knoppen voor de Seika Notetaker braille leesregel van Nippon Telesoft. (#12598)
+- Verbeteringen in het melden van het Windows Emoji-paneel en de klembordgeschiedenis. (#11485)
+- De karakterbeschrijvingen van het Bengaalse alfabet bijgewerkt. (#12502)
+- NVDA sluit veilig af wanneer een nieuw proces wordt gestart. (#12605)
+- Het opnieuw selecteren van het Handy Tech brailleleesregelstuurprogramma in het dialoogvenster Brailleleesregel selecteren veroorzaakt geen fouten meer. (#12618)
+- Windows versie 10.0.22000 of later wordt herkend als Windows 11, niet als Windows 10. (#12626)
+- Ondersteuning voor schermgordijn is hersteld en getest voor Windows-versies tot 10.0.22000. (#12684)
+- Als er geen resultaten worden weergegeven bij het filteren van invoerhandelingen, blijft het dialoogvenster voor het configureren van invoerhandelingen werken zoals verwacht. (#12673)
+- Een bug opgelost waarbij het eerste menu-item van een submenu in sommige contexten niet werd aangekondigd. (#12624)
+-
+
+
+== Veranderingen voor ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2021.1 =
 Deze release bevat optionele experimentele ondersteuning voor UIA in Excel- en Chromium-browsers.
 Er zijn verbeteringen voor verschillende talen en voor het openen van koppelingen in braille.

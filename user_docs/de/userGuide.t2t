@@ -36,7 +36,7 @@ Zu den wichtigsten Funktionen gehören:
 
 ++ Internationalisierung ++[Internationalization]
 Auf der Welt sollten alle Menschen den gleichen Zugang zur Information und zu moderner Technologie erhalten, unabhängig von der Sprache.
-Neben Englisch wurde NVDA in mehr als 54 Sprachen übersetzt, darunter: Afrikaans, Albanisch, Amharisch, Arabisch, Aragonisch, Bulgarisch, Burmesisch, Katalanisch, Chinesisch (vereinfacht und traditionell), Dänisch, Deutsch (Deutschland und Schweiz), Farsi, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Hebräisch, Hindi, Isländisch, Irisch, Tschechisch, Kroatisch, Ungarisch, Italienisch, Japanisch, Kannada, Koreanisch, Kirgisisch, Litauisch, Mazedonisch, Mongolisch, Nepali, Norwegisch, Polnisch, Portugiesisch (Brasilien und Portugal), Punjabi, Rumänisch, Russisch, Serbisch, Slowakisch, Slowenisch, Spanisch (Kolumbien und Spanien), Schwedisch, Tamil, Thai, Türkisch, Ukrainisch und Vietnamesisch.
+Neben Englisch wurde NVDA in mehr als 54 Sprachen übersetzt, darunter: Afrikaans, Albanisch, Amharisch, Arabisch, Aragonesisch, Bulgarisch, Burmesisch, Chinesisch (vereinfacht und traditionell), Dänisch, Deutsch (Deutschland und Schweiz), Farsi, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Hebräisch, Hindi, Irisch, Isländisch, Italienisch, Japanisch, Kannada, Katalanisch, Kirgisisch, Koreanisch, Kroatisch, Litauisch, Mazedonisch, Mongolisch, Nepalesisch, Niederländisch, Norwegisch, Polnisch, Portugiesisch (Brasilien und Portugal), Punjabi, Rumänisch, Russisch, Schwedisch, Serbisch, Slowakisch, Slowenisch, Spanisch (Kolumbien und Spanien), Tamil, Thai, Tschechisch, Türkisch, Ukrainisch, Ungarisch, Vietnamesisch.
 
 ++ Sprachausgaben-Unterstützung ++[SpeechSynthesizerSupport]
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die entsprechende Sprache installiert hat.
@@ -58,7 +58,7 @@ Copyright NVDA_COPYRIGHT_YEARS NVDA-Mitwirkende.
 
 NVDA ist unter der GNU General Public License Version 2 verfügbar, mit zwei besonderen Ausnahmen.
 Die Ausnahmen sind im Lizenz-Dokument unter den Abschnitten "Nicht-GPL-Komponenten in Plugins und Treibern" und "Microsoft Distributable Code" aufgeführt.
-NVDA verwendet auch Komponenten, die unter verschiedenen freien und Open-Source-Lizenzen zur Verfügung gestellt werden.
+NVDA verwendet auch Komponenten, die unter verschiedenen freien und Opensource-Lizenzen zur Verfügung gestellt werden.
 Es steht Ihnen frei, diese Software auf jede Art und Weise weiterzugeben oder zu verändern, solange Sie die Lizenz mitliefern und den gesamten Quellcode jedem zur Verfügung stellen.
 Dies gilt sowohl für Original- als auch für modifizierte Versionen dieser Software sowie für alle veränderten Versionen.
 
@@ -789,14 +789,15 @@ Wenn Sie Visuell hervorheben in der Kategorie "[Visuelle Darstellungen #VisionSe
 ++ Der Bildschirmvorhang ++[VisionScreenCurtain]
 Für blinde oder sehbehinderte Benutzer ist es oft nicht möglich oder notwendig, den Inhalt des Bildschirms zu sehen.
 Zudem könnte es schwierig sein, sicherzustellen, dass Ihnen niemand über die Schulter schaut.
-In NVDA gibt es dafür den Bildschirmvorhang, der aktiviert werden kann, um den Bildschirm zu verdunkeln.
+Dafür gitb es in NVDA den Bildschirmvorhang. Mit dieser Funktion wird der Bildschirm verdunkelt.
 
 Sie können den Bildschirmvorhang in den [NVDA-Einstellungen #NVDASettings], in der Kategorie [Visuelle Darstellungen #VisionSettings] aktivieren.
 
-Wenn der Bildschirmvorhang aktiv ist, können einige Aufgaben, die sich direkt auf das beziehen, was auf dem Bildschirm angezeigt wird, wie z. B. die Durchführung von [OCR #Win10Ocr] oder das Erstellen eines Screenshots, nicht ausgeführt werden.
+Wenn der Bildschirmvorhang aktiv ist, können einige Aufgaben, die direkt auf der Bildschirmanzeige basieren, wie das Ausführen der [Texterkennung #Win10Ocr] oder das Erstellen eines Screenshots, nicht ausgeführt werden.
 
-Um die Sicherheit zu gewährleisten, vergewissern Sie sich, dass der Bildschirmvorhang mit neuen oder experimentellen Versionen von Windows ordnungsgemäß funktioniert.
-Bei Verwendung von NVDA-Versionen älter als 2021.2 und Windows neuer als Windows 10 21H2 funktioniert der Bildschirmvorhang möglicherweise nicht ohne Warnung.
+Auf Grund einer Änderung in der API für die Windows-Lupe musste die Funktion des Bildschirmvorhangs aktualisiert werden, um die neuesten Versionen von Windows zu unterstützen.
+Verwenden Sie NVDA 2021.2, um den Bildschirmvorhang mit Windows 10 21H2 (10.0.19044) oder neuer zu aktivieren.
+Wenn Sie eine neue Windows-Version verwenden, erhalten Sie aus Sicherheitsgründen eine visuelle Bestätigung, dass der Bildschirmvorhang den Bildschirm vollständig verdunkelt.
 
 + Inhaltserkennung +[ContentRecognition]
 Wenn Entwickler von Anwendungen unzureichende Informationen zur Zugänglichkeit bereitstellen, können Sie zahlreiche Werkzeuge verwenden, um z. B. Text aus einem Bild auszulesen.
