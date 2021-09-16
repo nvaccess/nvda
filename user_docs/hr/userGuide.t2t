@@ -63,10 +63,10 @@ Dozvoljeno je dijeljenje i promjena ovog softvera na koji god način želite, sv
 Ovo se odnosi na originalni i promijenjeni softver, kao i na rad koji je iz toga proizašao.
 
 Za pojedinosti [pogledajte cijelu licencu. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
-Za detalje o iznimkama, molimo pročitajte dokumenit licence kojeg možete naći u NVDA izborniku u podizborniku "pomoć".
+Za detalje o iznimkama, molimo pročitajte dokument licence kojeg možete naći u NVDA izborniku u podizborniku "pomoć".
 
 + Preduvjeti za pokretanje NVDA čitača +[SystemRequirements]
-- Operacijski sustavi: sva 32-bitna i 64-bitna izdanja sustava Windows 7, Windows 8, Windows 8.1, Windows 10 i svih serverskih operacijskih sustava, počevši od Windows Server 2008 R2.
+- Operacijski sustavi: sva 32-bitna i 64-bitna izdanja sustava Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 i svih serverskih operacijskih sustava, počevši od Windows Server 2008 R2.
  - Za Windows 7, NVDA treba servisni paket 1 ili noviji.
  - Za Windows Server 2008 R2, NVDA treba servisni paket 1 ili noviji.
 - Najmanje 150 MB prostora na tvrdom disku.
@@ -795,9 +795,13 @@ Ekransku zavjesu možete uključiti u kategoriji [Vid #VisionSettings], u [NVDA 
 
 Kada je zaslonska zavjesa uključena, neki zadaci koji su bazirani na sadržaju ekrana kao što je to izvođenje [prepoznavanja teksta #Win10Ocr] ili slikanja zaslona ne mogu biti izvedeni.
 
+Zbog izmjena u Api-ju lupe sustava windows, značajka zaslonska zavjesa  je obnovljena kako bi radila sa novijim verzijama operacijskog sustava Windows.
+Koristite NVDA 2021.2 kako biste aktivirali zaslonsku zavjesu u operacijskom sustavu Windows 10 21H2 (10.0.19044) i novijim.
+Iz sigurnosnih razloga, kada koristite noviju inačicu sustava Windows, trebali biste pitati čovjeka koji normalno vidi radi li ova funkcija.
+
 + Prepoznavanje sadržaja +[ContentRecognition]
 Kad autori ne daju dovoljno informacija korisniku čitača ekrana, kako bi mogao prepoznati informaciju, mogu se koristiti razni alati, kako bi se tekst mogao prepoznati sa slike.
-NVDA podržava funkciju za optičko prepoznavanje znakova (OCR), koja je ugrađena u Windowse 10 kako bi se tekst mogao prepoznati sa slika.
+NVDA podržava funkciju za optičko prepoznavanje znakova (OCR), koja je ugrađena u Windowse 10 i novije inačice kako bi se tekst mogao prepoznati sa slika.
 Dodatni prepoznavači sadržaja se mogu ponuditi putem NVDA dodataka.
 
 Pri korištenju naredbe za prepoznavanje sadržaja, NVDA prepoznaje sadržaj s trenutačnog [navigacijskog objekta #ObjectNavigation].
@@ -809,17 +813,17 @@ Kad prepoznavanje završi, rezultat će se predstaviti slično modusu čitanja, 
 Pritiskom tipke enter ili razmaknice aktivirat će (kliknuti) tekst pri kursoru, ako je moguće.
 Pritiskom tipke escape se rezultat prepoznavanja odbacuje.
 
-++ Windows 10 OCR ++[Win10Ocr]
-Windows 10 uključuje OCR za mnoge jezike.
+++ Windows OCR ++[Win10Ocr]
+Windows 10 i novije inačice uključuju OCR za mnoge jezike.
 NVDA može to koristiti kako bi se prepoznavao tekst sa slike ili nedostupne aplikacije.
 
-Jezik prepoznavanja možete postaviti u [kategoriji Windows 10 OCR #Win10OcrSettings] [u dijaloškom okviru postavki #NVDASettings].
+Jezik prepoznavanja možete postaviti u [kategoriji Windows OCR #Win10OcrSettings] [u dijaloškom okviru postavki #NVDASettings].
 Dodatni jezici se mogu instalirati putem izbornika Start>Postavke>Vrijeme i Jezik>Regija i jezik, a zatim Dodaj jezik.
 
-Funkcija Windows 10 OCR može biti djelomično ili u cijelosti nekompatibilna sa [NVDA poboljšanjima vida #Vision] ili drugim vanjskim vizualnim pomagalima. Prije poletk prepoznavanja, ta ćete pomagala trebait isključiti.
+Funkcija Windows OCR može biti djelomično ili u cijelosti nekompatibilna sa [NVDA poboljšanjima vida #Vision] ili drugim vanjskim vizualnim pomagalima. Prije poletk prepoznavanja, ta ćete pomagala trebait isključiti.
 
 %kc:beginInclude
-Za prepoznavanje teksta u navigacijskom objektu koristeći windows 10 ocr, pritisnite NVDA+r.
+Za prepoznavanje teksta u navigacijskom objektu koristeći windows ocr, pritisnite NVDA+r.
 %kc:endInclude
 
 + Značajke specifične za neke aplikacije +[ApplicationSpecificFeatures]
@@ -1179,12 +1183,6 @@ Prečac: NVDA+p
 Ova opcija omogućuje određivanje količine interpunkcijskih znakova i drugih simbola koji se trebaju izgovoriti kao riječi.
 Na primjer, kad je ova opcija postavljena na sve, svi će se simboli izgovoriti kao riječi.
 Ova se opcija primjenjuje na sve govorne jedinice, ne samo na trenutačno aktivnu.
-
-==== Izgovaraj svu interpunkciju i simbole prilikom čitanja riječ po riječ ====[SpeechSettingsSymbolLevelWord]
-
-Prilikom čitanja teksta riječ po riječ, poželjno je dobivati više detalja u usporedbi sa čitanjem po rečenicama.
-Kada je opcija odabrana (podrazumjevano), NVDA izgovara sve znakove interpunkcije i simbole prilikom čitanja riječ po riječ, kao da je razina čitanja interpunkcije postavljena na "sve".
-Imajte na umu, da u bilo kojem slučaju, NVDA čita interpunkciju i simbole kada čitate znak po znak.
 
 ==== Vjeruj jeziku glasa za čitanje opisa znakova i simbola ====[SpeechSettingsTrust]
 Standardno je uključena. Ova opcija govori programu NVDA da se jeziku trenutačno odabranog glasa može vjerovati, kad se procesiraju simboli i znakovi.
@@ -1795,8 +1793,8 @@ Zvuk se povećava u visini za svaki razmak, a za tabulator, povećavat će se ek
 - Govor i zvučni signali: Ova opcija čita uvlake koristeći obje metode.
 -
 
-+++ Windows 10 OCR postavke +++[Win10OcrSettings]
-Postavke u ovoj kategoriji omogućuju podešavanje [Windows 10 OCR #Win10Ocr].
++++ Windows OCR postavke +++[Win10OcrSettings]
+Postavke u ovoj kategoriji omogućuju podešavanje [Windows OCR #Win10Ocr].
 Ova kategorija sadrži sljedeće opcije:
 
 ==== Jezik prepoznavanja ====[Win10OcrSettingsRecognitionLanguage]
@@ -2262,7 +2260,7 @@ Za detaljniji i iscrpniji popis besplatnih i komercijalnih govornih jedinica koj
 
 ++ eSpeak NG ++[eSpeakNG]
 [eSpeak NG https://github.com/espeak-ng/espeak-ng] je govorna jedinica ugrađena u NVDA čitaču, koja ne zahtijeva dodatne komponente niti instaliranje specijalnih upravljačkih programa.
-U Windowsima 7, 8 i 8.1, NVDA standardno koristi eSpeak NG ([Windows OneCore #OneCore] se standardno koristi u Windowsima 10).
+U Windowsima 7, 8 i 8.1, NVDA standardno koristi eSpeak NG ([Windows OneCore #OneCore] se standardno koristi u Windowsima 10 i novijim).
 Budući da je Espeak NG ugrađen u NVDA, to je dobar izbor kad se NVDA pokreće s USB sticka na drugim sustavima.
 
 Svaki glas, koji dolazi s eSpeak NG-om, govori različitim jezikom.
@@ -2296,9 +2294,9 @@ Za korištenje ovih glasova, potrebno je instalirati dvije komponente:
 -
 
 ++ Windows OneCore glasovi ++[OneCore]
-U sustavu Windowse 10 su uključeni novi glasovi poznati pod "OneCore" ili "mobile" glasovi.
+U sustavu Windows 10 ili novijim inačicama su uključeni novi glasovi poznati pod nazivom "OneCore" ili "mobile" glasovi.
 Glasovi su dostupni za mnoge jezike i brži su od Microsoft glasova koji koriste Microsoft Speech API verzije 5. Bilješka prevoditelja: od Windows 10 verzije 1709, dostupan je hrvatski glas Matej.
-U sustavu Windows 10, NVDA standardno koristi Windows OneCore glasove ([[eSpeak NG #eSpeakNG] se koristi u drugim izdanjima).
+U sustavu Windows 10 i novijim inačicama, NVDA standardno koristi Windows OneCore glasove ([[eSpeak NG #eSpeakNG] se koristi u drugim izdanjima).
 
 Kako biste dodali nove Windows OneCore glasove, uđite u odjeljak  "postavke govora", koji se nalazi unutar Windowsovih postavki. 
 Aktivirajte opciju "Dodaj glasove" i potražite željeni jezik.
@@ -2515,7 +2513,7 @@ Ako spajate brajične redke koji ne koriste hid preko usb veze, morate instalira
 VarioUltra i Pronto! brajični redci koriste HID.
 Refreshabraille i Orbit Reader 20 mogu koristiti HID ako su konfigurirani na određeni način.
 
- USB serijski način u Orbit Reader 20 brajičnom redku, trenutačno je podržan samo u Windows 10 operacijskom sustavu.
+ USB serijski način u Orbit Reader 20 brajičnom redku, trenutačno je podržan samo u Windows 10 i novijim inačicama operacijskog sustava.
 Umjesto toga, trebali biste koristiti USB HID.
 
 Slijede prečaci za ove brajične retke s NVDA čitačem.
@@ -3118,7 +3116,7 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 
 ++ Nattiq nBraille brajični retci ++[NattiqTechnologies]
 NVDA podržava brajične retke tvrtke [Nattiq Technologies https://www.nattiq.com/] kada su spojeni putem USB priključka.
-Windows 10 prepoznaje brajični redak pri spajanju, za starije inačice operacijskog sustava windows trebat ćete instalirati upravljačke programe.
+Windows 10 i novije inačice prepoznaju brajični redak pri spajanju, za starije inačice operacijskog sustava windows trebat ćete instalirati upravljačke programe.
 Možete ih preuzeti sa web stranice proizvođača.
 
 Slijede dodjeljeni prečaci za brajične retke Nattiq Technologies displays za korištenje s NVDA.

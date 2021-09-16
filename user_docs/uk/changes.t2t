@@ -1,64 +1,64 @@
-NVDA'daki Yenilikler
+Що нового в NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
-Bu sürüm, ön Windows 11 desteği sunar.
-Windows 11 henüz piyasaya sürülmemiş olsa da, bu sürüm Windows 11'in önizleme sürümlerinde test edilmiştir.
-Bu, Ekran Perdesi için önemli bir düzeltme de içeriyor, (önemli notlara bakın).
-COM Kayıt Düzeltme Aracı artık NVDA çalışırken daha fazla sorunu çözebiliyor.
-Sentezleyici eSpeak ve braille çevirmeni LibLouis için güncellemeler var.
-Özellikle braille desteği ve Windows terminalleri, hesap makinesi, emoji paneli ve pano geçmişi için çeşitli hata düzeltmeleri ve iyileştirmeler de var.
+У цій версії впроваджено попередню підтримку Windows 11.
+Хоча Windows 11 ще не випущено, цю версію було протестовано на версіях Windows 11 preview.
+Ця версія включає важливе виправлення для екранної завіси  (див. важливі примітки).
+Інструмент виправлення реєстру COM тепер виправляє більше проблем під час роботи NVDA.
+Ця версія містить оновлення синтезатора eSpeak і бібліотеки брайлівського введення/виведення LibLouis.
+Також виправлено різні помилки і внесено поліпшення, зокрема, в підтримку Брайля  й терміналів Windows, калькулятора, панелі емодзі та історії буфера обміну.
 
 
-== Önemli notlar ==
-Windows Büyüteç API'sindeki bir değişiklik nedeniyle, Ekran Perdesi, Windows'un en yeni sürümlerini destekleyecek şekilde güncellenmek zorunda kaldı.
-Windows 10 21H2 (10.0.19044) veya sonraki sürümlerde Ekran Perdesini etkinleştirmek için NVDA 2021.2'yi kullanın.
-Buna Windows 10 Insider ve Windows 11 dahildir.
-Güvenliği gözeterek Windows'un yeni bir sürümünü kullanırken Ekran Perdesinin ekranı tamamen kararttığına dair görsel onay alın.
+== Важливі примітки ==
+Через зміни в API лупи Windows, екранну завісу було оновлено для підтримки нових версій Windows.
+Щоб увімкнути екранну завісу у Windows 10 21H2 (10.0.19044) чи новіших версіях, використовуйте NVDA 2021.2.
+Це стоссується Windows 10 Insiders і Windows 11.
+З міркувань безпеки, під час використання нової версії Windows отримайте візуальне підтвердження того, що екранна завіса робить екран повністю чорним.
 
 
-== Yeni özellikler ==
-- ARIA bilgi notları için deneysel destek::
-  - aria-detayları ile bir nesnenin ayrıntılarının özetinin okunması için bir komut ekler. (#12364)
-  - Gelişmiş ayarlar kategorisine nesnenin detaylarının bildirimi için bir ayar ekler. (#12439) 
+== Нові можливості ==
+- Експериментальна підтримка приміток ARIA:
+  - додає команду для читання короткого опису подробиць у об’єкті з ARIA-подробицями. (#12364)
+  - додає у додаткові налаштування параметр промовляння того, що об’єкт містить подробиці в режимі огляду. (#12439) 
   -
-- Windows 10 Sürüm 1909 ve sonraki sürümlerde (Windows 11 dahil), NVDA, Dosya Gezgini'nde arama yaparken öneri sayısını duyurur. (#10341, #12628)
-- Microsoft Word'de, NVDA artık basıldığında girinti ve asılı girinti kısayollarının sonucunu bildirir. (#6269)
+- У Windows 10 версії 1909 і новіших (включно з Windows 11), NVDA оголошує кількість пропозицій під час виконання пошуку в файловому провіднику. (#10341, #12628)
+- У Microsoft Word, NVDA тепер оголошує результат виконання комбінацій клавіш відступу й висячого відступу. (#6269)
 -
 
 
-== Değişiklikler ==
-- Espeak-ng güncellendi, 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
-- Belge formatları kategorisinde kullanıcı tercihlerinde makaleler etkinleştirilmişse, NVDA içerikten sonra "makale" der. (#11103)
-- liblouis braille çevirmeni güncellendi, [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
-  - Yeni braille tabloları: Bulgarca 1. derece, Birmanca 1. derece, Birmanca 2. derece, Kazakça 1. derece, Kmerce 1. derece, Kuzey Kürtçe 1. derece, Sepedi derece 1, Sepedi derece 2, Sesotho derece 1, Sesotho derece 2, Setsvana derece 1, Setsvana 2. derece, Tatar derece 1, Vietnam derece 0, Vietnam derece 2, Güney Vietnam derece 1, Xhosa derece 1, Xhosa derece 2, Yakut derece 1, Zulu derece 1, Zulu derece 2
+== Зміни ==
+- Espeak-ng оновлено до 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Якщо у налаштуваннях форматування документа увімкнено статті, то NVDA промовлятиме «стаття» після вмісту. (#11103)
+- Бібліотеку брайлівського введення/виведення LibLouis оновлено до [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Нові брайлівські таблиці: Bulgarian grade 1, Burmese grade 1, Burmese grade 2, Kazakh grade 1, Khmer grade 1, Northern Kurdish grade 0, Sepedi grade 1, Sepedi grade 2, Sesotho grade 1, Sesotho grade 2, Setswana grade 1, Setswana grade 2, Tatar grade 1, Vietnamese grade 0, Vietnamese grade 2, Southern Vietnamese grade 1, Xhosa grade 1, Xhosa grade 2, Yakut grade 1, Zulu grade 1, Zulu grade 2
   -
-- Windows 10 OCR, Windows OCR olarak yeniden adlandırıldı. (#12690)
+- Windows 10 OCR перейменовано на Windows OCR. (#12690)
 -
 
 
-== Hata düzeltmeleri ==
-- Windows 10 Hesap Makinesi'nde NVDA, braille ekranında hesap makinesi ifadelerini bildirir.(#12268)
-- Windows 10 sürüm 1607 ve sonraki sürümlerdeki terminal programlarında, bir satırın ortasına karakter eklerken veya silerken, düzenleme imlecinin sağındaki karakterler artık okunmaz. (#3200)
-  - Diff Match Patch artık varsayılan olarak etkin. (#12485)
+== Виправлення ==
+- У Калькуляторі Windows 10, NVDA повідомлятиме вирази калькулятора на брайлівському дисплеї. (#12268)
+- У термінальних програмах у  Windows 10 версії 1607 та новіших під час вставки або видалення символів у середині рядка, символи справа від каретки більше не читаються. (#3200)
+  - початково увімкнено Diff Match Patch. (#12485)
   -
-- Braille girişi, aşağıdaki kısaltmalı tablolarla düzgün çalışır: Arapça, İspanyolca, Urduca, Çince (Çin, Mandarin). (#12541)
-- COM Kayıt Düzeltme Aracı artık özellikle 64 bit Windows'ta daha fazla sorunu çözmektedir. (#12560)
-- Nippon Telesoft'tan Seika Notetaker braille cihazı için düğme kullanımında iyileştirmeler. (#12598)
-- Windows emoji paneli ve pano geçmişi bildirimlerinde iyileştirmeler. (#11485)
-- Bengal alfabesi karakter açıklamaları güncellendi. (#12502)
-- Yeni bir NVDA işlemi başlatıldığında NVDA güvenli bir şekilde sonlandırılır. (#12605)
-- Braille Ekranını Seç iletişim kutusundan Handy Tech braille ekran sürücüsünün yeniden seçilmesi artık hatalara neden olmaz. (#12618)
-- Windows sürüm 10.0.22000 veya üstü, Windows 10 olarak değil, Windows 11 olarak tanınır. (#12626)
-- Ekran perdesi desteği, 10.0.22000'e kadar olan Windows sürümleri için düzeltildi ve sınandı. (#12684)
-- Girdi hareketlerini filtrelerken hiçbir sonuç gösterilmiyorsa, girdi hareketi yapılandırma iletişim kutusu beklendiği gibi çalışmaya devam eder. (#12673)
-- Bazı bağlamlarda bir alt menünün ilk menü öğesinin duyurulmamasına  neden olan bir hata düzeltildi. (#12624)
+- Брайлівське введення працює належним чином з нижченаведеними скорописними таблицями: Arabic grade 2, Spanish grade 2, Urdu grade 2, Chinese (China, Mandarin) grade 2. (#12541)
+- Інструмент виправлення реєстру COM тепер виправляє більше проблем, особливо у 64-розрядних версіях Windows. (#12560)
+- Поліпшено керування кнопками для брайлівського пристрою Seika Notetaker braille від Nippon Telesoft. (#12598)
+- Поліпшено оповіщення у панелі емодзі Windows та історії буфера обміну. (#11485)
+- Оновлено опис літер бенгальської абетки. (#12502)
+- NVDA безпечно завершує роботу, коли запускається новий процес. (#12605)
+- Повторний вибір драйвера брайлівського дисплея Handy Tech з діалогу вибору брайлівського дисплея більше не видає помилку. (#12618)
+- Windows версії 10.0.22000 та новіших розпізнається як Windows 11, а не Windows 10. (#12626)
+- Виправлено і протестовано підтримку екранної завіси у Windows, починаючи з версії 10.0.22000. (#12684)
+- Якщо під час фільтрування жестів вводу не показано ніяких результатів, діалог «Жести вводу» продовжує працювати належним чином. (#12673)
+- Виправлено помилку, коли у низці випадків не оголошувався перший пункт підменю. (#12624)
 -
 
 
-== Changes for Developers ==
+== Зміни для розробників (англ.) ==
 - ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SymbolLevel.*`` before 2022.1. (#11856, #12636)
 - ``controlTypes`` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
   - ``ROLE_*`` and ``STATE_*`` constants should be replaced to their equivalent ``Role.*`` and ``State.*``.
@@ -71,75 +71,75 @@ Güvenliği gözeterek Windows'un yeni bir sürümünü kullanırken Ekran Perde
 
 
 = 2021.1 =
-Bu sürüm, Excel ve Chromium tarayıcılarda UIA için isteğe bağlı deneysel destek içerir.
-Çeşitli diller ve bağlantılara Braille erişimi  için düzeltmelere sahip.
-Unicode CLDR, matematiksel semboller ve LibLouis için güncellemeler var.
+Ця версія включає факультативну експериментальну підтримку UIA в Excel та браузерах на основі Chromium.
+Внесено виправлення у кілька мов і поліпшено активацію посилань за допомогою Брайля.
+Оновлено Загальний репозиторій мовних даних Unicode (CLDR), математичні символи та LibLouis.
+Внесено низку виправлень і поліпшень , які стосуються Office, Visual Studio й низки мов.
 
-Office, Visual Studio ve çeşitli diller dahil olmak üzere birçok hata düzeltmesi ve iyileştirme.
-Not: Bu, Eklenti API uyumluluğunu değiştiren bir sürümdür.
-Eklentilerin yeniden test edilmesi ve manifest  dosyalarının güncellenmesi gerekecektir.
-Bu sürüm ayrıca Adobe Flash desteğini de kaldırmaktadır.
-
-
-== Yeni özellikler ==
-- Chromium tabanlı tarayıcılar için (Edge gibi) UIA için erken destek. (#12025)
-- Microsoft Excel için   isteğe bağlı UI Otomasyonu  deneysel desteği. Yalnızca Microsoft Excel derlemesi 16.0.13522.10000 veya üzeri için önerilir. (#12210)
-- NVDA Python Konsolunda çıktı üzerinde  daha kolay navigasyon. (#9784)
-  - alt + yukarı / aşağı ok, önceki / sonraki çıktı sonucuna gider (seçim için shift tuşunu ekleyin).
-  - control + l çıktı panosunu temizler.
-- NVDA artık, mevcutsa Microsoft Outlook'ta bir randevuya atanan kategorileri bildiriyor. (#11598)
-- Nippon Telesoft'tan Seika Notetaker braille ekranı için destek. (#11514)
+Примітка:
+ - Ця версія порушує сумісність з наявними додатками.
+ - Ця версія також припинила підтримку Adobe Flash.
+ -
 
 
-== Değişiklikler ==
-- Tarama kipinde, kontroller artık tanımlayıcıları üzerine braille imleci yönlendirmesiyle etkinleştirilebilir (yani, bir bağlantı için "bln" üzerine braille imleci ile gelinip etkinleştirilebilir). Bu, özellikle örneğin etiketsiz onay kutularının etkinleştirilmesi için kullanışlı olabilir. (#7447)
-- NVDA artık ekran perdesi etkinse kullanıcının Windows 10 OCR gerçekleştirmesini engeller. (#11911)
-- Unicode Ortak Yerel Veri Deposu (CLDR) 38.1'e güncellendi. (#11943)
-- Sembol sözlüğüne daha fazla matematiksel sembol eklendi. Bunlar Türkçe için çoktan eklenmişti. (#11467)
-- Kullanıcı rehberi, ne yeni dosyası ve çabuk komut listesi artık yenilenmiş bir görünüme sahip. (#12027)
-- Microsoft Word gibi desteklemeyen uygulamalarda ekran düzenini değiştirmeye çalışırken artık "Desteklenmiyor" deniyor. (#7297)
-- Gelişmiş ayarlar kategorisindeki 'Süresi dolan odak olayları için konuşmayı iptal etmeyi dene' seçeneği artık varsayılan olarak etkindir. (#10885)
-  - Bu davranış, bu seçenek "Hayır" olarak ayarlanarak devre dışı bırakılabilir.
-  - Web uygulamaları (Gmail gibi) artık odağı hızla hareket ettirirken güncel olmayan bilgiler söylenmez.
-- liblouis braille çevirmen  [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0] sürümüne güncellendi. (#12137)
-  - Yeni braille tabloları: Belarus edebi braille, Belarus bilgisayar braille, Urduca derece 1, Urduca derece 2.
-- Adobe Flash içerik desteği, Flash kullanımının Adobe tarafından etkin bir şekilde önerilmemesi nedeniyle NVDA'dan kaldırılmıştır. (#11131)
-- NVDA, pencereler hala açıkken bile kapatılabilir, çıkış işlemi artık tüm NVDA pencerelerini ve iletişim kutularını kapatır. (#1740)
-- Konuşma Görüntüleyici artık `` alt + F4 '' ile kapatılabilir ve işaretleme cihazı kullanıcılarının daha kolay etkileşimi için standart bir kapatma düğmesine sahiptir. (#12330)
-- Braille Görüntüleyici artık işaretleme cihazı kullanıcılarının daha kolay etkileşimi için standart bir kapat düğmesine sahiptir. (#12328)
-- Öğeler Listesi iletişim kutusunda, bazı yerel dillerde bir öğe türü radyo düğmesi etiketi ile çakıştığı  için  "Etkinleştir" düğmesindeki hızlandırıcı anahtar kaldırılmıştır. Uygun olduğunda, düğme hala iletişim kutusu için varsayılandır  ve bu nedenle, öğeler listesinde  dolaşılırken enter tuşuna basılarak  basılabilir. (#6167)
+== Нові можливості ==
+- Рання підтримка UIA у браузерах на основі Chromium (таких, як Edge). (#12025)
+- Факультативна експериментальна підтримка для Microsoft Excel з використанням UI Automation. Рекомендується лише для Microsoft Excel build 16.0.13522.10000 або новіших. (#12210)
+- Зручніша навігація по результатах виведення в консолі Python. (#9784)
+  - alt+стрілка вгору/стрілка вниз переходить до попереднього/наступного результату виведення (додайте shift для виділення).
+  - control+l очищує область виведення.
+- NVDA тепер повідомляє категорії, призначені для зустрічей у Microsoft Outlook, якщо вони існують. (#11598)
+- Підтримуються брайлівські дисплеї Seika Notetaker від Nippon Telesoft. (#11514)
 
 
-== Hata düzeltmeleri ==
-- Outlook 2010'daki ileti listesi bir kez daha okunabilir hale getirildi. (#12241)
-- Windows 10 sürüm 1607 ve sonraki sürümlerdeki terminal programlarında, bir satırın ortasına karakter eklerken veya silerken, imlecin sağındaki karakterler artık okunmaz. (#3200)
-  - Bu deneysel düzeltme NVDA'nın gelişmiş ayarlar panelinde   diff algorithm  Diff Match Patch olarak ayarlanarak manuel olarak etkinleştirilmelidir.
-- MS Outlook'ta, mesaj gövdesinden konu alanına geçiş için shift + tab basıldığında yanlış mesafe bildirimi artık gerçekleşmemelidir. (#10254)
-- Python Konsolunda, boş olmayan bir giriş satırının başına girinti için bir sekme eklemek ve bir giriş satırının ortasında sekme tamamlama gerçekleştirmek artık desteklenmektedir. (#11532)
-- Biçimlendirme bilgileri ve diğer taranabilir mesajlar, ekran düzeni kapatıldığında artık beklenmeyen boş satırlar oluşturmaz. (#12004)
-- Artık UIA etkinleştirildiğinde MS Word'deki açıklamaları okumak mümkündür. (#9285)
-- Visual Studio ile etkileşimde performans iyileştirildi. (#12171)
-- NVDA'yı sağdan sola düzen ile kullanırken eksik öğeler gibi grafiksel hatalar düzeltildi. (#8859)
-- GUI düzen yönü, sistem yerel ayarına değil, NVDA diline göre belirleniyor. (#638)
-  - sağdan sola diller için bilinen sorun: etiketlere / kontrollere sahip gruplama kliplerinin sağ kenarlığı. (#12181)
-- Python yerel ayarı, tercihlerde seçilen dile tutarlı bir şekilde uyacak şekilde ayarlanır ve varsayılan dil kullanılırken gerçekleşir. (#12214)
-- TextInfo.getTextInChunks, NVDA günlük görüntüleyici gibi Zengin Düzenleme kontrollerinde çağrıldığında artık donmaz. (#11613)
-- NVDA'yı Windows 10 1803 ve 1809'da de_CH gibi yerel ayar adında alt çizgi içeren dillerde kullanmak bir kez daha mümkündür. (#12250)
-- WordPad'de, üst simge / alt simge bildirimi ayarı beklendiği gibi çalışır. (#12262)
-- NVDA, eski odak kaybolursa ve aynı konumdaki yeni odakla değiştirilirse, bir web sayfasındaki yeni odaklanmış içeriği bildirmekte artık başarısız olmaz. (#12147)
-- Karşılık gelen seçenek etkinleştirilirse, tüm Excel hücreleri için üstü çizili, üst simge ve alt simge biçimlendirmesi artık rapor edilmektedir. (#12264)
-- Hedefteki yapılandırma dizini boşken taşınabilir kopya konfigürasyonunun kurulum sırasında kopyalanmaması sorunu düzeltildi. (#12071, #12205)
-- 'Büyük harflerden önce büyük de' seçeneği işaretlendiğinde aksanlı veya şapkalı  bazı harflerin yanlış bildirimi  düzeltildi. (#11948)
-- SAPI4 konuşma sentezleyicisindeki perde değişim hatası düzeltildi. (#12311)
-- NVDA yükleyicisi artık `` --minimal '' komut satırı parametresini kabul ediyor ve kurulu veya taşınabilir bir NVDA yürütülebilir kopyasıyla aynı belgelenmiş davranışı izleyerek başlangıç ​​sesini çalmıyor. (#12289)
-- MS Word veya Outlook'ta, tarama kipi ayarlarında "düzenleme tablolarını göster" seçeneği etkinleştirilmişse, tablo hızlı gezinme tuşu artık düzen tablosuna atlayabilir. (#11899)
-- NVDA artık emojiler için bazı dillerde "↑↑↑" ifadesini söylemeyecektir. (#11963)
-- Espeak şimdi tekrar Kantonca ve Mandarin dilini destekliyor. (#10418)
-- Yeni Chromium tabanlı Microsoft Edge'de adres çubuğu gibi metin alanları artık boşken de duyuruluyor. (#12474)
-- Seika Braille sürücüsü düzeltildi. (#10787)
+== Зміни ==
+- У режимі огляду, елементи керування тепер можна активовувати за допомогою маршрутизації брайлівського курсора за їх дескриптором (наприклад, «псл» для посилання). Це особливо корисно для активації, наприклад, прапорців без міток. (#7447)
+- NVDA тепер не дозволяє користувачам скористатися Windows 10 OCR у разі, якщо увімкнено екранну завісу. (#11911)
+- Загальний репозиторій мовних даних Unicode  (CLDR) оновлено до версії 39.0. (#11943, #12314)
+- До словника символів додано низку математичних знаків. (#11467)
+- Посібник користувача, файл «Що нового» та список команд тепер мають оновлений вигляд. (#12027)
+- Під час спроби змінити екранне представлення у програмах, які цього не підтримують, таких, як Microsoft Word, NVDA промовлятиме оповіщення «Не підтримується». (#7297)
+- Параметр «Намагатися скасувати читання старого вмісту при швидкому переміщенні на новий» у панелі додаткових налаштувань тепер початково увімкнений. (#10885)
+  - Цю поведінку можна вимкнути, обравши параметр «Ні».
+  - У веб-додатках (наприклад, Gmail) більше не промовлятиметься застаріла інформація під час швидкого переміщення фокуса.
+- Бібліотеку брайлівського введення/виведення LibLouis оновлено до [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - Нові брайлівські таблиці: Білоруський літературний брайль, Білоруський комп’ютерний брайль, Urdu grade 1, Urdu grade 2.
+- Підтримку вмісту Adobe Flash вилучено з NVDA через те, що від використання Flash відмовилася компанія Adobe. (#11131)
+- NVDA тепер завершує роботу навіть за умови відкритих вікон, процес виходу  з NVDA тепер закриває усі її вікна й діалоги. (#1740)
+- Переглядач мовлення тепер закривається комбінацією клавіш ``alt+F4`` і має стандартну кнопку закриття для зручнішої взаємодії з користувачами вказівних пристроїв. (#12330)
+- Переглядач брайля тепер має стандартну кнопку закриття для зручнішої взаємодії з користувачами вказівних пристроїв. (#12328)
+- З деяких мов у діалоговому вікні «Список елементів» клавішу прискорювача на кнопці «Активувати» було видалено, щоб уникнути колізій з мітками радіокнопок для вибору типу елементів. Коли кнопка доступна, вона як і раніше використовується в діалоговому вікні і її все ще можна викликати простим натисканням клавіші Enter у списку елементів. (#6167) 
+
+== Виправлення (англ.) ==
+- The list of messages in Outlook 2010 is once again readable. (#12241)
+- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
+  - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
+- In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
+- In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
+- Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
+- It is now possible to read comments in MS Word with UIA enabled. (#9285)
+- Performance when interacting with Visual Studio has been improved. (#12171)
+- Fix graphical bugs such as missing elements when using NVDA with a right-to-left layout. (#8859)
+- Respect the GUI layout direction based on the NVDA language, not the system locale. (#638)
+  - known issue for right-to-left languages: the right border of groupings clips with labels/controls. (#12181)
+- The python locale is set to match the language selected in preferences consistently, and will occur when using the default language. (#12214)
+- TextInfo.getTextInChunks no longer freezes when called on Rich Edit controls such as the NVDA log viewer. (#11613)
+- It is once again possible to use NVDA in languages containing underscores in the locale name such as de_CH on Windows 10 1803 and 1809. (#12250)
+- In WordPad, configuration of superscript/subscript reporting works as expected. (#12262)
+- NVDA no longer fails to announce the newly focused content on a web page if the old focus disappears and is replaced by the new focus in the same position. (#12147)
+- Strikethrough, superscript and subscript formatting for entire Excel cells are now reported if the corresponding option is enabled. (#12264)
+- Fixed copying config during installation from a portable copy when default destination config directory is empty. (#12071, #12205)
+- Fixed incorrect announcement of some letters with accents or diacritic when 'Say cap before capitals' option is checked. (#11948)
+- Fixed the pitch change failure in SAPI4 speech synthesizer. (#12311)
+- The NVDA installer now also honors the ``--minimal`` command line parameter and does not play the start-up sound, following the same documented behavior as an installed or portable copy NVDA executable. (#12289)
+- In MS Word or Outlook, the table quick navigation key can now jump to layout table if "Include layout tables" option is enabled in Browse mode settings. (#11899)
+- NVDA will no longer announce "↑↑↑" for emojis in particular languages. (#11963)
+- Espeak now supports Cantonese and Mandarin again. (#10418)
+- In the new Chromium based Microsoft Edge, text fields such as the address bar are now announced when empty. (#12474)
+- Fix Seika Braille driver. (#10787)
 
 
-== Geliştiriciler için Değişiklikler ==
+== Зміни для розробників ==
 - Note: this is an Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
   - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons`` is no longer supported, and ``scons.py`` has also been removed.
@@ -170,7 +170,7 @@ Bu sürüm ayrıca Adobe Flash desteğini de kaldırmaktadır.
 - The ``controlTypes.isCurrentLabels`` mapping has been removed. (#11782)
   - Instead use the ``displayString`` property on a ``controlTypes.IsCurrent`` enum value.
     - For example: ``controlTypes.IsCurrent.YES.displayString``.
-  ``winKernel.GetTimeFormat`` has been removed - use ``winKernel.GetTimeFormatEx`` instead. (#12139)
+- ``winKernel.GetTimeFormat`` has been removed - use ``winKernel.GetTimeFormatEx`` instead. (#12139)
 - ``winKernel.GetDateFormat`` has been removed - use ``winKernel.GetDateFormatEx`` instead. (#12139)
 - ``gui.DriverSettingsMixin`` has been removed - use ``gui.AutoSettingsMixin``. (#12144)
 - ``speech.getSpeechForSpelling`` has been removed - use ``speech.getSpellingSpeech``. (#12145)
@@ -227,81 +227,81 @@ Bu sürüm ayrıca Adobe Flash desteğini de kaldırmaktadır.
 
 
 = 2020.4 =
-Bu sürüm, yeni Çince Giriş yöntemlerini, Liblouis güncellemesini ve artık odak modunda da çalışan ögeler listesi (NVDA + f7) gibi yenilikler içeriyor.
-Yanı sıra, bağlama duyarli yardim artık NVDA iletişim kutularında F1'e basıldığında kullanılabiliyor.
-Sembol telaffuz kuralları, konuşma sözlüğü, braille mesajları ve tümünü okurken atlayarak okumada iyileştirmeler yapıldı.
-Mail, Outlook, Teams, Visual Studio, Azure Data Studio, Foobar2000 için hata düzeltmeleri ve iyileştirmeler var.
-Web'de Google Dokümanlar için iyileştirmeler ve ARIA için daha fazla destek sunuluyor.
-Ayrıca aşağıda okuyacağınız üzere birçok önemli hata düzeltmesi ve iyileştirmeden söz edilebilir.
+Ця версія включає в себе підтримку нових методів введення для китайської мови, оновлену версію бібліотеки брайлівського введення/виведення Liblouis, а також можливість викликати діалог «Список елементів» (NVDA+F7) у режимі фокуса.
+У діалогах NVDA тепер доступна контекстно-залежна довідка при натисканні клавіші F1.
+Реалізовано поліпшення в правилах вимови символів, мовленнєвих словниках, брайлівських повідомленнях NVDA і режимі неперервного читання.
+Виправлено помилки і поліпшено підтримку додатків Пошта, Outlook, Teams, Visual Studio, Azure Data Studio і Foobar2000.
+У роботі з веб-додатками поліпшено взаємодію з Документами Google і значно збільшено рівень підтримки атрибутів WAI-ARIA.
+А також безліч інших важливих поліпшень і виправлень.
 
-== Yeni özellikler ==
-- NVDA iletişim kutularında F1'e basmak artık yardım dosyasında en alakalı bölümü açıyor. (#7757)
-- Microsoft SQL Server Management Studio ve Visual Studio 2017 ve sonraki sürümlerinde otomatik tamamlama önerileri (IntelliSense) desteği. (#7504)
-- Sembol telaffuzu: Karmaşık bir sembol tanımında gruplama desteği ve bir değiştirme kuralında grup referanslarını destekleyerek onları daha basit ve daha güçlü hale getiriyor. (#11107)
-- Artık geçersiz düzenli ifade ((regular expression) ikamelerine sahip konuşma Sözlüğü girişleri oluşturmaya çalışırken kullanıcılar uyarılıyor. (#11407)
-  - Özellikle gruplama hataları tespit ediliyor.
-- Windows 10'da yeni Çince Geleneksel Hizli ve Pinyin giriş yöntemleri için destek eklendi. (#11562)
-- Sekme başlıkları artık f tuşu ile hizli gezinilebilen form alanları olarak kabul ediliyor. (#10432)
-- Işaretli (vurgulanan) metnin raporlamasını değiştirmek için bir komut eklendi; Varsayılan olarak ilişkilendirilmiş bir hareket yok. (#11807)
-- NVDA'yi sessizce kurarken, sağlanan yapılandirmayı kullanıcı hesabına otomatik olarak kopyalamanıza izin veren --copy-portable-config komut satırı parametresi eklendi. (#9676)
-- Braille yönlendirme artık fare kullanıcıları için Braille Görüntüleyici ile destekleniyor, fareyle bir braille hücresine yönlendirebilirsiniz. (#11804)
-- NVDA artık Humanware Brailliant BI 40X ve 20X cihazlarını hem USB hem de Bluetooth araciligiyla otomatik olarak algılayacaktır. (#11819)
-
-
-== değişiklikler ==
-- Liblouis braille çevirmeni 3.16.1 sürümüne güncellendi:
- - Birden çok çökme sorununu  gideriyor
- - Baskurt 1. derece Braille tablosu eklendi
- - Coptic 8 noktalı bilgisayar braille tablosu eklendi
- - Rus edebi braille ve Rus edebi braille (ayrıntılı) tabloları eklendi
- - Afrikaca 2. derece braille tablosu eklendi
- - Rus 1. derece Braille tablosu kaldırıldı
-- Tarama kipinde tümünü oku  ile okurken, sonrakini bul ve öncekini bul komutları, okumayi durdurmaz, tümünü okurken atlamaya izin ver seçeneği işaretlenmişse artık    okuma sonraki veya önceki bulunan terimden sonra devam eder. (#11563)
-- HIMS braille ekranları için F3, Boşluk + nokta 148 olarak yeniden değiştirildi. (#11710)
-- "Braille mesaj zaman asimi" ve "Mesajları süresiz göster" seçeneklerinin kullanıcı deneyimi iyileştirmeleri. (#11602)
-- Web tarayıcıları ve tarama kipini destekleyen diğer uygulamalar için Öge Listesi iletişim kutusu (NVDA + F7) artık odak kipindeyken de kullanılabilir. (#10453)
-- ARIA canli bölgelerinde yapılan güncellemeler artık dinamik içerik değişikliklerinin raporlanmasi devre dışı bırakıldığında engelleniyor. (#9077)
-- NVDA artık kopyalanan metinden önce "Panoya kopyalandi" ifadesini söylüyor. (#6757)
-- Disk yönetiminde grafiksel görünüm tablosunun sunumu iyileştirildi. (#10048)
-- Kontrol devre dışı bırakıldığında, kontrol etiketleri de artık devre dışı bırakılır (grileşir). (#11809)
-- CLDR emoji notu sürüm 38'e güncellendi. (#11817)
-- Dahili "Odak Vurgulamasi" özelligi "görsel vurgu" olarak yeniden adlandırıldı. (#11700)
+== Нові можливості ==
+- Натискання F1 у діалогах NVDA тепер відкриває відповідний розділ довідки з посібника користувача. (#7757)
+- У Microsoft SQL Server Management Studio та Visual Studio 2017 і новіших додано підтримку технології автоматичного доповнення (IntelliSense). (#7504)
+- У таблиці вимови символів NVDA додано підтримку групувань у визначеннях комплексних символів, а також підтримку посилань на групи в правилах заміни, що робить їх потужнішими і простими у використанні. (#11107)
+- NVDA тепер повідомляє користувача при спробі створити в мовленнєвому словнику запис із неправильним регулярним виразом для заміни. (#11407)
+  - Зокрема, тепер виявляються помилки групувань.
+- Додано підтримку нових методів введення для традиційного китайського швидкого і піньїнь у Windows 10. (#11562)
+- Заголовки вкладок на веб-сторінках тепер розглядаються як поля форм, між якими можна швидко переміщатися клавішею F. (#10432)
+- У діалозі «Жести вводу» додано команду для перемикання читання виділеного (підсвіченого) тексту в документах (не плутати з виділенням тексту для подальшого копіювання/вирізання); з цією командою не асоційовано жодного жесту, користувач може зробити це самостійно. (#11807)
+- Додано новий параметр командного рядка --copy-portable-config, який дозволяє автоматично скопіювати переносну конфігурацію в обліковий запис користувача під час тихого встановлення NVDA. (#9676)
+- Переглядач Брайля тепер підтримує маршрутизацію Брайля для користувачів мишки, для цього наведіть вказівник мишки на брайлівську комірку. (#11804)
+- NVDA тепер автоматично визначає підключення пристроїв Humanware Brailliant BI 40X і 20X як через USB, так і через Bluetooth. (#11819)
 
 
-== Hata düzeltmeleri ==
-- NVDA, Hizli Günlük girişi uygulamasini kullanirken düzenleme alanlarıyla artık doğru sekilde çalışıyor. (#8996)
-- Toplam süre yoksa (ör. Canli yayin oynatirken) Foobar2000'de geçen süreyi  doğru olarak bildiriyor. (#11337)
-- NVDA artık web sayfalarındaki düzenlenebilir içerikteki ögelerde aria-roledescription özelligini kapsiyor. (#11607)
-- "liste" artık Google Dokümanlar'daki bir listenin her satirinda veya Google Chrome'daki diger düzenlenebilir içerikte duyurulmuyor. (#7562)
-- Web'deki düzenlenebilir içerikte bir liste ögesinden digerine karakter veya kelime bazinda navigasyon yaparken, yeni liste ögesine gelindiği artık bildiriliyor. (#11569)
-- NVDA artık, düzenleme imleci Google Dokümanlar'daki bir liste ögesinin veya web üzerindeki diger düzenlenebilir içerigin sonundaki bir bağlantının sonuna yerleştirildiğinde doğru satırı okuyor. (#11606)
-- Windows 7'de, masaüstünden başlat menüsünü açip kapatmak artık odagi doğru sekilde ayarliyor. (#10567)
-- "Süresi dolan odak olaylarını iptal etme girişimi" etkinleştirildiğinde, sekme başlığı artık Firefox'ta sekmeler arasinda geçiş yapılırken tekrar duyuruluyor. (#11397)
-- NVDA, SAPI5 Ivona sesleriyle konuşurken bir listeye bir karakter yazdiktan sonra bir liste ögesini artık okuyabiliyor. (#11651)
-- Windows 10 Mail 16005.13110 ve sonraki sürümlerde e-postaları okurken tarama kipini kullanmak yine mümkün. (#11439)
-- Harposoftware.com'dan SAPI5 Ivona seslerini kullanirken, NVDA artık konfigürasyonu kaydedebiliyor, sentezleyicileri değiştirebiliyor ve yeniden başlatıldıktan sonra artık sessiz kalmiyor. (#11650)
-- artık HIMS ekranlarındaki bir braille klavyeden bilgisayar braille'ine 6 rakamini girmek mümkün. (#11710)
-- Azure Data Studio'da önemli performans iyileştirmeleri. (#11533, #11715)
-- "Süresi dolan odak olayları için konuşmayi iptal etme girişimi" etkinleştirildiğinde, NVDA Bul iletişim kutusunun başlığı  okunabiliyor. (#11632)
-- NVDA bilgisayar uyandırıldığında odak bir Microsoft Edge belgesindeyse artık donmuyor. (#11576)
-- Tarama kipinin tekrar islevsel olmasi için MS Edge'de bir bağlam menüsünü kapattiktan sonra sekmeye basmak veya odagi hareket ettirmek gerekmiyor. (#11202)
-- NVDA, Tortoise SVN gibi 64 bitlik bir uygulama içindeki liste görünümlerindeki ögeleri artık okuyabiliyor. (#8175)
-- ARIA agaç ızgaraları artık hem Firefox hem de Chrome'da tarama kipinde normal tablolar olarak gösteriliyor. (#9715)
-- Geriye doğru arama artık NVDA + shift + F3 araciligiyla 'öncekini bul' ile başlatılabilir. (#11770)
-- Bir NVDA komutu, komutun iki yürütmesi arasinda ilgisiz bir tusa basilmasi durumunda artık tekrarlanmış olarak degerlendirilmez. (#11388) 
-- Internet Explorer'da güçlü ve vurgulu etiketleri NVDA'nin Belge Biçimlendirme ayarlarında Vurgu bildirimi  kapalıysa artık  bildirilmiyor. (#11808)
-- Excel'de hücreler arasinda gezinirken az sayida kullanıcının yaşadığı birkaç saniyelik bir donma artık olmuyor. (#11818)
-- Microsoft Teams 1.3.00.28xxx gibi sürüm numaralarına sahip derlemelerde, NVDA artık yanlis odaklanmış bir menü nedeniyle sohbetlerde veya Teams kanallarında mesajları okuyabiliyor. (#11821)
-- Google Chrome'da ayni anda hem yazim hem de dil bilgisi hatasi olarak isaretlenen metin, NVDA tarafindan uygun sekilde hem yazim hem de dil bilgisi hatasi olarak bildiriliyor. (#11787)
-- Outlook'u (Fransizca yerel ayar) kullanirken, 'Tümünü yanitla' (control + shift + R) kisayolu yeniden çalışıyor. (#11196)
-- Visual Studio'da, mevcut seçili IntelliSense ögesi hakkinda ek ayrıntılar sağlayan IntelliSense araç ipuçları artık yalnizca bir kez bildiriliyor. (#11611)
-- Windows 10 Hesap Makinesi'nde, yazılan karakterlerin  bildirimi devre dışı bırakılmışsa NVDA hesaplamaların ilerlemesini bildirmez. (#9428)
-- NVDA ABD Ingilizcesi 2. derece kullanirken ve bilgisayar Braille'ine açarken Braille imleci bir URL gibi belirli bir içerigi gösterirken artık çökmüyor.  (#11754)
-- NVDA + F kullanarak odaklanmış Excel hücresi için biçimlendirme bilgilerini almak yine mümkün. (#11914)
-- Papenmeier braille ekranlarındaki QWERTY girişi, onu destekleyen ekranlar için tekrar çalışıyor ve artık NVDA'nin rastgele donmasina neden olmuyor. (#11944)
+== Зміни ==
+- Бібліотеку брайлівського введення/виведення Liblouis оновлено до версії 3.16.1:
+ - Усунуто множинні крахи бібліотеки
+ - Додано таблицю башкирського Брайля першого ступеня
+ - Додано таблицю коптського восьмикрапкового комп’ютерного Брайля
+ - Додано таблиці російського літературного Брайля та російського літературного Брайля з індикацією великих літер
+ - Додана таблиця африкаанс Брайля другого ступеня
+ - Вилучено стару таблицю російського Брайля першого ступеня
+- Використання команд NVDA для пошуку наступного/попереднього фрагмента тексту в документі в режимі огляду більше не зупиняє неперервне читання, якщо в налаштуваннях клавіатури увімкнено параметр «Продовжувати неперервне читання після натискання клавіш швидкої навігації». NVDA продовжить неперервне читання з позиції знайденого тексту. (#11563)
+- Для брайлівських дисплеїв HIMS натискання клавіші F3 було перепризначено на пробіл + крапки 148. (#11710)
+- Підвищено зручність налаштування відображення повідомлень NVDA на брайлівських дисплеях. (#11602)
+-  У браузерах та інших додатках, які підтримують режим огляду, діалог зі списком елементів (NVDA+F7), тепер може бути викликаний і в режимі редагування. (#10453)
+- Читання оновлень у «живих» областях ARIA (live regions) тепер керується налаштуванням «Повідомляти про зміни динамічного контенту» (NVDA+5). (#9077)
+- NVDA тепер промовляє фразу «Скопійовано в буфер обміну» перед скопійованим текстом. (#6757)
+- Поліпшено читання таблиці з графічним поданням дисків у вікні стандартного засобу керування дисками Windows. (#10048)
+- Мітки для недоступних елементів керування (виділених сірим кольором) тепер також недоступні. (#11809)
+- Загальний репозиторій мовних даних консорціуму Unicode (CLDR), який використовується в NVDA для читання символів емодзі, оновлений до версії 38. (#11817)
+- Вбудовану функцію підсвічування фокуса було перейменовано в підсвічування. (#11700)
 
 
-== Changes for Developers ==
+== Виправлення ==
+- NVDA тепер знову коректно працює з полями редагування в додатку для радіоаматорів Fast Log Entry. (#8996)
+- У Foobar2000 NVDA тепер коректно повідомляє, скільки пройшло часу, якщо відсутній загальний час відтворення (наприклад, при відтворенні інтернет-потоку). (#11337)
+- Для вмісту на веб-сторінках, який можливо редагувати, NVDA тепер коректно враховує атрибут aria-roledescription. (#11607)
+- Слово «список» більше не вимовляється на кожному рядку списку в Документах Google або в будь-якому іншому вмісті, доступному для редагування в Google Chrome. (#7562)
+- На веб-сторінках всередині доступного для редагування вмісту NVDA тепер оголошує перехід на новий елемент списку з попереднього при переміщенні стрілками по символах чи словах. (#11569)
+- NVDA тепер правильно повідомляє поточний рядок, коли курсор встановлюється в кінець посилання на останньому елементі списку в Документах Google або будь-якому іншому доступному для редагування вмісті на веб-сторінках. (#11606)
+- Відкриття й закриття меню «Пуск» з робочого столу у Windows 7 тепер коректно встановлює системний фокус в початкове положення. (#10567)
+- При перемиканні вкладок у Firefox, NVDA тепер коректно повідомляє заголовок вкладки, навіть якщо увімкнено параметр «Намагатися скасувати читання старого вмісту при швидкому переміщенні на новий». (#11397)
+- NVDA тепер коректно повідомляє елемент списку, після введення символа в списку  при використанні голосів SAPI5 Ivona. (#11651)
+- Тепер знову можна використовувати режим огляду для читання електронних листів у додатку Пошта Windows 10 версії 16005.13110 і новіших. (#11439)
+- При використанні голосів SAPI5 Ivona від harposoftware.com, NVDA тепер коректно зберігає свою конфігурацію, без помилок перемикає синтезатори і більше не мовчить після перезавантаження. (#11650)
+- З клавіатур брайлівських дисплеїв HIMS, під час використання комп’ютерного Брайля, тепер можна вводити цифру 6. (#11710)
+- Значно поліпшено продуктивність під час роботи з Azure Data Studio. (#11533, # 11715)
+- Заголовок пошуку NVDA в режимі огляду тепер знову коректно повідомляється при увімкненому параметрі «Намагатися скасувати читання старого вмісту при швидкому переміщенні на новий». (#11632)
+- NVDA більше не повинна зависати при пробудженні комп’ютера з встановленим фокусом у документі Microsoft Edge. (#11576)
+- Для відновлення функціональності режиму огляду більше немає необхідності натискати tab або переміщати фокус після закриття контекстного меню в Microsoft Edge. (#11202)
+- NVDA тепер коректно повідомляє елементи списків у 64-розрядних додатках, таких як Tortoise SVN. (#8175)
+- У браузерах Google Chrome і Firefox ARIA-елемент treegrid (деревоподібна сітка) тепер подається в режимі огляду як звичайна таблиця. (#9715)
+- Зворотний пошук тепер можна ініціювати командою «знайти попередній», яка викликається натисканням NVDA+shift+F3 (#11770)
+- Сценарій NVDA більше не розглядається як повторюваний, якщо між двома його виконаннями відбувається непов’язане з ним натискання клавіші. (#11388)
+- Читання тегів акцентування strong і emphasis в Internet Explorer тепер знову можна відключити зняттям прапорця «Акценти» в налаштуваннях форматування документа NVDA. (#11808)
+- Підвисання на кілька секунд, яке спостерігалося у невеликої кількості користувачів при переміщенні стрілками між комірками в Microsoft Excel, більше відбуватися не повинно. (#11818)
+- У Microsoft Teams версій 1.3.00.28xxx NVDA тепер коректно читає повідомлення чату та командні канали навіть при неправильно сфокусованому меню. (#11821)
+- Текст, одночасно позначений як орфографічна і граматична помилка в Google Chrome, NVDA оголошує як орфографічна і граматична помилка. (#11787)
+- При використанні Microsoft Outlook з французькою локалізацією, сполучення клавіш для команди «Відповісти всім» (Control+Shift+R) тепер знову працює. (#11196)
+- Підказки IntelliSense у Visual Studio, які надають додаткові відомості про поточний  елемент IntelliSense, тепер повідомляються лише один раз. (#11611)
+- У калькуляторі Windows 10 NVDA більше не оголошуватиме про перебіг обчислень, якщо читання символів під час введення вимкнено. (#9428)
+- NVDA більше не завершує аварійно роботу при використанні таблиці English US grade 2 з увімкненим параметром «Розгортати слово під курсором, яке написане скорописом» під час відображення деякого вмісту, такого як URL. (#11754)
+- Команда NVDA+F знову дозволяє отримувати інформацію про форматування комірки у фокусі в Microsoft Excel. (#11914)
+- QWERTY-введення на брайлівських дисплеях Papenmeier тепер знову працює і не викликає випадкових зависань NVDA. (#11944)
+
+
+== Зміни для розробників (англ) ==
 - System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
 - NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
 - The aria live politeness setting for live regions can now be found on NVDA Objects using the liveRegionPoliteness property. (#11596)
@@ -759,7 +759,7 @@ Please refer to the list of changes further down for more details on this and ho
 
 == Bug Fixes ==
 - When using OneCore speech synthesizer on Windows 10 April 2018 Update and later, large chunks of silence are no longer inserted between speech utterances. (#8985)
-- When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as ðŸ¤¦) will now read properly. (#8782)
+- When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)
 - Improved restart confirmation dialog after changing NVDA's interface language. The text and the button labels are now more concise and less confusing. (#6416)
 - If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech synthesizer on Windows 10, rather than espeak. (#9025)
 - Removed the "Welcome Dialog" entry in the NVDA menu while on secure screens. (#8520)
@@ -866,7 +866,7 @@ Highlights of this release include automatic detection of many Braille displays,
 - Content marked as being either inserted or deleted in web pages is now reported in Google Chrome. (#8558)
 - Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#5992, #5993)
 - Added scripts for reporting elapsed and total time of current track in Foobar2000. (#6596)
-- The Mac command key symbol (âŒ˜) is now announced when reading text with any synthesizer. (#8366)
+- The Mac command key symbol (⌘) is now announced when reading text with any synthesizer. (#8366)
 - Custom roles via the aria-roledescription attribute are now supported in all web browsers. (#8448)
 - New braille tables: Czech 8 dot, Central Kurdish, Esperanto, Hungarian, Swedish 8 dot computer braille. (#8226, #8437)
 - Support has been added to automatically detect braille displays in the background. (#1271)
@@ -1473,7 +1473,7 @@ Highlights of this release include the ability to indicate spelling errors while
 == Changes for Developers ==
 - NVDA's C++ components are now built with Microsoft Visual Studio 2015. (#5592)
 - You can now present a text or HTML message to the user in browse mode using ui.browseableMessage. (#4908)
-- In the User Guide, when a %kc:setting command is used for a setting which has a common key for all layouts, the key may now be placed after a full-width colon (ï¼š) as well as the regular colon (:). (#5739)
+- In the User Guide, when a %kc:setting command is used for a setting which has a common key for all layouts, the key may now be placed after a full-width colon (：) as well as the regular colon (:). (#5739)
 
 
 = 2016.1 =
@@ -1569,7 +1569,7 @@ Highlights of this release include performance improvements in Windows 10; inclu
 - When moving by character in Microsoft Word with NVDA's Report Editor Revisions option enabled, less information is now reported for track changes, which makes navigation more efficient. To view the extra information, use the Elements List. (#4920)
 - Updated liblouis braille translator to 2.6.4. (#5341)
 - Several symbols (including basic mathematical symbols) have been moved to level some so that they are spoken by default. (#3799)
-- If the synthesizer supports it, speech should now pause for parentheses and the en dash (â€“). (#3799)
+- If the synthesizer supports it, speech should now pause for parentheses and the en dash (–). (#3799)
 - When selecting text, the text is reported before the indication of selection instead of after. (#1707)
 
 
@@ -1780,7 +1780,7 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - In the Microsoft Outlook message list, items are no longer pointlessly announced as Data Items. (#4439)
 - When selecting text in the code editing control in the Eclipse IDE, the entire selection is no longer announced every time the selection changes. (#2314)
 - Various versions of Eclipse, such as Spring Tool Suite and the version included in the Android Developer Tools bundle, are now recognised as Eclipse and handled appropriately. (#4360, #4454)
-- Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls (including many Windows 8 applications) is now much more accurateÂ  on high DPI displays or when document zoom is changed. (#3494) 
+- Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls (including many Windows 8 applications) is now much more accurate  on high DPI displays or when document zoom is changed. (#3494) 
 - Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls will now announce the label of more buttons. (#4173)
 - When using a Papenmeier BRAILLEX braille display with BrxCom, keys on the display now work as expected. (#4614)
 
@@ -1949,7 +1949,7 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - When using browse mode quick navigation commands  while in say all with skim reading enabled, NVDA more accurately announces the new field; e.g. it now says a heading is a heading, rather than just its text. (#3689)
 - The jump to end or start of container quick navigation commands now honor the skim reading during say all setting; i.e. they will no longer cancel the current say all. (#3675)
 - Touch gesture names listed in NVDA's Input Gestures dialog are now friendly and localized. (#3624)
-- NVDA no longer causes certain programs to crash when moving the mouse over their rich edit (TRichEdit) controls. Programs include Jarte 5.1 and BRfÃ¡cil. (#3693, #3603, #3581)
+- NVDA no longer causes certain programs to crash when moving the mouse over their rich edit (TRichEdit) controls. Programs include Jarte 5.1 and BRfácil. (#3693, #3603, #3581)
 - In Internet Explorer and other MSHTML controls, containers such as tables marked as presentation by ARIA are no longer reported to the user. (#3713)
 - in Microsoft Word, NVDA no longer inappropriately repeats table row and column information for a cell on a braille display multiple times. (#3702)
 - In languages which use a space as a digit group/thousands separator such as French and German, numbers from separate chunks of text are no longer pronounced as a single number. This was particularly problematic for table cells containing numbers. (#3698)
@@ -2388,7 +2388,7 @@ Highlights of this release include features for more fluent reading of braille; 
 - Sleep mode is automatically enabled when using OpenBook. (#1209)
 - In Poedit, translators can now read translator added and automatically extracted comments. Messages that are untranslated or fuzzy are marked with a star and a beep is heard when you navigate onto them. (#1811)
 - Support for the HumanWare Brailliant BI and B series displays. (#1990)
-- New languages: Norwegian BokmÃ¥l, Traditional Chinese (Hong Kong).
+- New languages: Norwegian Bokmål, Traditional Chinese (Hong Kong).
 
 
 == Changes ==
@@ -2812,8 +2812,8 @@ Notable features of this release include greatly simplified object navigation; v
 
 
 == Bug Fixes ==
-- In ÂµTorrent, the focused item in the torrents list no longer reports repeatedly or steals focus when a menu is open.
-- In ÂµTorrent, the names of the files in the Torrent Contents list are now reported.
+- In µTorrent, the focused item in the torrents list no longer reports repeatedly or steals focus when a menu is open.
+- In µTorrent, the names of the files in the Torrent Contents list are now reported.
 - In Mozilla applications, focus is now correctly detected when it lands on an empty table or tree.
 - In Mozilla applications, "not checked" is now correctly reported for checkable controls such as checkable table cells. (#571)
 - In Mozilla applications, the text of correctly implemented ARIA dialogs is no longer ignored and will now be reported when the dialog appears. (#630)
@@ -3298,4 +3298,3 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 - If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 - When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
-

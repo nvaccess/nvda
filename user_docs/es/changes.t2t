@@ -4,21 +4,25 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
+Esta versión introduce el soporte preliminar para Windows 11.
+Aunque Windows 11 aún no ha sido lanzado, esta versión se ha probado en versiones preliminares de Windows 11.
+Se incluye una corrección importante para la Cortina de Pantalla (consulta Notas importantes).
+La herramienta COM Registration Fixing ahora puede resolver más problemas cuando se ejecuta NVDA.
+Hay actualizaciones para el sintetizador eSpeak y para el transcriptor braille LibLouis.
+También hay varias correcciones de fallos y mejoras, en particular para el soporte de braille y para las terminales de Windows, para la calculadora, el panel de emoji y para el historial del portapapeles.
+
 
 == Notas importantes ==
-- La Cortina de Pantalla en versiones anteriores de NVDA ya no es compatible con versiones de Windows más recientes que Windows 10 21H2 (10.0.19044).
+Debido a un cambio en la API Windows Magnification, la Cortina de Pantalla tuvo que ser actualizada para admitir las versiones más nuevas de Windows.
+Utiliza NVDA 2021.2 para activar la Cortina de Pantalla con Windows 10 21H2 (10.0.19044) o posteriores.
 Esto incluye Windows 10 Insiders y Windows 11.
-Esto se debe a un cambio en la API Windows Magnification.
-Cuando se utilicen versiones anteriores de NVDA y Windows más recientes que Windows 10 21H2, la cortina de pantalla puede dejar de funcionar sin previo aviso.
-Para garantizar la seguridad, confirma que la cortina de pantalla funciona correctamente con las versiones nuevas o experimentales de Windows.
-(#12491, #12684)
--
+Por razones de seguridad, al utilizar una versión nueva de Windows, obtén una confirmación visual de que la Cortina de Pantalla haga que ésta esté totalmente negra.
 
 
 == Nuevas características ==
-- Soporte para anotaciones ARIA:
+- Soporte experimental para anotaciones ARIA:
   - añade una orden para leer un resumen de detalles de un objeto con aria-details. (#12364)
-  - añade una opción en avanzado para anunciar si un objeto tiene detalles en modo Exploración. (#12439) 
+  - añade una opción en preferencias avanzadas para anunciar si un objeto tiene detalles en modo Exploración. (#12439) 
   -
 - En Windows 10 Versión 1909 y posteriores (incluyendo Windows 11), NVDA anunciará el recuento de sugerencias al realizar búsquedas en el Explorador de Archivos. (#10341, #12628)
 - En Microsoft Word, NVDA ahora anuncia el resultado de los atajos de sangría y sangría francesa cuando se ejecuten. (#6269)
@@ -50,6 +54,7 @@ Para garantizar la seguridad, confirma que la cortina de pantalla funciona corre
 - La versión de Windows 10.0.22000 o posterior se reconoce como Windows 11, no como Windows 10. (#12626)
 - Se ha corregido y probado la compatibilidad de la cortina de pantalla para versiones de Windows hasta la 10.0.22000. (#12684)
 - Si no se muestran resultados al filtrar los gestos de entrada, el diálogo de configuración de gestos de entrada sigue funcionando como se esperaba. (#12673)
+- Se corrigió un fallo donde el primer elemento de menú de un submenú no se anuncia en algunos contextos. (#12624)
 -
 
 

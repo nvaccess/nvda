@@ -1288,7 +1288,7 @@ def getTextInfoSpeech(  # noqa: C901
 				# We entered the most outer clickable, so announce it, if we won't be announcing anything else interesting for this field
 				presCat=field.getPresentationCategory(newControlFieldStack[0:count],formatConfig,reason)
 				if not presCat or presCat is field.PRESCAT_LAYOUT:
-					speechSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
+					speechSequence.append(controlTypes.State.CLICKABLE.displayString)
 					shouldConsiderTextInfoBlank = False
 				inClickable=True
 		fieldSequence = info.getControlFieldSpeech(
@@ -1392,7 +1392,7 @@ def getTextInfoSpeech(  # noqa: C901
 						# Announce it if there is nothing else interesting about the field, but not if the user turned it off. 
 						presCat=command.field.getPresentationCategory(newControlFieldStack[0:],formatConfig,reason)
 						if not presCat or presCat is command.field.PRESCAT_LAYOUT:
-							fieldSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
+							fieldSequence.append(controlTypes.State.CLICKABLE.displayString)
 						inClickable=True
 				fieldSequence.extend(info.getControlFieldSpeech(
 					command.field,

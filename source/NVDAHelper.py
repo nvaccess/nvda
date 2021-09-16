@@ -218,7 +218,7 @@ def handleInputCompositionEnd(result):
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
 	if result:
-		speech.speakText(result,symbolLevel=characterProcessing.SYMLVL_ALL)
+		speech.speakText(result, symbolLevel=characterProcessing.SymbolLevel.ALL)
 
 def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,isReading):
 	import speech

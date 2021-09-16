@@ -4,9 +4,23 @@
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
+Ova verzija uključuje preliminarnu Windows 11 podršku.
+Iako Windows 11 još uvek nije zvanično dostupan, ova verzija je testirana na insajderskim verzijama Windowsa 11.
+Ovo uključuje važne popravljene probleme sa zatamnjivanjem ekrana (pročitajte važne napomene ).
+COM Registration Fixing alatka sada može da ispravi više problema.
+Ažurirani su sintetizator eSpeak i brajev prevodilac LibLouis.
+Takođe su ispravljeni važni problemi, posebno vezani za brajevu podršku i Windows terminal, Kalkulator, emoji panel i istoriju privremene memorije.
+
+
+== Važne napomene ==
+Zbog promene u API-u za Windows lupu, zatamnjivanje ekrana je ažurirano kako bi podržavalo najnovije Windows verzije.
+Koristite  NVDA 2021.2 da biste aktivirali zatamnjivanje ekrana na Windowsu 10 21H2 (10.0.19044) ili novijim.
+Ovo uključuje insajderske verzije Windowsa 10 kao i Windows 11.
+Kako biste se uverili u svoju privatnost, kada koristite noviju Windows verziju, vizuelno potvrdite da zatamnjivanje ekrana čini da ekran bude potpuno crn.
+
 
 == Nove karakteristike ==
-- Podrška za ARIA napomene:
+- Eksperimentalna podrška za ARIA napomene:
   - Dodata komanda za čitanje detalja objekta koji ima aria-details. (#12364)
   - Dodata opcija u naprednim podešavanjima za prijavljivanje kada objekat sadrži detalje u režimu pretraživanja. (#12439) 
   -
@@ -16,10 +30,12 @@
 
 
 == Promene ==
-- Podrazumevano, NVDA će sada izgovarati sve simbole kada se krećete reč po reč.
-Ovo se može promeniti u dijalogu podešavanja ili novom komandom bez podrazumevane prečice. (#11779)
 - Espeak-ng je ažuriran na 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
 - Ako je prijavljivanje članaka omogućeno u podešavanjima formatiranja dokumenta, NVDA će izgovoriti  "članak" nakon sadržaja. (#11103)
+- Ažuriran liblouis brajev prevodilac na  [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nove brajeve tabele: Bugarski stepen 1, Burmese stepen 1, Burmese stepen 2, Kazakh stepen 1, Khmer stepen 1, Severni Kurdiški  stepen 0, Sepedi stepen 1, Sepedi stepen 2, Sesotho stepen 1, Sesotho stepen 2, Setswana stepen 1, Setswana stepen 2, Tatar stepen 1, Vijetnamski  stepen 0, Vijetnamski  stepen 2, Južni vijetnamski  stepen 1, Xhosa stepen 1, Xhosa stepen 2, Yakut stepen 1, Zulu stepen 1, Zulu stepen 2
+  - Windows 10 OCR je preimenovan u Windows OCR. (#12690)
+-
 -
 
 
@@ -27,9 +43,6 @@ Ovo se može promeniti u dijalogu podešavanja ili novom komandom bez podrazumev
 - U Windows 10 kalkulatoru, NVDA će prikazivati izraze računanja na brajevom redu. (#12268)
 - U terminal programima na Windowsu 10 verziji 1607 i novijim, kada se ubacuju ili brišu znakovi u sredini reda, znakovi desno od kursora se više ne čitaju. (#3200)
   - Diff Match Patch je  sada podrazumevano omogućen. (#12485)
-  -
-- Ažuriran liblouis brajev prevodilac na [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
-  - Nove brajeve tabele: Bugarski stepen 1, Burmese stepen 1, Burmese stepen 2, Kazahstanski stepen 1, Khmer stepen 1, Severni Kurdiški stepen 0, Sepedi stepen 1, Sepedi stepen 2, Sesotho stepen 1, Sesotho stepen 2, Setswana stepen 1, Setswana stepen 2, Tatar stepen 1, Vietnamski stepen 0, Vietnamski stepen 2, Južni Vietnamski stepen 1, Xhosa stepen 1, Xhosa stepen 2, Yakut stepen 1, Zulu stepen 1, Zulu stepen 2
   -
 - Brajev unos ispravno radi sa sledećim tabelama kratkopisa: Arapski stepen 2, Španski stepen 2, Urdu stepen 2, Kineski  (Kina, Mandarinski) stepen 2. (#12541)
 - COM Registration Fixing alatka sada ispravlja više problema, posebno na 64 bitnim verzijama Windowsa. (#1256)
@@ -39,7 +52,14 @@ Ovo se može promeniti u dijalogu podešavanja ili novom komandom bez podrazumev
 - NVDA će bezbedno izaći kada se pokrene novi proces. (#12605)
 - Ponovno biranje Handy Tech drajvera za brajev red u dijalogu za izbor brajevog reda više ne izaziva greške. (#12618)
 - Windows verzija 10.0.22000 i novije se sada prepoznaju kao Windows 11, ne Windows 10. (#12626)
+- Ako nema prikazanih rezultata kada se pretražuju ulazne komande, dijalog ulaznih komandi nastavlja da radi kako treba. (#12673)
+- Podrška za zatamnjivanje ekrana je ispravljena i testirana na Windows verzijama do  10.0.22000. (#12684)
+- Ispravljena greška koja je izazivala da se prva stavka podmenija u nekim situacijama ne izgovara. (#12624)
 -
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
 
 
 = 2021.1 =
