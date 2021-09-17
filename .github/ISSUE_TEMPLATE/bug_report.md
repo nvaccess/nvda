@@ -35,6 +35,6 @@ Each of the questions and sections below start with multiple hash symbols (#). P
 
 #### Have you tried any other versions of NVDA? If so, please report their behaviors.
 
-#### If add-ons are disabled, is your problem still occurring?
+#### If NVDA add-ons are disabled, is your problem still occurring?
 
 #### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
