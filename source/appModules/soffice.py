@@ -240,10 +240,6 @@ class SymphonyIATableCell(SymphonyTableCell):
 
 class SymphonyTable(IAccessible):
 
-	def _getSelectedItemsCount_accSelection(self, maxCount):
-		# accSelection is broken in LibreOffice.
-		raise NotImplementedError
-
 	def event_selectionWithIn(self):
 		curFocus = api.getFocusObject()
 		if self == curFocus.table:

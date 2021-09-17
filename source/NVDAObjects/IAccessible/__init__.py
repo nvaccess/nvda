@@ -1303,6 +1303,7 @@ the NVDAObject for IAccessible
 		# Call the rawmethod for IEnumVARIANT::Next as COMTypes' overloaded version does not allow limiting the amount of items returned
 		numItemsFetched=ctypes.c_ulong()
 		itemsBuf=(VARIANT*(maxCount+1))()
+		enumObj.Reset()
 		res=enumObj._IEnumVARIANT__com_Next(maxCount,itemsBuf,ctypes.byref(numItemsFetched))
 		# IEnumVARIANT returns S_FALSE  if the buffer is too small, although it still writes as many as it can.
 		# For our purposes, we can treat both S_OK and S_FALSE as success.
