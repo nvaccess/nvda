@@ -43,7 +43,8 @@ If you need this functionality please assign a gesture to the appropriate script
 - More dialog text is automatically read in LibreOffice Writer, such as in confirmation dialogs. (#11687)
 - Reading / navigating with browse mode in Microsoft Word via UI automation now ensures the document is always scrolled so that the current browse mode position is visible, and that the caret position in focus mode correctly reflects the browse mode position. (#9611)
 - When performing Say all in Microsoft Word via UI automation, the document is now automatically scrolled, and the caret position is correctly updated. (#9611)
--
+- When reading emails in Outlook and NVDA is accessing the message with UI Automation, certain tables are now marked as layout tables, which means they will no longer be reported by default. (#11430)
+ -
 
 
 == Changes for Developers ==
