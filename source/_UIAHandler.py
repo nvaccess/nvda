@@ -747,6 +747,8 @@ class UIAHandler(COMObject):
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
 			# The window does support UIA natively.
+			# Detect if we can also inject in-process
+			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 
 			# MS Word documents now have a fairly usable UI Automation implementation.
 			# However, builds of MS Office 2016 before build 13901 or so had bugs which
@@ -755,7 +757,6 @@ class UIAHandler(COMObject):
 			# if we can inject in-process, refuse to use UIA and instead
 			# fall back to the MS Word object model.
 			if windowClass == "_WwG":
-				canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 				isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
 				if (
 					(
