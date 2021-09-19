@@ -89,7 +89,11 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 			safetyCount+=1
 		else:
 			try:
-				log.error("Never ending focus ancestry: last object: %s, %s, window class %s, application name %s"%(tempObj.name,controlTypes.roleLabels[tempObj.role],tempObj.windowClassName,tempObj.appModule.appName))
+				log.error(
+					"Never ending focus ancestry:"
+					f" last object: {tempObj.name}, {controlTypes.Role(tempObj.role).displayString},"
+					f" window class {tempObj.windowClassName}, application name {tempObj.appModule.appName}"
+				)
 			except:
 				pass
 			tempObj=getDesktopObject()

@@ -795,17 +795,18 @@ Deze posities worden gemarkeerd met een gekleurde rechthoek er om.
 
 Wanneer Visuele Uitlichting ingeschakeld is in de categorie[zicht #VisionSettings] in het dialoogvenster [NVDA-instellingen #NVDASettings] , kunt u daar aanpassen of u al dan niet de focus, het navigatorobject of de bladermodusaanwijzer #VisionSettingsFocusHighlight] markeert.
 
-++ Scherm dimmen (Schermgordijn) ++[VisionScreenCurtain]
+++ Scherm Dimmen (Schermgordijn) ++[VisionScreenCurtain]
 Als blinde of slechtziende gebruiker is het vaak niet mogelijk of noodzakelijk te zien wat er op het scherm wordt weergegeven.
 Bovendien kan het heel lastig zijn met zekerheid vast te stellen dat er niet iemand over je schouder meekijkt.
-In zo'n geval kent NVDA de optie 'Scherm dimmen' die ingeschakeld kan worden om een donker scherm te krijgen.
+In zo'n geval kent NVDA de optie 'Scherm Dimmen' die ingeschakeld kan worden om een donker scherm te krijgen.
 
-U kunt Scherm dimmen inschakelen in de categorie [zicht #VisionSettings] in het dialoogvenster   [Instellingen van NVDA #NVDASettings].
+U kunt Scherm Dimmen inschakelen in de categorie [zicht #VisionSettings] in het dialoogvenster   [Instellingen van NVDA #NVDASettings].
 
-Wanneer Schermdimmen is ingeschakeld, zijn taken die rechtstreeks te maken hebben met wat er op het scherm verschijnt, niet uitvoerbaar.
+Wanneer Scherm Dimmen is ingeschakeld, zijn taken die rechtstreeks te maken hebben met wat er op het scherm verschijnt, zoals het uitvoeren van [een OCR-conversie #Win10OCR] of het maken van een schermafbeelding, niet uitvoerbaar.
 
-Om zeker te zijn van een veilige werkomgeving dient u na te gaan of het schermgordijn correct werkt met nieuwe of experimentele versies van Windows.
-Bij gebruik van NVDA-versies ouder dan  2021.2 en Windows-versies die  nieuwer zijn dan Windows 10 21H2, werkt Scherm Dimmen mogelijk niet, zonder dat hiervoor gewaarschuwd wordt.
+Vanwege een wijziging in de Windows Magnification API, moetst Scherm Dimmen worden bijgewerkt om ondersteuning te kunnen bieden voor de nieuwste versies van Windows.
+Gebruik NVDA 2021.2 om Scherm Dimmen te activeren met Windows 10 21H2 (10.0.19044) of later.
+Om zeker te zijn van een veilige werkomgeving bij gebruik van een nieuwe Windowsversie dient u (visueel) na te gaan dan wel laten nagaan of u een volledig donker scherm hebt.
 
 + Inhoudherkenning +[ContentRecognition]
 Wanneer auteurs onvoldoende informatie verschaffen waarmee een gebruiker van een schermleesprogramma kan bepalen om welke inhoud het gaat, kunnen verscheidene hulpprogramma's worden gebruikt om de inhoud te herkennen uit een afbeelding.

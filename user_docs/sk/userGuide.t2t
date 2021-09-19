@@ -66,7 +66,7 @@ Pre viac informácií si môžete pozrieť [kompletnú licenciu (anglicky) https
 Pre podrobné informácie o výnimkáchh, pozrite dokument v menu NVDA > Pomocník > Licencia (anglicky).
 
 + Systémové požiadavky +[SystemRequirements]
-- NVDA spustíte v 32 aj 64 bitových verziách systémov Windows 7, 8, 8.1, 10 a tiež v serverových edíciách Windows od verzie 2008 R2..
+- NVDA spustíte v 32 aj 64 bitových verziách systémov Windows 7, 8, 8.1, 10, Windows 11 a tiež v serverových edíciách Windows od verzie 2008 R2.
 - Vo Windows 7 musí byť nainštalovaný Service Pack 2 alebo novší.
  - V systémoch Windows Server 2008 R2 musí byť nainštalovaný Service Pack 1 alebo novší.
 - Mali by ste mať aspoň 150 MB voľného miesta na disku
@@ -793,11 +793,15 @@ V týchto situáciách môžete použiť funkciu tienenia obrazovky. Toto spôso
 
 Tienenie obrazovky môžete aktivovať v [kategórii zrak #VisionSettings] v [Dialógu Nastavenia #NVDASettings].
 
-Kým je tienenie obrazovky aktívne, nie je možné robiť činnosti priamo závislé na obsahu obrazovky ako [rozpoznávanie textu použitím OCR #Win10Ocr] alebo zachytenie snímky obrazovky.
+Kým je tienenie obrazovky aktívne, nie je možné robiť činnosti priamo závislé na obsahu obrazovky ako [rozpoznávanie textu použitím OCR #WinOcr] alebo zachytenie snímky obrazovky.
 
-+Optické rozpoznávanie textu+[ContentRecognition]
+Keďže v najnovších verziách systému Windows došlo k úpravám v API na zväčšovanie, bolo potrebné v NVDA aktualizovať spôsob, akým sa zabezpečuje tienenie obrazovky.
+Použite NVDA od verzie 2021.2 v kombinácii s Windows od verzie 10 21H2 (10.0.19044).
+Z bezpečnostných dôvodov odporúčame, aby ste sa pri prvom použití tienenia obrazovky uistili vlastným zrakom, alebo prostredníctvom vidiacej osoby, či je obrazovka skutočne čierna.
+
++Optické rozpoznávanie textu Windows +[ContentRecognition]
 Ak nie sú k dispozícii užitočné textové informácie, je možné použiť nástroje na optické  rozpoznávanie textu z obrázka.
-NVDA dokáže rozpoznávať text z obrázka pomocou optického rozpoznávania (OCR) vstavaného v operačnom systéme Windows 10.
+NVDA dokáže rozpoznávať text z obrázka pomocou optického rozpoznávania (OCR) vstavaného v operačnom systéme Windows od verzie 10.
 Ďalšie spôsoby rozpoznávania textu môžu byť integrované pomocou doplnkov.
 
 Ak vyvoláte rozpoznanie textu, NVDA bude analyzovať aktuálny [navigačný objekt #ObjectNavigation].
@@ -809,14 +813,14 @@ Keď je rozpoznávanie dokončené, text sa zobrazí v režime prehliadania a m�
 objekt pod kurzorom môžete aktivovať (zvyčajne kliknúť naň) medzerou alebo klávesom enter.
 Klávesom ESC zatvoríte okno s rozpoznaným textom.
 
-++ Windows 10 OCR ++[Win10Ocr]
-priamo v systéme windows 10 je k dispozícii optické rozpoznávanie textu pre mnohé jazyky, vrátane Slovenčiny.
+++ Rozpoznávanie textu Windows ++[WinOcr]
+priamo v systéme windows od verzie 10 je k dispozícii optické rozpoznávanie textu pre mnohé jazyky, vrátane Slovenčiny.
 NVDA môže pomocou OCR rozpoznať text v obrázku alebo v neprístupnom okne aplikácie.
 
-jazyk rozpoznávania nastavíte v kategórii  [Rozpoznávanie textu OCR #Win10OcrSettings] v [Nastaveniach #NVDASettings].
+jazyk rozpoznávania nastavíte v kategórii  [Rozpoznávanie textu Windows #WinOcrSettings] v [Nastaveniach #NVDASettings].
 Doplnkové jazyky pre rozpoznávanie (Napríklad Češtinu) nainštalujete z menu štart > nastavenia > čas a jazyk > miestne a jazykové nastavenia > Pridanie jazyka.
 
-OCR systému Windows 10 môže byť čiastočne alebo úplne nefunkčné  v kombinácii s [vizuálnymi rozšíreniami NVDA #Vision] alebo inými externými vizuálnymi pomôckami. Pred spustením optického rozpoznávania by ste mali obmedziť použitie takýchto pomôcok.
+OCR systému Windows od verzie 10 môže byť čiastočne alebo úplne nefunkčné  v kombinácii s [vizuálnymi rozšíreniami NVDA #Vision] alebo inými externými vizuálnymi pomôckami. Pred spustením optického rozpoznávania by ste mali obmedziť použitie takýchto pomôcok.
 
 %kc:beginInclude
 rozpoznanie textu v aktuálnom navigačnom objekte vyvoláte skratkou NVDA+R.
@@ -1789,11 +1793,11 @@ Tón sa zvyšuje pri každej medzere, pri každom tabulátore sa zvyšuje štvor
 - Oznamovať a pípať: Oznamuje odsadenie riadka hlasom aj pípaním podľa pravidiel uvedených vyššie.
 -
 
-+++ Rozpoznávanie textu OCR +++[Win10OcrSettings]
-Môžete tu  nastaviť parametre pre rozpoznávanie textu pomocou rozhrania [Windows 10 OCR #Win10Ocr].
++++ Rozpoznávanie textu windows +++[WinOcrSettings]
+Môžete tu  nastaviť parametre pre rozpoznávanie textu pomocou rozhrania [Windows OCR #WinOcr].
 Kategória obsahuje nasledujúce možnosti:
 
-==== jazyk rozpoznávania ====[Win10OcrSettingsRecognitionLanguage]
+==== jazyk rozpoznávania ====[WinOcrSettingsRecognitionLanguage]
 V tomto zozname môžete vybrať jazyk, ktorý sa bude používať na rozpoznávanie textu.
 
 +++ Pokročilé +++[AdvancedSettings]
@@ -1826,10 +1830,10 @@ Toto môže spomaliť odozvu napríklad v Microsoft Visual Studio.
 Ak zapnete túto možnosť, NVDA bude sledovať udalosti len pre zamerané prvky.
 Ak badáte spomalenie pri práci v aplikáciách, skúste zapnúť túto možnosť.
 
-==== Na zobrazenie prvkov v Microsoft aplikáciách používať UI automation ====[AdvancedSettingsUseUiaForWord]
+==== Na sprístupnenie prvkov v dokumentoch Microsoft Word používať UI automation ====[AdvancedSettingsUseUiaForWord]
 Ak začiarknete túto možnosť, NVDA sa pokúsi použiť Microsoft UI Automation accessibility api na zobrazenie prvkov v aplikácii MS Word.
 Toto sa týka aplikácie Word, a tiež písania a čítania správ v aplikácii Outlook.
-Aktuálne verzie MS Office 2016/365 bežiace v systéme Windows 10 majú podporu dostatočne dobrú, ako je súčasná podpora zabudovaná priamo v NVDA. Výhodou tiež je, že aplikácie cez UI automation reagujú rýchlejšie.
+Aktuálne verzie MS Office 2016/365 bežiace v systéme Windows od verzie 10 majú podporu dostatočne dobrú, ako je súčasná podpora zabudovaná priamo v NVDA. Výhodou tiež je, že aplikácie cez UI automation reagujú rýchlejšie.
 Niektoré informácie sú však nedostatočne prezentované, alebo sú prezentované nesprávne, takže nemôžeme UI automation odporúčať vo všetkých prípadoch.
 Väčšine používateľov neodporúčame používať UI automation. Zároveň privítame odozvu od používateľov Office 2016/365, ktorí sú ochotný otestovať UI automation.
 
@@ -1847,6 +1851,14 @@ V zoznamovom rámiku sa nachádzajú tieto možnosti:
 - Len keď je to nevyhnutné: Ak sa NVDA nedokáže zaviesť do procesu prehliadača s cieľom použiť rozhranie IA2 a k dispozícii je rozhranie UIA, NVDA použie UIA ako náhradu.
 - Áno: Vždy ak je v prehliadači k dispozícii rozhranie UIA, NVDA ho použije.
 - Nie: UIA sa nepoužije vôbec, ani ak sa NVDA nedokáže zaviesť do procesu prehliadača. Môže byť užitočné pre vývojárov, pri ladení implementácie IA2.
+-
+
+==== Povoliť podporu pre oznamovanie Aria revízií ====[Annotations]
+Začiarknite, ak chcete testovať experimentálnu podporu pre revízie aria (komentáre a pod).
+Niektoré funkcie nemusia byť dokončené.
+Dostupné sú tieto možnosti:
+- "Oznamovať podrobnosti pri prvkoch v režime prehliadania": Oznamuje situácie, ak prvok obsahuje podrobnosti.
+Oznámenie podrobností je možné vyvolať klávesovou skratkou. Túto je potrebné priradiť v dialógu [Klávesové skratky #InputGestures].
 -
 
 ==== Na sprístupnenie prvkov v zošitoch Microsoft Excel používať UI Automation ====[UseUiaForExcel]
@@ -1867,11 +1879,10 @@ Ak tomu chcete zabrániť, vypnite dočasne čítanie poznakoch a po slovách.
 ==== Algoritmus počítania rozdielov ====[DiffAlgo]
 Toto nastavenie ovplyvňuje, ako NVDA zisťuje nový text na prečítanie v okne príkazového riadku.
 V zoznamovom rámiku sú 3 možnosti:
-- Automaticky: Od NVDA 2021.1 toto je rovnaké ako Difflib.
-Ak sa preukáže, že používatelia sú spokojní s novým nastavením, v budúcnosti sa to môže zmeniť na Diff Match Patch.
+- Automaticky: Od NVDA 2021.2 sa používa automaticky algoritmus Diff Match Patch.
 - povoliť Diff Match Patch: Táto možnosť spôsobí, že NVDA zisťuje text na prečítanie v okne príkazového riadku po znakoch.
 Môže to zlepšiť odozvu pri množstve textu na výstupe a spresniť oznamovanie zmien v strede riadkov.
-Žiaľ nemusí to byť kompatibilné so všetkými aplikáciami.
+Žiaľ nemusí  byť kompatibilné so všetkými aplikáciami, preto sa Diff Match Patch v niektorých situáciách nepoužíva.
 Táto funkcia je podporovaná v okne príkazového riadku vo Windows 10 od verzie 1607.
 Môže tiež byť dostupná v niektorých oknách v niektorých skorších verziách Windows.
 - vynútiť Difflib: Pri tomto nastavení NVDA počíta text na prečítanie po riadkoch.
@@ -2250,7 +2261,7 @@ Zoznam niektorých konkrétnych hlasových výstupov, ktoré je možné použív
 
 ++ eSpeak NG++[eSpeakNG]
 Hlasový výstup [eSpeak NG https://github.com/espeak-ng/espeak-ng] je priamo zabudovaný do NVDA a nie je závislý na iných špeciálnych ovládačoch alebo iných komponentoch, ktoré by bolo potrebné doinštalovať.
-V systémoch  Windows 7, 8 a 8.1, NVDA používa  eSpeak NG ako predvolený hlasový výstup. ([Hlasy Windows OneCore #OneCore] sa používajú predvolene v systéme Windows 10).
+V systémoch  Windows 7, 8 a 8.1, NVDA používa  eSpeak NG ako predvolený hlasový výstup. ([Hlasy Windows OneCore #OneCore] sa používajú predvolene v systéme Windows od verzie 10).
 Tento hlas by mal pracovať na každom systéme, kde beží NVDA, čo znamená, že NVDA môžete spúšťať na ľubovoľnom počítači dokonca aj z USB kľúča alebo iného prenosného média.
 
 Každý hlas hlasového výstupu eSpeak NG hovorí iným jazykom.
@@ -2284,9 +2295,9 @@ Aby Ste mohli používať tieto hlasy, je potrebné nainštalovať dva komponent
 -
 
 ++ Hlasy OneCore ++[OneCore]
-Operačný systém windows 10 obsahuje hlasy označené ako "one core" alebo "mobile".
+Operačný systém windows od verzie 10 obsahuje hlasy označené ako "one core" alebo "mobile".
 hlasy sú dostupné pre mnoho jazykov (vrátane Slovenčiny a Češtiny) a často majú lepšiu odozvu ako hlasy v rozhraní Sapi5.
-NVDA používa Hlasy Onecore predvolene v systémoch Windows 10. ([eSpeak NG #eSpeakNG] sa používa v starších systémoch).
+NVDA používa Hlasy Onecore predvolene v systémoch Windows od verzie 10. ([eSpeak NG #eSpeakNG] sa používa v starších systémoch).
 
 Ak chcete nainštalovať nový hlas, otvorte nastavenia systému (windows+i), tu hľadajte kategóriu čas a jazyk a následne sekciu reč. Môžete samozrejme prejsť priamo do tejto sekcie cez vyhľadávanie.
 Aktivujte tlačidlo Pridať hlasy.
@@ -2503,7 +2514,7 @@ Ak pripájate niektorý z  riadkov cez USB a riadok nepodporuje režim HID, mus�
 Riadky VarioUltra a Pronto! používajú pripojenie cez HID.
 Riadky Refreshabraille a Orbit Reader môžete nastaviť tak, aby používali technológiu HID.
 
-USB sériový režim je podporovaný  pri riadkoch Orbit Reader 20 len v systéme Windows 10.
+USB sériový režim je podporovaný  pri riadkoch Orbit Reader 20 len v systéme Windows od verzie 10.
 Odporúčame vám ale používať režim HID.
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
@@ -3106,7 +3117,7 @@ Pre popis a umiestnenie tlačidiel si prosím pozrite návod k vášmu riadku.
 
 ++ Riadky Nattiq nBraille ++[NattiqTechnologies]
 NVDA podporuje braillovské riadky od spoločnosti [Nattiq Technologies https://www.nattiq.com/] pripojené cez USB.
-V systéme Windows 10 sú riadky rozpoznané automaticky. Pre staršie verzie operačného systému Windows je potrebné ručne nainštalovať ovládače.
+V systéme Windows od verzie 10 sú riadky rozpoznané automaticky. Pre staršie verzie operačného systému Windows je potrebné ručne nainštalovať ovládače.
 Tie sú dostupné zo stránok výrobcu.
 
 Nasledujú príkazy, ktoré môžete používať na tomto riadku v kombinácii s NVDA.

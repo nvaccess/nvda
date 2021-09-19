@@ -793,10 +793,11 @@ Pour cette situation, NVDA contient une fonctionnalité appelée "Rideau d'Écra
 
 Vous pouvez activer le Rideau d'Écran dans la [catégorie vision #VisionSettings] du dialogue [Paramètres NVDA Settings #NVDASettings].
 
-Quand le rideau d'écran est activé, certaines tâches directement liées à ce qui apparaît sur l'écran telles que [la reconnaissance optique de caractères #Win10Ocr] ou la prise d'une copie d'écran ne peuvent pas être effectuées.
+Quand le Rideau d'Écran est activé, certaines tâches directement liées à ce qui apparaît sur l'écran telles que [la reconnaissance optique de caractères #Win10Ocr] ou la prise d'une copie d'écran ne peuvent pas être effectuées.
 
-Pour garantir la sécurité, vérifiez que le rideau d'écran fonctionne correctement avec les versions nouvelles ou expérimentales de Windows.
-Lorsque vous utilisez des versions de NVDA antérieures à 2021.2 et de Windows plus récentes que Windows 10 21H2, le rideau d'écran peut ne pas fonctionner sans avertissement.
+En raison d'un changement dans l'API de grossissement de Windows, le Rideau d'Écran a dû être mis à jour pour prendre en charge les dernières versions de Windows.
+Utilisez NVDA 2021.2 pour activer le Rideau d'Écran avec Windows 10 21H2 (10.0.19044) ou une version ultérieure.
+Pour des raisons de sécurité, lorsque vous utilisez une nouvelle version de Windows, obtenez une confirmation visuelle que le rideau d'écran rend l'écran entièrement noir.
 
 + Reconnaissance de Contenu +[ContentRecognition]
 Quand les auteurs ne fournissent pas assez d'informations pour qu'un utilisateur de revue d'écran puisse déterminer le contenu de quelque chose, divers outils peuvent être utilisés pour tenter de reconnaître le contenu à partir d'une image.
@@ -1852,7 +1853,7 @@ La liste déroulante contient les options suivantes :
 - Non : Ne pas utiliser UIA, même si NVDA ne peut pas injecter dans le processus. Ceci peut être utile pour les développeurs corrigeant des problèmes liés à IA2 et voulant s'assurer que NVDA ne revient pas à UIA.
 -
 
-==== Activer le support expérimental des annotations ARIA ====[Annotations]
+==== Annotations ====[Annotations]
 Utilisé pour activer les fonctionnalités qui ajoutent une prise en charge expérimentale des annotations ARIA.
 Certaines de ces fonctionnalités peuvent être incomplètes.
 Les options suivantes existent :

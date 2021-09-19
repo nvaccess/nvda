@@ -4,19 +4,23 @@
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
+Bản phát hành này bước đầu hỗ trợ cho Windows 11.
+Trong khi  Windows 11 chưa chính thức ra mắt, bản phát hành này được thử nghiệm trên các phiên bản xem trước của nó.
+Bản phát hành bao gồm việc sửa một lỗi quan trọng cho tính năng Che Màn Hình (xem thêm phần các lưu ý quan trọng).
+Công cụ sửa lỗi COM giờ đây có thể giải quyết nhiều vấn đề trong khi chạy NVDA.
+Đã tích hợp các bản cập nhật cho bộ đọc eSpeak và thư viện phiên dịch chữ nổi LibLouis.
+Ngoài ra, cũng đã sửa được nhiều lỗi và có nhiều cải thiện, đặc biệt là cải thiện cho chữ nổi và Windows terminals, máy tính, bản biểu tượng cảm xúc và lịch sử bộ nhớ tạm.
+
 
 == Các lưu ý quan trọng ==
-- Tính năng che màn hình trên các bản phát hành trước đây của NVDA không còn tương thích với các phiên bản Windows mới hơn Windows 10 21H2 (10.0.19044).
-Điều này bao gồm cả Windows 10 Insiders và Windows 11.
-Nguyên nhân do một thay đổi trong Windows Magnification API.
-Khi sử dụng các bản phát hành trước đây của NVDA và các phiên bản Windows mới hơn Windows 10 21H2, tính năng che màn hình có thể không hoạt động mà chẳng có cảnh báo gì.
-Để đảm bảo tính bảo mật, hãy xác nhận rằng tính năng che màn hình hoạt động được với các phiên bản Windows mới, kể cả bản thử nghiệm.
-(#12491, #12684)
--
+Do một thay đổi trong Windows Magnification API, tính năng Che Màn Hình phải được cập nhật để hỗ trợ phiên bản mới nhất của Windows.
+Hãy dùng NVDA 2021.2 để bật tính năng Che Màn Hình với Windows 10 21H2 (10.0.19044) trở lên.
+Điều này áp dụng cho cả Windows 10 Insiders và Windows 11.
+Vì mục tiêu bảo mật, khi sử dụng một phiên bản mới của Windows, hãy tìm sự xác nhận trực quan rằng tính năng Che Màn Hình có làm cho màn hình đen toàn bộ.
 
 
 == Tính năng mới ==
-- Hỗ trợ cho các ghi chú ARIA:
+- Hỗ trợ thử nghiệm cho các ghi chú ARIA:
   - Thêm một lệnh để đọc tổng quan các chi tiết của một đối tượng với aria-details. (#12364)
   - Thêm một tùy chọn trong cài đặt mở rộng để thông báo nếu một đối tượng có các thông tin chi tiết trong chế độ duyệt. (#12439) 
   -
@@ -47,9 +51,10 @@ Khi sử dụng các bản phát hành trước đây của NVDA và các phiên
 - Đã cập nhật mô tả ký tự bảng chữ cái tiếng Bengal. (#12502)
 - NVDA sẽ được tắt một cách an toàn khi một bản NVDA mới được gọi chạy. (#12605)
 - Việc chọn lại trình điều khiển cho màn hình nổi Handy Tech  từ hộp thoại Chọn Màn Hình Nổi không còn xảy ra lỗi. (#12618)
-- Windows phiên bản 10.0.22000 hay cao hơn được nhận dạng là Windows 11, không phải Windows 10. (#12626)
+- Windows phiên bản 10.0.22000 trở lên được nhận dạng là Windows 11, không phải Windows 10. (#12626)
 - Tính năng che màn hình đã được sửa lỗi và thử nghiệm cho các phiên bản Windows đến 10.0.22000. (#12684)
 - Nếu không có kết quả nào hiển thị khi lọc các thao tác, hộp thoại Quản lý các thao tác vẫn tiếp tục hoạt động như mong muốn. (#12673)
+- Sửa một lỗi làm cho mục đầu tiên trong trình đơn của một trình đơn con không đọc lên trong vài ngữ cảnh. (#12624)
 -
 
 

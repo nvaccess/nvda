@@ -440,7 +440,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		Examples of where this property might be overridden are shapes in Powerpoint, or ARIA role descriptions.
 		"""
 		if self.landmark and self.landmark in aria.landmarkRoles:
-			return f"{aria.landmarkRoles[self.landmark]} {controlTypes.roleLabels[controlTypes.Role.LANDMARK]}"
+			return f"{aria.landmarkRoles[self.landmark]} {controlTypes.Role.LANDMARK.displayString}"
 		return None
 
 	def _get_roleTextBraille(self):
