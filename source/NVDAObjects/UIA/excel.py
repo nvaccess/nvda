@@ -113,6 +113,10 @@ class ExcelCustomAnnotationTypes:
 		return cls._instance
 
 	def __init__(self):
+		#  Available custom Annotations list at https://docs.microsoft.com/en-us/office/uia/excel/excelannotations
+		# Note annotation:
+		# Represents an old-style comment (now known as a note)
+		# which contains non-threaded plain text content.
 		self.note = CustomAnnotationTypeInfo(
 			guid=GUID("{4E863D9A-F502-4A67-808F-9E711702D05E}"),
 		)
