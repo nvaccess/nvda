@@ -1652,7 +1652,8 @@ class UIA(Window):
 			windowHandle=self.windowHandle,
 			UIAElement=element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		)
-		if not obj: return None
+		if not obj:
+			return None
 		return obj.makeTextInfo(textInfos.POSITION_ALL).text
 
 	def _get_rowHeaderText(self):
