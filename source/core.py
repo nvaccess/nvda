@@ -203,6 +203,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
+	# added comment
 	addonHandler.initialize()
 	# Tones
 	tones.initialize()
