@@ -19,6 +19,11 @@ import ui
 
 class CalendarViewDayItem(UIA):
 	def _getTextFromHeaderElement(self, element: IUIAutomationElement) -> Optional[str]:
+		# Generally we prefer text content as the header text.
+		# But although this element does expose a UIA text pattern,
+		# The text content is only the 2 character week day abbreviation.
+		# The UIA name property contains the full week day name,
+		# So use that instead.
 		return element.GetCurrentPropertyValue(UIA_NamePropertyId)
 
 
