@@ -43,11 +43,12 @@ class CustomAnnotationTypeInfo:
 
 	def __post_init__(self) -> None:
 		""" The id field must be initialised at runtime.
-		UIA will return the id to use when given the GUID.
-		Any application can be first to register a custom annotation type, subsequent applications
-		will be given the same id.
-		Registtering custom annotations is only supported on Windows 11 and above.
+		A GUID uniquely identifies a custom annotation, but the UIA system relies on integer IDs.
+		Any application (clients or providers) can register a custom annotation type, subsequent applications
+		will get the same id for a given GUID.
+		Registering custom annotations is only supported on Windows 11 and above.
 		For any lesser version, id will be 0.
+
 		"""
 		if winVersion.getWinVer() >= winVersion.WIN11:
 			import NVDAHelper
