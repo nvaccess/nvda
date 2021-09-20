@@ -1270,6 +1270,14 @@ class UIA(Window):
 		)
 		return self.UIATextPattern
 
+	def _get_UIATableItemPattern(self):
+		self.UIATableItemPattern = self._getUIAPattern(
+			UIAHandler.UIA_TableItemPatternId,
+			UIAHandler.IUIAutomationTableItemPattern,
+			cache=False
+		)
+		return self.UIATableItemPattern
+
 	def _get_UIATextEditPattern(self):
 		if not isinstance(UIAHandler.handler.clientObject,UIAHandler.IUIAutomation3):
 			return None
@@ -1639,6 +1647,14 @@ class UIA(Window):
 			return val
 		return 1
 
+	def _getTextFromHeaderElement(self, element: UIAHandler.IUIAutomationElement) -> typing.Optional[str]:
+		obj = UIA(
+			windowHandle=self.windowHandle,
+			UIAElement=element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		)
+		if not obj: return None
+		return obj.makeTextInfo(textInfos.POSITION_ALL).text
+
 	def _get_rowHeaderText(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
 		if val==UIAHandler.handler.reservedNotSupportedValue:
@@ -1649,9 +1665,9 @@ class UIA(Window):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
-			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-			if not obj: continue
-			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			text = self._getTextFromHeaderElement(e)
+			if not text:
+				continue
 			textList.append(text)
 		return " ".join(textList)
 
@@ -1677,9 +1693,9 @@ class UIA(Window):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
-			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-			if not obj: continue
-			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			text = self._getTextFromHeaderElement(e)
+			if not text:
+				continue
 			textList.append(text)
 		return " ".join(textList)
 

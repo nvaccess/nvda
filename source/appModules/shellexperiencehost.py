@@ -7,14 +7,22 @@
 Shell Experience Host is home to a number of things, including Action Center and other shell features.
 """
 
+from typing import Optional
+
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.UIA import UIA
+from UIAHandler import IUIAutomationElement, UIA_NamePropertyId
 import controlTypes
 import ui
 
-class ActionCenterToggleButton(UIA):
 
+class CalendarViewDayItem(UIA):
+	def _getTextFromHeaderElement(self, element: IUIAutomationElement) -> Optional[str]:
+		return element.GetCurrentPropertyValue(UIA_NamePropertyId)
+
+
+class ActionCenterToggleButton(UIA):
 	# Somehow, item status property repeats when Action Center is opened more than once.
 	_itemStatusMessageCache = None
 
@@ -52,3 +60,9 @@ class AppModule(appModuleHandler.AppModule):
 				pass
 		elif isinstance(obj, UIA) and obj.role == controlTypes.Role.TOGGLEBUTTON and obj.UIAElement.cachedClassName == "ToggleButton":
 			clsList.insert(0, ActionCenterToggleButton)
+		elif (
+			isinstance(obj, UIA)
+			and obj.role == controlTypes.Role.DATAITEM
+			and obj.UIAElement.cachedClassName == "CalendarViewDayItem"
+		):
+			clsList.insert(0, CalendarViewDayItem)
