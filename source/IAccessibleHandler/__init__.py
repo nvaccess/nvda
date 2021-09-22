@@ -569,7 +569,8 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 	):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
-				f"Directing winEvent to existing focus object {focus}. WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+				f"Directing winEvent to existing focus object {focus}. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
 			)
 		NVDAEvent = (NVDAEvent[0], focus)
 	eventHandler.queueEvent(*NVDAEvent)
