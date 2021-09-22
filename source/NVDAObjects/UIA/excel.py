@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2021 NV Access Limited
+# Copyright (C) 2018-2021 NV Access Limited, Leonard de Ruijter
 
 from typing import Optional, Tuple
 import UIAHandler
@@ -102,7 +102,7 @@ class ExcelCell(ExcelObject):
 	shouldAllowDuplicateUIAFocusEvent = True
 
 	name = ""
-	role = controlTypes.ROLE_TABLECELL
+	role = controlTypes.Role.TABLECELL
 	rowHeaderText = None
 	columnHeaderText = None
 
@@ -113,7 +113,7 @@ class ExcelCell(ExcelObject):
 		parent = self.parent
 		# There will be at least one grid element between the cell and the sheet.
 		# There could be multiple as there might be a data table defined on the sheet.
-		while parent and parent.role == controlTypes.ROLE_TABLE:
+		while parent and parent.role == controlTypes.Role.TABLE:
 			parent = parent.parent
 		if parent:
 			return parent._getUIACacheablePropertyValue(self._UIAExcelCustomProps.areGridLinesVisible.id)
@@ -350,15 +350,23 @@ class ExcelCell(ExcelObject):
 
 	def _get_states(self):
 		states = super().states
+		if controlTypes.State.FOCUSED in states and self.selectionContainer.getSelectedItemsCount() == 0:
+			# #12530: In some versions of Excel, the selection pattern reports 0 selected items,
+			# even though the focused UIA element reports as selected.
+			# NVDA only silences the positive SELECTED state when one item is selected.
+			# Therefore, by discarding both the SELECTED and SELECTABLE states,
+			# we eliminate the redundant selection announcement.
+			states.discard(controlTypes.State.SELECTED)
+			states.discard(controlTypes.State.SELECTABLE)
 		if self._isContentTooLargeForCell:
 			if not self._nextCellHasContent:
-				states.add(controlTypes.STATE_OVERFLOWING)
+				states.add(controlTypes.State.OVERFLOWING)
 			else:
-				states.add(controlTypes.STATE_CROPPED)
+				states.add(controlTypes.State.CROPPED)
 		if self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.cellFormula.id):
-			states.add(controlTypes.STATE_HASFORMULA)
+			states.add(controlTypes.State.HASFORMULA)
 		if self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.hasDataValidationDropdown.id):
-			states.add(controlTypes.STATE_HASPOPUP)
+			states.add(controlTypes.State.HASPOPUP)
 		return states
 
 	def _get_cellCoordsText(self):
@@ -438,7 +446,7 @@ class ExcelCell(ExcelObject):
 
 
 class ExcelWorksheet(ExcelObject):
-	role = controlTypes.ROLE_TABLE
+	role = controlTypes.Role.TABLE
 
 	# The grid UIAElement dies each time the sheet is scrolled.
 	# Therefore this grid would be announced in the focus ancestory each time which is bad.
@@ -454,7 +462,7 @@ class ExcelWorksheet(ExcelObject):
 		# and identifying it by one of its children would be more costly than the current approach.
 		parent.isPresentableFocusAncestor = True
 		# However, the selection state on the sheet is not useful, so remove it.
-		parent.states.discard(controlTypes.STATE_SELECTED)
+		parent.states.discard(controlTypes.State.SELECTED)
 		return parent
 
 

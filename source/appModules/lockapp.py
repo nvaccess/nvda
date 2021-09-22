@@ -25,11 +25,11 @@ class LockAppContainer(UIA):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if isinstance(obj,UIA) and obj.role==controlTypes.ROLE_PANE and obj.UIAElement.cachedClassName=="LockAppContainer":
+		if isinstance(obj,UIA) and obj.role==controlTypes.Role.PANE and obj.UIAElement.cachedClassName=="LockAppContainer":
 			clsList.insert(0,LockAppContainer)
 
 	def event_NVDAObject_init(self, obj):
-		if obj.role == controlTypes.ROLE_WINDOW:
+		if obj.role == controlTypes.Role.WINDOW:
 			# Stop users from being able to object navigate out of the lock screen.
 			obj.parent = None
 

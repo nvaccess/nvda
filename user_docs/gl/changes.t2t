@@ -3,6 +3,73 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+Esta versión introduce o soporte preliminar para Windows 11.
+Aínda que Windows 11 non se lanzou, esta versión provouse en versións preliminares de Windows 11.
+Inclúese un arranxo importante para a Cortina de Pantalla (consulta Notas importantes).
+A ferramenta COM Registration Fixing agora pode resolver máis problemas cando se executa o NVDA.
+Hai actualizacións para o sintetizador eSpeak e para o transcriptor braille LibLouis.
+Tamén hai varios arranxos de fallos e melloras, en particular para o soporte de braille e para as terminais de Windows, para a calculadora, o panel de emoji e para o historial do portapapeis.
+
+
+== Notas importantes ==
+Debido a un cambio na API Windows Magnification, a Cortina de Pantalla tivo que seren actualizada para admitir as versións máis novas de Windows.
+Usa o NVDA 2021.2 para activar a Cortina de Pantalla con Windows 10 21H2 (10.0.19044) ou posteriores.
+Esto inclúe Windows 10 Insiders e Windows 11.
+Por razóns de seguridade, ao usar unha versión nova de Windows, obtén unha confirmación visual de que a Cortina de Pantalla faga que esta estea totalmente negra.
+
+
+== Novas características ==
+- Soporte experimental para anotacións ARIA:
+  - engade unha orde para ler un resumo de detalles dun obxecto con aria-details. (#12364)
+  - engade unha opción en preferencias avanzadas para anunciar se un obxecto ten detalles en modo Exploración. (#12439) 
+  -
+- En Windows 10 Versión 1909 e posteriores (incluindo Windows 11), o NVDA anunciará o reconto de suxerencias ao se realizar buscas no Explorador de Arquivos. (#10341, #12628)
+- En Microsoft Word, o NVDA agora anuncia o resultado dos atallos de sangría e sangría francesa cando se executen. (#6269)
+-
+
+
+== Cambios ==
+- Espeak-ng actualizouse a 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Se se activa artigo nas preferencias de usuario para formateado de documentos, o NVDA anuncia "artigo" despois do contido. (#11103)
+- Actualizado o transcriptor braille liblouis a [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Novas táboas braille: Búlgaro grao 1, Birmano grao 1, Birmano grao 2, Kazaxo grao 1, Xemer grao 1, Kurdo do norte grao 0, Sepedi grao 1, Sepedi grao 2, Sesotho grao 1, Sesotho grao 2, Setswana grao 1, Setswana grao 2, Tártaro grao 1, Vietnamés grao 0, Vietnamés grao 2, Vietnamés do sul grao 1, Xhosa grao 1, Xhosa grao 2, Yakut grao 1, Zulú grao 1, Zulú grao 2
+  -
+- O OCR de Windows 10 pasou a chamarse OCR de Windows. (#12690)
+-
+
+
+== Corrección de Erros ==
+- Na Calculadora de Windows 10, o NVDA anunciará as expresións da calculadora sobre a pantalla braille. (#12268)
+- Nos programas de terminal en Windows 10 versión 1607 e posterior, ao se insertar ou se eliminar caracteres no medio dunha liña, xa non se len os caracteres á dereita do cursor. (#3200)
+  - Agora Diff Match Patch actívase por defecto. (#12485)
+  -
+- A entrada braille funciona correctamente coas seguintes táboas contraídas: Árabe grao 2, Español grao 2, Urdu grao 2, Chino (China, Mandarín) grao 2. (#12541)
+- A ferramenta COM Registration Fixing agora resolve máis problemas, especialmente en Windows de 64 bit. (#12560)
+- Melloras ao manexo de botóns para o dispositivo braille Seika Notetaker de Nippon Telesoft. (#12598)
+- Melloras para anunciar o panel de emoji de Windows e o historial do portapapeis. (#11485)
+- Actualizáronse as descripcións dos caracteres do alfabeto Bengalí. (#12502)
+- O NVDA sae de xeito seguro cando se inicie un novo proceso. (#12605)
+- Voltar a selecionar o controlador da pantalla braille Handy Tech dende o diálogo Selecionar Pantalla Braille xa non provoca erros. (#12618)
+- A versión de Windows 10.0.22000 ou posterior recoñécese como Windows 11, non coma Windows 10. (#12626)
+- Arranxouse e probouse a compatibilidade da cortina de pantalla para versións de Windows hasta a 10.0.22000. (#12684)
+- Se non se amosan resultados ao filtrar os xestos de entrada, o diálogo de configuración de xestos de entrada segue funcionando coma se esperaba. (#12673)
+- Arranxouse un fallo onde o primeiro elemento de menú dun submenú non se anuncia nalgúns contextos. (#12624)
+-
+
+
+== Cambios para Desenvolvedores ==
+- A constante ``characterProcessing.SYMLVL_*`` debería substituirse usando a súa equivalente ``SymbolLevel.*`` antes de 2022.1. (#11856, #12636)
+- ``controlTypes`` dibidiuse en varios submódulos, os símbolos marcados como obsoletos deben reemprazarse antes de 2022.1. (#12510)
+  - As constantes ``ROLE_*`` e ``STATE_*`` deberían reemprazarse polas súas equivalentes ``Role.*`` e ``State.*``.
+  - As constantes ``roleLabels``, ``stateLabels`` e ``negativeStateLabels`` quedaron obsoletas, os usos como ``roleLabels[ROLE_*]`` deberían reemprazarse polas súas equivalentes ``Role.*.displayString`` ou ``State.*.negativeDisplayString``.
+  - As etiquetas ``processPositiveStates`` e ``processNegativeStates`` quedaron obsoletas para a súa eliminación.
+  -
+- En Windows 10 Versión 1511 e posterior (incluindo compilaciones Insider Preview), o nome actual da versión da característica de actualización de Windows obtense do Rexistro de Windows. (#12509)
+- Obsoleto: winVersion.WIN10_RELEASE_NAME_TO_BUILDS eliminarase en 2022.1, non hai un reemprazo directo. (#12544)
+-
+
+
 = 2021.1 =
 Esta versión inclúe soporte experimental opcional para UIA en Excel e navegadores Chromium.
 Hai correcións para varias linguas e para aceso ás ligas en braille.

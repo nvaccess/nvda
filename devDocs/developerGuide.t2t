@@ -350,9 +350,9 @@ For example, the Ok button just discussed could be a widget in a Java applicatio
 NVDA Objects have many properties.
 Some of the most useful are:
 - name: the label of the control.
-- role: one of the ROLE_* constants from NVDA's controlTypes module.
+- role: one of the Role.* constants from NVDA's controlTypes module.
 Button, dialog, editableText, window and checkbox are examples of roles.
-- states: a set of 0 or more of the STATE_* constants from NVDA's controlTypes module.
+- states: a set of 0 or more of the State.* constants from NVDA's controlTypes module.
 Focusable, focused, selected, selectable, expanded, collapsed and checked are some examples of states.
 - value: the value of the control; e.g. the percentage of a scroll bar or the current setting of a combo box.
 - description: a sentence or two describing what the control does (usually the same as its tooltip).
@@ -481,7 +481,7 @@ The following keyword arguments can be used when applying the script decorator:
 - allowInSleepMode: A boolean indicating whether this script should run when sleep mode is active.
   This option defaults to False.
 - resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
-  The constants for say all mode are prefixed with CURSOR_ and specified in the sayAllHandler modules.
+  The constants for say all mode can be found in the CURSOR enum in speech.sayAll.
   If resumeSayAllMode is not specified, say all does not resume after this script.
 -
 
@@ -649,7 +649,7 @@ import ui
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "Edit" and obj.role == controlTypes.ROLE_EDITABLETEXT:
+		if obj.windowClassName == "Edit" and obj.role == controlTypes.Role.EDITABLETEXT:
 			clsList.insert(0, EnhancedEditField)
 
 class EnhancedEditField(IAccessible):

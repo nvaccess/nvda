@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import locale
 import comtypes.client
@@ -322,7 +322,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryText(self):
-		if controlTypes.STATE_PROTECTED in self.obj.states:
+		if controlTypes.State.PROTECTED in self.obj.states:
 			return u'*' * (self._getStoryLength() - 1)
 		return self.obj.windowText
 
@@ -399,7 +399,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			# #4095: Some protected richEdit controls do not hide their password characters.
 			# We do this specifically.
 			# Note that protected standard edit controls get characters hidden in _getStoryText.
-			if text and controlTypes.STATE_PROTECTED in self.obj.states:
+			if text and controlTypes.State.PROTECTED in self.obj.states:
 				text=u'*'*len(text)
 		else:
 			text = super(EditTextInfo, self)._getTextRange(start, end)
@@ -626,12 +626,12 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		bufText=rangeObj.text
 		if not bufText:
 			return u""
-		if controlTypes.STATE_PROTECTED in self.obj.states:
+		if controlTypes.State.PROTECTED in self.obj.states:
 			return u'*'*len(bufText)
 		newTextList=[]
 		start=rangeObj.start
 		for offset in range(len(bufText)):
-			if ord(bufText[offset])==0xfffc:
+			if ord(bufText[offset]) == ord(textUtils.OBJ_REPLACEMENT_CHAR):
 				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
 				embedRangeObj.setRange(start+offset,start+offset+1)
 				label=self._getEmbeddedObjectLabel(embedRangeObj)
@@ -807,7 +807,7 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 		return None
 
 	def _get_role(self):
-		return controlTypes.ROLE_EDITABLETEXT
+		return controlTypes.Role.EDITABLETEXT
 
 	def event_caret(self):
 		global selOffsetsAtLastCaretEvent
@@ -830,7 +830,7 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 	def _get_states(self):
 		states = super(Edit, self)._get_states()
 		if self.windowStyle & winUser.ES_MULTILINE:
-			states.add(controlTypes.STATE_MULTILINE)
+			states.add(controlTypes.State.MULTILINE)
 		return states
 
 class RichEdit(Edit):

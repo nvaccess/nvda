@@ -10,6 +10,7 @@ from .outputReason import OutputReason
 from .processAndLabelStates import processAndLabelStates
 from .role import Role, silentRolesOnFocus, silentValuesForRoles
 from .state import State, STATES_SORTED
+from .descriptionFrom import DescriptionFrom
 
 
 # To maintain backwards compatibility, all symbols are exported from the package until 2022.1
@@ -25,6 +26,7 @@ if version_year >= 2022:
 		"silentValuesForRoles",
 		"State",
 		"STATES_SORTED",
+		"DescriptionFrom",
 	]
 
 
