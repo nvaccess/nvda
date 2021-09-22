@@ -77,4 +77,10 @@ class CustomAnnotationTypesCommon:
 		return cls._instance
 
 	def __init__(self):
+		# Registration of Custom annotation types used across multiple applications or frameworks should go here.
+		# Currently there are none known.
+		# An example registration would look like the following:
+		# self.note = CustomAnnotationTypeInfo(
+		# 	guid=GUID("{4E863D9A-F502-4A67-808F-9E711702D05E}"),
+		# )
 		pass
