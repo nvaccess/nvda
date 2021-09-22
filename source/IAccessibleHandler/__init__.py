@@ -534,12 +534,22 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	# Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus = eventHandler.lastQueuedFocusObject
-	if focus and objectID == winUser.OBJID_CARET and eventID in (
+	if objectID == winUser.OBJID_CARET and eventID in (
 		winUser.EVENT_OBJECT_LOCATIONCHANGE,
 		winUser.EVENT_OBJECT_SHOW
 	):
+		if not isinstance(focus, NVDAObjects.IAccessible.IAccessible):
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					f"Ignoring MSAA caret event on non-MSAA focus {focus}, "
+					f"winEvent {getWinEventLogInfo(window, objectID, childID)}"
+				)
+			return False
 		if isMSAADebugLoggingEnabled():
-			log.debug("handling winEvent as caret event on focus")
+			log.debug(
+				"handling winEvent as caret event on focus. "
+				f"winEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		NVDAEvent = ("caret", focus)
 	else:
 		NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
@@ -550,10 +560,16 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 			log.debug("Handling winEvent as mouse shape change")
 		mouseHandler.updateMouseShape(NVDAEvent[1].name)
 		return
-	if NVDAEvent[1] == focus:
+	# if the winEvent is for the object with focus,
+	# Ensure that that the event is send to the existing focus instance,
+	# rather than  a new instance of the object with focus.
+	if (
+		NVDAEvent[1] is not focus
+		and NVDAEvent[1] == focus
+	):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
-				f"Directing winEvent to focus object {focus}. WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+				f"Directing winEvent to existing focus object {focus}. WinEvent {getWinEventLogInfo(window, objectID, childID)}"
 			)
 		NVDAEvent = (NVDAEvent[0], focus)
 	eventHandler.queueEvent(*NVDAEvent)
