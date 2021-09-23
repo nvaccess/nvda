@@ -562,7 +562,7 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 		return
 	# if the winEvent is for the object with focus,
 	# Ensure that that the event is send to the existing focus instance,
-	# rather than  a new instance of the object with focus.
+	# rather than a new instance of the object with focus.
 	if (
 		NVDAEvent[1] is not focus
 		and NVDAEvent[1] == focus
