@@ -89,12 +89,14 @@ class ListCtrlAccessible(wx.Accessible):
 	"""WX Accessible implementation for checkable lists which aren't fully accessible."""
 
 	def GetRole(self, childId):
-		if childId == winUser.CHILDID_SELF:
+		(status, role) = super().GetRole(childId)
+		if childId == winUser.CHILDID_SELF or status != wx.ACC_OK:
 			return super().GetRole(childId)
 		return (wx.ACC_OK, wx.ROLE_SYSTEM_CHECKBUTTON)
 
 	def GetState(self, childId):
-		if childId == winUser.CHILDID_SELF:
+		(status, state) = super().GetState(childId)
+		if childId == winUser.CHILDID_SELF or status != wx.ACC_OK:
 			return super().GetState(childId)
 		states = wx.ACC_STATE_SYSTEM_SELECTABLE | wx.ACC_STATE_SYSTEM_FOCUSABLE
 		if self.Window.IsChecked(childId - 1):
@@ -103,7 +105,7 @@ class ListCtrlAccessible(wx.Accessible):
 			# wx doesn't seem to  have a method to check whether a list item is focused.
 			# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
 			states |= wx.ACC_STATE_SYSTEM_SELECTED | wx.ACC_STATE_SYSTEM_FOCUSED
-		return (wx.ACC_OK, states)
+			return (wx.ACC_OK, states)
 
 
 class CustomCheckListBox(wx.CheckListBox):
