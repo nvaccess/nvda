@@ -19,7 +19,6 @@ What's New in NVDA
 - Espeak-ng has been updated to 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
 - NVDA will default to eSpeak if no installed OneCore voices support the NVDA preferred language. (#10451)
 - If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)
-- For builds of Microsoft Office 2016/365 greater than 13900, NVDA will now always use UI Automation to access Microsoft Word document controls, no matter whether the user has toggled the `Use UI Automation to access Microsoft word document controls` advanced setting on or off. 
 - When reading status bar with ``NVDA+end``, the review cursor is no longer moved to its location.
 If you need this functionality please assign a gesture to the appropriate script in the Object Navigation category in the Input Gestures dialog. (#8600)
 - When opening a settings dialog which is already open, NVDA sets focus on the existing dialog rather than raise an error. (#5383)
@@ -51,6 +50,7 @@ If you need this functionality please assign a gesture to the appropriate script
 - Routing keys on Braille displays supported by the HID Braille driver are no longer reversed. (#12860)
 - Ensure the Windows 11 system tray calendar reports the day of the week in full. (#12757)
 - Input with literary braille tables should behave more reliably when in edit fields. (#12667)
+- When navigating the Windows system tray calendar, NVDA now reports the day of the week in full. (#12757)
 -
 
 
