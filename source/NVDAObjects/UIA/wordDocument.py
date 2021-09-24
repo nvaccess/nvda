@@ -431,7 +431,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			return
 		# Using the legacy object model,
 		# Move the caret to the next sentence in the requested direction.
-		legacyInfo = LegacyWordDocumentTextInfo(self,textInfos.POSITION_CARET)
+		legacyInfo = LegacyWordDocumentTextInfo(self, textInfos.POSITION_CARET)
 		legacyInfo.move(textInfos.UNIT_SENTENCE, direction)
 		legacyInfo.updateCaret()
 		# Fetch the new caret position (start of the next sentence) with UI Automation.
