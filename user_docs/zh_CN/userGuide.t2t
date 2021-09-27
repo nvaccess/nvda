@@ -66,7 +66,7 @@ NVDA 还使用了其他协议的开源免费软件。
 如果想要了解例外情况，请在NVDA菜单帮助部分里查看完整的授权协议。
 
 + 系统需求 +[SystemRequirements]
-- 操作系统： 所有32位或者64位的Windows 7 Sp1、Windows 8 、Windows 8.1 、Windows 10(包括服务器系统)。
+- 操作系统： 所有32位或者64位的Windows 7 Sp1、Windows 8 、Windows 8.1 、Windows 10， Windows 11(从 2008 R2 起的所有服务器系统)。
 - 对于 Windows 7 版本，NVDA 要求 SP1 以上。
 - 对于 Windows Server 2008 R2 服务器操作系统 ， NVDA 要求 SP1 或者更高。
 - 大约需要150 MB 的磁盘空间。
@@ -794,10 +794,17 @@ NVDA提供了几种内置的视觉增强提供程序。
 您可以在[NVDA 设置面板 #NVDASettings][视觉增强 #VisionSettings] 一栏内开启黑屏。
 
 如果启用黑屏，所有依靠屏幕所显示内容而执行的动作均不可用，如执行[OCR #Win10Ocr] 或截屏等。
+ 
+要确保“黑屏”功能能可靠的工作，可使用更新的操作系统。
+若使用早于2021.2的NVDA版本和早于Windows 10 21H2的Windows时，“黑屏”功能可能在没有警告的情况下无法工作。
+因 Windows Magnification API更新的缘故， “黑屏”功能必须更新以支持更新的操作系统。
+请使用 NVDA 2021.2 来在 Windows 10 21H2 (10.0.19044) 或更新的操作系统启用“黑屏”功能。
+出于安全的目的，请在使用黑屏功能让屏幕完全变黑以前，进行视觉确认。
+
 
 + 图像内容识别 +[ContentRecognition]
 当开发者没有为屏幕阅读器用户提供足够的信息来确认内容时，可以使用各种工具来尝试从图像中识别其内容。
-NVDA 支持 Windows 10 内置的光学字符识别（OCR）功能，以便将图像识别成为文本。 
+NVDA 支持 Windows 10 或其后版本内置的光学字符识别（OCR）功能，以便将图像识别成为文本。 
 还有一些 NVDA 插件也提供了类似的 OCR 功能。
 
 当您使用内容识别指令时，NVDA会从目前的[导航对象 #ObjectNavigation]识别内容。
@@ -809,17 +816,17 @@ NVDA 支持 Windows 10 内置的光学字符识别（OCR）功能，以便将图
 在光标上的文本按 enter 或空格键就可以选中对应文本（相当于单击）。
 按 escape 键退出识别结果文档。
 
-++ Windows 10 OCR ++[Win10Ocr]
-Windows 10包含了支持众多语言的光学字符识别（OCR）功能。
+++ Windows OCR ++[WinOcr]
+Windows 10或更新版本的操作系统包含了支持众多语言的光学字符识别（OCR）功能。
 NVDA 可以借助该技术来识别图像中或无障碍支持不好的应用程序中的文本内容。
 
-您可以在[NVDA设置 #NVDASettings]对话框的[Windows 10 OCR部分 #Win10OcrSettings]中设置用于文本识别的语言。
+您可以在[NVDA设置 #NVDASettings]对话框的[Windows OCR 部分 #Win10OcrSettings]中设置用于文本识别的语言。
 您可以打开开始菜单，选择设置，选择时间和语言 - >地区和语言，然后选择添加语言来安装其他语言。
 
-Windows 10 OCR 可能与[NVDA 视觉增强 #Vision] 或其他辅助技术部分或完全不兼容。执行识别功能前您必须先关闭他们。
+Windows OCR 可能与[NVDA 视觉增强 #Vision] 或其他辅助技术部分或完全不兼容。执行识别功能前您必须先关闭他们。
 
 %kc:beginInclude
-按 NVDA加r 使用Windows 10 OCR 识别当前导航对象内包含的文本。
+按 NVDA加r 使用Windows OCR 识别当前导航对象内包含的文本。
 %kc:endInclude
 
 + 特定应用程序的 NVDA命令 +[ApplicationSpecificFeatures]
@@ -1177,7 +1184,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 按键: NVDA+p
 
 此选项允许您定义朗读时，标点和符号朗读的数量。
-例如，设置成“全部”，朗读时所有标点都会被读出。
+例如，设置成“全部符号”，朗读时所有标点都会被读出。
 此选项应用于所有的合成器，而并不仅用于当前激活的合成器。
 
 ==== 处理字符和标点时信任语音的语言 ====[SpeechSettingsTrust]
@@ -1790,7 +1797,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 -
 
 +++ Windows 10 光学字符识别 设置 +++[Win10OcrSettings]
-这个部分允许你设置 [Windows 10 光学字符识别 #Win10Ocr].
+这个部分允许你设置 [Windows 光学字符识别 #Win10Ocr].
 这个分类包含以下选项
 
 ==== 识别用语言 ====[Win10OcrSettingsRecognitionLanguage]
@@ -1826,11 +1833,11 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 因此，启用此选项后，对于大多数事件，NVDA会将事件注册限制到系统焦点。
 如果您在一个或多个应用程序中遇到性能问题，我们建议您尝试使用此功能以查看性能是否有所提高。
 
-==== 在Word里使用Microsoft UI Automation ====[AdvancedSettingsUseUiaForWord]
+==== 在 Word 里使用Microsoft UI Automation （如果可用）====[AdvancedSettingsUseUiaForWord]
 Microsoft UI Automation是微软的最新无障碍接口 简称UIA，启用此选项后，NVDA将尝试使用Microsoft UI Automation这个无障碍接口从Word文档控件中获取信息。
 这包括Microsoft Word本身，以及Microsoft Outlook消息查看器和编写器。
-  对于在Windows 10上运行的最新版本的Office 2016或者Office 365，Microsoft UI Automation能够获取的信息和原来的方式差不多，而且响应速度更快。
-但是，在某些版本的Office中可能存在某些未公开或未正确显示的信息，这意味着UIA支持不好用。
+  对于在 Windows 10 或其后版本的操作系统上运行的最新版本的Office 2016或者Office 365，Microsoft UI Automation能够获取的信息和原来的方式差不多，而且响应速度更快。
+但是，在某些版本的 Office 中可能存在某些未能正确读取或读取信息有错误的可能，这也说明 UI Automation并不必然可用。
 我们建议大多数用户不要启用此功能，但我们欢迎Office 2016或者Office 365的用户测试此功能并提供反馈。
 
 ==== 使用Microsoft UI Automation支持命令提示符 ====[AdvancedSettingsConsoleUIA]
@@ -1847,6 +1854,14 @@ UIA 对基于 Chromium 的浏览器的支持目前处于早期开发阶段，可
 - 仅必要时：当 NVDA 无法注入浏览器进程以使用 IA2 且 UIA 接口可用时，则 NVDA 将回退到 UIA 。
 ‘- 是：如果浏览器支持 UIA ， NVDA 将调用该接口。
 - 否：不使用 UIA ，即使 NVDA 无法在进程中注入。这可能对开发人员调试 IA2 的问题很有用，或者希望确保 NVDA 不会自动退回到 UIA 。
+-
+
+==== 启用实验性的 ARIA 注释支持====[Annotations]
+为 ARIA 注释启用实验性质的朗读支持特性。
+当中的某些特性可能并不完整。
+存在如下选项：
+- “在浏览模式启用详细信息朗读”：当对象包含详细信息时朗读该信息。
+可在[按键与手势对话框 #InputGestures]添加快捷方式以定义朗读详细内容的摘要。
 -
 
 ==== 在 Excel 调用 UI Automation 接口（如果可用） ====[UseUiaForExcel]
@@ -1867,18 +1882,17 @@ Microsoft Excel 的 UI Automation 接口实现不断变化，早于 16.0.13522.1
 ==== Diff 算法 ====[DiffAlgo]
 该设置将决定 NVDA 用何种算法确定在终端内要朗读的新文本。
 Diff 算法组合框内有三个选项：
-- 自动：自 NVDA 2021.1 起，此选项等效于选择 Difflib。
-在以后版本中，这可能会更改为 Diff Match Patch，有待更多用户的测试。
+- 自动： 在NVDA 2021.2， 此选项等价于启用 Diff Match Patch"。
 - 允许 Diff Match Patch：此选项设置 NVDA 按字符计算终端文本的变化。
 当控制台中包含大量文本时，该选项可以提高性能，并能够更加准确的报告行中间的字符变化。
-但该选项可能不兼容某些应用程序。
+但该选项可能不兼容某些应用程序。所以， Diff Match Patch  不必然可用。
 Windows 10 版本 1607 及更高版本上的 Windows 控制台支持此功能。
 当然，在早期的 Windows 版本中其他控制台终端也可能支持该特性。
 - 强制 Difflib：此选项设置 NVDA 逐行计算控制台终端文本的变化。
 这与 NVDA 在 2020.4 及以前版本中的行为相同。
 -
 
-==== 取消无效焦点事件的朗读（实验性） ====[CancelExpiredFocusSpeech]
+==== 取消过期焦点事件的朗读====[CancelExpiredFocusSpeech]
 启用此选项则会取消对无效焦点事件的朗读。
 尤其在chrome下，快速浏览Gmail中的信息时会导致nvda读出无效的内容。
 自 NVDA 2021.1 起，此选项默认启用。
@@ -2250,7 +2264,7 @@ In this dialog you can enable or disable the following:
 
 ++ eSpeak NG++[eSpeakNG]
 [eSpeak NG https://github.com/espeak-ng/espeak-ng] 语音合成器预装在 NVDA 之中，不需要安装特别的驱动或者组件。
-在Windows 7, 8 以及 8.1上 NVDA 默认使用 eSpeak NG（Windows 10的NVDA则是默认使用[Windows OneCore #OneCore]）。
+在Windows 7, 8 以及 8.1上 NVDA 默认使用 eSpeak NG（Windows 10 或后续的操作系统的NVDA则是默认使用[Windows OneCore #OneCore]）。
 作为 NVDA 的预装合成器，对于在其他系统通过 U 盘驱动器运行 NVDA来说，这是一个很好的选择。
 
 每个 eSpeak NG 的语音都可以说一种不同的语言。
@@ -2284,9 +2298,9 @@ Microsoft Speech Platform (微软语音平台)包含许多语言的声音，它�
 -
 
 ++ Windows OneCore 语音 ++[OneCore]
-Windows 10包括称为“OneCore”或“移动”语音的新语音。
+Windows 10 或更新的操作系统包括称为“OneCore”或“移动”语音的新语音。
 为多种语言提供了语音，它们比使用Microsoft Speech API第5版提供的Microsoft语音响应更快。
-在Windows 10上，NVDA默认使用Windows OneCore 语音(其他版本的Windows上NVDA默认使用[eSpeak NG #eSpeakNG])。
+在Windows 10 或更新的操作系统上，NVDA默认使用Windows OneCore 语音(其他版本的Windows上NVDA默认使用[eSpeak NG #eSpeakNG])。
 
 若想添加新的 Windows OneCore 语音角色，请转到Windows系统设置中的“语音设置”。
 按下“添加语音”按钮并搜索您所需语言的语音。

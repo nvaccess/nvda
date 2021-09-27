@@ -747,25 +747,37 @@ class UIAHandler(COMObject):
 		# Ask the window if it supports UIA natively
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
-			# The window does support UIA natively, but MS Word documents now
-			# have a fairly usable UI Automation implementation.
-			# However, builds of MS Office 2016 before build 9000 or so had bugs which
-			# we cannot work around.
-			# And even current builds of Office 2016 are still missing enough info from
-			# UIA that it is still impossible to switch to UIA completely.
-			# Therefore, if we can inject in-process, refuse to use UIA and instead
-			# fall back to the MS Word object model.
+			# The window does support UIA natively.
+			# Detect if we can also inject in-process
 			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
-			if (
-				# An MS Word document window 
-				windowClass=="_WwG" 
-				# Disabling is only useful if we can inject in-process (and use our older code)
-				and canUseOlderInProcessApproach
-				# Allow the user to explicitly force UIA support for MS Word documents
-				# no matter the Office version
-				and not config.conf['UIA']['useInMSWordWhenAvailable']
-			):
-				return False
+
+			# MS Word documents now have a fairly usable UI Automation implementation.
+			# However, builds of MS Office 2016 before build 13901 or so had bugs which
+			# we cannot work around.
+			# Therefore for less recent versions of Office,
+			# if we can inject in-process, refuse to use UIA and instead
+			# fall back to the MS Word object model.
+			if windowClass == "_WwG":
+				isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
+				if (
+					(
+						winVersion.getWinVer() < winVersion.WIN10
+						or (
+							# An MS Office app before build 13901
+							isOfficeApp
+							and (
+								tuple(int(x) for x in appModule.productVersion.split('.')[:3])
+								< (16, 0, 13901)
+							)
+						)
+					)
+					# Disabling is only useful if we can inject in-process (and use our older code)
+					and canUseOlderInProcessApproach
+					# Allow the user to still explicitly force UIA support
+					# no matter the Office version
+					and not config.conf['UIA']['useInMSWordWhenAvailable']
+				):
+					return False
 			# MS Excel spreadsheets now have a fairly usable UI Automation implementation.
 			# However, builds of MS Office 2016 before build 9000 or so had bugs which we
 			# cannot work around.
@@ -797,7 +809,7 @@ class UIAHandler(COMObject):
 				)
 			):
 				return False
-			if windowClass == "ConsoleWindowClass":
+			elif windowClass == "ConsoleWindowClass":
 				return UIAUtils._shouldUseUIAConsole(hwnd)
 		return bool(res)
 

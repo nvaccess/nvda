@@ -85,6 +85,13 @@ class SettingsDialog(
 
 	class MultiInstanceError(RuntimeError): pass
 
+	class MultiInstanceErrorWithDialog(MultiInstanceError):
+		dialog: 'SettingsDialog'
+
+		def __init__(self, dialog: 'SettingsDialog', *args: object) -> None:
+			self.dialog = dialog
+			super().__init__(*args)
+
 	class DialogState(IntEnum):
 		CREATED = 0
 		DESTROYED = 1
@@ -110,7 +117,10 @@ class SettingsDialog(
 				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
 			)
 		if state is cls.DialogState.CREATED and not multiInstanceAllowed:
-			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+			raise SettingsDialog.MultiInstanceErrorWithDialog(
+				firstMatchingInstance,
+				"Only one instance of SettingsDialog can exist at a time",
+			)
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
 			# keeping it alive.
@@ -2593,7 +2603,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Use UI Automation to access Microsoft &Word document controls when available")
+		label = _("Always use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
 		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -2818,7 +2828,6 @@ class AdvancedPanelControls(
 			"speechManager",
 			"synthDriver",
 			"nvwave",
-			"brailleInput",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -4385,7 +4394,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			pass
 		addedSymbol.displayName = identifier
 		addedSymbol.replacement = ""
-		addedSymbol.level = characterProcessing.SYMLVL_ALL
+		addedSymbol.level = characterProcessing.SymbolLevel.ALL
 		addedSymbol.preserve = characterProcessing.SYMPRES_NEVER
 		self.symbols.append(addedSymbol)
 		self.symbolsList.ItemCount = len(self.symbols)

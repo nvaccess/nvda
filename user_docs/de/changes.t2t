@@ -4,21 +4,25 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
+Diese Version führt die vorläufige Unterstützung für Windows 11 ein.
+Während Windows 11 noch veröffentlicht werden muss, wurde diese Version auf Vorab-Versionen von Windows 11 getestet.
+Dies beinhaltet eine wichtige Korrektur für den Bildschirmvorhang (siehe Wichtige Hinweise).
+Das Behebungs-Tool für die COM-Registrierung kann nun mehr Probleme beim Ausführen von NVDA beheben.
+Außerdem gibt es Updates für die Sprachausgabe eSpeak und den Liblouis-Braille-Übersetzer.
+Ferner sind auch verschiedene Fehlerbehebungen und Verbesserungen, insbesondere für Braille-Unterstützung und Windows-Terminals, Taschenrechner, Emoji-Panel und Zwischenablageverlauf mit dabei.
+
 
 == Wichtige Hinweise ==
-- Der Bildschirmvorhang in älteren NVDA-Versionen ist nicht mehr mit Windows-Versionen kompatibel, die nach Windows 10 Version 21H2 (10.0.19044) erschienen.
-Dazu gehören Windows 10-Insider und Windows 11.
-Dies ist auf eine Änderung in der API der Windows-Lupe zurückzuführen.
-Bei Verwendung älterer NVDA-Versionen und Windows nach Windows 10 Version 21H2 funktioniert der Bildschirmvorhang möglicherweise ohne Warnung nicht.
-Um die Sicherheit zu gewährleisten, vergewissern Sie sich, dass der Bildschirmvorhang mit neuen oder experimentellen Versionen von Windows ordnungsgemäß funktioniert.
-(#12491, #12684)
--
+Auf Grund einer Änderung in der API für die Windows-Lupe musste die Funktion für den Bildschirmvorhang aktualisiert werden, um die neuesten Versionen von Windows zu unterstützen.
+Verwenden Sie NVDA 2021.2, um den Bildschirmvorhang mit Windows 10 21H2 (10.0.19044) oder neuer zu aktivieren.
+Dazu gehören Insider Builds für Windows 10 und Windows 11.
+Wenn Sie eine neuere Windows-Version verwenden, erhalten Sie aus Sicherheitsgründen eine visuelle Bestätigung, dass der Bildschirmvorhang den Bildschirm vollständig verdunkelt.
 
 
 == Neue Features ==
-- Unterstützung für ARIA-Anmerkungen:
+- Experimentelle Unterstützung für ARIA-Anmerkungen:
   - Fügt einen Befehl hinzu, um eine Zusammenfassung der Details eines Objekts mit "aria-details" zu lesen. (#12364)
-  - Fügt eine Option im erweiterten Bericht hinzu, wenn ein Objekt Details im Lesemodus enthält. (#12439)
+  - Fügt eine Option in den Erweiterten Einstellungen hinzu, um zu benachrichtigen, sobald ein Objekt Details im Lesemodus enthält. (#12439)
   -
 - In Windows 10 Version 1909 und neuer (einschließlich Windows 11) gibt NVDA die Anzahl der Vorschläge an, wenn Suchvorgänge im Datei-Explorer durchgeführt werden. (#10341, #12628)
 - In Microsoft Word gibt NVDA nun bei der Ausführung das Ergebnis von Einrückungen und hängenden Absätzen  an. (#6269)
@@ -50,6 +54,7 @@ Um die Sicherheit zu gewährleisten, vergewissern Sie sich, dass der Bildschirmv
 - Windows Version 10.0.22000 oder höher wird als Windows 11 erkannt, nicht als Windows 10. (#12626)
 - Die Unterstützung für den Bildschirmvorhang wurde behoben und für Windows-Versionen bis 10.0.22000 getestet. (#12684)
 - Wenn beim Filtern von Tastenbefehle keine Ergebnisse angezeigt werden, funktioniert das Dialogfeld für diese Konfiguration für die Tastenbefehle weiterhin wie erwartet. (#12673)
+- Es wurde ein Fehler behoben, bei dem der erste Menü-Eintrag eines Untermenüs in einigen Kontexten nicht vorgelesen wurde. (#12624)
 -
 
 
@@ -61,7 +66,7 @@ Um die Sicherheit zu gewährleisten, vergewissern Sie sich, dass der Bildschirmv
   - ``processPositiveStates`` und ``processNegativeStates`` sind zum Entfernen veraltet.
   -
 - Unter Windows 10 Version 1511 und neuer (einschließlich Insider-Builds) wird der aktuelle Versionsname des Windows-Feature-Updates aus der Windows-Registrierung abgerufen. (#12509)
-- Veraltet: winVersion.WIN10_RELEASE_NAME_TO_BUILDS wird in 2022.1 entfernt, es gibt keinen direkten Ersatz. (#12544)
+- Veraltet: ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` wird in 2022.1 entfernt, es gibt keinen direkten Ersatz. (#12544)
 -
 
 

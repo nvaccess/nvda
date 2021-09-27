@@ -22,5 +22,14 @@ class NVDAObjectWithRole(PlaceholderNVDAObject):
 		super(NVDAObjectWithRole,self).__init__(**kwargs)
 		self.role=role
 
-	def _get_name(self):
-		return controlTypes.roleLabels.get(self.role,controlTypes.Role.UNKNOWN)
+	# Type information for autoproperty _get_name
+	# the translated display string for the role, or unknown
+	name: str
+
+	def _get_name(self) -> str:
+		try:
+			role = controlTypes.Role(self.role)
+			role.displayString
+		except ValueError:
+			role = controlTypes.Role.UNKNOWN
+		return role.displayString
