@@ -93,7 +93,7 @@ env.Append(
 	]
 )
 env.Append(CCFLAGS=[
-	'/std:c++17',
+	'/std:c++20',
 ])
 
 env.Append(CXXFLAGS=['/EHsc'])
@@ -138,8 +138,6 @@ env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we h
 
 # Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
 win10env = env.Clone()  # noqa: F821
-# Add C++ co-routine support, used by C++/WinRT.
-win10env.Append(CXXFLAGS='/await')
 Export('win10env')
 
 if 'debugCRT' in debug:
