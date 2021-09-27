@@ -16,8 +16,8 @@ class State(DisplayStringIntEnum):
 	@property
 	def negativeDisplayString(self) -> str:
 		"""
-		@return: The translated UI display string that should be used for when referring to this value of
-		the enum in the negative.
+		@return: The translated UI display string, used when referring to this value of the enum in the
+		negative.
 		"""
 		try:
 			return _negativeStateLabels[self]

@@ -419,10 +419,13 @@ addTable("ro.ctb", _("Romanian"))
 addTable("ru.ctb", _("Russian computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ru-litbrl.ctb", _("Russian literary braille"), input=False)
+addTable("ru-litbrl.ctb", _("Russian literary braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ru-litbrl-detailed.utb", _("Russian literary braille (detailed)"), input=False)
+addTable("ru-litbrl-detailed.utb", _("Russian literary braille (detailed)"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("ru-ru-g1.ctb", _("Russian contracted braille"), contracted=True, input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("sa-in-g1.utb", _("Sanskrit grade 1"))
@@ -492,6 +495,12 @@ addTable("unicode-braille.utb", _("Unicode braille"), output=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("vi-vn-g0.utb", _("Vietnamese grade 0"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("ve-za-g1.utb", _("Tshivenda grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("ve-za-g2.ctb", _("Tshivenda grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("vi-vn-g1.ctb", _("Vietnamese grade 1"), input=False)

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -12,6 +12,7 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 from abc import abstractmethod
 import weakref
 import re
+import typing
 from typing import (
 	Any,
 	Union,
@@ -28,6 +29,8 @@ from controlTypes import OutputReason
 import locationHelper
 from logHandler import log
 
+if typing.TYPE_CHECKING:
+	import NVDAObjects
 
 SpeechSequence = List[Union[Any, str]]
 
@@ -62,20 +65,20 @@ class ControlField(Field):
 			reason=OutputReason.CARET,
 			extraDetail=False
 	):
-		role = self.get("role", controlTypes.ROLE_UNKNOWN)
+		role = self.get("role", controlTypes.Role.UNKNOWN)
 		states = self.get("states", set())
 
 		# Honour verbosity configuration.
-		if role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
+		if role in (controlTypes.Role.TABLE, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER):
 			# The user doesn't want layout tables.
 			# Find the nearest table.
-			if role == controlTypes.ROLE_TABLE:
+			if role == controlTypes.Role.TABLE:
 				# This is the nearest table.
 				table = self
 			else:
 				# Search ancestors for the nearest table.
 				for anc in reversed(ancestors):
-					if anc.get("role") == controlTypes.ROLE_TABLE:
+					if anc.get("role") == controlTypes.Role.TABLE:
 						table = anc
 						break
 				else:
@@ -86,94 +89,94 @@ class ControlField(Field):
 		name = self.get("name")
 		landmark = self.get("landmark")
 		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS) and (
-			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
-			or (role == controlTypes.ROLE_GRAPHIC and not formatConfig["reportGraphics"])
-			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
-			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
-			or (role == controlTypes.ROLE_GROUPING and (not name or not formatConfig["reportGroupings"]))
-			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
-			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
-			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
-			or (role == controlTypes.ROLE_MARKED_CONTENT and not formatConfig["reportHighlight"])
-			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
-			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
+			(role == controlTypes.Role.LINK and not formatConfig["reportLinks"])
+			or (role == controlTypes.Role.GRAPHIC and not formatConfig["reportGraphics"])
+			or (role == controlTypes.Role.HEADING and not formatConfig["reportHeadings"])
+			or (role == controlTypes.Role.BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
+			or (role == controlTypes.Role.GROUPING and (not name or not formatConfig["reportGroupings"]))
+			or (role in (controlTypes.Role.TABLE, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER) and not formatConfig["reportTables"])
+			or (role in (controlTypes.Role.LIST, controlTypes.Role.LISTITEM) and controlTypes.State.READONLY in states and not formatConfig["reportLists"])
+			or (role == controlTypes.Role.ARTICLE and not formatConfig["reportArticles"])
+			or (role == controlTypes.Role.MARKED_CONTENT and not formatConfig["reportHighlight"])
+			or (role in (controlTypes.Role.FRAME, controlTypes.Role.INTERNALFRAME) and not formatConfig["reportFrames"])
+			or (role in (controlTypes.Role.DELETED_CONTENT,controlTypes.Role.INSERTED_CONTENT) and not formatConfig["reportRevisions"])
 			or (
-				(role == controlTypes.ROLE_LANDMARK or landmark)
+				(role == controlTypes.Role.LANDMARK or landmark)
 				and not formatConfig["reportLandmarks"]
 			)
-			or (role == controlTypes.ROLE_REGION and (not name or not formatConfig["reportLandmarks"]))
+			or (role == controlTypes.Role.REGION and (not name or not formatConfig["reportLandmarks"]))
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
 
 		if (
 			role in (
-				controlTypes.ROLE_DELETED_CONTENT,
-				controlTypes.ROLE_INSERTED_CONTENT,
-				controlTypes.ROLE_LINK, 
-				controlTypes.ROLE_HEADING, 
-				controlTypes.ROLE_BUTTON, 
-				controlTypes.ROLE_RADIOBUTTON, 
-				controlTypes.ROLE_CHECKBOX, 
-				controlTypes.ROLE_GRAPHIC, 
-				controlTypes.ROLE_CHART, 
-				controlTypes.ROLE_MENUITEM, 
-				controlTypes.ROLE_TAB, 
-				controlTypes.ROLE_COMBOBOX, 
-				controlTypes.ROLE_SLIDER, 
-				controlTypes.ROLE_SPINBUTTON, 
-				controlTypes.ROLE_PROGRESSBAR, 
-				controlTypes.ROLE_TOGGLEBUTTON, 
-				controlTypes.ROLE_MENUBUTTON, 
-				controlTypes.ROLE_TREEVIEW, 
-				controlTypes.ROLE_CHECKMENUITEM, 
-				controlTypes.ROLE_RADIOMENUITEM,
-				controlTypes.ROLE_CAPTION,
+				controlTypes.Role.DELETED_CONTENT,
+				controlTypes.Role.INSERTED_CONTENT,
+				controlTypes.Role.LINK, 
+				controlTypes.Role.HEADING, 
+				controlTypes.Role.BUTTON, 
+				controlTypes.Role.RADIOBUTTON, 
+				controlTypes.Role.CHECKBOX, 
+				controlTypes.Role.GRAPHIC, 
+				controlTypes.Role.CHART, 
+				controlTypes.Role.MENUITEM, 
+				controlTypes.Role.TAB, 
+				controlTypes.Role.COMBOBOX, 
+				controlTypes.Role.SLIDER, 
+				controlTypes.Role.SPINBUTTON, 
+				controlTypes.Role.PROGRESSBAR, 
+				controlTypes.Role.TOGGLEBUTTON, 
+				controlTypes.Role.MENUBUTTON, 
+				controlTypes.Role.TREEVIEW, 
+				controlTypes.Role.CHECKMENUITEM, 
+				controlTypes.Role.RADIOMENUITEM,
+				controlTypes.Role.CAPTION,
 			)
-			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
-			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
+			or (role == controlTypes.Role.EDITABLETEXT and controlTypes.State.MULTILINE not in states and (controlTypes.State.READONLY not in states or controlTypes.State.FOCUSABLE in states))
+			or (role == controlTypes.Role.LIST and controlTypes.State.READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
 		elif (
 			role in (
-				controlTypes.ROLE_SEPARATOR,
-				controlTypes.ROLE_FOOTNOTE,
-				controlTypes.ROLE_ENDNOTE,
-				controlTypes.ROLE_EMBEDDEDOBJECT,
-				controlTypes.ROLE_MATH
+				controlTypes.Role.SEPARATOR,
+				controlTypes.Role.FOOTNOTE,
+				controlTypes.Role.ENDNOTE,
+				controlTypes.Role.EMBEDDEDOBJECT,
+				controlTypes.Role.MATH
 			)
 			or (
-				extraDetail and role == controlTypes.ROLE_LISTITEM
+				extraDetail and role == controlTypes.Role.LISTITEM
 			)
 		):
 			return self.PRESCAT_MARKER
-		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
+		elif role in (controlTypes.Role.APPLICATION, controlTypes.Role.DIALOG):
 			# Applications and dialogs should be reported as markers when embedded within content, but not when they themselves are the root
 			return self.PRESCAT_MARKER if ancestors else self.PRESCAT_LAYOUT 
-		elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
+		elif role in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER):
 			return self.PRESCAT_CELL
 		elif (
 			role in (
-				controlTypes.ROLE_BLOCKQUOTE,
-				controlTypes.ROLE_GROUPING,
-				controlTypes.ROLE_FIGURE,
-				controlTypes.ROLE_REGION,
-				controlTypes.ROLE_FRAME,
-				controlTypes.ROLE_INTERNALFRAME,
-				controlTypes.ROLE_TOOLBAR,
-				controlTypes.ROLE_MENUBAR,
-				controlTypes.ROLE_POPUPMENU,
-				controlTypes.ROLE_TABLE,
-				controlTypes.ROLE_ARTICLE,
-				controlTypes.ROLE_MARKED_CONTENT,
+				controlTypes.Role.BLOCKQUOTE,
+				controlTypes.Role.GROUPING,
+				controlTypes.Role.FIGURE,
+				controlTypes.Role.REGION,
+				controlTypes.Role.FRAME,
+				controlTypes.Role.INTERNALFRAME,
+				controlTypes.Role.TOOLBAR,
+				controlTypes.Role.MENUBAR,
+				controlTypes.Role.POPUPMENU,
+				controlTypes.Role.TABLE,
+				controlTypes.Role.ARTICLE,
+				controlTypes.Role.MARKED_CONTENT,
 			)
-			or (role == controlTypes.ROLE_EDITABLETEXT and (
-				controlTypes.STATE_READONLY not in states
-				or controlTypes.STATE_FOCUSABLE in states
-			) and controlTypes.STATE_MULTILINE in states)
-			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
-			or (role == controlTypes.ROLE_LANDMARK or landmark)
-			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
+			or (role == controlTypes.Role.EDITABLETEXT and (
+				controlTypes.State.READONLY not in states
+				or controlTypes.State.FOCUSABLE in states
+			) and controlTypes.State.MULTILINE in states)
+			or (role == controlTypes.Role.LIST and controlTypes.State.READONLY in states)
+			or (role == controlTypes.Role.LANDMARK or landmark)
+			or (controlTypes.State.FOCUSABLE in states and controlTypes.State.EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER
 
@@ -199,7 +202,6 @@ class FieldCommand(object):
 			"controlEnd", indicating the end of a L{ControlField}; or
 			"formatChange", indicating a L{FormatField} change.
 		@param field: The field associated with this command; may be C{None} for controlEnd.
-		@type field: L{Field}
 		"""
 		if command not in ("controlStart","controlEnd","formatChange"):
 			raise ValueError("Unknown command: %s"%command)
@@ -333,19 +335,25 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _set_end(self, otherEndpoint: "TextInfoEndpoint"):
 		self.end.moveTo(otherEndpoint)
 
-	def _get_obj(self):
+	#: Typing information for auto-property: _get_obj
+	obj: "NVDAObjects.NVDAObject"
+
+	def _get_obj(self) -> "NVDAObjects.NVDAObject":
 		"""The object containing the range of text being represented."""
 		return self._obj()
 
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
+	#: Typing information for auto-property: _get_text
+	text: str
+
 	_abstract_text = True
-	def _get_text(self):
+
+	def _get_text(self) -> str:
 		"""The text with in this range.
 		Subclasses must implement this.
 		@return: The text.
-		@rtype: str
 		@note: The text is not guaranteed to be the exact length of the range in offsets.
 		"""
 		raise NotImplementedError
@@ -627,7 +635,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def getMathMl(self, field):
 		"""Get MathML for a math control field.
-		This will only be called for control fields with a role of L{controlTypes.ROLE_MATH}.
+		This will only be called for control fields with a role of L{controlTypes.Role.MATH}.
 		@raise LookupError: If MathML can't be retrieved for this field.
 		"""
 		raise NotImplementedError

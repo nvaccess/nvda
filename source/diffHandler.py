@@ -98,6 +98,7 @@ class DiffMatchPatch(DiffAlgo):
 				]
 		except Exception:
 			log.exception("Exception in DMP, falling back to difflib")
+			self._terminate()
 			return Difflib().diff(newText, oldText)
 
 	def _terminate(self):
@@ -105,8 +106,12 @@ class DiffMatchPatch(DiffAlgo):
 			if DiffMatchPatch._proc:
 				log.debug("Terminating diff-match-patch proxy")
 				# nvda_dmp exits when it receives two zero-length texts.
-				DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
-				DiffMatchPatch._proc.wait(timeout=5)
+				try:
+					DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
+					DiffMatchPatch._proc.wait(timeout=5)
+				except Exception:
+					log.exception("Exception during DMP termination")
+				DiffMatchPatch._proc = None
 
 
 class Difflib(DiffAlgo):

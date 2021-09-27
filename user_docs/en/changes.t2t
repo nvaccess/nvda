@@ -7,31 +7,87 @@ What's New in NVDA
 
 == New Features ==
 - Adds an input gesture for toggling settings for reporting the style of cell borders. (#10408)
+- Support for the new HID Braille specification which aims to standardise support for Braille Displays. (#12523)
+ - Devices that support this specification will be auto detected by NVDA.
+ - For technical details on NVDA's implementation of this specification, see https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+- Add support for the VisioBraille Vario 4 Braille Device. (#12607)
+- Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
 -
+
 
 == Changes ==
 - Espeak-ng has been updated to 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+- NVDA will default to eSpeak if no installed OneCore voices support the NVDA preferred language. (#10451)
+- If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)
+- When reading status bar with ``NVDA+end``, the review cursor is no longer moved to its location.
+If you need this functionality please assign a gesture to the appropriate script in the Object Navigation category in the Input Gestures dialog. (#8600)
+- When opening a settings dialog which is already open, NVDA sets focus on the existing dialog rather than raise an error. (#5383)
+- For builds of Microsoft Office 2016/365 greater than 13900, NVDA will now always use UI Automation to access Microsoft Word document controls, no matter whether the user has toggled the Use UI Automation to access Microsoft word document controls advanced setting on or off. (#12770)
+- Updated liblouis braille translator to [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
+  - New braille tables: Russian grade 1, Tshivenda grade 1, Tshivenda grade 2
+  -
 -
 
 
 == Bug Fixes ==
 - Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
+- It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
+- NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
+- In ARIA data grid cells on the web, the Escape key will now be passed through to the grid and no longer turn off focus mode unconditionally. (#12413)
+- When reading a header cell of a table in Chrome, fix the column name being announced twice. (#10840)
+- NVDA no longer reports a numerical value for UIA sliders that have a textual representation of their value defined. (UIA ValuePattern is now preferred over RangeValuePattern). (#12724)
+- NVDA no longer treats the value of UIA sliders as always percentage based.
+- Reporting the location of a cell in Microsoft Excel when accessed via UI Automation again works correctly on Windows 11. (#12782)
+- NVDA no longer sets invalid Python locales. (#12753)
+- If a disabled addon is uninstalled and then re-installed it is re-enabled. (#12792)
+- Fixed bugs around updating and removing addons where the addon folder has been renamed or has files opened. (#12792, #12629)
+- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA no longer redundantly announces when a single cell is selected. (#12530)
+- More dialog text is automatically read in LibreOffice Writer, such as in confirmation dialogs. (#11687)
+- Reading / navigating with browse mode in Microsoft Word via UI automation now ensures the document is always scrolled so that the current browse mode position is visible, and that the caret position in focus mode correctly reflects the browse mode position. (#9611)
+- When performing Say all in Microsoft Word via UI automation, the document is now automatically scrolled, and the caret position is correctly updated. (#9611)
+- When reading emails in Outlook and NVDA is accessing the message with UI Automation, certain tables are now marked as layout tables, which means they will no longer be reported by default. (#11430)
+- A rare error when changing audio devices has been fixed. (#12620)
+- Routing keys on Braille displays supported by the HID Braille driver are no longer reversed. (#12860)
+- Ensure the Windows 11 system tray calendar reports the day of the week in full. (#12757)
+- Input with literary braille tables should behave more reliably when in edit fields. (#12667)
+- When navigating the Windows system tray calendar, NVDA now reports the day of the week in full. (#12757)
+- When using a Chinese input method such as Taiwan - Microsoft Quick in Microsoft Word, scrolling the braille display forward and backward no longer incorrectly keeps jumping back to the original caret position. (#12855)
 -
 
 
 == Changes for Developers ==
+- Building NVDA now requires Visual Studio 2019 16.10.4 or later.
+To match the production build environment, update Visual Studio to keep in sync with the [current version AppVeyor is using https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019]. (#12728)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been deprecated for removal in 2022.1. (#12660)
   - Instead use ``apiLevel`` (see the comments at ``_UIAConstants.WinConsoleAPILevel`` for details).
   -
+- Transparency of text background color sourced from GDI applications (via the display model), is now exposed for add-ons or appModules. (#12658)
+- ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` and ``LOCALE_SLANGDISPLAYNAME`` are moved to the ``LOCALE`` enum in languageHandler.
+They are still available at the module level but are deprecated and to be removed in NVDA 2022.1. (#12753)
+- The usage of functions ``addonHandler.loadState`` and ``addonHandler.saveState`` should be replaced with their equivalents ``addonHandler.state.save`` and ``addonHandler.state.load`` before 2022.1. (#12792)
 -
 
 
 = 2021.2 =
+This release introduces preliminary Windows 11 support.
+While Windows 11 is yet to be released, this release has been tested on preview versions of Windows 11.
+This includes an important fix for Screen Curtain (see important notes).
+The COM Registration Fixing Tool can now resolve more problems when running NVDA.
+There are updates to the synthesizer eSpeak and braille translator LibLouis.
+There are also various bug fixes and improvements, notably for braille support and Windows terminals, calculator, emoji panel and clipboard history.
+
+
+== Important notes ==
+Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
+Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
+This includes Windows 10 Insiders and Windows 11.
+For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
+
 
 == New Features ==
-- Support for ARIA annotations:
+- Experimental support for ARIA annotations:
   - adds a command to read a summary of details of an object with aria-details. (#12364)
-  - adds an option in advanced to report if an object has details in browse mode. (#12439) 
+  - adds an option in advanced preferences to report if an object has details in browse mode. (#12439) 
   -
 - In Windows 10 Version 1909 and later (including Windows 11), NVDA will announce suggestion count when performing searches in File Explorer. (#10341, #12628)
 - In Microsoft Word, NVDA now announces the result of indent and hanging indent shortcuts when executed. (#6269)
@@ -39,10 +95,12 @@ What's New in NVDA
 
 
 == Changes ==
-- NVDA now speaks by default every symbol when navigating by word.
-This can be toggled in the Preferences dialog or with a new (unassigned) command. (#11779)
 - Espeak-ng has been updated to 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
 - If article is enabled in the user preferences for document formatting, NVDA announces "article" after the content. (#11103)
+- Updated liblouis braille translator to [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - New braille tables: Bulgarian grade 1, Burmese grade 1, Burmese grade 2, Kazakh grade 1, Khmer grade 1, Northern Kurdish grade 0, Sepedi grade 1, Sepedi grade 2, Sesotho grade 1, Sesotho grade 2, Setswana grade 1, Setswana grade 2, Tatar grade 1, Vietnamese grade 0, Vietnamese grade 2, Southern Vietnamese grade 1, Xhosa grade 1, Xhosa grade 2, Yakut grade 1, Zulu grade 1, Zulu grade 2
+  -
+- Windows 10 OCR was renamed to Windows OCR. (#12690)
 -
 
 
@@ -51,17 +109,17 @@ This can be toggled in the Preferences dialog or with a new (unassigned) command
 - In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
   - Diff Match Patch now enabled by default. (#12485)
   -
-- Updated liblouis braille translator to [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
-  - New braille tables: Bulgarian grade 1, Burmese grade 1, Burmese grade 2, Kazakh grade 1, Khmer grade 1, Northern Kurdish grade 0, Sepedi grade 1, Sepedi grade 2, Sesotho grade 1, Sesotho grade 2, Setswana grade 1, Setswana grade 2, Tatar grade 1, Vietnamese grade 0, Vietnamese grade 2, Southern Vietnamese grade 1, Xhosa grade 1, Xhosa grade 2, Yakut grade 1, Zulu grade 1, Zulu grade 2
-  -
 - The braille input works properly with the following contracted tables: Arabic grade 2, Spanish grade 2, Urdu grade 2, Chinese (China, Mandarin) grade 2. (#12541)
-- The COM Registration Fixing Tool now resolves more issues, especially on 64 bit Windows. (#1256)
+- The COM Registration Fixing Tool now resolves more issues, especially on 64 bit Windows. (#12560)
 - Improvements to button handling for the Seika Notetaker braille device from Nippon Telesoft. (#12598)
 - Improvements to announcing the Windows emoji panel and clipboard history. (#11485)
 - Updated the Bengali alphabet character descriptions. (#12502)
 - NVDA exits safely when a new process is started. (#12605)
 - Reselecting the Handy Tech braille display driver from the Select Braille Display dialog no longer causes errors. (#12618)
 - Windows version 10.0.22000 or later is recognized as Windows 11, not Windows 10. (#12626)
+- Screen curtain support has been fixed and tested for Windows versions up until 10.0.22000. (#12684)
+- If no results are shown when filtering input gestures, the input gesture configuration dialog continues to work as expected. (#12673)
+- Fixed a bug where the first menu item of a submenu is not announced in some contexts. (#12624)
 -
 
 
@@ -73,7 +131,7 @@ This can be toggled in the Preferences dialog or with a new (unassigned) command
   - ``processPositiveStates`` and ``processNegativeStates`` have been deprecated for removal.
   -
 - On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
-- Deprecated: winVersion.WIN10_RELEASE_NAME_TO_BUILDS will be removed in 2022.1, there is no direct replacement. (#12544)
+- Deprecated: ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` will be removed in 2022.1, there is no direct replacement. (#12544)
 -
 
 

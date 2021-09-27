@@ -333,9 +333,6 @@ class consoleUIAWindow(Window):
 class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Disable the name as it won't be localized
 	name = ""
-	#: Only process text changes every 30 ms, in case the console is getting
-	#: a lot of text.
-	STABILIZE_DELAY = 0.03
 
 	def _get_apiLevel(self) -> WinConsoleAPILevel:
 		"""

@@ -42,7 +42,7 @@ class JAB_OOTable(JAB):
 
 class JAB_OOTableCell(JAB):
 
-	role=controlTypes.ROLE_TABLECELL
+	role=controlTypes.Role.TABLECELL
 
 	def _get_name(self):
 		name=super(JAB_OOTableCell,self).name
@@ -63,7 +63,7 @@ class JAB_OOTableCell(JAB):
 
 	def _get_states(self):
 		states=super(JAB_OOTableCell,self).states
-		states.discard(controlTypes.STATE_EDITABLE)
+		states.discard(controlTypes.State.EDITABLE)
 		return states
 
 	def _get_rowNumber(self):
@@ -215,15 +215,15 @@ class SymphonyTableCell(IAccessible):
 
 	def _get_states(self):
 		states=super(SymphonyTableCell,self).states
-		states.discard(controlTypes.STATE_MULTILINE)
-		states.discard(controlTypes.STATE_EDITABLE)
-		if controlTypes.STATE_SELECTED not in states and {controlTypes.STATE_FOCUSED, controlTypes.STATE_SELECTABLE}.issubset(states):
+		states.discard(controlTypes.State.MULTILINE)
+		states.discard(controlTypes.State.EDITABLE)
+		if controlTypes.State.SELECTED not in states and {controlTypes.State.FOCUSED, controlTypes.State.SELECTABLE}.issubset(states):
 			# #8988: Cells in Libre Office do not have the selected state when a single cell is selected (i.e. has focus).
 			# Since #8898, the negative selected state is announced for table cells with the selectable state.
-			states.add(controlTypes.STATE_SELECTED)
+			states.add(controlTypes.State.SELECTED)
 		if self.IA2Attributes.get('Formula'):
 			# #860: Recent versions of Calc expose has formula state via IAccessible 2.
-			states.add(controlTypes.STATE_HASFORMULA)
+			states.add(controlTypes.State.HASFORMULA)
 		return states
 
 class SymphonyTable(IAccessible):
@@ -245,30 +245,30 @@ class AppModule(appModuleHandler.AppModule):
 		role=obj.role
 		windowClassName=obj.windowClassName
 		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME", "SALFRAME"):
-			if role==controlTypes.ROLE_TABLECELL:
+			if role==controlTypes.Role.TABLECELL:
 				clsList.insert(0, SymphonyTableCell)
-			elif role==controlTypes.ROLE_TABLE:
+			elif role==controlTypes.Role.TABLE:
 				clsList.insert(0, SymphonyTable)
 			elif hasattr(obj, "IAccessibleTextObject"):
 				clsList.insert(0, SymphonyText)
-			if role==controlTypes.ROLE_PARAGRAPH:
+			if role==controlTypes.Role.PARAGRAPH:
 				clsList.insert(0, SymphonyParagraph)
 		if isinstance(obj, JAB) and windowClassName == "SALFRAME":
-			if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_LABEL):
+			if role in (controlTypes.Role.PANEL,controlTypes.Role.LABEL):
 				parent=obj.parent
-				if parent and parent.role==controlTypes.ROLE_TABLE:
+				if parent and parent.role==controlTypes.Role.TABLE:
 					clsList.insert(0,JAB_OOTableCell)
-			elif role==controlTypes.ROLE_TABLE:
+			elif role==controlTypes.Role.TABLE:
 				clsList.insert(0,JAB_OOTable)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
 		if isinstance(obj, JAB) and windowClass == "SALFRAME":
 			# OpenOffice.org has some strange role mappings due to its use of JAB.
-			if obj.role == controlTypes.ROLE_CANVAS:
-				obj.role = controlTypes.ROLE_DOCUMENT
+			if obj.role == controlTypes.Role.CANVAS:
+				obj.role = controlTypes.Role.DOCUMENT
 
-		if windowClass in ("SALTMPSUBFRAME", "SALFRAME") and obj.role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_TEXTFRAME) and obj.description:
+		if windowClass in ("SALTMPSUBFRAME", "SALFRAME") and obj.role in (controlTypes.Role.DOCUMENT,controlTypes.Role.TEXTFRAME) and obj.description:
 			# This is a word processor document.
 			obj.description = None
 			obj.treeInterceptorClass = CompoundDocument

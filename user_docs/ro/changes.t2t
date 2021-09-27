@@ -3,6 +3,73 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+Această versiune introduce suportul preliminar pentru Windows 11.
+În timp ce lansarea oficială a Windows 11 încă se lasă așteptată, această versiune de NVDA a fost testată pe versiunile de previzualizare ale acestui sistem de operare.
+Acest fapt include o reparare importantă a cortinei ecranului (vedeți secțiunea Note Importante).
+Instrumentul de Remediere a Înregistrării COM poate rezolva mai multe probleme atunci când se execută NVDA.
+De asemenea, există actualizări pentru sintetizatorul eSpeak și pentru traducătorul braille LibLouis.
+Există și alte rezolvări de probleme și îmbunătățiri, în special pentru suportul braille și pentru terminalele Windows, precum și pentru calculator, panoul de emoji și pentru istoricul planșetei.
+
+
+== Note importante ==
+Din cauza unei modificări în API-ul Magnification al Windows, Cortina de Ecran a fost actualizată cele mai noi versiuni de Windows.
+Utilizați NVDA 2021.2 pentru a activa Cortina de Ecran cu Windows 10 21H2 (10.0.19044) sau mai nou.
+Aceasta include Windows 10 Insiders și Windows 11.
+Dacă folosiți o nouă versiune de Windows, pentru a fi sigur că funcționalitatea Cortină Ecran face ecranul complet negru, întrebați pe cineva care vede.
+
+
+== Noi Funcționalități ==
+- Suport experimental pentru adnotările ARIA:
+  - adaugă o comandă pentru citirea unor informații pe scurt despre un obiect cu aria-details. (#12364)
+  - adaugă o opțiune în panoul setărilor avansate care să raporteze atunci când un obiect are detalii în modul de navigare. (#12439)
+  -
+- În versiunea 1909 a Windows 10, precum și în cele mai noi decât aceasta (chiar și în Windows 11), NVDA va anunța numărul de sugestii la efectuarea căutărilor în File Explorer. (#10341, #12628)
+- În Microsoft Word, NVDA anunță rezultatul scurtăturilor cu liniuțe și cu linii suspendate atunci când este executat. (#6269)
+-
+
+
+== Modificări ==
+- S-a actualizat Espeak-ng la 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Dacă articolul este activat din preferințele utilizatorului pentru formatarea documentului, NVDA va spune „articol” după conținut. (#11103)
+- S-a actualizat traducătorul braille liblouis la [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Tabele braille noi: bulgară grad 1, birmană grad 1, birmană grad 2, kazahă grad 1, khmeră grad 1, curdă de nord grad 0, sepedi grad 1, sepedi grad 2, sesotho grad 1, sesotho grad 2, setswana grad 1, setswana grad 2, tătară grad 1, vietnameză grad 0, vietnameză grad 2, vietnameză de sud grad 1, xhosa grad 1, xhosa grad 2, iakută grad 1, zulu grad 1, zulu grad 2
+  -
+- A fost redenumit Windows 10 OCR în Windows OCR. (#12690)
+-
+
+
+== Defecte Rezolvate ==
+- În aplicația Calculator din Windows 10, NVDA va anunța expresiile de calcul pe un afișaj braille. (#12268)
+- În programele terminale din versiunea 1607 a Windows 10, precum și în cele mai noi decât aceasta, nu mai sunt citite caracterele din dreapta cursorului de scriere în cazul inserării sau al eliminării  caracterelor din mijlocul unui rând. (#3200)
+  - Diff Match Patch este activ în mod implicit. (#12485)
+  -
+- Intrarea braille funcționează corespunzător cu următoarele tabele abreviate: arabă grad 2, spaniolă grad 2, urdu grad 2, chineză (China, mandarină) grad 2. (#12541)
+- Instrumentul de Remediere a Înregistrării COM rezolvă mai multe probleme, în special în versiunile de Windows bazate pe 64 de biți. (#12560)
+- Îmbunătățiri la butonul de control pentru dispozitivul braille Seika Notetaker de la Nippon Telesoft. (#12598)
+- Îmbunătățiri la anunțarea panoului de emoji al Windows și a istoricului planșetei. (#11485)
+- Au fost actualizate descrierile de caractere ale alfabetului bengalez. (#12502)
+- NVDA se închide în siguranță atunci când este inițiat un nou proces. (#12605)
+- Reselectarea driver-ului pentru afișajul braille Handy Tech din dialogul selectării afișajelor braille nu mai cauzează erori. (#12618)
+- Versiunea 10.0.22000 a Windows este recunoscută ca Windows 11. Se aplică și pentru versiunile mai noi decât aceasta. (#12626)
+- A fost reparat și testat suportul cortinei ecranului pe versiunile de Windows până la 10.0.22000. (#12684)
+- Dacă nu sunt afișate rezultate la filtrarea gesturilor de intrare, dialogul acestora de configurare continuă să funcționeze așa cum era de așteptat. (#12673)
+- A fost reparată o eroare care făcea ca primul element de meniu dintr-un submeniu nu era anunțat în niște contexte. (#12624)
+-
+
+
+== Modificări pentru Dezvoltatori (în engleză) ==
+- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SymbolLevel.*`` before 2022.1. (#11856, #12636)
+- ``controlTypes`` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
+  - ``ROLE_*`` and ``STATE_*`` constants should be replaced to their equivalent ``Role.*`` and ``State.*``.
+  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` have been deprecated, usages such as ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+  - ``processPositiveStates`` and ``processNegativeStates`` have been deprecated for removal.
+  -
+- On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
+- Deprecated: winVersion.WIN10_RELEASE_NAME_TO_BUILDS will be removed in 2022.1, there is no direct replacement. (#12544)
+-
+
+
 = 2021.1 =
 Această versiune include suportul opțional și experimental pentru UIA-ul din Excel și din navigatoarele web bazate pe Chromium.
 Există corecturi pentru câteva limbi și pentru accesarea link-urilor în Braille.

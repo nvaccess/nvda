@@ -3,6 +3,65 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+Bản phát hành này bước đầu hỗ trợ cho Windows 11.
+Trong khi  Windows 11 chưa chính thức ra mắt, bản phát hành này được thử nghiệm trên các phiên bản xem trước của nó.
+Bản phát hành bao gồm việc sửa một lỗi quan trọng cho tính năng Che Màn Hình (xem thêm phần các lưu ý quan trọng).
+Công cụ sửa lỗi COM giờ đây có thể giải quyết nhiều vấn đề trong khi chạy NVDA.
+Đã tích hợp các bản cập nhật cho bộ đọc eSpeak và thư viện phiên dịch chữ nổi LibLouis.
+Ngoài ra, cũng đã sửa được nhiều lỗi và có nhiều cải thiện, đặc biệt là cải thiện cho chữ nổi và Windows terminals, máy tính, bản biểu tượng cảm xúc và lịch sử bộ nhớ tạm.
+
+
+== Các lưu ý quan trọng ==
+Do một thay đổi trong Windows Magnification API, tính năng Che Màn Hình phải được cập nhật để hỗ trợ phiên bản mới nhất của Windows.
+Hãy dùng NVDA 2021.2 để bật tính năng Che Màn Hình với Windows 10 21H2 (10.0.19044) trở lên.
+Điều này áp dụng cho cả Windows 10 Insiders và Windows 11.
+Vì mục tiêu bảo mật, khi sử dụng một phiên bản mới của Windows, hãy tìm sự xác nhận trực quan rằng tính năng Che Màn Hình có làm cho màn hình đen toàn bộ.
+
+
+== Tính năng mới ==
+- Hỗ trợ thử nghiệm cho các ghi chú ARIA:
+  - Thêm một lệnh để đọc tổng quan các chi tiết của một đối tượng với aria-details. (#12364)
+  - Thêm một tùy chọn trong cài đặt mở rộng để thông báo nếu một đối tượng có các thông tin chi tiết trong chế độ duyệt. (#12439) 
+  -
+- Trong Windows 10 phiên bản 1909 và cao hơn (bao gồm Windows 11), NVDA sẽ đọc số gợi ý đếm được khi thực hiện tìm kiếm trong File Explorer. (#10341, #12628)
+- Trong Microsoft Word, NVDA giờ đây sẽ đọc kết quả của việc thụt lề và thụt lề đoạn khi thực hiện bằng phím tắt. (#6269)
+-
+
+
+== Các thay đổi ==
+- Đã cập nhật Espeak-ng lên 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Nếu tùy chọn bài viết được bật trong thiết lập người dùng cho định dạng tài liệu, NVDA sẽ đọc "bài viết" sau khi đọc nội dung. (#11103)
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Các bản chữ nổi mới: Bun-ga-ri cấp 1, Burmese (Myanmar) cấp 1, Burmese cấp 2, Kazakhstan cấp 1, Khmer cấp 1, Bắc Kurdish cấp 0, Sepedi cấp 1, Sepedi cấp 2, Sesotho cấp 1, Sesotho cấp 2, Setswana cấp 1, Setswana cấp 2, Tatar cấp 1, Việt Nam cấp 0, Việt Nam cấp 2, Miền Nam Việt Nam cấp 1, Xhosa cấp 1, Xhosa cấp 2, Yakut cấp 1, Zulu cấp 1, Zulu cấp 2
+  -
+- Windows 10 OCR đã đổi tên thành Windows OCR. (#12690)
+
+
+== Sửa lỗi ==
+- Trong ứng dụng Calculator của Windows 10, NVDA sẽ thể hiện biểu thức tính toán trên màn hình chữ nổi. (#12268)
+- Trong các chương trình terminal trên Windows 10 phiên bản 1607 trở lên, khi thêm hay xóa các kí tự ở giữa một dòng, kí tự bên phải dấu nháy không còn bị đọc lên. (#3200)
+  - Diff Match Patch giờ đây mặc định được bật. (#12485)
+  -
+
+- Đầu vào chữ nổi đã hoạt động tốt với các bản chữ nổi viết tắt sau: Ả rập cấp 2, Tây Ban Nha cấp 2, Urdu cấp 2, Trung Quốc (Đài Loan, Quan Thoại) cấp 2. (#12541)
+- Công cụ sửa lỗi đăng kí COM  giờ đây sửa được nhiều lỗi hơn, đặc biệt là trên Windows 64 bit. (#12560)
+- cải thiện việc quản lý các nút cho máy đọc chữ nổi Seika Notetaker của Nippon Telesoft. (#12598)
+- Cải thiện việc đọc trong bản biểu tượng cảm xúc và lịch sử bộ nhớ tạm. (#11485)
+- Đã cập nhật mô tả ký tự bảng chữ cái tiếng Bengal. (#12502)
+- NVDA sẽ được tắt một cách an toàn khi một bản NVDA mới được gọi chạy. (#12605)
+- Việc chọn lại trình điều khiển cho màn hình nổi Handy Tech  từ hộp thoại Chọn Màn Hình Nổi không còn xảy ra lỗi. (#12618)
+- Windows phiên bản 10.0.22000 trở lên được nhận dạng là Windows 11, không phải Windows 10. (#12626)
+- Tính năng che màn hình đã được sửa lỗi và thử nghiệm cho các phiên bản Windows đến 10.0.22000. (#12684)
+- Nếu không có kết quả nào hiển thị khi lọc các thao tác, hộp thoại Quản lý các thao tác vẫn tiếp tục hoạt động như mong muốn. (#12673)
+- Sửa một lỗi làm cho mục đầu tiên trong trình đơn của một trình đơn con không đọc lên trong vài ngữ cảnh. (#12624)
+-
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2021.1 =
 Bản phát hành này bao gồm tùy chọn hỗ trợ thử nghiệm cho UIA trong Excel và các trình duyệt trên nền Chromium.
 Sửa các lỗi cho vài ngôn ngữ và lỗi  truy cập các liên kết trong chữ nổi.
@@ -48,8 +107,8 @@ Lưu ý:
 - Danh sách thư trong Outlook 2010 lại có thể đọc được. (#12241)
 - Trong các chương trình terminal trên Windows 10 phiên bản 1607 trở lên, khi chèn hay xóa kí tự ở giữa một dòng, kí tự bên phải kí tự đó không còn bị đọc lên. (#3200)
   - Sửa lỗi thử nghiệm này phải được bật thủ công trong bảng cài đặt nâng cao của NVDA bằng cách đổi thuật toán diff algorithm thành Diff Match Patch.
-- Trong MS Outlook, việc thông báo khoảng cách một cách không hợp lý khi shift+tab từ nội dung thư đến trường tiêu đề sẽ không còn nữa. (#10254)
-- Trong Python Console, việc chèn một tab để thụt lề ở đầu của một dòng nhập liệu không rỗng và thao tác từ hoàn thành bằng tab ở giữa một dòng giờ đã được hỗ trợ. (#11532)
+- Trong MS Outlook, sẽ không còn lỗi thông báo khoảng cách một cách không hợp lý khi shift+tab từ nội dung thư đến trường tiêu đề. (#10254)
+- Trong Python Console, việc chèn một tab để thụt lề ở đầu của một dòng nhập liệu không rỗng và thao tác tự hoàn thành bằng tab ở giữa một dòng giờ đã được hỗ trợ. (#11532)
 - Thông tin định dạng và các thông điệp có thể duyệt khác không còn đọc là dòng trắng một cách không mong muốn khi tắt trình bày theo màn hình. (#12004)
 - Giờ đây, có thể đọc bình luận trong MS Word khi bật UIA. (#9285)
 - Khả năng vận hành khi tương tác với Visual Studio đã được cải thiện. (#12171)
@@ -67,7 +126,7 @@ Lưu ý:
 - Sửa lỗi thay đổi cao độ trong các bộ đọc SAPI4. (#12311)
 - Bộ cài NVDA giờ đây tôn trọng tham số của dòng lệnh ``--minimal`` và không phát âm thanh khởi động, hoạt động giống nhau với tập tin thực thi của bản cài hay bản chạy trực tiếp của NVDA. (#12289)
 - Trong MS Word hay Outlook, các phím di chuyển nhanh trong bảng giờ đây có thể đi đến bố cục bảng nếu bật tùy chọn "Đọc các bảng bố cục" trong cài đặt chế độ duyệt. (#11899)
-- NVDA sẽ không còn đọc "↑↑↑" cho các biểu tượng cảm xúc trong một số ngôn ngữ. (#11963)
+- NVDA sẽ không còn đọc "↑↑↑" (các dấu mũi tên lên) cho các biểu tượng cảm xúc trong một số ngôn ngữ. (#11963)
 - Espeak giờ đây lại hỗ trợ tiếng Quảng Đông và tiếng Quan Thoại. (#10418)
  - Trong phiên bản  Microsoft Edge mới trên nền tản Chromium, các trường nhập liệu như thanh địa chỉ giờ đã được đọc khi không có nội dung. (#12474)
 - Sửa lỗi trình điều khiển của Seika Braille. (#10787)

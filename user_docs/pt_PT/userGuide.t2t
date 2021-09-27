@@ -66,7 +66,7 @@ Para mais detalhes, pode [ver a licença completa. https://www.gnu.org/licenses/
 Para detalhes sobre as exceções, aceda o documento da licença no menu Ajuda do NVDA.
 
 + Requisitos Do Sistema +[SystemRequirements]
-- Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows 7, Windows 8 e Windows 10, e todas as versões Server a partir do Windows Server 2008 R2.
+- Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows 7, Windows 8, Windows 8.1, Windows 10 e Windows 11, e todas as versões Server a partir do Windows Server 2008 R2.
 - Para Windows 7, o NVDA requer o Service Pack 1 ou superior.
 - Para Windows Server 2008 R2, o NVDA requer o Service Pack 1 ou superior.
 - Pelo menos 150 MB de espaço livre.
@@ -795,9 +795,13 @@ Pode activar esta funcionalidade na secção [Visão #VisionSettings] na janela 
 
 Quando a Cortina de ecrã está activa algumas tarefas, directamente ligadas ao que é mostrado no ecrã, tal como a execução do [OCR #Win10Ocr] ou obter um PrintScreen, não podem ser executadas.
 
+Devido a alterações na API do Windows Magnification, a  "Cortina de ecrã" teve de ser actualizada para suportar as novas versões do Windows
+Use o NVDA 2021.2 para activar a Cortina de ecrã com o Windows 10 21H2 (10.0.19044) ou mais recentes.
+Para garantir a sua segurança, obtenha confirmação visual de que a Cortina de ecrã funciona corretamente com novas versões do Windows.
+
 + Reconhecimento de Conteúdo +[ContentRecognition]
 Quando os autores não disponibilizam informação suficiente para que os utilizadores de leitores de ecrã possam determinar o conteúdo de um objecto, vários métodos podem ser usados para reconhecer o conteúdo de uma imagem.
-O NVDA suporta o Reconhecimento Óptico de Caracteres (OCR), uma funcionalidade incluida no Windows 10 para reconhecer texto de imagens.
+O NVDA suporta o Reconhecimento Óptico de Caracteres (OCR), uma funcionalidade incluida no Windows 10 e seguintes, para reconhecer texto de imagens.
 Outros métodos de reconhecimento de conteúdo podem ser adicionados através de Extras do NVDA.
 
 Quando usa o comando para reconhecer o conteúdo, o NVDA reconhece o conteúdo do [objecto de navegação actual #ObjectNavigation].
@@ -809,17 +813,17 @@ Após o reconhecimento estar completo, o resultado será apresentado num documen
 Pressionar Enter ou Espaço, executará um clique no local do texto sob o cursor, se possível.
 Pressionar Escape, fechará o resultado do reconhecimento.
 
-++ Windows 10 OCR ++[Win10Ocr]
-O Windows 10 inclui OCR para vários idiomas.
+++ OCR do Windows ++[Win10Ocr]
+O Windows 10 e seguintes incluiem OCR para vários idiomas.
 O NVDA pode usá-lo para reconhecer texto de imagens ou de aplicações inacessíveis.
 
-Pode configurar o idioma a utilizar na secção [Windows 10 OCR #Win10OcrSettings] do diálogo [Configurações do NVDA #NVDASettings].
+Pode configurar o idioma a utilizar na secção [OCR do Windows #Win10OcrSettings] do diálogo [Configurações do NVDA #NVDASettings].
 Idiomas adicionais podem ser instalados, abrindo o menu "Iniciar", escolhendo "configurações", seleccionando o separador "Hora e Idioma", depois "Região e Idioma", e, por fim, "Adicionar um idioma".
 
-O Windows 10 OCR pode ser, total ou parcialmente, incompatível com as [Ajudas visuais do NVDA #Vision] ou outras ajudas visuais externas. É necessário desactivá-las antes de executar um reconhecimento por OCR.
+O OCR do Windows pode ser, total ou parcialmente, incompatível com as [Ajudas visuais do NVDA #Vision] ou outras ajudas visuais externas. É necessário desactivá-las antes de executar um reconhecimento por OCR.
 
 %kc:beginInclude
-Para reconhecer o texto no objecto de navegação actual, usando o Windows 10 OCR, pressione NVDA+r.
+Para reconhecer o texto no objecto de navegação actual, usando o OCR do Windows, pressione NVDA+r.
 %kc:endInclude
 
 + Funcionalidades Específicas para Aplicações +[ApplicationSpecificFeatures]
@@ -1789,8 +1793,8 @@ O som aumentará a tonalidade cada espaço e para cada Tab aumentará o equivale
 - Voz e sons: O NVDA usará, em simultâneo, os dois métodos acima descritos.
 -
 
-+++ configurações do Windows 10 OCR +++[Win10OcrSettings]
-Esta secção permite configurar o [Windows 10 OCR #Win10Ocr].
++++ configurações do OCR do Windows +++[Win10OcrSettings]
+Esta secção permite configurar o [OCR do Windows #Win10Ocr].
 Actualmente, só contém uma opção:
 
 ==== Idioma de reconhecimento ====[Win10OcrSettingsRecognitionLanguage]
@@ -1829,7 +1833,7 @@ Se notar problemas de performance numa ou várias aplicações, recomendamos que
 ==== Usar UI Automation para aceder a controlos de documentos do Microsoft Word, se disponível ====[AdvancedSettingsUseUiaForWord]
 Ao activar esta opção, o NVDA irá utilizar a API de acessibilidade da Microsoft, UI Automation, para obter informações dos controlos de documentos do Microsoft Word.
 Isto inclui o próprio Microsoft Word e também o visualizador e o compositor de mensagens do Microsoft Outlook.
-Para as versões mais recentes do Microsoft Office, 2016/365, em execução no Windows 10, o suporte da UI Automation está suficientemente completo para fornecer praticamente o mesmo acesso aos documentos do Microsoft Word, que havia antes, com a vantagem adicional de aumentar significativamente a capacidade de resposta.
+Para as versões mais recentes do Microsoft Office, 2016/365, em Windows 10 e seguintes, o suporte da UI Automation está suficientemente completo para fornecer praticamente o mesmo acesso aos documentos do Microsoft Word, que havia antes, com a vantagem adicional de aumentar significativamente a capacidade de resposta.
 No entanto, em algumas versões do Microsoft Office, pode haver algumas informações que não são expostas, ou o são incorrectamente, pelo que o suporte UI Automation nem sempre deve ser activado.
 Ainda não é recomendável, para a maioria dos utilizadores, activar esta opção por padrão, embora seja aceitável que os utilizadores do Office 2016/365 queiram testar este recurso e fornecer "feedback".
  
@@ -1847,6 +1851,14 @@ A caixa combinada tem as seguintes opções:
 - Apenas quando necessário;
 - Sim: se o navegador disponibilizar UIA o NVDA usá-la-á;
 - Não: Não usar UIA, mesmo que o NVDA não consiga injectar no processo. Isto pode ser útil para desenvolvedores para descortinar problemas com IA2 e querem assegurar-se que NVDA não volta para o uso de UIA.
+-
+
+==== Activar suporte Experimental a ARIA annotations ====[Annotations]
+Usado para permitir funcionalidades dando suporte experimental a ARIA annotations.
+Algumas dessas funcionalidades podem estar incompletas.
+Existem as seguintes opções: 
+- Anunciar detalhes em modo de navegação: Activa o anúncio de que um objecto tem detalhes em modo de navegação.
+Anunciar o sumário dos detalhes pode ser feito atribuindo um comando através do diálogo [Definir comandos #InputGestures].
 -
 
 ==== Usar UI Automation para aceder às folhas do Microsoft Excel se disponível ====[UseUiaForExcel]
@@ -1867,11 +1879,10 @@ Em ambientes não confiáveis, pode desactivar temporariamente [o anúncio de ca
 ==== Algoritmo Diff ====[DiffAlgo]
 Esta opção controla como o NVDA determina o novo texto a ser falado nas consolas de terminal.
 A caixa de combinação "algoritmo diff" tem três opções:
-- Automático (Difflib): A partir do NVDA 2021.1, esta opção é equivalente a Difflib.
-Em versões futuras pode ser alterado para Diff Match Patch, dependendo dos testes positivos dos utilizadores;
+- Automático A partir do NVDA 2021.2, esta opção é equivalente a permitir Diff Match Patch".
 - Permitir Diff Match Patch: Esta opção faz com que o NVDA calcule as alterações ao texto por caracter.
-Pode melhorar a performance quando muito texto é escrito na consola, e permite maior acerto no anúncio de alterações no meio das linhas.
-Todavia isso pode ser incompatível com algumas aplicações.
+Pode melhorar a performance quando é escrito muito texto na consola, e permite maior acerto no anúncio de alterações no meio das linhas.
+Todavia isso pode ser incompatível com algumas aplicações, por isso "Diff Match Patch" não é sempre usado.
 Esta funcionalidade é suportada na Consola Windows no Windows 10 versões 1607 e seguintes.
 Adicionalmente, pode também estar disponível em outras consolas de Windows de versões anteriores.
 - Forçar Difflib: Esta opção faz com que o NVDA calcule as alterações ao texto por linha.
@@ -2250,7 +2261,7 @@ Para uma lista ainda mais extensa de sintetizadores de voz, gratuitos e comercia
 
 ++ eSpeak NG ++[eSpeakNG]
 O sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng] é incluído directamente no NVDA e não necessita instalar nenhum outro driver ou componente especial.
-Em Windows 7, 8 e 8.1, o NVDA usa o eSpeak NG como padrão, enquanto em Windows 10 é usado por padrão o [Windows OneCore #OneCore].
+Em Windows 7, 8 e 8.1, o NVDA usa o eSpeak NG como padrão, enquanto em Windows 10 e seguintes é usado por padrão o [Windows OneCore #OneCore].
 Tendo em conta que este sintetizador está incluído no NVDA, é uma óptima escolha para quando se executa o NVDA num dispositivo USB ou CD, noutros sistemas.
 
 Cada voz que vem com o eSpeak NG fala num idioma diferente.
@@ -2284,9 +2295,9 @@ Para as usar, precisa de instalar dois componentes:
 -
 
 ++ Windows OneCore Voices ++[OneCore]
-O Windows 10 inclui novas vozes, conhecidas por "OneCore" ou "mobile".
+A partir do  Windows 10 o sistema já inclui novas vozes, conhecidas por "OneCore" ou "mobile".
 Estas vozes são disponibilizadas para vários idiomas e possuem uma resposta mais rápida que as vozes Microsoft disponíveis através do Microsoft Speech API versão 5.
-No Windows 10, o NVDA usa o sintetizador Windows OneCore voices por padrão, enquanto o [[eSpeak NG #eSpeakNG] é usado nas versões anteriores.
+No Windows 10 e seguintes, o NVDA usa o sintetizador Windows OneCore voices por padrão, enquanto o [[eSpeak NG #eSpeakNG] é usado nas versões anteriores.
 
 Para adicionar novas vozes Windows OneCore voices, vá a "Definições", "Hora e idioma", e por fim, "Voz".
 Use o botão "Adicionar vozes" e e pesquise o idioma desejado.
@@ -2503,7 +2514,7 @@ Se for ligar uma linha, que não use o modo HID, via USB, deverá, primeiro, ins
 As VarioUltra e Pronto! usam HID.
 As Refreshabraille e Orbit Reader 20 podem usar HID, se devidamente configuradas.
 
-O modo USB serial da Orbit Reader 20 só é actualmente suportado no Windows 10.
+O modo USB serial da Orbit Reader 20 só é actualmente suportado no Windows 10 e seguintes.
 Regra geral, deve ser usado o modo USB HID.
 
 Seguem-se as associações de teclas para estas linhas Braille com o NVDA.
@@ -3106,7 +3117,7 @@ Por favor, consulte a documentação destas linhas Braille para obter a descriç
 
 ++ Linhas Nattiq nBraille ++[NattiqTechnologies]
 O NVDA suporta as linhas Braille da [Nattiq Technologies https://www.nattiq.com/] quando ligadas por USB.
-O Windows 10 detecta-as assim que são ligadas, podendo necessitar de instalar os drivers USB, se usar uma versão mais antiga do Windows.
+O Windows 10 e seguintes detectam-as assim que são ligadas, podendo necessitar de instalar os drivers USB, se usar uma versão mais antiga do Windows.
 Pode obtê-los nas páginas web do fabricante.
 
 Seguem-se as associações de comandos das linhas NBraille da Nattiq Technologies com o NVDA.

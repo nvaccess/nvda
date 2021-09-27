@@ -401,7 +401,7 @@ class OfficeChartElementBase(Window):
 		return text
 
 	def _get_role(self):
-		return controlTypes.ROLE_UNKNOWN
+		return controlTypes.Role.UNKNOWN
 
 	def _get_name(self):
 		return self._getChartElementText(self.elementID , self.arg1 , self.arg2 , self.reportExtraInfo )
@@ -518,7 +518,7 @@ class OfficeChartElementList(Window):
 
 class OfficeChart(OfficeChartElementList):
 
-	role=controlTypes.ROLE_CHART
+	role=controlTypes.Role.CHART
 
 	def __init__(self,windowHandle, officeApplicationObject, officeChartObject, initialDocument , keyIndex=0):
 		super(OfficeChart,self).__init__(windowHandle=windowHandle  , officeChartObject = officeChartObject )
@@ -603,7 +603,7 @@ class OfficeChart(OfficeChartElementList):
 
 class OfficeChartElementCollection(OfficeChartElementList):
 
-	role=controlTypes.ROLE_CHARTELEMENT
+	role=controlTypes.Role.CHARTELEMENT
 	description=None
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
@@ -644,7 +644,7 @@ class OfficeChartElementCollection(OfficeChartElementList):
 class OfficeChartElementSeries(OfficeChartElementList):
 
 	description=None
-	role=controlTypes.ROLE_CHARTELEMENT
+	role=controlTypes.Role.CHARTELEMENT
 
 	def __init__(self,windowHandle, officeChartObject , elementID , arg1 = None , arg2= None   ):
 		super(OfficeChartElementSeries,self).__init__( windowHandle=windowHandle , officeChartObject = officeChartObject ) 

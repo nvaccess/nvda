@@ -35,7 +35,14 @@ sys.path.insert(1, SOURCE_DIR)
 # Suppress Flake8 warning F401 (module imported but unused)
 # as this module is imported to expand the system path.
 import sourceEnv  # noqa: F401
-
+# Apply several monkey patches to comtypes to make sure that it would search for generated interfaces
+# rather than creating them on the fly. Also stop module being never than typelib error, seen when
+# virtual environment has been created under different version of Windows than the one used for unit tests.
+# Suppress Flake8 warning E402 (module import not at top of file) as this cannot be imported until source
+# directory is appended to python path.
+import monkeyPatches.comtypesMonkeyPatches  # noqa: E402
+monkeyPatches.comtypesMonkeyPatches.replace_check_version()
+monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
 import globalVars
 
 

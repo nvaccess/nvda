@@ -103,52 +103,52 @@ class HTMLAttribCache(object):
 
 
 nodeNamesToNVDARoles: Dict[str, int] = {
-	"FRAME":controlTypes.ROLE_FRAME,
-	"IFRAME":controlTypes.ROLE_INTERNALFRAME,
-	"FRAMESET":controlTypes.ROLE_DOCUMENT,
-	"BODY":controlTypes.ROLE_DOCUMENT,
-	"TH":controlTypes.ROLE_TABLECELL,
-	"IMG":controlTypes.ROLE_GRAPHIC,
-	"A":controlTypes.ROLE_LINK,
-	"LABEL":controlTypes.ROLE_LABEL,
-	"#text":controlTypes.ROLE_STATICTEXT,
-	"#TEXT":controlTypes.ROLE_STATICTEXT,
-	"H1":controlTypes.ROLE_HEADING,
-	"H2":controlTypes.ROLE_HEADING,
-	"H3":controlTypes.ROLE_HEADING,
-	"H4":controlTypes.ROLE_HEADING,
-	"H5":controlTypes.ROLE_HEADING,
-	"H6":controlTypes.ROLE_HEADING,
-	"DIV":controlTypes.ROLE_SECTION,
-	"P":controlTypes.ROLE_PARAGRAPH,
-	"FORM":controlTypes.ROLE_FORM,
-	"UL":controlTypes.ROLE_LIST,
-	"OL":controlTypes.ROLE_LIST,
-	"DL":controlTypes.ROLE_LIST,
-	"LI":controlTypes.ROLE_LISTITEM,
-	"DD":controlTypes.ROLE_LISTITEM,
-	"DT":controlTypes.ROLE_LISTITEM,
-	"TR":controlTypes.ROLE_TABLEROW,
-	"THEAD":controlTypes.ROLE_TABLEHEADER,
-	"TBODY":controlTypes.ROLE_TABLEBODY,
-	"HR":controlTypes.ROLE_SEPARATOR,
-	"OBJECT":controlTypes.ROLE_EMBEDDEDOBJECT,
-	"APPLET":controlTypes.ROLE_EMBEDDEDOBJECT,
-	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
-	"FIELDSET": controlTypes.ROLE_GROUPING,
-	"OPTION":controlTypes.ROLE_LISTITEM,
-	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
-	"MATH":controlTypes.ROLE_MATH,
-	"NAV": controlTypes.ROLE_LANDMARK,
-	"HEADER": controlTypes.ROLE_LANDMARK,
-	"MAIN": controlTypes.ROLE_LANDMARK,
-	"ASIDE": controlTypes.ROLE_LANDMARK,
-	"FOOTER": controlTypes.ROLE_LANDMARK,
-	"SECTION": controlTypes.ROLE_REGION,
-	"ARTICLE": controlTypes.ROLE_ARTICLE,
-	"FIGURE": controlTypes.ROLE_FIGURE,
-	"FIGCAPTION": controlTypes.ROLE_CAPTION,
-	"MARK": controlTypes.ROLE_MARKED_CONTENT,
+	"FRAME":controlTypes.Role.FRAME,
+	"IFRAME":controlTypes.Role.INTERNALFRAME,
+	"FRAMESET":controlTypes.Role.DOCUMENT,
+	"BODY":controlTypes.Role.DOCUMENT,
+	"TH":controlTypes.Role.TABLECELL,
+	"IMG":controlTypes.Role.GRAPHIC,
+	"A":controlTypes.Role.LINK,
+	"LABEL":controlTypes.Role.LABEL,
+	"#text":controlTypes.Role.STATICTEXT,
+	"#TEXT":controlTypes.Role.STATICTEXT,
+	"H1":controlTypes.Role.HEADING,
+	"H2":controlTypes.Role.HEADING,
+	"H3":controlTypes.Role.HEADING,
+	"H4":controlTypes.Role.HEADING,
+	"H5":controlTypes.Role.HEADING,
+	"H6":controlTypes.Role.HEADING,
+	"DIV":controlTypes.Role.SECTION,
+	"P":controlTypes.Role.PARAGRAPH,
+	"FORM":controlTypes.Role.FORM,
+	"UL":controlTypes.Role.LIST,
+	"OL":controlTypes.Role.LIST,
+	"DL":controlTypes.Role.LIST,
+	"LI":controlTypes.Role.LISTITEM,
+	"DD":controlTypes.Role.LISTITEM,
+	"DT":controlTypes.Role.LISTITEM,
+	"TR":controlTypes.Role.TABLEROW,
+	"THEAD":controlTypes.Role.TABLEHEADER,
+	"TBODY":controlTypes.Role.TABLEBODY,
+	"HR":controlTypes.Role.SEPARATOR,
+	"OBJECT":controlTypes.Role.EMBEDDEDOBJECT,
+	"APPLET":controlTypes.Role.EMBEDDEDOBJECT,
+	"EMBED":controlTypes.Role.EMBEDDEDOBJECT,
+	"FIELDSET": controlTypes.Role.GROUPING,
+	"OPTION":controlTypes.Role.LISTITEM,
+	"BLOCKQUOTE":controlTypes.Role.BLOCKQUOTE,
+	"MATH":controlTypes.Role.MATH,
+	"NAV": controlTypes.Role.LANDMARK,
+	"HEADER": controlTypes.Role.LANDMARK,
+	"MAIN": controlTypes.Role.LANDMARK,
+	"ASIDE": controlTypes.Role.LANDMARK,
+	"FOOTER": controlTypes.Role.LANDMARK,
+	"SECTION": controlTypes.Role.REGION,
+	"ARTICLE": controlTypes.Role.ARTICLE,
+	"FIGURE": controlTypes.Role.FIGURE,
+	"FIGCAPTION": controlTypes.Role.CAPTION,
+	"MARK": controlTypes.Role.MARKED_CONTENT,
 }
 
 
@@ -378,7 +378,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		text=self._rangeObj.text
 		if not text:
 			text=u""
-		if controlTypes.STATE_PROTECTED in self.obj.states:
+		if controlTypes.State.PROTECTED in self.obj.states:
 			text=u'*'*len(text)
 		return text
 
@@ -413,7 +413,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 class MSHTML(IAccessible):
 
 	def _get__UIAControl(self):
-		if UIAHandler.handler and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_FOCUSED in self.states:
+		if UIAHandler.handler and self.role==controlTypes.Role.EDITABLETEXT and controlTypes.State.FOCUSED in self.states:
 			e=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
 			obj=UIA(UIAElement=e)
 			if isinstance(obj,EditableTextWithoutAutoSelectDetection):
@@ -511,7 +511,7 @@ class MSHTML(IAccessible):
 		if nodeName:
 			if nodeName=="SELECT" and self.windowStyle&winUser.WS_POPUP:
 				clsList.append(PopupList)
-			elif nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
+			elif nodeNamesToNVDARoles.get(nodeName) == controlTypes.Role.DOCUMENT:
 				try:
 					isBodyNode=self.HTMLNodeUniqueNumber==self.HTMLNode.document.body.uniqueNumber
 				except (COMError,NameError):
@@ -538,7 +538,7 @@ class MSHTML(IAccessible):
 						pass
 
 	def _get_treeInterceptorClass(self):
-		if self.role in (controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG) and not self.isContentEditable:
+		if self.role in (controlTypes.Role.DOCUMENT, controlTypes.Role.APPLICATION, controlTypes.Role.DIALOG) and not self.isContentEditable:
 			import virtualBuffers.MSHTML
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
@@ -646,7 +646,7 @@ class MSHTML(IAccessible):
 		presType=super(MSHTML,self).presentationType
 		if presType==self.presType_content and self.HTMLAttributes['role']=="presentation":
 			presType=self.presType_layout
-		if presType==self.presType_content and self.role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEBODY):
+		if presType==self.presType_content and self.role in (controlTypes.Role.TABLECELL,controlTypes.Role.TABLEROW,controlTypes.Role.TABLE,controlTypes.Role.TABLEBODY):
 			ti=self.treeInterceptor
 			try:
 				if ti and ti.isReady and ti.isNVDAObjectPartOfLayoutTable(self):
@@ -688,7 +688,7 @@ class MSHTML(IAccessible):
 			#Adding an ARIA landmark or unknown role to a DIV or NAV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
 			# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
 			# E.g. row (#2780)
-			(self.HTMLNodeName in ("DIV","NAV") and self.role==controlTypes.ROLE_GROUPING)
+			(self.HTMLNodeName in ("DIV","NAV") and self.role==controlTypes.Role.GROUPING)
 		):
 			title=self.HTMLAttributes['title']
 			# #2121: MSHTML sometimes returns a node for the title attribute.
@@ -720,7 +720,7 @@ class MSHTML(IAccessible):
 			return value
 		IARole=self.IAccessibleRole
 		# value is not useful on certain nodes that just expose a URL, or they  have other ways of getting their content (#4976 - editble combos).
-		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT) or (IARole==oleacc.ROLE_SYSTEM_COMBOBOX and controlTypes.STATE_EDITABLE in self.states):
+		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT) or (IARole==oleacc.ROLE_SYSTEM_COMBOBOX and controlTypes.State.EDITABLE in self.states):
 			return ""
 		else:
 			return super(MSHTML,self).value
@@ -763,7 +763,7 @@ class MSHTML(IAccessible):
 			nodeName=self.HTMLNodeName
 			if nodeName:
 				if nodeName in ("OBJECT","EMBED","APPLET"):
-					return controlTypes.ROLE_EMBEDDEDOBJECT
+					return controlTypes.Role.EMBEDDEDOBJECT
 				if self.HTMLNodeHasAncestorIAccessible or nodeName in (
 					"BODY",
 					"FRAMESET",
@@ -775,16 +775,16 @@ class MSHTML(IAccessible):
 					"ARTICLE",
 					"FIELDSET",
 				):
-					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_SECTION)
+					return nodeNamesToNVDARoles.get(nodeName,controlTypes.Role.SECTION)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
-			if controlTypes.STATE_LINKED in states:
-				return controlTypes.ROLE_LINK
+			if controlTypes.State.LINKED in states:
+				return controlTypes.Role.LINK
 		role=super(MSHTML,self).role
 		#IE uses a MSAA role of ROLE_SYSTEM_TEXT with no readonly state for unsupported or future tags with an explicit ARIA role.
 		#If this is the case, force the role to staticText so this is not confused as a real edit field.
-		if role==controlTypes.ROLE_EDITABLETEXT and ariaRole and ariaRole!="textbox":
-			role=controlTypes.ROLE_STATICTEXT
+		if role==controlTypes.Role.EDITABLETEXT and ariaRole and ariaRole!="textbox":
+			role=controlTypes.Role.STATICTEXT
 		return role
 
 	def _get_states(self):
@@ -799,36 +799,36 @@ class MSHTML(IAccessible):
 		htmlRequired='required' in self.HTMLAttributes
 		ariaRequired=self.HTMLAttributes['aria-required']
 		if htmlRequired or ariaRequired=="true":
-			states.add(controlTypes.STATE_REQUIRED)
+			states.add(controlTypes.State.REQUIRED)
 		ariaSelected=self.HTMLAttributes['aria-selected']
 		if ariaSelected=="true":
-			states.add(controlTypes.STATE_SELECTED)
+			states.add(controlTypes.State.SELECTED)
 		elif ariaSelected=="false":
-			states.discard(controlTypes.STATE_SELECTED)
+			states.discard(controlTypes.State.SELECTED)
 		ariaExpanded=self.HTMLAttributes['aria-expanded']
 		if ariaExpanded=="true":
-			states.add(controlTypes.STATE_EXPANDED)
+			states.add(controlTypes.State.EXPANDED)
 		elif ariaExpanded=="false":
-			states.add(controlTypes.STATE_COLLAPSED)
+			states.add(controlTypes.State.COLLAPSED)
 		ariaInvalid=self.HTMLAttributes['aria-invalid']
 		if ariaInvalid=="true":
-			states.add(controlTypes.STATE_INVALID_ENTRY)
+			states.add(controlTypes.State.INVALID_ENTRY)
 		ariaGrabbed=self.HTMLAttributes['aria-grabbed']
 		if ariaGrabbed=="true":
-			states.add(controlTypes.STATE_DRAGGING)
+			states.add(controlTypes.State.DRAGGING)
 		elif ariaGrabbed=="false":
-			states.add(controlTypes.STATE_DRAGGABLE)
+			states.add(controlTypes.State.DRAGGABLE)
 		ariaDropeffect=self.HTMLAttributes['aria-dropeffect']
 		if ariaDropeffect and ariaDropeffect!="none":
-			states.add(controlTypes.STATE_DROPTARGET)
+			states.add(controlTypes.State.DROPTARGET)
 		if self.HTMLAttributes["aria-hidden"]=="true":
-			states.add(controlTypes.STATE_INVISIBLE)
+			states.add(controlTypes.State.INVISIBLE)
 		if self.isContentEditable:
-			states.add(controlTypes.STATE_EDITABLE)
-			states.discard(controlTypes.STATE_READONLY)
+			states.add(controlTypes.State.EDITABLE)
+			states.discard(controlTypes.State.READONLY)
 		nodeName=self.HTMLNodeName
 		if nodeName=="TEXTAREA":
-			states.add(controlTypes.STATE_MULTILINE)
+			states.add(controlTypes.State.MULTILINE)
 		# #4667: Internet Explorer 11 correctly fires focus events for aria-activeDescendant, but fails to set the focused state.
 		# Therefore check aria-activeDescendant manually and set these states if this is the active descendant. 
 		try:
@@ -838,8 +838,8 @@ class MSHTML(IAccessible):
 		if activeElement:
 			activeID=activeElement.getAttribute('aria-activedescendant')
 			if activeID and activeID==self.HTMLNode.ID:
-				states.add(controlTypes.STATE_FOCUSABLE)
-				states.add(controlTypes.STATE_FOCUSED)
+				states.add(controlTypes.State.FOCUSABLE)
+				states.add(controlTypes.State.FOCUSED)
 		return states
 
 	def _get_isContentEditable(self):
@@ -930,7 +930,7 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).lastChild
 
 	def _get_columnNumber(self):
-		if not self.role==controlTypes.ROLE_TABLECELL or not self.HTMLNode:
+		if not self.role==controlTypes.Role.TABLECELL or not self.HTMLNode:
 			raise NotImplementedError
 		try:
 			return self.HTMLNode.cellIndex+1
@@ -938,7 +938,7 @@ class MSHTML(IAccessible):
 			raise NotImplementedError
 
 	def _get_rowNumber(self):
-		if not self.role==controlTypes.ROLE_TABLECELL or not self.HTMLNode:
+		if not self.role==controlTypes.Role.TABLECELL or not self.HTMLNode:
 			raise NotImplementedError
 		HTMLNode=self.HTMLNode
 		while HTMLNode:
@@ -950,7 +950,7 @@ class MSHTML(IAccessible):
 		raise NotImplementedError
 
 	def _get_rowCount(self):
-		if self.role!=controlTypes.ROLE_TABLE or not self.HTMLNode:
+		if self.role!=controlTypes.Role.TABLE or not self.HTMLNode:
 			raise NotImplementedError
 		try:
 			return len([x for x in self.HTMLNode.rows])
@@ -999,7 +999,7 @@ class MSHTML(IAccessible):
 		super(MSHTML,self).setFocus()
 
 	def _get_table(self):
-		if self.role not in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW) or not self.HTMLNode:
+		if self.role not in (controlTypes.Role.TABLECELL,controlTypes.Role.TABLEROW) or not self.HTMLNode:
 			return None
 		HTMLNode=self.HTMLNode
 		while HTMLNode:
@@ -1075,7 +1075,7 @@ class V6ComboBox(IAccessible):
 
 	def event_valueChange(self):
 		focus = api.getFocusObject()
-		if controlTypes.STATE_FOCUSED not in self.states or focus.role != controlTypes.ROLE_COMBOBOX:
+		if controlTypes.State.FOCUSED not in self.states or focus.role != controlTypes.Role.COMBOBOX:
 			# This combo box is not focused.
 			return super(V6ComboBox, self).event_valueChange()
 		# This combo box is focused. However, the value change is not fired on the real focus object.
@@ -1121,7 +1121,7 @@ class Body(MSHTML):
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		# We must override this because we override parent to skip the MSAAHTML Registered Handler client,
 		# which might have the focused state.
-		if controlTypes.STATE_FOCUSED in self.states:
+		if controlTypes.State.FOCUSED in self.states:
 			return True
 		parent = super(Body, self).parent
 		if not parent:
@@ -1168,10 +1168,10 @@ class RootClient(IAccessible):
 	description = None
 
 class MSAATextLeaf(IAccessible):
-	role=controlTypes.ROLE_STATICTEXT
+	role=controlTypes.Role.STATICTEXT
 
 class Math(MSHTML):
-	role = controlTypes.ROLE_MATH
+	role = controlTypes.Role.MATH
 
 	def _get_mathMl(self):
 		import mathPres
