@@ -104,7 +104,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 			elif escapement > 0:
 				formatField["text-position"] = TextPosition.SUPERSCRIPT
 			else:
-				textPos = "baseline"
+				formatField["text-position"] = TextPosition.BASELINE
 		except KeyError:
 			pass
 		try:
