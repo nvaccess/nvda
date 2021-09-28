@@ -121,7 +121,7 @@ def normalizeIA2TextFormatField(formatField):
 	try:
 		formatField["text-position"] = TextPosition(formatField.pop("text-position"))
 	except KeyError:
-		formatField["text-position"] = TextPosition.UNDEFINED
+		formatField["text-position"] = TextPosition.BASELINE
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
