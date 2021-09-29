@@ -433,21 +433,22 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		# Move the caret to the next sentence in the requested direction.
 		legacyInfo = LegacyWordDocumentTextInfo(self, textInfos.POSITION_CARET)
 		legacyInfo.move(textInfos.UNIT_SENTENCE, direction)
-		legacyInfo.updateCaret()
-		# Fetch the new caret position (start of the next sentence) with UI Automation.
-		startInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		# Save the start of the sentence for future use
+		legacyStart = legacyInfo.copy()
 		# With the legacy object model,
 		# Move the caret to the end of the new sentence.
 		legacyInfo.move(textInfos.UNIT_SENTENCE, 1)
 		legacyInfo.updateCaret()
-		# Fetch the new caret position (end of the next sentence) with UI automation.
+		# Fetch the caret position (end of the next sentence) with UI automation.
 		endInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		# Move the caret back to the start of the next sentence,
+		# where it should be left for the user.
+		legacyStart.updateCaret()
+		# Fetch the new caret position (start of the next sentence) with UI Automation.
+		startInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 		# Make a UI automation text range spanning the entire next sentence.
 		info = startInfo.copy()
 		info.end = endInfo.end
-		# Move the caret back to the start of the next sentence,
-		# where it should be left for the user.
-		startInfo.updateCaret()
 		# Speak the sentence moved to
 		speech.speakTextInfo(info, unit=textInfos.UNIT_SENTENCE, reason=controlTypes.OutputReason.CARET)
 		# Forget the word currently being typed as the user has moved the caret somewhere else.
