@@ -296,8 +296,13 @@ class UIATextInfo(textInfos.TextInfo):
 				if UIAHandler.AnnotationType_GrammarError in annotationTypes:
 					formatField["invalid-grammar"]=True
 			if formatConfig["reportComments"]:
-				if UIAHandler.AnnotationType_Comment in annotationTypes:
-					formatField["comment"]=True
+				cats = self.obj._UIACustomAnnotationTypes
+				if cats.microsoftWord_draftComment.id and cats.microsoftWord_draftComment.id in annotationTypes:
+					formatField["comment"] = textInfos.CommentType.DRAFT
+				elif cats.microsoftWord_resolvedComment.id and cats.microsoftWord_resolvedComment.id in annotationTypes:
+					formatField["comment"] = textInfos.CommentType.RESOLVED
+				elif UIAHandler.AnnotationType_Comment in annotationTypes:
+					formatField["comment"] = True
 			if formatConfig["reportRevisions"]:
 				if UIAHandler.AnnotationType_InsertionChange in annotationTypes:
 					formatField["revision-insertion"]=True

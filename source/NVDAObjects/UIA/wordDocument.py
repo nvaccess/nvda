@@ -32,6 +32,7 @@ from scriptHandler import script
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
 END_OF_ROW_MARK = '\x07'
 
+
 class ElementsListDialog(browseMode.ElementsListDialog):
 
 	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
@@ -80,7 +81,12 @@ def getCommentInfoFromPosition(position):
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
 		# Use Annotation Type Comment if available
-		if typeID == UIAHandler.AnnotationType_Comment:
+		cats = position.obj._UIACustomAnnotationTypes
+		if (
+			typeID == UIAHandler.AnnotationType_Comment
+			or (typeID and typeID == cats.microsoftWord_draftComment)
+			or (typeID and typeID == cats.microsoftWord_resolvedComment)
+		):
 			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)

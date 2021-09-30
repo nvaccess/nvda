@@ -2440,8 +2440,15 @@ def getFormatFieldSpeech(  # noqa: C901
 		oldComment=attrsCache.get("comment") if attrsCache is not None else None
 		if (comment or oldComment is not None) and comment!=oldComment:
 			if comment:
-				# Translators: Reported when text contains a comment.
-				text=_("has comment")
+				if comment is textInfos.CommentType.DRAFT:
+					# Translators: Reported when text contains a draft comment.
+					text = _("has draft comment")
+				elif comment is textInfos.CommentType.RESOLVED:
+					# Translators: Reported when text contains a resolved comment.
+					text = _("has resolved comment")
+				else:  # generic
+					# Translators: Reported when text contains a generic comment.
+					text = _("has comment")
 				textList.append(text)
 			elif extraDetail:
 				# Translators: Reported when text no longer contains a comment.

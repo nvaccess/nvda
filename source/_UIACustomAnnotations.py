@@ -78,9 +78,9 @@ class CustomAnnotationTypesCommon:
 
 	def __init__(self):
 		# Registration of Custom annotation types used across multiple applications or frameworks should go here.
-		# Currently there are none known.
-		# An example registration would look like the following:
-		# self.note = CustomAnnotationTypeInfo(
-		# 	guid=GUID("{4E863D9A-F502-4A67-808F-9E711702D05E}"),
-		# )
-		pass
+		self.microsoftWord_resolvedComment = CustomAnnotationTypeInfo(
+			guid=GUID("{A015030C-5B44-4EAC-B0CC-21BA35DE6D07}"),
+		)
+		self.microsoftWord_draftComment = CustomAnnotationTypeInfo(
+			guid=GUID("{26BAEBC6-591E-4116-BBCF-E9A7996CD169}"),
+		)
