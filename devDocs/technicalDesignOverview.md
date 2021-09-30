@@ -47,7 +47,7 @@ See also:
 - [Accessibility Insights for Windows - Accessibility Insights](https://accessibilityinsights.io/docs/en/windows/overview/#:~:text=Accessibility%20Insights%20for%20Windows%20helps%20developers%20find%20and,the%20element%20or%20setting%20keyboard%20focus%20on%20it.)
 	- Good for UIA, doesn't support MSAA / IA2
 - [Inspect.exe (Windows SDK)](https://docs.microsoft.com/en-us/windows/win32/winauto/inspect-objects)
-	- Handles MSAA and UIA, but not IA2 as far as I can tell.
+	- Handles MSAA and UIA, but not IA2
 
 ### Native APIs
 Some widgets do not expose sufficient information via accessibility APIs to make them fully accessible.
