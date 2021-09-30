@@ -649,3 +649,89 @@ def test_i10840():
 		nextActualSpeech,
 		"column 2  items"
 	)
+
+
+def test_preventDuplicateSpeechFromDescription_browse_downArrow():
+	"""
+	When description matches name/content, it should not be spoken.
+	This prevents duplicate speech.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(["speech", "reportObjectDescriptions"], True)
+
+	_chrome.prepareChrome(
+		f"""
+		<a href="#" title="apple" style="display:block">apple</a>
+		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
+		"""
+	)
+	# Read in browse
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		"link  apple"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		"link  banana"
+	)
+
+
+def test_preventDuplicateSpeechFromDescription_browse_tab():
+	"""
+	When description matches name/content, it should not be spoken.
+	This prevents duplicate speech.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(["speech", "reportObjectDescriptions"], True)
+
+	_chrome.prepareChrome(
+		f"""
+		<a href="#" title="apple" style="display:block">apple</a>
+		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
+		"""
+	)
+	# Read in browse
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"apple  link  apple"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"banana  link  banana"
+	)
+
+
+def preventDuplicateSpeechFromDescription_focus():
+	"""
+	When description matches name/content, it should not be spoken.
+	This prevents duplicate speech.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(["speech", "reportObjectDescriptions"], True)
+
+	_chrome.prepareChrome(
+		f"""
+		<a href="#" title="apple" style="display:block">apple</a>
+		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
+		"""
+	)
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"apple  link  apple"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"banana  link  banana"
+	)
