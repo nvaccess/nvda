@@ -40,6 +40,7 @@ See also:
 
 #### Tools for investigating Accessibility APIs
 
+- Using [NVDA Object Navigation](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#ObjectNavigation) and [logging developer information](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#LogViewer).
 - [Accessibility Viewer (aViewer)](https://github.com/ThePacielloGroup/aviewer/)
 	- handles MSAA, IA2, UIA but can be a bit buggy
 	- tends to provide user friendly display strings that make it harder to map back to raw values
