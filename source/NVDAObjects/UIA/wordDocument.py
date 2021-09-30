@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2016-2021 NV Access Limited, Joseph Lee, Jakub Lukowicz
 
-from comtypes import COMError
+from comtypes import COMError, GUID
 from collections import defaultdict
 import textInfos
 import eventHandler
@@ -19,12 +19,43 @@ from UIAUtils import *
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase
 from scriptHandler import script
+from _UIACustomAnnotations import CustomAnnotationTypeInfo
 
 
 """Support for Microsoft Word via UI Automation."""
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
 END_OF_ROW_MARK = '\x07'
+
+
+class WordCustomAnnotationTypes:
+	""" UIA 'custom annotation types' specific to mS Word.
+	Once registered, all subsequent registrations will return the same ID value.
+	This class should be used as a singleton via WordCustomAnnotationTypes.get()
+	to prevent unnecessary work by repeatedly interacting with UIA.
+	"""
+	#: Singleton instance
+	_instance: "Optional[WordCustomAnnotationTypes]" = None
+
+	@classmethod
+	def get(cls) -> "WordCustomAnnotationTypes":
+		"""Get the singleton instance or initialise it.
+		"""
+		if cls._instance is None:
+			cls._instance = cls()
+		return cls._instance
+
+	def __init__(self):
+		self.bookmark = CustomAnnotationTypeInfo(
+			guid=GUID("{25330951-A372-4DB9-A88A-85137AD008D2}"),
+		)
+		self.resolvedComment = CustomAnnotationTypeInfo(
+			guid=GUID("{A015030C-5B44-4EAC-B0CC-21BA35DE6D07}"),
+		)
+		self.draftComment = CustomAnnotationTypeInfo(
+			guid=GUID("{26BAEBC6-591E-4116-BBCF-E9A7996CD169}"),
+		)
+
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
@@ -390,6 +421,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
+	_UIAWordCustomAnnotationTypes = WordCustomAnnotationTypes.get()
 
 	def _get_role(self):
 		role=super(WordDocumentNode,self).role
