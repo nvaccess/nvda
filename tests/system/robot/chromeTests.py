@@ -696,12 +696,12 @@ def test_preventDuplicateSpeechFromDescription_browse_tab():
 	actualSpeech = _chrome.getSpeechAfterKey('tab')
 	_asserts.strings_match(
 		actualSpeech,
-		"apple  link  apple"
+		"apple  link"
 	)
 	actualSpeech = _chrome.getSpeechAfterKey('tab')
 	_asserts.strings_match(
 		actualSpeech,
-		"banana  link  banana"
+		"banana  link"
 	)
 
 
@@ -728,10 +728,10 @@ def preventDuplicateSpeechFromDescription_focus():
 	actualSpeech = _chrome.getSpeechAfterKey('tab')
 	_asserts.strings_match(
 		actualSpeech,
-		"apple  link  apple"
+		"apple  link"
 	)
 	actualSpeech = _chrome.getSpeechAfterKey('tab')
 	_asserts.strings_match(
 		actualSpeech,
-		"banana  link  banana"
+		"banana  link"
 	)
