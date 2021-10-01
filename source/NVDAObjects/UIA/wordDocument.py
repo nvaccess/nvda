@@ -427,6 +427,8 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			return
 		if not self.WinwordSelectionObject:
 			# Legacy object model not available.
+			# Translators: a message when navigating by sentence is unavailable in MS Word
+			ui.message(_("Navigating by sentence not supported in this document"))
 			gesture.send()
 			return
 		# Using the legacy object model,
