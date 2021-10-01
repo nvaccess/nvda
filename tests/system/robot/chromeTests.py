@@ -649,3 +649,52 @@ def test_i10840():
 		nextActualSpeech,
 		"column 2  items"
 	)
+
+
+def test_mark_browse():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <mark>Kangaroo</mark> is important.</p>
+		</div>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		"The word  highlighted  Kangaroo  out of highlighted  is important."
+	)
+	# Test moving by word
+	actualSpeech = _chrome.getSpeechAfterKey("numpad6")
+	_asserts.strings_match(
+		actualSpeech,
+		"word"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("numpad6")
+	_asserts.strings_match(
+		actualSpeech,
+		"highlighted  Kangaroo  out of highlighted"
+	)
+
+
+def test_mark_focus():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <a href="#"><mark>Kangaroo</mark></a> is important.</p>
+		</div>
+		"""
+	)
+
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"link  highlighted  Kangaroo"
+	)
