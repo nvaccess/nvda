@@ -184,7 +184,7 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a figure.
 	controlTypes.Role.FIGURE: _("fig"),
 	# Translators: Displayed in braille for an object which represents marked (highlighted) content
-	controlTypes.Role.MARKED_CONTENT: _("mrkd"),
+	controlTypes.Role.MARKED_CONTENT: _("hlght"),
 }
 
 positiveStateLabels = {

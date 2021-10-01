@@ -50,10 +50,10 @@ ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
 	[Tags]	aria-at
 	test_ariaCheckbox_browseMode
-ARIA details
-	[Documentation]	Ensure a summary of aria-details is read on command.
+ARIA marked and aria details
+	[Documentation]	Ensure a summary of aria-details is read on command from a mark element
 	[Tags]	annotations
-	test aria details
+	test_mark_aria_details
 i12147
 	[Documentation]	New focus target should be announced if the triggering element is removed when activated
 	test_i12147
