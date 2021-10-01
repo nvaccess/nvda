@@ -12,6 +12,7 @@ What's New in NVDA
  - For technical details on NVDA's implementation of this specification, see https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
 - Add support for the VisioBraille Vario 4 Braille Device. (#12607)
 - Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
+- In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
 -
 
 
@@ -48,7 +49,6 @@ If you need this functionality please assign a gesture to the appropriate script
 - When reading emails in Outlook and NVDA is accessing the message with UI Automation, certain tables are now marked as layout tables, which means they will no longer be reported by default. (#11430)
 - A rare error when changing audio devices has been fixed. (#12620)
 - Routing keys on Braille displays supported by the HID Braille driver are no longer reversed. (#12860)
-- Ensure the Windows 11 system tray calendar reports the day of the week in full. (#12757)
 - Input with literary braille tables should behave more reliably when in edit fields. (#12667)
 - When navigating the Windows system tray calendar, NVDA now reports the day of the week in full. (#12757)
 - When using a Chinese input method such as Taiwan - Microsoft Quick in Microsoft Word, scrolling the braille display forward and backward no longer incorrectly keeps jumping back to the original caret position. (#12855)
