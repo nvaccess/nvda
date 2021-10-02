@@ -853,6 +853,12 @@ class UIATextInfo(textInfos.TextInfo):
 		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
 
 	def move(self,unit,direction,endPoint=None):
+		# #12808: Store the old range in case we need to restore it
+		# (see below).
+		if direction > 0 and self.isCollapsed:
+			oldRange = self._rangeObj.clone()
+		else:
+			oldRange = None
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
 		if endPoint=="start":
 			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
@@ -860,6 +866,19 @@ class UIATextInfo(textInfos.TextInfo):
 			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_End,UIAUnit,direction)
 		else:
 			res=self._rangeObj.Move(UIAUnit,direction)
+		# #12808: When attempting to move a collapsed range past the end of the
+		# document, modern UIA providers will indicate a successful forward
+		# move and set the range to POSITION_LAST. If a provider does this,
+		# we must be at the end, so just act as if we can't move forward.
+		if res and oldRange:
+			endInfo = self.obj.makeTextInfo(textInfos.POSITION_LAST)
+			if self == endInfo:
+				log.debugWarning(
+					f"Forward movement of {res} returned but range would be "
+					"degenerate at end. Assuming end of document."
+				)
+				self._rangeObj = oldRange
+				res = 0
 		#Some Implementations of Move and moveEndpointByUnit return a positive number even if the direction is negative
 		if direction<0 and res>0:
 			res=0-res
