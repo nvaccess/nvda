@@ -7,5 +7,5 @@ foreach ($syms in
 	"source\lib64\*.dll", "source\lib64\*.exe", "source\lib64\*.pdb",
 	"source\synthDrivers\*.dll", "source\synthDrivers\*.pdb"
 ) {
-	& $env:symstore add /s symbols /compress -:NOREFS /t NVDA /f $syms
+	& $env:symstore add -:NOREFS /s symbols /compress /t NVDA /f $syms
 }
