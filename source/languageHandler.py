@@ -439,16 +439,13 @@ def normalizeLanguage(lang) -> Optional[str]:
 	return "_".join(ld)
 
 
-def useImperialMeasurements(localeName: Optional[str] = None) -> bool:
+def useImperialMeasurements() -> bool:
 	"""
 	Whether or not measurements should be reported as imperial, rather than metric.
 	"""
-	if not localeName:
-		localeName = getLanguage()
-	localeName = normalizeLocaleForWin32(localeName)
 	bufLength = 2
 	buf = ctypes.create_unicode_buffer(bufLength)
-	if not winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE.IMEASURE, buf, bufLength):
+	if not winKernel.kernel32.GetLocaleInfoEx(None, LOCALE.IMEASURE, buf, bufLength):
 		raise RuntimeError("LOCALE.IMEASURE not supported")
 	return buf.value == '1'
 
