@@ -43,6 +43,7 @@ class LOCALE(enum.IntEnum):
 	# https://docs.microsoft.com/en-us/windows/win32/intl/locale-information-constants
 	SLANGUAGE = 0x2
 	SLIST = 0xC
+	IMEASURE = 0xD
 	SLANGDISPLAYNAME = 0x6f
 	SENGLISHLANGUAGENAME = 0x00001001
 	SENGLISHCOUNTRYNAME = 0x00001002
@@ -436,6 +437,21 @@ def normalizeLanguage(lang) -> Optional[str]:
 	if len(ld)>=2:
 		ld[1]=ld[1].upper()
 	return "_".join(ld)
+
+
+def useImperialMeasurements(localeName: Optional[str] = None) -> bool:
+	"""
+	Whether or not measurements should be reported as imperial, rather than metric.
+	"""
+	if not localeName:
+		localeName = getLanguage()
+	localeName = normalizeLocaleForWin32(localeName)
+	bufLength = 2
+	buf = ctypes.create_unicode_buffer(bufLength)
+	if not winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE.IMEASURE, buf, bufLength):
+		raise RuntimeError("LOCALE.IMEASURE not supported")
+	return buf.value == '1'
+
 
 # Map Windows primary locale identifiers to locale names
 # Note these are only primary language codes (I.e. no country information)
