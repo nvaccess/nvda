@@ -62,32 +62,27 @@ void OcSpeech::setCallback(ocSpeech_Callback fn) {
 }
 
 fire_and_forget OcSpeech::speak(hstring text) {
-	// Ensure that work is performed on a background thread.
-	co_await resume_background();
+	try {
+		// Ensure that work is performed on a background thread.
+		co_await resume_background();
 
-	auto markersStr = make_shared<wstring>();
-	SpeechSynthesisStream speechStream{ nullptr };
-	try {
+		auto markersStr = make_shared<wstring>();
+		SpeechSynthesisStream speechStream{ nullptr };
+
 		speechStream = co_await synth.SynthesizeSsmlToStreamAsync(text);
-	} catch (hresult_error const& e) {
-		LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-		callback(NULL, 0, NULL);
-		co_return;
-	}
-	// speechStream.Size() is 64 bit, but Buffer can only take 32 bit.
-	// We shouldn't get values above 32 bit in reality.
-	const unsigned int size = static_cast<unsigned int>(speechStream.Size());
-	Buffer buffer = Buffer{ size };
-	IVectorView<IMediaMarker> markers = speechStream.Markers();
-	for (auto const& marker : markers) {
-		if (markersStr->length() > 0) {
-			*markersStr += L"|";
+		// speechStream.Size() is 64 bit, but Buffer can only take 32 bit.
+		// We shouldn't get values above 32 bit in reality.
+		const unsigned int size = static_cast<unsigned int>(speechStream.Size());
+		Buffer buffer = Buffer{ size };
+		IVectorView<IMediaMarker> markers = speechStream.Markers();
+		for (auto const& marker : markers) {
+			if (markersStr->length() > 0) {
+				*markersStr += L"|";
+			}
+			*markersStr += marker.Text();
+			*markersStr += L":";
+			*markersStr += to_wstring(marker.Time().count());
 		}
-		*markersStr += marker.Text();
-		*markersStr += L":";
-		*markersStr += to_wstring(marker.Time().count());
-	}
-	try {
 		co_await speechStream.ReadAsync(buffer, size, InputStreamOptions::None);
 		// Data has been read from the speech stream.
 		// Pass it to the callback.

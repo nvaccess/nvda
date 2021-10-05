@@ -49,9 +49,10 @@ void __stdcall uwpOcr_terminate(UwpOcr* instance) {
 }
 
 fire_and_forget UwpOcr::recognize(SoftwareBitmap bitmap) {
-	// Ensure that work is performed on a background thread.
-	co_await resume_background();
 	try {
+		// Ensure that work is performed on a background thread.
+		co_await resume_background();
+
 		auto result = co_await engine.RecognizeAsync(bitmap);
 		auto lines = result.Lines();
 		auto jLines = JsonArray{};
