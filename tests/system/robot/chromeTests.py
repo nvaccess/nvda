@@ -681,7 +681,7 @@ def test_mark_focus():
 	_chrome.prepareChrome(
 		"""
 		<div>
-			<p>The word <a href="#"><mark>Kangaroo</mark></a> is important.</p>
+			<p>The word <mark><a href="#">Kangaroo</a></mark> is important.</p>
 		</div>
 		"""
 	)
@@ -696,5 +696,5 @@ def test_mark_focus():
 	actualSpeech = _chrome.getSpeechAfterKey('tab')
 	_asserts.strings_match(
 		actualSpeech,
-		"link  highlighted  Kangaroo"
+		"highlighted\nKangaroo  link"
 	)
