@@ -1015,6 +1015,12 @@ class UIA(Window):
 				clsList.append(SearchField)
 		except COMError:
 			log.debug("Failed to locate UIA search field", exc_info=True)
+		# #12790: detect suggestions list views firing layout invalidated event.
+		try:
+			if UIAAutomationId == "SuggestionsList":
+				clsList.append(SuggestionsList)
+		except COMError:
+			log.debug("Could not detect suggestions list", exc_info=True)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
@@ -1271,6 +1277,14 @@ class UIA(Window):
 			cache=False
 		)
 		return self.UIATextPattern
+
+	def _get_UIATableItemPattern(self):
+		self.UIATableItemPattern = self._getUIAPattern(
+			UIAHandler.UIA_TableItemPatternId,
+			UIAHandler.IUIAutomationTableItemPattern,
+			cache=False
+		)
+		return self.UIATableItemPattern
 
 	def _get_UIATextEditPattern(self):
 		if not isinstance(UIAHandler.handler.clientObject,UIAHandler.IUIAutomation3):
@@ -1641,6 +1655,15 @@ class UIA(Window):
 			return val
 		return 1
 
+	def _getTextFromHeaderElement(self, element: UIAHandler.IUIAutomationElement) -> typing.Optional[str]:
+		obj = UIA(
+			windowHandle=self.windowHandle,
+			UIAElement=element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		)
+		if not obj:
+			return None
+		return obj.makeTextInfo(textInfos.POSITION_ALL).text
+
 	def _get_rowHeaderText(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
 		if val==UIAHandler.handler.reservedNotSupportedValue:
@@ -1651,9 +1674,9 @@ class UIA(Window):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
-			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-			if not obj: continue
-			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			text = self._getTextFromHeaderElement(e)
+			if not text:
+				continue
 			textList.append(text)
 		return " ".join(textList)
 
@@ -1679,9 +1702,9 @@ class UIA(Window):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
-			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-			if not obj: continue
-			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			text = self._getTextFromHeaderElement(e)
+			if not text:
+				continue
 			textList.append(text)
 		return " ".join(textList)
 
@@ -2047,15 +2070,40 @@ class SearchField(EditableTextWithSuggestions, UIA):
 			self.event_suggestionsClosed()
 
 
-class SuggestionListItem(UIA):
-	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+class SuggestionsList(UIA):
+	"""A list of suggestions in response to search terms being entered.
+	This list shows suggestions without selecting the top suggestion.
+	Examples include suggestions lists in modern apps such as Settings app in Windows 10 and later.
 	"""
 
-	role=controlTypes.Role.LISTITEM
+	def event_UIA_layoutInvalidated(self):
+		# #12790: announce number of items found
+		if self.childCount == 0:
+			return
+		# In some cases, suggestions list fires layout invalidated event repeatedly.
+		# This is the case with Microsoft Store's search field.
+		speech.cancelSpeech()
+		# Item count must be the last one spoken.
+		suggestionsCount: int = self.childCount
+		suggestionsMessage = (
+			# Translators: part of the suggestions count message for one suggestion.
+			_("1 suggestion")
+			# Translators: part of the suggestions count message (for example: 2 suggestions).
+			if suggestionsCount == 1 else _("{} suggestions").format(suggestionsCount)
+		)
+		ui.message(suggestionsMessage)
+
+
+class SuggestionListItem(UIA):
+	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+	Unlike suggestions list class, top suggestion is automatically selected.
+	"""
+
+	role = controlTypes.Role.LISTITEM
 
 	def event_UIA_elementSelected(self):
-		focusControllerFor=api.getFocusObject().controllerFor
-		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
+		focusControllerFor = api.getFocusObject().controllerFor
+		if len(focusControllerFor) > 0 and focusControllerFor[0].appModule is self.appModule and self.name:
 			speech.cancelSpeech()
 			api.setNavigatorObject(self, isFocus=True)
 			self.reportFocus()
