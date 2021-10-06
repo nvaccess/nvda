@@ -64,7 +64,7 @@ ARIA description Focus Mode
 	[Documentation]	Navigate to a span with aria-description in focus mode
 	test_ariaDescription_focusMode
 ARIA description Browse Mode
-	[Documentation]	Navigate to a span with aria-description in browse mode
+	[Documentation]	Navigate (down arrow, in browse mode) aria-description is read, other sources of description are not.
 	test_ariaDescription_browseMode
 ARIA description Say All
 	[Documentation]	Say all, contents includes aria-description
@@ -76,5 +76,3 @@ Prevent Duplicate Speech From Description while in Focus mode
 	preventDuplicateSpeechFromDescription_focus
 Prevent Duplicate Speech From Description while in Browse mode with tab nav
 	test_preventDuplicateSpeechFromDescription_browse_tab
-Prevent Duplicate Speech From Description while in Browse mode with down arrow nav
-	test_preventDuplicateSpeechFromDescription_browse_downArrow
