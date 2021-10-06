@@ -44,6 +44,12 @@ import ui
 import winVersion
 
 
+paragraphIndentIDs = {
+	UIAHandler.UIA_IndentationFirstLineAttributeId: "first-line-indent",
+	UIAHandler.UIA_IndentationLeadingAttributeId: "left-indent",
+	UIAHandler.UIA_IndentationTrailingAttributeId: "right-indent",
+}
+
 class UIATextInfo(textInfos.TextInfo):
 
 	_cache_controlFieldNVDAObjectClass=True
@@ -169,6 +175,8 @@ class UIATextInfo(textInfos.TextInfo):
 					UIAHandler.UIA_IsSuperscriptAttributeId,
 					UIAHandler.UIA_IsSubscriptAttributeId
 				})
+			if formatConfig["reportParagraphIndentation"]:
+				IDs.update(set(paragraphIndentIDs))
 			if formatConfig["reportAlignment"]:
 				IDs.add(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
 			if formatConfig["reportColor"]:
@@ -224,6 +232,21 @@ class UIATextInfo(textInfos.TextInfo):
 			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField["style"]=val
+		if formatConfig["reportParagraphIndentation"]:
+			for ID, fieldAttr in paragraphIndentIDs.items():
+				val = fetcher.getValue(ID, ignoreMixedValues=ignoreMixedValues)
+				if isinstance(val, float):
+					# val is in points (1/72 of an inch)
+					val /= 72.0
+					if languageHandler.useImperialMeasurements():
+						# Translators: a measurement in inches
+						valText = _("{val:.2f} in").format(val=val)
+					else:
+						# Convert from inches to centermetres
+						val *= 2.54
+						# Translators: a measurement in centermetres
+						valText = _("{val:.2f} cm").format(val=val)
+					formatField[fieldAttr] = valText
 		if formatConfig["reportAlignment"]:
 			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val==UIAHandler.HorizontalTextAlignment_Left:
