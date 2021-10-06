@@ -41,7 +41,7 @@ See also:
 - [The Linux Foundation IA2 reference](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/)
 - [IA2 event constants](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/_accessible_event_i_d_8idl.html)
   - From the perspective of Windows, the IA2 event constants are considered custom "application specific" event IDs.
-- [Windows event constanstant](https://docs.microsoft.com/en-us/windows/win32/winauto/event-constants)
+- [Windows event constants](https://docs.microsoft.com/en-us/windows/win32/winauto/event-constants)
 
 
 #### Tools for investigating Accessibility APIs
