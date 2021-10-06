@@ -39,7 +39,7 @@ Several accessibility APIs are used, including Microsoft Active Accessibility (M
 See also:
 - [Stack Overflow: "What is the difference between IAccessible, IAccessible2, UIAutomation and MSAA?"](https://stackoverflow.com/a/55130227)
 - [The Linux Foundation IA2 reference](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/)
-- [IA2 event constants](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/_accessible_event_i_d_8idl.html#ae26846b6d521727ab696d20c3f43c0b5)
+- [IA2 event constants](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/_accessible_event_i_d_8idl.html)
   - From the perspective of Windows, the IA2 event constants are considered custom "application specific" event IDs.
 - [Windows event constanstant](https://docs.microsoft.com/en-us/windows/win32/winauto/event-constants)
 
