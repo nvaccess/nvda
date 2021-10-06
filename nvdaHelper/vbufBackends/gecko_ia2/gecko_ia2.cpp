@@ -541,7 +541,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	if(pacc->get_accName(varChild,&name)!=S_OK)
 		name=NULL;
 
-	std::optional<wstring> description{ getAccDescription(pacc, varChild) }; // todo: fix usages to use optional
+	std::optional<wstring> description{ getAccDescription(pacc, varChild) };
 	if (description.has_value()) {
 		parentNode->addAttribute(L"description", description.value());
 	}
