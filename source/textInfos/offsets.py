@@ -601,7 +601,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def move(self,unit,direction,endPoint=None):
 		if direction==0:
-			return 0;
+			return 0
 		if endPoint=="end":
 			offset=self._endOffset
 		elif endPoint=="start":
@@ -637,7 +637,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			self._endOffset=offset
 		else:
 			if (direction>0 and offset<=self._startOffset) or (direction<0 and offset>=self._startOffset) or offset<lowLimit or offset>=highLimit:
-				return 0
+				self._startOffset = self._endOffset = max(self._getStoryLength() - 1, 0)
+				return count
 			self._startOffset=self._endOffset=offset
 		if self._startOffset>self._endOffset:
 			tempOffset=self._startOffset

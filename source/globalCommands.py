@@ -1329,7 +1329,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
-		if res==0:
+		if res == 0 or info == info.obj.makeTextInfo(textInfos.POSITION_LAST):
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
 		else:
@@ -1400,7 +1400,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_WORD)
 		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
-		if res==0:
+		if res == 0 or info == info.obj.makeTextInfo(textInfos.POSITION_LAST):
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
 		else:
