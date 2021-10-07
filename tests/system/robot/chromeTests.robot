@@ -60,6 +60,21 @@ i12147
 Table in style display: table
 	[Documentation]	Properly announce table row/column count and working table navigation for a HTML table in a div with style display: table
 	test_tableInStyleDisplayTable
+ARIA roleDescription focus
+	[Documentation]	report focusing an element with a custom role	
+	test_ariaRoleDescription_focus
+ARIA roleDescription inline browse mode
+	[Documentation]	Read an inline element with a custom role in browse mode
+	test_ariaRoleDescription_inline_browseMode
+ARIA roleDescription block browse mode
+	[Documentation]	Read an block element with a custom role in browse mode
+	test_ariaRoleDescription_block_browseMode
+ARIA roleDescription inline content editable
+	[Documentation]	Read an inline element with a custom role in content editables 
+	test_ariaRoleDescription_inline_contentEditable
+ARIA roleDescription block content editable
+	[Documentation]	Read an block element with a custom role in content editables 
+	test_ariaRoleDescription_block_contentEditable
 ARIA description Focus Mode
 	[Documentation]	Navigate to a span with aria-description in focus mode
 	test_ariaDescription_focusMode
