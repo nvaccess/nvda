@@ -67,7 +67,7 @@ ARIA roleDescription inline browse mode
 	[Documentation]	Read an inline element with a custom role in browse mode
 	test_ariaRoleDescription_inline_browseMode
 ARIA roleDescription block browse mode
-	[Documentation]	Read an block element with a custom role in browse mode
+	[Documentation]	Read a block element with a custom role in browse mode
 	test_ariaRoleDescription_block_browseMode
 ARIA roleDescription inline content editable
 	[Documentation]	Read an inline element with a custom role in content editables 
