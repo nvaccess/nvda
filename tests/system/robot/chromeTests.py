@@ -1043,6 +1043,7 @@ def test_ensureNoBrowseModeDescription():
 		actualSpeech,
 		SPEECH_SEP.join([
 			"link",  # role description
+			# No link description (from title)
 			"Apple",  # link name / contents
 		]),
 		message="Test browse mode with reportObjectDescriptions=True"
@@ -1051,7 +1052,7 @@ def test_ensureNoBrowseModeDescription():
 		actualBraille,
 		BRAILLE_SEP.join([
 			"lnk",  # role description
-			"Cat",  # link description (from title)
+			# No link description (from title)
 			"Apple",  # link name / contents
 		]),
 		message="Test browse mode with reportObjectDescriptions=True"
@@ -1067,6 +1068,7 @@ def test_ensureNoBrowseModeDescription():
 		actualSpeech,
 		SPEECH_SEP.join([
 			"link",  # role description
+			# No link description (from title)
 			"Apple",  # link name / contents
 		]),
 		message="Test browse mode with reportObjectDescriptions=False"
@@ -1075,6 +1077,7 @@ def test_ensureNoBrowseModeDescription():
 		actualBraille,
 		BRAILLE_SEP.join([
 			"lnk",  # role description
+			# No link description (from title)
 			"Apple",  # link name / contents
 		]),
 		message="Test browse mode with reportObjectDescriptions=False"
@@ -1117,6 +1120,7 @@ def test_ensureNoBrowseModeDescription():
 		SPEECH_SEP.join([
 			"Banana",  # link name / contents
 			"link",  # role description
+			# No link description (from title)
 		]),
 		message="Test focus mode with reportObjectDescriptions=False"
 	)
@@ -1125,6 +1129,7 @@ def test_ensureNoBrowseModeDescription():
 		BRAILLE_SEP.join([
 			"Banana",  # link name / contents
 			"lnk",  # role description
+			# No link description (from title)
 		]),
 		message="Test focus mode with reportObjectDescriptions=False"
 	)
