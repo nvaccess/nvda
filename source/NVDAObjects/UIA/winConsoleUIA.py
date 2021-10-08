@@ -383,7 +383,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 
 	def _get_devInfo(self):
 		info = super().devInfo
-		info.append(f"API level: {self.apiLevel.name}")
+		info.append(f"API level: {self.apiLevel} ({self.apiLevel.name})")
 		return info
 
 	def detectPossibleSelectionChange(self):

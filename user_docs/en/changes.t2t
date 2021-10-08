@@ -52,6 +52,9 @@ If you need this functionality please assign a gesture to the appropriate script
 - Input with literary braille tables should behave more reliably when in edit fields. (#12667)
 - When navigating the Windows system tray calendar, NVDA now reports the day of the week in full. (#12757)
 - When using a Chinese input method such as Taiwan - Microsoft Quick in Microsoft Word, scrolling the braille display forward and backward no longer incorrectly keeps jumping back to the original caret position. (#12855)
+- When accessing Microsoft Word documents via UIA, navigating by sentence (alt+downArrow / alt+upArrow) is again possible. (#9254)
+- When accessing MS Word with UIA, paragraph indenting is now reported. (#12899(
+- When accessing MS Word with UIA, change tracking command and some other localized commands are now reported in Word . (#12904)
 -
 
 
