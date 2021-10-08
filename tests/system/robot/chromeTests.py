@@ -27,7 +27,8 @@ _asserts: _AssertsLib = _getLib("AssertsLib")
 # adds a slight pause to the synthesizer.
 SPEECH_SEP = "  "
 SPEECH_CALL_SEP = '\n'
-
+#: single space is used to separate semantics in braille output.
+BRAILLE_SEP = " "
 
 ARIAExamplesDir = os.path.join(
 	_NvdaLib._locations.repoRoot, "include", "w3c-aria-practices", "examples"
@@ -1010,4 +1011,120 @@ def preventDuplicateSpeechFromDescription_focus():
 	_asserts.strings_match(
 		actualSpeech,
 		"banana  link"
+	)
+
+
+def test_ensureNoBrowseModeDescription():
+	"""
+	Test that option (speech.reportObjectDescriptions default:True)
+	does not result in description in browse mode.
+	"""
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy = _NvdaLib.getSpyLib()
+	# prevent browse / focus mode messages from interfering, 0 means don't show.
+	spy.set_configValue(["braille", "messageTimeout"], 0)
+
+	_chrome.prepareChrome(
+		"\n".join([
+			r'<button>something for focus</button>'
+			r'<a href="#" style="display:block" title="Cat">Apple</a>',
+			# second link to make testing second focus mode tab easier
+			r'<a href="#" style="display:block" title="Fish">Banana</a>',
+		])
+	)
+
+	actualSpeech = _NvdaLib.getSpeechAfterKey('tab')
+	_builtIn.should_contain(actualSpeech, "something for focus")
+
+	# Test Browse mode
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"link",  # role description
+			"Apple",  # link name / contents
+		]),
+		message="Test browse mode with reportObjectDescriptions=True"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		BRAILLE_SEP.join([
+			"lnk",  # role description
+			"Cat",  # link description (from title)
+			"Apple",  # link name / contents
+		]),
+		message="Test browse mode with reportObjectDescriptions=True"
+	)
+
+	# move virtual cursor back up to reset to start position
+	actualSpeech = _NvdaLib.getSpeechAfterKey('upArrow')
+	_builtIn.should_contain(actualSpeech, "something for focus")
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, False)
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"link",  # role description
+			"Apple",  # link name / contents
+		]),
+		message="Test browse mode with reportObjectDescriptions=False"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		BRAILLE_SEP.join([
+			"lnk",  # role description
+			"Apple",  # link name / contents
+		]),
+		message="Test browse mode with reportObjectDescriptions=False"
+	)
+
+	# move virtual cursor back up to reset to start position
+	actualSpeech = _NvdaLib.getSpeechAfterKey('upArrow')
+	_builtIn.should_contain(actualSpeech, "something for focus")
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
+	# Test focus mode
+	actualSpeech = _NvdaLib.getSpeechAfterKey("nvda+space")
+	_asserts.speech_matches(actualSpeech, "Focus mode")
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Apple",  # link name / contents
+			"link",  # role description
+			"Cat",  # link description (from title)
+		]),
+		message="Test focus mode with reportObjectDescriptions=True"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		BRAILLE_SEP.join([
+			"Apple",  # link name / contents
+			"lnk",  # role description
+			"Cat",  # link description (from title)
+		]),
+		message="Test focus mode with reportObjectDescriptions=True"
+	)
+
+	# Use second link to test focus mode when 'reportObjectDescriptions' is off.
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, False)
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Banana",  # link name / contents
+			"link",  # role description
+		]),
+		message="Test focus mode with reportObjectDescriptions=False"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		BRAILLE_SEP.join([
+			"Banana",  # link name / contents
+			"lnk",  # role description
+		]),
+		message="Test focus mode with reportObjectDescriptions=False"
 	)
