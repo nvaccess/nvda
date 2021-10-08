@@ -46,6 +46,11 @@ import core
 import keyboardHandler
 import characterProcessing
 from . import guiHelper
+
+#: The size that settings panel text descriptions should be wrapped at.
+# Ensure self.scaleSize is used to adjust for OS scaling adjustments.
+PANEL_DESCRIPTION_WIDTH = 544
+
 try:
 	import updateCheck
 except RuntimeError:
@@ -1908,6 +1913,13 @@ class InputCompositionPanel(SettingsPanel):
 
 
 class ObjectPresentationPanel(SettingsPanel):
+
+	# Translators: This is a label appearing on the document formatting settings panel.
+	panelDescription = _(
+		"Configure how much information NVDA will present about controls."
+		" These options don't apply to browse mode."
+	)
+
 	# Translators: This is the label for the object presentation panel.
 	title = _("Object Presentation")
 	helpId = "ObjectPresentationSettings"
@@ -1932,6 +1944,12 @@ class ObjectPresentationPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		self.windowText = sHelper.addItem(
+			wx.StaticText(self, label=self.panelDescription)
+		)
+		self.windowText.Wrap(self.scaleSize(PANEL_DESCRIPTION_WIDTH))
+
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
 		reportToolTipsText = _("Report &tooltips")
@@ -2975,7 +2993,7 @@ class AdvancedPanel(SettingsPanel):
 		warningGroup.addItem(warningText)
 
 		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=self.warningExplanation))
-		self.windowText.Wrap(self.scaleSize(544))
+		self.windowText.Wrap(self.scaleSize(PANEL_DESCRIPTION_WIDTH))
 
 		enableAdvancedControlslabel = _(
 			# Translators: This is the label for a checkbox in the Advanced settings panel.
