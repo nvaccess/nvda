@@ -23,6 +23,12 @@ _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 
+#: Double space is used to separate semantics in speech output this typically
+# adds a slight pause to the synthesizer.
+SPEECH_SEP = "  "
+SPEECH_CALL_SEP = '\n'
+
+
 ARIAExamplesDir = os.path.join(
 	_NvdaLib._locations.repoRoot, "include", "w3c-aria-practices", "examples"
 )
@@ -152,7 +158,7 @@ def announce_list_item_when_moving_by_word_or_character():
 	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			"list item  level 1",
 			"b"
 		])
@@ -259,7 +265,7 @@ def test_pr11606():
 	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			"out of link",
 			"space"
 		])
@@ -328,7 +334,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("enter")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			# focus mode turns on
 			"Focus mode",
 			# Focus enters the ARIA treegrid (table)
@@ -522,7 +528,7 @@ def test_ariaDescription_focusMode():
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		"  ".join([
+		SPEECH_SEP.join([
 			"User nearby, Aaron",  # annotation
 			"Here is a sentence that is being edited by someone else.",  # span text
 			"Multiple can edit this.",  # bold paragraph text
@@ -534,7 +540,7 @@ def test_ariaDescription_focusMode():
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		"  ".join([  # two space separator
+		SPEECH_SEP.join([  # two space separator
 			"An element with a role, follow",  # paragraph text
 			"link",  # link role
 			"opens in a new tab",  # link description
@@ -548,7 +554,7 @@ def test_ariaDescription_focusMode():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		"  ".join([
+		SPEECH_SEP.join([
 			"Testing the title attribute,",  # paragraph text
 			"link",  # link role
 			"to google's",  # link contents (name)
@@ -575,7 +581,7 @@ def test_ariaDescription_browseMode():
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		"  ".join([
+		SPEECH_SEP.join([
 			"User nearby, Aaron",  # annotation
 			"Here is a sentence that is being edited by someone else.",  # span text
 			"Multiple can edit this.",  # bold paragraph text
@@ -587,7 +593,7 @@ def test_ariaDescription_browseMode():
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		"  ".join([  # two space separator
+		SPEECH_SEP.join([  # two space separator
 			"An element with a role, follow",  # paragraph text
 			"link",  # link role
 			"opens in a new tab",  # link description
@@ -601,7 +607,7 @@ def test_ariaDescription_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		"  ".join([
+		SPEECH_SEP.join([
 			"Testing the title attribute,",  # paragraph text
 			"link",  # link role
 			"to google's",  # link contents (name)
@@ -626,15 +632,15 @@ def test_ariaDescription_sayAll():
 	# - Chrome 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			"Test page load complete",
 			"edit  multi line  This is a line with no annotation",
-			"  ".join([
+			SPEECH_SEP.join([
 				"User nearby, Aaron",  # annotation
 				"Here is a sentence that is being edited by someone else.",  # span text
 				"Multiple can edit this.",  # bold paragraph text
 			]),
-			"  ".join([  # two space separator
+			SPEECH_SEP.join([  # two space separator
 				"An element with a role, follow",  # paragraph text
 				"link",  # link role
 				"opens in a new tab",  # link description
@@ -643,7 +649,7 @@ def test_ariaDescription_sayAll():
 			]),
 			# 'title' attribute for link ("conduct a search") should not be announced.
 			# too often title is used without screen reader users in mind, and is overly verbose.
-			"  ".join([
+			SPEECH_SEP.join([
 				"Testing the title attribute,",  # paragraph text
 				"link",  # link role
 				# note description missing when sourced from title attribute
@@ -710,10 +716,11 @@ def test_preventDuplicateSpeechFromDescription_browse_tab():
 	- speech.reportObjectDescriptions default:True
 	"""
 	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(["speech", "reportObjectDescriptions"], True)
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
 
 	_chrome.prepareChrome(
-		f"""
+		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
@@ -739,10 +746,11 @@ def preventDuplicateSpeechFromDescription_focus():
 	- speech.reportObjectDescriptions default:True
 	"""
 	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(["speech", "reportObjectDescriptions"], True)
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
 
 	_chrome.prepareChrome(
-		f"""
+		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
