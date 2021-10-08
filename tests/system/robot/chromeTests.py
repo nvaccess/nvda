@@ -48,7 +48,7 @@ def checkbox_labelled_by_inner_element():
 	)
 
 
-def test_aria_details():
+def test_mark_aria_details():
 	_chrome.prepareChrome(
 		"""
 		<div>
@@ -69,7 +69,7 @@ def test_aria_details():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		"The word  marked content  has details  cat  out of marked content  has a comment tied to it."
+		"The word  highlighted  has details  cat  out of highlighted  has a comment tied to it."
 	)
 	# this word has no details attached
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
@@ -87,7 +87,7 @@ def test_aria_details():
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"marked content  has details  cat  out of marked content"
+		"highlighted  has details  cat  out of highlighted"
 	)
 	# read the details summary
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
@@ -839,4 +839,53 @@ def test_i10840():
 	_asserts.strings_match(
 		nextActualSpeech,
 		"column 2  items"
+	)
+
+
+def test_mark_browse():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <mark>Kangaroo</mark> is important.</p>
+		</div>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		"The word  highlighted  Kangaroo  out of highlighted  is important."
+	)
+	# Test moving by word
+	actualSpeech = _chrome.getSpeechAfterKey("numpad6")
+	_asserts.strings_match(
+		actualSpeech,
+		"word"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("numpad6")
+	_asserts.strings_match(
+		actualSpeech,
+		"highlighted  Kangaroo  out of highlighted"
+	)
+
+
+def test_mark_focus():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <mark><a href="#">Kangaroo</a></mark> is important.</p>
+		</div>
+		"""
+	)
+
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"highlighted\nKangaroo  link"
 	)

@@ -41,7 +41,6 @@ pr11606
 	test_pr11606
 ARIA treegrid
 	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
-	# Excluded due to regular failures.
 	test_ariaTreeGrid_browseMode
 ARIA invalid spelling and grammar
 	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
@@ -50,10 +49,16 @@ ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
 	[Tags]	aria-at
 	test_ariaCheckbox_browseMode
+Marked Browse mode
+	[Documentation]	Ensure that Marked content is read in browse mode
+	test_mark_browse
+Marked Focus mode
+	[Documentation]	Ensure that Marked content is read in Focus mode
+	test_mark_focus
 ARIA details
-	[Documentation]	Ensure a summary of aria-details is read on command.
+	[Documentation]	Ensure a summary of aria-details is read on command from a mark element
 	[Tags]	annotations
-	test aria details
+	test_mark_aria_details
 i12147
 	[Documentation]	New focus target should be announced if the triggering element is removed when activated
 	test_i12147
