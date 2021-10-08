@@ -41,7 +41,6 @@ pr11606
 	test_pr11606
 ARIA treegrid
 	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
-	# Excluded due to regular failures.
 	test_ariaTreeGrid_browseMode
 ARIA invalid spelling and grammar
 	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
@@ -50,16 +49,37 @@ ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
 	[Tags]	aria-at
 	test_ariaCheckbox_browseMode
+Marked Browse mode
+	[Documentation]	Ensure that Marked content is read in browse mode
+	test_mark_browse
+Marked Focus mode
+	[Documentation]	Ensure that Marked content is read in Focus mode
+	test_mark_focus
 ARIA details
-	[Documentation]	Ensure a summary of aria-details is read on command.
+	[Documentation]	Ensure a summary of aria-details is read on command from a mark element
 	[Tags]	annotations
-	test aria details
+	test_mark_aria_details
 i12147
 	[Documentation]	New focus target should be announced if the triggering element is removed when activated
 	test_i12147
 Table in style display: table
 	[Documentation]	Properly announce table row/column count and working table navigation for a HTML table in a div with style display: table
 	test_tableInStyleDisplayTable
+ARIA roleDescription focus
+	[Documentation]	report focusing an element with a custom role	
+	test_ariaRoleDescription_focus
+ARIA roleDescription inline browse mode
+	[Documentation]	Read an inline element with a custom role in browse mode
+	test_ariaRoleDescription_inline_browseMode
+ARIA roleDescription block browse mode
+	[Documentation]	Read a block element with a custom role in browse mode
+	test_ariaRoleDescription_block_browseMode
+ARIA roleDescription inline content editable
+	[Documentation]	Read an inline element with a custom role in content editables 
+	test_ariaRoleDescription_inline_contentEditable
+ARIA roleDescription block content editable
+	[Documentation]	Read an block element with a custom role in content editables 
+	test_ariaRoleDescription_block_contentEditable
 ARIA description Focus Mode
 	[Documentation]	Navigate to a span with aria-description in focus mode
 	test_ariaDescription_focusMode
