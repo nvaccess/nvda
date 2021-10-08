@@ -1914,8 +1914,8 @@ class InputCompositionPanel(SettingsPanel):
 
 class ObjectPresentationPanel(SettingsPanel):
 
-	# Translators: This is a label appearing on the document formatting settings panel.
 	panelDescription = _(
+		# Translators: This is a label appearing on the Object Presentation settings panel.
 		"Configure how much information NVDA will present about controls."
 		" These options don't apply to browse mode."
 	)
