@@ -44,10 +44,32 @@ import winVersion
 
 
 paragraphIndentIDs = {
-	UIAHandler.UIA_IndentationFirstLineAttributeId: "first-line-indent",
-	UIAHandler.UIA_IndentationLeadingAttributeId: "left-indent",
-	UIAHandler.UIA_IndentationTrailingAttributeId: "right-indent",
+	UIAHandler.UIA_IndentationFirstLineAttributeId,
+	UIAHandler.UIA_IndentationLeadingAttributeId,
+	UIAHandler.UIA_IndentationTrailingAttributeId,
 }
+
+
+def getIndentValueDisplayString(val):
+	"""A function returning the string to display in formatting info.
+	@param val: an indent value fetched via an UIAHandler.UIA_Indentation*AttributeId attribute.
+	@type: float
+	@return: The string used in formatting information to report the length of an indentation.
+	@rtype: string
+	"""
+	
+	# val is in points (1/72 of an inch)
+	val /= 72.0
+	if languageHandler.useImperialMeasurements():
+		# Translators: a measurement in inches
+		valText = _("{val:.2f} in").format(val=val)
+	else:
+		# Convert from inches to centimetres
+		val *= 2.54
+		# Translators: a measurement in centimetres
+		valText = _("{val:.2f} cm").format(val=val)
+	return valText
+
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -232,20 +254,33 @@ class UIATextInfo(textInfos.TextInfo):
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField["style"]=val
 		if formatConfig["reportParagraphIndentation"]:
-			for ID, fieldAttr in paragraphIndentIDs.items():
-				val = fetcher.getValue(ID, ignoreMixedValues=ignoreMixedValues)
-				if isinstance(val, float):
-					# val is in points (1/72 of an inch)
-					val /= 72.0
-					if languageHandler.useImperialMeasurements():
-						# Translators: a measurement in inches
-						valText = _("{val:.2f} in").format(val=val)
-					else:
-						# Convert from inches to centermetres
-						val *= 2.54
-						# Translators: a measurement in centermetres
-						valText = _("{val:.2f} cm").format(val=val)
-					formatField[fieldAttr] = valText
+			val = fetcher.getValue(UIAHandler.UIA_IndentationFirstLineAttributeId, ignoreMixedValues=ignoreMixedValues)
+			uiaIndentFirstLine = val if isinstance(val, float) else None
+			val = fetcher.getValue(UIAHandler.UIA_IndentationLeadingAttributeId, ignoreMixedValues=ignoreMixedValues)
+			uiaIndentLeading = val if isinstance(val, float) else None
+			val = fetcher.getValue(UIAHandler.UIA_IndentationTrailingAttributeId, ignoreMixedValues=ignoreMixedValues)
+			uiaIndentTrailing = val if isinstance(val, float) else None
+			if uiaIndentFirstLine is not None and uiaIndentLeading is not None:
+				reportedFirstLineIndent = uiaIndentFirstLine - uiaIndentLeading
+				if reportedFirstLineIndent > 0:  # First line positive indent
+					reportedLeftIndent = uiaIndentLeading
+					reportedHangingIndent = None
+				elif reportedFirstLineIndent < 0:  # First line negative indent
+					reportedLeftIndent = uiaIndentFirstLine
+					reportedHangingIndent = -reportedFirstLineIndent
+					reportedFirstLineIndent = None
+				else:
+					reportedLeftIndent = uiaIndentLeading
+					reportedFirstLineIndent = None
+					reportedHangingIndent = None
+				if reportedLeftIndent:
+					formatField['left-indent'] = getIndentValueDisplayString(reportedLeftIndent)
+				if reportedFirstLineIndent:
+					formatField['first-line-indent'] = getIndentValueDisplayString(reportedFirstLineIndent)
+				if reportedHangingIndent:
+					formatField['hanging-indent'] = getIndentValueDisplayString(reportedHangingIndent)
+			if uiaIndentTrailing:
+				formatField['right-indent'] = getIndentValueDisplayString(uiaIndentTrailing)
 		if formatConfig["reportAlignment"]:
 			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val==UIAHandler.HorizontalTextAlignment_Left:
