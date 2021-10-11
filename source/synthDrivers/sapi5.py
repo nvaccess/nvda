@@ -88,8 +88,8 @@ def waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags):
 		_duckersByHandle[h]=d
 		return res
 	elif audioDucking._isDebug():
-		log.debugWarning("Opening wave out failed for SAPI5 synthdriver.")
-		log.debug("Res: {res}\npWaveOutHandle: {pWaveOutHandle}")
+		log.debugWarning("Opening wave out failed for SAPI5 synthdriver")
+		log.debug("Res: {res}\n pWaveOutHandle: {pWaveOutHandle}")
 	return res
 
 @WINFUNCTYPE(c_long,c_long)
@@ -102,6 +102,9 @@ def waveOutClose(waveOutHandle):
 		res=e.winerror
 	if res==0 and waveOutHandle:
 		_duckersByHandle.pop(waveOutHandle,None)
+	elif audioDucking._isDebug():
+		log.debugWarning("Closing wave out failed for SAPI5 synthdriver")
+		log.debug("Res: {res}\n waveOutHandle: {waveOutHandle}")
 	return res
 
 _waveOutHooks=[]
