@@ -23,6 +23,12 @@ _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 
+#: Double space is used to separate semantics in speech output this typically
+# adds a slight pause to the synthesizer.
+SPEECH_SEP = "  "
+SPEECH_CALL_SEP = '\n'
+
+
 ARIAExamplesDir = os.path.join(
 	_NvdaLib._locations.repoRoot, "include", "w3c-aria-practices", "examples"
 )
@@ -152,7 +158,7 @@ def announce_list_item_when_moving_by_word_or_character():
 	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			"list item  level 1",
 			"b"
 		])
@@ -259,7 +265,7 @@ def test_pr11606():
 	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			"out of link",
 			"space"
 		])
@@ -328,7 +334,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("enter")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			# focus mode turns on
 			"Focus mode",
 			# Focus enters the ARIA treegrid (table)
@@ -661,40 +667,46 @@ def test_ariaRoleDescription_block_contentEditable():
 	)
 
 
-annotation = "User nearby, Aaron"
-linkDescription = "opens in a new tab"
-linkTitle = "conduct a search"
-ariaDescriptionSample = f"""
-		<div>
-			<div
-				contenteditable=""
-				spellcheck="false"
-				role="textbox"
-				aria-multiline="true"
-			><p>This is a line with no annotation</p>
-			<p><span
-					aria-description="{annotation}"
-				>Here is a sentence that is being edited by someone else.</span>
-				<b>Multiple can edit this.</b></p>
-			<p>An element with a role, follow <a
-				href="www.google.com"
-				aria-description="{linkDescription}"
-				>to google's</a
-			> website</p>
-			<p>Testing the title attribute, <a
-				href="www.google.com"
-				title="{linkTitle}"
-				>to google's</a
-			> website</p>
+def _getAriaDescriptionSample() -> str:
+	annotation = "User nearby, Aaron"
+	linkDescription = "opens in a new tab"
+	# link title should be read in focus
+	linkTitle = "conduct a search"
+	linkContents = "to google's"
+	return f"""
+			<div>
+				<div
+					contenteditable=""
+					spellcheck="false"
+					role="textbox"
+					aria-multiline="true"
+				><p>This is a line with no annotation</p>
+				<p><span
+						aria-description="{annotation}"
+					>Here is a sentence that is being edited by someone else.</span>
+					<b>Multiple can edit this.</b></p>
+				<p>An element with a role, follow <a
+					href="www.google.com"
+					aria-description="{linkDescription}"
+					>{linkContents}</a
+				> website</p>
+				<p>Testing the title attribute, <a
+					href="www.google.com"
+					title="{linkTitle}"
+					>{linkContents}</a
+				> website</p>
+				</div>
 			</div>
-		</div>
-	"""
+		"""
 
 
 def test_ariaDescription_focusMode():
 	""" Ensure aria description is read in focus mode.
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	- annotations.reportAriaDescription default:True
 	"""
-	_chrome.prepareChrome(ariaDescriptionSample)
+	_chrome.prepareChrome(_getAriaDescriptionSample())
 	# Focus the contenteditable and automatically switch to focus mode (due to contenteditable)
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(
@@ -707,18 +719,25 @@ def test_ariaDescription_focusMode():
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		f"{annotation}  Here is a sentence that is being edited by someone else."
-		f"  Multiple can edit this."
+		SPEECH_SEP.join([
+			"User nearby, Aaron",  # annotation
+			"Here is a sentence that is being edited by someone else.",  # span text
+			"Multiple can edit this.",  # bold paragraph text
+		])
 	)
 
-	linkRole = "link"
-	linkName = "to google's"
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	# description-from hasn't reached Chrome stable yet.
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		f"An element with a role, follow  {linkRole}  {linkDescription}  {linkName}  website"
+		SPEECH_SEP.join([  # two space separator
+			"An element with a role, follow",  # paragraph text
+			"link",  # link role
+			"opens in a new tab",  # link description
+			"to google's",  # link contents (name)
+			"website"  # paragraph text
+		])
 	)
 
 	# 'title' attribute for link ("conduct a search") should not be announced.
@@ -726,14 +745,22 @@ def test_ariaDescription_focusMode():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		f"Testing the title attribute,  {linkRole}  {linkName}  website"
+		SPEECH_SEP.join([
+			"Testing the title attribute,",  # paragraph text
+			"link",  # link role
+			"to google's",  # link contents (name)
+			"website"  # paragraph text
+		])
 	)
 
 
 def test_ariaDescription_browseMode():
 	""" Ensure aria description is read in browse mode.
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	- annotations.reportAriaDescription default:True
 	"""
-	_chrome.prepareChrome(ariaDescriptionSample)
+	_chrome.prepareChrome(_getAriaDescriptionSample())
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
@@ -745,18 +772,25 @@ def test_ariaDescription_browseMode():
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		f"{annotation}  Here is a sentence that is being edited by someone else."
-		"  Multiple can edit this."
+		SPEECH_SEP.join([
+			"User nearby, Aaron",  # annotation
+			"Here is a sentence that is being edited by someone else.",  # span text
+			"Multiple can edit this.",  # bold paragraph text
+		])
 	)
 
-	linkRole = "link"
-	linkName = "to google's"
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	# description-from hasn't reached Chrome stable yet.
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		f"An element with a role, follow  {linkRole}  {linkDescription}  {linkName}  website"
+		SPEECH_SEP.join([  # two space separator
+			"An element with a role, follow",  # paragraph text
+			"link",  # link role
+			"opens in a new tab",  # link description
+			"to google's",  # link contents (name)
+			"website"  # paragraph text
+		])
 	)
 
 	# 'title' attribute for link ("conduct a search") should not be announced.
@@ -764,33 +798,56 @@ def test_ariaDescription_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		f"Testing the title attribute,  {linkRole}  {linkName}  website"
+		SPEECH_SEP.join([
+			"Testing the title attribute,",  # paragraph text
+			"link",  # link role
+			"to google's",  # link contents (name)
+			"website"  # paragraph text
+		])
 	)
 
 
 def test_ariaDescription_sayAll():
 	""" Ensure aria description is read by say all.
+	# Historically, description was not announced at all in browse mode with arrow navigation,
+	# annotations are now a special case.
+
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	- annotations.reportAriaDescription default:True
 	"""
-	_chrome.prepareChrome(ariaDescriptionSample)
+	_chrome.prepareChrome(_getAriaDescriptionSample())
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+downArrow")
 
-	linkRole = "link"
-	linkName = "to google's"
-
-	# description-from hasn't reached Chrome stable yet.
-	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
+	# Reporting aria-description only supported in:
+	# - Chrome 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			"Test page load complete",
 			"edit  multi line  This is a line with no annotation",
-			f"{annotation}  Here is a sentence that is being edited by someone else.  Multiple can edit this.",
-			"An element with a role, "  # no comma, concat these two long strings.
-			f"follow  {linkRole}  {linkDescription}  {linkName}  website",
+			SPEECH_SEP.join([
+				"User nearby, Aaron",  # annotation
+				"Here is a sentence that is being edited by someone else.",  # span text
+				"Multiple can edit this.",  # bold paragraph text
+			]),
+			SPEECH_SEP.join([  # two space separator
+				"An element with a role, follow",  # paragraph text
+				"link",  # link role
+				"opens in a new tab",  # link description
+				"to google's",  # link contents (name)
+				"website",  # paragraph text
+			]),
 			# 'title' attribute for link ("conduct a search") should not be announced.
 			# too often title is used without screen reader users in mind, and is overly verbose.
-			f"Testing the title attribute,  {linkRole}  {linkName}  website"
-			"  out of edit",
+			SPEECH_SEP.join([
+				"Testing the title attribute,",  # paragraph text
+				"link",  # link role
+				# note description missing when sourced from title attribute
+				"to google's",  # link contents (name)
+				"website",  # paragraph text
+				"out of edit"
+			]),
 			"After Test Case Marker"
 		])
 	)
@@ -888,4 +945,69 @@ def test_mark_focus():
 	_asserts.strings_match(
 		actualSpeech,
 		"highlighted\nKangaroo  link"
+	)
+
+
+def test_preventDuplicateSpeechFromDescription_browse_tab():
+	"""
+	When description matches name/content, it should not be spoken.
+	This prevents duplicate speech.
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	"""
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
+	_chrome.prepareChrome(
+		"""
+		<a href="#" title="apple" style="display:block">apple</a>
+		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
+		"""
+	)
+	# Read in browse
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"apple  link"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"banana  link"
+	)
+
+
+def preventDuplicateSpeechFromDescription_focus():
+	"""
+	When description matches name/content, it should not be spoken.
+	This prevents duplicate speech.
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	"""
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
+	_chrome.prepareChrome(
+		"""
+		<a href="#" title="apple" style="display:block">apple</a>
+		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
+		"""
+	)
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"apple  link"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"banana  link"
 	)

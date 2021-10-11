@@ -84,7 +84,7 @@ ARIA description Focus Mode
 	[Documentation]	Navigate to a span with aria-description in focus mode
 	test_ariaDescription_focusMode
 ARIA description Browse Mode
-	[Documentation]	Navigate to a span with aria-description in browse mode
+	[Documentation]	Navigate (down arrow, in browse mode) aria-description is read, other sources of description are not.
 	test_ariaDescription_browseMode
 ARIA description Say All
 	[Documentation]	Say all, contents includes aria-description
@@ -92,3 +92,7 @@ ARIA description Say All
 i10840
 	[Documentation]	The name of table header cells should only be conveyed once when navigating directly to them in browse mode (chrome self-references a header cell as its own header, which used to cause the name to be announced twice)
 	test_i10840
+Prevent Duplicate Speech From Description while in Focus mode
+	preventDuplicateSpeechFromDescription_focus
+Prevent Duplicate Speech From Description while in Browse mode with tab nav
+	test_preventDuplicateSpeechFromDescription_browse_tab

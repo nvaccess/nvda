@@ -6,6 +6,7 @@
 
 import itertools
 import os
+import typing
 from typing import Iterable, Union, Tuple, List, Optional
 from locale import strxfrm
 
@@ -520,7 +521,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, role.displayString)
-	elif role is None: 
+	elif role is None:
 		role = propertyValues.get("_role")
 	value = propertyValues.get("value")
 	if value and role not in controlTypes.silentValuesForRoles:
@@ -558,7 +559,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			# %s is replaced with the level.
 			textList.append(_('lv %s')%positionInfo['level'])
 	if rowNumber:
-		if includeTableCellCoords and not cellCoordsText: 
+		if includeTableCellCoords and not cellCoordsText:
 			if rowSpan>1:
 				# Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
 				# Occurences of %s are replaced with the corresponding row numbers.
@@ -614,20 +615,30 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
+		name = obj.name
 		placeholderValue = obj.placeholder
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
-		description = None
-		if obj.description and (
-			presConfig["reportObjectDescriptions"]
-			or (
-				config.conf["annotations"]["reportAriaDescription"]
-				and obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+
+		# determine if description should be read
+		_shouldUseDescription = (
+			obj.description  # is there a description
+			and obj.description != name  # the description must not be a duplicate of name, prevent double braille
+			and (
+				presConfig["reportObjectDescriptions"]  # report description always
+				or (
+					# aria description provides more relevant information than other sources of description such as
+					# a 'title' attribute.
+					# It should be used for extra details that would be obvious visually.
+					config.conf["annotations"]["reportAriaDescription"]
+					and obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+				)
 			)
-		):
-			description = obj.description
+		)
+		description = obj.description if _shouldUseDescription else None
+
 		text = getPropertiesBraille(
-			name=obj.name,
+			name=name,
 			role=role,
 			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
@@ -657,7 +668,17 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
-def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
+
+#  C901 'getControlFieldBraille' is too complex
+# Note: when working on getControlFieldBraille, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getControlFieldBraille(  # noqa: C901
+		info: textInfos.TextInfo,
+		field: textInfos.Field,
+		ancestors: typing.List[textInfos.Field],
+		reportStart: bool,
+		formatConfig: config.AggregatedSection
+):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
@@ -678,14 +699,17 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	description = None
 	_descriptionFrom: controlTypes.DescriptionFrom = field.get("_description-from")
+	_descriptionIsContent: bool = field.get("descriptionIsContent", False)
 	if (
-		config.conf["presentation"]["reportObjectDescriptions"]
+		not _descriptionIsContent
+		and config.conf["presentation"]["reportObjectDescriptions"]
 		or (
 			config.conf["annotations"]["reportAriaDescription"]
 			and _descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		)
 	):
 		description = field.get("description", None)
+
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
@@ -694,6 +718,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
 		roleText = f"{controlTypes.Role.LANDMARK.displayString} {landmarkLabels[landmark]}"
+
 	content = field.get("content")
 
 	if presCat == field.PRESCAT_LAYOUT:
