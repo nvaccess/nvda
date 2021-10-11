@@ -14,6 +14,7 @@ import winKernel
 from winKernel import SYSTEMTIME
 import config
 from logHandler import log
+import hidpi
 
 def ValidHandle(value):
 	if value == 0:
@@ -438,22 +439,20 @@ def _getHidInfo(hwId, path):
 	if hwId.startswith("VID"):
 		info["provider"] = "usb"
 		info["usbID"] = hwId[:17] # VID_xxxx&PID_xxxx
-		return info
-	if not hwId.startswith("{00001124-0000-1000-8000-00805f9b34fb}"): # Not Bluetooth
+	elif hwId.startswith("{00001124-0000-1000-8000-00805f9b34fb}"):
+		info["provider"] = "bluetooth"
+	else:
 		# Unknown provider.
 		info["provider"] = None
 		return info
-	info["provider"] = "bluetooth"
 	# Fetch additional info about the HID device.
-	# This is a bit slow, so we only do it for Bluetooth,
-	# as this info might be necessary to identify Bluetooth devices.
 	from serial.win32 import CreateFile, INVALID_HANDLE_VALUE, FILE_FLAG_OVERLAPPED
 	handle = CreateFile(path, 0,
 		winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE, None,
 		winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
 	if handle == INVALID_HANDLE_VALUE:
 		if _isDebug():
-			log.debug(u"Opening device {dev} to get additional info failed: {exc}".format(
+			log.debugWarning("Opening device {dev} to get additional info failed: {exc}".format(
 				dev=path, exc=ctypes.WinError()))
 		return info
 	try:
@@ -462,12 +461,23 @@ def _getHidInfo(hwId, path):
 			info["vendorID"] = attribs.VendorID
 			info["productID"] = attribs.ProductID
 			info["versionNumber"] = attribs.VersionNumber
+		else:
+			if _isDebug():
+				log.debugWarning("HidD_GetAttributes failed")
 		buf = ctypes.create_unicode_buffer(128)
 		bytes = ctypes.sizeof(buf)
 		if ctypes.windll.hid.HidD_GetManufacturerString(handle, buf, bytes):
 			info["manufacturer"] = buf.value
 		if ctypes.windll.hid.HidD_GetProductString(handle, buf, bytes):
 			info["product"] = buf.value
+		pd = ctypes.c_void_p()
+		if ctypes.windll.hid.HidD_GetPreparsedData(handle, ctypes.byref(pd)):
+			try:
+				caps = hidpi.HIDP_CAPS()
+				ctypes.windll.hid.HidP_GetCaps(pd, ctypes.byref(caps))
+				info['HIDUsagePage'] = caps.UsagePage
+			finally:
+				ctypes.windll.hid.HidD_FreePreparsedData(pd)
 	finally:
 		winKernel.closeHandle(handle)
 	return info

@@ -102,6 +102,25 @@ def getCodePath(f):
 					break
 	return ".".join(x for x in (path,className,funcName) if x)
 
+
+def shouldPlayErrorSound() -> bool:
+	"""Indicates if an error sound should be played when an error is logged.
+	"""
+	import nvwave
+	if nvwave.isInError():
+		if nvwave._isDebugForNvWave():
+			log.debug("No beep for log; nvwave is in error state")
+		return False
+
+	import config
+	# Only play the error sound if this is a test version or if the config states it explicitly.
+	return (
+		buildVersion.isTestVersion
+		# Play error sound: 1 = Yes
+		or (config.conf is not None and config.conf["featureFlag"]["playErrorSound"] == 1)
+	)
+
+
 # Function to strip the base path of our code from traceback text to improve readability.
 if getattr(sys, "frozen", None):
 	# We're running a py2exe build.
@@ -266,14 +285,12 @@ class RemoteHandler(logging.Handler):
 class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
-		# Only play the error sound if this is a test version.
-		shouldPlayErrorSound =  buildVersion.isTestVersion
 		if record.levelno>=logging.CRITICAL:
 			try:
-				winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
+				winsound.PlaySound("SystemHand", winsound.SND_ALIAS | winsound.SND_ASYNC)
 			except:
 				pass
-		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
+		elif record.levelno >= logging.ERROR and shouldPlayErrorSound():
 			import nvwave
 			try:
 				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
@@ -290,7 +307,8 @@ class Formatter(logging.Formatter):
 
 	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
 		"""Custom implementation of `formatTime` which avoids `time.localtime`
-		since it causes a crash under some versions of Universal CRT ( #12160, Python issue 36792)
+		since it causes a crash under some versions of Universal CRT when Python locale
+		is set to a Unicode one (#12160, Python issue 36792)
 		"""
 		timeAsFileTime = winKernel.time_tToFileTime(record.created)
 		timeAsSystemTime = winKernel.SYSTEMTIME()

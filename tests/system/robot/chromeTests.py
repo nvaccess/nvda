@@ -48,7 +48,7 @@ def checkbox_labelled_by_inner_element():
 	)
 
 
-def test_aria_details():
+def test_mark_aria_details():
 	_chrome.prepareChrome(
 		"""
 		<div>
@@ -69,7 +69,7 @@ def test_aria_details():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		"The word  marked content  has details  cat  out of marked content  has a comment tied to it."
+		"The word  highlighted  has details  cat  out of highlighted  has a comment tied to it."
 	)
 	# this word has no details attached
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
@@ -87,7 +87,7 @@ def test_aria_details():
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"marked content  has details  cat  out of marked content"
+		"highlighted  has details  cat  out of highlighted"
 	)
 	# read the details summary
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
@@ -316,7 +316,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"row 1  Subject  column 1  Subject"
+		"row 1  column 1  Subject"
 	)
 	# Navigate to row 2 column 1 with NVDA table navigation command
 	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
@@ -461,10 +461,431 @@ def test_tableInStyleDisplayTable():
 	actualSpeech = _chrome.getSpeechAfterKey("t")
 	_asserts.strings_match(
 		actualSpeech,
-		"table  with 2 rows and 2 columns  row 1  First heading  column 1  First heading"
+		"table  with 2 rows and 2 columns  row 1  column 1  First heading"
 	)
 	nextActualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
 	_asserts.strings_match(
 		nextActualSpeech,
 		"row 2  First content cell"
+	)
+
+
+def test_ariaRoleDescription_focus():
+	"""
+	NVDA should report the custom role of an object on focus.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<button aria-roledescription="pizza">Cheese</button><br />
+		<button aria-roledescription="pizza">Meat</button>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"Cheese  pizza"
+	)
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"Meat  pizza"
+	)
+
+
+def test_ariaRoleDescription_inline_browseMode():
+	"""
+	NVDA should report the custom role for inline elements in browse mode.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<p>Start
+		<img aria-roledescription="drawing" alt="Our logo" src="https://www.nvaccess.org/images/logo.png" />
+		End</p>
+		"""
+	)
+	# When reading the entire line,
+	# entering the custom role should be reported,
+	# but not exiting
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Start  drawing  Our logo  End"
+	)
+	# When reading the line by word,
+	# Both entering and exiting the custom role should be reported.
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"drawing  Our"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"logo  out of drawing"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"End"
+	)
+
+
+def test_ariaRoleDescription_block_browseMode():
+	"""
+	NVDA should report the custom role at start and end for block elements in browse mode.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<aside aria-roledescription="warning">
+		<p>Wet paint!</p>
+		<p>Please be careful.</p>
+		</aside>
+		<p>End</p>
+		"""
+	)
+	# when reading the page by line,
+	# both entering and exiting the custom role should be reported.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"warning  Wet paint!"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Please be careful."
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"out of warning  End"
+	)
+
+
+def test_ariaRoleDescription_inline_contentEditable():
+	"""
+	NVDA should report the custom role for inline elements in content editables.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<div contenteditable="true">
+		<p>Top line</p>
+		<p>Start
+		<img aria-roledescription="drawing" alt="Our logo" src="https://www.nvaccess.org/images/logo.png" />
+		End</p>
+		</div>
+		"""
+	)
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"section  multi line  editable  Top line"
+	)
+	# When reading the entire line,
+	# entering the custom role should be reported,
+	# but not exiting
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Start  drawing  Our logo    End"
+	)
+	# When reading the line by word,
+	# Both entering and exiting the custom role should be reported.
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"drawing  Our logo    out of drawing"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"End"
+	)
+
+
+def test_ariaRoleDescription_block_contentEditable():
+	"""
+	NVDA should report the custom role at start and end for block elements in content editables.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<div contenteditable="true">
+		<p>Top line</p>
+		<aside aria-roledescription="warning">
+		<p>Wet paint!</p>
+		<p>Please be careful.</p>
+		</aside>
+		<p>End</p>
+		</div>
+		"""
+	)
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"section  multi line  editable  Top line"
+	)
+	# when reading the page by line,
+	# both entering and exiting the custom role should be reported.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"warning  Wet paint!"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Please be careful."
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"out of warning  End"
+	)
+
+
+annotation = "User nearby, Aaron"
+linkDescription = "opens in a new tab"
+linkTitle = "conduct a search"
+ariaDescriptionSample = f"""
+		<div>
+			<div
+				contenteditable=""
+				spellcheck="false"
+				role="textbox"
+				aria-multiline="true"
+			><p>This is a line with no annotation</p>
+			<p><span
+					aria-description="{annotation}"
+				>Here is a sentence that is being edited by someone else.</span>
+				<b>Multiple can edit this.</b></p>
+			<p>An element with a role, follow <a
+				href="www.google.com"
+				aria-description="{linkDescription}"
+				>to google's</a
+			> website</p>
+			<p>Testing the title attribute, <a
+				href="www.google.com"
+				title="{linkTitle}"
+				>to google's</a
+			> website</p>
+			</div>
+		</div>
+	"""
+
+
+def test_ariaDescription_focusMode():
+	""" Ensure aria description is read in focus mode.
+	"""
+	_chrome.prepareChrome(ariaDescriptionSample)
+	# Focus the contenteditable and automatically switch to focus mode (due to contenteditable)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"edit  multi line  This is a line with no annotation\nFocus mode"
+	)
+
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	# description-from hasn't reached Chrome stable yet.
+	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
+	_asserts.strings_match(
+		actualSpeech,
+		f"{annotation}  Here is a sentence that is being edited by someone else."
+		f"  Multiple can edit this."
+	)
+
+	linkRole = "link"
+	linkName = "to google's"
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	# description-from hasn't reached Chrome stable yet.
+	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
+	_asserts.strings_match(
+		actualSpeech,
+		f"An element with a role, follow  {linkRole}  {linkDescription}  {linkName}  website"
+	)
+
+	# 'title' attribute for link ("conduct a search") should not be announced.
+	# too often title is used without screen reader users in mind, and is overly verbose.
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		f"Testing the title attribute,  {linkRole}  {linkName}  website"
+	)
+
+
+def test_ariaDescription_browseMode():
+	""" Ensure aria description is read in browse mode.
+	"""
+	_chrome.prepareChrome(ariaDescriptionSample)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"edit  multi line  This is a line with no annotation"
+	)
+
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	# description-from hasn't reached Chrome stable yet.
+	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
+	_asserts.strings_match(
+		actualSpeech,
+		f"{annotation}  Here is a sentence that is being edited by someone else."
+		"  Multiple can edit this."
+	)
+
+	linkRole = "link"
+	linkName = "to google's"
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	# description-from hasn't reached Chrome stable yet.
+	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
+	_asserts.strings_match(
+		actualSpeech,
+		f"An element with a role, follow  {linkRole}  {linkDescription}  {linkName}  website"
+	)
+
+	# 'title' attribute for link ("conduct a search") should not be announced.
+	# too often title is used without screen reader users in mind, and is overly verbose.
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		f"Testing the title attribute,  {linkRole}  {linkName}  website"
+	)
+
+
+def test_ariaDescription_sayAll():
+	""" Ensure aria description is read by say all.
+	"""
+	_chrome.prepareChrome(ariaDescriptionSample)
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+downArrow")
+
+	linkRole = "link"
+	linkName = "to google's"
+
+	# description-from hasn't reached Chrome stable yet.
+	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"Test page load complete",
+			"edit  multi line  This is a line with no annotation",
+			f"{annotation}  Here is a sentence that is being edited by someone else.  Multiple can edit this.",
+			"An element with a role, "  # no comma, concat these two long strings.
+			f"follow  {linkRole}  {linkDescription}  {linkName}  website",
+			# 'title' attribute for link ("conduct a search") should not be announced.
+			# too often title is used without screen reader users in mind, and is overly verbose.
+			f"Testing the title attribute,  {linkRole}  {linkName}  website"
+			"  out of edit",
+			"After Test Case Marker"
+		])
+	)
+
+
+def test_i10840():
+	"""
+	The name of table header cells should only be conveyed once when navigating directly to them in browse mode
+	Chrome self-references a header cell as its own header, which used to cause the name to be announced twice
+	"""
+	_chrome.prepareChrome(
+		f"""
+			<table>
+				<thead>
+					<tr>
+						<th>Month</th>
+						<th>items</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>January</td>
+						<td>100</td>
+					</tr>
+					<tr>
+						<td>February</td>
+						<td>80</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>Sum</td>
+						<td>180</td>
+					</tr>
+				</tfoot>
+				</table>
+		"""
+	)
+	# Jump to the table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(
+		actualSpeech,
+		"table  with 4 rows and 2 columns  row 1  column 1  Month"
+	)
+	nextActualSpeech = _chrome.getSpeechAfterKey("control+alt+rightArrow")
+	_asserts.strings_match(
+		nextActualSpeech,
+		"column 2  items"
+	)
+
+
+def test_mark_browse():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <mark>Kangaroo</mark> is important.</p>
+		</div>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		"The word  highlighted  Kangaroo  out of highlighted  is important."
+	)
+	# Test moving by word
+	actualSpeech = _chrome.getSpeechAfterKey("numpad6")
+	_asserts.strings_match(
+		actualSpeech,
+		"word"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("numpad6")
+	_asserts.strings_match(
+		actualSpeech,
+		"highlighted  Kangaroo  out of highlighted"
+	)
+
+
+def test_mark_focus():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <mark><a href="#">Kangaroo</a></mark> is important.</p>
+		</div>
+		"""
+	)
+
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"highlighted\nKangaroo  link"
 	)

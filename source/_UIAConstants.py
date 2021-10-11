@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -60,3 +60,25 @@ class UIAutomationType(enum.IntEnum):
 	OUT_POINT_ARRAY = 28
 	OUT_RECT_ARRAY = 29
 	OUT_ELEMENT_ARRAY = 30
+
+
+class WinConsoleAPILevel(enum.IntEnum):
+	"""
+	Defines actively used Windows Console versions and the levels of custom code required
+	for each.
+	"""
+	# Represents a console before microsoft/terminal#4018 was merged.
+	# These consoles do not support UIA word navigation and require a number
+	# of text range workarounds.
+	END_INCLUSIVE = 0
+	# Represents a console with microsoft/terminal#4018, but without
+	# resolution of microsoft/terminal#2161 (text formatting)
+	# or microsoft/terminal#6986 (extraneous empty lines).
+	# This is a significant improvement over END_INCLUSIVE, so fewer workarounds
+	# are required. However, these consoles lack some information
+	# (such as text formatting) and require bounding, so are unsuitable for
+	# usage by default.
+	IMPROVED = 1
+	# Represents an IMPROVED console that exposes text formatting and a
+	# buffer that does not contain extraneous empty lines.
+	FORMATTED = 2

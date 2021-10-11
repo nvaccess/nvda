@@ -1,11 +1,14 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
-# Julien Cochuyt
+# Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
+# Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
+# jakubl7545, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -82,6 +85,13 @@ class SettingsDialog(
 
 	class MultiInstanceError(RuntimeError): pass
 
+	class MultiInstanceErrorWithDialog(MultiInstanceError):
+		dialog: 'SettingsDialog'
+
+		def __init__(self, dialog: 'SettingsDialog', *args: object) -> None:
+			self.dialog = dialog
+			super().__init__(*args)
+
 	class DialogState(IntEnum):
 		CREATED = 0
 		DESTROYED = 1
@@ -107,7 +117,10 @@ class SettingsDialog(
 				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
 			)
 		if state is cls.DialogState.CREATED and not multiInstanceAllowed:
-			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+			raise SettingsDialog.MultiInstanceErrorWithDialog(
+				firstMatchingInstance,
+				"Only one instance of SettingsDialog can exist at a time",
+			)
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
 			# keeping it alive.
@@ -2196,7 +2209,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		highlightText = _("Mar&ked (highlighted text)")
+		highlightText = _("Highlighted (mar&ked) text")
 		self.highlightCheckBox = fontGroup.addItem(
 			wx.CheckBox(fontGroupBox, label=highlightText)
 		)
@@ -2590,7 +2603,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Use UI Automation to access Microsoft &Word document controls when available")
+		label = _("Always use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
 		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -2658,6 +2671,15 @@ class AdvancedPanelControls(
 		self.annotationsDetailsCheckBox = AnnotationsGroup.addItem(wx.CheckBox(AnnotationsBox, label=label))
 		self.annotationsDetailsCheckBox.SetValue(config.conf["annotations"]["reportDetails"])
 		self.annotationsDetailsCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportDetails"])
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Report aria-description always")
+		self.ariaDescCheckBox: wx.CheckBox = AnnotationsGroup.addItem(
+			wx.CheckBox(AnnotationsBox, label=label)
+		)
+		self.ariaDescCheckBox.SetValue(config.conf["annotations"]["reportAriaDescription"])
+		self.ariaDescCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportAriaDescription"])
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2767,6 +2789,27 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
+		label = _("Document Formatting")
+		docFormatting = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		docFormattingBox = docFormatting.GetStaticBox()
+		docFormattingGroup = guiHelper.BoxSizerHelper(self, sizer=docFormatting)
+		sHelper.addItem(docFormattingGroup)
+
+		# Translators: This is the label for a checkbox control in the
+		#  Advanced settings panel.
+		label = _("Report transparent color values")
+		self.reportTransparentColorCheckBox: wx.CheckBox = docFormattingGroup.addItem(
+			wx.CheckBox(docFormattingBox, label=label)
+		)
+		self.bindHelpEvent("ReportTransparentColors", self.reportTransparentColorCheckBox)
+		self.reportTransparentColorCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportTransparentColor"]
+		)
+		self.reportTransparentColorCheckBox.defaultValue = self._getDefaultValue(
+			["documentFormatting", "reportTransparentColor"])
+
+		# Translators: This is the label for a group of advanced options in the
+		# Advanced settings panel
 		label = _("Debug logging")
 		debugLogSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
@@ -2804,6 +2847,20 @@ class AdvancedPanelControls(
 					self._getDefaultValue(['debugLog', x])
 			)
 		]
+		
+		# Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+		label = _("Play a sound for logged e&rrors:")
+		playErrorSoundChoices = (
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			pgettext("advanced.playErrorSound", "Only in NVDA test versions"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			pgettext("advanced.playErrorSound", "Yes"),
+		)
+		self.playErrorSoundCombo = debugLogGroup.addLabeledControl(label, wx.Choice, choices=playErrorSoundChoices)
+		self.bindHelpEvent("PlayErrorSound", self.playErrorSoundCombo)
+		self.playErrorSoundCombo.SetSelection(config.conf["featureFlag"]["playErrorSound"])
+		self.playErrorSoundCombo.defaultValue = self._getDefaultValue(["featureFlag", "playErrorSound"])
+		
 		self.Layout()
 
 	def onOpenScratchpadDir(self,evt):
@@ -2830,8 +2887,10 @@ class AdvancedPanelControls(
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
+			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
+			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
@@ -2848,6 +2907,8 @@ class AdvancedPanelControls(
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
+		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
+		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
 
@@ -2870,9 +2931,14 @@ class AdvancedPanelControls(
 			self.diffAlgoVals[diffAlgoChoice]
 		)
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
+		config.conf["documentFormatting"]["reportTransparentColor"] = (
+			self.reportTransparentColorCheckBox.IsChecked()
+		)
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
+		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
+		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
 
 class AdvancedPanel(SettingsPanel):
 	enableControlsCheckBox = None  # type: wx.CheckBox
@@ -4328,7 +4394,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			pass
 		addedSymbol.displayName = identifier
 		addedSymbol.replacement = ""
-		addedSymbol.level = characterProcessing.SYMLVL_ALL
+		addedSymbol.level = characterProcessing.SymbolLevel.ALL
 		addedSymbol.preserve = characterProcessing.SYMPRES_NEVER
 		self.symbols.append(addedSymbol)
 		self.symbolsList.ItemCount = len(self.symbols)

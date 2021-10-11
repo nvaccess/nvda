@@ -315,7 +315,7 @@ There are some key commands that are useful when moving with the System focus:
 | Report current focus | NVDA+tab | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
 | Report title | NVDA+t | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 | Read active window | NVDA+b | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
-| Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
+| Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 %kc:endInclude
 
 ++ Navigating with the System Caret ++[SystemCaret]
@@ -381,6 +381,7 @@ To navigate by object, use the following commands:
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double-tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
 | Report review cursor location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
+| Move review cursor to status bar | none | none | none | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location. |
 %kc:endInclude
 
 Note: numpad keys require the Num Lock to be turned off to work properly.
@@ -1401,6 +1402,10 @@ This option won't be available if your braille display only supports automatic p
 
 You may consult the documentation for your braille display in the section [Supported Braille Displays #SupportedBrailleDisplays] to check for more details on the supported types of communication and available ports.
 
+Please note: If you connect multiple Braille Displays to your machine at the same time which use the same driver (E.g. connecting two Seika displays),
+it is currently impossible to tell NVDA which display to use.
+Therefore it is recommended to only connect one Braille Display of a given type / manufacturer to your machine at a time.
+ 
 +++ Vision +++[VisionSettings]
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids #Vision].
 
@@ -1740,7 +1745,7 @@ You can configure reporting of:
  - Font attributes
  - Superscripts and subscripts
  - Emphasis
- - Marked (Highlighted text)
+ - Highlighted (Marked) text
  - Style
  - Colours
 - Document information
@@ -1830,12 +1835,12 @@ This has a major negative impact on performance, especially in applications like
 Therefore, when this option is enabled, NVDA will limit event registration to the system focus for most events.
 If you suffer from performance issues in one or more applications, We recommend you to try this functionality to see whether performance improves.
 
-==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
-When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls.
+==== Always use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
+When this option is enabled, NVDA will always try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls, even for less recent builds of Microsoft Office 2016/365.
 This includes Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
- For the most recent versions of Microsoft Office 2016/365 running on Windows 10 and later, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
-However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
-We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
+ For Microsoft Office with a build version of 16.0.13901 or greater, NVDA will always use UI Automation to access Microsoft Word documents no matter how this setting is configured. 
+For the most recent versions of Microsoft Office 2016/365 running on Windows 10 and later, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
+However, There may be some information which is either not exposed, or exposed incorrectly in some  older builds of Microsoft Office, which means this UI automation support cannot always be relied upon.
 
 ==== Use UI Automation to access the Windows Console when available ====[AdvancedSettingsConsoleUIA]
 When this option is enabled, NVDA will use a new, work in progress version of its support for Windows Console which takes advantage of [accessibility improvements made by Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. This feature is highly experimental and is still incomplete, so its use is not yet recommended. However, once completed, it is anticipated that this new support will become the default, improving NVDA's performance and stability in Windows command consoles.
@@ -1853,12 +1858,21 @@ The combo box has the following options:
 - No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
 -
 
-==== Enable Experimental ARIA annotations support ====[Annotations]
-Used to enable features which add experimental support for ARIA annotations.
+==== Annotations ====[Annotations]
+This group of options is used to enable features which add experimental support for ARIA annotations.
 Some of these features may be incomplete.
 The following options exist: 
 - "Report details in browse mode": enables reporting if an object has details in browse mode.
 Reporting the summary of those details can be done by assigning a gesture using the [Input Gestures dialog #InputGestures].
+- "Report aria-description always":
+  When the source of ``accDescription`` is aria-description, the description is reported.
+  This is useful for annotations on the web.
+  Note:
+  - There are many sources for ``accDescription`` several have mixed or unreliable semantics.
+    Historically AT has not been able to differentiate sources of ``accDescription`` typically it wasn't spoken due to the mixed semantics.
+  - This option is in very early development, it relies on browser features not yet widely available.
+  - Expected to work with Chromium 92.0.4479.0+
+  -
 -
 
 ==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]
@@ -1898,10 +1912,21 @@ This functionality is enabled by default as of NVDA 2021.1.
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
 If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
 
+==== Report transparency for colors ====[ReportTransparentColors]
+This option enables reporting when colors are transparent, useful for addon/appModule developers gathering information to improve user experience with a 3rd party application.
+Some GDI applications will highlight text with a background color, NVDA (via display model) attempts to report this color.
+In some situations, the text background may be entirely transparent, with the text layered on some other GUI element.
+With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
+
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
 Logging these messages can result in decreased performance and large log files.
 Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.
+
+==== Play a sound for logged errors ====[PlayErrorSound]
+This option allows you to specify if NVDA will play an error sound in case an error is logged.
+Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
+Choosing Yes allows to enable error sounds whatever your current NVDA version is.
 
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
@@ -2329,6 +2354,7 @@ The following displays support this automatic detection functionality.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
+- Any Display that supports the Standard HID Braille protocol
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -3153,6 +3179,37 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
+++ Standard HID Braille displays ++[HIDBraille]
+This is an experimental driver for the new Standard HID Braille Specification, agreed upon in 2018 by Microsoft, Google, Apple and several assistive technology companies including NV Access. 
+The hope is that all future Braille Display models created by any manufacturer, will use this standard protocol which will remove the need for manufacturer-specific Braille drivers.
+
+NVDA's automatic braille display detection will also recognize any display that supports this protocol.
+ 
+Following are the current key assignments for these displays.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | pan left |
+| Scroll braille display forward | pan right |
+| Move braille display to previous line | space + dot1 |
+| Move braille display to next line | space + dot4 |
+| Route to braille cell | routing set 1|
+| Toggle braille tethered to | up+down |
+| upArrow key | joystick up |
+| downArrow key | joystick down |
+| leftArrow key | space+dot3 or joystick left |
+| rightArrow key | space+dot6 or joystick right |
+| shift+tab key | space+dot1+dot3 |
+| tab key | space+dot4+dot6 |
+| alt key | space+dot1+dot3+dot4 (space+m) |
+| escape key | space+dot1+dot5 (space+e) |
+| enter key | dot8 or joystick center |
+| windows key | space+dot3+dot4 |
+| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+%kc:endInclude
+ 
 + Advanced Topics +[AdvancedTopics]
 
 ++ Command Line Options ++[CommandLineOptions]
