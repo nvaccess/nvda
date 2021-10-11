@@ -465,7 +465,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		elif position==textInfos.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textInfos.POSITION_LAST:
-			self._startOffset=self._endOffset=max(self._getStoryLength()-1,0)
+			self._startOffset = self._endOffset = max(self._getStoryLength(), 0)
 		elif position==textInfos.POSITION_CARET:
 			self._startOffset=self._endOffset=self._getCaretOffset()
 		elif position==textInfos.POSITION_SELECTION:
@@ -637,7 +637,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			self._endOffset=offset
 		else:
 			if (direction>0 and offset<=self._startOffset) or (direction<0 and offset>=self._startOffset) or offset<lowLimit or offset>=highLimit:
-				self._startOffset = self._endOffset = max(self._getStoryLength() - 1, 0)
+				self._startOffset = self._endOffset = max(self._getStoryLength(), 0)
 				return count
 			self._startOffset=self._endOffset=offset
 		if self._startOffset>self._endOffset:
