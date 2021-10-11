@@ -629,8 +629,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		p=self.pointAtStart
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(p.x,p.y)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def getMathMl(self, field):
