@@ -4,10 +4,9 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from enum import IntEnum
 import locale
 from collections import OrderedDict
-import threading
-import time
 import os
 from ctypes import *
 import comtypes.client
@@ -15,8 +14,6 @@ from comtypes import COMError
 import winreg
 import audioDucking
 import NVDAHelper
-import globalVars
-import speech
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import config
 import nvwave
@@ -35,11 +32,13 @@ from speech.commands import (
 	SpeechCommand,
 )
 
-# SPAudioState enumeration
-SPAS_CLOSED=0
-SPAS_STOP=1
-SPAS_PAUSE=2
-SPAS_RUN=3
+
+class SPAudioState(IntEnum):
+	CLOSED = 0
+	STOP = 1
+	PAUSE = 2
+	RUN = 3
+
 
 class FunctionHooker(object):
 
@@ -75,6 +74,8 @@ _duckersByHandle={}
 
 @WINFUNCTYPE(windll.winmm.waveOutOpen.restype,*windll.winmm.waveOutOpen.argtypes,use_errno=False,use_last_error=False)
 def waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags):
+	if audioDucking._isDebug():
+		log.debugWarning("Ducking audio requested for SAPI5 synthdriver")
 	try:
 		res=windll.winmm.waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags) or 0
 	except WindowsError as e:
@@ -93,6 +94,8 @@ def waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags):
 
 @WINFUNCTYPE(c_long,c_long)
 def waveOutClose(waveOutHandle):
+	if audioDucking._isDebug():
+		log.debugWarning("End ducking audio requested for SAPI5 synthdriver")
 	try:
 		res=windll.winmm.waveOutClose(waveOutHandle) or 0
 	except WindowsError as e:
@@ -104,9 +107,10 @@ def waveOutClose(waveOutHandle):
 _waveOutHooks=[]
 def ensureWaveOutHooks():
 	if not _waveOutHooks and audioDucking.isAudioDuckingSupported():
-		sapiPath=os.path.join(os.path.expandvars("$SYSTEMROOT"),"system32","speech","common","sapi.dll")
-		_waveOutHooks.append(FunctionHooker(sapiPath,"WINMM.dll","waveOutOpen",waveOutOpen))
-		_waveOutHooks.append(FunctionHooker(sapiPath,"WINMM.dll","waveOutClose",waveOutClose))
+		sapiPath = os.path.join(os.path.expandvars("$SYSTEMROOT"), "System32", "Speech", "Common", "sapi.dll")
+		_waveOutHooks.append(FunctionHooker(sapiPath, "winmm.dll", "waveOutOpen", waveOutOpen))
+		_waveOutHooks.append(FunctionHooker(sapiPath, "winmm.dll", "waveOutClose", waveOutClose))
+
 
 class constants:
 	SVSFlagsAsync = 1
@@ -388,11 +392,11 @@ class SynthDriver(SynthDriver):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
 		# Therefore  instruct the underlying audio interface to stop first, before interupting and purging any remaining speech.
 		if self.ttsAudioStream:
-			self.ttsAudioStream.setState(SPAS_STOP,0)
+			self.ttsAudioStream.setState(SPAudioState.STOP, 0)
 		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
 
 	def pause(self,switch):
 		# SAPI5's default means of pausing in most cases is either extrmemely slow (e.g. takes more than half a second) or does not work at all.
 		# Therefore instruct the underlying audio interface to pause instead.
 		if self.ttsAudioStream:
-			self.ttsAudioStream.setState(SPAS_PAUSE if switch else SPAS_RUN,0)
+			self.ttsAudioStream.setState(SPAudioState.PAUSE if switch else SPAudioState.RUN, 0)
