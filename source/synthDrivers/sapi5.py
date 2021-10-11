@@ -82,8 +82,13 @@ def waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags):
 	if res==0 and pWaveOutHandle:
 		h=pWaveOutHandle.contents.value
 		d=audioDucking.AudioDucker()
-		d.enable()
+		if not d.enable() and audioDucking._isDebug():
+			log.debugWarning("Ducking audio failed for SAPI5 synthdriver")
 		_duckersByHandle[h]=d
+		return res
+	elif audioDucking._isDebug():
+		log.debugWarning("Opening wave out failed for SAPI5 synthdriver.")
+		log.debug("Res: {res}\npWaveOutHandle: {pWaveOutHandle}")
 	return res
 
 @WINFUNCTYPE(c_long,c_long)
