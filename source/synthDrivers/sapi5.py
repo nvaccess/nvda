@@ -49,6 +49,38 @@ class constants(IntEnum):
 	SVEBookmark = 16
 
 
+class AudioDucker(audioDucking.AudioDucker):
+	def __init__(self, speechEndWaitFunction):
+		super().__init__()
+		self._speechDucked = False
+		self._speechEndWaitFunction = speechEndWaitFunction
+
+	def enable(self):
+		if not audioDucking.isAudioDuckingSupported():
+			return
+		with self._lock:
+			if self._speechDucked:
+				return
+			self._speechDucked = True
+		# The driver can wait until all speech is finished to end ducking
+		# So a wrapper AudioDucker class is not required
+		audioDucking._setDuckingState(True)
+		_thread = threading.Thread(target=self.disable, args=self)
+		_thread.start()
+		return True
+
+	def disable(self):
+		ms_timeout = 5 * 60 * 1000  # 10 min timeout
+		# WaitUntilDone waits until all speech is finished
+		self._speechEndWaitFunction(ms_timeout)
+		if not audioDucking.isAudioDuckingSupported():
+			return
+		audioDucking._setDuckingState(False)
+		with self._lock:
+			self._speechDucked = False
+		return True
+
+
 class SapiSink(object):
 	"""Handles SAPI event notifications.
 	See https://msdn.microsoft.com/en-us/library/ms723587(v=vs.85).aspx
@@ -111,7 +143,7 @@ class SynthDriver(SynthDriver):
 		self._initTts(_defaultVoiceToken)
 		self._audioDucker: Optional[audioDucking.AudioDucker] = None
 		if audioDucking.isAudioDuckingSupported():
-			self._audioDucker = audioDucking.AudioDucker()
+			self._audioDucker = AudioDucker(self.tts.WaitUntilDone)
 
 	def terminate(self):
 		self._eventsConnection = None
@@ -318,34 +350,8 @@ class SynthDriver(SynthDriver):
 
 		text = "".join(textList)
 		flags = constants.SVSFIsXML | constants.SVSFlagsAsync
-		self.duckSpeech()
+		self._audioDucker.enable()
 		self.tts.Speak(text, flags)
-
-	_speechDuckedLock = threading.RLock()
-	_speechDucked = False
-
-	def duckSpeech(self):
-		if not audioDucking.isAudioDuckingSupported():
-			return
-		with self._duckingLock:
-			if self._speechDuckedLock:
-				return
-			self._speechDucked = True
-		audioDucking._setDuckingState(True)
-		_thread = threading.Thread(target=self._disableAudioDuckingOnFinish, args=self)
-		_thread.start()
-
-	def _disableAudioDuckingOnFinish(self):
-		"""Thread safe function that should be called asynchronously.
-		tts.WaitUntilDone and AudioDucker.disable are both thread safe.
-		"""
-		if not audioDucking.isAudioDuckingSupported():
-			return
-		ms_timeout = 5 * 60 * 1000  # 10 min timeout
-		self.tts.WaitUntilDone(ms_timeout)
-		audioDucking._setDuckingState(False)
-		with self._duckingLock:
-			self._speechDucked = False
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
@@ -353,7 +359,7 @@ class SynthDriver(SynthDriver):
 		if self.ttsAudioStream:
 			self.ttsAudioStream.setState(SPAudioState.STOP, 0)
 		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
-		self._disableAudioDuckingOnFinish()
+		self._audioDucker.disable()
 
 	def pause(self, switch: bool):
 		# SAPI5's default means of pausing in most cases is either extrmemely slow (e.g. takes more than half a second) or does not work at all.
@@ -361,10 +367,7 @@ class SynthDriver(SynthDriver):
 		if self.ttsAudioStream:
 			if switch:
 				self.ttsAudioStream.setState(SPAudioState.PAUSE, 0)
-				if audioDucking.isAudioDuckingSupported():
-					audioDucking._setDuckingState(False)
-					with self._duckingLock:
-						self._speechDucked = False
+				self._audioDucker.disable()
 			else:
-				self.duckSpeech()
+				self._audioDucker.enable()
 				self.ttsAudioStream.setState(SPAudioState.RUN, 0)
