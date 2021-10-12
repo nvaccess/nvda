@@ -101,4 +101,6 @@ Prevent Duplicate Speech From Description while in Browse mode with tab nav
 Only report description in focus mode due to reportObjectDescriptions
 	[Documentation]	The term object in reportObjectDescriptions (essentially) means focus mode.
 	test_ensureNoBrowseModeDescription
-
+Quick Nav reports target first
+	[Documentation]	Quick Nav target should always be reported before ancestors. Ancestors should be reported from inner to outer.
+	test_quickNavTargetReporting

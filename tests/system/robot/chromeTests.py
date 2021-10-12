@@ -1133,3 +1133,64 @@ def test_ensureNoBrowseModeDescription():
 		]),
 		message="Test focus mode with reportObjectDescriptions=False"
 	)
+
+
+def test_quickNavTargetReporting():
+	"""
+	When using quickNav, the target object should be spoken first, inner context should be given before outer
+	context.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
+	_chrome.prepareChrome(
+		"""
+		<div
+			aria-describedby="descId"
+			aria-labelledby="labelId"
+			role="article"
+		>
+			<h1>Quick Nav Target</h1>
+			<div id="labelId">
+					<div>Some name.</div>
+			</div>
+			<div id="descId">
+					<span>A bunch of text.</span>
+			</div>
+		</div>
+		"""
+	)
+	# Quick nav to heading
+	actualSpeech = _chrome.getSpeechAfterKey("h")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"A bunch of text.",  # article (ancestor) description
+			"Quick Nav Target",  # Heading content (quick nav target), should read first
+			"heading",  # Heading role
+			"level 1",  # Heading level
+		])
+	)
+	# Reset to allow trying again with report articles enabled
+	actualSpeech = _chrome.getSpeechAfterKey("control+home")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Before Test Case Marker",
+		])
+	)
+
+	# Quick nav to heading with report articles enabled
+	spy.set_configValue(REPORT_ARTICLES, True)
+	actualSpeech = _chrome.getSpeechAfterKey("h")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Quick Nav Target",  # Heading content (quick nav target), should read first
+			"heading",  # Heading role
+			"level 1",  # Heading level
+			"article",  # article role, enabled via report article
+			"A bunch of text.",  # article (ancestor) description
+		])
+	)
