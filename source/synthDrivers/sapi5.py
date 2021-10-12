@@ -64,9 +64,6 @@ class AudioDucker(audioDucking.AudioDucker):
 	def enable(self):
 		if not audioDucking.isAudioDuckingSupported():
 			return
-		if audioDucking._isDebug():
-			log.debug("Starting audio duck for SAPI5")
-
 		with AudioDucker._lock:
 			if AudioDucker._speechDucked:
 				log.debug("audio already ducked for SAPI5")
@@ -75,6 +72,8 @@ class AudioDucker(audioDucking.AudioDucker):
 
 		# The synthDriver will wait until all speech is finished to end ducking
 		audioDucking._setDuckingState(True)
+		if audioDucking._isDebug():
+			log.debug("Audio ducking started for SAPI")
 		_thread = threading.Thread(target=AudioDucker._disable, args=(self._speechEndWaitFunction,))
 		_thread.start()
 		return True
@@ -92,11 +91,13 @@ class AudioDucker(audioDucking.AudioDucker):
 		ms_timeout = 5 * 60 * 1000  # 5 min timeout
 		# WaitUntilDone waits until all speech is finished
 		if not speechEndWaitFunction(ms_timeout) and audioDucking._isDebug():
-			log.debugWarning("Couldn't wait for speech to finish")
+			log.debugWarning("Couldn't wait for SAPI5 speech to finish")
 
 		audioDucking._setDuckingState(False)
 		with AudioDucker._lock:
 			AudioDucker._speechDucked = False
+		if audioDucking._isDebug():
+			log.debug("Audio ducking ended for SAPI5")
 		return True
 
 
