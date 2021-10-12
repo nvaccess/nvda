@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -41,13 +41,14 @@ class SPAudioState(IntEnum):
 
 
 class SpeechVoiceSpeakFlags(IntEnum):
+	# https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720892(v=vs.85)
 	FlagsAsync = 1
 	PurgeBeforeSpeak = 2
 	IsXML = 8
 
 
 class SpeechVoiceEvents(IntEnum):
-	# From the SpeechVoiceEvents enum: https://msdn.microsoft.com/en-us/library/ms720886(v=vs.85).aspx
+	# https://msdn.microsoft.com/en-us/previous-versions/windows/desktop/ms720886(v=vs.85)
 	EndInputStream = 4
 	Bookmark = 16
 
@@ -56,22 +57,23 @@ class AudioDucker(audioDucking.AudioDucker):
 	_speechDucked = False
 	_lock = threading.Lock()
 
-	def __init__(self, speechEndWaitFunction):
+	def __init__(self, speechEndWaitFunction: Callable[[int], bool]):
 		super().__init__()
 		self._speechEndWaitFunction = speechEndWaitFunction
 
 	def enable(self):
-		if audioDucking._isDebug():
-			log.debug("Starting audio duck for SAPI5")
 		if not audioDucking.isAudioDuckingSupported():
 			return
+		if audioDucking._isDebug():
+			log.debug("Starting audio duck for SAPI5")
+
 		with AudioDucker._lock:
 			if AudioDucker._speechDucked:
 				log.debug("audio already ducked for SAPI5")
 				return
 			AudioDucker._speechDucked = True
-		# The driver can wait until all speech is finished to end ducking
-		# So a wrapper AudioDucker class is not required
+
+		# The synthDriver will wait until all speech is finished to end ducking
 		audioDucking._setDuckingState(True)
 		_thread = threading.Thread(target=AudioDucker._disable, args=(self._speechEndWaitFunction,))
 		_thread.start()
@@ -82,14 +84,16 @@ class AudioDucker(audioDucking.AudioDucker):
 
 	@staticmethod
 	def _disable(speechEndWaitFunction: Callable[[int], bool]):
-		ms_timeout = 5 * 60 * 1000  # 5 min timeout
-		# WaitUntilDone waits until all speech is finished
 		if not audioDucking.isAudioDuckingSupported():
 			return
 		if audioDucking._isDebug():
 			log.debug("Waiting for speech to end to end audio duck for SAPI5")
+
+		ms_timeout = 5 * 60 * 1000  # 5 min timeout
+		# WaitUntilDone waits until all speech is finished
 		if not speechEndWaitFunction(ms_timeout) and audioDucking._isDebug():
 			log.debugWarning("Couldn't wait for speech to finish")
+
 		audioDucking._setDuckingState(False)
 		with AudioDucker._lock:
 			AudioDucker._speechDucked = False
