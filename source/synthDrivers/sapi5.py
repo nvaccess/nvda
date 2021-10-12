@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Optional
+from typing import Callable
 import threading
 from enum import IntEnum
 import locale
@@ -50,34 +50,37 @@ class constants(IntEnum):
 
 
 class AudioDucker(audioDucking.AudioDucker):
+	_speechDucked = False
+	_lock = threading.Lock()
+
 	def __init__(self, speechEndWaitFunction):
 		super().__init__()
-		self._speechDucked = False
 		self._speechEndWaitFunction = speechEndWaitFunction
 
 	def enable(self):
 		if not audioDucking.isAudioDuckingSupported():
 			return
-		with self._lock:
-			if self._speechDucked:
+		with AudioDucker._lock:
+			if AudioDucker._speechDucked:
 				return
-			self._speechDucked = True
+			AudioDucker._speechDucked = True
 		# The driver can wait until all speech is finished to end ducking
 		# So a wrapper AudioDucker class is not required
 		audioDucking._setDuckingState(True)
-		_thread = threading.Thread(target=self.disable, args=self)
+		_thread = threading.Thread(target=self.disable, args=(self._speechEndWaitFunction,))
 		_thread.start()
 		return True
 
-	def disable(self):
+	@staticmethod
+	def disable(speechEndWaitFunction: Callable[[int], None]):
 		ms_timeout = 5 * 60 * 1000  # 10 min timeout
 		# WaitUntilDone waits until all speech is finished
-		self._speechEndWaitFunction(ms_timeout)
+		speechEndWaitFunction(ms_timeout)
 		if not audioDucking.isAudioDuckingSupported():
 			return
 		audioDucking._setDuckingState(False)
-		with self._lock:
-			self._speechDucked = False
+		with AudioDucker._lock:
+			AudioDucker._speechDucked = False
 		return True
 
 
@@ -141,9 +144,7 @@ class SynthDriver(SynthDriver):
 		"""
 		self._pitch=50
 		self._initTts(_defaultVoiceToken)
-		self._audioDucker: Optional[audioDucking.AudioDucker] = None
-		if audioDucking.isAudioDuckingSupported():
-			self._audioDucker = AudioDucker(self.tts.WaitUntilDone)
+		self._audioDucker = AudioDucker(self.tts.WaitUntilDone)
 
 	def terminate(self):
 		self._eventsConnection = None
