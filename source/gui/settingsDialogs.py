@@ -47,10 +47,6 @@ import keyboardHandler
 import characterProcessing
 from . import guiHelper
 
-#: The size that settings panel text descriptions should be wrapped at.
-# Ensure self.scaleSize is used to adjust for OS scaling adjustments.
-PANEL_DESCRIPTION_WIDTH = 544
-
 try:
 	import updateCheck
 except RuntimeError:
@@ -65,6 +61,10 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+
+#: The size that settings panel text descriptions should be wrapped at.
+# Ensure self.scaleSize is used to adjust for OS scaling adjustments.
+PANEL_DESCRIPTION_WIDTH = 544
 
 class SettingsDialog(
 		DpiScalingHelperMixinWithoutInit,
@@ -1917,7 +1917,8 @@ class ObjectPresentationPanel(SettingsPanel):
 	panelDescription = _(
 		# Translators: This is a label appearing on the Object Presentation settings panel.
 		"Configure how much information NVDA will present about controls."
-		" These options don't apply to browse mode."
+		" These options apply to focus reporting and NVDA object navigation,"
+		" but not when reading text content e.g. web content with browse mode."
 	)
 
 	# Translators: This is the label for the object presentation panel.
