@@ -40,13 +40,16 @@ class SPAudioState(IntEnum):
 	RUN = 3
 
 
-class constants(IntEnum):
-	SVSFlagsAsync = 1
-	SVSFPurgeBeforeSpeak = 2
-	SVSFIsXML = 8
+class SpeechVoiceSpeakFlags(IntEnum):
+	FlagsAsync = 1
+	PurgeBeforeSpeak = 2
+	IsXML = 8
+
+
+class SpeechVoiceEvents(IntEnum):
 	# From the SpeechVoiceEvents enum: https://msdn.microsoft.com/en-us/library/ms720886(v=vs.85).aspx
-	SVEEndInputStream = 4
-	SVEBookmark = 16
+	EndInputStream = 4
+	Bookmark = 16
 
 
 class AudioDucker(audioDucking.AudioDucker):
@@ -58,10 +61,13 @@ class AudioDucker(audioDucking.AudioDucker):
 		self._speechEndWaitFunction = speechEndWaitFunction
 
 	def enable(self):
+		if audioDucking._isDebug():
+			log.debug("Starting audio duck for SAPI5")
 		if not audioDucking.isAudioDuckingSupported():
 			return
 		with AudioDucker._lock:
 			if AudioDucker._speechDucked:
+				log.debug("audio already ducked for SAPI5")
 				return
 			AudioDucker._speechDucked = True
 		# The driver can wait until all speech is finished to end ducking
@@ -76,10 +82,12 @@ class AudioDucker(audioDucking.AudioDucker):
 
 	@staticmethod
 	def _disable(speechEndWaitFunction: Callable[[int], bool]):
-		ms_timeout = 5 * 60 * 1000  # 10 min timeout
+		ms_timeout = 5 * 60 * 1000  # 5 min timeout
 		# WaitUntilDone waits until all speech is finished
 		if not audioDucking.isAudioDuckingSupported():
 			return
+		if audioDucking._isDebug():
+			log.debug("Waiting for speech to end to end audio duck for SAPI5")
 		if not speechEndWaitFunction(ms_timeout) and audioDucking._isDebug():
 			log.debugWarning("Couldn't wait for speech to finish")
 		audioDucking._setDuckingState(False)
@@ -220,7 +228,7 @@ class SynthDriver(SynthDriver):
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(weakref.ref(self)))
-		self.tts.EventInterests = constants.SVEBookmark | constants.SVEEndInputStream
+		self.tts.EventInterests = SpeechVoiceEvents.Bookmark | SpeechVoiceEvents.EndInputStream
 		from comInterfaces.SpeechLib import ISpAudio
 		try:
 			self.ttsAudioStream=self.tts.audioOutputStream.QueryInterface(ISpAudio)
@@ -354,7 +362,7 @@ class SynthDriver(SynthDriver):
 		outputTags()
 
 		text = "".join(textList)
-		flags = constants.SVSFIsXML | constants.SVSFlagsAsync
+		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.FlagsAsync
 		self._audioDucker.enable()
 		self.tts.Speak(text, flags)
 
@@ -363,11 +371,12 @@ class SynthDriver(SynthDriver):
 		# Therefore  instruct the underlying audio interface to stop first, before interupting and purging any remaining speech.
 		if self.ttsAudioStream:
 			self.ttsAudioStream.setState(SPAudioState.STOP, 0)
-		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
+		self.tts.Speak(None, 1 | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
 		self._audioDucker.disable()
 
 	def pause(self, switch: bool):
-		# SAPI5's default means of pausing in most cases is either extrmemely slow (e.g. takes more than half a second) or does not work at all.
+		# SAPI5's default means of pausing in most cases is either extremely slow
+		# (e.g. takes more than half a second) or does not work at all.
 		# Therefore instruct the underlying audio interface to pause instead.
 		if self.ttsAudioStream:
 			if switch:
