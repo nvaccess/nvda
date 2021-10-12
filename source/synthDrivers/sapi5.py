@@ -4,6 +4,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Optional
+import threading
 from enum import IntEnum
 import locale
 from collections import OrderedDict
@@ -183,6 +185,9 @@ class SynthDriver(SynthDriver):
 		ensureWaveOutHooks()
 		self._pitch=50
 		self._initTts(_defaultVoiceToken)
+		self._audioDucker: Optional[audioDucking.AudioDucker] = None
+		if audioDucking.isAudioDuckingSupported():
+			self._audioDucker = audioDucking.AudioDucker()
 
 	def terminate(self):
 		self._eventsConnection = None
@@ -389,7 +394,21 @@ class SynthDriver(SynthDriver):
 
 		text = "".join(textList)
 		flags = constants.SVSFIsXML | constants.SVSFlagsAsync
+		self.duckSpeech()
 		self.tts.Speak(text, flags)
+
+	def duckSpeech(self):
+		if not audioDucking.isAudioDuckingSupported():
+			return
+		self._audioDucker.enable()
+		_thread = threading.Thread(target=self._disableAudioDuckingOnFinish, args=self)
+		_thread.start()
+
+	def _disableAudioDuckingOnFinish(self):
+		if not audioDucking.isAudioDuckingSupported():
+			return
+		self.tts.WaitUntilDone()
+		self._audioDucker.disable()
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
@@ -397,9 +416,14 @@ class SynthDriver(SynthDriver):
 		if self.ttsAudioStream:
 			self.ttsAudioStream.setState(SPAudioState.STOP, 0)
 		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
+		self._disableAudioDuckingOnFinish()
 
 	def pause(self,switch):
 		# SAPI5's default means of pausing in most cases is either extrmemely slow (e.g. takes more than half a second) or does not work at all.
 		# Therefore instruct the underlying audio interface to pause instead.
 		if self.ttsAudioStream:
 			self.ttsAudioStream.setState(SPAudioState.PAUSE if switch else SPAudioState.RUN, 0)
+			if switch:
+				self._disableAudioDuckingOnFinish()
+			else:
+				self.duckSpeech()
