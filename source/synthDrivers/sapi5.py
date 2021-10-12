@@ -67,17 +67,21 @@ class AudioDucker(audioDucking.AudioDucker):
 		# The driver can wait until all speech is finished to end ducking
 		# So a wrapper AudioDucker class is not required
 		audioDucking._setDuckingState(True)
-		_thread = threading.Thread(target=self.disable, args=(self._speechEndWaitFunction,))
+		_thread = threading.Thread(target=AudioDucker._disable, args=(self._speechEndWaitFunction,))
 		_thread.start()
 		return True
 
+	def disable(self):
+		AudioDucker._disable(self._speechEndWaitFunction)
+
 	@staticmethod
-	def disable(speechEndWaitFunction: Callable[[int], None]):
+	def _disable(speechEndWaitFunction: Callable[[int], bool]):
 		ms_timeout = 5 * 60 * 1000  # 10 min timeout
 		# WaitUntilDone waits until all speech is finished
-		speechEndWaitFunction(ms_timeout)
 		if not audioDucking.isAudioDuckingSupported():
 			return
+		if not speechEndWaitFunction(ms_timeout) and audioDucking._isDebug():
+			log.debugWarning("Couldn't wait for speech to finish")
 		audioDucking._setDuckingState(False)
 		with AudioDucker._lock:
 			AudioDucker._speechDucked = False
