@@ -702,8 +702,10 @@ def getControlFieldBraille(  # noqa: C901
 	_descriptionIsContent: bool = field.get("descriptionIsContent", False)
 	if (
 		not _descriptionIsContent
-		and config.conf["presentation"]["reportObjectDescriptions"]
-		or (
+		# Note "reportObjectDescriptions" is not a reason to include description,
+		# "Object" implies focus/object nav, getControlFieldBraille calculates text for Browse mode.
+		# There is no way to identify getControlFieldBraille being called for reason focus, as is done in speech.
+		and (
 			config.conf["annotations"]["reportAriaDescription"]
 			and _descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		)

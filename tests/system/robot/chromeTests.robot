@@ -19,6 +19,8 @@ Test Teardown	default teardown
 default teardown
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
+	dump_speech_to_log
+	dump_braille_to_log
 	exit chrome
 	quit NVDA
 
@@ -96,3 +98,7 @@ Prevent Duplicate Speech From Description while in Focus mode
 	preventDuplicateSpeechFromDescription_focus
 Prevent Duplicate Speech From Description while in Browse mode with tab nav
 	test_preventDuplicateSpeechFromDescription_browse_tab
+Only report description in focus mode due to reportObjectDescriptions
+	[Documentation]	The term object in reportObjectDescriptions (essentially) means focus mode.
+	test_ensureNoBrowseModeDescription
+
