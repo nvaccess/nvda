@@ -3,6 +3,15 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+== TBA 2022.1 Changes for Developers ==
+- ``synthDrivers.sapi5`` changes:
+  - ``SPAS_*`` usages should be replaced with ``SPAudioState.*``
+  - ``constants.SVSF*`` usages should be replaced with ``SpeechVoiceSpeakFlags.*``
+    - Note: ``SVSFlagsAsync`` should be replaced with ``SpeechVoiceSpeakFlags.FlagsAsync`` not ``SpeechVoiceSpeakFlags.lagsAsync``
+  - ``constants.SVE*`` usages should be replaced with ``SpeechVoiceEvents.*``
+  -
+-
+
 = 2021.3 =
 
 == New Features ==
