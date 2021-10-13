@@ -1065,7 +1065,7 @@ Tries to force this object to take the focus.
 		def _delayedDetection():
 			try:
 				fields = info.getTextWithFields()
-			except RuntimeError:
+			except Exception:
 				log.debugWarning("Error fetching formatting for last character of previous word", exc_info=True)
 				return
 			for command in fields:
