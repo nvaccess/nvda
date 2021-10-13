@@ -900,7 +900,11 @@ class UIA(Window):
 			clsList.append(PlaceholderNetUITWMenuItem)
 		elif UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
-		elif UIAClassName == "ListViewItem" and self.UIAElement.cachedFrameworkID == "WPF":
+		elif (
+			UIAClassName == "ListViewItem"
+			and self.UIAElement.cachedFrameworkID == "WPF"
+			and self.role == controlTypes.Role.DATAITEM
+		):
 			from NVDAObjects.behaviors import RowWithFakeNavigation
 			clsList.append(RowWithFakeNavigation)
 		elif UIAClassName=="NetUIDropdownAnchor":
