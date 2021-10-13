@@ -900,6 +900,9 @@ class UIA(Window):
 			clsList.append(PlaceholderNetUITWMenuItem)
 		elif UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif UIAClassName == "ListViewItem" and self.UIAElement.cachedFrameworkID == "WPF":
+			from NVDAObjects.behaviors import RowWithFakeNavigation
+			clsList.append(RowWithFakeNavigation)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
 		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.Role.PANE:
