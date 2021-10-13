@@ -3,6 +3,14 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+== TBA 2022.1 Changes for Developers ==
+- ``audioDucking.AUDIODUCKINGMODE_*`` constants are now a ``DisplayStringIntEnum``.
+  - usages should be replaced with ``AudioDuckingMode.*``
+  - usages of ``audioDucking.audioDuckingModes`` should be replaced with ``AudioDuckingMode.*.displayString``
+  -
+- ``audioDucking.ANRUS_ducking_*`` constants usages should be replaced with ``ANRUSDucking.*``
+-
+
 = 2021.3 =
 
 == New Features ==

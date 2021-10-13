@@ -1058,7 +1058,11 @@ class SynthesizerSelectionDialog(SettingsDialog):
 
 		# Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 		duckingListLabelText = _("Audio d&ucking mode:")
-		self.duckingList=settingsSizerHelper.addLabeledControl(duckingListLabelText, wx.Choice, choices=audioDucking.audioDuckingModes)
+		self.duckingList = settingsSizerHelper.addLabeledControl(
+			duckingListLabelText,
+			wx.Choice,
+			choices=audioDucking.AudioDuckingMode._displayStringLabels.values()
+		)
 		self.bindHelpEvent("SelectSynthesizerDuckingMode", self.duckingList)
 		index=config.conf['audio']['audioDuckingMode']
 		self.duckingList.SetSelection(index)
