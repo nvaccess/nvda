@@ -34,9 +34,16 @@ Rich accessibility APIs provide additional information, including the ability to
 NVDA relies heavily on accessibility APIs to gather information.
 Several accessibility APIs are used, including Microsoft Active Accessibility (MSAA) (also known as IAccessible), [IAccessible2](http://www.linuxfoundation.org/en/Accessibility/IAccessible2), Java Access Bridge and UI Automation.
 
+**Note:** IAccessible2 was not created by Microsoft, see [Wikipedia for more background](https://en.wikipedia.org/wiki/IAccessible2).
+
 See also:
 - [Stack Overflow: "What is the difference between IAccessible, IAccessible2, UIAutomation and MSAA?"](https://stackoverflow.com/a/55130227)
 - [The Linux Foundation IA2 reference](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/)
+- [IA2 event constants](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/_accessible_event_i_d_8idl.html)
+  - From the perspective of Windows, the IA2 event constants are considered custom "application specific" event IDs.
+- [IA2 Project (IDL files)](https://github.com/LinuxA11y/IAccessible2) 
+- [Windows event constants](https://docs.microsoft.com/en-us/windows/win32/winauto/event-constants)
+
 
 #### Tools for investigating Accessibility APIs
 

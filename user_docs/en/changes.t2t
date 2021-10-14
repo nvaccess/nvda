@@ -8,11 +8,13 @@ What's New in NVDA
 == New Features ==
 - Adds an input gesture for toggling settings for reporting the style of cell borders. (#10408)
 - Support for the new HID Braille specification which aims to standardise support for Braille Displays. (#12523)
- - Devices that support this specification will be auto detected by NVDA.
- - For technical details on NVDA's implementation of this specification, see https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+  - Devices that support this specification will be auto detected by NVDA.
+  - For technical details on NVDA's implementation of this specification, see https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+  -
 - Add support for the VisioBraille Vario 4 Braille Device. (#12607)
 - Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
 - In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
+- Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
 -
 
 
@@ -27,6 +29,7 @@ If you need this functionality please assign a gesture to the appropriate script
 - Updated liblouis braille translator to [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
   - New braille tables: Russian grade 1, Tshivenda grade 1, Tshivenda grade 2
   -
+- Instead of "marked content" or "mrkd", "highlight" or "hlight" will be announced for speech and braille respectively. (#12892)
 -
 
 
@@ -55,6 +58,8 @@ If you need this functionality please assign a gesture to the appropriate script
 - When accessing Microsoft Word documents via UIA, navigating by sentence (alt+downArrow / alt+upArrow) is again possible. (#9254)
 - When accessing MS Word with UIA, paragraph indenting is now reported. (#12899(
 - When accessing MS Word with UIA, change tracking command and some other localized commands are now reported in Word . (#12904)
+- Fixed duplicate braille and speech when 'description' matches 'content' or 'name'. (#12888)
+- In MS Word with UIA enabled, More accurate playing of spelling error sound as you type. (#12161)
 -
 
 
@@ -68,6 +73,7 @@ To match the production build environment, update Visual Studio to keep in sync 
 - ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` and ``LOCALE_SLANGDISPLAYNAME`` are moved to the ``LOCALE`` enum in languageHandler.
 They are still available at the module level but are deprecated and to be removed in NVDA 2022.1. (#12753)
 - The usage of functions ``addonHandler.loadState`` and ``addonHandler.saveState`` should be replaced with their equivalents ``addonHandler.state.save`` and ``addonHandler.state.load`` before 2022.1. (#12792)
+- Braille output can now be checked in system tests. (#12917)
 -
 
 

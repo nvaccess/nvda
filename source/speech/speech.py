@@ -451,6 +451,14 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				except NotImplementedError:
 					continue
 				break
+
+	if (
+		newPropertyValues.get("description")  # has a value
+		and newPropertyValues.get("name") == newPropertyValues.get("description")  # value is equal to name
+		and reason != controlTypes.OutputReason.CHANGE  # if the value has changed, report it.
+	):
+		del newPropertyValues['description']  # prevent duplicate speech due to description matching name
+
 	if positionInfo:
 		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
 			newPropertyValues['positionInfo_level']=positionInfo['level']
@@ -1775,21 +1783,24 @@ def getControlFieldSpeech(  # noqa: C901
 
 	description: Optional[str] = None
 	_descriptionFrom = attrs.get('_description-from', controlTypes.DescriptionFrom.UNKNOWN)
+	_descriptionIsContent: bool = attrs.get("descriptionIsContent", False)
 	if (
 		(
 			config.conf["presentation"]["reportObjectDescriptions"]
-			and (
-				reason == OutputReason.FOCUS
-				# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
-				# Not used internally, but may be used by addons.
-				or attrs.get('alwaysReportDescription', False)
-			)
+			and not _descriptionIsContent
+			and reason == OutputReason.FOCUS
+		)
+		or (
+			# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
+			# Not used internally, but may be used by addons.
+			attrs.get('alwaysReportDescription', False)
 		)
 		or (
 			# Don't report other sources of description like "title" all the time
 			# The usages of these is not consistent and often does not seem to have
 			# Screen Reader users in mind
 			config.conf["annotations"]["reportAriaDescription"]
+			and not _descriptionIsContent
 			and controlTypes.DescriptionFrom.ARIA_DESCRIPTION == _descriptionFrom
 			and reason in (
 				OutputReason.FOCUS,
