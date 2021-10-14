@@ -2454,6 +2454,18 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text no longer contains a comment.
 				text=_("out of comment")
 				textList.append(text)
+	if formatConfig["reportBookmarks"]:
+		bookmark = attrs.get("bookmark")
+		oldBookmark = attrsCache.get("bookmark") if attrsCache is not None else None
+		if (bookmark or oldBookmark is not None) and bookmark != oldBookmark:
+			if bookmark:
+				# Translators: Reported when text contains a bookmark
+				text = _("bookmark")
+				textList.append(text)
+			elif extraDetail:
+				# Translators: Reported when text no longer contains a bookmark
+				text = _("out of bookmark")
+				textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")
 		oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None

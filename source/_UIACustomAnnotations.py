@@ -84,3 +84,6 @@ class CustomAnnotationTypesCommon:
 		self.microsoftWord_draftComment = CustomAnnotationTypeInfo(
 			guid=GUID("{26BAEBC6-591E-4116-BBCF-E9A7996CD169}"),
 		)
+		self.microsoftWord_bookmark = CustomAnnotationTypeInfo(
+			guid=GUID("{25330951-A372-4DB9-A88A-85137AD008D2}"),
+		)
