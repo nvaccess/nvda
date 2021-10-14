@@ -10,9 +10,6 @@ from typing import Optional
 
 RPC_E_CALL_CANCELED = -2147418110
 
-class CallCancelled(Exception):
-	"""Raised when a call is cancelled.
-	"""
 
 import comtypes
 import sys

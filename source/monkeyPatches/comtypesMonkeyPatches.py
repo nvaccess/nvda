@@ -12,6 +12,7 @@ from ctypes import cast, c_void_p
 from _ctypes import _Pointer
 import importlib
 import sys
+import exceptions
 
 
 def new_WINFUNCTYPE(restype,*argtypes,**kwargs):
@@ -29,13 +30,13 @@ def new_WINFUNCTYPE(restype,*argtypes,**kwargs):
 			try:
 				return super().__call__(*args,**kwargs)
 			except _ctypes.COMError as e:
-				from core import CallCancelled, RPC_E_CALL_CANCELED
+				from core import RPC_E_CALL_CANCELED
 				if e.args[0]==RPC_E_CALL_CANCELED:
 					# As this is a cancelled COM call,
 					# raise CallCancelled instead of the original COMError.
 					# Also raising from None gives a cleaner traceback,
 					# Hiding the fact we were already in an except block.
-					raise CallCancelled("COM call cancelled") from None
+					raise exceptions.CallCancelled("COM call cancelled") from None
 				# Otherwise, just continue the original COMError exception up the stack.
 				raise
 	return WinFunctionType
