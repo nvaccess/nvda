@@ -3,13 +3,12 @@
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from dataclasses import dataclass
-from typing import Optional
 
 """NVDA core"""
 
 
-
+from dataclasses import dataclass
+from typing import Optional
 import comtypes
 import sys
 import winVersion
@@ -23,7 +22,7 @@ import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
-import garbageHandler  # noqa: E402
+import garbageHandler
 
 
 # inform those who want to know that NVDA has finished starting up.
