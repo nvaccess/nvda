@@ -1194,3 +1194,140 @@ def test_quickNavTargetReporting():
 			"A bunch of text.",  # article (ancestor) description
 		])
 	)
+
+
+def test_focusTargetReporting():
+	"""
+	When moving focus the target object should be spoken first, inner context should be given before outer
+	context.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
+	_chrome.prepareChrome(
+		"""
+		<a href="#">before Target</a>
+		<div
+			aria-describedby="descId"
+			aria-labelledby="labelId"
+			role="article"
+		>
+			<a href="#">Focus Target</a>
+			<div id="labelId">
+					<div>Some name.</div>
+			</div>
+			<div id="descId">
+					<span>A bunch of text.</span>
+			</div>
+		</div>
+		"""
+	)
+	# Set focus
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# Focus the link
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"A bunch of text.",  # description for article
+			"Focus Target",  # link content (focus target), should read first
+			"link",  # link role
+		]),
+		message="browse mode - focus with Report Articles disabled"
+	)
+	# Reset to allow trying again with report articles enabled
+	actualSpeech = _chrome.getSpeechAfterKey("shift+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# Focus the link with report articles enabled
+	spy.set_configValue(REPORT_ARTICLES, True)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Focus Target",  # link content (focus target), should read first
+			"link",  # link role
+			"article",  # article role, enabled via report article
+			"A bunch of text.",  # article (ancestor) description
+		]),
+		message="browse mode - focus with Report Articles enabled"
+	)
+
+	# Reset to allow trying again in focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("shift+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+
+	spy.set_configValue(REPORT_ARTICLES, False)
+	# Focus the link
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			SPEECH_SEP.join([
+				"Some name.",  # name for article
+				"article",  # article role, enabled via report article
+				"A bunch of text.",  # description for article
+			]),
+			SPEECH_SEP.join([
+				"Focus Target",  # link content (focus target), should read first
+				"link",  # link role
+			]),
+		]),
+		message="focus mode - focus with Report Articles disabled"
+	)
+	# Reset to allow trying again with report articles enabled
+	actualSpeech = _chrome.getSpeechAfterKey("shift+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# Focus the link with report articles enabled
+	spy.set_configValue(REPORT_ARTICLES, True)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			SPEECH_SEP.join([
+				"Some name.",  # name for article
+				"article",  # article role, enabled via report article
+				"A bunch of text.",  # description for article
+			]),
+			SPEECH_SEP.join([
+				"Focus Target",  # link content (focus target), should read first
+				"link",  # link role
+			]),
+		]),
+		message="focus mode - focus with Report Articles enabled"
+	)

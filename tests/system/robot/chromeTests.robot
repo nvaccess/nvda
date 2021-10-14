@@ -104,3 +104,6 @@ Only report description in focus mode due to reportObjectDescriptions
 Quick Nav reports target first
 	[Documentation]	Quick Nav target should always be reported before ancestors. Ancestors should be reported from inner to outer.
 	test_quickNavTargetReporting
+Focus reports target first
+	[Documentation]	Focus target should always be reported before ancestors. Ancestors should be reported from inner to outer.
+	test_focusTargetReporting
