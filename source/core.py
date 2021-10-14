@@ -8,7 +8,6 @@ from typing import Optional
 
 """NVDA core"""
 
-RPC_E_CALL_CANCELED = -2147418110
 
 
 import comtypes
