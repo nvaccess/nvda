@@ -50,27 +50,6 @@ paragraphIndentIDs = {
 }
 
 
-def getIndentValueDisplayString(val):
-	"""A function returning the string to display in formatting info.
-	@param val: an indent value fetched via an UIAHandler.UIA_Indentation*AttributeId attribute.
-	@type: float
-	@return: The string used in formatting information to report the length of an indentation.
-	@rtype: string
-	"""
-	
-	# val is in points (1/72 of an inch)
-	val /= 72.0
-	if languageHandler.useImperialMeasurements():
-		# Translators: a measurement in inches
-		valText = _("{val:.2f} in").format(val=val)
-	else:
-		# Convert from inches to centimetres
-		val *= 2.54
-		# Translators: a measurement in centimetres
-		valText = _("{val:.2f} cm").format(val=val)
-	return valText
-
-
 class UIATextInfo(textInfos.TextInfo):
 
 	_cache_controlFieldNVDAObjectClass=True
@@ -254,33 +233,7 @@ class UIATextInfo(textInfos.TextInfo):
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField["style"]=val
 		if formatConfig["reportParagraphIndentation"]:
-			val = fetcher.getValue(UIAHandler.UIA_IndentationFirstLineAttributeId, ignoreMixedValues=ignoreMixedValues)
-			uiaIndentFirstLine = val if isinstance(val, float) else None
-			val = fetcher.getValue(UIAHandler.UIA_IndentationLeadingAttributeId, ignoreMixedValues=ignoreMixedValues)
-			uiaIndentLeading = val if isinstance(val, float) else None
-			val = fetcher.getValue(UIAHandler.UIA_IndentationTrailingAttributeId, ignoreMixedValues=ignoreMixedValues)
-			uiaIndentTrailing = val if isinstance(val, float) else None
-			if uiaIndentFirstLine is not None and uiaIndentLeading is not None:
-				reportedFirstLineIndent = uiaIndentFirstLine - uiaIndentLeading
-				if reportedFirstLineIndent > 0:  # First line positive indent
-					reportedLeftIndent = uiaIndentLeading
-					reportedHangingIndent = None
-				elif reportedFirstLineIndent < 0:  # First line negative indent
-					reportedLeftIndent = uiaIndentFirstLine
-					reportedHangingIndent = -reportedFirstLineIndent
-					reportedFirstLineIndent = None
-				else:
-					reportedLeftIndent = uiaIndentLeading
-					reportedFirstLineIndent = None
-					reportedHangingIndent = None
-				if reportedLeftIndent:
-					formatField['left-indent'] = getIndentValueDisplayString(reportedLeftIndent)
-				if reportedFirstLineIndent:
-					formatField['first-line-indent'] = getIndentValueDisplayString(reportedFirstLineIndent)
-				if reportedHangingIndent:
-					formatField['hanging-indent'] = getIndentValueDisplayString(reportedHangingIndent)
-			if uiaIndentTrailing:
-				formatField['right-indent'] = getIndentValueDisplayString(uiaIndentTrailing)
+			formatField.update(self._getFormatFieldIndent(fetcher, ignoreMixedValues=ignoreMixedValues))
 		if formatConfig["reportAlignment"]:
 			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val==UIAHandler.HorizontalTextAlignment_Left:
@@ -346,6 +299,72 @@ class UIATextInfo(textInfos.TextInfo):
 				pass
 		return textInfos.FieldCommand("formatChange",formatField)
 
+	def _getFormatFieldIndent(self, fetcher, ignoreMixedValues):
+		"""
+		Helper function to get indent formatting from the fetcher passed as parameter.
+		The indent formatting is reported according to MS Word's convention.
+		@param fetcher: the UIA fetcher used to get all formatting information.
+		@type fetcher: L{UIATextRangeAttributeValueFetcher}
+		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
+			If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute
+			value signifying that the caller may want to try again with a smaller range.
+		@type: bool
+		@return: The indent formatting informations corresponding to what has been retrieved via the fetcher.
+		@rtype: L{textInfos.FormatField}
+		"""
+		
+		formatField = textInfos.FormatField()
+		val = fetcher.getValue(UIAHandler.UIA_IndentationFirstLineAttributeId, ignoreMixedValues=ignoreMixedValues)
+		uiaIndentFirstLine = val if isinstance(val, float) else None
+		val = fetcher.getValue(UIAHandler.UIA_IndentationLeadingAttributeId, ignoreMixedValues=ignoreMixedValues)
+		uiaIndentLeading = val if isinstance(val, float) else None
+		val = fetcher.getValue(UIAHandler.UIA_IndentationTrailingAttributeId, ignoreMixedValues=ignoreMixedValues)
+		uiaIndentTrailing = val if isinstance(val, float) else None
+		if uiaIndentFirstLine is not None and uiaIndentLeading is not None:
+			reportedFirstLineIndent = uiaIndentFirstLine - uiaIndentLeading
+			if reportedFirstLineIndent > 0:  # First line positive indent
+				reportedLeftIndent = uiaIndentLeading
+				reportedHangingIndent = None
+			elif reportedFirstLineIndent < 0:  # First line negative indent
+				reportedLeftIndent = uiaIndentFirstLine
+				reportedHangingIndent = -reportedFirstLineIndent
+				reportedFirstLineIndent = None
+			else:
+				reportedLeftIndent = uiaIndentLeading
+				reportedFirstLineIndent = None
+				reportedHangingIndent = None
+			if reportedLeftIndent:
+				formatField['left-indent'] = self._getIndentValueDisplayString(reportedLeftIndent)
+			if reportedFirstLineIndent:
+				formatField['first-line-indent'] = self._getIndentValueDisplayString(reportedFirstLineIndent)
+			if reportedHangingIndent:
+				formatField['hanging-indent'] = self._getIndentValueDisplayString(reportedHangingIndent)
+		if uiaIndentTrailing:
+			formatField['right-indent'] = self._getIndentValueDisplayString(uiaIndentTrailing)
+		return formatField
+	
+	@staticmethod
+	def _getIndentValueDisplayString(val):
+		"""A function returning the string to display in formatting info.
+		@param val: an indent value fetched via an UIAHandler.UIA_Indentation*AttributeId attribute.
+		@type: float
+		@return: The string used in formatting information to report the length of an indentation.
+		@rtype: string
+		"""
+		
+		# val is in points (1/72 of an inch)
+		val /= 72.0
+		if languageHandler.useImperialMeasurements():
+			# Translators: a measurement in inches
+			valText = _("{val:.2f} in").format(val=val)
+		else:
+			# Convert from inches to centimetres
+			val *= 2.54
+			# Translators: a measurement in centimetres
+			valText = _("{val:.2f} cm").format(val=val)
+		return valText
+	
+	
 	def __init__(self,obj,position,_rangeObj=None):
 		super(UIATextInfo,self).__init__(obj,position)
 		if _rangeObj:
