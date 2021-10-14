@@ -807,6 +807,14 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 		oldLink=fieldCache.get("link")
 		if link and link != oldLink:
 			textList.append(roleLabels[controlTypes.Role.LINK])
+	if formatConfig["reportBookmarks"]:
+		bookmark = field.get("bookmark")
+		oldBookmark = fieldCache.get("bookmark") if fieldCache is not None else None
+		if (bookmark or oldBookmark is not None) and bookmark != oldBookmark:
+			if bookmark:
+				# Translators: brailled when text contains a bookmark
+				text = _("bkmk")
+				textList.append(text)
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
