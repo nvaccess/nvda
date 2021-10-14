@@ -8,11 +8,13 @@ What's New in NVDA
 == New Features ==
 - Adds an input gesture for toggling settings for reporting the style of cell borders. (#10408)
 - Support for the new HID Braille specification which aims to standardise support for Braille Displays. (#12523)
- - Devices that support this specification will be auto detected by NVDA.
- - For technical details on NVDA's implementation of this specification, see https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+  - Devices that support this specification will be auto detected by NVDA.
+  - For technical details on NVDA's implementation of this specification, see https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+  -
 - Add support for the VisioBraille Vario 4 Braille Device. (#12607)
 - Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
 - In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
+- Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
 -
 
 
