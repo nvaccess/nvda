@@ -344,15 +344,13 @@ class UIATextInfo(textInfos.TextInfo):
 		return formatField
 	
 	@staticmethod
-	def _getIndentValueDisplayString(val):
+	def _getIndentValueDisplayString(val: float) -> str:
 		"""A function returning the string to display in formatting info.
-		@param val: an indent value fetched via an UIAHandler.UIA_Indentation*AttributeId attribute.
-		@type: float
+		@param val: an indent value measured in points, fetched via an UIAHandler.UIA_Indentation*AttributeId attribute.
 		@return: The string used in formatting information to report the length of an indentation.
-		@rtype: string
 		"""
 		
-		# val is in points (1/72 of an inch)
+		# convert points to inches (1pt = 1/72 in)
 		val /= 72.0
 		if languageHandler.useImperialMeasurements():
 			# Translators: a measurement in inches
