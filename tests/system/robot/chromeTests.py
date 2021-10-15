@@ -1166,7 +1166,6 @@ def test_quickNavTargetReporting():
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join([
-			"A bunch of text.",  # article (ancestor) description
 			"Quick Nav Target",  # Heading content (quick nav target), should read first
 			"heading",  # Heading role
 			"level 1",  # Heading level
@@ -1238,7 +1237,6 @@ def test_focusTargetReporting():
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join([
-			"A bunch of text.",  # description for article
 			"Focus Target",  # link content (focus target), should read first
 			"link",  # link role
 		]),
