@@ -128,14 +128,6 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 		return installedUserConfigPath
 	return os.path.join(globalVars.appDir, 'userConfig')
 
-def getSystemConfigPath():
-	if isInstalledCopy():
-		try:
-			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL.COMMON_APPDATA), "nvda")
-		except WindowsError:
-			pass
-	return None
-
 
 SCRATCH_PAD_ONLY_DIRS = (
 	'appModules',
