@@ -102,7 +102,9 @@ def getInstalledUserConfigPath():
 		configInLocalAppData = bool(winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
 	except WindowsError:
 		configInLocalAppData=False
-	configParent=shlobj.SHGetFolderPath(0, shlobj.CSIDL_LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL_APPDATA)
+	configParent = shlobj.SHGetFolderPath(
+		0, shlobj.CSIDL.LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL.APPDATA
+	)
 	try:
 		return os.path.join(configParent, "nvda")
 	except WindowsError:
@@ -129,7 +131,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 def getSystemConfigPath():
 	if isInstalledCopy():
 		try:
-			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_COMMON_APPDATA), "nvda")
+			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL.COMMON_APPDATA), "nvda")
 		except WindowsError:
 			pass
 	return None
