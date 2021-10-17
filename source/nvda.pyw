@@ -127,18 +127,13 @@ def stringToLang(value: str) -> str:
 	"""
 	if value.casefold() == "Windows".casefold():
 		return "Windows"
-	value = value.replace("-", "_")
-	lang = value.split("_")[0].lower()
-	dialect = value.split("_")[1].upper() if "_" in value else None
-	# Validating the size of the codes.
-	# Further validation would require L{languageHandler} to be initialized.
-	if len(lang) != 2 or (dialect and len(dialect) != 2):
+	import languageHandler
+	normalizedLang = languageHandler.normalizeLanguage(value)
+	if normalizedLang is None:
 		raise argparse.ArgumentTypeError(
 			"Language code should be \"Windows\" or of the forms \"en\" or \"pt_BR\"."
 		)
-	if dialect:
-		return f"{lang}_{dialect}"
-	return lang
+	return normalizedLang
 
 
 #Process option arguments

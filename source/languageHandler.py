@@ -423,7 +423,7 @@ def getLanguage() -> str:
 	return curLang
 
 
-def normalizeLanguage(lang) -> Optional[str]:
+def normalizeLanguage(lang: str) -> Optional[str]:
 	"""
 	Normalizes a  language-dialect string  in to a standard form we can deal with.
 	Converts  any dash to underline, and makes sure that language is lowercase and dialect is upercase.

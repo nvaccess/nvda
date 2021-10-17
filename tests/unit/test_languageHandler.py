@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2021 NV Access Limited
+# Copyright (C) 2017-2021 NV Access Limited, Łukasz Golonka
 
 """Unit tests for the languageHandler module.
 """
@@ -51,7 +51,7 @@ class TestLocaleNameToWindowsLCID(unittest.TestCase):
 		self.assertEqual(lcid, LCID_NONE)
 
 
-class Test_Normalization(unittest.TestCase):
+class Test_Normalization_For_Win32(unittest.TestCase):
 
 	def test_isNormalizedWin32LocaleNormalizedLocale(self):
 		self.assertTrue(languageHandler.isNormalizedWin32Locale("en"))
@@ -322,3 +322,23 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 		for localeName in WINDOWS_LANGS:
 			with self.subTest(localeName=localeName):
 				languageHandler.setLanguage(localeName)
+
+
+class Test_language_Normalization_for_NVDA(unittest.TestCase):
+	"""Set of unit tests for `languageHandler.normalizeLanguage`."""
+
+	def test_normalization_no_country_info(self):
+		"""Makes sure that if no country info is provided language is normalized to lower case."""
+		self.assertEqual("en", languageHandler.normalizeLanguage("en"))
+		self.assertEqual("en", languageHandler.normalizeLanguage("EN"))
+		self.assertEqual("kmr", languageHandler.normalizeLanguage("kmr"))
+
+	def test_underscore_used_as_separator_after_normalization(self):
+		"""Ensures that underscore is used to separate country info from language.
+		Also implicitly test the fact that country code is converted to upper case."""
+		self.assertEqual("pt_BR", languageHandler.normalizeLanguage("pt_BR"))
+		self.assertEqual("pt_BR", languageHandler.normalizeLanguage("pt-BR"))
+
+	def test_meta_languages_no_normalization(self):
+		"""Ensures that for meta languages such as x-western `None` is returned."""
+		self.assertIsNone(languageHandler.normalizeLanguage("x-western"))
