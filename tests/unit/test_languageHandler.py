@@ -342,3 +342,53 @@ class Test_language_Normalization_for_NVDA(unittest.TestCase):
 	def test_meta_languages_no_normalization(self):
 		"""Ensures that for meta languages such as x-western `None` is returned."""
 		self.assertIsNone(languageHandler.normalizeLanguage("x-western"))
+
+
+class test_getAvailableLanguages(unittest.TestCase):
+	"""Set of unit tests for `languageHandler.getAvailableLanguages`"""
+
+	def test_langsListExpectedFormat(self):
+		"""Ensures that for all languages except user default each element of the returned list consists of
+		language code, and language  description containing language code
+		(necessary since lang descriptions are localized to the default Windows language)."""
+		for langCode, langDesc in languageHandler.getAvailableLanguages()[1:]:
+			self.assertIn(langCode, langDesc)
+			self.assertIn(languageHandler.getLanguageDescription(langCode), langDesc)
+
+	def test_knownLanguageCodesInList(self):
+		"""Ensure that expected languages are in the list."""
+		langCodes = [lang[0] for lang in languageHandler.getAvailableLanguages()]
+		self.assertIn("pl", langCodes)
+		self.assertIn("ru", langCodes)
+		self.assertIn("zh_TW", langCodes)
+		self.assertIn("kmr", langCodes)
+
+	def test_langsWithOutTranslationsNotInList(self):
+		"""Ensure that languages which do  not have a translations
+		(i.e. only symbol  files are present) are excluded ."""
+		langCodes = [lang[0] for lang in languageHandler.getAvailableLanguages()]
+		self.assertNotIn("be", langCodes)
+		self.assertNotIn("te", langCodes)
+		self.assertNotIn("zh", langCodes)
+		self.assertNotIn("kok", langCodes)
+
+	def test_manuallyAddedLocalesPresentInList(self):
+		"""Some locales do not have translations, yet they should be  present in the list."""
+		langCodes = [lang[0] for lang in languageHandler.getAvailableLanguages()]
+		self.assertEqual("Windows", langCodes[0])
+		self.assertIn("en", langCodes)
+
+	def test_noDuplicates(self):
+		seenLangCodes = set()
+		seenLangDescs = set()
+		for langCode, langDesc in languageHandler.getAvailableLanguages():
+			self.assertNotIn(langCode, seenLangCodes)
+			seenLangCodes.add(langCode)
+			self.assertNotIn(langDesc, seenLangDescs)
+			seenLangDescs.add(langDesc)
+
+	def test_userDefaultDescriptionIsCorrect(self):
+		"""Description for the 'user default' should not contain a language code."""
+		userDefaultLangCode, userDefaultLangDesc = languageHandler.getAvailableLanguages()[0]
+		self.assertEqual(userDefaultLangCode, "Windows")
+		self.assertNotIn(userDefaultLangCode, userDefaultLangDesc)

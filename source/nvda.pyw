@@ -125,15 +125,21 @@ def stringToBool(string):
 def stringToLang(value: str) -> str:
 	"""Perform basic case normalization for ease of use.
 	"""
-	if value.casefold() == "Windows".casefold():
-		return "Windows"
 	import languageHandler
-	normalizedLang = languageHandler.normalizeLanguage(value)
-	if normalizedLang is None:
-		raise argparse.ArgumentTypeError(
-			"Language code should be \"Windows\" or of the forms \"en\" or \"pt_BR\"."
+	if value.casefold() == "Windows".casefold():
+		normalizedLang = "Windows"
+	else:
+		normalizedLang = languageHandler.normalizeLanguage(value)
+	possibleLangNames = languageHandler.listNVDALocales()
+	if normalizedLang is not None and normalizedLang in possibleLangNames:
+		return normalizedLang
+	raise argparse.ArgumentTypeError(
+		(
+			"Language code should be \"Windows\","
+			" of the forms \"en\" or \"pt_BR\""
+			f" or one of:\n {', '.join(possibleLangNames)}."
 		)
-	return normalizedLang
+	)
 
 
 #Process option arguments
