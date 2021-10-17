@@ -713,6 +713,17 @@ class GeneralSettingsPanel(SettingsPanel):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.languageNames = languageHandler.getAvailableLanguages(presentational=True)
 		languageChoices = [x[1] for x in self.languageNames]
+		if languageHandler.isLanguageForced():
+			cmdLangDescription = [
+				ld[1] for ld in self.languageNames if ld[0] == globalVars.appArgs.cmdLineLanguage
+			][0]
+			languageChoices.insert(
+				0,
+				# Translators: Shown for a language which has been provided from the command line
+				# 'langDesc' would be replaced with description of the given locale.
+				_("Command line option: {langDesc}").format(langDesc=cmdLangDescription)
+			)
+			self.languageNames.insert(0, "FORCED")
 		# Translators: The label for a setting in general settings to select NVDA's interface language
 		# (once selected, NVDA must be restarted; the option user default means the user's Windows language
 		# will be used).
@@ -720,12 +731,12 @@ class GeneralSettingsPanel(SettingsPanel):
 		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
 		self.bindHelpEvent("GeneralSettingsLanguage", self.languageList)
 		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
-		try:
-			self.oldLanguage=config.conf["general"]["language"]
-			index=[x[0] for x in self.languageNames].index(self.oldLanguage)
-			self.languageList.SetSelection(index)
-		except:
-			pass
+		self.oldLanguage = config.conf["general"]["language"]
+		if languageHandler.isLanguageForced():
+			index = 0
+		else:
+			index = [x[0] for x in self.languageNames].index(self.oldLanguage)
+		self.languageList.SetSelection(index)
 		if globalVars.appArgs.secure:
 			self.languageList.Disable()
 
@@ -884,8 +895,9 @@ class GeneralSettingsPanel(SettingsPanel):
 			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
 
 	def onSave(self):
-		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
-		config.conf["general"]["language"]=newLanguage
+		if not languageHandler.isLanguageForced() or self.languageList.GetSelection() != 0:
+			newLanguage = [x[0] for x in self.languageNames][self.languageList.GetSelection()]
+			config.conf["general"]["language"] = newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()

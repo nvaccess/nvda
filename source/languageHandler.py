@@ -285,6 +285,12 @@ def makePgettext(translations):
 		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
 	return pgettext
 
+
+def isLanguageForced() -> bool:
+	"""Returns `True` if language is provided from the command line - `False` otherwise."""
+	return any(filter(lambda elem: elem.startswith("--lang="), sys.argv))
+
+
 def getWindowsLanguage():
 	"""
 	Fetches the locale name of the user's configured language in Windows.

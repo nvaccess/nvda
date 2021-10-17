@@ -156,6 +156,9 @@ def restart(disableAddons=False, debugLogging=False):
 			sys.argv.remove(paramToRemove)
 		except ValueError:
 			pass
+		for i, arg in list(enumerate(sys.argv)):
+			if arg.startswith("--lang="):
+				del sys.argv[i]
 	options = []
 	if not hasattr(sys, "frozen"):
 		options.append(os.path.basename(sys.argv[0]))
@@ -163,13 +166,6 @@ def restart(disableAddons=False, debugLogging=False):
 		options.append('--disable-addons')
 	if debugLogging:
 		options.append('--debug-logging')
-	if globalVars.appArgs.cmdLineLanguage:
-		import config
-		# We should better compare here with the saved value if not saveOnExit.
-		if config.conf["general"]["language"] != globalVars.appArgs.cmdLineLanguage:
-			for i, arg in list(enumerate(sys.argv)):
-				if arg.startswith("--lang="):
-					del sys.argv[i]
 
 	if not triggerNVDAExit(NewNVDAInstance(
 		sys.executable,
@@ -205,12 +201,9 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("Reloading config")
 	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
-	#Language
+	# Language
 	lang = globalVars.appArgs.cmdLineLanguage
-	if lang:
-		# Ensure the language specified on the command line will be saved with the config.
-		config.conf["general"]["language"] = lang
-	else:
+	if not lang:
 		lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
@@ -426,10 +419,7 @@ def main():
 			pass
 	logHandler.setLogLevelFromConfig()
 	lang = globalVars.appArgs.cmdLineLanguage
-	if lang:
-		# Ensure the language specified on the command line will be saved with the config.
-		config.conf["general"]["language"] = lang
-	else:
+	if not lang:
 		lang = config.conf["general"]["language"]
 	import languageHandler
 	log.debug(f"setting language to {lang}")
