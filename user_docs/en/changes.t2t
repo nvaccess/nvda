@@ -4,6 +4,20 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2021.3 =
+This release introduces support for the new HID Braille specification.
+This specification aims to standardise support for Braille Displays without needing individual drivers.
+There are updates to eSpeak-NG and LibLouis, including new Russian and Tshivenda tables.
+Error sounds can be enabled in stable builds of NVDA via a new advanced settings option.
+Say all in Word now scrolls the view to keep the current position visible.
+There are lots of improvements when using Office with UIA.
+One UIA fix is that Outlook now ignores more types of layout tables in messages.
+
+Important notes:
+
+Due to an update to our security certificate, a small number of users get an error when NVDA 2021.2 checks for updates.
+NVDA now asks Windows to update security certificates, which will prevent this error in future.
+Affected users will need to download this update manually.
+
 
 == New Features ==
 - Adds an input gesture for toggling settings for reporting the style of cell borders. (#10408)
