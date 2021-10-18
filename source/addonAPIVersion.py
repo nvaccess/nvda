@@ -13,12 +13,13 @@ how the API has changed as well as the range of API versions supported by this b
 """
 
 CURRENT = (buildVersion.version_year, buildVersion.version_major, buildVersion.version_minor)
-BACK_COMPAT_TO = (2021, 1, 0)
+BACK_COMPAT_TO = (2022, 1, 0)
 """
 As BACK_COMPAT_TO is incremented, the changed / removed parts / or reasoning should be added below.
 These only serve to act as a reminder, the changelog should be consulted for a comprehensive listing.
 EG: (x, y, z): Large changes to speech.py
 ---
+(2022, 1, 0): TODO: update during the dev cycle:
 (2021, 1, 0): wxPython 4.1.1, SayAll / Speech re-arranged, removal of previously deprecated code.
 (2019, 3, 0): speech refactor, Python 3
 (0, 0, 0): API version zero, used to signify addons released prior to API version checks.
