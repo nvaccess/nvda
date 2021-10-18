@@ -312,7 +312,7 @@ def handleAppSwitch(oldMods, newMods):
 			mod.event_appModule_gainFocus()
 
 
-def suspendWow64RedirectionForFileInfoRetrieval(func):
+def _suspendWow64RedirectionForFileInfoRetrieval(func):
 	"""Decorator which should be used for functions which need to access binaries backing given appModule.
 	It checks if the given binary is placed in a system32 directory, and if for the current system system32
 	redirects 32-bit processes such as NVDA to a different syswow64 directory
@@ -409,7 +409,7 @@ class AppModule(baseObject.ScriptableObject):
 		else:
 			return None
 
-	@suspendWow64RedirectionForFileInfoRetrieval
+	@_suspendWow64RedirectionForFileInfoRetrieval
 	def _setProductInfo(self):
 		"""Set productName and productVersion attributes.
 		There are at least two ways of obtaining product info for an app:
