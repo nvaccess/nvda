@@ -4,6 +4,8 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from typing import Set
+import weakref
 import wx
 
 import config
@@ -36,10 +38,12 @@ class WelcomeDialog(
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
 		"From this menu, you can configure NVDA, get help and access other NVDA functions."
 	)
+	_instances: Set["WelcomeDialog"] = weakref.WeakSet()
 
 	def __init__(self, parent):
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super().__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
+		WelcomeDialog._instances.add(self)
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time.
@@ -108,6 +112,7 @@ class WelcomeDialog(
 		except Exception:
 			log.debugWarning("Could not save", exc_info=True)
 		self.EndModal(wx.ID_OK)
+		self.Close()
 
 	@classmethod
 	def run(cls):
@@ -117,8 +122,16 @@ class WelcomeDialog(
 		gui.mainFrame.prePopup()
 		d = cls(gui.mainFrame)
 		d.ShowModal()
-		wx.CallAfter(d.Destroy)
 		gui.mainFrame.postPopup()
+
+	@classmethod
+	def closeInstances(cls):
+		instances = list(cls._instances)
+		for instance in instances:
+			if instance and not instance.IsBeingDeleted() and instance.IsModal():
+				instance.EndModal(wx.ID_CLOSE_ALL)
+			else:
+				cls._instances.remove(instance)
 
 
 class LauncherDialog(
