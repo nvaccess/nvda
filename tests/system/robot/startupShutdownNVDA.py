@@ -39,6 +39,22 @@ def NVDA_Starts():
 	_process.process_should_be_running(_nvdaProcessAlias)
 
 
+def open_welcome_dialog_from_menu():
+	spy = _nvdaLib.getSpyLib()
+	spy.emulateKeyPress("NVDA+n")
+	spy.emulateKeyPress("h")
+	spy.emulateKeyPress("l")
+	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present.
+
+
+def open_about_dialog_from_menu():
+	spy = _nvdaLib.getSpyLib()
+	spy.emulateKeyPress("NVDA+n")
+	spy.emulateKeyPress("h")
+	spy.emulateKeyPress("a")
+	spy.wait_for_specific_speech("About NVDA")  # ensure the dialog is present.
+
+
 def quits_from_menu(showExitDialog=True):
 	"""Ensure NVDA can be quit from menu."""
 	spy = _nvdaLib.getSpyLib()
