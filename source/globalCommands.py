@@ -1331,7 +1331,11 @@ class GlobalCommands(ScriptableObject):
 		res=info.move(textInfos.UNIT_LINE,1)
 		newLine = info.copy()
 		newLine.expand(textInfos.UNIT_LINE)
-		if res == 0 or newLine.start <= origInfo.start: 
+		# Some implementations of move by line 1 may succed one more time than expected,
+		# Landing on the exclosive end of the document.
+		# Therefore, verify that expanding after the move does result in being on a new line,
+		# I.e. the new line starts after the original review cursor position.
+		if res == 0 or newLine.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
 		else:
