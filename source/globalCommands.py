@@ -1325,17 +1325,22 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:numpad9", "kb(laptop):NVDA+downArrow", "ts(text):flickDown")
 	)
 	def script_review_nextLine(self,gesture):
-		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
+		origInfo = api.getReviewPosition().copy()
+		origInfo.collapse()
+		info = origInfo.copy()
 		res=info.move(textInfos.UNIT_LINE,1)
-		if res==0:
+		newLine = info.copy()
+		newLine.expand(textInfos.UNIT_LINE)
+		# Some implementations of move by line 1 may succed one more time than expected,
+		# Landing on the exclosive end of the document.
+		# Therefore, verify that expanding after the move does result in being on a new line,
+		# I.e. the new line starts after the original review cursor position.
+		if res == 0 or newLine.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
 		else:
 			api.setReviewPosition(info)
-		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
+		speech.speakTextInfo(newLine, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	@script(
 		# Translators: Input help mode message for move review cursor to bottom line command.
