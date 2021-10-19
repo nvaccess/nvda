@@ -40,6 +40,11 @@ import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
 
+
+# Custom object ID used for clipboard pane in some versions of MS Office
+MSO_COLLECT_AND_PASTE_OBJECT_ID = 21
+
+
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
 		accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
@@ -499,7 +504,10 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith('Mozilla'):
 			from . import mozilla
 			mozilla.findExtraOverlayClasses(self, clsList)
-		elif self.event_objectID in (None,winUser.OBJID_CLIENT) and windowClassName.startswith('bosa_sdm'):
+		elif(
+			self.event_objectID in (None, winUser.OBJID_CLIENT, MSO_COLLECT_AND_PASTE_OBJECT_ID)
+			and windowClassName.startswith('bosa_sdm')
+		):
 			if role==oleacc.ROLE_SYSTEM_GRAPHIC and controlTypes.State.FOCUSED in self.states:
 				from .msOffice import SDMSymbols
 				clsList.append(SDMSymbols)

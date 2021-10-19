@@ -361,15 +361,8 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 			threadID = super().windowThreadID
 		return threadID
 
-	def _get_isImprovedTextRangeAvailable(self):
-		log.warning(
-			"winConsole.isImprovedTextRangeAvailable is deprecated and will be "
-			"removed in NVDA 2022.1. Please use apiLevel instead."
-		)
-		return self.apiLevel >= WinConsoleAPILevel.IMPROVED
-
 	def _get_TextInfo(self):
-		"""Overriding _get_ConsoleUIATextInfo and thus the ConsoleUIATextInfo property
+		"""Overriding _get_TextInfo and thus the ConsoleUIATextInfo property
 		on NVDAObjects.UIA.UIA
 		ConsoleUIATextInfo bounds review to the visible text.
 		ConsoleUIATextInfoWorkaroundEndInclusive fixes expand/collapse and implements
@@ -383,7 +376,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 
 	def _get_devInfo(self):
 		info = super().devInfo
-		info.append(f"API level: {self.apiLevel.name}")
+		info.append(f"API level: {self.apiLevel} ({self.apiLevel.name})")
 		return info
 
 	def detectPossibleSelectionChange(self):

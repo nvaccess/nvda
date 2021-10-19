@@ -451,6 +451,14 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				except NotImplementedError:
 					continue
 				break
+
+	if (
+		newPropertyValues.get("description")  # has a value
+		and newPropertyValues.get("name") == newPropertyValues.get("description")  # value is equal to name
+		and reason != controlTypes.OutputReason.CHANGE  # if the value has changed, report it.
+	):
+		del newPropertyValues['description']  # prevent duplicate speech due to description matching name
+
 	if positionInfo:
 		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
 			newPropertyValues['positionInfo_level']=positionInfo['level']
@@ -1775,28 +1783,33 @@ def getControlFieldSpeech(  # noqa: C901
 
 	description: Optional[str] = None
 	_descriptionFrom = attrs.get('_description-from', controlTypes.DescriptionFrom.UNKNOWN)
+	_descriptionIsContent: bool = attrs.get("descriptionIsContent", False)
+	_reportDescriptionAsAnnotation: bool = (
+		# Don't report other sources of description like "title" all the time
+		# The usages of these is not consistent and often does not seem to have
+		# Screen Reader users in mind
+		config.conf["annotations"]["reportAriaDescription"]
+		and not _descriptionIsContent
+		and controlTypes.DescriptionFrom.ARIA_DESCRIPTION == _descriptionFrom
+		and reason in (
+			OutputReason.FOCUS,
+			OutputReason.QUICKNAV,
+			OutputReason.CARET,
+			OutputReason.SAYALL,
+		)
+	)
 	if (
 		(
 			config.conf["presentation"]["reportObjectDescriptions"]
-			and (
-				reason == OutputReason.FOCUS
-				# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
-				# Not used internally, but may be used by addons.
-				or attrs.get('alwaysReportDescription', False)
-			)
+			and not _descriptionIsContent
+			and reason == OutputReason.FOCUS
 		)
 		or (
-			# Don't report other sources of description like "title" all the time
-			# The usages of these is not consistent and often does not seem to have
-			# Screen Reader users in mind
-			config.conf["annotations"]["reportAriaDescription"]
-			and controlTypes.DescriptionFrom.ARIA_DESCRIPTION == _descriptionFrom
-			and reason in (
-				OutputReason.FOCUS,
-				OutputReason.CARET,
-				OutputReason.SAYALL,
-			)
+			# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
+			# Not used internally, but may be used by addons.
+			attrs.get('alwaysReportDescription', False)
 		)
+		or _reportDescriptionAsAnnotation
 	):
 		description = attrs.get('description')
 
@@ -2013,7 +2026,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if isCurrent != controlTypes.IsCurrent.NO:
 			out.extend(isCurrentSequence)
-		if descriptionSequence:
+		if descriptionSequence and _reportDescriptionAsAnnotation:
 			out.extend(descriptionSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
 		if role == controlTypes.Role.TREEVIEWITEM:
