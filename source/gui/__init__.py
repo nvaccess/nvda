@@ -26,6 +26,7 @@ import core
 from . import guiHelper
 from .settingsDialogs import SettingsDialog
 from .settingsDialogs import *
+from .startupDialogs import WelcomeDialog
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
 from . import logViewer
@@ -684,6 +685,7 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
+			WelcomeDialog.saveAndCloseInstances()
 			if not core.triggerNVDAExit():
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 			return  # there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this
