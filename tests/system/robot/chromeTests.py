@@ -23,6 +23,13 @@ _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 
+#: Double space is used to separate semantics in speech output this typically
+# adds a slight pause to the synthesizer.
+SPEECH_SEP = "  "
+SPEECH_CALL_SEP = '\n'
+#: single space is used to separate semantics in braille output.
+BRAILLE_SEP = " "
+
 ARIAExamplesDir = os.path.join(
 	_NvdaLib._locations.repoRoot, "include", "w3c-aria-practices", "examples"
 )
@@ -48,7 +55,7 @@ def checkbox_labelled_by_inner_element():
 	)
 
 
-def test_aria_details():
+def test_mark_aria_details():
 	_chrome.prepareChrome(
 		"""
 		<div>
@@ -69,7 +76,7 @@ def test_aria_details():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		"The word  marked content  has details  cat  out of marked content  has a comment tied to it."
+		"The word  highlighted  has details  cat  out of highlighted  has a comment tied to it."
 	)
 	# this word has no details attached
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
@@ -87,7 +94,7 @@ def test_aria_details():
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"marked content  has details  cat  out of marked content"
+		"highlighted  has details  cat  out of highlighted"
 	)
 	# read the details summary
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
@@ -152,7 +159,7 @@ def announce_list_item_when_moving_by_word_or_character():
 	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			"list item  level 1",
 			"b"
 		])
@@ -259,7 +266,7 @@ def test_pr11606():
 	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			"out of link",
 			"space"
 		])
@@ -328,7 +335,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("enter")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			# focus mode turns on
 			"Focus mode",
 			# Focus enters the ARIA treegrid (table)
@@ -661,40 +668,46 @@ def test_ariaRoleDescription_block_contentEditable():
 	)
 
 
-annotation = "User nearby, Aaron"
-linkDescription = "opens in a new tab"
-linkTitle = "conduct a search"
-ariaDescriptionSample = f"""
-		<div>
-			<div
-				contenteditable=""
-				spellcheck="false"
-				role="textbox"
-				aria-multiline="true"
-			><p>This is a line with no annotation</p>
-			<p><span
-					aria-description="{annotation}"
-				>Here is a sentence that is being edited by someone else.</span>
-				<b>Multiple can edit this.</b></p>
-			<p>An element with a role, follow <a
-				href="www.google.com"
-				aria-description="{linkDescription}"
-				>to google's</a
-			> website</p>
-			<p>Testing the title attribute, <a
-				href="www.google.com"
-				title="{linkTitle}"
-				>to google's</a
-			> website</p>
+def _getAriaDescriptionSample() -> str:
+	annotation = "User nearby, Aaron"
+	linkDescription = "opens in a new tab"
+	# link title should be read in focus
+	linkTitle = "conduct a search"
+	linkContents = "to google's"
+	return f"""
+			<div>
+				<div
+					contenteditable=""
+					spellcheck="false"
+					role="textbox"
+					aria-multiline="true"
+				><p>This is a line with no annotation</p>
+				<p><span
+						aria-description="{annotation}"
+					>Here is a sentence that is being edited by someone else.</span>
+					<b>Multiple can edit this.</b></p>
+				<p>An element with a role, follow <a
+					href="www.google.com"
+					aria-description="{linkDescription}"
+					>{linkContents}</a
+				> website</p>
+				<p>Testing the title attribute, <a
+					href="www.google.com"
+					title="{linkTitle}"
+					>{linkContents}</a
+				> website</p>
+				</div>
 			</div>
-		</div>
-	"""
+		"""
 
 
 def test_ariaDescription_focusMode():
 	""" Ensure aria description is read in focus mode.
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	- annotations.reportAriaDescription default:True
 	"""
-	_chrome.prepareChrome(ariaDescriptionSample)
+	_chrome.prepareChrome(_getAriaDescriptionSample())
 	# Focus the contenteditable and automatically switch to focus mode (due to contenteditable)
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(
@@ -707,18 +720,25 @@ def test_ariaDescription_focusMode():
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		f"{annotation}  Here is a sentence that is being edited by someone else."
-		f"  Multiple can edit this."
+		SPEECH_SEP.join([
+			"User nearby, Aaron",  # annotation
+			"Here is a sentence that is being edited by someone else.",  # span text
+			"Multiple can edit this.",  # bold paragraph text
+		])
 	)
 
-	linkRole = "link"
-	linkName = "to google's"
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	# description-from hasn't reached Chrome stable yet.
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		f"An element with a role, follow  {linkRole}  {linkDescription}  {linkName}  website"
+		SPEECH_SEP.join([  # two space separator
+			"An element with a role, follow",  # paragraph text
+			"link",  # link role
+			"opens in a new tab",  # link description
+			"to google's",  # link contents (name)
+			"website"  # paragraph text
+		])
 	)
 
 	# 'title' attribute for link ("conduct a search") should not be announced.
@@ -726,14 +746,22 @@ def test_ariaDescription_focusMode():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		f"Testing the title attribute,  {linkRole}  {linkName}  website"
+		SPEECH_SEP.join([
+			"Testing the title attribute,",  # paragraph text
+			"link",  # link role
+			"to google's",  # link contents (name)
+			"website"  # paragraph text
+		])
 	)
 
 
 def test_ariaDescription_browseMode():
 	""" Ensure aria description is read in browse mode.
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	- annotations.reportAriaDescription default:True
 	"""
-	_chrome.prepareChrome(ariaDescriptionSample)
+	_chrome.prepareChrome(_getAriaDescriptionSample())
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
@@ -745,18 +773,25 @@ def test_ariaDescription_browseMode():
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		f"{annotation}  Here is a sentence that is being edited by someone else."
-		"  Multiple can edit this."
+		SPEECH_SEP.join([
+			"User nearby, Aaron",  # annotation
+			"Here is a sentence that is being edited by someone else.",  # span text
+			"Multiple can edit this.",  # bold paragraph text
+		])
 	)
 
-	linkRole = "link"
-	linkName = "to google's"
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	# description-from hasn't reached Chrome stable yet.
 	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		f"An element with a role, follow  {linkRole}  {linkDescription}  {linkName}  website"
+		SPEECH_SEP.join([  # two space separator
+			"An element with a role, follow",  # paragraph text
+			"link",  # link role
+			"opens in a new tab",  # link description
+			"to google's",  # link contents (name)
+			"website"  # paragraph text
+		])
 	)
 
 	# 'title' attribute for link ("conduct a search") should not be announced.
@@ -764,33 +799,56 @@ def test_ariaDescription_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
 	_asserts.strings_match(
 		actualSpeech,
-		f"Testing the title attribute,  {linkRole}  {linkName}  website"
+		SPEECH_SEP.join([
+			"Testing the title attribute,",  # paragraph text
+			"link",  # link role
+			"to google's",  # link contents (name)
+			"website"  # paragraph text
+		])
 	)
 
 
 def test_ariaDescription_sayAll():
 	""" Ensure aria description is read by say all.
+	# Historically, description was not announced at all in browse mode with arrow navigation,
+	# annotations are now a special case.
+
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	- annotations.reportAriaDescription default:True
 	"""
-	_chrome.prepareChrome(ariaDescriptionSample)
+	_chrome.prepareChrome(_getAriaDescriptionSample())
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+downArrow")
 
-	linkRole = "link"
-	linkName = "to google's"
-
-	# description-from hasn't reached Chrome stable yet.
-	# reporting aria-description only supported in Chrome canary 92.0.4479.0+
+	# Reporting aria-description only supported in:
+	# - Chrome 92.0.4479.0+
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join([
+		SPEECH_CALL_SEP.join([
 			"Test page load complete",
 			"edit  multi line  This is a line with no annotation",
-			f"{annotation}  Here is a sentence that is being edited by someone else.  Multiple can edit this.",
-			"An element with a role, "  # no comma, concat these two long strings.
-			f"follow  {linkRole}  {linkDescription}  {linkName}  website",
+			SPEECH_SEP.join([
+				"User nearby, Aaron",  # annotation
+				"Here is a sentence that is being edited by someone else.",  # span text
+				"Multiple can edit this.",  # bold paragraph text
+			]),
+			SPEECH_SEP.join([  # two space separator
+				"An element with a role, follow",  # paragraph text
+				"link",  # link role
+				"opens in a new tab",  # link description
+				"to google's",  # link contents (name)
+				"website",  # paragraph text
+			]),
 			# 'title' attribute for link ("conduct a search") should not be announced.
 			# too often title is used without screen reader users in mind, and is overly verbose.
-			f"Testing the title attribute,  {linkRole}  {linkName}  website"
-			"  out of edit",
+			SPEECH_SEP.join([
+				"Testing the title attribute,",  # paragraph text
+				"link",  # link role
+				# note description missing when sourced from title attribute
+				"to google's",  # link contents (name)
+				"website",  # paragraph text
+				"out of edit"
+			]),
 			"After Test Case Marker"
 		])
 	)
@@ -839,4 +897,435 @@ def test_i10840():
 	_asserts.strings_match(
 		nextActualSpeech,
 		"column 2  items"
+	)
+
+
+def test_mark_browse():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <mark>Kangaroo</mark> is important.</p>
+		</div>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		"The word  highlighted  Kangaroo  out of highlighted  is important."
+	)
+	# Test moving by word
+	actualSpeech = _chrome.getSpeechAfterKey("numpad6")
+	_asserts.strings_match(
+		actualSpeech,
+		"word"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("numpad6")
+	_asserts.strings_match(
+		actualSpeech,
+		"highlighted  Kangaroo  out of highlighted"
+	)
+
+
+def test_mark_focus():
+	_chrome.prepareChrome(
+		"""
+		<div>
+			<p>The word <mark><a href="#">Kangaroo</a></mark> is important.</p>
+		</div>
+		"""
+	)
+
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"highlighted\nKangaroo  link"
+	)
+
+
+def test_preventDuplicateSpeechFromDescription_browse_tab():
+	"""
+	When description matches name/content, it should not be spoken.
+	This prevents duplicate speech.
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	"""
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
+	_chrome.prepareChrome(
+		"""
+		<a href="#" title="apple" style="display:block">apple</a>
+		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
+		"""
+	)
+	# Read in browse
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"apple  link"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"banana  link"
+	)
+
+
+def preventDuplicateSpeechFromDescription_focus():
+	"""
+	When description matches name/content, it should not be spoken.
+	This prevents duplicate speech.
+	Settings which may affect this:
+	- speech.reportObjectDescriptions default:True
+	"""
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
+	_chrome.prepareChrome(
+		"""
+		<a href="#" title="apple" style="display:block">apple</a>
+		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
+		"""
+	)
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"apple  link"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('tab')
+	_asserts.strings_match(
+		actualSpeech,
+		"banana  link"
+	)
+
+
+def test_ensureNoBrowseModeDescription():
+	"""
+	Test that option (speech.reportObjectDescriptions default:True)
+	does not result in description in browse mode.
+	"""
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy = _NvdaLib.getSpyLib()
+	# prevent browse / focus mode messages from interfering, 0 means don't show.
+	spy.set_configValue(["braille", "messageTimeout"], 0)
+
+	_chrome.prepareChrome(
+		"\n".join([
+			r'<button>something for focus</button>'
+			r'<a href="#" style="display:block" title="Cat">Apple</a>',
+			# second link to make testing second focus mode tab easier
+			r'<a href="#" style="display:block" title="Fish">Banana</a>',
+		])
+	)
+
+	actualSpeech = _NvdaLib.getSpeechAfterKey('tab')
+	_builtIn.should_contain(actualSpeech, "something for focus")
+
+	# Test Browse mode
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"link",  # role description
+			# No link description (from title)
+			"Apple",  # link name / contents
+		]),
+		message="Test browse mode with reportObjectDescriptions=True"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		BRAILLE_SEP.join([
+			"lnk",  # role description
+			# No link description (from title)
+			"Apple",  # link name / contents
+		]),
+		message="Test browse mode with reportObjectDescriptions=True"
+	)
+
+	# move virtual cursor back up to reset to start position
+	actualSpeech = _NvdaLib.getSpeechAfterKey('upArrow')
+	_builtIn.should_contain(actualSpeech, "something for focus")
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, False)
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"link",  # role description
+			# No link description (from title)
+			"Apple",  # link name / contents
+		]),
+		message="Test browse mode with reportObjectDescriptions=False"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		BRAILLE_SEP.join([
+			"lnk",  # role description
+			# No link description (from title)
+			"Apple",  # link name / contents
+		]),
+		message="Test browse mode with reportObjectDescriptions=False"
+	)
+
+	# move virtual cursor back up to reset to start position
+	actualSpeech = _NvdaLib.getSpeechAfterKey('upArrow')
+	_builtIn.should_contain(actualSpeech, "something for focus")
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
+	# Test focus mode
+	actualSpeech = _NvdaLib.getSpeechAfterKey("nvda+space")
+	_asserts.speech_matches(actualSpeech, "Focus mode")
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Apple",  # link name / contents
+			"link",  # role description
+			"Cat",  # link description (from title)
+		]),
+		message="Test focus mode with reportObjectDescriptions=True"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		BRAILLE_SEP.join([
+			"Apple",  # link name / contents
+			"lnk",  # role description
+			"Cat",  # link description (from title)
+		]),
+		message="Test focus mode with reportObjectDescriptions=True"
+	)
+
+	# Use second link to test focus mode when 'reportObjectDescriptions' is off.
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, False)
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Banana",  # link name / contents
+			"link",  # role description
+			# No link description (from title)
+		]),
+		message="Test focus mode with reportObjectDescriptions=False"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		BRAILLE_SEP.join([
+			"Banana",  # link name / contents
+			"lnk",  # role description
+			# No link description (from title)
+		]),
+		message="Test focus mode with reportObjectDescriptions=False"
+	)
+
+
+def test_quickNavTargetReporting():
+	"""
+	When using quickNav, the target object should be spoken first, inner context should be given before outer
+	context.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
+	_chrome.prepareChrome(
+		"""
+		<div
+			aria-describedby="descId"
+			aria-labelledby="labelId"
+			role="article"
+		>
+			<h1>Quick Nav Target</h1>
+			<div id="labelId">
+					<div>Some name.</div>
+			</div>
+			<div id="descId">
+					<span>A bunch of text.</span>
+			</div>
+		</div>
+		"""
+	)
+	# Quick nav to heading
+	actualSpeech = _chrome.getSpeechAfterKey("h")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Quick Nav Target",  # Heading content (quick nav target), should read first
+			"heading",  # Heading role
+			"level 1",  # Heading level
+		])
+	)
+	# Reset to allow trying again with report articles enabled
+	actualSpeech = _chrome.getSpeechAfterKey("control+home")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Before Test Case Marker",
+		])
+	)
+
+	# Quick nav to heading with report articles enabled
+	spy.set_configValue(REPORT_ARTICLES, True)
+	actualSpeech = _chrome.getSpeechAfterKey("h")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Quick Nav Target",  # Heading content (quick nav target), should read first
+			"heading",  # Heading role
+			"level 1",  # Heading level
+			"article",  # article role, enabled via report article
+			"A bunch of text.",  # article (ancestor) description
+		])
+	)
+
+
+def test_focusTargetReporting():
+	"""
+	When moving focus the target object should be spoken first, inner context should be given before outer
+	context.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
+	_chrome.prepareChrome(
+		"""
+		<a href="#">before Target</a>
+		<div
+			aria-describedby="descId"
+			aria-labelledby="labelId"
+			role="article"
+		>
+			<a href="#">Focus Target</a>
+			<div id="labelId">
+					<div>Some name.</div>
+			</div>
+			<div id="descId">
+					<span>A bunch of text.</span>
+			</div>
+		</div>
+		"""
+	)
+	# Set focus
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# Focus the link
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Focus Target",  # link content (focus target), should read first
+			"link",  # link role
+		]),
+		message="browse mode - focus with Report Articles disabled"
+	)
+	# Reset to allow trying again with report articles enabled
+	actualSpeech = _chrome.getSpeechAfterKey("shift+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# Focus the link with report articles enabled
+	spy.set_configValue(REPORT_ARTICLES, True)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Focus Target",  # link content (focus target), should read first
+			"link",  # link role
+			"article",  # article role, enabled via report article
+			"A bunch of text.",  # article (ancestor) description
+		]),
+		message="browse mode - focus with Report Articles enabled"
+	)
+
+	# Reset to allow trying again in focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("shift+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+
+	spy.set_configValue(REPORT_ARTICLES, False)
+	# Focus the link
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			SPEECH_SEP.join([
+				"Some name.",  # name for article
+				"article",  # article role, enabled via report article
+				"A bunch of text.",  # description for article
+			]),
+			SPEECH_SEP.join([
+				"Focus Target",  # link content (focus target), should read first
+				"link",  # link role
+			]),
+		]),
+		message="focus mode - focus with Report Articles disabled"
+	)
+	# Reset to allow trying again with report articles enabled
+	actualSpeech = _chrome.getSpeechAfterKey("shift+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# Focus the link with report articles enabled
+	spy.set_configValue(REPORT_ARTICLES, True)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			SPEECH_SEP.join([
+				"Some name.",  # name for article
+				"article",  # article role, enabled via report article
+				"A bunch of text.",  # description for article
+			]),
+			SPEECH_SEP.join([
+				"Focus Target",  # link content (focus target), should read first
+				"link",  # link role
+			]),
+		]),
+		message="focus mode - focus with Report Articles enabled"
 	)

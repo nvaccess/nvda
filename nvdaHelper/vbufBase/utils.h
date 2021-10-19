@@ -60,6 +60,12 @@ void multiValueAttribsStringToMap(const std::wstring &attribsString, multiValueA
  */
 bool nodeHasUsefulContent(VBufStorage_fieldNode_t* node);
 
+/**
+ * Determine whether a buffer node's description is the same as it's content.
+ * This can happen with links that have a title attribute matching the content.
+ */
+bool nodeContentMatchesString(VBufStorage_fieldNode_t* node, const std::wstring& testStr);
+
 inline bool isPrivateCharacter(wchar_t ch) {
 	return (ch>=L'\xe000'&&ch<=L'\xf8ff')||(ch==L'\x200b');
 }
