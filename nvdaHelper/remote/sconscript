@@ -15,7 +15,7 @@
 Import([
 	'env',
 	'ia2RPCStubs',
-	'minHookLib',
+	'detoursLib',
 ])
 
 winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
@@ -59,16 +59,15 @@ vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="VBufRemote_",
 )
 
-if env["TARGET_ARCH"] != 'arm64':
-	displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
-		target="./displayModelRemote",
-		source=[
-			"../interfaces/displayModel/displayModel.idl",
-			"../interfaces/displayModel/displayModel.acf",
-		],
-		MSRPCStubs_noClient=True,
-		MSRPCStubs_prefix="displayModelRemote_",
-	)
+displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
+	target="./displayModelRemote",
+	source=[
+		"../interfaces/displayModel/displayModel.idl",
+		"../interfaces/displayModel/displayModel.acf",
+	],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="displayModelRemote_",
+)
 
 nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCServerSource=env.MSRPCStubs(
 	target="./nvdaInProcUtils",
@@ -109,9 +108,14 @@ source = [
 	"outlook.cpp",
 	"excel.cpp",
 	nvdaInProcUtilsRPCServerSource,
+	"gdiHooks.cpp",
+	"displayModel.cpp",
+	"displayModelRemote.cpp",
+	displayModelRPCServerSource,
 	"nvdaHelperRemote.def",
 	vbufBackendLibs,
 ]
+
 libs = [
 	"user32",
 	"ole32",
@@ -125,15 +129,9 @@ libs = [
 	"version",
 	"DbgHelp",
 	"gdi32",
+	detoursLib,
 ]
-# MinHook doesn't support ARM64, which means we can't support displayModel on ARM64.
-if env["TARGET_ARCH"] != 'arm64':
-	source.extend((
-		"gdiHooks.cpp",
-		"displayModel.cpp",
-		"displayModelRemote.cpp",
-		displayModelRPCServerSource,
-	))
+
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=source,

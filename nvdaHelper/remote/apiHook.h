@@ -16,38 +16,37 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define _APIHOOK_H
 
 /**
- * Initializes API hooking subsystem.
+ * Initializes an API hooking transaction.
  * @return success flag
  */ 
-bool apiHook_initialize();
+bool apiHook_beginTransaction();
 
 /**
  * Requests that the given function from the given module should be hooked with the given hook procedure. 
  * Warning, this function has no safety checks, you should usually use the apiHook_hookFunction_safe macro
- * @param moduleName the name of the module the function you wish to hook is located in.
- * @param functionName the name of the function you wish to hook.
- * @param newHookProc the function you wish  to be called instead of the original one.
- * @return the address of the original function. You could use this to call the origianl function from with in your replacement.
+ * @param realFunction the name of the function you wish to hook.
+ * @param fakeFunction the function you wish  to be called instead of the original one.
+ * @param targetPointerRef Pointer to the target pointer to which the detour will be attached.
  */ 
-void* apiHook_hookFunction(const char* moduleName, const char* functionName, void* newHookProc);
+bool apiHook_hookFunction(void* realFunction, void* fakeFunction, void** targetPointerRef);
 
  /**
  * a helper template used internally by apiHook_hookFunction_safe
  */
-template<typename funcType> funcType _apiHook_hookFunction_tpl(const char* moduleName, const char* functionName, funcType funcSyg, funcType fakeFunction) { return (funcType)apiHook_hookFunction(moduleName,functionName,(void*)fakeFunction); }
+template<typename funcType> bool _apiHook_hookFunction_tpl(funcType realFunction, funcType fakeFunction, funcType* targetPointerRef) { return apiHook_hookFunction((void*)realFunction,(void*)fakeFunction,(void**)targetPointerRef); }
 
 /**
  * Safely hooks a given function from a given module with a given fake function.
- * @param moduleName a string containing the name of the module the function lives in
- * @param the name/symbol of the function that should be hooked (i.e. the symbole from its header file, not a string) -- the the symbol's type is used for safety, the the function name string looked up in the module is made from this symbol name.
- * @param fakeFunction the replacement function.
+ * @param realFunction the name of the function you wish to hook.
+ * @param fakeFunction the function you wish  to be called instead of the original one.
+ * @param targetPointerRef Pointer to the target pointer to which the detour will be attached.
  */ 
-#define apiHook_hookFunction_safe(moduleName,realFunction,fakeFunction) _apiHook_hookFunction_tpl(moduleName,#realFunction,realFunction,fakeFunction)
+#define apiHook_hookFunction_safe(realFunction,fakeFunction, targetPointerRef) _apiHook_hookFunction_tpl(realFunction,fakeFunction,targetPointerRef)
  
 /**
- * Actually hooks all requested hook functions.
+ * Commitss an API hooking transaction.
  */
-	bool apiHook_enableHooks();
+bool apiHook_commitTransaction();
 
 /**
  * unhooks all functions previously hooked with apiHook_hookFunction and terminates API hooking subsystem.
