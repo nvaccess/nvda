@@ -19,6 +19,8 @@ Test Teardown	default teardown
 default teardown
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
+	dump_speech_to_log
+	dump_braille_to_log
 	exit chrome
 	quit NVDA
 
@@ -84,7 +86,7 @@ ARIA description Focus Mode
 	[Documentation]	Navigate to a span with aria-description in focus mode
 	test_ariaDescription_focusMode
 ARIA description Browse Mode
-	[Documentation]	Navigate to a span with aria-description in browse mode
+	[Documentation]	Navigate (down arrow, in browse mode) aria-description is read, other sources of description are not.
 	test_ariaDescription_browseMode
 ARIA description Say All
 	[Documentation]	Say all, contents includes aria-description
@@ -92,3 +94,16 @@ ARIA description Say All
 i10840
 	[Documentation]	The name of table header cells should only be conveyed once when navigating directly to them in browse mode (chrome self-references a header cell as its own header, which used to cause the name to be announced twice)
 	test_i10840
+Prevent Duplicate Speech From Description while in Focus mode
+	preventDuplicateSpeechFromDescription_focus
+Prevent Duplicate Speech From Description while in Browse mode with tab nav
+	test_preventDuplicateSpeechFromDescription_browse_tab
+Only report description in focus mode due to reportObjectDescriptions
+	[Documentation]	The term object in reportObjectDescriptions (essentially) means focus mode.
+	test_ensureNoBrowseModeDescription
+Quick Nav reports target first
+	[Documentation]	Quick Nav target should always be reported before ancestors. Ancestors should be reported from inner to outer.
+	test_quickNavTargetReporting
+Focus reports target first
+	[Documentation]	Focus target should always be reported before ancestors. Ancestors should be reported from inner to outer.
+	test_focusTargetReporting
