@@ -45,6 +45,8 @@ Quits from keyboard with welcome dialog open
 Quits from keyboard with about dialog open
 	[Documentation]	Starts NVDA and ensures that it can be quit with the about dialog open
 	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
+	# Excluded to be fixed still (#12907, #12957)
+	[Tags]	excluded_from_build
 	open about dialog from menu
 	quits from keyboard	# run test
 
