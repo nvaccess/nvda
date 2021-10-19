@@ -3,6 +3,24 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.1 =
+
+== New Features ==
+-
+
+== Changes ==
+- Espeak-ng has been updated to 1.51-dev commit ``7e5457f91e10``. (#12950)
+-
+
+== Bug Fixes ==
+- Clipboard manager pane should no longer incorrectly steal focus when opening some Office programs. (#12736)
+-
+
+== Changes for Developers ==
+- Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+-
+
+
 = 2021.3 =
 
 == New Features ==
@@ -56,10 +74,11 @@ If you need this functionality please assign a gesture to the appropriate script
 - When navigating the Windows system tray calendar, NVDA now reports the day of the week in full. (#12757)
 - When using a Chinese input method such as Taiwan - Microsoft Quick in Microsoft Word, scrolling the braille display forward and backward no longer incorrectly keeps jumping back to the original caret position. (#12855)
 - When accessing Microsoft Word documents via UIA, navigating by sentence (alt+downArrow / alt+upArrow) is again possible. (#9254)
-- When accessing MS Word with UIA, paragraph indenting is now reported. (#12899(
+- When accessing MS Word with UIA, paragraph indenting is now reported. (#12899)
 - When accessing MS Word with UIA, change tracking command and some other localized commands are now reported in Word . (#12904)
 - Fixed duplicate braille and speech when 'description' matches 'content' or 'name'. (#12888)
-- In MS Word with UIA enabled, More accurate playing of spelling error sound as you type. (#12161)
+- In MS Word with UIA enabled, more accurate playing of spelling error sounds as you type. (#12161)
+- In Windows 11, NVDA will no longer announce "pane" when pressing Alt+Tab to switch between programs. (#12648)
 -
 
 
