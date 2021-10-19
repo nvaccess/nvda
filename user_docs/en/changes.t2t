@@ -19,6 +19,8 @@ What's New in NVDA
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
+- ``TVItemStruct`` has been from ``sysTreeView32``. (#12935)
+- ``MessageItem`` has been removed from the Outlook appModule. (#12935)
 -
 
 
