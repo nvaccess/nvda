@@ -125,11 +125,11 @@ class WelcomeDialog(
 		gui.mainFrame.postPopup()
 
 	@classmethod
-	def saveAndCloseInstances(cls):
+	def closeInstances(cls):
 		instances = list(cls._instances)
 		for instance in instances:
 			if instance and not instance.IsBeingDeleted() and instance.IsModal():
-				instance.onOk(None)  # Save and close
+				instance.EndModal(wx.ID_CLOSE_ALL)
 			else:
 				cls._instances.remove(instance)
 
