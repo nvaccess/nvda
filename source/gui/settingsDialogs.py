@@ -715,7 +715,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		languageChoices = [x[1] for x in self.languageNames]
 		if languageHandler.isLanguageForced():
 			cmdLangDescription = [
-				ld[1] for ld in self.languageNames if ld[0] == globalVars.appArgs.cmdLineLanguage
+				ld[1] for ld in self.languageNames if ld[0] == globalVars.appArgs.language
 			][0]
 			languageChoices.insert(
 				0,

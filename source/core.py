@@ -202,8 +202,9 @@ def resetConfiguration(factoryDefaults=False):
 	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
 	# Language
-	lang = globalVars.appArgs.cmdLineLanguage
-	if not lang:
+	if languageHandler.isLanguageForced():
+		lang = globalVars.appArgs.language
+	else:
 		lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
@@ -418,10 +419,11 @@ def main():
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
-	lang = globalVars.appArgs.cmdLineLanguage
-	if not lang:
-		lang = config.conf["general"]["language"]
 	import languageHandler
+	if languageHandler.isLanguageForced():
+		lang = globalVars.appArgs.language
+	else:
+		lang = config.conf["general"]["language"]
 	log.debug(f"setting language to {lang}")
 	languageHandler.setLanguage(lang)
 	log.info(f"Windows version: {winVersion.getWinVer()}")
@@ -609,7 +611,7 @@ def main():
 			log.error("Failed to initialize wx locale",exc_info=True)
 		finally:
 			# Revert wx's changes to the python locale
-			languageHandler.setLocale(languageHandler.curLang)
+			languageHandler.setLocale(languageHandler.getLanguage())
 
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()

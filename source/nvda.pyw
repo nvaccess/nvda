@@ -152,10 +152,13 @@ parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choice
 parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
 parser.add_argument(
 	'--lang',
-	dest='cmdLineLanguage',
+	dest='language',
 	default=None,
 	type=stringToLang,
-	help="Override the configured NVDA language. Set to \"Windows\" for current user default, \"en\" for English, etc."
+	help=(
+		"Override the configured NVDA language."
+		" Set to \"Windows\" for current user default, \"en\" for English, etc."
+	)
 )
 parser.add_argument('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 parser.add_argument('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
