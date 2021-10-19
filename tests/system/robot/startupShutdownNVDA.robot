@@ -39,13 +39,13 @@ Quits from keyboard
 Quits from keyboard with welcome dialog open
 	[Documentation]	Starts NVDA and ensures that it can be quit with the welcome dialog open
 	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
-	open about dialog from menu
+	open welcome dialog from menu
 	quits from keyboard	# run test
 
 Quits from keyboard with about dialog open
 	[Documentation]	Starts NVDA and ensures that it can be quit with the about dialog open
 	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
-	open welcome dialog from menu
+	open about dialog from menu
 	quits from keyboard	# run test
 
 Quits from menu
