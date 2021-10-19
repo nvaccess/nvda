@@ -368,7 +368,7 @@ class MainFrame(wx.Frame):
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
-	def __init__(self, frame):
+	def __init__(self, frame: MainFrame):
 		super(SysTrayIcon, self).__init__()
 		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon, versionInfo.name)
