@@ -6,6 +6,10 @@
 
 """Support for UI Automation (UIA) controls."""
 import typing
+from typing import (
+	Optional,
+	Dict,
+)
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
@@ -835,7 +839,7 @@ class UIATextInfo(textInfos.TextInfo):
 		if debug:
 			log.debug("_getTextWithFieldsForUIARange end")
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		fields=list(self._getTextWithFieldsForUIARange(self.obj.UIAElement,self._rangeObj,formatConfig))

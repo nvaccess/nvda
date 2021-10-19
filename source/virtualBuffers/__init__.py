@@ -10,7 +10,10 @@ import threading
 import ctypes
 import collections
 import itertools
-import typing
+from typing import (
+	Optional,
+	Dict,
+)
 import weakref
 import wx
 import review
@@ -276,7 +279,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				command.field = self._normalizeFormatField(field)
 		return commandList
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
