@@ -134,9 +134,7 @@ def stringToLang(value: str) -> str:
 	if normalizedLang is not None and normalizedLang in possibleLangNames:
 		return normalizedLang
 	raise argparse.ArgumentTypeError(
-		(
-			f"Language code should be one of:\n{', '.join(possibleLangNames)}."
-		)
+		f"Language code should be one of:\n{', '.join(possibleLangNames)}."
 	)
 
 
@@ -371,7 +369,6 @@ if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 import buildVersion
 log.info("Starting NVDA version %s" % buildVersion.version)
-
 log.debug("Debug level logging enabled")
 if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")
