@@ -488,10 +488,10 @@ class GlobalCommands(ScriptableObject):
 		config.conf["documentFormatting"]["reportHighlight"] = shouldReport
 		if shouldReport:
 			# Translators: The message announced when toggling the report marked document formatting setting.
-			state = _("report marked on")
+			state = _("report highlighted on")
 		else:
 			# Translators: The message announced when toggling the report marked document formatting setting.
-			state = _("report marked off")
+			state = _("report highlighted off")
 		ui.message(state)
 
 	@script(

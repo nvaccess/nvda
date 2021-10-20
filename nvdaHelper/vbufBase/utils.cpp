@@ -160,3 +160,16 @@ bool nodeHasUsefulContent(VBufStorage_fieldNode_t* node) {
 	}
 	return false;
 }
+
+/*
+Used to prevent duplicate content.
+*/
+bool nodeContentMatchesString(VBufStorage_fieldNode_t* node, const wstring& testStr) {
+	const int length = node->getLength();
+	if (length != testStr.length()) {
+		return false;
+	}
+	wstring content;
+	node->getTextInRange(0, length, content, false);
+	return content == testStr;
+}

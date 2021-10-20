@@ -25,7 +25,15 @@ import speech
 import api
 import textInfos
 from logHandler import log
-from UIAUtils import *
+from UIAUtils import (
+	BulkUIATextRangeAttributeValueFetcher,
+	UIATextRangeAttributeValueFetcher,
+	getChildrenWithCacheFromUIATextRange,
+	getEnclosingElementWithCacheFromUIATextRange,
+	iterUIARangeByUnit,
+	UIAMixedAttributeError,
+	UIATextRangeFromElement,
+)
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import (
@@ -41,6 +49,13 @@ import braille
 import locationHelper
 import ui
 import winVersion
+
+
+paragraphIndentIDs = {
+	UIAHandler.UIA_IndentationFirstLineAttributeId,
+	UIAHandler.UIA_IndentationLeadingAttributeId,
+	UIAHandler.UIA_IndentationTrailingAttributeId,
+}
 
 
 class UIATextInfo(textInfos.TextInfo):
@@ -168,6 +183,8 @@ class UIATextInfo(textInfos.TextInfo):
 					UIAHandler.UIA_IsSuperscriptAttributeId,
 					UIAHandler.UIA_IsSubscriptAttributeId
 				})
+			if formatConfig["reportParagraphIndentation"]:
+				IDs.update(set(paragraphIndentIDs))
 			if formatConfig["reportAlignment"]:
 				IDs.add(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
 			if formatConfig["reportColor"]:
@@ -223,6 +240,8 @@ class UIATextInfo(textInfos.TextInfo):
 			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField["style"]=val
+		if formatConfig["reportParagraphIndentation"]:
+			formatField.update(self._getFormatFieldIndent(fetcher, ignoreMixedValues=ignoreMixedValues))
 		if formatConfig["reportAlignment"]:
 			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val==UIAHandler.HorizontalTextAlignment_Left:
@@ -288,6 +307,72 @@ class UIATextInfo(textInfos.TextInfo):
 				pass
 		return textInfos.FieldCommand("formatChange",formatField)
 
+	def _getFormatFieldIndent(
+			self,
+			fetcher: UIATextRangeAttributeValueFetcher,
+			ignoreMixedValues: bool,
+	) -> textInfos.FormatField:
+		"""
+		Helper function to get indent formatting from the fetcher passed as parameter.
+		The indent formatting is reported according to MS Word's convention.
+		@param fetcher: the UIA fetcher used to get all formatting information.
+		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
+			If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute
+			value signifying that the caller may want to try again with a smaller range.
+		@return: The indent formatting informations corresponding to what has been retrieved via the fetcher.
+		"""
+		
+		formatField = textInfos.FormatField()
+		val = fetcher.getValue(UIAHandler.UIA_IndentationFirstLineAttributeId, ignoreMixedValues=ignoreMixedValues)
+		uiaIndentFirstLine = val if isinstance(val, float) else None
+		val = fetcher.getValue(UIAHandler.UIA_IndentationLeadingAttributeId, ignoreMixedValues=ignoreMixedValues)
+		uiaIndentLeading = val if isinstance(val, float) else None
+		val = fetcher.getValue(UIAHandler.UIA_IndentationTrailingAttributeId, ignoreMixedValues=ignoreMixedValues)
+		uiaIndentTrailing = val if isinstance(val, float) else None
+		if uiaIndentFirstLine is not None and uiaIndentLeading is not None:
+			reportedFirstLineIndent = uiaIndentFirstLine - uiaIndentLeading
+			if reportedFirstLineIndent > 0:  # First line positive indent
+				reportedLeftIndent = uiaIndentLeading
+				reportedHangingIndent = None
+			elif reportedFirstLineIndent < 0:  # First line negative indent
+				reportedLeftIndent = uiaIndentFirstLine
+				reportedHangingIndent = -reportedFirstLineIndent
+				reportedFirstLineIndent = None
+			else:
+				reportedLeftIndent = uiaIndentLeading
+				reportedFirstLineIndent = None
+				reportedHangingIndent = None
+			if reportedLeftIndent:
+				formatField['left-indent'] = self._getIndentValueDisplayString(reportedLeftIndent)
+			if reportedFirstLineIndent:
+				formatField['first-line-indent'] = self._getIndentValueDisplayString(reportedFirstLineIndent)
+			if reportedHangingIndent:
+				formatField['hanging-indent'] = self._getIndentValueDisplayString(reportedHangingIndent)
+		if uiaIndentTrailing:
+			formatField['right-indent'] = self._getIndentValueDisplayString(uiaIndentTrailing)
+		return formatField
+	
+	@staticmethod
+	def _getIndentValueDisplayString(val: float) -> str:
+		"""A function returning the string to display in formatting info.
+		@param val: an indent value measured in points, fetched via
+			an UIAHandler.UIA_Indentation*AttributeId attribute.
+		@return: The string used in formatting information to report the length of an indentation.
+		"""
+		
+		# convert points to inches (1pt = 1/72 in)
+		val /= 72.0
+		if languageHandler.useImperialMeasurements():
+			# Translators: a measurement in inches
+			valText = _("{val:.2f} in").format(val=val)
+		else:
+			# Convert from inches to centimetres
+			val *= 2.54
+			# Translators: a measurement in centimetres
+			valText = _("{val:.2f} cm").format(val=val)
+		return valText
+	
+	
 	def __init__(self,obj,position,_rangeObj=None):
 		super(UIATextInfo,self).__init__(obj,position)
 		if _rangeObj:
@@ -877,6 +962,13 @@ class UIA(Window):
 			clsList.append(PlaceholderNetUITWMenuItem)
 		elif UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif (
+			UIAClassName == "ListViewItem"
+			and self.UIAElement.cachedFrameworkID == "WPF"
+			and self.role == controlTypes.Role.DATAITEM
+		):
+			from NVDAObjects.behaviors import RowWithFakeNavigation
+			clsList.append(RowWithFakeNavigation)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
 		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.Role.PANE:
@@ -1013,6 +1105,12 @@ class UIA(Window):
 				clsList.append(SearchField)
 		except COMError:
 			log.debug("Failed to locate UIA search field", exc_info=True)
+		# #12790: detect suggestions list views firing layout invalidated event.
+		try:
+			if UIAAutomationId == "SuggestionsList":
+				clsList.append(SuggestionsList)
+		except COMError:
+			log.debug("Could not detect suggestions list", exc_info=True)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
@@ -2062,15 +2160,40 @@ class SearchField(EditableTextWithSuggestions, UIA):
 			self.event_suggestionsClosed()
 
 
-class SuggestionListItem(UIA):
-	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+class SuggestionsList(UIA):
+	"""A list of suggestions in response to search terms being entered.
+	This list shows suggestions without selecting the top suggestion.
+	Examples include suggestions lists in modern apps such as Settings app in Windows 10 and later.
 	"""
 
-	role=controlTypes.Role.LISTITEM
+	def event_UIA_layoutInvalidated(self):
+		# #12790: announce number of items found
+		if self.childCount == 0:
+			return
+		# In some cases, suggestions list fires layout invalidated event repeatedly.
+		# This is the case with Microsoft Store's search field.
+		speech.cancelSpeech()
+		# Item count must be the last one spoken.
+		suggestionsCount: int = self.childCount
+		suggestionsMessage = (
+			# Translators: part of the suggestions count message for one suggestion.
+			_("1 suggestion")
+			# Translators: part of the suggestions count message (for example: 2 suggestions).
+			if suggestionsCount == 1 else _("{} suggestions").format(suggestionsCount)
+		)
+		ui.message(suggestionsMessage)
+
+
+class SuggestionListItem(UIA):
+	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+	Unlike suggestions list class, top suggestion is automatically selected.
+	"""
+
+	role = controlTypes.Role.LISTITEM
 
 	def event_UIA_elementSelected(self):
-		focusControllerFor=api.getFocusObject().controllerFor
-		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
+		focusControllerFor = api.getFocusObject().controllerFor
+		if len(focusControllerFor) > 0 and focusControllerFor[0].appModule is self.appModule and self.name:
 			speech.cancelSpeech()
 			api.setNavigatorObject(self, isFocus=True)
 			self.reportFocus()
