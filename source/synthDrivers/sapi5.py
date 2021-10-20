@@ -395,7 +395,7 @@ class SynthDriver(SynthDriver):
 		outputTags()
 
 		text = "".join(textList)
-		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.FlagsAsync
+		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
 		self.tts.Speak(text, flags)
 
 	def cancel(self):
@@ -403,7 +403,7 @@ class SynthDriver(SynthDriver):
 		# Therefore  instruct the underlying audio interface to stop first, before interupting and purging any remaining speech.
 		if self.ttsAudioStream:
 			self.ttsAudioStream.setState(SPAudioState.STOP, 0)
-		self.tts.Speak(None, 1 | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
+		self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
 
 	def pause(self, switch: bool):
 		# SAPI5's default means of pausing in most cases is either extremely slow
