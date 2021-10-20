@@ -135,9 +135,7 @@ def stringToLang(value: str) -> str:
 		return normalizedLang
 	raise argparse.ArgumentTypeError(
 		(
-			"Language code should be \"Windows\","
-			" of the forms \"en\" or \"pt_BR\""
-			f" or one of:\n {', '.join(possibleLangNames)}."
+			f"Language code should be one of:\n{', '.join(possibleLangNames)}."
 		)
 	)
 
