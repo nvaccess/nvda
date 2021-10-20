@@ -834,6 +834,29 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 		oldLink=fieldCache.get("link")
 		if link and link != oldLink:
 			textList.append(roleLabels[controlTypes.Role.LINK])
+	if formatConfig["reportComments"]:
+		comment = field.get("comment")
+		oldComment = fieldCache.get("comment") if fieldCache is not None else None
+		if (comment or oldComment is not None) and comment != oldComment:
+			if comment:
+				if comment is textInfos.CommentType.DRAFT:
+					# Translators: Brailled when text contains a draft comment.
+					text = _("drft cmnt")
+				elif comment is textInfos.CommentType.RESOLVED:
+					# Translators: Brailled when text contains a resolved comment.
+					text = _("rslvd cmnt")
+				else:  # generic
+					# Translators: Brailled when text contains a generic comment.
+					text = _("cmnt")
+				textList.append(text)
+	if formatConfig["reportBookmarks"]:
+		bookmark = field.get("bookmark")
+		oldBookmark = fieldCache.get("bookmark") if fieldCache is not None else None
+		if (bookmark or oldBookmark is not None) and bookmark != oldBookmark:
+			if bookmark:
+				# Translators: brailled when text contains a bookmark
+				text = _("bkmk")
+				textList.append(text)
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])

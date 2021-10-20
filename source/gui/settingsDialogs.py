@@ -2268,6 +2268,12 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		bookmarksText = _("&Bookmarks")
+		self.bookmarksCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=bookmarksText))
+		self.bookmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportBookmarks"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		revisionsText = _("&Editor revisions")
 		self.revisionsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=revisionsText))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
@@ -2473,6 +2479,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		)
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportBookmarks"] = self.bookmarksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
