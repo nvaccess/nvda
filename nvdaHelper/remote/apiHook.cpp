@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-typedef set<pair<void*, void*>> functionSet_t;
+typedef set<pair<void**, void*>> functionSet_t;
 
 functionSet_t g_hookedFunctions;
 
@@ -49,25 +49,27 @@ bool apiHook_hookFunction(void* realFunction, void* fakeFunction, void** targetP
 	if (targetPointerRef == nullptr) {
 		return false;
 	}
-	LOG_DEBUG("requesting to hook function at address 0X" << std::hex << realFunction << " with  new function at address 0X" << fakeFunction);
 	*targetPointerRef = realFunction;
-	void* targetPointer = nullptr;
-	auto res = DetourAttachEx(targetPointerRef, fakeFunction, nullptr, &targetPointer, nullptr);
+	LOG_DEBUG("requesting to hook function at address 0X" << std::hex << realFunction << " with  new function at address 0X" << fakeFunction);
+	auto res = DetourAttach(targetPointerRef, fakeFunction);
 	if(res != NO_ERROR) {
-		LOG_ERROR("DetourAttach for function failed with " << res);
+		LOG_ERROR("DetourAttach for function at address 0X" << std::hex << realFunction << " with  new function at address 0X" << fakeFunction << " failed with " << res);
 		return false;
 	}
-	g_hookedFunctions.insert(make_pair(targetPointer, fakeFunction));
-	LOG_DEBUG("successfully hooked function with hook procedure at address 0X" << std::hex << fakeFunction <<);
+	g_hookedFunctions.insert(make_pair(targetPointerRef, fakeFunction));
+	LOG_DEBUG("successfully hooked function at address 0X" << std::hex << realFunction << " with  new function at address 0X" << fakeFunction << ", new pointer will be written to variable at address 0X" << std::hex << targetPointerRef << " add transaction commit time");
 	return true;
 }
 
 bool apiHook_commitTransaction() {
-	auto res = DetourTransactionCommit();
+	LOG_DEBUG("About to commit an API hook transaction");
+	void** failedPointerRef = nullptr;
+	auto res = DetourTransactionCommitEx(&failedPointerRef);
 	if (res != NO_ERROR) {
-		LOG_ERROR("DetourTransactionCommit failed with " << res);
+		LOG_ERROR("DetourTransactionCommit failed with " << res << " due to variable at address 0X" << std::hex << failedPointerRef << " that should hold a function pointer");
 		return false;
 	} 
+	LOG_ERROR("DetourTransactionCommit succeeded");
 	return TRUE;
 }
 
@@ -76,13 +78,14 @@ bool apiHook_terminate() {
 	if (!res) {
 		return false;
 	}
-	long detourRes;
-	for (auto iter : g_hookedFunctions) {
-		void* realFunc = iter.first;
-		void* HookProc = iter.second;
-		detourRes = DetourDetach(&realFunc, HookProc);
+	long detourRes = NO_ERROR;
+	for (const auto& iter : g_hookedFunctions) {
+		void** pointerRec = iter.first;
+		void* fakeFunc = iter.second;
+		LOG_DEBUG("Detaching function hook at address 0X" << std::hex << *pointerRec << " with hook procedure at address 0X" << std::hex << fakeFunc);
+		detourRes = DetourDetach(pointerRec, fakeFunc);
 		if (detourRes != NO_ERROR) {
-			LOG_ERROR("Error detaching function hook at address 0X" << std::hex << realFunc << " with hook procedure at address 0X" << std::hex << HookProc);
+			LOG_ERROR("Error detaching function hook at address 0X" << std::hex << *pointerRec << " with hook procedure at address 0X" << std::hex << fakeFunc);
 		}
 	}
 	res = apiHook_commitTransaction();
