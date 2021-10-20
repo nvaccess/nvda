@@ -6,6 +6,7 @@
 
 import itertools
 import os
+import typing
 from typing import Iterable, Union, Tuple, List, Optional
 from locale import strxfrm
 
@@ -184,7 +185,7 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a figure.
 	controlTypes.Role.FIGURE: _("fig"),
 	# Translators: Displayed in braille for an object which represents marked (highlighted) content
-	controlTypes.Role.MARKED_CONTENT: _("mrkd"),
+	controlTypes.Role.MARKED_CONTENT: _("hlght"),
 }
 
 positiveStateLabels = {
@@ -520,7 +521,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, role.displayString)
-	elif role is None: 
+	elif role is None:
 		role = propertyValues.get("_role")
 	value = propertyValues.get("value")
 	if value and role not in controlTypes.silentValuesForRoles:
@@ -558,7 +559,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			# %s is replaced with the level.
 			textList.append(_('lv %s')%positionInfo['level'])
 	if rowNumber:
-		if includeTableCellCoords and not cellCoordsText: 
+		if includeTableCellCoords and not cellCoordsText:
 			if rowSpan>1:
 				# Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
 				# Occurences of %s are replaced with the corresponding row numbers.
@@ -614,20 +615,30 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
+		name = obj.name
 		placeholderValue = obj.placeholder
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
-		description = None
-		if obj.description and (
-			presConfig["reportObjectDescriptions"]
-			or (
-				config.conf["annotations"]["reportAriaDescription"]
-				and obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+
+		# determine if description should be read
+		_shouldUseDescription = (
+			obj.description  # is there a description
+			and obj.description != name  # the description must not be a duplicate of name, prevent double braille
+			and (
+				presConfig["reportObjectDescriptions"]  # report description always
+				or (
+					# aria description provides more relevant information than other sources of description such as
+					# a 'title' attribute.
+					# It should be used for extra details that would be obvious visually.
+					config.conf["annotations"]["reportAriaDescription"]
+					and obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+				)
 			)
-		):
-			description = obj.description
+		)
+		description = obj.description if _shouldUseDescription else None
+
 		text = getPropertiesBraille(
-			name=obj.name,
+			name=name,
 			role=role,
 			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
@@ -657,7 +668,17 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
-def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
+
+#  C901 'getControlFieldBraille' is too complex
+# Note: when working on getControlFieldBraille, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getControlFieldBraille(  # noqa: C901
+		info: textInfos.TextInfo,
+		field: textInfos.Field,
+		ancestors: typing.List[textInfos.Field],
+		reportStart: bool,
+		formatConfig: config.AggregatedSection
+):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
@@ -678,14 +699,19 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	description = None
 	_descriptionFrom: controlTypes.DescriptionFrom = field.get("_description-from")
+	_descriptionIsContent: bool = field.get("descriptionIsContent", False)
 	if (
-		config.conf["presentation"]["reportObjectDescriptions"]
-		or (
+		not _descriptionIsContent
+		# Note "reportObjectDescriptions" is not a reason to include description,
+		# "Object" implies focus/object nav, getControlFieldBraille calculates text for Browse mode.
+		# There is no way to identify getControlFieldBraille being called for reason focus, as is done in speech.
+		and (
 			config.conf["annotations"]["reportAriaDescription"]
 			and _descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		)
 	):
 		description = field.get("description", None)
+
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
@@ -694,6 +720,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
 		roleText = f"{controlTypes.Role.LANDMARK.displayString} {landmarkLabels[landmark]}"
+
 	content = field.get("content")
 
 	if presCat == field.PRESCAT_LAYOUT:
@@ -807,6 +834,29 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 		oldLink=fieldCache.get("link")
 		if link and link != oldLink:
 			textList.append(roleLabels[controlTypes.Role.LINK])
+	if formatConfig["reportComments"]:
+		comment = field.get("comment")
+		oldComment = fieldCache.get("comment") if fieldCache is not None else None
+		if (comment or oldComment is not None) and comment != oldComment:
+			if comment:
+				if comment is textInfos.CommentType.DRAFT:
+					# Translators: Brailled when text contains a draft comment.
+					text = _("drft cmnt")
+				elif comment is textInfos.CommentType.RESOLVED:
+					# Translators: Brailled when text contains a resolved comment.
+					text = _("rslvd cmnt")
+				else:  # generic
+					# Translators: Brailled when text contains a generic comment.
+					text = _("cmnt")
+				textList.append(text)
+	if formatConfig["reportBookmarks"]:
+		bookmark = field.get("bookmark")
+		oldBookmark = fieldCache.get("bookmark") if fieldCache is not None else None
+		if (bookmark or oldBookmark is not None) and bookmark != oldBookmark:
+			if bookmark:
+				# Translators: brailled when text contains a bookmark
+				text = _("bkmk")
+				textList.append(text)
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])

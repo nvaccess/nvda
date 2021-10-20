@@ -26,6 +26,7 @@ Optional[Any]  # None or the value when the evaluator was met
 	"""Repeatedly tries to get a value up until a time limit expires. Tries are separated by
 	a time interval. The call will block until shouldStopEvaluator returns True when given the value,
 	the default evaluator just returns the value converted to a boolean.
+	@param errorMessage Use 'None' to suppress the exception.
 	@return A tuple, (True, value) if evaluator condition is met, otherwise (False, None)
 	@raises RuntimeError if the time limit expires and an errorMessage is given.
 	"""

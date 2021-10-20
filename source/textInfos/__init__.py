@@ -10,6 +10,7 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 """
 
 from abc import abstractmethod
+from enum import Enum
 import weakref
 import re
 import typing
@@ -733,3 +734,12 @@ class TextInfoEndpoint:
 	def __repr__(self):
 		endpointLabel = "start" if self.isStart else "end"
 		return f"{endpointLabel} endpoint of {self.textInfo}"
+
+
+class CommentType(Enum):
+	"""
+	a value exposed by the 'comment' key of a L{Formatfield}.
+	"""
+	GENERAL = "general"
+	DRAFT = "draft"
+	RESOLVED = "resolved"
