@@ -19,17 +19,15 @@ import globalVars
 import winKernel
 import buildVersion
 from typing import Optional
+import exceptions
+import RPCConstants
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
-RPC_S_SERVER_UNAVAILABLE = 1722
-RPC_S_CALL_FAILED_DNE = 1727
 EPT_S_NOT_REGISTERED = 1753
 E_ACCESSDENIED = -2147024891
 CO_E_OBJNOTCONNECTED = -2147220995
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
-RPC_E_CALL_REJECTED = -2147418111
-RPC_E_DISCONNECTED = -2147417848
 LOAD_WITH_ALTERED_SEARCH_PATH=0x8
 
 def isPathExternalToNVDA(path):
@@ -204,15 +202,34 @@ class Logger(logging.Logger):
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
 		"""
 		import comtypes
-		from core import CallCancelled, RPC_E_CALL_CANCELED
 		if exc_info is True:
 			exc_info = sys.exc_info()
 
 		exc = exc_info[1]
 		if (
-			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, EPT_S_NOT_REGISTERED, RPC_E_CALL_CANCELED))
-			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, CO_E_OBJNOTCONNECTED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED, RPC_E_DISCONNECTED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
-			or isinstance(exc, CallCancelled)
+			(
+				isinstance(exc, WindowsError)
+				and exc.winerror in (
+					ERROR_INVALID_WINDOW_HANDLE,
+					ERROR_TIMEOUT,
+					RPCConstants.RPC.S_SERVER_UNAVAILABLE,
+					RPCConstants.RPC.S_CALL_FAILED_DNE,
+					EPT_S_NOT_REGISTERED,
+					RPCConstants.RPC.E_CALL_CANCELED
+				)
+			)
+			or (
+				isinstance(exc, comtypes.COMError)
+				and (
+					exc.hresult in (
+						E_ACCESSDENIED,
+						CO_E_OBJNOTCONNECTED,
+						EVENT_E_ALL_SUBSCRIBERS_FAILED,
+						RPCConstants.RPC.E_CALL_REJECTED,
+						RPCConstants.RPC.E_CALL_CANCELED,
+						RPCConstants.RPC.E_DISCONNECTED
+					) or exc.hresult & 0xFFFF == RPCConstants.RPC.S_SERVER_UNAVAILABLE))
+			or isinstance(exc, exceptions.CallCancelled)
 		):
 			level = self.DEBUGWARNING
 		else:
