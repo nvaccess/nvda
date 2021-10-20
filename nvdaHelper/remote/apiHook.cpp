@@ -17,7 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <delayimp.h>
-#include <Detours/src/detours.h>
+#include <detours/src/detours.h>
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
 #include "dllmain.h"
