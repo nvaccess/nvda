@@ -1066,7 +1066,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		self.duckingList = settingsSizerHelper.addLabeledControl(
 			duckingListLabelText,
 			wx.Choice,
-			choices=audioDucking.AudioDuckingMode._displayStringLabels.values()
+			choices=[mode.displayString for mode in audioDucking.AudioDuckingMode]
 		)
 		self.bindHelpEvent("SelectSynthesizerDuckingMode", self.duckingList)
 		index=config.conf['audio']['audioDuckingMode']
