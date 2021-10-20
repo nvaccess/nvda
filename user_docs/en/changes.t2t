@@ -30,6 +30,8 @@ What's New in NVDA
   - ``constants.SVE*`` usages should be replaced with ``SpeechVoiceEvents.*``
   -
 - The ``soffice`` appModule has the following classes and functions removed ``JAB_OOTableCell``, ``JAB_OOTable``, ``gridCoordStringToNumbers``. (#12849)
+- core.CallCancelled becomes exceptions.CallCancelled. 
+- All constants starting with RPC from core and logHandler are moved into RPCConstants.RPC enum
 -
 
 
