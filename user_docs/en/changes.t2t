@@ -10,6 +10,7 @@ What's New in NVDA
 
 == Changes ==
 - Espeak-ng has been updated to 1.51-dev commit ``7e5457f91e10``. (#12950)
+- NVDA will report selection and merged cells in LibreOffice Calc 7.3 and above. (#9310, #6897)
 -
 
 == Bug Fixes ==
@@ -26,6 +27,7 @@ What's New in NVDA
   - usages of ``audioDucking.audioDuckingModes`` should be replaced with ``AudioDuckingMode.*.displayString``
   -
 - ``audioDucking.ANRUS_ducking_*`` constants usages should be replaced with ``ANRUSDucking.*``. (#12926)
+- The ``soffice`` appModule has the following classes and functions removed ``JAB_OOTableCell``, ``JAB_OOTable``, ``gridCoordStringToNumbers``. (#12849)
 -
 
 
