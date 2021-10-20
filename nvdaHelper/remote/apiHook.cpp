@@ -69,7 +69,7 @@ bool apiHook_commitTransaction() {
 		LOG_ERROR("DetourTransactionCommit failed with " << res << " due to variable at address 0X" << std::hex << failedPointerRef << " that should hold a function pointer");
 		return false;
 	} 
-	LOG_ERROR("DetourTransactionCommit succeeded");
+	LOG_DEBUG("DetourTransactionCommit succeeded");
 	return TRUE;
 }
 
