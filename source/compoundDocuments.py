@@ -136,7 +136,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 			and controlTypes.State.LINKED not in obj.states
 		)
 
-	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+	def _getControlFieldForObject(self, obj: NVDAObject, ignoreEditableText=True):
 		if ignoreEditableText and self._isObjectEditableText(obj):
 			# This is basically just a text node.
 			return None
@@ -290,16 +290,18 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 						embedIndex = self._getFirstEmbedIndex(ti)
 					else:
 						embedIndex += 1
-					field = ti.obj.getChild(embedIndex)
-					controlField = self._getControlFieldForObject(field, ignoreEditableText=False)
-					controlField["content"] = field.name
+					childObject: NVDAObject = ti.obj.getChild(embedIndex)
+					controlField = self._getControlFieldForObject(childObject, ignoreEditableText=False)
+					controlField["content"] = childObject.name
 					fields.extend((
 						textInfos.FieldCommand("controlStart", controlField),
 						textUtils.OBJ_REPLACEMENT_CHAR,
 						textInfos.FieldCommand("controlEnd", None)
 					))
-				else:
-					fields.append(field)
+				else:  # str or fieldCommand
+					if not isinstance(textWithEmbeddedObjectsItem, (str, textInfos.FieldCommand)):
+						log.error(f"Unexpected type: {textWithEmbeddedObjectsItem!r}")
+					fields.append(textWithEmbeddedObjectsItem)
 		return fields
 
 	def _findNextContent(self, origin, moveBack=False):
