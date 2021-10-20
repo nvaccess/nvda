@@ -18,6 +18,7 @@ import os
 import time
 import ctypes
 import logHandler
+import languageHandler
 import globalVars
 from logHandler import log
 import addonHandler
@@ -146,14 +147,13 @@ def restart(disableAddons=False, debugLogging=False):
 			log.error("NVDA already in process of exiting, this indicates a logic error.")
 		return
 	import subprocess
-	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
+	for paramToRemove in (
+		"--disable-addons", "--debug-logging", "--ease-of-access"
+	) + languageHandler.getLanguageCliArgs():
 		try:
 			sys.argv.remove(paramToRemove)
 		except ValueError:
 			pass
-		for i, arg in list(enumerate(sys.argv)):
-			if arg.startswith("--lang="):
-				del sys.argv[i]
 	options = []
 	if not hasattr(sys, "frozen"):
 		options.append(os.path.basename(sys.argv[0]))
@@ -178,7 +178,6 @@ def resetConfiguration(factoryDefaults=False):
 	import brailleInput
 	import speech
 	import vision
-	import languageHandler
 	import inputCore
 	import tones
 	log.debug("Terminating vision")
@@ -243,7 +242,6 @@ def _setInitialFocus():
 
 
 def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
-	import languageHandler
 	import wx
 	lang = languageHandler.getLanguage()
 	wxLocaleObj = wx.Locale()
@@ -414,7 +412,6 @@ def main():
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
-	import languageHandler
 	if languageHandler.isLanguageForced():
 		lang = globalVars.appArgs.language
 	else:

@@ -286,9 +286,24 @@ def makePgettext(translations):
 	return pgettext
 
 
+def getLanguageCliArgs() -> Tuple[str, ...]:
+	"""Returns all command line arguments which were used to set current NVDA language
+	or an empty tuple if language has not been specified from the CLI."""
+	for argIndex, argValue in enumerate(sys.argv):
+		if argValue == "--lang":
+			# Language was provided in a form `--lang lang_CODE`. The next position in `sys.argv` is a language code.
+			# It is impossible not to provide it in this case as it would be flagged as an error
+			# during arguments validation.
+			return (argValue, sys.argv[argIndex + 1])
+		if argValue.startswith("--lang="):
+			# Language in a form `--lang=lang_CODE`
+			return (argValue,)
+	return tuple()
+
+
 def isLanguageForced() -> bool:
 	"""Returns `True` if language is provided from the command line - `False` otherwise."""
-	return any(filter(lambda elem: elem.startswith("--lang="), sys.argv))
+	return bool(getLanguageCliArgs())
 
 
 def getWindowsLanguage():
