@@ -49,9 +49,10 @@ void __stdcall uwpOcr_terminate(UwpOcr* instance) {
 }
 
 fire_and_forget UwpOcr::recognize(SoftwareBitmap bitmap) {
-	// Ensure that work is performed on a background thread.
-	co_await resume_background();
 	try {
+		// Ensure that work is performed on a background thread.
+		co_await resume_background();
+
 		auto result = co_await engine.RecognizeAsync(bitmap);
 		auto lines = result.Lines();
 		auto jLines = JsonArray{};
@@ -73,7 +74,10 @@ fire_and_forget UwpOcr::recognize(SoftwareBitmap bitmap) {
 		callback(jLines.Stringify().c_str());
 	} catch (hresult_error const& e) {
 		LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-		callback(NULL);
+		callback(nullptr);
+	} catch (...) {
+		LOG_ERROR(L"Unexpected error in UwpOcr::recognize");
+		callback(nullptr);
 	}
 }
 
