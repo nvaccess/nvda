@@ -3,7 +3,86 @@ NVDA 新版資訊
 
 %!includeconf: ../changes.t2tconf
 
-= 中文摘譯內容 =
+= 2021.2 中文摘譯內容 =
+此版本更新初步支援 Windows 11，雖然 Windows 11 尚未正式發佈，此版本的 NVDA 已在 Windows 11 的預覽版本中經過測試。
+此次更新包含了螢幕簾幕的修正 (參考以下第一點摘譯內容)。現在，COM 註冊修復工具能夠解決更多 NVDA 在執行上所遇到的問題；此外，合成器及點字表也有進行更新；以及一些錯誤的修正與改進。
+
+== 新版重點 ==
+- 由於 Windows 放大 API 的變更，螢幕簾幕亦需要更新才能支援最新版的 Windows。使用 NVDA 2021.2 搭配 Windows 10 21H2 (10.0.19044) 或更新版本，當要啟用螢幕簾幕時，為安全起見，請在視覺上確認螢幕簾幕功能有讓整個螢幕變黑。
+- 在 Windows 10 版本 1909 及以後 (含 Windows 11)，NVDA 會提示在檔案總管中搜尋檔案時所搜尋到的結果數量。(#10341, #12628)
+- 在 Microsoft Word 中，當按下縮排或凸排的快速鍵時，NVDA 會讀出執行結果。(#6269)
+- Windows 10 OCR 被更名為 Windows OCR。(#12690)
+-
+
+
+= 2021.2 =
+This release introduces preliminary Windows 11 support.
+While Windows 11 is yet to be released, this release has been tested on preview versions of Windows 11.
+This includes an important fix for Screen Curtain (see important notes).
+The COM Registration Fixing Tool can now resolve more problems when running NVDA.
+There are updates to the synthesizer eSpeak and braille translator LibLouis.
+There are also various bug fixes and improvements, notably for braille support and Windows terminals, calculator, emoji panel and clipboard history.
+
+
+== Important notes ==
+Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
+Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
+This includes Windows 10 Insiders and Windows 11.
+For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
+
+
+== New Features ==
+- Experimental support for ARIA annotations:
+  - adds a command to read a summary of details of an object with aria-details. (#12364)
+  - adds an option in advanced preferences to report if an object has details in browse mode. (#12439) 
+  -
+- In Windows 10 Version 1909 and later (including Windows 11), NVDA will announce suggestion count when performing searches in File Explorer. (#10341, #12628)
+- In Microsoft Word, NVDA now announces the result of indent and hanging indent shortcuts when executed. (#6269)
+-
+
+
+== Changes ==
+- Espeak-ng has been updated to 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- If article is enabled in the user preferences for document formatting, NVDA announces "article" after the content. (#11103)
+- Updated liblouis braille translator to [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - New braille tables: Bulgarian grade 1, Burmese grade 1, Burmese grade 2, Kazakh grade 1, Khmer grade 1, Northern Kurdish grade 0, Sepedi grade 1, Sepedi grade 2, Sesotho grade 1, Sesotho grade 2, Setswana grade 1, Setswana grade 2, Tatar grade 1, Vietnamese grade 0, Vietnamese grade 2, Southern Vietnamese grade 1, Xhosa grade 1, Xhosa grade 2, Yakut grade 1, Zulu grade 1, Zulu grade 2
+  -
+- Windows 10 OCR was renamed to Windows OCR. (#12690)
+-
+
+
+== Bug Fixes ==
+- In Windows 10 Calculator, NVDA will announce calculator expressions on a braille display. (#12268)
+- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
+  - Diff Match Patch now enabled by default. (#12485)
+  -
+- The braille input works properly with the following contracted tables: Arabic grade 2, Spanish grade 2, Urdu grade 2, Chinese (China, Mandarin) grade 2. (#12541)
+- The COM Registration Fixing Tool now resolves more issues, especially on 64 bit Windows. (#12560)
+- Improvements to button handling for the Seika Notetaker braille device from Nippon Telesoft. (#12598)
+- Improvements to announcing the Windows emoji panel and clipboard history. (#11485)
+- Updated the Bengali alphabet character descriptions. (#12502)
+- NVDA exits safely when a new process is started. (#12605)
+- Reselecting the Handy Tech braille display driver from the Select Braille Display dialog no longer causes errors. (#12618)
+- Windows version 10.0.22000 or later is recognized as Windows 11, not Windows 10. (#12626)
+- Screen curtain support has been fixed and tested for Windows versions up until 10.0.22000. (#12684)
+- If no results are shown when filtering input gestures, the input gesture configuration dialog continues to work as expected. (#12673)
+- Fixed a bug where the first menu item of a submenu is not announced in some contexts. (#12624)
+-
+
+
+== Changes for Developers ==
+- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SymbolLevel.*`` before 2022.1. (#11856, #12636)
+- ``controlTypes`` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
+  - ``ROLE_*`` and ``STATE_*`` constants should be replaced to their equivalent ``Role.*`` and ``State.*``.
+  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` have been deprecated, usages such as ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+  - ``processPositiveStates`` and ``processNegativeStates`` have been deprecated for removal.
+  -
+- On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
+- Deprecated: ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` will be removed in 2022.1, there is no direct replacement. (#12544)
+-
+
+
+= 2021.1 中文摘譯內容 =
 此版本包括新增了在 Excel 和 Chromium 瀏覽器中對 UIA 的可選擇性支援，對一些語言和點字的錯誤進行修復，也對 Unicode CLDR 和數學符號、eSpeak-NG 語音和 LibLouis 都有更新。
 此外，也包括許多錯誤修正與改進，包括在 Office、Visual Studio 和一些語言上的支援均有改善。
 
