@@ -281,6 +281,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		commandList = list([
 			self._normalizeCommand(command)
 			for command in commandList
+			# drop None to convert from XMLFormatting.CommandListT to textInfos.TextInfo.TextWithFieldsT
+			if command is not None
 		])
 		return commandList
 
