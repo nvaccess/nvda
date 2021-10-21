@@ -139,7 +139,7 @@ class SpeechManagerInteractions:
 
 		# Install the mock synth
 		synthDriverHandler._curSynth = self.synthMock
-		synthDriverHandler.getSynthInstance = mock.Mock(return_value=self.synthMock)
+		synthDriverHandler._getSynthDriver = lambda name: mock.Mock(return_value=self.synthMock)
 		#: Sequences sent to the speechManager so far.
 		self._knownSequences = []
 		#: Map ExpectedIndexes (IndexCommand) to knownSequences index

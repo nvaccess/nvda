@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-21 07:49+0000\n"
+"POT-Creation-Date: 2021-09-03 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Artin Dekker <vertalen@artindekker.com>\n"
 "Language-Team: \n"
@@ -100,33 +100,29 @@ msgid "grammar: {text}"
 msgstr "grammatica: {text}"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "none"
-msgstr "geen arcering"
+msgstr "geen"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "color"
-msgstr "{color}"
+msgstr "kleur"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "gradient"
-msgstr "kleurovergang lineair"
+msgstr "gradient"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "picture"
-msgstr ""
+msgstr "afbeelding"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
-msgstr "Patroon"
+msgstr "patroon"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -475,6 +471,10 @@ msgstr "sort afl"
 msgid "sorted desc"
 msgstr "sort afl"
 
+#. Translators: Displayed in braille when an object has additional details (such as a comment section).
+msgid "details"
+msgstr "details"
+
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
 msgstr "lbeschr"
@@ -747,20 +747,23 @@ msgstr "Bengaals graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian computer braille"
-msgstr "Russisch 8 punt computerbraille"
+msgstr "Wit-Russische computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian literary braille"
-msgstr "Russische literaire braille"
+msgstr "Wit-Russische literaire braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
 msgstr "Bulgaars 8 punt computerbraille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Bulgarian grade 1"
+msgstr "Bulgaars graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -989,18 +992,13 @@ msgstr "Grieks internationaal braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Hebrew 8 dot computer braille"
-msgstr "Hebreeuws 8 punt computerbraille"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "Israeli grade 1"
 msgstr "Israëlisch graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Israeli 8 dot computer braille"
-msgstr "Israëlisch 8 punt computerbraille"
+msgid "Hebrew computer braille"
+msgstr "Hebreeuws computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1051,6 +1049,21 @@ msgstr "Italiaans 8 punt computerbraille"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Kannada graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Kazakh grade 1"
+msgstr "Kazachs graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Khmer grade 1"
+msgstr "Khmer graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Northern Kurdish grade 0"
+msgstr "Noordelijk Koerdisch graad 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1124,6 +1137,16 @@ msgstr "Marathi graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Burmese grade 1"
+msgstr "Birmees graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Burmese grade 2"
+msgstr "Birmees graad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Dutch (Belgium) 6 dot"
 msgstr "Nederlands (België) 6 punt"
 
@@ -1166,6 +1189,16 @@ msgstr "Noors graad 3"
 #. braille settings dialog.
 msgid "Nepali grade 1"
 msgstr "Nepalees graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sepedi grade 1"
+msgstr "Sepedi graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sepedi grade 2"
+msgstr "Sepedi graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1229,6 +1262,11 @@ msgstr "Sanskriet graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Yakut grade 1"
+msgstr "Yakut graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
 msgstr "Zweeds 8 punts computerbraille"
 
@@ -1254,6 +1292,16 @@ msgstr "Sloveens graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Sesotho grade 1"
+msgstr "Sesotho graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sesotho grade 2"
+msgstr "Sesotho graad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "Servisch graad 1"
 
@@ -1261,6 +1309,11 @@ msgstr "Servisch graad 1"
 #. braille settings dialog.
 msgid "Tamil grade 1"
 msgstr "Tamil graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tatar grade 1"
+msgstr "Tatar graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1274,6 +1327,16 @@ msgstr "Turks graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Setswana grade 1"
+msgstr "Setswana graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Setswana grade 2"
+msgstr "Setswana graad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Ukrainian grade 1"
 msgstr "Oekraïens graad 1"
 
@@ -1284,15 +1347,13 @@ msgstr "Oekraïens computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 1"
-msgstr "Iers graad 1"
+msgstr "Urdu graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 2"
-msgstr "Iers graad 2"
+msgstr "Urdu graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1306,8 +1367,33 @@ msgstr "Unicode braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 0"
+msgstr "Viëtnamees graad 0"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Viëtnamees graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 2"
+msgstr "Viëtnamees graad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Southern Vietnamese grade 1"
+msgstr "Zuid-Vietnamees graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 1"
+msgstr "Xhosa graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 2"
+msgstr "Xhosa graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1328,6 +1414,16 @@ msgstr "Chinees (Hong kong, Cantonees)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chinees (Taiwan, Mandarijn)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 1"
+msgstr "Zulu graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 2"
+msgstr "Zulu graad 2"
 
 #. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
@@ -1922,6 +2018,15 @@ msgstr "Geen uitgebreide beschrijving"
 msgid "Shows the long description at this position if one is found."
 msgstr "Toont de uitgebreide beschrijving, indien beschikbaar."
 
+#. Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
+msgid "Shows a summary of the details at this position if found."
+msgstr "Toont een samenvatting van de details op deze positie indien gevonden."
+
+#. Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
+#. set of details to read.
+msgid "No additional details"
+msgstr "Geen extra details"
+
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
@@ -1956,9 +2061,8 @@ msgstr ""
 "vernieuwen van het document"
 
 #. Translators: The message reported for not supported toggling of screen layout
-#, fuzzy
 msgid "Not supported in this document."
-msgstr "Niet ondersteund in dit document"
+msgstr "Niet ondersteund in dit document."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2204,819 +2308,6 @@ msgstr "bruin"
 msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "bruingeel"
-
-#. Translators: The word for window of a program such as document window.
-msgid "window"
-msgstr "venster"
-
-#. Translators: Used to identify title bar of a program.
-msgid "title bar"
-msgstr "titelbalk"
-
-#. Translators: The word used for pane such as desktop pane.
-msgid "pane"
-msgstr "deelvenster"
-
-#. Translators: The word used to denote a dialog box such as open dialog.
-msgid "dialog"
-msgstr "dialoogvenster"
-
-#. Translators: The text used to identify check boxes such as select check box.
-msgid "check box"
-msgstr "selectievakje"
-
-#. Translators: The text used to identify radio buttons such as yes or no radio button.
-msgid "radio button"
-msgstr "keuzerondje"
-
-#. Translators: The word used to identify a static text such as dialog text.
-msgid "text"
-msgstr "tekst"
-
-#. Translators: The word used to identify edit fields such as subject edit field.
-msgid "edit"
-msgstr "invoerveld"
-
-#. Translators: The word used to identify a button such as OK button.
-msgid "button"
-msgstr "knop"
-
-#. Translators: Text used to identify menu bar of a program.
-msgid "menu bar"
-msgstr "menubalk"
-
-#. Translators: Used to identify a menu item such as an item in file menu.
-msgid "menu item"
-msgstr "menu-item"
-
-#. Translators: The word used for menus such as edit menu.
-#. Translators: Identifies a menu such as file menu.
-msgid "menu"
-msgstr "menu"
-
-#. Translators: Used to identify combo boxes such as file type combo box.
-msgid "combo box"
-msgstr "vervolgkeuzelijst"
-
-#. Translators: The word used for lists such as folder list.
-msgid "list"
-msgstr "lijst"
-
-#. Translators: Used to identify a list item such as email list items.
-msgid "list item"
-msgstr "lijstitem"
-
-#. Translators: The word used to identify graphics such as webpage graphics.
-msgid "graphic"
-msgstr "afbeelding"
-
-#. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
-msgid "help balloon"
-msgstr "helpballon"
-
-#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
-msgid "tool tip"
-msgstr "flitsbericht"
-
-#. Translators: Identifies a link in webpage documents.
-msgid "link"
-msgstr "link"
-
-#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
-msgid "tree view"
-msgstr "boomstructuur"
-
-#. Translators: Identifies a tree view item.
-msgid "tree view item"
-msgstr "boomstructuuritem"
-
-#. Translators: The word presented for tabs in a tab enabled window.
-msgctxt "controlType"
-msgid "tab"
-msgstr "tabblad"
-
-#. Translators: Identifies a tab control such as webpage tabs in web browsers.
-msgid "tab control"
-msgstr "tabblad"
-
-#. Translators: Identifies a slider such as volume slider.
-msgid "slider"
-msgstr "schuifregelaar"
-
-#. Translators: Identifies a progress bar such as NvDA update progress.
-msgid "progress bar"
-msgstr "voortgangsbalk"
-
-#. Translators: Identifies a scroll bar.
-msgid "scroll bar"
-msgstr "schuifbalk"
-
-#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
-msgid "status bar"
-msgstr "statusbalk"
-
-#. Translators: Identifies a table such as ones used in various websites.
-msgid "table"
-msgstr "tabel"
-
-#. Translators: Identifies a cell in a table.
-msgid "cell"
-msgstr "cel"
-
-#. Translators: Identifies a column (a group of vertical cells in a table).
-msgid "column"
-msgstr "kolom"
-
-#. Translators: Identifies a row (a group of horizontal cells in a table).
-msgid "row"
-msgstr "rij"
-
-#. Translators: Identifies a frame (a smaller window in a webpage or a document).
-#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
-msgid "frame"
-msgstr "frame"
-
-#. Translators: Identifies a tool bar.
-msgid "tool bar"
-msgstr "werkbalk"
-
-#. Translators: Identifies a column header in tables and spreadsheets.
-msgid "column header"
-msgstr "kolomkop"
-
-#. Translators: Identifies a row header in tables and spreadsheets.
-msgid "row header"
-msgstr "rijkop"
-
-#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
-msgid "drop down button"
-msgstr "uitschuifknop"
-
-#. Translators: Identifies an element.
-msgid "clock"
-msgstr "klok"
-
-#. Translators: Identifies a separator (a horizontal line drawn on the screen).
-msgid "separator"
-msgstr "scheiding"
-
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
-msgid "form"
-msgstr "formulier"
-
-#. Translators: Identifies a heading (a bold text used for identifying a section).
-msgid "heading"
-msgstr "kop"
-
-#. Translators: Identifies a heading level.
-msgid "heading 1"
-msgstr "kop 1"
-
-#. Translators: Identifies a heading level.
-msgid "heading 2"
-msgstr "kop 2"
-
-#. Translators: Identifies a heading level.
-msgid "heading 3"
-msgstr "kop 3"
-
-#. Translators: Identifies a heading level.
-msgid "heading 4"
-msgstr "kop 4"
-
-#. Translators: Identifies a heading level.
-msgid "heading 5"
-msgstr "kop 5"
-
-#. Translators: Identifies a heading level.
-msgid "heading 6"
-msgstr "kop 6"
-
-#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
-msgid "paragraph"
-msgstr "paragraaf"
-
-#. Translators: Presented for a section in a document which is a block quotation;
-#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
-msgid "block quote"
-msgstr "citaatblok"
-
-#. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
-msgid "table header"
-msgstr "tabelkopkop"
-
-#. Translators: Identifies a table body (the main body of the table).
-msgid "table body"
-msgstr "tabelinhoud"
-
-#. Translators: Identifies a table footer (text placed at the end of the table).
-msgid "table footer"
-msgstr "tabel voettekst"
-
-#. Translators: Identifies a document (for example, a webpage document).
-msgid "document"
-msgstr "document"
-
-#. Translators: Identifies an animation in a document or a webpage.
-msgid "animation"
-msgstr "animatie"
-
-#. Translators: Identifies an application in webpages.
-msgid "application"
-msgstr "applicatie"
-
-#. Translators: Identifies a box element.
-msgid "box"
-msgstr "vak"
-
-#. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
-msgid "grouping"
-msgstr "groepering"
-
-#. Translators: Identifies a property page such as drive properties dialog.
-msgid "property page"
-msgstr "eigenschappenblad"
-
-#. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
-msgid "canvas"
-msgstr "canvas"
-
-#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
-msgid "caption"
-msgstr "bijschrift"
-
-#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
-msgid "check menu item"
-msgstr "selecteer menu-item"
-
-#. Translators: Identifies a data edit field.
-msgid "date edit"
-msgstr "datuminvoerveld"
-
-#. Translators: Identifies an icon.
-msgid "icon"
-msgstr "pictogram"
-
-#. Translators: Identifies a directory pane.
-msgid "directory pane"
-msgstr "mappenlijst"
-
-#. Translators: Identifies an object that is embedded in a document.
-msgid "embedded object"
-msgstr "ingebed object"
-
-#. Translators: Identifies an end note.
-msgid "end note"
-msgstr "eindnoot"
-
-#. Translators: Identifies a footer (usually text).
-msgid "footer"
-msgstr "voettekst"
-
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
-msgid "foot note"
-msgstr "voetnoot"
-
-#. Translators: Reported for an object which is a glass pane; i.e.
-#. a pane that is guaranteed to be on top of all panes beneath it.
-msgid "glass pane"
-msgstr "glas venster"
-
-#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
-msgid "header"
-msgstr "koptekst"
-
-#. Translators: Identifies an image map (a type of graphical link).
-msgid "image map"
-msgstr "afbeeldingen map"
-
-#. Translators: Identifies an input window.
-msgid "input window"
-msgstr "invoervenster"
-
-#. Translators: Identifies a label.
-msgid "label"
-msgstr "label"
-
-#. Translators: Identifies a note field.
-msgid "note"
-msgstr "opmerking"
-
-#. Translators: Identifies a page.
-msgid "page"
-msgstr "pagina"
-
-#. Translators: Identifies a radio menu item.
-msgid "radio menu item"
-msgstr "keuzerondje menu-item"
-
-#. Translators: Identifies a layered pane.
-msgid "layered pane"
-msgstr "boomstructuur"
-
-#. Translators: Identifies a redundant object.
-msgid "redundant object"
-msgstr "overtollig object"
-
-#. Translators: Identifies a root pane.
-msgid "root pane"
-msgstr "hoofdvenster"
-
-#. Translators: May be reported for an editable text object in a toolbar.
-#. This is deprecated and is not often (if ever) used.
-msgid "edit bar"
-msgstr "invoerveld in werkbalk"
-
-#. Translators: Identifies a terminal window such as command prompt.
-msgid "terminal"
-msgstr "prompt"
-
-#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
-msgid "rich edit"
-msgstr "invoerveld met opmaakondersteuning"
-
-#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
-msgid "ruler"
-msgstr "liniaal"
-
-#. Translators: Identifies a scroll pane.
-msgid "scroll pane"
-msgstr "schuifvenster"
-
-#. Translators: Identifies a section of text.
-msgid "section"
-msgstr "sectie"
-
-#. Translators: Identifies a shape.
-msgid "shape"
-msgstr "vorm"
-
-#. Translators: Identifies a split pane.
-msgid "split pane"
-msgstr "splitsvenster"
-
-#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
-#. which represents the portion of the entire data that the user can see.
-#. As the user manipulates the scroll bars, the contents of the view port can change.
-msgid "view port"
-msgstr "view port"
-
-#. Translators: Reported for an object that forms part of a menu system
-#. but which can be undocked from or torn off the menu system
-#. to exist as a separate window.
-msgid "tear off menu"
-msgstr "Ontkoppel van menu"
-
-#. Translators: Identifies a text frame (a frame window which contains text).
-msgid "text frame"
-msgstr "tekstframe"
-
-#. Translators: Identifies a toggle button (a button used to toggle something).
-msgid "toggle button"
-msgstr "schakelknop"
-
-msgid "border"
-msgstr "begrenzing"
-
-#. Translators: Identifies a caret object.
-msgid "caret"
-msgstr "dakje"
-
-#. Translators: Identifies a character field (should not be confused with edit fields).
-msgid "character"
-msgstr "karakter"
-
-#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
-msgid "chart"
-msgstr "grafiek"
-
-#. Translators: Identifies a cursor object.
-msgid "cursor"
-msgstr "cursor"
-
-#. Translators: Identifies a diagram (seen on some websites and on Office documents).
-msgid "diagram"
-msgstr "diagram"
-
-#. Translators: Identifies a dial object.
-msgid "dial"
-msgstr "draaiknop"
-
-#. Translators: Identifies a drop list.
-msgid "drop list"
-msgstr "uitklaplijst"
-
-#. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
-msgid "split button"
-msgstr "splitsknop"
-
-#. Translators: Identifies a menu button (a button which opens a menu of items).
-msgid "menu button"
-msgstr "menuknop"
-
-#. Translators: Reported for a button which expands a grid when it is pressed.
-msgid "drop down button grid"
-msgstr "uitvouwknop begrenzing"
-
-#. Translators: Identifies mathematical content.
-msgid "math"
-msgstr "wiskunde"
-
-#. Translators: Identifies a grip control.
-msgid "grip"
-msgstr "greep"
-
-#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
-msgid "hot key field"
-msgstr "sneltoetsveld"
-
-#. Translators: Identifies an indicator control.
-msgid "indicator"
-msgstr "markering"
-
-#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
-msgid "spin button"
-msgstr "draaikeuzeknop"
-
-#. Translators: Identifies a sound clip on websites.
-msgid "sound"
-msgstr "geluid"
-
-#. Translators: Identifies a whitespace.
-msgid "white space"
-msgstr "lege ruimte"
-
-#. Translators: Identifies a tree view button.
-msgid "tree view button"
-msgstr "boomstructuurknop"
-
-#. Translators: Identifies an IP address (an IP address field element).
-msgid "IP address"
-msgstr "IP-adres"
-
-#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
-msgid "desktop icon"
-msgstr "bureaubladpictogram"
-
-#. Translators: Identifies desktop pane (the desktop window).
-msgid "desktop pane"
-msgstr "bureaublad venster"
-
-#. Translators: Identifies an option pane.
-msgid "option pane"
-msgstr "optie venster"
-
-#. Translators: Identifies a color chooser.
-msgid "color chooser"
-msgstr "kleurenkiezer"
-
-#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
-msgid "file chooser"
-msgstr "bestandenkiezer"
-
-msgid "filler"
-msgstr "opvuller"
-
-#. Translators: Identifies a panel control for grouping related options.
-msgid "panel"
-msgstr "paneel"
-
-#. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
-msgid "password edit"
-msgstr "wachtwoordinvoerveld"
-
-#. Translators: Identifies a font chooser.
-msgid "font chooser"
-msgstr "lettertypekiezer"
-
-msgid "line"
-msgstr "regel"
-
-#. Translators: Identifies a font name.
-msgid "font name"
-msgstr "lettertypenaam"
-
-#. Translators: Identifies font size.
-msgid "font size"
-msgstr "lettergrootte"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is bolded.
-msgid "bold"
-msgstr "vet"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "cursief"
-
-#. Translators: Describes text formatting.
-msgid "underline"
-msgstr "onderstrepen"
-
-#. Translators: Describes text formatting.
-msgid "foreground color"
-msgstr "voorgrondkleur"
-
-#. Translators: Describes text formatting.
-msgid "background color"
-msgstr "achtergrondkleur"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for superscript text.
-msgid "superscript"
-msgstr "superscript"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for subscript text.
-msgid "subscript"
-msgstr "subscript"
-
-#. Translators: Describes style of text.
-#. Translators: a Microsoft Word revision type (style change)
-msgid "style"
-msgstr "stijl"
-
-#. Translators: Describes text formatting.
-msgid "indent"
-msgstr "inspringing"
-
-#. Translators: Describes text formatting.
-msgid "alignment"
-msgstr "uitlijning"
-
-#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-msgid "alert"
-msgstr "bericht"
-
-#. Translators: Identifies a data grid control (a grid which displays data).
-msgid "data grid"
-msgstr "dataraster"
-
-msgid "data item"
-msgstr "data-item"
-
-msgid "header item"
-msgstr "kop-item"
-
-#. Translators: Identifies a thumb control (a button-like control for changing options).
-msgid "thumb control"
-msgstr "duimtoets"
-
-msgid "calendar"
-msgstr "agenda"
-
-msgid "video"
-msgstr "video"
-
-msgid "audio"
-msgstr "audio"
-
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "grafiekelement"
-
-#. Translators: Identifies deleted content.
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "Verwijderd"
-
-#. Translators: Identifies inserted content.
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "ingevoegd"
-
-#. Translators: Identifies a landmark.
-msgid "landmark"
-msgstr "oriëntatiepunt"
-
-#. Translators: Identifies an article.
-msgid "article"
-msgstr "artikel"
-
-#. Translators: Identifies a region.
-msgid "region"
-msgstr "gebied"
-
-#. Translators: Identifies a figure (commonly seen on some websites).
-msgid "figure"
-msgstr "figuur"
-
-#. Translators: Identifies marked (highlighted) content
-msgid "marked content"
-msgstr "gemarkeerde inhoud"
-
-#. Translators: This is presented when a control or document is unavailable.
-msgid "unavailable"
-msgstr "niet beschikbaar"
-
-#. Translators: This is presented when a control has focus.
-msgid "focused"
-msgstr "gefocust"
-
-#. Translators: This is presented when the control is selected.
-msgid "selected"
-msgstr "geselecteerd"
-
-#. Translators: This is presented when a document is busy.
-msgid "busy"
-msgstr "bezig"
-
-#. Translators: This is presented when a button is pressed.
-msgid "pressed"
-msgstr "ingedrukt"
-
-#. Translators: This is presented when a check box is checked.
-msgid "checked"
-msgstr "ingeschakeld"
-
-#. Translators: This is presented when a three state check box is half checked.
-msgid "half checked"
-msgstr "half ingeschakeld"
-
-#. Translators: This is presented when the control is a read-only control such as read-only edit box.
-msgid "read only"
-msgstr "alleen lezen"
-
-#. Translators: This is presented when a tree view or submenu item is expanded.
-msgid "expanded"
-msgstr "uitgevouwen"
-
-#. Translators: This is presented when a tree view or submenu is collapsed.
-msgid "collapsed"
-msgstr "samengevouwen"
-
-#. Translators: This is presented when a control or a document becomes invisible.
-msgid "invisible"
-msgstr "onzichtbaar"
-
-#. Translators: This is presented when a visited link is encountered.
-msgid "visited"
-msgstr "bezocht"
-
-#. Translators: This is presented when a link is encountered.
-msgid "linked"
-msgstr "gekoppeld"
-
-#. Translators: This is presented when the control menu item has a submenu.
-msgid "subMenu"
-msgstr "sub menu"
-
-#. Translators: This is presented when a protected control or a document is encountered.
-msgid "protected"
-msgstr "beveiligd"
-
-#. Translators: This is presented when a required form field is encountered.
-msgid "required"
-msgstr "vereist"
-
-#. Translators: Reported when an object no longer exists in the user interface;
-#. i.e. it is dead and is no longer usable.
-msgid "defunct"
-msgstr "onbruikbaar"
-
-#. Translators: This is presented when an invalid entry has been made.
-msgid "invalid entry"
-msgstr "ongeldige invoer"
-
-msgid "modal"
-msgstr "modaal"
-
-#. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
-msgid "has auto complete"
-msgstr "heeft auto aanvullen"
-
-#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
-msgid "multi line"
-msgstr "meerdere regels"
-
-msgid "iconified"
-msgstr "bevat pictogram"
-
-#. Translators: Presented when the current control is located off screen.
-msgid "off screen"
-msgstr "buiten scherm"
-
-#. Translators: Presented when the control allows selection such as text fields.
-msgid "selectable"
-msgstr "selecteerbaar"
-
-#. Translators: Presented when a control can be moved to using system focus.
-msgid "focusable"
-msgstr "focusbaar"
-
-#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
-msgid "clickable"
-msgstr "klikbaar"
-
-msgid "editable"
-msgstr "bewerkbaar"
-
-msgid "checkable"
-msgstr "heeft selectievakje"
-
-msgid "draggable"
-msgstr "sleepbaar"
-
-msgid "dragging"
-msgstr "bezig met slepen"
-
-#. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects that support accessible drag and drop.
-msgid "drop target"
-msgstr "doel plaatsen"
-
-msgid "sorted"
-msgstr "gesorteerd"
-
-msgid "sorted ascending"
-msgstr "oplopend gesorteerd"
-
-msgid "sorted descending"
-msgstr "aflopend gesorteerd"
-
-#. Translators: a state that denotes that an object (usually a graphic) has a long description.
-msgid "has long description"
-msgstr "heeft uitgebreide beschrijving"
-
-#. Translators: a state that denotes that an object is pinned in its current location
-msgid "pinned"
-msgstr "vastgemaakt"
-
-#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
-msgid "has formula"
-msgstr "heeft formule"
-
-#. Translators: a state that denotes the existance of a comment.
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "heeft opmerking"
-
-#. Translators: a state that denotes that the object is covered partially or fully by another object
-msgid "obscured"
-msgstr "wordt overlapt"
-
-#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
-msgid "cropped"
-msgstr "afgesneden"
-
-#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
-msgid "overflowing"
-msgstr "Overschrijdend"
-
-#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
-msgid "unlocked"
-msgstr "ontgrendeld"
-
-#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-msgid "not selected"
-msgstr "niet geselecteerd"
-
-#. Translators: This is presented when a button is not pressed.
-msgid "not pressed"
-msgstr "niet ingedrukt"
-
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "uitgeschakeld"
-
-#. Translators: This is presented when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "klaar met slepen"
-
-#. Translators: Presented when an item is marked as current in a collection of items
-msgid "current"
-msgstr "huidig"
-
-#. Translators: Presented when a page item is marked as current in a collection of page items
-msgid "current page"
-msgstr "huidige pagina"
-
-#. Translators: Presented when a step item is marked as current in a collection of step items
-msgid "current step"
-msgstr "huidige stap"
-
-#. Translators: Presented when a location item is marked as current in a collection of location items
-msgid "current location"
-msgstr "huidige locatie"
-
-#. Translators: Presented when a date item is marked as current in a collection of date items
-msgid "current date"
-msgstr "huidige datum"
-
-#. Translators: Presented when a time item is marked as current in a collection of time items
-msgid "current time"
-msgstr "huidig tijdstip"
-
-#. Translators: Indicates that a particular state of an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the full identifier of the negated state (e.g. selected).
-#, python-format
-msgid "not %s"
-msgstr "niet %s"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -4090,16 +3381,15 @@ msgid "Expanded symbol ({})"
 msgstr "Vervangen symbool ({})"
 
 #. Translators: Input help mode message for toggle speech mode command.
-#, fuzzy
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA will just speak normally."
 msgstr ""
 "Schakelt tussen de verschillende spraakmodi: uit, pieptonen en spreek. Bij "
-"\"uit\" zal NVDA niets uitspreken. Bij \"pieptonen\" hoort u een pieptoon "
-"telkens er iets door NVDA uitgesproken zou worden. Bij \"spreek\" zal NVDA "
-"gewoon spreken"
+"uit zal NVDA niets uitspreken. Bij pieptonen hoort u een pieptoon telkens "
+"als er iets door NVDA uitgesproken zou worden. Bij spreek zal NVDA gewoon "
+"spreken."
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -4909,17 +4199,16 @@ msgid "Not math"
 msgstr "Geen wiskunde"
 
 #. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "Herkent de inhoud van het huidige navigatorobject met Windows 10 OCR "
+msgid "Recognizes the content of the current navigator object with Windows OCR"
+msgstr "Herkent de inhoud van het huidige navigatorobject met Windows OCR"
 
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "Windows 10 OCR niet beschikbaar"
+#. Translators: Reported when Windows OCR is not available.
+msgid "Windows OCR not available"
+msgstr "Windows OCR niet beschikbaar"
 
 #. Translators: Reported when screen curtain is enabled.
-msgid "Please disable screen curtain before using Windows 10 OCR."
-msgstr "Schakel schermgordijn uit voordat u Windows 10 OCR gebruikt."
+msgid "Please disable screen curtain before using Windows OCR."
+msgstr "Schakel schermgordijn uit voordat u Windows OCR gebruikt."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -7165,36 +6454,31 @@ msgid "unread"
 msgstr "ongelezen"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Python Console"
-msgstr "Python console"
+msgstr "Python Console"
 
 #. Translators: Description of a command to clear the Python Console output pane
 msgid "Clear the output pane"
-msgstr ""
+msgstr "Het uitvoervenster wissen"
 
 #. Translators: Description of a command to move to the next result in the Python Console output pane
-#, fuzzy
 msgid "Move to the next result"
-msgstr "gaat naar de volgende lijst"
+msgstr "gaat naar het volgende resultaat"
 
 #. Translators: Description of a command to move to the previous result
 #. in the Python Console output pane
-#, fuzzy
 msgid "Move to the previous result"
-msgstr "gaat naar de vorige lijst"
+msgstr "gaat naar het vorige resultaat"
 
 #. Translators: Description of a command to select from the current caret position to the end
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the end of the current result"
-msgstr "Leest de notitie bij de huidige cel"
+msgstr "Selecteer tot het einde van het huidige resultaat"
 
 #. Translators: Description of a command to select from the current caret position to the start
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the start of the current result"
-msgstr "Leest de notitie bij de huidige cel"
+msgstr "Selecteer tot het begin van het huidige resultaat"
 
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
@@ -7256,9 +6540,9 @@ msgstr "{startTime} tot {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "categories {categories}"
-msgstr "Categorie {categoryAxisData}: "
+msgstr "categorieën {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7697,8 +6981,12 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Papenmeier BRAILLEX oudere modellen"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
-msgstr "Seika brailleleesregels"
+msgid "Seika Braille Displays"
+msgstr "Seika Brailleleesregels"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr "Seika Notetaker"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -7746,6 +7034,841 @@ msgstr "Bezig met herkennen"
 
 msgid "Recognition failed"
 msgstr "Herkenning mislukt"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "huidig"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "huidige pagina"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "huidige stap"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "huidige locatie"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "huidige datum"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "huidig tijdstip"
+
+#. Translators: The word for window of a program such as document window.
+msgid "window"
+msgstr "venster"
+
+#. Translators: Used to identify title bar of a program.
+msgid "title bar"
+msgstr "titelbalk"
+
+#. Translators: The word used for pane such as desktop pane.
+msgid "pane"
+msgstr "deelvenster"
+
+#. Translators: The word used to denote a dialog box such as open dialog.
+msgid "dialog"
+msgstr "dialoogvenster"
+
+#. Translators: The text used to identify check boxes such as select check box.
+msgid "check box"
+msgstr "selectievakje"
+
+#. Translators: The text used to identify radio buttons such as yes or no radio button.
+msgid "radio button"
+msgstr "keuzerondje"
+
+#. Translators: The word used to identify a static text such as dialog text.
+msgid "text"
+msgstr "tekst"
+
+#. Translators: The word used to identify edit fields such as subject edit field.
+msgid "edit"
+msgstr "invoerveld"
+
+#. Translators: The word used to identify a button such as OK button.
+msgid "button"
+msgstr "knop"
+
+#. Translators: Text used to identify menu bar of a program.
+msgid "menu bar"
+msgstr "menubalk"
+
+#. Translators: Used to identify a menu item such as an item in file menu.
+msgid "menu item"
+msgstr "menu-item"
+
+#. Translators: The word used for menus such as edit menu.
+#. Translators: Identifies a menu such as file menu.
+msgid "menu"
+msgstr "menu"
+
+#. Translators: Used to identify combo boxes such as file type combo box.
+msgid "combo box"
+msgstr "vervolgkeuzelijst"
+
+#. Translators: The word used for lists such as folder list.
+msgid "list"
+msgstr "lijst"
+
+#. Translators: Used to identify a list item such as email list items.
+msgid "list item"
+msgstr "lijstitem"
+
+#. Translators: The word used to identify graphics such as webpage graphics.
+msgid "graphic"
+msgstr "afbeelding"
+
+#. Translators: Used to identify help balloon (a circular window with helpful text such as notification
+#. text).
+msgid "help balloon"
+msgstr "helpballon"
+
+#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as
+#. file information).
+msgid "tool tip"
+msgstr "flitsbericht"
+
+#. Translators: Identifies a link in webpage documents.
+msgid "link"
+msgstr "link"
+
+#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
+msgid "tree view"
+msgstr "boomstructuur"
+
+#. Translators: Identifies a tree view item.
+msgid "tree view item"
+msgstr "boomstructuuritem"
+
+#. Translators: The word presented for tabs in a tab enabled window.
+msgctxt "controlType"
+msgid "tab"
+msgstr "tabblad"
+
+#. Translators: Identifies a tab control such as webpage tabs in web browsers.
+msgid "tab control"
+msgstr "tabblad"
+
+#. Translators: Identifies a slider such as volume slider.
+msgid "slider"
+msgstr "schuifregelaar"
+
+#. Translators: Identifies a progress bar such as NvDA update progress.
+msgid "progress bar"
+msgstr "voortgangsbalk"
+
+#. Translators: Identifies a scroll bar.
+msgid "scroll bar"
+msgstr "schuifbalk"
+
+#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
+#. document).
+msgid "status bar"
+msgstr "statusbalk"
+
+#. Translators: Identifies a table such as ones used in various websites.
+msgid "table"
+msgstr "tabel"
+
+#. Translators: Identifies a cell in a table.
+msgid "cell"
+msgstr "cel"
+
+#. Translators: Identifies a column (a group of vertical cells in a table).
+msgid "column"
+msgstr "kolom"
+
+#. Translators: Identifies a row (a group of horizontal cells in a table).
+msgid "row"
+msgstr "rij"
+
+#. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
+#. embedded within a web page.
+msgid "frame"
+msgstr "frame"
+
+#. Translators: Identifies a tool bar.
+msgid "tool bar"
+msgstr "werkbalk"
+
+#. Translators: Identifies a column header in tables and spreadsheets.
+msgid "column header"
+msgstr "kolomkop"
+
+#. Translators: Identifies a row header in tables and spreadsheets.
+msgid "row header"
+msgstr "rijkop"
+
+#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
+msgid "drop down button"
+msgstr "uitschuifknop"
+
+#. Translators: Identifies an element.
+msgid "clock"
+msgstr "klok"
+
+#. Translators: Identifies a separator (a horizontal line drawn on the screen).
+msgid "separator"
+msgstr "scheiding"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "formulier"
+
+#. Translators: Identifies a heading (a bold text used for identifying a section).
+msgid "heading"
+msgstr "kop"
+
+#. Translators: Identifies a heading level.
+msgid "heading 1"
+msgstr "kop 1"
+
+#. Translators: Identifies a heading level.
+msgid "heading 2"
+msgstr "kop 2"
+
+#. Translators: Identifies a heading level.
+msgid "heading 3"
+msgstr "kop 3"
+
+#. Translators: Identifies a heading level.
+msgid "heading 4"
+msgstr "kop 4"
+
+#. Translators: Identifies a heading level.
+msgid "heading 5"
+msgstr "kop 5"
+
+#. Translators: Identifies a heading level.
+msgid "heading 6"
+msgstr "kop 6"
+
+#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
+msgid "paragraph"
+msgstr "paragraaf"
+
+#. Translators: Presented for a section in a document which is a block quotation;
+#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+#. See http://en.wikipedia.org/wiki/Block_quotation
+msgid "block quote"
+msgstr "citaatblok"
+
+#. Translators: Identifies a table header (a short text at the start of a table which describes what the
+#. table is about).
+msgid "table header"
+msgstr "tabelkopkop"
+
+#. Translators: Identifies a table body (the main body of the table).
+msgid "table body"
+msgstr "tabelinhoud"
+
+#. Translators: Identifies a table footer (text placed at the end of the table).
+msgid "table footer"
+msgstr "tabel voettekst"
+
+#. Translators: Identifies a document (for example, a webpage document).
+msgid "document"
+msgstr "document"
+
+#. Translators: Identifies an animation in a document or a webpage.
+msgid "animation"
+msgstr "animatie"
+
+#. Translators: Identifies an application in webpages.
+msgid "application"
+msgstr "applicatie"
+
+#. Translators: Identifies a box element.
+msgid "box"
+msgstr "vak"
+
+#. Translators: Identifies a grouping (a number of related items grouped together, such as related options
+#. in dialogs).
+msgid "grouping"
+msgstr "groepering"
+
+#. Translators: Identifies a property page such as drive properties dialog.
+msgid "property page"
+msgstr "eigenschappenblad"
+
+#. Translators: Identifies a canvas element on webpages (a box with some background color with some text
+#. drawn on the box, like a canvas).
+msgid "canvas"
+msgstr "canvas"
+
+#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
+msgid "caption"
+msgstr "bijschrift"
+
+#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
+#. name).
+msgid "check menu item"
+msgstr "selecteer menu-item"
+
+#. Translators: Identifies a data edit field.
+msgid "date edit"
+msgstr "datuminvoerveld"
+
+#. Translators: Identifies an icon.
+msgid "icon"
+msgstr "pictogram"
+
+#. Translators: Identifies a directory pane.
+msgid "directory pane"
+msgstr "mappenlijst"
+
+#. Translators: Identifies an object that is embedded in a document.
+msgid "embedded object"
+msgstr "ingebed object"
+
+#. Translators: Identifies an end note.
+msgid "end note"
+msgstr "eindnoot"
+
+#. Translators: Identifies a footer (usually text).
+msgid "footer"
+msgstr "voettekst"
+
+#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+msgid "foot note"
+msgstr "voetnoot"
+
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+msgid "glass pane"
+msgstr "glas venster"
+
+#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
+msgid "header"
+msgstr "koptekst"
+
+#. Translators: Identifies an image map (a type of graphical link).
+msgid "image map"
+msgstr "afbeeldingen map"
+
+#. Translators: Identifies an input window.
+msgid "input window"
+msgstr "invoervenster"
+
+#. Translators: Identifies a label.
+msgid "label"
+msgstr "label"
+
+#. Translators: Identifies a note field.
+msgid "note"
+msgstr "opmerking"
+
+#. Translators: Identifies a page.
+msgid "page"
+msgstr "pagina"
+
+#. Translators: Identifies a radio menu item.
+msgid "radio menu item"
+msgstr "keuzerondje menu-item"
+
+#. Translators: Identifies a layered pane.
+msgid "layered pane"
+msgstr "boomstructuur"
+
+#. Translators: Identifies a redundant object.
+msgid "redundant object"
+msgstr "overtollig object"
+
+#. Translators: Identifies a root pane.
+msgid "root pane"
+msgstr "hoofdvenster"
+
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+msgid "edit bar"
+msgstr "invoerveld in werkbalk"
+
+#. Translators: Identifies a terminal window such as command prompt.
+msgid "terminal"
+msgstr "prompt"
+
+#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
+#. addition to text; encountered on webpages and NvDA log viewer).
+msgid "rich edit"
+msgstr "invoerveld met opmaakondersteuning"
+
+#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
+msgid "ruler"
+msgstr "liniaal"
+
+#. Translators: Identifies a scroll pane.
+msgid "scroll pane"
+msgstr "schuifvenster"
+
+#. Translators: Identifies a section of text.
+msgid "section"
+msgstr "sectie"
+
+#. Translators: Identifies a shape.
+msgid "shape"
+msgstr "vorm"
+
+#. Translators: Identifies a split pane.
+msgid "split pane"
+msgstr "splitsvenster"
+
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+msgid "view port"
+msgstr "view port"
+
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+msgid "tear off menu"
+msgstr "Ontkoppel van menu"
+
+#. Translators: Identifies a text frame (a frame window which contains text).
+msgid "text frame"
+msgstr "tekstframe"
+
+#. Translators: Identifies a toggle button (a button used to toggle something).
+msgid "toggle button"
+msgstr "schakelknop"
+
+msgid "border"
+msgstr "begrenzing"
+
+#. Translators: Identifies a caret object.
+msgid "caret"
+msgstr "dakje"
+
+#. Translators: Identifies a character field (should not be confused with edit fields).
+msgid "character"
+msgstr "karakter"
+
+#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
+msgid "chart"
+msgstr "grafiek"
+
+#. Translators: Identifies a cursor object.
+msgid "cursor"
+msgstr "cursor"
+
+#. Translators: Identifies a diagram (seen on some websites and on Office documents).
+msgid "diagram"
+msgstr "diagram"
+
+#. Translators: Identifies a dial object.
+msgid "dial"
+msgstr "draaiknop"
+
+#. Translators: Identifies a drop list.
+msgid "drop list"
+msgstr "uitklaplijst"
+
+#. Translators: Identifies a split button (a control which performs different actions when different parts
+#. are clicked).
+msgid "split button"
+msgstr "splitsknop"
+
+#. Translators: Identifies a menu button (a button which opens a menu of items).
+msgid "menu button"
+msgstr "menuknop"
+
+#. Translators: Reported for a button which expands a grid when it is pressed.
+msgid "drop down button grid"
+msgstr "uitvouwknop begrenzing"
+
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr "wiskunde"
+
+#. Translators: Identifies a grip control.
+msgid "grip"
+msgstr "greep"
+
+#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
+#. assigning shortcut for icons on the desktop).
+msgid "hot key field"
+msgstr "sneltoetsveld"
+
+#. Translators: Identifies an indicator control.
+msgid "indicator"
+msgstr "markering"
+
+#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
+msgid "spin button"
+msgstr "draaikeuzeknop"
+
+#. Translators: Identifies a sound clip on websites.
+msgid "sound"
+msgstr "geluid"
+
+#. Translators: Identifies a whitespace.
+msgid "white space"
+msgstr "lege ruimte"
+
+#. Translators: Identifies a tree view button.
+msgid "tree view button"
+msgstr "boomstructuurknop"
+
+#. Translators: Identifies an IP address (an IP address field element).
+msgid "IP address"
+msgstr "IP-adres"
+
+#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts
+#. for programs).
+msgid "desktop icon"
+msgstr "bureaubladpictogram"
+
+#. Translators: Identifies desktop pane (the desktop window).
+msgid "desktop pane"
+msgstr "bureaublad venster"
+
+#. Translators: Identifies an option pane.
+msgid "option pane"
+msgstr "optie venster"
+
+#. Translators: Identifies a color chooser.
+msgid "color chooser"
+msgstr "kleurenkiezer"
+
+#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
+msgid "file chooser"
+msgstr "bestandenkiezer"
+
+msgid "filler"
+msgstr "opvuller"
+
+#. Translators: Identifies a panel control for grouping related options.
+msgid "panel"
+msgstr "paneel"
+
+#. Translators: Identifies a password field (a protected edit field for entering passwords such as when
+#. logging into web-based email sites).
+msgid "password edit"
+msgstr "wachtwoordinvoerveld"
+
+#. Translators: Identifies a font chooser.
+msgid "font chooser"
+msgstr "lettertypekiezer"
+
+msgid "line"
+msgstr "regel"
+
+#. Translators: Identifies a font name.
+msgid "font name"
+msgstr "lettertypenaam"
+
+#. Translators: Identifies font size.
+msgid "font size"
+msgstr "lettergrootte"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is bolded.
+msgid "bold"
+msgstr "vet"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "cursief"
+
+#. Translators: Describes text formatting.
+msgid "underline"
+msgstr "onderstrepen"
+
+#. Translators: Describes text formatting.
+msgid "foreground color"
+msgstr "voorgrondkleur"
+
+#. Translators: Describes text formatting.
+msgid "background color"
+msgstr "achtergrondkleur"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for superscript text.
+msgid "superscript"
+msgstr "superscript"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for subscript text.
+msgid "subscript"
+msgstr "subscript"
+
+#. Translators: Describes style of text.
+#. Translators: a Microsoft Word revision type (style change)
+msgid "style"
+msgstr "stijl"
+
+#. Translators: Describes text formatting.
+msgid "indent"
+msgstr "inspringing"
+
+#. Translators: Describes text formatting.
+msgid "alignment"
+msgstr "uitlijning"
+
+#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such
+#. as file downloads or pop-up blocker).
+msgid "alert"
+msgstr "bericht"
+
+#. Translators: Identifies a data grid control (a grid which displays data).
+msgid "data grid"
+msgstr "dataraster"
+
+msgid "data item"
+msgstr "data-item"
+
+msgid "header item"
+msgstr "kop-item"
+
+#. Translators: Identifies a thumb control (a button-like control for changing options).
+msgid "thumb control"
+msgstr "duimtoets"
+
+msgid "calendar"
+msgstr "agenda"
+
+msgid "video"
+msgstr "video"
+
+msgid "audio"
+msgstr "audio"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "grafiekelement"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "Verwijderd"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ingevoegd"
+
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "oriëntatiepunt"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "artikel"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "gebied"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "figuur"
+
+#. Translators: Identifies marked (highlighted) content
+msgid "marked content"
+msgstr "gemarkeerde inhoud"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not
+#. checked), but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "niet %s"
+
+#. Translators: This is presented when a control or document is unavailable.
+msgid "unavailable"
+msgstr "niet beschikbaar"
+
+#. Translators: This is presented when a control has focus.
+msgid "focused"
+msgstr "gefocust"
+
+#. Translators: This is presented when the control is selected.
+msgid "selected"
+msgstr "geselecteerd"
+
+#. Translators: This is presented when a document is busy.
+msgid "busy"
+msgstr "bezig"
+
+#. Translators: This is presented when a button is pressed.
+msgid "pressed"
+msgstr "ingedrukt"
+
+#. Translators: This is presented when a check box is checked.
+msgid "checked"
+msgstr "ingeschakeld"
+
+#. Translators: This is presented when a three state check box is half checked.
+msgid "half checked"
+msgstr "half ingeschakeld"
+
+#. Translators: This is presented when the control is a read-only control such as read-only edit box.
+msgid "read only"
+msgstr "alleen lezen"
+
+#. Translators: This is presented when a tree view or submenu item is expanded.
+msgid "expanded"
+msgstr "uitgevouwen"
+
+#. Translators: This is presented when a tree view or submenu is collapsed.
+msgid "collapsed"
+msgstr "samengevouwen"
+
+#. Translators: This is presented when a control or a document becomes invisible.
+msgid "invisible"
+msgstr "onzichtbaar"
+
+#. Translators: This is presented when a visited link is encountered.
+msgid "visited"
+msgstr "bezocht"
+
+#. Translators: This is presented when a link is encountered.
+msgid "linked"
+msgstr "gekoppeld"
+
+#. Translators: This is presented when the control menu item has a submenu.
+msgid "subMenu"
+msgstr "sub menu"
+
+#. Translators: This is presented when a protected control or a document is encountered.
+msgid "protected"
+msgstr "beveiligd"
+
+#. Translators: This is presented when a required form field is encountered.
+msgid "required"
+msgstr "vereist"
+
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+msgid "defunct"
+msgstr "onbruikbaar"
+
+#. Translators: This is presented when an invalid entry has been made.
+msgid "invalid entry"
+msgstr "ongeldige invoer"
+
+msgid "modal"
+msgstr "modaal"
+
+#. Translators: This is presented when a field supports auto completion of entered text such as email
+#. address field in Microsoft Outlook.
+msgid "has auto complete"
+msgstr "heeft auto aanvullen"
+
+#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment
+#. fields on websites.
+msgid "multi line"
+msgstr "meerdere regels"
+
+msgid "iconified"
+msgstr "bevat pictogram"
+
+#. Translators: Presented when the current control is located off screen.
+msgid "off screen"
+msgstr "buiten scherm"
+
+#. Translators: Presented when the control allows selection such as text fields.
+msgid "selectable"
+msgstr "selecteerbaar"
+
+#. Translators: Presented when a control can be moved to using system focus.
+msgid "focusable"
+msgstr "focusbaar"
+
+#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
+msgid "clickable"
+msgstr "klikbaar"
+
+msgid "editable"
+msgstr "bewerkbaar"
+
+msgid "checkable"
+msgstr "heeft selectievakje"
+
+msgid "draggable"
+msgstr "sleepbaar"
+
+msgid "dragging"
+msgstr "bezig met slepen"
+
+#. Translators: Reported where an object which is being dragged can be dropped.
+#. This is only reported for objects that support accessible drag and drop.
+msgid "drop target"
+msgstr "doel plaatsen"
+
+msgid "sorted"
+msgstr "gesorteerd"
+
+msgid "sorted ascending"
+msgstr "oplopend gesorteerd"
+
+msgid "sorted descending"
+msgstr "aflopend gesorteerd"
+
+#. Translators: a state that denotes that an object (usually a graphic) has a long description.
+msgid "has long description"
+msgstr "heeft uitgebreide beschrijving"
+
+#. Translators: a state that denotes that an object has additional details (such as a comment section).
+msgid "has details"
+msgstr "bevat details"
+
+#. Translators: a state that denotes that an object is pinned in its current location
+msgid "pinned"
+msgstr "vastgemaakt"
+
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "heeft formule"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "heeft opmerking"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "wordt overlapt"
+
+#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the
+#. allocated/available space
+msgid "cropped"
+msgstr "afgesneden"
+
+#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
+msgid "overflowing"
+msgstr "Overschrijdend"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
+#. Excel spreadsheet).
+msgid "unlocked"
+msgstr "ontgrendeld"
+
+#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+msgid "not selected"
+msgstr "niet geselecteerd"
+
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "niet ingedrukt"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "uitgeschakeld"
+
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "klaar met slepen"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -7830,8 +7953,13 @@ msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr "Even geduld terwijl NVDA uw COM-registraties probeert te repareren."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
-msgid "COM Registration Fixing tool complete"
-msgstr "Probleemoplosser voor COM-registratie uitgevoerd"
+msgid ""
+"The COM Registration Fixing tool has finished. It is highly recommended that "
+"you restart your computer now, to make sure the changes take full effect."
+msgstr ""
+"De COM-registratietool is klaar. Het wordt ten zeerste aanbevolen om uw "
+"computer nu opnieuw op te starten, om er zeker van te zijn dat de "
+"wijzigingen volledig doorgevoerd worden."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -9673,11 +9801,11 @@ msgstr "Ondersteuning voor aanraakinteractie inschakelen"
 msgid "&Touch typing mode"
 msgstr "&Direct typen met aanraken"
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr "Windows 10 OCR"
+#. Translators: The title of the Windows OCR panel.
+msgid "Windows OCR"
+msgstr "Windows OCR"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "Herkennings&taal:"
 
@@ -9718,13 +9846,12 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid ""
 "Use UI Automation to access Microsoft &Excel spreadsheet controls when "
 "available"
 msgstr ""
-"Gebruik UI Automation voor toegang tot Microsoft &Word-documenten indien "
-"beschikbaar"
+"Gebruik UI Automation om toegang te krijgen tot Microsoft- en Excel-"
+"spreadsheetbesturingselementen indien beschikbaar"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9759,16 +9886,24 @@ msgid "Only when necessary"
 msgstr "Alleen indien nodig"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
 msgstr "Ja"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
 msgstr "Nee"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Annotations"
+msgstr "Aantekeningen"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report details in browse mode"
+msgstr "Meld details in bladermodus"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9787,32 +9922,30 @@ msgstr ""
 #. settings panel.
 #. Choices are automatic, allow Diff Match Patch, and force Difflib.
 msgid "&Diff algorithm:"
-msgstr ""
+msgstr "&Diff algoritme:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#, fuzzy
-msgid "Automatic (Difflib)"
-msgstr "Automatisch"
+msgid "Automatic (Diff Match Patch)"
+msgstr "Automatisch (Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character when supported, using the diff match patch algorithm.
 msgid "allow Diff Match Patch"
-msgstr ""
+msgstr "Diff Match Patch toestaan"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 msgid "force Difflib"
-msgstr ""
+msgstr "Difflib forceren"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#, fuzzy
 msgid "Default (Yes)"
-msgstr "Standaard (Nee)"
+msgstr "Standaard (Ja)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -10239,7 +10372,6 @@ msgid "NVDA  Usage Data Collection"
 msgstr "Verzamelen van gebruiksstatistieken door NVDA"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
-#, fuzzy
 msgid ""
 "In order to improve NVDA in the future, NV Access wishes to collect usage "
 "data from running copies of NVDA.\n"
@@ -10254,7 +10386,7 @@ msgid ""
 "improve NVDA?"
 msgstr ""
 "Om NVDA in de toekomst te kunnen verbeteren, wenst NV Access "
-"gebruiksstatistieken te verzamelen wanner NVDA actief is.\n"
+"gebruiksstatistieken te verzamelen wanneer NVDA actief is.\n"
 "\n"
 "Deze statistieken omvatten versie van het besturingssysteem, versie van "
 "NVDA, taal, land van herkomst en bepaalde NVDA-instellingen zoals de huidige "
@@ -10897,24 +11029,26 @@ msgid ""
 "Shows a browseable message Listing information about a cell's appearance "
 "such as outline and fill colors, rotation and size"
 msgstr ""
+"Toont een bericht in bladermodus met informatie over het uiterlijk van een "
+"cel, zoals omtrek- en opvulkleuren, rotatie en grootte"
 
 #. Translators: The width of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
-msgstr ""
+msgstr "Celbreedte: {0.x:.1f} punt"
 
 #. Translators: The height of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
-msgstr ""
+msgstr "cel hoogte: {0.y:.1f} punt"
 
 #. Translators: The rotation in degrees of an Excel cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degrees"
-msgstr ""
+msgstr "Rotatie: {0} graden"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #, python-brace-format
@@ -10922,89 +11056,86 @@ msgctxt "excel-UIA"
 msgid ""
 "Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
 msgstr ""
+"Omtrekkleur: boven={0.name}, onder={1.name}, links={2.name}, rechts={3.name}"
 
 #. Translators: The outline (border) thickness values of an Excel cell.
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
-msgstr ""
+msgstr "Omtrekdikte: boven={0}, onder={1}, links={2}, rechts={3}"
 
 #. Translators: The fill color of an Excel cell
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill color: {0.name}"
-msgstr "Segmentkleur: {colorName} "
+msgstr "Opvulkleur: {0.name}"
 
 #. Translators: The fill type (pattern, gradient etc) of an Excel Cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill type: {0}"
-msgstr ""
+msgstr "Vultype: {0}"
 
 #. Translators: the number format of an Excel cell
 #, python-brace-format
 msgid "Number format: {0}"
-msgstr ""
+msgstr "Getalnotatie: {0}"
 
 #. Translators: If an excel cell has data validation set
-#, fuzzy
 msgid "Has data validation"
-msgstr "%s applicatie"
+msgstr "Heeft gegevensvalidatie"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #, python-brace-format
 msgid "Data validation prompt: {0}"
-msgstr ""
+msgstr "Gegevensvalidatieprompt: {0}"
 
 #. Translators: If an excel cell has conditional formatting
-#, fuzzy
 msgid "Has conditional formatting"
-msgstr "Documentopmaak"
+msgstr "Heeft voorwaardelijke opmaakDocumentopmaak"
 
 #. Translators: If an excel cell has visible gridlines
-#, fuzzy
 msgid "Gridlines are visible"
-msgstr "onzichtbaar"
+msgstr "Rasterlijnen zijn zichtbaar"
 
 #. Translators: Title for a browsable message that describes the appearance of a cell in Excel
 msgctxt "excel-UIA"
 msgid "Cell Appearance"
-msgstr ""
+msgstr "cel uiterlijk"
 
 #. Translators:  an error message on a cell in Microsoft Excel.
 #, python-brace-format
 msgid "Error: {errorText}"
-msgstr ""
+msgstr "Fout: {errorText}"
 
 #. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
 #, python-brace-format
 msgid "{author} is editing"
-msgstr ""
+msgstr "{author} is aan het bewerken"
 
 #. Translators: Excel, report range of cell coordinates
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
-msgstr "{firstAddress}  {firstContent} tot {lastAddress}  {lastContent}"
+msgstr "{firstAddress} {firstValue} tot {lastAddress} {lastValue}"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Reports the note or comment thread on the current cell"
-msgstr "Leest de notitie bij de huidige cel"
+msgstr "Meldt de notitie- of commentaarthread bij de huidige cel"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment}  by {author}"
-msgstr "{comment} door {author} op {date}"
+msgstr "{comment}  door {author}"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment}  by {author} with {numReplies} replies"
-msgstr "{comment} door {author} op {date}"
+msgstr "{comment}  door {author} met {numReplies} reacties"
 
 #. Translators: A message in Excel when there is no note
 msgid "No note or comment thread on this cell"
-msgstr ""
+msgstr "Geen notitie- of commentaarthread bij deze cel"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11032,9 +11163,9 @@ msgid "track change: {text}"
 msgstr "wijziging: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author}"
-msgstr "opmerking: {comment} door {author} op {date}"
+msgstr "opmerking: {comment} door {author}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
@@ -12401,6 +12532,25 @@ msgstr "Dubbele regelafstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 regelafstand"
+
+#, fuzzy
+#~ msgctxt "command toggle"
+#~ msgid "off"
+#~ msgstr "uit"
+
+#, fuzzy
+#~ msgctxt "command toggle"
+#~ msgid "on"
+#~ msgstr "aan"
+
+#~ msgid "Israeli 8 dot computer braille"
+#~ msgstr "Israëlisch 8 punt computerbraille"
+
+#~ msgid "COM Registration Fixing tool complete"
+#~ msgstr "Probleemoplosser voor COM-registratie uitgevoerd"
+
+#~ msgid "Automatic (Difflib)"
+#~ msgstr "Automatisch (Difflib)"
 
 #, fuzzy
 #~ msgid "category"

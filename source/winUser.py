@@ -364,6 +364,8 @@ MWMO_ALERTABLE = 0x0002
 SM_CXSCREEN = 0
 # The height of the screen of the primary display monitor, in pixels.
 SM_CYSCREEN = 1
+# Whether the left and right mouse buttons are swapped
+SM_SWAPBUTTON = 23
 # The coordinates for the left side of the virtual screen.
 SM_XVIRTUALSCREEN = 76
 # The coordinates for the top of the virtual screen.

@@ -3,6 +3,63 @@ NVDA 변경 이력
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+이번 릴리즈는 Windows 11 지원을 위한 예비 지원이 도입됩니다.
+Windows 11은 아직 출시되지 않았지만 이 릴리스는 Windows 11의 미리 보기 버전에서 테스트되었습니다.
+또한 스크린 커튼에 대한 중요한 수정사항을 포함합니다(중요사항 섹션을 참고해주세요)
+이번 릴리즈에 NVDA 실행중에 'COM Registration 재설정'으로 더 많은 문제를 해결할 수 있게 되었으며, 
+eSpeak 음성엔진과 LibLouis 점역엔진에 대한 업데이트가 포함되었습니다.
+또한 점자 지원과 Windows 터미널, 계산기, 이모지 패널, 클립보드 목록에 대한 다양한 버그 수정 및 개선이 이루어졌습니다.
+
+
+== 중요사항 ==
+Windows 화면 확대 API의 변경으로 인해, 최신 Windows를 지원하기 위해서는 화면 커튼을 업데이트해야만 했습니다.
+NVDA 2021.2에서 스크린커튼을 활성화하려면 Windows 10 21H2 또는 그 이상이 필요합니다. 이는 Windows 10 Insiders와 Windows 11을 포함합니다.
+사생활을 보호하기 위해서, 윈도우의 새 버전을 사용할 때는 화면 커튼 기능이 화면을 완전히 검게 가리는지를 시각적으로 확인하십시오.
+
+
+== 새로운 기능 ==
+- ARIA annotations에 대한 실험적인 지원:
+  - aria-details가 있는 개체의 세부 정보 summary을 읽는 명령을 추가합니다. (#12364)
+  - 브라우즈 모드에서 개체에 세부 정보가 있는 경우 알림 옵션을 고급 설정에 추가합니다. (#12439) 
+  -
+- Windows 10 버전 1909 이상 (Windows 11 포함)에서 NVDA는 파일 탐색기에서 검색을 수행할 때 제안된 검색어 수를 알립니다. (#10341, #12628)
+- Microsoft Word에서 NVDA가 들여쓰기와 내어쓰기 단축키 실행 시 결과를 알립니다. (#6269)
+-
+
+
+== 변경사항 ==
+- Espeak-ng가 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``로 업데이트 되었습니다.. (#12449, #12202, #12280, #12568)
+- 사용자 환경 설정 내 문서 서식 설정에서 아티클이 선택된 경우 NVDA는 콘텐츠 뒤에 "아티클"을 알립니다. (#11103)
+- Liblouis 점역 엔진이 [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]로 업데이트되었습니다. (#12526)
+  - 새로운 점자 테이블 추가: Bulgarian grade 1, Burmese grade 1, Burmese grade 2, Kazakh grade 1, Khmer grade 1, Northern Kurdish grade 0, Sepedi grade 1, Sepedi grade 2, Sesotho grade 1, Sesotho grade 2, Setswana grade 1, Setswana grade 2, Tatar grade 1, Vietnamese grade 0, Vietnamese grade 2, Southern Vietnamese grade 1, Xhosa grade 1, Xhosa grade 2, Yakut grade 1, Zulu grade 1, Zulu grade 2
+  -
+- Windows 10 OCR은 Windows OCR로 이름이 변경되었습니다. (#12690)
+-
+
+
+== 버그 수정 ==
+- Windows 10 계산기에서, NVDA는 점자 디스플레이에 계산 표현식을 표시합니다. (#12268)
+- Windows 10 version 1607 이상의 터미널 프로그램에서 라인 중간에 문자를 삽입하거나 삭제할 때 오른쪽 캐럿 문자가 더이상 읽히지 않습니다. (#3200)
+  - Diff Match Patch는 이제 기본 값으로 활성화되었습니다. (#12485)
+  -
+- The braille input works properly with the following contracted tables: Arabic grade 2, Spanish grade 2, Urdu grade 2, Chinese (China, Mandarin) grade 2. (#12541)
+- COM Registration  수정 도구는 이제 64 bit Windows에서 더 많은 문제를 해결합니다. (#12560)
+- Nippon Telesoft의 Seika Notetaker braille 장지의 버튼 처리가 개선되었습니다. (#12598)
+- Windows emoji 패널 및 클립보드 기록 알림을 개선했습니다. (#11485)
+- Bengali 알파벳 케릭터 설명을 업데이트하였습니다. (#12502)
+- NVDA는 새로운 프로세스가 시작될 때 안전하게 종료됩니다. (#12605)
+- 점자 디스플레이 선택 대화상자에서 Handy Tech 점자 디스플레이 드라이버를 다시 선택하면 더이상 오류가 발생하지 않습니다. (#12618)
+- Windows version 10.0.22000 이상은 Windows 10이 아닌 Windows 11로 인식됩니다. (#12626)
+- 화면 커튼 지원은 Windows 버전 10.0.22000까지 문제가 수정되고 테스트되었습니다. (#12684)
+- 입력 제스처를 필터링할 때 결과가 표시되지 않으면, 제스처 설정 대화상자가 예상데로 작동되도록 수정되었습니다. (#12673)
+- 특정 컨텍스트 메뉴에서 서브메뉴의 첫 번째 메뉴항목이 알려지지 않는 문제가 수정되었습니다. (#12624)
+-
+
+
+== 개발자를 위한 내용 ==
+개발자를 위한 내용에 대해서는 영어판 changes.html 문서를 참조하세요. 
+
 = 2021.1 =
 이 버전은 Chromium 기반 브라우저와 Excel에서 선택 가능한 실험적인 UIA를 지원 기능을 포함합니다..
 여러 언어 및 점자로 된 링크에 엑세스하기 위한 수정 사항이 있습니다.
@@ -21,6 +78,7 @@ eSpeak-NG와 LibLouis에 CLDR 유니코드와 수식기호 문자 업데이트�
   - Alt + 위/아래 화살표 키로 출력된 이전 또는 다음 결과값을 읽을 수 있습니다. (선택할 때는 Shift 키를 사용할 수 있습니다).
   - Control + I 키를 눌러 출력창을 깨끗이 정리할 수 있습니다.
 - 이제 NVDA가 Microsoft Outlook(마이크로소프트 아웃룩)에서 약속에 할당된 범주를 보고합니다. (#11598)
+- Nippon Telesoft의 Seika 점자 디스플레이를 지원합니다. (#11514)
 
 
 == 변경 사항 ==

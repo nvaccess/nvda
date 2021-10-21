@@ -11,8 +11,8 @@
 Chào mừng bạn đến với NVDA!
 
 NonVisual Desktop Access (NVDA), (tạm dịch: tiếp cận máy tính không cần thị giác), là một phần mềm đọc màn hình miễn phí, mã nguồn mở trên hệ điều hành windows.
-Cung cấp các phản hồi qua bộ đọc và qua màn hình nổi để giúp người khiếm thị có thể sử dụng được máy tính mà không tốn chi phí.
-NVDA được phát triển bởi công ty [NV Access https://www.nvaccess.org/], với sự đóng góp và hỗ trợ từ cộng đồng.
+Cung cấp các phản hồi qua bộ đọc và màn hình nổi, giúp người mù và nhìn kém có thể sử dụng được máy tính chạy hệ điều hành Windows mà không tốn chi phí nhiều hơn một người sáng mắt.
+NVDA được phát triển bởi công ty [NV Access https://www.nvaccess.org/], với	 sự đóng góp và hỗ trợ từ cộng đồng.
 
 ++ Các tính năng chung ++[GeneralFeatures]
 NVDA cho phép người mù và nhìn kém tương tác và sử dụng máy tính với hệ điều hành Windows và các ứng dụng khác.
@@ -66,7 +66,7 @@ Bạn có thể chia sẻ hoặc thay đổi phần mềm này theo ý mình, mi
 Để biết chi tiết các trường hợp ngoại lệ, hãy truy cập tài liệu giấy phép từ trình đơn NVDA trong phần "trợ giúp".
 
 + Yêu Cầu Hệ Thống +[SystemRequirements]
-- Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 7, Windows 8, Windows 8.1,  Windows 10 và các bản máy chủ từ bản Windows Server 2008 R2.
+- Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 7, Windows 8, Windows 8.1,  Windows 10, Windows 11 và các bản máy chủ từ bản Windows Server 2008 R2.
  - Đối với Windows 7, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
  - Đối với Windows Server 2008 R2, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
 - Không gian lưu trữ tối thiểu là 150 MB
@@ -789,15 +789,19 @@ Khi bật chức năng Làm Nổi  trực quan trong [phân loại hỗ trợ nh
 ++ Che màn hình ++[VisionScreenCurtain]
 Là người mù hay nhìn kém, thường sẽ không thể hoặc không cần nhìn những gì trên màn hình.
 Hơn nữa, cũng có thể khó để biết có ai đó nhìn màn hình của bạn từ đằng sau hay không.
-Tình huống này, NVDA có một tính năng tên gọi "che màn hình", có thể bật lên để làm đen màn hình.
+Tình huống này, NVDA có một tính năng tên gọi "Che Màn Hình", có thể bật lên để làm đen màn hình.
 
 Bạn có thể bật tính năng này trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings].
 
-Khi bật tính năng che màn hình, vài thao tác dựa vào những gì hiển thị trên màn hình như [Nhận dạng văn bản #Win10Ocr] hay chụp màn hình không thể thực hiện.
+Khi bật tính năng Che Màn Hình, vài thao tác dựa vào những gì hiển thị trên màn hình như [Nhận dạng văn bản #Win10Ocr] hay chụp màn hình không thể thực hiện được.
+
+Do một thay đổi trong Windows Magnification API, tính năng Che Màn Hình phải được cập nhật để hỗ trợ phiên bản mới nhất của Windows.
+Hãy dùng NVDA 2021.2 để bật tính năng Che Màn Hình với Windows 10 21H2 (10.0.19044) trở lên.
+Vì mục tiêu bảo mật, khi sử dụng một phiên bản mới của Windows, hãy tìm sự xác nhận trực quan rằng tính năng Che Màn Hình có làm cho màn hình đen toàn bộ.
 
 + Nhận Dạng Nội Dung +[ContentRecognition]
 Khi tác giả không cung cấp đầy đủ thông tin của ứng dụng cho trình đọc màn hình, sẽ có nhiều công cụ khác nhau hỗ trợ để có thể nhận dạng nội dung của một hình ảnh chẳng hạn.
-NVDA hỗ trợ sử dụng chức năng nhận dạng văn bản từ hình ảnh - optical character recognition (OCR) với công cụ nhận dạng Windows 10 OCR.
+NVDA hỗ trợ sử dụng chức năng nhận dạng kí tự quang học - optical character recognition (OCR) là chức năng có sẵn trong Windows 10 trở lên để nhận dạng văn bản từ hình ảnh.
 Cũng có thêm những trình nhận dạng văn bản khác cho NVDA dưới dạng add-on.
 
 Khi thực hiện lệnh nhận dạng nội dung, NVDA sẽ tiến hành nhận dạng tại [đối tượng điều hướng #ObjectNavigation].
@@ -809,17 +813,17 @@ Khi hoàn tất nhận dạng, kết quả sẽ hiển thị trong một tài li
 Bấm enter hoặc phím khoảng trắng để kích hoạt văn bản tại vị trí con trỏ nếu có thể.
 Bấm escape để bỏ qua kết quả nhận dạng.
 
-++ Windows 10 OCR ++[Win10Ocr]
-Công cụ nhận dạng Windows 10 OCR hỗ trợ nhiều ngôn ngữ khác nhau.
+++ Windows OCR ++[Win10Ocr]
+Windows 10 trở lên đã bao gồm hỗ trợ nhận dạng kí tự quang học (OCR) cho nhiều ngôn ngữ khác nhau.
 NVDA có thể dùng công cụ này để nhận dạng văn bản trong hình ảnh và những ứng dụng không tiếp cận.
 
-Bạn có thể chọn ngôn ngữ nhận dạng trong phân loại [Windows 10 OCR #Win10OcrSettings] trong [hộp thoại cấu hình NVDA #NVDASettings].
+Bạn có thể chọn ngôn ngữ nhận dạng trong phân loại [Windows OCR #Win10OcrSettings] trong [hộp thoại cấu hình NVDA #NVDASettings].
 Có thể cài đặt thêm ngôn ngữ nhận dạng bằng cách mở start menu, chọn Settings (cài đặt), mở Time & Language (ngôn ngữ và thời gian) -> Region & Language (ngôn ngữ và vùng), sau đó chọn Add a language (thêm ngôn ngữ).
 
-Windows 10 OCR có thể không tương thích một phần hay toàn phần với [hỗ trợ nhìn của NVDA #Vision] hoặc các tiện ích hỗ trợ nhìn bên ngoài. Bạn sẽ phải tắt các tiện ích này trước khi thực hiện nhận dạng.
+Windows OCR có thể không tương thích một phần hay toàn phần với [hỗ trợ nhìn của NVDA #Vision] hoặc các tiện ích hỗ trợ nhìn bên ngoài. Bạn sẽ phải tắt các tiện ích này trước khi thực hiện nhận dạng.
 
 %kc:beginInclude
-Bấm NVDA+r để nhận dạng với Windows 10 OCR.
+Bấm NVDA+r để nhận dạng văn bản ở đối tượng điều hướng hiện tại với Windows OCR.
 %kc:endInclude
 
 + Tính năng cụ thể cho một số ứng dụng +[ApplicationSpecificFeatures]
@@ -1038,9 +1042,9 @@ Khi bạn chọn một phân loại, hộp thoại sẽ hiển thị  vài thi�
 Các thiết lập này có thể được áp dụng bằng cách bấm nút Áp dụng. trường hợp này, hộp thoại không bị đóng lại.
 Nếu muốn lưu thiết lập và đóng hộp thoại cấu hình NVDA, bạn có thể dùng nút Đồng ý.
 
-Một số phân loại có thể gọi bằng phím tắt.
+Một số phân loại có phím tắt để mở.
 Nếu bấm phím tắt, hộp thoại cấu hình NVDA sẽ được mở và con trỏ sẽ đi đến phân loại đó.
-Mặc định, không phải tất cả phân loại đều mở được bằng phím tắt.
+Mặc định, không phải tất cả phân loại đều có thể mở được bằng phím tắt.
 Nếu muốn mở phân loại nào không được gán phím tắt, hãy dùng [hộp thoại quản lý thao tác #InputGestures] để gán phím lệnh hay thao tác cảm ứng cho phân loại đó.
 
 Dưới đây là các phân loại trong hộp thoại cấu hình NVDA:
@@ -1389,7 +1393,7 @@ Vui lòng xem phần [Các màn hình nổi được hỗ trợ #SupportedBraill
 Tùy chọn này, nếu có, cho phép bạn chọn cổng hoặc loại kết nối sử dụng để giao tiếp với màn hình nổi được chọn.
 Nó là một hộp xổ gồm các lựa chọn có sẵn cho màn hình nổi đó.
 
-Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là, việc kết nối màn hình nổi với máy tính sẽ được tự động thiết lập bằng cách chương trình tự quét cổng USB và bluetooth trên hệ thống.
+Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là việc kết nối màn hình nổi với máy tính sẽ được tự động thiết lập bằng cách chương trình tự quét cổng USB và bluetooth trên hệ thống.
 Tuy nhiên, với một số màn hình nổi, bạn có thể chỉ định cổng kết nối cho nó.
 Một số lựa chọn thường gặp là: "tự động" (yêu cầu NVDA tự động hóa quá trình nhận dạng và kết nối), "USB", "bluetooth" và giao tiếp qua cổng serial nếu màn hình nổi bạn có hỗ trợ kiểu giao tiếp này.
 
@@ -1789,8 +1793,8 @@ Mỗi âm sẽ tăng cao độ lên một chút và đại diện cho một kho�
 - Cả âm thanh và đọc: lựa chọn này sẽ thông báo bằng cả hai cách nói trên.
 -
 
-+++ Cài Đặt Windows 10 OCR +++[Win10OcrSettings]
-Các thiết lập ở phân loại này cho phép bạn cấu hình [Windows 10 OCR #Win10Ocr].
++++ Cài Đặt Windows OCR +++[Win10OcrSettings]
+Các thiết lập ở phân loại này cho phép bạn cấu hình [Windows OCR #Win10Ocr].
 Phân loại này gồm các mục sau:
 
 ==== Ngôn Ngữ Nhận Dạng ====[Win10OcrSettingsRecognitionLanguage]
@@ -1829,7 +1833,7 @@ Nếu bạn thấy mệt mỏi với việc vận hành của một hay vài ứ
 ==== Sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word khi có thể ====[AdvancedSettingsUseUiaForWord]
 Khi bật tùy chọn này, NVDA sẽ nỗ lực dùng  Microsoft UI Automation accessibility API để lấy các thông tin từ các điều khiển của tài liệu Microsoft Word.
 Nó được tích hợp trong chính Microsoft Word cũng như trình xem và soạn thư của Microsoft Outlook.
- Với hầu hết các phiên bản gần đây của Microsoft Office 2016/365 chạy trên windows 10, hỗ trợ UI Automation hoàn toàn đủ để truy cập các tài liệu Microsoft Word gần như bằng với hỗ trợ sẵn có của NVDA cho Microsoft Word, với lợi thế là tăng khả năng phản hồi.
+ Với hầu hết các phiên bản gần đây của Microsoft Office 2016/365 chạy trên windows 10 trở lên, hỗ trợ UI Automation hoàn toàn đủ để truy cập các tài liệu Microsoft Word gần như bằng với hỗ trợ sẵn có của NVDA cho Microsoft Word, với lợi thế là tăng khả năng phản hồi.
  Tuy nhiên, có thể một vài thông tin không được thể hiện hoặc thể hiện không chính xác trong vài phiên bản của Microsoft Office, có nghĩa là hỗ trợ UI automation không thể luôn được dựa vào.
  Chúng tôi vẫn không khuyến khích đa số người dùng bật tính năng này làm mặc định, dù rằng vẫn hoan nghênh những người dùng Office 2016/365 thử nghiệm tính năng này và cung cấp phản hồi.
 
@@ -1847,6 +1851,14 @@ Hộp xổ có các tùy chọn sau:
 - Chỉ khi cần: khi NVDA không thể can thiệp vào quá trình của trình duyệt để dùng IA2 và UIA thì khả dụng, NVDA sẽ quay trở lại để dùng UIA.
 - Có: nếu trình duyệt làm cho UIA khả dụng, NVDA sẽ dùng nó.
 - Không: không dùng UIA, thậm chí khi NVDA không thể can thiệp vào tiến trình. Điều này có thể hữu dụng cho những nhà phát triển đang dò lỗi với IA2 và muốn chắc chắn rằng NVDA không quay trở lại dùng UIA.
+-
+
+==== Bật hỗ trợ ghi chú thử nghiệm ARIA ====[Annotations]
+Dùng để bật tính năng hỗ trợ thử nghiệm cho các ghi chú ARIA.
+Một trong những tính năng thuộc nhóm này có thể chưa được hoàn thiện.
+Hiện có các tùy chọn sau: 
+- "Thông báo các chi tiết trong chế độ duyệt": bật thông báo nếu một đối tượng có các thông tin chi tiết trong chế độ duyệt.
+Việc thông báo tổng quan các chi tiết này có thể thực hiện bằng cách gán một thao tác thông qua hộp thoại [Quản lý thao tác #InputGestures].
 -
 
 ==== Sử dụng UI Automation để truy cập các điều khiển của bảng tính trong Microsoft Excel khi có thể ====[UseUiaForExcel]
@@ -1867,11 +1879,10 @@ Trong những môi trường không an toàn, bạn có thể tạm thời vô h
 ==== Thuật toán Diff ====[DiffAlgo]
 Thiết lập này điều khiển cách NVDA xác định công cụ chuyển văn bản sang giọng nói mới trong terminal.
 Hộp xổ thuật toán diff có ba tùy chọn:
-- Tự động: với NVDA 2021.1, tùy chọn này tương đương với Difflib.
-Ở các bản phát hành trong tương lai, nó có thể được đổi thành Diff Match Patch đang chờ người dùng thử nghiệm.
+- Tự động: với NVDA 2021.2, tùy chọn này tương đương với "cho phép Diff Match Patch".
 - cho phép Diff Match Patch: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng kí tự.
 Nó có thể cải thiện khả năng vận hành khi số lượng lớn nội dung văn bản được viết vào console và cho phép nhiều thông báo  chính xác hơn cho các thay đổi tạo ra ở giữa các dòng.
-Tuy nhiên, nó có thể không tương thích với vài ứng dụng.
+Tuy nhiên, nó có thể không tương thích với vài ứng dụng nên Diff Match Patch không phải lúc nào cũng được dùng.
 Tính năng này đã hỗ trợ trong Windows Console trên Windows 10 phiên bản 1607 trở lên.
 Ngoài ra, nó có thể khả dụng trong các ứng dụng terminal khác trên các bản phát hành cũ hơn của Windows.
 - buộc dùng Difflib: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng dòng.
@@ -2089,7 +2100,7 @@ Bạn có thể làm điều đó bằng cách chọn hộp kiểm "tạm thời
 
 +++ Kích hoạt một hồ sơ bằng thao tác +++[ConfigProfileGestures]
 Với mọi hồ sơ được thêm vào, bạn có thể gán một hay nhiều thao tác để kích hoạt nó.
-Mặc định, hồ sơ cấu hình không được gán thao tác.
+Mặc định, hồ sơ cấu hình không được gán sẵn thao tác.
 Bạn có thể gán thao tác để kích hoạt một hồ sơ bằng [Hộp thoại quản lý thao tác #InputGestures].
 Mỗi hồ sơ sẽ tồn tại trong phân loại hồ sơ cấu hình.
 Khi bạn đổi tên một hồ sơ, các thao tác được gán trước đó vẫn hoạt động.
@@ -2250,7 +2261,7 @@ Phần này có các thông tin về các bộ đọc mà NVDA hỗ trợ.
 
 ++ eSpeak NG++[eSpeakNG]
 Bộ đọc [eSpeak NG https://github.com/espeak-ng/espeak-ng] được tích hợp trực tiếp với NVDA và nó không cần cài thêm bất kỳ trình điều khiển hoặc gói dữ liệu nào.
-Trên Windows 7, 8 và 8.1, NVDA mặc định dùng bộ đọc  eSpeak NG ([bộ đọc Windows OneCore #OneCore] mặc định được dùng cho Windows 10).
+Trên Windows 7, 8 và 8.1, NVDA mặc định dùng bộ đọc  eSpeak NG ([bộ đọc Windows OneCore #OneCore] mặc định được dùng cho Windows 10) trở lên.
 Vì được tích hợp sẵn trong NVDA nên nó có thể là lựa chọn tuyệt vời cho bản NVDA chạy trực tiếp từ USB.
 
 Mỗi giọng trong eSpeak NG tương ứng với một ngôn ngữ khác nhau.
@@ -2271,7 +2282,7 @@ Có thể mua  hoặc tải và sử dụng miễn phí nhiều bộ tổng hợ
 Nếu sử dụng các bộ đọc này thì trong phân loại [tiếng nói #SpeechSettings] của  [hộp thoại cấu hình NVDA #NVDASettings] hoặc [vòng thiết lập tham số giọng đọc #SynthSettingsRing]sẽ chứa tất cả các giọng đọc của các bộ tổng hợp tiếng nói chuẩn SAPI 5 đã được cài trong máy.
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
-Microsoft Speech Platform (nền tản bộ đọc của Microsoft) cung cấp các bộ đọc nhiều ngôn ngữ để phát triển các ứng dụng dựa trên máy chủ.
+Microsoft Speech Platform (nền tảng bộ đọc của Microsoft) cung cấp các bộ đọc nhiều ngôn ngữ để phát triển các ứng dụng dựa trên máy chủ.
 Các giọng đọc này cũng có thể được sử dụng với NVDA.
 
 Để sử dụng được các giọng này, bạn cần cài hai thành phần:
@@ -2283,10 +2294,10 @@ Các giọng đọc này cũng có thể được sử dụng với NVDA.
  -
 -
 
-++ Giọn Windows OneCore ++[OneCore]
-Windows 10 đi kèm với những giọng đọc mới, được gọi là OneCore hoặc còn gọi là "Mobil voices" (giọng Mobile).
+++ Giọng Windows OneCore ++[OneCore]
+Windows 10 trở lên đi kèm với những giọng đọc mới, được gọi là OneCore hoặc còn gọi là "Mobil voices" (giọng Mobile).
 Những giọng đọc mới hỗ trợ cho khá nhiều ngôn ngữ khác nhau và  phản hồi nhanh hơn so với những giọng theo chuân SAPI-5.
-Trên Windows 10, NVDA mặc định dùng các giọng Windows OneCore ([eSpeak NG #eSpeakNG] thì dùng cho các bản phát hành khác).
+Trên Windows 10 trở lên, NVDA mặc định dùng các giọng Windows OneCore ([eSpeak NG #eSpeakNG] thì dùng cho các bản phát hành khác).
 
 Để thêm các giọng đọc Windows OneCore mới, truy cập vào "Speech Settings" trong Windows system settings. 
 Dùng tùy chọn "Add voices" và tìm kiếm ngôn ngữ mong muốn.
@@ -2503,7 +2514,7 @@ Nếu kết nối qua cổng USB mà không sử dụng HID, trước hết, b�
 Mẫu VarioUltra và Pronto! sử dụng HID.
 Nếu cấu hình đúng, mẫu  Refreshabraille và Orbit Reader 20 có thể dùng HID.
 
-Chế độ serial USB của mẫu Orbit Reader 20 hiện chỉ hỗ trợ trên Windows 10.
+Chế độ serial USB của mẫu Orbit Reader 20 hiện chỉ hỗ trợ trên Windows 10 trở lên.
 Nên sử dụng USB HID để thay thế.
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
@@ -3106,7 +3117,7 @@ Vui lòng xem Tài Liệu của màn hình cho phần mô tả vị trí các ph
 
 ++ Các màn hình của Nattiq nBraille ++[NattiqTechnologies]
 NVDA Hỗ trợ các màn hình của [Nattiq Technologies https://www.nattiq.com/] khi kết nối qua USB.
-Windows 10 tự nhận màn hình khi được kết nối, có thể bạn cần phải cài trình điều khiển USB nếu dùng các phiên bản windows cũ (thấp hơn Win10).
+Windows 10 trở lên tự nhận màn hình khi được kết nối, có thể bạn cần phải cài trình điều khiển USB nếu dùng các phiên bản windows cũ (thấp hơn Win10).
 Bạn có thể tải chúng từ trang web của nhà sản xuất.
 
 Sau đây là các phím tắt gán cho các màn hình của Nattiq Technologies với NVDA.
@@ -3129,7 +3140,7 @@ Khi cấu hình cổng và màn hình để sử dụng, bạn hãy đọc kỹ 
 Đối với những màn hình có bàn phím chữ nổi, hiện BRLTTY bản thân nó cũng hỗ trợ nhập liệu kiểu chữ nổi.
 Vì vậy, sẽ không cần bảng mã chữ nổi đầu vào của NVDA.
 
-BRLTTY không liên quan đến việc hỗ trợ tính năng  ngầm tự nhận biết của NVDA.
+BRLTTY không được bao gồm trong tính năng  ngầm tự nhận biết màn hình của NVDA.
 
 Sau đây là các lệnh của BRLTTY được gán cho NVDA.
 Vui lòng xem [Danh sách phím kết hợp của BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] để biết thêm thông tin về cách thức các lệnh của BRLTTY kết hợp với các điều khiển trên màn hình nổi.

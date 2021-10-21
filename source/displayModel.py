@@ -1,8 +1,7 @@
-#displayModel.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Joseph Lee
 
 import ctypes
 from ctypes import *
@@ -441,10 +440,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		field['underline']=True if field.get('underline')=="true" else False
 		color=field.get('color')
 		if color is not None:
-			field['color']=colors.RGB.fromCOLORREF(int(color))
+			field['color'] = colors.RGB.fromDisplayModelFormatColor_t(int(color))
 		bkColor=field.get('background-color')
 		if bkColor is not None:
-			field['background-color']=colors.RGB.fromCOLORREF(int(bkColor))
+			field['background-color'] = colors.RGB.fromDisplayModelFormatColor_t(int(bkColor))
 
 	def _getOffsetFromPoint(self, x, y):
 		# Accepts physical coordinates.
@@ -639,8 +638,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		point = Point(rect.left, rect.center.y).toPhysical(self.obj.windowHandle)
 		oldX, oldY = winUser.getCursorPos()
 		winUser.setCursorPos(*point)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def _getSelectionOffsets(self):

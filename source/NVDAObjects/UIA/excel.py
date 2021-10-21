@@ -1,9 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2021 NV Access Limited
+# Copyright (C) 2018-2021 NV Access Limited, Leonard de Ruijter
 
 from typing import Optional, Tuple
+from comtypes import COMError
+import winVersion
 import UIAHandler
 import _UIAHandler
 import _UIAConstants
@@ -15,6 +17,9 @@ import locationHelper
 import controlTypes
 from _UIACustomProps import (
 	CustomPropertyInfo,
+)
+from _UIACustomAnnotations import (
+	CustomAnnotationTypeInfo,
 )
 from comtypes import GUID
 from scriptHandler import script
@@ -90,10 +95,39 @@ class ExcelCustomProperties:
 		)
 
 
+class ExcelCustomAnnotationTypes:
+	""" UIA 'custom annotation types' specific to Excel.
+	Once registered, all subsequent registrations will return the same ID value.
+	This class should be used as a singleton via ExcelCustomAnnotationTypes.get()
+	to prevent unnecessary work by repeatedly interacting with UIA.
+	"""
+	#: Singleton instance
+	_instance: "Optional[ExcelCustomAnnotationTypes]" = None
+
+	@classmethod
+	def get(cls) -> "ExcelCustomAnnotationTypes":
+		"""Get the singleton instance or initialise it.
+		"""
+		if cls._instance is None:
+			cls._instance = cls()
+		return cls._instance
+
+	def __init__(self):
+		#  Available custom Annotations list at https://docs.microsoft.com/en-us/office/uia/excel/excelannotations
+		# Note annotation:
+		# Represents an old-style comment (now known as a note)
+		# which contains non-threaded plain text content.
+		self.note = CustomAnnotationTypeInfo(
+			guid=GUID("{4E863D9A-F502-4A67-808F-9E711702D05E}"),
+		)
+
+
 class ExcelObject(UIA):
 	"""Common base class for all Excel UIA objects
 	"""
 	_UIAExcelCustomProps = ExcelCustomProperties.get()
+	_UIAExcelCustomAnnotationTypes = ExcelCustomAnnotationTypes.get()
+
 
 
 class ExcelCell(ExcelObject):
@@ -102,7 +136,7 @@ class ExcelCell(ExcelObject):
 	shouldAllowDuplicateUIAFocusEvent = True
 
 	name = ""
-	role = controlTypes.ROLE_TABLECELL
+	role = controlTypes.Role.TABLECELL
 	rowHeaderText = None
 	columnHeaderText = None
 
@@ -113,7 +147,7 @@ class ExcelCell(ExcelObject):
 		parent = self.parent
 		# There will be at least one grid element between the cell and the sheet.
 		# There could be multiple as there might be a data table defined on the sheet.
-		while parent and parent.role == controlTypes.ROLE_TABLE:
+		while parent and parent.role == controlTypes.Role.TABLE:
 			parent = parent.parent
 		if parent:
 			return parent._getUIACacheablePropertyValue(self._UIAExcelCustomProps.areGridLinesVisible.id)
@@ -350,15 +384,32 @@ class ExcelCell(ExcelObject):
 
 	def _get_states(self):
 		states = super().states
+		if controlTypes.State.FOCUSED in states and self.selectionContainer.getSelectedItemsCount() == 0:
+			# #12530: In some versions of Excel, the selection pattern reports 0 selected items,
+			# even though the focused UIA element reports as selected.
+			# NVDA only silences the positive SELECTED state when one item is selected.
+			# Therefore, by discarding both the SELECTED and SELECTABLE states,
+			# we eliminate the redundant selection announcement.
+			states.discard(controlTypes.State.SELECTED)
+			states.discard(controlTypes.State.SELECTABLE)
 		if self._isContentTooLargeForCell:
 			if not self._nextCellHasContent:
-				states.add(controlTypes.STATE_OVERFLOWING)
+				states.add(controlTypes.State.OVERFLOWING)
 			else:
-				states.add(controlTypes.STATE_CROPPED)
+				states.add(controlTypes.State.CROPPED)
 		if self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.cellFormula.id):
-			states.add(controlTypes.STATE_HASFORMULA)
+			states.add(controlTypes.State.HASFORMULA)
 		if self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.hasDataValidationDropdown.id):
-			states.add(controlTypes.STATE_HASPOPUP)
+			states.add(controlTypes.State.HASPOPUP)
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			try:
+				annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
+			except COMError:
+				# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
+				annotationTypes = None
+			if annotationTypes:
+				if self._UIAExcelCustomAnnotationTypes.note.id in annotationTypes:
+					states.add(controlTypes.State.HASNOTE)
 		return states
 
 	def _get_cellCoordsText(self):
@@ -413,6 +464,17 @@ class ExcelCell(ExcelObject):
 		description=_("Reports the note or comment thread on the current cell"),
 		gesture="kb:NVDA+alt+c")
 	def script_reportComment(self, gesture):
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			noteElement = self.UIAAnnotationObjects.get(self._UIAExcelCustomAnnotationTypes.note.id)
+			if noteElement:
+				name = noteElement.CurrentName
+				desc = noteElement.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
+				# Translators: a note on a cell in Microsoft excel.
+				text = _("{name}: {desc}").format(name=name, desc=desc)
+				ui.message(text)
+			else:
+				# Translators: message when a cell in Excel contains no note
+				ui.message(_("No note on this cell"))
 		commentsElement = self.UIAAnnotationObjects.get(UIAHandler.AnnotationType_Comment)
 		if commentsElement:
 			comment = commentsElement.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
@@ -420,25 +482,25 @@ class ExcelCell(ExcelObject):
 			numReplies = commentsElement.GetCurrentPropertyValue(self._UIAExcelCustomProps.commentReplyCount.id)
 			if numReplies == 0:
 				# Translators: a comment on a cell in Microsoft excel.
-				text = _("{comment}  by {author}").format(
+				text = _("Comment thread: {comment}  by {author}").format(
 					comment=comment,
 					author=author
 				)
 			else:
 				# Translators: a comment on a cell in Microsoft excel.
-				text = _("{comment}  by {author} with {numReplies} replies").format(
+				text = _("Comment thread: {comment}  by {author} with {numReplies} replies").format(
 					comment=comment,
 					author=author,
 					numReplies=numReplies
 				)
 			ui.message(text)
 		else:
-			# Translators: A message in Excel when there is no note
-			ui.message(_("No note or comment thread on this cell"))
+			# Translators: A message in Excel when there is no comment thread
+			ui.message(_("No comment thread on this cell"))
 
 
 class ExcelWorksheet(ExcelObject):
-	role = controlTypes.ROLE_TABLE
+	role = controlTypes.Role.TABLE
 
 	# The grid UIAElement dies each time the sheet is scrolled.
 	# Therefore this grid would be announced in the focus ancestory each time which is bad.
@@ -454,7 +516,7 @@ class ExcelWorksheet(ExcelObject):
 		# and identifying it by one of its children would be more costly than the current approach.
 		parent.isPresentableFocusAncestor = True
 		# However, the selection state on the sheet is not useful, so remove it.
-		parent.states.discard(controlTypes.STATE_SELECTED)
+		parent.states.discard(controlTypes.State.SELECTED)
 		return parent
 
 

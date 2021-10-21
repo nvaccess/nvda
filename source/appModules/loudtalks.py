@@ -15,7 +15,7 @@ class loudTalksLink(Window):
 
 	value = None
 
-	role = controlTypes.ROLE_LINK
+	role = controlTypes.Role.LINK
 
 
 class loudTalksContactListItem(ListItem):
@@ -32,7 +32,7 @@ class loudTalksContactListItem(ListItem):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_WINDOW: 
+		if obj.role == controlTypes.Role.WINDOW: 
 			return
 		if obj.windowClassName == "UrlStaticWndClass":
 			clsList.insert(0, loudTalksLink)

@@ -108,11 +108,11 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Audio ducking not supported"))
 			return
 		curMode=config.conf['audio']['audioDuckingMode']
-		numModes=len(audioDucking.audioDuckingModes)
+		numModes = len(audioDucking.AudioDuckingMode)
 		nextMode=(curMode+1)%numModes
 		audioDucking.setAudioDuckingMode(nextMode)
 		config.conf['audio']['audioDuckingMode']=nextMode
-		nextLabel=audioDucking.audioDuckingModes[nextMode]
+		nextLabel = audioDucking.AudioDuckingMode(nextMode).displayString
 		ui.message(nextLabel)
 
 	@script(
@@ -488,10 +488,10 @@ class GlobalCommands(ScriptableObject):
 		config.conf["documentFormatting"]["reportHighlight"] = shouldReport
 		if shouldReport:
 			# Translators: The message announced when toggling the report marked document formatting setting.
-			state = _("report marked on")
+			state = _("report highlighted on")
 		else:
 			# Translators: The message announced when toggling the report marked document formatting setting.
-			state = _("report marked off")
+			state = _("report highlighted off")
 		ui.message(state)
 
 	@script(
@@ -913,34 +913,13 @@ class GlobalCommands(ScriptableObject):
 			if level > curLevel:
 				break
 		else:
-			level = characterProcessing.SYMLVL_NONE
+			level = characterProcessing.SymbolLevel.NONE
 		name = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[level]
 		config.conf["speech"]["symbolLevel"] = level.value
 		# Translators: Reported when the user cycles through speech symbol levels
 		# which determine what symbols are spoken.
 		# %s will be replaced with the symbol level; e.g. none, some, most and all.
 		ui.message(_("Symbol level %s") % name)
-
-	@script(
-		# Translators: Input help mode message for a command.
-		description=_("Toggle the announcement of all punctuation and symbols when reviewing by word"),
-		category=SCRCAT_SPEECH
-	)
-	def script_toggleSpeechSymbolLevelWordAll(self, gesture):
-		symbolLevelWordAll = config.conf["speech"]["symbolLevelWordAll"]
-		if symbolLevelWordAll:
-			# Translators: Used to report the new state of a setting which is toggled via a command.
-			reportedState = pgettext("command toggle", "off")
-		else:
-			# Translators: Used to report the new state of a setting which is toggled via a command.
-			reportedState = pgettext("command toggle", "on")
-		config.conf["speech"]["symbolLevelWordAll"] = not symbolLevelWordAll
-		ui.message(
-			# Translators: Reported when toggling a speech setting
-			_("Speak all punctuation and symbols when reviewing by word: {state}").format(
-				state=reportedState
-			)
-		)
 
 	@script(
 		# Translators: Input help mode message for move mouse to navigator object command.
@@ -1345,18 +1324,23 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad9", "kb(laptop):NVDA+downArrow", "ts(text):flickDown")
 	)
-	def script_review_nextLine(self,gesture):
-		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
-		res=info.move(textInfos.UNIT_LINE,1)
-		if res==0:
+	def script_review_nextLine(self, gesture):
+		origInfo = api.getReviewPosition().copy()
+		origInfo.collapse()
+		info = origInfo.copy()
+		res = info.move(textInfos.UNIT_LINE, 1)
+		newLine = info.copy()
+		newLine.expand(textInfos.UNIT_LINE)
+		# #12808: Some implementations of move forward by one line may succeed one more time than expected,
+		# landing on the exclusive end of the document.
+		# Therefore, verify that expanding after the move does result in being on a new line,
+		# i.e. the new line starts after the original review cursor position.
+		if res == 0 or newLine.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
 		else:
 			api.setReviewPosition(info)
-		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
+		speech.speakTextInfo(newLine, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	@script(
 		# Translators: Input help mode message for move review cursor to bottom line command.
@@ -1416,18 +1400,23 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad6", "kb(laptop):NVDA+control+rightArrow", "ts(text):2finger_flickRight")
 	)
-	def script_review_nextWord(self,gesture):
-		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
-		info.collapse()
-		res=info.move(textInfos.UNIT_WORD,1)
-		if res==0:
+	def script_review_nextWord(self, gesture):
+		origInfo = api.getReviewPosition().copy()
+		origInfo.collapse()
+		info = origInfo.copy()
+		res = info.move(textInfos.UNIT_WORD, 1)
+		newWord = info.copy()
+		newWord.expand(textInfos.UNIT_WORD)
+		# #12808: Some implementations of move forward by one word may succeed one more time than expected,
+		# landing on the exclusive end of the document.
+		# Therefore, verify that expanding after the move does result in being on a new word,
+		# i.e. the new word starts after the original review cursor position.
+		if res == 0 or newWord.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
 		else:
 			api.setReviewPosition(info)
-		info.expand(textInfos.UNIT_WORD)
-		speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_WORD)
+		speech.speakTextInfo(newWord, unit=textInfos.UNIT_WORD, reason=controlTypes.OutputReason.CARET)
 
 	@script(
 		description=_(
@@ -1910,22 +1899,17 @@ class GlobalCommands(ScriptableObject):
 		else:
 			ui.message(_("No focus"))
 
-	@script(
-		description=_(
-			# Translators: Input help mode message for report status line text command.
-			"Reads the current application status bar and moves the navigator to it. "
-			"If pressed twice, spells the information. "
-			"If pressed three times, copies the status bar to the clipboard"
-		),
-		category=SCRCAT_FOCUS,
-		gestures=("kb(desktop):NVDA+end", "kb(laptop):NVDA+shift+end")
-	)
-	def script_reportStatusLine(self,gesture):
+	@staticmethod
+	def _getStatusBarText(setReviewCursor: bool = False) -> Optional[str]:
+		"""Returns text of the current status bar and optionally sets review cursor to it.
+		If no status bar has been found `None` is returned and this fact is announced in speech and braille.
+		"""
 		obj = api.getStatusBar()
-		found=False
+		found = False
 		if obj:
 			text = api.getStatusBarText(obj)
-			api.setNavigatorObject(obj)
+			if setReviewCursor:
+				api.setNavigatorObject(obj)
 			found = True
 		else:
 			foreground = api.getForegroundObject()
@@ -1940,30 +1924,104 @@ class GlobalCommands(ScriptableObject):
 			if info:
 				text = info.text
 				info.collapse()
-				api.setReviewPosition(info)
+				if setReviewCursor:
+					api.setReviewPosition(info)
 				found = True
 		if not found:
 			# Translators: Reported when there is no status line for the current program or window.
 			ui.message(_("No status line found"))
+			return None
+		return text
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for command which reads content of the status bar.
+			"Reads the current application status bar."
+		),
+		category=SCRCAT_FOCUS,
+	)
+	def script_readStatusLine(self, gesture):
+		text = self._getStatusBarText()
+		if text is None:
 			return
-		if scriptHandler.getLastScriptRepeatCount()==0:
-			if not text.strip():
-				# Translators: Reported when status line exist, but is empty.
-				ui.message(_("no status bar information"))
-			else:
-				ui.message(text)
-		elif scriptHandler.getLastScriptRepeatCount()==1:
-			if not  text.strip():
-				# Translators: Reported when status line exist, but is empty.
-				ui.message(_("no status bar information"))
-			else:
-				speech.speakSpelling(text)
+		if not text.strip():
+			# Translators: Reported when status line exist, but is empty.
+			ui.message(_("no status bar information"))
 		else:
-			if not text.strip():
-				# Translators: Reported when user attempts to copy content of the empty status line.
-				ui.message(_("unable to copy status bar content to clipboard"))
-			else:
-				api.copyToClip(text, notify=True)
+			ui.message(text)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for command which spells content of the status bar.
+			"Spells the current application status bar."
+		),
+		category=SCRCAT_FOCUS,
+	)
+	def script_spellStatusLine(self, gesture):
+		text = self._getStatusBarText()
+		if text is None:
+			return
+		if not text.strip():
+			# Translators: Reported when status line exist, but is empty.
+			ui.message(_("no status bar information"))
+		else:
+			speech.speakSpelling(text)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for command which copies status bar content to the clipboard.
+			"Copies content of the status bar  of current application to the clipboard."
+		),
+		category=SCRCAT_FOCUS,
+	)
+	def script_copyStatusLine(self, gesture):
+		text = self._getStatusBarText()
+		if text is None:
+			return
+		if not text.strip():
+			# Translators: Reported when user attempts to copy content of the empty status line.
+			ui.message(_("Unable to copy status bar content to clipboard"))
+		else:
+			api.copyToClip(text, notify=True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for Command which moves review cursor to the status bar.
+			"Reads the current application status bar and moves navigator object into it."
+		),
+		category=SCRCAT_OBJECTNAVIGATION,
+	)
+	def script_reviewCursorToStatusLine(self, gesture):
+		text = self._getStatusBarText(setReviewCursor=True)
+		if text is None:
+			return
+		if not text.strip():
+			# Translators: Reported when status line exist, but is empty.
+			ui.message(_("no status bar information"))
+		else:
+			ui.message(text)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for report status line text command.
+			"Reads the current application status bar. "
+			"If pressed twice, spells the information. "
+			"If pressed three times, copies the status bar to the clipboard"
+		),
+		category=SCRCAT_FOCUS,
+		gestures=("kb(desktop):NVDA+end", "kb(laptop):NVDA+shift+end")
+	)
+	def script_reportStatusLine(self, gesture):
+		text = self._getStatusBarText()
+		if text is None:
+			return
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			self.script_readStatusLine(gesture)
+		elif repeats == 1:
+			self.script_spellStatusLine(gesture)
+		else:
+			self.script_copyStatusLine(gesture)
 
 	@script(
 		# Translators: Input help mode message for toggle mouse tracking command.
@@ -3064,7 +3122,7 @@ class GlobalCommands(ScriptableObject):
 	def script_touch_rightClick(self, gesture):
 		obj = api.getNavigatorObject()
 		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
-		if controlTypes.STATE_INVISIBLE in obj.states or controlTypes.STATE_OFFSCREEN in obj.states:
+		if controlTypes.State.INVISIBLE in obj.states or controlTypes.State.OFFSCREEN in obj.states:
 			return
 		try:
 			p = api.getReviewPosition().pointAtStart
@@ -3131,7 +3189,7 @@ class GlobalCommands(ScriptableObject):
 		mathMl = mathPres.getMathMlFromTextInfo(api.getReviewPosition())
 		if not mathMl:
 			obj = api.getNavigatorObject()
-			if obj.role == controlTypes.ROLE_MATH:
+			if obj.role == controlTypes.Role.MATH:
 				try:
 					mathMl = obj.mathMl
 				except (NotImplementedError, LookupError):
@@ -3145,13 +3203,13 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes a command.
-		description=_("Recognizes the content of the current navigator object with Windows 10 OCR"),
+		description=_("Recognizes the content of the current navigator object with Windows OCR"),
 		gesture="kb:NVDA+r"
 	)
 	def script_recognizeWithUwpOcr(self, gesture):
 		if not winVersion.isUwpOcrAvailable():
-			# Translators: Reported when Windows 10 OCR is not available.
-			ui.message(_("Windows 10 OCR not available"))
+			# Translators: Reported when Windows OCR is not available.
+			ui.message(_("Windows OCR not available"))
 			return
 		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
 		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
@@ -3159,7 +3217,7 @@ class GlobalCommands(ScriptableObject):
 		isScreenCurtainRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
 		if isScreenCurtainRunning:
 			# Translators: Reported when screen curtain is enabled.
-			ui.message(_("Please disable screen curtain before using Windows 10 OCR."))
+			ui.message(_("Please disable screen curtain before using Windows OCR."))
 			return
 		from contentRecog import uwpOcr, recogUi
 		recog = uwpOcr.UwpOcr()

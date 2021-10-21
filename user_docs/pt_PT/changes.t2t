@@ -3,6 +3,72 @@ Traduzido pela Equipa portuguesa do NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+Esta versão apresenta um suporte preliminar ao Windows 11.
+Apesar de o Windows 11 ainda não ter sido lançado, esta versão foi testada em versões de teste do Windows 11.
+Isto inclui uma correcção importante para a cortina de ecrã (consulte "Notas importantes").
+A Ferramenta de correcção de registo de DLLs agora resolve mais problemas durante a execução do NVDA.
+Há atualizações para o sintetizador eSpeak e o conversor Braille LibLouis.
+Há também várias correções de bugs e melhorias, principalmente para suporte Vraille e terminais do Windows, calculadora, painel de emoji e histórico da área de transferência.
+
+
+== Notas importantes ==
+Devido a alterações na API do Windows Magnification, a  "Cortina de ecrã" teve de ser actualizada para suportar as novas versões do Windows.
+Use o NVDA 2021.2 para activar a Cortina de ecrã no Windows 10 21H2 (10.0.19044) ou superior.
+Isto inclui o Windows 10 Insiders e o Windows 11.
+Para se certificar que está seguro, ao usar uma nova versão do Windows, tente obter confirmação visual de que a "Cortina de ecrã" funciona devidamente nessa versão do Windows.
+
+
+== Novas funcionalidades ==
+- Suporte para anotações ARIA:
+  - adicionado um comando para anunciar o sumário de detalhes dum objecto com aria-details. (#12364)
+  - adicionada uma opção na secção Avançadas para anunciar se um objecto tem detalhes no Modo de navegação. (#12439) 
+  -
+- No Windows 10 Versão 1909 e superiores, (incluindo o Windows 11), o NVDA anunciará a contagem de sugestões ao executar pesquisas no Explorador de ficheiros. (#10341, #12628)
+- No Microsoft Word, o NVDA agora anuncia o resultado da indentação e dos atalhos de indentação suspensos quando executados. (#6269)
+-
+
+
+== Alterações ==
+- Atualizado o Espeak-ng para a versão 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Se nas configurações de Formatação de documentos estiver marcado para anunciar Artigos, o NVDA anunciará "Artigo" após o conteúdo. (#11103)
+- Atualizado o conversor Braille liblouis para a versão [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Novas tabelas  Braille: Búlgaro grau 1, Birmanês grau 1, Birmanês grau 2, Cazaque grau 1, Khmer grau 1, Curdo do Norte grau 0, Sepedi grau 1, Sepedi grau 2, Sesotho grau 1, Sesotho grau 2, Setswana grau 1, Setswana grau 2, Tatar grau 1, Vietnamita grau 0, Vietnamita grau 2, Sulvietnamita grau 1, Xhosa grau 1, Xhosa grau 2, Yakut grau 1, Zulu grau 1, Zulu grau 2
+  -
+- Windows 10 OCR foi renomeado para Windows OCR. (#12690)
+-
+
+
+== Correcção de erros ==
+- Na Calculadora do Windows 10, o NVDA passa a mostrar as expressões de cálculo em Braille. (#12268)
+- Em programas de  terminal no Windows 10, versão 1607 e seguintes, ao introduzir ou apagar caracteres no meio de uma linha, os caracteres à direita já não são lidos. (#3200)
+  - Diff Match Patch passa a predefinição. (#12485)
+  -
+- A escrita Braille já funciona bem nas seguintes tabelas de grau 2: Árabe, Espanhol, Urdu, Chinês (China, Mandarin). (#12541)
+- A ferramenta de correcção de DLL's já resolve mais problemas, eespecialmente em sistemas de 64 bit. (#12560)
+- Melhorias no tratamento das teclas dos Notetakers Braille Seika da Nippon Telesoft. (#12598)
+- Melhorias no anúncio do Painel de emojis do Windows e do Histórico da Área de transferências. (#11485)
+- Actualizadas as descrições dos caracteres alfabéticos Bengali. (#12502)
+- O NVDA já é fechado em segurança quando um novo processo é iniciado. (#12605)
+- Reseleccionar as linhas Braille Handy Tech pelo diálogo Seleccionar Linha Braille já não causa erros. (#12618)
+- O Windows versão 10.0.22000 ou posterior é reconhecido como Windows 11, e não Windows 10. (#12626)
+- O suporte à Curtina de ecrã foi corrigido e testado até à versão Windows 10.0.22000. (#12684)
+- Se não forem mostrados resultados ao filtrar comandos, o diálogo continuará a funcionar como é devido. (#12673)
+-
+
+
+== Alterações para desenvolvedores ==
+- ``characterProcessing.SYMLVL_*`` constants should be replaced using their equivalent ``SymbolLevel.*`` before 2022.1. (#11856, #12636)
+- ``controlTypes`` has been split up into various submodules, symbols marked for deprecation must be replaced before 2022.1. (#12510)
+  - ``ROLE_*`` and ``STATE_*`` constants should be replaced to their equivalent ``Role.*`` and ``State.*``.
+  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` have been deprecated, usages such as ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+  - ``processPositiveStates`` and ``processNegativeStates`` have been deprecated for removal.
+  -
+- On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
+- Deprecated: winVersion.WIN10_RELEASE_NAME_TO_BUILDS will be removed in 2022.1, there is no direct replacement. (#12544)
+-
+
+
 = 2021.1 =
 Esta versão inclui, entre muitas outras novidades:
 - Suporte opcional, experimental, para UIA no Excel e nos navegadores baseados no Chromium;
@@ -16,6 +82,7 @@ Notas importantes:
 - Esta versão exige uma mudança na API de compatibilidade dos extras.
 Os extras terão de ser testados e, pelo menos, reflectir esta mudança no manifest.ini.
 - Esta versão termina com o suporte ao Adobe Flash.
+-
 
 
 == Novas Funcionalidades ==
@@ -25,6 +92,7 @@ Os extras terão de ser testados e, pelo menos, reflectir esta mudança no manif
   - alt+seta acima/abaixo salta para o anterior/próximo resultado (juntar shift para seleccionar);
   - control+l limpa o painel de resultados;
 - O NVDA passa a anunciar as categorias associadas a um compromisso no Microsoft Outlook, se houver algum. (#11598)
+- Suporte para os dispositivos Braille Seika da Nippon Telesoft. (#11514)
 
 
 == Alterações ==
@@ -72,7 +140,7 @@ Os extras terão de ser testados e, pelo menos, reflectir esta mudança no manif
 - O NVDA já não anunciará "↑↑↑" para emojis em alguns idiomas. (#11963)
 
 
-== Changes for Developers ==
+== Alterações para desenvolvedores ==
 - Note: this is an Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
   - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons`` is no longer supported, and ``scons.py`` has also been removed.

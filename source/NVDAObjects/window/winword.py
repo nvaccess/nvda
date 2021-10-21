@@ -271,20 +271,20 @@ storyTypeLocalizedLabels={
 }
 
 wdFieldTypesToNVDARoles={
-	wdFieldFormTextInput:controlTypes.ROLE_EDITABLETEXT,
-	wdFieldFormCheckBox:controlTypes.ROLE_CHECKBOX,
-	wdFieldFormDropDown:controlTypes.ROLE_COMBOBOX,
+	wdFieldFormTextInput:controlTypes.Role.EDITABLETEXT,
+	wdFieldFormCheckBox:controlTypes.Role.CHECKBOX,
+	wdFieldFormDropDown:controlTypes.Role.COMBOBOX,
 }
 
 wdContentControlTypesToNVDARoles={
-	wdContentControlRichText:controlTypes.ROLE_EDITABLETEXT,
-	wdContentControlText:controlTypes.ROLE_EDITABLETEXT,
-	wdContentControlPicture:controlTypes.ROLE_GRAPHIC,
-	wdContentControlComboBox:controlTypes.ROLE_COMBOBOX,
-	wdContentControlDropdownList:controlTypes.ROLE_COMBOBOX,
-	wdContentControlDate:controlTypes.ROLE_EDITABLETEXT,
-	wdContentControlGroup:controlTypes.ROLE_GROUPING,
-	wdContentControlCheckBox:controlTypes.ROLE_CHECKBOX,
+	wdContentControlRichText:controlTypes.Role.EDITABLETEXT,
+	wdContentControlText:controlTypes.Role.EDITABLETEXT,
+	wdContentControlPicture:controlTypes.Role.GRAPHIC,
+	wdContentControlComboBox:controlTypes.Role.COMBOBOX,
+	wdContentControlDropdownList:controlTypes.Role.COMBOBOX,
+	wdContentControlDate:controlTypes.Role.EDITABLETEXT,
+	wdContentControlGroup:controlTypes.Role.GROUPING,
+	wdContentControlCheckBox:controlTypes.Role.CHECKBOX,
 }
 
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
@@ -765,36 +765,36 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _normalizeControlField(self,field):
 		role=field.pop('role',None)
 		if role=="heading":
-			role=controlTypes.ROLE_HEADING
+			role=controlTypes.Role.HEADING
 		elif role=="table":
-			role=controlTypes.ROLE_TABLE
+			role=controlTypes.Role.TABLE
 			field['table-rowcount']=int(field.get('table-rowcount',0))
 			field['table-columncount']=int(field.get('table-columncount',0))
 		elif role=="tableCell":
-			role=controlTypes.ROLE_TABLECELL
+			role=controlTypes.Role.TABLECELL
 			field['table-rownumber']=int(field.get('table-rownumber',0))
 			field['table-columnnumber']=int(field.get('table-columnnumber',0))
 		elif role=="footnote":
-			role=controlTypes.ROLE_FOOTNOTE
+			role=controlTypes.Role.FOOTNOTE
 		elif role=="endnote":
-			role=controlTypes.ROLE_ENDNOTE
+			role=controlTypes.Role.ENDNOTE
 		elif role=="graphic":
-			role=controlTypes.ROLE_GRAPHIC
+			role=controlTypes.Role.GRAPHIC
 		elif role=="chart":
-			role=controlTypes.ROLE_CHART
+			role=controlTypes.Role.CHART
 		elif role=="object":
 			progid=field.get("progid")
 			if progid and progid.startswith("Equation.DSMT"):
 				# MathType.
-				role=controlTypes.ROLE_MATH
+				role=controlTypes.Role.MATH
 			else:
-				role=controlTypes.ROLE_EMBEDDEDOBJECT
+				role=controlTypes.Role.EMBEDDEDOBJECT
 		else:
 			fieldType=int(field.pop('wdFieldType',-1))
 			if fieldType!=-1:
-				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
+				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.Role.UNKNOWN)
 				if fieldType==wdFieldFormCheckBox and int(field.get('wdFieldResult','0'))>0:
-					field['states']=set([controlTypes.STATE_CHECKED])
+					field['states']=set([controlTypes.State.CHECKED])
 				elif fieldType==wdFieldFormDropDown:
 					field['value']=field.get('wdFieldResult',None)
 			fieldStatusText=field.pop('wdFieldStatusText',None)
@@ -804,25 +804,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			else:
 				fieldType=int(field.get('wdContentControlType',-1))
 				if fieldType!=-1:
-					role=wdContentControlTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
-					if role==controlTypes.ROLE_CHECKBOX:
+					role=wdContentControlTypesToNVDARoles.get(fieldType,controlTypes.Role.UNKNOWN)
+					if role==controlTypes.Role.CHECKBOX:
 						fieldChecked=bool(int(field.get('wdContentControlChecked','0')))
 						if fieldChecked:
-							field['states']=set([controlTypes.STATE_CHECKED])
+							field['states']=set([controlTypes.State.CHECKED])
 					fieldTitle=field.get('wdContentControlTitle',None)
 					if fieldTitle:
 						field['name']=fieldTitle
 						field['alwaysReportName']=True
 		if role is not None: field['role']=role
-		if role==controlTypes.ROLE_TABLE and field.get('longdescription'):
-			field['states']=set([controlTypes.STATE_HASLONGDESC])
+		if role==controlTypes.Role.TABLE and field.get('longdescription'):
+			field['states']=set([controlTypes.State.HASLONGDESC])
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)
 			if name:
 				field['name']=name
 				field['alwaysReportName']=True
-				field['role']=controlTypes.ROLE_FRAME
+				field['role']=controlTypes.Role.FRAME
 		newField = LazyControlField_RowAndColumnHeaderText(self)
 		newField.update(field)
 		return newField

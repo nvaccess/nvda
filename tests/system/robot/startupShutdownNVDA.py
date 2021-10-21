@@ -39,6 +39,22 @@ def NVDA_Starts():
 	_process.process_should_be_running(_nvdaProcessAlias)
 
 
+def open_welcome_dialog_from_menu():
+	spy = _nvdaLib.getSpyLib()
+	spy.emulateKeyPress("NVDA+n")
+	spy.emulateKeyPress("h")
+	spy.emulateKeyPress("l")
+	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present.
+
+
+def open_about_dialog_from_menu():
+	spy = _nvdaLib.getSpyLib()
+	spy.emulateKeyPress("NVDA+n")
+	spy.emulateKeyPress("h")
+	spy.emulateKeyPress("a")
+	spy.wait_for_specific_speech("About NVDA")  # ensure the dialog is present.
+
+
 def quits_from_menu(showExitDialog=True):
 	"""Ensure NVDA can be quit from menu."""
 	spy = _nvdaLib.getSpyLib()
@@ -61,17 +77,14 @@ def quits_from_menu(showExitDialog=True):
 		_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little for it
 		spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
 
-	_process.wait_for_process(_nvdaProcessAlias, timeout="10 sec")
+	_process.wait_for_process(_nvdaProcessAlias, timeout="3 sec")
 	_process.process_should_be_stopped(_nvdaProcessAlias)
 
 
 def quits_from_keyboard():
 	"""Ensure NVDA can be quit from keyboard."""
 	spy = _nvdaLib.getSpyLib()
-	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present.
-	spy.wait_for_speech_to_finish()
-	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
-	spy.emulateKeyPress("enter")
+	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little for it
 
 	spy.emulateKeyPress("NVDA+q")
 	exitTitleIndex = spy.wait_for_specific_speech("Exit NVDA")
@@ -87,9 +100,17 @@ def quits_from_keyboard():
 		])
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
+	_process.process_should_be_running(_nvdaProcessAlias)
 	spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
-	_process.wait_for_process(_nvdaProcessAlias, timeout="10 sec")
+	_process.wait_for_process(_nvdaProcessAlias, timeout="3 sec")
 	_process.process_should_be_stopped(_nvdaProcessAlias)
+
+
+def test_desktop_shortcut():
+	spy = _nvdaLib.getSpyLib()
+	spy.emulateKeyPress("control+alt+n")
+	# Takes some time to exit a running process and start a new one
+	waitUntilWindowFocused("Welcome to NVDA", timeoutSecs=7)
 
 
 def read_welcome_dialog():

@@ -409,8 +409,8 @@ class ConsoleUI(
 			self.execute()
 			return
 		elif key in (wx.WXK_UP, wx.WXK_DOWN):
-			if self.historyMove(-1 if key == wx.WXK_UP else 1):
-				return
+			self.historyMove(-1 if key == wx.WXK_UP else 1)
+			return
 		elif key == wx.WXK_F6:
 			self.outputCtrl.SetFocus()
 			return

@@ -16,8 +16,8 @@ class State(DisplayStringIntEnum):
 	@property
 	def negativeDisplayString(self) -> str:
 		"""
-		@return: The translated UI display string that should be used for when referring to this value of
-		the enum in the negative.
+		@return: The translated UI display string, used when referring to this value of the enum in the
+		negative.
 		"""
 		try:
 			return _negativeStateLabels[self]
@@ -71,6 +71,7 @@ class State(DisplayStringIntEnum):
 	OVERFLOWING = 0x10000000000
 	UNLOCKED = 0x20000000000
 	HAS_ARIA_DETAILS = 0x40000000000
+	HASNOTE = 0x80000000000
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -160,6 +161,8 @@ _stateLabels: Dict[State, str] = {
 	# Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
 	# Excel spreadsheet).
 	State.UNLOCKED: _("unlocked"),
+	# Translators: a state that denotes the existance of a note.
+	State.HASNOTE: _("has note"),
 }
 
 

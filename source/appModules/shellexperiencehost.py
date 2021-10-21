@@ -7,14 +7,27 @@
 Shell Experience Host is home to a number of things, including Action Center and other shell features.
 """
 
+from typing import Optional
+
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.UIA import UIA
+from UIAHandler import IUIAutomationElement, UIA_NamePropertyId
 import controlTypes
 import ui
 
-class ActionCenterToggleButton(UIA):
 
+class CalendarViewDayItem(UIA):
+	def _getTextFromHeaderElement(self, element: IUIAutomationElement) -> Optional[str]:
+		# Generally we prefer text content as the header text.
+		# But although this element does expose a UIA text pattern,
+		# The text content is only the 2 character week day abbreviation.
+		# The UIA name property contains the full week day name,
+		# So use that instead.
+		return element.GetCurrentPropertyValue(UIA_NamePropertyId)
+
+
+class ActionCenterToggleButton(UIA):
 	# Somehow, item status property repeats when Action Center is opened more than once.
 	_itemStatusMessageCache = None
 
@@ -39,8 +52,8 @@ class AppModule(appModuleHandler.AppModule):
 			# #8845: Brightness button in Action Center is a button, not a toggle button.
 			# Brightness control is now a slider in build 18277.
 			if obj.UIAElement.cachedAutomationID == "Microsoft.QuickAction.Brightness":
-				obj.role = controlTypes.ROLE_BUTTON
-				obj.states.discard(controlTypes.STATE_CHECKABLE)
+				obj.role = controlTypes.Role.BUTTON
+				obj.states.discard(controlTypes.State.CHECKABLE)
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if isinstance(obj, IAccessible):
@@ -50,5 +63,11 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(ContentGenericClient)
 			except ValueError:
 				pass
-		elif isinstance(obj, UIA) and obj.role == controlTypes.ROLE_TOGGLEBUTTON and obj.UIAElement.cachedClassName == "ToggleButton":
+		elif isinstance(obj, UIA) and obj.role == controlTypes.Role.TOGGLEBUTTON and obj.UIAElement.cachedClassName == "ToggleButton":
 			clsList.insert(0, ActionCenterToggleButton)
+		elif (
+			isinstance(obj, UIA)
+			and obj.role == controlTypes.Role.DATAITEM
+			and obj.UIAElement.cachedClassName == "CalendarViewDayItem"
+		):
+			clsList.insert(0, CalendarViewDayItem)

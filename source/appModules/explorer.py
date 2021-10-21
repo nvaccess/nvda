@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2021 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -96,7 +96,7 @@ class NotificationArea(IAccessible):
 				):
 					winUser.setCursorPos(0, 0)
 
-		if self.role == controlTypes.ROLE_TOOLBAR:
+		if self.role == controlTypes.Role.TOOLBAR:
 			# Sometimes, the toolbar itself receives the focus instead of the focused child.
 			# However, the focused child still has the focused state.
 			for child in self.children:
@@ -159,7 +159,7 @@ class ExplorerToolTip(ToolTip):
 
 class GridTileElement(UIA):
 
-	role=controlTypes.ROLE_TABLECELL
+	role=controlTypes.Role.TABLECELL
 
 	def _get_description(self):
 		name=self.name
@@ -173,7 +173,7 @@ class GridTileElement(UIA):
 
 
 class GridListTileElement(UIA):
-	role=controlTypes.ROLE_TABLECELL
+	role=controlTypes.Role.TABLECELL
 	description=None
 
 
@@ -204,13 +204,13 @@ class ImmersiveLauncher(UIA):
 class StartButton(IAccessible):
 	"""For Windows 8.1 and 10 Start buttons to be recognized as proper buttons and to suppress selection announcement."""
 
-	role = controlTypes.ROLE_BUTTON
+	role = controlTypes.Role.BUTTON
 
 	def _get_states(self):
 		# #5178: Selection announcement should be suppressed.
 		# Borrowed from Mozilla objects in NVDAObjects/IAccessible/Mozilla.py.
 		states = super(StartButton, self).states
-		states.discard(controlTypes.STATE_SELECTED)
+		states.discard(controlTypes.State.SELECTED)
 		return states
 		
 CHAR_LTR_MARK = u'\u200E'
@@ -275,16 +275,16 @@ class AppModule(appModuleHandler.AppModule):
 		windowClass = obj.windowClassName
 		role = obj.role
 
-		if windowClass in ("Search Box","UniversalSearchBand") and role==controlTypes.ROLE_PANE and isinstance(obj,IAccessible):
+		if windowClass in ("Search Box","UniversalSearchBand") and role==controlTypes.Role.PANE and isinstance(obj,IAccessible):
 			clsList.insert(0,SearchBoxClient)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "ToolbarWindow32":
-			if role != controlTypes.ROLE_POPUPMENU:
+			if role != controlTypes.Role.POPUPMENU:
 				try:
 					# The toolbar's immediate parent is its window object, so we need to go one further.
 					toolbarParent = obj.parent.parent
-					if role != controlTypes.ROLE_TOOLBAR:
+					if role != controlTypes.Role.TOOLBAR:
 						# Toolbar item.
 						toolbarParent = toolbarParent.parent
 				except AttributeError:
@@ -293,19 +293,19 @@ class AppModule(appModuleHandler.AppModule):
 					clsList.insert(0, NotificationArea)
 			return
 
-		if obj.role == controlTypes.ROLE_TOOLTIP:
+		if obj.role == controlTypes.Role.TOOLTIP:
 			clsList.insert(0, ExplorerToolTip)
 			return
 
-		if windowClass == "Edit" and controlTypes.STATE_READONLY in obj.states:
+		if windowClass == "Edit" and controlTypes.State.READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "SysListView32":
 			if(
-				role == controlTypes.ROLE_MENUITEM
+				role == controlTypes.Role.MENUITEM
 				or(
-					role == controlTypes.ROLE_LISTITEM
+					role == controlTypes.Role.LISTITEM
 					and obj.simpleParent
 					and obj.simpleParent.simpleParent
 					and obj.simpleParent.simpleParent == api.getDesktopObject()
@@ -315,8 +315,8 @@ class AppModule(appModuleHandler.AppModule):
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		# #5178: Start button in Windows 8.1 and 10 should not have been a list in the first place.
-		if windowClass == "Start" and role in (controlTypes.ROLE_LIST, controlTypes.ROLE_BUTTON):
-			if role == controlTypes.ROLE_LIST:
+		if windowClass == "Start" and role in (controlTypes.Role.LIST, controlTypes.Role.BUTTON):
+			if role == controlTypes.Role.LIST:
 				clsList.remove(List)
 			clsList.insert(0, StartButton)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
@@ -325,7 +325,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, MetadataEditField)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == "WorkerW" and role == controlTypes.ROLE_PANE and obj.name is None:
+		if windowClass == "WorkerW" and role == controlTypes.Role.PANE and obj.name is None:
 			clsList.insert(0, WorkerW)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
@@ -337,28 +337,34 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridListTileElement)
 			elif uiaClassName == "GridGroup":
 				clsList.insert(0, GridGroup)
-			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.ROLE_PANE:
+			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.Role.PANE:
 				clsList.insert(0, ImmersiveLauncher)
 			elif uiaClassName == "ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
 				clsList.insert(0, SuggestionListItem)
-			elif uiaClassName == "MultitaskingViewFrame" and role == controlTypes.ROLE_WINDOW:
+			# Multitasking view frame window
+			elif (
+				# Windows 10 and earlier
+				(uiaClassName == "MultitaskingViewFrame" and role == controlTypes.Role.WINDOW)
+				# Windows 11 where a pane window receives focus when switching tasks
+				or (uiaClassName == "Windows.UI.Input.InputSite.WindowClass" and role == controlTypes.Role.PANE)
+			):
 				clsList.insert(0, MultitaskingViewFrameWindow)
 			# Windows 10 task switch list
-			elif role == controlTypes.ROLE_LISTITEM and (
+			elif role == controlTypes.Role.LISTITEM and (
 				# RS4 and below we can match on a window class
 				windowClass == "MultitaskingViewFrame" or
 				# RS5 and above we must look for a particular UIA automationID on the list
 				isinstance(obj.parent,UIA) and obj.parent.UIAElement.cachedAutomationID=="SwitchItemListControl"
 			):
 				clsList.insert(0, MultitaskingViewFrameListItem)
-			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
+			elif uiaClassName == "UIProperty" and role == controlTypes.Role.EDITABLETEXT:
 				clsList.insert(0, UIProperty)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
 		role = obj.role
 
-		if windowClass == "ToolbarWindow32" and role == controlTypes.ROLE_POPUPMENU:
+		if windowClass == "ToolbarWindow32" and role == controlTypes.Role.POPUPMENU:
 			parent = obj.parent
 			if parent and parent.windowClassName == "SysPager" and not (obj.windowStyle & 0x80):
 				# This is the menu for a group of icons on the task bar, which Windows stupidly names "Application".
@@ -374,7 +380,7 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = None
 			return
 
-		if windowClass == "DV2ControlHost" and role == controlTypes.ROLE_PANE:
+		if windowClass == "DV2ControlHost" and role == controlTypes.Role.PANE:
 			# Windows 7 start menu.
 			obj.presentationType=obj.presType_content
 			obj.isPresentableFocusAncestor = True
@@ -388,18 +394,23 @@ class AppModule(appModuleHandler.AppModule):
 			obj.presentationType=obj.presType_layout
 			return
 
-		if windowClass == "DirectUIHWND" and role == controlTypes.ROLE_LIST:
-			if obj.parent and obj.parent.parent:
-				parent = obj.parent.parent.parent
-				if parent is not None and parent.windowClassName == "Desktop Search Open View":
-					# List containing search results in Windows 7 start menu.
-					# Its name is not useful so discard it.
-					obj.name = None
-					return
+		if windowClass == "DirectUIHWND" and role == controlTypes.Role.LIST:
+			# Is this a list containing search results in Windows 7 start menu?
+			isWin7SearchResultsList = False
+			try:
+				if obj.parent and obj.parent.parent:
+					parent = obj.parent.parent.parent
+					isWin7SearchResultsList = parent is not None and parent.windowClassName == "Desktop Search Open View"
+			except AttributeError:
+				isWin7SearchResultsList = False
+			if isWin7SearchResultsList:
+				# Namae of this list is not useful and should be  discarded.
+				obj.name = None
+				return
 
 	def event_gainFocus(self, obj, nextHandler):
 		wClass = obj.windowClassName
-		if wClass == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
+		if wClass == "ToolbarWindow32" and obj.role == controlTypes.Role.MENUITEM and obj.parent.role == controlTypes.Role.MENUBAR and eventHandler.isPendingEvents("gainFocus"):
 			# When exiting a menu, Explorer fires focus on the top level menu item before it returns to the previous focus.
 			# Unfortunately, this focus event always occurs in a subsequent cycle, so the event limiter doesn't eliminate it.
 			# Therefore, if there is a pending focus event, don't bother handling this event.

@@ -22,7 +22,10 @@ from os.path import (
 	splitext as _splitext,
 )
 import tempfile as _tempFile
-from typing import Optional as _Optional
+from typing import (
+	Optional as _Optional,
+	Tuple as _Tuple,
+)
 from urllib.parse import quote as _quoteStr
 
 from robotremoteserver import (
@@ -392,3 +395,38 @@ def getSpyLib():
 	if spy is None:
 		raise AssertionError("Spy not yet available, check order of keywords and NVDA log for errors.")
 	return spy
+
+
+def getSpeechAfterKey(key) -> str:
+	"""Ensure speech has stopped, press key, and get speech until it stops.
+	@return: The speech after key press.
+	"""
+	spy = getSpyLib()
+	spy.wait_for_speech_to_finish()
+	nextSpeechIndex = spy.get_next_speech_index()
+	spy.emulateKeyPress(key)
+	spy.wait_for_speech_to_finish(speechStartedIndex=nextSpeechIndex)
+	speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
+	return speech
+
+
+def getSpeechAndBrailleAfterKey(key) -> _Tuple[str, str]:
+	"""Ensure speech has stopped, press key, and get speech until it stops, report the status of the
+	braille display.
+	@return: Tuple of Speech then Braille.
+	"""
+	spy = getSpyLib()
+	spy.wait_for_speech_to_finish()
+
+	nextSpeechIndex = spy.get_next_speech_index()
+	nextBrailleIndex = spy.get_next_braille_index()
+
+	spy.emulateKeyPress(key)
+
+	spy.wait_for_speech_to_finish(speechStartedIndex=nextSpeechIndex)
+	speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
+
+	spy.wait_for_braille_update(nextBrailleIndex)
+	braille = spy.get_last_braille()
+
+	return speech, braille
