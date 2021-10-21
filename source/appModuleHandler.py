@@ -31,7 +31,7 @@ import config
 import NVDAObjects #Catches errors before loading default appModule
 import api
 import appModules
-import watchdog
+import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
 import shlobj
@@ -273,7 +273,7 @@ def handleAppSwitch(oldMods, newMods):
 		if not mod.sleepMode and hasattr(mod,'event_appModule_loseFocus'):
 			try:
 				mod.event_appModule_loseFocus()
-			except watchdog.CallCancelled:
+			except exceptions.CallCancelled:
 				pass
 
 	nvdaGuiLostFocus = nextStage and nextStage[-1].appName == "nvda"

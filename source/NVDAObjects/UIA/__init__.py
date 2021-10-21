@@ -17,6 +17,7 @@ import colors
 import languageHandler
 import UIAHandler
 import _UIACustomProps
+import _UIACustomAnnotations
 import globalVars
 import eventHandler
 import controlTypes
@@ -159,7 +160,12 @@ class UIATextInfo(textInfos.TextInfo):
 		formatField=textInfos.FormatField()
 		if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
 			raise ValueError("%s is not a text range"%textRange)
-		fetchAnnotationTypes=formatConfig["reportSpellingErrors"] or formatConfig["reportComments"] or formatConfig["reportRevisions"]
+		fetchAnnotationTypes = (
+			formatConfig["reportSpellingErrors"]
+			or formatConfig["reportComments"]
+			or formatConfig["reportRevisions"]
+			or formatConfig["reportBookmarks"]
+		)
 		try:
 			textRange=textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 		except (COMError,AttributeError):
@@ -291,13 +297,22 @@ class UIATextInfo(textInfos.TextInfo):
 				if UIAHandler.AnnotationType_GrammarError in annotationTypes:
 					formatField["invalid-grammar"]=True
 			if formatConfig["reportComments"]:
-				if UIAHandler.AnnotationType_Comment in annotationTypes:
-					formatField["comment"]=True
+				cats = self.obj._UIACustomAnnotationTypes
+				if cats.microsoftWord_draftComment.id and cats.microsoftWord_draftComment.id in annotationTypes:
+					formatField["comment"] = textInfos.CommentType.DRAFT
+				elif cats.microsoftWord_resolvedComment.id and cats.microsoftWord_resolvedComment.id in annotationTypes:
+					formatField["comment"] = textInfos.CommentType.RESOLVED
+				elif UIAHandler.AnnotationType_Comment in annotationTypes:
+					formatField["comment"] = True
 			if formatConfig["reportRevisions"]:
 				if UIAHandler.AnnotationType_InsertionChange in annotationTypes:
 					formatField["revision-insertion"]=True
 				elif UIAHandler.AnnotationType_DeletionChange in annotationTypes:
 					formatField["revision-deletion"]=True
+			if formatConfig["reportBookmarks"]:
+				cats = self.obj._UIACustomAnnotationTypes
+				if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
+					formatField["bookmark"] = True
 		cultureVal=fetcher.getValue(UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
 		if cultureVal and isinstance(cultureVal,int):
 			try:
@@ -903,6 +918,7 @@ class UIATextInfo(textInfos.TextInfo):
 
 class UIA(Window):
 	_UIACustomProps = _UIACustomProps.CustomPropertiesCommon.get()
+	_UIACustomAnnotationTypes = _UIACustomAnnotations.CustomAnnotationTypesCommon.get()
 
 	shouldAllowDuplicateUIAFocusEvent = False
 
