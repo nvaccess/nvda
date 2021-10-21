@@ -38,9 +38,9 @@ import shlobj
 from functools import wraps
 
 # Path to the native system32 directory.
-nativeSys32: str = shlobj.SHGetFolderPath(None, shlobj.CSIDL.SYSTEM)
+nativeSys32: str = shlobj.SHGetKnownFolderPath(shlobj.FOLDERID.System.value)
 # Path to the syswow64 directory if it exists on the current system.
-Syswow64Sys32: str = shlobj.SHGetFolderPath(None, shlobj.CSIDL.SYSTEMX86)
+Syswow64Sys32: str = shlobj.SHGetKnownFolderPath(shlobj.FOLDERID.SystemX86.value)
 # Do we have separate system32 directories for 32 and 64-bit processes?
 hasSeparateSyswow64: bool = nativeSys32 != Syswow64Sys32
 

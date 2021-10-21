@@ -102,8 +102,8 @@ def getInstalledUserConfigPath():
 		configInLocalAppData = bool(winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
 	except WindowsError:
 		configInLocalAppData=False
-	configParent = shlobj.SHGetFolderPath(
-		0, shlobj.CSIDL.LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL.APPDATA
+	configParent = shlobj.SHGetKnownFolderPath(
+		shlobj.FOLDERID.LocalAppData.value if configInLocalAppData else shlobj.FOLDERID.RoamingAppData.value
 	)
 	try:
 		return os.path.join(configParent, "nvda")
