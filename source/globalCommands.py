@@ -1332,9 +1332,9 @@ class GlobalCommands(ScriptableObject):
 		newLine = info.copy()
 		newLine.expand(textInfos.UNIT_LINE)
 		# #12808: Some implementations of move forward by one line may succeed one more time than expected,
-		# Landing on the exclusive end of the document.
+		# landing on the exclusive end of the document.
 		# Therefore, verify that expanding after the move does result in being on a new line,
-		# I.e. the new line starts after the original review cursor position.
+		# i.e. the new line starts after the original review cursor position.
 		if res == 0 or newLine.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
@@ -1408,9 +1408,9 @@ class GlobalCommands(ScriptableObject):
 		newWord = info.copy()
 		newWord.expand(textInfos.UNIT_WORD)
 		# #12808: Some implementations of move forward by one word may succeed one more time than expected,
-		# Landing on the exclusive end of the document.
+		# landing on the exclusive end of the document.
 		# Therefore, verify that expanding after the move does result in being on a new word,
-		# I.e. the new word starts after the original review cursor position.
+		# i.e. the new word starts after the original review cursor position.
 		if res == 0 or newWord.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
