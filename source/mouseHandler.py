@@ -3,6 +3,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from dataclasses import dataclass
+from typing import Optional
 import time
 import wx
 import gui
@@ -262,3 +264,75 @@ def terminate():
 	winInputHook.terminate()
 	_shapeTimer.Stop()
 	_shapeTimer = None
+
+
+@dataclass
+class LogicalButtonFlags:
+	"""
+	A container for holding the flags denoting the primary and secondary buttons on a mouse.
+	See L{GetLogicalButtonFlags}.
+	"""
+	primaryDown: int
+	primaryUp: int
+	secondaryDown: int
+	secondaryUp: int
+
+
+def getLogicalButtonFlags() -> LogicalButtonFlags:
+	"""
+	Fills and returns a LogicalButtonFlags object with the appropriate MOUSEEVENTF_* button flags
+	taking into account the Windows user setting
+	for which button (left or right) is primary and which is secondary.
+	"""
+	swappedButtons = ctypes.windll.user32.GetSystemMetrics(winUser.SM_SWAPBUTTON)
+	if not swappedButtons:
+		return LogicalButtonFlags(
+			primaryDown=winUser.MOUSEEVENTF_LEFTDOWN,
+			primaryUp=winUser.MOUSEEVENTF_LEFTUP,
+			secondaryDown=winUser.MOUSEEVENTF_RIGHTDOWN,
+			secondaryUp=winUser.MOUSEEVENTF_RIGHTUP,
+		)
+	else:
+		return LogicalButtonFlags(
+			primaryDown=winUser.MOUSEEVENTF_RIGHTDOWN,
+			primaryUp=winUser.MOUSEEVENTF_RIGHTUP,
+			secondaryDown=winUser.MOUSEEVENTF_LEFTDOWN,
+			secondaryUp=winUser.MOUSEEVENTF_LEFTUP,
+		)
+
+
+def _doClick(
+		downFlag: int,
+		upFlag: int,
+		releaseDelay: Optional[float] = None
+):
+	executeMouseEvent(downFlag, 0, 0)
+	if releaseDelay:
+		time.sleep(releaseDelay)
+	executeMouseEvent(upFlag, 0, 0)
+
+
+def doPrimaryClick(releaseDelay: Optional[float] = None):
+	"""
+	Performs a primary mouse click at the current mouse pointer location.
+	The primary button is the one that usually activates or selects an item.
+	This function honors the Windows user setting
+	for which button (left or right) is classed as the primary button.
+	@ param releaseDelay: optional float in seconds of how long NVDA should sleep
+	between pressing down and then releasing up the primary button.
+	"""
+	buttonFlags = getLogicalButtonFlags()
+	_doClick(buttonFlags.primaryDown, buttonFlags.primaryUp, releaseDelay)
+
+
+def doSecondaryClick(releaseDelay: Optional[float] = None):
+	"""
+	Performs a secondary mouse click at the current mouse pointer location.
+	The secondary button is the one that usually displays a context menu for an item when clicked.
+	This function honors the Windows user setting
+	for which button (left or right) is classed as the secondary button.
+	@ param releaseDelay: optional float in seconds of how long NVDA should sleep
+	between pressing down and then releasing up the primary button.
+	"""
+	buttonFlags = getLogicalButtonFlags()
+	_doClick(buttonFlags.secondaryDown, buttonFlags.secondaryUp, releaseDelay)

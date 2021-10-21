@@ -1759,8 +1759,7 @@ class ExcelFormControl(ExcelBase):
 		(x,y)=self._getFormControlScreenCoordinates()
 		winUser.setCursorPos(x,y)
 		#perform Mouse Left-Click
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		self.invalidateCache()
 		wx.CallLater(100,eventHandler.executeEvent,"stateChange",self)
 
