@@ -263,20 +263,25 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 					return placeholder
 		return None
 
+	def _normalizeCommand(self, command: XMLFormatting.CommandsT) -> XMLFormatting.CommandsT:
+		if not isinstance(command, textInfos.FieldCommand):
+			return command  # no need to normalize str or None
+		field = command.field
+		if isinstance(field, textInfos.ControlField):
+			command.field = self._normalizeControlField(field)
+		elif isinstance(field, textInfos.FormatField):
+			command.field = self._normalizeFormatField(field)
+		return command
+
 	def _getFieldsInRange(self, start: int, end: int) -> textInfos.TextInfo.TextWithFieldsT:
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
 		if not text:
 			return [""]
-		commandList: typing.List[textInfos.FieldCommand] = XMLFormatting.XMLTextParser().parse(text)
-		for command in commandList:
-			if not isinstance(command, textInfos.FieldCommand):
-				continue  # no need to normalize str or None
-
-			field = command.field
-			if isinstance(field, textInfos.ControlField):
-				command.field = self._normalizeControlField(field)
-			elif isinstance(field, textInfos.FormatField):
-				command.field = self._normalizeFormatField(field)
+		commandList = XMLFormatting.XMLTextParser().parse(text)
+		commandList = list([
+			self._normalizeCommand(command)
+			for command in commandList
+		])
 		return commandList
 
 	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
