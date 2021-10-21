@@ -75,8 +75,9 @@ class NotepadLib:
 	def _writeTestFile(testCase) -> str:
 		"""
 		Creates a file for a plaintext test case.
-		@param testCase:  The plaintext sample that is to be tested.
-		@return: path to the plaintext file.
+
+		:param testCase:  The plaintext sample that is to be tested.
+		:returns: path to the plaintext file.
 		"""
 		filePath = NotepadLib._getTestCasePath(NotepadLib.getUniqueTestCaseTitle(testCase))
 		with open(file=filePath, mode='w', encoding='UTF-8') as f:
@@ -110,7 +111,8 @@ class NotepadLib:
 		Different versions of notepad/windows have variations in how the title is presented.
 		This may mean that there is a file extension in the title.
 		E.G. "test.txt - Notepad" or "test – Notepad".
-		@param testCase - The plaintext sample to test.
+
+		:param testCase - The plaintext sample to test.
 		"""
 		spy = _NvdaLib.getSpyLib()
 		path = self._writeTestFile(testCase)

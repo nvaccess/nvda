@@ -96,8 +96,9 @@ class ParamChangeTracker(object):
 
 	def update(self, command):
 		"""Update the tracker with a parameter change.
-		@param command: The parameter change command.
-		@type command: L{SynthParamCommand}
+
+		:param command: The parameter change command.
+		:type command: L{SynthParamCommand}
 		"""
 		paramType = type(command)
 		if command.isDefault:
@@ -108,8 +109,9 @@ class ParamChangeTracker(object):
 
 	def getChanged(self):
 		"""Get the commands for the parameters which have been changed from their defaults.
-		@return: List of parameter change commands.
-		@type: list of L{SynthParamCommand}
+
+		:returns: List of parameter change commands.
+		:type: list of L{SynthParamCommand}
 		"""
 		return list(self._commands.values())
 
@@ -268,7 +270,8 @@ class SpeechManager(object):
 
 	def _queueSpeechSequence(self, inSeq: SpeechSequence, priority: Spri) -> bool:
 		"""
-		@return: Whether to interrupt speech.
+
+		:returns: Whether to interrupt speech.
 		"""
 		outSeq = self._processSpeechSequence(inSeq)
 		log._speechManagerDebug("Out Seq: %r", outSeq)  # expensive string to build - defer
@@ -518,7 +521,8 @@ class SpeechManager(object):
 		The boundary for considering a wrapped value as before another value is based on the distance
 		between the indexes. If the distance is greater than half the available index space it is no longer
 		before.
-		@return True if indexA was created before indexB, else False
+
+		:returns True if indexA was created before indexB, else False
 		"""
 		w = cls._WRAPPED_INDEX_MAGNITUDE
 		return (
@@ -598,11 +602,11 @@ class SpeechManager(object):
 	# SpeechManager needs unit tests and a breakdown of responsibilities.
 	def _removeCompletedFromQueue(self, index: int) -> Tuple[bool, bool]:  # noqa: C901
 		"""Removes completed speech sequences from the queue.
-		@param index: The index just reached indicating a completed sequence.
-		@return: Tuple of (valid, endOfUtterance),
+		:param index: The index just reached indicating a completed sequence.
+		:returns: Tuple of (valid, endOfUtterance),
 			where valid indicates whether the index was valid and
 			endOfUtterance indicates whether this sequence was the end of the current utterance.
-		@rtype: (bool, bool)
+		:rtype: (bool, bool)
 		"""
 		# Find the sequence that just completed speaking.
 		if not self._curPriQueue:

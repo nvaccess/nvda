@@ -30,16 +30,17 @@ _tables = {}
 def addTable(fileName, displayName, contracted=False, output=True, input=True):
 	"""Register a braille translation table.
 	At least one of C{input} or C{output} must be C{True}.
-	@param fileName: The file name of the table.
-	@type fileName: basestring
-	@param displayname: The name of the table as displayed to the user. This should be translatable.
-	@type displayName: unicode
-	@param contracted: C{True} if the table is contracted, C{False} if uncontracted.
-	@type cContracted: bool
-	@param output: C{True} if this table can be used for output, C{False} if not.
-	@type output: bool
-	@param input: C{True} if this table can be used for input, C{False} if not.
-	@type input: bool
+
+	:param fileName: The file name of the table.
+	:type fileName: basestring
+	:param displayname: The name of the table as displayed to the user. This should be translatable.
+	:type displayName: unicode
+	:param contracted: C{True} if the table is contracted, C{False} if uncontracted.
+	:type cContracted: bool
+	:param output: C{True} if this table can be used for output, C{False} if not.
+	:type output: bool
+	:param input: C{True} if this table can be used for input, C{False} if not.
+	:type input: bool
 	"""
 	if not output and not input:
 		raise ValueError("input and output cannot both be False")
@@ -48,16 +49,18 @@ def addTable(fileName, displayName, contracted=False, output=True, input=True):
 
 def getTable(fileName):
 	"""Get information about a table given its file name.
-	@return: The table information.
-	@rtype: L{BrailleTable}
-	@raise LookupError: If there is no table registered with this file name.
+
+	:returns: The table information.
+	:rtype: L{BrailleTable}
+	:raises LookupError: If there is no table registered with this file name.
 	"""
 	return _tables[fileName]
 
 def listTables():
 	"""List all registered braille tables.
-	@return: A list of braille tables.
-	@rtype: list of L{BrailleTable}
+
+	:returns: A list of braille tables.
+	:rtype: list of L{BrailleTable}
 	"""
 	return sorted(_tables.values(), key=lambda table: strxfrm(table.displayName))
 

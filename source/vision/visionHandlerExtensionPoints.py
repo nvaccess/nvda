@@ -30,25 +30,25 @@ class EventExtensionPoints:
 	#: For example, a magnifier can track the magnified area of the screen to this object,
 	#: when the name of the object has changed.
 	#: Handlers are called with two  arguments.
-	#: @param obj: The object that received a property change.
-	#: @type obj: L{NVDAObjects.NVDAObject}
-	#: @param property: The object's property that changed, e.g. "name" or "description".
-	#: @type property: str
+	#: :param obj: The object that received a property change.
+	#: :type obj: L{NVDAObjects.NVDAObject}
+	#: :param property: The object's property that changed, e.g. "name" or "description".
+	#: :type property: str
 	post_objectUpdate: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when the focused NVDAObject has changed.
 	#: This allows a vision enhancement provider to take an action when the focus changed.
 	#: For example, a magnifier can track the magnified area of the screen to this object.
 	#: Handlers are called with one argument.
-	#: @param obj: The object that received focus.
-	#: @type obj: L{NVDAObjects.NVDAObject}
+	#: :param obj: The object that received focus.
+	#: :type obj: L{NVDAObjects.NVDAObject}
 	post_focusChange: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when the foreground NVDAObject has changed.
 	#: This allows a vision enhancement provider to take an action
 	#: when another window takes the foreground.
 	#: For example, a magnifier can track the magnified area of the screen to this object.
 	#: Handlers are called with one argument.
-	#: @param obj: The object that became the foreground object.
-	#: @type obj: L{NVDAObjects.NVDAObject}
+	#: :param obj: The object that became the foreground object.
+	#: :type obj: L{NVDAObjects.NVDAObject}
 	post_foregroundChange: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when a physical caret has moved.
 	#: This allows a vision enhancement provider to take an action
@@ -58,8 +58,8 @@ class EventExtensionPoints:
 	#: and handle the pending caret update at the end of every core cycle using L{post_coreCycle},
 	#: unless they delegate caret change handling to a separate thread.
 	#: Handlers are called with one argument.
-	#: @param obj: The object in which the caret position changed.
-	#: @type obj: L{NVDAObjects.NVDAObject}
+	#: :param obj: The object in which the caret position changed.
+	#: :type obj: L{NVDAObjects.NVDAObject}
 	post_caretMove: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when a virtual caret has moved.
 	#: This allows a vision enhancement provider to take an action
@@ -69,8 +69,8 @@ class EventExtensionPoints:
 	#: and handle the pending update at the end of every core cycle using L{post_coreCycle},
 	#: unless they delegate virtual caret change handling to a separate thread.
 	#: Handlers are called with one argument.
-	#: @param obj: The cursor manager that changed it virtual caret position.
-	#: @type obj: L{cursorManager.CursorManager}
+	#: :param obj: The cursor manager that changed it virtual caret position.
+	#: :type obj: L{cursorManager.CursorManager}
 	post_browseModeMove: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when the position of the review cursor has changed.
 	#: This allows a vision enhancement provider to take an action
@@ -81,8 +81,8 @@ class EventExtensionPoints:
 	#: and handle the pending review position change at the end of every core cycle using L{post_coreCycle},
 	#: unless they delegate review position change handling to a separate thread.
 	#: Handlers are called with one argument.
-	#: @param context: The context that triggered the review position change.
-	#: @type context: L{vision.constants.Context}
+	#: :param context: The context that triggered the review position change.
+	#: :type context: L{vision.constants.Context}
 	post_reviewMove: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when the mouse has moved.
 	#: This allows a vision enhancement provider to take an action for mouse moves.
@@ -90,8 +90,8 @@ class EventExtensionPoints:
 	#: Note that, by the nature of NVDA's mouse tracking implementation,
 	#: This extension point is only called once per core cycle.
 	#: Handlers are called with one argument.
-	#: @param obj: The object that received focus.
-	#: @type obj: L{NVDAObjects.NVDAObject}
+	#: :param obj: The object that received focus.
+	#: :type obj: L{NVDAObjects.NVDAObject}
 	post_mouseMove: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider at the end of every core cycle.
 	#: This allows a vision enhancement provider to rate limit certain actions.

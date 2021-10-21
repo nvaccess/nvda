@@ -158,12 +158,13 @@ def LresultFromObject(wParam,obj):
 	"""
 	returns a reference, similar to a handle, to the specified object. 
 	Servers return this reference when handling WM_GETOBJECT.
-	@param wParam: the wParam value passed in with WM_GETOBJECT.
-	@type wParam: int
-	@param obj: the COM object instance you want a reference for.
-	@type obj: COMObject
-	@return: a reference to the object.
-	@rtype: int
+
+	:param wParam: the wParam value passed in with WM_GETOBJECT.
+	:type wParam: int
+	:param obj: the COM object instance you want a reference for.
+	:type obj: COMObject
+	:returns: a reference to the object.
+	:rtype: int
 	""" 
 	objIID=obj._iid_
 	return oledll.oleacc.LresultFromObject(byref(objIID),wParam,obj)
@@ -172,14 +173,15 @@ def ObjectFromLresult(res,wParam,interface):
 	"""
 	retrieves a requested interface pointer for an accessible object 
 	based on a previously generated object reference.
-	@param res: the previously generated object reference.
-	@type res: int
-	@param wParam: the wParam value passed in with WM_GETOBJECT.
-	@type wParam: int
-	@param interface: the requested COM interface.
-	@type interface: comtypes COM interface
-	@return: the object.
-	@rtype: COMObject
+
+	:param res: the previously generated object reference.
+	:type res: int
+	:param wParam: the wParam value passed in with WM_GETOBJECT.
+	:type wParam: int
+	:param interface: the requested COM interface.
+	:type interface: comtypes COM interface
+	:returns: the object.
+	:rtype: COMObject
 	"""
 	p=POINTER(interface)()
 	oledll.oleacc.ObjectFromLresult(res,byref(interface._iid_),wParam,byref(p))
@@ -189,16 +191,17 @@ def CreateStdAccessibleProxy(hwnd,className,objectID,interface=IAccessible):
 	"""
 	creates an accessible object using a specific window class, with the methods and properties 
 	of the specified type of system-provided user interface element.
-	@param hwnd: the handle of the window this accessible object should represent.
-	@type hwnd: int
-	@param className: the window class name to use.
-	@type className: str
-	@param objectID: an OBJID_* constant or custom value stating the specific object in the window.
-	@type objectID: int
-	@param interface: the requested COM interface for this object. Defaults to IAccessible.
-	@type interface: comtypes COM interface
-	@return: the created object.
-	@rtype: COMObject
+
+	:param hwnd: the handle of the window this accessible object should represent.
+	:type hwnd: int
+	:param className: the window class name to use.
+	:type className: str
+	:param objectID: an OBJID_* constant or custom value stating the specific object in the window.
+	:type objectID: int
+	:param interface: the requested COM interface for this object. Defaults to IAccessible.
+	:type interface: comtypes COM interface
+	:returns: the created object.
+	:rtype: COMObject
 	"""
 	p=POINTER(interface)()
 	oledll.oleacc.CreateStdAccessibleProxyW(hwnd,className,objectID,byref(interface._iid_),byref(p))
@@ -208,14 +211,15 @@ def CreateStdAccessibleObject(hwnd,objectID,interface=IAccessible):
 	"""
 	creates an accessible object with the methods and properties 
 	of the specified type of system-provided user interface element.
-	@param hwnd: the handle of the window this accessible object should represent.
-	@type hwnd: int
-	@param objectID: an OBJID_* constant or custom value stating the specific object in the window.
-	@type objectID: int
-	@param interface: the requested COM interface for this object. Defaults to IAccessible.
-	@type interface: comtypes COM interface
-	@return: the created object.
-	@rtype: COMObject
+
+	:param hwnd: the handle of the window this accessible object should represent.
+	:type hwnd: int
+	:param objectID: an OBJID_* constant or custom value stating the specific object in the window.
+	:type objectID: int
+	:param interface: the requested COM interface for this object. Defaults to IAccessible.
+	:type interface: comtypes COM interface
+	:returns: the created object.
+	:rtype: COMObject
 	""" 
 	p=POINTER(interface)()
 	oledll.oleacc.CreateStdAccessibleObject(hwnd,objectID,byref(interface._iid_),byref(p))
@@ -224,14 +228,15 @@ def CreateStdAccessibleObject(hwnd,objectID,interface=IAccessible):
 def AccessibleObjectFromWindow(hwnd,objectID,interface=IAccessible):
 	"""
 	Retreaves a COM object from the given window, with the given object ID.
-	@param hwnd: the handle of the window to retreave the object from.
-	@type hwnd: int
-	@param objectID: one of the OBJID_* constants or a custom positive value representing the specific object you want to retreave.
-	@type objectID: int
-	@param interface: the requested COM interface you wish to use on the retreaved object.
-	@type interface: comtypes COM interface
-	@return: the retreaved object.
-	@rtype: COMObject
+
+	:param hwnd: the handle of the window to retreave the object from.
+	:type hwnd: int
+	:param objectID: one of the OBJID_* constants or a custom positive value representing the specific object you want to retreave.
+	:type objectID: int
+	:param interface: the requested COM interface you wish to use on the retreaved object.
+	:type interface: comtypes COM interface
+	:returns: the retreaved object.
+	:rtype: COMObject
 	"""
 	p=POINTER(interface)()
 	oledll.oleacc.AccessibleObjectFromWindow(hwnd,objectID,byref(p._iid_),byref(p))
@@ -251,14 +256,15 @@ def AccessibleObjectFromWindow_safe(hwnd,objectID,interface=IAccessible,timeout=
 def AccessibleObjectFromEvent(hwnd,objectID,childID):
 	"""
 	Retreaves an  IAccessible object from the given window, with the given object ID and child ID.
-	@param hwnd: the handle of the window to retreave the object from.
-	@type hwnd: int
-	@param objectID: one of the OBJID_* constants or a custom positive value representing the specific object you want to retreave.
-	@type objectID: int
-	@param childID: the ID of the child element you wish to retreave.
-	@type childID: int
-	@return: the retreaved object.
-	@rtype: COMObject
+
+	:param hwnd: the handle of the window to retreave the object from.
+	:type hwnd: int
+	:param objectID: one of the OBJID_* constants or a custom positive value representing the specific object you want to retreave.
+	:type objectID: int
+	:param childID: the ID of the child element you wish to retreave.
+	:type childID: int
+	:returns: the retreaved object.
+	:rtype: COMObject
 	"""
 	p=POINTER(IAccessible)()
 	varChild=VARIANT()
@@ -284,10 +290,11 @@ def AccessibleObjectFromEvent_safe(hwnd,objectID,childID,timeout=2):
 def WindowFromAccessibleObject(pacc):
 	"""
 	Retreaves the handle of the window this IAccessible object belongs to.
-	@param pacc: the IAccessible object who's window you want to fetch.
-	@type pacc: POINTER(IAccessible)
-	@return: the window handle.
-	@rtype: int
+
+	:param pacc: the IAccessible object who's window you want to fetch.
+	:type pacc: POINTER(IAccessible)
+	:returns: the window handle.
+	:rtype: int
 	"""
 	hwnd=c_int()
 	oledll.oleacc.WindowFromAccessibleObject(pacc,byref(hwnd))
@@ -313,10 +320,11 @@ def AccessibleChildren(pacc,iChildStart,cChildren):
 def GetProcessHandleFromHwnd(windowHandle):
 	"""Retrieves a process handle of the process who owns the window.
 	This uses GetProcessHandleFromHwnd found in oleacc.dll which allows a client with UIAccess to open a process that is elevated.
-	@param windowHandle: a window of a process you wish to retreave a process handle for
-	@type windowHandle: integer
-	@returns: a process handle with read, write and operation access
-	@rtype: integer
+
+	:param windowHandle: a window of a process you wish to retreave a process handle for
+	:type windowHandle: integer
+	:returns: a process handle with read, write and operation access
+	:rtype: integer
 	"""
 	return oledll.oleacc.GetProcessHandleFromHwnd(windowHandle)
 

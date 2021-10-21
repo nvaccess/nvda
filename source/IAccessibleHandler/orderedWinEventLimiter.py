@@ -31,8 +31,9 @@ class OrderedWinEventLimiter(object):
 
 	def __init__(self, maxFocusItems=4):
 		"""
-		@param maxFocusItems: the amount of focus changed events allowed to be queued.
-		@type maxFocusItems: integer
+
+		:param maxFocusItems: the amount of focus changed events allowed to be queued.
+		:type maxFocusItems: integer
 		"""
 		self.maxFocusItems = maxFocusItems
 		self._focusEventCache = {}
@@ -50,12 +51,13 @@ class OrderedWinEventLimiter(object):
 			threadID: int
 	) -> bool:
 		"""Adds a winEvent to the limiter.
-		@param eventID: the winEvent type
-		@param window: the window handle of the winEvent
-		@param objectID: the objectID of the winEvent
-		@param childID: the childID of the winEvent
-		@param threadID: the threadID of the winEvent
-		@return: C{True} if the event was added, C{False} if it was discarded.
+
+		:param eventID: the winEvent type
+		:param window: the window handle of the winEvent
+		:param objectID: the objectID of the winEvent
+		:param childID: the childID of the winEvent
+		:param threadID: the threadID of the winEvent
+		:returns: C{True} if the event was added, C{False} if it was discarded.
 		"""
 		if eventID == winUser.EVENT_OBJECT_FOCUS:
 			if objectID in (winUser.OBJID_SYSMENU, winUser.OBJID_MENU) and childID == 0:
@@ -89,7 +91,8 @@ class OrderedWinEventLimiter(object):
 		They are definitely guaranteed to be in the correct order though.
 		winEvents for objects listed in alwaysAllowedObjects will always be emitted,
 		Even if the winEvent limit for that thread has been exceeded.
-		@return Tuple[eventID,window,objectID,childID]
+
+		:returns Tuple[eventID,window,objectID,childID]
 		"""
 		if self._lastMenuEvent is not None:
 			heapq.heappush(self._eventHeap, self._lastMenuEvent)

@@ -28,7 +28,8 @@ class VisionEnhancementProviderSettings(AutoSettings):
 			start / termination of the provider.
 			The implementation must handle how to modify the returned settings based on external (software,
 			hardware) dependencies.
-	@note
+
+	.. note
 	If the vision enhancement provider has settings, it will provide an implementation of this class.
 	The provider will hold a reference to an instance of this class, this is accessed through the class method
 	L{VisionEnhancementProvider.getSettings}.
@@ -54,28 +55,32 @@ class VisionProviderStateControl:
 	@abstractmethod
 	def getProviderInfo(self):
 		"""
-		@return: The provider info
-		@rtype: providerInfo.ProviderInfo
+
+		:returns: The provider info
+		:rtype: providerInfo.ProviderInfo
 		"""
 
 	@abstractmethod
 	def getProviderInstance(self):
 		"""Gets an instance for the provider if it already exists
-		@rtype: Optional[VisionEnhancementProvider]
+
+		:rtype: Optional[VisionEnhancementProvider]
 		"""
 
 	@abstractmethod
 	def startProvider(self, shouldPromptOnError: bool) -> bool:
 		"""Initializes the provider, prompting user with the error if necessary.
-		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
-		@return: True on success
+
+		:param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		:returns: True on success
 		"""
 
 	@abstractmethod
 	def terminateProvider(self, shouldPromptOnError: bool) -> bool:
 		"""Terminate the provider, prompting user with the error if necessary.
-		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
-		@return: True on success
+
+		:param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		:returns: True on success
 		"""
 
 
@@ -99,7 +104,8 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	@abstractmethod
 	def getSettings(cls) -> VisionEnhancementProviderSettings:
 		"""
-		@remarks: The L{VisionEnhancementProviderSettings} class should be implemented to define the settings
+
+		.. remarks: The L{VisionEnhancementProviderSettings} class should be implemented to define the settings
 			for your provider
 		"""
 		...
@@ -116,8 +122,9 @@ class VisionEnhancementProvider(AutoPropertyObject):
 			def __init__(self, parent: wx.Window, providerControl: VisionProviderStateControl):
 				super().__init__(parent=parent)
 		```
-		@rtype: Optional[SettingsPanel]
-		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
+
+		:rtype: Optional[SettingsPanel]
+		.. remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
 		"""
 		return None
 
@@ -132,8 +139,9 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	def terminate(self) -> None:
 		"""Terminate this provider.
 		This should be used for any required clean up.
-		@precondition: L{initialize} has been called.
-		@postcondition: This provider can no longer be used.
+
+		.. precondition: L{initialize} has been called.
+		.. postcondition: This provider can no longer be used.
 		"""
 		...
 
@@ -145,7 +153,8 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		This method should only register itself with the extension points,
 		and should refrain from doing anything else,
 		as it might be called again several times between initialization and termination.
-		@param extensionPoints: An object containing available extension points as attributes.
+
+		:param extensionPoints: An object containing available extension points as attributes.
 		"""
 		...
 
@@ -158,7 +167,8 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	@classmethod
 	def enableInConfig(cls, enable: bool) -> None:
 		"""Enables or disables the provider in the current configuration.
-		@param enable: Whether to enable (C{True}) or disable (C{False}) the provider in the configuration.
+
+		:param enable: Whether to enable (C{True}) or disable (C{False}) the provider in the configuration.
 		"""
 		settings = cls.getSettings()
 		config.conf[settings._getConfigSection()][settings.getId()]["enabled"] = enable

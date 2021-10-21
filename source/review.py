@@ -17,10 +17,11 @@ import config
 def getObjectPosition(obj):
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in  the given object.
-	@param obj: the NVDAObject to review
-	@type obj: L{NVDAObject}
-	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
-	@rtype: (L{TextInfo},L{ScriptableObject})
+
+	:param obj: the NVDAObject to review
+	:type obj: L{NVDAObject}
+	:returns: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
+	:rtype: (L{TextInfo},L{ScriptableObject})
 	"""
 	try:
 		pos=obj.makeTextInfo(textInfos.POSITION_CARET)
@@ -37,10 +38,11 @@ def getObjectPosition(obj):
 def getDocumentPosition(obj):
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in  the given object's L{TreeInterceptor}, positioned at the object.
-	@param obj: the NVDAObject to review
-	@type obj: L{NVDAObject}
-	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
-	@rtype: (L{TextInfo},L{ScriptableObject})
+
+	:param obj: the NVDAObject to review
+	:type obj: L{NVDAObject}
+	:returns: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
+	:rtype: (L{TextInfo},L{ScriptableObject})
 	"""
 	if not isinstance(obj.treeInterceptor,DocumentTreeInterceptor):
 		return None
@@ -53,10 +55,11 @@ def getDocumentPosition(obj):
 def getScreenPosition(obj):
 	"""
 	Fetches a TextInfo instance suitable for reviewing the screen, positioned at the given object's coordinates. 
-	@param obj: the NVDAObject to review
-	@type obj: L{NVDAObject}
-	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
-	@rtype: (L{TextInfo},L{ScriptableObject})
+
+	:param obj: the NVDAObject to review
+	:type obj: L{NVDAObject}
+	:returns: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
+	:rtype: (L{TextInfo},L{ScriptableObject})
 	"""
 	focus=api.getFocusObject()
 	while focus and not isinstance(focus,Window):
@@ -86,10 +89,11 @@ _currentMode=0
 def getPositionForCurrentMode(obj):
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in or around the given object, according to the current review mode. 
-	@param obj: the NVDAObject to review
-	@type obj: L{NVDAObject}
-	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
-	@rtype: (L{TextInfo},L{ScriptableObject})
+
+	:param obj: the NVDAObject to review
+	:type obj: L{NVDAObject}
+	:returns: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
+	:rtype: (L{TextInfo},L{ScriptableObject})
 	"""
 	mode=_currentMode
 	while mode>=0:
@@ -105,10 +109,11 @@ def getCurrentMode():
 def setCurrentMode(mode,updateReviewPosition=True):
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
-	@param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).
-	@type mode: int or string
-	@return: a presentable label for the new current mode (suitable for speaking or brailleing)
-	@rtype: string
+
+	:param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).
+	:type mode: int or string
+	:returns: a presentable label for the new current mode (suitable for speaking or brailleing)
+	:rtype: string
 	"""
 	global _currentMode
 	if isinstance(mode,int):
@@ -130,10 +135,11 @@ def setCurrentMode(mode,updateReviewPosition=True):
 def nextMode(prev=False,startMode=None):
 	"""
 	Sets the current review mode to the next available  mode and updates the review position. 
-	@param prev: if true then switch to the previous mode. If false, switch to the next mode.
-	@type prev: bool
-	@return: a presentable label for the new current mode (suitable for speaking or brailleing)
-	@rtype: string
+
+	:param prev: if true then switch to the previous mode. If false, switch to the next mode.
+	:type prev: bool
+	:returns: a presentable label for the new current mode (suitable for speaking or brailleing)
+	:rtype: string
 	"""
 	if startMode is None:
 		startMode=_currentMode
@@ -146,8 +152,9 @@ def nextMode(prev=False,startMode=None):
 def handleCaretMove(pos):
 	"""
 	Instructs the review position to be updated due to caret movement.
-	@param pos: Either a TextInfo instance at the caret position, or an NVDAObject or TeeInterceptor who's caret position should be retreaved.
-	@type pos: L{textInfos.TextInfo} or L{NVDAObject} or L{TreeInterceptor}
+
+	:param pos: Either a TextInfo instance at the caret position, or an NVDAObject or TeeInterceptor who's caret position should be retreaved.
+	:type pos: L{textInfos.TextInfo} or L{NVDAObject} or L{TreeInterceptor}
 	"""
 	if not config.conf["reviewCursor"]["followCaret"]:
 		return

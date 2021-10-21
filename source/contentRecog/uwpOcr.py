@@ -17,10 +17,11 @@ uwpOcr_Callback = ctypes.CFUNCTYPE(None, ctypes.c_wchar_p)
 
 def getLanguages():
 	"""Return the available recognition languages.
-	@return: A list of language codes suitable to be passed to L{UwpOcr}'s constructor.
+
+	:returns: A list of language codes suitable to be passed to L{UwpOcr}'s constructor.
 		These need to be normalized with L{languageHandler.normalizeLanguage}
 		for use as NVDA language codes.
-	@rtype: list of str
+	:rtype: list of str
 	"""
 	dll = NVDAHelper.getHelperLocalWin10Dll()
 	dll.uwpOcr_getLanguages.restype = NVDAHelper.bstrReturn
@@ -76,7 +77,8 @@ class UwpOcr(ContentRecognizer):
 
 	def __init__(self, language=None):
 		"""
-		@param language: The language code of the desired recognition language,
+
+		:param language: The language code of the desired recognition language,
 			C{None} to use the user's configured language.
 		"""
 		if language:

@@ -282,8 +282,9 @@ class TouchHandler(threading.Thread):
 	def notifyInteraction(self, obj):
 		"""Notify the system that UI interaction is occurring via touch.
 		This should be called when performing an action on an object.
-		@param obj: The NVDAObject with which the user is interacting.
-		@type obj: L{NVDAObjects.NVDAObject}
+
+		:param obj: The NVDAObject with which the user is interacting.
+		:type obj: L{NVDAObjects.NVDAObject}
 		"""
 		oledll.oleacc.AccNotifyTouchInteraction(gui.mainFrame.Handle, obj.windowHandle,
 			obj.location.center.toPOINT())
@@ -293,7 +294,8 @@ handler=None
 
 def touchSupported(debugLog: bool = False):
 	"""Returns if the system and current NVDA session supports touchscreen interaction.
-	@param debugLog: Whether to log additional details about touch support to the NVDA log.
+
+	:param debugLog: Whether to log additional details about touch support to the NVDA log.
 	"""
 	if not config.isInstalledCopy() and not config.isAppX:
 		if debugLog:

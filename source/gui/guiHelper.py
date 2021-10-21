@@ -82,7 +82,8 @@ class ButtonHelper(object):
 	"""
 	def __init__(self, orientation):
 		"""
-		@param orientation: the orientation for the buttons, either wx.HORIZONTAL or wx.VERTICAL
+
+		:param orientation: the orientation for the buttons, either wx.HORIZONTAL or wx.VERTICAL
 		"""
 		object.__init__(self)
 		self._firstButton = True
@@ -100,8 +101,9 @@ class ButtonHelper(object):
 			usage hint: 
 				parent = self # a wx window class. EG wx.Dialog
 				myButtonHelper.addButton(dialog, label=_("my new button"))
-			@param args: The formal arguments to pass directly to wx.Button. The only required parameter is 'parent'.
-			@param kwargs: The keyword args passed directly to wx.Button
+
+			:param args: The formal arguments to pass directly to wx.Button. The only required parameter is 'parent'.
+			:param kwargs: The keyword args passed directly to wx.Button
 		"""
 		wxButton = wx.Button(*args, **kwargs)
 		if not self._firstButton:
@@ -167,10 +169,10 @@ class LabeledControlHelper(object):
 	EnableChanged, EVT_ENABLE_CHANGED = newevent.NewEvent()
 
 	def __init__(self, parent: wx.Window, labelText: str, wxCtrlClass: wx.Control, **kwargs):
-		""" @param parent: An instance of the parent wx window. EG wx.Dialog
-			@param labelText: The text to associate with a wx control.
-			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
-			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
+		""" :param parent: An instance of the parent wx window. EG wx.Dialog
+			:param labelText: The text to associate with a wx control.
+			:param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
+			:param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 		object.__init__(self)
 
@@ -221,11 +223,11 @@ class PathSelectionHelper(object):
 	`pathControl` property which exposes a wx.TextCtrl.
 	"""
 	def __init__(self, parent, buttonText, browseForDirectoryTitle):
-		""" @param parent: An instance of the parent wx window. EG wx.Dialog
-			@param buttonText: The text for the button to launch a directory dialog (wx.DirDialog). This is typically 'Browse'
-			@type buttonText: string
-			@param browseForDirectoryTitle: The text for the title of the directory dialog (wx.DirDialog)
-			@type browseForDirectoryTitle: string
+		""" :param parent: An instance of the parent wx window. EG wx.Dialog
+			:param buttonText: The text for the button to launch a directory dialog (wx.DirDialog). This is typically 'Browse'
+			:type buttonText: string
+			:param browseForDirectoryTitle: The text for the title of the directory dialog (wx.DirDialog)
+			:type browseForDirectoryTitle: string
 		"""
 		object.__init__(self)
 		self._textCtrl = wx.TextCtrl(parent)
@@ -257,11 +259,12 @@ class BoxSizerHelper(object):
 	"""
 	def __init__(self, parent, orientation=None, sizer=None):
 		""" Init. Pass in either orientation OR sizer.
-			@param parent: An instance of the parent wx window. EG wx.Dialog
-			@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
-			@type itemType: wx.HORIZONTAL or wx.VERTICAL
-			@param sizer: the sizer to use rather than constructing one.
-			@type sizer: wx.BoxSizer
+
+			:param parent: An instance of the parent wx window. EG wx.Dialog
+			:param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
+			:type itemType: wx.HORIZONTAL or wx.VERTICAL
+			:param sizer: the sizer to use rather than constructing one.
+			:type sizer: wx.BoxSizer
 		"""
 		object.__init__(self)
 		self._parent = parent
@@ -279,8 +282,9 @@ class BoxSizerHelper(object):
 	def addItem(self, item, **keywordArgs):
 		""" Adds an item with space between it and the previous item.
 			Does not handle adding LabledControlHelper; use L{addLabeledControl} instead.
-			@param item: the item to add to the sizer
-			@param **keywordArgs: the extra args to pass when adding the item to the wx.Sizer. This parameter is 
+
+			:param item: the item to add to the sizer
+			:param **keywordArgs: the extra args to pass when adding the item to the wx.Sizer. This parameter is 
 				normally not necessary.
 		"""
 		assert not self.dialogDismissButtonsAdded, "Buttons to dismiss the dialog already added, they should be the last item added."
@@ -317,11 +321,12 @@ class BoxSizerHelper(object):
 
 	def addLabeledControl(self, labelText, wxCtrlClass, **kwargs):
 		""" Convenience method to create a labeled control
-			@param labelText: Text to use when constructing the wx.StaticText to label the control.
-			@type LabelText: String
-			@param wxCtrlClass: Control class to construct and associate with the label
-			@type wxCtrlClass: Some wx control type EG wx.TextCtrl
-			@param kwargs: keyword arguments used to construct the wxCtrlClass. As taken by guiHelper.LabeledControlHelper
+
+			:param labelText: Text to use when constructing the wx.StaticText to label the control.
+			:type LabelText: String
+			:param wxCtrlClass: Control class to construct and associate with the label
+			:type wxCtrlClass: Some wx control type EG wx.TextCtrl
+			:param kwargs: keyword arguments used to construct the wxCtrlClass. As taken by guiHelper.LabeledControlHelper
 
 			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
 			limitations from there.
@@ -340,15 +345,16 @@ class BoxSizerHelper(object):
 		""" Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
 		to be the last items added to the dialog. Buttons that launch an action, do not dismiss the dialog, or are not
 		the last item should be added via L{addItem}
-		@param buttons: The buttons to add
-		@type buttons:
+
+		:param buttons: The buttons to add
+		:type buttons:
 		  wx.Sizer or guiHelper.ButtonHelper or single wx.Button
 		  or a bit list of the following flags: wx.OK, wx.CANCEL, wx.YES, wx.NO, wx.APPLY, wx.CLOSE,
 		  wx.HELP, wx.NO_DEFAULT
-		@param separated:
+		:param separated:
 		  Whether a separator should be added between the dialog content and its footer.
 		  Should be set to L{False} for message or single input dialogs, L{True} otherwise.
-		@type separated: L{bool}
+		:type separated: L{bool}
 		"""
 		parent = self._parent
 		if isinstance(self.sizer, wx.StaticBoxSizer):

@@ -316,7 +316,8 @@ def espeak_errcheck(res, func, args):
 
 def initialize(indexCallback=None):
 	"""
-	@param indexCallback: A function which is called when eSpeak reaches an index.
+
+	:param indexCallback: A function which is called when eSpeak reaches an index.
 		It is called with one argument:
 		the number of the index or C{None} when speech stops.
 	"""

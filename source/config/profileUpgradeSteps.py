@@ -6,7 +6,7 @@
 
 """
 Contains upgrade steps for the NVDA configuration files. These steps are run to ensure that a configuration file
-complies with the latest schema (@see configSpec.py).
+complies with the latest schema (.. see configSpec.py).
 
 To add a new step (after modifying the schema and incrementing the schema version number) add a new method to this
 module. The method name should be in the form "upgradeConfigFrom_X_to_Y" where X is the previous schema version, and Y

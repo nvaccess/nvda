@@ -147,15 +147,16 @@ class UIATextInfo(textInfos.TextInfo):
 	def _getFormatFieldAtRange(self,textRange,formatConfig,ignoreMixedValues=False):
 		"""
 		Fetches formatting for the given UI Automation Text range.
-		@param textRange: the text range whos formatting should be fetched.
-		@type textRange: L{UIAutomation.IUIAutomationTextRange}
-		@param formatConfig: the types of formatting requested.
-		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+
+		:param textRange: the text range whos formatting should be fetched.
+		:type textRange: L{UIAutomation.IUIAutomationTextRange}
+		:param formatConfig: the types of formatting requested.
+		:type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
-		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included. If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute value signifying that the caller may want to try again with a smaller range. 
-		@type: bool
-		@return: The formatting for the given text range.
-		@rtype: L{textInfos.FormatField}
+		:param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included. If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute value signifying that the caller may want to try again with a smaller range. 
+		:type: bool
+		:returns: The formatting for the given text range.
+		:rtype: L{textInfos.FormatField}
 		"""
 		formatField=textInfos.FormatField()
 		if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
@@ -330,11 +331,12 @@ class UIATextInfo(textInfos.TextInfo):
 		"""
 		Helper function to get indent formatting from the fetcher passed as parameter.
 		The indent formatting is reported according to MS Word's convention.
-		@param fetcher: the UIA fetcher used to get all formatting information.
-		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
+
+		:param fetcher: the UIA fetcher used to get all formatting information.
+		:param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
 			If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute
 			value signifying that the caller may want to try again with a smaller range.
-		@return: The indent formatting informations corresponding to what has been retrieved via the fetcher.
+		:returns: The indent formatting informations corresponding to what has been retrieved via the fetcher.
 		"""
 		
 		formatField = textInfos.FormatField()
@@ -370,9 +372,10 @@ class UIATextInfo(textInfos.TextInfo):
 	@staticmethod
 	def _getIndentValueDisplayString(val: float) -> str:
 		"""A function returning the string to display in formatting info.
-		@param val: an indent value measured in points, fetched via
+
+		:param val: an indent value measured in points, fetched via
 			an UIAHandler.UIA_Indentation*AttributeId attribute.
-		@return: The string used in formatting information to report the length of an indentation.
+		:returns: The string used in formatting information to report the length of an indentation.
 		"""
 		
 		# convert points to inches (1pt = 1/72 in)
@@ -501,11 +504,12 @@ class UIATextInfo(textInfos.TextInfo):
 	) -> textInfos.ControlField:
 		"""
 		Fetch control field information for the given UIA NVDAObject.
-		@param obj: the NVDAObject the control field is for.
-		@param isEmbedded: True if this NVDAObject is for a leaf node (has no useful children).
-		@param startOfNode: True if the control field represents the very start of this object.
-		@param endOfNode: True if the control field represents the very end of this object.
-		@return: The control field for this object
+
+		:param obj: the NVDAObject the control field is for.
+		:param isEmbedded: True if this NVDAObject is for a leaf node (has no useful children).
+		:param startOfNode: True if the control field represents the very start of this object.
+		:param endOfNode: True if the control field represents the very end of this object.
+		:returns: The control field for this object
 		"""
 		role = obj.role
 		field = textInfos.ControlField()
@@ -556,17 +560,18 @@ class UIATextInfo(textInfos.TextInfo):
 	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
-		@param textRange: the UI Automation text range to walk.
-		@type textRange: L{UIAHandler.IUIAutomationTextRange}
-		@param formatConfig: the types of formatting requested.
-		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+
+		:param textRange: the UI Automation text range to walk.
+		:type textRange: L{UIAHandler.IUIAutomationTextRange}
+		:param formatConfig: the types of formatting requested.
+		:type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
-		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
+		:param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
 			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
 			If this parameter is None, text and formatting is fetched for the entire range in one go, but if mixed attribute values are found, it will split by the first unit in self.UIAFormatUnits, and run this method recursively on each subrange, providing the remaining units from self.UIAFormatUnits as the value of this parameter. 
-		@type UIAFormatUnits: List of UI Automation Text Units or None
-		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
+		:type UIAFormatUnits: List of UI Automation Text Units or None
+		:rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
@@ -609,23 +614,24 @@ class UIATextInfo(textInfos.TextInfo):
 	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementClipped=(True,True)):
 		"""
 		Yields start and end control fields, and text, for the given UI Automation text range.
-		@param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
-		@type rootElement: L{UIAHandler.IUIAutomation}
-		@param textRange: the UI Automation text range whos content should be fetched.
-		@type textRange: L{UIAHandler.IUIAutomation}
-		@param formatConfig: the types of formatting requested.
-		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+
+		:param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
+		:type rootElement: L{UIAHandler.IUIAutomation}
+		:param textRange: the UI Automation text range whos content should be fetched.
+		:type textRange: L{UIAHandler.IUIAutomation}
+		:param formatConfig: the types of formatting requested.
+		:type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
-		@param includeRoot: If true, then a control start and end will be yielded for the root element.
-		@type includeRoot: bool
-		@param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
-		@type alwaysWalkAncestors: bool
-		@param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
-		@type recurseChildren: bool
-		@param _rootElementClipped: Indicates if textRange represents all of the given rootElement,
+		:param includeRoot: If true, then a control start and end will be yielded for the root element.
+		:type includeRoot: bool
+		:param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
+		:type alwaysWalkAncestors: bool
+		:param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
+		:type recurseChildren: bool
+		:param _rootElementClipped: Indicates if textRange represents all of the given rootElement,
 			or is clipped at the start or end.
-		@type _rootElementClipped: 2-tuple
-		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
+		:type _rootElementClipped: 2-tuple
+		:rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
@@ -849,7 +855,8 @@ class UIATextInfo(textInfos.TextInfo):
 		Fetches per line bounding rectangles from the given UI Automation text range.
 		Note that if the range object doesn't cover a whole line (e.g. a character),
 		the bounding rectangle will be restricted to the range.
-		@rtype: [locationHelper.RectLTWH]
+
+		:rtype: [locationHelper.RectLTWH]
 		"""
 		rects = []
 		rectArray = textRange.GetBoundingRectangles()
@@ -1218,14 +1225,15 @@ class UIA(Window):
 	def __init__(self,windowHandle=None,UIAElement=None,initialUIACachedPropertyIDs=None):
 		"""
 		An NVDAObject for a UI Automation element.
-		@param windowHandle: if a UIAElement is not specifically given, then this windowHandle is used to fetch its root UIAElement 
-		@type windowHandle: int
-		@param UIAElement: the UI Automation element that should be represented by this NVDAObject
+
+		:param windowHandle: if a UIAElement is not specifically given, then this windowHandle is used to fetch its root UIAElement 
+		:type windowHandle: int
+		:param UIAElement: the UI Automation element that should be represented by this NVDAObject
 		The UI Automation element must have been created with a L{UIAHandler.handler.baseCacheRequest}
-		@type UIAElement: L{UIAHandler.IUIAutomationElement}
-		@param initialUIACachedPropertyIDs: Extra UI Automation properties the given UIAElement has already had cached with a UIA cache request that inherits from L{UIAHandler.handler.baseCacheRequest}.
+		:type UIAElement: L{UIAHandler.IUIAutomationElement}
+		:param initialUIACachedPropertyIDs: Extra UI Automation properties the given UIAElement has already had cached with a UIA cache request that inherits from L{UIAHandler.handler.baseCacheRequest}.
 		Cached values of these properties will be available for the remainder of the current core cycle. After that, new values will be fetched.
-		@type initialUIACachedPropertyIDs: L{UIAHandler.IUIAutomationCacheRequest}
+		:type initialUIACachedPropertyIDs: L{UIAHandler.IUIAutomationCacheRequest}
 		"""
 		if not UIAElement:
 			raise ValueError("needs a UIA element")

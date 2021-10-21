@@ -34,12 +34,13 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	def getResizeFactor(self, width, height):
 		"""Return the factor by which an image must be resized
 		before it is passed to this recognizer.
-		@param width: The width of the image in pixels.
-		@type width: int
-		@param height: The height of the image in pixels.
-		@type height: int
-		@return: The resize factor, C{1} for no resizing.
-		@rtype: int or float
+
+		:param width: The width of the image in pixels.
+		:type width: int
+		:param height: The height of the image in pixels.
+		:type height: int
+		:returns: The resize factor, C{1} for no resizing.
+		:rtype: int or float
 		"""
 		return 1
 
@@ -48,17 +49,18 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		"""Asynchronously recognize content from an image.
 		This method should not block.
 		Only one recognition can be performed at a time.
-		@param pixels: The pixels of the image as a two dimensional array of RGBQUADs.
+
+		:param pixels: The pixels of the image as a two dimensional array of RGBQUADs.
 			For example, to get the red value for the coordinate (1, 2):
 			pixels[2][1].rgbRed
 			This can be treated as raw bytes in BGRA8 format;
 			i.e. four bytes per pixel in the order blue, green, red, alpha.
 			However, the alpha channel should be ignored.
-		@type pixels: Two dimensional array (y then x) of L{winGDI.RGBQUAD}
-		@param imageInfo: Information about the image for recognition.
-		@type imageInfo: L{RecogImageInfo}
-		@param onResult: A callable which takes a L{RecognitionResult} (or an exception on failure) as its only argument.
-		@type onResult: callable
+		:type pixels: Two dimensional array (y then x) of L{winGDI.RGBQUAD}
+		:param imageInfo: Information about the image for recognition.
+		:type imageInfo: L{RecogImageInfo}
+		:param onResult: A callable which takes a L{RecognitionResult} (or an exception on failure) as its only argument.
+		:type onResult: callable
 		"""
 		raise NotImplementedError
 
@@ -75,11 +77,12 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 
 	def validateObject(self, nav):
 		"""Validation to be performed on the navigator object before content recognition
-		@param nav: The navigator object to be validated
-		@type nav: L{NVDAObjects.NVDAObject}
-		@return: C{True} or C{False}, depending on whether the navigator object is valid or not.
+
+		:param nav: The navigator object to be validated
+		:type nav: L{NVDAObjects.NVDAObject}
+		:returns: C{True} or C{False}, depending on whether the navigator object is valid or not.
 			C{True} for no validation.
-		@rtype: bool
+		:rtype: bool
 		"""
 		return True
 
@@ -99,17 +102,18 @@ class RecogImageInfo(object):
 
 	def __init__(self, screenLeft, screenTop, screenWidth, screenHeight, resizeFactor):
 		"""
-		@param screenLeft: The x screen coordinate of the upper-left corner of the image.
-		@type screenLeft: int
-		@param screenTop: The y screen coordinate of the upper-left corner of the image.
-		@type screenTop: int
-		@param screenWidth: The width of the image on the screen.
-		@type screenWidth: int
-		@param screenHeight: The height of the image on the screen.
-		@type screenHeight: int
-		@param resizeFactor: The factor by which the image must be resized for recognition.
-		@type resizeFactor: int or float
-		@raise ValueError: If the supplied screen coordinates indicate that
+
+		:param screenLeft: The x screen coordinate of the upper-left corner of the image.
+		:type screenLeft: int
+		:param screenTop: The y screen coordinate of the upper-left corner of the image.
+		:type screenTop: int
+		:param screenWidth: The width of the image on the screen.
+		:type screenWidth: int
+		:param screenHeight: The height of the image on the screen.
+		:type screenHeight: int
+		:param resizeFactor: The factor by which the image must be resized for recognition.
+		:type resizeFactor: int or float
+		:raises ValueError: If the supplied screen coordinates indicate that
 			the image is not visible; e.g. width or height of 0.
 		"""
 		if screenLeft < 0 or screenTop < 0 or screenWidth <= 0 or screenHeight <= 0:
@@ -165,10 +169,11 @@ class RecognitionResult(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	@abstractmethod
 	def makeTextInfo(self, obj, position) -> BaseContentRecogTextInfo:
 		"""Make a TextInfo within the recognition result text at the requested position.
-		@param obj: The object to return for the C{obj} property of the TextInfo.
+
+		:param obj: The object to return for the C{obj} property of the TextInfo.
 			The TextInfo itself doesn't use this, but NVDA requires it to set the review object, etc.
-		@param position: The requested position; one of the C{textInfos.POSITION_*} constants.
-		@return: The TextInfo at the requested position in the result.
+		:param position: The requested position; one of the C{textInfos.POSITION_*} constants.
+		:returns: The TextInfo at the requested position in the result.
 		"""
 		raise NotImplementedError
 
@@ -185,7 +190,8 @@ class LinesWordsResult(RecognitionResult):
 
 	def __init__(self, data, imageInfo):
 		"""Constructor.
-		@param data: The lines/words data structure. For example:
+
+		:param data: The lines/words data structure. For example:
 			[
 				[
 					{"x": 106, "y": 91, "width": 11, "height": 9, "text": "Word1"},
@@ -196,11 +202,11 @@ class LinesWordsResult(RecognitionResult):
 					{"x": 117, "y": 105, "width": 11, "height": 9, "text": "Word4"}
 				]
 			]
-		@type data: list of lists of dicts
-		@param imageInfo: Information about the recognized image.
+		:type data: list of lists of dicts
+		:param imageInfo: Information about the recognized image.
 			This is used to convert coordinates in the recognized image
 			to screen coordinates.
-		@type imageInfo: L{RecogImageInfo}
+		:type imageInfo: L{RecogImageInfo}
 		"""
 		self.data = data
 		self.imageInfo = imageInfo

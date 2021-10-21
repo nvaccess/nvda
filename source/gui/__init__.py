@@ -63,10 +63,10 @@ class MainFrame(wx.Frame):
 		#: The focus before the last popup or C{None} if unknown.
 		#: This is only valid before L{prePopup} is called,
 		#: so it should be used as early as possible in any popup that needs it.
-		#: @type: L{NVDAObject}
+		#: :type: L{NVDAObject}
 		self.prevFocus = None
 		#: The focus ancestors before the last popup or C{None} if unknown.
-		#: @type: list of L{NVDAObject}
+		#: :type: list of L{NVDAObject}
 		self.prevFocusAncestors = None
 		# If NVDA has the uiAccess privilege, it can always set the foreground window.
 		import systemUtils
@@ -85,7 +85,8 @@ class MainFrame(wx.Frame):
 		"""Prepare for a popup.
 		This should be called before any dialog or menu which should pop up for the user.
 		L{postPopup} should be called after the dialog or menu has been shown.
-		@postcondition: A dialog or menu may be shown.
+
+		.. postcondition: A dialog or menu may be shown.
 		"""
 		nvdaPid = os.getpid()
 		focus = api.getFocusObject()
@@ -578,16 +579,17 @@ def messageBox(message, caption=wx.MessageBoxCaptionStr, style=wx.OK | wx.CENTER
 	"""Display a message dialog.
 	This should be used for all message dialogs
 	rather than using C{wx.MessageDialog} and C{wx.MessageBox} directly.
-	@param message: The message text.
-	@type message: str
-	@param caption: The caption (title) of the dialog.
-	@type caption: str
-	@param style: Same as for wx.MessageBox.
-	@type style: int
-	@param parent: The parent window (optional).
-	@type parent: C{wx.Window}
-	@return: Same as for wx.MessageBox.
-	@rtype: int
+
+	:param message: The message text.
+	:type message: str
+	:param caption: The caption (title) of the dialog.
+	:type caption: str
+	:param style: Same as for wx.MessageBox.
+	:type style: int
+	:param parent: The parent window (optional).
+	:type parent: C{wx.Window}
+	:returns: Same as for wx.MessageBox.
+	:rtype: int
 	"""
 	global isInMessageBox
 	wasAlready = isInMessageBox
@@ -606,10 +608,11 @@ def runScriptModalDialog(dialog, callback=None):
 	This will not block the caller,
 	but will instead call C{callback} (if provided) with the result from the dialog.
 	The dialog will be destroyed once the callback has returned.
-	@param dialog: The dialog to show.
-	@type dialog: C{wx.Dialog}
-	@param callback: The optional callable to call with the result from the dialog.
-	@type callback: callable
+
+	:param dialog: The dialog to show.
+	:type dialog: C{wx.Dialog}
+	:param callback: The optional callable to call with the result from the dialog.
+	:type callback: callable
 	"""
 	def run():
 		mainFrame.prePopup()

@@ -30,25 +30,28 @@ class MathPresentationProvider(object):
 
 	def getSpeechForMathMl(self, mathMl):
 		"""Get speech output for specified MathML markup.
-		@param mathMl: The MathML markup.
-		@type mathMl: str
-		@return: A speech sequence.
-		@rtype: List[str, SpeechCommand]
+
+		:param mathMl: The MathML markup.
+		:type mathMl: str
+		:returns: A speech sequence.
+		:rtype: List[str, SpeechCommand]
 		"""
 		raise NotImplementedError
 
 	def getBrailleForMathMl(self, mathMl):
 		"""Get braille output for specified MathML markup.
-		@param mathMl: The MathML markup.
-		@type mathMl: str
-		@return: A string of Unicode braille.
-		@rtype: unicode
+
+		:param mathMl: The MathML markup.
+		:type mathMl: str
+		:returns: A string of Unicode braille.
+		:rtype: unicode
 		"""
 		raise NotImplementedError
 
 	def interactWithMathMl(self, mathMl):
 		"""Begin interaction with specified MathML markup.
-		@param mathMl: The MathML markup.
+
+		:param mathMl: The MathML markup.
 		"""
 		raise NotImplementedError
 
@@ -60,14 +63,15 @@ interactionProvider: Optional[MathPresentationProvider] = None
 
 def registerProvider(provider, speech=False, braille=False, interaction=False):
 	"""Register a math presentation provider.
-	@param provider: The provider to register.
-	@type provider: L{MathPresentationProvider}
-	@param speech: Whether this provider supports speech output.
-	@type speech: bool
-	@param braille: Whether this provider supports braille output.
-	@type braille: bool
-	@param interaction: Whether this provider supports interaction.
-	@type interaction: bool
+
+	:param provider: The provider to register.
+	:type provider: L{MathPresentationProvider}
+	:param speech: Whether this provider supports speech output.
+	:type speech: bool
+	:param braille: Whether this provider supports braille output.
+	:type braille: bool
+	:param interaction: Whether this provider supports interaction.
+	:type interaction: bool
 	"""
 	global speechProvider, brailleProvider, interactionProvider
 	if speech:
@@ -137,10 +141,11 @@ def stripExtraneousXml(xml):
 def getMathMlFromTextInfo(pos):
 	"""Get MathML (if any) at the start of a TextInfo.
 	The caller need not call L{ensureInit} before calling this function.
-	@param pos: The TextInfo in question.
-	@type pos: L{textInfos.TextInfo}
-	@return: The MathML or C{None} if there is no math.
-	@rtype: str
+
+	:param pos: The TextInfo in question.
+	:type pos: L{textInfos.TextInfo}
+	:returns: The MathML or C{None} if there is no math.
+	:rtype: str
 	"""
 	pos = pos.copy()
 	pos.expand(textInfos.UNIT_CHARACTER)
@@ -162,7 +167,8 @@ def interactWithMathMl(mathMl):
 	If interaction isn't supported, this will be reported to the user.
 	The script should return after calling this function.
 	The caller need not call L{ensureInit} before calling this function.
-	@param mathMl: The MathML markup.
+
+	:param mathMl: The MathML markup.
 	"""
 	ensureInit()
 	if not interactionProvider:
@@ -175,8 +181,9 @@ def interactWithMathMl(mathMl):
 RE_MATH_LANG = re.compile(r"""<math.*? xml:lang=["']([^"']+)["'].*?>""")
 def getLanguageFromMath(mathMl):
 	"""Get the language specified in a math tag.
-	@return: The language or C{None} if unspeicifed.
-	@rtype: str
+
+	:returns: The language or C{None} if unspeicifed.
+	:rtype: str
 	"""
 	m = RE_MATH_LANG.search(mathMl)
 	if m:

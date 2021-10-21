@@ -118,8 +118,9 @@ def setupProfile(
 
 def teardownProfile(stagingDir: str):
 	""" Cleans up the profile directory
-	@todo: this could have an option to preserve the profile for debugging purposes.
-	@param stagingDir: Where the profile was constructed
+
+	#12971 fixup .. todo: this could have an option to preserve the profile for debugging purposes.
+	:param stagingDir: Where the profile was constructed
 	"""
 	builtIn.log("Cleaning up NVDA profile", level='DEBUG')
 	opSys.remove_directory(

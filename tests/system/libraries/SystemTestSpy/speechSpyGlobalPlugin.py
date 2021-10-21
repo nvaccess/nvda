@@ -161,8 +161,9 @@ class NVDASpyLib:
 
 	def get_speech_at_index_until_now(self, speechIndex: int) -> str:
 		""" All speech from (and including) the index until now.
-		@param speechIndex:
-		@return: The speech joined together, see L{_getJoinedBaseStringsFromCommands}
+
+		:param speechIndex:
+		:returns: The speech joined together, see L{_getJoinedBaseStringsFromCommands}
 		"""
 		with self._speechLock:
 			speechCommands = [
@@ -203,8 +204,9 @@ class NVDASpyLib:
 
 	def get_braille_at_index_until_now(self, brailleIndex: int) -> str:
 		""" All raw braille text from (and including) the index until now.
-		@param brailleIndex:
-		@return: The raw text, each update on a new line
+
+		:param brailleIndex:
+		:returns: The raw text, each update on a new line
 		"""
 		with self._brailleLock:
 			rangeOfInterest = self._nvdaBraille_requiresLock[brailleIndex:]
@@ -248,7 +250,8 @@ class NVDASpyLib:
 
 	def init_max_keyword_duration(self, maxSeconds: float):
 		"""This should only be called once, immediately after importing the library.
-		@param maxSeconds: Should match the 'timeout' value given to the `robot.libraries.Remote` instance. If
+
+		:param maxSeconds: Should match the 'timeout' value given to the `robot.libraries.Remote` instance. If
 		this value is greater than the value for the `robot.libraries.Remote` instance it may mean that the test
 		is failed, and NVDA is never exited, requiring manual intervention.
 		Should be set to a large value like '30' (seconds).
@@ -274,7 +277,7 @@ class NVDASpyLib:
 		return self._allSpeechStartIndex
 
 	def get_next_speech_index(self) -> int:
-		""" @return: the next index that will be used.
+		""" :returns: the next index that will be used.
 		"""
 		return self.get_last_speech_index() + 1
 
@@ -285,10 +288,11 @@ class NVDASpyLib:
 			maxWaitSeconds: int = 5,
 	) -> int:
 		"""
-		@param speech: The speech to expect.
-		@param afterIndex: The speech should come after this index. The index is exclusive.
-		@param maxWaitSeconds: The amount of time to wait in seconds.
-		@return: the index of the speech.
+
+		:param speech: The speech to expect.
+		:param afterIndex: The speech should come after this index. The index is exclusive.
+		:param maxWaitSeconds: The amount of time to wait in seconds.
+		:returns: the index of the speech.
 		"""
 		success, speechIndex = _blockUntilConditionMet(
 			getValue=lambda: self._getIndexOfSpeech(speech, afterIndex),
@@ -322,7 +326,8 @@ class NVDASpyLib:
 			maxWaitSeconds=5.0,
 	):
 		"""Wait until there is at least a single update.
-		@note there may be subsequent braille updates. This method does not confirm updates are finished.
+
+		.. note there may be subsequent braille updates. This method does not confirm updates are finished.
 		"""
 		_blockUntilConditionMet(
 			getValue=lambda: self.get_last_braille_index() == nextBrailleIndex,
@@ -334,7 +339,7 @@ class NVDASpyLib:
 		return self._getBrailleAtIndex(-1)
 
 	def get_next_braille_index(self) -> int:
-		""" @return: the next index that will be used.
+		""" :returns: the next index that will be used.
 		"""
 		return self.get_last_braille_index() + 1
 
@@ -344,7 +349,8 @@ class NVDASpyLib:
 		The key press will either result in a script being executed, or the key being sent on to the OS.
 		By default this method will block until any script resulting from this key has been executed,
 		and the NVDA core has again gone back to sleep.
-		@param kbIdentifier: an NVDA keyboard gesture identifier.
+
+		:param kbIdentifier: an NVDA keyboard gesture identifier.
 		0 or more modifier keys followed by a main key, all separated by a plus (+) symbol.
 		E.g. control+shift+downArrow.
 		See vkCodes.py in the NVDA source directory for valid key names.

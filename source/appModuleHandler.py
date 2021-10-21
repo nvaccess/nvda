@@ -6,8 +6,8 @@
 # See the file COPYING for more details.
 
 """Manages appModules.
-@var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
-@type runningTable: dict
+:var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
+:type runningTable: dict
 """
 
 import itertools
@@ -64,12 +64,13 @@ class processEntry32W(ctypes.Structure):
 
 def getAppNameFromProcessID(processID,includeExt=False):
 	"""Finds out the application name of the given process.
-	@param processID: the ID of the process handle of the application you wish to get the name of.
-	@type processID: int
-	@param includeExt: C{True} to include the extension of the application's executable filename, C{False} to exclude it.
-	@type window: bool
-	@returns: application name
-	@rtype: str
+
+	:param processID: the ID of the process handle of the application you wish to get the name of.
+	:type processID: int
+	:param includeExt: C{True} to include the extension of the application's executable filename, C{False} to exclude it.
+	:type window: bool
+	:returns: application name
+	:rtype: str
 	"""
 	if processID==NVDAProcessID:
 		return "nvda.exe" if includeExt else "nvda"
@@ -105,10 +106,11 @@ def getAppModuleForNVDAObject(obj):
 
 def getAppModuleFromProcessID(processID):
 	"""Finds the appModule that is for the given process ID. The module is also cached for later retreavals.
-	@param processID: The ID of the process for which you wish to find the appModule.
-	@type processID: int
-	@returns: the appModule, or None if there isn't one
-	@rtype: appModule 
+
+	:param processID: The ID of the process for which you wish to find the appModule.
+	:type processID: int
+	:returns: the appModule, or None if there isn't one
+	:rtype: appModule 
 	"""
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
@@ -123,10 +125,11 @@ def getAppModuleFromProcessID(processID):
 
 def update(processID,helperLocalBindingHandle=None,inprocRegistrationHandle=None):
 	"""Tries to load a new appModule for the given process ID if need be.
-	@param processID: the ID of the process.
-	@type processID: int
-	@param helperLocalBindingHandle: an optional RPC binding handle pointing to the RPC server for this process
-	@param inprocRegistrationHandle: an optional rpc context handle representing successful registration with the rpc server for this process
+
+	:param processID: the ID of the process.
+	:type processID: int
+	:param helperLocalBindingHandle: an optional RPC binding handle pointing to the RPC server for this process
+	:param inprocRegistrationHandle: an optional rpc context handle representing successful registration with the rpc server for this process
 	"""
 	# This creates a new app module if necessary.
 	mod=getAppModuleFromProcessID(processID)
@@ -156,12 +159,13 @@ def doesAppModuleExist(name):
 
 def fetchAppModule(processID,appName):
 	"""Returns an appModule found in the appModules directory, for the given application name.
-	@param processID: process ID for it to be associated with
-	@type processID: integer
-	@param appName: the application name for which an appModule should be found.
-	@type appName: str
-	@returns: the appModule, or None if not found
-	@rtype: AppModule
+
+	:param processID: process ID for it to be associated with
+	:type processID: integer
+	:param appName: the application name for which an appModule should be found.
+	:type appName: str
+	:returns: the appModule, or None if not found
+	:rtype: AppModule
 	"""  
 	# First, check whether the module exists.
 	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
@@ -331,18 +335,18 @@ class AppModule(baseObject.ScriptableObject):
 
 	#: Whether NVDA should sleep while in this application (e.g. the application is self-voicing).
 	#: If C{True}, all  events and script requests inside this application are silently dropped.
-	#: @type: bool
+	#: :type: bool
 	sleepMode=False
 
 	def __init__(self,processID,appName=None):
 		super(AppModule,self).__init__()
 		#: The ID of the process this appModule is for.
-		#: @type: int
+		#: :type: int
 		self.processID=processID
 		if appName is None:
 			appName=getAppNameFromProcessID(processID)
 		#: The application name.
-		#: @type: str
+		#: :type: str
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
 		self.helperLocalBindingHandle=None
@@ -444,17 +448,19 @@ class AppModule(baseObject.ScriptableObject):
 		This is called when an NVDAObject is being instantiated after L{NVDAObjects.NVDAObject.findOverlayClasses} has been called on the API-level class.
 		This allows an AppModule to add or remove overlay classes.
 		See L{NVDAObjects.NVDAObject.findOverlayClasses} for details about overlay classes.
-		@param obj: The object being created.
-		@type obj: L{NVDAObjects.NVDAObject}
-		@param clsList: The list of classes, which will be modified by this method if appropriate.
-		@type clsList: list of L{NVDAObjects.NVDAObject}
+
+		:param obj: The object being created.
+		:type obj: L{NVDAObjects.NVDAObject}
+		:param clsList: The list of classes, which will be modified by this method if appropriate.
+		:type clsList: list of L{NVDAObjects.NVDAObject}
 		"""
 	# optimisation: Make it easy to detect that this hasn't been overridden.
 	chooseNVDAObjectOverlayClasses._isBase = True
 
 	def _get_appPath(self):
 		"""Returns the full path for the executable e.g. 'C:\\Windows\\explorer.exe' for Explorer.
-		@rtype: str
+
+		:rtype: str
 		"""
 		size = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
 		path = ctypes.create_unicode_buffer(size.value)
@@ -464,7 +470,8 @@ class AppModule(baseObject.ScriptableObject):
 
 	def _get_is64BitProcess(self):
 		"""Whether the underlying process is a 64 bit process.
-		@rtype: bool
+
+		:rtype: bool
 		"""
 		if os.environ.get("PROCESSOR_ARCHITEW6432") not in ("AMD64","ARM64"):
 			# This is 32 bit Windows.
@@ -497,7 +504,8 @@ class AppModule(baseObject.ScriptableObject):
 		A special case is a converted desktop app distributed on Microsoft Store.
 		Not all immersive apps are packaged as a true Store app with a package info
 		e.g. File Explorer reports itself as immersive when it is not.
-		@rtype: bool
+
+		:rtype: bool
 		"""
 		if winVersion.getWinVer() < winVersion.WIN8:
 			# Windows Store/UWP apps were introduced in Windows 8.
@@ -520,7 +528,8 @@ class AppModule(baseObject.ScriptableObject):
 		* AMD64: x64 app on x64 or ARM64 Windows.
 		* ARM: 32-bit ARM app on ARM64 Windows.
 		* ARM64: 64-bit ARM app on ARM64 Windows.
-		@rtype: str
+
+		:rtype: str
 		"""
 		# Details: https://docs.microsoft.com/en-us/windows/desktop/SysInfo/image-file-machine-constants
 		# The only value missing is ARM64 (AA64)
@@ -595,7 +604,8 @@ class AppModule(baseObject.ScriptableObject):
 		If C{None} is returned, L{GlobalCommands.script_reportStatusLine} will
 		in turn resort to reading the bottom line of text written to the
 		display.
-		@rtype: NVDAObject
+
+		:rtype: NVDAObject
 		"""
 		raise NotImplementedError()
 
@@ -605,7 +615,8 @@ class AppModule(baseObject.ScriptableObject):
 		L{api.getStatusBar} could not locate a proper L{NVDAObject} for the
 		status bar.
 		For this method to get called, L{_get_statusBar} must return C{None}.
-		@rtype: TextInfo
+
+		:rtype: TextInfo
 		"""
 		raise NotImplementedError()
 
@@ -620,10 +631,11 @@ def getWmiProcessInfo(processId):
 	"""Retrieve the WMI Win32_Process class instance for a given process.
 	For details about the available properties, see
 	http://msdn.microsoft.com/en-us/library/aa394372%28v=vs.85%29.aspx
-	@param processId: The id of the process in question.
-	@type processId: int
-	@return: The WMI Win32_Process class instance.
-	@raise LookupError: If there was an error retrieving the instance.
+
+	:param processId: The id of the process in question.
+	:type processId: int
+	:returns: The WMI Win32_Process class instance.
+	:raises LookupError: If there was an error retrieving the instance.
 	"""
 	try:
 		wmi = comtypes.client.CoGetObject(r"winmgmts:root\cimv2", dynamic=True)

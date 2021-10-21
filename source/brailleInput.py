@@ -35,10 +35,10 @@ DOT8 = 1 << 7
 #: This bit flag must be added to all braille cells when using liblouis with dotsIO.
 LOUIS_DOTS_IO_START = 0x8000
 #: The start of the Unicode braille range.
-#: @type: int
+#: :type: int
 UNICODE_BRAILLE_START = 0x2800
 #: The Unicode braille character to use when masking cells in protected fields.
-#: @type: str
+#: :type: str
 UNICODE_BRAILLE_PROTECTED = u"⣿" # All dots down
 
 
@@ -97,7 +97,8 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def _get_table(self):
 		"""The translation table to use for braille input.
-		@rtype: L{brailleTables.BrailleTable}
+
+		:rtype: L{brailleTables.BrailleTable}
 		"""
 		return self._table
 
@@ -121,8 +122,9 @@ class BrailleInputHandler(AutoPropertyObject):
 	def _translate(self, endWord: bool) -> bool:
 		"""Translate buffered braille up to the cursor.
 		Any text produced is sent to the system.
-		@param endWord: C{True} if this is the end of a word, C{False} otherwise.
-		@return: C{True} if translation produced text, C{False} if not.
+
+		:param endWord: C{True} if this is the end of a word, C{False} otherwise.
+		:returns: C{True} if translation produced text, C{False} if not.
 		"""
 		assert not self.useContractedForCurrentFocus or endWord, "Must only translate contracted at end of word"
 		if self.useContractedForCurrentFocus:
@@ -178,8 +180,9 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def _translateForReportContractedCell(self, pos):
 		"""Translate text for current input as required by L{_reportContractedCell}.
-		@return: The previous translated text.
-		@rtype: str
+
+		:returns: The previous translated text.
+		:rtype: str
 		"""
 		cells = self.bufferBraille[:pos + 1]
 		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
@@ -197,8 +200,9 @@ class BrailleInputHandler(AutoPropertyObject):
 		However, it's helpful for the user to have a rough idea.
 		For example, in English contracted braille, "alw" is the contraction for "always".
 		As the user types "alw", the characters a, l, w will be spoken.
-		@return: C{True} if a guess was reported, C{False} if not (e.g. a number sign).
-		@rtype: bool
+
+		:returns: C{True} if a guess was reported, C{False} if not (e.g. a number sign).
+		:rtype: bool
 		"""
 		oldText = self._translateForReportContractedCell(pos)
 		oldTextLen = len(oldText)
@@ -369,7 +373,8 @@ class BrailleInputHandler(AutoPropertyObject):
 		"""Emulates a key using the keyboard emulation system.
 		If emulation fails (e.g. because of an unknown key), a debug warning is logged
 		and the system falls back to sending unicode characters.
-		@param withModifiers: Whether this key emulation should include the modifiers that are held virtually.
+
+		:param withModifiers: Whether this key emulation should include the modifiers that are held virtually.
 			Note that this method does not take care of clearing L{self.currentModifiers}.
 		"""
 		if withModifiers:
@@ -387,7 +392,8 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def sendChars(self, chars: str):
 		"""Sends the provided unicode characters to the system.
-		@param chars: The characters to send to the system.
+
+		:param chars: The characters to send to the system.
 		"""
 		inputs = []
 		chars = ''.join(
@@ -472,11 +478,11 @@ class BrailleInputGesture(inputCore.InputGesture):
 	"""
 
 	#: Bitmask of pressed dots.
-	#: @type: int
+	#: :type: int
 	dots = 0
 
 	#: Whether the space bar is pressed.
-	#: @type: bool
+	#: :type: bool
 	space = False
 
 	shouldPreventSystemIdle = True

@@ -45,12 +45,13 @@ class DeviceMatch(
 	namedtuple("DeviceMatch", ("type","id", "port", "deviceInfo"))
 ):
 	"""Represents a detected device.
-	@ivar id: The identifier of the device.
-	@type id: str
-	@ivar port: The port that can be used by a driver to communicate with a device.
-	@type port: str
-	@ivar deviceInfo: all known information about a device.
-	@type deviceInfo: dict
+
+	:var id: The identifier of the device.
+	:type id: str
+	:var port: The port that can be used by a driver to communicate with a device.
+	:type port: str
+	:var deviceInfo: all known information about a device.
+	:type deviceInfo: dict
 	"""
 	__slots__ = ()
 
@@ -80,14 +81,15 @@ def _getDriver(driver):
 
 def addUsbDevices(driver, type, ids):
 	"""Associate USB devices with a driver.
-	@param driver: The name of the driver.
-	@type driver: str
-	@param type: The type of the driver, either C{KEY_HID}, C{KEY_SERIAL} or C{KEY_CUSTOM}.
-	@type type: str
-	@param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
+
+	:param driver: The name of the driver.
+	:type driver: str
+	:param type: The type of the driver, either C{KEY_HID}, C{KEY_SERIAL} or C{KEY_CUSTOM}.
+	:type type: str
+	:param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
 		Note that alphabetical characters in hexadecimal numbers should be uppercase.
-	@type ids: set of str
-	@raise ValueError: When one of the provided IDs is malformed.
+	:type ids: set of str
+	:raises ValueError: When one of the provided IDs is malformed.
 	"""
 	malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 	if malformedIds:
@@ -99,20 +101,22 @@ def addUsbDevices(driver, type, ids):
 
 def addBluetoothDevices(driver, matchFunc):
 	"""Associate Bluetooth HID or COM ports with a driver.
-	@param driver: The name of the driver.
-	@type driver: str
-	@param matchFunc: A function which determines whether a given Bluetooth device matches.
+
+	:param driver: The name of the driver.
+	:type driver: str
+	:param matchFunc: A function which determines whether a given Bluetooth device matches.
 		It takes a L{DeviceMatch} as its only argument
 		and returns a C{bool} indicating whether it matched.
-	@type matchFunc: callable
+	:type matchFunc: callable
 	"""
 	devs = _getDriver(driver)
 	devs[KEY_BLUETOOTH] = matchFunc
 
 def getDriversForConnectedUsbDevices():
 	"""Get any matching drivers for connected USB devices.
-	@return: Pairs of drivers and device information.
-	@rtype: generator of (str, L{DeviceMatch}) tuples
+
+	:returns: Pairs of drivers and device information.
+	:rtype: generator of (str, L{DeviceMatch}) tuples
 	"""
 	usbDevs = itertools.chain(
 		(DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
@@ -133,8 +137,9 @@ def getDriversForConnectedUsbDevices():
 
 def getDriversForPossibleBluetoothDevices():
 	"""Get any matching drivers for possible Bluetooth devices.
-	@return: Pairs of drivers and port information.
-	@rtype: generator of (str, L{DeviceMatch}) tuples
+
+	:returns: Pairs of drivers and port information.
+	:rtype: generator of (str, L{DeviceMatch}) tuples
 	"""
 	btDevs = itertools.chain(
 		(DeviceMatch(KEY_SERIAL, port["bluetoothName"], port["port"], port)
@@ -168,7 +173,7 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 		return list(hwPortUtils.listHidDevices(onlyAvailable=True))
 
 #: The single instance of the device info fetcher.
-#: @type: L{_DeviceInfoFetcher}
+#: :type: L{_DeviceInfoFetcher}
 deviceInfoFetcher = _DeviceInfoFetcher()
 
 class Detector(object):
@@ -180,11 +185,12 @@ class Detector(object):
 		"""Constructor.
 		The keyword arguments initialize the detector in a particular state.
 		On an initialized instance, these initial arguments can be overridden by calling L{_startBgScan} or L{rescan}.
-		@param usb: Whether this instance should detect USB devices initially.
-		@type usb: bool
-		@param bluetooth: Whether this instance should detect Bluetooth devices initially.
-		@type bluetooth: bool
-		@param limitToDevices: Drivers to which detection should be limited initially.
+
+		:param usb: Whether this instance should detect USB devices initially.
+		:type usb: bool
+		:param bluetooth: Whether this instance should detect Bluetooth devices initially.
+		:type bluetooth: bool
+		:param limitToDevices: Drivers to which detection should be limited initially.
 			C{None} if no driver filtering should occur.
 		"""
 		self._BgScanApc = winKernel.PAPCFUNC(self._bgScan)
@@ -218,11 +224,12 @@ class Detector(object):
 		"""Starts a scan for devices.
 		If a scan is already in progress, a new scan will be queued after the current scan.
 		To explicitely cancel a scan in progress, use L{rescan}.
-		@param usb: Whether USB devices should be detected for this and subsequent scans.
-		@type usb: bool
-		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
-		@type bluetooth: bool
-		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
+
+		:param usb: Whether USB devices should be detected for this and subsequent scans.
+		:type usb: bool
+		:param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
+		:type bluetooth: bool
+		:param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
 			C{None} if no driver filtering should occur.
 		"""
 		with self._queuedScanLock:
@@ -294,11 +301,12 @@ class Detector(object):
 
 	def rescan(self, usb=True, bluetooth=True, limitToDevices=None):
 		"""Stop a current scan when in progress, and start scanning from scratch.
-		@param usb: Whether USB devices should be detected for this and subsequent scans.
-		@type usb: bool
-		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
-		@type bluetooth: bool
-		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
+
+		:param usb: Whether USB devices should be detected for this and subsequent scans.
+		:type usb: bool
+		:param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
+		:type bluetooth: bool
+		:param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
 			C{None} if no driver filtering should occur.
 		"""
 		self._stopBgScan()
@@ -329,10 +337,11 @@ class Detector(object):
 
 def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	"""Get any connected USB devices associated with a particular driver.
-	@param driver: The name of the driver.
-	@type driver: str
-	@return: Device information for each device.
-	@raise LookupError: If there is no detection data for this driver.
+
+	:param driver: The name of the driver.
+	:type driver: str
+	:returns: Device information for each device.
+	:raises LookupError: If there is no detection data for this driver.
 	"""
 	usbDevs = itertools.chain(
 		(DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
@@ -355,10 +364,11 @@ def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 
 def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	"""Get any possible Bluetooth devices associated with a particular driver.
-	@param driver: The name of the driver.
-	@type driver: str
-	@return: Port information for each port.
-	@raise LookupError: If there is no detection data for this driver.
+
+	:param driver: The name of the driver.
+	:type driver: str
+	:returns: Port information for each port.
+	:raises LookupError: If there is no detection data for this driver.
 	"""
 	if driver == "hid":
 		# check for the Braille HID protocol before any other device matching.
@@ -381,11 +391,12 @@ def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 
 def driverHasPossibleDevices(driver):
 	"""Determine whether there are any possible devices associated with a given driver.
-	@param driver: The name of the driver.
-	@type driver: str
-	@return: C{True} if there are possible devices, C{False} otherwise.
-	@rtype: bool
-	@raise LookupError: If there is no detection data for this driver.
+
+	:param driver: The name of the driver.
+	:type driver: str
+	:returns: C{True} if there are possible devices, C{False} otherwise.
+	:rtype: bool
+	:raises LookupError: If there is no detection data for this driver.
 	"""
 	return bool(next(itertools.chain(
 		getConnectedUsbDevicesForDriver(driver),
@@ -394,10 +405,11 @@ def driverHasPossibleDevices(driver):
 
 def driverSupportsAutoDetection(driver):
 	"""Returns whether the provided driver supports automatic detection of displays.
-	@param driver: The name of the driver.
-	@type driver: str
-	@return: C{True} if de driver supports auto detection, C{False} otherwise.
-	@rtype: bool
+
+	:param driver: The name of the driver.
+	:type driver: str
+	:returns: C{True} if de driver supports auto detection, C{False} otherwise.
+	:rtype: bool
 	"""
 	return driver in _driverDevices
 

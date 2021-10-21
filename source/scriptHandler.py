@@ -181,10 +181,11 @@ def executeScript(script,gesture):
 	"""Executes a given script (function) passing it the given gesture.
 	It also keeps track of the execution of duplicate scripts with in a certain amount of time, and counts how many times this happens.
 	Use L{getLastScriptRepeatCount} to find out this count value.
-	@param script: the function or method that should be executed. The function or method must take an argument of 'gesture'. This must be the same value as gesture.script, but its passed in here purely for performance. 
-	@type script: callable.
-	@param gesture: the input gesture that activated this script
-	@type gesture: L{inputCore.InputGesture}
+
+	:param script: the function or method that should be executed. The function or method must take an argument of 'gesture'. This must be the same value as gesture.script, but its passed in here purely for performance. 
+	:type script: callable.
+	:param gesture: the input gesture that activated this script
+	:type gesture: L{inputCore.InputGesture}
 	"""
 	global _lastScriptTime, _lastScriptCount, _lastScriptRef, _isScriptRunning 
 	lastScriptRef=_lastScriptRef() if _lastScriptRef else None
@@ -216,8 +217,9 @@ def executeScript(script,gesture):
 def getLastScriptRepeatCount():
 	"""The count of how many times the most recent script has been executed.
 	This should only be called from with in a script.
-	@returns: a value greater or equal to 0. If the script has not been repeated it is 0, if it has been repeated once its 1, and so forth.
-	@rtype: integer
+
+	:returns: a value greater or equal to 0. If the script has not been repeated it is 0, if it has been repeated once its 1, and so forth.
+	:rtype: integer
 	"""
 	if (time.time()-_lastScriptTime)>0.5:
 		return 0
@@ -253,14 +255,15 @@ def script(
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
 	It can only decorate methods which name start swith "script_"
-	@param description: A short translatable description of the script to be used in the gesture editor, etc.
-	@param category: The category of the script displayed in the gesture editor.
-	@param gesture: A gesture associated with this script.
-	@param gestures: A list of gestures associated with this script
-	@param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
-	@param bypassInputHelp: Whether this script should run when input help is active.
-	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
-	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
+
+	:param description: A short translatable description of the script to be used in the gesture editor, etc.
+	:param category: The category of the script displayed in the gesture editor.
+	:param gesture: A gesture associated with this script.
+	:param gestures: A list of gestures associated with this script
+	:param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
+	:param bypassInputHelp: Whether this script should run when input help is active.
+	:param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
+	:param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
 	One of the C{sayAll.CURSOR_*} constants.
 	"""
 	if gestures is None:

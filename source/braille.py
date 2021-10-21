@@ -304,19 +304,19 @@ RegionWithPositions = collections.namedtuple("RegionWithPositions",("region","st
 
 #: Automatic constant to be used by braille displays that support the "automatic" port
 #: and automatic braille display detection
-#: @type: tuple
+#: :type: tuple
 # Translators: String representing automatic port selection for braille displays.
 AUTOMATIC_PORT = ("auto", _("Automatic"))
 #: Used in place of a specific braille display driver name to indicate that
 #: braille displays should be automatically detected and used.
-#: @type: str
+#: :type: str
 AUTO_DISPLAY_NAME = AUTOMATIC_PORT[0]
 #: A port name which indicates that USB should be used.
-#: @type: tuple
+#: :type: tuple
 # Translators: String representing the USB port selection for braille displays.
 USB_PORT =  ("usb", _("USB"))
 #: A port name which indicates that Bluetooth should be used.
-#: @type: tuple
+#: :type: tuple
 # Translators: String representing the Bluetooth port selection for braille displays.
 BLUETOOTH_PORT =  ("bluetooth", _("Bluetooth"))
 
@@ -344,9 +344,10 @@ def _getDisplayDriver(moduleName, caseSensitive=True):
 
 def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	"""Gets a list of available display driver names with their descriptions.
-	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
-	@type excludeNegativeChecks: bool
-	@return: list of tuples with driver names and descriptions.
+
+	:param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
+	:type excludeNegativeChecks: bool
+	:returns: list of tuples with driver names and descriptions.
 	"""
 	displayList = []
 	# The display that should be placed at the end of the list.
@@ -387,40 +388,40 @@ class Region(object):
 		#: The original, raw text of this region.
 		self.rawText = ""
 		#: The position of the cursor in L{rawText}, C{None} if the cursor is not in this region.
-		#: @type: int
+		#: :type: int
 		self.cursorPos = None
 		#: The start of the selection in L{rawText} (inclusive), C{None} if there is no selection in this region.
-		#: @type: int
+		#: :type: int
 		self.selectionStart = None
 		#: The end of the selection in L{rawText} (exclusive), C{None} if there is no selection in this region.
-		#: @type: int
+		#: :type: int
 		self.selectionEnd = None
 		#: The translated braille representation of this region.
-		#: @type: [int, ...]
+		#: :type: [int, ...]
 		self.brailleCells = []
 		#: liblouis typeform flags for each character in L{rawText},
 		#: C{None} if no typeform info.
-		#: @type: [int, ...]
+		#: :type: [int, ...]
 		self.rawTextTypeforms = None
 		#: A list mapping positions in L{rawText} to positions in L{brailleCells}.
-		#: @type: [int, ...]
+		#: :type: [int, ...]
 		self.rawToBraillePos = []
 		#: A list mapping positions in L{brailleCells} to positions in L{rawText}.
-		#: @type: [int, ...]
+		#: :type: [int, ...]
 		self.brailleToRawPos = []
 		#: The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region.
 		self.brailleCursorPos: Optional[int] = None
 		#: The position of the selection start in L{brailleCells}, C{None} if there is no selection in this region.
-		#: @type: int
+		#: :type: int
 		self.brailleSelectionStart = None
 		#: The position of the selection end in L{brailleCells}, C{None} if there is no selection in this region.
-		#: @type: int
+		#: :type: int
 		self.brailleSelectionEnd = None
 		#: Whether to hide all previous regions.
-		#: @type: bool
+		#: :type: bool
 		self.hidePreviousRegions = False
 		#: Whether this region should be positioned at the absolute left of the display when focused.
-		#: @type: bool
+		#: :type: bool
 		self.focusToHardLeft = False
 
 	def update(self):
@@ -430,7 +431,8 @@ class Region(object):
 		Typeform information from L{rawTextTypeforms} is used, if any.
 		L{rawToBraillePos} and L{brailleToRawPos} are updated according to the translation.
 		L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are similarly updated based on L{cursorPos}, L{selectionStart} and L{selectionEnd}, respectively.
-		@postcondition: L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are updated and ready for rendering.
+
+		.. postcondition: L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are updated and ready for rendering.
 		"""
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
@@ -459,9 +461,10 @@ class Region(object):
 	def routeTo(self, braillePos):
 		"""Handle a cursor routing request.
 		For example, this might activate an object or move the cursor to the requested position.
-		@param braillePos: The routing position in L{brailleCells}.
-		@type braillePos: int
-		@note: If routing the cursor, L{brailleToRawPos} can be used to translate L{braillePos} into a position in L{rawText}.
+
+		:param braillePos: The routing position in L{brailleCells}.
+		:type braillePos: int
+		.. note: If routing the cursor, L{brailleToRawPos} can be used to translate L{braillePos} into a position in L{rawText}.
 		"""
 
 	def nextLine(self):
@@ -470,8 +473,9 @@ class Region(object):
 
 	def previousLine(self, start=False):
 		"""Move to the previous line if possible.
-		@param start: C{True} to move to the start of the line, C{False} to move to the end.
-		@type start: bool
+
+		:param start: C{True} to move to the start of the line, C{False} to move to the end.
+		:type start: bool
 		"""
 
 class TextRegion(Region):
@@ -602,10 +606,11 @@ class NVDAObjectRegion(Region):
 
 	def __init__(self, obj, appendText=""):
 		"""Constructor.
-		@param obj: The associated NVDAObject.
-		@type obj: L{NVDAObjects.NVDAObject}
-		@param appendText: Text which should always be appended to the NVDAObject text, useful if this region will always precede other regions.
-		@type appendText: str
+
+		:param obj: The associated NVDAObject.
+		:type obj: L{NVDAObjects.NVDAObject}
+		:param appendText: Text which should always be appended to the NVDAObject text, useful if this region will always precede other regions.
+		:type appendText: str
 		"""
 		super(NVDAObjectRegion, self).__init__()
 		self.obj = obj
@@ -803,16 +808,17 @@ def getControlFieldBraille(  # noqa: C901
 
 def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	"""Generates the braille text for the given format field.
-	@param field: The format field to examine.
-	@type field: {str : str, ...}
-	@param fieldCache: The format field of the previous run; i.e. the cached format field.
-	@type fieldCache: {str : str, ...}
-	@param isAtStart: True if this format field precedes any text in the line/paragraph.
+
+	:param field: The format field to examine.
+	:type field: {str : str, ...}
+	:param fieldCache: The format field of the previous run; i.e. the cached format field.
+	:type fieldCache: {str : str, ...}
+	:param isAtStart: True if this format field precedes any text in the line/paragraph.
 	This is useful to restrict display of information which should only appear at the start of the line/paragraph;
 	e.g. the line number or line prefix (list bullet/number).
-	@type isAtStart: bool
-	@param formatConfig: The formatting config.
-	@type formatConfig: {str : bool, ...}
+	:type isAtStart: bool
+	:param formatConfig: The formatting config.
+	:type formatConfig: {str : bool, ...}
 	"""
 	textList = []
 	if isAtStart:
@@ -885,8 +891,9 @@ class TextInfoRegion(Region):
 	def _getSelection(self):
 		"""Retrieve the selection.
 		If there is no selection, retrieve the collapsed cursor.
-		@return: The selection.
-		@rtype: L{textInfos.TextInfo}
+
+		:returns: The selection.
+		:rtype: L{textInfos.TextInfo}
 		"""
 		try:
 			return self.obj.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -895,8 +902,9 @@ class TextInfoRegion(Region):
 
 	def _setCursor(self, info):
 		"""Set the cursor.
-		@param info: The range to which the cursor should be moved.
-		@type info: L{textInfos.TextInfo}
+
+		:param info: The range to which the cursor should be moved.
+		:type info: L{textInfos.TextInfo}
 		"""
 		try:
 			info.updateCaret()
@@ -1261,18 +1269,18 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def __init__(self, handler):
 		self.handler = handler
 		#: The regions in this buffer.
-		#: @type: [L{Region}, ...]
+		#: :type: [L{Region}, ...]
 		self.regions = []
 		#: The raw text of the entire buffer.
 		self.rawText = ""
 		#: The position of the cursor in L{brailleCells}, C{None} if no region contains the cursor.
-		#: @type: int
+		#: :type: int
 		self.cursorPos = None
 		#: The translated braille representation of the entire buffer.
-		#: @type: [int, ...]
+		#: :type: [int, ...]
 		self.brailleCells = []
 		#: The position in L{brailleCells} where the display window starts (inclusive).
-		#: @type: int
+		#: :type: int
 		self.windowStartPos = 0
 
 	def clear(self):
@@ -1303,8 +1311,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			start = end
 
 	def _get_rawToBraillePos(self):
-		"""@return: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer.
-		@rtype: [int, ...]
+		""":returns: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer.
+
+		:rtype: [int, ...]
 		"""
 		rawToBraillePos = []
 		for region, regionStart, regionEnd in self.regionsWithPositions:
@@ -1314,8 +1323,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	brailleToRawPos: List[int]
 
 	def _get_brailleToRawPos(self):
-		"""@return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
-		@rtype: [int, ...]
+		""":returns: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
+
+		:rtype: [int, ...]
 		"""
 		brailleToRawPos = []
 		start = 0
@@ -1477,8 +1487,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""Bring the specified region into focus.
 		The region is placed at the start of the display.
 		However, if the region has not set L{Region.focusToHardLeft} and there is extra space at the end of the display, the display is scrolled left so that as much as possible is displayed.
-		@param region: The region to focus.
-		@type region: L{Region}
+
+		:param region: The region to focus.
+		:type region: L{Region}
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
@@ -1549,14 +1560,16 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		The window start position is saved as a position relative to a region.
 		This allows it to be restored even after other regions are added, removed or updated.
 		It can be restored with L{restoreWindow}.
-		@postcondition: The window is saved and can be restored with L{restoreWindow}.
+
+		.. postcondition: The window is saved and can be restored with L{restoreWindow}.
 		"""
 		self._savedWindow = self.bufferPosToRegionPos(self.windowStartPos)
 
 	def restoreWindow(self):
 		"""Restore the window saved by L{saveWindow}.
-		@precondition: L{saveWindow} has been called.
-		@postcondition: If the saved position is valid, the window is restored.
+
+		.. precondition: L{saveWindow} has been called.
+		.. postcondition: If the saved position is valid, the window is restored.
 			Otherwise, the nearest position is restored.
 		"""
 		region, pos = self._savedWindow
@@ -1567,8 +1580,9 @@ def invalidateCachedFocusAncestors(index):
 	"""Invalidate cached focus ancestors from a given index.
 	This will cause regions to be generated for the focus ancestors >= index next time L{getFocusContextRegions} is called,
 	rather than using cached regions for those ancestors.
-	@param index: The index from which cached focus ancestors should be invalidated.
-	@type index: int
+
+	:param index: The index from which cached focus ancestors should be invalidated.
+	:type index: int
 	"""
 	global _cachedFocusAncestorsEnd
 	# There could be multiple calls to this function before getFocusContextRegions() is called.
@@ -1676,8 +1690,9 @@ def formatCellsForLog(cells: List[int]) -> str:
 	"""Formats a sequence of braille cells so that it is suitable for logging.
 	The output contains the dot numbers for each cell, with each cell separated by a space.
 	A C{-} indicates an empty cell.
-	@param cells: The cells to format.
-	@return: The formatted cells.
+
+	:param cells: The cells to format.
+	:returns: The formatted cells.
 	"""
 	# optimisation: This gets called a lot, so needs to be as efficient as possible.
 	# List comprehensions without function calls are faster than loops.
@@ -1950,7 +1965,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		The timeout will be reset if the user scrolls the display.
 		The message will be dismissed immediately if the user presses a cursor routing key.
 		If a key is pressed the message will be dismissed by the next text being written to the display.
-		@postcondition: The message is displayed.
+
+		.. postcondition: The message is displayed.
 		"""
 		if not self.enabled or config.conf["braille"]["messageTimeout"] == 0 or text is None:
 			return
@@ -1968,7 +1984,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _resetMessageTimer(self):
 		"""Reset the message timeout.
-		@precondition: A message is currently being displayed.
+
+		.. precondition: A message is currently being displayed.
 		"""
 		if config.conf["braille"]["noMessageTimeout"]:
 			return
@@ -1981,8 +1998,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _dismissMessage(self):
 		"""Dismiss the current message.
-		@precondition: A message is currently being displayed.
-		@postcondition: The display returns to the main buffer.
+
+		.. precondition: A message is currently being displayed.
+		.. postcondition: The display returns to the main buffer.
 		"""
 		self.buffer.clear()
 		self.buffer = self.mainBuffer
@@ -2333,7 +2351,8 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	These gestures can be mapped in L{gestureMap}.
 	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
 
-	@see: L{hwIo} for raw serial and HID I/O.
+
+	.. see: L{hwIo} for raw serial and HID I/O.
 
 	There are factory functions to create L{autoSettingsUtils.driverSetting.DriverSetting} instances
 	for common display specific settings; e.g. L{DotFirmnessSetting}.
@@ -2348,13 +2367,13 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	#: which means the rest of NVDA is not blocked while this occurs,
 	#: thus resulting in better performance.
 	#: This is also required to use the L{hwIo} module.
-	#: @type: bool
+	#: :type: bool
 	isThreadSafe = False
 	#: Whether displays for this driver return acknowledgements for sent packets.
 	#: L{_handleAck} should be called when an ACK is received.
 	#: Note that thread safety is required for the generic implementation to function properly.
 	#: If a display is not thread safe, a driver should manually implement ACK processing.
-	#: @type: bool
+	#: :type: bool
 	receivesAckPackets = False
 	#: Whether this driver is awaiting an Ack for a connected display.
 	#: This is set to C{True} after displaying cells when L{receivesAckPackets} is True,
@@ -2364,7 +2383,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	#: Maximum timeout to use for communication with a device (in seconds).
 	#: This can be used for serial connections.
 	#: Furthermore, it is used by L{_BgThread} to stop waiting for missed acknowledgement packets.
-	#: @type: float
+	#: :type: float
 	timeout = 0.2
 
 	@classmethod
@@ -2372,8 +2391,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""Determine whether this braille display is available.
 		The display will be excluded from the list of available displays if this method returns C{False}.
 		For example, if this display is not present, C{False} should be returned.
-		@return: C{True} if this display is available, C{False} if not.
-		@rtype: bool
+
+		:returns: C{True} if this display is available, C{False} if not.
+		:rtype: bool
 		"""
 		if cls.isThreadSafe:
 			if bdDetect.driverHasPossibleDevices(cls.name):
@@ -2391,7 +2411,8 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		This will be called when NVDA is finished with this display driver.
 		It should close any open connections, perform cleanup, etc.
 		Subclasses should call the superclass method first.
-		@postcondition: This instance can no longer be used unless it is constructed again.
+
+		.. postcondition: This instance can no longer be used unless it is constructed again.
 		"""
 		super(BrailleDisplayDriver,self).terminate()
 		# Clear the display.
@@ -2406,15 +2427,17 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 	def _get_numCells(self) -> int:
 		"""Obtain the number of braille cells on this  display.
-		@note: 0 indicates that braille should be disabled.
-		@return: The number of cells.
+
+		.. note: 0 indicates that braille should be disabled.
+		:returns: The number of cells.
 		"""
 		return 0
 
 	def display(self, cells):
 		"""Display the given braille cells.
-		@param cells: The braille cells to display.
-		@type cells: [int, ...]
+
+		:param cells: The braille cells to display.
+		:type cells: [int, ...]
 		"""
 
 	#: Automatic port constant to be used by braille displays that support the "automatic" port
@@ -2428,8 +2451,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		Instead, they should provide automatic detection data via L{bdDetect}
 		and implement L{getPossibleManualPorts} if they support manual ports
 		such as serial ports.
-		@return: ordered dictionary of name : description for each port
-		@rtype: OrderedDict
+
+		:returns: ordered dictionary of name : description for each port
+		:rtype: OrderedDict
 		"""
 		try:
 			next(bdDetect.getConnectedUsbDevicesForDriver(cls.name))
@@ -2457,12 +2481,13 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def _getAutoPorts(cls, usb=True, bluetooth=True) -> Iterable[bdDetect.DeviceMatch]:
 		"""Returns possible ports to connect to using L{bdDetect} automatic detection data.
-		@param usb: Whether to search for USB devices.
-		@type usb: bool
-		@param bluetooth: Whether to search for bluetooth devices.
-		@type bluetooth: bool
-		@return: The device match for each port.
-		@rtype: iterable of L{DeviceMatch}
+
+		:param usb: Whether to search for USB devices.
+		:type usb: bool
+		:param bluetooth: Whether to search for bluetooth devices.
+		:type bluetooth: bool
+		:returns: The device match for each port.
+		:rtype: iterable of L{DeviceMatch}
 		"""
 		iters = []
 		if usb:
@@ -2481,7 +2506,8 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""Get possible manual hardware ports for this driver.
 		This is for ports which cannot be detected automatically
 		such as serial ports.
-		@return: The name and description for each port.
+
+		:returns: The name and description for each port.
 		"""
 		raise NotImplementedError
 
@@ -2491,8 +2517,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	) -> Iterable[bdDetect.DeviceMatch]:
 		"""Returns the ports for this driver to which a connection attempt should be made.
 		This generator function is usually used in L{__init__} to connect to the desired display.
-		@param port: the port to connect to.
-		@return: The name and description for each port
+
+		:param port: the port to connect to.
+		:returns: The name and description for each port
 		"""
 		if isinstance(port, bdDetect.DeviceMatch):
 			yield port
@@ -2515,17 +2542,18 @@ class BrailleDisplayDriver(driverHandler.Driver):
 					yield match
 
 	#: Global input gesture map for this display driver.
-	#: @type: L{inputCore.GlobalGestureMap}
+	#: :type: L{inputCore.GlobalGestureMap}
 	gestureMap = None
 
 	@classmethod
 	def _getModifierGestures(cls, model=None):
 		"""Retrieves modifier gestures from this display driver's L{gestureMap}
 		that are bound to modifier only keyboard emulate scripts.
-		@param model: the optional braille display model for which modifier gestures should also be included.
-		@type model: str; C{None} if model specific gestures should not be included
-		@return: the ids of the display keys and the associated generalised modifier names
-		@rtype: generator of (set, set)
+
+		:param model: the optional braille display model for which modifier gestures should also be included.
+		:type model: str; C{None} if model specific gestures should not be included
+		:returns: the ids of the display keys and the associated generalised modifier names
+		:rtype: generator of (set, set)
 		"""
 		import globalCommands
 		# Ignore the locale gesture map when searching for braille display gestures
@@ -2603,7 +2631,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		This string will be included in the source portion of gesture identifiers.
 		For example, if this was C{alvaBC6},
 		a display specific gesture identifier might be C{br(alvaBC6):etouch1}.
-		@rtype: str
+
+		:rtype: str
 		"""
 		raise NotImplementedError
 
@@ -2614,18 +2643,20 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		For example, if this was C{alvaBC6},
 		the model string could look like C{680},
 		and a corresponding display specific gesture identifier might be C{br(alvaBC6.680):etouch1}.
-		@rtype: str; C{None} if model specific gestures are not supported
+
+		:rtype: str; C{None} if model specific gestures are not supported
 		"""
 		return None
 
 	def _get_id(self):
 		"""The unique, display specific id for this gesture.
-		@rtype: str
+
+		:rtype: str
 		"""
 		raise NotImplementedError
 
 	#: The index of the routing key or C{None} if this is not a routing key.
-	#: @type: int
+	#: :type: int
 	routingIndex = None
 
 	def _get_identifiers(self):
@@ -2710,13 +2741,14 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	def _get_keyNames(self):
 		"""The names of the keys that are part of this gesture.
-		@rtype: list
+
+		:rtype: list
 		"""
 		return self.id.split("+")
 
 	#: Compiled regular expression to match an identifier including an optional model name
 	#: The model name should be an alphanumeric string without spaces.
-	#: @type: RegexObject
+	#: :type: RegexObject
 	ID_PARTS_REGEX = re.compile(r"br\((\w+)(?:\.(\w+))?\):([\w+]+)", re.U)
 
 	@classmethod
@@ -2748,9 +2780,10 @@ inputCore.registerGestureSource("br", BrailleDisplayGesture)
 
 def getSerialPorts(filterFunc=None):
 	"""Get available serial ports in a format suitable for L{BrailleDisplayDriver.getManualPorts}.
-	@param filterFunc: a function executed on every dictionary retrieved using L{hwPortUtils.listComPorts}.
+
+	:param filterFunc: a function executed on every dictionary retrieved using L{hwPortUtils.listComPorts}.
 		For example, this can be used to filter by USB or Bluetooth com ports.
-	@type filterFunc: callable
+	:type filterFunc: callable
 	"""
 	if filterFunc and not callable(filterFunc):
 		raise TypeError("The provided filterFunc is not callable")

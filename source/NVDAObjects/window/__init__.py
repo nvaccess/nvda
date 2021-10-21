@@ -40,16 +40,18 @@ def isUsableWindow(windowHandle):
 class WindowProcessHandleContainer(object):
 	"""
 	Manages a Windows process handle. On instanciation it retreaves an open process handle from the process of the provided window, and closes the handle on deletion. 
-	@ivar windowHandle: the handle of the window the whos process handle was requested
-	@type windowHandle: int
-	@ivar processHandle: The actual handle which can be used in any win32 calls that need it.
-	@type processHandle: int
+
+	:var windowHandle: the handle of the window the whos process handle was requested
+	:type windowHandle: int
+	:var processHandle: The actual handle which can be used in any win32 calls that need it.
+	:type processHandle: int
 	"""
  
 	def __init__(self,windowHandle):
 		"""
-		@param windowHandle: the handle of the window whos process handle should be retreaved.
-		@type windowHandle: int
+
+		:param windowHandle: the handle of the window whos process handle should be retreaved.
+		:type windowHandle: int
 		"""
 		self.windowHandle=windowHandle
 		import oleacc
@@ -68,16 +70,17 @@ except AttributeError:
 class Window(NVDAObject):
 	"""
 An NVDAObject for a window
-@ivar windowHandle: The window's handle
-@type windowHandle: int
-@ivar windowClassName: the window's class
-@type windowClassName: string
-@ivar windowControlID: the window's control ID
-@type windowControlID: int
-@ivar windowText: The window's text (using winUser.WM_GETTEXT) 
-@type windowText: string
-@ivar windowProcessID: The window's [processID,threadID]
-@type windowProcessID: list of two ints
+
+:var windowHandle: The window's handle
+:type windowHandle: int
+:var windowClassName: the window's class
+:type windowClassName: string
+:var windowControlID: the window's control ID
+:type windowControlID: int
+:var windowText: The window's text (using winUser.WM_GETTEXT) 
+:type windowText: string
+:var windowProcessID: The window's [processID,threadID]
+:type windowProcessID: list of two ints
 """
 
 	@classmethod
@@ -317,10 +320,11 @@ An NVDAObject for a window
 		"""
 		Removes unneeded information from a window class name (e.g. ATL: and windows forms info), and or maps it to a much more well-known compatible class name.
 		Conversions are also cached for future normalizations. 
-		@param name: the window class name to normalize
-		@type name: string
-		@returns: the normalized window class name
-		@rtype: string
+
+		:param name: the window class name to normalize
+		:type name: string
+		:returns: the normalized window class name
+		:rtype: string
 		"""
 		try:
 			return cls.normalizedWindowClassNameCache[name]

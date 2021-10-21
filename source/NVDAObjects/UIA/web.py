@@ -41,10 +41,11 @@ necessary. Note that not all browsers support UIA.
 def splitUIAElementAttribs(attribsString):
 	"""Split an UIA Element attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
-	@param attribsString: The UIA Element attributes string to convert.
-	@type attribsString: str
-	@return: A dict of the attribute keys and values, where values are strings
-	@rtype: {str: str}
+
+	:param attribsString: The UIA Element attributes string to convert.
+	:type attribsString: str
+	:returns: A dict of the attribute keys and values, where values are strings
+	:rtype: {str: str}
 	"""
 	attribsDict = {}
 	tmp = ""

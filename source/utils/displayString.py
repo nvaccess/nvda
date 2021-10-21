@@ -47,7 +47,8 @@ class _DisplayStringEnumMixin(ABC):
 	@property
 	def displayString(self) -> str:
 		"""
-		@return: The translated UI display string that should be used for this value of the enum.
+
+		:returns: The translated UI display string that should be used for this value of the enum.
 		"""
 		try:
 			return self._displayStringLabels[self]

@@ -41,12 +41,13 @@ HTMLDLG_VERIFY = 0x0100
 def browseableMessage(message,title=None,isHtml=False):
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
-	@param message: The message in either html or text.
-	@type message: str
-	@param title: The title for the message.
-	@type title: str
-	@param isHtml: Whether the message is html
-	@type isHtml: boolean
+
+	:param message: The message in either html or text.
+	:type message: str
+	:param title: The title for the message.
+	:type title: str
+	:param isHtml: Whether the message is html
+	:type isHtml: boolean
 	"""
 	htmlFileName = os.path.join(globalVars.appDir, 'message.html')
 	if not os.path.isfile(htmlFileName ): 
@@ -79,9 +80,10 @@ def message(
 ):
 	"""Present a message to the user.
 	The message will be presented in both speech and braille.
-	@param text: The text of the message.
-	@param speechPriority: The speech priority.
-	@param brailleText: If specified, present this alternative text on the braille display.
+
+	:param text: The text of the message.
+	:param speechPriority: The speech priority.
+	:param brailleText: If specified, present this alternative text on the braille display.
 	"""
 	speech.speakMessage(text, priority=speechPriority)
 	braille.handler.message(brailleText if brailleText is not None else text)
@@ -90,8 +92,9 @@ def message(
 def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 	"""Present a message from review or object navigation to the user.
 	The message will always be presented in speech, and also in braille if it is tethered to review or when auto tethering is on.
-	@param text: The text of the message.
-	@param speechPriority: The speech priority.
+
+	:param text: The text of the message.
+	:param speechPriority: The speech priority.
 	"""
 	speech.speakMessage(text, priority=speechPriority)
 	if braille.handler.shouldAutoTether or braille.handler.getTether() == braille.handler.TETHER_REVIEW:
@@ -100,7 +103,8 @@ def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 
 def reportTextCopiedToClipboard(text: Optional[str] = None):
 	"""Notify about the result of a "Copy to clipboard" operation.
-	@param text: The text that has been copied. Set to `None` to notify of a failed operation.
+
+	:param text: The text that has been copied. Set to `None` to notify of a failed operation.
 	See: `api.copyToClip`
 	"""
 	if not text:

@@ -56,28 +56,29 @@ class SingleTouchTracker(object):
 	"""
 	Represents the lifetime of one single finger while its in contact with the touch device, tracking start and current coordinates, start and end times, and whether its complete (broken contact yet).
 	It also calculates what kind of single action (tap, flick, hover) this finger is performing, once it has enough data.
-	@ivar ID: the ID this finger has been assigned by the Operating System.
-	@type ID: int
-	@ivar x: The last known x screen coordinate of this finger
-	@type x: int
-	@ivar y: The last known y screen coordinate of this finger
-	@type y: int
-	@ivar startX: The x screen coordinate  where the finger first made contact
-	@type startX: int
-	@ivar startY: The y screen coordinate  where the finger first made contact
-	@type startY: int
-	@ivar startTime: the time at which the finger first made contact
-	@type startTime: float
-	@ivar endTime: the time at which the finger broke contact. Before breaking contact the value is -1
-	@type endTime: float
-	@ivar maxAbsDeltaX: the maximum distance this finger has traveled on the x access while making contact
-	@type maxAbsDeltaX: int
-	@ivar maxAbsDeltaY: the maximum distance this finger has traveled on the y access while making contact
-	@type maxAbsDeltaY: int
-	@ivar action: the action this finger has performed (one of the action_* constants,E.g. tap, flickRight, hover etc). If not enough data has been collected yet the action will be unknown. 
-	@type action: string
-	@ivar complete: If true then this finger has broken contact
-	@type complete: bool
+
+	:var ID: the ID this finger has been assigned by the Operating System.
+	:type ID: int
+	:var x: The last known x screen coordinate of this finger
+	:type x: int
+	:var y: The last known y screen coordinate of this finger
+	:type y: int
+	:var startX: The x screen coordinate  where the finger first made contact
+	:type startX: int
+	:var startY: The y screen coordinate  where the finger first made contact
+	:type startY: int
+	:var startTime: the time at which the finger first made contact
+	:type startTime: float
+	:var endTime: the time at which the finger broke contact. Before breaking contact the value is -1
+	:type endTime: float
+	:var maxAbsDeltaX: the maximum distance this finger has traveled on the x access while making contact
+	:type maxAbsDeltaX: int
+	:var maxAbsDeltaY: the maximum distance this finger has traveled on the y access while making contact
+	:type maxAbsDeltaY: int
+	:var action: the action this finger has performed (one of the action_* constants,E.g. tap, flickRight, hover etc). If not enough data has been collected yet the action will be unknown. 
+	:type action: string
+	:var complete: If true then this finger has broken contact
+	:type complete: bool
 	"""
 	__slots__=['ID','x','y','startX','startY','startTime','endTime','maxAbsDeltaX','maxAbsDeltaY','action','complete']
 
@@ -128,25 +129,26 @@ class SingleTouchTracker(object):
 
 class MultiTouchTracker(object):
 	"""Represents an action jointly performed by 1 or more fingers.
-	@ivar action: the action this finger has performed (one of the action_* constants,E.g. tap, flickRight, hover etc).
-	@type action: string
-	@ivar x: the x screen coordinate where the action was performed. For multi-finger actions it is the average position of each of the fingers. For plural actions it is based on the first occurence
-	@type x: int
-	@ivar y: the y screen coordinate where the action was performed. For multi-finger actions it is the average position of each of the fingers. For plural actions it is based on the first occurence
-	@type y: int
-	@ivar startTime: the time the action began
-	@type startTime: float
-	@ivar endTime: the time the action was complete 
-	@type endTime: float
-	@ivar numFingers: the number of fingers that performed this action
-	@type numFingers: int
-	@ivar actionCount: the number of times this action was performed in quick succession (E.g. 2 for a double tap)
-	@ivar childTrackers: a list of L{MultiTouchTracker} objects which represent the direct sub-actions of this action. E.g. a 2-finger tripple tap's childTrackers will contain 3 2-finger taps. Each of the 2-finger taps' childTrackers will contain 2 taps.
-	@type childTrackers: list of L{MultiTouchTracker} objeccts
-	@ivar rawSingleTouchTracker: if this tracker represents a 1-fingered non-plural action then this will be the L{SingleTouchTracker} object for that 1 finger. If not then it is None.
-	@type rawSingleTouchTracker: L{SingleTouchTracker}
-	@ivar pluralTimeout: the time at which this tracker could no longer possibly be merged with another to be pluralized, thus it is aloud to be emitted
-	@type pluralTimeout: float
+
+	:var action: the action this finger has performed (one of the action_* constants,E.g. tap, flickRight, hover etc).
+	:type action: string
+	:var x: the x screen coordinate where the action was performed. For multi-finger actions it is the average position of each of the fingers. For plural actions it is based on the first occurence
+	:type x: int
+	:var y: the y screen coordinate where the action was performed. For multi-finger actions it is the average position of each of the fingers. For plural actions it is based on the first occurence
+	:type y: int
+	:var startTime: the time the action began
+	:type startTime: float
+	:var endTime: the time the action was complete 
+	:type endTime: float
+	:var numFingers: the number of fingers that performed this action
+	:type numFingers: int
+	:var actionCount: the number of times this action was performed in quick succession (E.g. 2 for a double tap)
+	:var childTrackers: a list of L{MultiTouchTracker} objects which represent the direct sub-actions of this action. E.g. a 2-finger tripple tap's childTrackers will contain 3 2-finger taps. Each of the 2-finger taps' childTrackers will contain 2 taps.
+	:type childTrackers: list of L{MultiTouchTracker} objeccts
+	:var rawSingleTouchTracker: if this tracker represents a 1-fingered non-plural action then this will be the L{SingleTouchTracker} object for that 1 finger. If not then it is None.
+	:type rawSingleTouchTracker: L{SingleTouchTracker}
+	:var pluralTimeout: the time at which this tracker could no longer possibly be merged with another to be pluralized, thus it is aloud to be emitted
+	:type pluralTimeout: float
 	"""
 	__slots__=['action','x','y','startTime','endTime','numFingers','actionCount','childTrackers','rawSingleTouchTracker','pluralTimeout']
 

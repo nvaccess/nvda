@@ -198,11 +198,12 @@ class FieldCommand(object):
 
 	def __init__(self, command: str, field: Optional[Union[ControlField, FormatField]]):
 		"""Constructor.
-		@param command: The command; one of:
+
+		:param command: The command; one of:
 			"controlStart", indicating the start of a L{ControlField};
 			"controlEnd", indicating the end of a L{ControlField}; or
 			"formatChange", indicating a L{FormatField} change.
-		@param field: The field associated with this command; may be C{None} for controlEnd.
+		:param field: The field associated with this command; may be C{None} for controlEnd.
 		"""
 		if command not in ("controlStart","controlEnd","formatChange"):
 			raise ValueError("Unknown command: %s"%command)
@@ -230,12 +231,13 @@ class Bookmark(baseObject.AutoPropertyObject):
 
 	def __init__(self,infoClass,data):
 		"""
-		@param infoClass: The class of the L{TextInfo} object.
-		@type infoClass: type; subclass of L{TextInfo}
-		@param data: Data that can be used to reconstruct the position the textInfo object was in when it generated the bookmark.
+
+		:param infoClass: The class of the L{TextInfo} object.
+		:type infoClass: type; subclass of L{TextInfo}
+		:param data: Data that can be used to reconstruct the position the textInfo object was in when it generated the bookmark.
 		"""
 		#: The class of the L{TextInfo} object.
-		#: @type: type; subclass of L{TextInfo}
+		#: :type: type; subclass of L{TextInfo}
 		self.infoClass=infoClass
 		#: Data that can be used to reconstruct the position the textInfo object was in when it generated the bookmark.
 		self.data=data
@@ -302,16 +304,18 @@ class TextInfo(baseObject.AutoPropertyObject):
 	To support routing to a screen point from a given position, L{pointAtStart} or L{boundingRects} must be implemented.
 	In order to support text formatting or control information, L{getTextWithFields} should be overridden.
 	
-	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
-	@type bookmark: L{Bookmark}
+
+	:var bookmark: A unique identifier that can be used to make another textInfo object at this position.
+	:type bookmark: L{Bookmark}
 	"""
 
 	def __init__(self,obj,position):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
-		@param position: The initial position of this range; one of the POSITION_* constants or a position object supported by the implementation.
-		@type position: int, tuple or string
-		@param obj: The object containing the range of text being represented.
+
+		:param position: The initial position of this range; one of the POSITION_* constants or a position object supported by the implementation.
+		:type position: int, tuple or string
+		:param obj: The object containing the range of text being represented.
 		"""
 		super(TextInfo,self).__init__()
 		self._obj=weakref.ref(obj) if type(obj)!=weakref.ProxyType else obj
@@ -354,18 +358,20 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_text(self) -> str:
 		"""The text with in this range.
 		Subclasses must implement this.
-		@return: The text.
-		@note: The text is not guaranteed to be the exact length of the range in offsets.
+
+		:returns: The text.
+		.. note: The text is not guaranteed to be the exact length of the range in offsets.
 		"""
 		raise NotImplementedError
 
 	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> List[Union[str, FieldCommand]]:
 		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
-		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
+
+		:param formatConfig: Document formatting configuration, useful if you wish to force a particular
 			configuration for a particular task.
-		@type formatConfig: dict
-		@return: A sequence of text strings interspersed with associated field commands.
+		:type formatConfig: dict
+		:returns: A sequence of text strings interspersed with associated field commands.
 		""" 
 		return [self.text]
 
@@ -381,27 +387,30 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_boundingRects(self):
 		"""Per line bounding rectangles for the visible text in this range.
 		Implementations should ensure that the bounding rectangles don't contain off screen coordinates.
-		@rtype: [L{locationHelper.RectLTWH}]
-		@raise NotImplementedError: If not supported.
-		@raise LookupError: If not available (i.e. off screen, hidden, etc.)
+
+		:rtype: [L{locationHelper.RectLTWH}]
+		:raises NotImplementedError: If not supported.
+		:raises LookupError: If not available (i.e. off screen, hidden, etc.)
 		"""
 		raise NotImplementedError
 
 	def unitIndex(self,unit):
 		"""
-@param unit: a unit constant for which you want to retreave an index
-@type: string
-@returns: The 1-based index of this unit, out of all the units of this type in the object
-@rtype: int
+
+:param unit: a unit constant for which you want to retreave an index
+:type: string
+:returns: The 1-based index of this unit, out of all the units of this type in the object
+:rtype: int
 """  
 		raise NotImplementedError
 
 	def unitCount(self,unit):
 		"""
-		@param unit: a unit constant
-		@type unit: string
-		@returns: the number of units of this type in the object
-		@rtype: int
+
+		:param unit: a unit constant
+		:type unit: string
+		:returns: the number of units of this type in the object
+		:rtype: int
 		"""
 		raise NotImplementedError
 
@@ -409,11 +418,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def compareEndPoints(self,other,which):
 		""" compares one end of this range to one end of another range.
 		Subclasses must implement this.
-		@param other: the text range to compare with.
-		@type other: L{TextInfo}
-		@param which: The ends to compare; one of "startToStart", "startToEnd", "endToStart", "endToEnd".
-		@return: -1 if this end is before other end, 1 if this end is after other end or 0 if this end and other end are the same. 
-		@rtype: int
+
+		:param other: the text range to compare with.
+		:type other: L{TextInfo}
+		:param which: The ends to compare; one of "startToStart", "startToEnd", "endToStart", "endToEnd".
+		:returns: -1 if this end is before other end, 1 if this end is after other end or 0 if this end and other end are the same. 
+		:rtype: int
 		"""
 		raise NotImplementedError
 
@@ -422,10 +432,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 		Note that collapsed objects can cause some confusion.
 		For example, in terms of offsets, (4, 4) and (4, 5) are not considered as overlapping.
 		Therefore, collapsed objects should probably be expanded to at least 1 character when using this method.
-		@param other: The TextInfo object being compared.
-		@type other: L{TextInfo}
-		@return: C{True} if the objects overlap, C{False} if not.
-		@rtype: bool
+
+		:param other: The TextInfo object being compared.
+		:type other: L{TextInfo}
+		:returns: C{True} if the objects overlap, C{False} if not.
+		:rtype: bool
 		"""
 		return self.compareEndPoints(other,"startToStart") == 0 or (self.compareEndPoints(other, "endToStart") > 0 and other.compareEndPoints(self, "endToStart") > 0)
 
@@ -433,31 +444,35 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def setEndPoint(self,other,which):
 		"""Sets one end of this range to one end of another range.
 		Subclasses must implement this.
-		@param other: The range from which an end is being obtained.
-		@type other: L{TextInfo}
-		@param which: The ends to use; one of "startToStart", "startToEnd", "endToStart", "endToEnd".
+
+		:param other: The range from which an end is being obtained.
+		:type other: L{TextInfo}
+		:param which: The ends to use; one of "startToStart", "startToEnd", "endToStart", "endToEnd".
 		"""
 		raise NotImplementedError
 
 	def _get_isCollapsed(self):
 		"""
-		@return: C{True} if representing a collapsed range, C{False} if the range is expanded to cover one or more characters.
-		@rtype: bool
+
+		:returns: C{True} if representing a collapsed range, C{False} if the range is expanded to cover one or more characters.
+		:rtype: bool
 		"""
 		return self.compareEndPoints(self,"startToEnd")==0
 
 	@abstractmethod
 	def expand(self,unit):
 		"""Expands the start and end of this text info object to a given unit
-		@param unit: a unit constant
-		@type unit: string
+
+		:param unit: a unit constant
+		:type unit: string
 		"""
 		raise NotImplementedError
 
 	def collapse(self, end=False):
 		"""Collapses this text info object so that both endpoints are the same.
-		@param end: Whether to collapse to the end; C{True} to collapse to the end, C{False} to collapse to the start.
-		@type end: bool
+
+		:param end: Whether to collapse to the end; C{True} to collapse to the end, C{False} to collapse to the start.
+		:type end: bool
 		"""
 		raise NotImplementedError
 
@@ -482,46 +497,51 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@abstractmethod
 	def move(self,unit,direction,endPoint=None):
 		"""Moves one or both of the endpoints of this object by the given unit and direction.
-		@param unit: the unit to move by; one of the UNIT_* constants.
-		@param direction: a positive value moves forward by a number of units, a negative value moves back a number of units
-		@type: int
-		@param endPoint: Either None, "start" or "end". If "start" then the start of the range is moved, if "end" then the end of the range is moved, if None - not specified then collapse to start and move both start and end.
-		@return: The number of units moved;
+
+		:param unit: the unit to move by; one of the UNIT_* constants.
+		:param direction: a positive value moves forward by a number of units, a negative value moves back a number of units
+		:type: int
+		:param endPoint: Either None, "start" or "end". If "start" then the start of the range is moved, if "end" then the end of the range is moved, if None - not specified then collapse to start and move both start and end.
+		:returns: The number of units moved;
 			negative indicates backward movement, positive indicates forward movement,
 			0 means no movement.
-		@rtype: int
+		:rtype: int
 		"""
 		raise NotImplementedError
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		"""Locates the given text and positions this TextInfo object at the start.
-		@param text: the text to search for
-		@type text: string
-		@param caceSensitive: true if case sensitivity search should be used, False if not
-		@type caseSensitive: bool
-		@param reverse: true then the search will go from current position towards the start of the text, if false then  towards the end.
-		@type reverse: bool
-		@returns: True if text is found, false otherwise
-		@rtype: bool
+
+		:param text: the text to search for
+		:type text: string
+		:param caceSensitive: true if case sensitivity search should be used, False if not
+		:type caseSensitive: bool
+		:param reverse: true then the search will go from current position towards the start of the text, if false then  towards the end.
+		:type reverse: bool
+		:returns: True if text is found, false otherwise
+		:rtype: bool
 		""" 
 		raise NotImplementedError
 
 	def _get_NVDAObjectAtStart(self):
 		"""retreaves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
-		@returns: the NVDAObject at the start
+
+		:returns: the NVDAObject at the start
 		"""
 		return self.obj
 
 	def _get_focusableNVDAObjectAtStart(self):
 		"""retreaves the deepest focusable NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
-		@returns: the NVDAObject at the start
+
+		:returns: the NVDAObject at the start
 		"""
 		return self.obj
 
 	def _get_pointAtStart(self):
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point.
 		The base implementation uses L{boundingRects}.
-		@rtype: L{locationHelper.Point}
+
+		:rtype: L{locationHelper.Point}
 		"""
 		if self.isCollapsed:
 			copy = self.copy()
@@ -540,19 +560,21 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def copyToClipboard(self, notify=False):
 		"""Copy the content of this instance to the clipboard.
-		@return: C{True} if successful, C{False} otherwise.
-		@rtype: bool
-		@param notify: whether to emit a confirmation message
-		@type notify: boolean
+
+		:returns: C{True} if successful, C{False} otherwise.
+		:rtype: bool
+		:param notify: whether to emit a confirmation message
+		:type notify: boolean
 		"""
 		import api
 		return api.copyToClip(self.clipboardText, notify)
 
 	def getTextInChunks(self, unit):
 		"""Retrieve the text of this instance in chunks of a given unit.
-		@param unit: The unit at which chunks should be split.
-		@return: Chunks of text.
-		@rtype: generator of str
+
+		:param unit: The unit at which chunks should be split.
+		:returns: Chunks of text.
+		:rtype: generator of str
 		"""
 		unitInfo=self.copy()
 		unitInfo.collapse()
@@ -621,7 +643,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def activate(self):
 		"""Activate this position.
 		For example, this might activate the object at this position or click the point at this position.
-		@raise NotImplementedError: If not supported.
+
+		:raises NotImplementedError: If not supported.
 		"""
 		if not self.obj.isInForeground:
 			raise NotImplementedError
@@ -636,17 +659,19 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def getMathMl(self, field):
 		"""Get MathML for a math control field.
 		This will only be called for control fields with a role of L{controlTypes.Role.MATH}.
-		@raise LookupError: If MathML can't be retrieved for this field.
+
+		:raises LookupError: If MathML can't be retrieved for this field.
 		"""
 		raise NotImplementedError
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
 	"""Convert a string so that it contains only CRLF line endings.
-	@param text: The text to convert.
-	@type text: str
-	@return: The converted text.
-	@rtype: str
+
+	:param text: The text to convert.
+	:type text: str
+	:returns: The converted text.
+	:rtype: str
 	"""
 	return RE_EOL.sub("\r\n", text)
 
@@ -656,9 +681,10 @@ class DocumentWithPageTurns(baseObject.ScriptableObject):
 
 	def turnPage(self, previous=False):
 		"""Switch to the next/previous page of text.
-		@param previous: C{True} to turn to the previous page, C{False} to turn to the next.
-		@type previous: bool
-		@raise RuntimeError: If there are no further pages.
+
+		:param previous: C{True} to turn to the previous page, C{False} to turn to the next.
+		:type previous: bool
+		:raises RuntimeError: If there are no further pages.
 		"""
 		raise NotImplementedError
 
@@ -696,8 +722,9 @@ class TextInfoEndpoint:
 			isStart: bool
 	):
 		"""
-		@param textInfo: the TextInfo instance you wish to represent an endpoint of.
-		@param isStart: true to represent the start, false for the end.
+
+		:param textInfo: the TextInfo instance you wish to represent an endpoint of.
+		:param isStart: true to represent the start, false for the end.
 		"""
 		self.textInfo = textInfo
 		self.isStart = isStart

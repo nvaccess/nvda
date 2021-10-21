@@ -36,7 +36,8 @@ class _CancellableSpeechCommand(SpeechCommand):
 			reportDevInfo=False
 	):
 		"""
-		@param reportDevInfo: If true, developer info is reported for repr implementation.
+
+		:param reportDevInfo: If true, developer info is reported for repr implementation.
 		"""
 		self._isCancelled = False
 		self._utteranceIndex = None
@@ -98,8 +99,9 @@ class IndexCommand(SynthCommand):
 
 	def __init__(self,index):
 		"""
-		@param index: the value of this index
-		@type index: integer
+
+		:param index: the value of this index
+		:type index: integer
 		"""
 		if not isinstance(index,int): raise ValueError("index must be int, not %s"%type(index))
 		self.index=index
@@ -113,7 +115,7 @@ class SynthParamCommand(SynthCommand):
 	#: Whether this command returns the parameter to its default value.
 	#: Note that the default might be configured by the user;
 	#: e.g. for pitch, rate, etc.
-	#: @type: bool
+	#: :type: bool
 	isDefault = False
 
 class CharacterModeCommand(SynthParamCommand):
@@ -121,8 +123,9 @@ class CharacterModeCommand(SynthParamCommand):
 
 	def __init__(self,state):
 		"""
-		@param state: if true character mode is on, if false its turned off.
-		@type state: boolean
+
+		:param state: if true character mode is on, if false its turned off.
+		:type state: boolean
 		"""
 		if not isinstance(state,bool): raise ValueError("state must be boolean, not %s"%type(state))
 		self.state=state
@@ -136,7 +139,8 @@ class LangChangeCommand(SynthParamCommand):
 
 	def __init__(self, lang: Optional[str]):
 		"""
-		@param lang: the language to switch to: If None then the NVDA locale will be used.
+
+		:param lang: the language to switch to: If None then the NVDA locale will be used.
 		"""
 		self.lang = lang
 		self.isDefault = not lang
@@ -150,8 +154,9 @@ class BreakCommand(SynthCommand):
 
 	def __init__(self, time=0):
 		"""
-		@param time: The duration of the pause to be inserted in milliseconds.
-		@param time: int
+
+		:param time: The duration of the pause to be inserted in milliseconds.
+		:param time: int
 		"""
 		self.time = time
 
@@ -179,12 +184,13 @@ class BaseProsodyCommand(SynthParamCommand):
 	def __init__(self, offset=0, multiplier=1):
 		"""Constructor.
 		Either of C{offset} or C{multiplier} may be specified, but not both.
-		@param offset: The amount by which to increase/decrease the user configured setting;
+
+		:param offset: The amount by which to increase/decrease the user configured setting;
 			e.g. 30 increases by 30, -10 decreases by 10, 0 returns to the configured setting.
-		@type offset: int
-		@param multiplier: The number by which to multiply the user configured setting;
+		:type offset: int
+		:param multiplier: The number by which to multiply the user configured setting;
 			e.g. 0.5 is half, 1 returns to the configured setting.
-		@param multiplier: int/float
+		:param multiplier: int/float
 		"""
 		if offset != 0 and multiplier != 1:
 			raise ValueError("offset and multiplier both specified")
@@ -276,12 +282,13 @@ class PhonemeCommand(SynthCommand):
 
 	def __init__(self, ipa, text=None):
 		"""
-		@param ipa: Unicode IPA characters.
-		@type ipa: str
-		@param text: Text to speak if the synthesizer does not support
+
+		:param ipa: Unicode IPA characters.
+		:type ipa: str
+		:param text: Text to speak if the synthesizer does not support
 			some or all of the specified IPA characters,
 			C{None} to ignore this command instead.
-		@type text: str
+		:type text: str
 		"""
 		self.ipa = ipa
 		self.text = text
@@ -367,10 +374,11 @@ class ConfigProfileTriggerCommand(SpeechCommand):
 
 	def __init__(self, trigger, enter=True):
 		"""
-		@param trigger: The configuration profile trigger.
-		@type trigger: L{config.ProfileTrigger}
-		@param enter: C{True} to apply the trigger, C{False} to stop applying it.
-		@type enter: bool
+
+		:param trigger: The configuration profile trigger.
+		:type trigger: L{config.ProfileTrigger}
+		:param enter: C{True} to apply the trigger, C{False} to stop applying it.
+		:type enter: bool
 		"""
 		self.trigger = trigger
 		self.enter = enter

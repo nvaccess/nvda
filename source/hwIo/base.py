@@ -42,12 +42,13 @@ class IoBase(object):
 			onReceiveSize: int = 1
 	):
 		"""Constructor.
-		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
+
+		:param fileHandle: A handle to an open I/O device opened for overlapped I/O.
 			If L{writeFileHandle} is specified, this is only for input.
 			The serial implementation uses a _port_handle member for this argument.
-		@param onReceive: A callable taking the received data as its only argument.
-		@param writeFileHandle: A handle to an open output device opened for overlapped I/O.
-		@param onReceiveSize: The size (in bytes) of the data with which to call C{onReceive}.
+		:param onReceive: A callable taking the received data as its only argument.
+		:param writeFileHandle: A handle to an open output device opened for overlapped I/O.
+		:param onReceiveSize: The size (in bytes) of the data with which to call C{onReceive}.
 		"""
 		self._file = fileHandle
 		self._onReceive = onReceive
@@ -70,8 +71,9 @@ class IoBase(object):
 	def waitForRead(self, timeout:Union[int, float]) -> bool:
 		"""Wait for a chunk of data to be received and processed.
 		This will return after L{onReceive} has been called or when the timeout elapses.
-		@param timeout: The maximum time to wait in seconds.
-		@return: C{True} if received data was processed before the timeout,
+
+		:param timeout: The maximum time to wait in seconds.
+		:returns: C{True} if received data was processed before the timeout,
 			C{False} if not.
 		"""
 		timeout= int(timeout*1000)
@@ -150,7 +152,8 @@ class IoBase(object):
 		"""Called when data is received.
 		The base implementation just calls the onReceive callback provided to the constructor.
 		This can be extended to perform tasks before/after the callback.
-		@type data: bytes
+
+		:type data: bytes
 		"""
 		if not isinstance(data, bytes):
 			raise TypeError("Expected argument 'data' to be of type 'bytes'")
@@ -174,7 +177,8 @@ class Serial(IoBase):
 		"""Constructor.
 		Pass the arguments you would normally pass to L{serial.Serial}.
 		There is also one additional required keyword argument.
-		@param onReceive: A callable taking a byte of received data as its only argument.
+
+		:param onReceive: A callable taking a byte of received data as its only argument.
 			This callable can then call C{read} to get additional data if desired.
 		"""
 		self._ser = None
@@ -247,10 +251,11 @@ class Bulk(IoBase):
 			onReceiveSize: int = 1
 	):
 		"""Constructor.
-		@param path: The device path.
-		@param epIn: The endpoint to read data from.
-		@param epOut: The endpoint to write data to.
-		@param onReceive: A callable taking a received input report as its only argument.
+
+		:param path: The device path.
+		:param epIn: The endpoint to read data from.
+		:param epOut: The endpoint to write data to.
+		:param onReceive: A callable taking a received input report as its only argument.
 		"""
 		if _isDebug():
 			log.debug("Opening device %s" % path)

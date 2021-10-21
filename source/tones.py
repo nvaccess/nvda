@@ -40,14 +40,15 @@ def terminate():
 
 def beep(hz,length,left=50,right=50):
 	"""Plays a tone at the given hz, length, and stereo balance.
-	@param hz: pitch in hz of the tone
-	@type hz: float
-	@param length: length of the tone in ms
-	@type length: integer
-	@param left: volume of the left channel (0 to 100)
-	@type left: integer
-	@param right: volume of the right channel (0 to 100)
-	@type right: integer
+
+	:param hz: pitch in hz of the tone
+	:type hz: float
+	:param length: length of the tone in ms
+	:type length: integer
+	:param left: volume of the left channel (0 to 100)
+	:type left: integer
+	:param right: volume of the right channel (0 to 100)
+	:type right: integer
 	"""
 	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
 	if not player:

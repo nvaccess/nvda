@@ -40,7 +40,8 @@ class Action(HandlerRegistrar):
 
 	def notify(self, **kwargs):
 		"""Notify all registered handlers that the action has occurred.
-		@param kwargs: Arguments to pass to the handlers.
+
+		:param kwargs: Arguments to pass to the handlers.
 		"""
 		for handler in self.handlers:
 			try:
@@ -51,7 +52,8 @@ class Action(HandlerRegistrar):
 	def notifyOnce(self, **kwargs):
 		"""Notify all registered handlers that the action has occurred.
 		Unregister handlers after calling.
-		@param kwargs: Arguments to pass to the handlers.
+
+		:param kwargs: Arguments to pass to the handlers.
 		"""
 		oldHandlers = list(self.handlers)
 		for handler in oldHandlers:
@@ -92,9 +94,10 @@ class Filter(HandlerRegistrar):
 		and the return value from that handler is passed to the next handler.
 		This process continues for all handlers until the final handler.
 		The return value from the final handler is returned to the caller.
-		@param value: The value to be filtered.
-		@param kwargs: Arguments to pass to the handlers.
-		@return: The filtered value.
+
+		:param value: The value to be filtered.
+		:param kwargs: Arguments to pass to the handlers.
+		:returns: The filtered value.
 		"""
 		for handler in self.handlers:
 			try:
@@ -139,9 +142,10 @@ class Decider(HandlerRegistrar):
 		If a handler returns False, processing stops
 		and False is returned.
 		If there are no handlers or all handlers return True, True is returned.
-		@param kwargs: Arguments to pass to the handlers.
-		@return: The decision.
-		@rtype: bool
+
+		:param kwargs: Arguments to pass to the handlers.
+		:returns: The decision.
+		:rtype: bool
 		"""
 		for handler in self.handlers:
 			try:

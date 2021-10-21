@@ -41,7 +41,8 @@ class DiffMatchPatch(DiffAlgo):
 
 	def _initialize(self):
 		"""Start the nvda_dmp process if it is not already running.
-		@note: This should be run from within the context of an acquired lock."""
+
+		.. note: This should be run from within the context of an acquired lock."""
 		if not DiffMatchPatch._proc:
 			log.debug("Starting diff-match-patch proxy")
 			if hasattr(sys, "frozen"):

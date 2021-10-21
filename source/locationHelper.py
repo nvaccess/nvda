@@ -19,7 +19,8 @@ class Point(namedtuple("Point",("x","y"))):
 	def fromFloatCollection(cls, *floats):
 		"""Creates an instance from float parameters.
 		The provided parameters will be converted to ints automatically.
-		@raise TypeError: If one of the input parameters isn't a float.
+
+		:raises TypeError: If one of the input parameters isn't a float.
 		"""
 		if not all(isinstance(f, float) for f in floats):
 			raise TypeError("All input parameters must be of type float")
@@ -187,7 +188,8 @@ class _RectMixin:
 	def fromFloatCollection(cls, *floats):
 		"""Creates an instance from float parameters.
 		The provided parameters will be converted to ints automatically.
-		@raise TypeError: If one of the input parameters isn't a float.
+
+		:raises TypeError: If one of the input parameters isn't a float.
 		"""
 		if not all(isinstance(f, float) for f in floats):
 			raise TypeError("All input parameters must be of type float")

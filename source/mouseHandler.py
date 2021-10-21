@@ -41,7 +41,7 @@ curMouseShape=""
 _shapeTimer=None
 scrBmpObj=None
 #: The time (in seconds) at which the last mouse event occurred.
-#: @type: float
+#: :type: float
 lastMouseEventTime=0
 
 SHAPE_REPORT_DELAY = 100
@@ -124,18 +124,19 @@ def executeMouseEvent(flags, x, y, data=0):
 	will be ignored by NVDA.
 	Consult https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-mouse_event
 	for detailed parameter documentation.
-	@param flags: Controls various aspects of mouse motion and button clicking.
+
+	:param flags: Controls various aspects of mouse motion and button clicking.
 		The supplied value should be one or a combination of the C{winUser.MOUSEEVENTF_*} constants.
-	@type flags: int
-	@param x: The mouse's absolute position along the x-axis
+	:type flags: int
+	:param x: The mouse's absolute position along the x-axis
 		or its amount of motion since the last mouse event was generated.
-	@type x: int
-	@param y: The mouse's absolute position along the y-axis
+	:type x: int
+	:param y: The mouse's absolute position along the y-axis
 		or its amount of motion since the last mouse event was generated.
-	@type y: int
-	@param data: Additional data depending on what flags are specified.
+	:type y: int
+	:param data: Additional data depending on what flags are specified.
 		This defaults to 0.
-	@type data: int
+	:type data: int
 	"""
 	with ignoreInjection():
 		winUser.mouse_event(flags, x, y, data, None)
@@ -318,6 +319,7 @@ def doPrimaryClick(releaseDelay: Optional[float] = None):
 	The primary button is the one that usually activates or selects an item.
 	This function honors the Windows user setting
 	for which button (left or right) is classed as the primary button.
+
 	@ param releaseDelay: optional float in seconds of how long NVDA should sleep
 	between pressing down and then releasing up the primary button.
 	"""
@@ -331,6 +333,7 @@ def doSecondaryClick(releaseDelay: Optional[float] = None):
 	The secondary button is the one that usually displays a context menu for an item when clicked.
 	This function honors the Windows user setting
 	for which button (left or right) is classed as the secondary button.
+
 	@ param releaseDelay: optional float in seconds of how long NVDA should sleep
 	between pressing down and then releasing up the primary button.
 	"""

@@ -64,10 +64,11 @@ class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 def getCommentInfoFromPosition(position):
 	"""
 	Fetches information about the comment located at the given position in a word document.
-	@param position: a TextInfo representing the span of the comment in the word document.
-	@type L{TextInfo}
-	@return: A dictionary containing keys of comment, author and date
-	@rtype: dict
+
+	:param position: a TextInfo representing the span of the comment in the word document.
+	:type L{TextInfo}
+	:returns: A dictionary containing keys of comment, author and date
+	:rtype: dict
 	"""
 	val=position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
 	if not val:

@@ -42,10 +42,11 @@ def isPathExternalToNVDA(path):
 
 def getCodePath(f):
 	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]
-	@param f: the frame object to use
-	@type f: frame
-	@returns: the dotted module.class.attribute path
-	@rtype: string
+
+	:param f: the frame object to use
+	:type f: frame
+	:returns: the dotted module.class.attribute path
+	:rtype: string
 	"""
 	fn=f.f_code.co_filename
 	if isPathExternalToNVDA(fn):
@@ -141,7 +142,7 @@ class Logger(logging.Logger):
 
 	#: The start position of a fragment of the log file as marked with
 	#: L{markFragmentStart} for later retrieval using L{getFragment}.
-	#: @type: C{long}
+	#: :type: C{long}
 	fragmentStart = None
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
@@ -242,8 +243,9 @@ class Logger(logging.Logger):
 	def markFragmentStart(self):
 		"""Mark the current end of the log file as the start position of a
 		fragment to be later retrieved by L{getFragment}.
-		@returns: Whether a log file is in use and a position could be marked
-		@rtype: bool
+
+		:returns: Whether a log file is in use and a position could be marked
+		:rtype: bool
 		"""
 		if (
 			not globalVars.appArgs
@@ -263,8 +265,9 @@ class Logger(logging.Logger):
 		L{markFragmentStart}.
 		If L{fragmentStart} does not point to the current end of the log file, it
 		is reset to C{None} after reading the fragment.
-		@returns: The text of the fragment, or C{None} if L{fragmentStart} is None.
-		@rtype: str
+
+		:returns: The text of the fragment, or C{None} if L{fragmentStart} is None.
+		:rtype: str
 		"""
 		if (
 			self.fragmentStart is None
@@ -342,11 +345,12 @@ class StreamRedirector(object):
 
 	def __init__(self, name, logger, level):
 		"""Constructor.
-		@param name: The name of the stream to be used in the log output.
-		@param logger: The logger to which to log.
-		@type logger: L{Logger}
-		@param level: The level at which to log.
-		@type level: int
+
+		:param name: The name of the stream to be used in the log output.
+		:param logger: The logger to which to log.
+		:type logger: L{Logger}
+		:param level: The level at which to log.
+		:type level: int
 		"""
 		self.name = name
 		self.logger = logger
@@ -363,8 +367,9 @@ class StreamRedirector(object):
 
 def redirectStdout(logger):
 	"""Redirect stdout and stderr to a given logger.
-	@param logger: The logger to which to redirect.
-	@type logger: L{Logger}
+
+	:param logger: The logger to which to redirect.
+	:type logger: L{Logger}
 	"""
 	sys.stdout = StreamRedirector("stdout", logger, logging.WARNING)
 	sys.stderr = StreamRedirector("stderr", logger, logging.ERROR)
@@ -392,9 +397,10 @@ def _showwarning(message, category, filename, lineno, file=None, line=None):
 def initialize(shouldDoRemoteLogging=False):
 	"""Initialize logging.
 	This must be called before any logging can occur.
-	@precondition: The command line arguments have been parsed into L{globalVars.appArgs}.
-	@var shouldDoRemoteLogging: True if all logging should go to the real NVDA via rpc (for slave)
-	@type shouldDoRemoteLogging: bool
+
+	.. precondition: The command line arguments have been parsed into L{globalVars.appArgs}.
+	:var shouldDoRemoteLogging: True if all logging should go to the real NVDA via rpc (for slave)
+	:type shouldDoRemoteLogging: bool
 	"""
 	global log, logHandler
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")

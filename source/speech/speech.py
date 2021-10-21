@@ -120,10 +120,11 @@ CHUNK_SEPARATOR = "  "
 BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", u"\xa0"))
 def isBlank(text):
 	"""Determine whether text should be reported as blank.
-	@param text: The text in question.
-	@type text: str
-	@return: C{True} if the text is blank, C{False} if not.
-	@rtype: bool
+
+	:param text: The text in question.
+	:type text: str
+	:returns: C{True} if the text is blank, C{False} if not.
+	:rtype: bool
 	"""
 	return not text or set(text) <= BLANK_CHUNK_CHARS
 
@@ -160,7 +161,8 @@ def _getSpeakMessageSpeech(
 		text: str,
 ) -> SpeechSequence:
 	"""Gets the speech sequence for a given message.
-	@param text: the message to speak
+
+	:param text: the message to speak
 	"""
 	if text is None:
 		return []
@@ -177,8 +179,9 @@ def speakMessage(
 		priority: Optional[Spri] = None
 ) -> None:
 	"""Speaks a given message.
-	@param text: the message to speak
-	@param priority: The speech priority.
+
+	:param text: the message to speak
+	:param priority: The speech priority.
 	"""
 	seq = _getSpeakMessageSpeech(text)
 	if seq:
@@ -237,7 +240,8 @@ def _getSpellingSpeechAddCharMode(
 ) -> Generator[SequenceItemT, None, None]:
 	"""Inserts CharacterMode commands in a speech sequence generator to ensure any single character
 	is spelt by the synthesizer.
-	@param seq: The speech sequence to be spelt.
+
+	:param seq: The speech sequence to be spelt.
 	"""
 	charMode = False
 	for item in seq:
@@ -260,10 +264,11 @@ def _getSpellingCharAddCapNotification(
 ) -> Generator[SequenceItemT, None, None]:
 	"""This function produces a speech sequence containing a character to be spelt as well as commands
 	to indicate that this character is uppercase if applicable.
-	@param speakCharAs: The character as it will be spoken by the synthesizer.
-	@param sayCapForCapitals: indicates if 'cap' should be reported along with the currently spelt character.
-	@param capPitchChange: pitch offset to apply while spelling the currently spelt character.
-	@param beepForCapitals: indicates if a cap notification beep should be produced while spelling the currently
+
+	:param speakCharAs: The character as it will be spoken by the synthesizer.
+	:param sayCapForCapitals: indicates if 'cap' should be reported along with the currently spelt character.
+	:param capPitchChange: pitch offset to apply while spelling the currently spelt character.
+	:param beepForCapitals: indicates if a cap notification beep should be produced while spelling the currently
 	spellt character.
 	"""
 	if sayCapForCapitals:
@@ -534,7 +539,8 @@ def _getPlaceholderSpeechIfTextEmpty(
 	""" Attempt to get speech for placeholder attribute if text for 'obj' is empty. Don't report the placeholder
 		value unless the text is empty, because it is confusing to hear the current value (presumably typed by the
 		user) *and* the placeholder. The placeholder should "disappear" once the user types a value.
-	@return: (True, SpeechSequence) if text for obj was considered empty and we attempted to get speech for the
+
+	:returns: (True, SpeechSequence) if text for obj was considered empty and we attempted to get speech for the
 		placeholder value. (False, []) if text for obj was not considered empty.
 	"""
 	textEmpty = obj._isTextEmpty
@@ -704,10 +710,11 @@ def speakText(
 		priority: Optional[Spri] = None
 ):
 	"""Speaks some text.
-	@param text: The text to speak.
-	@param reason: Unused
-	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
-	@param priority: The speech priority.
+
+	:param text: The text to speak.
+	:param reason: Unused
+	:param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
+	:param priority: The speech priority.
 	"""
 	seq = _getSpeakMessageSpeech(text)
 	if seq:
@@ -719,10 +726,11 @@ RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOT
 
 def splitTextIndentation(text):
 	"""Splits indentation from the rest of the text.
-	@param text: The text to split.
-	@type text: str
-	@return: Tuple of indentation and content.
-	@rtype: (str, str)
+
+	:param text: The text to split.
+	:type text: str
+	:returns: Tuple of indentation and content.
+	:rtype: (str, str)
 	"""
 	return RE_INDENTATION_SPLIT.match(text).groups()
 
@@ -735,8 +743,9 @@ IDT_MAX_SPACES = 72
 
 def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> SpeechSequence:
 	"""Retrieves the indentation speech sequence for a given string of indentation.
-	@param indentation: The string of indentation.
-	@param formatConfig: The configuration to use.
+
+	:param indentation: The string of indentation.
+	:param formatConfig: The configuration to use.
 	"""
 	speechIndentConfig = formatConfig["reportLineIndentation"]
 	toneIndentConfig = (
@@ -794,9 +803,10 @@ def speak(  # noqa: C901
 		priority: Spri = Spri.NORMAL
 ):
 	"""Speaks a sequence of text and speech commands
-	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
-	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
-	@param priority: The speech priority.
+
+	:param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
+	:param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
+	:param priority: The speech priority.
 	"""
 	logBadSequenceTypes(speechSequence)
 	# in case priority was explicitly passed in as None, set to default.
@@ -873,7 +883,8 @@ def speakPreselectedText(
 	inform a user that the newly focused control has content that is selected,
 	which they may unintentionally overwrite.
 
-	@remarks: Implemented using L{getPreselectedTextSpeech}
+
+	.. remarks: Implemented using L{getPreselectedTextSpeech}
 	"""
 	seq = getPreselectedTextSpeech(text)
 	if seq:
@@ -890,7 +901,8 @@ def getPreselectedTextSpeech(
 	inform a user that the newly focused control has content that is selected,
 	which they may unintentionally overwrite.
 
-	@remarks: Implemented using L{_getSelectionMessageSpeech}, which allows for
+
+	.. remarks: Implemented using L{_getSelectionMessageSpeech}, which allows for
 		creating a speech sequence with an arbitrary attached message.
 	"""
 	return _getSelectionMessageSpeech(
@@ -910,7 +922,8 @@ def speakTextSelected(
 	This method is in contrast with L{speakPreselectedText}.
 	The method will speak the provided text with the word "selected" appended.
 
-	@remarks: Implemented using L{speakSelectionMessage}, which allows for
+
+	.. remarks: Implemented using L{speakSelectionMessage}, which allows for
 		speaking text with an arbitrary attached message.
 	"""
 	# Translators: This is spoken to indicate what has just been selected.
@@ -952,10 +965,11 @@ def speakSelectionChange(  # noqa: C901
 		priority: Optional[Spri] = None
 ):
 	"""Speaks a change in selection, either selected or unselected text.
-	@param oldInfo: a TextInfo instance representing what the selection was before
-	@param newInfo: a TextInfo instance representing what the selection is now
-	@param generalize: if True, then this function knows that the text may have changed between the creation of the oldInfo and newInfo objects, meaning that changes need to be spoken more generally, rather than speaking the specific text, as the bounds may be all wrong.
-	@param priority: The speech priority.
+
+	:param oldInfo: a TextInfo instance representing what the selection was before
+	:param newInfo: a TextInfo instance representing what the selection is now
+	:param generalize: if True, then this function knows that the text may have changed between the creation of the oldInfo and newInfo objects, meaning that changes need to be spoken more generally, rather than speaking the specific text, as the bounds may be all wrong.
+	:param priority: The speech priority.
 	"""
 	selectedTextList=[]
 	unselectedTextList=[]
@@ -1027,7 +1041,8 @@ def _suppressSpeakTypedCharacters(number: int):
 	"""Suppress speaking of typed characters.
 	This should be used when sending a string of characters to the system
 	and those characters should not be spoken individually as if the user were typing them.
-	@param number: The number of characters to suppress.
+
+	:param number: The number of characters to suppress.
 	"""
 	_speechState._suppressSpeakTypedCharactersNumber += number
 	_speechState._suppressSpeakTypedCharactersTime = time.time()
@@ -2562,7 +2577,7 @@ def getTableInfoSpeech(
 
 
 #: The singleton _SpeechManager instance used for speech functions.
-#: @type: L{manager.SpeechManager}
+#: :type: L{manager.SpeechManager}
 _manager = manager.SpeechManager()
 
 

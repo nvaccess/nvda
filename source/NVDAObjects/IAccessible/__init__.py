@@ -341,10 +341,11 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	) -> typing.Generator[typing.Union[textInfos.FieldCommand, str, int], None, None]:
 		"""Iterate through the text, splitting at embedded object characters.
 		Where an embedded object character occurs, its offset is provided.
-		@param withFields: Whether to output control/format fields.
-		@type withFields: bool
-		@param formatConfig: Document formatting configuration.
-		@return: A generator of fields, text strings and numeric offsets of embedded object characters.
+
+		:param withFields: Whether to output control/format fields.
+		:type withFields: bool
+		:param formatConfig: Document formatting configuration.
+		:returns: A generator of fields, text strings and numeric offsets of embedded object characters.
 		"""
 		if withFields:
 			items = self.getTextWithFields(formatConfig=formatConfig)
@@ -377,8 +378,9 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 class IAccessible(Window):
 	"""
 the NVDAObject for IAccessible
-@ivar IAccessibleChildID: the IAccessible object's child ID
-@type IAccessibleChildID: int
+
+:var IAccessibleChildID: the IAccessible object's child ID
+:type IAccessibleChildID: int
 """
 
 	IAccessibleTableUsesTableCellIndexAttrib=False #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
@@ -598,14 +600,15 @@ the NVDAObject for IAccessible
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
-@param pacc: a pointer to an IAccessible object
-@type pacc: ctypes.POINTER(IAccessible)
-@param child: A child ID that will be used on all methods of the IAccessible pointer
-@type child: int
-@param hwnd: the window handle, if known
-@type hwnd: int
-@param objectID: the objectID for the IAccessible Object, if known
-@type objectID: int
+
+:param pacc: a pointer to an IAccessible object
+:type pacc: ctypes.POINTER(IAccessible)
+:param child: A child ID that will be used on all methods of the IAccessible pointer
+:type child: int
+:param hwnd: the window handle, if known
+:type hwnd: int
+:param objectID: the objectID for the IAccessible Object, if known
+:type objectID: int
 """
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
@@ -688,8 +691,9 @@ the NVDAObject for IAccessible
 		"""Determine whether a focus event should be allowed for this object.
 		Normally, this checks for the focused state to help eliminate redundant or invalid focus events.
 		However, some implementations do not correctly set the focused state, so this must be overridden.
-		@return: C{True} if the focus event should be allowed.
-		@rtype: bool
+
+		:returns: C{True} if the focus event should be allowed.
+		:rtype: bool
 		"""
 		#this object or one of its ancestors must have State.FOCUSED.
 		testObj = self
@@ -707,7 +711,8 @@ the NVDAObject for IAccessible
 	def _get_shouldAllowIAccessibleMenuStartEvent(self) -> bool:
 		"""Determine whether an IAccessible menu start or menu popup start event should be allowed
 		for this object.
-		@return: C{True} if the event should be allowed.
+
+		:returns: C{True} if the event should be allowed.
 		"""
 		return True
 

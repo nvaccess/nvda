@@ -36,11 +36,12 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	def _getTableCellCoords(self, info):
 		"""
 		Fetches information about the deepest table cell at the given position.
-		@param info:  the position where the table cell should be looked for.
-		@type info: L{textInfos.TextInfo}
-		@returns: a tuple of table ID, row number, column number, row span, and column span.
-		@rtype: tuple
-		@raises: LookupError if there is no table cell at this position.
+
+		:param info:  the position where the table cell should be looked for.
+		:type info: L{textInfos.TextInfo}
+		:returns: a tuple of table ID, row number, column number, row span, and column span.
+		:rtype: tuple
+		:raises: LookupError if there is no table cell at this position.
 		"""
 		if info.isCollapsed:
 			info = info.copy()
@@ -73,16 +74,17 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	def _getTableCellAt(self,tableID,startPos,row,column):
 		"""
 		Starting from the given start position, Locates the table cell with the given row and column coordinates and table ID.
-		@param startPos: the position to start searching from.
-		@type startPos: L{textInfos.TextInfo}
-		@param tableID: the ID of the table.
-		@param row: the row number of the cell
-		@type row: int
-		@param column: the column number of the table cell
-		@type column: int
-		@returns: the table cell's position in the document
-		@rtype: L{textInfos.TextInfo}
-		@raises: LookupError if the cell does not exist 
+
+		:param startPos: the position to start searching from.
+		:type startPos: L{textInfos.TextInfo}
+		:param tableID: the ID of the table.
+		:param row: the row number of the cell
+		:type row: int
+		:param column: the column number of the table cell
+		:type column: int
+		:returns: the table cell's position in the document
+		:rtype: L{textInfos.TextInfo}
+		:raises: LookupError if the cell does not exist 
 		"""
 		raise NotImplementedError
 
@@ -92,23 +94,24 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		Locates the nearest table cell relative to another table cell in a given direction, given its coordinates.
 		For example, this is used to move to the cell in the next column, previous row, etc.
 		This method will skip over missing table cells (where L{_getTableCellAt} raises LookupError), up to the number of times set by _missingTableCellSearchLimit set on this instance.
-		@param tableID: the ID of the table
-		@param startPos: the position in the document to start searching from.
-		@type startPos: L{textInfos.TextInfo}
-		@param origRow: the row number of the starting cell
-		@type origRow: int
-		@param origCol: the column number  of the starting cell
-		@type origCol: int
-		@param origRowSpan: the row span of the row of the starting cell
-		@type origRowSpan: int
-		@param origColSpan: the column span of the column of the starting cell
-		@type origColSpan: int
-		@param movement: the direction ("next" or "previous")
-		@type movement: string
-		@param axis: the axis of movement ("row" or "column")
-		@type axis: string
-		@returns: the position of the nearest table cell
-		@rtype: L{textInfos.TextInfo}
+
+		:param tableID: the ID of the table
+		:param startPos: the position in the document to start searching from.
+		:type startPos: L{textInfos.TextInfo}
+		:param origRow: the row number of the starting cell
+		:type origRow: int
+		:param origCol: the column number  of the starting cell
+		:type origCol: int
+		:param origRowSpan: the row span of the row of the starting cell
+		:type origRowSpan: int
+		:param origColSpan: the column span of the column of the starting cell
+		:type origColSpan: int
+		:param movement: the direction ("next" or "previous")
+		:type movement: string
+		:param axis: the axis of movement ("row" or "column")
+		:type axis: string
+		:returns: the position of the nearest table cell
+		:rtype: L{textInfos.TextInfo}
 		"""
 		if not axis:
 			raise ValueError("Axis must be row or column")

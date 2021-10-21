@@ -128,14 +128,15 @@ def GDIPlusGraphicsContext(hdc):
 @contextmanager
 def GDIPlusPen(color, width, dashStyle=DashStyleSolid):
 	"""Creates a GDI+ pen that is automatically destroyed when finished drawing.
-	@param color: an ARGB color.
-	@type color: int
-	@param width: The width of the pen, in pixels.
-	@type width: int
-	@param dashStyle: The style of the line(s) to be drawn.
+
+	:param color: an ARGB color.
+	:type color: int
+	:param width: The width of the pen, in pixels.
+	:type width: int
+	:param dashStyle: The style of the line(s) to be drawn.
 		This is one of the C{DashStyle*} constants.
 		Defaults to C{DashStyleSolid}, which draws solid lines.
-	@type dashStyle: int
+	:type dashStyle: int
 	"""
 	gpPen = c_void_p()
 	gpStatus = gdiplus.GdipCreatePen1(color, width, UnitPixel, byref(gpPen))

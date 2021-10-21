@@ -230,8 +230,9 @@ class Switch(Ia2Web):
 def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""Determine the most appropriate class if this is an IA2 web object.
 	This should be called after finding any classes for the specific web implementation.
-	@param baseClass: The base class for all web objects.
-	@param documentClass: The class to use for document roots, including ARIA applications.
+
+	:param baseClass: The base class for all web objects.
+	:param documentClass: The class to use for document roots, including ARIA applications.
 	"""
 	if not documentClass:
 		raise ValueError("documentClass cannot be None")

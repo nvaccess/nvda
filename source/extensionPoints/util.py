@@ -133,7 +133,8 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 	Therefore, usage is strongly discouraged due to the
 	risk of parameter order differences causing bugs.
 
-	@param func: can be any callable that is not an unbound method. EG:
+
+	:param func: can be any callable that is not an unbound method. EG:
 		- Bound instance methods
 		- class methods
 		- static methods

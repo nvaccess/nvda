@@ -91,8 +91,9 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	This is a mix-in class; i.e. it should be inherited alongside another L{baseObject.ScriptableObject}.
 	The class into which it is inherited must provide a C{makeTextInfo(position)} method.
 
-	@ivar selection: The current caret/selection range.
-	@type selection: L{textInfos.TextInfo}
+
+	:var selection: The current caret/selection range.
+	:type selection: L{textInfos.TextInfo}
 	"""
 
 	# Translators: the script category for browse mode

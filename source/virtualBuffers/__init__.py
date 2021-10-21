@@ -230,9 +230,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 
 	def _getPlaceholderAttribute(self, attrs, placeholderAttrsKey):
 		"""Gets the placeholder attribute to be used.
-		@return: The placeholder attribute when there is no content within the ControlField.
+
+		:returns: The placeholder attribute when there is no content within the ControlField.
 		None when the ControlField has content.
-		@note: The content is considered empty if it holds a single space.
+		.. note: The content is considered empty if it holds a single space.
 		"""
 		placeholder = attrs.get(placeholderAttrsKey)
 		# For efficiency, only check if it is valid to return placeholder when we have a placeholder value to return.
@@ -516,22 +517,24 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
 		Subclasses must override this method.
-		@param docHandle: The document handle.
-		@type docHandle: int
-		@param ID: The ID of the node.
-		@type ID: int
-		@return: The NVDAObject.
-		@rtype: L{NVDAObjects.NVDAObject}
+
+		:param docHandle: The document handle.
+		:type docHandle: int
+		:param ID: The ID of the node.
+		:type ID: int
+		:returns: The NVDAObject.
+		:rtype: L{NVDAObjects.NVDAObject}
 		"""
 		raise NotImplementedError
 
 	@abstractmethod
 	def getIdentifierFromNVDAObject(self,obj):
 		"""Retreaves the virtualBuffer field identifier from an NVDAObject.
-		@param obj: the NVDAObject to retreave the field identifier from.
-		@type obj: L{NVDAObject}
-		@returns: a the field identifier as a doc handle and ID paire.
-		@rtype: 2-tuple.
+
+		:param obj: the NVDAObject to retreave the field identifier from.
+		:type obj: L{NVDAObject}
+		:returns: a the field identifier as a doc handle and ID paire.
+		:rtype: 2-tuple.
 		"""
 		raise NotImplementedError
 

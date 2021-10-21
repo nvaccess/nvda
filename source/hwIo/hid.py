@@ -128,10 +128,11 @@ class Hid(IoBase):
 
 	def __init__(self, path: str, onReceive: Callable[[bytes], None], exclusive: bool = True):
 		"""Constructor.
-		@param path: The device path.
+
+		:param path: The device path.
 			This can be retrieved using L{hwPortUtils.listHidDevices}.
-		@param onReceive: A callable taking a received input report as its only argument.
-		@param exclusive: Whether to block other application's access to this device.
+		:param onReceive: A callable taking a received input report as its only argument.
+		:param exclusive: Whether to block other application's access to this device.
 		"""
 		if _isDebug():
 			log.debug("Opening device %s" % path)
@@ -247,8 +248,9 @@ class Hid(IoBase):
 
 	def getFeature(self, reportId: bytes) -> bytes:
 		"""Get a feature report from this device.
-		@param reportId: The report id.
-		@return: The report, including the report id.
+
+		:param reportId: The report id.
+		:returns: The report, including the report id.
 		"""
 		buf = ctypes.create_string_buffer(reportId, size=self._featureSize)
 		if not hidDll.HidD_GetFeature(self._file, buf, self._featureSize):
@@ -264,7 +266,8 @@ class Hid(IoBase):
 
 	def setFeature(self, report: bytes) -> None:
 		"""Send a feature report to this device.
-		@param report: The report, including its id.
+
+		:param report: The report, including its id.
 		"""
 		buf = ctypes.create_string_buffer(report, size=len(report))
 		bufSize = ctypes.sizeof(buf)
@@ -284,7 +287,8 @@ class Hid(IoBase):
 		"""
 		Write the given report to the device using HidD_SetOutputReport.
 		This is instead of using the standard WriteFile which may freeze with some USB HID implementations.
-		@param report: The report, including its id.
+
+		:param report: The report, including its id.
 		"""
 		buf = ctypes.create_string_buffer(report, size=len(report))
 		bufSize = ctypes.sizeof(buf)

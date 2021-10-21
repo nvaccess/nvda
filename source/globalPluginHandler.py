@@ -78,8 +78,9 @@ class GlobalPlugin(baseObject.ScriptableObject):
 		This is called when an NVDAObject is being instantiated after L{NVDAObjects.NVDAObject.findOverlayClasses} has been called on the API-level class.
 		This allows a global plugin to add or remove overlay classes.
 		See L{NVDAObjects.NVDAObject.findOverlayClasses} for details about overlay classes.
-		@param obj: The object being created.
-		@type obj: L{NVDAObjects.NVDAObject}
-		@param clsList: The list of classes, which will be modified by this method if appropriate.
-		@type clsList: list of L{NVDAObjects.NVDAObject}
+
+		:param obj: The object being created.
+		:type obj: L{NVDAObjects.NVDAObject}
+		:param clsList: The list of classes, which will be modified by this method if appropriate.
+		:type clsList: list of L{NVDAObjects.NVDAObject}
 		"""

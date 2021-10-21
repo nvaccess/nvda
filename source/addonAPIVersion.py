@@ -30,7 +30,7 @@ EG: (x, y, z): Large changes to speech.py
 #: Resulting match objects expose three groups reflecting release year, release major, and release minor version,
 # respectively.
 # As minor is optional, the final group in the resulting match object may be None if minor is not provided in the original string. In this case it should be treated as being 0. 
-#: @type: RegexObject
+#: :type: RegexObject
 ADDON_API_VERSION_REGEX = re.compile(r"^(0|\d{4})\.(\d)(?:\.(\d))?$")
 
 def getAPIVersionTupleFromString(version):

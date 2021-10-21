@@ -29,14 +29,15 @@ class Offsets:
 
 def findStartOfLine(text,offset,lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves back to sit on a multiple of the line length.
-	@param text: the text to search
-	@type text: str
-	@param offset: the offset of the text to start at
-	@type offset: int
-	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-	@type lineLength: int or None
-	@return: the found offset
-	@rtype: int 
+
+	:param text: the text to search
+	:type text: str
+	:param offset: the offset of the text to start at
+	:type offset: int
+	:param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+	:type lineLength: int or None
+	:returns: the found offset
+	:rtype: int 
 	"""
 	if not text:
 		return 0
@@ -55,14 +56,15 @@ def findStartOfLine(text,offset,lineLength=None):
 
 def findEndOfLine(text,offset,lineLength=None):
 	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves forward to sit on a multiple of the line length.
-	@param text: the text to search
-	@type text: str
-	@param offset: the offset of the text to start at
-	@type offset: int
-	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-	@type lineLength: int or None
-	@return: the found offset
-	@rtype: int 
+
+	:param text: the text to search
+	:type text: str
+	:param offset: the offset of the text to start at
+	:type offset: int
+	:param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+	:type lineLength: int or None
+	:returns: the found offset
+	:rtype: int 
 	"""
 	if not text:
 		return 0
@@ -82,14 +84,15 @@ def findEndOfLine(text,offset,lineLength=None):
 
 def findStartOfWord(text,offset,lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
-	@param text: the text to search
-	@type text: str
-	@param offset: the offset of the text to start at
-	@type offset: int
-	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-	@type lineLength: int or None
-	@return: the found offset
-	@rtype: int 
+
+	:param text: the text to search
+	:type text: str
+	:param offset: the offset of the text to start at
+	:type offset: int
+	:param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+	:type lineLength: int or None
+	:returns: the found offset
+	:rtype: int 
 	"""
 	if offset>=len(text):
 		return offset
@@ -104,14 +107,15 @@ def findStartOfWord(text,offset,lineLength=None):
 
 def findEndOfWord(text,offset,lineLength=None):
 	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
-	@param text: the text to search
-	@type text: str
-	@param offset: the offset of the text to start at
-	@type offset: int
-	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-	@type lineLength: int or None
-	@return: the found offset
-	@rtype: int 
+
+	:param text: the text to search
+	:type text: str
+	:param offset: the offset of the text to start at
+	:type offset: int
+	:param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+	:type lineLength: int or None
+	:returns: the found offset
+	:rtype: int 
 	"""
 	if offset>=len(text):
 		return offset+1
@@ -263,19 +267,21 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def _getStoryText(self):
 		"""Retrieve the entire text of the object.
-		@return: The entire text of the object.
-		@rtype: str
+
+		:returns: The entire text of the object.
+		:rtype: str
 		"""
 		raise NotImplementedError
 
 	def _getTextRange(self,start,end):
 		"""Retrieve the text in a given offset range.
-		@param start: The start offset.
-		@type start: int
-		@param end: The end offset (exclusive).
-		@type end: int
-		@return: The text contained in the requested range.
-		@rtype: str
+
+		:param start: The start offset.
+		:type start: int
+		:param end: The end offset (exclusive).
+		:type end: int
+		:returns: The text contained in the requested range.
+		:rtype: str
 		"""
 		text=self._getStoryText()
 		if self.encoding == textUtils.WCHAR_ENCODING:
@@ -309,9 +315,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		Calculates the bounds of a unit at an offset within a given string of text
 		using the Windows uniscribe  library, also used in Notepad, for example.
 		Units supported are character and word.
-		@param lineText: the text string to analyze
-		@param unit: the TextInfo unit (character or word)
-		@param relOffset: the character offset within the text string at which to calculate the bounds.
+
+		:param lineText: the text string to analyze
+		:param unit: the TextInfo unit (character or word)
+		:param relOffset: the character offset within the text string at which to calculate the bounds.
 		"""
 		if unit is textInfos.UNIT_WORD:
 			helperFunc = NVDAHelper.localLib.calculateWordOffsets

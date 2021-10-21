@@ -84,8 +84,9 @@ class ChromeLib:
 		"""
 		Creates a file for a HTML test case. The sample is written with a button before and after so that NVDA
 		can tab to the sample from either direction.
-		@param testCase:  The HTML sample that is to be tested.
-		@return: path to the HTML file.
+
+		:param testCase:  The HTML sample that is to be tested.
+		:returns: path to the HTML file.
 		"""
 		filePath = ChromeLib._getTestCasePath("test.html")
 		fileContents = (f"""
@@ -112,9 +113,10 @@ class ChromeLib:
 
 	def _waitForStartMarker(self, spy, lastSpeechIndex):
 		""" Wait until the page loads and NVDA reads the start marker.
-		@param spy:
-		@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
-		@return: None
+
+		:param spy:
+		:type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
+		:returns: None
 		"""
 		for i in range(10):  # set a limit on the number of tries.
 			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
@@ -161,7 +163,8 @@ class ChromeLib:
 	def prepareChrome(self, testCase: str) -> None:
 		"""
 		Starts Chrome opening a file containing the HTML sample
-		@param testCase - The HTML sample to test.
+
+		:param testCase - The HTML sample to test.
 		"""
 		spy = _NvdaLib.getSpyLib()
 		path = self._writeTestFile(testCase)
@@ -190,13 +193,15 @@ class ChromeLib:
 	@staticmethod
 	def getSpeechAfterKey(key) -> str:
 		"""Ensure speech has stopped, press key, and get speech until it stops.
-		@return: The speech after key press.
+
+		:returns: The speech after key press.
 		"""
 		return _NvdaLib.getSpeechAfterKey(key)
 
 	@staticmethod
 	def getSpeechAfterTab() -> str:
 		"""Ensure speech has stopped, press tab, and get speech until it stops.
-		@return: The speech after tab.
+
+		:returns: The speech after tab.
 		"""
 		return _NvdaLib.getSpeechAfterKey('tab')

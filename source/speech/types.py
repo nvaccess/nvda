@@ -57,10 +57,11 @@ def logBadSequenceTypes(sequence: SpeechIterable, raiseExceptionOnError=False) -
 	"""
 		Check if the provided sequence is valid, otherwise log an error (only if speech is
 		checked in the "log categories" setting of the advanced settings panel.
-		@param sequence: the sequence to check
-		@param raiseExceptionOnError: if True, and exception is raised. Useful to help track down the introduction
+
+		:param sequence: the sequence to check
+		:param raiseExceptionOnError: if True, and exception is raised. Useful to help track down the introduction
 			of erroneous speechSequence data.
-		@return: True if the sequence is valid.
+		:returns: True if the sequence is valid.
 	"""
 	if not _isDebugForSpeech():
 		return True

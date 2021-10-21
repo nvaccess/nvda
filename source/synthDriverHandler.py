@@ -40,7 +40,8 @@ class VoiceInfo(StringParameterInfo):
 
 	def __init__(self, id, displayName, language: Optional[str] = None):
 		"""
-		@param language: The ID of the language this voice speaks,
+
+		:param language: The ID of the language this voice speaks,
 			C{None} if not known or the synth implements language separate from voices.
 		"""
 		self.language = language
@@ -70,31 +71,32 @@ class SynthDriver(driverHandler.Driver):
 	L{supportedNotifications} should specify what notifications the synthesizer provides.
 	Currently, the available notifications are L{synthIndexReached} and L{synthDoneSpeaking}.
 	Both of these must be supported.
-	@ivar pitch: The current pitch; ranges between 0 and 100.
-	@type pitch: int
-	@ivar rate: The current rate; ranges between 0 and 100.
-	@type rate: int
-	@ivar volume: The current volume; ranges between 0 and 100.
-	@type volume: int
-	@ivar variant: The current variant of the voice.
-	@type variant: str
-	@ivar availableVariants: The available variants of the voice.
-	@type availableVariants: OrderedDict of [L{VoiceInfo} keyed by VoiceInfo's ID
-	@ivar inflection: The current inflection; ranges between 0 and 100.
-	@type inflection: int
+
+	:var pitch: The current pitch; ranges between 0 and 100.
+	:type pitch: int
+	:var rate: The current rate; ranges between 0 and 100.
+	:type rate: int
+	:var volume: The current volume; ranges between 0 and 100.
+	:type volume: int
+	:var variant: The current variant of the voice.
+	:type variant: str
+	:var availableVariants: The available variants of the voice.
+	:type availableVariants: OrderedDict of [L{VoiceInfo} keyed by VoiceInfo's ID
+	:var inflection: The current inflection; ranges between 0 and 100.
+	:type inflection: int
 	"""
 
 	#: The name of the synth; must be the original module file name.
-	#: @type: str
+	#: :type: str
 	name = ""
 	#: A description of the synth.
-	#: @type: str
+	#: :type: str
 	description = ""
 	#: The speech commands supported by the synth.
-	#: @type: set of L{SynthCommand} subclasses.
+	#: :type: set of L{SynthCommand} subclasses.
 	supportedCommands = frozenset()
 	#: The notifications provided by the synth.
-	#: @type: set of L{extensionPoints.Action} instances
+	#: :type: set of L{extensionPoints.Action} instances
 	supportedNotifications = frozenset()
 	_configSection = "speech"
 	# type information for auto property _get_voice
@@ -216,8 +218,9 @@ class SynthDriver(driverHandler.Driver):
 	def speak(self, speechSequence):
 		"""
 		Speaks the given sequence of text and speech commands.
-		@param speechSequence: a list of text strings and SynthCommand objects (such as index and parameter changes).
-		@type speechSequence: list of string and L{SynthCommand}
+
+		:param speechSequence: a list of text strings and SynthCommand objects (such as index and parameter changes).
+		:type speechSequence: list of string and L{SynthCommand}
 		"""
 		raise NotImplementedError
 
@@ -242,7 +245,8 @@ class SynthDriver(driverHandler.Driver):
 
 	def _getAvailableVoices(self) -> OrderedDict[str, VoiceInfo]:
 		"""fetches an ordered dictionary of voices that the synth supports.
-		@returns: an OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
+
+		:returns: an OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
 		"""
 		raise NotImplementedError
 
@@ -277,8 +281,9 @@ class SynthDriver(driverHandler.Driver):
 
 	def _getAvailableVariants(self):
 		"""fetches an ordered dictionary of variants that the synth supports, keyed by ID
-		@returns: an ordered dictionary of L{VoiceInfo} instances representing the available variants
-		@rtype: OrderedDict
+
+		:returns: an ordered dictionary of L{VoiceInfo} instances representing the available variants
+		:rtype: OrderedDict
 		"""
 		raise NotImplementedError
 
@@ -295,8 +300,9 @@ class SynthDriver(driverHandler.Driver):
 
 	def pause(self, switch):
 		"""Pause or resume speech output.
-		@param switch: C{True} to pause, C{False} to resume (unpause).
-		@type switch: bool
+
+		:param switch: C{True} to pause, C{False} to resume (unpause).
+		:type switch: bool
 		"""
 		pass
 
@@ -500,11 +506,12 @@ def findAndSetNextSynth(currentSynthName: str) -> bool:
 def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
 	"""
 	Switches synthesizers and or applies new voice settings to the synth due to a config profile switch.
-	@var resetSpeechIfNeeded: if true and a new synth will be loaded, speech queues are fully reset first.
+
+	:var resetSpeechIfNeeded: if true and a new synth will be loaded, speech queues are fully reset first.
 	This is what happens by default.
 	However, Speech itself may call this with false internally if this is a config profile switch within a
 	currently processing speech sequence.
-	@type resetSpeechIfNeeded: bool
+	:type resetSpeechIfNeeded: bool
 	"""
 	conf = config.conf["speech"]
 	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:

@@ -84,8 +84,9 @@ class SettingsDialog(
 		* Optionally, extend one or more of L{onOk}, L{onCancel} or L{onApply} to perform actions in response to the
 			OK, Cancel or Apply buttons, respectively.
 
-	@ivar title: The title of the dialog.
-	@type title: str
+
+	:var title: The title of the dialog.
+	:type title: str
 	"""
 
 	class MultiInstanceError(RuntimeError): pass
@@ -166,19 +167,20 @@ class SettingsDialog(
 			multiInstanceAllowed=False
 	):
 		"""
-		@param parent: The parent for this dialog; C{None} for no parent.
-		@type parent: wx.Window
-		@param resizeable: True if the settings dialog should be resizable by the user, only set this if
+
+		:param parent: The parent for this dialog; C{None} for no parent.
+		:type parent: wx.Window
+		:param resizeable: True if the settings dialog should be resizable by the user, only set this if
 			you have tested that the components resize correctly.
-		@type resizeable: bool
-		@param hasApplyButton: C{True} to add an apply button to the dialog; defaults to C{False} for backwards compatibility.
-		@type hasApplyButton: bool
-		@param settingsSizerOrientation: Either wx.VERTICAL or wx.HORIZONTAL. This controls the orientation of the
+		:type resizeable: bool
+		:param hasApplyButton: C{True} to add an apply button to the dialog; defaults to C{False} for backwards compatibility.
+		:type hasApplyButton: bool
+		:param settingsSizerOrientation: Either wx.VERTICAL or wx.HORIZONTAL. This controls the orientation of the
 			sizer that is passed into L{makeSettings}. The default is wx.VERTICAL.
-		@type settingsSizerOrientation: wx.Orientation
-		@param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
+		:type settingsSizerOrientation: wx.Orientation
+		:param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
 			Note that still only one instance of a particular SettingsDialog subclass may exist at one time.
-		@type multiInstanceAllowed: bool
+		:type multiInstanceAllowed: bool
 		"""
 		if gui._isDebug():
 			startTime = time.time()
@@ -240,8 +242,9 @@ class SettingsDialog(
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
 		Subclasses must override this method.
-		@param sizer: The sizer to which to add the settings controls.
-		@type sizer: wx.Sizer
+
+		:param sizer: The sizer to which to add the settings controls.
+		:type sizer: wx.Sizer
 		"""
 		raise NotImplementedError
 
@@ -302,8 +305,9 @@ class SettingsPanel(
 		* Optionally, extend one or both of L{onSave} or L{onDiscard} to perform actions in response to the parent dialog's OK or Cancel buttons, respectively.
 		* Optionally, extend one or both of L{isValid} or L{postSave} to perform validation before or steps after saving, respectively.
 
-	@ivar title: The title of the settings panel, also listed in the list of settings categories.
-	@type title: str
+
+	:var title: The title of the settings panel, also listed in the list of settings categories.
+	:type title: str
 	"""
 
 	title=""
@@ -311,7 +315,8 @@ class SettingsPanel(
 
 	def __init__(self, parent: wx.Window):
 		"""
-		@param parent: The parent for this panel; C{None} for no parent.
+
+		:param parent: The parent for this panel; C{None} for no parent.
 		"""
 		if gui._isDebug():
 			startTime = time.time()
@@ -336,7 +341,8 @@ class SettingsPanel(
 	def makeSettings(self, sizer: wx.BoxSizer):
 		"""Populate the panel with settings controls.
 		Subclasses must override this method.
-		@param sizer: The sizer to which to add the settings controls.
+
+		:param sizer: The sizer to which to add the settings controls.
 		"""
 		raise NotImplementedError
 
@@ -365,9 +371,10 @@ class SettingsPanel(
 		"""Evaluate whether the current circumstances of this panel are valid
 		and allow saving all the settings in a L{MultiCategorySettingsDialog}.
 		Sub-classes may extend this method.
-		@returns: C{True} if validation should continue,
+
+		:returns: C{True} if validation should continue,
 			C{False} otherwise.
-		@rtype: bool
+		:rtype: bool
 		"""
 		return True
 
@@ -427,10 +434,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def __init__(self, parent, initialCategory=None):
 		"""
-		@param parent: The parent for this dialog; C{None} for no parent.
-		@type parent: wx.Window
-		@param initialCategory: The initial category to select when opening this dialog
-		@type parent: SettingsPanel
+
+		:param parent: The parent for this dialog; C{None} for no parent.
+		:type parent: wx.Window
+		:param initialCategory: The initial category to select when opening this dialog
+		:type parent: SettingsPanel
 		"""
 		if initialCategory and not issubclass(initialCategory,SettingsPanel):
 			if gui._isDebug():
@@ -655,7 +663,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def _validateAllPanels(self):
 		"""Check if all panels are valid, and can be saved
-		@note: raises ValueError if a panel is not valid. See c{SettingsPanel.isValid}
+
+		.. note: raises ValueError if a panel is not valid. See c{SettingsPanel.isValid}
 		"""
 		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
@@ -1170,7 +1179,8 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 	the following methods must be provided:
 	- makeSettings
 	- onPanelActivated
-	@note: This mixin uses self.lastControl and self.sizerDict to keep track of the
+
+	.. note: This mixin uses self.lastControl and self.sizerDict to keep track of the
 	controls added / and maintain ordering.
 	If you plan to maintain other controls in the same panel care will need to be taken.
 	"""
@@ -1179,8 +1189,9 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		"""
 		Mixin init, forwards args to other base class.
 		The other base class is likely L{gui.SettingsPanel}.
-		@param args: Positional args to passed to other base class.
-		@param kwargs: Keyword args to passed to other base class.
+
+		:param args: Positional args to passed to other base class.
+		:param kwargs: Keyword args to passed to other base class.
 		"""
 		self.sizerDict = {}
 		self.lastControl = None
@@ -1203,8 +1214,9 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 	@abstractmethod
 	def makeSettings(self, sizer: wx.BoxSizer):
 		"""Populate the panel with settings controls.
-		@note: Normally classes also inherit from settingsDialogs.SettingsPanel.
-		@param sizer: The sizer to which to add the settings controls.
+
+		.. note: Normally classes also inherit from settingsDialogs.SettingsPanel.
+		:param sizer: The sizer to which to add the settings controls.
 		"""
 		...
 
@@ -1232,11 +1244,12 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 			settingsStorage: Any
 	) -> wx.BoxSizer:
 		"""Constructs appropriate GUI controls for given L{DriverSetting} such as label and slider.
-		@param setting: Setting to construct controls for
-		@param settingsStorage: where to get initial values / set values.
+
+		:param setting: Setting to construct controls for
+		:param settingsStorage: where to get initial values / set values.
 			This param must have an attribute with a name matching setting.id.
 			In most cases it will be of type L{AutoSettings}
-		@return: wx.BoxSizer containing newly created controls.
+		:returns: wx.BoxSizer containing newly created controls.
 		"""
 		labeledControl = guiHelper.LabeledControlHelper(
 			self,
@@ -1442,7 +1455,8 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 
 	def onPanelActivated(self):
 		"""Called after the panel has been activated
-		@note: Normally classes also inherit from settingsDialogs.SettingsPanel.
+
+		.. note: Normally classes also inherit from settingsDialogs.SettingsPanel.
 		"""
 		self.refreshGui()
 		super().onPanelActivated()
@@ -3819,8 +3833,9 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 			shouldPromptOnError: bool = True
 	) -> bool:
 		"""Initializes the provider, prompting user with the error if necessary.
-		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
-		@return: True on success
+
+		:param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		:returns: True on success
 		"""
 		success = self._doStartProvider()
 		if not success and shouldPromptOnError:
@@ -3832,8 +3847,9 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 			shouldPromptOnError: bool = True
 	) -> bool:
 		"""Terminate the provider, prompting user with the error if necessary.
-		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
-		@return: True on success
+
+		:param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		:returns: True on success
 		"""
 		success = self._doTerminate()
 		if not success and shouldPromptOnError:
@@ -3842,7 +3858,8 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 
 	def _doStartProvider(self) -> bool:
 		"""Attempt to start the provider, catching any errors.
-		@return True on successful termination.
+
+		:returns True on successful termination.
 		"""
 		try:
 			vision.handler.initializeProvider(self._providerInfo)
@@ -3856,7 +3873,8 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 
 	def _doTerminate(self) -> bool:
 		"""Attempt to terminate the provider, catching any errors.
-		@return True on successful termination.
+
+		:returns True on successful termination.
 		"""
 		try:
 			# Terminating a provider from the gui should never save the settings.
@@ -3950,8 +3968,9 @@ class VisionSettingsPanel(SettingsPanel):
 			verbose: bool = False
 	) -> None:
 		"""Terminates one or more providers in a way that is gui friendly,
-		@verbose: Whether to show a termination error.
-		@returns: Whether termination succeeded for all providers.
+
+		#12971 fixup .. verbose: Whether to show a termination error.
+		:returns: Whether termination succeeded for all providers.
 		"""
 		errorProviders: List[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
@@ -4020,7 +4039,8 @@ class VisionProviderSubPanel_Settings(
 			settingsCallable: Callable[[], vision.providerBase.VisionEnhancementProviderSettings]
 	):
 		"""
-		@param settingsCallable: A callable that returns an instance to a VisionEnhancementProviderSettings.
+
+		:param settingsCallable: A callable that returns an instance to a VisionEnhancementProviderSettings.
 			This will usually be a weakref, but could be any callable taking no arguments.
 		"""
 		self._settingsCallable = settingsCallable

@@ -19,7 +19,8 @@ class LocaleDataMap(object):
 
 	def __init__(self,localeDataFactory):
 		"""
-		@param localeDataFactory: the factory to create data objects for the requested locale.
+
+		:param localeDataFactory: the factory to create data objects for the requested locale.
 		""" 
 		self._localeDataFactory=localeDataFactory
 		self._dataMap={}
@@ -29,11 +30,12 @@ class LocaleDataMap(object):
 		Fetches a data object for the given locale. 
 		This may mean that the data object is first created and stored if it does not yet exist in the map.
 		The locale is also simplified (country is dropped) if the fallback argument is True and the full locale can not be used to create a data object.
-		@param locale: the locale of the data object requested
-		@type locale: string
-		@param fallback: if true and there is no data for the locale, then the country (if it exists) is stripped and just the language is tried.
-		@type fallback: boolean
-		@return: the data object for the given locale
+
+		:param locale: the locale of the data object requested
+		:type locale: string
+		:param fallback: if true and there is no data for the locale, then the country (if it exists) is stripped and just the language is tried.
+		:type fallback: boolean
+		:returns: the data object for the given locale
 		"""
 		localeList=[locale]
 		if fallback and '_' in locale:
@@ -53,8 +55,9 @@ class LocaleDataMap(object):
 	def invalidateLocaleData(self, locale):
 		"""Invalidate the data object (if any) for the given locale.
 		This will cause a new data object to be created when this locale is next requested.
-		@param locale: The locale for which the data object should be invalidated.
-		@type locale: str
+
+		:param locale: The locale for which the data object should be invalidated.
+		:type locale: str
 		"""
 		try:
 			del self._dataMap[locale]
@@ -75,8 +78,9 @@ class CharacterDescriptions(object):
 
 	def __init__(self,locale):
 		"""
-		@param locale: The characterDescriptions.dic file will be found by using this locale.
-		@type locale: string
+
+		:param locale: The characterDescriptions.dic file will be found by using this locale.
+		:type locale: string
 		"""
 		self._entries = {}
 		fileName = os.path.join(globalVars.appDir, 'locale', locale, 'characterDescriptions.dic')
@@ -107,12 +111,13 @@ _charDescLocaleDataMap=LocaleDataMap(CharacterDescriptions)
 def getCharacterDescription(locale,character):
 	"""
 	Finds a description or examples for the given character, which makes sence in the given locale.
-	@param locale: the locale (language[_COUNTRY]) the description should be for.
-	@type locale: string
-	@param character: the character  who's description should be retreaved.
-	@type character: string
-	@return:  the found description for the given character
-	@rtype: list of strings
+
+	:param locale: the locale (language[_COUNTRY]) the description should be for.
+	:type locale: string
+	:param character: the character  who's description should be retreaved.
+	:type character: string
+	:returns:  the found description for the given character
+	:rtype: list of strings
 	"""
 	try:
 		l=_charDescLocaleDataMap.fetchLocaleData(locale)
@@ -211,11 +216,12 @@ class SpeechSymbols(object):
 
 	def load(self, fileName, allowComplexSymbols=True):
 		"""Load symbol information from a file.
-		@param fileName: The name of the file from which to load symbol information.
-		@type fileName: str
-		@param allowComplexSymbols: Whether to allow complex symbols.
-		@type allowComplexSymbols: bool
-		@raise IOError: If the file cannot be read.
+
+		:param fileName: The name of the file from which to load symbol information.
+		:type fileName: str
+		:param allowComplexSymbols: Whether to allow complex symbols.
+		:type allowComplexSymbols: bool
+		:raises IOError: If the file cannot be read.
 		"""
 		self.fileName = fileName
 		with codecs.open(fileName, "r", "utf_8_sig", errors="replace") as f:
@@ -313,11 +319,12 @@ class SpeechSymbols(object):
 
 	def save(self, fileName=None):
 		"""Save symbol information to a file.
-		@param fileName: The name of the file to which to save symbol information,
+
+		:param fileName: The name of the file to which to save symbol information,
 			C{None} to use the file name last passed to L{load} or L{save}.
-		@type fileName: str
-		@raise IOError: If the file cannot be written.
-		@raise ValueError: If C{fileName} is C{None}
+		:type fileName: str
+		:raises IOError: If the file cannot be written.
+		:raises ValueError: If C{fileName} is C{None}
 			and L{load} or L{save} has not been called.
 		"""
 		if fileName:
@@ -415,8 +422,9 @@ class SpeechSymbolProcessor(object):
 
 	def __init__(self, locale):
 		"""Constructor.
-		@param locale: The locale for which symbol pronunciation should be processed.
-		@type locale: str
+
+		:param locale: The locale for which symbol pronunciation should be processed.
+		:type locale: str
 		"""
 		self.locale = locale
 
@@ -539,8 +547,9 @@ class SpeechSymbolProcessor(object):
 	def _replaceGroups(self, m: re.Match, string: str) -> str:
 		"""Replace matching group references (\\1, \\2, ...) with the corresponding matched groups.
 		Also replace \\\\ with \\ and reject other escapes, for escaping coherency.
-		@param m: The currently-matched group
-		@param string: The match replacement string which may contain group references
+
+		:param m: The currently-matched group
+		:param string: The match replacement string which may contain group references
 		"""
 		result = ''
 
@@ -610,10 +619,11 @@ class SpeechSymbolProcessor(object):
 		"""Update information for a symbol if it has changed.
 		If there is a change, the changed information will be added to the user's symbol data.
 		These changes do not take effect until the symbol processor is reinitialised.
-		@param newSymbol: The symbol to update.
-		@type newSymbol: L{SpeechSymbol}
-		@return: Whether there was a change.
-		@rtype: bool
+
+		:param newSymbol: The symbol to update.
+		:type newSymbol: L{SpeechSymbol}
+		:returns: Whether there was a change.
+		:rtype: bool
 		"""
 		identifier = newSymbol.identifier
 		try:
@@ -655,8 +665,9 @@ class SpeechSymbolProcessor(object):
 		"""Delete a user defined symbol.
 		If the symbol does not exist, this method simply does nothing.
 		These changes do not take effect until the symbol processor is reinitialised.
-		@param symbol: The symbol to delete.
-		@type symbol: L{SpeechSymbol}
+
+		:param symbol: The symbol to delete.
+		:type symbol: L{SpeechSymbol}
 		"""
 		try:
 			del self.userSymbols.symbols[symbol.identifier]
@@ -665,11 +676,12 @@ class SpeechSymbolProcessor(object):
 
 	def isBuiltin(self, symbolIdentifier):
 		"""Determine whether a symbol is built in.
-		@param symbolIdentifier: The identifier of the symbol in question.
-		@type symbolIdentifier: str
-		@return: C{True} if the symbol is built in,
+
+		:param symbolIdentifier: The identifier of the symbol in question.
+		:type symbolIdentifier: str
+		:returns: C{True} if the symbol is built in,
 			C{False} if it was added by the user.
-		@rtype: bool
+		:rtype: bool
 		"""
 		return any(symbolIdentifier in source.symbols for source in self.builtinSources)
 
@@ -678,9 +690,10 @@ _localeSpeechSymbolProcessors = LocaleDataMap(SpeechSymbolProcessor)
 
 def processSpeechSymbols(locale: str, text: str, level: SymbolLevel):
 	"""Process some text, converting symbols according to desired pronunciation.
-	@param locale: The locale of the text.
-	@param text: The text to process.
-	@param level: The symbol level to use.
+
+	:param locale: The locale of the text.
+	:param text: The text to process.
+	:param level: The symbol level to use.
 	"""
 	try:
 		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
@@ -692,10 +705,11 @@ def processSpeechSymbols(locale: str, text: str, level: SymbolLevel):
 
 def processSpeechSymbol(locale, symbol):
 	"""Process a single symbol according to desired pronunciation.
-	@param locale: The locale of the symbol.
-	@type locale: str
-	@param symbol: The symbol.
-	@type symbol: str
+
+	:param locale: The locale of the symbol.
+	:type locale: str
+	:param symbol: The symbol.
+	:type symbol: str
 	"""
 	try:
 		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)

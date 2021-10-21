@@ -130,9 +130,10 @@ class VisionHandler(AutoPropertyObject):
 			reloadFromSystem: bool = False,
 	) -> List[providerInfo.ProviderInfo]:
 		"""Gets a list of available vision enhancement provider information
-		@param onlyStartable: excludes all providers for which the check method returns C{False}.
-		@param reloadFromSystem: ensure the list is fresh. Providers may have been added to the file system.
-		@return: List of available providers
+
+		:param onlyStartable: excludes all providers for which the check method returns C{False}.
+		:param reloadFromSystem: ensure the list is fresh. Providers may have been added to the file system.
+		:returns: List of available providers
 		"""
 		if reloadFromSystem or not self._allProviders:
 			self._updateAllProvidersList()
@@ -189,8 +190,9 @@ class VisionHandler(AutoPropertyObject):
 		When termination fails, an exception is raised.
 		Yet, the provider will be removed from the providers dictionary,
 		so its instance goes out of scope and wil lbe garbage collected.
-		@param provider: The provider to terminate.
-		@param saveSettings: Whether settings should be saved on termination.
+
+		:param provider: The provider to terminate.
+		:param saveSettings: Whether settings should be saved on termination.
 		"""
 		providerId = provider.providerId
 		# Remove the provider from the _providers dictionary.
@@ -231,11 +233,12 @@ class VisionHandler(AutoPropertyObject):
 	) -> None:
 		"""
 		Enables and activates the supplied provider.
-		@param provider: The provider to initialize.
-		@param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
+
+		:param provider: The provider to initialize.
+		:param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
-		@note: On error, an an Exception is raised.
+		.. note: On error, an an Exception is raised.
 		"""
 		providerId = provider.providerId
 		providerInst = self._providers.pop(providerId, None)

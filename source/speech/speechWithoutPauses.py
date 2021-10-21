@@ -60,7 +60,8 @@ class SpeechWithoutPauses:
 		Speaks the speech sequences given over multiple calls,
 		only sending to the synth at acceptable phrase or sentence boundaries,
 		or when given None for the speech sequence.
-		@return: C{True} if something was actually spoken,
+
+		:returns: C{True} if something was actually spoken,
 			C{False} if only buffering occurred.
 		"""
 		speech = GeneratorWithReturn(self.getSpeechWithoutPauses(
@@ -80,7 +81,8 @@ class SpeechWithoutPauses:
 		Generate speech sequences over multiple calls,
 		only returning a speech sequence at acceptable phrase or sentence boundaries,
 		or when given None for the speech sequence.
-		@return: The speech sequence that can be spoken without pauses. The 'return' for this generator function,
+
+		:returns: The speech sequence that can be spoken without pauses. The 'return' for this generator function,
 		is a bool which indicates whether this sequence should be considered valid speech. Use
 		L{GeneratorWithReturn} to retain the return value. A generator is used because the previous
 		implementation had several calls to speech, this approach replicates that.
@@ -131,7 +133,8 @@ class SpeechWithoutPauses:
 
 	def _flushPendingSpeech(self) -> SpeechSequence:
 		"""
-		@return: may be empty sequence
+
+		:returns: may be empty sequence
 		"""
 		# Place the last incomplete phrase in to finalSpeechSequence to be spoken now
 		pending = self._pendingSpeechSequence
@@ -143,7 +146,8 @@ class SpeechWithoutPauses:
 			speechSequence: SpeechSequence
 	) -> SpeechSequence:
 		"""
-		@return: May be an empty sequence
+
+		:returns: May be an empty sequence
 		"""
 		finalSpeechSequence: SpeechSequence = []  # To be spoken now
 		pendingSpeechSequence: speechSequence = []  # To be saved off for speaking later

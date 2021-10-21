@@ -22,28 +22,30 @@ class Driver(AutoSettings):
 	"""
 
 	#: The name of the driver; must be the original module file name.
-	#: @type: str
+	#: :type: str
 	name = ""
 	#: A description of the driver.
-	#: @type: str
+	#: :type: str
 	description = ""
 	#: The configuration section where driver specific subsections should be saved.
-	#: @type: str
+	#: :type: str
 	_configSection = ""
 
 	def __init__(self):
 		"""Initialize this driver.
 		This method can also set default settings for the driver.
-		@raise Exception: If an error occurs.
-		@postcondition: This driver can be used.
+
+		:raises Exception: If an error occurs.
+		.. postcondition: This driver can be used.
 		"""
 		super(Driver, self).__init__()
 
 	def terminate(self):
 		"""Save settings and terminate this driver.
 		This should be used for any required clean up.
-		@precondition: L{initialize} has been called.
-		@postcondition: This driver can no longer be used.
+
+		.. precondition: L{initialize} has been called.
+		.. postcondition: This driver can no longer be used.
 		"""
 		self.saveSettings()
 		self._unregisterConfigSaveAction()
@@ -53,8 +55,9 @@ class Driver(AutoSettings):
 		"""Determine whether this driver is available.
 		The driver will be excluded from the list of available drivers if this method returns C{False}.
 		For example, if a speech synthesizer requires installation and it is not installed, C{False} should be returned.
-		@return: C{True} if this driver is available, C{False} if not.
-		@rtype: bool
+
+		:returns: C{True} if this driver is available, C{False} if not.
+		:rtype: bool
 		"""
 		return False
 

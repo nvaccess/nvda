@@ -173,15 +173,16 @@ class WavePlayer(garbageHandler.TrackedObject):
 			buffered: bool = False
 		):
 		"""Constructor.
-		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
-		@param samplesPerSec: Samples per second (hz).
-		@param bitsPerSample: The number of bits per sample.
-		@param outputDevice: The device ID or name of the audio output device to use.
-		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
-		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
-		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
-		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
-		@raise WindowsError: If there was an error opening the audio output device.
+
+		:param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
+		:param samplesPerSec: Samples per second (hz).
+		:param bitsPerSample: The number of bits per sample.
+		:param outputDevice: The device ID or name of the audio output device to use.
+		:param closeWhenIdle: If C{True}, close the output device when no audio is being played.
+		:param wantDucking: if true then background audio will be ducked on Windows 8 and higher
+		:param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
+		.. note: If C{outputDevice} is a name and no such device exists, the default device will be used.
+		:raises WindowsError: If there was an error opening the audio output device.
 		"""
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
@@ -195,7 +196,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker=audioDucking.AudioDucker()
 		#: If C{True}, close the output device when no audio is being played.
-		#: @type: bool
+		#: :type: bool
 		self.closeWhenIdle = closeWhenIdle
 		if buffered:
 			#: Minimum size of the buffer before audio is played.
@@ -217,7 +218,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 	def _setCurrentDevice(self, preferredDevice: typing.Union[str, int]) -> None:
 		""" Sets the _outputDeviceID and _outputDeviceName to the preferredDevice if
 		it is available, otherwise falls back to WAVE_MAPPER.
-		@param preferredDevice: The preferred device to use.
+
+		:param preferredDevice: The preferred device to use.
 		"""
 		if preferredDevice == WAVE_MAPPER or preferredDevice == self.DEFAULT_DEVICE_KEY:
 			self._outputDeviceID = WAVE_MAPPER
@@ -255,8 +257,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 
 	def _isPreferredDeviceAvailable(self) -> bool:
 		"""
-		@note: Depending on number of devices being fetched, this may take some time (~3ms)
-		@return: True if the preferred device is available
+
+		.. note: Depending on number of devices being fetched, this may take some time (~3ms)
+		:returns: True if the preferred device is available
 		"""
 		for ID, name in _getOutputDevices():
 			if name == self._preferredDeviceName:
@@ -329,9 +332,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 		but return immediately.
 		This allows for uninterrupted playback as long as a new chunk is fed before
 		the previous chunk has finished playing.
-		@param data: Waveform audio in the format specified when this instance was constructed.
-		@param onDone: Function to call when this chunk has finished playing.
-		@raise WindowsError: If there was an error playing the audio.
+
+		:param data: Waveform audio in the format specified when this instance was constructed.
+		:param onDone: Function to call when this chunk has finished playing.
+		:raises WindowsError: If there was an error playing the audio.
 		"""
 		if not self._minBufferSize:
 			self._feedUnbuffered_handleErrors(data, onDone=onDone)
@@ -346,7 +350,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 
 	def _feedUnbuffered_handleErrors(self, data, onDone=None) -> bool:
 		"""Tries to feed the device, on error resets the device and tries again.
-		@return: False if second attempt fails
+
+		:returns: False if second attempt fails
 		"""
 		try:
 			self._feedUnbuffered(data, onDone=onDone)
@@ -364,7 +369,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 
 	def _feedUnbuffered(self, data, onDone=None):
 		"""
-		@note: Raises WindowsError on invalid device (see winmm functions
+
+		.. note: Raises WindowsError on invalid device (see winmm functions
 		"""
 		if self._audioDucker and not self._audioDucker.enable():
 			return
@@ -431,8 +437,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 
 	def pause(self, switch):
 		"""Pause or unpause playback.
-		@param switch: C{True} to pause playback, C{False} to unpause.
-		@type switch: bool
+
+		:param switch: C{True} to pause playback, C{False} to unpause.
+		:type switch: bool
 		"""
 		if self._audioDucker and self._waveout:
 			if switch:
@@ -567,7 +574,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 
 def _getOutputDevices():
 	"""Generator, returning device ID and device Name in device ID order.
-		@note: Depending on number of devices being fetched, this may take some time (~3ms)
+
+		.. note: Depending on number of devices being fetched, this may take some time (~3ms)
 	"""
 	caps = WAVEOUTCAPS()
 	for devID in range(-1, winmm.waveOutGetNumDevs()):
@@ -581,18 +589,20 @@ def _getOutputDevices():
 
 def getOutputDeviceNames():
 	"""Obtain the names of all audio output devices on the system.
-	@return: The names of all output devices on the system.
-	@rtype: [str, ...]
-	@note: Depending on number of devices being fetched, this may take some time (~3ms)
+
+	:returns: The names of all output devices on the system.
+	:rtype: [str, ...]
+	.. note: Depending on number of devices being fetched, this may take some time (~3ms)
 	"""
 	return [name for ID, name in _getOutputDevices()]
 
 def outputDeviceIDToName(ID):
 	"""Obtain the name of an output device given its device ID.
-	@param ID: The device ID.
-	@type ID: int
-	@return: The device name.
-	@rtype: str
+
+	:param ID: The device ID.
+	:type ID: int
+	:returns: The device name.
+	:rtype: str
 	"""
 	caps = WAVEOUTCAPS()
 	try:
@@ -604,12 +614,13 @@ def outputDeviceIDToName(ID):
 
 def outputDeviceNameToID(name: str, useDefaultIfInvalid=False) -> int:
 	"""Obtain the device ID of an output device given its name.
-	@param name: The device name.
-	@param useDefaultIfInvalid: C{True} to use the default device (wave mapper) if there is no such device,
+
+	:param name: The device name.
+	:param useDefaultIfInvalid: C{True} to use the default device (wave mapper) if there is no such device,
 		C{False} to raise an exception.
-	@return: The device ID.
-	@raise LookupError: If there is no such device and C{useDefaultIfInvalid} is C{False}.
-	@note: Depending on number of devices, and the position of the device in the list,
+	:returns: The device ID.
+	:raises LookupError: If there is no such device and C{useDefaultIfInvalid} is C{False}.
+	.. note: Depending on number of devices, and the position of the device in the list,
 	this may take some time (~3ms)
 	"""
 	for curID, curName in _getOutputDevices():
@@ -629,8 +640,9 @@ fileWavePlayerThread = None
 
 def playWaveFile(fileName, asynchronous=True):
 	"""plays a specified wave file.
-	@param asynchronous: whether the wave file should be played asynchronously
-	@type asynchronous: bool
+
+	:param asynchronous: whether the wave file should be played asynchronously
+	:type asynchronous: bool
 	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName,"r")

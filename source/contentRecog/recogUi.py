@@ -103,8 +103,9 @@ _activeRecog = None
 def recognizeNavigatorObject(recognizer):
 	"""User interface function to recognize content in the navigator object.
 	This should be called from a script or in response to a GUI action.
-	@param recognizer: The content recognizer to use.
-	@type recognizer: L{contentRecog.ContentRecognizer}
+
+	:param recognizer: The content recognizer to use.
+	:type recognizer: L{contentRecog.ContentRecognizer}
 	"""
 	global _activeRecog
 	if isinstance(api.getFocusObject(), RecogResultNVDAObject):

@@ -88,7 +88,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		super(TreeInterceptor, self).__init__()
 		self._passThrough = False
 		#: The root object of the tree wherein events and scripts are intercepted.
-		#: @type: L{NVDAObjects.NVDAObject}
+		#: :type: L{NVDAObjects.NVDAObject}
 		self.rootNVDAObject = rootNVDAObject
 
 	def terminate(self):
@@ -103,15 +103,16 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		raise NotImplementedError
 
 	#: Whether this interceptor is ready to be used; i.e. whether it should receive scripts and events.
-	#: @type: bool
+	#: :type: bool
 	isReady = True
 
 	def __contains__(self, obj):
 		"""Determine whether an object is encompassed by this interceptor.
-		@param obj: The object in question.
-		@type obj: L{NVDAObjects.NVDAObject}
-		@return: C{True} if the object is encompassed by this interceptor.
-		@rtype: bool
+
+		:param obj: The object in question.
+		:type obj: L{NVDAObjects.NVDAObject}
+		:returns: C{True} if the object is encompassed by this interceptor.
+		:rtype: bool
 		"""
 		raise NotImplementedError
 
@@ -165,7 +166,7 @@ class DocumentTreeInterceptor(documentBase.TextContainerObject,TreeInterceptor):
 	#: In contrast, if you have no selection and you press shift+leftArrow to select the previous character,
 	#: this will be False.
 	#: If the selection is anchored at the end or there is no information this is C{False}.
-	#: @type: bool
+	#: :type: bool
 	isTextSelectionAnchoredAtStart=True
 
 class RootProxyTextInfo(textInfos.TextInfo):

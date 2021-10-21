@@ -341,13 +341,14 @@ class CancellableCallThread(threading.Thread):
 cancellableCallThread = None
 def cancellableExecute(func, *args, ccPumpMessages=True, **kwargs):
 	"""Execute a function in the main thread, making it cancellable.
-	@param func: The function to execute.
-	@type func: callable
-	@param ccPumpMessages: Whether to pump messages while waiting.
-	@type ccPumpMessages: bool
-	@param args: Positional arguments for the function.
-	@param kwargs: Keyword arguments for the function.
-	@raise CallCancelled: If the call was cancelled.
+
+	:param func: The function to execute.
+	:type func: callable
+	:param ccPumpMessages: Whether to pump messages while waiting.
+	:type ccPumpMessages: bool
+	:param args: Positional arguments for the function.
+	:param kwargs: Keyword arguments for the function.
+	:raises CallCancelled: If the call was cancelled.
 	"""
 	global cancellableCallThread
 	if not isRunning or _suspended or not isinstance(threading.currentThread(), threading._MainThread):
@@ -365,7 +366,8 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	"""Send a window message, making the call cancellable.
 	The C{timeout} and C{flags} arguments should usually be left at their default values.
 	The call will still be cancelled if appropriate even if the specified timeout has not yet been reached.
-	@raise CallCancelled: If the call was cancelled.
+
+	:raises CallCancelled: If the call was cancelled.
 	"""
 	result = ctypes.wintypes.DWORD()
 	NVDAHelper.localLib.cancellableSendMessageTimeout(hwnd, msg, wParam, lParam, flags, timeout, ctypes.byref(result))

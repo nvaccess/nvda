@@ -438,10 +438,11 @@ class SynthDriver(SynthDriver):
 		"""
 		Checks that the given voice actually exists and is valid.
 		It checks the Registry, and also ensures that its data files actually exist on this machine.
-		@param ID: the ID of the requested voice.
-		@type ID: string
-		@returns: True if the voice is valid, false otherwise.
-		@rtype: boolean
+
+		:param ID: the ID of the requested voice.
+		:type ID: string
+		:returns: True if the voice is valid, false otherwise.
+		:rtype: boolean
 		"""
 		IDParts = ID.split('\\')
 		rootKey = getattr(winreg, IDParts[0])
@@ -494,7 +495,8 @@ class SynthDriver(SynthDriver):
 		else one that matches the system language.
 		else any voice if pickAny is True.
 		Uses the Windows locale (eg en_AU) to provide country information for the voice where possible.
-		@returns: the ID of the voice, suitable for passing to self.voice for setting.
+
+		:returns: the ID of the voice, suitable for passing to self.voice for setting.
 		"""
 		voices = self.availableVoices
 		fullWindowsLanguage = languageHandler.getWindowsLanguage()

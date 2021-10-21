@@ -106,12 +106,13 @@ def getUIATextAttributeValueFromRange(rangeObj,attrib,ignoreMixedValues=False):
 def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 	"""
 	Splits a given UI Automation text range into smaller text ranges the size of the given unit and yields them.
-	@param rangeObj: the UI Automation text range to split.
-	@type rangeObj: L{UIAHandler.IUIAutomationTextRange}
-	@param unit: a UI Automation text unit.
-	@param reverse: true if the range should be walked backwards (from end to start)
-	@type reverse: bool
-	@rtype: a generator that yields L{UIAHandler.IUIAutomationTextRange} objects.
+
+	:param rangeObj: the UI Automation text range to split.
+	:type rangeObj: L{UIAHandler.IUIAutomationTextRange}
+	:param unit: a UI Automation text unit.
+	:param reverse: true if the range should be walked backwards (from end to start)
+	:type reverse: bool
+	:rtype: a generator that yields L{UIAHandler.IUIAutomationTextRange} objects.
 	"""
 	Endpoint_relativeEnd=UIAHandler.TextPatternRangeEndpoint_Start if reverse else UIAHandler.TextPatternRangeEndpoint_End
 	Endpoint_relativeStart=UIAHandler.TextPatternRangeEndpoint_End if reverse else UIAHandler.TextPatternRangeEndpoint_Start

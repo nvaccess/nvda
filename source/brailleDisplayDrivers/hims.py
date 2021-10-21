@@ -24,19 +24,19 @@ PARITY = serial.PARITY_NONE
 class Model(AutoPropertyObject):
 	"""Extend from this base class to define model specific behavior."""
 	#: Two bytes device identifier, used in the protocol to identify the device
-	#: @type: bytes
+	#: :type: bytes
 	deviceId = b""
 	#: A generic name that identifies the model/series, used in gesture identifiers
-	#: @type: string
+	#: :type: string
 	name = ""
 	#: Number of braille cells
-	#: @type: int
+	#: :type: int
 	numCells = 0 #0 means undefined, needs to be requested for
 	#: The USB VID and PID for this model in the form VID_xxxx&PID_xxxx
-	#: @type: string
+	#: :type: string
 	usbId = ""
 	#: The bluetooth prefix used by devices of this specific model
-	#: @type: string
+	#: :type: string
 	bluetoothPrefix = ""
 
 	def _get_keys(self):

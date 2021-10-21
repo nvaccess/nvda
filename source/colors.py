@@ -112,10 +112,11 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 
 	def toGDIPlusARGB(self, alpha: int = 255) -> int:
 		"""Creates a GDI+ compatible ARGB color, using the specified alpha for the alpha component.
-		@param alpha: The alpha part of the ARGB color,
+
+		:param alpha: The alpha part of the ARGB color,
 			0 is fully transparent and 255 is fully opaque.
 			Defaults to 255 (opaque).
-		@type alpha: int
+		:type alpha: int
 		"""
 		return (alpha << 24) | (self.red << 16) | (self.green << 8) | self.blue
 

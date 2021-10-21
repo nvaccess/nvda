@@ -17,7 +17,7 @@ import pythonConsole
 from logHandler import log
 
 #: The TCP port on which the server will run.
-#: @type: int
+#: :type: int
 PORT = 6832
 
 server = None

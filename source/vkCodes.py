@@ -14,7 +14,7 @@ These names are used when binding keyboard gestures to scripts.
 #: If extended is C{None}, the extended state of the key is irrelevant to the mapping;
 #: i.e. the name is the same in either case.
 #: The dict value is the key name.
-#: @type: dict with keys of tuple(int, bool) and values of str
+#: :type: dict with keys of tuple(int, bool) and values of str
 byCode = {
 	(0x01, None): "leftMouse",
 	(0x02, None): "rightMouse",
@@ -137,7 +137,7 @@ byCode = {
 #: Maps key names to vk codes.
 #: This is the inverse of the L{byCode} map
 #: except that names are all lower case to make case insensitive lookup easier.
-#: @type: dict with keys of str and values of tuple(int, bool)
+#: :type: dict with keys of str and values of tuple(int, bool)
 byName = dict((name.lower(), code) for code, name in byCode.items())
 
 # Used by SendInput for non-keyboard input to pass Unicode characters as if they were keystrokes.

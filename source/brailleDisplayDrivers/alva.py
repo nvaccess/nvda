@@ -300,7 +300,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _handleTime(self, time: bytes):
 		"""
-		@type time: bytes
+
+		:type time: bytes
 		"""
 		year = time[0] | time[1] << 8
 		if not ALVA_RTC_MIN_YEAR <= year <= ALVA_RTC_MAX_YEAR:

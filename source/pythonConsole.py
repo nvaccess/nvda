@@ -76,7 +76,7 @@ class CommandCompiler(codeop.CommandCompiler):
 		# Old-style class
 		codeop.CommandCompiler.__init__(self)
 		#: Whether the last compilation was on error.
-		#: @type: bool
+		#: :type: bool
 		self.error = False
 
 	def __call__(self, *args, **kwargs):
@@ -103,11 +103,11 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		self._setPrompt = setPromptFunc
 
 		#: The namespace available to the console. This can be updated externally.
-		#: @type: dict
+		#: :type: dict
 		self.namespace = {}
 		self.initNamespace()
 		#: The variables last added to the namespace containing a snapshot of NVDA's state.
-		#: @type: Optional[dict]
+		#: :type: Optional[dict]
 		self._namespaceSnapshotVars = None
 
 		super().__init__(locals=self.namespace, **kwargs)
@@ -473,7 +473,8 @@ def initialize():
 def activate():
 	"""Activate the console GUI.
 	This shows the GUI and brings it to the foreground if possible.
-	@precondition: L{initialize} has been called.
+
+	.. precondition: L{initialize} has been called.
 	"""
 	global consoleUI
 	consoleUI.Raise()

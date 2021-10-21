@@ -48,10 +48,11 @@ from typing import Optional
 
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	"""Reports the pass through mode if it has changed.
-	@param treeInterceptor: The current Browse Mode treeInterceptor.
-	@type treeInterceptor: L{BrowseModeTreeInterceptor}
-	@param onlyIfChanged: if true reporting will not happen if the last reportPassThrough reported the same thing.
-	@type onlyIfChanged: bool
+
+	:param treeInterceptor: The current Browse Mode treeInterceptor.
+	:type treeInterceptor: L{BrowseModeTreeInterceptor}
+	:param onlyIfChanged: if true reporting will not happen if the last reportPassThrough reported the same thing.
+	:type onlyIfChanged: bool
 	"""
 	if not onlyIfChanged or treeInterceptor.passThrough != reportPassThrough.last:
 		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
@@ -72,10 +73,11 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 	"""
 	Merges multiple iterators that emit L{QuickNavItem} objects, yielding them from first to last. 
 	They are sorted using min or max (__lt__ should be implemented on the L{QuickNavItem} objects).
-	@param iters: the iterators you want to merge. 
-	@type iters: sequence of iterators that emit L{QuicknavItem} objects.
-	@param direction: the direction these iterators are searching (e.g. next, previous)
-	@type direction: string
+
+	:param iters: the iterators you want to merge. 
+	:type iters: sequence of iterators that emit L{QuicknavItem} objects.
+	:param direction: the direction these iterators are searching (e.g. next, previous)
+	:type direction: string
 	"""
 	finder=min if direction=="next" else max
 	curValues=[]
@@ -109,10 +111,11 @@ class QuickNavItem(object, metaclass=ABCMeta):
 
 	def __init__(self,itemType,document):
 		"""
-		@param itemType: the type that was searched for (e.g. link, heading, table etc)
-		@type itemType: string
-		@param document: the browse mode document this item is a part of.
-		@type document: L{BrowseModeTreeInterceptor}
+
+		:param itemType: the type that was searched for (e.g. link, heading, table etc)
+		:type itemType: string
+		:param document: the browse mode document this item is a part of.
+		:type document: L{BrowseModeTreeInterceptor}
 		"""
 		self.itemType=itemType
 		self.document=document
@@ -122,10 +125,11 @@ class QuickNavItem(object, metaclass=ABCMeta):
 		"""
 		Is this item a child of the given parent?
 		This is used when representing items in a hierarchical tree structure, such as the Elements List.
-		@param parent: the item of whom this item may be a child of.
-		@type parent: L{QuickNavItem}
-		@return: True if this item is a child, false otherwise.
-		@rtype: bool
+
+		:param parent: the item of whom this item may be a child of.
+		:type parent: L{QuickNavItem}
+		:returns: True if this item is a child, false otherwise.
+		:rtype: bool
 		"""
 		raise NotImplementedError
 
@@ -133,8 +137,9 @@ class QuickNavItem(object, metaclass=ABCMeta):
 	def report(self,readUnit=None):
 		"""
 		Reports the contents of this item.
-		@param readUnit: the optional unit (e.g. line, paragraph) that should be used to announce the item position when moved to. If not given, then the full sise of the item is used.
-		@type readUnit: a L{textInfos}.UNIT_* constant.
+
+		:param readUnit: the optional unit (e.g. line, paragraph) that should be used to announce the item position when moved to. If not given, then the full sise of the item is used.
+		:type readUnit: a L{textInfos}.UNIT_* constant.
 		"""
 		raise NotImplementedError
 
@@ -167,8 +172,9 @@ class TextInfoQuickNavItem(QuickNavItem):
 	def __init__(self,itemType,document,textInfo):
 		"""
 		See L{QuickNavItem.__init__} for itemType and document argument definitions.
-		@param textInfo: the textInfo position this item represents.
-		@type textInfo: L{textInfos.TextInfo}
+
+		:param textInfo: the textInfo position this item represents.
+		:type textInfo: L{textInfos.TextInfo}
 		"""
 		self.textInfo=textInfo
 		super(TextInfoQuickNavItem,self).__init__(itemType,document)
@@ -227,7 +233,8 @@ class TextInfoQuickNavItem(QuickNavItem):
 		"""
 		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
 		This can be used by subclasses to implement the L{label} property.
-		@Param labelPropertyGetter: A callable taking 1 argument, specifying the property to fetch.
+
+		:param labelPropertyGetter: A callable taking 1 argument, specifying the property to fetch.
 			For example, if L{itemType} is landmark, the callable must return the landmark type when "landmark" is passed as the property argument.
 			Alternative property names might be name or value.
 			The callable must return None if the property doesn't exist.
@@ -330,11 +337,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def shouldPassThrough(self, obj, reason: Optional[OutputReason] = None):
 		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
-		@param obj: The object in question.
-		@type obj: L{NVDAObjects.NVDAObject}
-		@param reason: The reason for this query;
+
+		:param obj: The object in question.
+		:type obj: L{NVDAObjects.NVDAObject}
+		:param reason: The reason for this query;
 		one of the output reasons, or C{None} for manual pass through mode activation by the user.
-		@return: C{True} if pass through mode (focus mode) should be enabled, C{False} if it should be disabled (browse mode).
+		:returns: C{True} if pass through mode (focus mode) should be enabled, C{False} if it should be disabled (browse mode).
 		"""
 		if reason and (
 			self.disableAutoPassThrough
@@ -407,13 +415,14 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterNodesByType(self,itemType,direction="next",pos=None):
 		"""
 		Yields L{QuickNavItem} objects representing the ordered positions in this document according to the type being searched for (e.g. link, heading, table etc).
-		@param itemType: the type being searched for (e.g. link, heading, table etc)
-		@type itemType: string
-		@param direction: the direction in which to search (next, previous, up)
-		@type direction: string
-		@param pos: the position in the document from where to start the search.
-		@type pos: Usually an L{textInfos.TextInfo} 
-		@raise NotImplementedError: This type is not supported by this BrowseMode implementation
+
+		:param itemType: the type being searched for (e.g. link, heading, table etc)
+		:type itemType: string
+		:param direction: the direction in which to search (next, previous, up)
+		:type direction: string
+		:param pos: the position in the document from where to start the search.
+		:type pos: Usually an L{textInfos.TextInfo} 
+		:raises NotImplementedError: This type is not supported by this BrowseMode implementation
 		"""
 		raise NotImplementedError
 
@@ -454,15 +463,16 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			readUnit: Optional[str] = None
 	):
 		"""Adds a script for the given quick nav item.
-		@param itemType: The type of item, I.E. "heading" "Link" ...
-		@param key: The quick navigation key to bind to the script.
+
+		:param itemType: The type of item, I.E. "heading" "Link" ...
+		:param key: The quick navigation key to bind to the script.
 			Shift is automatically added for the previous item gesture. E.G. h for heading.
 			If C{None} is provided, the script is unbound by default.
-		@param nextDoc: The command description to bind to the script that yields the next quick nav item.
-		@param nextError: The error message if there are no more quick nav items of type itemType in this direction.
-		@param prevDoc: The command description to bind to the script that yields the previous quick nav item.
-		@param prevError: The error message if there are no more quick nav items of type itemType in this direction.
-		@param readUnit: The unit (one of the textInfos.UNIT_* constants) to announce when moving to this type of item. 
+		:param nextDoc: The command description to bind to the script that yields the next quick nav item.
+		:param nextError: The error message if there are no more quick nav items of type itemType in this direction.
+		:param prevDoc: The command description to bind to the script that yields the previous quick nav item.
+		:param prevError: The error message if there are no more quick nav items of type itemType in this direction.
+		:param readUnit: The unit (one of the textInfos.UNIT_* constants) to announce when moving to this type of item. 
 			For example, only the line is read when moving to tables to avoid reading a potentially massive table. 
 			If None, the entire item will be announced.
 		"""
@@ -503,8 +513,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _activateNVDAObject(self, obj):
 		"""Activate an object in response to a user request.
 		This should generally perform the default action or click on the object.
-		@param obj: The object to activate.
-		@type obj: L{NVDAObjects.NVDAObject}
+
+		:param obj: The object to activate.
+		:type obj: L{NVDAObjects.NVDAObject}
 		"""
 		try:
 			obj.doAction()
@@ -1324,8 +1335,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def _activateLongDesc(self,controlField):
 		"""
 		Activates (presents) the long description for a particular field (usually a graphic).
-		@param controlField: the field who's long description should be activated. This field is guaranteed to have states containing HASLONGDESC state. 
-		@type controlField: dict
+
+		:param controlField: the field who's long description should be activated. This field is guaranteed to have states containing HASLONGDESC state. 
+		:type controlField: dict
 		"""
 		raise NotImplementedError
 
@@ -1381,8 +1393,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
 		Subclasses may extend or override this method.
-		@param obj: The object in question.
-		@type obj: L{NVDAObjects.NVDAObject}
+
+		:param obj: The object in question.
+		:type obj: L{NVDAObjects.NVDAObject}
 		"""
 		return obj.role not in self.APPLICATION_ROLES and obj.isFocusable and obj.role!=controlTypes.Role.EMBEDDEDOBJECT
 
@@ -1467,10 +1480,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		In this case, we want tab/shift+tab to move to the next/previous focusable node relative to the virtual caret.
 		If the virtual caret is within the focused node, the tab/shift+tab key should be passed through to allow normal tab order navigation.
 		Note that this method does not pass the key through itself if it is not overridden. This should be done by the calling script if C{False} is returned.
-		@param direction: The direction in which to move.
-		@type direction: str
-		@return: C{True} if the tab order was overridden, C{False} if not.
-		@rtype: bool
+
+		:param direction: The direction in which to move.
+		:type direction: str
+		:returns: C{True} if the tab order was overridden, C{False} if not.
+		:rtype: bool
 		"""
 		if self._lastCaretMoveWasFocus:
 			# #5227: If the caret was last moved due to a focus change, don't override tab.
@@ -1530,18 +1544,20 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	def _shouldIgnoreFocus(self, obj):
 		"""Determines whether focus on a given object should be ignored.
-		@param obj: The object in question.
-		@type obj: L{NVDAObjects.NVDAObject}
-		@return: C{True} if focus on L{obj} should be ignored, C{False} otherwise.
-		@rtype: bool
+
+		:param obj: The object in question.
+		:type obj: L{NVDAObjects.NVDAObject}
+		:returns: C{True} if focus on L{obj} should be ignored, C{False} otherwise.
+		:rtype: bool
 		"""
 		return False
 
 	def _postGainFocus(self, obj):
 		"""Executed after a gainFocus within the browseMode document.
 		This will not be executed if L{event_gainFocus} determined that it should abort and call nextHandler.
-		@param obj: The object that gained focus.
-		@type obj: L{NVDAObjects.NVDAObject}
+
+		:param obj: The object that gained focus.
+		:type obj: L{NVDAObjects.NVDAObject}
 		"""
 
 	def _replayFocusEnteredEvents(self):
@@ -1687,10 +1703,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	) -> bool:
 		"""Handle scrolling the browseMode document to a given object in response to an event.
 		Subclasses should call this from an event which indicates that the document has scrolled.
-		@postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
-		@param obj: The object to which the document should scroll.
-		@return: C{True} if the document was scrolled, C{False} if not.
-		@note: If C{False} is returned, calling events should probably call their nextHandler.
+
+		.. postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
+		:param obj: The object to which the document should scroll.
+		:returns: C{True} if the document was scrolled, C{False} if not.
+		.. note: If C{False} is returned, calling events should probably call their nextHandler.
 		"""
 		if self.programmaticScrollMayFireEvent and self._lastProgrammaticScrollTime and time.time() - self._lastProgrammaticScrollTime < 0.4:
 			# This event was probably caused by this browseMode document's call to scrollIntoView().
@@ -1729,7 +1746,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		For example, for virtual buffers, if the object is in the buffer,
 		it definitely isn't in an application.
 		L{_isNVDAObjectInApplication} calls this and walks to the next ancestor if C{None} is returned.
-		@return: C{True} if definitely in an application,
+
+		:returns: C{True} if definitely in an application,
 			C{False} if definitely not in an application,
 			C{None} if this can't be determined without walking ancestors.
 		"""
@@ -1750,10 +1768,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		"""Determine whether a given object is within an application.
 		The object is considered to be within an application if it or one of its ancestors has an application role.
 		This should only be called on objects beneath the treeInterceptor's root NVDAObject.
-		@param obj: The object in question.
-		@type obj: L{NVDAObjects.NVDAObject}
-		@return: C{True} if L{obj} is within an application, C{False} otherwise.
-		@rtype: bool
+
+		:param obj: The object in question.
+		:type obj: L{NVDAObjects.NVDAObject}
+		:returns: C{True} if L{obj} is within an application, C{False} otherwise.
+		:rtype: bool
 		"""
 		# We cache the result for each object we walk.
 		# There can be browse mode documents within other documents and the result might be different between these,
@@ -1790,7 +1809,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		"""Get the constant identifier for this document.
 		This identifier should uniquely identify all instances (not just one instance) of a document for at least the current session of the hosting application.
 		Generally, the document URL should be used.
-		@return: The constant identifier for this document, C{None} if there is none.
+
+		:returns: The constant identifier for this document, C{None} if there is none.
 		"""
 		return None
 
@@ -1799,8 +1819,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		This is useful when the browser remembers the scroll position for the document,
 		but does not communicate this information via APIs.
 		The remembered caret position is associated with this document using L{documentConstantIdentifier}.
-		@return: C{True} if the caret position should be remembered, C{False} if not.
-		@rtype: bool
+
+		:returns: C{True} if the caret position should be remembered, C{False} if not.
+		:rtype: bool
 		"""
 		docConstId = self.documentConstantIdentifier
 		# Return True if the URL indicates that this is probably a web browser document.
@@ -1816,8 +1837,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		"""Retrieve the initial position of the caret after the buffer has been loaded.
 		This position, if any, will be passed to L{makeTextInfo}.
 		Subclasses should extend this method.
-		@return: The initial position of the caret, C{None} if there isn't one.
-		@rtype: TextInfo position
+
+		:returns: The initial position of the caret, C{None} if there isn't one.
+		:rtype: TextInfo position
 		"""
 		if self.shouldRememberCaretPositionAcrossLoads:
 			try:

@@ -61,7 +61,7 @@ bypassNVDAModifier = False
 currentModifiers = set()
 #: A counter which is incremented each time a key is pressed.
 #: Note that this may be removed in future, so reliance on it should generally be avoided.
-#: @type: int
+#: :type: int
 keyCounter = 0
 #: The current sticky NVDa modifier key.
 stickyNVDAModifier = None
@@ -339,7 +339,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 #: All normal modifier keys, where modifier vk codes are mapped to a more general modifier vk code
 # or C{None} if not applicable.
-	#: @type: dict
+	#: :type: dict
 	NORMAL_MODIFIER_KEYS = {
 		winUser.VK_LCONTROL: winUser.VK_CONTROL,
 		winUser.VK_RCONTROL: winUser.VK_CONTROL,
@@ -356,11 +356,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	}
 
 	#: All possible toggle key vk codes.
-	#: @type: frozenset
+	#: :type: frozenset
 	TOGGLE_KEYS = frozenset((winUser.VK_CAPITAL, winUser.VK_NUMLOCK, winUser.VK_SCROLL))
 
 	#: All possible keyboard layouts, where layout names are mapped to localised layout names.
-	#: @type: dict
+	#: :type: dict
 	LAYOUTS = {
 		# Translators: One of the keyboard layouts for NVDA.
 		"desktop": _("desktop"),
@@ -380,7 +380,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	def __init__(self, modifiers, vkCode, scanCode, isExtended):
 		#: The keyboard layout in which this gesture was created.
-		#: @type: str
+		#: :type: str
 		self.layout = config.conf["keyboard"]["keyboardLayout"]
 		self.modifiers = modifiers = set(modifiers)
 		# Don't double up if this is a modifier key repeat.
@@ -566,10 +566,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	@classmethod
 	def fromName(cls, name):
 		"""Create an instance given a key name.
-		@param name: The key name.
-		@type name: str
-		@return: A gesture for the specified key.
-		@rtype: L{KeyboardInputGesture}
+
+		:param name: The key name.
+		:type name: str
+		:returns: A gesture for the specified key.
+		:rtype: L{KeyboardInputGesture}
 		"""
 		keyNames = name.split("+")
 		keys = []
@@ -654,12 +655,13 @@ def injectRawKeyboardInput(isPress, code, isExtended):
 	For example, this might be used for input from a QWERTY keyboard on a braille display.
 	NVDA will treat the key as if it had been pressed on a normal system keyboard.
 	If it is not handled by NVDA, it will be sent to the operating system.
-	@param isPress: Whether the key is being pressed.
-	@type isPress: bool
-	@param code: The scan code (PC set 1) of the key.
-	@type code: int
-	@param isExtended: Whether this is an extended key.
-	@type isExtended: bool
+
+	:param isPress: Whether the key is being pressed.
+	:type isPress: bool
+	:param code: The scan code (PC set 1) of the key.
+	:type code: int
+	:param isExtended: Whether this is an extended key.
+	:type isExtended: bool
 	"""
 	mapScan = code
 	if isExtended:

@@ -225,10 +225,11 @@ def requestTextChangeNotifications(obj, enable):
 	Note that this event does not provide any information about the changed text itself.
 	It is important to request that notifications be cancelled when you no longer require them or when the object is no longer in use,
 	as otherwise, resources will not be released.
-	@param obj: The NVDAObject for which text change notifications are desired.
-	@type obj: NVDAObject
-	@param enable: C{True} to enable notifications, C{False} to disable them.
-	@type enable: bool
+
+	:param obj: The NVDAObject for which text change notifications are desired.
+	:type obj: NVDAObject
+	:param enable: C{True} to enable notifications, C{False} to disable them.
+	:type enable: bool
 	"""
 	if not enable:
 		_textChangeNotificationObjs.remove(obj)

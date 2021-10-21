@@ -363,14 +363,16 @@ class WordDocumentCollectionQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def rangeFromCollectionItem(self,item):
 		"""
 		Fetches a Microsoft Word range object from a Microsoft Word item in a collection. E.g. a HyperLink object.
-		@param item: an item from a collection (E.g. a HyperLink object).
+
+		:param item: an item from a collection (E.g. a HyperLink object).
 		"""
 		return item.range
 
 	def __init__(self,itemType,document,collectionItem):
 		"""
 		See L{TextInfoQuickNavItem} for itemType and document argument definitions.
-		@param collectionItem: an item from an MS Word collection  e.g. HyperLink object.
+
+		:param collectionItem: an item from an MS Word collection  e.g. HyperLink object.
 		"""
 		self.collectionItem=collectionItem
 		self.rangeObj=self.rangeFromCollectionItem(collectionItem)
@@ -444,8 +446,9 @@ class WinWordCollectionQuicknavIterator(object):
 	def __init__(self,itemType,document,direction,rangeObj,includeCurrent):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
-		@param rangeObj: a Microsoft Word range object where the collection should be fetched from.
-		@param includeCurrent: if true then any item at the initial position will be also emitted
+
+		:param rangeObj: a Microsoft Word range object where the collection should be fetched from.
+		:param includeCurrent: if true then any item at the initial position will be also emitted
 			rather than just further ones.
 		"""
 		self.document=document
@@ -457,17 +460,19 @@ class WinWordCollectionQuicknavIterator(object):
 	def collectionFromRange(self,rangeObj):
 		"""
 		Fetches a Microsoft Word collection object from a Microsoft Word range object. E.g. HyperLinks from a range.
-		@param rangeObj: a Microsoft Word range object.
-		@return: a Microsoft Word collection object.
+
+		:param rangeObj: a Microsoft Word range object.
+		:returns: a Microsoft Word collection object.
 		"""
 		raise NotImplementedError
 
 	def filter(self,item):
 		"""
 		Only allows certain items fom a collection to be emitted. E.g. a table who's borders are enabled.
-		@param item: an item from a Microsoft Word collection (e.g. HyperLink object).
-		@return True if this item should be allowd, false otherwise.
-		@rtype: bool
+
+		:param item: an item from a Microsoft Word collection (e.g. HyperLink object).
+		:returns True if this item should be allowd, false otherwise.
+		:rtype: bool
 		"""
 		return True
 

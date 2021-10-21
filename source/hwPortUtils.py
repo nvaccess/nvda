@@ -126,10 +126,11 @@ def _isDebug():
 
 def listComPorts(onlyAvailable=True):
 	"""List com ports on the system.
-	@param onlyAvailable: Only return ports that are currently available.
-	@type onlyAvailable: bool
-	@return: Dicts including keys of port, friendlyName and hardwareID.
-	@rtype: generator of dict
+
+	:param onlyAvailable: Only return ports that are currently available.
+	:type onlyAvailable: bool
+	:returns: Dicts including keys of port, friendlyName and hardwareID.
+	:rtype: generator of dict
 	"""
 	flags = DIGCF_DEVICEINTERFACE
 	if onlyAvailable:
@@ -336,10 +337,11 @@ def getWidcommBluetoothPortInfo(port):
 
 def listUsbDevices(onlyAvailable=True):
 	"""List USB devices on the system.
-	@param onlyAvailable: Only return devices that are currently available.
-	@type onlyAvailable: bool
-	@return: Generates dicts including keys of usbID (VID and PID), devicePath and hardwareID.
-	@rtype: generator of dict
+
+	:param onlyAvailable: Only return devices that are currently available.
+	:type onlyAvailable: bool
+	:returns: Generates dicts including keys of usbID (VID and PID), devicePath and hardwareID.
+	:rtype: generator of dict
 	"""
 	flags = DIGCF_DEVICEINTERFACE
 	if onlyAvailable:
@@ -485,12 +487,13 @@ def _getHidInfo(hwId, path):
 _hidGuid = None
 def listHidDevices(onlyAvailable=True):
 	"""List HID devices on the system.
-	@param onlyAvailable: Only return devices that are currently available.
-	@type onlyAvailable: bool
-	@return: Generates dicts including keys such as hardwareID,
+
+	:param onlyAvailable: Only return devices that are currently available.
+	:type onlyAvailable: bool
+	:returns: Generates dicts including keys such as hardwareID,
 		usbID (in the form "VID_xxxx&PID_xxxx")
 		and devicePath.
-	@rtype: generator of dict
+	:rtype: generator of dict
 	"""
 	global _hidGuid
 	if not _hidGuid:

@@ -20,9 +20,10 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 
 	def _calculateDescriptionFrom(self, attrs) -> controlTypes.DescriptionFrom:
 		"""Overridable calculation of DescriptionFrom
-		@param attrs: source attributes for the TextInfo
-		@return: the origin for accDescription.
-		@note: Chrome provides 'IAccessible2::attribute_description-from' which declares the origin used for
+
+		:param attrs: source attributes for the TextInfo
+		:returns: the origin for accDescription.
+		.. note: Chrome provides 'IAccessible2::attribute_description-from' which declares the origin used for
 			accDescription. Chrome also provides `IAccessible2::attribute_description` to maintain compatibility
 			with FireFox.
 		"""

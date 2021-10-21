@@ -71,13 +71,14 @@ class WideStringOffsetConverter:
 		"""
 		This method takes two offsets from the str representation
 		of the string the object is initialized with, and converts them to wide character string offsets.
-		@param strStart: The start offset in the str representation of the string.
-		@param strEnd: The end offset in the str representation of the string.
+
+		:param strStart: The start offset in the str representation of the string.
+		:param strEnd: The end offset in the str representation of the string.
 			This offset is exclusive.
-		@param raiseOnError: Raises an IndexError when one of the given offsets
+		:param raiseOnError: Raises an IndexError when one of the given offsets
 			exceeds L{strLength} or is lower than zero.
 			If C{False}, the out of range offset will be bounded to the range of the string.
-		@raise ValueError: if strEnd < strStart
+		:raises ValueError: if strEnd < strStart
 		"""
 		# Optimisation, don't do anything special if offsets are collapsed at the start.
 		if 0 == strEnd == strStart:
@@ -125,13 +126,14 @@ class WideStringOffsetConverter:
 			* wideStringStart=0, wideStringEnd=2
 			* wideStringStart=1, wideStringEnd=2
 		However, wideStringStart=1, wideStringEnd=1 results in (0, 0)
-		@param wideStringStart: The start offset in the wide character representation of the string.
-		@param wideStringEnd: The end offset in the wide character representation of the string.
+
+		:param wideStringStart: The start offset in the wide character representation of the string.
+		:param wideStringEnd: The end offset in the wide character representation of the string.
 			This offset is exclusive.
-		@param raiseOnError: Raises an IndexError when one of the given offsets
+		:param raiseOnError: Raises an IndexError when one of the given offsets
 			exceeds L{wideStringLength} or is lower than zero.
 			If C{False}, the out of range offset will be bounded to the range of the string.
-		@raise ValueError: if wideStringEnd < wideStringStart
+		:raises ValueError: if wideStringEnd < wideStringStart
 		"""
 		# Optimisation, don't do anything special if offsets are collapsed at the start.
 		if 0 == wideStringEnd == wideStringStart:

@@ -179,7 +179,8 @@ def terminate():
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
 	For now, only <userConfig>\addons is supported.
-	@rtype: list(string)
+
+	:rtype: list(string)
 	"""
 	addon_paths = []
 	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
@@ -191,9 +192,10 @@ def _getDefaultAddonPaths():
 def _getAvailableAddonsFromPath(path, isFirstLoad=False):
 	""" Gets available add-ons from path.
 	An addon is only considered available if the manifest file is loaded with no errors.
-	@param path: path from where to find addon directories.
-	@type path: string
-	@rtype generator of Addon instances
+
+	:param path: path from where to find addon directories.
+	:type path: string
+	:rtype generator of Addon instances
 	"""
 	log.debug("Listing add-ons from %s", path)
 	for p in os.listdir(path):
@@ -252,8 +254,9 @@ def getAvailableAddons(
 		isFirstLoad: bool = False
 ) -> typing.Generator["Addon", None, None]:
 	""" Gets all available addons on the system.
-	@param refresh: Whether or not to query the file system for available add-ons.
-	@param filterFunc: A function that allows filtering of add-ons.
+
+	:param refresh: Whether or not to query the file system for available add-ons.
+	:param filterFunc: A function that allows filtering of add-ons.
 	It takes an L{Addon} as its only argument
 	and returns a C{bool} indicating whether the add-on matches the provided filter.
 	: isFirstLoad: Should add-ons that are pending installations / removal from the file system
@@ -315,8 +318,9 @@ class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
 	def __init__(self, path):
 		""" Constructs an L{Addon} from.
-		@param path: the base directory for the addon data.
-		@type path: string
+
+		:param path: the base directory for the addon data.
+		:type path: string
 		"""
 		self.path = path
 		self._extendedPackages = set()
@@ -404,8 +408,9 @@ class Addon(AddonBase):
 		- `appModules`
 		- `synthDrivers`
 		- `brailleDisplayDrivers`
-		@param package: the python module representing the package.
-		@type package: python module.
+
+		:param package: the python module representing the package.
+		:type package: python module.
 		"""
 		# #3090: Ensure that we don't add disabled / blocked add-ons to package path.
 		# By returning here the addon does not "run"/ become active / registered.
@@ -478,10 +483,11 @@ class Addon(AddonBase):
 
 	def loadModule(self, name):
 		""" loads a python module from the addon directory
-		@param name: the module name
-		@type name: string
-		@returns the python module with C{name}
-		@rtype python module
+
+		:param name: the module name
+		:type name: string
+		:returns the python module with C{name}
+		:rtype python module
 		"""
 		log.debug("Importing module %s from plugin %s", name, self.name)
 		importer = pkgutil.ImpImporter(self.path)
@@ -500,8 +506,9 @@ class Addon(AddonBase):
 		""" Gets the gettext translation instance for this add-on.
 		<addon-path>\\locale will be used to find .mo files, if exists.
 		If a translation file is not found the default fallback null translation is returned.
-		@param domain: the translation domain to retrieve. The 'nvda' default should be used in most cases.
-		@returns: the gettext translation class.
+
+		:param domain: the translation domain to retrieve. The 'nvda' default should be used in most cases.
+		:returns: the gettext translation class.
 		"""
 		localedir = os.path.join(self.path, "locale")
 		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
@@ -526,10 +533,11 @@ class Addon(AddonBase):
 		English is tried as a last resort.
 		An add-on can specify a default documentation file name
 		via the docFileName parameter in its manifest.
-		@param fileName: The requested file name or C{None} for the add-on's default.
-		@type fileName: str
-		@return: The path to the requested file or C{None} if it wasn't found.
-		@rtype: str
+
+		:param fileName: The requested file name or C{None} for the add-on's default.
+		:type fileName: str
+		:returns: The path to the requested file or C{None} if it wasn't found.
+		:rtype: str
 		"""
 		if not fileName:
 			fileName = self.manifest["docFileName"]
@@ -551,10 +559,11 @@ class Addon(AddonBase):
 
 def getCodeAddon(obj=None, frameDist=1):
 	""" Returns the L{Addon} where C{obj} is defined. If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".
-	@param obj: python object or None for default behaviour.
-	@param frameDist: how many frames is the caller code. Only change this for functions in this module.
-	@return: L{Addon} instance or None if no code does not belong to a add-on package.
-	@rtype: C{Addon}
+
+	:param obj: python object or None for default behaviour.
+	:param frameDist: how many frames is the caller code. Only change this for functions in this module.
+	:returns: L{Addon} instance or None if no code does not belong to a add-on package.
+	:rtype: C{Addon}
 	"""
 	if obj is None:
 		obj = sys._getframe(frameDist)
@@ -610,7 +619,8 @@ class AddonBundle(AddonBase):
 	is available without the need for extraction."""
 	def __init__(self, bundlePath):
 		""" Constructs an L{AddonBundle} from a filename.
-		@param bundlePath: The path for the bundle file.
+
+		:param bundlePath: The path for the bundle file.
 		"""
 		self._path = bundlePath
 		# Read manifest:
@@ -637,8 +647,9 @@ class AddonBundle(AddonBase):
 	def extract(self, addonPath):
 		""" Extracts the bundle content to the specified path.
 		The addon will be extracted to L{addonPath}
-		@param addonPath: Path where to extract contents.
-		@type addonPath: string
+
+		:param addonPath: Path where to extract contents.
+		:type addonPath: string
 		"""
 		with zipfile.ZipFile(self._path, 'r') as z:
 			for info in z.infolist():
@@ -652,7 +663,8 @@ class AddonBundle(AddonBase):
 	@property
 	def manifest(self):
 		""" Gets the manifest for the represented Addon.
-		@rtype: AddonManifest
+
+		:rtype: AddonManifest
 		"""
 		return self._manifest
 
@@ -735,10 +747,11 @@ docFileName = string(default=None)
 
 	def __init__(self, input, translatedInput=None):
 		""" Constructs an L{AddonManifest} instance from manifest string data
-		@param input: data to read the manifest information
-		@type input: a fie-like object.
-		@param translatedInput: translated manifest input
-		@type translatedInput: file-like object
+
+		:param input: data to read the manifest information
+		:type input: a fie-like object.
+		:param translatedInput: translated manifest input
+		:type translatedInput: file-like object
 		"""
 		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
 		self._errors = None

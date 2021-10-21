@@ -184,8 +184,9 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self,_defaultVoiceToken=None):
 		"""
-		@param _defaultVoiceToken: an optional sapi voice token which should be used as the default voice (only useful for subclasses)
-		@type _defaultVoiceToken: ISpeechObjectToken
+
+		:param _defaultVoiceToken: an optional sapi voice token which should be used as the default voice (only useful for subclasses)
+		:type _defaultVoiceToken: ISpeechObjectToken
 		"""
 		ensureWaveOutHooks()
 		self._pitch=50

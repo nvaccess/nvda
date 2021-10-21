@@ -118,18 +118,18 @@ class AutoPropertyObject(garbageHandler.TrackedObject, metaclass=AutoPropertyTyp
 	"""
 
 	#: Tracks the instances of this class; used by L{invalidateCaches}.
-	#: @type: weakref.WeakKeyDictionary
+	#: :type: weakref.WeakKeyDictionary
 	__instances=weakref.WeakKeyDictionary()
 	#: Specifies whether properties are cached by default;
 	#: can be overridden for individual properties by setting _cache_propertyName.
-	#: @type: bool
+	#: :type: bool
 	cachePropertiesByDefault = False
 
 
 	def __new__(cls, *args, **kwargs):
 		self = super(AutoPropertyObject, cls).__new__(cls)
 		#: Maps properties to cached values.
-		#: @type: dict
+		#: :type: dict
 		self._propertyCache={}
 		self.__instances[self]=None
 		return self
@@ -190,17 +190,18 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 	They accept an L{inputCore.InputGesture} as their single argument.
 	Gesture bindings can be specified on the class by creating a C{__gestures} dict which maps gesture identifiers to script names.
 	They can also be bound on an instance using the L{bindGesture} method.
-	@cvar scriptCategory: If present, a translatable string displayed to the user
+
+	:var scriptCategory: If present, a translatable string displayed to the user
 		as the category for scripts in this class;
 		e.g. in the Input Gestures dialog.
 		This can be overridden for individual scripts
 		by setting a C{category} attribute on the script method.
-	@type scriptCategory: str
+	:type scriptCategory: str
 	"""
 
 	def __init__(self):
 		#: Maps input gestures to script functions.
-		#: @type: dict
+		#: :type: dict
 		self._gestureMap = {}
 		# Bind gestures specified on the class.
 		# This includes gestures specified on decorated scripts.
@@ -218,11 +219,12 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 
 	def bindGesture(self, gestureIdentifier, scriptName):
 		"""Bind an input gesture to a script.
-		@param gestureIdentifier: The identifier of the input gesture.
-		@type gestureIdentifier: str
-		@param scriptName: The name of the script, which is the name of the method excluding the C{script_} prefix.
-		@type scriptName: str
-		@raise LookupError: If there is no script with the provided name.
+
+		:param gestureIdentifier: The identifier of the input gesture.
+		:type gestureIdentifier: str
+		:param scriptName: The name of the script, which is the name of the method excluding the C{script_} prefix.
+		:type scriptName: str
+		:raises LookupError: If there is no script with the provided name.
 		"""
 		scriptAttrName = "script_%s" % scriptName
 		# Don't store the instance method, as this causes a circular reference
@@ -239,9 +241,10 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 	def removeGestureBinding(self,gestureIdentifier):
 		"""
 		Removes the binding for the given gesture identifier if a binding exists.
-		@param gestureIdentifier: The identifier of the input gesture.
-		@type gestureIdentifier: str
-		@raise LookupError: If there is no binding for this gesture 
+
+		:param gestureIdentifier: The identifier of the input gesture.
+		:type gestureIdentifier: str
+		:raises LookupError: If there is no binding for this gesture 
 		"""
 		# Import late to avoid circular import.
 		import inputCore
@@ -256,8 +259,9 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 		"""Bind or unbind multiple input gestures.
 		This is a convenience method which simply calls L{bindGesture} for each gesture and script pair, logging any errors.
 		For the case where script is None, L{removeGestureBinding} is called instead.
-		@param gestureMap: A mapping of gesture identifiers to script names.
-		@type gestureMap: dict of str to str
+
+		:param gestureMap: A mapping of gesture identifiers to script names.
+		:type gestureMap: dict of str to str
 		"""
 		for gestureIdentifier, scriptName in gestureMap.items():
 			if scriptName:
@@ -273,10 +277,11 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 
 	def getScript(self,gesture):
 		"""Retrieve the script bound to a given gesture.
-		@param gesture: The input gesture in question.
-		@type gesture: L{inputCore.InputGesture}
-		@return: The script function or C{None} if none was found.
-		@rtype: script function
+
+		:param gesture: The input gesture in question.
+		:type gesture: L{inputCore.InputGesture}
+		:returns: The script function or C{None} if none was found.
+		:rtype: script function
 		""" 
 		for identifier in gesture.normalizedIdentifiers:
 			try:

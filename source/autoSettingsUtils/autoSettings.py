@@ -30,7 +30,8 @@ class AutoSettings(AutoPropertyObject):
 
 	def __init__(self):
 		"""Perform any initialisation
-		@note: registers with the config save action extension point
+
+		.. note: registers with the config save action extension point
 		"""
 		super().__init__()
 		self._registerConfigSaveAction()
@@ -53,7 +54,8 @@ class AutoSettings(AutoPropertyObject):
 	@abstractmethod
 	def getId(cls) -> str:
 		"""
-		@return: Application friendly name, should be globally unique, however since this is used in the config file
+
+		:returns: Application friendly name, should be globally unique, however since this is used in the config file
 		human readable is also beneficial.
 		"""
 		...
@@ -62,7 +64,8 @@ class AutoSettings(AutoPropertyObject):
 	@abstractmethod
 	def getDisplayName(cls) -> str:
 		"""
-		@return: The translated name for this collection of settings. This is for use in the GUI to represent the
+
+		:returns: The translated name for this collection of settings. This is for use in the GUI to represent the
 		group of these settings.
 		"""
 		...
@@ -71,7 +74,8 @@ class AutoSettings(AutoPropertyObject):
 	@abstractmethod
 	def _getConfigSection(cls) -> str:
 		"""
-		@return: The section of the config that these settings belong in.
+
+		:returns: The section of the config that these settings belong in.
 		"""
 		...
 
@@ -150,8 +154,9 @@ class AutoSettings(AutoPropertyObject):
 		"""
 		Save values for settings to config.
 		The values from the attributes of `clsOrInst` that match the `id` of each setting are saved to config.
-		@param clsOrInst: Destination for the values.
-		@param settings: The settings to load.
+
+		:param clsOrInst: Destination for the values.
+		:param settings: The settings to load.
 		"""
 		section = cls._getConfigSection()
 		setingsId = cls.getId()
@@ -187,10 +192,11 @@ class AutoSettings(AutoPropertyObject):
 	) -> None:
 		"""
 		Load settings from config, set them on `clsOrInst`.
-		@param clsOrInst: Destination for the values.
-		@param settings: The settings to load.
-		@param onlyChanged: When True, only settings that no longer match the config are set.
-		@note: attributes are set on clsOrInst using setattr.
+
+		:param clsOrInst: Destination for the values.
+		:param settings: The settings to load.
+		:param onlyChanged: When True, only settings that no longer match the config are set.
+		.. note: attributes are set on clsOrInst using setattr.
 			The id of each setting in `settings` is used as the attribute name.
 		"""
 		section = cls._getConfigSection()
@@ -223,7 +229,8 @@ class AutoSettings(AutoPropertyObject):
 		Loads settings for this AutoSettings instance from the configuration.
 		This method assumes that the instance has attributes o/properties
 		corresponding with the name of every setting in L{supportedSettings}.
-		@param onlyChanged: When loading settings, only apply those for which
+
+		:param onlyChanged: When loading settings, only apply those for which
 			the value in the configuration differs from the current value.
 		"""
 		self._loadSpecificSettings(self, self.supportedSettings, onlyChanged)
@@ -231,9 +238,10 @@ class AutoSettings(AutoPropertyObject):
 	@classmethod
 	def _paramToPercent(cls, current: int, min: int, max: int) -> int:
 		"""Convert a raw parameter value to a percentage given the current, minimum and maximum raw values.
-		@param current: The current value.
-		@param min: The minimum value.
-		@param max: The maximum value.
+
+		:param current: The current value.
+		:param min: The minimum value.
+		:param max: The maximum value.
 		"""
 		return paramToPercent(current, min, max)
 
@@ -241,8 +249,9 @@ class AutoSettings(AutoPropertyObject):
 	def _percentToParam(cls, percent: int, min: int, max: int) -> int:
 		"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum
 		raw parameter values.
-		@param percent: The current percentage.
-		@param min: The minimum raw parameter value.
-		@param max: The maximum raw parameter value.
+
+		:param percent: The current percentage.
+		:param min: The minimum raw parameter value.
+		:param max: The maximum raw parameter value.
 		"""
 		return percentToParam(percent, min, max)

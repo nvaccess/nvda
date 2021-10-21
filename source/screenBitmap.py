@@ -18,8 +18,9 @@ class ScreenBitmap(object):
 
 	def __init__(self,width,height):
 		"""
-		@param width: the width of the resulting bitmap in rgb pixels.
-		@param height: the height of the bitmap in rgb pixels.
+
+		:param width: the width of the resulting bitmap in rgb pixels.
+		:param height: the height of the bitmap in rgb pixels.
 		"""
 		self.width=width
 		self.height=height

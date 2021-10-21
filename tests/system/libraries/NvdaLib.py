@@ -236,9 +236,10 @@ class NvdaLib:
 	@staticmethod
 	def _addMethodsToSpy(remoteLib: _Remote):
 		""" Adds a method for each keywords on the remote library.
-		@param remoteLib: the library to augment with methods.
-		@rtype: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
-		@return: The library augmented with methods for all keywords.
+
+		:param remoteLib: the library to augment with methods.
+		:rtype: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
+		:returns: The library augmented with methods for all keywords.
 		"""
 		# Add methods back onto the lib so they can be called directly rather than manually calling run_keyword
 		def _makeKeywordCaller(lib, keyword):
@@ -387,8 +388,9 @@ def getSpyLib():
 	""" Gets the spy library instance. This has been augmented with methods for all supported keywords.
 	Requires NvdaLib and nvdaSpy (remote library - see speechSpyGlobalPlugin) to be initialised.
 	On failure check order of keywords in Robot log and NVDA log for failures.
-	@rtype: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
-	@return: Remote NVDA spy Robot Framework library.
+
+	:rtype: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
+	:returns: Remote NVDA spy Robot Framework library.
 	"""
 	nvdaLib = _getLib("NvdaLib")
 	spy = nvdaLib.nvdaSpy
@@ -399,7 +401,8 @@ def getSpyLib():
 
 def getSpeechAfterKey(key) -> str:
 	"""Ensure speech has stopped, press key, and get speech until it stops.
-	@return: The speech after key press.
+
+	:returns: The speech after key press.
 	"""
 	spy = getSpyLib()
 	spy.wait_for_speech_to_finish()
@@ -413,7 +416,8 @@ def getSpeechAfterKey(key) -> str:
 def getSpeechAndBrailleAfterKey(key) -> _Tuple[str, str]:
 	"""Ensure speech has stopped, press key, and get speech until it stops, report the status of the
 	braille display.
-	@return: Tuple of Speech then Braille.
+
+	:returns: Tuple of Speech then Braille.
 	"""
 	spy = getSpyLib()
 	spy.wait_for_speech_to_finish()

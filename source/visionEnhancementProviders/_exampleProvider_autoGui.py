@@ -133,8 +133,9 @@ class AutoGuiTestProvider(providerBase.VisionEnhancementProvider):
 	@classmethod
 	def getSettingsPanelClass(cls) -> Optional[Type]:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
-		@return: Optional[SettingsPanel]
-		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
+
+		:returns: Optional[SettingsPanel]
+		.. remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
 		"""
 		return None  # No custom GUI
 

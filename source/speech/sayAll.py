@@ -85,8 +85,9 @@ class _SayAllHandler:
 
 	def isRunning(self):
 		"""Determine whether say all is currently running.
-		@return: C{True} if say all is currently running, C{False} if not.
-		@rtype: bool
+
+		:returns: C{True} if say all is currently running, C{False} if not.
+		:rtype: bool
 		"""
 		return bool(self._getActiveSayAll())
 

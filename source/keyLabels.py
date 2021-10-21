@@ -166,10 +166,11 @@ localizedKeyLabels = {
 def getKeyCombinationLabel(keyCombination):
 	"""
 	Fetches a localized label for a combination of multiple keys.
-	@param keyCombination: The key combination identifier to get the localized label for, usually plus-separated key identifiers.
-	@type keyCombination: string
-	@returns: A localized key combination
-	@rtype: string
+
+	:param keyCombination: The key combination identifier to get the localized label for, usually plus-separated key identifiers.
+	:type keyCombination: string
+	:returns: A localized key combination
+	:rtype: string
 	"""
 	keys = keyCombination.lower().split("+")
 	return "+".join(localizedKeyLabels.get(key, key) for key in keys)

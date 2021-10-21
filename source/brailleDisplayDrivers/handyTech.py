@@ -139,19 +139,19 @@ KEY_SPACES = (KEY_LEFT_SPACE, KEY_RIGHT_SPACE,)
 class Model(AutoPropertyObject):
 	"""Extend from this base class to define model specific behavior."""
 	#: Device identifier, used in the protocol to identify the device
-	#: @type: string
+	#: :type: string
 	deviceId = None
 
 	#: A generic name that identifies the model/series, used in gesture identifiers
-	#: @type: string
+	#: :type: string
 	genericName = None
 
 	#: Specific name of this model
-	#: @type: string
+	#: :type: string
 	name = None
 
 	#: Number of braille cells
-	#: @type: int
+	#: :type: int
 	numCells = 0
 
 	def __init__(self, display):
@@ -529,9 +529,10 @@ def _allSubclasses(cls):
 
 	This function calls itself recursively to return all subclasses of cls.
 
-	@param cls: the base class to list subclasses of
-	@type cls: class
-	@rtype: [class]
+
+	:param cls: the base class to list subclasses of
+	:type cls: class
+	:rtype: [class]
 	"""
 	return cls.__subclasses__() + [g for s in cls.__subclasses__()
 		for g in _allSubclasses(s)]

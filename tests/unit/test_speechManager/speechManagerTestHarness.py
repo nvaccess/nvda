@@ -100,7 +100,8 @@ class SpeechManagerInteractions:
 
 	def __init__(self, testCase: unittest.TestCase):
 		"""
-		@param testCase: Used to run asserts
+
+		:param testCase: Used to run asserts
 		"""
 		self._testCase = testCase
 		import synthDriverHandler
@@ -272,7 +273,8 @@ class SpeechManagerInteractions:
 
 	def indexReached(self, index: _IndexT):
 		"""Call SpeechManager.indexReached
-		@note SpeechManager requires a call to pumpAll for this to have any affect.
+
+		.. note SpeechManager requires a call to pumpAll for this to have any affect.
 		"""
 		self._assertSpeechManagerKnowsAboutIndex(index)
 		self._testDebug_IndexReached.append(index)
@@ -280,13 +282,15 @@ class SpeechManagerInteractions:
 
 	def doneSpeaking(self):
 		"""Call SpeechManager.doneSpeaking
-		@note SpeechManager requires a call to pumpAll for this to have any affect
+
+		.. note SpeechManager requires a call to pumpAll for this to have any affect
 		"""
 		self.sManager._onSynthDoneSpeaking(self.synthMock)
 
 	def pumpAll(self):
 		"""Call queueHandler.pumpAll
-		@note This is required to process pending events (indexReached, doneSpeaking) for SpeechManager.
+
+		.. note This is required to process pending events (indexReached, doneSpeaking) for SpeechManager.
 		"""
 		queueHandler.pumpAll()
 
@@ -320,7 +324,8 @@ class SpeechManagerInteractions:
 	def create_BeepCommand(self, hz, length, left=50, right=50, expectedToBecomeIndex=None):
 		"""BeepCommands get converted into IndexCommands by speechManager. The expectedToBecomeIndex argument
 		allow us to track that.
-		@note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
+
+		.. note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
 		indexed commands to help to prevent errors in the tests.
 		"""
 		self._testCase.assertIsNotNone(
@@ -335,7 +340,8 @@ class SpeechManagerInteractions:
 	def create_ConfigProfileTriggerCommand(self, trigger, enter=True, expectedToBecomeIndex=None):
 		"""ConfigProfileTriggerCommands get converted into IndexCommands by speechManager. The
 		expectedToBecomeIndex argument allows tracking that.
-		@note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
+
+		.. note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
 		indexed commands to help to prevent errors in the tests.
 		"""
 		self._testCase.assertIsNotNone(
@@ -350,7 +356,8 @@ class SpeechManagerInteractions:
 	def create_WaveFileCommand(self, filename, expectedToBecomeIndex=None):
 		"""WaveFileCommands get converted into IndexCommands by speechManager. The expectedToBecomeIndex argument
 		allows tracking that.
-		@note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
+
+		.. note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
 		indexed commands to help to prevent errors in the tests.
 		"""
 		self._testCase.assertIsNotNone(
@@ -365,7 +372,8 @@ class SpeechManagerInteractions:
 	def create_EndUtteranceCommand(self, expectedToBecomeIndex=None):
 		"""EndUtteranceCommand get converted into IndexCommands by speechManager. The expectedToBecomeIndex argument
 		allow tracking that.
-		@note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
+
+		.. note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
 		indexed commands to help to prevent errors in the tests.
 		"""
 		self._testCase.assertIsNotNone(
@@ -417,14 +425,16 @@ class SpeechManagerInteractions:
 
 	def addMockCallMonitoring(self, monitorMocks: typing.List[mock.Mock]):
 		""" Allows the call count state for other arbitrary mock objects to be tracked.
-		@param monitorMocks: Mock objects to track the number of calls to
+
+		:param monitorMocks: Mock objects to track the number of calls to
 		"""
 		for m in monitorMocks:
 			self._expectedMockCallCount[m] = 0
 
 	def expect_mockCall(self, m: mock.Mock):
 		""" Expect another call to the given Mock. The total number of expected calls to this mock is incremented.
-		@param m: Mock object to expect another call on.
+
+		:param m: Mock object to expect another call on.
 		"""
 		if not self._inExpectBlock:
 			self._testCase.fail("Expectations should be set in a with expectation() block")

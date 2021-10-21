@@ -709,7 +709,8 @@ class PAINTSTRUCT(Structure):
 def paint(hwnd, painStruct=None):
 	"""
 	Context manager that wraps BeginPaint and EndPaint.
-	@param painStruct: The paint structure used in the call to BeginPaint.
+
+	:param painStruct: The paint structure used in the call to BeginPaint.
 		if C{None} (default), an empty structure is provided.
 	"""
 	if painStruct is None:

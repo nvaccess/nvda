@@ -28,7 +28,8 @@ def _linearInterpolate(value, start, end):
 
 def _getCharIndexUnderMouse(ctrl: wx.TextCtrl) -> Optional[int]:
 	""" Get the index of the character under the mouse.
-	@note: Assumes all characters are on one line
+
+	.. note: Assumes all characters are on one line
 	"""
 	mousePos = wx.GetMousePosition()
 	toClient = ctrl.ScreenToClient(mousePos)

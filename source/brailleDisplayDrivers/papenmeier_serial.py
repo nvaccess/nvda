@@ -33,7 +33,8 @@ def brl_auto_id() -> bytes:
 
 def brl_out(offset: int, data: List[int]) -> bytes:
 	"""send data to braille display
-		@param offset: Must be positive.
+
+		:param offset: Must be positive.
 	"""
 	d2 = len(data)+7
 	ret = bytearray([

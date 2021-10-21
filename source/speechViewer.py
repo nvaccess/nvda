@@ -155,7 +155,8 @@ SPEECH_SEQUENCE_SEPARATOR = "\n"
 
 def appendSpeechSequence(sequence: SpeechSequence) -> None:
 	""" Appends a speech sequence to the speech viewer.
-	@param sequence: To append, items are separated with . Concluding with a newline.
+
+	:param sequence: To append, items are separated with . Concluding with a newline.
 	"""
 	if not isActive:
 		return

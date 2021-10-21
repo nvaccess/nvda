@@ -19,17 +19,18 @@ from typing import Optional
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 	"""Find a descendant window matching specified criteria.
-	@param parent: The handle of the parent window to search within.
-	@type parent: int
-	@param visible: Whether the window should be visible or C{None} if irrelevant.
-	@type visible: bool
-	@param controlID: The control ID of the window or C{None} if irrelevant.
-	@type controlID: int
-	@param className: The class name of the window or C{None} if irrelevant.
-	@type className: str
-	@return: The handle of the matching descendant window.
-	@rtype: int
-	@raise LookupError: if no matching window is found.
+
+	:param parent: The handle of the parent window to search within.
+	:type parent: int
+	:param visible: Whether the window should be visible or C{None} if irrelevant.
+	:type visible: bool
+	:param controlID: The control ID of the window or C{None} if irrelevant.
+	:type controlID: int
+	:param className: The class name of the window or C{None} if irrelevant.
+	:type className: str
+	:returns: The handle of the matching descendant window.
+	:rtype: int
+	:raises LookupError: if no matching window is found.
 	"""
 	# We need something mutable to store the result from the callback.
 	result = []
@@ -66,13 +67,14 @@ except AttributeError:
 def logicalToPhysicalPoint(window, x, y):
 	"""Converts the logical coordinates of a point in a window to physical coordinates.
 	This should be used when points are received directly from a window that is not DPI aware.
-	@param window: The window handle.
-	@param x: The logical x coordinate.
-	@type x: int
-	@param y: The logical y coordinate.
-	@type y: int
-	@return: The physical x and y coordinates.
-	@rtype: tuple of (int, int)
+
+	:param window: The window handle.
+	:param x: The logical x coordinate.
+	:type x: int
+	:param y: The logical y coordinate.
+	:type y: int
+	:returns: The physical x and y coordinates.
+	:rtype: tuple of (int, int)
 	"""
 	if not _logicalToPhysicalPoint:
 		return x, y
@@ -83,13 +85,14 @@ def logicalToPhysicalPoint(window, x, y):
 def physicalToLogicalPoint(window, x, y):
 	"""Converts the physical coordinates of a point in a window to logical coordinates.
 	This should be used when sending points directly to a window that is not DPI aware.
-	@param window: The window handle.
-	@param x: The physical x coordinate.
-	@type x: int
-	@param y: The physical y coordinate.
-	@type y: int
-	@return: The logical x and y coordinates.
-	@rtype: tuple of (int, int)
+
+	:param window: The window handle.
+	:param x: The physical x coordinate.
+	:type x: int
+	:param y: The physical y coordinate.
+	:type y: int
+	:returns: The logical x and y coordinates.
+	:rtype: tuple of (int, int)
 	"""
 	if not _physicalToLogicalPoint:
 		return x, y
@@ -105,8 +108,9 @@ def getWindowScalingFactor(window):
 	"""Gets the logical scaling factor used for the given window handle. This is based off the Dpi reported by windows
 	for the given window handle / divided by the "base" DPI level of 96. Typically this is a result of using the scaling
 	percentage in the windows display settings. 100% is typically 96 DPI, 150% is typically 144 DPI.
-	@param window: a native Windows window handle (hWnd)
-	@returns the logical scaling factor. EG. 1.0 if the window DPI level is 96, 1.5 if the window DPI level is 144"""
+
+	:param window: a native Windows window handle (hWnd)
+	:returns the logical scaling factor. EG. 1.0 if the window DPI level is 96, 1.5 if the window DPI level is 144"""
 	user32 = ctypes.windll.user32
 	try:
 		winDpi = user32.GetDpiForWindow(window)
@@ -180,13 +184,14 @@ class CustomWindow(AutoPropertyObject):
 			parent: Optional[int] = None
 	):
 		"""Constructor.
-		@param windowName: The name of the window.
-		@param windowStyle: The style of the window.
+
+		:param windowName: The name of the window.
+		:param windowStyle: The style of the window.
 			This is a combination of the C{winUser.WS_*} constants.
-		@param extendedWindowStyle: The extended style of the window.
+		:param extendedWindowStyle: The extended style of the window.
 			This is a combination of the C{winUser.WS_EX_*} constants.
-		@param parent: The handle of the parent window, if any.
-		@raise WindowsError: If an error occurs.
+		:param parent: The handle of the parent window, if any.
+		:raises WindowsError: If an error occurs.
 		"""
 		if not isinstance(self.className, str):
 			raise TypeError("className attribute must be a unicode string")
@@ -243,17 +248,18 @@ class CustomWindow(AutoPropertyObject):
 	@abstractmethod
 	def windowProc(self, hwnd, msg, wParam, lParam):
 		"""Process messages sent to this window.
-		@param hwnd: The handle to this window.
-		@type hwnd: int
-		@param msg: The message.
-		@type msg: int
-		@param wParam: Additional message information.
-		@type wParam: int
-		@param lParam: Additional message information.
-		@type lParam: int
-		@return: The result of the message processing
+
+		:param hwnd: The handle to this window.
+		:type hwnd: int
+		:param msg: The message.
+		:type msg: int
+		:param wParam: Additional message information.
+		:type wParam: int
+		:param lParam: Additional message information.
+		:type lParam: int
+		:returns: The result of the message processing
 			or C{None} to call DefWindowProc.
-		@rtype: int or None
+		:rtype: int or None
 		"""
 		return None
 

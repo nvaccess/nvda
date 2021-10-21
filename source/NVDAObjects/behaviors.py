@@ -72,10 +72,11 @@ class Dialog(NVDAObject):
 	@classmethod
 	def getDialogText(cls,obj,allowFocusedDescendants=True):
 		"""This classmethod walks through the children of the given object, and collects up and returns any text that seems to be  part of a dialog's message text.
-		@param obj: the object who's children you want to collect the text from
-		@type obj: L{IAccessible}
-		@param allowFocusedDescendants: if false no text will be returned at all if one of the descendants is focused.
-		@type allowFocusedDescendants: boolean
+
+		:param obj: the object who's children you want to collect the text from
+		:type obj: L{IAccessible}
+		:param allowFocusedDescendants: if false no text will be returned at all if one of the descendants is focused.
+		:type allowFocusedDescendants: boolean
 		"""
 		children=obj.children
 		textList=[]
@@ -235,8 +236,9 @@ class LiveText(NVDAObject):
 	def startMonitoring(self):
 		"""Start monitoring for new text.
 		New text will be reported when it is detected.
-		@note: If monitoring has already been started, this will have no effect.
-		@see: L{stopMonitoring}
+
+		.. note: If monitoring has already been started, this will have no effect.
+		.. see: L{stopMonitoring}
 		"""
 		if self._monitorThread:
 			return
@@ -251,8 +253,9 @@ class LiveText(NVDAObject):
 
 	def stopMonitoring(self):
 		"""Stop monitoring previously started with L{startMonitoring}.
-		@note: If monitoring has not been started, this will have no effect.
-		@see: L{startMonitoring}
+
+		.. note: If monitoring has not been started, this will have no effect.
+		.. see: L{startMonitoring}
 		"""
 		if not self._monitorThread:
 			return
@@ -262,7 +265,8 @@ class LiveText(NVDAObject):
 
 	def event_textChange(self):
 		"""Fired when the text changes.
-		@note: It is safe to call this directly from threads other than the main thread.
+
+		.. note: It is safe to call this directly from threads other than the main thread.
 		"""
 		self._event.set()
 
@@ -272,7 +276,8 @@ class LiveText(NVDAObject):
 			this object. Most subclasses should simply use the base
 			implementation, which returns DMP (character-based diffing).
 			
-			@Note: DMP is experimental, and can be disallowed via user
+
+			.. note: DMP is experimental, and can be disallowed via user
 			preference. In this case, the prior stable implementation, Difflib
 			(line-based diffing), will be used.
 		"""
@@ -623,26 +628,29 @@ class RowWithoutCellObjects(NVDAObject):
 	def _getColumnLocation(self,column):
 		"""Get the screen location for the given column.
 		Subclasses may optionally  override this method.
-		@param column: The index of the column, starting at 1.
-		@type column: int
-		@rtype: tuple
+
+		:param column: The index of the column, starting at 1.
+		:type column: int
+		:rtype: tuple
 		"""
 		raise NotImplementedError
 
 	def _getColumnContent(self, column):
 		"""Get the text content for a given column of this row.
 		Subclasses must override this method.
-		@param column: The index of the column, starting at 1.
-		@type column: int
-		@rtype: str
+
+		:param column: The index of the column, starting at 1.
+		:type column: int
+		:rtype: str
 		"""
 		raise NotImplementedError
 
 	def _getColumnHeader(self, column):
 		"""Get the header text for this column.
-		@param column: The index of the column, starting at 1.
-		@type column: int
-		@rtype: str
+
+		:param column: The index of the column, starting at 1.
+		:type column: int
+		:rtype: str
 		"""
 		raise NotImplementedError
 

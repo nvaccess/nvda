@@ -4,7 +4,7 @@
 # Copyright (C) 2006-2021 NV Access Limited, Davy Kager, Julien Cochuyt
 
 """Common support for editable text.
-@note: If you want editable text functionality for an NVDAObject,
+.. note: If you want editable text functionality for an NVDAObject,
 	you should use the EditableText classes in L{NVDAObjects.behaviors}.
 """
 
@@ -33,8 +33,9 @@ class EditableText(TextContainerObject,ScriptableObject):
 		* When the object gains focus, L{initAutoSelectDetection} must be called.
 		* When the object notifies of a possible selection change, L{detectPossibleSelectionChange} must be called.
 		* Optionally, if the object notifies of changes to its content, L{hasContentChangedSinceLastSelection} should be set to C{True}.
-	@ivar hasContentChangedSinceLastSelection: Whether the content has changed since the last selection occurred.
-	@type hasContentChangedSinceLastSelection: bool
+
+	:var hasContentChangedSinceLastSelection: Whether the content has changed since the last selection occurred.
+	:type hasContentChangedSinceLastSelection: bool
 	"""
 
 	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
@@ -56,18 +57,19 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
-		@param bookmark: a bookmark representing the position of the caret before  it was instructed to move
-		@type bookmark: bookmark
-		@param retryInterval: the interval of time in seconds this method should  wait before checking the caret each time.
-		@type retryInterval: float 
-		@param timeout: the over all amount of time in seconds the method should wait before giving up completely,
+
+		:param bookmark: a bookmark representing the position of the caret before  it was instructed to move
+		:type bookmark: bookmark
+		:param retryInterval: the interval of time in seconds this method should  wait before checking the caret each time.
+		:type retryInterval: float 
+		:param timeout: the over all amount of time in seconds the method should wait before giving up completely,
 			C{None} to use the value from the configuration.
-		@type timeout: float
-		@param origWord: The word at the caret before the movement command,
+		:type timeout: float
+		:param origWord: The word at the caret before the movement command,
 			C{None} if the word at the caret should not be used to detect movement.
 			This is intended for use with the delete key.
-		@return: a tuple containing a boolean denoting whether this method timed out, and  a TextInfo representing the old or updated caret position or None if interupted by a script or focus event.
-		@rtype: tuple
+		:returns: a tuple containing a boolean denoting whether this method timed out, and  a TextInfo representing the old or updated caret position or None if interupted by a script or focus event.
+		:rtype: tuple
 		"""
 		if timeout is None:
 			timeoutMs = config.conf["editableText"]["caretMoveTimeoutMs"]

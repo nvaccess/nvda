@@ -83,15 +83,16 @@ def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
 	"""Wrapper to the kernel32 CreateWaitableTimer function.
 	Consult https://msdn.microsoft.com/en-us/library/windows/desktop/ms682492.aspx for Microsoft's documentation.
 	In contrast with the original function, this wrapper assumes the following defaults.
-	@param securityAttributes: Defaults to C{None};
+
+	:param securityAttributes: Defaults to C{None};
 		The timer object gets a default security descriptor and the handle cannot be inherited.
 		The ACLs in the default security descriptor for a timer come from the primary or impersonation token of the creator.
-	@type securityAttributes: pointer to L{SECURITY_ATTRIBUTES}
-	@param manualReset: Defaults to C{False} which means the timer is a synchronization timer.
+	:type securityAttributes: pointer to L{SECURITY_ATTRIBUTES}
+	:param manualReset: Defaults to C{False} which means the timer is a synchronization timer.
 		If C{True}, the timer is a manual-reset notification timer.
-	@type manualReset: bool
-	@param name: Defaults to C{None}, the timer object is created without a name.
-	@type name: str
+	:type manualReset: bool
+	:param name: Defaults to C{None}, the timer object is created without a name.
+	:type name: str
 	"""
 	res = kernel32.CreateWaitableTimerW(securityAttributes, manualReset, name)
 	if res==0:
@@ -101,22 +102,23 @@ def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
 def setWaitableTimer(handle, dueTime, period=0, completionRoutine=None, arg=None, resume=False):
 	"""Wrapper to the kernel32 SETWaitableTimer function.
 	Consult https://msdn.microsoft.com/en-us/library/windows/desktop/ms686289.aspx for Microsoft's documentation.
-	@param handle: A handle to the timer object.
-	@type handle: int
-	@param dueTime: Relative time (in miliseconds).
+
+	:param handle: A handle to the timer object.
+	:type handle: int
+	:param dueTime: Relative time (in miliseconds).
 		Note that the original function requires relative time to be supplied as a negative nanoseconds value.
-	@type dueTime: int
-	@param period: Defaults to 0, timer is only executed once.
+	:type dueTime: int
+	:param period: Defaults to 0, timer is only executed once.
 		Value should be supplied in miliseconds.
-	@type period: int
-	@param completionRoutine: The function to be executed when the timer elapses.
-	@type completionRoutine: L{PAPCFUNC}
-	@param arg: Defaults to C{None}; a pointer to a structure that is passed to the completion routine.
-	@type arg: L{ctypes.c_void_p}
-	@param resume: Defaults to C{False}; the system is not restored.
+	:type period: int
+	:param completionRoutine: The function to be executed when the timer elapses.
+	:type completionRoutine: L{PAPCFUNC}
+	:param arg: Defaults to C{None}; a pointer to a structure that is passed to the completion routine.
+	:type arg: L{ctypes.c_void_p}
+	:param resume: Defaults to C{False}; the system is not restored.
 		If this parameter is TRUE, restores a system in suspended power conservation mode 
 		when the timer state is set to signaled.
-	@type resume: bool
+	:type resume: bool
 	"""
 	res = kernel32.SetWaitableTimer(
 		handle,
@@ -412,8 +414,9 @@ class HGLOBAL(HANDLE):
 
 	def __init__(self,h,autoFree=True):
 		"""
-		@param h: the raw Windows HGLOBAL handle
-		@param autoFree: True by default, the handle will automatically be freed with GlobalFree 
+
+		:param h: the raw Windows HGLOBAL handle
+		:param autoFree: True by default, the handle will automatically be freed with GlobalFree 
 		when this object goes out of scope.
 		"""
 		super(HGLOBAL,self).__init__(h)

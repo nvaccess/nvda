@@ -31,7 +31,8 @@ from typing import Any, Optional
 def getFocusObject() -> NVDAObjects.NVDAObject:
 	"""
 	Gets the current object with focus.
-	@returns: the object with focus
+
+	:returns: the object with focus
 	"""
 	return globalVars.focusObject
 
@@ -42,8 +43,9 @@ def getForegroundObject():
 	The cache is updated as queued events are processed, as such there will be a delay between the winEvent
 	and this function matching. However, within NVDA this should be used in order to be in sync with other
 	functions such as "getFocusAncestors".
-@returns: the current foreground object
-@rtype: L{NVDAObjects.NVDAObject}
+
+:returns: the current foreground object
+:rtype: L{NVDAObjects.NVDAObject}
 """
 	return globalVars.foregroundObject
 
@@ -54,8 +56,9 @@ def setForegroundObject(obj):
 		Alternative names for this function may have been:
 		- setLastForegroundWindow
 		- setLastForegroundEventObject
-@param obj: the object that will be stored as the current foreground object
-@type obj: NVDAObjects.NVDAObject
+
+:param obj: the object that will be stored as the current foreground object
+:type obj: NVDAObjects.NVDAObject
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
@@ -65,8 +68,9 @@ def setForegroundObject(obj):
 def setFocusObject(obj):
 	"""Stores an object as the current focus object. (Note: this does not physically change the window with focus in the operating system, but allows NVDA to keep track of the correct object).
 Before overriding the last object, this function calls event_loseFocus on the object to notify it that it is loosing focus. 
-@param obj: the object that will be stored as the focus object
-@type obj: NVDAObjects.NVDAObject
+
+:param obj: the object that will be stored as the focus object
+:type obj: NVDAObjects.NVDAObject
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
@@ -200,13 +204,14 @@ def setReviewPosition(
 		isMouse=False
 ):
 	"""Sets a TextInfo instance as the review position.
-	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
+
+	:param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
 		In that case, the next time the navigator object is asked for it fetches it from the review position.
-	@type clearNavigatorObject: bool
-	@param isCaret: Whether the review position is changed due to caret following.
-	@type isCaret: bool
-	@param isMouse: Whether the review position is changed due to mouse following.
-	@type isMouse: bool
+	:type clearNavigatorObject: bool
+	:param isCaret: Whether the review position is changed due to caret following.
+	:type isCaret: bool
+	:param isMouse: Whether the review position is changed due to mouse following.
+	:type isMouse: bool
 	"""
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
@@ -225,8 +230,9 @@ def setReviewPosition(
 
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 
-@returns: the current navigator object
-@rtype: L{NVDAObjects.NVDAObject}
+
+:returns: the current navigator object
+:rtype: L{NVDAObjects.NVDAObject}
 """
 	if globalVars.navigatorObject:
 		return globalVars.navigatorObject
@@ -243,10 +249,11 @@ def getNavigatorObject():
 
 def setNavigatorObject(obj,isFocus=False):
 	"""Sets an object to be the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. It also sets the current review position to None so that next time the review position is asked for, it is created from the navigator object.  
-@param obj: the object that will be set as the current navigator object
-@type obj: NVDAObjects.NVDAObject  
-@param isFocus: true if the navigator object was set due to a focus change.
-@type isFocus: bool
+
+:param obj: the object that will be set as the current navigator object
+:type obj: NVDAObjects.NVDAObject  
+:param isFocus: true if the navigator object was set due to a focus change.
+:type isFocus: bool
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
@@ -269,8 +276,9 @@ def setNavigatorObject(obj,isFocus=False):
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
-@returns: True if it should be suppressed, False otherwise.
-@rtype: boolean
+
+:returns: True if it should be suppressed, False otherwise.
+:rtype: boolean
 """
 	focusObject=getFocusObject()
 	if focusObject and focusObject.isProtected:
@@ -307,9 +315,10 @@ def processPendingEvents(processEventQueue=True):
 
 def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
 	"""Copies the given text to the windows clipboard.
-	@returns: True if it succeeds, False otherwise.
-	@param text: the text which will be copied to the clipboard
-	@param notify: whether to emit a confirmation message
+
+	:returns: True if it succeeds, False otherwise.
+	:param text: the text which will be copied to the clipboard
+	:param notify: whether to emit a confirmation message
 	"""
 	if not isinstance(text, str) or len(text) == 0:
 		return False
@@ -334,8 +343,9 @@ def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
 
 def getClipData():
 	"""Receives text from the windows clipboard.
-@returns: Clipboard text
-@rtype: string
+
+:returns: Clipboard text
+:rtype: string
 """
 	import gui
 	with winUser.openClipboard(gui.mainFrame.Handle):
@@ -343,8 +353,9 @@ def getClipData():
 
 def getStatusBar():
 	"""Obtain the status bar for the current foreground object.
-	@return: The status bar object or C{None} if no status bar was found.
-	@rtype: L{NVDAObjects.NVDAObject}
+
+	:returns: The status bar object or C{None} if no status bar was found.
+	:rtype: L{NVDAObjects.NVDAObject}
 	"""
 	foreground = getForegroundObject()
 	try:
@@ -369,10 +380,11 @@ def getStatusBar():
 def getStatusBarText(obj):
 	"""Get the text from a status bar.
 	This includes the name of the status bar and the names and values of all of its children.
-	@param obj: The status bar.
-	@type obj: L{NVDAObjects.NVDAObject}
-	@return: The status bar text.
-	@rtype: str
+
+	:param obj: The status bar.
+	:type obj: L{NVDAObjects.NVDAObject}
+	:returns: The status bar text.
+	:rtype: str
 	"""
 	text = obj.name or ""
 	if text:
@@ -381,10 +393,11 @@ def getStatusBarText(obj):
 
 def filterFileName(name):
 	"""Replaces invalid characters in a given string to make a windows compatible file name.
-	@param name: The file name to filter.
-	@type name: str
-	@returns: The filtered file name.
-	@rtype: str
+
+	:param name: The file name to filter.
+	:type name: str
+	:returns: The filtered file name.
+	:rtype: str
 	"""
 	invalidChars=':?*\|<>/"'
 	for c in invalidChars:
@@ -424,8 +437,9 @@ def getCaretObject():
 	This is normally the focus object.
 	However, if the focus object has a tree interceptor which is not in focus mode,
 	the tree interceptor will be returned.
-	@return: The object containing the caret.
-	@rtype: L{baseObject.ScriptableObject}
+
+	:returns: The object containing the caret.
+	:rtype: L{baseObject.ScriptableObject}
 	"""
 	obj = getFocusObject()
 	ti = obj.treeInterceptor

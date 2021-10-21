@@ -88,10 +88,11 @@ def normalizeLocaleForWin32(localeName: str) -> str:
 
 def localeNameToWindowsLCID(localeName):
 	"""Retreave the Windows locale identifier (LCID) for the given locale name
-	@param localeName: a string of 2letterLanguage_2letterCountry or just language (2letterLanguage or 3letterLanguage)
-	@type localeName: string
-	@returns: a Windows LCID or L{LCID_NONE} if it could not be retrieved.
-	@rtype: integer
+
+	:param localeName: a string of 2letterLanguage_2letterCountry or just language (2letterLanguage or 3letterLanguage)
+	:type localeName: string
+	:returns: a Windows LCID or L{LCID_NONE} if it could not be retrieved.
+	:rtype: integer
 	""" 
 	# Windows Vista (NT 6.0) and later is able to convert locale names to LCIDs.
 	# Because NVDA supports Windows 7 (NT 6.1) SP1 and later, just use it directly.
@@ -220,9 +221,10 @@ def ansiCodePageFromNVDALocale(localeName: str) -> Optional[str]:
 
 def getAvailableLanguages(presentational=False):
 	"""generates a list of locale names, plus their full localized language and country names.
-	@param presentational: whether this is meant to be shown alphabetically by language description
-	@type presentational: bool
-	@rtype: list of tuples
+
+	:param presentational: whether this is meant to be shown alphabetically by language description
+	:type presentational: bool
+	:rtype: list of tuples
 	"""
 	#Make a list of all the locales found in NVDA's locale dir
 	localesDir = os.path.join(globalVars.appDir, 'locale')

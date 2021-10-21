@@ -35,21 +35,22 @@ class HighlightStyle(
 		namedtuple("HighlightStyle", ("color", "width", "style", "margin"))
 ):
 	"""Represents the style of a highlight for a particular context.
-	@ivar color: The color to use for the style
-	@type color: L{RGB}
-	@ivar width: The width of the lines to be drawn, in pixels.
+
+	:var color: The color to use for the style
+	:type color: L{RGB}
+	:var width: The width of the lines to be drawn, in pixels.
 		A higher width reduces the inner dimensions of the rectangle.
 		Therefore, if you need to increase the outer dimensions of the rectangle,
 		you need to increase the margin as well.
-	@type width: int
-	@ivar style: The style of the lines to be drawn;
+	:type width: int
+	:var style: The style of the lines to be drawn;
 		One of the C{winGDI.DashStyle*} enumeration constants.
-	@type style: int
-	@ivar margin: The number of pixels between the highlight's rectangle
+	:type style: int
+	:var margin: The number of pixels between the highlight's rectangle
 		and the rectangle of the object to be highlighted.
 		A higher margin stretches the highlight's rectangle.
 		This value may also be negative.
-	@type margin: int
+	:type margin: int
 	"""
 
 
@@ -391,8 +392,9 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	@classmethod  # override
 	def getSettingsPanelClass(cls):
 		"""Returns the class to be used in order to construct a settings panel for the provider.
-		@return: Optional[SettingsPanel]
-		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
+
+		:returns: Optional[SettingsPanel]
+		.. remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
 		"""
 		return NVDAHighlighterGuiPanel
 

@@ -191,7 +191,8 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 
 	def _exitDialog(self, result: int):
 		"""
-		@param result: either wx.YES or wx.No
+
+		:param result: either wx.YES or wx.No
 		"""
 		if result == wx.YES:
 			settingsStorage = self._settingsStorage
@@ -316,8 +317,9 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 	@classmethod
 	def getSettingsPanelClass(cls) -> Optional[Type]:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
-		@return: Optional[SettingsPanel]
-		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
+
+		:returns: Optional[SettingsPanel]
+		.. remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
 		"""
 		return ScreenCurtainGuiPanel
 

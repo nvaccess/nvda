@@ -36,8 +36,9 @@ lastQueuedFocusObject=None
 
 def queueEvent(eventName,obj,**kwargs):
 	"""Queues an NVDA event to be executed.
-	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
-	@type eventName: string
+
+	:param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
+	:type eventName: string
 	"""
 	_trackFocusObject(eventName, obj)
 	with _pendingEventCountsLock:
@@ -68,12 +69,13 @@ def _queueEventCallback(eventName,obj,kwargs):
 
 def isPendingEvents(eventName=None,obj=None):
 	"""Are there currently any events queued?
-	@param eventName: an optional name of an event type. If given then only if there are events of this type queued will it return True.
-	@type eventName: string
-	@param obj: the NVDAObject the event is for
-	@type obj: L{NVDAObjects.NVDAObject}
-	@returns: True if there are events queued, False otherwise.
-	@rtype: boolean
+
+	:param eventName: an optional name of an event type. If given then only if there are events of this type queued will it return True.
+	:type eventName: string
+	:param obj: the NVDAObject the event is for
+	:type obj: L{NVDAObjects.NVDAObject}
+	:returns: True if there are events queued, False otherwise.
+	:rtype: boolean
 	"""
 	if not eventName and not obj:
 		return bool(len(_pendingEventCountsByName))
@@ -264,11 +266,12 @@ def _getFocusLossCancellableSpeechCommand(
 
 def executeEvent(eventName, obj, **kwargs):
 	"""Executes an NVDA event.
-	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
-	@type eventName: string
-	@param obj: the object the event is for
-	@type obj: L{NVDAObjects.NVDAObject}
-	@param kwargs: Additional event parameters as keyword arguments.
+
+	:param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
+	:type eventName: string
+	:param obj: the object the event is for
+	:type obj: L{NVDAObjects.NVDAObject}
+	:param kwargs: Additional event parameters as keyword arguments.
 	"""
 	try:
 		isGainFocus = eventName == "gainFocus"

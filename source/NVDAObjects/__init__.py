@@ -197,7 +197,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	cachePropertiesByDefault = True
 
 	#: The TextInfo class this object should use to provide access to text.
-	#: @type: type; L{textInfos.TextInfo}
+	#: :type: type; L{textInfos.TextInfo}
 	TextInfo=NVDAObjectTextInfo
 
 	#: Indicates if the text selection is anchored at the start.
@@ -207,19 +207,20 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: In contrast, if you have no selection and you press shift+leftArrow to select the previous character,
 	#: this will be False.
 	#: If the selection is anchored at the end or there is no information this is C{False}.
-	#: @type: bool
+	#: :type: bool
 	isTextSelectionAnchoredAtStart=True
 
 	@classmethod
 	def findBestAPIClass(cls,kwargs,relation=None):
 		"""
 		Finds out the highest-level APIClass this object can get to given these kwargs, and updates the kwargs and returns the APIClass.
-		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
-		@param type: string
-		@param kwargs: the arguments necessary to construct an object of the class this method was called on.
-		@type kwargs: dictionary
-		@returns: the new APIClass
-		@rtype: DynamicNVDAObjectType
+
+		:param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
+		:param type: string
+		:param kwargs: the arguments necessary to construct an object of the class this method was called on.
+		:type kwargs: dictionary
+		:returns: the new APIClass
+		:rtype: DynamicNVDAObjectType
 		"""
 		newAPIClass=cls
 		if 'getPossibleAPIClasses' in newAPIClass.__dict__:
@@ -236,12 +237,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def getPossibleAPIClasses(cls,kwargs,relation=None):
 		"""
 		Provides a generator which can generate all the possible API classes (in priority order) that inherit directly from the class it was called on.
-		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
-		@param type: string
-		@param kwargs: the arguments necessary to construct an object of the class this method was called on.
-		@type kwargs: dictionary
-		@returns: a generator
-		@rtype: generator
+
+		:param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
+		:param type: string
+		:param kwargs: the arguments necessary to construct an object of the class this method was called on.
+		:type kwargs: dictionary
+		:returns: a generator
+		:rtype: generator
 		"""
 		import NVDAObjects.window
 		yield NVDAObjects.window.Window
@@ -252,11 +254,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		Finds out if this class can be instanciated from the given super kwargs.
 		If so it updates the kwargs to contain everything it will need to instanciate this class, and returns True.
 		If this class can not be instanciated, it returns False and kwargs is not touched.
-		@param relation: why is this class being instanciated? parent, focus, foreground etc...
-		@type relation: string
-		@param kwargs: the kwargs for constructing this class's super class.
-		@type kwargs: dict
-		@rtype: boolean
+
+		:param relation: why is this class being instanciated? parent, focus, foreground etc...
+		:type relation: string
+		:param kwargs: the kwargs for constructing this class's super class.
+		:type kwargs: dict
+		:rtype: boolean
 		"""
 		raise NotImplementedError
  
@@ -270,8 +273,9 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		This process allows an NVDAObject to be dynamically created using the most appropriate NVDAObject subclass at each API level.
 		Classes should be listed with subclasses first. That is, subclasses should generally call super and then append their own classes to the list.
 		For example: Called on an IAccessible NVDAObjectThe list might contain DialogIaccessible (a subclass of IAccessible), Edit (a subclass of Window).
-		@param clsList: The list of classes, which will be modified by this method if appropriate.
-		@type clsList: list of L{NVDAObject}
+
+		:param clsList: The list of classes, which will be modified by this method if appropriate.
+		:type clsList: list of L{NVDAObject}
 		"""
 		clsList.append(NVDAObject)
 
@@ -280,12 +284,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	@staticmethod
 	def objectFromPoint(x,y):
 		"""Retrieves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
-		@param x: the x coordinate.
-		@type x: int
-		@param y: the y coordinate.
-		@param y: int
-		@return: The object at the given x and y coordinates.
-		@rtype: L{NVDAObject}
+
+		:param x: the x coordinate.
+		:type x: int
+		:param y: the y coordinate.
+		:param y: int
+		:returns: The object at the given x and y coordinates.
+		:rtype: L{NVDAObject}
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
@@ -294,8 +299,9 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	@staticmethod
 	def objectWithFocus():
 		"""Retrieves the object representing the control currently with focus in the Operating System. This differens from NVDA's focus object as this focus object is the real focus object according to the Operating System, not according to NVDA.
-		@return: the object with focus.
-		@rtype: L{NVDAObject}
+
+		:returns: the object with focus.
+		:rtype: L{NVDAObject}
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="focus")
@@ -313,8 +319,9 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def objectInForeground():
 		"""Retrieves the object representing the current foreground control according to the
 		Operating System. This may differ from NVDA's cached foreground object.
-		@return: the foreground object
-		@rtype: L{NVDAObject}
+
+		:returns: the foreground object
+		:rtype: L{NVDAObject}
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
@@ -328,10 +335,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _isEqual(self,other):
 		"""Calculates if this object is equal to another object. Used by L{NVDAObject.__eq__}.
-		@param other: the other object to compare with.
-		@type other: L{NVDAObject}
-		@return: True if equal, false otherwise.
-		@rtype: boolean
+
+		:param other: the other object to compare with.
+		:type other: L{NVDAObject}
+		:returns: True if equal, false otherwise.
+		:rtype: boolean
 		"""
 		return True
  
@@ -369,14 +377,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: However, for some objects (e.g. ARIA applications), a tree interceptor shouldn't be used by default,
 	#: but the user may wish to override this.
 	#: In this case, this can be set to C{False} and updated later.
-	#: @type: bool
+	#: :type: bool
 	shouldCreateTreeInterceptor = True
 
 	def _get_treeInterceptor(self):
 		"""Retrieves the treeInterceptor associated with this object.
 		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
-		@return: the treeInterceptor
-		@rtype: L{treeInterceptorHandler.TreeInterceptor}
+
+		:returns: the treeInterceptor
+		:rtype: L{treeInterceptorHandler.TreeInterceptor}
 		""" 
 		if hasattr(self,'_treeInterceptor'):
 			ti=self._treeInterceptor
@@ -403,8 +412,9 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_appModule(self):
 		"""Retrieves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
-		@return: the appModule
-		@rtype: L{appModuleHandler.AppModule}
+
+		:returns: the appModule
+		:rtype: L{appModuleHandler.AppModule}
 		"""
 		if not hasattr(self,'_appModuleRef'):
 			a=appModuleHandler.getAppModuleForNVDAObject(self)
@@ -487,10 +497,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def getActionName(self,index=None):
 		"""Retrieves the name of an action supported by this object.
 		If index is not given then the default action will be used if it exists.
-		@param index: the optional 0-based index of the wanted action.
-		@type index: int
-		@return: the action's name
-		@rtype: str
+
+		:param index: the optional 0-based index of the wanted action.
+		:type index: int
+		:returns: the action's name
+		:rtype: str
 		"""
 		raise NotImplementedError
  
@@ -506,7 +517,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_keyboardShortcut(self):
 		"""The shortcut key that activates this object(example: alt+t).
-		@rtype: str
+
+		:rtype: str
 		"""
 		return ""
 
@@ -521,14 +533,16 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_states(self) -> typing.Set[controlTypes.State]:
 		"""Retrieves the current states of this object (example: selected, focused).
-		@return: a set of State constants from L{controlTypes}.
+
+		:returns: a set of State constants from L{controlTypes}.
 		"""
 		return set()
 
 	def _get_location(self):
 		"""The location of this object on the screen.
-		@return: left, top, width and height of the object.
-		@rtype: tuple of int
+
+		:returns: left, top, width and height of the object.
+		:rtype: tuple of int
 		"""
 		raise NotImplementedError
 
@@ -552,7 +566,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_parent(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves this object's parent (the object that contains this object).
-		@return: the parent object if it exists else None.
+
+		:returns: the parent object if it exists else None.
 		"""
 		return None
 
@@ -567,15 +582,17 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_next(self):
 		"""Retrieves the object directly after this object with the same parent.
-		@return: the next object if it exists else None.
-		@rtype: L{NVDAObject} or None
+
+		:returns: the next object if it exists else None.
+		:rtype: L{NVDAObject} or None
 		"""
 		return None
 
 	def _get_previous(self):
 		"""Retrieves the object directly before this object with the same parent.
-		@return: the previous object if it exists else None.
-		@rtype: L{NVDAObject} or None
+
+		:returns: the previous object if it exists else None.
+		:rtype: L{NVDAObject} or None
 		"""
 		return None
 
@@ -584,7 +601,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_firstChild(self) -> typing.Optional["NVDAObject"]:
 		"""Retrieves the first object that this object contains.
-		@return: the first child object if it exists else None.
+
+		:returns: the first child object if it exists else None.
 		"""
 		return None
 
@@ -593,7 +611,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_lastChild(self) -> typing.Optional["NVDAObject"]:
 		"""Retrieves the last object that this object contains.
-		@return: the last child object if it exists else None.
+
+		:returns: the last child object if it exists else None.
 		"""
 		return None
 
@@ -602,7 +621,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_children(self):
 		"""Retrieves a list of all the objects directly contained by this object (who's parent is this object).
-		@rtype: list of L{NVDAObject}
+
+		:rtype: list of L{NVDAObject}
 		"""
 		log.debugWarning(
 			"Base implementation used."
@@ -617,16 +637,18 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def getChild(self, index: int) -> "NVDAObject":
 		"""Retrieve a child by index.
-		@note: Subclasses may override this if they have an efficient way to retrieve a single, arbitrary child.
+
+		.. note: Subclasses may override this if they have an efficient way to retrieve a single, arbitrary child.
 			The base implementation uses L{children}.
-		@param index: The 0-based index of the child to retrieve.
-		@return: The child.
+		:param index: The 0-based index of the child to retrieve.
+		:returns: The child.
 		"""
 		return self.children[index]
 
 	def _get_rowNumber(self):
 		"""Retrieves the row number of this object if it is in a table.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
@@ -642,13 +664,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		the user needs to  be told it is perhaps row 500 (taking all virtual rows into account).
 		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
 		then this property should not be implemented.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
 	def _get_columnNumber(self):
 		"""Retrieves the column number of this object if it is in a table.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
@@ -664,7 +688,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		the user needs to  be told it is perhaps column 500 (taking all virtual columns into account).
 		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
 		then this property should not be implemented.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
@@ -680,7 +705,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_rowCount(self):
 		"""Retrieves the number of rows this object contains if its a table.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
@@ -696,13 +722,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		the user needs to  be told the table really has 1000 rows. 
 		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
 		then this property should not be implemented.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
 	def _get_columnCount(self):
 		"""Retrieves the number of columns this object contains if its a table.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
@@ -718,37 +746,43 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		the user needs to  be told the table really has 1000 columns. 
 		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
 		then this property should not be implemented.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
 	def _get_rowSpan(self):
 		"""The number of rows spanned by this cell.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
 	def _get_rowHeaderText(self):
 		"""The text of the row headers for this cell.
-		@rtype: str
+
+		:rtype: str
 		"""
 		raise NotImplementedError
 
 	def _get_columnSpan(self):
 		"""The number of columns spanned by this cell.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
 	def _get_columnHeaderText(self):
 		"""The text of the column headers for this cell.
-		@rtype: str
+
+		:rtype: str
 		"""
 		raise NotImplementedError
 
 	def _get_table(self):
 		"""Retrieves the object that represents the table that this object is contained in, if this object is a table cell.
-		@rtype: L{NVDAObject}
+
+		:rtype: L{NVDAObject}
 		"""
 		raise NotImplementedError
 
@@ -764,8 +798,9 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_recursiveDescendants(self):
 		"""Recursively traverse and return the descendants of this object.
 		This is a depth-first forward traversal.
-		@return: The recursive descendants of this object.
-		@rtype: generator of L{NVDAObject}
+
+		:returns: The recursive descendants of this object.
+		:rtype: generator of L{NVDAObject}
 		"""
 		for child in self.children:
 			yield child
@@ -897,26 +932,30 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_childCount(self):
 		"""Retrieves the number of children this object contains.
-		@rtype: int
+
+		:rtype: int
 		"""
 		return len(self.children)
 
 	def _get_activeChild(self):
 		"""Retrieves the child of this object that currently has, or contains, the focus.
-		@return: the active child if it has one else None
-		@rtype: L{NVDAObject} or None
+
+		:returns: the active child if it has one else None
+		:rtype: L{NVDAObject} or None
 		"""
 		return None
 
 	def _get_isFocusable(self):
 		"""Whether this object is focusable.
-		@rtype: bool
+
+		:rtype: bool
 		"""
 		return controlTypes.State.FOCUSABLE in self.states
 
 	def _get_hasFocus(self):
 		"""Whether this object has focus.
-		@rtype: bool
+
+		:rtype: bool
 		"""
 		return controlTypes.State.FOCUSED in self.states
 
@@ -933,28 +972,32 @@ Tries to force this object to take the focus.
 
 	def _get_labeledBy(self):
 		"""Retrieves the object that this object is labeled by (example: the static text label beside an edit field).
-		@return: the label object if it has one else None.
-		@rtype: L{NVDAObject} or None 
+
+		:returns: the label object if it has one else None.
+		:rtype: L{NVDAObject} or None 
 		"""
 		return None
 
 	def _get_positionInfo(self):
 		"""Retrieves position information for this object such as its level, its index with in a group, and the number of items in that group.
-		@return: a dictionary containing any of level, groupIndex and similarItemsInGroup.
-		@rtype: dict
+
+		:returns: a dictionary containing any of level, groupIndex and similarItemsInGroup.
+		:rtype: dict
 		"""
 		return {}
 
 	def _get_processID(self):
 		"""Retrieves an identifyer of the process this object is a part of.
-		@rtype: int
+
+		:rtype: int
 		"""
 		raise NotImplementedError
 
 	def _get_isProtected(self):
 		"""
-		@return: True if this object is protected (hides its input for passwords), or false otherwise
-		@rtype: boolean
+
+		:returns: True if this object is protected (hides its input for passwords), or false otherwise
+		:rtype: boolean
 		"""
 		# Objects with the protected state, or with a role of passWordEdit should always be protected.
 		isProtected=(controlTypes.State.PROTECTED in self.states or self.role==controlTypes.Role.PASSWORDEDIT)
@@ -967,32 +1010,36 @@ Tries to force this object to take the focus.
 
 	def _get_indexInParent(self):
 		"""The index of this object in its parent object.
-		@return: The 0 based index, C{None} if there is no parent.
-		@rtype: int
-		@raise NotImplementedError: If not supported by the underlying object.
+
+		:returns: The 0 based index, C{None} if there is no parent.
+		:rtype: int
+		:raises NotImplementedError: If not supported by the underlying object.
 		"""
 		raise NotImplementedError
 
 	def _get_flowsTo(self):
 		"""The object to which content flows from this object.
-		@return: The object to which this object flows, C{None} if none.
-		@rtype: L{NVDAObject}
-		@raise NotImplementedError: If not supported by the underlying object.
+
+		:returns: The object to which this object flows, C{None} if none.
+		:rtype: L{NVDAObject}
+		:raises NotImplementedError: If not supported by the underlying object.
 		"""
 		raise NotImplementedError
 
 	def _get_flowsFrom(self):
 		"""The object from which content flows to this object.
-		@return: The object from which this object flows, C{None} if none.
-		@rtype: L{NVDAObject}
-		@raise NotImplementedError: If not supported by the underlying object.
+
+		:returns: The object from which this object flows, C{None} if none.
+		:rtype: L{NVDAObject}
+		:raises NotImplementedError: If not supported by the underlying object.
 		"""
 		raise NotImplementedError
 
 	def _get_isPresentableFocusAncestor(self):
 		"""Determine if this object should be presented to the user in the focus ancestry.
-		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
-		@rtype: bool
+
+		:returns: C{True} if it should be presented in the focus ancestry, C{False} if not.
+		:rtype: bool
 		"""
 		if self.presentationType in (self.presType_layout, self.presType_unavailable):
 			return False
@@ -1002,8 +1049,9 @@ Tries to force this object to take the focus.
 
 	def _get_statusBar(self):
 		"""Finds the closest status bar in relation to this object.
-		@return: the found status bar else None
-		@rtype: L{NVDAObject} or None
+
+		:returns: the found status bar else None
+		:rtype: L{NVDAObject} or None
 		"""
 		return None
 
@@ -1017,8 +1065,9 @@ Tries to force this object to take the focus.
 
 	def _get_shouldAcceptShowHideCaretEvent(self):
 		"""Some objects/applications send show/hide caret events when we don't expect it, such as when the cursor is blinking.
-		@return: if show/hide caret events should be accepted for this object.
-		@rtype: Boolean
+
+		:returns: if show/hide caret events should be accepted for this object.
+		:rtype: Boolean
 		"""
 		return True
 
@@ -1030,16 +1079,18 @@ Tries to force this object to take the focus.
 	def _get_placeholder(self):
 		"""If it exists for this object get the value of the placeholder text.
 		For example this might be the aria-placeholder text for a field in a web page.
-		@return: the placeholder text else None
-		@rtype: String or None
+
+		:returns: the placeholder text else None
+		:rtype: String or None
 		"""
 		log.debug("Potential unimplemented child class: %r" %self)
 		return None
 
 	def _get_landmark(self):
 		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
-		@return: ARIA landmark role else None
-		@rtype: String or None
+
+		:returns: ARIA landmark role else None
+		:rtype: String or None
 		"""
 		return None
 
@@ -1189,8 +1240,9 @@ This code is executed if a gain focus event is received by this object.
 
 	def event_becomeNavigatorObject(self, isFocus=False):
 		"""Called when this object becomes the navigator object.
-		@param isFocus: true if the navigator object was set due to a focus change.
-		@type isFocus: bool
+
+		:param isFocus: true if the navigator object was set due to a focus change.
+		:type isFocus: bool
 		"""
 		# When the navigator object follows the focus and braille is auto tethered to review,
 		# we should not update braille with the new review position as a tether to focus is due.
@@ -1257,7 +1309,8 @@ This code is executed if a gain focus event is received by this object.
 
 	def _get__isTextEmpty(self):
 		"""
-		@return C{True} if the text contained in the object is considered empty by the underlying implementation. In most cases this will match {isCollapsed}, however some implementations may consider a single space or line feed as an empty range.
+
+		:returns C{True} if the text contained in the object is considered empty by the underlying implementation. In most cases this will match {isCollapsed}, however some implementations may consider a single space or line feed as an empty range.
 		"""
 		ti = self.makeTextInfo(textInfos.POSITION_FIRST)
 		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
@@ -1269,12 +1322,13 @@ This code is executed if a gain focus event is received by this object.
 		This should be used for arbitrary string values which aren't usually useful in debugging past a certain length.
 		If the string is too long to be useful, it will be truncated.
 		This string should be included as returned. There is no need to call repr.
-		@param string: The string to format.
-		@type string: str
-		@param truncateLen: The length at which to truncate the string.
-		@type truncateLen: int
-		@return: The formatted string.
-		@rtype: str
+
+		:param string: The string to format.
+		:type string: str
+		:param truncateLen: The length at which to truncate the string.
+		:type truncateLen: int
+		:returns: The formatted string.
+		:rtype: str
 		"""
 		if isinstance(string, str) and len(string) > truncateLen:
 			return "%r (truncated)" % string[:truncateLen]
@@ -1283,8 +1337,9 @@ This code is executed if a gain focus event is received by this object.
 	def _get_devInfo(self):
 		"""Information about this object useful to developers.
 		Subclasses may extend this, calling the superclass property first.
-		@return: A list of text strings providing information about this object useful to developers.
-		@rtype: list of str
+
+		:returns: A list of text strings providing information about this object useful to developers.
+		:rtype: list of str
 		"""
 		info = []
 		try:
@@ -1365,7 +1420,8 @@ This code is executed if a gain focus event is received by this object.
 	def _get_sleepMode(self):
 		"""Whether NVDA should sleep for this object (e.g. it is self-voicing).
 		If C{True}, all  events and script requests for this object are silently dropped.
-		@rtype: bool
+
+		:rtype: bool
 		"""
 		if self.appModule:
 			return self.appModule.sleepMode
@@ -1378,12 +1434,13 @@ This code is executed if a gain focus event is received by this object.
 		"""Obtain the MathML markup for an object containing math content.
 		This will only be called (and thus only needs to be implemented) for
 		objects with a role of L{controlTypes.Role.MATH}.
-		@raise LookupError: If MathML can't be retrieved for this object.
+
+		:raises LookupError: If MathML can't be retrieved for this object.
 		"""
 		raise NotImplementedError
 
 	#: The language/locale of this object.
-	#: @type: str
+	#: :type: str
 	language = None
 
 	def _get__hasNavigableText(self):

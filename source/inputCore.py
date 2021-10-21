@@ -57,16 +57,16 @@ class InputGesture(baseObject.AutoPropertyObject):
 	cachePropertiesByDefault = True
 
 	#: indicates that sayAll was running before this gesture
-	#: @type: bool
+	#: :type: bool
 	wasInSayAll=False
 
 	#: Indicates that while in Input Help Mode, this gesture should be handled as if Input Help mode was currently off.
-	#: @type: bool
+	#: :type: bool
 	bypassInputHelp=False
 
 	#: Indicates that this gesture should be reported in Input help mode. This would only be false
 	#: for flooding Gestures like touch screen hovers.
-	#: @type: bool
+	#: :type: bool
 	reportInInputHelp=True
 
 	#: Indicates whether executing this gesture should explicitly prevent the system from being idle.
@@ -96,8 +96,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		See L{normalizeGestureIdentifier} for more details.
 
 		Subclasses must implement this method.
-		@return: One or more identifiers which uniquely identify this gesture.
-		@rtype: list or tuple of str
+
+		:returns: One or more identifiers which uniquely identify this gesture.
+		:rtype: list or tuple of str
 		"""
 		raise NotImplementedError
 
@@ -110,8 +111,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		by calling L{normalizeGestureIdentifier} for each identifier.
 		These normalized identifiers can be directly looked up in input gesture maps.
 		Subclasses should not override this method.
-		@return: One or more normalized identifiers which uniquely identify this gesture.
-		@rtype: list of str
+
+		:returns: One or more normalized identifiers which uniquely identify this gesture.
+		:rtype: list of str
 		"""
 		return [normalizeGestureIdentifier(identifier) for identifier in self.identifiers]
 
@@ -122,17 +124,18 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""The name of this gesture as presented to the user.
 		The base implementation calls L{getDisplayTextForIdentifier} for the first identifier.
 		Subclasses need not override this unless they wish to provide a more optimal implementation.
-		@return: The display name.
-		@rtype: str
+
+		:returns: The display name.
+		:rtype: str
 		"""
 		return self.getDisplayTextForIdentifier(self.normalizedIdentifiers[0])[1]
 
 	#: Whether this gesture should be reported when reporting of command gestures is enabled.
-	#: @type: bool
+	#: :type: bool
 	shouldReportAsCommand = True
 
 	#: whether this gesture represents a character being typed (i.e. not a potential command)
-	#: @type bool
+	#: :type bool
 	isCharacter=False
 
 	SPEECHEFFECT_CANCEL = "cancel"
@@ -142,7 +145,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 	speechEffectWhenExecuted = SPEECHEFFECT_CANCEL
 
 	#: Whether this gesture is only a modifier, in which case it will not search for a script to execute.
-	#: @type: bool
+	#: :type: bool
 	isModifier = False
 
 	def reportExtra(self):
@@ -153,8 +156,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 
 	def _get_script(self):
 		"""The script bound to this input gesture.
-		@return: The script to be executed.
-		@rtype: script function
+
+		:returns: The script to be executed.
+		:rtype: script function
 		"""
 		self.script=scriptHandler.findScript(self)
 		return self.script
@@ -162,15 +166,17 @@ class InputGesture(baseObject.AutoPropertyObject):
 	def send(self):
 		"""Send this gesture to the operating system.
 		This is not possible for all sources.
-		@raise NotImplementedError: If the source does not support sending of gestures.
+
+		:raises NotImplementedError: If the source does not support sending of gestures.
 		"""
 		raise NotImplementedError
 
 	def _get_scriptableObject(self):
 		"""An object which contains scripts specific to this  gesture or type of gesture.
 		This object will be searched for scripts before any other object when handling this gesture.
-		@return: The gesture specific scriptable object or C{None} if there is none.
-		@rtype: L{baseObject.ScriptableObject}
+
+		:returns: The gesture specific scriptable object or C{None} if there is none.
+		:rtype: L{baseObject.ScriptableObject}
 		"""
 		return None
 
@@ -185,11 +191,12 @@ class InputGesture(baseObject.AutoPropertyObject):
 		The display text consists of two strings:
 		the gesture's source (e.g. "laptop keyboard")
 		and the specific gesture (e.g. "alt+tab").
-		@param identifier: The normalized gesture identifier in question.
-		@type identifier: str
-		@return: A tuple of (source, specificGesture).
-		@rtype: tuple of (str, str)
-		@raise Exception: If no display text can be determined.
+
+		:param identifier: The normalized gesture identifier in question.
+		:type identifier: str
+		:returns: A tuple of (source, specificGesture).
+		:rtype: tuple of (str, str)
+		:raises Exception: If no display text can be determined.
 		"""
 		raise NotImplementedError
 
@@ -210,8 +217,9 @@ class GlobalGestureMap(object):
 
 	def __init__(self, entries=None):
 		"""Constructor.
-		@param entries: Initial entries to add; see L{update} for the format.
-		@type entries: mapping of str to mapping
+
+		:param entries: Initial entries to add; see L{update} for the format.
+		:type entries: mapping of str to mapping
 		"""
 		self._map: Dict[
 			str,  # Normalized gesture
@@ -222,10 +230,10 @@ class GlobalGestureMap(object):
 					str,  # script
 		]]] = {}
 		#: Indicates that the last load or update contained an error.
-		#: @type: bool
+		#: :type: bool
 		self.lastUpdateContainedError = False
 		#: The file name for this gesture map, if any.
-		#: @type: str
+		#: :type: str
 		self.fileName = None
 		if entries:
 			self.update(entries)
@@ -238,17 +246,18 @@ class GlobalGestureMap(object):
 
 	def add(self, gesture, module, className, script,replace=False):
 		"""Add a gesture mapping.
-		@param gesture: The gesture identifier.
-		@type gesture: str
-		@param module: The name of the Python module containing the target script.
-		@type module: str
-		@param className: The name of the class in L{module} containing the target script.
-		@type className: str
-		@param script: The name of the target script
+
+		:param gesture: The gesture identifier.
+		:type gesture: str
+		:param module: The name of the Python module containing the target script.
+		:type module: str
+		:param className: The name of the class in L{module} containing the target script.
+		:type className: str
+		:param script: The name of the target script
 			or C{None} to unbind the gesture for this class.
-		@type script: str
-		@param replace: if true replaces all existing bindings for this gesture with the given script, otherwise only appends this binding.
-		@type replace: boolean
+		:type script: str
+		:param replace: if true replaces all existing bindings for this gesture with the given script, otherwise only appends this binding.
+		:type replace: boolean
 		"""
 		gesture = normalizeGestureIdentifier(gesture)
 		try:
@@ -271,8 +280,9 @@ class GlobalGestureMap(object):
 			[virtualBuffers.VirtualBuffer]
 			nextHeading = kb:a
 			None = kb:h
-		@param filename: The name of the file to load.
-		@type: str
+
+		:param filename: The name of the file to load.
+		:type: str
 		"""
 		self.fileName = filename
 		try:
@@ -298,8 +308,9 @@ class GlobalGestureMap(object):
 					None: "kb:h",
 				}
 			}
-		@param entries: The items to add.
-		@type entries: mapping of str to mapping
+
+		:param entries: The items to add.
+		:type entries: mapping of str to mapping
 		"""
 		self.lastUpdateContainedError = False
 		for locationName, location in entries.items():
@@ -326,11 +337,12 @@ class GlobalGestureMap(object):
 
 	def getScriptsForGesture(self, gesture):
 		"""Get the scripts associated with a particular gesture.
-		@param gesture: The gesture identifier.
-		@type gesture: str
-		@return: The Python class and script name for each script;
+
+		:param gesture: The gesture identifier.
+		:type gesture: str
+		:returns: The Python class and script name for each script;
 			the script name may be C{None} indicating that the gesture should be unbound for this class.
-		@rtype: generator of (class, str)
+		:rtype: generator of (class, str)
 		"""
 		try:
 			scripts = self._map[gesture]
@@ -349,9 +361,10 @@ class GlobalGestureMap(object):
 
 	def getScriptsForAllGestures(self):
 		"""Get all of the scripts and their gestures.
-		@return: The Python class, gesture and script name for each mapping;
+
+		:returns: The Python class, gesture and script name for each mapping;
 			the script name may be C{None} indicating that the gesture should be unbound for this class.
-		@rtype: generator of (class, str, str)
+		:rtype: generator of (class, str, str)
 		"""
 		for gesture in self._map:
 			for cls, scriptName in self.getScriptsForGesture(gesture):
@@ -359,15 +372,16 @@ class GlobalGestureMap(object):
 
 	def remove(self, gesture, module, className, script):
 		"""Remove a gesture mapping.
-		@param gesture: The gesture identifier.
-		@type gesture: str
-		@param module: The name of the Python module containing the target script.
-		@type module: str
-		@param className: The name of the class in L{module} containing the target script.
-		@type className: str
-		@param script: The name of the target script.
-		@type script: str
-		@raise ValueError: If the requested mapping does not exist.
+
+		:param gesture: The gesture identifier.
+		:type gesture: str
+		:param module: The name of the Python module containing the target script.
+		:type module: str
+		:param className: The name of the class in L{module} containing the target script.
+		:type className: str
+		:param script: The name of the target script.
+		:type script: str
+		:raises ValueError: If the requested mapping does not exist.
 		"""
 		gesture = normalizeGestureIdentifier(gesture)
 		try:
@@ -378,7 +392,8 @@ class GlobalGestureMap(object):
 
 	def save(self):
 		"""Save this gesture map to disk.
-		@precondition: L{load} must have been called.
+
+		.. precondition: L{load} must have been called.
 		"""
 		if globalVars.appArgs.secure:
 			return
@@ -417,19 +432,19 @@ class InputManager(baseObject.AutoPropertyObject):
 	"""
 
 	#: a modifier gesture was just executed while sayAll was running
-	#: @type: bool
+	#: :type: bool
 	lastModifierWasInSayAll=False
 
 	def __init__(self):
 		#: The function to call when capturing gestures.
 		#: If it returns C{False}, normal execution will be prevented.
-		#: @type: callable
+		#: :type: callable
 		self._captureFunc = None
 		#: The gestures mapped for the NVDA locale.
-		#: @type: L{GlobalGestureMap}
+		#: :type: L{GlobalGestureMap}
 		self.localeGestureMap = GlobalGestureMap()
 		#: The gestures mapped by the user.
-		#: @type: L{GlobalGestureMap}
+		#: :type: L{GlobalGestureMap}
 		self.userGestureMap = GlobalGestureMap()
 		self.loadLocaleGestureMap()
 		self.loadUserGestureMap()
@@ -437,9 +452,10 @@ class InputManager(baseObject.AutoPropertyObject):
 
 	def executeGesture(self, gesture):
 		"""Perform the action associated with a gesture.
-		@param gesture: The gesture to execute.
-		@type gesture: L{InputGesture}
-		@raise NoInputGestureAction: If there is no action to perform.
+
+		:param gesture: The gesture to execute.
+		:type gesture: L{InputGesture}
+		:raises NoInputGestureAction: If there is no action to perform.
 		"""
 		if watchdog.isAttemptingRecovery:
 			# The core is dead, so don't try to perform an action.
@@ -510,7 +526,8 @@ class InputManager(baseObject.AutoPropertyObject):
 
 	def _get_isInputHelpActive(self):
 		"""Whether input help is enabled, wherein the function of each key pressed by the user is reported but not executed.
-		@rtype: bool
+
+		:rtype: bool
 		"""
 		return self._captureFunc == self._inputHelpCaptor
 
@@ -583,8 +600,9 @@ class InputManager(baseObject.AutoPropertyObject):
 		"""Convenience method to emulate a gesture.
 		First, an attempt will be made to execute the gesture using L{executeGesture}.
 		If that fails, the gesture will be sent to the operating system if possible using L{InputGesture.send}.
-		@param gesture: The gesture to execute.
-		@type gesture: L{InputGesture}
+
+		:param gesture: The gesture to execute.
+		:type gesture: L{InputGesture}
 		"""
 		try:
 			return self.executeGesture(gesture)
@@ -662,7 +680,8 @@ class _AllGestureMappingsRetriever(object):
 
 	def addResult(self, scriptInfo):
 		"""
-		@type scriptInfo: AllGesturesScriptInfo
+
+		:type scriptInfo: AllGesturesScriptInfo
 		"""
 		self.scriptInfo[scriptInfo.cls, scriptInfo.scriptName] = scriptInfo
 		try:
@@ -699,7 +718,8 @@ class _AllGestureMappingsRetriever(object):
 	@classmethod
 	def makeKbEmuScriptInfo(cls, scriptCls, kbGestureIdentifier):
 		"""
-		@rtype AllGesturesScriptInfo
+
+		:rtype AllGesturesScriptInfo
 		"""
 		info = KbEmuScriptInfo(scriptCls, kbGestureIdentifier)
 		info.category = SCRCAT_KBEMU
@@ -808,10 +828,11 @@ def registerGestureSource(source, gestureCls):
 	For example, for "br(baum):d1", if "br(baum)" isn't registered,
 	"br" will be used if it is registered.
 	This registration is used, for example, to get the display text for a gesture identifier.
-	@param source: The source prefix for associated gesture identifiers.
-	@type source: str
-	@param gestureCls: The input gesture class.
-	@type gestureCls: L{InputGesture}
+
+	:param source: The source prefix for associated gesture identifiers.
+	:type source: str
+	:param gestureCls: The input gesture class.
+	:type gestureCls: L{InputGesture}
 	"""
 	gestureSources[source] = gestureCls
 
@@ -836,11 +857,12 @@ def getDisplayTextForGestureIdentifier(identifier):
 	The display text consists of two strings:
 	the gesture's source (e.g. "laptop keyboard")
 	and the specific gesture (e.g. "alt+tab").
-	@param identifier: The normalized gesture identifier in question.
-	@type identifier: str
-	@return: A tuple of (source, specificGesture).
-	@rtype: tuple of (str, str)
-	@raise LookupError: If no display text can be determined.
+
+	:param identifier: The normalized gesture identifier in question.
+	:type identifier: str
+	:returns: A tuple of (source, specificGesture).
+	:rtype: tuple of (str, str)
+	:raises LookupError: If no display text can be determined.
 	"""
 	gcls = _getGestureClsForIdentifier(identifier)
 	try:
@@ -850,7 +872,7 @@ def getDisplayTextForGestureIdentifier(identifier):
 		raise LookupError("Couldn't get display text for identifier: %s" % identifier)
 
 #: The singleton input manager instance.
-#: @type: L{InputManager}
+#: :type: L{InputManager}
 manager = None
 
 def initialize():

@@ -18,12 +18,13 @@ def _processPositiveStates(
 ) -> Set[State]:
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
 	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is checked.
-	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).
-	@param states: The raw states for an object to process.
-	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}).
-	@param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to
+
+	:param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).
+	:param states: The raw states for an object to process.
+	:param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}).
+	:param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to
 	positive.
-	@return: The processed positive states.
+	:returns: The processed positive states.
 	"""
 	positiveStates = positiveStates.copy() if positiveStates is not None else states.copy()
 	# The user never cares about certain states.
@@ -88,12 +89,13 @@ def _processNegativeStates(
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
 	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is not
 	checked.
-	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).
-	@param states: The raw states for an object to process.
-	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS)}.
-	@param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to
+
+	:param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).
+	:param states: The raw states for an object to process.
+	:param reason: The reason to process the states (e.g. C{OutputReason.FOCUS)}.
+	:param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to
 	negative.
-	@return: The processed negative states.
+	:returns: The processed negative states.
 	"""
 	if reason == OutputReason.CHANGE and not isinstance(negativeStates, set):
 		raise TypeError("negativeStates must be a set for this reason")
@@ -162,18 +164,19 @@ def processAndLabelStates(
 ) -> List[str]:
 	"""Processes the states for an object and returns the appropriate state labels for both positive and
 	negative states.
-	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).
-	@param states: The raw states for an object to process.
-	@param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}).
-	@param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to
+
+	:param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).
+	:param states: The raw states for an object to process.
+	:param reason: The reason to process the states (e.g. C{OutputReason.FOCUS}).
+	:param positiveStates: Used for C{OutputReason.CHANGE}, specifies states changed from negative to
 	positive.
-	@param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to
+	:param negativeStates: Used for C{OutputReason.CHANGE}, specifies states changed from positive to
 	negative.
-	@param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive
+	:param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive
 	labels as their values.
-	@param negativeStateLabelDict: Dictionary containing state identifiers as keys and associated negative
+	:param negativeStateLabelDict: Dictionary containing state identifiers as keys and associated negative
 	labels as their values.
-	@return: The labels of the relevant positive and negative states.
+	:returns: The labels of the relevant positive and negative states.
 	"""
 	mergedStateLabels = []
 	positiveStates = _processPositiveStates(role, states, reason, positiveStates)

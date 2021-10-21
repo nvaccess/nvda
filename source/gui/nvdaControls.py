@@ -34,12 +34,13 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	):
 		""" initialiser
 			Takes the same parameter as a wx.ListCtrl with the following additions:
-			@param autoSizeColumn: defaults to "LAST" which results in the last column being resized.
+
+			:param autoSizeColumn: defaults to "LAST" which results in the last column being resized.
 				Pass the column number to be resized, valid values: 1 to N
-			@type autoSizeColumn: int
-			@param itemTextCallable: A callable to be called to get the item text for a particular item's column in the list.
+			:type autoSizeColumn: int
+			:param itemTextCallable: A callable to be called to get the item text for a particular item's column in the list.
 				It should accept the same parameters as L{OnGetItemText},
-			@type itemTextCallable: L{callable}
+			:type itemTextCallable: L{callable}
 		"""
 		if itemTextCallable is not None:
 			if not isinstance(itemTextCallable, Callable):

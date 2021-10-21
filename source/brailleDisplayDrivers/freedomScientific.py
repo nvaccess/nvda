@@ -104,7 +104,8 @@ TRANSLATION_TABLE_SIZE = 2 ** DOTS_TABLE_SIZE
 def _makeTranslationTable(dotsTable):
 	"""Create a translation table for braille dot combinations
 
-	@param dotsTable: The list of 8 bitmasks to use for each dot (dot 1 - 8)
+
+	:param dotsTable: The list of 8 bitmasks to use for each dot (dot 1 - 8)
 	"""
 	def isoDot(number):
 		"""
@@ -118,8 +119,9 @@ def _makeTranslationTable(dotsTable):
 
 		Based on: https://github.com/brltty/brltty/blob/master/Headers/brl_dots.h
 
-		@param number: The dot to encode (1-8)
-		@type number: int
+
+		:param number: The dot to encode (1-8)
+		:type number: int
 		"""
 		return 1 << (number - 1)
 
@@ -138,10 +140,11 @@ def _translate(cells, translationTable):
 	The translation table contains the bytes to encode all the possible dot combinations.
 	See L{_makeTranslationTable} as well.
 
-	@param cells: The cells to translate, given in ISO 11548 format (used by most braille displays)
-	@type cells: [int]
-	@param translationTable: A list of all possible braille dot combinations
-	@type translationTable: [int]
+
+	:param cells: The cells to translate, given in ISO 11548 format (used by most braille displays)
+	:type cells: [int]
+	:param translationTable: A list of all possible braille dot combinations
+	:type translationTable: [int]
 	"""
 	outCells = [0] * len(cells)
 	for i, cell in enumerate(cells):
@@ -263,11 +266,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			data: bytes = FS_DATA_EMPTY
 	):
 		"""Send a packet to the display
-		@param packetType: Type of packet (first byte), use one of the FS_PKT constants
-		@param arg1: First argument (second byte of packet)
-		@param arg2: Second argument (third byte of packet)
-		@param arg3: Third argument (fourth byte of packet)
-		@param data: Data to send if this is an extended packet, required checksum will
+
+		:param packetType: Type of packet (first byte), use one of the FS_PKT constants
+		:param arg1: First argument (second byte of packet)
+		:param arg2: Second argument (third byte of packet)
+		:param arg3: Third argument (fourth byte of packet)
+		:param data: Data to send if this is an extended packet, required checksum will
 			be added automatically
 		"""
 		def handleArg(arg: bytes) -> bytes:

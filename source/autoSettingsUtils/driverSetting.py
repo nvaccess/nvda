@@ -33,7 +33,8 @@ class DriverSetting(AutoPropertyObject):
 
 	def _get_configSpec(self):
 		"""Returns the configuration specification of this particular setting for config file validator.
-		@rtype: str
+
+		:rtype: str
 		"""
 		return "string(default={defaultVal})".format(defaultVal=self.defaultVal)
 
@@ -47,13 +48,14 @@ class DriverSetting(AutoPropertyObject):
 			useConfig: bool = True
 	):
 		"""
-		@param id: internal identifier of the setting
-		@param displayNameWithAccelerator: the localized string shown in voice or braille settings dialog
-		@param availableInSettingsRing: Will this option be available in a settings ring?
-		@param defaultVal: Specifies the default value for a driver setting.
-		@param displayName: the localized string used in synth settings ring or
+
+		:param id: internal identifier of the setting
+		:param displayNameWithAccelerator: the localized string shown in voice or braille settings dialog
+		:param availableInSettingsRing: Will this option be available in a settings ring?
+		:param defaultVal: Specifies the default value for a driver setting.
+		:param displayName: the localized string used in synth settings ring or
 			None to use displayNameWithAccelerator
-		@param useConfig: Whether the value of this option is loaded from and saved to NVDA's configuration.
+		:param useConfig: Whether the value of this option is loaded from and saved to NVDA's configuration.
 			Set this to C{False} if the driver deals with loading and saving.
 		"""
 		self.id = id
@@ -92,16 +94,17 @@ class NumericDriverSetting(DriverSetting):
 			displayName: Optional[str] = None,
 			useConfig: bool = True):
 		"""
-		@param defaultVal: Specifies the default value for a numeric driver setting.
-		@param minVal: Specifies the minimum valid value for a numeric driver setting.
-		@param maxVal: Specifies the maximum valid value for a numeric driver setting.
-		@param minStep: Specifies the minimum step between valid values for each numeric setting.
+
+		:param defaultVal: Specifies the default value for a numeric driver setting.
+		:param minVal: Specifies the minimum valid value for a numeric driver setting.
+		:param maxVal: Specifies the maximum valid value for a numeric driver setting.
+		:param minStep: Specifies the minimum step between valid values for each numeric setting.
 			For example, if L{minStep} is set to 10, setting values can only be multiples of 10; 10, 20, 30, etc.
-		@param normalStep: Specifies the step between values that a user will normally prefer.
+		:param normalStep: Specifies the step between values that a user will normally prefer.
 			This is used in the settings ring.
-		@param largeStep: Specifies the step between values if a large adjustment is desired.
+		:param largeStep: Specifies the step between values if a large adjustment is desired.
 			This is used for pageUp/pageDown on sliders in the Voice Settings dialog.
-		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
+		.. note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
 		super(NumericDriverSetting, self).__init__(
 			id,
@@ -134,7 +137,8 @@ class BooleanDriverSetting(DriverSetting):
 			useConfig: bool = True
 	):
 		"""
-		@param defaultVal: Specifies the default value for a boolean driver setting.
+
+		:param defaultVal: Specifies the default value for a boolean driver setting.
 		"""
 		super(BooleanDriverSetting, self).__init__(
 			id,

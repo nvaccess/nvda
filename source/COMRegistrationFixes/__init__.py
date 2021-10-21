@@ -29,8 +29,9 @@ PROGRAM_FILES_X86 = os.path.join(SYSTEM_DRIVE, "Program Files (x86)")
 def register32bitServer(fileName: str) -> None:
 	"""Registers the COM proxy dll with the given file name, using the 32-bit version of regsvr32.
 	Note: this function is valid while NVDA remains a 32-bit app. Re-evaluate if we move to 64-bit.
-	@param fileName: the path to the dll
-	@type fileName: str
+
+	:param fileName: the path to the dll
+	:type fileName: str
 	"""
 	# Points to the 32-bit version, on Windows 32-bit or 64-bit.
 	regsvr32 = os.path.join(SYSTEM32, "regsvr32.exe")
@@ -49,8 +50,9 @@ def register32bitServer(fileName: str) -> None:
 def register64bitServer(fileName: str) -> None:
 	"""Registers the COM proxy dll with the given file name, using the 64-bit version of regsvr64.
 	Note: this function is valid while NVDA remains a 32-bit app. Re-evaluate if we move to 64-bit.
-	@param fileName: the path to the dll
-	@type fileName: str
+
+	:param fileName: the path to the dll
+	:type fileName: str
 	"""
 	# SysWOW64 provides a virtual directory to allow 32-bit programs to reach 64-bit executables.
 	regsvr32 = os.path.join(SYSNATIVE, "regsvr32.exe")
@@ -69,8 +71,9 @@ def register64bitServer(fileName: str) -> None:
 def apply32bitRegistryPatch(fileName: str) -> None:
 	"""Applies the registry patch with the given file name, using 32-bit regExe.
 	Note: this function is valid while NVDA remains a 32-bit app. Re-evaluate if we move to 64-bit.
-	@param fileName: the path to the .reg file
-	@type fileName: str
+
+	:param fileName: the path to the .reg file
+	:type fileName: str
 	"""
 	if not os.path.isfile(fileName):
 		raise FileNotFoundError(f"Cannot apply 32-bit registry patch: {fileName} not found.")
@@ -91,8 +94,9 @@ def apply32bitRegistryPatch(fileName: str) -> None:
 def apply64bitRegistryPatch(fileName: str) -> None:
 	"""Applies the registry patch with the given file name, using 64-bit regExe.
 	Note: this function is valid while NVDA remains a 32-bit app. Re-evaluate if we move to 64-bit.
-	@param fileName: the path to the .reg file
-	@type fileName: str
+
+	:param fileName: the path to the .reg file
+	:type fileName: str
 	"""
 	if not os.path.isfile(fileName):
 		raise FileNotFoundError(f"Cannot apply 64-bit registry patch: {fileName} not found.")

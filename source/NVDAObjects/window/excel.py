@@ -330,7 +330,8 @@ class ExcelQuicknavIterator(object):
 	def __init__(self, itemType , document , direction , includeCurrent):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
-		@param includeCurrent: if true then any item at the initial position will be also emitted
+
+		:param includeCurrent: if true then any item at the initial position will be also emitted
 			rather than just further ones.
 		"""
 		self.document=document
@@ -342,17 +343,19 @@ class ExcelQuicknavIterator(object):
 		"""
 		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object.
 		E.g. charts, notes, or formula.
-		@param worksheetObject: a Microsoft excel worksheet object.
-		@return: a Microsoft excel collection object.
+
+		:param worksheetObject: a Microsoft excel worksheet object.
+		:returns: a Microsoft excel collection object.
 		"""
 		raise NotImplementedError
 
 	def filter(self,item):
 		"""
 		Only allows certain items fom a collection to be emitted. E.g. a chart .
-		@param item: an item from a Microsoft excel collection (e.g. chart object).
-		@return True if this item should be allowd, false otherwise.
-		@rtype: bool
+
+		:param item: an item from a Microsoft excel collection (e.g. chart object).
+		:returns True if this item should be allowd, false otherwise.
+		:rtype: bool
 		"""
 		return True
 
@@ -1124,7 +1127,8 @@ class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 	def __init__(self, itemType , document , direction , includeCurrent):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
-		@param includeCurrent: if true then any item at the initial position will be also emitted
+
+		:param includeCurrent: if true then any item at the initial position will be also emitted
 			rather than just further ones.
 		"""
 		self.document=document
@@ -1834,7 +1838,8 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 	def iterate(self, position):
 		"""
 		returns a generator that emits L{QuickNavItem} objects for this collection.
-		@param position: an excelRangeObject representing either the TopLeftCell of the currently selected form control
+
+		:param position: an excelRangeObject representing either the TopLeftCell of the currently selected form control
 		or ActiveCell in a worksheet
 		"""
 		# Returns the Row containing TopLeftCell of an item

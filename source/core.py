@@ -37,12 +37,12 @@ mainThreadId = threading.get_ident()
 #: This allows components to perform an action when several system events occur,
 #: such as power, screen orientation and hardware changes.
 #: Handlers are called with three arguments.
-#: @param msg: The window message.
-#: @type msg: int
-#: @param wParam: Additional message information.
-#: @type wParam: int
-#: @param lParam: Additional message information.
-#: @type lParam: int
+#: :param msg: The window message.
+#: :type msg: int
+#: :param wParam: Additional message information.
+#: :type wParam: int
+#: :param lParam: Additional message information.
+#: :type lParam: int
 post_windowMessageReceipt = extensionPoints.Action()
 
 _pump = None
@@ -287,7 +287,8 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 	"""
 	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
 	instance information with `newNVDA`.
-	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
+
+	:returns: True if this is the first call to trigger the exit, and the shutdown event was queued.
 	"""
 	import queueHandler
 	global _hasShutdownBeenTriggered

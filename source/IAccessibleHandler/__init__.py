@@ -436,13 +436,14 @@ def winEventToNVDAEvent(  # noqa: C901
 ) -> Optional[Tuple[str, NVDAObjects.IAccessible.IAccessible]]:
 	"""Tries to convert a win event ID to an NVDA event name, and instantiate or fetch an NVDAObject for
 	 the win event parameters.
-	@param eventID: the win event ID (type)
-	@param window: the win event's window handle
-	@param objectID: the win event's object ID
-	@param childID: the win event's childID
-	@param useCache: C{True} to use the L{liveNVDAObjectTable} cache when
+
+	:param eventID: the win event ID (type)
+	:param window: the win event's window handle
+	:param objectID: the win event's object ID
+	:param childID: the win event's childID
+	:param useCache: C{True} to use the L{liveNVDAObjectTable} cache when
 	 retrieving an NVDAObject, C{False} if the cache should not be used.
-	@returns: the NVDA event name and the NVDAObject the event is for
+	:returns: the NVDA event name and the NVDAObject the event is for
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -515,16 +516,17 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 	"""Converts the win event to an NVDA event,
 	Checks to see if this NVDAObject  equals the current focus.
 	If all goes well, then the event is queued and we return True
-	@param eventID: a win event ID (type)
-	@type eventID: integer
-	@param window: a win event's window handle
-	@type window: integer
-	@param objectID: a win event's object ID
-	@type objectID: integer
-	@param childID: a win event's child ID
-	@type childID: integer
-	@returns: True if the event was processed, False otherwise.
-	@rtype: boolean
+
+	:param eventID: a win event ID (type)
+	:type eventID: integer
+	:param window: a win event's window handle
+	:type window: integer
+	:param objectID: a win event's object ID
+	:type objectID: integer
+	:param childID: a win event's child ID
+	:type childID: integer
+	:returns: True if the event was processed, False otherwise.
+	:rtype: boolean
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -581,15 +583,16 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 	"""checks to see if the focus win event is not the same as the existing focus,
 	then converts the win event to an NVDA event (instantiating an NVDA Object) then calls
 	processFocusNVDAEvent. If all is ok it returns True.
-	@type window: integer
-	@param objectID: a win event's object ID
-	@type objectID: integer
-	@param childID: a win event's child ID
-	@type childID: integer
-	@param force: If True, the shouldAllowIAccessibleFocusEvent property of the object is ignored.
-	@type force: boolean
-	@returns: True if the focus is valid and was handled, False otherwise.
-	@rtype: boolean
+
+	:type window: integer
+	:param objectID: a win event's object ID
+	:type objectID: integer
+	:param childID: a win event's child ID
+	:type childID: integer
+	:param force: If True, the shouldAllowIAccessibleFocusEvent property of the object is ignored.
+	:type force: boolean
+	:returns: True if the focus is valid and was handled, False otherwise.
+	:rtype: boolean
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -656,12 +659,13 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 def processFocusNVDAEvent(obj, force=False):
 	"""Processes a focus NVDA event.
 	If the focus event is valid, it is queued.
-	@param obj: the NVDAObject the focus event is for
-	@type obj: L{NVDAObjects.NVDAObject}
-	@param force: If True, the shouldAllowIAccessibleFocusEvent property of the object is ignored.
-	@type force: boolean
-	@return: C{True} if the focus event is valid and was queued, C{False} otherwise.
-	@rtype: boolean
+
+	:param obj: the NVDAObject the focus event is for
+	:type obj: L{NVDAObjects.NVDAObject}
+	:param force: If True, the shouldAllowIAccessibleFocusEvent property of the object is ignored.
+	:type force: boolean
+	:returns: C{True} if the focus event is valid and was queued, C{False} otherwise.
+	:rtype: boolean
 	"""
 	if not force and isinstance(obj, NVDAObjects.IAccessible.IAccessible):
 		focus = eventHandler.lastQueuedFocusObject
@@ -723,14 +727,15 @@ def processForegroundWinEvent(window, objectID, childID):
 	then converts the win event to an NVDA event (instantiating an NVDA Object) and then checks the NVDAObject
 	against the existing focus object.
 	If all is ok it queues the foreground event to NVDA and returns True.
-	@param window: a win event's window handle
-	@type window: integer
-	@param objectID: a win event's object ID
-	@type objectID: integer
-	@param childID: a win event's child ID
-	@type childID: integer
-	@returns: True if the foreground was processed, False otherwise.
-	@rtype: boolean
+
+	:param window: a win event's window handle
+	:type window: integer
+	:param objectID: a win event's object ID
+	:type objectID: integer
+	:param childID: a win event's child ID
+	:type childID: integer
+	:returns: True if the foreground was processed, False otherwise.
+	:rtype: boolean
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -839,7 +844,8 @@ def processDestroyWinEvent(window, objectID, childID):
 
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	"""Process a menuStart win event.
-	@postcondition: Focus will be directed to the menu if appropriate.
+
+	.. postcondition: Focus will be directed to the menu if appropriate.
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
@@ -873,7 +879,8 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 
 def processFakeFocusWinEvent(eventID, window, objectID, childID):
 	"""Process a fake focus win event.
-	@postcondition: The focus will be found and an event generated for it if appropriate.
+
+	.. postcondition: The focus will be found and an event generated for it if appropriate.
 	"""
 	# A suitable event for faking the focus has been received with no focus event, so we probably need to
 	# find the focus and fake it.
@@ -1119,10 +1126,10 @@ def splitIA2Attribs(attribsString):  # noqa: C901
 	An invalid attributes string does not cause an error, but strange results may be returned.
 	Subattributes are handled. Subattribute keys and values are placed into a dict which becomes the value
 	of the attribute.
-	@param attribsString: The IAccessible2 attributes string to convert.
-	@type attribsString: str
-	@return: A dict of the attribute keys and values, where values are strings or dicts.
-	@rtype: {str: str or {str: str}}
+	:param attribsString: The IAccessible2 attributes string to convert.
+	:type attribsString: str
+	:returns: A dict of the attribute keys and values, where values are strings or dicts.
+	:rtype: {str: str or {str: str}}
 	"""
 	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
 	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:

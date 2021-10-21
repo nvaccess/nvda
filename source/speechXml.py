@@ -206,7 +206,8 @@ class SpeechXmlConverter(object):
 
 	def generateBalancerCommands(self, speechSequence):
 		"""Generate appropriate XmlBalancer commands for a given speech sequence.
-		@rtype: generator
+
+		:rtype: generator
 		"""
 		for item in speechSequence:
 			if isinstance(item, str):

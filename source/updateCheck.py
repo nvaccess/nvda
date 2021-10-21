@@ -4,7 +4,7 @@
 # Copyright (C) 2012-2021 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
-@note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
+.. note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
 from typing import Dict, Optional, Tuple
 import garbageHandler
@@ -68,7 +68,7 @@ except OSError:
 		log.debugWarning("Default download path for updates %s could not be created."%storeUpdatesDir)
 
 #: Persistent state information.
-#: @type: dict
+#: :type: dict
 state = None
 _stateFileName = None
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
@@ -99,9 +99,10 @@ def getQualifiedDriverClassNameForStats(cls):
 def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
-	@param auto: Whether this is an automatic check for updates.
-	@return: Information about the update or C{None} if there is no update.
-	@raise RuntimeError: If there is an error checking for an update.
+
+	:param auto: Whether this is an automatic check for updates.
+	:returns: Information about the update or C{None} if there is no update.
+	:raises RuntimeError: If there is an error checking for an update.
 	"""
 	allowUsageStats=config.conf["update"]['allowUsageStats']
 	# #11837: build version string, service pack, and product type manually
@@ -584,8 +585,9 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 
 	def __init__(self, updateInfo):
 		"""Constructor.
-		@param updateInfo: update information such as possible URLs, version and the SHA-1 hash of the file as a hex string.
-		@type updateInfo: dict
+
+		:param updateInfo: update information such as possible URLs, version and the SHA-1 hash of the file as a hex string.
+		:type updateInfo: dict
 		"""
 		from addonAPIVersion import getAPIVersionTupleFromString
 		self.updateInfo = updateInfo

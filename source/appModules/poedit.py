@@ -22,8 +22,9 @@ import winUser
 
 def fetchObject(obj, path):
 	"""Fetch the child object  described by path.
-	@returns: requested object if found, or None
-	@rtype: L{NVDAObjects.NVDAObject}
+
+	:returns: requested object if found, or None
+	:rtype: L{NVDAObjects.NVDAObject}
 	"""
 	path.reverse()
 	p = obj

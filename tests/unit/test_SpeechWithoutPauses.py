@@ -56,7 +56,8 @@ def old_speakWithoutPauses(  # noqa: C901
 	"""
 	Speaks the speech sequences given over multiple calls, only sending to the synth at acceptable phrase or
 	sentence boundaries, or when given None for the speech sequence.
-	@return: C{True} if something was actually spoken,
+
+	:returns: C{True} if something was actually spoken,
 		C{False} if only buffering occurred.
 	"""
 	speakWithoutPauses = old_speakWithoutPauses

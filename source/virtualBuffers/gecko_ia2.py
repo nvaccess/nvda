@@ -65,9 +65,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	def _calculateDescriptionFrom(self, attrs: textInfos.ControlField) -> controlTypes.DescriptionFrom:
 		"""Overridable calculation of DescriptionFrom
 		Match behaviour of NVDAObjects.IAccessible.mozilla.Mozilla._get_descriptionFrom
-		@param attrs: source attributes for the TextInfo
-		@return: the origin for accDescription.
-		@remarks: Firefox does not yet have a 'IAccessible2::attribute_description-from'
+
+		:param attrs: source attributes for the TextInfo
+		:returns: the origin for accDescription.
+		.. remarks: Firefox does not yet have a 'IAccessible2::attribute_description-from'
 			(IA2 attribute "description-from").
 			We can infer that the origin of accDescription is 'aria-description' because Firefox will include
 			a 'IAccessible2::attribute_description' (IA2 attribute "description") when the aria-description
