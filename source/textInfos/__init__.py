@@ -89,7 +89,7 @@ class ControlField(Field):
 
 		name = self.get("name")
 		landmark = self.get("landmark")
-		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS) and (
+		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS, OutputReason.QUICKNAV) and (
 			(role == controlTypes.Role.LINK and not formatConfig["reportLinks"])
 			or (role == controlTypes.Role.GRAPHIC and not formatConfig["reportGraphics"])
 			or (role == controlTypes.Role.HEADING and not formatConfig["reportHeadings"])
