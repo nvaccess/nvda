@@ -10,6 +10,7 @@ import api
 import core
 from scriptHandler import script
 import speech
+from diffHandler import prefer_difflib
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	"""
@@ -35,6 +36,11 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		if consoleObject and self.windowHandle == consoleObject.windowHandle:
 			return winConsoleHandler.WinConsoleTextInfo
 		return super(WinConsole,self).TextInfo
+
+	def _get_diffAlgo(self):
+		# Legacy consoles contain only one screen of text at a time.
+		# Use Difflib to reduce choppiness in reading.
+		return prefer_difflib()
 
 	def event_becomeNavigatorObject(self, isFocus=False):
 		if winConsoleHandler.consoleObject is not self:

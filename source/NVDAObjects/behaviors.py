@@ -269,14 +269,17 @@ class LiveText(NVDAObject):
 	def _get_diffAlgo(self):
 		"""
 			This property controls which diffing algorithm should be used by
-			this object. Most subclasses should simply use the base
-			implementation, which returns DMP (character-based diffing).
+			this object. If the object contains a strictly contiguous
+			span of text (i.e. textInfos.POSITION_ALL refers to the entire
+			contents of the object and not just one visible screen of text),
+			then diffHandler.prefer_dmp (character-based diffing) is suitable.
+			Otherwise, use diffHandler.prefer_difflib.
 			
-			@Note: DMP is experimental, and can be disallowed via user
-			preference. In this case, the prior stable implementation, Difflib
-			(line-based diffing), will be used.
+			@Note: Barring a very good reason to do otherwise, please return
+			either diffHandler.prefer_dmp() or diffHandler.prefer_difflib()
+			so that user preference can override this choice.
 		"""
-		return diffHandler.get_dmp_algo()
+		return diffHandler.prefer_dmp()
 
 	def _get_devInfo(self):
 		info = super().devInfo

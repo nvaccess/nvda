@@ -10,6 +10,7 @@ import textUtils
 import UIAHandler
 
 from comtypes import COMError
+from diffHandler import prefer_difflib
 from logHandler import log
 from UIAUtils import _getConhostAPILevel
 from _UIAConstants import WinConsoleAPILevel
@@ -378,6 +379,14 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		info = super().devInfo
 		info.append(f"API level: {self.apiLevel} ({self.apiLevel.name})")
 		return info
+
+	def _get_diffAlgo(self):
+		if self.apiLevel < WinConsoleAPILevel.FORMATTED:
+			# These consoles are constrained to onscreen text.
+			# Use Difflib to reduce choppiness in reading.
+			return prefer_difflib()
+		else:
+			return super().diffAlgo
 
 	def detectPossibleSelectionChange(self):
 		try:
