@@ -34,15 +34,6 @@ import appModules
 import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
-import shlobj
-from functools import wraps
-
-# Path to the native system32 directory.
-nativeSys32: str = shlobj.SHGetKnownFolderPath(shlobj.FOLDERID.System.value)
-# Path to the syswow64 directory if it exists on the current system.
-Syswow64Sys32: str = shlobj.SHGetKnownFolderPath(shlobj.FOLDERID.SystemX86.value)
-# Do we have separate system32 directories for 32 and 64-bit processes?
-hasSeparateSyswow64: bool = nativeSys32 != Syswow64Sys32
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
@@ -311,27 +302,6 @@ def handleAppSwitch(oldMods, newMods):
 		if not mod.sleepMode and hasattr(mod,'event_appModule_gainFocus'):
 			mod.event_appModule_gainFocus()
 
-
-def _suspendWow64RedirectionForFileInfoRetrieval(func):
-	"""Decorator which should be used for functions which need to access binaries backing given appModule.
-	It checks if the given binary is placed in a system32 directory, and if for the current system system32
-	redirects 32-bit processes such as NVDA to a different syswow64 directory
-	disables redirection for the duration of the method call."""
-	@wraps(func)
-	def funcWrapper(self):
-		if (
-			hasSeparateSyswow64
-			and self.appPath
-			# `os.path.commonpath` is necessary to perfor case-insensitive comparisons
-			and os.path.commonpath([nativeSys32]) == os.path.commonpath([nativeSys32, self.appPath])
-		):
-			with winKernel.suspendWow64Redirection():
-				return func(self)
-		else:
-			return func(self)
-	return funcWrapper
-
-
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
 	"""Base app module.
@@ -409,7 +379,6 @@ class AppModule(baseObject.ScriptableObject):
 		else:
 			return None
 
-	@_suspendWow64RedirectionForFileInfoRetrieval
 	def _setProductInfo(self):
 		"""Set productName and productVersion attributes.
 		There are at least two ways of obtaining product info for an app:

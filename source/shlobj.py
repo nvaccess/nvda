@@ -14,6 +14,7 @@ and "C:\Winnt" on another.
 import comtypes
 import ctypes
 import enum
+import functools
 import typing
 
 
@@ -36,8 +37,10 @@ class FOLDERID(enum.Enum):
 	SystemX86 = "{D65231B0-B2F1-4857-A4CE-A8E7C6EA7D27}"
 
 
+@functools.lru_cache(maxsize=128)
 def SHGetKnownFolderPath(folderGuid: str, dwFlags: int = 0, hToken: typing.Optional[int] = None) -> str:
-	"""Wrapper for `SHGetKnownFolderPath`."""
+	"""Wrapper for `SHGetKnownFolderPath` which caches the results
+	to avoid calling the win32 function unnecessarily."""
 	guid = comtypes.GUID(folderGuid)
 	pathPointer = ctypes.c_wchar_p()
 	res = ctypes.windll.shell32.SHGetKnownFolderPath(
