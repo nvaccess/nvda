@@ -321,7 +321,7 @@ class WordDocumentTextInfo(UIATextInfo):
 							mathEndIndex = index
 						curLevel -= 1
 				if mathEndIndex is not None:
-					del fields[mathStartIndex+1:mathEndIndex]
+					del fields[mathStartIndex + 1:mathEndIndex]
 
 		# Sometimes embedded objects and graphics In MS Word can cause a controlStart then a controlEnd with no actual formatChange / text in the middle.
 		# SpeakTextInfo always expects that the first lot of controlStarts will always contain some text.
