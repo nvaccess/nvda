@@ -72,6 +72,10 @@ Affected users will need to download this update manually.
 - Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
 - In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
 - Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
+- In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
+    - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
+    - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
+    -
 -
 
 
