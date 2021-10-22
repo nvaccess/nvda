@@ -18,7 +18,7 @@ import functools
 import typing
 
 
-class FOLDERID(enum.Enum):
+class FOLDERID(str, enum.Enum):
 	"""Contains guids of known folders from Knownfolders.h. Full list is availabe at:
 	https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid"""
 	#: The file system directory that serves as a common repository for application-specific data.
