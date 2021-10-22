@@ -24,11 +24,15 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
-from .settingsDialogs import SettingsDialog
+from .settingsDialogs import (
+	SettingsDialog,
+	DefaultDictionaryDialog,
+	VoiceDictionaryDialog,
+	TemporaryDictionaryDialog,
+)
 from .settingsDialogs import *
 from .startupDialogs import WelcomeDialog
 from .inputGestures import InputGesturesDialog
-import speechDictHandler
 from . import logViewer
 import speechViewer
 import winUser
@@ -156,16 +160,13 @@ class MainFrame(wx.Frame):
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
-		# Translators: Title for default speech dictionary dialog.
-		self._popupSettingsDialog(DictionaryDialog,_("Default dictionary"),speechDictHandler.dictionaries["default"])
+		self._popupSettingsDialog(DefaultDictionaryDialog)
 
 	def onVoiceDictionaryCommand(self,evt):
-		# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-		self._popupSettingsDialog(DictionaryDialog,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
+		self._popupSettingsDialog(VoiceDictionaryDialog)
 
 	def onTemporaryDictionaryCommand(self,evt):
-		# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
+		self._popupSettingsDialog(TemporaryDictionaryDialog)
 
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():

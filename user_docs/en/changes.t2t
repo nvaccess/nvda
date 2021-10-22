@@ -6,22 +6,60 @@ What's New in NVDA
 = 2022.1 =
 
 == New Features ==
+- Support for reporting notes in MS Excel with UI Automation enabled on Windows 11. (#12861)
+- In recent builds of Microsoft Word via UI Automation on Windows 11, the existence of bookmarks, draft comments and resolved comments are now reported in both speech and braille. (#12861)
 -
 
 == Changes ==
 - Espeak-ng has been updated to 1.51-dev commit ``7e5457f91e10``. (#12950)
+- NVDA will report selection and merged cells in LibreOffice Calc 7.3 and above. (#9310, #6897)
 -
 
 == Bug Fixes ==
 - Clipboard manager pane should no longer incorrectly steal focus when opening some Office programs. (#12736)
+- On a system where the user has chosen to swap the primary mouse button from the left to the right, NVDA will no longer accidentally bring up a context menu instead of activating an item, in applications such as web browsers. (#12642)
+- When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)
 -
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+- ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
+- ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
+- ``MessageItem`` has been removed from the Outlook appModule. (#12935)
+- ``audioDucking.AUDIODUCKINGMODE_*`` constants are now a ``DisplayStringIntEnum``. (#12926)
+  - usages should be replaced with ``AudioDuckingMode.*``
+  - usages of ``audioDucking.audioDuckingModes`` should be replaced with ``AudioDuckingMode.*.displayString``
+  -
+- ``audioDucking.ANRUS_ducking_*`` constants usages should be replaced with ``ANRUSDucking.*``. (#12926)
+- ``synthDrivers.sapi5`` changes (#12927):
+  - ``SPAS_*`` usages should be replaced with ``SPAudioState.*``
+  - ``constants.SVSF*`` usages should be replaced with ``SpeechVoiceSpeakFlags.*``
+    - Note: ``SVSFlagsAsync`` should be replaced with ``SpeechVoiceSpeakFlags.Async`` not ``SpeechVoiceSpeakFlags.lagsAsync``
+    -
+  - ``constants.SVE*`` usages should be replaced with ``SpeechVoiceEvents.*``
+  -
+- The ``soffice`` appModule has the following classes and functions removed ``JAB_OOTableCell``, ``JAB_OOTable``, ``gridCoordStringToNumbers``. (#12849)
+- core.CallCancelled becomes exceptions.CallCancelled. 
+- All constants starting with RPC from core and logHandler are moved into RPCConstants.RPC enum
+- It is recommended that mouseHandler.doPrimaryClick and mouseHandler.doSecondaryClick functions should be used to click the mouse to perform a logical action such as activating (primary) or secondary (show context menu), rather than using executeMouseEvent and specifying the left or right mouse button specifically. This ensures code will honor the Windows user setting for swapping the primary mouse button. (#12642)
 -
 
 
 = 2021.3 =
+This release introduces support for the new HID Braille specification.
+This specification aims to standardise support for Braille Displays without needing individual drivers.
+There are updates to eSpeak-NG and LibLouis, including new Russian and Tshivenda tables.
+Error sounds can be enabled in stable builds of NVDA via a new advanced settings option.
+Say all in Word now scrolls the view to keep the current position visible.
+There are lots of improvements when using Office with UIA.
+One UIA fix is that Outlook now ignores more types of layout tables in messages.
+
+Important notes:
+
+Due to an update to our security certificate, a small number of users get an error when NVDA 2021.2 checks for updates.
+NVDA now asks Windows to update security certificates, which will prevent this error in future.
+Affected users will need to download this update manually.
+
 
 == New Features ==
 - Adds an input gesture for toggling settings for reporting the style of cell borders. (#10408)
@@ -47,7 +85,7 @@ If you need this functionality please assign a gesture to the appropriate script
 - Updated liblouis braille translator to [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
   - New braille tables: Russian grade 1, Tshivenda grade 1, Tshivenda grade 2
   -
-- Instead of "marked content" or "mrkd", "highlight" or "hlight" will be announced for speech and braille respectively. (#12892)
+- Instead of "marked content" or "mrkd", "highlight" or "hlght" will be announced for speech and braille respectively. (#12892)
 -
 
 
@@ -69,7 +107,6 @@ If you need this functionality please assign a gesture to the appropriate script
 - When performing Say all in Microsoft Word via UI automation, the document is now automatically scrolled, and the caret position is correctly updated. (#9611)
 - When reading emails in Outlook and NVDA is accessing the message with UI Automation, certain tables are now marked as layout tables, which means they will no longer be reported by default. (#11430)
 - A rare error when changing audio devices has been fixed. (#12620)
-- Routing keys on Braille displays supported by the HID Braille driver are no longer reversed. (#12860)
 - Input with literary braille tables should behave more reliably when in edit fields. (#12667)
 - When navigating the Windows system tray calendar, NVDA now reports the day of the week in full. (#12757)
 - When using a Chinese input method such as Taiwan - Microsoft Quick in Microsoft Word, scrolling the braille display forward and backward no longer incorrectly keeps jumping back to the original caret position. (#12855)
