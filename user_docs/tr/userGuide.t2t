@@ -315,7 +315,7 @@ Sistem odağıyla dolaşırken, bazı yararlı tuş kombinasyonları bulunmaktad
 | Üzerinde bulunulan Odağın bildirimi | NVDA+tab | NVDA+tab | Sistem odağının üzerinde bulunduğu geçerli nesne veya kontrolü belirtir. İki kez basıldığında Bilgi harf harf okunur |
 | Başlığın Bildirimi | NVDA+t | NVDA+t | Üzerinde bulunulan geçerli pencerenin başlığını seslendirir. İki kez basıldığında Bilgi harf harf söylenecektir. Üç kez basıldığında bilgi panoya kopyalanır |
 | Etkin Pencerenin okunması | NVDA+b | NVDA+b | etkin penceredeki tüm kontroller okunur (iletişim kutuları için yararlıdır) |
-| Durum çubuğunun bildirimi | NVDA+end | NVDA+shift+end | NVDA bulabilirse, durum çubuğunu belirtir. Bulamazsa, aktif pencerenin en alt satırı okunur. Bu komut, nesne sunucusunu da durum çubuğunun konumuna taşır. İki kez basılırsa bilgi kodlanır. Üç kez basılırsa bilgi panoya kopyalanır. |
+| Durum çubuğunun bildirimi | NVDA+end | NVDA+shift+end | NVDA bulabilirse, durum çubuğunu bildirir. İki kez basılırsa bilgi kodlanır. Üç kez basılırsa bilgi panoya kopyalanır. |
 %kc:endInclude
 
 ++ Sistem Düzenleme İmleciyle Dolaşım ++[SystemCaret]
@@ -372,15 +372,16 @@ Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma hareketi | Tarif |
-| Geçerli nesnenin bildirimi | NVDA+numaratör5 | NVDA+shift+o | yok | Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
-| Ana nesneye gitme | NVDA+numaratör8 | NVDA+shift+yukarı yön tuşu | yukarı fiske | nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider |
-| önceki nesneye gitme | NVDA+numaratör4 | NVDA+shift+sol yön tuşu | sola fiske | nesne sunucusunu, üzerinde bulunulan nesneyle aynı seviyede bulunan bir önceki nesneye taşır |
-| bir sonraki nesneye gitme | NVDA+numaratör6 | NVDA+shift+sağ yön tuşu | sağa fiske | nesne sunucusunu, üzerinde bulunulan nesneyle aynı seviyede bulunan bir sonraki nesneye taşır |
-| İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+aşağı yön tuşu | aşağı fiske | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
-| Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | yok | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya taşır |
-| Üzerinde bulunulan nesneyi etkinleştirme | NVDA+numaratörEnter | NVDA+enter | çift dokunma | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
-| Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | yok | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
-| Geçerli nesnenin boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | yok | İnceleme imlecinin konumundaki nesnenin belgenin neresinde ya da sayfanın solundan ya da üstünden ne kadar uzakta olduğuyla ilgili bilgi verir. İki kez basılırsa daha ayrıntılı bilgi sunulabilir |
+| Geçerli nesnenin bildir | NVDA+numaratör5 | NVDA+shift+o | yok | Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
+| Ana nesneye git | NVDA+numaratör8 | NVDA+shift+yukarı yön tuşu | yukarı fiske | nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider |
+| önceki nesneye git | NVDA+numaratör4 | NVDA+shift+sol yön tuşu | sola fiske | nesne sunucusunu, üzerinde bulunulan nesneyle aynı seviyede bulunan bir önceki nesneye taşır |
+| bir sonraki nesneye git | NVDA+numaratör6 | NVDA+shift+sağ yön tuşu | sağa fiske | nesne sunucusunu, üzerinde bulunulan nesneyle aynı seviyede bulunan bir sonraki nesneye taşır |
+| İlk Yavru nesneye git | NVDA+numaratör2 | NVDA+shift+aşağı yön tuşu | aşağı fiske | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
+| Odaktaki nesneye git | NVDA+numaratörMinus | NVDA+GeriSil | yok | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya taşır |
+| Üzerinde bulunulan nesneyi etkinleştir | NVDA+numaratörEnter | NVDA+enter | çift dokunma | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
+| Sistem odağını nesne sunucusuna taşı | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | yok | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
+| İnceleme imleci konumunu bildir | NVDA+numaratörSil | NVDA+Sil | yok | İnceleme imlecinin konumundaki nesnenin belgenin neresinde ya da sayfanın solundan ya da üstünden ne kadar uzakta olduğuyla ilgili bilgi verir. İki kez basılırsa daha ayrıntılı bilgi sunulabilir |
+| İnceleme imlecini durum çubuğuna taşı | Yok | Yok | Yok | NVDA  bulabilirse Durum Çubuğunu bildirir. Ayrıca nesne sunucusunu bu konuma taşır. |
 %kc:endInclude
 
 Not: Numaratördeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
@@ -1401,6 +1402,10 @@ Bu bölüm braille ekranınız yalnızca otomatik port belirlemeyi destekliyorsa
 
 Desteklenen bağlantı tipleri ve mevcut portlar için daha fazla detaya ulaşmak için [desteklenen braille ekranlar #SupportedBrailleDisplays] bölümünde Braille ekranınızın dokümantasyonuna baş vurabilirsiniz.
 
+Lütfen dikkat: Makinenize aynı anda aynı sürücüyü kullanan birden fazla Braille Ekranı bağlarsanız (Örneğin iki Seika ekranını bağlama),
+NVDA'ya hangi ekranın kullanılacağını belirtmek  şu anda olanaklı değil.
+Bu nedenle, makinenize aynı anda yalnızca belirli bir türde / üreticiye ait bir Braille Ekranı bağlamanız önerilir.
+ 
 +++ Görsellik +++[VisionSettings]
 NVDA Ayarları iletişim kutusundaki görsellik kategorisi [görsel yardımları #Vision] etkinleştirmenizi, devre dışı bırakmanızı ve yapılandırmanızı sağlar.
 
@@ -1740,7 +1745,7 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 - Yazı tipi özellikleri
  - Üst ve alt simgeler
  - Vurgu
- - İşaretlenmiş (Öne çıkarılan metin)
+ - Öne çıkarılmış (işaretli) metin
  - Stil
  - Renkler
 - Belge Bilgileri
@@ -1830,12 +1835,12 @@ Bunun, özellikle Microsoft Visual Studio gibi uygulamalarda performans üzerind
 Bu nedenle, bu seçenek etkinleştirildiğinde, NVDA çoğu olay için olay kaydını sistem odağıyla sınırlayacaktır.
 Bir veya daha fazla uygulamada performans sorunları yaşıyorsanız, performansın iyileşip iyileşmediğini görmek için bu işlevi denemenizi öneririz.
 
-==== Varsa Microsoft Word belge denetimlerine erişmek için UI otomasyonunu kullanın ====[AdvancedSettingsUseUiaForWord]
-Bu seçenek etkinleştirildiğinde, NVDA Microsoft Word belge denetimlerinden bilgi almak için Microsoft UI Automation erişilebilirlik api'sini kullanmaya çalışacaktır.
+==== Kullanılabilir olduğunda Microsoft Word belge denetimlerine erişmek için her zaman UI otomasyonunu kullan ====[AdvancedSettingsUseUiaForWord]
+Bu seçenek etkinleştirildiğinde, NVDA, Microsoft Office 2016/365'in daha yeni sürümleri için bile Microsoft Word belge denetimlerinden bilgi almak için her zaman Microsoft UI Otomasyonu erişilebilirlik API'sini kullanmaya çalışacaktır.
 Buna, Microsoft Word’ün yanı sıra,  Microsoft Outlook mesaj görüntüleyicisi ve oluşturucusu dahildir.
- Windows 10 ve sonraki windows sürümlerinde çalışan Microsoft Office 2016/365'in en yeni sürümleri için, UI Automation desteği, NVDA'nın mevcut Microsoft Word desteğine neredeyse eşit olan Microsoft Word belgelerine erişim sağlayacak kadar eksiksizdir ve yanıt verme kabiliyetinin büyük oranda artması avantajını sağlar.
-Ancak Microsoft Office'in bazı sürümlerinde ya açığa çıkmamış ya da yanlış açıklanmış bazı bilgiler olabilir; bu, bu UI otomasyon desteğinin her zaman güvenilemeyeceği anlamına gelir.
-Kullanıcıların çoğunun varsayılan olarak bunu açmasını önermiyoruz, ancak Office 2016/365 kullanıcılarının bu özelliği test etmesini ve geri bildirimde bulunmasını memnuniyetle karşılarız.
+16.0.13901 veya üzeri bir sürümüne sahip Microsoft Office için, NVDA, bu ayar nasıl yapılandırılırsa yapılandırılsın Microsoft Word belgelerine erişmek için her zaman UI Otomasyonunu kullanacaktır.
+Windows 10 ve sonraki sürümlerde çalışan Microsoft Office 2016/365'in en yeni sürümleri için, UI Otomasyonu desteği, Microsoft Word belgelerine neredeyse NVDA'nın mevcut Microsoft Word desteğine eşit erişim sağlayacak kadar eksiksizdir ve yanıt hızının büyük ölçüde artması avantajını da beraberinde getirir.
+Ancak, Microsoft Office'in bazı eski sürümlerinde gösterilmeyen veya yanlış gösterilen bazı bilgiler olabilir; bu,  UI otomasyon desteğine her zaman güvenilemeyeceği anlamına gelir.
 
 ==== Windows Konsoluna erişmek için mevcut olduğunda UI Otomasyonunu kullan ====[AdvancedSettingsConsoleUIA]
 Bu seçenek etkinleştirildiğinde, NVDA, [Microsoft tarafından yapılan erişilebilirlik geliştirmelerinin https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Windows Konsolu desteğinden yararlanan yeni ve devam eden bir çalışmadan faydalanacaktır. Bu özellik oldukça deneyseldir ve hala eksiktir, bu nedenle kullanımı henüz tavsiye edilmez. Ancak tamamlandığında, bu yeni desteğin varsayılan olacağı ve NVDA'nın Windows komut konsollarındaki performansını ve kararlılığını artıracağı tahmin edilmektedir.
@@ -1854,11 +1859,20 @@ Seçim kutusunda aşağıdaki seçenekler vardır:
 -
 
 ==== Bİlgi notları ====[Annotations]
-ARIA bilgi notları için deneysel destek ekleyen özellikleri etkinleştirmek için kullanılır.
+Bu seçenek grubu, ARIA bilgi notları için deneysel destek ekleyen özellikleri etkinleştirmek için kullanılır.
 Bu özelliklerden bazıları eksik sunuluyor olabilir.
 Aşağıdaki seçenekler mevcuttur: 
 - "Tarama kipinde ayrıntıları bildir": Varsa,tarama kipinde üzerine bulunulan nesne ayrıntıları gösterilir.
 Bu ayrıntıların özeti [girdi hareketleri iletişim kutusu #InputGestures] altından atanabilecek bir kısayol tuşu ile de alınabilir.
+- "Aria açıklamasını her zaman bildir":
+  ``accDescription`` kaynağı aria-description olduğunda, açıklama aktarılır.
+  Bu, web'deki ek açıklamalar için kullanışlıdır.
+  Not:
+  - ``accDescription`` için birçok kaynak vardır, bunların birçoğu karışık veya güvenilmez anlamlara sahiptir.
+    Tarihsel olarak AT, ``accDescription`` kaynaklarını ayırt edemedi, tipik olarak karışık anlambilim nedeniyle konuşulmadı.
+  - Bu seçenek çok erken geliştirme aşamasındadır, henüz yaygın olarak bulunmayan tarayıcı özelliklerine dayanır.
+  - Chromium 92.0.4479.0+ ile çalışması beklenirr
+  -
 -
 
 ==== mevcut olduğunda Microsoft Excel elektronik tablo kontrollerine erişmek için UI otomasyonunu kullan ====[UseUiaForExcel]
@@ -1898,10 +1912,21 @@ Bu işlev NVDA 2021.1'den itibaren varsayılan olarak etkindir.
 Bu seçenek, NVDA'nın düzenleme imleci (ekleme noktası) düzenlenebilir metin kontrollerinde hareket etmesini bekleyeceği mili saniye sayısını ayarlamanızı sağlar.
 NVDA’nın, düzenleme imlecini yanlış şekilde takip ettiğini fark ederseniz, her zaman arkasında bir karakter varmış gibi görünüyor veya satırları tekrarlıyorsa, o zaman bu değeri arttırmayı deneyebilirsiniz.
 
+==== Renkler için saydamlığı bildir ====[ReportTransparentColors]
+Bu seçenek, renkler saydam olduğunda bildirime  olanak tanır ve 3. taraf bir uygulamayla kullanıcı deneyimini geliştirmek için bilgi toplayan addon/appModule geliştiricileri için yararlıdır.
+Bazı GDI uygulamaları metni arka plan rengiyle vurgulayacaktır, NVDA (görüntüleme modeli aracılığıyla) bu rengi bildirmeye çalışır.
+Bazı durumlarda, metin arka planı tamamen saydam olabilir ve metin başka bir GUI öğesinde katmanlanır.
+Tarihsel olarak popüler olan birkaç GUI API'si ile metin saydam bir arka planla oluşturulabilir, ancak görsel olarak arka plan rengi doğrudur.
+
 ==== Hata ayıklama kategorileri ====[AdvancedSettingsDebugLoggingCategories]
 Bu listedeki onay kutuları, NVDA günlüğünde belirli hata ayıklama mesajı kategorilerini etkinleştirmenize izin verir.
 Bu mesajların kaydedilmesi performansın düşmesine ve büyük günlük dosyalarının oluşturulmasına  neden olabilir.
 Bunları yalnızca, bir NVDA geliştiricisi tarafından özellikle talimat verilmişse   açın. Örneğin Bir braille ekran sürücüsünün neden doğru çalışmadığını anlamaya çalışırken.
+
+==== Günlüğe kaydedilen hatalar için ses çal ====[PlayErrorSound]
+Bu seçenek, bir hatanın kaydedilmesi durumunda NVDA'nın ses çalıp çalmayacağını belirlemenizi sağlar.
+Yalnızca test sürümlerinde (varsayılan) seçilmesi, NVDA'nın yalnızca mevcut NVDA sürümü bir test sürümü (alfa, beta veya kaynaktan çalıştırma) olması durumunda hata seslerini çalmasına neden olur.
+Evet'i seçmek, mevcut NVDA sürümünüz ne olursa olsun hata seslerini etkinleştirmenizi sağlar.
 
 ++ çeşitli Ayarlar ++[MiscSettings]
 [NVDA ayarları #NVDASettings] iletişim kutusunun yanında, NVDA Menüsündeki Tercihler altmenüsü aşağıda verilen çeşitli diğer öğeleri de içerir.
@@ -2339,6 +2364,7 @@ Aşağıdaki ekranlar otomatik algılama işlevini destekler.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
+- Any Display that supports the Standard HID Braille protocol
 -
 
 ++ Freedom Scientific Focus/PAC Mate Serisi ++[FreedomScientificFocus]
@@ -3163,6 +3189,37 @@ Lütfen [BRLTTY tuş komutları listesine http://mielke.cc/brltty/doc/KeyBinding
 | imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | route (imleci karektere götür) |
 %kc:endInclude
 
+++ Standard HID Braille displays ++[HIDBraille]
+This is an experimental driver for the new Standard HID Braille Specification, agreed upon in 2018 by Microsoft, Google, Apple and several assistive technology companies including NV Access. 
+The hope is that all future Braille Display models created by any manufacturer, will use this standard protocol which will remove the need for manufacturer-specific Braille drivers.
+
+NVDA's automatic braille display detection will also recognize any display that supports this protocol.
+ 
+Following are the current key assignments for these displays.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | pan left |
+| Scroll braille display forward | pan right |
+| Move braille display to previous line | space + dot1 |
+| Move braille display to next line | space + dot4 |
+| Route to braille cell | routing set 1|
+| Toggle braille tethered to | up+down |
+| upArrow key | joystick up |
+| downArrow key | joystick down |
+| leftArrow key | space+dot3 or joystick left |
+| rightArrow key | space+dot6 or joystick right |
+| shift+tab key | space+dot1+dot3 |
+| tab key | space+dot4+dot6 |
+| alt key | space+dot1+dot3+dot4 (space+m) |
+| escape key | space+dot1+dot5 (space+e) |
+| enter key | dot8 or joystick center |
+| windows key | space+dot3+dot4 |
+| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+%kc:endInclude
+ 
 + İleri Düzey Konular +[AdvancedTopics]
 
 ++ Komut Satırı Seçenekleri ++[CommandLineOptions]

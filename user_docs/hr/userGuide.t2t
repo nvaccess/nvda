@@ -315,7 +315,7 @@ Postoji nekoliko tipkovničkih prečaca koji su korisni za kretanje po objektima
 | Izvijesti o trenutačnom fokusu | NVDA+tabulator | NVDA+tabulator | Izvještava o objektu koji je trenutačno u fokusu. Kad pritisnete dvaput, slovkat će izgovoreno |
 | Izvijesti o naslovu | NVDA+t | NVDA+t | Izvještava o naslovu trenutačnog prozora. Kad pritisnete dvaput, NVDA će slovkati izgovoreno. Kad pritisnete triput naslov se kopira u međuspremnik. |
 | Pročitaj trenutačni prozor | NVDA+b | NVDA+b | Čita sve kontrole u trenutačno aktivnom prozoru (korisno za dijaloške okvire) |
-| Izvijesti o traci stanja | NVDA+end | NVDA+šift+end | Izvještava o traci stanja, ako je NVDA pronađe. Također premješta navigacijski objekt na tu lokaciju. Kad se pritisne dvaput, informacije na traci stanja se slovkaju, a kad se pritisne triput, kopiraju se u međuspremnik. |
+| Izvijesti o traci stanja | NVDA+end | NVDA+šift+end | Izvještava o traci stanja, ako je NVDA pronađe. Kad se pritisne dvaput, informacije na traci stanja se slovkaju, a kad se pritisne triput, kopiraju se u međuspremnik. |
 %kc:endInclude
 
 ++ Kretanje pomoću kursora sustava ++[SystemCaret]
@@ -381,6 +381,7 @@ Da biste se kretali po objektima, koristite sljedeće prečace:
 | Aktiviraj trenutačni navigacijski objekt | NVDA+numEnter | NVDA+enter | dvostruki dodir | Aktivira trenutačni navigacijski objekt (slično pritiskanjem miša ili razmaknice kad postoji fokus sustava) |
 | Premjesti fokus sustava ili kursor na trenutačnu poziciju | NVDA+šift+numMinus | NVDA+šift+backspace | nema | Kad se pritisne jedanput, premješta fokus sustava na trenutačni navigacijski objekt. Kad se pritisne dvaput, premješta kursor sustava na trenutačnu poziciju preglednog kursora |
 | Izvijesti o trenutačnom položaju preglednog kursora | NVDA+numDilit | NVDA+dilit | nema | Izvještava o informacijama o položaju teksta ili objekta na preglednom kursoru. Na primjer, to može uključivati postotak po dokumentu, udaljenost od rubova stranice ili točnu poziciju na ekranu. Kad se pritisne dvaput, može pružati dodatne detalje. |
+| Premjesti kursor na traku stanja | nema | nema | nema | izgovara traku stanja ako ju NVDA pronađe. Objekt navigatora će se također premjestiti na tu lokaciju. |
 %kc:endInclude
 
 Napomena: za tipke na numeričkoj tipkovnici je potrebno isključiti numerički blok, kako bi ispravno radile.
@@ -1401,6 +1402,10 @@ Ova opcija neće biti dostupna ako vaš brajični redak koristi automatsko otkri
 
 Pročitajte dokumentaciju za vaš brajični redak u poglavlju [Podržani brajični redci #SupportedBrailleDisplays] za više informacija o podržanim načinima spajanja i dostupnim priključcima.
 
+Imajte na umu da ako spojite više brajičnih redaka na jedno računalo u isto vrijeme a ti redci koriste isti upravljački program npr. spajanje dva seika brajična redka,
+Trenutno je nemoguće odrediti koji brajični redak NVDA bi trebao koristiti.
+Stoga preporuča se spajanje samo jednog brajičnog redka određenog tipa ili proizvođača na vaše računalo u isto vrijeme.
+
 +++ Vid +++[VisionSettings]
 Kategorija "Vid" u dijaloškom okviru NVDA Postavke omogućuje aktiviranje, deaktiviranje i konfiguriranje [vizualnih pomagala #Vision].
 
@@ -1739,7 +1744,7 @@ Možete podesiti izvještavanje o sljedećim elementima:
  - veličina fonta
  - Indeksi i eksponenti
  - karakteristika fonta
- - Obilježen tekst
+ - Istaknut (označen) tekst
  - isticanje
  - stil
  - boje
@@ -1827,15 +1832,15 @@ Ovaj gumb postoji samo kad je uključena opcija "omogući bilježnicu razvojnog 
 Ova opcija mijenja način na koji NVDA registrira događaje NI automation sučelja za pristupačnost.
 Ako je ova opcija onemogućena, NVDA registrira više UIA događaja koji su procesuirani i odmah uništavani u samom NVDA čitaču.
 Ovo ima veliki negativni utjecaj na performanse, pogotovo na Microsoft visual studio.
-Stoga, ako je ova opcija uključena, NVDA NVDA će ograničiti registraciju događaja samo na fokus sustava za većinu događaja.
+Stoga, ako je ova opcija uključena, NVDA će ograničiti registraciju događaja samo na fokus sustava za većinu događaja.
 Ako vam smetaju problemi sa performansama u jednoj ili više aplikacija, preporučujemo vam da isprobate ovu funkciju i vodite postoji li poboljšanje u performansama.
 
-==== Koristi automatizaciju korisničkog sučelja za pristup kontrolama Microsoft Word dokumenata, kad je dostupna ====[AdvancedSettingsUseUiaForWord]
-Kad je ova opcija uključena, NVDA će dohvaćati sve informacije iz Microsoft word dokumenata koristeći Microsoft UIA API.
+==== Uvijek koristi UI automation za pristup kontrolama Microsoft Word dokumenata kada ej to moguće ====[AdvancedSettingsUseUiaForWord]
+Kada ej ova opcija uključena, NVDA će uvijek pokušavati koristiti Microsoft UI Automation API pristupačnosti u svrhu dohvaćanja informacija iz kontrola Microsoft Word dokumenata, čak i za malo starije međuverzije paketa Microsoft Office 2016/365.
 Ovo uključuje Microsoft Word, te sastavljač i preglednik poruka u Microsoft Outlooku.
- Za najnovije verzije Microsoft Office 2016/365 koje se pokreću na sustavu Windows 10, UI automation podrška je skoro jednaka podršci za Microsoft Word, uz tu razliku, da su performanse poboljšane.
-Međutim, postoje neke informacije koje se ne mogu dohvatiti koristeći ovu podršku, stoga se na nju ne možemo potpuno pouzdati.
-Još uvijek ne preporučujemo uključivanje ove opcije za stalno korištenje, ali pozivamo korisnike Microsoft Office 2016/365 da testiraju ovu značajku, te da šalju povratne informacije.
+ U međuverzijama Microsoft Office 16.0.13901 i novijim, NVDA će uvijek koristiti UI Automation za pristup Microsoft Word dokumentima neovisno o tome kako je konfigurirana ova postavka. 
+Za najposljednjije verzije Microsoft Office paketa 2016/365 koje se pokreću na Windows 10 i novijim, podrška za UI Automation je dovoljno kompletna kako bi omogućila pristup Microsoft word dokumentima skoro jednako kao postojeća podrška Microsoft office paketa u NVDA, sa dodanom prednošću unapređenih performansi.
+Međutim, postoje neke informacije koje se ne pokazuju, ili se pokazuju neispravno u starijim međuverzijama paketa Microsoft Office, što znaći, da se na ovu UIA implementaciju ne može potpuno osloniti.
 
 ==== Koristi UI Automation za pristup windows naredbenom retku kada je to dostupno ====[AdvancedSettingsConsoleUIA]
 Kada je ova opcija uključena, NVDA će koristiti nove, u toku razvoja [unapređenja pristupačnosti koje je napravio Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ova je značajka još uvijek eksperimentalna, te njeno korištenje se ne preporučuje. Međutim, ista će podrazumjevano postati standard, kada se isprave sve pogreške.
@@ -1853,12 +1858,22 @@ Odabirni okvir sadrđi sljedeće opcije:
 - ne: ne koristi UIA, čak ako NVDA nije u stanju ući u proces. Ovo može biti zanimljivo za razvojne programere koji otklanjaju pogreške sa IA2, i žele osigurati da se NVDA ne vraća na korištenje UIA.
 -
 
-==== Uključi eksperimentalnu podršku Aria zabilješki ====[Annotations]
-Koristi se za omogućavanje značajki koje uključuju izgovor Aria zabilješki.
-Neke od ovih značajki može biti nekompletno.
+==== Zabilješke ====[Annotations]
+Ova grupa opcija se koristi za omogućavanje značajki koje dodaju eksperimentalnu podršku za ARIA zabilješke.
+Neke od ovih značajki mogu biti nedovršene.
 Postoje sljedeće opcije: 
 - "Izgovori detalje u modusu čitanja": izgovara detalje ako objekt posjeduje iste u modusu čitanja.
-Čitanje skraćenog pregleda tih detalja može se učiniti pridjeljivanjem gesti koristeći [dijaloški okvir ulaznih gesti #InputGestures].
+Čitanje skraćenog pregleda tih detalja može se aktivirati gestom, tako da se pridjeli gesta koristeći [dijaloški okvir ulaznih gesti #InputGestures].
+- "Uvijek izgovaraj aria-description":
+  Kada je izvor ``accDescription`` aria-description, opis će se izgovarati.
+  ovo je korisno za zabilješke na mreži.
+  Upozorenje:
+  - Postoji više izvora za ``accDescription`` neki od njih imaju nepouzdanu ili miješanu semantiku.
+    U povijesti asistivne tehnologije nisu mogle  razlikovati izvore ``accDescription`` uobičajeno nije se izgovaralo zbog mješane semantike.
+  - Ova je opcija u jako ranom razvoju. Ova opcija ovisi o značajkama preglednika koje nisu široko dostupne.
+  - Očekuje se da će ova opcija raditi sa Chromium verzija 92.0.4479.0 i novijim
+  -
+ -
 
 ==== Koristi UI automation za pristup Excel proračunskim tablicama kada je to moguće ====[UseUiaForExcel]
 Kada je ova opcija omogućena, NVDA će probati koristiti Microsoft UI Automation API za pristupačnost kako bi izvlačio informacije iz kontrola proračunskih tablica Microsoft Excela.
@@ -1897,10 +1912,21 @@ Ova je funkcija podrazumjevano uključena od  NVDA verzije 2021.1.
 Ova opcija omogućuje povećanje ogranićenja čekanja, u kojem NVDA čeka da se pojavi pokazivač u polju za uređivanje.
 Ako mislite da NVDA uvijek kasni jedan znak iza ili ponavlja retke, tada biste trebali povećati ovu vrijednost.
 
+==== Izgovaraj transparentnost boja ====[ReportTransparentColors]
+Ova opcija omogućuje izgovor transparentnosti boja, korisno za programere koji razvijaju module aplikacija ili dodatke te koji skupljaju informacije u svrhu unapređivanja korisničkog iskustva sa aplikacijom treće strane.
+Neke GDI aplikacije će isticati tekst pozadinskom bojom, NVDA (uz pomoć modela prikaza) će pokušati izgovoriti tu boju.
+U nekim situacijama, pozadina teksta može biti potpuno transparentna, sa tekstom prekrivenim na nekom drugom elementu prozora.
+Sa nekim povijesno popularnim GUI api-jima, tekst može biti prikazan sa transparentnom pozadinom, ali je vizualno pozadinska boja točna.
+
 ==== Kategorije zapisivanja ====[AdvancedSettingsDebugLoggingCategories]
 Potvrdni okviri u ovoj kategoriji omogućuju dodavanje kategorija debugiranja u zapisnik.
 Zapisivanje ovih poruka može prouzročiti pad performansi i velike datoteke zapisnika.
 Uključite iste samo ako vas je na to naveo Programer NVDA razvojnog tima, u slučaju da, na primjer, ne radi brajični redak.
+
+==== Reproduciraj zvuk za zapisane greške ====[PlayErrorSound]
+Ova opcija omogućuje određivanje hoće li NVDA reproducirati zvuk u slučaju zapisane pogreške.
+Ako izaberete samo u testnim verzijama (podrazumijevano) prouzročit će da će se zvukovi reproducirati samo ako se radi o testnoj verziji (alpha, beta ili ako se pokreće iz izvornog koda).
+Ako odaberete da zvukovi će se reproducirati neovisno od verzije NVDA.
 
 ++ Razne postavke ++[MiscSettings]
 Osim [Postavki NVDA #NVDASettings] dijaloškog okvira, podizbornik postavke, sadrži sljedeće stavke koje su opisane ispod.
@@ -2328,6 +2354,7 @@ Sljedeći brajični redci podržavaju ovu funkcionalnost automatskog prepoznavan
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille serije
 - Eurobraille Esys/Esytime/Iris brajični redci
 - Nattiq nBraille brajični retci
+- Svaki brajični redak koji podržava standardni HID brajični protokol
 -
 
 ++ Brajični redci Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
@@ -3150,6 +3177,37 @@ Pogledajte [BRLTTY tablice tipkovničkih prečaca http://mielke.cc/brltty/doc/Ke
 | Premjesti brajični redak na prethodni redak | lnup (idi jedan redak gore) |
 | Premjesti brajični redak na sljedeći redak | lndn (idi jedan redak dolje) |
 | Premjesti se na brajičnu ćeliju | route (dovedi kursor na znak) |
+%kc:endInclude
+
+++ Standardni HID brajični retci ++[HIDBraille]
+Ovo je eksperimentalni upravljački program za novu standardnu HID specifikaciju, sa kojom su se složili Microsoft, Google, Apple i neke druge tvrtke koje proizvode asistivnu tehnologiju u 2018. godini uključujući i NV Access. 
+Nada mo se da će bilo koji model brajičnog redka kojeg će proizvesti bilo koji proizvođač  koristiti ovaj standardni protokol što će ukloniti potrebu pisanja upravljačkih programa koji su specifični za bilo kojeg proizvođača.
+
+NVDA funkcija automatskog prepoznavanja brajičnih redaka će prepoznavati bilo koji brajični redak koji podržava ovaj protokol.
+ 
+Slijede dodjeljeni prečaci za te brajične retke.
+%kc:beginInclude
+|| Naziv | prečac |
+| premještanje brajičnog retka u natrag | pan left |
+| Premještanje brajičnog redka u narped | pan right |
+| Premjesti brajični redak na prethodni redak | razmak + točkica1 |
+| premjesti brajični redak na sljedeći redak | razmak + točkica4 |
+| premjesti se na brajičnu ćeliju | routing set 1|
+| prebacuje prikazivanje fokusa | up+down |
+| strelica gore | joystick up |
+| strelic dolje | joystick down |
+| strelica lijevo | razmak+točkica3 ili joystick left |
+| strelica desno | razmak+točkica6 ili joystick right |
+| shift+tab tipka | razmak+točkica1+točkica3 |
+| Tab | razmak+točkica4+točkica6 |
+| Alt | razmak+točkica1+točkica3+točkica4 (razmak+m) |
+| escape | razmak+točkica1+točkica5 (razmak+e) |
+| enter | točkica8 ili joystick center |
+| windows tipka | razmak+točkica3+točkica4 |
+| alt+tab | razmak+točkica2+točkica3+točkica4+točkica5 (razmak+t) |
+| NVDA izbornk | razmak+točkica1+točkica3+točkica4+točkica5 (razmak+n) |
+| windows+d tipka (minimizira sve programe) | razmak+točkica1+točkica4+točkica5 (razmak+d) |
+| Čitaj sve | razmak+točkica1+točkica2+točkica3+točkica4+točkica5+točkica6 |
 %kc:endInclude
 
 + Teme za napredne korisnike +[AdvancedTopics]
