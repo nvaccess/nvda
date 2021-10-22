@@ -44,7 +44,7 @@ template<typename funcType> bool _apiHook_hookFunction_tpl(funcType realFunction
 #define apiHook_hookFunction_safe(realFunction,fakeFunction, targetPointerRef) _apiHook_hookFunction_tpl(realFunction,fakeFunction,targetPointerRef)
  
 /**
- * Commitss an API hooking transaction.
+ * Commits an API hooking transaction.
  */
 bool apiHook_commitTransaction();
 
