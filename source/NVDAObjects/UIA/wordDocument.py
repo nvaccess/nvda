@@ -5,6 +5,7 @@
 
 from comtypes import COMError
 from collections import defaultdict
+import buildVersion
 import mathPres
 from scriptHandler import isScriptWaiting
 import textInfos
@@ -411,7 +412,10 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		elif obj.role == controlTypes.Role.MATH:
 			# Don't set focus to math equations otherwise they cannot be interacted  with mathPlayer.
 			return False
-		return super(WordBrowseModeDocument,self).shouldSetFocusToObj(obj)
+		return super()._shouldSetFocusToObj(obj)
+
+	if buildVersion.version_year < 2022:
+		shouldSetFocusToObj = _shouldSetFocusToObj  # deprecated to be removed in 2022.1
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
