@@ -454,6 +454,7 @@ class WordDocumentNode(UIA):
 			return self._getUIACacheablePropertyValue(self._UIACustomProps.word_mathml.id)
 		except COMError:
 			pass
+		return None
 
 	def _get_role(self):
 		if self.mathMl:
