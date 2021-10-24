@@ -5,6 +5,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Optional
 import time
 import os
 import sys
@@ -574,20 +575,21 @@ def showGui():
 def quit():
 	wx.CallAfter(mainFrame.onExitCommand, None)
 
-def messageBox(message, caption=wx.MessageBoxCaptionStr, style=wx.OK | wx.CENTER, parent=None):
+
+def messageBox(
+		message: str,
+		caption: str = wx.MessageBoxCaptionStr,
+		style: int = wx.OK | wx.CENTER,
+		parent: Optional[wx.Window] = None
+) -> int:
 	"""Display a message dialog.
 	This should be used for all message dialogs
 	rather than using C{wx.MessageDialog} and C{wx.MessageBox} directly.
 	@param message: The message text.
-	@type message: str
 	@param caption: The caption (title) of the dialog.
-	@type caption: str
 	@param style: Same as for wx.MessageBox.
-	@type style: int
-	@param parent: The parent window (optional).
-	@type parent: C{wx.Window}
+	@param parent: The parent window.
 	@return: Same as for wx.MessageBox.
-	@rtype: int
 	"""
 	global isInMessageBox
 	wasAlready = isInMessageBox
@@ -687,9 +689,12 @@ class ExitDialog(wx.Dialog):
 			action += 1
 		if action == 0:
 			WelcomeDialog.closeInstances()
-			if not core.triggerNVDAExit():
+			if core.triggerNVDAExit():
+				# there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this
+				return
+			else:
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
-			return  # there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this
+				return
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:

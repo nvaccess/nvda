@@ -294,18 +294,23 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 	instance information with `newNVDA`.
 	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
 	"""
+	import gui
 	import queueHandler
 	global _hasShutdownBeenTriggered
 	with _shuttingDownFlagLock:
-		if not _hasShutdownBeenTriggered:
+		safeToExit = not gui.isInMessageBox
+		if not safeToExit:
+			log.error("NVDA cannot exit safely, ensure open dialogs are closed")
+			return False
+		elif _hasShutdownBeenTriggered:
+			log.debug("NVDA has already been triggered to exit safely.")
+			return False
+		else:
 			# queue this so that the calling process can exit safely (eg a Popup menu)
 			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
 			_hasShutdownBeenTriggered = True
 			log.debug("_doShutdown has been queued")
 			return True
-		else:
-			log.debug("NVDA has already been triggered to exit safely.")
-			return False
 
 
 def _closeAllWindows():
