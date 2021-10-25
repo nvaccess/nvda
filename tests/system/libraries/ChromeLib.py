@@ -122,6 +122,7 @@ class ChromeLib:
 			actualSpeech = spy.get_speech_at_index_until_now(lastSpeechIndex)
 			if self._wasStartMarkerSpoken(actualSpeech):
 				break
+			spy.emulateKeyPress('F6')
 			lastSpeechIndex = spy.get_last_speech_index()
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()

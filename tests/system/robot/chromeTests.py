@@ -58,49 +58,179 @@ def checkbox_labelled_by_inner_element():
 def test_mark_aria_details():
 	_chrome.prepareChrome(
 		"""
-		<div>
+		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
 			<p>The word <mark aria-details="cat-details">cat</mark> has a comment tied to it.</p>
-			<div id="cat-details" role="comment">
-				Cats go woof BTW<br>&mdash;Jonathon Commentor
-				<div role="comment">
-				No they don't<br>&mdash;Zara
-				</div>
-				<div role="form">
+		</div>
+		<div>
+			<div id="cat-details" role="comment">Cats go woof BTW<br>&mdash;Jonathon Commentor
+				<div role="comment">No they don't<br>&mdash;Zara</div>
+			</div>
+			<div role="form">
 				<textarea cols="80" placeholder="Add reply..."></textarea>
 				<input type="submit">
-				</div>
 			</div>
 		</div>
 		"""
 	)
-	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
-	_asserts.strings_match(
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+	_asserts.speech_matches(
 		actualSpeech,
-		"The word  highlighted  has details  cat  out of highlighted  has a comment tied to it."
+		SPEECH_SEP.join([
+			"edit",
+			"multi line",
+			"The word",  # content
+			"highlighted",
+			"has details",
+			"cat",  # highlighted content
+			"out of highlighted",
+			"has a comment tied to it.",  # content
+		]),
+		message="Browse mode: Read line with details."
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"mln edt The word  details hlght cat hlght end  has a comment tied to it. edt end",
+		message="Browse mode: Read line with details.",
 	)
 	# this word has no details attached
-	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
-	_asserts.strings_match(
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
+	_asserts.speech_matches(
 		actualSpeech,
-		"word"
+		"word",
+		message="Browse mode: Move by word to word without details"
 	)
+	_asserts.braille_matches(
+		actualBraille,
+		"mln edt The word  details hlght cat hlght end  has a comment tied to it. edt end",
+		message="Browse mode: Move by word to word without details",
+	)
+
 	# check that there is no summary reported
-	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
-	_asserts.strings_match(
+	READ_DETAILS_GESTURE = "NVDA+\\"  # see chrome-gestures.ini
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
+	_asserts.speech_matches(
 		actualSpeech,
-		"No additional details"
+		"No additional details",
+		message="Browse mode: Report details on word without details"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"No additional details",
+		message="Browse mode: Report details on word without details",
 	)
 	# this word has details attached to it
-	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
-	_asserts.strings_match(
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
+	_asserts.speech_matches(
 		actualSpeech,
-		"highlighted  has details  cat  out of highlighted"
+		"highlighted  has details  cat  out of highlighted",
+		message="Browse mode: Move by word to word with details",
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"mln edt The word  details hlght cat hlght end  has a comment tied to it. edt end",
+		message="Browse mode: Move by word to word with details",
 	)
 	# read the details summary
-	actualSpeech = _chrome.getSpeechAfterKey("NVDA+\\")
-	_asserts.strings_match(
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
+	_asserts.speech_matches(
 		actualSpeech,
-		"Cats go woof BTW  Jonathon Commentor No they don't  Zara Submit"
+		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
+		message="Browse mode: Report details on word with details"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"Cats go woof BTW —Jonathon CommentorNo they don't —Zara",
+		message="Browse mode: Report details on word with details",
+	)
+
+	# Reset caret
+	actualSpeech = _NvdaLib.getSpeechAfterKey("upArrow")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"out of edit",
+			"Test page load complete",
+		]),
+		message="reset caret",
+	)
+
+	# Force focus mode
+	actualSpeech = _NvdaLib.getSpeechAfterKey("NVDA+space")
+	_asserts.speech_matches(
+		actualSpeech,
+		"Focus mode",
+		message="force focus mode",
+	)
+
+	# Tab into the contenteditable
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"edit",
+			"multi line",
+			"The word",  # content
+			"highlighted",
+			"cat",  # highlighted content
+			"out of highlighted",
+			"has a comment tied to it.",  # content
+		]),
+		message="Focus mode: report content editable with details"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"The word  hlght cat hlght end  has a comment tied to it.",
+		message="Focus mode: report content editable with details",
+	)
+
+	# Try to read the details
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"backslash",  # a backslash character is typed, gesture only mapped in browse mode
+		]),
+		message="Focus mode: Try to read details, caret not on details word.",
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		# a backslash character is typed, gesture only mapped in browse mode
+		r"\The word  hlght cat hlght end  has a comment tied to it.",
+		message="Focus mode: Try to read details, caret not on details word.",
+	)
+
+	# move to the word with details: "cat"
+	_NvdaLib.getSpeechAfterKey("control+rightArrow")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"highlighted",
+			"cat",  # highlighted content
+			"out of highlighted",
+		]),
+		message="Focus mode: Move by word to word with details"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		# a backslash character was typed when the gesture was used
+		expected=r"\The word  hlght cat hlght end  has a comment tied to it.",
+		message="Focus mode: Move by word to word with details",
+	)
+
+	# Try to read the details
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
+	_asserts.speech_matches(
+		actualSpeech,
+		"backslash",  # gesture only mapped in browse mode
+		message="Focus mode:  Report details on word with details.",
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		# a backslash character was typed when the gesture was used
+		expected=r"\The word \ hlght cat hlght end  has a comment tied to it.",
+		message="Focus mode:  Report details on word with details.",
 	)
 
 
