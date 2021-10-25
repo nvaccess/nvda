@@ -651,10 +651,10 @@ class ExitDialog(wx.Dialog):
 			addonsDisabledText = _("All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again.")
 			warningMessages.append(addonsDisabledText)
 		if languageHandler.isLanguageForced():
-			# Translators: A message in the exit Dialog shown when NVDA language has been
-			# overwritten from the command line.
 			langForcedMsg = _(
-				"\nNVDA's interface language is now forced from the command line."
+				# Translators: A message in the exit Dialog shown when NVDA language has been
+				# overwritten from the command line.
+				"NVDA's interface language is now forced from the command line."
 				" On the next restart, the language  saved in NVDA's configuration will be used instead."
 			)
 			warningMessages.append(langForcedMsg)
