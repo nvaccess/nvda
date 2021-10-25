@@ -17,8 +17,8 @@ import shlobj
 @functools.lru_cache(maxsize=1)
 def hasSyswow64Dir() -> bool:
 	"""Returns `True` if the current system has separate system32 directories for 32-bit processes."""
-	nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FOLDERID.System.value)
-	Syswow64Sys32 = shlobj.SHGetKnownFolderPath(shlobj.FOLDERID.SystemX86.value)
+	nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.System)
+	Syswow64Sys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.SystemX86)
 	return nativeSys32 != Syswow64Sys32
 
 

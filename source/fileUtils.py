@@ -55,7 +55,7 @@ def _suspendWow64RedirectionForFileInfoRetrieval(func):
 	"""
 	@wraps(func)
 	def funcWrapper(filePath, *attributes):
-		nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FOLDERID.System.value)
+		nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.System)
 		if (
 			systemUtils.hasSyswow64Dir()
 			# `os.path.commonpath` is necessary to perform case-insensitive comparisons

@@ -18,7 +18,7 @@ import functools
 import typing
 
 
-class FOLDERID(str, enum.Enum):
+class FolderId(str, enum.Enum):
 	"""Contains guids of known folders from Knownfolders.h. Full list is availabe at:
 	https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid"""
 	#: The file system directory that serves as a common repository for application-specific data.
@@ -38,10 +38,10 @@ class FOLDERID(str, enum.Enum):
 
 
 @functools.lru_cache(maxsize=128)
-def SHGetKnownFolderPath(folderGuid: str, dwFlags: int = 0, hToken: typing.Optional[int] = None) -> str:
+def SHGetKnownFolderPath(folderGuid: FolderId, dwFlags: int = 0, hToken: typing.Optional[int] = None) -> str:
 	"""Wrapper for `SHGetKnownFolderPath` which caches the results
 	to avoid calling the win32 function unnecessarily."""
-	guid = comtypes.GUID(folderGuid)
+	guid = comtypes.GUID(folderGuid.value)
 	pathPointer = ctypes.c_wchar_p()
 	res = ctypes.windll.shell32.SHGetKnownFolderPath(
 		comtypes.byref(guid),
@@ -50,7 +50,7 @@ def SHGetKnownFolderPath(folderGuid: str, dwFlags: int = 0, hToken: typing.Optio
 		ctypes.byref(pathPointer)
 	)
 	if res != 0:
-		raise RuntimeError(f"SHGetKnownFolderPath failed with erro code {res}")
+		raise RuntimeError(f"SHGetKnownFolderPath failed with error code {res}")
 	path = pathPointer.value
 	ctypes.windll.ole32.CoTaskMemFree(pathPointer)
 	return path
