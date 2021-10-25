@@ -345,8 +345,7 @@ class Gecko_ia2(VirtualBuffer):
 			log.debugWarning("Clicking with mouse")
 			oldX, oldY = winUser.getCursorPos()
 			winUser.setCursorPos(*location.center)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+			mouseHandler.doPrimaryClick()
 			winUser.setCursorPos(oldX, oldY)
 			break
 

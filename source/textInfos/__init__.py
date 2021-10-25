@@ -89,7 +89,7 @@ class ControlField(Field):
 
 		name = self.get("name")
 		landmark = self.get("landmark")
-		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS) and (
+		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS, OutputReason.QUICKNAV) and (
 			(role == controlTypes.Role.LINK and not formatConfig["reportLinks"])
 			or (role == controlTypes.Role.GRAPHIC and not formatConfig["reportGraphics"])
 			or (role == controlTypes.Role.HEADING and not formatConfig["reportHeadings"])
@@ -630,8 +630,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		p=self.pointAtStart
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(p.x,p.y)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def getMathMl(self, field):

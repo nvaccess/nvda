@@ -102,7 +102,9 @@ def getInstalledUserConfigPath():
 		configInLocalAppData = bool(winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
 	except WindowsError:
 		configInLocalAppData=False
-	configParent=shlobj.SHGetFolderPath(0, shlobj.CSIDL_LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL_APPDATA)
+	configParent = shlobj.SHGetKnownFolderPath(
+		shlobj.FOLDERID.LocalAppData.value if configInLocalAppData else shlobj.FOLDERID.RoamingAppData.value
+	)
 	try:
 		return os.path.join(configParent, "nvda")
 	except WindowsError:
@@ -125,14 +127,6 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 			installedUserConfigPath+='_appx'
 		return installedUserConfigPath
 	return os.path.join(globalVars.appDir, 'userConfig')
-
-def getSystemConfigPath():
-	if isInstalledCopy():
-		try:
-			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_COMMON_APPDATA), "nvda")
-		except WindowsError:
-			pass
-	return None
 
 
 SCRATCH_PAD_ONLY_DIRS = (

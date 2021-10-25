@@ -1241,7 +1241,7 @@ def getTextInfoSpeech(  # noqa: C901
 	speechSequence: SpeechSequence = []
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
 	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
-	if reason != OutputReason.FOCUS:
+	if reason not in [OutputReason.FOCUS, OutputReason.QUICKNAV]:
 		endingBlock=False
 		for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
 			fieldSequence = info.getControlFieldSpeech(
@@ -1554,7 +1554,8 @@ def getPropertiesSpeech(  # noqa: C901
 			or reason not in (
 				OutputReason.SAYALL,
 				OutputReason.CARET,
-				OutputReason.FOCUS
+				OutputReason.FOCUS,
+				OutputReason.QUICKNAV
 			)
 			or not (
 				name
@@ -1732,7 +1733,7 @@ def _shouldSpeakContentFirst(
 		controlTypes.Role.REGION,
 	)
 	return (
-		reason == OutputReason.FOCUS
+		reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		and (
 			# the category is not a container, unless it's an article (#11103)
 			presCat != attrs.PRESCAT_CONTAINER
@@ -1769,7 +1770,7 @@ def getControlFieldSpeech(  # noqa: C901
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	role = attrs.get('role', controlTypes.Role.UNKNOWN)
 	if (
-		reason == OutputReason.FOCUS
+		reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		or attrs.get('alwaysReportName', False)
 	):
 		name = attrs.get('name', "")
@@ -1802,7 +1803,7 @@ def getControlFieldSpeech(  # noqa: C901
 		(
 			config.conf["presentation"]["reportObjectDescriptions"]
 			and not _descriptionIsContent
-			and reason == OutputReason.FOCUS
+			and reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		)
 		or (
 			# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
@@ -1907,7 +1908,7 @@ def getControlFieldSpeech(  # noqa: C901
 		return tableSeq
 	elif (
 		nameSequence
-		and reason == OutputReason.FOCUS
+		and reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		and fieldType == "start_addedToControlFieldStack"
 		and role in (controlTypes.Role.GROUPING, controlTypes.Role.PROPERTYPAGE)
 	):
@@ -2138,7 +2139,10 @@ def getFormatFieldSpeech(  # noqa: C901
 			headingLevel
 			and (
 				initialFormat
-				and (reason == OutputReason.FOCUS or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH))
+				and (
+					reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
+					or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH)
+				)
 				or headingLevel != oldHeadingLevel
 			)
 		):

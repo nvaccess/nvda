@@ -23,16 +23,13 @@ class AzardiTreeViewItem(TreeViewItem):
 	def script_enter(self, gesture):
 		api.moveMouseToNVDAObject(self)
 		api.setMouseObject(self)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
+		mouseHandler.doPrimaryClick()
 
 	def script_contextMenu(self, gesture):
 		api.moveMouseToNVDAObject(self)
 		api.setMouseObject(self)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
+		mouseHandler.doSecondaryClick()
 
 	__gestures = {
 		"kb:enter": "enter",
