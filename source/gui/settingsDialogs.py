@@ -717,13 +717,12 @@ class GeneralSettingsPanel(SettingsPanel):
 			cmdLangDescription = [
 				ld[1] for ld in self.languageNames if ld[0] == globalVars.appArgs.language
 			][0]
-			languageChoices.insert(
-				0,
+			languageChoices.append(
 				# Translators: Shown for a language which has been provided from the command line
 				# 'langDesc' would be replaced with description of the given locale.
 				_("Command line option: {langDesc}").format(langDesc=cmdLangDescription)
 			)
-			self.languageNames.insert(0, "FORCED")
+			self.languageNames.append("FORCED")
 		# Translators: The label for a setting in general settings to select NVDA's interface language
 		# (once selected, NVDA must be restarted; the option user default means the user's Windows language
 		# will be used).
@@ -733,7 +732,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
 		self.oldLanguage = config.conf["general"]["language"]
 		if languageHandler.isLanguageForced():
-			index = 0
+			index = len(self.languageNames) - 1
 		else:
 			index = [x[0] for x in self.languageNames].index(self.oldLanguage)
 		self.languageList.SetSelection(index)
@@ -895,7 +894,10 @@ class GeneralSettingsPanel(SettingsPanel):
 			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
 
 	def onSave(self):
-		if not languageHandler.isLanguageForced() or self.languageList.GetSelection() != 0:
+		if(
+			not languageHandler.isLanguageForced()
+			or self.languageList.GetSelection() != len(self.languageNames) - 1
+		):
 			newLanguage = [x[0] for x in self.languageNames][self.languageList.GetSelection()]
 			config.conf["general"]["language"] = newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
