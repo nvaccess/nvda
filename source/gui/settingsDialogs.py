@@ -41,7 +41,7 @@ import brailleInput
 import vision
 import vision.providerInfo
 import vision.providerBase
-from typing import Callable, List, Optional, Any
+from typing import Callable, List, Optional, Any, Union
 import core
 import keyboardHandler
 import characterProcessing
@@ -425,23 +425,16 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	class CategoryUnavailableError(RuntimeError): pass
 
-	def __init__(self, parent, initialCategory=None):
+	def __init__(
+			self,
+			parent: Union[wx.Window, None],
+			initialCategory: Optional[SettingsPanel] = None,
+	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
-		@type parent: wx.Window
 		@param initialCategory: The initial category to select when opening this dialog
-		@type parent: SettingsPanel
 		"""
-		if initialCategory and not issubclass(initialCategory,SettingsPanel):
-			if gui._isDebug():
-				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
-			raise TypeError("initialCategory should be an instance of SettingsPanel")
-		if initialCategory and initialCategory not in self.categoryClasses:
-			if gui._isDebug():
-				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
-			raise MultiCategorySettingsDialog.CategoryUnavailableError(
-				"The provided initial category is not a part of this dialog"
-			)
+		self.checkCategory(initialCategory)
 		self.initialCategory = initialCategory
 		self.currentCategory = None
 		self.setPostInitFocus = None
@@ -552,6 +545,25 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		self.Bind(EVT_RW_LAYOUT_NEEDED, self._onPanelLayoutChanged)
 
+	def checkCategory(self, cat: Union[SettingsPanel, None]) -> None:
+		"""
+		@param cat: The class of the panel on which the dialog should be opened or C{None} if no specific panel
+			is targetted.
+		
+		"""
+		if cat is None:
+			return
+		if not issubclass(cat, SettingsPanel):
+			if gui._isDebug():
+				log.debug("Unable to open category: {}".format(cat), stack_info=True)
+			raise TypeError("cat should be an instance of SettingsPanel")
+		if cat not in self.categoryClasses:
+			if gui._isDebug():
+				log.debug("Unable to open category: {}".format(cat), stack_info=True)
+			raise MultiCategorySettingsDialog.CategoryUnavailableError(
+				"The provided initial category is not a part of this dialog"
+			)
+	
 	def _getCategoryPanel(self, catId):
 		panel = self.catIdToInstanceMap.get(catId, None)
 		if not panel:
@@ -624,6 +636,19 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# erase the old contents and must be redrawn
 		self.container.Refresh()
 
+	def selectNewCategory(self, cat):
+		self.checkCategory(cat)
+		currentCat = self.currentCategory
+		newIndex = self.categoryClasses.index(cat)
+		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
+			listHadFocus = self.catListCtrl.HasFocus()
+			if not listHadFocus:
+				self.catListCtrl.SetFocus()
+			self.catListCtrl.Select(newIndex)
+			# we must focus the new selection in the category list to trigger the change of category.
+			self.catListCtrl.Focus(newIndex)
+			self.currentCategory.SetFocus()
+	
 	def _doCategoryChange(self, newCatId):
 		oldCat = self.currentCategory
 		# Freeze and Thaw are called to stop visual artifact's while the GUI
