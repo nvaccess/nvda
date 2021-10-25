@@ -79,17 +79,40 @@ sphinxAPIDocs = env.Command(
 		] + [f"{sourceDir}\\{f}" for f in ignorePaths]
 	]
 )
+sphinxHtmlCommand = [
+	sys.executable,
+	"-m", "sphinx.cmd.build",
+	"-M", "html",
+	"devDocs",  # Source directory
+	"$TARGET",  # Build directory
+]
+
 sphinxHtml = env.Command(
 	"_build",
 	sphinxAPIDocs,
-	[[
-		sys.executable,
-		"-m", "sphinx.cmd.build",
-		"-M", "html",
-		"devDocs",  # Source directory
-		"$TARGET",  # Build directory
-	]]
+	[sphinxHtmlCommand]
 )
+
 devDocs_nvda = env.Command(devDocsOutputDir.Dir('NVDA'), sphinxHtml, Move('$TARGET', '$SOURCE'))
 env.Alias('devDocs', [devGuide, devDocs_nvda, devDocs_nvdaHelper_readme])
 env.Clean('devDocs', [devGuide, devDocs_nvda, devDocs_nvdaHelper_readme])
+
+sphinxHtmlTests = env.Command(
+	"_build",
+	sphinxAPIDocs,
+	[
+		sphinxHtmlCommand + [
+			# Turn warnings into errors. This means that the build stops at the first warning and sphinx-build 
+			"-W",
+			# With -W option, keep going processing when getting warnings to the end of build
+			"--keep-going",
+			# Increase verbosity (loglevel).
+			# This option can be given up to three times to get more debug logging 
+			"-v", "-v", "-v",
+			# Run in nit-picky mode. Currently, this generates warnings for all missing references
+			"-n"
+		]
+	]
+)
+
+env.Alias('testDevDocs', [sphinxHtmlTests])
