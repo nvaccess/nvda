@@ -115,6 +115,10 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	#: Typing for autoproperty _get_passThrough
+	# Whether most scripts should temporarily pass through this interceptor without being intercepted.
+	passThrough: bool
+
 	def _get_passThrough(self):
 		"""Whether most scripts should temporarily pass through this interceptor without being intercepted.
 		"""

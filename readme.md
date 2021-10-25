@@ -68,7 +68,7 @@ The following dependencies need to be installed on your system:
 				* Desktop development with C++
 			* Then in the Installation details tree view, under Desktop for C++, Optional, ensure the following are selected:
 				* MSVC v142 - VS 2019 C++ x64/x86 build tools
-				* Windows 10 SDK (10.0.19041.0)
+				* Windows 11 SDK (10.0.22000.0)
 				* C++ ATL for v142 build tools (x86 & x64)
 				* C++ Clang tools for Windows
 		* On the Individual components tab, ensure the following items are selected:
@@ -84,10 +84,10 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 74068b91bcd578b
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 7e5457f91e10
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.org/), version 3.18.0
+* [liblouis](http://www.liblouis.org/), version 3.19.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 39.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)

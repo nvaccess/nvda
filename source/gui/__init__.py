@@ -24,10 +24,15 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
-from .settingsDialogs import SettingsDialog
+from .settingsDialogs import (
+	SettingsDialog,
+	DefaultDictionaryDialog,
+	VoiceDictionaryDialog,
+	TemporaryDictionaryDialog,
+)
 from .settingsDialogs import *
+from .startupDialogs import WelcomeDialog
 from .inputGestures import InputGesturesDialog
-import speechDictHandler
 from . import logViewer
 import speechViewer
 import winUser
@@ -155,16 +160,13 @@ class MainFrame(wx.Frame):
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
-		# Translators: Title for default speech dictionary dialog.
-		self._popupSettingsDialog(DictionaryDialog,_("Default dictionary"),speechDictHandler.dictionaries["default"])
+		self._popupSettingsDialog(DefaultDictionaryDialog)
 
 	def onVoiceDictionaryCommand(self,evt):
-		# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-		self._popupSettingsDialog(DictionaryDialog,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
+		self._popupSettingsDialog(VoiceDictionaryDialog)
 
 	def onTemporaryDictionaryCommand(self,evt):
-		# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
+		self._popupSettingsDialog(TemporaryDictionaryDialog)
 
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
@@ -367,7 +369,7 @@ class MainFrame(wx.Frame):
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
-	def __init__(self, frame):
+	def __init__(self, frame: MainFrame):
 		super(SysTrayIcon, self).__init__()
 		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon, versionInfo.name)
@@ -684,6 +686,7 @@ class ExitDialog(wx.Dialog):
 		if action >= 2 and config.isAppX:
 			action += 1
 		if action == 0:
+			WelcomeDialog.closeInstances()
 			if not core.triggerNVDAExit():
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 			return  # there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this

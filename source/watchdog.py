@@ -18,7 +18,7 @@ import winKernel
 from logHandler import log
 import globalVars
 import core
-from core import CallCancelled
+import exceptions
 import NVDAHelper
 
 #settings
@@ -226,7 +226,7 @@ def _notifySendMessageCancelled():
 	def sendMessageCallCanceller(frame, event, arg):
 		if frame == caller:
 			# Raising an exception will also cause the profile function to be deactivated.
-			raise CallCancelled
+			raise exceptions.CallCancelled
 	sys.setprofile(sendMessageCallCanceller)
 
 def initialize():
@@ -296,7 +296,7 @@ class CancellableCallThread(threading.Thread):
 		self.name = f"{self.__class__.__module__}.{self.execute.__qualname__}({fname})"
 		# Don't even bother making the call if the core is already dead.
 		if isAttemptingRecovery:
-			raise CallCancelled
+			raise exceptions.CallCancelled
 
 		self._func = func
 		self._args = args
@@ -315,7 +315,7 @@ class CancellableCallThread(threading.Thread):
 		if waitIndex.value == 1:
 			# Cancelled.
 			self.isUsable = False
-			raise CallCancelled
+			raise exceptions.CallCancelled
 
 		exc = self._exc_info
 		if exc:

@@ -127,10 +127,8 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				return
 			log.debug("Double clicking")
 			winUser.setCursorPos(p.x, p.y)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+			mouseHandler.doPrimaryClick()
+			mouseHandler.doPrimaryClick()
 			return
 
 		# The user makes a selection using browse mode virtual selection.
@@ -346,8 +344,8 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		log.debug("Setting selection to (%d, %d)" % (sel._startOffset, sel._endOffset))
 		sel.updateSelection()
 
-	def _getControlFieldForObject(self, obj):
-		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(obj)
+	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
 		if field and field["role"] == controlTypes.Role.MATH:
 			try:
 				field["mathMl"] = obj.mathMl

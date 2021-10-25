@@ -136,9 +136,15 @@ class CompoundTextInfo(textInfos.TextInfo):
 			and controlTypes.State.LINKED not in obj.states
 		)
 
-	def _getControlFieldForObject(self, obj: NVDAObject):
+	def _getControlFieldForObject(self, obj: NVDAObject, ignoreEditableText=True):
+		if ignoreEditableText and self._isObjectEditableText(obj):
+			# This is basically just a text node.
+			return None
 		role = obj.role
 		states = obj.states
+		if role == controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
+			# Named link destination, not a link that can be activated.
+			return None
 		field = textInfos.ControlField()
 		field["role"] = role
 		field['roleText'] = obj.roleText
@@ -271,11 +277,8 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		rootObj = self.obj.rootNVDAObject
 		obj = self._startObj
 		while obj and obj != rootObj:
-			if not (
-				self._isObjectEditableText(obj)
-				or self._isNamedlinkDestination(obj)
-			):
-				field = self._getControlFieldForObject(obj)
+			field = self._getControlFieldForObject(obj)
+			if field:
 				fields.insert(0, textInfos.FieldCommand("controlStart", field))
 			obj = obj.parent
 
@@ -288,18 +291,13 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 					else:
 						embedIndex += 1
 					childObject: NVDAObject = ti.obj.getChild(embedIndex)
-					if not (
-						# Don't check for self._isObjectEditableText
-						# Only for named link destinations.
-						self._isNamedlinkDestination(obj)
-					):
-						controlField = self._getControlFieldForObject(childObject)
-						controlField["content"] = childObject.name
-						fields.extend((
-							textInfos.FieldCommand("controlStart", controlField),
-							textUtils.OBJ_REPLACEMENT_CHAR,
-							textInfos.FieldCommand("controlEnd", None),
-						))
+					controlField = self._getControlFieldForObject(childObject, ignoreEditableText=False)
+					controlField["content"] = childObject.name
+					fields.extend((
+						textInfos.FieldCommand("controlStart", controlField),
+						textUtils.OBJ_REPLACEMENT_CHAR,
+						textInfos.FieldCommand("controlEnd", None)
+					))
 				else:  # str or fieldCommand
 					if not isinstance(textWithEmbeddedObjectsItem, (str, textInfos.FieldCommand)):
 						log.error(f"Unexpected type: {textWithEmbeddedObjectsItem!r}")

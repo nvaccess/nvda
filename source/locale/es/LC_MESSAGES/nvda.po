@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-30 00:01+0000\n"
-"PO-Revision-Date: 2021-08-02 14:19+0200\n"
+"POT-Creation-Date: 2021-10-15 00:01+0000\n"
+"PO-Revision-Date: 2021-10-19 16:42+0200\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -415,8 +415,8 @@ msgid "fig"
 msgstr "fig"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
-msgid "mrkd"
-msgstr "mrcd"
+msgid "hlght"
+msgstr "rstd"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -1256,6 +1256,11 @@ msgstr "Braille Ruso literario (detallado)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Russian contracted braille"
+msgstr "Braille Ruso contraído"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sánscrito grado 1"
 
@@ -1368,6 +1373,16 @@ msgstr "Braille unicode"
 #. braille settings dialog.
 msgid "Vietnamese grade 0"
 msgstr "Vietnamita grado 0"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 1"
+msgstr "Tshivenda gradd 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 2"
+msgstr "Tshivenda grado 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2106,6 +2121,13 @@ msgctxt "symbolPreserve"
 msgid "only below symbol's level"
 msgstr "sólo por debajo del nivel de los símbolos"
 
+#. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
+#. "transparent bright orange-yellow"
+#, python-brace-format
+msgctxt "color variation"
+msgid "transparent {colorDescription}"
+msgstr "transparencia {colorDescription}"
+
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
 msgid "white"
@@ -2768,12 +2790,12 @@ msgid "Toggles on and off the reporting of marked text"
 msgstr "Activa y desactiva el anunciado de texto marcado"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked on"
-msgstr "anunciar marcado activado"
+msgid "report highlighted on"
+msgstr "anunciar resaltado activado"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked off"
-msgstr "anunciar marcado desactivado"
+msgid "report highlighted off"
+msgstr "anunciar resaltado desactivado"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -2927,6 +2949,22 @@ msgstr "anunciar coordenadas de celdas de tabla desactivado"
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
 msgstr "anunciar coordenadas de celdas de tabla activado"
+
+#. Translators: Input help mode message for toggle report cell borders command.
+msgid "Cycles through the cell border reporting settings"
+msgstr "Se mueve por las opciones de borde de la celda"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report styles of cell borders"
+msgstr "Anunciar estilos de los bordes de la celda"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report colors and styles of cell borders"
+msgstr "Anunciar colores y estilos de bordes de celda"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report cell borders off."
+msgstr "Anunciar bordes de la celda activado."
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3422,7 +3460,6 @@ msgstr "Mueve el foco al siguiente documento más cercano que contenga el foco"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
-#. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -3516,27 +3553,48 @@ msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
 "Anuncia el objeto con el foco. Si se pulsa dos veces, deletrea la información"
 
-#. Translators: Input help mode message for report status line text command.
-msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
-msgstr ""
-"Lee la barra de estado de la aplicación actual y mueve el navegador de "
-"objetos hacia ella. Si se presiona dos veces, deletrea la información. Si se "
-"presiona tres veces, copia la barra de estado al portapapeles"
-
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Línea de estado no encontrada"
+
+#. Translators: Input help mode message for command which reads content of the status bar.
+msgid "Reads the current application status bar."
+msgstr "Lee la barra de estado de la aplicación actual."
 
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
 msgstr "sin información de la barra de estado"
 
+#. Translators: Input help mode message for command which spells content of the status bar.
+msgid "Spells the current application status bar."
+msgstr "Deletrea la barra de estado de la aplicación actual."
+
+#. Translators: Input help mode message for command which copies status bar content to the clipboard.
+msgid ""
+"Copies content of the status bar  of current application to the clipboard."
+msgstr ""
+"Copia el contenido de la barra de estado de la aplicación actual al "
+"portapapeles."
+
 #. Translators: Reported when user attempts to copy content of the empty status line.
-msgid "unable to copy status bar content to clipboard"
-msgstr "imposible copiar el contenido de la barra de estado al portapapeles"
+msgid "Unable to copy status bar content to clipboard"
+msgstr "Imposible copiar el contenido de la barra de estado al portapapeles"
+
+#. Translators: Input help mode message for Command which moves review cursor to the status bar.
+msgid ""
+"Reads the current application status bar and moves navigator object into it."
+msgstr ""
+"Lee la barra de estado de la aplicación actual y pone el navegador de "
+"objetos en ella."
+
+#. Translators: Input help mode message for report status line text command.
+msgid ""
+"Reads the current application status bar. If pressed twice, spells the "
+"information. If pressed three times, copies the status bar to the clipboard"
+msgstr ""
+"Lee la barra de estado de la aplicación actual. Si se pulsa dos veces, "
+"deletrea la información. Si se pulsa tres veces, copia la barra de estado en "
+"el portapapeles"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -4699,6 +4757,17 @@ msgstr "teclado %s"
 msgid "keyboard, all layouts"
 msgstr "teclado, todas las disposiciones"
 
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc}, {lc}"
+
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "Predeterminado para el usuario"
+
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Aragonese"
@@ -4723,17 +4792,6 @@ msgstr "Birmano"
 msgctxt "languageName"
 msgid "Somali"
 msgstr "Somalí"
-
-#. Translators: The pattern defining how languages are displayed and sorted in in the general
-#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
-#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
-#, python-brace-format
-msgid "{desc}, {lc}"
-msgstr "{desc}, {lc}"
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "Predeterminado para el usuario"
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
@@ -6982,6 +7040,10 @@ msgid "Toggle braille input"
 msgstr "Conmutar entrada braille"
 
 #. Translators: The name of a series of braille displays.
+msgid "Standard HID Braille Display"
+msgstr "Pantalla Braille HID Estándar"
+
+#. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 msgstr "Series de la HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
 
@@ -7697,8 +7759,8 @@ msgid "figure"
 msgstr "figura"
 
 #. Translators: Identifies marked (highlighted) content
-msgid "marked content"
-msgstr "contenido marcado"
+msgid "highlighted"
+msgstr "resaltado"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -7916,13 +7978,6 @@ msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "No se pudo guardar la configuración; provablemente el sistema de archivos es "
 "de sólo lectura"
-
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-#. (example: when trying to open keyboard settings when general settings dialog is open).
-msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr ""
-"Todavía está abierto un diálogo de opciones de NVDA. Por favor ciérralo "
-"antes."
 
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
@@ -8348,7 +8403,7 @@ msgstr "&Ver complementos incompatibles..."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
-msgstr "Elegir el Fichero de Pacquete de Complemento"
+msgstr "Elegir el Fichero de Paquete de Complemento"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
@@ -9597,6 +9652,8 @@ msgid "Automatically set system &focus to focusable elements"
 msgstr "Poner automáticamente el &foco del sistema en los elementos enfocables"
 
 #. Translators: This is the label for the document formatting panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Document Formatting"
 msgstr "Formateado de Documentos"
 
@@ -9640,8 +9697,8 @@ msgstr "É&nfasis"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Mar&ked (highlighted text)"
-msgstr "Mar&cado (texto resaltado)"
+msgid "Highlighted (mar&ked) text"
+msgstr "Texto resaltado (mar&cado)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9867,10 +9924,11 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
+"Always use UI Automation to access Microsoft &Word document controls when "
+"available"
 msgstr ""
-"Utilizar UI Automation para acceder a controles de documento de Microsoft "
-"&Word cuando esté disponible"
+"Utilizar siempre UI Automation para acceder a controles de documento de "
+"Microsoft &Word cuando esté disponible"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9933,6 +9991,11 @@ msgstr "&Anotaciones"
 #. Advanced settings panel.
 msgid "Report details in browse mode"
 msgstr "Anunciar detalles en modo exploración"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report aria-description always"
+msgstr "Anunciar siempre aria-description"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10000,6 +10063,11 @@ msgstr "Texto editable"
 msgid "Caret movement timeout (in ms)"
 msgstr "Tiempo de espera de movimiento del cursor del sistema (en ms)"
 
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Report transparent color values"
+msgstr "Anunciar valores de transparencia de color"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Debug logging"
@@ -10009,6 +10077,20 @@ msgstr "Registro de depuración"
 #. Advanced settings panel
 msgid "Enabled logging categories"
 msgstr "Categorías de registro habilitadas"
+
+#. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+msgid "Play a sound for logged e&rrors:"
+msgstr "Reproducir un sonido para los e&rrores registrados:"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Only in NVDA test versions"
+msgstr "Sólo en versiones de prueba de NVDA"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Yes"
+msgstr "Sí"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -11063,8 +11145,26 @@ msgstr ""
 msgid "Not in table"
 msgstr "No estás en una tabla"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} in"
+msgstr "{val:.2f} pg"
+
+#. Translators: a measurement in centermetres
+#, python-brace-format
+msgid "{val:.2f} cm"
+msgstr "{val:.2f} cm"
+
 msgid "invoke"
 msgstr "invocar"
+
+#. Translators: part of the suggestions count message for one suggestion.
+msgid "1 suggestion"
+msgstr "1 sugerencia"
+
+#. Translators: part of the suggestions count message (for example: 2 suggestions).
+msgid "{} suggestions"
+msgstr "{} sugerencias"
 
 #. Translators: the description of a script
 msgctxt "excel-UIA"
@@ -11216,6 +11316,10 @@ msgstr "Comentario: {comment} por {author}"
 #, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
 msgstr "Comentario: {comment} por {author} en {date}"
+
+#. Translators: a message when navigating by sentence is unavailable in MS Word
+msgid "Navigating by sentence not supported in this document"
+msgstr "La navegación por frases no está admitida en este documento"
 
 msgid "Desktop"
 msgstr "Escritorio"
@@ -12583,66 +12687,22 @@ msgstr "Espaciado de línea doble"
 msgid "1.5 line spacing"
 msgstr "espaciado de línea a 1.5"
 
-#, fuzzy
-#~ msgctxt "command toggle"
-#~ msgid "off"
-#~ msgstr "desactivado"
+#~ msgid "mrkd"
+#~ msgstr "mrcd"
 
-#, fuzzy
-#~ msgctxt "command toggle"
-#~ msgid "on"
-#~ msgstr "activado"
+#~ msgid "report marked on"
+#~ msgstr "anunciar marcado activado"
 
-#~ msgid "Israeli 8 dot computer braille"
-#~ msgstr "Braille Israelí computerizado de 8 puntos"
+#~ msgid "report marked off"
+#~ msgstr "anunciar marcado desactivado"
 
-#~ msgid "COM Registration Fixing tool complete"
-#~ msgstr "Se completó la herramienta COM Registration Fixing"
+#~ msgid "marked content"
+#~ msgstr "contenido marcado"
 
-#~ msgid "Automatic (Difflib)"
-#~ msgstr "Automático (Difflib)"
+#~ msgid "An NVDA settings dialog is already open. Please close it first."
+#~ msgstr ""
+#~ "Todavía está abierto un diálogo de opciones de NVDA. Por favor ciérralo "
+#~ "antes."
 
-#~ msgid "category"
-#~ msgid_plural "categories"
-#~ msgstr[0] "categoría"
-#~ msgstr[1] "categories"
-
-#~ msgid "&Activate"
-#~ msgstr "&Activar"
-
-#~ msgctxt "line spacing value"
-#~ msgid "exact"
-#~ msgstr "exacto"
-
-#~ msgid "Russian grade 1"
-#~ msgstr "Ruso grado 1"
-
-#~ msgid "%s copied to clipboard"
-#~ msgstr "%s copiado al portapapeles"
-
-#~ msgid "Review selection copied to clipboard"
-#~ msgstr "Selección de revisión copiada al portapapeles"
-
-#~ msgid "Apply"
-#~ msgstr "Aplicar"
-
-#~ msgid "Co&mments"
-#~ msgstr "Co&mentarios"
-
-#~ msgid "C&omments"
-#~ msgstr "&Comentarios"
-
-#~ msgid "Ukrainian"
-#~ msgstr "Ucraniano"
-
-#~ msgid "Russian braille for computer code"
-#~ msgstr "Ruso para código computerizado"
-
-#~ msgid "Speaks the current foreground object"
-#~ msgstr "Verbaliza el objeto actual en primer plano"
-
-#~ msgid "&Automatically start NVDA after I log on to Windows"
-#~ msgstr "Iniciar NVDA &automáticamente después de iniciar sesión en Windows"
-
-#~ msgid "Use NVDA on the Windows &logon screen"
-#~ msgstr "Utilizar NVDA en la pantalla de &inicio de sesión de Windows"
+#~ msgid "Mar&ked (highlighted text)"
+#~ msgstr "Mar&cado (texto resaltado)"

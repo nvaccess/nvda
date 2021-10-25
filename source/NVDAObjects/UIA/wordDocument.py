@@ -5,6 +5,7 @@
 
 from comtypes import COMError
 from collections import defaultdict
+from scriptHandler import isScriptWaiting
 import textInfos
 import eventHandler
 import UIAHandler
@@ -12,12 +13,17 @@ from logHandler import log
 import controlTypes
 import ui
 import speech
+import review
+import braille
 import api
 import browseMode
 from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator, TextAttribUIATextInfoQuickNavItem
 from UIAUtils import *
 from . import UIA, UIATextInfo
-from NVDAObjects.window.winword import WordDocument as WordDocumentBase
+from NVDAObjects.window.winword import (
+	WordDocument as WordDocumentBase,
+	WordDocumentTextInfo as LegacyWordDocumentTextInfo
+)
 from scriptHandler import script
 
 
@@ -25,6 +31,7 @@ from scriptHandler import script
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
 END_OF_ROW_MARK = '\x07'
+
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
@@ -74,7 +81,12 @@ def getCommentInfoFromPosition(position):
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
 		# Use Annotation Type Comment if available
-		if typeID == UIAHandler.AnnotationType_Comment:
+		cats = position.obj._UIACustomAnnotationTypes
+		if (
+			typeID == UIAHandler.AnnotationType_Comment
+			or (typeID and typeID == cats.microsoftWord_draftComment)
+			or (typeID and typeID == cats.microsoftWord_resolvedComment)
+		):
 			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
@@ -117,6 +129,28 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 		return getPresentableCommentInfoFromPosition(commentInfo)
 
 class WordDocumentTextInfo(UIATextInfo):
+
+	def _ensureRangeVisibility(self):
+		try:
+			inView = self.pointAtStart in self.obj.location
+		except LookupError:
+			inView = False
+		if not inView:
+			self._rangeObj.ScrollIntoView(True)
+
+	def updateSelection(self):
+		# #9611: The document must be scrolled so that the range is visible on screen
+		# Otherwise trying to set the selection to the range
+		# may cause the selection to remain on the wrong page.
+		self._ensureRangeVisibility()
+		super().updateSelection()
+
+	def updateCaret(self):
+		# #9611: The document must be scrolled so that the range is visible on screen
+		# Otherwise trying to set the caret to the range
+		# may cause the caret to remain on the wrong page.
+		self._ensureRangeVisibility()
+		super().updateCaret()
 
 	def _get_locationText(self):
 		point = self.pointAtStart
@@ -178,11 +212,16 @@ class WordDocumentTextInfo(UIATextInfo):
 				or obj.name
 			)
 		# #11430: Read-only tables, such as in the Outlook message viewer
-		# should be treated as layout tables.
+		# should be treated as layout tables,
+		# if they have either 1 column or 1 row.
 		if (
 			obj.appModule.appName == 'outlook'
 			and obj.role == controlTypes.Role.TABLE
 			and controlTypes.State.READONLY in obj.states
+			and (
+				obj.rowCount <= 1
+				or obj.columnCount <= 1
+			)
 		):
 			field['table-layout'] = True
 		return field
@@ -385,6 +424,46 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		if activityId == "AccSN2":  # Delete activity ID
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
+
+	# The following overide of the EditableText._caretMoveBySentenceHelper private method
+	# Falls back to the MS Word object model if available.
+	# This override should be removed as soon as UI Automation in MS Word has the ability to move by sentence.
+	def _caretMoveBySentenceHelper(self, gesture, direction):
+		if isScriptWaiting():
+			return
+		if not self.WinwordSelectionObject:
+			# Legacy object model not available.
+			# Translators: a message when navigating by sentence is unavailable in MS Word
+			ui.message(_("Navigating by sentence not supported in this document"))
+			gesture.send()
+			return
+		# Using the legacy object model,
+		# Move the caret to the next sentence in the requested direction.
+		legacyInfo = LegacyWordDocumentTextInfo(self, textInfos.POSITION_CARET)
+		legacyInfo.move(textInfos.UNIT_SENTENCE, direction)
+		# Save the start of the sentence for future use
+		legacyStart = legacyInfo.copy()
+		# With the legacy object model,
+		# Move the caret to the end of the new sentence.
+		legacyInfo.move(textInfos.UNIT_SENTENCE, 1)
+		legacyInfo.updateCaret()
+		# Fetch the caret position (end of the next sentence) with UI automation.
+		endInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		# Move the caret back to the start of the next sentence,
+		# where it should be left for the user.
+		legacyStart.updateCaret()
+		# Fetch the new caret position (start of the next sentence) with UI Automation.
+		startInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		# Make a UI automation text range spanning the entire next sentence.
+		info = startInfo.copy()
+		info.end = endInfo.end
+		# Speak the sentence moved to
+		speech.speakTextInfo(info, unit=textInfos.UNIT_SENTENCE, reason=controlTypes.OutputReason.CARET)
+		# Forget the word currently being typed as the user has moved the caret somewhere else.
+		speech.clearTypedWordBuffer()
+		# Alert review and braille the caret has moved to its new position
+		review.handleCaretMove(info)
+		braille.handler.handleCaretMove(self)
 
 	@script(
 		gesture="kb:NVDA+alt+c",

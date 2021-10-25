@@ -46,6 +46,7 @@ import core
 import keyboardHandler
 import characterProcessing
 from . import guiHelper
+
 try:
 	import updateCheck
 except RuntimeError:
@@ -60,6 +61,10 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+
+#: The size that settings panel text descriptions should be wrapped at.
+# Ensure self.scaleSize is used to adjust for OS scaling adjustments.
+PANEL_DESCRIPTION_WIDTH = 544
 
 class SettingsDialog(
 		DpiScalingHelperMixinWithoutInit,
@@ -1058,7 +1063,11 @@ class SynthesizerSelectionDialog(SettingsDialog):
 
 		# Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 		duckingListLabelText = _("Audio d&ucking mode:")
-		self.duckingList=settingsSizerHelper.addLabeledControl(duckingListLabelText, wx.Choice, choices=audioDucking.audioDuckingModes)
+		self.duckingList = settingsSizerHelper.addLabeledControl(
+			duckingListLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in audioDucking.AudioDuckingMode]
+		)
 		self.bindHelpEvent("SelectSynthesizerDuckingMode", self.duckingList)
 		index=config.conf['audio']['audioDuckingMode']
 		self.duckingList.SetSelection(index)
@@ -1908,6 +1917,14 @@ class InputCompositionPanel(SettingsPanel):
 
 
 class ObjectPresentationPanel(SettingsPanel):
+
+	panelDescription = _(
+		# Translators: This is a label appearing on the Object Presentation settings panel.
+		"Configure how much information NVDA will present about controls."
+		" These options apply to focus reporting and NVDA object navigation,"
+		" but not when reading text content e.g. web content with browse mode."
+	)
+
 	# Translators: This is the label for the object presentation panel.
 	title = _("Object Presentation")
 	helpId = "ObjectPresentationSettings"
@@ -1932,6 +1949,12 @@ class ObjectPresentationPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		self.windowText = sHelper.addItem(
+			wx.StaticText(self, label=self.panelDescription)
+		)
+		self.windowText.Wrap(self.scaleSize(PANEL_DESCRIPTION_WIDTH))
+
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
 		reportToolTipsText = _("Report &tooltips")
@@ -2209,7 +2232,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		highlightText = _("Mar&ked (highlighted text)")
+		highlightText = _("Highlighted (mar&ked) text")
 		self.highlightCheckBox = fontGroup.addItem(
 			wx.CheckBox(fontGroupBox, label=highlightText)
 		)
@@ -2242,6 +2265,12 @@ class DocumentFormattingPanel(SettingsPanel):
 		commentsText = _("No&tes and comments")
 		self.commentsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=commentsText))
 		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
+		bookmarksText = _("&Bookmarks")
+		self.bookmarksCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=bookmarksText))
+		self.bookmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportBookmarks"])
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2450,6 +2479,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		)
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportBookmarks"] = self.bookmarksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
@@ -2603,7 +2633,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Use UI Automation to access Microsoft &Word document controls when available")
+		label = _("Always use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
 		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -2975,7 +3005,7 @@ class AdvancedPanel(SettingsPanel):
 		warningGroup.addItem(warningText)
 
 		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=self.warningExplanation))
-		self.windowText.Wrap(self.scaleSize(544))
+		self.windowText.Wrap(self.scaleSize(PANEL_DESCRIPTION_WIDTH))
 
 		enableAdvancedControlslabel = _(
 			# Translators: This is the label for a checkbox in the Advanced settings panel.
@@ -3228,6 +3258,37 @@ class DictionaryDialog(SettingsDialog):
 			del self.tempSpeechDict[index]
 			index=self.dictList.GetNextSelected(index)
 		self.dictList.SetFocus()
+
+
+class DefaultDictionaryDialog(DictionaryDialog):
+	def __init__(self, parent):
+		super().__init__(
+			parent,
+			# Translators: Title for default speech dictionary dialog.
+			title=_("Default dictionary"),
+			speechDict=speechDictHandler.dictionaries["default"],
+		)
+
+
+class VoiceDictionaryDialog(DictionaryDialog):
+	def __init__(self, parent):
+		super().__init__(
+			parent,
+			# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries["voice"].fileName,
+			speechDict=speechDictHandler.dictionaries["voice"],
+		)
+
+
+class TemporaryDictionaryDialog(DictionaryDialog):
+	def __init__(self, parent):
+		super().__init__(
+			parent,
+			# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+			# as NvDA is running).
+			title=_("Temporary dictionary"),
+			speechDict=speechDictHandler.dictionaries["temp"],
+		)
 
 
 class BrailleSettingsPanel(SettingsPanel):

@@ -1580,7 +1580,8 @@ To toggle simple review mode from anywhere, please assign a custom gesture using
 
 +++ Object Presentation (NVDA+control+o) +++[ObjectPresentationSettings]
 The Object Presentation category in the NVDA Settings dialog is used to set how much information NVDA will present about controls such as description, position information and so on.
-This category contains the following options:
+These options don't typically apply to browse mode.
+These options typically apply to focus reporting and NVDA object navigation, but not reading text content e.g. browse mode.
 
 ==== Report tooltips ====[ObjectPresentationReportToolTips]
 A checkbox that when checked tells NVDA to report tooltips as they appear.
@@ -1745,11 +1746,12 @@ You can configure reporting of:
  - Font attributes
  - Superscripts and subscripts
  - Emphasis
- - Marked (Highlighted text)
+ - Highlighted (Marked) text
  - Style
  - Colours
 - Document information
  - Comments
+ - Bookmarks
  - Editor revisions
  - Spelling errors
 - Pages and spacing
@@ -1835,12 +1837,12 @@ This has a major negative impact on performance, especially in applications like
 Therefore, when this option is enabled, NVDA will limit event registration to the system focus for most events.
 If you suffer from performance issues in one or more applications, We recommend you to try this functionality to see whether performance improves.
 
-==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
-When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls.
+==== Always use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
+When this option is enabled, NVDA will always try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls, even for less recent builds of Microsoft Office 2016/365.
 This includes Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
- For the most recent versions of Microsoft Office 2016/365 running on Windows 10 and later, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
-However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
-We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
+ For Microsoft Office with a build version of 16.0.13901 or greater, NVDA will always use UI Automation to access Microsoft Word documents no matter how this setting is configured. 
+For the most recent versions of Microsoft Office 2016/365 running on Windows 10 and later, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
+However, There may be some information which is either not exposed, or exposed incorrectly in some  older builds of Microsoft Office, which means this UI automation support cannot always be relied upon.
 
 ==== Use UI Automation to access the Windows Console when available ====[AdvancedSettingsConsoleUIA]
 When this option is enabled, NVDA will use a new, work in progress version of its support for Windows Console which takes advantage of [accessibility improvements made by Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. This feature is highly experimental and is still incomplete, so its use is not yet recommended. However, once completed, it is anticipated that this new support will become the default, improving NVDA's performance and stability in Windows command consoles.
