@@ -25,6 +25,7 @@ from comtypes import (
 
 import threading
 import time
+import IAccessibleHandler.internalWinEventHandler
 import config
 import api
 import appModuleHandler
@@ -533,6 +534,15 @@ class UIAHandler(COMObject):
 			return
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
+			# #12982: This element may be the root of an MS Word document
+			# for which we may be refusing to use UIA as its implementation may be incomplete.
+			# However, there are some controls embedded in the MS Word document window
+			# such as the Modern comments side track pain
+			# for which we do have to use UIA.
+			# But, if focus jumps from one of these controls back to the document (E.g. the user presses escape),
+			# we receive no MSAA focus event, only a UIA focus event.
+			# As we are not treating the Word doc as UIA, we need to manually fire an MSAA focus event on the document.
+			self._emitMSAAFocusForWordDocIfNecessary(sender)
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: Ignoring for non native element")
 			return
@@ -850,6 +860,55 @@ class UIAHandler(COMObject):
 		UIAElement._nearestWindowHandle=window
 		return window
 
+	def _isNetUIEmbeddedInWordDoc(self, element: UIA.IUIAutomationElement) -> bool:
+		"""
+		Detects if the given UIA element represents a control in a NetUI container
+		embedded within a MS Word document window.
+		E.g. the Modern Comments side track pain.
+		This method also caches the answer on the element itself
+		to both speed up checking later and to allow checking on an already dead element
+		E.g. a previous focus.
+		"""
+		if getattr(element, '_isNetUIEmbeddedInWordDoc', False):
+			return True
+		windowHandle = self.getNearestWindowHandle(element)
+		if winUser.getClassName(windowHandle) != '_WwG':
+			return False
+		condition = UIAUtils.createUIAMultiPropertyCondition(
+			{UIA.UIA_ClassNamePropertyId: 'NetUIHWNDElement'},
+			{UIA.UIA_NativeWindowHandlePropertyId: windowHandle}
+		)
+		walker = self.clientObject.createTreeWalker(condition)
+		cacheRequest = self.clientObject.createCacheRequest()
+		cacheRequest.AddProperty(UIA.UIA_ClassNamePropertyId)
+		cacheRequest.addProperty(UIA.UIA_NativeWindowHandlePropertyId)
+		ancestor = walker.NormalizeElementBuildCache(element, cacheRequest)
+		# ancestor will either be the embedded NetUIElement, or just hit the root of the MS Word document window
+		if ancestor.CachedClassName != 'NetUIHWNDElement':
+			return False
+		element._isNetUIEmbeddedInWordDoc = True
+		return True
+
+	def _emitMSAAFocusForWordDocIfNecessary(self, element: UIA.IUIAutomationElement) -> None:
+		"""
+		Fires an MSAA focus event on the given UIA element
+		if the element is the root of a Word document,
+		and the focus was previously in a NetUI container embedded in this Word document.
+		"""
+		import NVDAObjects.UIA
+		oldFocus = eventHandler.lastQueuedFocusObject
+		if (
+			isinstance(oldFocus, NVDAObjects.UIA.UIA)
+			and getattr(oldFocus.UIAElement, '_isNetUIEmbeddedInWordDoc', False)
+			and element.CachedClassName == '_WwG'
+			and element.CachedControlType == UIA.UIA_DocumentControlTypeId
+			and self.getNearestWindowHandle(element) == oldFocus.windowHandle
+			and not self.isUIAWindow(oldFocus.windowHandle)
+		):
+			IAccessibleHandler.internalWinEventHandler.winEventLimiter.addEvent(
+				winUser.EVENT_OBJECT_FOCUS, oldFocus.windowHandle, winUser.OBJID_CLIENT, 0, oldFocus.windowThreadID
+			)
+
 	def isNativeUIAElement(self,UIAElement):
 		#Due to issues dealing with UIA elements coming from the same process, we do not class these UIA elements as usable.
 		#It seems to be safe enough to retreave the cached processID, but using tree walkers or fetching other properties causes a freeze.
@@ -863,6 +922,14 @@ class UIAHandler(COMObject):
 		windowHandle=self.getNearestWindowHandle(UIAElement)
 		if windowHandle:
 			if self.isUIAWindow(windowHandle):
+				return True
+			# #12982: although NVDA by default may not treat this element's window as native UIA,
+			# E.g. it is proxied from MSAA, or NVDA has specifically black listed it,
+			# It may be an element from a NetUIcontainer embedded in a Word document,
+			# such as the MS Word Modern Comments side track pain.
+			# These elements are only exposed via UIA, and not MSAA,
+			# thus we must treat these elements as native UIA.
+			if self._isNetUIEmbeddedInWordDoc(UIAElement):
 				return True
 			if winUser.getClassName(windowHandle)=="DirectUIHWND" and "IEFRAME.dll" in UIAElement.cachedProviderDescription and UIAElement.currentClassName in ("DownloadBox", "accessiblebutton", "DUIToolbarButton", "PushButton"):
 				# This is the IE 9 downloads list.
