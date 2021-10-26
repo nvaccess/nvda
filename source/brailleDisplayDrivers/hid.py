@@ -197,8 +197,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(HID):panLeft",),
-			"braille_scrollForward": ("br(HID):panRight",),
+			"braille_scrollBack": (
+				"br(HID):panLeft",
+				"br(HID):rockerUp",
+			),
+			"braille_scrollForward": (
+				"br(HID):panRight",
+				"br(HID):rockerDown",
+			),
 			"braille_previousLine": ("br(HID):space+dot1",),
 			"braille_nextLine": ("br(HID):space+dot4",),
 			"braille_routeTo": ("br(HID):routerSet1_routerKey",),
