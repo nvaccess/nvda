@@ -34,11 +34,13 @@ def messageBox(
 	global _isInMessageBox
 	wasAlready = _isInMessageBox
 	_isInMessageBox = True
-	if not parent:
-		mainFrame.prePopup()
-	res = wx.MessageBox(message, caption, style, parent or mainFrame)
-	if not parent:
-		mainFrame.postPopup()
-	if not wasAlready:
-		_isInMessageBox = False
+	try:
+		if not parent:
+			mainFrame.prePopup()
+		res = wx.MessageBox(message, caption, style, parent or mainFrame)
+		if not parent:
+			mainFrame.postPopup()
+	finally:
+		if not wasAlready:
+			_isInMessageBox = False
 	return res
