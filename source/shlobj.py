@@ -13,12 +13,12 @@ and "C:\Winnt" on another.
 
 import comtypes
 import ctypes
-import enum
+from enum import Enum
 import functools
-import typing
+from typing import Optional, Union
 
 
-class FolderId(str, enum.Enum):
+class FolderId(str, Enum):
 	"""Contains guids of known folders from Knownfolders.h. Full list is availabe at:
 	https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid"""
 	#: The file system directory that serves as a common repository for application-specific data.
@@ -38,10 +38,17 @@ class FolderId(str, enum.Enum):
 
 
 @functools.lru_cache(maxsize=128)
-def SHGetKnownFolderPath(folderGuid: FolderId, dwFlags: int = 0, hToken: typing.Optional[int] = None) -> str:
+def SHGetKnownFolderPath(
+		folderGuid: Union[FolderId, str],
+		dwFlags: int = 0,
+		hToken: Optional[int] = None
+) -> str:
 	"""Wrapper for `SHGetKnownFolderPath` which caches the results
 	to avoid calling the win32 function unnecessarily."""
-	guid = comtypes.GUID(folderGuid.value)
+	if isinstance(folderGuid, FolderId):
+		folderGuid = folderGuid.value
+	guid = comtypes.GUID(folderGuid)
+
 	pathPointer = ctypes.c_wchar_p()
 	res = ctypes.windll.shell32.SHGetKnownFolderPath(
 		comtypes.byref(guid),
