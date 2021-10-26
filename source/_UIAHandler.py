@@ -537,7 +537,7 @@ class UIAHandler(COMObject):
 			# #12982: This element may be the root of an MS Word document
 			# for which we may be refusing to use UIA as its implementation may be incomplete.
 			# However, there are some controls embedded in the MS Word document window
-			# such as the Modern comments side track pain
+			# such as the Modern comments side track pane
 			# for which we do have to use UIA.
 			# But, if focus jumps from one of these controls back to the document (E.g. the user presses escape),
 			# we receive no MSAA focus event, only a UIA focus event.
@@ -864,7 +864,7 @@ class UIAHandler(COMObject):
 		"""
 		Detects if the given UIA element represents a control in a NetUI container
 		embedded within a MS Word document window.
-		E.g. the Modern Comments side track pain.
+		E.g. the Modern Comments side track pane.
 		This method also caches the answer on the element itself
 		to both speed up checking later and to allow checking on an already dead element
 		E.g. a previous focus.
@@ -926,7 +926,7 @@ class UIAHandler(COMObject):
 			# #12982: although NVDA by default may not treat this element's window as native UIA,
 			# E.g. it is proxied from MSAA, or NVDA has specifically black listed it,
 			# It may be an element from a NetUIcontainer embedded in a Word document,
-			# such as the MS Word Modern Comments side track pain.
+			# such as the MS Word Modern Comments side track pane.
 			# These elements are only exposed via UIA, and not MSAA,
 			# thus we must treat these elements as native UIA.
 			if self._isNetUIEmbeddedInWordDoc(UIAElement):
