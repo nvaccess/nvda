@@ -5,7 +5,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Optional
 import time
 import os
 import sys
@@ -25,6 +24,7 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
+from .message import isInMessageBox, messageBox
 from .settingsDialogs import (
 	SettingsDialog,
 	DefaultDictionaryDialog,
@@ -51,7 +51,6 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 
 ### Globals
 mainFrame = None
-isInMessageBox = False
 
 
 class MainFrame(wx.Frame):
@@ -146,7 +145,7 @@ class MainFrame(wx.Frame):
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
-		if isInMessageBox:
+		if isInMessageBox():
 			return
 		self.prePopup()
 		try:
@@ -296,7 +295,7 @@ class MainFrame(wx.Frame):
 		pythonConsole.activate()
 
 	def onAddonsManagerCommand(self,evt):
-		if isInMessageBox:
+		if isInMessageBox():
 			return
 		self.prePopup()
 		from .addonGui import AddonsDialog
@@ -312,7 +311,7 @@ class MainFrame(wx.Frame):
 		NVDAObject.clearDynamicClassCache()
 
 	def onCreatePortableCopyCommand(self,evt):
-		if isInMessageBox:
+		if isInMessageBox():
 			return
 		self.prePopup()
 		import gui.installerGui
@@ -321,15 +320,15 @@ class MainFrame(wx.Frame):
 		self.postPopup()
 
 	def onInstallCommand(self, evt):
-		if isInMessageBox:
+		if isInMessageBox():
 			return
 		from gui import installerGui
 		installerGui.showInstallGui()
 
 	def onRunCOMRegistrationFixesCommand(self, evt):
-		if isInMessageBox:
+		if isInMessageBox():
 			return
-		if gui.messageBox(
+		if messageBox(
 			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
 			_("You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?"),
 			# Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool 
@@ -361,7 +360,7 @@ class MainFrame(wx.Frame):
 		)
 
 	def onConfigProfilesCommand(self, evt):
-		if isInMessageBox:
+		if isInMessageBox():
 			return
 		self.prePopup()
 		from .configProfiles import ProfilesDialog
@@ -575,33 +574,6 @@ def showGui():
 def quit():
 	wx.CallAfter(mainFrame.onExitCommand, None)
 
-
-def messageBox(
-		message: str,
-		caption: str = wx.MessageBoxCaptionStr,
-		style: int = wx.OK | wx.CENTER,
-		parent: Optional[wx.Window] = None
-) -> int:
-	"""Display a message dialog.
-	This should be used for all message dialogs
-	rather than using C{wx.MessageDialog} and C{wx.MessageBox} directly.
-	@param message: The message text.
-	@param caption: The caption (title) of the dialog.
-	@param style: Same as for wx.MessageBox.
-	@param parent: The parent window.
-	@return: Same as for wx.MessageBox.
-	"""
-	global isInMessageBox
-	wasAlready = isInMessageBox
-	isInMessageBox = True
-	if not parent:
-		mainFrame.prePopup()
-	res = wx.MessageBox(message, caption, style, parent or mainFrame)
-	if not parent:
-		mainFrame.postPopup()
-	if not wasAlready:
-		isInMessageBox = False
-	return res
 
 def runScriptModalDialog(dialog, callback=None):
 	"""Run a modal dialog from a script.
