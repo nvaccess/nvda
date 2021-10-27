@@ -61,7 +61,10 @@ mainFrame = None
 if version_year < 2022:
 	def __getattr__(name):
 		if name == "isInMessageBox":
-			log.warning("gui.isInMessageBox is deprecated and will be removed in 2022.1. Consult the changes for developers in 2022.1 for advice on alternatives.")
+			log.warning(
+				"gui.isInMessageBox is deprecated and will be removed in 2022.1."
+				"Consult the changes for developers in 2022.1 for advice on alternatives."
+			)
 			return _isInMessageBox()
 		raise AttributeError(f"module {__name__} has no attribute {name}")
 
