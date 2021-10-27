@@ -496,7 +496,7 @@ class ExcelCell(ExcelObject):
 			if self.rowSpan > 1 or self.columnSpan > 1:
 				# Excel does not offer information about merged cells
 				# but merges all merged cells into one UIA element named as the first cell in the merged range.
-				# We have to calculate the last adress' name manually.
+				# We have to calculate the last address name manually.
 				firstAddress = name
 				firstColumn, firstRow = self._coordinateRegEx.match(firstAddress).groups()
 				firstRow = int(firstRow)
