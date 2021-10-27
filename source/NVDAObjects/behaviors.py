@@ -266,7 +266,7 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _get_diffAlgo(self):
+	def _get_diffAlgo(self) -> Union[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
 		"""
 			This property controls which diffing algorithm should be used by
 			this object. If the object contains a strictly contiguous
@@ -275,9 +275,9 @@ class LiveText(NVDAObject):
 			then diffHandler.prefer_dmp (character-based diffing) is suitable.
 			Otherwise, use diffHandler.prefer_difflib.
 			
-			@Note: Barring a very good reason to do otherwise, please return
-			either diffHandler.prefer_dmp() or diffHandler.prefer_difflib()
-			so that user preference can override this choice.
+			@Note: Return either diffHandler.prefer_dmp() or
+			diffHandler.prefer_difflib() so that the diffAlgo user
+			preference can override this choice.
 		"""
 		return diffHandler.prefer_dmp()
 
