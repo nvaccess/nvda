@@ -5,14 +5,16 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import threading
 from typing import Optional
 import wx
 
-_isInMessageBox = False
+_messageBoxCounterLock = threading.Lock()
+_messageBoxCounter = 0
 
 
 def isInMessageBox() -> bool:
-	return _isInMessageBox
+	return _messageBoxCounter != 0
 
 
 def messageBox(
@@ -31,9 +33,9 @@ def messageBox(
 	@return: Same as for wx.MessageBox.
 	"""
 	from gui import mainFrame
-	global _isInMessageBox
-	wasAlready = _isInMessageBox
-	_isInMessageBox = True
+	global _messageBoxCounter
+	with _messageBoxCounterLock:
+		_messageBoxCounter += 1
 	try:
 		if not parent:
 			mainFrame.prePopup()
@@ -41,6 +43,6 @@ def messageBox(
 		if not parent:
 			mainFrame.postPopup()
 	finally:
-		if not wasAlready:
-			_isInMessageBox = False
+		with _messageBoxCounterLock:
+			_messageBoxCounter -= 1
 	return res

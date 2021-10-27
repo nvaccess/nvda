@@ -45,9 +45,6 @@ import speechViewer
 import winUser
 import api
 
-if version_year < 2022:
-	from .message import _isInMessageBox as isInMessageBox  # noqa F401
-
 try:
 	import updateCheck
 except RuntimeError:
@@ -60,6 +57,13 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 
 ### Globals
 mainFrame = None
+
+if version_year < 2022:
+	def __getattr__(name):
+		if name == "isInMessageBox":
+			log.warning("gui.isInMessageBox is deprecated, instead use gui.message.isInMessageBox()")
+			return _isInMessageBox()
+		raise AttributeError(f"module {__name__} has no attribute {name}")
 
 
 class MainFrame(wx.Frame):
