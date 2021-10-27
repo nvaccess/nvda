@@ -28,7 +28,7 @@ import ui
 import braille
 import nvwave
 import globalVars
-from typing import List
+from typing import List, Union
 import diffHandler
 
 
