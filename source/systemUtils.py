@@ -9,7 +9,6 @@ import ctypes
 import winKernel
 import shellapi
 import winUser
-import os
 import functools
 import shlobj
 
@@ -17,8 +16,8 @@ import shlobj
 @functools.lru_cache(maxsize=1)
 def hasSyswow64Dir() -> bool:
 	"""Returns `True` if the current system has separate system32 directories for 32-bit processes."""
-	nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.System)
-	Syswow64Sys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.SystemX86)
+	nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.SYSTEM)
+	Syswow64Sys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.SYSTEM_X86)
 	return nativeSys32 != Syswow64Sys32
 
 

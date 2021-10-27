@@ -103,7 +103,7 @@ def getInstalledUserConfigPath():
 	except WindowsError:
 		configInLocalAppData=False
 	configParent = shlobj.SHGetKnownFolderPath(
-		shlobj.FolderId.LocalAppData if configInLocalAppData else shlobj.FolderId.RoamingAppData
+		shlobj.FolderId.LOCAL_APP_DATA if configInLocalAppData else shlobj.FolderId.ROAMING_APP_DATA
 	)
 	try:
 		return os.path.join(configParent, "nvda")
