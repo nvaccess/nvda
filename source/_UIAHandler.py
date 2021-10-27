@@ -45,6 +45,10 @@ from queue import Queue
 import aria
 
 
+#: The window class name for Microsoft Word documents.
+# Microsoft Word's UI Automation implementation
+# also exposes this value as the document UIA element's classname property.
+MS_WORD_DOCUMENT_WINDOW_CLASS = "_WwG"
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
@@ -768,7 +772,7 @@ class UIAHandler(COMObject):
 			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 			if (
 				# An MS Word document window 
-				windowClass=="_WwG" 
+				windowClass == MS_WORD_DOCUMENT_WINDOW_CLASS
 				# Disabling is only useful if we can inject in-process (and use our older code)
 				and canUseOlderInProcessApproach
 				# Allow the user to explicitly force UIA support for MS Word documents
@@ -860,7 +864,7 @@ class UIAHandler(COMObject):
 		if getattr(element, '_isNetUIEmbeddedInWordDoc', False):
 			return True
 		windowHandle = self.getNearestWindowHandle(element)
-		if winUser.getClassName(windowHandle) != '_WwG':
+		if winUser.getClassName(windowHandle) != MS_WORD_DOCUMENT_WINDOW_CLASS:
 			return False
 		condition = UIAUtils.createUIAMultiPropertyCondition(
 			{UIA.UIA_ClassNamePropertyId: 'NetUIHWNDElement'},
@@ -869,7 +873,7 @@ class UIAHandler(COMObject):
 		walker = self.clientObject.createTreeWalker(condition)
 		cacheRequest = self.clientObject.createCacheRequest()
 		cacheRequest.AddProperty(UIA.UIA_ClassNamePropertyId)
-		cacheRequest.addProperty(UIA.UIA_NativeWindowHandlePropertyId)
+		cacheRequest.AddProperty(UIA.UIA_NativeWindowHandlePropertyId)
 		ancestor = walker.NormalizeElementBuildCache(element, cacheRequest)
 		# ancestor will either be the embedded NetUIElement, or just hit the root of the MS Word document window
 		if ancestor.CachedClassName != 'NetUIHWNDElement':
@@ -888,7 +892,7 @@ class UIAHandler(COMObject):
 		if (
 			isinstance(oldFocus, NVDAObjects.UIA.UIA)
 			and getattr(oldFocus.UIAElement, '_isNetUIEmbeddedInWordDoc', False)
-			and element.CachedClassName == '_WwG'
+			and element.CachedClassName == MS_WORD_DOCUMENT_WINDOW_CLASS
 			and element.CachedControlType == UIA.UIA_DocumentControlTypeId
 			and self.getNearestWindowHandle(element) == oldFocus.windowHandle
 			and not self.isUIAWindow(oldFocus.windowHandle)
