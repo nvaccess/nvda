@@ -38,7 +38,7 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		return super(WinConsole,self).TextInfo
 
 	def _get_diffAlgo(self):
-		# Legacy consoles contain only one screen of text at a time.
+		# #12974: Legacy consoles contain only one screen of text at a time.
 		# Use Difflib to reduce choppiness in reading.
 		return prefer_difflib()
 

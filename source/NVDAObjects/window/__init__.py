@@ -415,7 +415,7 @@ class DisplayModelLiveText(LiveText, Window):
 		displayModel.requestTextChangeNotifications(self, False)
 
 	def _get_diffAlgo(self):
-		# The display model gives us only one screen of text at a time.
+		# #12974: The display model gives us only one screen of text at a time.
 		# Use Difflib to reduce choppiness in reading.
 		return prefer_difflib()
 

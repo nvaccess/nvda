@@ -382,7 +382,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 
 	def _get_diffAlgo(self):
 		if self.apiLevel < WinConsoleAPILevel.FORMATTED:
-			# These consoles are constrained to onscreen text.
+			# #12974: These consoles are constrained to onscreen text.
 			# Use Difflib to reduce choppiness in reading.
 			return prefer_difflib()
 		else:
