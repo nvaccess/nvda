@@ -103,7 +103,7 @@ def getInstalledUserConfigPath():
 	except WindowsError:
 		configInLocalAppData=False
 	configParent = shlobj.SHGetKnownFolderPath(
-		shlobj.FOLDERID.LocalAppData.value if configInLocalAppData else shlobj.FOLDERID.RoamingAppData.value
+		shlobj.FolderId.LOCAL_APP_DATA if configInLocalAppData else shlobj.FolderId.ROAMING_APP_DATA
 	)
 	try:
 		return os.path.join(configParent, "nvda")
@@ -1151,4 +1151,3 @@ class ProfileTrigger(object):
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
-
