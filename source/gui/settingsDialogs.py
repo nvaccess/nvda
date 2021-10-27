@@ -41,7 +41,7 @@ import brailleInput
 import vision
 import vision.providerInfo
 import vision.providerBase
-from typing import Callable, List, Optional, Any, Union
+from typing import Callable, List, Optional, Any
 import core
 import keyboardHandler
 import characterProcessing
@@ -427,7 +427,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def __init__(
 			self,
-			parent: Union[wx.Window, None],
+			parent: Optional[wx.Window],
 			initialCategory: Optional[SettingsPanel] = None,
 	):
 		"""
@@ -545,7 +545,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		self.Bind(EVT_RW_LAYOUT_NEEDED, self._onPanelLayoutChanged)
 
-	def checkCategory(self, cat: Union[SettingsPanel, None]) -> None:
+	def checkCategory(self, cat: Optional[SettingsPanel]) -> None:
 		"""
 		@param cat: The class of the panel on which the dialog should be opened or C{None} if no specific panel
 			is targetted.
