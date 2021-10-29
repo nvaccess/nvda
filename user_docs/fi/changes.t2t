@@ -4,15 +4,31 @@
 %!includeconf: ../changes.t2tconf
 
 = 2021.3 =
+Tämä versio esittelee tuen uudelle HID Braille -määritykselle.
+Sen tarkoituksena on standardoida pistenäyttöjen tuki, jossa ei tarvita valmistajakohtaisia ajureita.
+Päivityksiä eSpeak-NG:hen ja LibLouis-pistekirjoituskääntäjään, mukaan lukien uusi venäläinen ja vendalainen taulukko.
+Virheäänet voidaan ottaa käyttöön NVDA:n vakaissa versioissa uudella Lisäasetukset-paneelin asetuksella.
+Jatkuva luku vierittää nyt näkymää Wordissa pitääkseen nykyisen sijainnin näkyvissä.
+Paljon parannuksia käytettäessä Officea UIA:n kanssa.
+Eräs UIA-korjaus on, että Outlook jättää nyt huomiotta viesteissä useammantyyppisiä asettelutaulukoita.
+
+Tärkeitä huomautuksia:
+
+Suojausvarmenteemme päivityksen vuoksi pieni määrä käyttäjiä saa virheilmoituksen, kun NVDA 2021.2 tarkistaa päivityksiä.
+NVDA pyytää nyt Windowsia päivittämään suojausvarmenteet, mikä estää tämän virheen tulevaisuudessa.
+Asianomaisten käyttäjien on ladattava tämä päivitys manuaalisesti.
+
 
 == Uudet ominaisuudet ==
 - Lisätty syötekomento solun reunojen tyylin ilmaisemisasetuksen vaihtamiseen. (#10408)
 - Tuki uudelle HID Braille -määritykselle, jonka tarkoituksena on pistenäyttötuen standardointi. (#12523)
  - NVDA tunnistaa Tätä määritystä tukevat laitteet automaattisesti.
  - Tekniset tiedot tämän määrityksen NVDA-toteutuksesta ovat osoitteessa https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+ -
 - Lisätty tuki VisioBraille Vario 4 -pistenäytölle. (#12607)
 - Virheilmoitukset voidaan ottaa käyttöön lisäasetuksista mitä tahansa NVDA:n versiota käytettäessä. (#12672)
 - NVDA puhuu Windows 10:ssä ja uudemmissa ehdotusten määrän kirjoitettaessa hakuehtoja sellaisissa sovelluksissa kuin Asetukset ja Microsoft Store. (#7330, #12758, #12790)
+- Taulukossa liikkumista tuetaan nyt ruudukkosäätimissä, jotka on luotu PowerShellin Out-GridView-cmdlet-komentoa käyttäen. (#12928)
 -
 
 
@@ -49,13 +65,15 @@ Mikäli tarvitset tätä toiminnallisuutta, määritä syötekomento asianmukais
 - Asiakirjaa vieritetään nyt automaattisesti ja kohdistimen sijainti päivitetään asianmukaisesti Microsoft Wordissa jatkuvaa lukua käytettäessä UI automation -rajapinnan ollessa käytössä. (#9611)
 - Kun NVDA käyttää Outlookissa sähköposteja luettaessa UI Automation -rajapintaa, tiyetyt taulukot merkitään nyt asettelutaulukoiksi, mikä tarkoittaa, ettei niitä ilmaista oletusarvoisesti. (#11430)
 - Korjattu harvinainen virhe äänilaitteiden vaihdossa. (#12620)
-- HID Braille -ajurin tukemien pistenäyttöjen kosketuskohdistinnäppäinten järjestys ei ole enää käänteinen. (#12860)
 - Pistekirjoituksen syötön  pitäisi toimia luotettavammin muokkauskentissä kaunokirjallisia pistetaulukkoja käytettäessä. (#12667)
 - NVDA ilmoittaa nyt viikonpäivän kokonaisuudessaan Windowsin ilmoitusalueen kalenterissa liikuttaessa. (#12757)
 - Pistenäytön vierittäminen eteen- ja taaksepäin ei enää siirrä virheellisesti takaisin kohdistimen alkuperäiseen sijaintiin Microsoft Wordissa käytettäessä kiinalaista syöttömenetelmää, kuten Taiwan - Microsoft Quick. (#12855)
 - Kun Microsoft Word -asiakirjojen lukemiseen käytetään UIA:ta, virkkeittäin liikkuminen (Alt+Alanuoli / Alt+Ylänuoli) on taas mahdollista. (#9254)
-- Kappalesisennykset ilmoitetaan nyt, kun MS Wordia käytetään UIA:n kautta. (#12899(
-- Muutosten seurantakomento ja jotkin muut lokalisoidut komennot puhutaan, kun MS Wordia käytetään UIA:n kautta. (#12904)
+- Kappalesisennykset ilmoitetaan, kun MS Wordia käytetään UIA:n kautta. (#12899(
+- Muutostenjäljityskomento ja jotkin muut lokalisoidut komennot puhutaan, kun MS Wordia käytetään UIA:n kautta. (#12904)
+- Korjattu kaksinkertainen pistekirjoituksen ja puheen tuottaminen, kun "kuvaus" on sama kuin "sisältö" tai "nimi". (#12888)
+- Kirjoitusvirheäänien toistaminen on nyt tarkempaa kirjoitettaessa MS Wordissa UIA:n ollessa käytössä. (#12161)
+- NVDA ei enää sano "ruutu" Windows 11:ssä vaihdettaessa ohjelmien välillä Alt+Sarkain-näppäinyhdistelmällä. (#12648)
 -
 
 
