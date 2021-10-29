@@ -1579,13 +1579,14 @@ Um den einfachen Darstellungsmodus per Tastenkombination ein- und auszuschalten,
 
 +++ Objekt-Darstellung (NVDA+Strg+O) +++[ObjectPresentationSettings]
 Hier kann eingestellt werden, inwieweit NVDA über Position, Beschreibungen von Objekten, etc. informieren soll.
-Diese Kategorie enthält die folgenden Optionen:
+Diese Optionen gelten normalerweise nicht für den Lesemodus.
+Diese Optionen gelten normalerweise für die Ansage des Fokus und Objekt-Navigation in NVDA, jedoch nicht für das Lesen von Textinhalten, z. B. im Lesemodus.
 
-==== QuickInfos vorlesen ====[ObjectPresentationReportToolTips]
-Wenn dieses Kontrollkästchen aktiviert ist, meldet NVDA die QuickInfos, sobald sie erscheinen.
+==== QuickInfos mitteilen ====[ObjectPresentationReportToolTips]
+Wenn dieses Kontrollkästchen aktiviert ist, teilt NVDA die QuickInfos mit, sobald sie erscheinen.
 Viele Windows- und Steuerelemente zeigen eine kleine Meldung an, wenn Sie den Mauszeiger über das Element oder Objekt bewegen, oder manchmal, wenn Sie den Fokus darauf verschieben.
 
-==== Benachrichtigungen vorlesen ====[ObjectPresentationReportNotifications]
+==== Benachrichtigungen mitteilen ====[ObjectPresentationReportNotifications]
 Wenn dieses Kontrollfeld aktiviert ist, teilt NVDA die Hilfesprechblasen und Toast-Benachrichtigungen mit, sobald diese erscheinen.
 - Hilfesprechblasen sind wie QuickInfos, sind aber in der Regel größer und werden mit System-Ereignissen in Verbindung gebracht, wie z. B. dem Trennen eines Netzwerkkabels oder um über Windows-Sicherheitsprobleme zu informieren.
 - Toast-Benachrichtigungen wurden in Windows 10 eingeführt und erscheinen im Benachrichtigungs-Center in der Taskleiste, um über mehrere Ereignisse zu informieren (wenn z. B. ein Update heruntergeladen wurde, eine neue E-Mail in Ihrem Posteingang eintrifft, etc.)
