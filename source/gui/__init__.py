@@ -59,6 +59,9 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 mainFrame = None
 
 if version_year < 2022:
+	# Like other module level constants, this must be used as follows (#13011):
+	# import gui; doSomething(gui.isInMessageBox)
+	# from gui import isInMessageBox; doSomething(isInMessageBox)
 	isInMessageBox = False
 
 class MainFrame(wx.Frame):
