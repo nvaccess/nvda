@@ -3,6 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2015-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
+from typing import Optional
 from ctypes import byref
 from comtypes import COMError
 from comtypes.automation import VARIANT
@@ -151,7 +152,13 @@ class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 			return False
 		return self.level>parent.level
 
-def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
+
+def UIAHeadingQuicknavIterator(
+		itemType: str,
+		document: "UIABrowseModeDocument",
+		position: Optional["UIABrowseModeDocumentTextInfo"],
+		direction: str = "next"
+):
 	reverse = bool(direction == "previous")
 	entireDocument = document.makeTextInfo(textInfos.POSITION_ALL)
 	if position is None:
