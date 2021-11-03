@@ -20,6 +20,7 @@ import eventHandler
 import braille
 import vision
 import watchdog
+import exceptions
 import appModuleHandler
 import cursorManager
 from typing import Any, Optional
@@ -129,7 +130,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		newAppModules.append(obj.appModule)
 	try:
 		treeInterceptorHandler.cleanup()
-	except watchdog.CallCancelled:
+	except exceptions.CallCancelled:
 		pass
 	treeInterceptorObject=None
 	o=None

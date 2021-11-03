@@ -5,6 +5,7 @@
 
 from comtypes import COMError
 from collections import defaultdict
+import mathPres
 from scriptHandler import isScriptWaiting
 import textInfos
 import eventHandler
@@ -24,6 +25,7 @@ from NVDAObjects.window.winword import (
 	WordDocument as WordDocumentBase,
 	WordDocumentTextInfo as LegacyWordDocumentTextInfo
 )
+from NVDAObjects import NVDAObject
 from scriptHandler import script
 
 
@@ -31,6 +33,7 @@ from scriptHandler import script
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
 END_OF_ROW_MARK = '\x07'
+
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
@@ -80,7 +83,12 @@ def getCommentInfoFromPosition(position):
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
 		# Use Annotation Type Comment if available
-		if typeID == UIAHandler.AnnotationType_Comment:
+		cats = position.obj._UIACustomAnnotationTypes
+		if (
+			typeID == UIAHandler.AnnotationType_Comment
+			or (typeID and typeID == cats.microsoftWord_draftComment)
+			or (typeID and typeID == cats.microsoftWord_resolvedComment)
+		):
 			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
@@ -123,6 +131,12 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 		return getPresentableCommentInfoFromPosition(commentInfo)
 
 class WordDocumentTextInfo(UIATextInfo):
+
+	def getMathMl(self, field):
+		mathml = field.get('mathml')
+		if not mathml:
+			raise LookupError("No MathML")
+		return mathml
 
 	def _ensureRangeVisibility(self):
 		try:
@@ -186,6 +200,8 @@ class WordDocumentTextInfo(UIATextInfo):
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_GroupControlTypeId and obj.name:
 			field['role']=controlTypes.Role.EMBEDDEDOBJECT
 			field['alwaysReportName']=True
+		elif obj.role == controlTypes.Role.MATH:
+			field['mathml'] = obj.mathMl
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_CustomControlTypeId and obj.name:
 			# Include foot note and endnote identifiers
 			field['content']=obj.name
@@ -281,6 +297,32 @@ class WordDocumentTextInfo(UIATextInfo):
 		if len(fields)==0: 
 			# Nothing to do... was probably a collapsed range.
 			return fields
+
+		# MS Word tries to produce speakable math content within equations.
+		# However, using mathPlayer with the exposed mathml property on the equation is much nicer.
+		# But, we therefore need to remove the inner math content if reading by line
+		if not formatConfig or not formatConfig.get('extraDetail'):
+			# We really only want to remove content if we can guarantee that mathPlayer is available.
+			mathPres.ensureInit()
+			if mathPres.speechProvider or mathPres.brailleProvider:
+				curLevel = 0
+				mathLevel = None
+				mathStartIndex = None
+				mathEndIndex = None
+				for index in range(len(fields)):
+					field = fields[index]
+					if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
+						curLevel += 1
+						if mathLevel is None and field.field.get('mathml'):
+							mathLevel = curLevel
+							mathStartIndex = index
+					elif isinstance(field, textInfos.FieldCommand) and field.command == "controlEnd":
+						if curLevel == mathLevel:
+							mathEndIndex = index
+						curLevel -= 1
+				if mathEndIndex is not None:
+					del fields[mathStartIndex + 1:mathEndIndex]
+
 		# Sometimes embedded objects and graphics In MS Word can cause a controlStart then a controlEnd with no actual formatChange / text in the middle.
 		# SpeakTextInfo always expects that the first lot of controlStarts will always contain some text.
 		# Therefore ensure that the first lot of controlStarts does contain some text by inserting a blank formatChange and empty string in this case.
@@ -362,15 +404,21 @@ class WordDocumentTextInfo(UIATextInfo):
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 
-	def shouldSetFocusToObj(self,obj):
+	def _shouldSetFocusToObj(self, obj: NVDAObject) -> bool:
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
-		return super(WordBrowseModeDocument,self).shouldSetFocusToObj(obj)
+		elif obj.role == controlTypes.Role.MATH:
+			# Don't set focus to math equations otherwise they cannot be interacted  with mathPlayer.
+			return False
+		return super()._shouldSetFocusToObj(obj)
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
+			return False
+		elif obj.role == controlTypes.Role.MATH:
+			# Don't  activate focus mode for math equations otherwise they cannot be interacted  with mathPlayer.
 			return False
 		return super(WordBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
 
@@ -397,7 +445,16 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
 
+	def _get_mathMl(self):
+		try:
+			return self._getUIACacheablePropertyValue(self._UIACustomProps.word_mathml.id)
+		except COMError:
+			pass
+		return None
+
 	def _get_role(self):
+		if self.mathMl:
+			return controlTypes.Role.MATH
 		role=super(WordDocumentNode,self).role
 		# Footnote / endnote elements currently have a role of unknown. Force them to editableText so that theyr text is presented correctly
 		if role==controlTypes.Role.UNKNOWN:

@@ -3,17 +3,12 @@
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from dataclasses import dataclass
-from typing import Optional
 
 """NVDA core"""
 
-RPC_E_CALL_CANCELED = -2147418110
 
-class CallCancelled(Exception):
-	"""Raised when a call is cancelled.
-	"""
-
+from dataclasses import dataclass
+from typing import Optional
 import comtypes
 import sys
 import winVersion
@@ -27,7 +22,7 @@ import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
-import garbageHandler  # noqa: E402
+import garbageHandler
 
 
 # inform those who want to know that NVDA has finished starting up.
@@ -294,18 +289,23 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 	instance information with `newNVDA`.
 	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
 	"""
+	from gui.message import isInMessageBox
 	import queueHandler
 	global _hasShutdownBeenTriggered
 	with _shuttingDownFlagLock:
-		if not _hasShutdownBeenTriggered:
+		safeToExit = not isInMessageBox()
+		if not safeToExit:
+			log.error("NVDA cannot exit safely, ensure open dialogs are closed")
+			return False
+		elif _hasShutdownBeenTriggered:
+			log.debug("NVDA has already been triggered to exit safely.")
+			return False
+		else:
 			# queue this so that the calling process can exit safely (eg a Popup menu)
 			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
 			_hasShutdownBeenTriggered = True
 			log.debug("_doShutdown has been queued")
 			return True
-		else:
-			log.debug("NVDA has already been triggered to exit safely.")
-			return False
 
 
 def _closeAllWindows():

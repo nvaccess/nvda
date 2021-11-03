@@ -1063,7 +1063,11 @@ class SynthesizerSelectionDialog(SettingsDialog):
 
 		# Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 		duckingListLabelText = _("Audio d&ucking mode:")
-		self.duckingList=settingsSizerHelper.addLabeledControl(duckingListLabelText, wx.Choice, choices=audioDucking.audioDuckingModes)
+		self.duckingList = settingsSizerHelper.addLabeledControl(
+			duckingListLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in audioDucking.AudioDuckingMode]
+		)
 		self.bindHelpEvent("SelectSynthesizerDuckingMode", self.duckingList)
 		index=config.conf['audio']['audioDuckingMode']
 		self.duckingList.SetSelection(index)
@@ -2264,6 +2268,12 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		bookmarksText = _("&Bookmarks")
+		self.bookmarksCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=bookmarksText))
+		self.bookmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportBookmarks"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		revisionsText = _("&Editor revisions")
 		self.revisionsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=revisionsText))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
@@ -2469,6 +2479,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		)
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportBookmarks"] = self.bookmarksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
@@ -2622,7 +2633,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Always use UI Automation to access Microsoft &Word document controls when available")
+		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
 		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -3247,6 +3258,37 @@ class DictionaryDialog(SettingsDialog):
 			del self.tempSpeechDict[index]
 			index=self.dictList.GetNextSelected(index)
 		self.dictList.SetFocus()
+
+
+class DefaultDictionaryDialog(DictionaryDialog):
+	def __init__(self, parent):
+		super().__init__(
+			parent,
+			# Translators: Title for default speech dictionary dialog.
+			title=_("Default dictionary"),
+			speechDict=speechDictHandler.dictionaries["default"],
+		)
+
+
+class VoiceDictionaryDialog(DictionaryDialog):
+	def __init__(self, parent):
+		super().__init__(
+			parent,
+			# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries["voice"].fileName,
+			speechDict=speechDictHandler.dictionaries["voice"],
+		)
+
+
+class TemporaryDictionaryDialog(DictionaryDialog):
+	def __init__(self, parent):
+		super().__init__(
+			parent,
+			# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+			# as NvDA is running).
+			title=_("Temporary dictionary"),
+			speechDict=speechDictHandler.dictionaries["temp"],
+		)
 
 
 class BrailleSettingsPanel(SettingsPanel):
