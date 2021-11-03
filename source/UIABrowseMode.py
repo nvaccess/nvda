@@ -154,7 +154,7 @@ class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
 	reverse = bool(direction == "previous")
 	entireDocument = document.makeTextInfo(textInfos.POSITION_ALL)
-	if not position:
+	if position is None:
 		searchArea = entireDocument
 	else:
 		searchArea = position.copy()
