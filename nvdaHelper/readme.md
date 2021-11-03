@@ -71,3 +71,15 @@ When `fillVBuf` is called, it recursively descends through the child elements th
 `controlFieldNode`s or `textFieldNode`s for them.
 This code is responsible for interacting with the IA2 accessibility API, these calls should be minimised for
  performance reasons.
+
+
+### Overview
+
+- NVDA's python code calls into the (`NVDAHelperLocal.dll` / `NVDAHelperLocalWin10.dll`).
+- Generated RPC Wrappers are called.
+- The RPC Wrappers call through to the "remote in-process DLL" (`nvdaHelperRemote.dll`)
+
+#### Build notes
+IDL/ACF files are input to MSRPCStubs to generate headers in `build/<arch>`
+- See `MSRPCStubs` in `*scons*` files.
+- Note these set a prefix, making whole word searches for methods difficult.
