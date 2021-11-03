@@ -90,7 +90,7 @@ COM_INTERFACES = {
 	# because we don't know what version is available on Appveyor.
 	# Instead we locally generate the file and include it in the repository.
 	# Ensuring that adjustments performed by 'makeIDEFriendly' are incorporated.
-	"UIAutomationClient.py": ('{944DE083-8FB8-45CF-BCB7-C477ACB2F897}', 1, 0),
+	# "UIAutomationClient.py": ('{944DE083-8FB8-45CF-BCB7-C477ACB2F897}', 1, 0),
 }
 
 for k,v in COM_INTERFACES.items():
