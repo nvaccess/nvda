@@ -135,12 +135,12 @@ def test_mark_aria_details():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"No additional details",
+		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
 		message="Browse mode: Report details on word with details"
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"No additional details",
+		"Cats go woof BTW\n—Jonathon CommentorNo they don't\n—Zara",
 		message="Browse mode: Report details on word with details",
 	)
 
@@ -190,14 +190,14 @@ def test_mark_aria_details():
 	_asserts.speech_matches(
 		actualSpeech,
 		SPEECH_SEP.join([
-			"backslash",  # a backslash character is typed, gesture only mapped in browse mode
+			"No additional details",
 		]),
 		message="Focus mode: Try to read details, caret not on details word.",
 	)
 	_asserts.braille_matches(
 		actualBraille,
 		# a backslash character is typed, gesture only mapped in browse mode
-		r"\The word  hlght details cat hlght end  has a comment tied to it.",
+		"No additional details",
 		message="Focus mode: Try to read details, caret not on details word.",
 	)
 
@@ -217,7 +217,7 @@ def test_mark_aria_details():
 	_asserts.braille_matches(
 		actualBraille,
 		# a backslash character was typed when the gesture was used
-		expected=r"\The word  hlght details cat hlght end  has a comment tied to it.",
+		expected="The word  hlght details cat hlght end  has a comment tied to it.",
 		message="Focus mode: Move by word to word with details",
 	)
 
@@ -225,13 +225,13 @@ def test_mark_aria_details():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"backslash",  # gesture only mapped in browse mode
+		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
 		message="Focus mode:  Report details on word with details.",
 	)
 	_asserts.braille_matches(
 		actualBraille,
 		# a backslash character was typed when the gesture was used
-		expected=r"\The word \ hlght details cat hlght end  has a comment tied to it.",
+		expected="Cats go woof BTW\n—Jonathon CommentorNo they don't\n—Zara",
 		message="Focus mode:  Report details on word with details.",
 	)
 

@@ -404,10 +404,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
 			self._treeInterceptor=None
 
-	def _get_appModule(self):
-		"""Retrieves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
+	#: Type definition for auto prop '_get_appModule'
+	appModule: "appModuleHandler.AppModule"
+
+	def _get_appModule(self) -> "appModuleHandler.AppModule":
+		"""Retrieves the appModule representing the application this object is a part of by
+		asking L{appModuleHandler}.
 		@return: the appModule
-		@rtype: L{appModuleHandler.AppModule}
 		"""
 		if not hasattr(self,'_appModuleRef'):
 			a=appModuleHandler.getAppModuleForNVDAObject(self)

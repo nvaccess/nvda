@@ -44,7 +44,15 @@ class Ia2Web(IAccessible):
 			return controlTypes.DescriptionFrom.UNKNOWN
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
-		return None
+		if not self.hasDetails:
+			return None
+		detailsRelations = self.detailsRelations
+		if not detailsRelations:
+			log.error("should be able to fetch detailsRelations")
+			return None
+		for target in detailsRelations:
+			# just take the first for now.
+			return target.summarizeInProcess()
 
 	@property
 	def hasDetails(self) -> bool:
