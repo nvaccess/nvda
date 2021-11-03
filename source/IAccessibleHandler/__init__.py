@@ -3,6 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+# F401 imported but unused. RelationType should be exposed from IAccessibleHandler, in future __all__
+# should be used to export it.
+from .types import RelationType  # noqa: F401
+
 import re
 import struct
 from typing import Optional, Tuple
@@ -52,9 +56,6 @@ NAVRELATION_LABELLED_BY = 0x1003
 NAVRELATION_NODE_CHILD_OF = 0x1005
 NAVRELATION_EMBEDS = 0x1009
 
-# IAccessible2 relations (not included in the typelib)
-IA2_RELATION_FLOWS_FROM = "flowsFrom"
-IA2_RELATION_FLOWS_TO = "flowsTo"
 
 # A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,
 # childID event params.
