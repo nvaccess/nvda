@@ -88,7 +88,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
 * [liblouis](http://www.liblouis.org/), version 3.19.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 39.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 40.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit 45a76a3

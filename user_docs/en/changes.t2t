@@ -13,12 +13,17 @@ What's New in NVDA
 == Changes ==
 - Espeak-ng has been updated to 1.51-dev commit ``7e5457f91e10``. (#12950)
 - NVDA will report selection and merged cells in LibreOffice Calc 7.3 and above. (#9310, #6897)
+- Updated Unicode Common Locale Data Repository (CLDR) to 40.0. (#12999)
 -
 
 == Bug Fixes ==
 - Clipboard manager pane should no longer incorrectly steal focus when opening some Office programs. (#12736)
 - On a system where the user has chosen to swap the primary mouse button from the left to the right, NVDA will no longer accidentally bring up a context menu instead of activating an item, in applications such as web browsers. (#12642)
 - When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)
+- NVDA can report the application name and version for binaries placed in system32 when running under 64-bit version of Windows. (#12943)
+- Improved consistency of output reading in terminal programs. (#12974)
+  - Note that in some situations, when inserting or deleting characters in the middle of a line, the characters after the caret may again be read out.
+  -
 -
 
 == Changes for Developers ==
@@ -39,9 +44,15 @@ What's New in NVDA
   - ``constants.SVE*`` usages should be replaced with ``SpeechVoiceEvents.*``
   -
 - The ``soffice`` appModule has the following classes and functions removed ``JAB_OOTableCell``, ``JAB_OOTable``, ``gridCoordStringToNumbers``. (#12849)
-- core.CallCancelled becomes exceptions.CallCancelled. 
-- All constants starting with RPC from core and logHandler are moved into RPCConstants.RPC enum
-- It is recommended that mouseHandler.doPrimaryClick and mouseHandler.doSecondaryClick functions should be used to click the mouse to perform a logical action such as activating (primary) or secondary (show context menu), rather than using executeMouseEvent and specifying the left or right mouse button specifically. This ensures code will honor the Windows user setting for swapping the primary mouse button. (#12642)
+- ``core.CallCancelled`` is now ``exceptions.CallCancelled``. (#12940)
+- All constants starting with RPC from ``core`` and ``logHandler`` are moved into ``RPCConstants.RPC`` enum. (#12940)
+- It is recommended that ``mouseHandler.doPrimaryClick`` and ``mouseHandler.doSecondaryClick`` functions should be used to click the mouse to perform a logical action such as activating (primary) or secondary (show context menu),
+rather than using executeMouseEvent and specifying the left or right mouse button specifically.
+This ensures code will honor the Windows user setting for swapping the primary mouse button. (#12642)
+- ``config.getSystemConfigPath`` has been removed - there is no replacement. (#12943)
+- ``shlobj.SHGetFolderPath`` has been removed - please use ``shlobj.SHGetKnownFolderPath`` instead. (#12943)
+- ``shlobj`` constants have been removed. A new enum has been created, ``shlobj.FolderId`` for usage with ``SHGetKnownFolderPath``. (#12943)
+- ``diffHandler.get_dmp_algo`` and ``diffHandler.get_difflib_algo`` have been replaced with ``diffHandler.prefer_dmp`` and ``diffHandler.prefer_difflib`` respectively. (#12974)
 -
 
 
@@ -71,6 +82,10 @@ Affected users will need to download this update manually.
 - Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
 - In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
 - Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
+- In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
+    - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
+    - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
+    -
 -
 
 
@@ -81,11 +96,11 @@ Affected users will need to download this update manually.
 - When reading status bar with ``NVDA+end``, the review cursor is no longer moved to its location.
 If you need this functionality please assign a gesture to the appropriate script in the Object Navigation category in the Input Gestures dialog. (#8600)
 - When opening a settings dialog which is already open, NVDA sets focus on the existing dialog rather than raise an error. (#5383)
-- For builds of Microsoft Office 2016/365 greater than 13900, NVDA will now always use UI Automation to access Microsoft Word document controls, no matter whether the user has toggled the Use UI Automation to access Microsoft word document controls advanced setting on or off. (#12770)
 - Updated liblouis braille translator to [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
   - New braille tables: Russian grade 1, Tshivenda grade 1, Tshivenda grade 2
   -
 - Instead of "marked content" or "mrkd", "highlight" or "hlght" will be announced for speech and braille respectively. (#12892)
+- NVDA will no longer attempt to exit when dialogs are awaiting a required action (eg Confirm/Cancel). (#12984)
 -
 
 
@@ -116,6 +131,7 @@ If you need this functionality please assign a gesture to the appropriate script
 - Fixed duplicate braille and speech when 'description' matches 'content' or 'name'. (#12888)
 - In MS Word with UIA enabled, more accurate playing of spelling error sounds as you type. (#12161)
 - In Windows 11, NVDA will no longer announce "pane" when pressing Alt+Tab to switch between programs. (#12648)
+- The new Modern Comments side track pane is now supported in MS Word when not accessing the document via UIA. Press alt+f12 to move between the side track pane and the document. (#12982)
 -
 
 
