@@ -480,7 +480,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report marked (highlighted) content command.
-		description=_("Toggles on and off the reporting of marked text"),
+		description=_("Toggles on and off the reporting of highlighted text"),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportHighlightedText(self, gesture):

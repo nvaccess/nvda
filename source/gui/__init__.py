@@ -59,15 +59,10 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 mainFrame = None
 
 if version_year < 2022:
-	def __getattr__(name):
-		if name == "isInMessageBox":
-			log.warning(
-				"gui.isInMessageBox is deprecated and will be removed in 2022.1."
-				"Consult the changes for developers in 2022.1 for advice on alternatives."
-			)
-			return _isInMessageBox()
-		raise AttributeError(f"module {__name__} has no attribute {name}")
-
+	# Like other top level variables, this must be used as follows (#13011):
+	# import gui; doSomething(gui.isInMessageBox)
+	# NOT the following: from gui import isInMessageBox; doSomething(isInMessageBox)
+	isInMessageBox = False
 
 class MainFrame(wx.Frame):
 

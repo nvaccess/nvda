@@ -19,6 +19,7 @@ from NVDAObjects import NVDAObject
 from NVDAObjects.behaviors import EditableText, EditableTextWithoutAutoSelectDetection, LiveText
 import watchdog
 from locationHelper import RectLTWH
+from diffHandler import prefer_difflib
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -412,6 +413,12 @@ class DisplayModelLiveText(LiveText, Window):
 	def stopMonitoring(self):
 		super(DisplayModelLiveText, self).stopMonitoring()
 		displayModel.requestTextChangeNotifications(self, False)
+
+	def _get_diffAlgo(self):
+		# #12974: The display model gives us only one screen of text at a time.
+		# Use Difflib to reduce choppiness in reading.
+		return prefer_difflib()
+
 
 windowClassMap={
 	"EDIT":"Edit",

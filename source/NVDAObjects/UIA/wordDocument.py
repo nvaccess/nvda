@@ -469,6 +469,11 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
 	name=u""
 
+	def event_textChange(self):
+		# Ensure Braille is updated when text changes,
+		# As Microsoft Word does not fire caret events when typing text, even though the caret does move.
+		braille.handler.handleCaretMove(self)
+
 	def event_UIA_notification(self, activityId=None, **kwargs):
 		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
 		# such as "delete back word" when Control+Backspace is pressed.
