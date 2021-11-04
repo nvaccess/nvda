@@ -1901,14 +1901,14 @@ In untrusted environments, you may temporarily disable [speak typed characters #
 ==== Diff algorithm ====[DiffAlgo]
 This setting controls how NVDA determines the new text to speak in terminals.
 The diff algorithm combo box has three options:
-- Automatic: as of NVDA 2021.2, this option is equivalent to "allow Diff Match Patch".
-- allow Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character.
+- Automatic: This option causes NVDA to prefer Diff Match Patch in most situations, but fall back to Difflib in problematic applications, such as older versions of the Windows Console and Mintty.
+- Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character, even in situations where it is not recommended.
 It may improve performance when large volumes of text are written to the console and allow more accurate reporting of changes made in the middle of lines.
-However, it may be incompatible with some applications, so Diff Match Patch is not always used.
-This feature is supported in Windows Console on Windows 10 versions 1607 and later.
-Additionally, it may be available in other terminals on earlier Windows releases.
-- force Difflib: this option causes NVDA to calculate changes to terminal text by line.
+However, in some applications, reading of new text may be choppy or inconsistent.
+- Difflib: this option causes NVDA to calculate changes to terminal text by line, even in situations where it is not recommended.
 It is identical to NVDA's behaviour in versions 2020.4 and earlier.
+This setting may stabilize reading of incoming text in some applications.
+However, in terminals, when inserting or deleting a character in the middle of a line, the text after the caret will be read out.
 -
 
 ==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
