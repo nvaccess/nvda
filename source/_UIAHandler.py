@@ -800,11 +800,12 @@ class UIAHandler(COMObject):
 			elif windowClass == "Chrome_RenderWidgetHostHWND":
 				# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
 				# As their IA2 implementation is still better at the moment.
-				# However, in cases where Chromium is running under another user, the IAccessible2 implementation is unavailable.
+				# However, in cases where Chromium is running under another user,
+				# the IAccessible2 implementation is unavailable.
 				hasAccessToIA2 = True
 				try:
 					import oleacc
-					oleacc.AccessibleObjectFromWindow(hwnd, winUser.OBJID_CLIENT).accChild(0)
+					oleacc.AccessibleObjectFromWindow(hwnd, winUser.OBJID_CLIENT).accChild(winUser.CHILDID_SELF)
 				except COMError:
 					hasAccessToIA2 = False
 				if (
