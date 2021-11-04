@@ -26,7 +26,7 @@ class Excel6(Window):
 	"""
 
 	def _get_focusRedirect(self):
-		if self.role==controlTypes.ROLE_UNKNOWN:
+		if self.role==controlTypes.Role.UNKNOWN:
 			# The control is inaccessible, try several times to find the CellEdit UIA element with focus and use that instead.
 			for count in range(10):
 				if count>=1:

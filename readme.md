@@ -57,15 +57,18 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019 Community, Version 16.3 or later:
-	* Download from https://visualstudio.microsoft.com/vs/
+* Microsoft Visual Studio 2019:
+	* To replicate the production build environment, use the [version of Visual Studio that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
+	* Download from https://visualstudio.microsoft.com/downloads/
+		* When you do not use the Visual Studio IDE itself, you can download the build tools under the Tools for Visual Studio 2019 expandable heading
+		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download the community version under the Visual Studio 2019 expandable heading
 	* When installing Visual Studio, you need to enable the following:
-		* On the Workloads tab
-			* in the Windows group:
+		* In the list  on the Workloads tab
+			* in the Windows grouping:
 				* Desktop development with C++
-			* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
+			* Then in the Installation details tree view, under Desktop for C++, Optional, ensure the following are selected:
 				* MSVC v142 - VS 2019 C++ x64/x86 build tools
-				* Windows 10 SDK (10.0.19041.0)
+				* Windows 11 SDK (10.0.22000.0)
 				* C++ ATL for v142 build tools (x86 & x64)
 				* C++ Clang tools for Windows
 		* On the Individual components tab, ensure the following items are selected:
@@ -81,11 +84,11 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit aafd2e720
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 7e5457f91e10
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.org/), version 3.17.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 39.0
+* [liblouis](http://www.liblouis.org/), version 3.19.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 40.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
@@ -100,7 +103,6 @@ Additionally, the following build time dependencies are included in the miscDeps
 * [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
 * [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
-* [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
 * To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:

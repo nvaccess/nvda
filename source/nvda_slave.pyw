@@ -12,15 +12,10 @@ import sys
 import os
 import globalVars
 import winKernel
+import monkeyPatches.comtypesMonkeyPatches
 
-
-# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
-# and Append our comInterfaces directory to the comtypes.gen search path.
-import comtypes
-import comtypes.client
-import comtypes.gen
-import comInterfaces
-comtypes.gen.__path__.append(comInterfaces.__path__[0])
+# Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
+monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
 
 
 if hasattr(sys, "frozen"):
@@ -131,8 +126,10 @@ def main():
 		sys.exit(1)
 
 if __name__ == "__main__":
+	# Initialize remote logging back to NVDA
 	logHandler.initialize(True)
-	logHandler.log.setLevel(0)
+	# Log at the most detailed level, and NVDA will filter it using its own level setting.
+	logHandler.log.setLevel(logHandler.log.DEBUG)
 	import languageHandler
 	languageHandler.setLanguage("Windows")
 	main()

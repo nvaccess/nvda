@@ -19,17 +19,15 @@ import globalVars
 import winKernel
 import buildVersion
 from typing import Optional
+import exceptions
+import RPCConstants
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
-RPC_S_SERVER_UNAVAILABLE = 1722
-RPC_S_CALL_FAILED_DNE = 1727
 EPT_S_NOT_REGISTERED = 1753
 E_ACCESSDENIED = -2147024891
 CO_E_OBJNOTCONNECTED = -2147220995
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
-RPC_E_CALL_REJECTED = -2147418111
-RPC_E_DISCONNECTED = -2147417848
 LOAD_WITH_ALTERED_SEARCH_PATH=0x8
 
 def isPathExternalToNVDA(path):
@@ -101,6 +99,25 @@ def getCodePath(f):
 				if className:
 					break
 	return ".".join(x for x in (path,className,funcName) if x)
+
+
+def shouldPlayErrorSound() -> bool:
+	"""Indicates if an error sound should be played when an error is logged.
+	"""
+	import nvwave
+	if nvwave.isInError():
+		if nvwave._isDebugForNvWave():
+			log.debug("No beep for log; nvwave is in error state")
+		return False
+
+	import config
+	# Only play the error sound if this is a test version or if the config states it explicitly.
+	return (
+		buildVersion.isTestVersion
+		# Play error sound: 1 = Yes
+		or (config.conf is not None and config.conf["featureFlag"]["playErrorSound"] == 1)
+	)
+
 
 # Function to strip the base path of our code from traceback text to improve readability.
 if getattr(sys, "frozen", None):
@@ -185,15 +202,34 @@ class Logger(logging.Logger):
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
 		"""
 		import comtypes
-		from core import CallCancelled, RPC_E_CALL_CANCELED
 		if exc_info is True:
 			exc_info = sys.exc_info()
 
 		exc = exc_info[1]
 		if (
-			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, EPT_S_NOT_REGISTERED, RPC_E_CALL_CANCELED))
-			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, CO_E_OBJNOTCONNECTED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED, RPC_E_DISCONNECTED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
-			or isinstance(exc, CallCancelled)
+			(
+				isinstance(exc, WindowsError)
+				and exc.winerror in (
+					ERROR_INVALID_WINDOW_HANDLE,
+					ERROR_TIMEOUT,
+					RPCConstants.RPC.S_SERVER_UNAVAILABLE,
+					RPCConstants.RPC.S_CALL_FAILED_DNE,
+					EPT_S_NOT_REGISTERED,
+					RPCConstants.RPC.E_CALL_CANCELED
+				)
+			)
+			or (
+				isinstance(exc, comtypes.COMError)
+				and (
+					exc.hresult in (
+						E_ACCESSDENIED,
+						CO_E_OBJNOTCONNECTED,
+						EVENT_E_ALL_SUBSCRIBERS_FAILED,
+						RPCConstants.RPC.E_CALL_REJECTED,
+						RPCConstants.RPC.E_CALL_CANCELED,
+						RPCConstants.RPC.E_DISCONNECTED
+					) or exc.hresult & 0xFFFF == RPCConstants.RPC.S_SERVER_UNAVAILABLE))
+			or isinstance(exc, exceptions.CallCancelled)
 		):
 			level = self.DEBUGWARNING
 		else:
@@ -266,14 +302,12 @@ class RemoteHandler(logging.Handler):
 class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
-		# Only play the error sound if this is a test version.
-		shouldPlayErrorSound =  buildVersion.isTestVersion
 		if record.levelno>=logging.CRITICAL:
 			try:
-				winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
+				winsound.PlaySound("SystemHand", winsound.SND_ALIAS | winsound.SND_ASYNC)
 			except:
 				pass
-		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
+		elif record.levelno >= logging.ERROR and shouldPlayErrorSound():
 			import nvwave
 			try:
 				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
@@ -290,7 +324,8 @@ class Formatter(logging.Formatter):
 
 	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
 		"""Custom implementation of `formatTime` which avoids `time.localtime`
-		since it causes a crash under some versions of Universal CRT ( #12160, Python issue 36792)
+		since it causes a crash under some versions of Universal CRT when Python locale
+		is set to a Unicode one (#12160, Python issue 36792)
 		"""
 		timeAsFileTime = winKernel.time_tToFileTime(record.created)
 		timeAsSystemTime = winKernel.SYSTEMTIME()

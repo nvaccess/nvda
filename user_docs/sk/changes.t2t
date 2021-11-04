@@ -3,6 +3,130 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+Prednosti tejto verzie zahŕňajú prvotnú podporu pre operačný systém Windows 11.
+NVDA bolo testované s aktuálne dostupnými verziami Windows 11.
+Táto verzia tiež zahŕňa opravu tienenia obrazovky (pozri dôležité poznámky).
+Opravný nástroj COM aktuálne dokáže vyriešiť oveľa viac problémov.
+Boli tiež aktualizované dáta hlasovej syntézy eSpeak a prekladovej tabuľky LibLouis.
+Vylepšili sme podporu pre kalkulačku, okná terminálov, históriu schránky, panel s emotikonmi a braillovské riadky.
+
+
+== Dôležité poznámky ==
+Keďže v najnovších verziách systému Windows došlo k úpravám v API na zväčšovanie, bolo potrebné v NVDA aktualizovať spôsob, akým sa zabezpečuje tienenie obrazovky.
+Použite NVDA od verzie 2021.2 v kombinácii s Windows od verzie 10 21H2 (10.0.19044).
+Toto zahŕňa aj verzie Windows 10 insider a Windows 11.
+Z bezpečnostných dôvodov odporúčame, aby ste sa pri prvom použití tienenia obrazovky uistili vlastným zrakom, alebo prostredníctvom vidiacej osoby, či je obrazovka skutočne čierna.
+
+
+== Nové vlastnosti ==
+- Pridaná experimentálna podpora pre aria revízie:
+  - Pridaná možnosť asociovať klávesovú skratku, ktorá prečíta aria podrobnosti zameraného prvku. (#12364)
+  - V pokročilých nastaveniach pribudla možnosť zapnúť oznamovanie situácií, keď prvok obsahuje podrobnosti. (#12439)
+  -
+- V systémoch Windows od verzie 10 1909 (vrátane Windows 11) NVDA oznamuje počet možných návrhov pri vyhľadávaní cez prieskumníka Windows. (#10341, #12628)
+- NVDA odteraz v aplikácii MS Word oznamuje pridanie zarážky a opakovanej zarážky pri použití príslušnej klávesovej skratky. (#6269)
+-
+
+
+== Zmeny ==
+- Rečová syntéza Espeak-ng aktualizovaná na verziu 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Ak je v nastaveniach čítania textu aktivované oznamovanie článkov, NVDA oznamuje "článok" až po vyslovení obsahu. (#11103)
+- Braillovská prekladová tabuľka liblouis aktualizovaná na verziu [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nové tabuľky: Maďarčina plnopis, Barmčina plnopis a skratkopis, Kazachčina plnopis, Khmérčina plnopis, Severná Kurdčina počítačový kód, severná sothčina plnopis a skratkopis, sothčina plnopis a skratkopis, Čwančina plnopis a skratkopis, Tatárčina plnopis, Vietnamčina počítačový kód a skratkopis, Južná Vietnamčina plnopis, xhoština plnopis a skratkopis, Jakutčina plnopis, zuluština plnopis a skratkopis.
+  -
+- Rozpoznávanie textu Windows 10 bolo premenované na rozpoznávanie textu Windows. (#12690)
+-
+
+
+== Opravy ==
+- Výrazy z kalkulačky Windows sa teraz zobrazujú aj na braillovských riadkoch. (#12268)
+- pri pridávaní alebo mazaní znakov uprostred riadka v konzolách Windows od verzie Windows 10 1607 NVDA viac nečíta znaky napravo od kurzora. (#3200)
+  - Odteraz sa predvolene používa algoritmus Diff Match Patch. (#12485)
+  -
+- Písanie v skratkopise cez klávesnicu braillovských riadkov funguje správne aj s týmito tabuľkami: Arabčina, Španielčina, Urdčina, Čínština (Čínština a Mandarínčina). (#12541)
+- Opravný nástroj COM odteraz dokáže vyriešiť omnoho viac problémov, hlavne na 64-bitových verziách systému Windows. (#12560)
+- Vylepšené spracovanie príkazov zo zariadení Seika od Nippon Telesoft. (#12598)
+- Vylepšené oznamovanie v panely emotikonov a histórii schránky Windows. (#11485)
+- Aktualizované fonetické hláskovanie v Bengálčine. (#12502)
+- Ak je spustený nový proces NVDA, pôvodný sa automaticky správne ukončí. (#12605)
+- Opätovné vybratie ovládača braillovského riadka Handy Tech v zozname riadkov viac nespôsobuje chyby. (#12618)
+- Windows od verzie 10.0.22000 je už rozpoznávaný ako Windows 11. (#12626)
+- Tienenie obrazovky bolo testované a opravené pre Windows 10.0.22000. (#12684)
+- Ak filtrovanie v dialógu klávesové skratky nezobrazí žiadne výsledky, dialóg sa správa štandardne a nespôsobuje problémy. (#12673)
+- Prvá položka podmenu je odteraz vždy správne oznamovaná. (#12624)
+-
+
+
+= 2021.1 =
+Prednosti tejto verzie zahŕňajú voliteľnú experimentálnu podporu rozhrania UIA v aplikácii MS Excel a prehliadačoch postavených na jadre Chromium.
+Takisto boli opravené niektoré preklady a pridaná možnosť aktivovať odkazy z braillovských riadkov.
+Tiež boli pridané nové matematické symboly, aktualizované tabuľky LibLouis a aktualizovaná databáza Unicode CLDR.
+Spomeňme aj vylepšenú podporu pre MS Office a Visual studio.
+
+Upozorňujeme:
+ - Od tejto verzie nie sú podporované doplnky pre staršie verzie NVDA.
+ - NVDA viac nepodporuje prvky Adobe Flash.
+ -
+
+
+== Nové vlastnosti ==
+- Prvotná podpora pre rozhranie UIA v prehliadačoch postavených na jadre Chromium (napríklad Edge). (#12025)
+- Pridaná voliteľná experimentálna podpora pre sprístupnenie aplikácie MS Excel cez UI Automation. Funguje pre Microsoft Excel od zostavy 16.0.13522.10000 (#12210)
+- Vylepšená navigácia vo výstupe z Python konzoly NVDA. (#9784)
+- alt+šípka hore alebo dole prechádza na predchádzajúci alebo nasledujúci výsledok výstupu. (pre výber použite shift).
+  - ctrl+l vymaže záznam.
+- NVDA odteraz v aplikácii MS Outlook oznamuje kategórie priradené k udalostiam, ak sú zadané. (#11598)
+- Pridaná podpora pre zápisník a braillovský riadok Seika od spoločnosti Nippon Telesoft. (#11514)
+
+
+== zmeny ==
+- V režime prehliadania je teraz možné z braillovského riadka aktivovať prvky aj v prípade, že sa kurzor nachádza nie na názve, ale na type prvku (napríklad kurzor stojí na skratke odk pre odkaz). Toto je užitočné napríklad vtedy, ak chcete takto začiarknuť políčko, ktoré nemá popis. (#7447)
+- NVDA odteraz upozorní, že nie je možné opticky rozpoznať text na obrazovke, ak je aktivované tienenie obrazovky. (#11911)
+- Aktualizovaná databáza Unicode konzorcia (CLDR) na verziu 39.0. (#11943, #12314)
+- Pridané nové matematické symboly. (#11467)
+- Dokumentácia, zoznam skratiek a zoznam zmien majú vynovený vzhľad. (#12027)
+- Ak nie je možné prepínať zachovanie vzhľadu ako na obrazovke, NVDA na túto skutočnosť upozorní. (#7297)
+- Pokročilá Funkcia prerušiť reč po vypršaní zameranej udalosti je odteraz predvolene zapnutá. (#10885)
+  - Stále je možné v pokročilých nastaveniach NVDA túto možnosť vypnúť.
+  - Webové aplikácie (napríklad Gmail) takto už viac neoznamujú staré nepresné informácie pri rýchlej práci.
+- Braillovská tabuľka liblouis aktualizovaná na verziu [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - Nové braillovské prekladové tabuľky: Bieloruský počítačový 8 bodový brail, Bieloruština plnopis, Urdčina plnopis a Urdčina skratkopis.
+- Keďže spoločnosť Adobe viac nepokračuje vo vývoji Adobe Flash, NVDA takisto viac nepodporuje tieto prvky. (#11131)
+- Ak sa pokúsite ukončiť NVDA a súčasne sú stále otvorené nejaké dialógi NVDA, tieto sa automaticky zatvoria a NVDA sa ukončí. (#1740)
+- Zobrazovač reči je odteraz možné ukončiť klávesovou skratkou alt+F4 a tiež je možné myšou aktivovať tlačidlo zatvoriť. (#12330)
+- Zobrazovač braillu je možné ukončiť myšou aktivovaním tlačidla zatvoriť. (#12328)
+- Zo zoznamu prvkov bola odstránená klávesová skratka na aktivovanie tlačidla Aktivovať, keďže v niektorých jazykoch skratka kolidovala s prepínačom prvkov. Tlačidlo Aktivovať je stále predvoleným tlačidlom, preto je ho možné aktivovať stlačením klávesu enter kdekoľvek v zozname prvkov. (#6167)
+
+
+== opravy ==
+- Opäť je možné čítať zoznam správ v aplikácii MS Outlook 2010. (#12241)
+- Pri práci v terminálových oknách v systéme Windows 10 od verzie 1607, NVDA viac po vložení alebo zmazaní znakov uprostred riadka nečíta znaky za systémovým kurzorom. (#3200)
+  - Túto opravu je potrebné ručne aktivovať v pokročilých nastaveniach NVDA, nastavením Algoritmu počítania rozdielov na Diff Match Patch.
+- NVDA viac v aplikácii MS Outlook neoznamuje vzdialenosť, ak prejdete skratkou shift+tab z tela správy na predmet. (#10254)
+- V python konzole pridaná možnosť vložiť odsadenie na riadku, ktorý nie je prázdny. (#11532)
+- Ak je vypnutá možnosť zachovať vzhľad ako na obrazovke a zobrazíte si v režime prehliadania napríklad informácie o formátovaní, NVDA viac nezobrazuje zbytočné prázdne riadky. (#12004)
+- Odteraz je možné v aplikácii MS Word čítať komentáre, ak je povolený prístup cez UIA. (#9285)
+- Zrýchlená odozva v aplikácii Visual Studio. (#12171)
+- Opravené nesprávne zobrazenie grafických prvkov NVDA pri rozložení zprava doľava. (#8859)
+- NVDA odteraz rešpektuje rozloženie nastavené podľa systému a nie podľa jazyka NVDA. (#638)
+  - Stále je známi problém, že pri zobrazení zprava doľava sa pravá hranica skupín prvkov spája s popismi alebo prvkami. (#12181)
+- Lokalizácia Python je nastavená na rovnakú hodnotu ako jazyk NVDA a použije sa v prípadoch, keď sa vyžaduje informácia o predvolenom jazyku. (#12214)
+- TextInfo.getTextInChunks viac nezamrzne pri vyvolaný v editačných poliach, napríklad v zobrazovači logu. (#11613)
+- Opäť je možné používať NVDA v jazykoch, ktoré majú v názve podčiarkovník ako napríklad de_CH v systémoch Windows 10 1803 a 1809. (#12250)
+- V aplikácii Wordpad správne funguje oznamovanie indexov. (#12262)
+- NVDA správne oznamuje obsah vo webových dokumentoch, ak sa stratí zameranie a je nahradené novým fokusom na tom istom mieste. (#12147)
+- Prečiarknutie, horný a dolný index pre celé bunky v aplikácii MS excel sú správne oznamované, ak je táto možnosť zapnutá. (#12264)
+- Opravené kopírovanie priečinka s používateľskými nastaveniami NVDA pri inštalácii z prenosnej verzie, ak je cieľový priečinok prázdny. (#12071, #12205)
+- Opravené nesprávne oznamovanie veľkých písmen s prízvukom alebo diakritikou pri zapnutom slovnom oznamovaní veľkých písmen. (#11948)
+- Opravené oznamovanie veľkých písmen zmenou výšky hlasu pri syntézach reči používajúcich rozhranie Sapi4. (#12311)
+- Inštalátor NVDA rešpektuje parameter príkazového riadka ``--minimal``, takže neprehráva úvodný zvuk, rovnako ako prenosná alebo inštalovaná kópia NVDA. (#12289)
+- V aplikáciách MS Word alebo Outlook funguje rýchla navigácia po tabuľkách formujúcich vzhľad, ak je zapnutá možnosť Zahrnúť tabuľky formujúce vzhľad v nastaveniach režimu prehliadania. (#11899)
+- NVDA viac pri emotikonoch v niektorých jazykoch neoznamuje "↑↑↑". (#11963)
+- Espeak opäť podporuje Kantonský a Mandarínsky jazyk. (#10418)
+- V aplikácii MS Edge postavenej na jadre Chromium NVDA oznamuje textové prvky, napríklad adresný riadok, ak sú prázdne. (#12474)
+- Opravený ovládač pre braillovský riadok Seika. (#10787)
+
 = 2020.4 =
 Pridaná podpora pre nové Čínske metódy vstupu, aktualizovanú prekladovú tabuľku Liblouis a pridanú možnosť aktivovať zoznam prvkov (nvda+F7) v režime fokusu.
 V dialógoch NVDA je možné získať pomoc k funkciám po stlačení skratky F1.

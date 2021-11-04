@@ -1,6 +1,5 @@
-# languageHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2018 NV access Limited, Joseph Lee
+# Copyright (C) 2007-2021 NV access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,15 +13,21 @@ import sys
 import ctypes
 import locale
 import gettext
+import enum
+import buildVersion
 import globalVars
 from logHandler import log
+import winKernel
+from typing import Optional
 
 #a few Windows locale constants
-LOCALE_SLANGUAGE=0x2
-LOCALE_SLIST = 0xC
-LOCALE_SLANGDISPLAYNAME=0x6f
 LOCALE_USER_DEFAULT = 0x400
 LOCALE_CUSTOM_UNSPECIFIED = 0x1000
+
+# A constant returned when asking Windows for a default code page for a given locale
+# and its code page is the default code page for non Unicode programs set in Windows.
+CP_ACP = "0"
+
 #: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
 #: This might be because Windows doesn't know about the locale (e.g. "an"),
 #: because it is not a standardized locale name anywhere (e.g. "zz")
@@ -30,6 +35,56 @@ LOCALE_CUSTOM_UNSPECIFIED = 0x1000
 LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
 
 curLang="en"
+
+
+class LOCALE(enum.IntEnum):
+	# Represents NLS constants which can be used with `GetLocaleInfoEx` or `GetLocaleInfoW`
+	# Full list of these constants is available at:
+	# https://docs.microsoft.com/en-us/windows/win32/intl/locale-information-constants
+	SLANGUAGE = 0x2
+	SLIST = 0xC
+	IMEASURE = 0xD
+	SLANGDISPLAYNAME = 0x6f
+	SENGLISHLANGUAGENAME = 0x00001001
+	SENGLISHCOUNTRYNAME = 0x00001002
+	IDEFAULTANSICODEPAGE = 0x00001004
+
+
+# These constants are deprecated and  members of LOCALE enum should be used instead
+# They would be removed in NVDA 2022.1
+if buildVersion.version_year < 2022:
+	LOCALE_SLANGUAGE = LOCALE.SLANGUAGE
+	LOCALE_SLIST = LOCALE.SLIST
+	LOCALE_SLANGDISPLAYNAME = LOCALE.SLANGDISPLAYNAME
+
+
+def isNormalizedWin32Locale(localeName: str) -> bool:
+	"""Checks if the given locale is in a form which can be used by Win32 locale functions such as
+	`GetLocaleInfoEx`. See `normalizeLocaleForWin32` for more comments."""
+	hyphensCount = localeName.count("-")
+	underscoresCount = localeName.count("_")
+	if not hyphensCount and not underscoresCount:
+		return True
+	if hyphensCount:
+		return True
+	return False
+
+
+def normalizeLocaleForWin32(localeName: str) -> str:
+	"""Converts given locale to a form which can be used by Win32 locale functions such as
+	`GetLocaleInfoEx` unless locale is normalized already.
+	Uses hyphen as a language/country separator taking care not to replace underscores used
+	as a separator between country name and alternate order specifiers.
+	For example locales using alternate sorts see:
+	https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/e6a54e86-9660-44fa-a005-d00da97722f2
+	While NVDA does not support locales requiring multiple sorting orders users may still have their Windows
+	set to such locale and if all underscores were replaced unconditionally
+	we would be unable to generate Python locale from their default UI language.
+	"""
+	if not isNormalizedWin32Locale(localeName):
+		localeName = localeName.replace('_', '-', 1)
+	return localeName
+
 
 def localeNameToWindowsLCID(localeName):
 	"""Retreave the Windows locale identifier (LCID) for the given locale name
@@ -40,7 +95,7 @@ def localeNameToWindowsLCID(localeName):
 	""" 
 	# Windows Vista (NT 6.0) and later is able to convert locale names to LCIDs.
 	# Because NVDA supports Windows 7 (NT 6.1) SP1 and later, just use it directly.
-	localeName=localeName.replace('_','-')
+	localeName = normalizeLocaleForWin32(localeName)
 	LCID=ctypes.windll.kernel32.LocaleNameToLCID(localeName,0)
 	# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
 	# This was observed for Aragonese ("an").
@@ -49,7 +104,8 @@ def localeNameToWindowsLCID(localeName):
 		LCID=LCID_NONE
 	return LCID
 
-def windowsLCIDToLocaleName(lcid):
+
+def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
 	"""
 	gets a normalized locale from a lcid
 	"""
@@ -70,27 +126,97 @@ def getLanguageDescription(language):
 		buf=ctypes.create_unicode_buffer(1024)
 		#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
 		if '_' not in language:
-			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGDISPLAYNAME,buf,1024)
+			res = ctypes.windll.kernel32.GetLocaleInfoW(LCID, LOCALE.SLANGDISPLAYNAME, buf, 1024)
 		else:
 			res=0
 		if res==0:
-			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGUAGE,buf,1024)
+			res = ctypes.windll.kernel32.GetLocaleInfoW(LCID, LOCALE.SLANGUAGE, buf, 1024)
 		desc=buf.value
 	if not desc:
 		#Some hard-coded descriptions where we know the language fails on various configurations.
-		desc={
-			# Translators: The name of a language supported by NVDA.
-			"an":pgettext("languageName","Aragonese"),
-			# Translators: The name of a language supported by NVDA.
-			"ckb":pgettext("languageName","Central Kurdish"),
-			# Translators: The name of a language supported by NVDA.
-			"kmr":pgettext("languageName","Northern Kurdish"),
-			# Translators: The name of a language supported by NVDA.
-			"my":pgettext("languageName","Burmese"),
-			# Translators: The name of a language supported by NVDA.
-			"so":pgettext("languageName","Somali"),
-		}.get(language,None)
+		# Imported lazily since langs description are translatable
+		# and `languageHandler` is responsible for setting the translation.
+		import localesData
+		desc = localesData.LANG_NAMES_TO_LOCALIZED_DESCS.get(language, None)
 	return desc
+
+
+def englishLanguageNameFromNVDALocale(localeName: str) -> Optional[str]:
+	"""Returns either English name of the given language  using `GetLocaleInfoEx` or None
+	if the given locale is not known to Windows."""
+	localeName = normalizeLocaleForWin32(localeName)
+	buffLength = winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE.SENGLISHLANGUAGENAME, None, 0)
+	if buffLength:
+		buf = ctypes.create_unicode_buffer(buffLength)
+		winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE.SENGLISHLANGUAGENAME, buf, buffLength)
+		langName = buf.value
+		if "Unknown" in langName:
+			# Windows 10 returns 'Unknown' for locales not known to Windows
+			# even though documentation states that in case of an unknown locale 0 is returned.
+			return None
+		try:
+			langName.encode("ascii")
+			return langName
+		except UnicodeEncodeError:
+			# The language name cannot be encoded in ASCII which unfortunately means we wonn't be able
+			# to set Python's locale to it (Python issue 26024).
+			# this has been observed for Norwegian
+			# (language name as returned from Windows is 'Norwegian Bokmål').
+			# Thankfully keeping just the ASCII part of the string yields the desired result.
+			partsList = []
+			for part in langName.split():
+				try:
+					part.encode("ascii")
+					partsList.append(part)
+				except UnicodeEncodeError:
+					continue
+			return " ".join(partsList)
+	return None
+
+
+def englishCountryNameFromNVDALocale(localeName: str) -> Optional[str]:
+	"""Returns either English name of the given country using GetLocaleInfoEx or None
+	if the given locale is not known to Windows."""
+	localeName = normalizeLocaleForWin32(localeName)
+	buffLength = winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE.SENGLISHCOUNTRYNAME, None, 0)
+	if buffLength:
+		buf = ctypes.create_unicode_buffer(buffLength)
+		winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE.SENGLISHCOUNTRYNAME, buf, buffLength)
+		if "Unknown" in buf.value:
+			# Windows 10 returns 'Unknown region' for locales not known to Windows
+			# even though documentation states that in case of an unknown locale 0 is returned.
+			return None
+		# Country name can contain dots such as 'Hong Kong S.A.R.'.
+		# Python's `setlocale` cannot deal with that.
+		# Removing dots works though.
+		return buf.value.replace(".", "")
+	return None
+
+
+def ansiCodePageFromNVDALocale(localeName: str) -> Optional[str]:
+	"""Returns either ANSI code page for a given locale using GetLocaleInfoEx or None
+	if the given locale is not known to Windows."""
+	localeName = normalizeLocaleForWin32(localeName)
+	# Windows 10 returns English code page (1252) for locales not known to Windows
+	# even though documentation states that in case of an unknown locale 0 is returned.
+	# This means that it is impossible to differentiate locales that are unknown
+	# and locales using 1252 as ANSI code page.
+	# Use `englishCountryNameFromNVDALocale` to determine if the given locale is supported or not
+	# before attempting to retrieve code page.
+	if not englishCountryNameFromNVDALocale(localeName):
+		return None
+	buffLength = winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE.IDEFAULTANSICODEPAGE, None, 0)
+	if buffLength:
+		buf = ctypes.create_unicode_buffer(buffLength)
+		winKernel.kernel32.GetLocaleInfoEx(localeName, LOCALE.IDEFAULTANSICODEPAGE, buf, buffLength)
+		codePage = buf.value
+		if codePage == CP_ACP:
+			# Some locales such as Hindi are Unicode only i.e. they don't have specific ANSI code page.
+			# In such case code page should be set to the default ANSI code page of the system.
+			codePage = str(winKernel.kernel32.GetACP())
+		return codePage
+	return None
+
 
 def getAvailableLanguages(presentational=False):
 	"""generates a list of locale names, plus their full localized language and country names.
@@ -153,9 +279,8 @@ def getWindowsLanguage():
 	Fetches the locale name of the user's configured language in Windows.
 	"""
 	windowsLCID=ctypes.windll.kernel32.GetUserDefaultUILanguage()
-	try:
-		localeName=locale.windows_locale[windowsLCID]
-	except KeyError:
+	localeName = windowsLCIDToLocaleName(windowsLCID)
+	if not localeName:
 		# #4203: some locale identifiers from Windows 8 do not exist in Python's list.
 		# Therefore use windows' own function to get the locale name.
 		# Eventually this should probably be used all the time.
@@ -198,100 +323,107 @@ def setLanguage(lang: str) -> None:
 		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
 		curLang = localeName
 	except IOError:
-		log.debugWarning(f"couldn't set the translation service locale to {localeName}")
-		trans = gettext.translation("nvda", fallback=True)
-		curLang = "en"
+		try:
+			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
+			localeName = localeName.split("_")[0]
+			trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
+			curLang = localeName
+		except IOError:
+			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
+			trans = gettext.translation("nvda", fallback=True)
+			curLang = "en"
 
 	trans.install()
 	setLocale(curLang)
 	# Install our pgettext function.
 	builtins.pgettext = makePgettext(trans)
 
+
+def localeStringFromLocaleCode(localeCode: str) -> str:
+	"""Given an NVDA locale such as 'en' or or a Windows locale such as 'pl_PL'
+	creates a locale representation in a standard form for Win32
+	which can be safely passed to Python's `setlocale`.
+	The required format is:
+	'englishLanguageName_englishCountryName.localeANSICodePage'
+	Raises exception if the given locale is not known to Windows.
+	"""
+	normalizedLocaleCode = normalizeLocaleForWin32(localeCode)
+	langName = englishLanguageNameFromNVDALocale(normalizedLocaleCode)
+	if langName is None:
+		raise ValueError(f"Locale code {localeCode} not supported by Windows")
+	countryName = englishCountryNameFromNVDALocale(normalizedLocaleCode)
+	codePage = ansiCodePageFromNVDALocale(normalizedLocaleCode)
+	return f"{langName}_{countryName}.{codePage}"
+
+
+def _setPythonLocale(localeString: str) -> bool:
+	"""Sets Python locale to a specified one.
+	Returns `True` if succesfull `False` if locale cannot be set or retrieved."""
+	try:
+		locale.setlocale(locale.LC_ALL, localeString)
+		locale.getlocale()
+		log.debug(f"set python locale to {localeString}")
+		return True
+	except locale.Error:
+		log.debugWarning(f"python locale {localeString} could not be set")
+		return False
+	except ValueError:
+		log.debugWarning(f"python locale {localeString} could not be retrieved with getlocale")
+		return False
+
+
 def setLocale(localeName: str) -> None:
 	'''
 	Set python's locale using a `localeName` such as "en", "ru_RU", or "es-ES".
 	Will fallback on `curLang` if it cannot be set and finally fallback to the system locale.
-	'''
-
-	r'''
-	Python 3.8's locale system allows you to set locales that you cannot get
-	so we must test for both ValueErrors and locale.Errors
-
-	>>> import locale
-	>>> locale.setlocale(locale.LC_ALL, 'foobar')
-	Traceback (most recent call last):
-	File "<stdin>", line 1, in <module>
-	File "Python38-32\lib\locale.py", line 608, in setlocale
-		return _setlocale(category, locale)
-	locale.Error: unsupported locale setting
-	>>> locale.setlocale(locale.LC_ALL, 'en-GB')
-	'en-GB'
-	>>> locale.getlocale()
-	Traceback (most recent call last):
-	File "<stdin>", line 1, in <module>
-	File "Python38-32\lib\locale.py", line 591, in getlocale
-		return _parse_localename(localename)
-	File "Python38-32\lib\locale.py", line 499, in _parse_localename
-		raise ValueError('unknown locale: %s' % localename)
-	ValueError: unknown locale: en-GB
+	Passing NVDA locales straight to python `locale.setlocale` does now work since it tries to normalize the
+	parameter using `locale.normalize` which results in locales unknown to Windows (Python issue 37945).
+	For example executing: `locale.setlocale(locale.LC_ALL, "pl")`
+	results in locale being set to `('pl_PL', 'ISO8859-2')`
+	which is meaningless to Windows,
 	'''
 	originalLocaleName = localeName
-	# Try setting Python's locale to localeName
+	localeString = ""
 	try:
-		locale.setlocale(locale.LC_ALL, localeName)
-		locale.getlocale()
-		log.debug(f"set python locale to {localeName}")
+		localeString = localeStringFromLocaleCode(localeName)
+		log.debug(f"Win32 locale string from locale code is {localeString}")
+	except ValueError:
+		log.debugWarning(f"Locale {localeName} not supported by Windows")
+	if localeString and _setPythonLocale(localeString):
 		return
-	except locale.Error:
-		log.debugWarning(f"python locale {localeName} could not be set")
-	except ValueError:
-		log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
-
-	if '-' in localeName:
-		# Python couldn't support the language-country locale, try language_country.
+	# The full form langName_country either cannot be retrieved from Windows
+	# or Python cannot be set to that locale.
+	# Try just with the language name.
+	if "_" in localeName:
+		localeName = localeName.split("_")[0]
 		try:
-			localeName = localeName.replace('-', '_')
-			locale.setlocale(locale.LC_ALL, localeName)
-			locale.getlocale()
-			log.debug(f"set python locale to {localeName}")
-			return
-		except locale.Error:
-			log.debugWarning(f"python locale {localeName} could not be set")
+			localeString = localeStringFromLocaleCode(localeName)
+			log.debug(f"Win32 locale string from locale code is {localeString}")
 		except ValueError:
-			log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
-
-	if '_' in localeName:
-		# Python couldn't support the language_country locale, just try language.
-		try:
-			localeName = localeName.split('_')[0]
-			locale.setlocale(locale.LC_ALL, localeName)
-			locale.getlocale()
-			log.debug(f"set python locale to {localeName}")
-			return
-		except locale.Error:
-			log.debugWarning(f"python locale {localeName} could not be set")
-		except ValueError:
-			log.debugWarning(f"python locale {localeName} could not be retrieved with getlocale")
-
-	try:
-		locale.getlocale()
-	except ValueError:
-		# as the locale may have been changed to something that getlocale() couldn't retrieve
-		# reset to default locale
-		if originalLocaleName == curLang:
-			# reset to system locale default if we can't set the current lang's locale
-			locale.setlocale(locale.LC_ALL, "")
-			log.debugWarning(f"set python locale to system default")
-		else:
-			log.debugWarning(f"setting python locale to the current language {curLang}")
-			# fallback and try to reset the locale to the current lang
-			setLocale(curLang)
+			log.debugWarning(f"Locale {localeName} not supported by Windows")
+	if localeString and _setPythonLocale(localeString):
+		return
+	# As a final fallback try setting locale just to the English name of the given language.
+	localeFromLang = englishLanguageNameFromNVDALocale(localeName)
+	if localeFromLang and _setPythonLocale(localeFromLang):
+		return
+	# Either Windows does not know the locale, or Python is unable to handle it.
+	# reset to default locale
+	if originalLocaleName == curLang:
+		# reset to system locale default if we can't set the current lang's locale
+		locale.setlocale(locale.LC_ALL, "")
+		log.debugWarning(f"set python locale to system default")
+	else:
+		log.debugWarning(f"setting python locale to the current language {curLang}")
+		# fallback and try to reset the locale to the current lang
+		setLocale(curLang)
 
 
 def getLanguage() -> str:
 	return curLang
 
-def normalizeLanguage(lang):
+
+def normalizeLanguage(lang) -> Optional[str]:
 	"""
 	Normalizes a  language-dialect string  in to a standard form we can deal with.
 	Converts  any dash to underline, and makes sure that language is lowercase and dialect is upercase.
@@ -305,6 +437,18 @@ def normalizeLanguage(lang):
 	if len(ld)>=2:
 		ld[1]=ld[1].upper()
 	return "_".join(ld)
+
+
+def useImperialMeasurements() -> bool:
+	"""
+	Whether or not measurements should be reported as imperial, rather than metric.
+	"""
+	bufLength = 2
+	buf = ctypes.create_unicode_buffer(bufLength)
+	if not winKernel.kernel32.GetLocaleInfoEx(None, LOCALE.IMEASURE, buf, bufLength):
+		raise RuntimeError("LOCALE.IMEASURE not supported")
+	return buf.value == '1'
+
 
 # Map Windows primary locale identifiers to locale names
 # Note these are only primary language codes (I.e. no country information)

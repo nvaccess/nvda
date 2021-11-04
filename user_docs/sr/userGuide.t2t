@@ -66,7 +66,7 @@ Za više detalja, možete[videti celu licencu. https://www.gnu.org/licenses/old-
 Za detalje o izuzecima, pristupite dokumentu licence u NVDA meniju u sekciji "pomoć".
 
 + Sistemski zahtevi +[SystemRequirements]
- - Operativni sistemi: sve 32-bitne i 64-bitne verzije operativnih  sistema Windows 7, Windows 8, Windows 8.1, Windows 10, i sve server verzije Windows operativnog sistema počevši od  Windows Server 2008 R2.
+ - Operativni sistemi: sve 32-bitne i 64-bitne verzije operativnih  sistema Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, i sve server verzije Windows operativnog sistema počevši od  Windows Server 2008 R2.
  - za Windows 7, NVDA zahteva Service Pack 1 ili noviji.
  - za Windows Server 2008 R2, NVDA zahteva Service Pack 1 ili noviji.
 Oba bi trebalo da budu instalirana ako su primenjena sva ažuriranja koristeći Windows Update.
@@ -274,24 +274,24 @@ Kada se meni pojavi, možete koristiti strelice da se krećete kroz meni, i tast
 
 ++ Osnovne NVDA komande ++[BasicNVDACommands]
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir| Opis |
-| Pokreće ili restartuje NVDA | Control+alt+n | Control+alt+n | Nema | Pokreće ili restartuje NVDA sa radne površine, ako je ova Windows prečica omogućena u procesu instalacije programa NVDA. Ovo je Windows prečica i zato se ne može promeniti u dijalogu ulazne komande. |
-| Zaustavi govor | Kontrol | Kontrol | dodir sa dva prsta| govor prestaje|
-| Pauziraj govor | Šift| Šift| Nema komande| pauzira govor. Ako se pritisne ponovo govor se nastavlja gde je stao(ako trenutni sintetizator podržava pauziranje) |
-| NVDA meni | NVDA+n | NVDA+n | dvostruki dodir sa dva prsta| otvara NVDA meni kako biste pristupili podešavanjima, alatima, dobili pomoć, i tako dalje. |
-| Prebaci režim govora| NVDA+s | NVDA+s | Nema komande | Prebacuje režime govora između govor, pištanja i isključen. |
-| Uključuje i isključuje pomoć za unos| NVDA+1 | NVDA+1 | Nema komande | pritiskanje bilo kog tastera u ovom režimu prijavljuje ime tastera, i opis komande koju NVDA koristi|
-| Izlaz iz NVDA| NVDA+q | NVDA+q | Nema komande | izlazi iz NVDA|
-| Ignoriši sledeći taster| NVDA+f2 | NVDA+f2 | Nema komande | govori NVDA-u da sledeći taster pošalje kroz aplikaciju, čak i ako je to NVDA komanda|
-| Uključuje i isključuje režim spavanja za trenutnu aplikaciju| NVDA+šift+s | NVDA+šift+z | Nema komande | Režim spavanja isključuje sav govor ili brajev izlaz za trenutnu aplikaciju. Ovo je najviše korisno u aplikacijama koje već imaju karakteristike čitanja ekrana. Ponovo pritisnite ovu komandu da isključite režim spavanja. |
+ || Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir | Opis |
+ | Pokreće ili restartuje NVDA | Control+alt+n | Control+alt+n | Nema | Pokreće ili restartuje NVDA sa radne površine, ako je ova Windows prečica omogućena u procesu instalacije programa NVDA. Ovo je Windows prečica i zato se ne može promeniti u dijalogu ulazne komande. |
+ | Zaustavi govor | Kontrol | Kontrol | dodir sa dva prsta | govor prestaje |
+ | Pauziraj govor | Šift | Šift | Nema komande | pauzira govor. Ako se pritisne ponovo govor se nastavlja gde je stao(ako trenutni sintetizator podržava pauziranje) |
+ | NVDA meni | NVDA+n | NVDA+n | dvostruki dodir sa dva prsta | otvara NVDA meni kako biste pristupili podešavanjima, alatima, dobili pomoć, i tako dalje. |
+ | Prebaci režim govora | NVDA+s | NVDA+s | Nema komande | Prebacuje režime govora između govor, pištanja i isključen. |
+ | Uključuje i isključuje pomoć za unos | NVDA+1 | NVDA+1 | Nema komande | pritiskanje bilo kog tastera u ovom režimu prijavljuje ime tastera, i opis komande koju NVDA koristi |
+ | Izlaz iz NVDA | NVDA+q | NVDA+q | Nema komande | izlazi iz NVDA |
+ | Ignoriši sledeći taster | NVDA+f2 | NVDA+f2 | Nema komande | govori NVDA-u da sledeći taster pošalje kroz aplikaciju, čak i ako je to NVDA komanda |
+ | Uključuje i isključuje režim spavanja za trenutnu aplikaciju | NVDA+šift+s | NVDA+šift+z | Nema komande | Režim spavanja isključuje sav govor ili brajev izlaz za trenutnu aplikaciju. Ovo je najviše korisno u aplikacijama koje već imaju karakteristike čitanja ekrana. Ponovo pritisnite ovu komandu da isključite režim spavanja. |
 %kc:endInclude
 
 ++ Prijavljivanje sistemskih informacija++[ReportingSystemInformation]
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Prijavi datum/vreme| NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme|
-| Prijavi stanje baterije| NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutni procenat. |
-| Prijavi tekst privremene memorije| NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
+ || Ime | Komanda | Opis |
+ | Prijavi datum/vreme | NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme |
+ | Prijavi stanje baterije | NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutni procenat. |
+ | Prijavi tekst privremene memorije | NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
 %kc:endInclude
 
 + Navigacija sa NVDA-om +[NavigatingWithNVDA]
@@ -311,11 +311,11 @@ Kada je [Vizuelno označavanje  #VisionFocusHighlight] omogućeno, lokacija sist
 
 Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim fokusom:
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | Opis |
-| Prijavi trenutni fokus| NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče|
-| Prijavi naslov| NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju|
-| Čitaj aktivan prozor| NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
-| Prijavi statusnu traku| NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju|
+ || Ime | Desktop komanda | Laptop komanda | Opis |
+ | Prijavi trenutni fokus | NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče |
+ | Prijavi naslov | NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju |
+ | Čitaj aktivan prozor | NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
+ | Prijavi statusnu traku | NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju |
 %kc:endInclude
 
 ++ Navigacija sa sistemskim kursorom++[SystemCaret]
@@ -327,20 +327,20 @@ NVDA će izgovarati kada se krećete znak po znak, reč i red, i takođe će izg
 
 NVDA Pruža sledeće komande za sistemski kursor:
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | opis |
-| Izgovori sve | NVDA+Strelica dole | NVDA+a | Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita|
-| Pročitaj trenutni red| NVDA+Strelica gore| NVDA+l | Čita red na kom se sistemski kursor nalazi. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta sriče red koristeći opise znakova. |
-| Pročitaj trenutni izbor teksta| NVDA+šift+strelica gore | NVDA+šift+s | Čita trenutno odabran tekst|
-| Prijavi formatiranje teksta | NVDA+f | NVDA+f | Prijavljuje formatiranje teksta na trenutnoj poziciji kursora. Ako se pritisne dva puta prikazuje informaciju u režimu pretraživanja |
-| Sledeća rečenica | alt+strelica dole | alt+strelica dole | Pomera kursor na sledeću rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook) |
-| Prethodna rečenica | alt+strelica gore | alt+Strelica gore | Pomera kursor na prethodnu rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook)  |
+ || Ime | Desktop komanda | Laptop komanda | opis |
+ | Izgovori sve | NVDA+Strelica dole | NVDA+a | Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita |
+ | Pročitaj trenutni red | NVDA+Strelica gore | NVDA+l | Čita red na kom se sistemski kursor nalazi. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta sriče red koristeći opise znakova. |
+ | Pročitaj trenutni izbor teksta | NVDA+šift+strelica gore | NVDA+šift+s | Čita trenutno odabran tekst |
+ | Prijavi formatiranje teksta | NVDA+f | NVDA+f | Prijavljuje formatiranje teksta na trenutnoj poziciji kursora. Ako se pritisne dva puta prikazuje informaciju u režimu pretraživanja |
+ | Sledeća rečenica | alt+strelica dole | alt+strelica dole | Pomera kursor na sledeću rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook) |
+ | Prethodna rečenica | alt+strelica gore | alt+Strelica gore | Pomera kursor na prethodnu rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook)  |
 
 Kada ste u tabeli, Sledeće komande su takođe dostupne:
-|| Ime | Komanda | Opis |
-| Pomeri na prethodnu kolonu| Kontrol+alt+strelica levo | Pomera sistemski kursor na prethodnu kolonu(ostajete u istom redu) |
-| Pomeri na sledeću kolonu| Kontrol+alt+strelica desno | Pomera sistemski kursor na sledeću kolonu(ostajete u istom redu) |
-| Pomeri na prethodni red | control+alt+strelica gore | Pomera sistemski kursor na prethodni red(ostajete u istoj koloni) |
-| Pomeri na sledeći red| control+alt+strelica dole | Pomera sistemski kursor na sledeći red(ostajete u istoj koloni) |
+ || Ime | Komanda | Opis |
+ | Pomeri na prethodnu kolonu | Kontrol+alt+strelica levo | Pomera sistemski kursor na prethodnu kolonu(ostajete u istom redu) |
+ | Pomeri na sledeću kolonu | Kontrol+alt+strelica desno | Pomera sistemski kursor na sledeću kolonu(ostajete u istom redu) |
+ | Pomeri na prethodni red | control+alt+strelica gore | Pomera sistemski kursor na prethodni red(ostajete u istoj koloni) |
+ | Pomeri na sledeći red | control+alt+strelica dole | Pomera sistemski kursor na sledeći red(ostajete u istoj koloni) |
 %kc:endInclude
 
 ++ Navigacija objekata ++[ObjectNavigation]
@@ -371,16 +371,17 @@ Napomena: Praćenje objektne navigacije brajevim redom može se podesiti koriš�
 Za navigaciju između objekata, koristite sledeće komande:
 
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | Pokret| Opis |
-| Prijavi trenutni objekat| NVDA+numeričko5 | NVDA+šift+o | Nema komande | Prijavljuje trenutni navigacioni objekat. Ako se pritisne dva puta informacija se sriče, i pritiskanjem 3 puta informacija i vrednost se kopira u privremenu memoriju. |
-| Premesti se na sadržani objekat | NVDA+numeričko8 | NVDA+šift+strelica gore | prevuci nagore(režim objekata) | premešta se na objekat koji sadrži trenutni navigacioni objekat|
-| Premesti se na prethodni objekat | NVDA+numeričko4 | NVDA+šift+strelica levo | prevlačenje nalevo(režim objekata) | pomera se na objekat pre trenutnog navigacionog objekta|
-| Premesti na sledeći objekat | NVDA+numeričko6 | NVDA+šift+strelica desno | prevlačenje nadesno(režim objekata) | premešta se na objekat posle trenutnog navigacionog objekta|
-| Premesti se na prvi sadržan objekat| NVDA+numeričko2 | NVDA+šift+strelica dole | prevlačenje nadole (režim objekata) | Premešta se na prvi objekat sadržan od strane navigacionog objekta|
-| Premesti se na fokusiran objekat| NVDA+numerički minus | NVDA+taster za brisanje unazad | Nema komande | Premešta se na objekat koji trenutno ima sistemski fokus, i takođe postavlja pregledni kursor na poziciju sistemskog kursora, ako je prikazan|
-| Aktiviraj trenutni navigacioni objekat| NVDA+numerički enter | NVDA+enter | dupli dodir | aktivira trenutni navigacioni objekat(slično kliku mišem ili pritiskanju tastera razmak kada ima sistemski fokus) |
-| Premesti sistemski fokus ili kursor na poziciju pregleda| NVDA+šift+numerički minus | NVDA+šift+taster za brisanje unazad | Nema komande | Ako se pritisne jednom pomera sistemski fokus na mesto navigacionog objekta, ako se pritisne dva puta pomera sistemski kursor na poziciju preglednog kursora|
-| Prijavi lokaciju preglednog kursora| NVDA+numerički taster za brisanje | NVDA+taster za brisanje | nema komande | Prijavljuje informacije o lokaciji teksta ispod preglednog kursora. Na primer, ovo može uključiti procente u dokumentu, daljina od ivica strana ili poziciju na ekranu. Ako se pritisne dva puta može se dobiti više informacija. |
+ || Ime | Desktop komanda | Laptop komanda | Pokret | Opis |
+ | Prijavi trenutni objekat | NVDA+numeričko5 | NVDA+šift+o | Nema komande | Prijavljuje trenutni navigacioni objekat. Ako se pritisne dva puta informacija se sriče, a  pritiskanjem 3 puta informacija i vrednost se kopiraju u privremenu memoriju. |
+ | Premesti se na sadržani objekat | NVDA+numeričko8 | NVDA+šift+strelica gore | prevuci nagore(režim objekata) | premešta se na objekat koji sadrži trenutni navigacioni objekat |
+ | Premesti se na prethodni objekat | NVDA+numeričko4 | NVDA+šift+strelica levo | prevlačenje nalevo(režim objekata) | pomera se na objekat pre trenutnog navigacionog objekta |
+ | Premesti na sledeći objekat | NVDA+numeričko6 | NVDA+šift+strelica desno | prevlačenje nadesno(režim objekata) | premešta se na objekat posle trenutnog navigacionog objekta |
+ | Premesti se na prvi sadržan objekat | NVDA+numeričko2 | NVDA+šift+strelica dole | prevlačenje nadole (režim objekata) | Premešta se na prvi objekat sadržan od strane navigacionog objekta |
+ | Premesti se na fokusiran objekat | NVDA+numerički minus | NVDA+taster za brisanje unazad | Nema komande | Premešta se na objekat koji trenutno ima sistemski fokus, i takođe postavlja pregledni kursor na poziciju sistemskog kursora, ako je prikazan |
+ | Aktiviraj trenutni navigacioni objekat | NVDA+numerički enter | NVDA+enter | dupli dodir | aktivira trenutni navigacioni objekat(slično kliku mišem ili pritiskanju tastera razmak kada ima sistemski fokus) |
+ | Premesti sistemski fokus ili kursor na poziciju pregleda | NVDA+šift+numerički minus | NVDA+šift+taster za brisanje unazad | Nema komande | Ako se pritisne jednom pomera sistemski fokus na mesto navigacionog objekta, ako se pritisne dva puta pomera sistemski kursor na poziciju preglednog kursora |
+ | Prijavi lokaciju preglednog kursora | NVDA+numerički taster za brisanje | NVDA+taster za brisanje | nema komande | Prijavljuje informacije o lokaciji teksta ispod preglednog kursora. Na primer, ovo može uključiti procente u dokumentu, daljinu od ivica strana ili poziciju na ekranu. Ako se pritisne dva puta može se dobiti više informacija. |
+| Pomera pregledni kursor na statusnu traku | Nema komande | Nema komande | Nema komande | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat na ovu lokaciju. |
 %kc:endInclude
 
 Napomena: Komande sa numeričke tastature zahtevaju da num lock taster  bude isključen kako bi ispravno radile.
@@ -398,35 +399,35 @@ Napomena: Praćenje objektne navigacije brajevim redom može se podesiti koriš�
 
 Sledeće komande su dostupne za pregled teksta:
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | Pokret | Opis |
-| Premesti na prvi red pregleda| Šift+numeričko7 | NVDA+control+home | Nema komande | Premešta pregledni kursor na prvi red teksta|
-| Premesti na prethodni red pregleda| Numeričko7 | NVDA+strelica gore | Prevlačenje nagore(režim teksta) | Pomera pregledni kursor na prethodni red teksta|
-| Prijavi trenutni red pregleda | numpad8 | NVDA+šift+. | Nema komande | Izgovara trenutni red na kom se nalazi pregledni kursor. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta red se sriče koristeći opise znakova. |
-| Prebaci se na sledeći red pregleda| Numeričko9 | NVDA+strelica dole | Prevlačenje nadole(režim teksta) | Premesti pregledni kursor na sledeći red teksta|
-| Premesti se na poslednji red pregleda| Šift+numeričko9 | NVDA+control+end | Nema komande | Pomera pregledni kursor na poslednji red u dokumentu|
-| Premesti se na prethodnu reč pregleda| Numeričko4 | NVDA+control+strelica levo | Prevlačenje sa 2 prsta nalevo(Režim teksta) | Pomera pregledni kursor na prethodnu reč u tekstu|
-| Prijavi trenutnu reč pregleda| Numeričko5 | NVDA+control+. | Nema komande | Izgovara trenutnu reč teksta na kom se nalazi pregledni kursor. Ako se pritisne dva puta reč se sriče. Ako se pritisne tri puta reč se sriče koristeći opise znakova. |
-| Premesti se na sledeću reč pregleda| Numeričko6 | NVDA+control+strelica desno | Prevlačenje dva prsta nadesno(režim teksta) | Premešta pregledni kursor na sledeću reč|
-| Premesti se na početak reda u pregledu| Šift+numeričko1 | NVDA+home | Nema komande | Premešta pregledni kursor na početak reda|
-| Premesti se na prethodni znak pregleda| Numeričko1 | NVDA+strelica levo | Prevlačenje nalevo(režim teksta) | Premešta pregledni kursor na prethodno slovo u trenutnom redu teksta|
-| Prijavi trenutni znak pregleda| Numeričko2 | NVDA+. | Nema komande | Izgovara trenutni znak u redu na kom se pregledni kursor nalazi. Ako se pritisne dva puta pruža se opis ili primer tog znaka. Ako se pritisne tri puta izgovara se decimalna i hexadecimalna vrednost tog znaka. |
-| Premesti se na sledeći znak pregleda| Numeričko3 | NVDA+strelica desno | Prevlačenje nadesno(režim teksta) | Premešta pregledni kursor na sledeći znak u trenutnom redu teksta|
-| Premesti se na kraj reda pregleda| Šift+numeričko3 | NVDA+end | Nema komande | Premešta pregledni kursor na kraj trenutnog reda u tekstu|
-| Izgovori sve uz pregled| Numerički plus | NVDA+šift+a | Prevlačenje nadole sa 3 prsta(režim teksta) | Čita od trenutne pozicije preglednog kursora, pomerajući ga u toku čitanja|
-| Izaberi a zatim kopiraj iz preglednog kursora| NVDA+f9 | NVDA+f9 | Nema komande | Počinje izbor teksta koji treba da se kopira iz preglednog kursora. Kopiranje nije odrađeno dok ne kažete programu NVDA gde se nalazi kraj vašeg odabira|
-| Izaberi a zatim kopiraj pregledni kursor| NVDA+f10 | NVDA+f10 | Nema komande | Ako se pritisne jednom, tekst od početnog markera pa sve do kraja uključujući i trenutnu poziciju preglednog kursora je odabran. Ako je moguće, sistemski kursor će se pomeriti na odabran tekst. Nakon što se ova komanda pritisne drugi put, tekst se kopira u Windows privremenu memoriju|
-| Pomeri se na označen početak za kopiranje u pregledu| NVDA+šift+f9 | NVDA+šift+f9 | nema | Pomera pregledni kursor na poziciju koja je prethodno označena kao početak za kopiranje|
-| Prijavi formatiranje teksta | NVDA+šift+f | NVDA+šift+f | Nema | Prijavljuje formatiranje teksta na poziciji preglednog kursora. Ako se pritisne dva puta prikazuje informacije u režimu pretraživanja |
-| Prijavi zamenu za trenutni simbol| nema | Nema | Nema | Izgovara simbol na poziciji preglednog kursora. Ako se pritisne 2 puta, prikazuje simbol i tekst koji se izgovara u režimu pretraživanja. |
+ || Ime | Desktop komanda | Laptop komanda | Pokret | Opis |
+ | Premesti na prvi red pregleda | Šift+numeričko7 | NVDA+control+home | Nema komande | Premešta pregledni kursor na prvi red teksta |
+ | Premesti na prethodni red pregleda | Numeričko7 | NVDA+strelica gore | Prevlačenje nagore(režim teksta) | Pomera pregledni kursor na prethodni red teksta |
+ | Prijavi trenutni red pregleda | numpad8 | NVDA+šift+. | Nema komande | Izgovara trenutni red na kom se nalazi pregledni kursor. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta red se sriče koristeći opise znakova. |
+ | Prebaci se na sledeći red pregleda | Numeričko9 | NVDA+strelica dole | Prevlačenje nadole(režim teksta) | Premesti pregledni kursor na sledeći red teksta |
+ | Premesti se na poslednji red pregleda | Šift+numeričko9 | NVDA+control+end | Nema komande | Pomera pregledni kursor na poslednji red u dokumentu |
+ | Premesti se na prethodnu reč pregleda | Numeričko4 | NVDA+control+strelica levo | Prevlačenje sa 2 prsta nalevo(Režim teksta) | Pomera pregledni kursor na prethodnu reč u tekstu |
+ | Prijavi trenutnu reč pregleda | Numeričko5 | NVDA+control+. | Nema komande | Izgovara trenutnu reč teksta na kom se nalazi pregledni kursor. Ako se pritisne dva puta reč se sriče. Ako se pritisne tri puta reč se sriče koristeći opise znakova. |
+ | Premesti se na sledeću reč pregleda | Numeričko6 | NVDA+control+strelica desno | Prevlačenje dva prsta nadesno(režim teksta) | Premešta pregledni kursor na sledeću reč |
+ | Premesti se na početak reda u pregledu | Šift+numeričko1 | NVDA+home | Nema komande | Premešta pregledni kursor na početak reda |
+ | Premesti se na prethodni znak pregleda | Numeričko1 | NVDA+strelica levo | Prevlačenje nalevo(režim teksta) | Premešta pregledni kursor na prethodno slovo u trenutnom redu teksta |
+ | Prijavi trenutni znak pregleda | Numeričko2 | NVDA+. | Nema komande | Izgovara trenutni znak u redu na kom se pregledni kursor nalazi. Ako se pritisne dva puta pruža se opis ili primer tog znaka. Ako se pritisne tri puta izgovara se decimalna i hexadecimalna vrednost tog znaka. |
+ | Premesti se na sledeći znak pregleda | Numeričko3 | NVDA+strelica desno | Prevlačenje nadesno(režim teksta) | Premešta pregledni kursor na sledeći znak u trenutnom redu teksta |
+ | Premesti se na kraj reda pregleda | Šift+numeričko3 | NVDA+end | Nema komande | Premešta pregledni kursor na kraj trenutnog reda u tekstu |
+ | Izgovori sve uz pregled | Numerički plus | NVDA+šift+a | Prevlačenje nadole sa 3 prsta(režim teksta) | Čita od trenutne pozicije preglednog kursora, pomerajući ga u toku čitanja |
+ | Izaberi a zatim kopiraj iz preglednog kursora | NVDA+f9 | NVDA+f9 | Nema komande | Počinje izbor teksta koji treba da se kopira iz preglednog kursora. Kopiranje nije odrađeno dok ne kažete programu NVDA gde se nalazi kraj vašeg odabira |
+ | Izaberi a zatim kopiraj pregledni kursor | NVDA+f10 | NVDA+f10 | Nema komande | Ako se pritisne jednom, tekst od početnog markera pa sve do kraja uključujući i trenutnu poziciju preglednog kursora je odabran. Ako je moguće, sistemski kursor će se pomeriti na odabran tekst. Nakon što se ova komanda pritisne drugi put, tekst se kopira u Windows privremenu memoriju |
+ | Pomeri se na označen početak za kopiranje u pregledu | NVDA+šift+f9 | NVDA+šift+f9 | nema | Pomera pregledni kursor na poziciju koja je prethodno označena kao početak za kopiranje |
+ | Prijavi formatiranje teksta | NVDA+šift+f | NVDA+šift+f | Nema | Prijavljuje formatiranje teksta na poziciji preglednog kursora. Ako se pritisne dva puta prikazuje informacije u režimu pretraživanja |
+ | Prijavi zamenu za trenutni simbol | nema | Nema | Nema | Izgovara simbol na poziciji preglednog kursora. Ako se pritisne 2 puta, prikazuje simbol i tekst koji se izgovara u režimu pretraživanja. |
 %kc:endInclude
 
 Napomena: Tasteri sa numeričke tastature zahtevaju da taster numlock bude isključen kako bi ispravno radili.
 
 Dobar način da zapamtite desktop raspored ovih prečica je da ih zamislite kao mrežu 3 sa 3, koja od vrha ka dnu pregleda redove, reči i znakove a s leva na desno pomera kursor na prethodni, izgovara trenutni ili sledeći.
 Izgled je ovako ilustrovan:
-| prethodni red | Trenutni red | Sledeći red |
-| Prethodna reč | Trenutna reč | Sledeća reč |
-| Prethodni znak | trenutni znak | Sledeći znak |
+ | prethodni red | Trenutni red | Sledeći red |
+ | Prethodna reč | Trenutna reč | Sledeća reč |
+ | Prethodni znak | trenutni znak | Sledeći znak |
 
 ++ Režimi pregleda ++[ReviewModes]
 Komande programa NVDA[za pregled teksta#ReviewingText] mogu pregledati sadržaj trenutnog navigacionog objekta, trenutnog dokumenta ili ekrana, u zavisnosti od toga koji je režim pregleda odabran.
@@ -434,9 +435,9 @@ Režimi pregleda su zamena za stari način pregleda programa NVDA.
 
 Sledeće komande menjaju režime pregleda:
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | Pokret | Opis |
-| Prebaci se na sledeći režim pregleda| NVDA+numeričko7 | NVDA+pageUp | Prevlačenje nagore sa dva prsta| Prelazi na sledeći dostupan režim pregleda|
-| Prebaci se na prethodni režim pregleda | NVDA+numeričko1 | NVDA+pageDown | Prevlačenje nadole sa dva prsta| Prelazi na prethodni dostupan režim pregleda|
+ || Ime | Desktop komanda | Laptop komanda | Pokret | Opis |
+ | Prebaci se na sledeći režim pregleda | NVDA+numeričko7 | NVDA+pageUp | Prevlačenje nagore sa dva prsta | Prelazi na sledeći dostupan režim pregleda |
+ | Prebaci se na prethodni režim pregleda | NVDA+numeričko1 | NVDA+pageDown | Prevlačenje nadole sa dva prsta | Prelazi na prethodni dostupan režim pregleda |
 %kc:endInclude
 
 +++ Pregled objekata +++[ObjectReview]
@@ -478,13 +479,13 @@ Ako želite da iskoristite njihove prednosti, možete ih podesiti iz kategorije 
 
 Iako bi trebalo koristiti fizički miš za navigaciju sa mišem, NVDA ima nekoliko glavnih komandi koje su vezane za miš:
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir | Opis |
-| Klik levog tastera miša| Numeričko podeljeno | NVDA+[ | Nema | Izvršava levi klik tastera miša jednom. Dvostruki klik se može izvršiti brzim pritiskanjem ove komande dva puta|
-| Zaključavanje levog tastera miša| Šift+numeričko podeljeno | NVDA+control+[ | Nema | Zaključava levi taster miša. Pritisnite ponovo da ga otpustite. Da vučete miš, pritisnite ovu komandu a zatim ili pomerajte miš fizički ili koristite jednu od dostupnih komandi za prebacivanje miša|
-| Desni klik miša| Numeričko puta | NVDA+] | Dodirnite i zadržite | Izvršava desni klik miša. |
-| Zaključavanje desnog tastera miša | Šift+numeričko puta | NVDA+control+] | Nema | Zaključava desni taster miša. Pritisnite ponovo da ga otpustite. Da vučete miš, pritisnite ovu komandu a zatim ili pomerajte miš fizički ili koristite jednu od dostupnih komandi za prebacivanje miša|
-| Prebaci miš na trenutni navigacioni objekat| NVDA+numeričko podeljeno | NVDA+šift+m | Nema | Pomera miš na lokaciju trenutnog navigacionog objekta i preglednog kursora|
-| Navigacija do objekta ispod miša| NVDA+Numeričko puta | NVDA+šift+n | Nema | Postavlja navigacioni objekat na trenutnu lokaciju miša|
+ || Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir | Opis |
+ | Klik levog tastera miša | Numeričko podeljeno | NVDA+[ | Nema | Izvršava levi klik tastera miša jednom. Dvostruki klik se može izvršiti brzim pritiskanjem ove komande dva puta |
+ | Zaključavanje levog tastera miša | Šift+numeričko podeljeno | NVDA+control+[ | Nema | Zaključava levi taster miša. Pritisnite ponovo da ga otpustite. Da vučete miš, pritisnite ovu komandu a zatim ili pomerajte miš fizički ili koristite jednu od dostupnih komandi za prebacivanje miša |
+ | Desni klik miša | Numeričko puta | NVDA+] | Dodirnite i zadržite | Izvršava desni klik miša. |
+ | Zaključavanje desnog tastera miša | Šift+numeričko puta | NVDA+control+] | Nema | Zaključava desni taster miša. Pritisnite ponovo da ga otpustite. Da vučete miš, pritisnite ovu komandu a zatim ili pomerajte miš fizički ili koristite jednu od dostupnih komandi za prebacivanje miša |
+ | Prebaci miš na trenutni navigacioni objekat | NVDA+numeričko podeljeno | NVDA+šift+m | Nema | Pomera miš na lokaciju trenutnog navigacionog objekta i preglednog kursora |
+ | Navigacija do objekta ispod miša | NVDA+Numeričko puta | NVDA+šift+n | Nema | Postavlja navigacioni objekat na trenutnu lokaciju miša |
 %kc:endInclude
 
 + Režim pretraživanja +[BrowseMode]
@@ -518,14 +519,14 @@ Ako se pritisne escape vratićete se u režim pretraživanja.
 Takođe, možete ručno ući u režim fokusiranja, kada će on ostati omogućen dok ga vi ne onemogućite.
 
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Prebacivanje režima| NVDA+razmak | Prebacuje se između režima fokusiranja i režima pretraživanja|
-| Izlaz iz režima fokusiranja| escape | Vraća se u režim pretraživanja ako ste automatski ušli u režim fokusiranja|
-| Osvežava dokument režima pretraživanja| NVDA+f5 | Ponavlja učitavanje trenutnog dokumenta(korisno ako određen sadržaj nedostaje u dokumentu. nije dostupno u programima Microsoft Word i Outlook.) |
-| Pronađi | NVDA+control+f | Otvara dijalog u kome možete da upišete tekst koji želite da pronađete u dokumentu. Pogledajte sekciju [pretraga teksta #SearchingForText] za dodatne informacije. |
-| Pronađi sledeće| NVDA+f3 | Pretražuje sledeću pojavu teksta koji ste prethodno pretražili u dokumentu|
-| Pronađi prethodno | NVDA+šift+f3 | Pretražuje prethodnu pojavu teksta koju ste pronašli u dokumentu|
-| Otvara duži opis| NVDA+d | Otvara novi prozor koji sadrži duži opis elementa ako element ima duži opis. | 
+ || Ime | Komanda | Opis |
+ | Prebacivanje režima | NVDA+razmak | Prebacuje se između režima fokusiranja i režima pretraživanja |
+ | Izlaz iz režima fokusiranja | escape | Vraća se u režim pretraživanja ako ste automatski ušli u režim fokusiranja |
+ | Osvežava dokument režima pretraživanja | NVDA+f5 | Ponavlja učitavanje trenutnog dokumenta(korisno ako određen sadržaj nedostaje u dokumentu. nije dostupno u programima Microsoft Word i Outlook.) |
+ | Pronađi | NVDA+control+f | Otvara dijalog u kome možete da upišete tekst koji želite da pronađete u dokumentu. Pogledajte sekciju [pretraga teksta #SearchingForText] za dodatne informacije. |
+ | Pronađi sledeće | NVDA+f3 | Pretražuje sledeću pojavu teksta koji ste prethodno pretražili u dokumentu |
+ | Pronađi prethodno | NVDA+šift+f3 | Pretražuje prethodnu pojavu teksta koju ste pronašli u dokumentu |
+ | Otvara duži opis | NVDA+d | Otvara novi prozor koji sadrži duži opis elementa ako element ima duži opis. | 
 %kc:endInclude
 
 ++ Navigacija jednim slovom++[SingleLetterNavigation]
@@ -559,9 +560,9 @@ Sledeći tasteri skaču na sledeći dostupan element, dok dodavanje šift taster
 - w: Greška u pravopisu
 -
 Da se pomerate na početak i kraj elemenata kao što su liste i tabele:
-|| Ime | Komanda | Opis |
-| Pomeri se na početak sadržaja| Šift+zarez | Premešta se na početak sadržaja(lista, tabela, i tako dalje.) Gde se nalazi kursor|
-| Pomeri se na kraj sadržaja| Zarez | Pomera se na kraj sadržaja(liste, tabele, i tako dalje.) Gde se nalazi kursor|
+ || Ime | Komanda | Opis |
+ | Pomeri se na početak sadržaja | Šift+zarez | Premešta se na početak sadržaja(lista, tabela, i tako dalje.) Gde se nalazi kursor |
+ | Pomeri se na kraj sadržaja | Zarez | Pomera se na kraj sadržaja(liste, tabele, i tako dalje.) Gde se nalazi kursor |
 %kc:endInclude
 
 Neke Web aplikacije kao što su Gmail, Twitter i Facebook koriste slova kao prečice.
@@ -577,8 +578,8 @@ Radio dugme vam dozvoljava da menjate vrstu elementa.
 U dijalogu takođe postoji polje za unos teksta uz pomoć kojeg možete da pretražujete stranicu.
 Nakon što izaberete stavku, možete koristiti dva dugmeta u dijalogu da dođete do stavke ili da je aktivirate.
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Lista elemenata u režimu pretraživanja | NVDA+f7 | Prikazuje listu različitih vrsta elemenata u dokumentu|
+ || Ime | Komanda | Opis |
+ | Lista elemenata u režimu pretraživanja | NVDA+f7 | Prikazuje listu različitih vrsta elemenata u dokumentu |
 %kc:endInclude
 
 ++ Pretraga teksta ++[SearchingForText]
@@ -588,10 +589,10 @@ Izborno polje  "osetljivo na velika i mala slova" uzima u obzir veličinu slova 
 Na primer, sa uz opciju "osetljivo na velika i mala slova" možete pronaći "NV Access" ali ne "nv access".
 Koristite sledeće tastere za izvršavanje pretraga:
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Pronađi tekst| NVDA+control+f | Otvara dijalog za pretragu|
-| Pronađi sledeće | NVDA+f3 | Traži sledeće pojavljivanje trenutnog termina pretrage|
-| Pronađi prethodno | NVDA+shift+f3 | Pretražuje prethodno pojavljivanje trenutnog termina pretrage|
+ || Ime | Komanda | Opis |
+ | Pronađi tekst | NVDA+control+f | Otvara dijalog za pretragu |
+ | Pronađi sledeće | NVDA+f3 | Traži sledeće pojavljivanje trenutnog termina pretrage |
+ | Pronađi prethodno | NVDA+shift+f3 | Pretražuje prethodno pojavljivanje trenutnog termina pretrage |
 %kc:endInclude
 
 ++ Umetnuti objekti ++[ImbeddedObjects]
@@ -602,8 +603,8 @@ Za interakciju sa ovim objektima, možete pritisnuti enter na njih.
 Ako je pristupačan, možete koristiti taster tab za interakciju kao i u drugim aplikacijama.
 Postoji komanda za vraćanje na stranicu koja sadrži ovakav objekat:
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Premesti se na sadržan dokument režima pretraživanja| NVDA+control+razmak | Prebacuje fokus van umetnutog objekta i vraća ga na dokument koji ga sadrži|
+ || Ime | Komanda | Opis |
+ | Premesti se na sadržan dokument režima pretraživanja | NVDA+control+razmak | Prebacuje fokus van umetnutog objekta i vraća ga na dokument koji ga sadrži |
 %kc:endInclude
 
 + Čitanje matematičkog sadržaja +[ReadingMath]
@@ -637,8 +638,8 @@ Podrazumevano, pregledni kursor prati sistemski kursor, tako da obično možete 
 +
 
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Interakcija sa matematičkim sadržajem| NVDA+alt+m | Počinje interakciju sa matematičkim sadržajem. |
+ || Ime | Komanda | Opis |
+ | Interakcija sa matematičkim sadržajem | NVDA+alt+m | Počinje interakciju sa matematičkim sadržajem. |
 %kc:endInclude
 
 Nakon toga, možete koristiti komande programa MathPlayer kao što su strelice da istražujete sadržaj.
@@ -662,94 +663,94 @@ Možete podesiti brajev red korišćenjem kategorije [brajev red #BrailleSetting
 ++ Skraćenice za vrste kontrola, stanje i orjentire++[BrailleAbbreviations]
 Kako bi što je više informacija moguće stalo na brajev red, sledeće skraćenice su dodate za vrste kontrola stanje kao i orjentire.
 
-|| Skraćenica | Vrsta kontrole |
-| app | Aplikacija |
-| art | članak |
-| bqt | Citat |
-| btn | Dugme |
-| drbtn | Dugme padajućeg menija|
-| spnbtn | Kružno dugme |
-| splbtn | Dugme za razdvajanje|
-| tgbtn | Dugme prekidača |
-| cap | naslov |
-| cbo | Izborni okvir |
-| chk | Izborno polje |
-| dlg | dialog |
-| doc | Dokument |
-| edt | Polje za unos teksta |
-| pwdedt | Polje za unos lozinke |
-| Umetnuti | Umetnuti objekat |
-| enote | Završna napomena |
-| fig | Figura |
-| fnote | Fusnote |
-| gra | Slika|
-| grp | Grupisanje |
-| hN | Naslov  na nivou n, na primer h1, h2. |
-| hlp | Pomoćni balon |
-| lmk | Orjentir |
-| lnk | link |
-| lst | Lista |
-| vlnk | Posećen link |
-| mnu | Meni |
-| mnubar | Traka menija |
-| mnubtn | Dugme menija |
-| mnuitem | Stavka menija |
-| pnl | panel |
-| prgbar | Traka napredovanja |
-| rbtn | radio dugme |
-| scrlbar | Klizna traka |
-| sect | Sekcija |
-| stbar | Statusna traka |
-| tabctl | Kontrola kartice |
-| tbl | Tabela |
-| cN | kolona tabele sa brojem  n, na primer c1, c2. |
-| rN | Red tabele sa brojem n, na primer  r1, r2. |
-| term | terminal |
-| tlbar | Traka sa alatima |
-| tltip | Opis alata |
-| tv | Prikaz stabla |
-| tvbtn | Dugme prikaza stabla |
-| tvitem | Stavka prikaza stabla |
-| lv N | Stavka prikaza stabla na nivou N|
-| wnd | Prozor |
-| ⠤⠤⠤⠤⠤ | separator |
-| mrkd | Obeležen sadržaj |
+ || Skraćenica | Vrsta kontrole |
+ | app | Aplikacija |
+ | art | članak |
+ | bqt | Citat |
+ | btn | Dugme |
+ | drbtn | Dugme padajućeg menija |
+ | spnbtn | Kružno dugme |
+ | splbtn | Dugme za razdvajanje |
+ | tgbtn | Dugme prekidača |
+ | cap | naslov |
+ | cbo | Izborni okvir |
+ | chk | Izborno polje |
+ | dlg | dialog |
+ | doc | Dokument |
+ | edt | Polje za unos teksta |
+ | pwdedt | Polje za unos lozinke |
+ | Umetnuti | Umetnuti objekat |
+ | enote | Završna napomena |
+ | fig | Figura |
+ | fnote | Fusnote |
+ | gra | Slika |
+ | grp | Grupisanje |
+ | hN | Naslov  na nivou n, na primer h1, h2. |
+ | hlp | Pomoćni balon |
+ | lmk | Orjentir |
+ | lnk | link |
+ | lst | Lista |
+ | vlnk | Posećen link |
+ | mnu | Meni |
+ | mnubar | Traka menija |
+ | mnubtn | Dugme menija |
+ | mnuitem | Stavka menija |
+ | pnl | panel |
+ | prgbar | Traka napredovanja |
+ | rbtn | radio dugme |
+ | scrlbar | Klizna traka |
+ | sect | Sekcija |
+ | stbar | Statusna traka |
+ | tabctl | Kontrola kartice |
+ | tbl | Tabela |
+ | cN | kolona tabele sa brojem  n, na primer c1, c2. |
+ | rN | Red tabele sa brojem n, na primer  r1, r2. |
+ | term | terminal |
+ | tlbar | Traka sa alatima |
+ | tltip | Opis alata |
+ | tv | Prikaz stabla |
+ | tvbtn | Dugme prikaza stabla |
+ | tvitem | Stavka prikaza stabla |
+ | lv N | Stavka prikaza stabla na nivou N |
+ | wnd | Prozor |
+ | ⠤⠤⠤⠤⠤ | separator |
+ | mrkd | Obeležen sadržaj |
 
 Sledeći pokazivači stanja su takođe definisani:
-|| Skraćenica | Stanje kontrole |
-| ... | Prikazuje se kada objekat podržava automatsko dopunjavanje|
-| ⢎⣿⡱ | Prikazano kada objekat (Na primer dugme prekidača) je pritisnut|
-| ⢎⣀⡱ | Prikazano kada objekat (na primer dugme prekidača) nije pritisnut|
-| ⣏⣿⣹ | Prikazano kada je objekat (na primer izborno polje ) označen|
-| ⣏⣸⣹ | Prikazano kada je objekat (na primer izborno polje ) polovično označen|
-| ⣏⣀⣹ | Prikazano kada objekat (na primer izborno polje ) nije označen|
-| - | Prikazano kada objekat(na primer stavka prikaza stabla) se može skupiti|
-| + | Prikazano kada objekat(na primer stavka prikaza stabla) se može proširiti|
-| *** | Prikazano kada naiđete na zaštićen dokument ili kontrolu|
-| clk | Prikazano kada se na objekat može kliknuti|
-| cmnt | Prikazano kada postoji komentar za ćeliju u tabeli ili deo teksta u dokumentu|
-| frml | Prikazano kada postoji formula u ćeliji tabele|
-| Neispravan | Prikazano kada dođe do neispravnog unosa|
-| ldesc | Prikazano kada objekat (obično slika) ima dug opis|
-| mln | Prikazano kada polje za unos teksta dozvoljava unos više redova na primer polja za unos komentara na sajtovima|
-| req | Prikazano kada je polje za unos obavezno|
-| ro | Prikazano kada objekat(na primer polje za unos teksta) je samo za čitanje|
-| sel | Prikazano kada je objekat izabran|
-| nsel | Prikazano kada objekat nije izabran|
-| sorted asc | Prikazano kada je objekat sortiran uzlazno|
-| sorted desc | Prikazano kada je objekat sortiran silazno|
-| submnu | Prikazano kada objekat ima dodatni prozor(obično podmeni) |
+ || Skraćenica | Stanje kontrole |
+ | ... | Prikazuje se kada objekat podržava automatsko dopunjavanje |
+ | ⢎⣿⡱ | Prikazano kada objekat (Na primer dugme prekidača) je pritisnut |
+ | ⢎⣀⡱ | Prikazano kada objekat (na primer dugme prekidača) nije pritisnut |
+ | ⣏⣿⣹ | Prikazano kada je objekat (na primer izborno polje ) označen |
+ | ⣏⣸⣹ | Prikazano kada je objekat (na primer izborno polje ) polovično označen |
+ | ⣏⣀⣹ | Prikazano kada objekat (na primer izborno polje ) nije označen |
+ | - | Prikazano kada objekat(na primer stavka prikaza stabla) se može skupiti |
+ | + | Prikazano kada objekat(na primer stavka prikaza stabla) se može proširiti |
+ | *** | Prikazano kada naiđete na zaštićen dokument ili kontrolu |
+ | clk | Prikazano kada se na objekat može kliknuti |
+ | cmnt | Prikazano kada postoji komentar za ćeliju u tabeli ili deo teksta u dokumentu |
+ | frml | Prikazano kada postoji formula u ćeliji tabele |
+ | Neispravan | Prikazano kada dođe do neispravnog unosa |
+ | ldesc | Prikazano kada objekat (obično slika) ima dug opis |
+ | mln | Prikazano kada polje za unos teksta dozvoljava unos više redova na primer polja za unos komentara na sajtovima |
+ | req | Prikazano kada je polje za unos obavezno |
+ | ro | Prikazano kada objekat(na primer polje za unos teksta) je samo za čitanje |
+ | sel | Prikazano kada je objekat izabran |
+ | nsel | Prikazano kada objekat nije izabran |
+ | sorted asc | Prikazano kada je objekat sortiran uzlazno |
+ | sorted desc | Prikazano kada je objekat sortiran silazno |
+ | submnu | Prikazano kada objekat ima dodatni prozor(obično podmeni) |
 
 Takođe, sledeće skraćenice za orjentire su definisane:
-|| Skraćenica | Orjentir |
-| bnnr | baner |
-| cinf | Informacije o sadržaju |
-| cmpl | Dodatni |
-| form | Formular |
-| main | Glavni |
-| navi | Navigacija|
-| srch | Pretraga |
-| rgn | region |
+ || Skraćenica | Orjentir |
+ | bnnr | baner |
+ | cinf | Informacije o sadržaju |
+ | cmpl | Dodatni |
+ | form | Formular |
+ | main | Glavni |
+ | navi | Navigacija |
+ | srch | Pretraga |
+ | rgn | region |
 
 ++ Brajev unos ++[BrailleInput]
 NVDA podržava unos skraćenog i standardnog brajevog pisma.
@@ -795,9 +796,13 @@ Možete omogućiti zatamnjivanje ekrana u [kategoriji vid #VisionSettings] dijal
 
 Kada je zatamnjivanje ekrana omogućeno neki zadaci koji zavise od sadržaja vidljivog na ekranu kao što su izvršavanje funkcije [OCR #Win10Ocr] ili slikanje ekrana nisu mogući.
 
+Zbog promene u API-u za Windows lupu, zatamnjivanje ekrana je ažurirano kako bi podržavalo najnovije Windows verzije.
+Koristite  NVDA 2021.2 da aktivirate zatamnjivanje ekrana na Windowsu 10 21H2 (10.0.19044) ili novijim.
+Kako biste se uverili u vašu privatnost, kada koristite novu verziju Windowsa, vizuelno potvrdite da zatamnjivanje ekrana čini ekran potpuno crnim.
+
 + Prepoznavanje sadržaja +[ContentRecognition]
 Kada autori ne pruže dovoljno informacija za korisnike čitača ekrana o sadržaju, razni alati se mogu koristiti za pokušaj prepoznavanja sadržaja sa slike.
-NVDA podržava optičko prepoznavanje znakova (eng. OCR) funkciju koja je ugrađena u Windows 10 za prepoznavanje teksta sa slike.
+NVDA podržava optičko prepoznavanje znakova (eng. OCR) funkciju koja je ugrađena u Windows 10 i noviji za prepoznavanje teksta sa slike.
 Dodatni pružaoci prepoznavanja se mogu dobiti instaliranjem NVDA dodataka.
 
 Kada koristite komandu za prepoznavanje sadržaja, NVDA prepoznaje sadržaj trenutnog [navigacionog objekta #ObjectNavigation].
@@ -809,17 +814,17 @@ Kada je prepoznavanje završeno, rezultat će biti prikazan u dokumentu koji je 
 Pritiskanje tastera enter aktivira (izvršava klik miša ) tekst na poziciji kursora ako je moguće.
 Pritiskanje tastera ESC odbacuje rezultat prepoznavanja.
 
-++ Windows 10 OCR ++[Win10Ocr]
-Windows 10 uključuje  OCR za puno jezika.
+++ Windows OCR ++[Win10Ocr]
+Windows 10 i novije verzije  uključuju  OCR za puno jezika.
 NVDA može da koristi ovo za prepoznavanje teksta sa slika ili nepristupačnih aplikacija.
 
-Možete podesiti jezik koji ćese koristiti za prepoznavanje u [Windows 10 OCR kategoriji #Win10OcrSettings] [NVDA podešavanja #NVDASettings].
+Možete podesiti jezik koji ćese koristiti za prepoznavanje u [Windows OCR kategoriji #Win10OcrSettings] [NVDA podešavanja #NVDASettings].
 Dodatni jezici se mogu instalirati otvaranjem start menija, biranjem opcije podešavanja, zatim opcije vreme i jezik -> region i jezik a nakon toga izabrati opciju dodaj jezik.
 
-Windows 10 OCR može biti delimično ili potpuno nekompatibilan sa [NVDA vizuelnim poboljšanjima #Vision] ili drugim vizuelnim pomoćnim alatima. Morate onemogućiti ove alate pre nego što započnete proces prepoznavanja.
+Windows OCR može biti delimično ili potpuno nekompatibilan sa [NVDA vizuelnim poboljšanjima #Vision] ili drugim vizuelnim pomoćnim alatima. Morate onemogućiti ove alate pre nego što započnete proces prepoznavanja.
 +
 %kc:beginInclude
-Da prepoznate tekst trenutnog navigacionog objekta koristeći Windows 10 OCR, pritisnite NVDA+r.
+Da prepoznate tekst trenutnog navigacionog objekta koristeći Windows OCR, pritisnite NVDA+r.
 %kc:endInclude
 
 + Posebne karakteristike za aplikacije+[ApplicationSpecificFeatures]
@@ -833,9 +838,9 @@ Kao prvo, ovo zahteva da opcija prijavi zaglavlja redova/kolona iz  kategorije f
 Takođe, NVDA mora da zna koje kolone ili redovi sadrže zaglavlje tabele.
 Nakon što dođete do prve ćelije koja sadrži zaglavlja redova i kolona, koristite jednu od sledećih komandi:
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Postavi zaglavlja kolona| NVDA+šift+c | Ako se pritisne jednom govori programu NVDA da je ovo prva ćelija koja sadrži red sa zaglavljem kolona, koja treba automatski biti izgovorena kada se pomerate ispod kolona ovog reda. Pritiskanje dva puta briše podešavanje. |
-| Podesi zaglavlje redova| NVDA+šift+r | Ako se pritisne jednom govori programu NVDA da je ovo prva ćelija koja sadrži kolone zaglavlja redova, Što treba automatski biti izgovoreno kada se krećete između kolona ovog reda. Pritiskanje dva puta briše podešavanje. |
+ || Ime | Komanda | Opis |
+ | Postavi zaglavlja kolona | NVDA+šift+c | Ako se pritisne jednom govori programu NVDA da je ovo prva ćelija koja sadrži red sa zaglavljem kolona, koja treba automatski biti izgovorena kada se pomerate ispod kolona ovog reda. Pritiskanje dva puta briše podešavanje. |
+ | Podesi zaglavlje redova | NVDA+šift+r | Ako se pritisne jednom govori programu NVDA da je ovo prva ćelija koja sadrži kolone zaglavlja redova, Što treba automatski biti izgovoreno kada se krećete između kolona ovog reda. Pritiskanje dva puta briše podešavanje. |
 %kc:endInclude
 Ova podešavanja se čuvaju u dokumentu kao markeri i kompatibilna su sa drugim čitačima ekrana kao što je Jaws.
 Ovo znači da korisnici drugih čitača ekrana koji kasnije otvore ovaj dokument već imaju podešena zaglavlja redova i kolona.
@@ -867,9 +872,9 @@ Kao prvo, ovo zahteva da opcija prijavi zaglavlja redova/kolona u kategoriji for
 Takođe, NVDA mora da zna koje kolone ili redovi sadrže zaglavlje tabele.
 Nakon što dođete do prve ćelije koja sadrži zaglavlja redova i kolona, koristite jednu od sledećih komandi:
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Postavi zaglavlja kolona| NVDA+šift+c | Ako se pritisne jednom govori programu NVDA da je ovo prva ćelija koja sadrži red sa zaglavljem kolona, koja treba automatski biti izgovorena kada se pomerate ispod kolona ovog reda. Pritiskanje dva puta briše podešavanje. |
-| Podesi zaglavlje redova| NVDA+šift+r | Ako se pritisne jednom govori programu NVDA da je ovo prva ćelija koja sadrži kolone zaglavlja redova, Što treba automatski biti izgovoreno kada se krećete između kolona ovog reda. Pritiskanje dva puta briše podešavanje. |
+ || Ime | Komanda | Opis |
+ | Postavi zaglavlja kolona | NVDA+šift+c | Ako se pritisne jednom govori programu NVDA da je ovo prva ćelija koja sadrži red sa zaglavljem kolona, koja treba automatski biti izgovorena kada se pomerate ispod kolona ovog reda. Pritiskanje dva puta briše podešavanje. |
+ | Podesi zaglavlje redova | NVDA+šift+r | Ako se pritisne jednom govori programu NVDA da je ovo prva ćelija koja sadrži kolone zaglavlja redova, Što treba automatski biti izgovoreno kada se krećete između kolona ovog reda. Pritiskanje dva puta briše podešavanje. |
 %kc:endInclude
 Ova podešavanja će biti upisana u radnu svesku i biti kompatibilna sa drugim čitačima ekrana kao što je Jaws.
 Ovo znači da korisnici drugih čitača ekrana koji kasnije otvore ovu radnu svesku automatski imaju zaglavlja redova i kolona podešena. 
@@ -933,31 +938,31 @@ Za dodatne informacije o režimu pretraživanja i navigaciji jednim slovom, pro�
 
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Uključi i isključi čitanje napomena za predavača| kontrol+šift+s | Kada ste u slajd šou koji je pokrenut, ova komanda prebacuje između čitanja napomena za predavača i čitanja slajdova. Ovo uključuje samo šta NVDA čita, a ne šta je prikazano na ekranu. | 
+ || Ime | Komanda | Opis |
+ | Uključi i isključi čitanje napomena za predavača | kontrol+šift+s | Kada ste u slajd šou koji je pokrenut, ova komanda prebacuje između čitanja napomena za predavača i čitanja slajdova. Ovo uključuje samo šta NVDA čita, a ne šta je prikazano na ekranu. | 
 %kc:endInclude
 
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Prijavi preostalo vreme| Kontrol+šift+r | Prijavljuje preostalo vreme pesme koja se trenutno reprodukuje, ukoliko se nešto reprodukuje. |
-| Prijavi proteklo vreme| Kontrol+Šift+e | Prijavljuje proteklo vreme zapisa koji se trenutno reprodukuje, ako se neki zapis reprodukuje. |
-| Prijavi trajanje zapisa| Kontrol+šift+t | Prijavljuje ukupno trajanje zapisa koji se trenutno reprodukuje, ako se neki zapis reprodukuje. |
+ || Ime | Komanda | Opis |
+ | Prijavi preostalo vreme | Kontrol+šift+r | Prijavljuje preostalo vreme pesme koja se trenutno reprodukuje, ukoliko se nešto reprodukuje. |
+ | Prijavi proteklo vreme | Kontrol+Šift+e | Prijavljuje proteklo vreme zapisa koji se trenutno reprodukuje, ako se neki zapis reprodukuje. |
+ | Prijavi trajanje zapisa | Kontrol+šift+t | Prijavljuje ukupno trajanje zapisa koji se trenutno reprodukuje, ako se neki zapis reprodukuje. |
 %kc:endInclude
 
 Napomena: Prečice opisane iznad rade samo sa podrazumevanim formatom statusne trake programa Foobar2000.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Prijavi jednu od poslednjih poruka| NVDA+kontrol+1-4 | Prijavljuje jednu od poslednjih poruka, u zavisnosti od pritisnutog broja; Na primer NVDA+kontrol+2 čita drugu najnoviju poruku. |
+ || Ime | Komanda | Opis |
+ | Prijavi jednu od poslednjih poruka | NVDA+kontrol+1-4 | Prijavljuje jednu od poslednjih poruka, u zavisnosti od pritisnutog broja; Na primer NVDA+kontrol+2 čita drugu najnoviju poruku. |
 %kc:endInclude
 
 ++ Poedit ++[Poedit]
 %kc:beginInclude
-|| Ime | Komanda | Opis |
-| Prijavi prozor sa komentarima | Kontrol+šift+c | Prijavljuje sve komentare u prozoru sa komentarima. |
-| Prijavi napomene za prevodioce| Kontrol+šift+a | Prijavljuje sve napomene za prevodioce. |
+ || Ime | Komanda | Opis |
+ | Prijavi prozor sa komentarima | Kontrol+šift+c | Prijavljuje sve komentare u prozoru sa komentarima. |
+ | Prijavi napomene za prevodioce | Kontrol+šift+a | Prijavljuje sve napomene za prevodioce. |
 %kc:endInclude
 
 ++ Kindle za PC ++[Kindle]
@@ -1002,9 +1007,9 @@ Da prikažete, uredite ili obrišete napomenu:
 ++ Azardi ++[Azardi]
 %kc:beginInclude
 Kada ste u prikazu tabele dodatih knjiga:
-|| Ime | Komanda | Opis |
-| Enter | enter | Otvara izabranu knjigu. |
-| Kontekstni meni | Aplikacioni taster| Otvara kontekstni meni za izabranu knjigu. |
+ || Ime | Komanda | Opis |
+ | Enter | enter | Otvara izabranu knjigu. |
+ | Kontekstni meni | Aplikacioni taster | Otvara kontekstni meni za izabranu knjigu. |
 %kc:endInclude
 
 ++ Windows konzola ++[WinConsole]
@@ -1015,11 +1020,11 @@ Tekst koji nije vidljiv u prozoru nije dostupan kada se koriste komande NVDA pre
 Zbog toga, neophodno je da pomerite prozor konzole kako biste videli raniji tekst.
 %kc:beginInclude
 Sledeće ugrađene prečice u Windows konzoli mogu biti korisne kada se  [pregleda tekst #ReviewingText] uz NVDA:
-|| Ime | Komanda | Opis |
-| Pomeri gore | control+StrelicaGore | Pomera prozor konzole gore, kako bi stariji tekst mogao da se pročita. |
-| Pomeri dole | control+StrelicaDole | Pomera prozor konzole dole, kako bi noviji tekst mogao da se pročita. |
-| Pomeri na početak | control+home | Pomera prozor konzole na početak teksta. |
-| Pomeri na kraj | control+end | Pomera prozor konzole na kraj teksta. |
+ || Ime | Komanda | Opis |
+ | Pomeri gore | control+StrelicaGore | Pomera prozor konzole gore, kako bi stariji tekst mogao da se pročita. |
+ | Pomeri dole | control+StrelicaDole | Pomera prozor konzole dole, kako bi noviji tekst mogao da se pročita. |
+ | Pomeri na početak | control+home | Pomera prozor konzole na početak teksta. |
+ | Pomeri na kraj | control+end | Pomera prozor konzole na kraj teksta. |
 %kc:endInclude
 
 + Podešavanje programa NVDA +[ConfiguringNVDA]
@@ -1251,11 +1256,11 @@ Nije moguće podržati stišavanje pozadinskih zvukova za prenosne i privremene 
 +++ Krug sintetizatora+++[SynthSettingsRing]
 Ako želite brzo da menjate podešavanja govora bez ulaza u kategoriju govor podešavanja programa NVDA, NVDA ima nekoliko komandi za pomeranje kroz neka od često korišćenih podešavanja govora:
 %kc:beginInclude
-|| Ime | Desktop komanda | Laptop komanda | Opis |
-| Prebaci se na sledeće podešavanje govora| NVDA+kontrol+strelica desno | NVDA+šift+kontrol+strelica desno | Premešta se na sledeće dostupno podešavanje govora, vraćajući se na prvo podešavanje nakon poslednjeg|
-| Premešta se na prethodno podešavanje govora | NVDA+kontrol+strelica levo | NVDA+šift+kontrol+strelica levo | Premešta se na prethodno podešavanje govora, vraćajući se na poslednje podešavanje nakon prvog|
-| Povećaj trenutno podešavanje govora| NVDA+kontrol+strelica gore | NVDA+šift+kontrol+strelica gore | Povećava trenutno podešavanje govora na kome se nalazite. Na primer povećava brzinu, bira sledeći glas, pojačava ton|
-| Smanjuje trenutno podešavanje govora| NVDA+kontrol+strelica dole | NVDA+šift+kontrol+strelica dole | Smanjuje trenutno podešavanje govora na kome se nalazite. Na primer smanjuje brzinu, bira prethodni glas, smanjuje ton|
+ || Ime | Desktop komanda | Laptop komanda | Opis |
+ | Prebaci se na sledeće podešavanje govora | NVDA+kontrol+strelica desno | NVDA+šift+kontrol+strelica desno | Premešta se na sledeće dostupno podešavanje govora, vraćajući se na prvo podešavanje nakon poslednjeg |
+ | Premešta se na prethodno podešavanje govora | NVDA+kontrol+strelica levo | NVDA+šift+kontrol+strelica levo | Premešta se na prethodno podešavanje govora, vraćajući se na poslednje podešavanje nakon prvog |
+ | Povećaj trenutno podešavanje govora | NVDA+kontrol+strelica gore | NVDA+šift+kontrol+strelica gore | Povećava trenutno podešavanje govora na kome se nalazite. Na primer povećava brzinu, bira sledeći glas, pojačava ton |
+ | Smanjuje trenutno podešavanje govora | NVDA+kontrol+strelica dole | NVDA+šift+kontrol+strelica dole | Smanjuje trenutno podešavanje govora na kome se nalazite. Na primer smanjuje brzinu, bira prethodni glas, smanjuje ton |
 %kc:endInclude
 
 +++ Brajeva podešavanja +++[BrailleSettings]
@@ -1397,6 +1402,10 @@ Ova opcija neće biti dostupna ako vaš brajev red podržava samo automatsko pre
 
 Možete pogledati dokumentaciju za vaš brajev red u delu [podržani brajevi redovi #SupportedBrailleDisplays] da proverite vrste komunikacije i dostupne portove.
 
+Molimo imajte na umu sledeće: Ako povežete više brajevih redova na vaš računar koji koriste isti drajver u isto vreme (na primer povezivanjem dva Seika uređaja),
+trenutno je nemoguće da kažete programu NVDA koji red da koristi.
+Tako da je preporučeno da povežete jedan brajev red jednog proizvođača / vrste u datom trenutku.
+ 
 +++ Vid +++[VisionSettings]
 Kategorija vid u NVDA podešavanjima vam dozvoljava da omogućite, onemogućite i podesite  [vizuelne pomoćnike #Vision].
 
@@ -1571,7 +1580,8 @@ Da isključite i uključite režim jednostavnog pregleda bilo gde, dodajte prila
 
 +++ Predstavljanje objekata (NVDA+kontrol+o) +++[ObjectPresentationSettings]
 Kategorija predstavljanje objekata u dijalogu NVDA podešavanja se koristi za podešavanje koliko informacija će prijavljivati o kontrolama kao što su opis, informacije o poziciji i tako dalje.
-Ova kategorija sadrži sledeće opcije:
+Ove opcije se obično ne primenjuju u režimu pretraživanja.
+Ove opcije obično važe za prijavljivanje fokusa i objektnu navigaciju, ali ne i za čitanje tekstualnog sadržaja na primer u režimu pretraživanja.
 
 ==== Prijavi opise alata ====[ObjectPresentationReportToolTips]
 Izborno polje koje kada je označeno govori programu NVDA da čita opise alata kada se pojave.
@@ -1789,8 +1799,8 @@ Ton će povećati visinu za svaki razmak, a za tabulator, povećaće visinu jedn
 - Govor i tonovi: Ova opcija čita uvlačenja koristeći obe opcije.
 -
 
-+++ Windows 10 OCR podešavanja +++[Win10OcrSettings]
-Podešavanja u ovoj kategoriji vam dozvoljavaju  da podesite [Windows 10 OCR #Win10Ocr].
++++ Windows OCR podešavanja +++[Win10OcrSettings]
+Podešavanja u ovoj kategoriji vam dozvoljavaju  da podesite [Windows OCR #Win10Ocr].
 Ova kategorija sadrži sledeće opcije:
 
 ==== Jezik prepoznavanja ====[Win10OcrSettingsRecognitionLanguage]
@@ -1826,12 +1836,12 @@ Ovo ima ogroman negativan uticaj na brzinu, posebno u aplikacijama kao što je M
 Zato, kada je ova opcija omogućena, NVDA će ograničiti registraciju događaja na sistemski fokus za većinu događaja.
 Ako imate probleme u brzini jedne ili više aplikacija, preporučujemo da probate ovu opciju i proverite da li se brzina poboljšala.
 
-==== Koristi UI automation za pristup Microsoft Word kontrolama kada je dostupan====[AdvancedSettingsUseUiaForWord]
-Kada je ova opcija omogućena, NVDA će pokušati da koristi Microsoft UI Automation API za pristupačnost kako bi preuzeo informacije iz Microsoft Word kontrola.
+==== Uvek koristi UI Automation za pristup kontrolama dokumenata u programu Microsoft Word kada je dostupan ====[AdvancedSettingsUseUiaForWord]
+Kada je ova opcija omogućena, NVDA će uvek pokušati da koristi Microsoft UI Automation API za pristupačnost kako bi preuzeo informacije iz Microsoft Word kontrola, čak i za starije verzije Microsoft Office paketa od 2016/365.
 Ovo uključuje sam Microsoft Word, kao i pregledač poruka i pisanje poruka u programu Microsoft Outlook.
- Za najnovije verzije aplikacije Microsoft Office 2016/365 na windowsu 10, UI Automation podrška je dovoljno kompletna za pružanje pristupa Microsoft Word dokumentima skoro identično već postojećoj NVDA Microsoft Word podršci, uz dodatu prednost velikog poboljšanja u brzini.
-Ali, moguće je da postoje određene informacije koje ili nisu pružene, ili su neispravne u određenim verzijama aplikacije Microsoft Office, što znači da se na ovu UI automation podršku ne može uvek u potpunosti osloniti.
-I dalje ne preporučujemo većini korisnika da ovo uključe, ali preporučujemo korisnicima aplikacije Office 2016/365 da testiraju ovu opciju i pruže dodatne informacije.
+ Za Microsoft Office verzije 16.0.13901 ili novije, NVDA će uvek koristiti UI Automation za pristup Microsoft Word dokumentima bez obzira kako je ova opcija podešena. 
+Za najnoviji Microsoft Office 2016/365 pokrenut na Windowsu 10 i novijim, UI Automation podrška je dovoljno kompletna da pruži pristup Microsoft Word dokumentima skoro jednako kao i već postojeća NVDA podrška, uz dodatnu prednost da je brzina značajno poboljšana.
+Ali, moguće je da postoje informacije koje još ne mogu biti preuzete, ili se neispravno dobijaju od strane starijih verzija paketa Microsoft Office, što znači da se na ovu UI Automation podršku ne možete uvek osloniti.
 
 ==== Koristi UI Automation za pristup Windows konzolama kada je dostupan====[AdvancedSettingsConsoleUIA]
 Kada je ova opcija omogućena, NVDA će koristiti novu, eksperimentalnu podršku za Windows konzole koja koristi nova [poboljšanja u pristupačnosti od strane Microsofta https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ova opcija je još uvek eksperimentalna i nije kompletna, tako da njeno korišćenje još nije preporučeno. Ali, kada se završi, ova podrška će verovatno postati podrazumevana, što će poboljšati stabilnost i brzinu programa NVDA u Windows konzoli.
@@ -1844,6 +1854,23 @@ Izborni okvir ima sledeće opcije:
 - Samo kada je neophodna: Kada NVDA ne može da ima direktan pristup procesu pretraživača i koristi IA2 a UIA podrška je dostupna, NVDA će koristiti ovu podršku.
 - Da: Ako pretraživač učini da UIA podrška bude dostupna, NVDA će je koristiti.
 - Ne: Ne koristi UIA podršku, čak iako NVDA nema pristup procesu. Ovo može biti korisno za programere koji žele da otkriju problem u podršci IA2 i žele da budu sigurni da NVDA neće koristiti UIA podršku.
+-
+
+==== Napomene  ====[Annotations]
+Ova grupa se koristi da bi se omogućile opcije koje dodaju eksperimentalnu podršku za ARIA napomene.
+Neke od ovih opcija mogu biti nepotpune.
+Sledeće opcije su dostupne: 
+- "Prijavi detalje u režimu pretraživanja": Omogućava prijavljivanje kada objekat sadrži detalje u režimu pretraživanja.
+Prijavljivanje kratkog opisa ovih detalja se može izvršiti dodavanjem prečice u dijalogu [ulaznih komandi  #InputGestures].
+- "Uvek prijavi aria-description opis":
+  Kada je izvor  ``accDescription`` aria-description, opis će biti prijavljen.
+  Ovo je korisno za napomene na Webu.
+  Napomena:
+  - Postoji puno izvora za ``accDescription`` mnogi su simantički neispravni.
+    Ranije asistivne tehnologije nisu mogle da razlikuju izvore za ``accDescription`` i obično nisu bili korišćeni zbog semantičkih neispravnosti.
+  - Ova opcija je u veoma ranom razvoju, zavisi od opcija pretraživača koje još nisu u širokoj primeni.
+  - Očekuje se da radi uz Chromium 92.0.4479.0+
+  -
 -
 
 ==== koristi UI automation za pristup Microsoft Excel kontrolama ćelija kada je dostupan ====[UseUiaForExcel]
@@ -1867,11 +1894,10 @@ U nesigurnim okruženjima, možete privremeno onemogućiti [izgovor ukucanih zna
 ==== Algoritam razlikovanja teksta ====[DiffAlgo]
 Ovo podešavanje određuje kako će NVDA razlikovati novi tekst koji treba da se izgovori u Terminalu.
 Ovaj izborni okvir ima sledeće opcije:
-- Automatski: Od NVDA verzije 2021.1, ova opcija ima istu funkciju kao i opcija Difflib.
-U budućim nadogradnjama, možda će biti promenjena u Diff Match Patch nakon uspešnog testiranja od strane korisnika.
+- Automatski: Od NVDA verzije 2021.2, ova opcija ima istu funkciju kao i opcija Dozvoli algoritam Diff Match Patch.
 - Dozvoli algoritam Diff Match Patch: Ova opcija izaziva da NVDA računa razlike u tekstu po znakovima.
 Možda će poboljšati brzinu kada se veći delovi teksta pojavljuju u konzoli kao i poboljšati preciznost prijavljivanja promenjenih znakova u sredini reda.
-Ali, možda je nekompatibilna sa nekim aplikacijama.
+Ali, možda je nekompatibilna sa nekim aplikacijama, tako da se DiffMatchPatch ne koristi uvek.
 Ova opcija je podržana u Windows konzoli na Windowsu 10 verziji 1607 i novijim.
 Takođe, možda će biti dostupna na drugim terminalima na starijim verzijama Windowsa.
 - Nateraj korišćenje algoritma Difflib: Ova opcija izaziva da NVDA računa razlike u tekstu u zavisnosti od reda.
@@ -1888,10 +1914,21 @@ Ova funkcija je podrazumevano omogućena od NVDA verzije 2021.1.
 Ova opcija vam dozvoljava da podesite vreme za koje će NVDA čekati na kursor  da se pomeri u kontrolama za uređivanje teksta.
 Ako primetite da NVDA neispravno prati kursor, na primer često je iza jednog znaka ili se redovi ponavljaju, možda će pomoći povećanje ove vrednosti.
 
+==== Prijavi transparentnost boja ====[ReportTransparentColors]
+Ova opcija omogućava prijavljivanje transparentnosti boja, korisno za programere dodataka za aplikacije kako bi poboljšali iskustvo korisnika uz neku aplikaciju.
+Neke GDI će obeležiti tekst pozadinskom bojom, NVDA (uz display model) pokušava da prijavi ovu boju.
+U nekim situacijama, pozadina teksta može da bude potpuno transparentna, a tekst da bude na nekom drugom elementu interfejsa.
+Uz nekoliko istorijski popularnih API-a za interfejse, tekst može biti sa transparentnom pozadinom, ali je vizuelno pozadinska boja precizna.
+
 ==== Kategorije za evidentiranje otklanjanja grešaka ====[AdvancedSettingsDebugLoggingCategories]
 Izborna polja u ovoj listi dozvoljavaju vam da omogućite određene vrste poruka u NVDA dnevniku za otklanjanje grešaka.
 Evidentiranje ovih poruka može dovesti do velikih dnevnika i smanjenja brzine.
 Omogućite ih samo ako ste dobili uputstva od NVDA programera, na primer za otklanjanje grešaka u radu određenih drajvera za brajev red.
+
+==== Reprodukuj zvuk za evidentirane greške ====[PlayErrorSound]
+Ova opcija vam dozvoljava da odredite da li će NVDA reprodukovati zvuk kada se evidentira greška.
+Izborom opcije samo u verzijama za testiranje (koja je podrazumevana) NVDA će reprodukovati zvukove za greške samo ako je trenutna verzija za testiranje (alpha, beta ili pokrenuta iz izvornog koda).
+Opcija da će omogućiti zvukove za greške bez obzira na to koja je verzija.
 
 ++ Razna podešavanja ++[MiscSettings]
 Osim dijaloga [NVDA podešavanja #NVDASettings], podmeni opcije NVDA menija sadrži nekoliko dodatnih stavki koje su opisane ispod.
@@ -2008,9 +2045,9 @@ Napomena:
 
 Следеће команде су такође корисне:
 %kc:beginInclude
-|| Име | Desktop команда | Laptop команда | Опис |
-| Сачувај подешаванја | NVDA+контрол+c | NVDA+контрол+c | Чува ваша тренутна подешаванја тако да нису изгублјена када изађете из програма НВДА|
-| Врати подешаванја| NVDA+контрол+r | NVDA+контрол+r | Ако се притисне једном подешаванја се враћају на сачувана. Ако се притисне 3 пута подешаванја се враћају на подразумевана. |
+ || Име | Desktop команда | Laptop команда | Опис |
+ | Сачувај подешаванја | NVDA+контрол+c | NVDA+контрол+c | Чува ваша тренутна подешаванја тако да нису изгублјена када изађете из програма НВДА |
+ | Врати подешаванја | NVDA+контрол+r | NVDA+контрол+r | Ако се притисне једном подешаванја се враћају на сачувана. Ако се притисне 3 пута подешаванја се враћају на подразумевана. |
 %kc:endInclude
 
 ++ Профили подешаванја ++[ConfigurationProfiles]
@@ -2251,7 +2288,7 @@ Za opširniju listu besplatnih i komercionalnih sintetizatora koje možete preuz
 
 ++ eSpeak NG ++[eSpeakNG]
 [eSpeak NG https://github.com/espeak-ng/espeak-ng] je ugrađen u NVDA i ne zahteva posebne komponente ili drajvere.
-Na Windowsu 7, 8 i 8.1, NVDA koristi eSpeak NG po podrazumevanim podešavanjima  ([Windows OneCore #OneCore] se koristi na Windowsu 10 po podrazumevanim podešavanjima).
+Na Windowsu 7, 8 i 8.1, NVDA koristi eSpeak NG po podrazumevanim podešavanjima  ([Windows OneCore #OneCore] se koristi na Windowsu 10 i novijim po podrazumevanim podešavanjima).
 Budući da je ovaj sintetizator ugrađen u NVDA, ovo je odličan izbor kada se NVDA pokreće sa USB memorije na drugim sistemima.
 
 Svaki glas koji dolazi sa sintezom Espeak NG govori drugi jezik.
@@ -2285,9 +2322,9 @@ Da biste koristili ove glasove, morate da instalirate dve komponente:
 -
 
 ++ Windows OneCore glasovi ++[OneCore]
-Windows 10 uključuje nove glasove poznati i kao "OneCore" ili  "Mobilni" glasovi.
+Windows 10 i noviji uključuju nove glasove poznati i kao "OneCore" ili  "Mobilni" glasovi.
 Glasovi su ponuđeni za puno jezika, i oni su brži od Microsoft glasova dostupni korišćenjem opcije Microsoft Speech API verzija  5.
-Na Windowsu 10, NVDA koristi Windows OneCore glasove po podrazumevanim podešavanjima ([eSpeak NG #eSpeakNG] se koristi na drugim verzijama).
+Na Windowsu 10 i novijim, NVDA koristi Windows OneCore glasove po podrazumevanim podešavanjima ([eSpeak NG #eSpeakNG] se koristi na drugim verzijama).
 
 Da biste dodali nove Windows OneCore glasove, posetite "podešavanja govora", u Windows podešavanjima sistema. 
 Koristite opciju "Dodaj glasove" i pretražite željene jezike.
@@ -2319,6 +2356,7 @@ Sledeći redovi podržavaju ovu funkciju automatskog prepoznavanja.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille serije
 - Eurobraille Esys/Esytime/Iris redovi
 - Nattiq nBraille redovi
+- Bilo koji red koji podržava standardni HID brajev protokol
 -
 
 ++ Brajevi redovi Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
@@ -2335,51 +2373,51 @@ Automatsko prepoznavanje brajevih redova programa NVDA će prepoznati ove redove
 Sledeća lista prikazuje sve dostupne dodeljene prečice za NVDA.
 Molimo pogledajte dokumentaciju za više informacija o opisu tastera i o tome gde se nalaze.
 %kc:beginInclude
-|| Ime | Komanda |
-| Prebaci brajev red na prethodni red | PrviTasterZaPomeranje1 (Prva ćelija na brajevom retu) |
-| Prebaci brajev red napred | toprouting20/40/80 (zadnja ćelija na brajevom redu) |
-| Prebaci brajev red nazad | leviAdvanceBar |
-| Prebaci brajev red napred | desniAdvanceBar |
-| Prebacuj se između usmeravanja brajevog pregleda | leviGDFTaster+desniGDFTaster |
-| Uključi ili isključi akciju levog wiz točka | leviWizPritisakWheel |
-| Prebaci se nazad koristeći levi točak | LeviWizWheelGore |
-| Prebaci se napred koristeći levi točak | leviWizWheelDole |
-| Uključi ili isključi desni wizwheel taster | desniWizPritisakWheel |
-| Premesti se nazad koristeći desni točak | DesniWizWheelGore |
-| Premesti se napred koristeći desni točak | desniWizWheelDole |
-| Prebaci se na brajevu ćeliju | routing |
-| shift+tab | BrajevRazmak+tačka1+tačka2 |
-| tab | BrajevRazmak+tačka4+tačka5 |
-| strelicaGore | BrajevRazmak+tačka1 |
-| strelicaDole | BrajevRazmak+tačka4 |
-| Kontrol+strelicaLevo | BrajevRazmak+tačka3 |
-| Kontrol+strelicaDesno | BrajevRazmak+tačka5 |
-| strelicaLevo | BrajevRazmak+tačka3 |
-| strelicaDesno | BrajevRazmak+tačka6 |
-| home | BrajevRazmak+tačka1+tačka3 |
-| end | BrajevRazmak+tačka4+tačka6 |
-| kontrol+home | BrajevRazmak+tačka1+tačka2+tačka3 |
-| kontrol+end | BrajevRazmak+tačka4+tačka5+tačka6 |
-| alt | BrajevRazmak+tačka1+tačka3+tačka4 |
-| alt+tab | BrajevRazmak+tačka2+tačka3+tačka4+tačka5 |
-| alt+šift+tab taster | BrajevRazmak+tačka1+tačka2+tačka5+tačka6 |
-| windows+tab taster | BrajevRazmak+tačka2+tačka3+tačka4 |
-| escape | BrajevRazmak+tačka1+tačka5 |
-| windows taster | BrajevRazmak+tačka2+tačka4+tačka5+tačka6 |
-| razmak | BrajevRazmak |
-| windows+d (umanji sve aplikacije) | BrajevRazmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6 |
-| pročitaj trenutni red | BrajevRazmak+tačka1+tačka4 |
-| NVDA meni | BrajevRazmak+tačka1+tačka3+tačka4+tačka5 |
+ || Ime | Komanda |
+ | Prebaci brajev red na prethodni red | PrviTasterZaPomeranje1 (Prva ćelija na brajevom retu) |
+ | Prebaci brajev red napred | toprouting20/40/80 (zadnja ćelija na brajevom redu) |
+ | Prebaci brajev red nazad | leviAdvanceBar |
+ | Prebaci brajev red napred | desniAdvanceBar |
+ | Prebacuj se između usmeravanja brajevog pregleda | leviGDFTaster+desniGDFTaster |
+ | Uključi ili isključi akciju levog wiz točka | leviWizPritisakWheel |
+ | Prebaci se nazad koristeći levi točak | LeviWizWheelGore |
+ | Prebaci se napred koristeći levi točak | leviWizWheelDole |
+ | Uključi ili isključi desni wizwheel taster | desniWizPritisakWheel |
+ | Premesti se nazad koristeći desni točak | DesniWizWheelGore |
+ | Premesti se napred koristeći desni točak | desniWizWheelDole |
+ | Prebaci se na brajevu ćeliju | routing |
+ | shift+tab | BrajevRazmak+tačka1+tačka2 |
+ | tab | BrajevRazmak+tačka4+tačka5 |
+ | strelicaGore | BrajevRazmak+tačka1 |
+ | strelicaDole | BrajevRazmak+tačka4 |
+ | Kontrol+strelicaLevo | BrajevRazmak+tačka3 |
+ | Kontrol+strelicaDesno | BrajevRazmak+tačka5 |
+ | strelicaLevo | BrajevRazmak+tačka3 |
+ | strelicaDesno | BrajevRazmak+tačka6 |
+ | home | BrajevRazmak+tačka1+tačka3 |
+ | end | BrajevRazmak+tačka4+tačka6 |
+ | kontrol+home | BrajevRazmak+tačka1+tačka2+tačka3 |
+ | kontrol+end | BrajevRazmak+tačka4+tačka5+tačka6 |
+ | alt | BrajevRazmak+tačka1+tačka3+tačka4 |
+ | alt+tab | BrajevRazmak+tačka2+tačka3+tačka4+tačka5 |
+ | alt+šift+tab taster | BrajevRazmak+tačka1+tačka2+tačka5+tačka6 |
+ | windows+tab taster | BrajevRazmak+tačka2+tačka3+tačka4 |
+ | escape | BrajevRazmak+tačka1+tačka5 |
+ | windows taster | BrajevRazmak+tačka2+tačka4+tačka5+tačka6 |
+ | razmak | BrajevRazmak |
+ | windows+d (umanji sve aplikacije) | BrajevRazmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6 |
+ | pročitaj trenutni red | BrajevRazmak+tačka1+tačka4 |
+ | NVDA meni | BrajevRazmak+tačka1+tačka3+tačka4+tačka5 |
 
 Za novije modele fokus brajevih redova koji na sebi imaju rocker bar tastere (focus 40, focus 80 i focus blue):
-|| Ime | Komanda |
-| Premesti brajev red na prethodni red | leviRockerBarGore, desniRockerBarGore |
-| premesti brajev red na sledeći red | leviRockerBarDole, desniRockerBarDole |
+ || Ime | Komanda |
+ | Premesti brajev red na prethodni red | leviRockerBarGore, desniRockerBarGore |
+ | premesti brajev red na sledeći red | leviRockerBarDole, desniRockerBarDole |
 
 Samo za Focus 80:
-|| Ime | Komanda |
-| Pomeri brajev red nazad na prethodni red | leviBumperBarGore, desniBumperBarGore |
-| Prebaci brajev red za red u napred | leviBumperBarDole, desniBumperBarDole |
+ || Ime | Komanda |
+ | Pomeri brajev red nazad na prethodni red | leviBumperBarGore, desniBumperBarGore |
+ | Prebaci brajev red za red u napred | leviBumperBarDole, desniBumperBarDole |
 %kc:endInclude
 
 ++ Optelec ALVA 6 serije/pretvarač protokola++[OptelecALVA]
@@ -2398,40 +2436,40 @@ Za ALVA redove sa novijim softverom, moguće je onemogućiti HID simulaciju tast
 Slede komande za ovaj red sa programom NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reda da biste pogledali opis i raspored tastera na brajevom redu.
 %kc:beginInclude
-|| Ime | Komanda |
-| Pomeri brajev red za red unazad | t1, etouch1 |
-| Premesti brajev red na prethodni red | t2 |
-| premesti na trenutni fokus | t3 |
-| Premesti brajev red na sledeći red | t4 |
-| Pomeri brajev red  napred za red | t5, etouch 3|
-| Prijavi formatiranje teksta ispod brajeve ćelije | secondary routing |
-| Prebaci na brajevu ćeliju | routing |
-| Uključuje i isključuje HID simulaciju tastature | t1+spEnter |
-| premesti se na najgornji red u pregledu | t1+t2 |
-| premesti se na poslednji red u pregledu | t4+t5 |
-| prebaci brajev vezan za| t1+t3 |
-| pročitaj naslov | etouch2 |
-| pročitaj traku statusa | etouch4 |
-| shift+tab | sp1 |
-| alt | sp2, alt |
-| escape | sp3 |
-| tab | sp4 |
-| strelicaGore | spUp |
-| strelicaDole | spDown |
-| strelicaLevo | spLeft |
-| strelicaDesno | spRight |
-| enter | spEnter, enter, enter |
-| izgovori datum i vreme | sp2+sp3 |
-| NVDA meni | sp1+sp3 |
-| windows+d (umanji sve aplikacije) | sp1+sp4 |
-| windows+b taster (fokusiranje sistemske trake) | sp3+sp4 |
-| windows taster | sp1+sp2, windows  |
-| alt+tab | sp2+sp4 |
-| ctrl+home | t3+spUp |
-| control+end | t3+spDown |
-| home | t3+spLeft |
-| end | t3+spRight |
-| Kontrol  | Kontrol |
+ || Ime | Komanda |
+ | Pomeri brajev red za red unazad | t1, etouch1 |
+ | Premesti brajev red na prethodni red | t2 |
+ | premesti na trenutni fokus | t3 |
+ | Premesti brajev red na sledeći red | t4 |
+ | Pomeri brajev red  napred za red | t5, etouch 3 |
+ | Prijavi formatiranje teksta ispod brajeve ćelije | secondary routing |
+ | Prebaci na brajevu ćeliju | routing |
+ | Uključuje i isključuje HID simulaciju tastature | t1+spEnter |
+ | premesti se na najgornji red u pregledu | t1+t2 |
+ | premesti se na poslednji red u pregledu | t4+t5 |
+ | prebaci brajev vezan za | t1+t3 |
+ | pročitaj naslov | etouch2 |
+ | pročitaj traku statusa | etouch4 |
+ | shift+tab | sp1 |
+ | alt | sp2, alt |
+ | escape | sp3 |
+ | tab | sp4 |
+ | strelicaGore | spUp |
+ | strelicaDole | spDown |
+ | strelicaLevo | spLeft |
+ | strelicaDesno | spRight |
+ | enter | spEnter, enter, enter |
+ | izgovori datum i vreme | sp2+sp3 |
+ | NVDA meni | sp1+sp3 |
+ | windows+d (umanji sve aplikacije) | sp1+sp4 |
+ | windows+b taster (fokusiranje sistemske trake) | sp3+sp4 |
+ | windows taster | sp1+sp2, windows  |
+ | alt+tab | sp2+sp4 |
+ | ctrl+home | t3+spUp |
+ | control+end | t3+spDown |
+ | home | t3+spLeft |
+ | end | t3+spRight |
+ | Kontrol  | Kontrol |
 %kc:endInclude
 
 ++ Handy Tech brajevi redovi ++[HandyTech]
@@ -2446,25 +2484,25 @@ Sledeći redovi nisu podržani, ali se mogu koristiti putem[Handy Techovih unive
 Slede komande za Handy Tech redove sa programom NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reda da biste znali gde se određeni tasteri nalaze.
 %kc:beginInclude
-|| Ime | Komanda |
-| Pomeri brajev red za red unazad | levo, gore, B3 |
-| Pomeri brajev red za red  napred | desno, dole, B6 |
-| Premesti brajev red na prethodni red | b4 |
-| Premesti brajev red na sledeći red | b5 |
-| Prebaci se na brajevu ćeliju | routing |
-| shift+tab | esc, levi trostruki akcijski taster gore+dole |
-| alt | b2+b4+b5 |
-| escape | b4+b6 |
-| tab | enter, desni trostruki akcijski taster gore+dole |
-| enter | esc+enter, Levi+desni trostruki akcijski taster gore+dole, AkcijaDžojstika|
-| strelicaGore | Džojstik gore |
-| strelicaDole | Džojstik dole |
-| StrelicaLevo | Džojstik levo |
-| StrelicaDesno  | Džojstik desno |
-| NVDA meni | b2+b4+b5+b6 |
-| Menjanje vezivanja brajevog reda| b2 |
-| Menjanje predstavljanja sadržaja fokusa| b7 |
-| Uključivanje i isključivanje brajevog unosa| Razmak+b1+b3+b4 (Razmak +veliko B) |
+ || Ime | Komanda |
+ | Pomeri brajev red za red unazad | levo, gore, B3 |
+ | Pomeri brajev red za red  napred | desno, dole, B6 |
+ | Premesti brajev red na prethodni red | b4 |
+ | Premesti brajev red na sledeći red | b5 |
+ | Prebaci se na brajevu ćeliju | routing |
+ | shift+tab | esc, levi trostruki akcijski taster gore+dole |
+ | alt | b2+b4+b5 |
+ | escape | b4+b6 |
+ | tab | enter, desni trostruki akcijski taster gore+dole |
+ | enter | esc+enter, Levi+desni trostruki akcijski taster gore+dole, AkcijaDžojstika |
+ | strelicaGore | Džojstik gore |
+ | strelicaDole | Džojstik dole |
+ | StrelicaLevo | Džojstik levo |
+ | StrelicaDesno  | Džojstik desno |
+ | NVDA meni | b2+b4+b5+b6 |
+ | Menjanje vezivanja brajevog reda | b2 |
+ | Menjanje predstavljanja sadržaja fokusa | b7 |
+ | Uključivanje i isključivanje brajevog unosa | Razmak+b1+b3+b4 (Razmak +veliko B) |
 %kc:endInclude
 
 
@@ -2478,16 +2516,16 @@ Ovaj red ne podržava funkciju automatskog prepoznavanja programa NVDA.
 Slede dodeljene tasterske prečice za ovaj brajev red za korišćenje sa NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reta kako biste ustanovili gde se ovi tasteri nalaze, zajedno sa pripadajućim opisom.
 %kc:beginInclude
-|| Ime | Komanda |
-| Pomeri brajev red za red unazad | LF |
-| Pomeri brajev red za red napred | RG |
-| Pomeri brajev red na prethodni red | UP |
-| Pomeri brajev red na sledeći red | DN |
-| Pomeri se na brajevu ćeliju | route |
-| Šift+tab | SLF |
-| tab | SRG |
-| alt+tab | SDN |
-| alt+šift+tab | SUP |
+ || Ime | Komanda |
+ | Pomeri brajev red za red unazad | LF |
+ | Pomeri brajev red za red napred | RG |
+ | Pomeri brajev red na prethodni red | UP |
+ | Pomeri brajev red na sledeći red | DN |
+ | Pomeri se na brajevu ćeliju | route |
+ | Šift+tab | SLF |
+ | tab | SRG |
+ | alt+tab | SDN |
+ | alt+šift+tab | SUP |
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit Brajevi Redovi ++[Baum]
@@ -2504,26 +2542,26 @@ Ako povezujete brajeve redove koji ne koriste hid preko usb veze, morate instali
 VarioUltra i Pronto! brajični redovi koriste HID.
 Refreshabraille i Orbit Reader 20 mogu koristiti HID ako su podešeni na određeni način.
 
- USB serijski način u Orbit Reader 20 brajevom redu, trenutno je podržan samo u Windows 10 operativnom sistemu.
+ USB serijski način u Orbit Reader 20 brajevom redu, trenutno je podržan samo na  Windows 10 operativnom sistemu i novijim.
 Umesto toga, trebali biste koristiti USB HID.
 
 Slede prečice za ovaj brajev red za korišćenje uz pomoć NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reta kako biste saznali listu i raspored tastera na brajevom redu.
 %kc:beginInclude
-|| Ime | Komanda |
-| Pomeri brajev red unazad | d2 |
-| Pomeri brajev red napred | d5 |
-| Pomeri brajev red na prethodni red | d1 |
-| Pomeri brajev red na sledeći red | d3 |
-| Pomeri se na brajevu ćeliju | routing |
+ || Ime | Komanda |
+ | Pomeri brajev red unazad | d2 |
+ | Pomeri brajev red napred | d5 |
+ | Pomeri brajev red na prethodni red | d1 |
+ | Pomeri brajev red na sledeći red | d3 |
+ | Pomeri se na brajevu ćeliju | routing |
 
 Za brajeve redove koji imaju joystick:
-|| Ime | Komanda |
-| strelicaGore | gore |
-| strelicaDole | dole |
-| strelicaLevo | levo |
-| strelicaDesno | desno |
-| enter | odabir |
+ || Ime | Komanda |
+ | strelicaGore | gore |
+ | strelicaDole | dole |
+ | strelicaLevo | levo |
+ | strelicaDesno | desno |
+ | enter | odabir |
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
@@ -2535,14 +2573,14 @@ Ovaj red još ne podržava funkciju automatskog prepoznavanja programa NVDA.
 Slede prečice za brajev red za korišćenje uz pomoć NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reda za više informacija o rasporedu i opisu tastera na brajevom redu.
 %kc:beginInclude
-|| Ime | Komanda |
-| Pomeri brajev red unazad | K1 |
-| Pomeri brajev red napred | K3 |
-| Pomeri brajev red na prethodni red | B2 |
-| Pomeri brajev red na sledeći red | B5 |
-| Premesti se na brajevu ćeliju | routing |
-| Prebacuj brajev vezan za| K2 |
-| Izgovori sve | B6 |
+ || Ime | Komanda |
+ | Pomeri brajev red unazad | K1 |
+ | Pomeri brajev red napred | K3 |
+ | Pomeri brajev red na prethodni red | B2 |
+ | Pomeri brajev red na sledeći red | B5 |
+ | Premesti se na brajevu ćeliju | routing |
+ | Prebacuj brajev vezan za | K2 |
+ | Izgovori sve | B6 |
 %kc:endInclude
 
 ++ Hedo MobilLine USB ++[HedoMobilLine]
@@ -2554,14 +2592,14 @@ Ovaj red još ne podržava funkciju automatskog prepoznavanja programa NVDA.
 Slede tasterske prečice za korišćenje uz pomoć NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reda kako biste saznali raspored i opis brajevih tastera na brajevom redu.
 %kc:beginInclude
-|| Ime | Komanda |
-| Pomeri brajev red unazad | K1 |
-| Pomeri brajev red napred | K3 |
-| Pomeri brajev red na prethodni red | B2 |
-| Pomeri brajev red na sledeći red | B5 |
-| Pomeri se na brajevu ćeliju | routing |
-| Prebacuj se između brajev vezan na| K2 |
-| Izgovori sve | B6 |
+ || Ime | Komanda |
+ | Pomeri brajev red unazad | K1 |
+ | Pomeri brajev red napred | K3 |
+ | Pomeri brajev red na prethodni red | B2 |
+ | Pomeri brajev red na sledeći red | B5 |
+ | Pomeri se na brajevu ćeliju | routing |
+ | Prebacuj se između brajev vezan na | K2 |
+ | Izgovori sve | B6 |
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B serije / BrailleNote Touch  ++[HumanWareBrailliant]
@@ -2580,45 +2618,45 @@ Slede komande za Brailliant BI/B i  BrailleNote touch redove sa programom NVDA.
 Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali opise tastera i njihov raspored.
 +++ Komande za sve modele+++
 %kc:beginInclude
-|| Ime | Komanda |
-| Pomeri brajev red unazad | Levo |
-| Pomeri brajev red napred | desno |
-| Premesti brajev red na prethodni red | gore |
-| Premesti brajev red na sledeći red | dole |
-| Premesti se na brajevu ćeliju | routing |
-| Prebacuj brajev vezan za| gore+dole |
-| strelicaGore | razmak+tačka1 |
-| strelicaDole | razmak+tačka4 |
-| strelicaLevo | razmak+tačka3 |
-| strelicaDesno | razmak+tačka6 |
-| Šift+tab | razmak+tačka1+tačka3 |
-| tab | razmak+tačka4+tačka6 |
-| alt | razmak+tačka1+tačka3+tačka4 (razmak+m) |
-| escape | razmak+tačka1+tačka5 (razmak+e) |
-| enter | tačka8 |
-| windows taster | razmak+tačka3+tačka4 |
-| alt+tab | razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
-| NVDA meni | Razmak+tačka1+tačka3+tačka4+tačka5 (razmak+n) |
-| windows+d  (Minimizuj sve aplikacije) | razmak+tačka1+tačka4+tačka5 (razmak+d) |
-| Izgovori sve| razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6 |
+ || Ime | Komanda |
+ | Pomeri brajev red unazad | Levo |
+ | Pomeri brajev red napred | desno |
+ | Premesti brajev red na prethodni red | gore |
+ | Premesti brajev red na sledeći red | dole |
+ | Premesti se na brajevu ćeliju | routing |
+ | Prebacuj brajev vezan za | gore+dole |
+ | strelicaGore | razmak+tačka1 |
+ | strelicaDole | razmak+tačka4 |
+ | strelicaLevo | razmak+tačka3 |
+ | strelicaDesno | razmak+tačka6 |
+ | Šift+tab | razmak+tačka1+tačka3 |
+ | tab | razmak+tačka4+tačka6 |
+ | alt | razmak+tačka1+tačka3+tačka4 (razmak+m) |
+ | escape | razmak+tačka1+tačka5 (razmak+e) |
+ | enter | tačka8 |
+ | windows taster | razmak+tačka3+tačka4 |
+ | alt+tab | razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
+ | NVDA meni | Razmak+tačka1+tačka3+tačka4+tačka5 (razmak+n) |
+ | windows+d  (Minimizuj sve aplikacije) | razmak+tačka1+tačka4+tačka5 (razmak+d) |
+ | Izgovori sve | razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6 |
 %kc:endInclude
 
 +++ Komande za  Brailliant BI 32, BI 40 i B 80 +++ 
 %kc:beginInclude
-|| Ime | Komanda |
-| NVDA meni | c1+c3+c4+c5 (komanda n) |
-| windows+d (minimizuj sve aplikacije) | c1+c4+c5 (komanda d) |
-| Izgovori sve | c1+c2+c3+c4+c5+c6 |
+ || Ime | Komanda |
+ | NVDA meni | c1+c3+c4+c5 (komanda n) |
+ | windows+d (minimizuj sve aplikacije) | c1+c4+c5 (komanda d) |
+ | Izgovori sve | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
 +++ Komande za Brailliant BI 14 +++ 
 %kc:beginInclude
-|| Ime | Komanda |
-| Strelica gore| Džojstik gore |
-| Strelica dole| džojstik dole|
-| Strelica levo | Džojstik levo|
-| Strelica desno | Džojstik desno|
-| enter  | Akcija džojstika|
+ || Ime | Komanda |
+ | Strelica gore | Džojstik gore |
+ | Strelica dole | džojstik dole |
+ | Strelica levo | Džojstik levo |
+ | Strelica desno | Džojstik desno |
+ | enter  | Akcija džojstika |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE  / smart beetle /Sync BrailleSerije ++[Hims]
@@ -2629,68 +2667,68 @@ Možete ih preuzeti ovde: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 Slede dodeljene prečice za ove brajeve redove za NVDA.
 Molimo pogledajte uputstva za upotrebu brajevih redova kako biste saznali raspored i opis tastera na brajevom redu.
 %kc:beginInclude
-|| Ime | Komanda |
-| Premesti se na brajevu ćeliju | routing |
-| Pomeri brajev red nazad| leftSideScrollUp, rightSideScrollUp, leftSideScroll |
-| Pomeri brajev red napred| leftSideScrollDown, rightSideScrollDown, rightSideScroll |
-| Pomeri brajev red na prethodni red| leftSideScrollUp+rightSideScrollUp |
-| Pomeri brajev red na sledeći red| leftSideScrollDown+rightSideScrollDown |
-| Premesti se na sledeći red u pregledu| rightSideUpArrow |
-| Premesti se na sledeći red u pregledu| rightSideDownArrow |
-| Premesti se na prethodni znak u pregledu| rightSideLeftArrow |
-| Premesti se na sledeći znak u pregledu| rightSideRightArrow |
-| Premesti se na trenutni fokus| leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
-| Kontrol taster| smartbeetle:f1, brailleedge:f3 |
-| windows taster | f7, smartbeetle:f2 |
-| alt taster | Tačka1+Tačka3+Tačka4+razmak, f2, smartbeetle:f3, brailleedge:f4 |
-| Šift taster | f5 |
-| insert taster | Tačka2+Tačka4+Razmak, f6 |
-| Aplikacijski Taster | Tačka1+Tačka2+Tačka3+Tačka4+razmak, f8 |
-| Taster velika slova| Tačka1+tačka3+tačka6+razmak |
-| tab taster | tačka4+tačka5+razmak, f3, brailleedge:f2 |
-| šift+alt+tab taster | f2+f3+f1 |
-| alt+tab taster | f2+f3 |
-| Šift+tab | Tačka1+tačka2+razmak |
+ || Ime | Komanda |
+ | Premesti se na brajevu ćeliju | routing |
+ | Pomeri brajev red nazad | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+ | Pomeri brajev red napred | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+ | Pomeri brajev red na prethodni red | leftSideScrollUp+rightSideScrollUp |
+ | Pomeri brajev red na sledeći red | leftSideScrollDown+rightSideScrollDown |
+ | Premesti se na sledeći red u pregledu | rightSideUpArrow |
+ | Premesti se na sledeći red u pregledu | rightSideDownArrow |
+ | Premesti se na prethodni znak u pregledu | rightSideLeftArrow |
+ | Premesti se na sledeći znak u pregledu | rightSideRightArrow |
+ | Premesti se na trenutni fokus | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+ | Kontrol taster | smartbeetle:f1, brailleedge:f3 |
+ | windows taster | f7, smartbeetle:f2 |
+ | alt taster | Tačka1+Tačka3+Tačka4+razmak, f2, smartbeetle:f3, brailleedge:f4 |
+ | Šift taster | f5 |
+ | insert taster | Tačka2+Tačka4+Razmak, f6 |
+ | Aplikacijski Taster | Tačka1+Tačka2+Tačka3+Tačka4+razmak, f8 |
+ | Taster velika slova | Tačka1+tačka3+tačka6+razmak |
+ | tab taster | tačka4+tačka5+razmak, f3, brailleedge:f2 |
+ | šift+alt+tab taster | f2+f3+f1 |
+ | alt+tab taster | f2+f3 |
+ | Šift+tab | Tačka1+tačka2+razmak |
  | end key | dot4+dot6+space |
-| kontrol+end taster | tačka4+tačka5+tačka6+razmak |
-| home taster | tačka1+tačka3+razmak, smartbeetle:f4 |
-| kontrol+home | Tačka1+tačka2+tačka3+razmak |
-| alt+f4 taster | tačka1+tačka3+tačka5+tačka6+razmak |
-| StrelicaLevo taster | tačka3+razmak, leftSideLeftArrow |
-| kontrol+šift+StrelicaLevo taster | tačka2+tačka8+razmak+f1 |
-| kontrol+strelicaLevo | Tačka2+razmak |
-| šift+alt+StrelicaLevo taster | tačka2+tačka7+f1 |
-| alt+strelicaLevo | Tačka2+tačka7 |
-| StrelicaDesno taster | tačka6+razmak, leftSideRightArrow |
-| Kontrol+šift+StrelicaDesno taster | tačka5+tačka8+razmak+f1 |
-| kontrol+strelicaDesno | Tačka5+razmak |
-| šift+alt+StrelicaDesno taster | tačka5+tačka7+f1 |
-| alt+strelicaDesno | Tačka5+tačka7 |
-| pageUp | Tačka1+tačka2+tačka6+razmak |
-| kontrol+pageUp | Tačka1+tačka2+tačka6+tačka8+razmak |
-| StrelicaGore taster | tačka1+razmak, leftSideUpArrow |
-| kontrol+šift+StrelicaGore taster | tačka2+tačka3+tačka8+razmak+f1 |
-| kontrol+strelicaGore | Tačka2+tačka3+razmak |
-| šift+alt+StrelicaGore taster | tačka2+tačka3+tačka7+f1 |
-| alt+strelicaGore | Tačka2+tačka3+tačka7 |
-| šift+StrelicaGore taster | leftSideScrollDown+razmak |
-| pageDown | Tačka3+tačka4+tačka5+razmak |
-| kontrol+pageDown taster | tačka3+tačka4+tačka5+tačka8+razmak |
-| StrelicaDole taster | tačka4+razmak, leftSideDownArrow |
-| kontrol+šift+StrelicaDole taster | tačka5+tačka6+tačka8+razmak+f1 |
-| kontrol+strelicaDole | Tačka5+tačka6+razmak |
-| šift+alt+StrelicaDole taster | tačka5+tačka6+tačka7+f1 |
-| alt+strelicaDole | Tačka5+tačka6+tačka7 |
-| šift+strelicaDole taster | razmak+rightSideScrollDown |
-| escape taster | tačka1+tačka5+razmak, f4, brailleedge:f1 |
-| Taster za brisanje | tačka1+tačka3+tačka5+razmak, tačka1+tačka4+tačka5+razmak |
-| f1 | Tačka1+tačka2+tačka5+razmak |
-| f3 taster | Tačka1+tačka4+tačka8+razmak |
-| f4 taster | tačka7+f3 |
-| windows+b taster | tačka1+tačka2+f1 |
-| windows+d taster | tačka1+tačka4+tačka5+f1 |
-| kontrol+insert taster | smartbeetle:f1+rightSideScroll |
-| alt+insert taster | smartbeetle:f3+rightSideScroll |
+ | kontrol+end taster | tačka4+tačka5+tačka6+razmak |
+ | home taster | tačka1+tačka3+razmak, smartbeetle:f4 |
+ | kontrol+home | Tačka1+tačka2+tačka3+razmak |
+ | alt+f4 taster | tačka1+tačka3+tačka5+tačka6+razmak |
+ | StrelicaLevo taster | tačka3+razmak, leftSideLeftArrow |
+ | kontrol+šift+StrelicaLevo taster | tačka2+tačka8+razmak+f1 |
+ | kontrol+strelicaLevo | Tačka2+razmak |
+ | šift+alt+StrelicaLevo taster | tačka2+tačka7+f1 |
+ | alt+strelicaLevo | Tačka2+tačka7 |
+ | StrelicaDesno taster | tačka6+razmak, leftSideRightArrow |
+ | Kontrol+šift+StrelicaDesno taster | tačka5+tačka8+razmak+f1 |
+ | kontrol+strelicaDesno | Tačka5+razmak |
+ | šift+alt+StrelicaDesno taster | tačka5+tačka7+f1 |
+ | alt+strelicaDesno | Tačka5+tačka7 |
+ | pageUp | Tačka1+tačka2+tačka6+razmak |
+ | kontrol+pageUp | Tačka1+tačka2+tačka6+tačka8+razmak |
+ | StrelicaGore taster | tačka1+razmak, leftSideUpArrow |
+ | kontrol+šift+StrelicaGore taster | tačka2+tačka3+tačka8+razmak+f1 |
+ | kontrol+strelicaGore | Tačka2+tačka3+razmak |
+ | šift+alt+StrelicaGore taster | tačka2+tačka3+tačka7+f1 |
+ | alt+strelicaGore | Tačka2+tačka3+tačka7 |
+ | šift+StrelicaGore taster | leftSideScrollDown+razmak |
+ | pageDown | Tačka3+tačka4+tačka5+razmak |
+ | kontrol+pageDown taster | tačka3+tačka4+tačka5+tačka8+razmak |
+ | StrelicaDole taster | tačka4+razmak, leftSideDownArrow |
+ | kontrol+šift+StrelicaDole taster | tačka5+tačka6+tačka8+razmak+f1 |
+ | kontrol+strelicaDole | Tačka5+tačka6+razmak |
+ | šift+alt+StrelicaDole taster | tačka5+tačka6+tačka7+f1 |
+ | alt+strelicaDole | Tačka5+tačka6+tačka7 |
+ | šift+strelicaDole taster | razmak+rightSideScrollDown |
+ | escape taster | tačka1+tačka5+razmak, f4, brailleedge:f1 |
+ | Taster za brisanje | tačka1+tačka3+tačka5+razmak, tačka1+tačka4+tačka5+razmak |
+ | f1 | Tačka1+tačka2+tačka5+razmak |
+ | f3 taster | Tačka1+tačka4+tačka8+razmak |
+ | f4 taster | tačka7+f3 |
+ | windows+b taster | tačka1+tačka2+f1 |
+ | windows+d taster | tačka1+tačka4+tačka5+f1 |
+ | kontrol+insert taster | smartbeetle:f1+rightSideScroll |
+ | alt+insert taster | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
 ++ Seika brajevi redovi ++[Seika]
@@ -2703,18 +2741,18 @@ Ovi redovi još ne podržavaju funkciju automatskog prepoznavanja programa NVDA.
 Slede tasterske prečice za ovaj brajev red za korišćenje uz pomoć NVDA.
 Molimo pogledajte uputstva za upotrebu vašeg brajevog reda da biste saznali raspored tastera i njihov opis.
 %kc:beginInclude
-|| Ime | komanda |
-| pomeri brajev red nazad | levo |
-| Pomeri brajev red napred | desno |
-| Premesti brajev red na prethodni red | b3 |
-| Premesti brajev red na sledeći red | b4 |
-| Prebacuj se između brajev vezan za| b5 |
-| Izgovori sve | b6 |
-| tab | b1 |
-| Šift+tab | b2 |
-| alt+tab | b1+b2 |
-| NVDA meni | levo+desno |
-| Prebaci se na brajevu ćeliju | routing |
+ || Ime | komanda |
+ | pomeri brajev red nazad | levo |
+ | Pomeri brajev red napred | desno |
+ | Premesti brajev red na prethodni red | b3 |
+ | Premesti brajev red na sledeći red | b4 |
+ | Prebacuj se između brajev vezan za | b5 |
+ | Izgovori sve | b6 |
+ | tab | b1 |
+ | Šift+tab | b2 |
+ | alt+tab | b1+b2 |
+ | NVDA meni | levo+desno |
+ | Prebaci se na brajevu ćeliju | routing |
 %kc:endInclude
 
 ++ Papenmeier BRAILLEX Noviji Modeli ++[Papenmeier]
@@ -2742,38 +2780,38 @@ Drugi se korak može izvesti tako da pritisnete jedan od routing tastera i EAB u
 Kad pritisnete i držite gornje, doljnje, desne i leve tastere (ili EAB) uzrokuje ponavljanje dodeljene akcije.
 
 Većinom, sledeći su tasteri dostupni na ovim brajevim redovima:
-|| Ime | taster |
-| l1 | Levi prednji taster |
-| l2 | Levi zadnji taster |
-| r1 | Desni prednji taster |
-| r2 | Desni zadnji taster |
-| up | 1 korak prema gore |
-| up2 | 2 koraka gore |
-| left | 1 korak levo |
-| left2 | 2 koraka levo |
-| right | 1 korak desno |
-| right2 | 2 koraka prema desno |
-| dn | 1 korak prema dole |
-| dn2 | 2 koraka prema dole |
+ || Ime | taster |
+ | l1 | Levi prednji taster |
+ | l2 | Levi zadnji taster |
+ | r1 | Desni prednji taster |
+ | r2 | Desni zadnji taster |
+ | up | 1 korak prema gore |
+ | up2 | 2 koraka gore |
+ | left | 1 korak levo |
+ | left2 | 2 koraka levo |
+ | right | 1 korak desno |
+ | right2 | 2 koraka prema desno |
+ | dn | 1 korak prema dole |
+ | dn2 | 2 koraka prema dole |
 
 Ovo su Papenmeier prečice dodeljene za korišćenje sa NVDA:
 %kc:beginInclude
-|| Ime | Komanda |
-| prebaci brajev red u levo | left |
-| prebaci brajev red u desno | right |
-| Prebaci brajev red u prethodni red | up |
-| Premesti brajev red na sledeći red | dn |
-| Prebaci se na brajevu ćeliju | routing |
-| Pročitaj trenutni znak u režimu pregleda | l1 |
-| Aktiviraj trenutni objekat navigacije | l2 |
-| prebacuj između brajev vezan za| r2 |
-| Prijavi naslov | l1+up |
-| Pročitaj statusnu traku | l2+down |
-| Premesti se na sadržan objekat | up2 |
-| Premesti se na prvi sadržani objekat | dn2 |
-| Prebaci se na prethodni objekat | left2 |
-| Prebaci se na sledeći objekat | right2 |
-| Prijavi formatiranje teksta ispod brajeve ćelije | gornji red routing tastera |
+ || Ime | Komanda |
+ | prebaci brajev red u levo | left |
+ | prebaci brajev red u desno | right |
+ | Prebaci brajev red u prethodni red | up |
+ | Premesti brajev red na sledeći red | dn |
+ | Prebaci se na brajevu ćeliju | routing |
+ | Pročitaj trenutni znak u režimu pregleda | l1 |
+ | Aktiviraj trenutni objekat navigacije | l2 |
+ | prebacuj između brajev vezan za | r2 |
+ | Prijavi naslov | l1+up |
+ | Pročitaj statusnu traku | l2+down |
+ | Premesti se na sadržan objekat | up2 |
+ | Premesti se na prvi sadržani objekat | dn2 |
+ | Prebaci se na prethodni objekat | left2 |
+ | Prebaci se na sledeći objekat | right2 |
+ | Prijavi formatiranje teksta ispod brajeve ćelije | gornji red routing tastera |
 %kc:endInclude
 
 Trio model ima četiri dodatna tastera koji se nalaze na prednjoj strani brajeve tastature.
@@ -2787,16 +2825,16 @@ Trenutno se ne koristi desna palčana tipka.
 Oba dve unutrašnje tipke su približene razmaku.
 
 %kc:beginInclude
-|| Ime | Komanda |
-| escape | razmak sa tačkom 7 |
-| strelicaGore | razmak sa tačkom 2 |
-| strelicaLevo | razmak sa tačkom 1 |
-| strelicaDesno | razmak sa tačkom 4 |
-| strelicaDole | razmak sa tačkom 5 |
-| kontrol | lt+tačka2 |
-| alt | lt+tačka3 |
-| kontrol+escape | razmak sa tačkama 1 2 3 4 5 6 |
-| tab | razmak sa tačkama 3 7 |
+ || Ime | Komanda |
+ | escape | razmak sa tačkom 7 |
+ | strelicaGore | razmak sa tačkom 2 |
+ | strelicaLevo | razmak sa tačkom 1 |
+ | strelicaDesno | razmak sa tačkom 4 |
+ | strelicaDole | razmak sa tačkom 5 |
+ | kontrol | lt+tačka2 |
+ | alt | lt+tačka3 |
+ | kontrol+escape | razmak sa tačkama 1 2 3 4 5 6 |
+ | tab | razmak sa tačkama 3 7 |
 %kc:endInclude 
 
 ++ Papenmeier Braille BRAILLEX stariji modeli ++[PapenmeierOld]
@@ -2816,71 +2854,71 @@ Stariji uređaji nemaju EAB; tasteri sa prednje strane se koriste umesto EAB.
 
 Uobičajeno mogu se naći sledeći tasteri na brajevim redovima:
 
-|| Ime | Taster |
-| l1 | Levi prednji taster |
-| l2 | Levi zadnji taster |
-| r1 | desni prednji taster |
-| r2 | desni zadnji taster |
-| up | 1 korak prema gore |
-| up2 | 2 koraka gore |
-| left | 1 korak levo |
-| left2 | 2 koraka levo |
-| right | 1 Korak desno |
-| right2 | 2 Koraka desno |
-| dn | 1 korak prema dole |
-| dn2 | 2 koraka prema dole |
+ || Ime | Taster |
+ | l1 | Levi prednji taster |
+ | l2 | Levi zadnji taster |
+ | r1 | desni prednji taster |
+ | r2 | desni zadnji taster |
+ | up | 1 korak prema gore |
+ | up2 | 2 koraka gore |
+ | left | 1 korak levo |
+ | left2 | 2 koraka levo |
+ | right | 1 Korak desno |
+ | right2 | 2 Koraka desno |
+ | dn | 1 korak prema dole |
+ | dn2 | 2 koraka prema dole |
 
 Slede Papenmeierove dodeljene prečice za korišćenje sa NVDA:
 
 %kc:beginInclude
 Uređaji koji imaju EAB:
-|| Ime | Komanda |
-| Pomeri brajev red nazad | left |
-| Pomeri brajev red napred | right |
-| Pomeri brajev red na prethodni red | up |
-| Pomeri brajev red na sledeći red | dn |
-| Premesti se na brajevu ćeliju | routing |
-| Izgovori trenutni znak u režimu pregleda| l1 |
-| aktiviraj trenutni objekat navigacije | l2 |
-| izgovori naslov | l1up |
-| Izgovori statusnu traku | l2down |
-| Premesti se na sadržan objekat | up2 |
-| Premesti se na prvi sadržani objekat | dn2 |
-| Premesti se na sledeći objekat | right2 |
-| Prebaci se na prethodni objekat | left2 |
-| Prijavi formatiranje teksta ispod brajeve ćelije| Gornji routing strip |
+ || Ime | Komanda |
+ | Pomeri brajev red nazad | left |
+ | Pomeri brajev red napred | right |
+ | Pomeri brajev red na prethodni red | up |
+ | Pomeri brajev red na sledeći red | dn |
+ | Premesti se na brajevu ćeliju | routing |
+ | Izgovori trenutni znak u režimu pregleda | l1 |
+ | aktiviraj trenutni objekat navigacije | l2 |
+ | izgovori naslov | l1up |
+ | Izgovori statusnu traku | l2down |
+ | Premesti se na sadržan objekat | up2 |
+ | Premesti se na prvi sadržani objekat | dn2 |
+ | Premesti se na sledeći objekat | right2 |
+ | Prebaci se na prethodni objekat | left2 |
+ | Prijavi formatiranje teksta ispod brajeve ćelije | Gornji routing strip |
 
 BRAILLEX Tiny:
-|| Ime | Komanda |
-| izgovori trenutni znak u režimu  pregleda | l1 |
-| Aktiviraj trenutni objekat navigacije | l2 |
-| Prebaci brajev red nazad | left |
-| Prebaci brajev red napred | right |
-| Prebaci brajev red na prethodni red | up |
-| Prebaci brajev red na sledeći red | dn |
-| Prebacuj vezivanje brajevog reda na| r2 |
-| Prebaci se na sadržan objekat | r1+up |
-| Prebaci se na prvi sadržani objekat | r1+dn |
-| Prebaci se na prvi objekat | r1+left |
-| Prebaci se na sledeći objekat | r1+right |
-| Prijavi formatiranje teksta ispod brajeve ćelije| Gornji routing strip |
-| Izgovori naslov | l1+gore |
-| izgovori statusnu traku | l2+dole |
+ || Ime | Komanda |
+ | izgovori trenutni znak u režimu  pregleda | l1 |
+ | Aktiviraj trenutni objekat navigacije | l2 |
+ | Prebaci brajev red nazad | left |
+ | Prebaci brajev red napred | right |
+ | Prebaci brajev red na prethodni red | up |
+ | Prebaci brajev red na sledeći red | dn |
+ | Prebacuj vezivanje brajevog reda na | r2 |
+ | Prebaci se na sadržan objekat | r1+up |
+ | Prebaci se na prvi sadržani objekat | r1+dn |
+ | Prebaci se na prvi objekat | r1+left |
+ | Prebaci se na sledeći objekat | r1+right |
+ | Prijavi formatiranje teksta ispod brajeve ćelije | Gornji routing strip |
+ | Izgovori naslov | l1+gore |
+ | izgovori statusnu traku | l2+dole |
 
 BRAILLEX 2D Screen:
-|| Ime | Komanda |
-| izgovori trenutni znak u režimu pregleda | l1 |
-| Aktiviraj trenutni objekat navigacije | l2 |
-| Prebacuj brajev vezan na| r2 |
-| Prijavi formatiranje teksta ispod brajeve ćelije | Gornji routing strip |
-| Premesti brajev red na prethodni red | up |
-| Pomeri brajev red nazad | left |
-| Prebaci brajev red napred | right |
-| Prebaci brajev red na sledeći red | dn |
-| Prebaci se na sledeći objekat | left2 |
-| Prebaci se na sadržan objekat | up2 |
-| Prebaci se na prvi sadržani objekat | dn2 |
-| Prebaci se na prethodni objekat | right2 |
+ || Ime | Komanda |
+ | izgovori trenutni znak u režimu pregleda | l1 |
+ | Aktiviraj trenutni objekat navigacije | l2 |
+ | Prebacuj brajev vezan na | r2 |
+ | Prijavi formatiranje teksta ispod brajeve ćelije | Gornji routing strip |
+ | Premesti brajev red na prethodni red | up |
+ | Pomeri brajev red nazad | left |
+ | Prebaci brajev red napred | right |
+ | Prebaci brajev red na sledeći red | dn |
+ | Prebaci se na sledeći objekat | left2 |
+ | Prebaci se na sadržan objekat | up2 |
+ | Prebaci se na prvi sadržani objekat | dn2 |
+ | Prebaci se na prethodni objekat | right2 |
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
@@ -2914,65 +2952,65 @@ Slede BrailleNote prečice za korišćenje sa NVDA čitačem ekrana.
 Molimo pogledajte vaše BrailleNote uputstvo za upotrebu da biste znali gde se nalaze ovi tasteri.
 
 %kc:beginInclude
-|| Ime | Komanda |
-| Prebaci brajev red nazad | nazad |
-| Prebaci brajev red napred | napred |
-| Premesti brajev red na prethodni red | prethodno |
-| Premesti brajev red na sledeći red | sledeće |
-| Prebaci se na brajevu ćeliju | routing |
-| NVDA meni | razmak+tačka1+tačka3+tačka4+tačka5 (razmak+n) |
-| Prebacuj brajev vezan za| Prethodni+Sledeći |
-| Strelica Gore | razmak+tačka1 |
-| Strelica Dole | razmak+tačka4 |
-| Leva Strelica | razmak+tačka3 |
-| Strelica desno | razmak+tačka6 |
-| Page up | razmak+tačka1+tačka3 |
-| Page down | razmak+tačka4+tačka6 |
-| Home | razmak+tačka1+tačka2 |
-| End | razmak+tačka4+tačka5 |
-| Kontrol+home | razmak+tačka1+tačka2+tačka3 |
-| Control+end | razmak+tačka4+tačka5+tačka6 |
-| Razmak | brajev razmak |
-| Enter | Razmak +tačka8  |
-| Backspace | Razmak +tačka7  |
-| Tab | razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
-| Šift+tab | razmak+tačka1+tačka2+tačka5+tačka6 |
-| Windows taster | razmak+tačka2+tačka4+tačka5+tačka6 (razmak+w) |
-| Alt | razmak+Tačka1+tačka3+tačka4 (razmak+m) |
-| Uključi/isključi pomoć za unos | razmak+tačka2+tačka3+tačka6 (razmak+spušteno h) |
+ || Ime | Komanda |
+ | Prebaci brajev red nazad | nazad |
+ | Prebaci brajev red napred | napred |
+ | Premesti brajev red na prethodni red | prethodno |
+ | Premesti brajev red na sledeći red | sledeće |
+ | Prebaci se na brajevu ćeliju | routing |
+ | NVDA meni | razmak+tačka1+tačka3+tačka4+tačka5 (razmak+n) |
+ | Prebacuj brajev vezan za | Prethodni+Sledeći |
+ | Strelica Gore | razmak+tačka1 |
+ | Strelica Dole | razmak+tačka4 |
+ | Leva Strelica | razmak+tačka3 |
+ | Strelica desno | razmak+tačka6 |
+ | Page up | razmak+tačka1+tačka3 |
+ | Page down | razmak+tačka4+tačka6 |
+ | Home | razmak+tačka1+tačka2 |
+ | End | razmak+tačka4+tačka5 |
+ | Kontrol+home | razmak+tačka1+tačka2+tačka3 |
+ | Control+end | razmak+tačka4+tačka5+tačka6 |
+ | Razmak | brajev razmak |
+ | Enter | Razmak +tačka8  |
+ | Backspace | Razmak +tačka7  |
+ | Tab | razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
+ | Šift+tab | razmak+tačka1+tačka2+tačka5+tačka6 |
+ | Windows taster | razmak+tačka2+tačka4+tačka5+tačka6 (razmak+w) |
+ | Alt | razmak+Tačka1+tačka3+tačka4 (razmak+m) |
+ | Uključi/isključi pomoć za unos | razmak+tačka2+tačka3+tačka6 (razmak+spušteno h) |
 
 Slede komande dodeljene za BrailleNote QT kada nije u režimu brajevog unosa.
 
-|| Ime | Komanda |
-| NVDA meni | read+n |
-| StrelicaGore| StrelicaGore |
-| StrelicaDole | StrelicaDole |
-| StrelicaLevo  | StrelicaLevo|
-| StrelicaDesno | StrelicaDesno |
-| Page up taster | function+StrelicaGore |
-| Page down taster | function+StrelicaDole |
-| Home taster | function+StrelicaLevo |
-| End taster | function+StrelicaDesno |
-| kontrol+home tasteri | read+t |
-| kontrol+end tasteri | read+b |
-| Enter taster | enter |
-| Backspace taster | backspace |
-| Tab taster | tab |
-| šift+tab tasteri | šift+tab |
-| Windows taster | read+w |
-| Alt taster | read+m |
-| Uključi i isključi pomoć za unos | read+1 |
+ || Ime | Komanda |
+ | NVDA meni | read+n |
+ | StrelicaGore | StrelicaGore |
+ | StrelicaDole | StrelicaDole |
+ | StrelicaLevo  | StrelicaLevo |
+ | StrelicaDesno | StrelicaDesno |
+ | Page up taster | function+StrelicaGore |
+ | Page down taster | function+StrelicaDole |
+ | Home taster | function+StrelicaLevo |
+ | End taster | function+StrelicaDesno |
+ | kontrol+home tasteri | read+t |
+ | kontrol+end tasteri | read+b |
+ | Enter taster | enter |
+ | Backspace taster | backspace |
+ | Tab taster | tab |
+ | šift+tab tasteri | šift+tab |
+ | Windows taster | read+w |
+ | Alt taster | read+m |
+ | Uključi i isključi pomoć za unos | read+1 |
 
 Slede komande dodeljene za scroll wheel:
 
-|| Ime | Komanda |
-| Strelica gore | StrelicaGore |
-| taster strelica dole | StrelicaDole |
-| taster strelica levo | StrelicaLevo |
-| Taster strelica desno | StrelicaDesno|
-| Taster enter | dugme u sredini|
-| Taster tab | Pomeranje točka u pravcu kazaljke sata |
-| Tasteri šift+tab| Pomeranje točka u suprotnom pravcu|
+ || Ime | Komanda |
+ | Strelica gore | StrelicaGore |
+ | taster strelica dole | StrelicaDole |
+ | taster strelica levo | StrelicaLevo |
+ | Taster strelica desno | StrelicaDesno |
+ | Taster enter | dugme u sredini |
+ | Taster tab | Pomeranje točka u pravcu kazaljke sata |
+ | Tasteri šift+tab | Pomeranje točka u suprotnom pravcu |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
@@ -2991,24 +3029,24 @@ Slede Dodeljene prečice za EcoBraille brajeve redove.
 Molimo pogledajte [EcoBraille korisničko uputstvo ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] Za opis i raspored tastera na vašem brajevom redu.
 
 %kc:beginInclude
-|| Ime | Komanda |
-| Pomeri brajev red nazad za red | T2 |
-| Pomeri brajev red napred za jedan red | T4 |
-| Pomeri brajev red na prethodnu liniju teksta | T1 |
-| Pomeri brajev red na sledeću liniju teksta | T5 |
-| Pomeri se na brajevu ćeliju | Routing |
-| Aktiviraj trenutni objekat navigacije | T3 |
-| Prebaci se na sledeći režim pregleda | F1 |
-| Pomeri se na prethodni objekat  | F2 |
-| Pomeri se na prethodni režim pregleda | F3 |
-| Pomeri se na prethodni objekat | F4 |
-| Čitaj trenutni objekat | F5 |
-| Prebaci se na sledeći objekat | F6 |
-| Premesti se na objekat koji ima fokus | F7 |
-| Premesti se na prvi sadržan objekat | F8 |
-| Premesti fokus sistema i kursor na trenutnu poziciju | F9 |
-| Prijavi poziciju preglednog kursora| F0 |
-| Uključi /isključi brajev vezan na| A |
+ || Ime | Komanda |
+ | Pomeri brajev red nazad za red | T2 |
+ | Pomeri brajev red napred za jedan red | T4 |
+ | Pomeri brajev red na prethodnu liniju teksta | T1 |
+ | Pomeri brajev red na sledeću liniju teksta | T5 |
+ | Pomeri se na brajevu ćeliju | Routing |
+ | Aktiviraj trenutni objekat navigacije | T3 |
+ | Prebaci se na sledeći režim pregleda | F1 |
+ | Pomeri se na prethodni objekat  | F2 |
+ | Pomeri se na prethodni režim pregleda | F3 |
+ | Pomeri se na prethodni objekat | F4 |
+ | Čitaj trenutni objekat | F5 |
+ | Prebaci se na sledeći objekat | F6 |
+ | Premesti se na objekat koji ima fokus | F7 |
+ | Premesti se na prvi sadržan objekat | F8 |
+ | Premesti fokus sistema i kursor na trenutnu poziciju | F9 |
+ | Prijavi poziciju preglednog kursora | F0 |
+ | Uključi /isključi brajev vezan na | A |
 %kc:endInclude
 
 ++ SuperBraille ++[SuperBraille]
@@ -3016,9 +3054,9 @@ Molimo pogledajte [EcoBraille korisničko uputstvo ftp://ftp.once.es/pub/utt/bib
 Budući da SuperBraille nema fizičke tastere za unos teksta ili pomeranje, sav unos mora se vršiti putem tastature računara.
 Zbog ovoga, i zbog zadržavanja kompatibilnosti sa drugim čitačima ekrana u Tajvanu, dve komande za pomeranje brajevog reda su dodate:
 %kc:beginInclude
-|| Ime | Komanda |
-| Pomeri brajev red nazad| NumeričkiMinus |
-| Pomeri brajev red napred| NumeričkiPlus | 
+ || Ime | Komanda |
+ | Pomeri brajev red nazad | NumeričkiMinus |
+ | Pomeri brajev red napred | NumeričkiPlus | 
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris redovi ++[Eurobraille]
@@ -3034,91 +3072,91 @@ Od dva tastera koji izgledaju slično razmaku, levi taster je backspace i desni 
 Slede komande ovog brajevog reda sa programom NVDA.
 Molimo pogledajte dokumentaciju brajevog reda za opis i raspored ovih tastera.
 %kc:beginInclude
-|| Ime | Taster |
-| Pomeri brajev red unazad| switch1-6left, l1 |
-| Pomeri brajev red u napred| switch1-6Right, l8 |
-| Prebaci se na trenutni fokus| switch1-6Left+switch1-6Right, l1+l8 |
-| Prebaci na brajevu ćeliju| routing |
-| Prijavi formatiranje teksta ispod brajeve ćelije| doubleRouting |
-| Prebaci na prethodni red u pregledu| joystick1Up |
-| Prebaci se na sledeći red u pregledu| joystick1Down |
-| Prebaci se na prethodni znak u pregledu| joystick1Left |
-| Prebaci se na sledeći znak u pregledu| joystick1Right |
-| Prebaci se na prethodni režim pregleda| joystick1Left+joystick1Up |
-| Prebaci se na sledeći režim pregleda| joystick1Right+joystick1Down |
-| Obriši poslednju unetu brajevu ćeliju ili znak| backSpace |
-| Prevedi bilo koji brajev unos i pritisni taster Enter| backSpace+razmak |
-| Taster insert| Tačka3+tačka5+razmak, l7 |
-| Taster za brisanje| tačka3+tačka6+razmak |
-| Taster home| tačka1+tačka2+tačka3+razmak, joystick2Left+joystick2Up |
-| Taster end| tačka4+tačka5+tačka6+razmak, joystick2Right+joystick2Down |
-| StrelicaLevo   | tačka2+razmak, joystick2Left, StrelicaLevo |
-| StrelicaDesno  | tačka5+razmak, joystick2Right, StrelicaDesno |
-| StrelicaGore  | tačka1+razmak, joystick2Up, StrelicaGore |
-| StrelicaDole  | tačka6+razmak, joystick2Down, StrelicaDole |
-| Taster Enter| joystick2Center |
-| Taster PageUp | tačka1+tačka3+razmak |
-| Taster PageDown | Tačka4+tačka6+razmak |
-| Numerički taster 1  | Tačka1+tačka6+backspace |
-| Numerički taster 2   | Tačka1+tačka2+tačka6+backspace |
-| Numerički taster 3 | Tačka1+tačka4+tačka6+backspace |
-| Numerički taster 4  | Tačka1+Tačka4+Tačka5+tačka6+backspace |
-| Numerički taster 5  | Tačka1+tačka5+tačka6+backspace |
-| Numerički taster 6   | Tačka1+tačka2+tačka4+tačka6+backspace |
-| Numerički taster 7 | tačka1+tačka2+tačka4+tačka5+tačka6+backspace |
-| Numerički taster 8  | Tačka1+tačka2+tačka5+tačka6+backspace |
-| Numerički taster 9  | Tačka2+tačka4+tačka6+backspace |
-| Numerički taster Insert  | tačka3+tačka4+tačka5+tačka6+backspace |
-| Decimalni zarez na numeričkoj tastaturi  | Tačka2+backspace |
-| Taster podeljeno na numeričkoj tastaturi  | Tačka3+tačka4+backspace |
-| Taster za množenje na numeričkoj tastaturi  | Tačka3+tačka5+backspace |
-| Taster minus na numeričkoj tastaturi  | Tačka3+tačka6+backspace |
-| Taster plus na numeričkoj tastaturi  | Tačka2+tačka3+tačka5+backspace |
-| Taster Enter na numeričkoj tastaturi | Tačka3+tačka4+tačka5+backspace |
-| escape taster | tačka1+tačka2+tačka4+tačka5+razmak, l2 |
-| tab taster | tačka2+tačka5+tačka6+razmak, l3 |
-| Šift +tab  | tačka2+tačka3+tačka5+razmak |
-| printScreen taster | tačka1+tačka3+tačka4+tačka6+razmak |
-| Taster pauza | tačka1+tačka4+razmak |
-| applications taster | tačka5+tačka6+backspace |
-| f1 taster | tačka1+backspace |
-| f2 taster | tačka1+tačka2+backspace |
-| f3 taster | tačka1+tačka4+backspace |
-| f4 taster | tačka1+tačka4+tačka5+backspace |
-| f5 taster | tačka1+tačka5+backspace |
-| f6 taster | tačka1+tačka2+tačka4+backspace |
-| f7 taster | tačka1+tačka2+tačka4+tačka5+backspace |
-| f8 taster | tačka1+tačka2+tačka5+backspace |
-| f9 taster | tačka2+tačka4+backspace |
-| f10 taster | tačka2+tačka4+tačka5+backspace |
-| f11 taster | tačka1+tačka3+backspace |
-| f12 taster | tačka1+tačka2+tačka3+backspace |
-| windows taster | tačka1+tačka2+tačka3+tačka4+backspace |
-| Taster za velika slova | tačka7+backspace, tačka8+backspace |
-| numLock taster | tačka3+backspace, tačka6+backspace |
-| Uključuje i isključuje taster šift | tačka1+tačka7+razmak, tačka4+tačka7+razmak |
-| kontrol taster | tačka7+tačka8+razmak, l5 |
-| Uključuje i isključuje  kontrol taster | tačka1+tačka7+tačka8+razmak, tačka4+tačka7+tačka8+razmak |
-| alt taster | tačka8+razmak, l6 |
-| Uključuje i isključuje alt taster| tačka1+tačka8+razmak, tačka4+tačka8+razmak |
-| alt taster | tačka8+razmak, tačka1+tačka8+razmak, tačka4+tačka8+razmak, l6 |
-| Uključuje i isključuje HID simulaciju unosa tastature| esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+ || Ime | Taster |
+ | Pomeri brajev red unazad | switch1-6left, l1 |
+ | Pomeri brajev red u napred | switch1-6Right, l8 |
+ | Prebaci se na trenutni fokus | switch1-6Left+switch1-6Right, l1+l8 |
+ | Prebaci na brajevu ćeliju | routing |
+ | Prijavi formatiranje teksta ispod brajeve ćelije | doubleRouting |
+ | Prebaci na prethodni red u pregledu | joystick1Up |
+ | Prebaci se na sledeći red u pregledu | joystick1Down |
+ | Prebaci se na prethodni znak u pregledu | joystick1Left |
+ | Prebaci se na sledeći znak u pregledu | joystick1Right |
+ | Prebaci se na prethodni režim pregleda | joystick1Left+joystick1Up |
+ | Prebaci se na sledeći režim pregleda | joystick1Right+joystick1Down |
+ | Obriši poslednju unetu brajevu ćeliju ili znak | backSpace |
+ | Prevedi bilo koji brajev unos i pritisni taster Enter | backSpace+razmak |
+ | Taster insert | Tačka3+tačka5+razmak, l7 |
+ | Taster za brisanje | tačka3+tačka6+razmak |
+ | Taster home | tačka1+tačka2+tačka3+razmak, joystick2Left+joystick2Up |
+ | Taster end | tačka4+tačka5+tačka6+razmak, joystick2Right+joystick2Down |
+ | StrelicaLevo   | tačka2+razmak, joystick2Left, StrelicaLevo |
+ | StrelicaDesno  | tačka5+razmak, joystick2Right, StrelicaDesno |
+ | StrelicaGore  | tačka1+razmak, joystick2Up, StrelicaGore |
+ | StrelicaDole  | tačka6+razmak, joystick2Down, StrelicaDole |
+ | Taster Enter | joystick2Center |
+ | Taster PageUp | tačka1+tačka3+razmak |
+ | Taster PageDown | Tačka4+tačka6+razmak |
+ | Numerički taster 1  | Tačka1+tačka6+backspace |
+ | Numerički taster 2   | Tačka1+tačka2+tačka6+backspace |
+ | Numerički taster 3 | Tačka1+tačka4+tačka6+backspace |
+ | Numerički taster 4  | Tačka1+Tačka4+Tačka5+tačka6+backspace |
+ | Numerički taster 5  | Tačka1+tačka5+tačka6+backspace |
+ | Numerički taster 6   | Tačka1+tačka2+tačka4+tačka6+backspace |
+ | Numerički taster 7 | tačka1+tačka2+tačka4+tačka5+tačka6+backspace |
+ | Numerički taster 8  | Tačka1+tačka2+tačka5+tačka6+backspace |
+ | Numerički taster 9  | Tačka2+tačka4+tačka6+backspace |
+ | Numerički taster Insert  | tačka3+tačka4+tačka5+tačka6+backspace |
+ | Decimalni zarez na numeričkoj tastaturi  | Tačka2+backspace |
+ | Taster podeljeno na numeričkoj tastaturi  | Tačka3+tačka4+backspace |
+ | Taster za množenje na numeričkoj tastaturi  | Tačka3+tačka5+backspace |
+ | Taster minus na numeričkoj tastaturi  | Tačka3+tačka6+backspace |
+ | Taster plus na numeričkoj tastaturi  | Tačka2+tačka3+tačka5+backspace |
+ | Taster Enter na numeričkoj tastaturi | Tačka3+tačka4+tačka5+backspace |
+ | escape taster | tačka1+tačka2+tačka4+tačka5+razmak, l2 |
+ | tab taster | tačka2+tačka5+tačka6+razmak, l3 |
+ | Šift +tab  | tačka2+tačka3+tačka5+razmak |
+ | printScreen taster | tačka1+tačka3+tačka4+tačka6+razmak |
+ | Taster pauza | tačka1+tačka4+razmak |
+ | applications taster | tačka5+tačka6+backspace |
+ | f1 taster | tačka1+backspace |
+ | f2 taster | tačka1+tačka2+backspace |
+ | f3 taster | tačka1+tačka4+backspace |
+ | f4 taster | tačka1+tačka4+tačka5+backspace |
+ | f5 taster | tačka1+tačka5+backspace |
+ | f6 taster | tačka1+tačka2+tačka4+backspace |
+ | f7 taster | tačka1+tačka2+tačka4+tačka5+backspace |
+ | f8 taster | tačka1+tačka2+tačka5+backspace |
+ | f9 taster | tačka2+tačka4+backspace |
+ | f10 taster | tačka2+tačka4+tačka5+backspace |
+ | f11 taster | tačka1+tačka3+backspace |
+ | f12 taster | tačka1+tačka2+tačka3+backspace |
+ | windows taster | tačka1+tačka2+tačka3+tačka4+backspace |
+ | Taster za velika slova | tačka7+backspace, tačka8+backspace |
+ | numLock taster | tačka3+backspace, tačka6+backspace |
+ | Uključuje i isključuje taster šift | tačka1+tačka7+razmak, tačka4+tačka7+razmak |
+ | kontrol taster | tačka7+tačka8+razmak, l5 |
+ | Uključuje i isključuje  kontrol taster | tačka1+tačka7+tačka8+razmak, tačka4+tačka7+tačka8+razmak |
+ | alt taster | tačka8+razmak, l6 |
+ | Uključuje i isključuje alt taster | tačka1+tačka8+razmak, tačka4+tačka8+razmak |
+ | alt taster | tačka8+razmak, tačka1+tačka8+razmak, tačka4+tačka8+razmak, l6 |
+ | Uključuje i isključuje HID simulaciju unosa tastature | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ Nattiq nBraille redovi ++[NattiqTechnologies]
 NVDA podržava redove kompanije [Nattiq Technologies https://www.nattiq.com/] kada se povežu putem USB-a.
-Windows 10 prepoznaje redove kada se povežu, možda ćete morati da instalirate drajvere ako koristite starije verzije Windowsa (starije od Win10).
+Windows 10 i noviji prepoznaju redove kada se povežu, možda ćete morati da instalirate drajvere ako koristite starije verzije Windowsa (starije od Win10).
 Možete ih preuzeti sa sajta proizvođača.
 
 Slede komande za Nattiq Technologies redove uz NVDA.
 Molimo pogledajte dokumentaciju brajevog reda da biste pročitali opise tastera kao i gde se oni nalaze.
 %kc:beginInclude
-|| Ime | Taster |
-| Pomeri brajev red nazad | Gore |
-| Pomeri brajev red napred | Dole |
-| Pomeri brajev red na prethodni red | Levo |
-| Pomeri brajev red na sledeći red | Desno |
-| Prebaci se na brajevu ćeliju | routing |
+ || Ime | Taster |
+ | Pomeri brajev red nazad | Gore |
+ | Pomeri brajev red napred | Dole |
+ | Pomeri brajev red na prethodni red | Levo |
+ | Pomeri brajev red na sledeći red | Desno |
+ | Prebaci se na brajevu ćeliju | routing |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
@@ -3135,14 +3173,45 @@ BRLTTY ne učestvuje u funkciji automatskog prepoznavanja programa NVDA.
 Ovo su BRLTTY prečice za NVDA.
 Molimo pogledajte [BRLTTY tabele tasterskih prečica http://mielke.cc/brltty/doc/KeyBindings/] za više informacija o tome kako su dodeljene prečice za kontrole na brajevim redovima.
 %kc:beginInclude
-|| Ime | BRLTTY komanda |
-| Prebaci brajev red nazad | fwinlt (idi jedan prozor u levo) |
-| Prebaci brajev red napred | fwinrt (Prebaci se jedan prozor u desno) |
-| Prebaci brajev red na sledeći red | lnup (Idi jedan red gore) |
-| Premesti brajev red na sledeći red | lndn (Idi dole za jedan red) |
-| Pomeri se na brajevu ćeliju | route (Pomeri kursor na znak) |
+ || Ime | BRLTTY komanda |
+ | Prebaci brajev red nazad | fwinlt (idi jedan prozor u levo) |
+ | Prebaci brajev red napred | fwinrt (Prebaci se jedan prozor u desno) |
+ | Prebaci brajev red na sledeći red | lnup (Idi jedan red gore) |
+ | Premesti brajev red na sledeći red | lndn (Idi dole za jedan red) |
+ | Pomeri se na brajevu ćeliju | route (Pomeri kursor na znak) |
 %kc:endInclude
 
+++ Standardni HID brajevi redovi ++[HIDBraille]
+Ovo je eksperimentalan brajev drajver za novi HID brajev standard, na koji su se 2018 složile različite kompanije kao što su Microsoft, Google, Apple i različiti proizvođači asistivnih tehnologija uključujući i NV Access. 
+Cilj je da svi budući brajevi redovi od bilo kog proizvođača, zajedno koriste ovaj protokol što će ukloniti potrebu za posebne drajvere svakog proizvođača.
+
+Automatsko prepoznavanje brajevih redova od strane programa NVDA će takođe raditi za sve redove koji koriste ovaj protokol.
+ 
+Slede trenutne tasterske prečice za ove redove.
+%kc:beginInclude
+|| Ime | komanda |
+| Pomeri brajev red nazad | pan left |
+| Pomeri brajev red napred | pan right |
+| Pomeri brajev red na prethodni red | Razmak + Tačka1 |
+| Pomeri brajev red na sledeći red | Razmak + tačka4 |
+| Prebaci na brajevu ćeliju | routing set 1|
+| Promeni vezivanje brajevog reda | Gore+Dole |
+| Strelica gore | Džojstik  gore |
+| Strelica dole | Džojstik dole |
+| Strelica levo | Razmak+tačka3 ili džojstik levo |
+| Strelica desno | Razmak+tačka6 ili džojstik desno |
+| Šift plus tab | razmak+tačka1+tačka3 |
+| tab | Razmak+tačka4+tačka6 |
+| alt | Razmak+tačka1+tačka3+tačka4 (razmak+m) |
+| escape | Razmak+tačka1+tačka5 (razmak+e) |
+| enter | tačka8 ili centar džojstika |
+| windows | Razmak+tačka3+tačka4 |
+| alt+tab | Razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
+| NVDA meni | Razmak+tačka1+tačka3+tačka4+tačka5 (razmak+n) |
+| windows+d (umanji sve aplikacije) | Razmak+tačka1+tačka4+tačka5 (razmak+d) |
+| Izgovori sve | Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6 |
+%kc:endInclude
+ 
 + Napredne teme +[AdvancedTopics]
 
 ++ Opcije komandne linije ++[CommandLineOptions]
@@ -3159,36 +3228,36 @@ nvda -q
 
 Neke opcije komandne linije imaju kratku i dugu verziju, dok neke imaju samo dugu verziju.
 Za one koje imaju kratku verziju, možete ih kombinovati ovako:
-| nvda -mc CONFIGPATH | Ovo će pokrenuti NVDA bez zvukova i poruke o pokretanju, i sa određenom konfiguracijom |
-| nvda -mc CONFIGPATH --disable-addons | Isto kao iznad, ali sa onemogućenim dodacima|
+ | nvda -mc CONFIGPATH | Ovo će pokrenuti NVDA bez zvukova i poruke o pokretanju, i sa određenom konfiguracijom |
+ | nvda -mc CONFIGPATH --disable-addons | Isto kao iznad, ali sa onemogućenim dodacima |
 
 Neke opcije prihvataju dodatne parametre; na primer koliko detaljna evidencija u dnevniku treba da bude ili adresa za korisnička podešavanja.
 Ovi parametri se postavljaju nakon opcije odvojeni razmakom, kada se koristi kratka verzija ili znakom jednako(=) kada se koristi duga verzija; na primer.:
-| nvda -l 10 | Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na otklanjanje grešaka|
-| nvda --log-file=c:\nvda.log |  Govori programu NVDA da piše datoteke sa dnevnikom na lokaciji c:\NVDA.log|
-| nvda --log-level=20 -f c:\nvda.log | Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na informacije i da piše datoteke sa dnevnikom na lokaciji c:\NVDA.log|
+ | nvda -l 10 | Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na otklanjanje grešaka |
+ | nvda --log-file=c:\nvda.log |  Govori programu NVDA da piše datoteke sa dnevnikom na lokaciji c:\NVDA.log |
+ | nvda --log-level=20 -f c:\nvda.log | Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na informacije i da piše datoteke sa dnevnikom na lokaciji c:\NVDA.log |
 
 Slede opcije komandne linije za NVDA:
-|| Kratka | Duga | Opis |
-| -h | --help | Prikaži pomoć komandne linije i izađi|
-| -q | --quit | Izađi iz već pokrenute kopije programa NVDA|
-| -k | --check-running | Prijavi da li je NVDA pokrenut korišćenjem koda izlaza; 0 ako je pokrenut, 1 ako nije pokrenut|
-| -f LOGFILENAME | --log-file=LOGFILENAME | Datoteka u kojoj poruke dnevnika trebaju biti pisane|
-| -l LOGLEVEL | --log-level=LOGLEVEL | Najniži nivo evidencije poruka(otklanjanje grešaka 10, ulaz/izlaz 12, upozorenje o otklanjanju grešaka 15, info 20, upozorenje 30, greška 40, kritično 50, onemogućeno 100), podrazumevano je upozorenje|
-| -c CONFIGPATH | --config-path=CONFIGPATH | Adresa na kojoj podešavanja za NVDA trebaju biti sačuvana|
-| -m | --minimal | Nema zvukova, nema interfejsa, nema poruka pokretanja i tako dalje|
-| -s | --secure | Bezbednosni režim: Onemogućena Python konzola, opcije profila kao što su stvaranje, brisanje, preimenovanje profila i slično., Provera ažuriranja, neke opcije u dijalogu dobrodošlice i kategoriji opštih podešavanja (na primer pokretanje programa NVDA nakon prijavljivanja, čuvanje podešavanja pri izlazu i slično.), preglednik dnevnika i opcije evidentiranja (koje se često koriste na sigurnim ekranima). Napomena da ova komanda takođe sprečava čuvanje podešavanja na sistem i da se prilagođene komande neće čuvati. |
-| Nema | --disable-addons | Dodaci neće imati efekta|
-| Nema | --debug-logging | Omogući evidenciju otklanjanja grešaka za ovo pokretanje. Ovo podešavanje će promeniti ostale nivoe evidencije( ""--loglevel"", -l) uključujući kada je evidentiranje onemogućeno. |
-| Nema | --no-logging | Onemogući evidentiranje dok se NVDA koristi. Ovo podešavanje se može zameniti ako nivo evidentiranja ( ""--loglevel"", -l) bude određen iz komandne linije ili se dnevnici za otklanjanje grešaka uključe. |
-| Nema| --no-sr-flag  | Ne menjaj globalnu oznaku čitača ekrana na sistemu|
-| Nema | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
-| Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
-| Nema | --enable-start-on-logon=True|False | U toku instalacije, omogući podešavanje [pokreni NVDA na Windows ekranu za prijavljivanje #StartAtWindowsLogon] |
-| Nema | --copy-portable-config | Kada instalirate, kopira podešavanja iz označene adrese  (--config-path, -c) u trenutni korisnički nalog |
-| Nema | --create-portable | Pravi prenosnu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
-| Nema | --create-portable-silent | Pravi prenosnu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
-| Nema | --portable-path=AdresaKopije | Adresa na kojoj će portabilna kopija biti napravljena|
+ || Kratka | Duga | Opis |
+ | -h | --help | Prikaži pomoć komandne linije i izađi |
+ | -q | --quit | Izađi iz već pokrenute kopije programa NVDA |
+ | -k | --check-running | Prijavi da li je NVDA pokrenut korišćenjem koda izlaza; 0 ako je pokrenut, 1 ako nije pokrenut |
+ | -f LOGFILENAME | --log-file=LOGFILENAME | Datoteka u kojoj poruke dnevnika trebaju biti pisane |
+ | -l LOGLEVEL | --log-level=LOGLEVEL | Najniži nivo evidencije poruka(otklanjanje grešaka 10, ulaz/izlaz 12, upozorenje o otklanjanju grešaka 15, info 20, upozorenje 30, greška 40, kritično 50, onemogućeno 100), podrazumevano je upozorenje |
+ | -c CONFIGPATH | --config-path=CONFIGPATH | Adresa na kojoj podešavanja za NVDA trebaju biti sačuvana |
+ | -m | --minimal | Nema zvukova, nema interfejsa, nema poruka pokretanja i tako dalje |
+ | -s | --secure | Bezbednosni režim: Onemogućena Python konzola, opcije profila kao što su stvaranje, brisanje, preimenovanje profila i slično., Provera ažuriranja, neke opcije u dijalogu dobrodošlice i kategoriji opštih podešavanja (na primer pokretanje programa NVDA nakon prijavljivanja, čuvanje podešavanja pri izlazu i slično.), preglednik dnevnika i opcije evidentiranja (koje se često koriste na sigurnim ekranima). Napomena da ova komanda takođe sprečava čuvanje podešavanja na sistem i da se prilagođene komande neće čuvati. |
+ | Nema | --disable-addons | Dodaci neće imati efekta |
+ | Nema | --debug-logging | Omogući evidenciju otklanjanja grešaka za ovo pokretanje. Ovo podešavanje će promeniti ostale nivoe evidencije( ""--loglevel"", -l) uključujući kada je evidentiranje onemogućeno. |
+ | Nema | --no-logging | Onemogući evidentiranje dok se NVDA koristi. Ovo podešavanje se može zameniti ako nivo evidentiranja ( ""--loglevel"", -l) bude određen iz komandne linije ili se dnevnici za otklanjanje grešaka uključe. |
+ | Nema | --no-sr-flag  | Ne menjaj globalnu oznaku čitača ekrana na sistemu |
+ | Nema | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
+ | Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
+ | Nema | --enable-start-on-logon=True |False | U toku instalacije, omogući podešavanje [pokreni NVDA na Windows ekranu za prijavljivanje #StartAtWindowsLogon] |
+ | Nema | --copy-portable-config | Kada instalirate, kopira podešavanja iz označene adrese  (--config-path, -c) u trenutni korisnički nalog |
+ | Nema | --create-portable | Pravi prenosnu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
+ | Nema | --create-portable-silent | Pravi prenosnu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
+ | Nema | --portable-path=AdresaKopije | Adresa na kojoj će portabilna kopija biti napravljena |
 
 ++ Sistemski parametri++[SystemWideParameters]
 NVDA dozvoljava promenu određenih vrednosti u sistemskoj registry bazi koje menjaju ponašanje programa NVDA.
@@ -3198,9 +3267,9 @@ Ove vrednosti se čuvaju u registry bazi u jednom od sledećih ključeva:
 -
 
 Sledeće vrednosti se mogu podesiti u ovom registry ključu:
-|| Ime | Vrsta | Moguće vrednosti | Opis |
-| configInLocalAppData | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite| Ako je omogućeno, Čuva NVDA podešavanja u local folderu foldera app data umesto roaming foldera|
-| serviceDebug | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, onemogućava bezbedni režim na Windows secure računarima, dozvoljavajući korišćenje Python konzole i pregleda dnevnika. Zbog nekoliko velikih bezbednosnih rizika, korišćenje ove opcije nije preporučeno|
+ || Ime | Vrsta | Moguće vrednosti | Opis |
+ | configInLocalAppData | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, Čuva NVDA podešavanja u local folderu foldera app data umesto roaming foldera |
+ | serviceDebug | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, onemogućava bezbedni režim na Windows secure računarima, dozvoljavajući korišćenje Python konzole i pregleda dnevnika. Zbog nekoliko velikih bezbednosnih rizika, korišćenje ove opcije nije preporučeno |
 
 + Dodatne informacije +[FurtherInformation]
 Ako vam trebaju dodatne informacije ili pomoć za program NVDA, molimo posetite NVDA sajt na lokaciji NVDA_URL.

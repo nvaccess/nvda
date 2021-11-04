@@ -10,12 +10,12 @@
 + 簡介 +[Introduction]
 歡迎使用NVDA!
 
-NVDA 非視覺桌面存取應用程式(Nonvisual Desktop Access)，是一款免費且開放原始碼，而用於微軟視窗作業系統的螢幕報讀軟體。
-透過合成語音及點字，NVDA可以讓視障者不必花比一般明眼人更多的錢，即可存取使用任何執行微軟視窗作業系統的電腦。
+NVDA 非視覺桌面存取應用程式(Nonvisual Desktop Access)，是一款免費且開放原始碼，而用於 Microsoft Windows 作業系統的螢幕報讀軟體。
+透過合成語音及點字，NVDA可以讓視障者不必花比一般明眼人更多的錢，即可存取使用任何執行 Microsoft Windows 作業系統的電腦。
 NVDA 是由[NV Access https://www.nvaccess.org/] 所開發，並包含來自 NVDA 社群參與者的許多貢獻和回饋。
 
 ++ 特色 ++[GeneralFeatures]
-NVDA 可提供視障者操作微軟視窗作業系統及其它應用程式，
+NVDA 可提供視障者操作 Microsoft Windows 作業系統及其它應用程式，
 
 主要特色包括：
 - 支援多種熱門應用程式，如網頁瀏覽器、郵件軟體、線上聊天軟體及 Office 套裝軟體等。
@@ -66,7 +66,7 @@ NVDA 同時也包含並使用了那些受其他免費且開放板權的組件。
 關於詳細的例外狀況說明，請參考 NVDA 功能表中，「說明」內的「授權文件」。
 
 + 系統需求 +[SystemRequirements]
-- 作業系統：32或64位元的微軟 Windows 7、Windows 8、Windows 8.1 及 Window 10，及 Windows Server 2008 R2 以上所有的伺服器作業系統。
+- 作業系統：32或64位元的 Microsoft Windows 7、Windows 8、Windows 8.1、Windows 10、Windows 11 及 Windows Server 2008 R2 以上所有的伺服器作業系統。
  - 使用 Windows 7，NVDA 需要 SP 1以上的等級。
  - 使用 Windows Server 2008 R2，NVDA 需要 SP 1以上的版本。
 - 最少 150 MB 以上的內存空間
@@ -305,7 +305,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 系統焦點，簡稱焦點，指的是接收鍵盤指令所在的 [物件 #Objects]。
 例如，當您在可編輯文字區打字時，系統焦點就停在此文字編輯區上。
 
-利用 NVDA 在視窗作業系統上進行導航，最常用到的操作方式是使用標準的視窗鍵盤指令來移動系統焦點，例如按 Tab 或 Shift+Tab 在各控制項間向前或向後移動；利用按 Alt 跳到功能表列及以方向鍵在功能表內的項目間移動、或是使用 Alt+Tab 在已開啟的不同視窗間切換。
+利用 NVDA 在 Windows 作業系統上進行導航，最常用到的操作方式是使用標準的 Windows 鍵盤指令來移動系統焦點，例如按 Tab 或 Shift+Tab 在各控制項間向前或向後移動；利用按 Alt 跳到功能表列及以方向鍵在功能表內的項目間移動、或是使用 Alt+Tab 在已開啟的不同視窗間切換。
 當您這樣操作時，NVDA 通常會讀出焦點所在物件的相關資訊，如：名稱、類型、數值、狀態、說明、便捷鍵及位置等。
 當有啟用[視覺醒目提示 #VisionFocusHighlight]時，當前系統焦點所在的位置會在螢幕上呈現出來。
 
@@ -332,8 +332,8 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 | 讀出游標所在行的內容 | NVDA+向上鍵 | NVDA+l | 讀出游標所在行的內容，連按兩次會拼讀出這一行內容，連按三下讀出字詞解釋。 |
 | 讀出選取的內容 | NVDA+Shift+向上鍵 | NVDA+Shift+s | 讀出目前已選取的文字。 |
 | 讀出文字的格式 | NVDA+F | NVDA+F | 讀出游標當前所在的文字格式，按兩下以瀏覽模式顯示資訊。 |
-| 讀出後一個句子 | alt+向下鍵 | alt+向下鍵 | 移動游標到後一個句子的開頭字元並讀出該句子（僅支援微軟 Word 和 Outlook 應用程式） |
-| 讀出前一個句子 | alt+向上鍵 | alt+向上鍵 | 移動游標到前一個句子的開頭字元並讀出整個句子（僅支援微軟 Word 和 Outlook 應用程式） |
+| 讀出後一個句子 | alt+向下鍵 | alt+向下鍵 | 移動游標到後一個句子的開頭字元並讀出該句子（僅支援 Microsoft Word 和 Outlook 應用程式） |
+| 讀出前一個句子 | alt+向上鍵 | alt+向上鍵 | 移動游標到前一個句子的開頭字元並讀出整個句子（僅支援 Microsoft Word 和 Outlook 應用程式） |
 
 當系統游標在一個表格內時，也可使用下列的快速鍵：
 || 名稱 | 快速鍵 | 說明 |
@@ -498,11 +498,10 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 - Microsoft Edge
 - Adobe Reader
 - Foxit Reader
-- Adobe Flash
 - 適用於電腦閱讀的 Amazon Kindle 電子書
 -
 
-對於微軟 Word 文件，當切換到「瀏覽模式」時，也是可以適用。
+對於 Microsoft Word 文件，當切換到「瀏覽模式」時，也是可以適用。
 
 在「瀏覽模式」狀態下，文件的內容是以平面形式呈現，利用按鍵來移動游標的操作，就如同在讀一般文字文件那樣，可檢閱其內容。
 所有 NVDA 的[系統游標 #SystemCaret] 按鍵指令皆可用於此模式，例如全文報讀、讀出格式資訊及在表格上的導航等指令。
@@ -522,7 +521,7 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 || 名稱 | 快速鍵 | 說明 |
 | 切換瀏覽/焦點模式 | NVDA+空白鍵 | 切換焦點模式與瀏覽模式。 |
 | 離開焦點模式 | Esc | 由先前的焦點模式切換回瀏覽模式。 |
-| 更新瀏覽模式 | NVDA+F5 | 重新載入目前文件內容（若發現似乎文件內容有些遺失，此功能相當管用，但對於微軟的 Word 及 Outlook 則不適用）
+| 更新瀏覽模式 | NVDA+F5 | 重新載入目前文件內容（若發現似乎文件內容有些遺失，此功能相當管用，但對於 Microsoft Word 及 Outlook 則不適用）
 | 尋找 | NVDA+Ctrl+F | 開啟一個對話框，以便輸入字串，在目前的文件中搜尋。請參閱 [尋找文字 #SearchingForText] 段落來獲取更多資訊 |
 | 尋找後一個 | NVDA+F3 | 在目前文件中向後尋找前次搜尋的文字。 |
 | 尋找前一個 | NVDA+Shift+F3 | 在目前文件中向前尋找前次搜尋的文字。 |
@@ -596,7 +595,7 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 %kc:endInclude
 
 ++ 嵌入式物件 ++[ImbeddedObjects]
-有些網頁像 Adobe Flash、Oracle Java 或 HTML5 採用了一些嵌入式物件的技術，以豐富其頁面的呈現。
+有些網頁像 、Oracle Java 或 HTML5 採用了一些嵌入式物件的技術，以豐富其頁面的呈現。
 當在瀏覽模式時，游標遇到這些元件，NVDA 會分別讀出「嵌入式物件」、「應用程式」或「對話框」等的提示。
 若要快速的移到這些物件，您可使用 o 及 shift+o，單鍵導航的操作
 要進入並與這些項目互動，您可在移到後，接著按 Enter。
@@ -613,8 +612,8 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 該軟體可以從以下的網址免費下載: https://www.dessci.com/en/products/mathplayer/
 
 NVDA 支援以下數學格式的內容：
-- Mozilla Firefox 、微軟 IE 及 Google Chrome 上的數學標記語言。
-- 以 Design Science MathType 在微軟 Word 及 PowerPoint 上編輯的數學公式。
+- Mozilla Firefox 、Microsoft IE 及 Google Chrome 上的數學標記語言。
+- 以 Design Science MathType 在 Microsoft Word 及 PowerPoint 上編輯的數學公式。
 要先安裝 MathType 公式編輯器方可生效。
 只需安裝試用版即可。
 它可以從以下網址下載: https://www.dessci.com/en/products/mathtype/
@@ -794,9 +793,15 @@ NVDA 的視覺相關設定可以從[NVDA 設定 #NVDASettings]對話框中的[�
 
 您可以在[NVDA 設定 #NVDASettings]對話框中的.[視覺類別 #VisionSettings]中啟用該功能。
 
+當啟用螢幕簾幕時，一些需查看螢幕畫面的動作，如[OCR #Win10Ocr]或螢幕截圖會無法執行。
+
+由於 Windows 放大 API 的變更，螢幕簾幕亦需要更新才能支援最新版的 Windows。
+使用 NVDA 2021.2 搭配 Windows 10 21H2 (10.0.19044) 或更新版本時，要啟用螢幕簾幕。
+為安全起見，當使用新版的 Windows 時，請在視覺上確認螢幕簾幕功能有讓整個螢幕變黑。
+
 + 內容辨識 +[ContentRecognition]
 當作者沒有為螢幕報讀軟體的用戶提供足夠資訊，以確認其內容時，可以使用各種工具來嘗試從圖像中辨識其內容。
-NVDA 支援 Windows 10內建的光學字元辨識（OCR）功能，以便將圖像辨識成為文字。
+NVDA 支援 Windows 10 及更新版本內建的光學字元辨識（OCR）功能，以便將圖像辨識成為文字。
 NVDA 的某些附加元件也有提供額外的內容辨識器。
 
 當您使用內容辨識指令時，NVDA 會從目前的導航器物件辨識內容 。 [導航器物件 #navigator object]
@@ -808,24 +813,26 @@ NVDA 的某些附加元件也有提供額外的內容辨識器。
 若允許的話，也可在游標所指的文字上按 enter 或空白鍵 （此如同一般的滑鼠單擊的操作）。
 按 escape 鍵可離開此辨識結果的視窗。
 
-++ Windows 10 光學字元辨識 ++[Win10Ocr]
-Windows 10包括了針對多種語言的光學字元辨識之功能。
+++ Windows OCR ++[Win10Ocr]
+Windows 10 及更新版本包括了針對多種語言的 OCR 功能。
 NVDA 可利用這個功能從圖像或某些系統焦點不可及的地方來辨識出文字。
 
-您可以在 [NVDA 設定 #NVDASettings] 對話框中 [Windows 10 OCR 類別 #Win10OcrSettings]設定文字辨識的語言。
+您可以在 [NVDA 設定 #NVDASettings] 對話框中 [Windows OCR #Win10OcrSettings]設定文字辨識的語言。
 利用開啟「開始功能表」，選擇設定，接著選「時間與語言」，再到「地區與語言」，最後選擇「新增語言」來安裝額外的語言。
 
+Windows OCR 可能部分或完全無法與[NVDA 視覺增強 #Vision]或其他額外針對視覺輔助的附加元件相容，若要進行辨識前，需先將這些視覺設定關閉。
+
 %kc:beginInclude
-要從目前導航器物件來使用 Windows 10光學字元辨識的功能，可按 NVDA+r。
+要從目前導航器物件來使用 Windows OCR 功能，可按 NVDA+r。
 %kc:endInclude
 
 + 特定應用程式指令的功能 +[ApplicationSpecificFeatures]
 NVDA 對某些應用程式提供了一些特有的功能，以便讓執行這些操作變得容易些，，或讓螢幕報讀軟體的使用者可讀取到那些原本無法操作的功能。
 
-++ 微軟 Word ++[MicrosoftWord]
+++ Microsoft Word ++[MicrosoftWord]
 
 +++ 欄及列標題的自動報讀 +++[WordAutomaticColumnAndRowHeaderReading]
-當在微軟 Word 表格內各個儲存格間移動導航時，NVDA 可自動讀出其欄標題或列標題。
+當在 Microsoft Word 表格內各個儲存格間移動導航時，NVDA 可自動讀出其欄標題或列標題。
 要啟動此項功能，首先需將 [NVDA 設定 #NVDASettings] 對話框中「文件格式」設定內的「讀出表格的列及欄標題』的核取方壞勾選，
 接著是要讓 NVDA 知道表格中的那一列或那一欄要設為標題。
 其操作方式是將游標移到表格內的該欄或該列，然後利用以下的指令設定：
@@ -837,16 +844,16 @@ NVDA 對某些應用程式提供了一些特有的功能，以便讓執行這些
 這些設定可與其它螢幕報讀軟體如 JAWS 相匹配的格式儲存，
 也就是說，若使用者以其它螢幕報讀軟體開啟該檔案，其表格內所設定的欄或列標題仍可適用。
 
-+++  在微軟 Word 的瀏覽模式 +++[BrowseModeInMicrosoftWord]
-NVDA 也可讓您在微軟 Word 上使用瀏覽模式，此類似於在網頁上的操作方式，如單鍵導航及開啟「元件清單」等特殊的功能。
++++  在 Microsoft Word 的瀏覽模式 +++[BrowseModeInMicrosoftWord]
+NVDA 也可讓您在 Microsoft Word 上使用瀏覽模式，此類似於在網頁上的操作方式，如單鍵導航及開啟「元件清單」等特殊的功能。
 %kc:beginInclude
-要在微軟 Word 上，切換瀏覽模式的開與關，按 NVDA+ 空白鍵。
+要在 Microsoft Word 上，切換瀏覽模式的開與關，按 NVDA+ 空白鍵。
 %kc:endInclude
 欲獲取進一步訊息，請參見[瀏覽模式 #BrowseMode]這一節。
 
 ++++ 元件清單 ++++[WordElementsList]
 %kc:beginInclude
-當微軟 Word 處於瀏覽模式時，您可按 NVDA+ F7，來 呼叫出「元件清單」的對話框。
+當 Microsoft Word 處於瀏覽模式時，您可按 NVDA+ F7，來 呼叫出「元件清單」的對話框。
 %kc:endInclude
 「元件清單」可以清單方式列出所有的標題、連結、註記（包括追蹤修訂及註解）以及錯誤（僅適用於目前拼字錯誤）等。
 
@@ -856,10 +863,10 @@ NVDA 也可讓您在微軟 Word 上使用瀏覽模式，此類似於在網頁上
 %kc:endInclude
 當在「元件清單」的「種類」選「標記」這個選項時，文件中所有的註解及追蹤修訂等標記，均可以被列出來。
 
-++ 微軟 Excel ++[MicrosoftExcel]
+++ Microsoft Excel ++[MicrosoftExcel]
 
 +++ 欄及列標題的自動報讀 +++[ExcelAutomaticColumnAndRowHeaderReading]
-當在微軟 Excel 工作表內的儲存格之間導航時，NVDA 可自動報讀其欄標題或列標題。
+當在 i Excel 工作表內的儲存格之間導航時，NVDA 可自動報讀其欄標題或列標題。
 要達成此項功能，首先需要將 [NVDA設定 #NVDASettings] 對話框中「文件格式」設定內的「讀出表格的列及欄標題』的核取方壞勾選，
 接著是要讓 NVDA 知道表格中那一列或那一欄設為標題。
 其操作方式是將游標移到工作表內的該欄或該列，然後利用以下的指令設定標題：
@@ -872,7 +879,7 @@ NVDA 也可讓您在微軟 Word 上使用瀏覽模式，此類似於在網頁上
 也就是，若用戶在往後使用其它螢幕報讀軟體開啟該檔案，其表格內的欄或列標題也會自動設定。
 
 +++ 元件清單 +++[ExcelElementsList]
-類似於在網頁上瀏覽，NVDA 對微軟 Excel 也提供了「元件清單」的功能
+類似於在網頁上瀏覽，NVDA 對 Microsoft Excel 也提供了「元件清單」的功能
 %kc:beginInclude
 要在 Excel 上呼叫出「元件清單」，按 NVDA+f7。
 %kc:endInclude
@@ -896,12 +903,12 @@ NVDA 也可讓您在微軟 Word 上使用瀏覽模式，此類似於在網頁上
 +++ 報讀附註 +++[ExcelReportingComments]
 %kc:beginInclude
 要讀出目前焦點所在儲存格的附註，按 NVDA+alt+c。
-在微軟 2016、365 及更新的版本上，已經將傳統稱所稱的「註解」改為「附註」。
+在 Microsoft 2016、365 及更新的版本上，已經將傳統稱所稱的「註解」改為「附註」。
 %kc:endInclude
 在工作表上按下 NVDA+F7 之後，其內所有的附註均會列在元件清單中。
 
 NVDA 也可以顯示一個特定的對話框用來新增及編輯附註。
-由於無障礙的限制，NVDA 使用此對話框來覆蓋原先微軟 Excel 的附註編輯區域。但這個用以顯示對話框的快速鍵是繼承自 Excel 的，因此在沒有啟動 NVDA 的情況下，此快速鍵依然有作用。
+由於無障礙的限制，NVDA 使用此對話框來覆蓋原先 Microsoft Excel 的附註編輯區域。但這個用以顯示對話框的快速鍵是繼承自 Excel 的，因此在沒有啟動 NVDA 的情況下，此快速鍵依然有作用。
 %kc:beginInclude
 在目前焦點的儲存格新增或編輯附註，按 Shift+F2。
 %kc:endInclude
@@ -911,7 +918,7 @@ NVDA 也可以顯示一個特定的對話框用來新增及編輯附註。
 附註：您仍然可以在 Excel 中，在儲存格上從快顯功能表中開啟編輯附註區域。
 然而，此方式開啟的會是一個非無障礙的編輯附註區域，並非前述 NVDA 專為編輯附註設計的對話框。
 
-在微軟 Office 2016、365 及更新的版本，加入了一個全新設計的註解對話框。
+在 Microsoft Office 2016、365 及更新的版本，加入了一個全新設計的註解對話框。
 此對話框是無障礙的，並提供更多功能，例如回覆註解等。
 此對話框也同樣可以在選定某個儲存格後，從快顯功能表中開啟。
 在此對話框中加入的註解，與前述提到的「附註」是不相關的。
@@ -928,7 +935,7 @@ Excel 工作表可含有表單區。
 一旦您在瀏覽模式下，將焦點移到表單區時，您可按 Enter 或空白鍵來啟動或轉換到焦點模式，以便依所在的控制項之種類而與之互動。
 欲進一步瞭解有關瀏覽模式之單鍵導航的訊息，請參見 [瀏覽模式 #BrowseMode].
 
-++ 微軟 PowerPoint ++[MicrosoftPowerPoint]
+++  Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || 名稱 | 快速鍵 | 說明 |
 | 切換報讀備忘稿或實際投影片內容 | control+shift+s | 當投影片撥放時，此快速鍵可切換報讀備忘稿或實際投影片內容，此操作不影響螢幕上的視覺呈現，僅改變 NVDA 報讀的內容。 |
@@ -958,7 +965,7 @@ Excel 工作表可含有表單區。
 %kc:endInclude
 
 ++ Kindle for PC ++[Kindle]
-NVDA 可支援在視窗作業系統上的 Amazon Kindle for PC 閱讀和瀏覽書。
+NVDA 可支援在 Windows 作業系統上的 Amazon Kindle for PC 閱讀和瀏覽書。
 這項功能僅支援 Kindle 的「Screen Reader: Supported」的電子書，可以查看書的詳細資訊頁面。
 
 在瀏覽模式來閱讀電子書。
@@ -1213,7 +1220,7 @@ ESpeak NG 的變聲聽起來像似原來的語音，僅是發音方式有些微�
 多數的語音合成器均有支援此項功能。
 
 通常這個選項應啟用。
-然而有些符合微軟 SAPI 介面的語音合成器並沒做好，在此功能啟用時，會有不正確的報讀。
+然而有些符合 Microsoft SAPI 介面的語音合成器並沒做好，在此功能啟用時，會有不正確的報讀。
 在這種狀況下，則此功能應停用。
 
 +++ 選擇語音合成器 (NVDA+control+s) +++[SelectSynthesizer]
@@ -1236,7 +1243,7 @@ NVDA 可以支援的語音合成器清單，請參見[支援的語音合成器 #
 ==== 自動音量調整模式 ====[SelectSynthesizerDuckingMode]
 快速鍵: NVDA+shift+d
 
-在微軟作業系統8以上的版本，此選項允許您選擇在 NVDA 啟動時，是否要降低其它正執行的應用程式之報讀音量，此又可分成當 NVDA 正在報讀時，或只要 NVDA 在執行中均要降低音量。
+在 Microsoft 作業系統8以上的版本，此選項允許您選擇在 NVDA 啟動時，是否要降低其它正執行的應用程式之報讀音量，此又可分成當 NVDA 正在報讀時，或只要 NVDA 在執行中均要降低音量。
 - 沒有自動音量調整： NVDA將永不降低其它應用程式的音量。
 - 當有輸出語音或音效時，開啟自動音量調整：僅有當 NVDA 報讀或送出音訊時，才降低其它應用程式的音量，此功能並沒有對所有的語音合成器均適用。
 - 總是開啟自動音量調整：只要 NVDA 啟動時，總是降低其它應用程式的音量。
@@ -1496,7 +1503,7 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 
 ==== 讀出鼠標圖案的改變 ====[MouseSettingsShape]
 若勾選此核取方塊，則每次鼠標的圖案改變時會讀出。
-在視窗作業系統上的鼠標，其圖案會隨系統狀態而改變，如可編輯狀態或某程式載入中。
+在 Windows 作業系統上的鼠標，其圖案會隨系統狀態而改變，如可編輯狀態或某程式載入中。
 
 %kc:setting
 ==== 啟動讀出鼠標所指文字或物件 ====[MouseSettingsTracking]
@@ -1572,7 +1579,7 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 
 ==== 讀出工具提示 ====[ObjectPresentationReportToolTips]
 此為一核取方塊，若勾選則 NVDA 會讀出在螢幕上出現的工具提示訊息。
-許多視窗作業系統上的應用程式或控制項，會提供一個小的工具提示訊息，當鼠標移到該物件附近時，即會報讀出來。
+許多 Windows 作業系統上的應用程式或控制項，會提供一個小的工具提示訊息，當鼠標移到該物件附近時，即會報讀出來。
 
 ==== 讀出通知 ====[ObjectPresentationReportNotifications]
 若勾選此核取方塊，NVDA 會在有氣泡提示或快顯通知出現時報讀其內容。
@@ -1676,7 +1683,7 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 此核取方塊用來切換在頁面載入後，是否啟用瀏覽模式。
 若沒有勾選，您仍然可以在支援瀏覽模式的頁面或文件中來手動啟用瀏覽模式。
 請參閱 [瀏覽模式 #BrowseMode] 來查看支援瀏覽模式的應用程式。
-這個選項並不適用於那些非經常使用瀏覽模式的應用程式中，例如在微軟 Word 。
+這個選項並不適用於那些非經常使用瀏覽模式的應用程式中，例如在 Microsoft Word。
 此選項預設是勾選的。
 
 ==== 頁面載入時，自動讀出全部內容 ====[BrowseModeSettingsAutoSayAll]
@@ -1743,7 +1750,7 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 - 「頁碼及段落間距」群組
  - 頁碼
  - 行號
- - 讀出行縮排 [（有4種不同的選項，包括：關、語音、提示音、語音及提示音） #lineIndentationOptions]
+ - 讀出行縮排 [（包括關、語音、提示音、語音及提示音） #DocumentFormattingSettingsLineIndentation]
  - 段落縮排 （例如：凸排縮排、第一行縮排）
  - 行距 （單行間距、兩倍行高等）
  - 對齊
@@ -1751,7 +1758,7 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
  - 表格
  - 列及欄標題
  - 儲存格座標
- - 儲存格框線 [(關, 樣式, 色彩與樣式)
+ - 儲存格框線 （關, 樣式, 色彩與樣式）
 - 「元件」群組
  - 標題
  - 連結
@@ -1786,8 +1793,8 @@ NVDA 會偵測到編輯游標／檢閱游標所在位置的格式，在某些情
 - 語音及提示音：若選此項，則 NVDA 會讀出縮排的語音及提示音的資訊。
 -
 
-+++ Windows 10光學字元辨識設定 +++[Win10OcrSettings]
-此類別的設定可以允許您對[Windows 10 OCR #Win10Ocr]進行設定。
++++ Windows OCR 設定 +++[Win10OcrSettings]
+此類別的設定可以允許您對[Windows OCR #Win10Ocr]進行設定。
 此類別包含以下選項：
 
 ==== 辨識語言 ====[Win10OcrSettingsRecognitionLanguage]
@@ -1817,24 +1824,50 @@ NVDA 會偵測到編輯游標／檢閱游標所在位置的格式，在某些情
 此按鈕僅在「啟用從開發者的目錄中載入程式碼」選項啟用時，才可以使用。
 
 ==== 啟用針對 UI Automation 事件及屬性變更的選擇性記錄 ====[AdvancedSettingsSelectiveUIAEventRegistration]
-此選項可變更 NVDA 記錄來自微軟 UI Automation 無障礙 API 事件的行為。
+此選項可變更 NVDA 記錄來自 Microsoft UI Automation 無障礙 API 事件的行為。
 當不啟用此選項時，NVDA 會記錄大量的 UIA 事件並在 NVDA 中進行處理與捨棄。
 這將造成使用效能上很大的負擔，尤其是像執行 Microsoft Visual Studio 等的應用程式。
 因此，若啟用此選項，NVDA 可限制大多數來自系統焦點的記錄事件。
 若您在使用一個或更多的應用程式時，覺得操作效能不佳，我們建議您啟用此選項，看是否可以改善效能。
 
-==== 使用 UI Automation 抓取微軟 Word 中的控制項資訊 (若有支援) ====[AdvancedSettingsUseUiaForWord]
-當啟用此選項，NVDA 會嘗試使用微軟 UI Automation 無障礙介面來抓取微軟 Word 文件的控制元件資訊。
-這包括微軟 Word 本身，以及 Outlook 的檢視及撰寫郵件。
-對於在 Windows 10中執行最新版的微軟 Office 2016/365 ，其本身的 UI Automation 所提供的無障礙支援幾乎已等同 NVDA 現有對於微軟 Word 的無障礙支援，這個好處能夠使操作的反應更加快速。
-然而在某些微軟 Office 中的一些資訊可能沒有顯示或顯示錯誤，因此 UI automation 目前還不能算是完全可靠。
+==== 使用 UI Automation 處理 Microsoft Word 文件中的控制項 (若有支援) ====[AdvancedSettingsUseUiaForWord]
+當啟用此選項，NVDA 會嘗試使用 Microsoft UI Automation 無障礙介面來處理 Microsoft Word 文件中的控制項。
+這包括 Microsoft Word 本身，以及 Outlook 的檢視及撰寫郵件。
+對於在 Windows 10 及更新版本中執行最新版的 Microsoft Office 2016/365 ，其本身的 UI Automation 所提供的無障礙支援幾乎已等同 NVDA 現有對於 Microsoft Word 的無障礙支援，這個好處能夠使操作的反應更加快速。
+然而在某些 Microsoft Office 中的一些資訊可能沒有顯示或顯示錯誤，因此 UI automation 目前還不能算是完全可靠。
 我們不建議大多數的使用者啟用此功能，但我們鼓厲使用 Office 2016/365 的使用者測試這項功能並給予我們回饋。
 
 ==== 在 Windows 主控台中使用UI Automation(若有支援) ====[AdvancedSettingsConsoleUIA]
-當啟用此選項後，NVDA 會使用一個全新且正在嘗試的功能來支援 Windows 主控台，它是基於[微軟針對無障礙的改善 https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]。此功能還在測試階段，且尚未全部完成，因此目前並不推薦啟用。然而，當此功能完善後，可預期它會成為 NVDA 的預設功能，來提升在 Windows 主控台中操作的效能及穩定性。
+當啟用此選項後，NVDA 會使用一個全新且正在嘗試的功能來支援 Windows 主控台，它是基於[Microsoft 針對無障礙的改善 https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]。此功能還在測試階段，且尚未全部完成，因此目前並不推薦啟用。然而，當此功能完善後，可預期它會成為 NVDA 的預設功能，來提升在 Windows 主控台中操作的效能及穩定性。
 
 ==== 在 UIA 主控台中讀出密碼 ====[AdvancedSettingsWinConsoleSpeakPasswords]
 此項設定用於輸入字元（如輸入密碼）時螢幕不會隨著變化的情況，例如在支援 UI Automation 的 Windows 主控台，此設定會依據[讀出輸入字元 #KeyboardSettingsSpeakTypedCharacters]或[讀出輸入字詞 #KeyboardSettingsSpeakTypedWords]的設定是開或關，而切換是否讀出所輸入的字元或字詞。為了隱私安全，此選項應該保持關閉，但當您發現在使用 NVDA 新嘗試支援主控台的功能時，輸入文字時的效能或穩定性有問題，則可以開啟該功能來報讀密碼
+ 
+==== 在 Microsoft Edge 及其他以 Chromium 為基礎的瀏覽器中使用 UIA (若有支援) ====[ChromiumUIA]
+允許在使用以 Chromium 為基礎的瀏覽器時（如 Microsoft Edge），指定是否使用 UIA。
+支援以 Chromium 為基礎瀏覽器的 UIA 仍在初期開發階段，它的效果可能比不上 IA2。
+此下拉方塊有以下選項：
+- 預設 (必要時使用):NVDA 的預設選項，目前為「必要時使用」，未來待此技術更加成熟後此預設選項可能會修改。
+- 必要時使用：若 NVDA 無法支援瀏覽器使用 IA2，而瀏覽器仍支援 UIA 的情況下，NVDA 會回到使用 UIA。
+- 一律使用：若瀏覽器允許使用 UIA，NVDA 便會使用它
+- 不使用：不使用 UIA，即使 NVDA 無法載入瀏覽器內容。此選項適合讓開發者在強迫其不要使用 UIA 時，測試 NVDA 使用 IA2 時的情況。
+-
+
+==== 啟用實驗性 ARIA 標記支援 ====[Annotations]
+此功能用來啟用針對 ARIA 標記加上實驗性支援的功能。
+但有些功能可能尚未完成。
+包含以下選項：
+- 「在瀏覽模式中讀出詳細資料」：若物件在此模式下有詳細資料時報讀出來。
+讀出那些詳細資料摘要的指令可以在 [輸入手勢對話框 #InputGestures] 中指派手勢。
+-
+
+==== 使用 UI Automation 處理 Microsoft Excel 工作表中的控制項 (若有支援) ====[UseUiaForExcel]
+當啟用此選項，NVDA 會嘗試使用 Microsoft UI Automation 無障礙介面來處理 Microsoft Excel 工作表中的控制項。
+此為實驗性功能，在此模式下，一些 Microsoft Excel 的功能可能還無法使用。
+例如，在 NVDA 的元件清單中列出公式和附註，在瀏覽模式中使用單鍵導航跳到表單項目等功能會無法使用。
+然而，對於基本的工作表瀏覽及編輯動作，此選項或許可提供最佳的效能之改善。
+我們仍不建議分使用者預設啟用此選項，但我們歡迎使用 Microsoft Excel  build 16.0.13522.10000 或更高版本的使用者測試此選項，並提供我們使用回饋。
+Microsoft Excel 的 UI automation 內容會時時更新，而 Microsoft Office 版本低於 16.0.13522.10000 可能尚未開放這些功能，若啟用此選項，並沒有太大用處。
 
 ==== 在 Windows 主控台中使用新的輸入支援 (若有支援) ====[AdvancedSettingsKeyboardSupportInLegacy]
 此選項會啟用一個替代的方式來偵側在 Windows 主控台輸入的文字。
@@ -1843,10 +1876,23 @@ NVDA 會偵測到編輯游標／檢閱游標所在位置的格式，在某些情
 警告：當開啟此選項後，輸入的字元不會顯示在螢幕上 (如密碼) 也同樣會被報讀出來。
 若要在比較沒有隱私的環境下輸入密碼，您可以暫時停用「[讀出輸入字元 #KeyboardSettingsSpeakTypedCharacters]」及「[讀出輸入字詞 #KeyboardSettingsSpeakTypedWords]」兩個選項。
 
+==== 內容差異分析 ====[DiffAlgo]
+此設定用來決定 NVDA 如何報讀在終端程式中的新增文字。
+「內容差異分析」包含三個選項：
+- 自動：在 NVDA 2021.2 中，此選項等同於「單行分析」。
+- 字元分析：此選項讓 NVDA 以逐字的方式來分析終端程式中，文字內容的改變。
+此選項在當有大量文字填入主控台時，可能會提高效能，以及當在一行文字的中間有文字改變時能夠更精準地報讀。
+然而，這可能與某些應用程式不相容，因此「字元分析」並不總是被使用。
+此功能支援 Windows 10 1607 以上版本的 Windows 主控台。
+此外，它可能也支援部分較舊  Windows 版本上的終端程式。
+- 單行分析：此選項讓 NVDA 以逐行的方式來分析終端程式中內容的改變。
+此選項與 NVDA 2020.4 及以前版本的預設作法相同。
+-
+
 ==== 嘗試將已過期焦點事件的語音取消 ====[CancelExpiredFocusSpeech]
 此選項會啟用一個功能來嘗試將已過期的焦點事件之語音取消。
 尤其是以 Chrome 瀏覽 Gmail 中快速移動的訊息，常引發 NVDA 報讀過時的資訊。
-這是 NVDA 2020.2 的實驗性功能。
+此功能在 NVDA 2021.1 預設是啟用的。
 
 ==== 等待游標移動時間 (以毫秒計) ====[AdvancedSettingsCaretMoveTimeout]
 此選項用來讓您設定 NVDA 等待游標（插入點）在可編輯的文字元件中移動的時間（以毫秒計）。
@@ -2215,7 +2261,7 @@ NVDA 支援了一個廣泛的語音合成器清單，包括免費的及商用的
 
 ++ eSpeak NG ++[eSpeakNG]
 此[eSpeak NG https://github.com/espeak-ng/espeak-ng]是直接內鍵於 NVDA 軟體內，它並不需要任何特殊的驅動程式，也不用先進行任何組件的安裝。
-在 Windows 7, 8 和 8.1 中，NVDA 預設使用 eSpeak NG。（在 Windows 10 中，則預設使用[Windows OneCore #OneCore]）
+在 Windows 7, 8 和 8.1 中，NVDA 預設使用 eSpeak NG。（在 Windows 10 及更新版本中，則預設使用[Windows OneCore #OneCore]）
 因為此語音合成器是內建的，對於從 USB 隨身碟中或者 CD 上直接啟用 NVDA，它會是一項很好的選擇。
 
 eSpeak NG 有提供多種的語音，並能說出不同的語言，
@@ -2223,20 +2269,20 @@ eSpeak NG 有提供多種的語音，並能說出不同的語言，
 
 且還有許多不同的變聲可供選擇，
 
-++ 微軟 SAPI 4 (SAPI 4) ++[SAPI4]
-微軟 SAPI 4 是較早期的語音合成器的標準版本。
-NVDA仍然支援使用者原已安裝的微軟 SAPI 4之語音合成器。
-然而微軟已不再支援此種介面的語音合成器，也無法從其網站取得可供支援的所需組件。
+++ Microsoft SAPI 4 (SAPI 4) ++[SAPI4]
+Microsoft SAPI 4 是較早期的語音合成器的標準版本。
+NVDA仍然支援使用者原已安裝的 Microsoft SAPI 4之語音合成器。
+然而 Microsoft 已不再支援此種介面的語音合成器，也無法從其網站取得可供支援的所需組件。
 
 當搭配 NVDA 使用此類型的語音合成器，您可從[NVDA 設定 #NVDASettings]對話框中[語音類別 #SpeechSettings] 或 [語音合成器 #SynthSettingsRing]從已安裝在您的電腦上的語音合成器中，選擇想要使用的其中一個項目。
 
-++ 微軟 SAPI5 (SAPI 5) ++[SAPI5]
-SAPI 5 是微軟語音合成器的標準版本。
+++  Microsoft SAPI 5 (SAPI 5) ++[SAPI5]
+SAPI 5 是 Microsoft 語音合成器的標準版本。
 您可以從許多公司或網站中購買或者免費下載那些遵循這個標準的語音合成器。您的系統中可能已預設安裝了至少一個 SAPI 5 的語音合成器。
 當 NVDA 選取這個語音合成器時，安裝在您的系統中的所有 SAPI 5.0 引擎提供的語音都可被使用，您可以從[NVDA 設定 #NVDASettings]對話框中的[語音類別 #SpeechSettings]， 或利用 [快速語音設定 #SynthSettingsRing] 來選用。
 
-++ 微軟 Speech Platform ++[MicrosoftSpeechPlatform]
-微軟 Speech Platform 提供了許多種語言的語音，多用於伺服器語音應用程式的開發。
+++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
+Microsoft Speech Platform 提供了許多種語言的語音，多用於伺服器語音應用程式的開發。
  NVDA也能使用這些語音。
 
 若要使用這些語音，您需要安裝兩個元件，包括：
@@ -2249,8 +2295,8 @@ SAPI 5 是微軟語音合成器的標準版本。
 -
 
 ++ Windows OneCore 語音 ++[OneCore]
-Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語音。
-該語音提供了多種語系，且與微軟 SAPI 5合成器對接的語音相比，較之來的反應更快速。
+Windows 10 及更新版本含有新的語音，一般稱之為「OneCore」或「mobile」語音。
+該語音提供了多種語系，且與 Microsoft SAPI 5 合成器對接的語音相比，較之來的反應更快速。
 在 Windows 10 中，NVDA 預設使用 Windows OneCore。（在其它版本中則預設是使用[eSpeak NG #eSpeakNG]）
 要新增 Windows OneCore 語音，請前往 Windows 系統設定中的「輕鬆存取」，接著在清單中選擇「朗讀程式」，並選擇「新增其他語音」。
 接著找到「新增語音」按鈕來添加新的語音。
@@ -2263,7 +2309,7 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 新增完成後，重新啟動 NVDA。
 
 
-請參考微軟此篇文章來查看可使用的語音清單: https://support.microsoft.com/zh-tw/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
+請參考 Microsoft 此篇文章來查看可使用的語音清單: https://support.microsoft.com/zh-tw/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + 支援的點顯器 +[SupportedBrailleDisplays]
 這一節的內容包含 NVDA 可支援點顯器的資訊。
@@ -2468,7 +2514,7 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 VarioUltra 和 Pronto! 使用 HID 模式的點顯器。
 如果配置適當，Refreshabraille 和 Orbit Reader 20 可以使用 HID 模式的點顯器。
 
-Orbit Reader 20的 USB serial 模式目前僅能在 Windows 10作業系統下獲得支援。
+Orbit Reader 20的 USB serial 模式目前僅能在 Windows 10 及更新版本作業系統下獲得支援。
 一般而言，僅可使用USB HID。
 
 以下是這些顯示器在 NVDA 的按鍵配置。
@@ -3071,7 +3117,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ Nattiq nBraille 點顯器 ++[NattiqTechnologies]
 NVDA 支援使用 USB 連接來自 [Nattiq Technologies https://www.nattiq.com/] 的點顯器。
-Windows 10 可自動偵測到該點顯器，若您使用舊版 Windows （Windows 10 以下），則可能需自行安裝 USB 驅動程式。
+Windows 10 及更新版本可自動偵測到該點顯器，若您使用舊版 Windows （Windows 10 以下），則可能需自行安裝 USB 驅動程式。
 您可以從製造商的網站上取得它們。
 
 以下是針對 Nattiq Technologies 點顯器操作 NVDA 的快速鍵。

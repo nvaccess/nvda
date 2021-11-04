@@ -41,7 +41,7 @@ symbols:
 decimal point		# virgule décimale
 thousands separator		# point des mille
 between-words -	tiret	all	norep	# - entre deux mots
-#in-word '	apostrophe	all	never# ' dans un mot
+in-word '	apostrophe	all	norep	# ' dans un mot
 in-word -	tiret	all	norep	# - dans un mot
 dates .	\1 point \2 point \3	all	norep	# point de date
 dates /	\1 barre oblique \2 barre oblique \3	all	norep	# barre oblique de date
@@ -85,7 +85,6 @@ $	dollar
 <	inférieur
 =	égal
 ?	point d'interrogation
-¿	point d'interrogation renversé	some
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
@@ -245,12 +244,12 @@ _	souligné
 ≟	égalité en doute
 
 #signes de comparaison
->	supérieur à
-≦	inférieur ou égal à
-≪	très inférieur à
+>	supérieur
+≦	inférieur ou égal
+≪	très inférieur
 ≥	supérieur ou égal à
 ≧	supérieur ou égal à
-≫	très supérieur à
+≫	très supérieur
 ≶	plus petit ou plus grand que
 ≷	plus grand ou plus petit que
 ≮	pas plus petit que

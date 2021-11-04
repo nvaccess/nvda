@@ -11,6 +11,7 @@ import UIAHandler
 import weakref
 from functools import lru_cache
 from logHandler import log
+from _UIAConstants import WinConsoleAPILevel
 
 
 def createUIAMultiPropertyCondition(*dicts):
@@ -334,22 +335,20 @@ def _shouldUseUIAConsole(hwnd: int) -> bool:
 		# #7497: the UIA implementation in old conhost is incomplete, therefore we
 		# should ignore it.
 		# When the UIA implementation is improved, the below line will be replaced
-		# with a call to _isImprovedConhostTextRangeAvailable.
+		# with a check that _getConhostAPILevel >= FORMATTED.
 		return False
 
 
 @lru_cache(maxsize=10)
-def _isImprovedConhostTextRangeAvailable(hwnd: int) -> bool:
-	"""This function determines whether microsoft/terminal#4495 and by extension
-	microsoft/terminal#4018 are present in this conhost.
-	In consoles before these PRs, a number of workarounds were needed
-	in our UIA implementation. However, these do not fix all bugs and are
-	problematic on newer console releases. This function is therefore used
-	to determine whether this console's UIA implementation is good enough to
-	use by default."""
-	# microsoft/terminal#4495: In newer consoles,
+def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
+	"""
+	This function determines which of several console UIA workarounds are
+	needed in a given conhost instance.
+	See the comments on the WinConsoleAPILevel enum for details.
+	"""
+	# microsoft/terminal#4495: In IMPROVED consoles,
 	# IUIAutomationTextRange::getVisibleRanges returns one visible range.
-	# Therefore, if exactly one range is returned, it is almost definitely a newer console.
+	# Therefore, if exactly one range is returned, it is almost definitely an IMPROVED console.
 	try:
 		UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
 			hwnd, UIAHandler.handler.baseCacheRequest
@@ -366,7 +365,19 @@ def _isImprovedConhostTextRangeAvailable(hwnd: int) -> bool:
 		UIATextPattern = textArea.GetCurrentPattern(
 			UIAHandler.UIA_TextPatternId
 		).QueryInterface(UIAHandler.IUIAutomationTextPattern)
-		return UIATextPattern.GetVisibleRanges().length == 1
+		visiRanges = UIATextPattern.GetVisibleRanges()
+		if visiRanges.length == 1:
+			# Microsoft/terminal#2161: FORMATTED consoles expose text formatting
+			# information to UIA.
+			if isinstance(
+				visiRanges.GetElement(0).GetAttributeValue(UIAHandler.UIA_FontNameAttributeId),
+				str
+			):
+				return WinConsoleAPILevel.FORMATTED
+			else:
+				return WinConsoleAPILevel.IMPROVED
+		else:
+			return WinConsoleAPILevel.END_INCLUSIVE
 	except (COMError, ValueError):
 		log.exception()
-		return False
+		return WinConsoleAPILevel.END_INCLUSIVE

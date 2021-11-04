@@ -40,6 +40,8 @@ LOCALE_USER_DEFAULT=0x0400
 LOCALE_NAME_USER_DEFAULT=None
 DATE_LONGDATE=0x00000002 
 TIME_NOSECONDS=0x00000002
+# Create Mutex
+ERROR_ALREADY_EXISTS = 0xb7
 # Wait return types
 WAIT_ABANDONED = 0x00000080
 WAIT_IO_COMPLETION = 0x000000c0
@@ -147,6 +149,36 @@ def GetSystemPowerStatus(sps):
 
 def getThreadLocale():
 	return kernel32.GetThreadLocale()
+
+
+ERROR_INVALID_FUNCTION = 0x1
+
+
+@contextlib.contextmanager
+def suspendWow64Redirection():
+	"""Context manager which disables Wow64 redirection for a section of code and re-enables it afterwards"""
+	oldValue = LPVOID()
+	res = kernel32.Wow64DisableWow64FsRedirection(byref(oldValue))
+	if res == 0:
+		# Disabling redirection failed.
+		# This can occur if we're running on 32-bit Windows (no Wow64 redirection)
+		# or as a 64-bit process on 64-bit Windows (Wow64 redirection not applicable)
+		# In this case failure is expected and there is no reason to raise an exception.
+		# Inspect last error code to determine reason for the failure.
+		errorCode = kernel32.GetLastError()
+		if errorCode == ERROR_INVALID_FUNCTION:  # Redirection not supported or not applicable.
+			redirectionDisabled = False
+		else:
+			raise WinError(errorCode)
+	else:
+		redirectionDisabled = True
+	try:
+		yield
+	finally:
+		if redirectionDisabled:
+			if kernel32.Wow64RevertWow64FsRedirection(oldValue) == 0:
+				raise WinError()
+
 
 class SYSTEMTIME(ctypes.Structure):
 	_fields_ = (

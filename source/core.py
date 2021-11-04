@@ -3,29 +3,13 @@
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from dataclasses import dataclass
-from typing import Optional
 
 """NVDA core"""
 
-RPC_E_CALL_CANCELED = -2147418110
 
-class CallCancelled(Exception):
-	"""Raised when a call is cancelled.
-	"""
-
-# Apply several monkey patches to comtypes
-# noinspection PyUnresolvedReferences
-import comtypesMonkeyPatches
-
-# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
-# and Append our comInterfaces directory to the comtypes.gen search path.
+from dataclasses import dataclass
+from typing import Optional
 import comtypes
-import comtypes.client
-import comtypes.gen
-import comInterfaces
-comtypes.gen.__path__.append(comInterfaces.__path__[0])
-
 import sys
 import winVersion
 import threading
@@ -38,7 +22,7 @@ import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
-import garbageHandler  # noqa: E402
+import garbageHandler
 
 
 # inform those who want to know that NVDA has finished starting up.
@@ -115,16 +99,51 @@ def doStartupDialogs():
 
 @dataclass
 class NewNVDAInstance:
-	filePath: Optional[str] = None
+	filePath: str
 	parameters: Optional[str] = None
 	directory: Optional[str] = None
+
+
+def restartUnsafely():
+	"""Start a new copy of NVDA immediately.
+	Used as a last resort, in the event of a serious error to immediately restart NVDA without running any
+	cleanup / exit code.
+	There is no dependency on NVDA currently functioning correctly, which is in contrast with L{restart} which
+	depends on the internal queue processing (queueHandler).
+	Because none of NVDA's shutdown code is run, NVDA is likely to be left in an unclean state.
+	Some examples of clean up that may be skipped.
+	- Free NVDA's mutex (mutex prevents multiple NVDA instances), leaving it abandoned when this process ends.
+	  - However, this situation is handled during mutex acquisition.
+	- Remove icons (systray)
+	- Saving settings
+	"""
+	log.info("Restarting unsafely")
+	import subprocess
+	# Unlike a normal restart, see L{restart}:
+	# - if addons are disabled, leave them disabled
+	# - if debug logging is set, leave it set.
+	# The new instance should operate in the same way (as much as possible) as the old instance.
+	for paramToRemove in ("--ease-of-access"):
+		try:
+			sys.argv.remove(paramToRemove)
+		except ValueError:
+			pass
+	options = []
+	if not hasattr(sys, "frozen"):
+		options.append(os.path.basename(sys.argv[0]))
+	_startNewInstance(NewNVDAInstance(
+		sys.executable,
+		subprocess.list2cmdline(options + sys.argv[1:]),
+		globalVars.appDir
+	))
 
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
 		globalVars.exitCode=3
-		triggerNVDAExit()
+		if not triggerNVDAExit():
+			log.error("NVDA already in process of exiting, this indicates a logic error.")
 		return
 	import subprocess
 	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
@@ -140,11 +159,12 @@ def restart(disableAddons=False, debugLogging=False):
 	if debugLogging:
 		options.append('--debug-logging')
 
-	triggerNVDAExit(NewNVDAInstance(
+	if not triggerNVDAExit(NewNVDAInstance(
 		sys.executable,
 		subprocess.list2cmdline(options + sys.argv[1:]),
 		globalVars.appDir
-	))
+	)):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 def resetConfiguration(factoryDefaults=False):
@@ -220,16 +240,16 @@ def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
 	import languageHandler
 	import wx
 	lang = languageHandler.getLanguage()
-	locale = wx.Locale()
-	wxLang = locale.FindLanguageInfo(lang)
+	wxLocaleObj = wx.Locale()
+	wxLang = wxLocaleObj.FindLanguageInfo(lang)
 	if not wxLang and '_' in lang:
-		wxLang = locale.FindLanguageInfo(lang.split('_')[0])
+		wxLang = wxLocaleObj.FindLanguageInfo(lang.split('_')[0])
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
 	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
 	# In this case, wxLang is already set to None.
 	# Therefore treat these situations like wx not knowing the language at all.
-	if wxLang and not locale.IsAvailable(wxLang.Language):
+	if wxLang and not wxLocaleObj.IsAvailable(wxLang.Language):
 		wxLang = None
 	if not wxLang:
 		log.debugWarning("wx does not support language %s" % lang)
@@ -263,20 +283,29 @@ def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
 		_startNewInstance(newNVDA)
 
 
-def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None):
+def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 	"""
 	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
 	instance information with `newNVDA`.
+	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
 	"""
+	from gui.message import isInMessageBox
 	import queueHandler
 	global _hasShutdownBeenTriggered
 	with _shuttingDownFlagLock:
-		if not _hasShutdownBeenTriggered:
+		safeToExit = not isInMessageBox()
+		if not safeToExit:
+			log.error("NVDA cannot exit safely, ensure open dialogs are closed")
+			return False
+		elif _hasShutdownBeenTriggered:
+			log.debug("NVDA has already been triggered to exit safely.")
+			return False
+		else:
 			# queue this so that the calling process can exit safely (eg a Popup menu)
 			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
 			_hasShutdownBeenTriggered = True
-		else:
-			log.warn("NVDA exit has already been triggered")
+			log.debug("_doShutdown has been queued")
+			return True
 
 
 def _closeAllWindows():
@@ -384,13 +413,10 @@ def main():
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
-	try:
-		lang = config.conf["general"]["language"]
-		import languageHandler
-		log.debug("setting language to %s"%lang)
-		languageHandler.setLanguage(lang)
-	except:
-		log.warning("Could not set language to %s"%lang)
+	lang = config.conf["general"]["language"]
+	import languageHandler
+	log.debug(f"setting language to {lang}")
+	languageHandler.setLanguage(lang)
 	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
@@ -431,11 +457,16 @@ def main():
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
 
 		def InitLocale(self):
-			# Backport of `InitLocale` from wx Python 4.1.2 as the current version tries to set a Python
-			# locale to an nonexistent one when creating an instance of `wx.App`.
-			# This causes a crash when running under a particular version of Universal CRT (#12160)
-			import locale
-			locale.setlocale(locale.LC_ALL, "C")
+			"""Custom implementation of `InitLocale` which ensures that wxPython does not change the locale.
+			The current wx implementation (as of wxPython 4.1.1) sets Python locale to an invalid one
+			which triggers Python issue 36792 (#12160).
+			The new implementation (wxPython 4.1.2) sets locale to "C" (basic Unicode locale).
+			While this is not wrong as such NVDA manages locale themselves using `languageHandler`
+			and it is better to remove wx from the equation so this method is a No-op.
+			This code may need to be revisited when we update Python / wxPython.
+			"""
+			pass
+
 
 	app = App(redirect=False)
 	# We support queryEndSession events, but in general don't do anything for them.
@@ -560,13 +591,13 @@ def main():
 	messageWindow = MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support
-	locale = wx.Locale()
+	wxLocaleObj = wx.Locale()
 	wxLang = getWxLangOrNone()
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
+		wxLocaleObj.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
 		try:
-			locale.Init(wxLang.Language)
+			wxLocaleObj.Init(wxLang.Language)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
 		finally:
@@ -611,8 +642,9 @@ def main():
 	import inputCore
 	inputCore.initialize()
 	import keyboardHandler
+	import watchdog
 	log.debug("Initializing keyboard handler")
-	keyboardHandler.initialize()
+	keyboardHandler.initialize(watchdog.WatchdogObserver())
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
@@ -652,7 +684,6 @@ def main():
 	# Queue the handling of initial focus,
 	# as API handlers might need to be pumped to get the first focus event.
 	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
-	import watchdog
 	import baseObject
 
 	# Doing this here is a bit ugly, but we don't want these modules imported
@@ -712,7 +743,12 @@ def main():
 	log.info("Exiting")
 	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
 	# triggerNVDAExit has not been called yet
-	triggerNVDAExit()
+	if triggerNVDAExit():
+		log.debug(
+			"NVDA not already exiting, hit catch-all exit trigger."
+			" This likely indicates NVDA is exiting due to WM_QUIT."
+		)
+		queueHandler.pumpAll()
 	_terminate(gui)
 	config.saveOnExit()
 

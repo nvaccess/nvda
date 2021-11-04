@@ -25,6 +25,7 @@ from comtypes import (
 
 import threading
 import time
+import IAccessibleHandler.internalWinEventHandler
 import config
 import api
 import appModuleHandler
@@ -44,6 +45,10 @@ from queue import Queue
 import aria
 
 
+#: The window class name for Microsoft Word documents.
+# Microsoft Word's UI Automation implementation
+# also exposes this value as the document UIA element's classname property.
+MS_WORD_DOCUMENT_WINDOW_CLASS = "_WwG"
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
@@ -102,45 +107,45 @@ NVDAUnitsToUIAUnits: Dict[str, int] = {
 }
 
 UIAControlTypesToNVDARoles={
-	UIA_ButtonControlTypeId:controlTypes.ROLE_BUTTON,
-	UIA_CalendarControlTypeId:controlTypes.ROLE_CALENDAR,
-	UIA_CheckBoxControlTypeId:controlTypes.ROLE_CHECKBOX,
-	UIA_ComboBoxControlTypeId:controlTypes.ROLE_COMBOBOX,
-	UIA_EditControlTypeId:controlTypes.ROLE_EDITABLETEXT,
-	UIA_HyperlinkControlTypeId:controlTypes.ROLE_LINK,
-	UIA_ImageControlTypeId:controlTypes.ROLE_GRAPHIC,
-	UIA_ListItemControlTypeId:controlTypes.ROLE_LISTITEM,
-	UIA_ListControlTypeId:controlTypes.ROLE_LIST,
-	UIA_MenuControlTypeId:controlTypes.ROLE_POPUPMENU,
-	UIA_MenuBarControlTypeId:controlTypes.ROLE_MENUBAR,
-	UIA_MenuItemControlTypeId:controlTypes.ROLE_MENUITEM,
-	UIA_ProgressBarControlTypeId:controlTypes.ROLE_PROGRESSBAR,
-	UIA_RadioButtonControlTypeId:controlTypes.ROLE_RADIOBUTTON,
-	UIA_ScrollBarControlTypeId:controlTypes.ROLE_SCROLLBAR,
-	UIA_SliderControlTypeId:controlTypes.ROLE_SLIDER,
-	UIA_SpinnerControlTypeId:controlTypes.ROLE_SPINBUTTON,
-	UIA_StatusBarControlTypeId:controlTypes.ROLE_STATUSBAR,
-	UIA_TabControlTypeId:controlTypes.ROLE_TABCONTROL,
-	UIA_TabItemControlTypeId:controlTypes.ROLE_TAB,
-	UIA_TextControlTypeId:controlTypes.ROLE_STATICTEXT,
-	UIA_ToolBarControlTypeId:controlTypes.ROLE_TOOLBAR,
-	UIA_ToolTipControlTypeId:controlTypes.ROLE_TOOLTIP,
-	UIA_TreeControlTypeId:controlTypes.ROLE_TREEVIEW,
-	UIA_TreeItemControlTypeId:controlTypes.ROLE_TREEVIEWITEM,
-	UIA_CustomControlTypeId:controlTypes.ROLE_UNKNOWN,
-	UIA_GroupControlTypeId:controlTypes.ROLE_GROUPING,
-	UIA_ThumbControlTypeId:controlTypes.ROLE_THUMB,
-	UIA_DataGridControlTypeId:controlTypes.ROLE_DATAGRID,
-	UIA_DataItemControlTypeId:controlTypes.ROLE_DATAITEM,
-	UIA_DocumentControlTypeId:controlTypes.ROLE_DOCUMENT,
-	UIA_SplitButtonControlTypeId:controlTypes.ROLE_SPLITBUTTON,
-	UIA_WindowControlTypeId:controlTypes.ROLE_WINDOW,
-	UIA_PaneControlTypeId:controlTypes.ROLE_PANE,
-	UIA_HeaderControlTypeId:controlTypes.ROLE_HEADER,
-	UIA_HeaderItemControlTypeId:controlTypes.ROLE_HEADERITEM,
-	UIA_TableControlTypeId:controlTypes.ROLE_TABLE,
-	UIA_TitleBarControlTypeId:controlTypes.ROLE_TITLEBAR,
-	UIA_SeparatorControlTypeId:controlTypes.ROLE_SEPARATOR,
+	UIA_ButtonControlTypeId:controlTypes.Role.BUTTON,
+	UIA_CalendarControlTypeId:controlTypes.Role.CALENDAR,
+	UIA_CheckBoxControlTypeId:controlTypes.Role.CHECKBOX,
+	UIA_ComboBoxControlTypeId:controlTypes.Role.COMBOBOX,
+	UIA_EditControlTypeId:controlTypes.Role.EDITABLETEXT,
+	UIA_HyperlinkControlTypeId:controlTypes.Role.LINK,
+	UIA_ImageControlTypeId:controlTypes.Role.GRAPHIC,
+	UIA_ListItemControlTypeId:controlTypes.Role.LISTITEM,
+	UIA_ListControlTypeId:controlTypes.Role.LIST,
+	UIA_MenuControlTypeId:controlTypes.Role.POPUPMENU,
+	UIA_MenuBarControlTypeId:controlTypes.Role.MENUBAR,
+	UIA_MenuItemControlTypeId:controlTypes.Role.MENUITEM,
+	UIA_ProgressBarControlTypeId:controlTypes.Role.PROGRESSBAR,
+	UIA_RadioButtonControlTypeId:controlTypes.Role.RADIOBUTTON,
+	UIA_ScrollBarControlTypeId:controlTypes.Role.SCROLLBAR,
+	UIA_SliderControlTypeId:controlTypes.Role.SLIDER,
+	UIA_SpinnerControlTypeId:controlTypes.Role.SPINBUTTON,
+	UIA_StatusBarControlTypeId:controlTypes.Role.STATUSBAR,
+	UIA_TabControlTypeId:controlTypes.Role.TABCONTROL,
+	UIA_TabItemControlTypeId:controlTypes.Role.TAB,
+	UIA_TextControlTypeId:controlTypes.Role.STATICTEXT,
+	UIA_ToolBarControlTypeId:controlTypes.Role.TOOLBAR,
+	UIA_ToolTipControlTypeId:controlTypes.Role.TOOLTIP,
+	UIA_TreeControlTypeId:controlTypes.Role.TREEVIEW,
+	UIA_TreeItemControlTypeId:controlTypes.Role.TREEVIEWITEM,
+	UIA_CustomControlTypeId:controlTypes.Role.UNKNOWN,
+	UIA_GroupControlTypeId:controlTypes.Role.GROUPING,
+	UIA_ThumbControlTypeId:controlTypes.Role.THUMB,
+	UIA_DataGridControlTypeId:controlTypes.Role.DATAGRID,
+	UIA_DataItemControlTypeId:controlTypes.Role.DATAITEM,
+	UIA_DocumentControlTypeId:controlTypes.Role.DOCUMENT,
+	UIA_SplitButtonControlTypeId:controlTypes.Role.SPLITBUTTON,
+	UIA_WindowControlTypeId:controlTypes.Role.WINDOW,
+	UIA_PaneControlTypeId:controlTypes.Role.PANE,
+	UIA_HeaderControlTypeId:controlTypes.Role.HEADER,
+	UIA_HeaderItemControlTypeId:controlTypes.Role.HEADERITEM,
+	UIA_TableControlTypeId:controlTypes.Role.TABLE,
+	UIA_TitleBarControlTypeId:controlTypes.Role.TITLEBAR,
+	UIA_SeparatorControlTypeId:controlTypes.Role.SEPARATOR,
 }
 
 UIALiveSettingtoNVDAAriaLivePoliteness: Dict[str, aria.AriaLivePoliteness] = {
@@ -177,18 +182,19 @@ UIALandmarkTypeIdsToLandmarkNames: Dict[int, str] = {
 	UIA.UIA_SearchLandmarkTypeId: "search",
 }
 
-UIAEventIdsToNVDAEventNames={
-	UIA_LiveRegionChangedEventId:"liveRegionChange",
-	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
-	UIA_MenuOpenedEventId:"gainFocus",
-	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
-	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
+UIAEventIdsToNVDAEventNames: Dict[int, str] = {
+	UIA.UIA_LiveRegionChangedEventId: "liveRegionChange",
+	UIA.UIA_SelectionItem_ElementSelectedEventId: "UIA_elementSelected",
+	UIA.UIA_MenuOpenedEventId: "gainFocus",
+	UIA.UIA_SelectionItem_ElementAddedToSelectionEventId: "stateChange",
+	UIA.UIA_SelectionItem_ElementRemovedFromSelectionEventId: "stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
-	UIA_ToolTipOpenedEventId:"UIA_toolTipOpened",
+	UIA.UIA_ToolTipOpenedEventId: "UIA_toolTipOpened",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
-	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
-	UIA_SystemAlertEventId:"UIA_systemAlert",
+	UIA.UIA_Window_WindowOpenedEventId: "UIA_window_windowOpen",
+	UIA.UIA_SystemAlertEventId: "UIA_systemAlert",
+	UIA.UIA_LayoutInvalidatedEventId: "UIA_layoutInvalidated",
 }
 
 localEventHandlerGroupUIAEventIds = set()
@@ -534,6 +540,15 @@ class UIAHandler(COMObject):
 			return
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
+			# #12982: This element may be the root of an MS Word document
+			# for which we may be refusing to use UIA as its implementation may be incomplete.
+			# However, there are some controls embedded in the MS Word document window
+			# such as the Modern comments side track pane
+			# for which we do have to use UIA.
+			# But, if focus jumps from one of these controls back to the document (E.g. the user presses escape),
+			# we receive no MSAA focus event, only a UIA focus event.
+			# As we are not treating the Word doc as UIA, we need to manually fire an MSAA focus event on the document.
+			self._emitMSAAFocusForWordDocIfNecessary(sender)
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: Ignoring for non native element")
 			return
@@ -759,7 +774,7 @@ class UIAHandler(COMObject):
 			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 			if (
 				# An MS Word document window 
-				windowClass=="_WwG" 
+				windowClass == MS_WORD_DOCUMENT_WINDOW_CLASS
 				# Disabling is only useful if we can inject in-process (and use our older code)
 				and canUseOlderInProcessApproach
 				# Allow the user to explicitly force UIA support for MS Word documents
@@ -839,6 +854,55 @@ class UIAHandler(COMObject):
 		UIAElement._nearestWindowHandle=window
 		return window
 
+	def _isNetUIEmbeddedInWordDoc(self, element: UIA.IUIAutomationElement) -> bool:
+		"""
+		Detects if the given UIA element represents a control in a NetUI container
+		embedded within a MS Word document window.
+		E.g. the Modern Comments side track pane.
+		This method also caches the answer on the element itself
+		to both speed up checking later and to allow checking on an already dead element
+		E.g. a previous focus.
+		"""
+		if getattr(element, '_isNetUIEmbeddedInWordDoc', False):
+			return True
+		windowHandle = self.getNearestWindowHandle(element)
+		if winUser.getClassName(windowHandle) != MS_WORD_DOCUMENT_WINDOW_CLASS:
+			return False
+		condition = UIAUtils.createUIAMultiPropertyCondition(
+			{UIA.UIA_ClassNamePropertyId: 'NetUIHWNDElement'},
+			{UIA.UIA_NativeWindowHandlePropertyId: windowHandle}
+		)
+		walker = self.clientObject.createTreeWalker(condition)
+		cacheRequest = self.clientObject.createCacheRequest()
+		cacheRequest.AddProperty(UIA.UIA_ClassNamePropertyId)
+		cacheRequest.AddProperty(UIA.UIA_NativeWindowHandlePropertyId)
+		ancestor = walker.NormalizeElementBuildCache(element, cacheRequest)
+		# ancestor will either be the embedded NetUIElement, or just hit the root of the MS Word document window
+		if ancestor.CachedClassName != 'NetUIHWNDElement':
+			return False
+		element._isNetUIEmbeddedInWordDoc = True
+		return True
+
+	def _emitMSAAFocusForWordDocIfNecessary(self, element: UIA.IUIAutomationElement) -> None:
+		"""
+		Fires an MSAA focus event on the given UIA element
+		if the element is the root of a Word document,
+		and the focus was previously in a NetUI container embedded in this Word document.
+		"""
+		import NVDAObjects.UIA
+		oldFocus = eventHandler.lastQueuedFocusObject
+		if (
+			isinstance(oldFocus, NVDAObjects.UIA.UIA)
+			and getattr(oldFocus.UIAElement, '_isNetUIEmbeddedInWordDoc', False)
+			and element.CachedClassName == MS_WORD_DOCUMENT_WINDOW_CLASS
+			and element.CachedControlType == UIA.UIA_DocumentControlTypeId
+			and self.getNearestWindowHandle(element) == oldFocus.windowHandle
+			and not self.isUIAWindow(oldFocus.windowHandle)
+		):
+			IAccessibleHandler.internalWinEventHandler.winEventLimiter.addEvent(
+				winUser.EVENT_OBJECT_FOCUS, oldFocus.windowHandle, winUser.OBJID_CLIENT, 0, oldFocus.windowThreadID
+			)
+
 	def isNativeUIAElement(self,UIAElement):
 		#Due to issues dealing with UIA elements coming from the same process, we do not class these UIA elements as usable.
 		#It seems to be safe enough to retreave the cached processID, but using tree walkers or fetching other properties causes a freeze.
@@ -852,6 +916,14 @@ class UIAHandler(COMObject):
 		windowHandle=self.getNearestWindowHandle(UIAElement)
 		if windowHandle:
 			if self.isUIAWindow(windowHandle):
+				return True
+			# #12982: although NVDA by default may not treat this element's window as native UIA,
+			# E.g. it is proxied from MSAA, or NVDA has specifically black listed it,
+			# It may be an element from a NetUIcontainer embedded in a Word document,
+			# such as the MS Word Modern Comments side track pane.
+			# These elements are only exposed via UIA, and not MSAA,
+			# thus we must treat these elements as native UIA.
+			if self._isNetUIEmbeddedInWordDoc(UIAElement):
 				return True
 			if winUser.getClassName(windowHandle)=="DirectUIHWND" and "IEFRAME.dll" in UIAElement.cachedProviderDescription and UIAElement.currentClassName in ("DownloadBox", "accessiblebutton", "DUIToolbarButton", "PushButton"):
 				# This is the IE 9 downloads list.
