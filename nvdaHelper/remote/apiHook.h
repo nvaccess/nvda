@@ -30,19 +30,15 @@ bool apiHook_beginTransaction();
  */ 
 bool apiHook_hookFunction(void* realFunction, void* fakeFunction, void** targetPointerRef);
 
- /**
- * a helper template used internally by apiHook_hookFunction_safe
- */
-template<typename funcType> bool _apiHook_hookFunction_tpl(funcType realFunction, funcType fakeFunction, funcType* targetPointerRef) { return apiHook_hookFunction((void*)realFunction,(void*)fakeFunction,(void**)targetPointerRef); }
-
 /**
  * Safely hooks a given function from a given module with a given fake function.
  * @param realFunction the name of the function you wish to hook.
  * @param fakeFunction the function you wish  to be called instead of the original one.
  * @param targetPointerRef Pointer to the target pointer to which the detour will be attached.
- */ 
-#define apiHook_hookFunction_safe(realFunction,fakeFunction, targetPointerRef) _apiHook_hookFunction_tpl(realFunction,fakeFunction,targetPointerRef)
- 
+*/ 
+template<typename funcType>
+bool apiHook_hookFunction_safe(funcType realFunction, funcType fakeFunction, funcType* targetPointerRef) { return apiHook_hookFunction((void*)realFunction,(void*)fakeFunction,(void**)targetPointerRef); }
+
 /**
  * Commits an API hooking transaction.
  */
