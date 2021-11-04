@@ -18,12 +18,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <objbase.h>
 #include <ia2.h>
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
 #include "nvdaHelperRemote.h"
 #include "dllmain.h"
 #include "inProcess.h"
-#include "nvdaInProcUtils.h"
+#include <remote/nvdaInProcUtils.h>
 #include "COMProxyRegistration.h"
 #include "IA2Support.h"
 

@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <ole2.h>
 #include <rpc.h>
-#include "displayModelRemote.h"
+#include <remote/displayModelRemote.h>
 #include "gdiHooks.h"
 #include <common/log.h>
 

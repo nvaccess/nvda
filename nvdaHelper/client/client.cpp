@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 #include <string>
 #include <sstream>
 #include <rpc.h>
-#include "nvdaController.h"
+#include <client/nvdaController.h>
 #include <common/winIPCUtils.h>
 
 using namespace std;

@@ -94,6 +94,10 @@ env.Append(
 )
 env.Append(CCFLAGS=[
 	'/std:c++17',
+	# '/showIncludes': Useful to understand which file causes some other file to be included.
+	# It will output a list of the include files.
+	# The option also displays nested include files, that is, the files
+	# included by the files that you include.
 ])
 
 env.Append(CXXFLAGS=['/EHsc'])

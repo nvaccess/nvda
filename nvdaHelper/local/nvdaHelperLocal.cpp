@@ -19,7 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <rpc.h>
 #include <sddl.h>
 #include <common/log.h>
-#include "nvdaControllerInternal.h"
+#include <local/nvdaControllerInternal.h>
 #include "nvdaHelperLocal.h"
 #include "dllImportTableHooks.h"
 #include "rpcsrv.h"
