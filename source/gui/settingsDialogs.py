@@ -2633,7 +2633,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Always use UI Automation to access Microsoft &Word document controls when available")
+		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
 		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -3258,6 +3258,37 @@ class DictionaryDialog(SettingsDialog):
 			del self.tempSpeechDict[index]
 			index=self.dictList.GetNextSelected(index)
 		self.dictList.SetFocus()
+
+
+class DefaultDictionaryDialog(DictionaryDialog):
+	def __init__(self, parent):
+		super().__init__(
+			parent,
+			# Translators: Title for default speech dictionary dialog.
+			title=_("Default dictionary"),
+			speechDict=speechDictHandler.dictionaries["default"],
+		)
+
+
+class VoiceDictionaryDialog(DictionaryDialog):
+	def __init__(self, parent):
+		super().__init__(
+			parent,
+			# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries["voice"].fileName,
+			speechDict=speechDictHandler.dictionaries["voice"],
+		)
+
+
+class TemporaryDictionaryDialog(DictionaryDialog):
+	def __init__(self, parent):
+		super().__init__(
+			parent,
+			# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+			# as NvDA is running).
+			title=_("Temporary dictionary"),
+			speechDict=speechDictHandler.dictionaries["temp"],
+		)
 
 
 class BrailleSettingsPanel(SettingsPanel):

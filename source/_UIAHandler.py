@@ -25,6 +25,7 @@ from comtypes import (
 
 import threading
 import time
+import IAccessibleHandler.internalWinEventHandler
 import config
 import api
 import appModuleHandler
@@ -44,6 +45,10 @@ from queue import Queue
 import aria
 
 
+#: The window class name for Microsoft Word documents.
+# Microsoft Word's UI Automation implementation
+# also exposes this value as the document UIA element's classname property.
+MS_WORD_DOCUMENT_WINDOW_CLASS = "_WwG"
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
@@ -533,6 +538,15 @@ class UIAHandler(COMObject):
 			return
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
+			# #12982: This element may be the root of an MS Word document
+			# for which we may be refusing to use UIA as its implementation may be incomplete.
+			# However, there are some controls embedded in the MS Word document window
+			# such as the Modern comments side track pane
+			# for which we do have to use UIA.
+			# But, if focus jumps from one of these controls back to the document (E.g. the user presses escape),
+			# we receive no MSAA focus event, only a UIA focus event.
+			# As we are not treating the Word doc as UIA, we need to manually fire an MSAA focus event on the document.
+			self._emitMSAAFocusForWordDocIfNecessary(sender)
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: Ignoring for non native element")
 			return
@@ -747,37 +761,25 @@ class UIAHandler(COMObject):
 		# Ask the window if it supports UIA natively
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
-			# The window does support UIA natively.
-			# Detect if we can also inject in-process
-			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
-
-			# MS Word documents now have a fairly usable UI Automation implementation.
-			# However, builds of MS Office 2016 before build 13901 or so had bugs which
+			# The window does support UIA natively, but MS Word documents now
+			# have a fairly usable UI Automation implementation.
+			# However, builds of MS Office 2016 before build 9000 or so had bugs which
 			# we cannot work around.
-			# Therefore for less recent versions of Office,
-			# if we can inject in-process, refuse to use UIA and instead
+			# And even current builds of Office 2016 are still missing enough info from
+			# UIA that it is still impossible to switch to UIA completely.
+			# Therefore, if we can inject in-process, refuse to use UIA and instead
 			# fall back to the MS Word object model.
-			if windowClass == "_WwG":
-				isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
-				if (
-					(
-						winVersion.getWinVer() < winVersion.WIN10
-						or (
-							# An MS Office app before build 13901
-							isOfficeApp
-							and (
-								tuple(int(x) for x in appModule.productVersion.split('.')[:3])
-								< (16, 0, 13901)
-							)
-						)
-					)
-					# Disabling is only useful if we can inject in-process (and use our older code)
-					and canUseOlderInProcessApproach
-					# Allow the user to still explicitly force UIA support
-					# no matter the Office version
-					and not config.conf['UIA']['useInMSWordWhenAvailable']
-				):
-					return False
+			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
+			if (
+				# An MS Word document window 
+				windowClass == MS_WORD_DOCUMENT_WINDOW_CLASS
+				# Disabling is only useful if we can inject in-process (and use our older code)
+				and canUseOlderInProcessApproach
+				# Allow the user to explicitly force UIA support for MS Word documents
+				# no matter the Office version
+				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
+				return False
 			# MS Excel spreadsheets now have a fairly usable UI Automation implementation.
 			# However, builds of MS Office 2016 before build 9000 or so had bugs which we
 			# cannot work around.
@@ -809,7 +811,7 @@ class UIAHandler(COMObject):
 				)
 			):
 				return False
-			elif windowClass == "ConsoleWindowClass":
+			if windowClass == "ConsoleWindowClass":
 				return UIAUtils._shouldUseUIAConsole(hwnd)
 		return bool(res)
 
@@ -850,6 +852,55 @@ class UIAHandler(COMObject):
 		UIAElement._nearestWindowHandle=window
 		return window
 
+	def _isNetUIEmbeddedInWordDoc(self, element: UIA.IUIAutomationElement) -> bool:
+		"""
+		Detects if the given UIA element represents a control in a NetUI container
+		embedded within a MS Word document window.
+		E.g. the Modern Comments side track pane.
+		This method also caches the answer on the element itself
+		to both speed up checking later and to allow checking on an already dead element
+		E.g. a previous focus.
+		"""
+		if getattr(element, '_isNetUIEmbeddedInWordDoc', False):
+			return True
+		windowHandle = self.getNearestWindowHandle(element)
+		if winUser.getClassName(windowHandle) != MS_WORD_DOCUMENT_WINDOW_CLASS:
+			return False
+		condition = UIAUtils.createUIAMultiPropertyCondition(
+			{UIA.UIA_ClassNamePropertyId: 'NetUIHWNDElement'},
+			{UIA.UIA_NativeWindowHandlePropertyId: windowHandle}
+		)
+		walker = self.clientObject.createTreeWalker(condition)
+		cacheRequest = self.clientObject.createCacheRequest()
+		cacheRequest.AddProperty(UIA.UIA_ClassNamePropertyId)
+		cacheRequest.AddProperty(UIA.UIA_NativeWindowHandlePropertyId)
+		ancestor = walker.NormalizeElementBuildCache(element, cacheRequest)
+		# ancestor will either be the embedded NetUIElement, or just hit the root of the MS Word document window
+		if ancestor.CachedClassName != 'NetUIHWNDElement':
+			return False
+		element._isNetUIEmbeddedInWordDoc = True
+		return True
+
+	def _emitMSAAFocusForWordDocIfNecessary(self, element: UIA.IUIAutomationElement) -> None:
+		"""
+		Fires an MSAA focus event on the given UIA element
+		if the element is the root of a Word document,
+		and the focus was previously in a NetUI container embedded in this Word document.
+		"""
+		import NVDAObjects.UIA
+		oldFocus = eventHandler.lastQueuedFocusObject
+		if (
+			isinstance(oldFocus, NVDAObjects.UIA.UIA)
+			and getattr(oldFocus.UIAElement, '_isNetUIEmbeddedInWordDoc', False)
+			and element.CachedClassName == MS_WORD_DOCUMENT_WINDOW_CLASS
+			and element.CachedControlType == UIA.UIA_DocumentControlTypeId
+			and self.getNearestWindowHandle(element) == oldFocus.windowHandle
+			and not self.isUIAWindow(oldFocus.windowHandle)
+		):
+			IAccessibleHandler.internalWinEventHandler.winEventLimiter.addEvent(
+				winUser.EVENT_OBJECT_FOCUS, oldFocus.windowHandle, winUser.OBJID_CLIENT, 0, oldFocus.windowThreadID
+			)
+
 	def isNativeUIAElement(self,UIAElement):
 		#Due to issues dealing with UIA elements coming from the same process, we do not class these UIA elements as usable.
 		#It seems to be safe enough to retreave the cached processID, but using tree walkers or fetching other properties causes a freeze.
@@ -863,6 +914,14 @@ class UIAHandler(COMObject):
 		windowHandle=self.getNearestWindowHandle(UIAElement)
 		if windowHandle:
 			if self.isUIAWindow(windowHandle):
+				return True
+			# #12982: although NVDA by default may not treat this element's window as native UIA,
+			# E.g. it is proxied from MSAA, or NVDA has specifically black listed it,
+			# It may be an element from a NetUIcontainer embedded in a Word document,
+			# such as the MS Word Modern Comments side track pane.
+			# These elements are only exposed via UIA, and not MSAA,
+			# thus we must treat these elements as native UIA.
+			if self._isNetUIEmbeddedInWordDoc(UIAElement):
 				return True
 			if winUser.getClassName(windowHandle)=="DirectUIHWND" and "IEFRAME.dll" in UIAElement.cachedProviderDescription and UIAElement.currentClassName in ("DownloadBox", "accessiblebutton", "DUIToolbarButton", "PushButton"):
 				# This is the IE 9 downloads list.
