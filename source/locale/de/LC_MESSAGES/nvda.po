@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 00:02+0000\n"
+"POT-Creation-Date: 2021-10-29 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -8005,19 +8005,6 @@ msgstr ""
 "Das Einstellungsfenster, das Sie öffnen wollen, ist auf diesem System nicht "
 "verfügbar."
 
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Standard-Wörterbuch"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Stimmen-Wörterbuch (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Temporäres Wörterbuch"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "NVDA-Informationen"
@@ -9970,11 +9957,10 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Always use UI Automation to access Microsoft &Word document controls when "
-"available"
+"Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Immer die Benutzeroberflächenautomatisierung verwenden, um auf "
-"Steuerelemente in Microsoft &Word-Dokumente zuzugreifen, sofern verfügbar"
+"UIA verwenden, um auf Steuerelemente in Microsoft &Word-Dokumente "
+"zuzugreifen, sofern verfügbar"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10051,8 +10037,8 @@ msgstr "Terminal-Programme"
 #. Advanced settings panel.
 msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Unterstützung bei neu eingegebenen Zeichen in der Windows-Konsole (falls "
-"verfügbar)"
+"Unterstützung bei neu eingegebenen Zeichen in der Windows-Konsole, sofern "
+"verfügbar"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -10247,6 +10233,20 @@ msgstr "&Bearbeiten"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Wörterbuch-Eintrag hinzufügen"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Standard-Wörterbuch"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Stimmen-Wörterbuch (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Temporäres Wörterbuch"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
