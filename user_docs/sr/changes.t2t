@@ -39,11 +39,10 @@ Korisnici koji su dobili ovu grešku moraju ručno da preuzmu ovo ažuriranje.
 - Kada čitate statusnu traku prečicom ``NVDA+end``, pregledni kursor se više ne prebacuje na njenu lokaciju.
 Ako vam je ova funkcija potrebna molimo dodelite prečicu odgovarajućoj komandi u kategoriji objektne navigacije dijaloga ulaznih komandi. (#8600)
 - Kada otvarate dijalog sa podešavanjima koji je već otvoren, NVDA će postaviti fokus na postojeći dijalog umesto da izbacuje grešku. (#5383)
-- Za verzije  Microsoft Office 2016/365 novije od 13900, NVDA će sada uvek koristiti UI Automation za pristup kontrolama Microsoft Word dokumenata, bez obzira na to da li je korisnik omogućio ili onemogućio ovo podešavanje u naprednim podešavanjima. (#12770)
 - Ažuriran liblouis brajev prevodilac na [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
   - Nove brajeve tabele: Ruski stepen 1, Tshivenda stepen 1, Tshivenda stepen 2
-  -
--
+  - NVDA neće više pokušavati da se zatvori kada su otvoreni dijalozi koji zahtevaju potvrdu (na primer uz dostupne opcije potvrdi / otkaži). (#12984)
+--
 
 
 == Ispravljene greške ==
@@ -73,6 +72,7 @@ Ako vam je ova funkcija potrebna molimo dodelite prečicu odgovarajućoj komandi
 - Ispravljena dupla izgovaranja ili informacije na brajevom redu kada se 'opis' podudara sa  'sadržajem' ili 'nazivom'. (#12888)
 - U programu MS Word sa omogućenom UIA podrškom, preciznija reprodukcija zvukova za pravopisne greške u toku pisanja. (#12161)
 - U Windowsu 11, NVDA više neće izgovarati "Okno" kada pritiskate alt plus tab da se prebacujete između otvorenih programa. (#12648)
+- Novo moderno okno za praćenje komentara je sada podržano u programu MS Word kada se dokumentu ne pristupa uz UIA. Pritisnite alt+f12 da se prebacujete između okna i dokumenta. (#12982)
 -
 
 

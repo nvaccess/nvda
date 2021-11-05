@@ -1854,8 +1854,8 @@ Het gevolg is dat de prestatie flink nadelig wordt beïnvloed, vooral bij  toepa
 Daarom zal NVDA,wanneer deze optie is ingeschakeld, registratie van gebeurtenissen  grotendeels beperken tot de systeemfocus.
 Als u te kampen hebt met prestatieproblemen bij één of meer toepassingen, raden we u aan deze functionaliteit uit te proberen om te zien of de prestaties verbeteren.
 
-==== Altijd UI automation gebruiken voor toegang tot besturingselementen van Microsoft Word-documenten voor zover beschikbaar ====[AdvancedSettingsUseUiaForWord]
-Wanneer  deze optie is ingeschakeld zal NVDA altijd proberen de Microsoft UI (= User Interface) Automation accessibility API te gebruiken om informatie op te halen van besturingselementen van Microsoft Word-documenten zelfs wanneer dit minder recente versies van Microsoft Office 2016/365 betreft.
+==== UI automation gebruiken voor toegang tot besturingselementen van Microsoft Word-documenten voor zover beschikbaar ====[AdvancedSettingsUseUiaForWord]
+Wanneer  deze optie is ingeschakeld probeert  NVDA   de Microsoft UI (= User Interface) Automation accessibility API te gebruiken om informatie op te halen van besturingselementen van Microsoft Word-documenten.
 Dit betreft Microsoft Word zelf, en ook de Microsoft Outlook message viewer alsmede  de composer.
 Voor Microsoft Office met   versiekenmerk 16.0.13901 of hoger zal NVDA altijd UI Automation gebruiken voor toegang tot Microsoft Word-documenten ongeacht hoe deze optie is ingesteld.
 Voor de meest recente versies van Microsoft Office 2016/365 die onder windows 10 en later, draaien, is de ondersteuning  van UI Automation voldoende om toegang te kunnen bieden tot Microsoft Word-documenten. De ondersteuning is nagenoeg gelijk aan die welke NVDA reeds biedt voor Microsoft Word maar met het bijkomende voordeel dat de reactiegevoeligheid substantieel wordt verhoogd.
@@ -3211,8 +3211,8 @@ De automatische brailleleesregeldetectie van NVDA herkent ook elke leesregel die
 Hieronder volgen de momenteel geldende toetsen met hun funftie voor deze leesregels.
 %kc:beginInclude
 || Naam | Toets |
-| Brailleleesregel terugscrollen | Scrolltoets naar  links |
-| Brailleleesregel vooruitscrollen  | Scrolltoets rechts |
+| Brailleleesregel terugscrollen | naar  links pannen of rocker omhoog |
+| Brailleleesregel vooruitscrollen  | naar rechts pannen of rocker omlaag |
 | Brailleleesregel naar  vorige regel verplaatsen | spatie + punt1 |
 | Brailleleesregel naar  volgende regel verplaatsen | spatie + punt4 |
 | Naar braillecel routeren | routing-set 1|

@@ -10,49 +10,49 @@ Zaktualizowano też eSpeak-NG i LibLouis. Dodane zostały m.in. nowa tablica dla
 Do ustawień zaawansowanych dodano opcję, która pozwala włączyć Dźwięki błędu również w wersjach stabilnych NVDA.
 Opcja "Czytaj wszystko" w programie Microsoft Word od teraz przewija widok tak, aby aktualna pozycja kursora zawsze była widoczna.
 Dodano liczne ulepszenia dotyczące interakcji z pakietem Microsoft Office  przy użyciu UIA.
-One UIA fix is that Outlook now ignores more types of layout tables in messages.
+Na przykład, dzięki jednej z poprawek UIA, Outlook ignoruje więcej typów tabel układu treści w wiadomościach.
 
-Important notes:
+Ważne uwagi:
 
-Due to an update to our security certificate, a small number of users get an error when NVDA 2021.2 checks for updates.
-NVDA now asks Windows to update security certificates, which will prevent this error in future.
-Affected users will need to download this update manually.
+Po aktualizacji naszego certyfikatu bezpieczeństwa, u niektórych użytkowników pojawia się błąd gdy NVDA 2021.2 sprawdza swoje aktualizacje.
+Od teraz NVDA automatycznie uzyskuje od systemu Windows aktualizacje certyfikatów bezpieczeństwa, co zapobiegnie pojawianiu się tego błędu w przyszłości.
+Użytkownicy, u których występuje ten problem, powinni pobrać ręcznie aktualizacje certyfikatów.
 
 
 == Nowe funkcje ==
-- Adds an input gesture for toggling settings for reporting the style of cell borders. (#10408)
-- Support for the new HID Braille specification which aims to standardise support for Braille Displays. (#12523)
-  - Devices that support this specification will be auto detected by NVDA.
-  - For technical details on NVDA's implementation of this specification, see https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+- Dodano zdarzenie wejścia dla przełączania ustawień ogłaszania stylu obramowań komórki. (#10408)
+- Wsparcie dla nowej specyfikacji brajlowskiej HID, którego celem jest zapewnienie uniwersalnego standardu wsparcia monitorów brajlowskich. (#12523)
+  - Monitory brajlowskie, które wspierają tę specyfikację, będą automatycznie wykrywane przez NVDA.
+  - Szczegóły techniczne dotyczące wprowadzenia specyfikacji HID do NVDA, są dostępne tutaj. https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
   -
-- Add support for the VisioBraille Vario 4 Braille Device. (#12607)
-- Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
-- In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
-- Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
+- Dodano wsparcie dla monitora brajlowskiego VisioBraille Vario 4. (#12607)
+- Powiadomienia o błędach można włączyć w każdej wersji NVDA z poziomu ustawień zaawansowanych. (#12672)
+- W systemie Windows 10 i nowszych, NVDA będzie ogłaszać ilość podpowiedzi wyszukiwania podczas wpisywania szukanych fraz w aplikacjach, takich jak Ustawienia lub Microsoft Store. (#7330, #12758, #12790)
+- Od teraz wspierane jest nawigowanie po tabelach dla kontrolek tabeli utworzonych za pomocą Out-GridView cmdlet w PowerShell. (#12928)
 -
 
 
 == Zmiany ==
-- Espeak-ng has been updated to 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
-- NVDA will default to eSpeak if no installed OneCore voices support the NVDA preferred language. (#10451)
-- If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)
-- When reading status bar with ``NVDA+end``, the review cursor is no longer moved to its location.
-If you need this functionality please assign a gesture to the appropriate script in the Object Navigation category in the Input Gestures dialog. (#8600)
-- When opening a settings dialog which is already open, NVDA sets focus on the existing dialog rather than raise an error. (#5383)
-- For builds of Microsoft Office 2016/365 greater than 13900, NVDA will now always use UI Automation to access Microsoft Word document controls, no matter whether the user has toggled the Use UI Automation to access Microsoft word document controls advanced setting on or off. (#12770)
-- Updated liblouis braille translator to [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
-  - New braille tables: Russian grade 1, Tshivenda grade 1, Tshivenda grade 2
+- Espeak-ng został zaktualizowany do wersji 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+- Gdy w systemie nie ma zainstalowanego wsparcia dla Głosów Mobilnych Windows w preferowanym języku, NVDA automatycznie wybierze eSpeak. (#10451)
+- Jeżeli Głosy Mobilne Windows w dalszym ciągu nie działają, należy z powrotem przełączyć syntezator na Espeak. (#11544)
+- Podczas odczytywania paska stanu poleceniem ``NVDA+end``, punkt przeglądu nie jest już przenoszony do miejsca, gdzie znajduje się ten pasek.
+Aby nadal móc przenosić punkt przeglądu do pasków stanu, należy przypisać polecenie do odpowiedniego skryptu w Zdarzeniach Wejścia, w kategorii Nawigacja Obiektowa. (#8600)
+- Przy próbie dwókrotnego otwarcia tego samego dialogu, NVDA ustawia kursor na już otwartym dialogu, zamiast wyświetlać błąd. (#5383)
+- Zaktualizowano Liblouis do wersji [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
+  - Nowe tablice brajlowskie: Rosyjski skróty, Tshivenda pismo pełne, Tshivenda skróty
   -
-- Instead of "marked content" or "mrkd", "highlight" or "hlght" will be announced for speech and braille respectively. (#12892)
+- Komunikaty "zaznaczone" lub "mrkd" i "podkreślone" lub "hlght" będą ogłaszane zarówno brajlem, jak i mową. (#12892)
+- NVDA nie będzie się już wyłączać, gdy pewne dialogi czekają na reakcję użytkownika (np. Potwierdź/Anuluj). (#12984)
 -
 
 
 == Poprawki błędów ==
-- Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
-- It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
-- NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
-- In ARIA data grid cells on the web, the Escape key will now be passed through to the grid and no longer turn off focus mode unconditionally. (#12413)
-- When reading a header cell of a table in Chrome, fix the column name being announced twice. (#10840)
+- Śledzenie klawiszy modyfikatorów, takich jak Control lub Insert, jest bardziej wydajne gdy rdzeń wznawia pracę. (#12609)
+- Znów możliwe jest sprawdzanie aktualizacji NVDA na niektórych systemach, takich jak czyste wersje instalacyjne Windows. (#12729)
+- NVDA poprawnie ogłasza puste komórki tabeli w programie Microsoft Word przy włączonym wsparciu UI automation. (#11043)
+- W tabeli ARIA, klawisz Escape zostanie przekierowany do tabeli i nie wyłączy już trybu czytania niezależnie od kontekstu. (#12413)
+- Naprawiono błąd, przez który w przeglądarce Google Chrome, nazwa komórki będącej nagłówkiem kolumny w tabeli była ogłaszana dwókrotnie. (#10840)
 - NVDA no longer reports a numerical value for UIA sliders that have a textual representation of their value defined. (UIA ValuePattern is now preferred over RangeValuePattern). (#12724)
 - NVDA no longer treats the value of UIA sliders as always percentage based.
 - Reporting the location of a cell in Microsoft Excel when accessed via UI Automation again works correctly on Windows 11. (#12782)
@@ -74,6 +74,7 @@ If you need this functionality please assign a gesture to the appropriate script
 - Fixed duplicate braille and speech when 'description' matches 'content' or 'name'. (#12888)
 - In MS Word with UIA enabled, more accurate playing of spelling error sounds as you type. (#12161)
 - In Windows 11, NVDA will no longer announce "pane" when pressing Alt+Tab to switch between programs. (#12648)
+- The new Modern Comments side track pane is now supported in MS Word when not accessing the document via UIA. Press alt+f12 to move between the side track pane and the document. (#12982)
 -
 
 
