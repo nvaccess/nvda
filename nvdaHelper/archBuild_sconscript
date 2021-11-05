@@ -197,6 +197,13 @@ if TARGET_ARCH=='x86':
 	if signExec:
 		env.AddPostAction(win10localLib[0],[signExec])
 	env.Install(libInstallDir,win10localLib)
+	MSUIA_lib_outDir,MSUIA_include_outDir = thirdPartyEnv.SConscript('microsoft-ui-uiautomation/sconscript')
+	Export('MSUIA_lib_outDir')
+	Export('MSUIA_include_outDir')
+	UIARemoteLib=env.SConscript('UIARemote/sconscript')
+	if signExec:
+		env.AddPostAction(UIARemoteLib[0],[signExec])
+	env.Install(libInstallDir,UIARemoteLib)
 
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
