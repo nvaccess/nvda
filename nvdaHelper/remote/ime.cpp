@@ -219,6 +219,9 @@ void handleReadingStringUpdate(HWND hwnd) {
 		len = GetReadingString(imc, 0, NULL, &err, &vert, &max_len);
 		if (len) {
 			read_str = (WCHAR*)malloc(sizeof(WCHAR) * (len + 1));
+			if (!read_str) {
+				return;
+			}
 			read_str[len] = '\0';
 			GetReadingString(imc, len, read_str, &err, &vert, &max_len);
 		}
@@ -262,6 +265,9 @@ void handleReadingStringUpdate(HWND hwnd) {
 				break;
 		}
 		read_str = (WCHAR*)malloc(sizeof(WCHAR) * (len + 1));
+		if (!read_str) {
+			return;
+		}
 		read_str[len] = '\0';
 		memcpy(read_str, str, sizeof(WCHAR) * len);
 		immUnlockIMCC(ctx->hPrivate);
@@ -331,6 +337,9 @@ static bool handleCandidates(HWND hwnd) {
 		return false;
 	}
 	CANDIDATELIST* list = (CANDIDATELIST*)malloc(len);
+	if (!list) {
+		return false;
+	}
 	ImmGetCandidateList(imc, 0, list, len);
 	ImmReleaseContext(hwnd, imc);
 
@@ -353,8 +362,12 @@ static bool handleCandidates(HWND hwnd) {
 		}
 	}
 	WCHAR* cand_str = NULL;
+	bool cand_updated = false;
 	if(buflen>0) {
 		cand_str=(WCHAR*)malloc(buflen);
+		if (!cand_str) {
+			return false;
+		}
 		WCHAR* ptr = cand_str;
 		for (DWORD n = list->dwPageStart; n < pageEnd;  ++n) {
 			DWORD offset = list->dwOffset[n];
@@ -369,17 +382,21 @@ static bool handleCandidates(HWND hwnd) {
 		WCHAR filename[MAX_PATH + 1]={0};
 		ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH);
 		nvdaControllerInternal_inputCandidateListUpdate(cand_str,selection,filename);
+		cand_updated = true;
 		free(cand_str);
 	}
 	/* Clean up */
 	free(list);
-	return cand_str!=NULL;
+	return cand_updated;
 }
 
 static WCHAR* getCompositionString(HIMC imc, DWORD index) {
 	int len = ImmGetCompositionStringW(imc, index, 0, 0);
 	if (len < sizeof(WCHAR))  return NULL;
 	WCHAR* wstr = (WCHAR*)malloc(len + sizeof(WCHAR));
+	if (!wstr) {
+		return nullptr;
+	}
 	len = ImmGetCompositionStringW(imc, index, wstr, len) / sizeof(WCHAR);
 	wstr[len] = L'\0';
 	 return wstr;
