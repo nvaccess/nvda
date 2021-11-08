@@ -204,7 +204,7 @@ std::vector<BYTE> getTTFData(HDC hdc, char* tableName) {
 //This class contains glyphIndex to wchar_t mapping. See [cmap], subheading "Format 4: Segment mapping to delta values"
 class GlyphTranslator {
 	private:
-	volatile long _refCount;
+	unsigned volatile long _refCount;
 	map<int,wchar_t> _glyphs;
 
 	public:
