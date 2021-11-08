@@ -78,6 +78,9 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 		size_t cpBufSize=characterLocations.size()*4;
 		// Hackishly use a BSTR to contain points.
 		wchar_t* cpTempBuf=(wchar_t*)malloc(cpBufSize*sizeof(wchar_t));
+		if (!cpTempBuf) {
+			return -1;
+		}
 		wchar_t* cpTempBufIt=cpTempBuf;
 		for(deque<RECT>::const_iterator cpIt=characterLocations.begin();cpIt!=characterLocations.end();++cpIt) {
 			*(cpTempBufIt++)=(wchar_t)cpIt->left;
