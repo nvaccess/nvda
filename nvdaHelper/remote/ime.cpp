@@ -108,12 +108,22 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 			// Do not know how to extract version number
 			return 0;
 	}
-	DWORD ver_handle;
-	DWORD buf_size = GetFileVersionInfoSizeW(filename, &ver_handle);
+	DWORD buf_size = GetFileVersionInfoSizeW(
+		filename,
+		nullptr  // lpdwHandle
+	);
 	if (!buf_size)  return 0;
 	void* buf = malloc(buf_size);
-    if (!buf)  return 0;
-	if (GetFileVersionInfoW(filename, ver_handle, buf_size, buf)) {
+	if (!buf) {
+		return 0;
+	}
+	const auto gotFileVerInfo = GetFileVersionInfoW(
+		filename,
+		0,  // dwHandle
+		buf_size,
+		buf
+	);
+	if (gotFileVerInfo) {
 		void* data = NULL;
 		UINT  data_len;
 		if (VerQueryValueW(buf, L"\\", &data, &data_len)) {
