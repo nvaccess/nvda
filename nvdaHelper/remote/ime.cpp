@@ -139,13 +139,16 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 
 bool getTIPFilename(REFCLSID clsid, WCHAR* filename, DWORD len) {
 	// Format registry path for CLSID
-	WCHAR reg_path[100];
+	WCHAR reg_path[100]{};
 	_snwprintf(reg_path, ARRAYSIZE(reg_path),
 		L"CLSID\\{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}\\InProcServer32",
 		clsid.Data1, clsid.Data2, clsid.Data3,
 		clsid.Data4[0], clsid.Data4[1], clsid.Data4[2], clsid.Data4[3],
 		clsid.Data4[4], clsid.Data4[5], clsid.Data4[6], clsid.Data4[7]);
 	HKEY reg_key = NULL;
+	// ensure null terminated for the case where the formatted string is longer than the reg_path buffer
+	// see _snwprintf docs
+	reg_path[99] = '\0';
 	RegOpenKeyW(HKEY_CLASSES_ROOT, reg_path, &reg_key);
 	if (!reg_key)  return false;
 	DWORD type = REG_NONE;
