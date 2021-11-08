@@ -142,7 +142,11 @@ void IA2Support_inProcess_terminate() {
 		return;
 	}
 	//Instruct the UI thread to uninstall IA2
-	IA2UIThreadUninstalledEvent=CreateEvent(NULL,true,false,NULL);
+	IA2UIThreadUninstalledEvent = CreateEvent(NULL, true, false, NULL);
+	if (IA2UIThreadUninstalledEvent == 0){
+		// unable to create the event, can't continue
+		return;
+	}
 	registerWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
 	wm_uninstallIA2Support=RegisterWindowMessage(L"wm_uninstallIA2Support");
 	PostThreadMessage(IA2UIThreadID,wm_uninstallIA2Support,0,0);
