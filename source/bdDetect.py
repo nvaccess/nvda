@@ -629,3 +629,8 @@ addUsbDevices("nattiqbraille", KEY_SERIAL, {
 addUsbDevices("superBrl", KEY_SERIAL, {
 	"VID_10C4&PID_EA60", # SuperBraille 3.2
 })
+
+# albatross
+addUsbDevices("albatross", KEY_SERIAL, {
+	"VID_0403&PID_6001",  # Caiku Albatross 46/80
+})

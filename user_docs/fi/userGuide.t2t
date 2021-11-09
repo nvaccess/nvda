@@ -2355,6 +2355,7 @@ Seuraavat näytöt tukevat automaattista tunnistusta.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Eurobraille Esys/Esytime/Iris
 - Nattiq nBraille
+- Tivomatic Caiku Albatross 46/80
 - Mikä tahansa standardinmukaista HID Braille -protokollaa tukeva näyttö
 -
 
@@ -3180,6 +3181,51 @@ Katso [BRLTTY:n näppäinsidosluetteloista http://mielke.cc/brltty/doc/KeyBindin
 | siirrä pistesoluun | kosketuskohdistinnäppäin (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Tivomaticin Caiku Albatross -pistenäyttöjä voidaan käyttää joko USB:n tai perinteisen sarjaportin kautta.
+Laitteita varten ei tarvitse asentaa ajureita.
+Yhdistä vain laite tietokoneeseen ja määritä NVDA käyttämään sitä.
+
+Huom: Vain 19200 baudin siirtonopeutta tuetaan. Vaihda siirtonopeudeksi 19200 tarvittaessa pistenäytön sisäisestä valikosta ennen kuin käytät laitetta NVDA:n kanssa.
+
+Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| Siirrä ylimmälle riville | home1, home2 |
+| Siirrä alimmalle riville | end1, end2 |
+| Vaihda Pistenäyttö seuraa -asetusta | lisäkohdistin1, lisäkohdistin2 |
+| Siirrä nykyiseen kohdistukseen | kohdistin1, kohdistin2 |
+| Siirrä edelliselle riville | ylös1, ylös2, ylös3 |
+| Siirrä seuraavalle riville | alas1, alas2, alas3 |
+| Vieritä taaksepäin | vasen |
+| Vieritä eteenpäin | oikea |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| Ilmoita muotoilutiedot pistesolusta | toissijainen kosketuskohdistinnäppäin |
+| Vaihda edelliseen tarkastelutilaan | f1 |
+| Vaihda seuraavaan tarkastelutilaan | f2 |
+| Siirrä aktiiviseen objektiin | f1+f2 |
+| Siirrä säilöobjektiin | f3 |
+| Siirrä ensimmäiseen sisältöobjektiin | f4 |
+| Siirrä edelliseen objektiin | f5 |
+| Siirrä seuraavaan objektiin | f6 |
+| Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | f7 |
+| Aktivoi nykyinen navigointiobjekti | f8 |
+| Lue nykyinen objekti | f7+f8 |
+| Lue päiväys/aika | f9 |
+| NVDA-valikko | f10 |
+| Lue ikkunan nimi | f11 |
+| Lue tilarivi | f12 |
+| Lue nykyinen rivi | f13 |
+| Puhu nykyinen merkki | f14 |
+| Jatkuva luku | f15 |
+| Vaihda puhetilaa | f16 |
+| windows+d (pienennä kaikki sovellukset) | attribuutti1 |
+| windows+e (tämä tietokone) | attribuutti2 |
+| windows+b (siirrä kohdistus ilmaisinalueelle) | attribuutti3 |
+| windows+i key (Windowsin asetukset) | attribuutti4 |
+%kc:endInclude
+ 
 ++ Standardinmukaiset HID-pistenäytöt ++[HIDBraille]
 Tämä on kokeellinen ajuri uudelle standardinmukaiselle HID Braille -määritykselle, josta Microsoft, Google, Apple ja useat avustavan teknologian yritykset, mukaan lukien NV Access, sopivat vuonna 2018.
 Toiveissa on, että kaikkien valmistajien tulevat pistenäyttömallit käyttävät tätä vakioprotokollaa, joka poistaa valmistajakohtaisten pistenäyttöajureiden tarpeen.

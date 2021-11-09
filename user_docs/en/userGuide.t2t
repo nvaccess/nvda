@@ -2362,6 +2362,7 @@ The following displays support this automatic detection functionality.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
+- Tivomatic Caiku Albatross 46/80 displays
 - Any Display that supports the Standard HID Braille protocol
 -
 
@@ -3187,6 +3188,51 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+The Caiku Albatross devices, which were manufactured by Tivomatic and available in Finland, can be connected to by either USB or serial.
+You do not need any specific drivers to be installed to use these displays.
+Just plug in the display and configure NVDA to use it.
+
+Note: Only baud rate 19200 is supported. Switch baud rate to 19200 as needed from display internal menu before using with NVDA.
+
+Following are key assignments for these displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Move to top line in review | home1, home2 |
+| Move to bottom line in review | end1, end2 |
+| Toggle braille tethered to | eCursor1, eCursor2 |
+| Move to current focus | cursor1, cursor2 |
+| Move braille display to previous line | up1, up2, up3 |
+| Move braille display to next line | down1, down2, down3 |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Route to braille cell | routing |
+| Report text formatting under braille cell | secondary routing |
+| Switches to the previous review mode (e.g. object, document or screen) | f1 |
+| Switches to the next review mode (e.g. object, document or screen) | f2 |
+| Sets the navigator object to the current focus | f1+f2 |
+| Moves the navigator object to the object containing it | f3 |
+| Moves the navigator object to the first object inside it | f4 |
+| Moves the navigator object to the previous object | f5 |
+| Moves the navigator object to the next object | f6 |
+| Moves focus to current navigator object | f7 |
+| Performs the default action on the current navigator object | f8 |
+| Reports the current navigator object | f7+f8 |
+| Reports date/time | f9 |
+| NVDA Menu | f10 |
+| Reports title | f11 |
+| Reports status bar | f12 |
+| Reports the current line under the application cursor | f13 |
+| Reports current character under review cursor | f14 |
+| Say all | f15 |
+| Toggles between the speech modes of off, beep and talk | f16 |
+| windows+d key (minimize all applications) | attribute1 |
+| windows+e key (this computer) | attribute2 |
+| windows+b key (focus system tray) | attribute3 |
+| windows+i key (Windows settings) | attribute4 |
+%kc:endInclude
+ 
 ++ Standard HID Braille displays ++[HIDBraille]
 This is an experimental driver for the new Standard HID Braille Specification, agreed upon in 2018 by Microsoft, Google, Apple and several assistive technology companies including NV Access. 
 The hope is that all future Braille Display models created by any manufacturer, will use this standard protocol which will remove the need for manufacturer-specific Braille drivers.
