@@ -23,27 +23,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode_t {
 
 public:
-	MshtmlVBufBackend_t* backend;
-	IHTMLDOMNode* pHTMLDOMNode;
-	IDispatch* propChangeSink;
-	IDispatch* loadSink;
-	IMarkupContainer2* pMarkupContainer2;
-	IHTMLChangeSink* pHTMLChangeSink;
-	DWORD HTMLChangeSinkCookey;
-	std::wstring language;
-	MshtmlVBufStorage_controlFieldNode_t* ariaLiveNode;
-	std::wstring ariaLivePoliteness;
-	unsigned int formatState;
-	bool ariaLiveIsTextRelevant;
-	bool ariaLiveIsAdditionsRelevant;
-	bool ariaLiveIsBusy;
-	VBufStorage_controlFieldNode_t*  ariaLiveAtomicNode;
 	void reportLiveText(std::wstring& text, std::wstring& politeness);
 	void reportLiveAddition();
 	void preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap);
 	void postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, std::set<VBufStorage_controlFieldNode_t*>& atomicNodes);
 	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset);
-	bool isRootNode;
+	
 	MshtmlVBufStorage_controlFieldNode_t(
 		int docHandle,
 		int ID,
@@ -55,6 +40,24 @@ public:
 	);
 
 	MshtmlVBufStorage_controlFieldNode_t() = delete;
+
+	MshtmlVBufBackend_t* backend = nullptr;
+	IHTMLDOMNode* pHTMLDOMNode = nullptr;
+	IDispatch* propChangeSink = nullptr;
+	IDispatch* loadSink = nullptr;
+	IMarkupContainer2* pMarkupContainer2 = nullptr;
+	IHTMLChangeSink* pHTMLChangeSink = nullptr;
+	DWORD HTMLChangeSinkCookey = 0;
+	std::wstring language;
+	MshtmlVBufStorage_controlFieldNode_t* ariaLiveNode = nullptr;
+	std::wstring ariaLivePoliteness;
+	unsigned int formatState = 0;
+	bool ariaLiveIsTextRelevant = false;
+	bool ariaLiveIsAdditionsRelevant = false;
+	bool ariaLiveIsBusy = false;
+	VBufStorage_controlFieldNode_t* ariaLiveAtomicNode = nullptr;
+	bool isRootNode = false;
+
 protected:
 	/*Destructor
 	* @remark Protected: This and derived classes are always dynamically allocated and memory managed by friends.
