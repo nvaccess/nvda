@@ -73,10 +73,10 @@ START_BYTE = b"\xfb"
 END_BYTE = b"\xfc"
 # To keep connected these both bytes must be sent periodically.
 BOTH_BYTES = b"\xfb\xfc"
+
+
 # Timer is used for that purpose and to reconnect with display (copied from
 # https://stackoverflow.com/questions/474528/what-is-the-best-way-to-repeatedly-execute-a-function-every-x-seconds)
-
-
 class RepeatedTimer(object):
 	def __init__(self, interval, function, *args, **kwargs):
 		self._timer = None
@@ -144,8 +144,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self.clearOldCells()
 			self._dev.close()
 			self._dev = None
-			if not self.currentPort:
-				return False
 			if not self.chkPort(self.currentPort):
 				# Maybe display was unplugged/powered off which causes USB serial port disappearing.
 				self.tryReconnect = True
@@ -161,8 +159,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def keepConnected(self):
 		# Can disappeared port be found again?
 		if self.tryReconnect:
-			if not self.currentPort:
-				return
 			if not self.chkPort(self.currentPort):
 				return
 			else:
@@ -181,7 +177,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# Try to reconnect if needed.
 		self.tryReconnect = False
 		# Current portto reconnect.
-		self.currentPort = 0
+		self.currentPort = ""
+		self.timerRunning = False
 		# Search ports where display can be connected.
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			if not self.chkPort(port):
@@ -228,9 +225,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if data != b"\xff":
 				# Read another byte, if the first one was value byte.
 				data = self._dev.read(1)
-				if len(data) == 0:
-					return
-				if data != b"\xff":
+				if len(data) == 0 or data != b"\xff":
 					return
 			log.debugWarning("Init byte: %r" % data)
 			data = self._dev.read(1)
@@ -245,7 +240,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			# It is possible that there is no connection from perspective of display.
 			if data == b"\xff":
-				if self.sendToDisplay(bytes(ESTABLISHED)):
+				if self.sendToDisplay(ESTABLISHED):
 					self.clearOldCells()
 				log.debugWarning("Byte %r, numCells %d, tryReconnect %r" % (data, self.numCells, self.tryReconnect))
 				return
