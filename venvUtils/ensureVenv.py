@@ -51,24 +51,13 @@ def fetchRequirementsSet(path: str) -> Set[str]:
 		lines = [x for x in lines if x and not x.isspace() and not x.startswith('#')]
 	return set(lines)
 
-
-def createVenvAndPopulate():
+def populate():
 	"""
-	Creates the NVDA build system's Python virtual environment and installs all required packages.
-	this function will overwrite any existing virtual environment found at c{venv_path}.
+	Installs all required packages within the virtual environment.
+	When called stand alone, this function only ensures that NVDA's package requirements are met,
+	without recreating the full environment.
+	This means that transitive dependencies can get out of sync with those used in automated builds.
 	"""
-	print("Creating virtual environment...", flush=True)
-	subprocess.run(
-		[
-			sys.executable,
-			"-m", "venv",
-			"--clear",
-			venv_path,
-		],
-		check=True
-	)
-	with open(venv_python_version_path, "w") as f:
-		f.write(sys.version)
 	print("Installing packages in virtual environment...", flush=True)
 	subprocess.run(
 		[
@@ -89,12 +78,32 @@ def createVenvAndPopulate():
 	shutil.copy(requirements_path, venv_orig_requirements_path)
 
 
+def createVenvAndPopulate():
+	"""
+	Creates the NVDA build system's Python virtual environment and installs all required packages.
+	this function will overwrite any existing virtual environment found at c{venv_path}.
+	"""
+	print("Creating virtual environment...", flush=True)
+	subprocess.run(
+		[
+			sys.executable,
+			"-m", "venv",
+			"--clear",
+			venv_path,
+		],
+		check=True
+	)
+	with open(venv_python_version_path, "w") as f:
+		f.write(sys.version)
+	populate()
+
+
 def ensureVenvAndRequirements():
 	"""
 	Ensures that the NVDA build system's Python virtual environment is created and up to date.
 	If a previous virtual environment exists but has a miss-matching Python version
-	or pip package requirements have changed,
-	The virtual environment is recreated with the updated version of Python and packages.
+	The virtual environment is recreated with the updated version of Python.
+	When pip package requirements have changed, this function asks the user to recreate the environment.
 	If a virtual environment is found but does not seem to be ours,
 	This function asks the user if it should be overwritten or not.
 	"""
@@ -121,8 +130,17 @@ def ensureVenvAndRequirements():
 	newRequirements = fetchRequirementsSet(requirements_path)
 	addedRequirements = newRequirements - oldRequirements
 	if addedRequirements:
-		print(f"Added or changed package requirements. {addedRequirements}")
-		return createVenvAndPopulate()
+		if askYesNoQuestion(
+			f"Added or changed package requirements. {addedRequirements}\n"
+			"You are encouraged to recreate the virtual environment. "
+			"If you choose no, the new requirements will be installed without recreating. "
+			"This means that transitive dependencies can get out of sync "
+			"with those used in automated builds. "
+			"Would you like to continue recreating the environment?"
+		):
+			return createVenvAndPopulate()
+		else:
+			return populate()
 
 
 if __name__ == '__main__':
