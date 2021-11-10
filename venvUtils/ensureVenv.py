@@ -51,6 +51,7 @@ def fetchRequirementsSet(path: str) -> Set[str]:
 		lines = [x for x in lines if x and not x.isspace() and not x.startswith('#')]
 	return set(lines)
 
+
 def populate():
 	"""
 	Installs all required packages within the virtual environment.
