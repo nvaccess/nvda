@@ -22,7 +22,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode_t {
 
-	public:
+public:
 	MshtmlVBufBackend_t* backend;
 	IHTMLDOMNode* pHTMLDOMNode;
 	IDispatch* propChangeSink;
@@ -44,9 +44,22 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 	void postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, std::set<VBufStorage_controlFieldNode_t*>& atomicNodes);
 	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset);
 	bool isRootNode;
-	MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, bool isRootNode, IHTMLDOMNode* pHTMLDOMNode, const std::wstring& lang);
-	~MshtmlVBufStorage_controlFieldNode_t();
+	MshtmlVBufStorage_controlFieldNode_t(
+		int docHandle,
+		int ID,
+		bool isBlock,
+		MshtmlVBufBackend_t* backend,
+		bool isRootNode,
+		IHTMLDOMNode* pHTMLDOMNode,
+		const std::wstring& lang
+	);
 
+	MshtmlVBufStorage_controlFieldNode_t() = delete;
+protected:
+	/*Destructor
+	* @remark Protected: This and derived classes are always dynamically allocated and memory managed by friends.
+	*/
+	virtual ~MshtmlVBufStorage_controlFieldNode_t();
 };
 
 #endif
