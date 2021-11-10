@@ -224,7 +224,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# If no connection, Albatross sends continuously byte \xff
 			# followed by byte containing various settings like number of cells.
 			if data != b"\xff":
-				return
+				# Read another byte, if the first one was value byte.
+				data = self._dev.read(1)
+				if len(data) == 0:
+					return
+				if data != b"\xff":
+					return
 			log.debugWarning("Init byte: %r" % data)
 			data = self._dev.read(1)
 			if len(data) == 0:
