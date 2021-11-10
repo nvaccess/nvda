@@ -176,6 +176,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super().__init__()
 		# Number of cells is received when initializing connection.
 		self.numCells = 0
+		# Keep old display data.
+		self.oldCells: List[int] = []
 		# Try to reconnect if needed.
 		self.tryReconnect = False
 		# Current portto reconnect.
@@ -189,8 +191,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				pass
 			# Check for cell information
 			if self.numCells:
-				# Keep old display data.
-				self.oldCells: List[int] = [0, ]
 				while len(self.oldCells) < self.numCells:
 					self.oldCells.append(0)
 				# We may need current connection port to reconnect.
