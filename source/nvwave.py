@@ -168,7 +168,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 			samplesPerSec: int,
 			bitsPerSample: int,
 			outputDevice: typing.Union[str, int] = WAVE_MAPPER,
-			closeWhenIdle: bool = False,
+			closeWhenIdle: Optional[bool] = None,
 			wantDucking: bool = True,
 			buffered: bool = False
 		):
@@ -196,7 +196,11 @@ class WavePlayer(garbageHandler.TrackedObject):
 				self._audioDucker=audioDucking.AudioDucker()
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
-		self.closeWhenIdle = closeWhenIdle
+		if closeWhenIdle is not None:
+			self.closeWhenIdle = closeWhenIdle
+		else:
+			leaveOpen = config.conf["audio"]["leaveDeviceOpenOnIdle"]
+			self.closeWhenIdle = leaveOpen == 2
 		if buffered:
 			#: Minimum size of the buffer before audio is played.
 			#: However, this is ignored if an C{onDone} callback is provided to L{feed}.

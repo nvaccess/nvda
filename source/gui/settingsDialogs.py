@@ -2796,6 +2796,39 @@ class AdvancedPanelControls(
 		self.cancelExpiredFocusSpeechCombo.defaultValue = self._getDefaultValue(
 			["featureFlag", "cancelExpiredFocusSpeech"]
 		)
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Audio")
+		audioSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		audioGroup = guiHelper.BoxSizerHelper(audioSizer, sizer=audioSizer)
+		sHelper.addItem(audioGroup)
+
+		leaveDeviceOpenOnIdleChoices = [
+			# Translators: Label for the 'Leave audio device open when no sound is playing' combobox
+			# in the Advanced settings panel.
+			_("Default (Yes)"),
+			# Translators: Label for the 'Leave audio device open when no sound is playing' combobox
+			# in the Advanced settings panel.
+			_("Yes"),
+			# Translators: Label for the 'Leave audio device open when no sound is playing' combobox
+			# in the Advanced settings panel.
+			_("No"),
+		]
+
+		# Translators: This is the label for combobox in the Advanced settings panel.
+		leaveDeviceOpenOnIdleText = _("Leave audio device &open when no sound is playing:")
+		self.leaveDeviceOpenOnIdleCombo: wx.Choice = audioGroup.addLabeledControl(
+			leaveDeviceOpenOnIdleText,
+			wx.Choice,
+			choices=leaveDeviceOpenOnIdleChoices
+		)
+		self.bindHelpEvent("leaveDeviceOpenOnIdle", self.leaveDeviceOpenOnIdleCombo)
+		self.leaveDeviceOpenOnIdleCombo.SetSelection(
+			config.conf["audio"]["leaveDeviceOpenOnIdle"]
+		)
+		self.leaveDeviceOpenOnIdleCombo.defaultValue = self._getDefaultValue(
+			["audio", "leaveDeviceOpenOnIdle"]
+		)
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2913,6 +2946,7 @@ class AdvancedPanelControls(
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
+			and self.leaveDeviceOpenOnIdleCombo.GetSelection() == self.leaveDeviceOpenOnIdleCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
@@ -2933,6 +2967,7 @@ class AdvancedPanelControls(
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
+		self.leaveDeviceOpenOnIdleCombo.SetSelection(self.leaveDeviceOpenOnIdleCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
@@ -2954,6 +2989,7 @@ class AdvancedPanelControls(
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
+		config.conf["audio"]["leaveDeviceOpenOnIdle"] = self.leaveDeviceOpenOnIdleCombo.GetSelection()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()

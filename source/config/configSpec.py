@@ -48,6 +48,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Audio settings
 [audio]
 	audioDuckingMode = integer(default=0)
+	# 0:default, 1:yes, 2:no
+	leaveDeviceOpenOnIdle = integer(0, 2, default=0)
 
 # Braille settings
 [braille]
