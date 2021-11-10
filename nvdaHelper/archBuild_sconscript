@@ -147,9 +147,9 @@ else:
 
 # Don't enable warnings and warnings as errors or analysis to 3rd party code.
 thirdPartyEnv = env.Clone()
+
 env.Append(CCFLAGS=[
-	'/W3',
-	'/WX',
+	'/W3',  # warning level 3
 ])
 if 'analyze' in debug:
 	env.Append(CCFLAGS=['/analyze'])
@@ -159,6 +159,10 @@ if 'analyze' in debug:
 	# Disable: 'x': unreferenced formal parameter
 	# We use a great deal of hook functions where we have no need for various parameters
 	env.Append(CCFLAGS='/wd4100')
+else:
+	env.Append(CCFLAGS=[
+		'/WX',  # warnings as error, don't do this with analyze, the build stops too early
+	])
 
 Export('thirdPartyEnv')
 Export('env')
