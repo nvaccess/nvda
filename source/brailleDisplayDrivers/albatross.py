@@ -214,7 +214,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self.rt.stop()
 				self.rt = None
 				self.timerRunning = False
-			self._dev.close()
+			# Possibly already closed.
+			if self._dev:
+				self._dev.close()
 		finally:
 			self._dev = None
 			self.numCells = 0
