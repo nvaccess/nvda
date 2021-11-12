@@ -68,11 +68,15 @@ CONTROL_KEY_CODES: List[int] = [
 	1, 42, 83, 84, 89, 90, 91, 92, 93, 94, 151, 192, 193, 194, 199, 200, 201, 202, 203, 204, ]
 # Send this to Albatross to confirm that connection is established.
 ESTABLISHED = b"\xfe\xfd\xfe\xfd"
+# Guess for number of bytes to read to clear input buffer after connection established..
+INPUT_BUF_SIZE = 1024
 # Send information to Albatross enclosed by these bytes.
 START_BYTE = b"\xfb"
 END_BYTE = b"\xfc"
-# To keep connected these both bytes must be sent periodically.
+# To keep connected these both above bytes must be sent periodically.
 BOTH_BYTES = b"\xfb\xfc"
+# How often BOTH_BYTES should be sent/to try to reconnect.
+TIMER_INTERVAL = 1
 
 
 # Timer is used for that purpose and to reconnect with display (copied from
@@ -115,86 +119,33 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
 
-	def chkPort(self, port: bytes) -> bool:
-		try:
-			self._dev = hwIo.Serial(
-				port, baudrate=BAUD_RATE, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE,
-				timeout=TIMEOUT, writeTimeout=WRITE_TIMEOUT, onReceive=self._onReceive)
-		except EnvironmentError:
-			log.debugWarning("", exc_info=True)
-			return False
-		return True
-
-	# Whole display should be updated at next time.
-	def clearOldCells(self):
-		i = 0
-		for cell in self.oldCells:
-			self.oldCells[i] = 0
-			i += 1
-
-	# All write operations are done here.
-	def sendToDisplay(self, data: bytes) -> bool:
-		try:
-			self._dev.write(data)
-		except serial.serialutil.SerialException:
-			# Suitable initial values for reconnection.
-			# Connection worked before failure.
-			if self.numCells:
-				self.numCells = 0
-				self.clearOldCells()
-			self._dev.close()
-			self._dev = None
-			if not self.chkPort(self.currentPort):
-				# Maybe display was unplugged/powered off which causes USB serial port disappearing.
-				self.tryReconnect = True
-				if self._dev:
-					self._dev.close()
-			return False
-		if data == ESTABLISHED:
-			# Actually I/O buffer should be reseted, but poor man's solution now.
-			while len(self._dev.read(1024)):
-				pass
-		return True
-
-	def keepConnected(self):
-		# Can disappeared port be found again?
-		if self.tryReconnect:
-			if not self.chkPort(self.currentPort):
-				return
-			else:
-				# Port found.
-				self.tryReconnect = False
-				return
-		if self.timerRunning and self.numCells:
-			self.sendToDisplay(BOTH_BYTES)
-
 	def __init__(self, port="Auto"):
 		super().__init__()
 		# Number of cells is received when initializing connection.
 		self.numCells = 0
 		# Keep old display data.
-		self.oldCells: List[int] = []
+		self._oldCells: List[int] = []
 		# Try to reconnect if needed.
-		self.tryReconnect = False
+		self._tryReconnect = False
 		# Current portto reconnect.
-		self.currentPort = ""
-		self.timerRunning = False
+		self._currentPort = ""
+		self._timerRunning = False
 		# Search ports where display can be connected.
 		for portType, portId, port, portInfo in self._getTryPorts(port):
-			if not self.chkPort(port):
+			if not self._chkPort(port):
 				continue
 			# Albatross seems to need some more time.
 			while not self._dev.waitForRead(TIMEOUT):
 				pass
 			# Check for cell information
 			if self.numCells:
-				while len(self.oldCells) < self.numCells:
-					self.oldCells.append(0)
+				while len(self._oldCells) < self.numCells:
+					self._oldCells.append(0)
 				# We may need current connection port to reconnect.
-				self.currentPort = port
+				self._currentPort = port
 				# Start timer to keep connection.
-				self.rt = RepeatedTimer(1, self.keepConnected)
-				self.timerRunning = True
+				self._rt = RepeatedTimer(TIMER_INTERVAL, self._keepConnected)
+				self._timerRunning = True
 				log.info(
 					"Connected to Caiku Albatross %s on %s port %s at %s bps.",
 					self.numCells, portType, port, BAUD_RATE)
@@ -207,16 +158,67 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def terminate(self):
 		try:
 			super().terminate()
-			if self.timerRunning:
-				self.rt.stop()
-				self.rt = None
-				self.timerRunning = False
+			if self._timerRunning:
+				self._rt.stop()
+				self._rt = None
+				self._timerRunning = False
 			# Possibly already closed.
 			if self._dev:
 				self._dev.close()
 		finally:
 			self._dev = None
 			self.numCells = 0
+
+	def _chkPort(self, port: bytes) -> bool:
+		try:
+			self._dev = hwIo.Serial(
+				port, baudrate=BAUD_RATE, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE,
+				timeout=TIMEOUT, writeTimeout=WRITE_TIMEOUT, onReceive=self._onReceive)
+		except EnvironmentError:
+			log.debugWarning("", exc_info=True)
+			return False
+		return True
+
+	# Whole display should be updated at next time.
+	def _clearOldCells(self):
+		for i in range(len(self._oldCells)):
+			self._oldCells[i] = 0
+
+	# All write operations are done here.
+	def _sendToDisplay(self, data: bytes) -> bool:
+		try:
+			self._dev.write(data)
+		except serial.serialutil.SerialException:
+			# Suitable initial values for reconnection.
+			# Connection worked before failure.
+			if self.numCells:
+				self.numCells = 0
+				self._clearOldCells()
+			self._dev.close()
+			self._dev = None
+			if not self._chkPort(self._currentPort):
+				# Maybe display was unplugged/powered off which causes USB serial port disappearing.
+				self._tryReconnect = True
+				if self._dev:
+					self._dev.close()
+			return False
+		if data == ESTABLISHED:
+			# Actually input buffer should be reseted, but poor man's solution now.
+			while len(self._dev.read(INPUT_BUF_SIZE)):
+				pass
+		return True
+
+	def _keepConnected(self):
+		# Can disappeared port be found again?
+		if self._tryReconnect:
+			if not self._chkPort(self._currentPort):
+				return
+			else:
+				# Port found.
+				self._tryReconnect = False
+				return
+		if self._timerRunning and self.numCells:
+			self._sendToDisplay(BOTH_BYTES)
 
 	def _onReceive(self, data: bytes):
 		if not self.numCells:
@@ -232,27 +234,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if len(data) == 0:
 				return
 			log.debugWarning("Value byte: %r" % data)
-			if not self.sendToDisplay(ESTABLISHED):
+			if not self._sendToDisplay(ESTABLISHED):
 				return
 			self.numCells = 80 if ord(data) >> 7 == 1 else 46
-			return
 		# Connected.
 		else:
 			# It is possible that there is no connection from perspective of display.
 			if data == b"\xff":
-				if self.sendToDisplay(ESTABLISHED):
-					self.clearOldCells()
-				log.debugWarning("Byte %r, numCells %d, tryReconnect %r" % (data, self.numCells, self.tryReconnect))
+				if self._sendToDisplay(ESTABLISHED):
+					self._clearOldCells()
+				log.debugWarning("Byte %r, numCells %d, _tryReconnect %r" % (data, self.numCells, self._tryReconnect))
 				return
-			pressedKeys = set()
 			# If Ctrl-key is pressed, then there is at least one byte to read;
 			# in single ctrl-key presses and key combinations the first key is resent as last one.
 			if ord(data) in CONTROL_KEY_CODES:
 				# at most 4 keys.
-				kPresses = bytearray(data + self._dev.read(4))
-				[pressedKeys.add(k) for k in kPresses]
-			else:
-				pressedKeys.add(ord(data))
+				data += self._dev.read(4)
+			pressedKeys = set(data)
 			try:
 				inputCore.manager.executeGesture(InputGestureKeys(pressedKeys))
 			except inputCore.NoInputGestureAction:
@@ -262,19 +260,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if not self.numCells:
 			return
 		writeBytes: List[bytes] = [START_BYTE, ]
-		# Only changed content is sent, variable i is used to show position on display.
-		i = 1
-		j = 0
-		for cell in cells:
-			if cell != self.oldCells[j]:
-				self.oldCells[j] = cell
-				writeBytes.append(intToByte(i))
+		# Only changed content is sent (cell index and data).
+		for i, cell in enumerate(cells):
+			if cell != self._oldCells[i]:
+				self._oldCells[i] = cell
+				# display indexing starts from 1
+				writeBytes.append(intToByte(i + 1))
 				# Bits have to be reversed.
 				writeBytes.append(intToByte(int('{:08b}'.format(cell)[::-1], 2)))
-			i += 1
-			j += 1
 		writeBytes.append(END_BYTE)
-		self.sendToDisplay(b"".join(writeBytes))
+		self._sendToDisplay(b"".join(writeBytes))
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
@@ -323,7 +318,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 		super().__init__()
 		self.keyCodes = set(keys)
 
-		self.keyNames = names = []
+		names = []
 		for key in self.keyCodes:
 			if 2 <= key <= 41 or 111 <= key <= 150:
 				names.append("routing")
