@@ -43,6 +43,7 @@ import textInfos
 from typing import Dict
 from queue import Queue
 import aria
+import UIARemote
 
 
 #: The window class name for Microsoft Word documents.
@@ -338,6 +339,7 @@ class UIAHandler(COMObject):
 			if config.conf['UIA']['selectiveEventRegistration']:
 				self._createLocalEventHandlerGroup()
 			self._registerGlobalEventHandlers()
+			UIARemote.initialize(True, self.clientObject)
 		except Exception as e:
 			self.MTAThreadInitException=e
 		finally:

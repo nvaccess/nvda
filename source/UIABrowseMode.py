@@ -22,6 +22,7 @@ import cursorManager
 import textInfos
 import browseMode
 from NVDAObjects.UIA import UIA
+import UIARemote
 
 class UIADocumentWithTableNavigation(documentBase.DocumentWithTableNavigation):
 
@@ -142,9 +143,15 @@ def UIATextAttributeQuicknavIterator(ItemClass,itemType,document,position,direct
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
-	def __init__(self,itemType,document,position,level=0):
+	def __init__(self,itemType,document,position,level=0, label=None):
 		super(HeadingUIATextInfoQuickNavItem,self).__init__(itemType,document,position)
 		self.level=level
+		if label:
+			self._label = label
+
+	@property
+	def label(self):
+		return self._label
 
 	def isChild(self,parent):
 		if not isinstance(parent,HeadingUIATextInfoQuickNavItem):
@@ -152,6 +159,22 @@ class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 		return self.level>parent.level
 
 def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
+	reverse=(direction=="previous")
+	entireDocument=document.makeTextInfo(textInfos.POSITION_ALL)
+	if not position:
+		searchArea=entireDocument
+	else:
+		searchArea=position.copy()
+		if reverse:
+			searchArea.setEndPoint(entireDocument,"startToStart")
+		else:
+			searchArea.setEndPoint(entireDocument,"endToEnd")
+	maxItems = 1 if position else 0
+	level = int(itemType[7:]) if len(itemType)>7 else 0
+	for foundLevel, foundLabel, foundRange in UIARemote.findHeadingsInTextRange(searchArea._rangeObj, maxItems=maxItems, backwards=reverse, level=level):
+		foundRange = document.makeTextInfo(foundRange)
+		yield HeadingUIATextInfoQuickNavItem(itemType,document,foundRange,level=foundLevel, label=foundLabel)
+	return
 	if position:
 		curPosition=position
 	else:
