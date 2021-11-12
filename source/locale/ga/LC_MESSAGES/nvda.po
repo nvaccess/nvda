@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2021.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-29 00:02+0000\n"
-"PO-Revision-Date: 2021-11-03 12:37+0000\n"
+"POT-Creation-Date: 2021-11-05 00:03+0000\n"
+"PO-Revision-Date: 2021-11-07 14:43+0000\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -420,7 +420,7 @@ msgstr "fig"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
 msgid "hlght"
-msgstr ""
+msgstr "aibhsithe"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -1382,9 +1382,8 @@ msgstr "Vítneaimis  Grád 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Tshivenda grade 1"
-msgstr "Hiondúis, grád 1"
+msgstr "Tshivenda grád 1 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2126,10 +2125,10 @@ msgstr "faoi leibhéal na siombaile fiú amháin"
 
 #. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
 #. "transparent bright orange-yellow"
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "color variation"
 msgid "transparent {colorDescription}"
-msgstr "cur síos fada"
+msgstr "{colorDescription} trédhearcach"
 
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
@@ -2773,8 +2772,8 @@ msgid "report emphasis on"
 msgstr "Tabhair tuairisc ar treise"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "Scorántar tuairisciú an téacs marcáilte "
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "Scorántar tuairisciú an téacs aibhsithe "
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 msgid "report highlighted on"
@@ -2937,9 +2936,8 @@ msgid "report table cell coordinates on"
 msgstr "Léigh comhordanáidí cille i dtáblaí"
 
 #. Translators: Input help mode message for toggle report cell borders command.
-#, fuzzy
 msgid "Cycles through the cell border reporting settings"
-msgstr "Sainroghanna eanguithe"
+msgstr "Sainroghanna Déantar tuairisc ar roghanna teorainneacha na gceall"
 
 #. Translators: A message reported when cycling through cell borders settings.
 msgid "Report styles of cell borders"
@@ -9487,6 +9485,9 @@ msgid ""
 "options apply to focus reporting and NVDA object navigation, but not when "
 "reading text content e.g. web content with browse mode."
 msgstr ""
+"Cumraigh an méid eolais faoi rialtáin  a chuirfidh NVDA ar fáil. Baineann na "
+"roghanna seo le tuairisciú fócais agus le nascleanúint oibiachta NVDA, ach "
+"ní bhaineann siad le brabhsáil téacs."
 
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
@@ -10066,10 +10067,9 @@ msgid "Only in NVDA test versions"
 msgstr "ar fáil i leagan tástála NVDA."
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#, fuzzy
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
-msgstr "Cealaigh"
+msgstr "Lean ar aghaidh"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -11135,7 +11135,7 @@ msgstr "{val:.2f} in"
 #. Translators: a measurement in centimetres
 #, python-brace-format
 msgid "{val:.2f} cm"
-msgstr ""
+msgstr "{val:.2f} cm"
 
 msgid "invoke"
 msgstr "gair"
@@ -11200,7 +11200,7 @@ msgstr "Dath: {0.name}"
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill type: {0}"
-msgstr ""
+msgstr "cineáil líonta {0}"
 
 #. Translators: the number format of an Excel cell
 #, python-brace-format
