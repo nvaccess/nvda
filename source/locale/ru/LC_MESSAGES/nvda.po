@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-29 00:02+0000\n"
-"PO-Revision-Date: 2021-11-02 20:09+0800\n"
+"POT-Creation-Date: 2021-11-05 00:03+0000\n"
+"PO-Revision-Date: 2021-11-06 03:10+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -2769,8 +2769,8 @@ msgid "report emphasis on"
 msgstr "чтение акцентирования включено"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "Включает и выключает объявление выделенного (подсвеченного) текста"
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "Включает и выключает объявление подсвеченного (выделенного) текста"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 msgid "report highlighted on"
@@ -4698,11 +4698,11 @@ msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
-msgstr "настольная"
+msgstr "desktop"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "laptop"
-msgstr "ноутбук"
+msgstr "laptop"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
@@ -4724,11 +4724,11 @@ msgstr "выключено"
 #. For example, in English, this might produce "laptop keyboard".
 #, python-format
 msgid "%s keyboard"
-msgstr "%s клавиатура"
+msgstr "клавиатура, %s-раскладка"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
 msgid "keyboard, all layouts"
-msgstr "Клавиатура, все раскладки"
+msgstr "клавиатура, все раскладки"
 
 #. Translators: The pattern defining how languages are displayed and sorted in in the general
 #. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
@@ -5920,7 +5920,7 @@ msgstr "Скорость"
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
-msgstr "До&полнительное ускорение"
+msgstr "Допо&лнительное ускорение"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -5947,7 +5947,7 @@ msgstr "Высота"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
-msgstr "&Интонация"
+msgstr "Ин&тонация"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -8090,7 +8090,7 @@ msgstr "Просмотрщик &речи"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
 msgid "Braille viewer"
-msgstr "Просмотрщик брайля"
+msgstr "Просмотрщик &брайля"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -9129,7 +9129,7 @@ msgstr "Показывать &варианты выхода при заверш�
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
-msgstr "Вос&производить звуки при запуске или завершении работы NVDA"
+msgstr "Воспроизводить зв&уки при запуске или завершении работы NVDA"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs
 #. (available options and what they are logging are found under comments for the logging level messages
@@ -9332,12 +9332,12 @@ msgstr "Говорить «&Большая» перед заглавными б�
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "&Beep for capitals"
-msgstr "&Сигнал перед заглавными буквами"
+msgstr "Сигнал перед &заглавными буквами"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "Use &spelling functionality if supported"
-msgstr "Использовать по&символьное чтение, если поддерживается"
+msgstr "Использовать поси&мвольное чтение, если поддерживается"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -9367,7 +9367,7 @@ msgstr "Читать с&лова при вводе"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Speech &interrupt for typed characters"
-msgstr "&Прерывать речь при наборе символов"
+msgstr "Прерывать речь при наборе с&имволов"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -9486,7 +9486,7 @@ msgstr "Всегда включать краткое &описание иеро�
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
 msgid "Report changes to the &reading string"
-msgstr "Сообщать изменения строки &прекомпозиции"
+msgstr "Сообщать изменения строки п&рекомпозиции"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
@@ -9544,7 +9544,7 @@ msgstr "Сообщать &горячие клавиши объекта"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report object &position information"
-msgstr "Сообщать &позицию объекта"
+msgstr "Сообщать по&зицию объекта"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9701,7 +9701,7 @@ msgstr "Документ"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "No&tes and comments"
-msgstr "Заметки и &примечания"
+msgstr "Заметки и пр&имечания"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9928,7 +9928,7 @@ msgstr ""
 #. Advanced settings panel.
 msgid "Speak &passwords in UIA consoles (may improve performance)"
 msgstr ""
-"Проговаривать &пароли в UIA-консолях (может улучшить производительность)"
+"Про&говаривать пароли в UIA-консолях (может улучшить производительность)"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -10224,15 +10224,15 @@ msgstr "Ошибка брайлевского дисплея"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
-msgstr "Брайлевская таблица в&ывода:"
+msgstr "Таблица в&ывода:"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 msgid "&Input table:"
-msgstr "Брайлевская таблица вв&ода:"
+msgstr "Таблица вв&ода:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "Использовать &компьютерный брайль для слова под курсором"
+msgstr "Использовать ко&мпьютерный брайль для слова под курсором"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
@@ -10252,7 +10252,7 @@ msgstr "&Форма курсора для системного фокуса:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
-msgstr "&Форма курсора для просмотрового курсора:"
+msgstr "Форма курсора для просмотрово&го курсора:"
 
 #. Translators: One of the show states of braille messages
 #. (the timeout mode shows messages for the specific time).
@@ -10989,7 +10989,7 @@ msgstr "Визуальная подсветка"
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
 msgid "&Enable Highlighting"
-msgstr "Включить &подсветку"
+msgstr "Включить по&дсветку"
 
 #. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
@@ -11003,7 +11003,7 @@ msgstr "&Всегда показывать предупреждения при �
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 msgid "&Play sound when toggling Screen Curtain"
-msgstr "&Воспроизводить звук при переключении затемнения экрана"
+msgstr "Воспроизводить &звук при переключении затемнения экрана"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
