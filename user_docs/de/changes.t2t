@@ -14,7 +14,7 @@ Ein Problem mit UIA wurde behoben, dass Outlook jetzt mehr Arten von Layouttabel
 
 Wichtige Anmerkungen:
 
-Auf Grund einer Aktualisierung unseres Sicherheitszertifikats erhalten einige Benutzer einen Fehler, wenn NVDA 2021.2 nach Updates suchen.
+Auf Grund einer Aktualisierung unseres Sicherheitszertifikats erhalten einige Benutzer einen Fehler, wenn NVDA 2021.2 nach Updates sucht.
 NVDA fordert nun Windows auf, Sicherheitszertifikate zu aktualisieren, wodurch dieser Fehler in Zukunft verhindert wird.
 Betroffene Benutzer müssen dieses Update manuell herunterladen.
 
@@ -50,14 +50,14 @@ Wenn Sie jedoch diese Funktionalität benötigen, weisen Sie dem entsprechenden 
 == Fehlerbehebung ==
 - Das Verfolgen von NVDA-Tasten (wie Strg oder Einfügen) ist robuster, wenn "Watchdog" wiederhergestellt wird. (#12609)
 - Es ist wieder möglich, auf bestimmten Systemen nach NVDA-Updates zu suchen; z. B. nach einer Bereinigung oder kompletten Neuinstallationen von Windows. (#12729)
-- NVDA teilt leere Tabellenzellen in Microsoft Word nun korrekt mit, wenn die UIA verwendet wird. (#11043)
+- NVDA teilt leere Tabellenzellen in Microsoft Word nun korrekt mit, wenn UIA verwendet wird. (#11043)
 - In ARIA-Datenrasterzellen im Web wird die Escape-Taste jetzt an das Raster weitergegeben und deaktiviert den Fokusmodus nicht mehr bedingungslos. (#12413)
 - Beim Lesen einer Kopfzeile einer Tabelle in Chrome wurde korrigiert, dass der Spaltenname zweimal angesagt wird. (#10840)
 - NVDA meldet keinen numerischen Wert mehr für UIA-Schieberegler, für die eine Textdarstellung ihres Wertes definiert ist. (UIA ValuePattern wird jetzt RangeValuePattern vorgezogen). (#12724)
 - NVDA behandelt den Wert von UIA-Schiebereglern nicht mehr immer prozentual.
 - Das Mitteilen des Standorts einer Zelle in Microsoft Excel beim Zugriff über die UIA funktioniert unter Windows 11 wieder ordnungsgemäß. (#12782)
 - NVDA legt keine ungültigen Python-Gebietsschemas mehr fest. (#12753)
-- Wenn eine deaktivierte Erweiterung deinstalliert und dann erneut wieder installiert wird, wird dieses nun automatisch aktiviert. (#12792)
+- Wenn eine deaktivierte Erweiterung deinstalliert und dann erneut wieder installiert wird, wird diese nun automatisch aktiviert. (#12792)
 - Fehler beim Aktualisieren und Entfernen von Erweiterungen behoben, bei denen der Ordner der Erweiterung umbenannt wurde oder Dateien geöffnet wurden. (#12792, #12629)
 - Bei Verwendung der UIA für den Zugriff auf Steuerelemente in Microsoft Excel-Tabellenkalkulationen gibt NVDA nicht mehr redundant an, wenn eine einzelne Zelle ausgewählt wird. (#12530)
 - Weitere Dialogtexte werden in LibreOffice Writer automatisch vorgelesen, beispielsweise in Bestätigungsdialogen. (#11687)
@@ -73,8 +73,8 @@ Wenn Sie jedoch diese Funktionalität benötigen, weisen Sie dem entsprechenden 
 - Beim Zugriff auf MS Word mit UIA werden der Befehl zur Änderungsverfolgung und einige andere lokalisierte Befehle jetzt in Word mitgeteilt. (#12904)
 - Doppelte Ausgaben in Braille und der Sprachausgabe behoben, wenn "description" mit "content" oder "name" übereinstimmt. (#12888)
 - Bei der Eingabe in Microsoft Word mit aktiviertem UIA teilt NVDA die Rechtschreibfehler exakter mit. (#12161)
-- In Windows 11 teilt NVDA "Fenster" nicht mehr mit, wenn Sie Alt+Tab drücken, um zwischen den Anwendungen zu wechseln. (#12648)
-- Der neue Bereichspanel der Modernen Kommentare wird nun in Microsoft Word unterstützt, wenn nicht über UIA auf das Dokument zugegriffen wird. Drücken Sie Alt+F12, um zwischen dem Panel und dem Dokument zu wechseln. (#12982)
+- In Windows 11 sagt NVDA nicht mehr "Fenster", wenn Sie Alt+Tab drücken, um zwischen den Anwendungen zu wechseln. (#12648)
+- Der neue Bereich der Modernen Kommentare wird nun in Microsoft Word unterstützt, wenn nicht über UIA auf das Dokument zugegriffen wird. Drücken Sie Alt+F12, um zwischen dem Panel und dem Dokument zu wechseln. (#12982)
 -
 
 
