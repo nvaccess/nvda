@@ -1580,7 +1580,8 @@ Para activar ou desactivar o Modo de revisão simples, em qualquer local, por fa
 
 +++ Apresentação de Objectos (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
 A secção "Apresentação de objectos" permite-lhe configurar o nível de informação que o NVDA dará sobre os objectos em foco, como descrição, posição, etc.
-Esta secção contém as seguintes opções:
+Estas opções normalmente não se aplicam ao modo de navegação.
+Pelo contrário, normalmente aplicam-se ao anúncio do foco e à navegação por objetos do NVDA, mas não à leitura de conteúdo de texto, como por exemplo. em modo de navegação.
 
 ==== Anunciar Sugestões ====[ObjectPresentationReportToolTips]
 Uma caixa de verificação que, quando marcada, indica ao NVDA  que anuncie sugestões, quando aparecem.
@@ -1835,12 +1836,12 @@ Isto tem um grande impacto negativo na performance, especialmente em aplicaçõe
 Portanto, com esta opção activada, o NVDA limitará o registo de eventos para o foco do sistema.
 Se notar problemas de performance numa ou várias aplicações, recomendamos que experimente esta funcionalidade para verificar se a performance melhora.
 
-==== Usar sempre UI Automation para aceder a controlos de documentos do Microsoft Word, se disponível ====[AdvancedSettingsUseUiaForWord].
-Quando esta opção estiver activada, o NVDA tentará sempre utilizar a API de acessibilidade da Microsoft UI Automation para obter informações dos controlos dos documentos do Microsoft Word, mesmo para versões menos recentes do Microsoft Office 2016.
+==== Usar UI Automation para aceder a controlos de documentos do Microsoft Word, se disponível ====[AdvancedSettingsUseUiaForWord].
+Quando esta opção estiver activada, o NVDA tentará utilizar a API de acessibilidade da Microsoft UI Automation para obter informações dos controlos dos documentos do Microsoft Word.
 Isto inclui o próprio Microsoft Word e também o visualizador e o compositor de mensagens do Microsoft Outlook.
-Para uma versão do Microsoft Office com compilação 16.0.13901 ou superior, o NVDA utilizará sempre a UI Automation para aceder aos documentos do Microsoft Word, independentemente desta configuração.
-Para as versões mais recentes do Microsoft Office, 2016/365, em Windows 10 e seguintes, o suporte da UI Automation está suficientemente completo para fornecer praticamente o mesmo acesso aos documentos do Microsoft Word, que havia antes, com a vantagem adicional de aumentar significativamente a capacidade de resposta.
+Para as versões mais recentes do Microsoft Office, 2016/365, em Windows 10 e seguintes, o suporte da UI Automation está suficientemente completo para fornecer praticamente o mesmo acesso aos documentos do Microsoft Word, que havia antes, com a vantagem adicional de aumentar significativamente a rapidez de resposta.
 No entanto, em algumas versões antigas do Microsoft Office, pode haver algumas informações que não são expostas, ou o são incorrectamente, pelo que o suporte UI Automation nem sempre deve ser activado.
+Ainda não se recomenda que todos os utilizadores activem esta opção, embora agradeçamos aos utilizadors do Office 2016/365 que testem este recurso e forneçam retorno.
 
 ==== Usar UI Automation para aceder à Consola Windows quando disponível ====[AdvancedSettingsConsoleUIA]
 Quando esta opção está activa, o NVDA usará a nova, ainda em progresso, versão do suporte para Consolas Windows que aproveita as melhorias na [acessibilidade introduzidas pela Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta funcionalidade ainda é altamente experimental e incompleta, por isso o seu uso ainda não é recomendado. Contudo, quando completa, prevemos que este novo suporte venha a ser o padrão, melhorando a performance e estabilidade do NVDA nas consolas de comando do Windows.
@@ -1863,16 +1864,16 @@ Este grupo de opções é usado para permitir funcionalidades que adicionam supo
 Algumas dessas funcionalidades podem estar incompletas.
 Existem as seguintes opções: 
 - Anunciar detalhes em modo de navegação: Activa o anúncio de que um objecto tem detalhes em modo de navegação.
-Anunciar o sumário dos detalhes pode ser feito atribuindo um comando através do diálogo [Definir comandos #InputGestures].
+  Anunciar o sumário dos detalhes pode ser feito atribuindo um comando através do diálogo [Definir comandos #InputGestures].
 - Anunciar sempre aria-description":
-Quando a fonte da "descrição" é aria-description, a descrição é anunciada.
-Isto é útil para anotações na web.
-Nota:
-- Existem muitas fontes de "accDescription", e várias têm uma semântica mista ou não fiável;
-  Historicamente AT não tem sido capaz de diferenciar fontes de ``descrição``` tipicamente não era falada devido à semântica mista.
-- Esta opção está em desenvolvimento muito precoce, e depende de características dos navegadores  ainda não amplamente disponíveis;
-- Espera-se que funcione com o Chromium 92.0.4479.0+.
--
+  Quando a fonte da "descrição" é aria-description, a descrição é anunciada.
+  Isto é útil para anotações na web.
+  Nota:
+		- Existem muitas fontes de "accDescription", e várias têm uma semântica mista ou não fiável;
+    Historicamente AT não tem sido capaz de diferenciar fontes de ``descrição``` tipicamente não era falada devido à semântica mista.
+  - Esta opção está em desenvolvimento muito precoce, e depende de características dos navegadores  ainda não amplamente disponíveis;
+  - Espera-se que funcione com o Chromium 92.0.4479.0+.
+  -
 
 ==== Usar UI Automation para aceder às folhas do Microsoft Excel se disponível ====[UseUiaForExcel]
 Quando esta opção está activada o NVDA tentará usar a Microsoft UI Automation accessibility API para recolher informação dos controlos das folhas do Microsoft Excel.
@@ -1915,7 +1916,7 @@ Se o NVDA parecer estar a seguir incorrectamente o cursor de inserção, por exe
 Esta opção permite anunciar quando as cores são transparentes, útil para desenvolvedores de  addons/appModule ao reunir informações para melhorar a experiência do utilizador com uma aplicação de terceiros.
 Algumas aplicações GDI realçam o texto com uma cor de fundo, e o  NVDA (via "display model) tenta anunciar esta cor.
 Em algumas situações, o fundo do texto pode ser totalmente transparente, com o texto em sobreposto a algum outro elemento GUI.
-Com várias APIs de GUI, historicamente populares, o texto pode ser apresentado com um fundo transparente, mas visualmente a cor de fundo é exacta.
+Com várias API's de GUI, historicamente populares, o texto pode ser apresentado com um fundo transparente, mas visualmente a cor de fundo é exacta.
 
 ==== Categorias do registo em modo de depuração ====[AdvancedSettingsDebugLoggingCategories]
 As caixas de verificação desta lista permitem activar categorias específicas de mensagens de depuração no registo do NVDA.
@@ -3178,17 +3179,17 @@ Por favor, consulte na documentação do BRLTTY as [tabelas de associação de t
 | Encaminhar para a célula braille | route (bring cursor to character) |
 %kc:endInclude
 
-++ Standard HID Braille displays ++[HIDBraille]
-This is an experimental driver for the new Standard HID Braille Specification, agreed upon in 2018 by Microsoft, Google, Apple and several assistive technology companies including NV Access. 
-The hope is that all future Braille Display models created by any manufacturer, will use this standard protocol which will remove the need for manufacturer-specific Braille drivers.
+++ Linhas Braille com protocolo HID ++[HIDBraille]
+Este é um driver experimental para o novo protocolo Braille HID, aprovado em 2018 por Microsoft, Google, Apple e várias entidades de tecnologia assistiva, incluindo a NV Access. 
+Espera-se que todos os dispositivos Braille futuros, desenvolvidos por qualquer fabricante utilize este protocolo, o que dispensará drivers específicos de cada fabricante.
 
-NVDA's automatic braille display detection will also recognize any display that supports this protocol.
+A detecção automática de dispositivos Braille do NVDA reconhecerá qualquer dispositivo que utilize este protocolo.
  
 Following are the current key assignments for these displays.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | pan left |
-| Scroll braille display forward | pan right |
+\| Scroll braille display back | pan left or rocker up |
+| Scroll braille display forward | pan right or rocker down |
 | Move braille display to previous line | space + dot1 |
 | Move braille display to next line | space + dot4 |
 | Route to braille cell | routing set 1|
