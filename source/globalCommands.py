@@ -2558,6 +2558,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TOOLS
 	)
 	def script_activateAddonsManager(self,gesture):
+		if globalVars.appArgs.secure:
+			return
 		wx.CallAfter(gui.mainFrame.onAddonsManagerCommand, None)
 
 	@script(
