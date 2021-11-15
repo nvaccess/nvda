@@ -33,6 +33,7 @@ UIARemoteLib=env.SharedLibrary(
 	],
 	LIBS=[
 		"runtimeobject",
+		"UIAutomationCore",
 		localLib[2],
 		MSUIA_lib_outDir.File('UiaOperationAbstraction.lib'),
 	],
