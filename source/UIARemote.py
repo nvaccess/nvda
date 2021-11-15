@@ -5,11 +5,15 @@ from comtypes import BSTR
 from comtypes.safearray import _midlSAFEARRAY as SAFEARRAY
 import NVDAHelper
 from logHandler import log
-import UIAHandler
+from comInterfaces import UIAutomationClient as UIA
 
 
 _dll=windll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
 initialize=_dll.initialize
+
+msWord_expandToEnclosingSentence = _dll.msWord_expandToEnclosingSentence
+msWord_expandToEnclosingSentence.argtypes = (POINTER(UIA.IUIAutomationTextRange),)
+msWord_expandToEnclosingSentence.restype = (POINTER(UIA.IUIAutomationTextRange))
 
 def findHeadingsInTextRange(textRange, maxItems=None, backwards=False, level=0):
 	headings = []
@@ -19,7 +23,7 @@ def findHeadingsInTextRange(textRange, maxItems=None, backwards=False, level=0):
 		numItemsFound = c_int()
 		foundLevels = SAFEARRAY(c_int)()
 		foundLabels = SAFEARRAY(BSTR)()
-		foundRanges = SAFEARRAY(POINTER(UIAHandler.IUIAutomationTextRange))()
+		foundRanges = SAFEARRAY(POINTER(UIA.IUIAutomationTextRange))()
 		remainingTextRange = POINTER(UIAHandler.IUIAutomationTextRange)()
 		_dll.findHeadingsInTextRange(textRange, maxItems, backwards, level, byref(numItemsFound), byref(foundLevels), byref(foundLabels), byref(foundRanges), byref(remainingTextRange));
 		numCalls += 1

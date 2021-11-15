@@ -40,6 +40,7 @@ MSUIA_wrapper_libs = env.Command(
 	],
 	source = [
 		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation.vcxproj'),
+		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation.idl'),
 		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'microsoft.ui.uiautomation', '*.cpp')),
 		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'microsoft.ui.uiautomation', '*.h')),
 	],

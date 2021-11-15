@@ -1,3 +1,6 @@
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+#include <locale>
+#include <codecvt>
 #include <functional>
 #include <string>
 #include <windows.h>
@@ -14,6 +17,39 @@
 using namespace UiaOperationAbstraction;
 
 wchar_t dllDirectory[MAX_PATH];
+
+winrt::guid GUID_MSWORD_EXPANDTOENCLOSINGSENTENCE { 0x98fe8b34, 0xf317, 0x459a, { 0x96, 0x27, 0x21, 0x12, 0x3e, 0xa9, 0x5b, 0xea } };
+
+extern "C" __declspec(dllexport) IUIAutomationTextRange* __stdcall msWord_expandToEnclosingSentence(IUIAutomationTextRange* pTextRangeArg) {
+	try {
+		auto scope=UiaOperationScope::StartNew();
+		UiaBool isSupported{false};
+		UiaTextRange textRange{pTextRangeArg};
+		auto element = textRange.GetEnclosingElement();
+		scope.If(element.IsExtensionSupported(GUID_MSWORD_EXPANDTOENCLOSINGSENTENCE),[&]() {
+			isSupported = true;
+			element.CallExtension(GUID_MSWORD_EXPANDTOENCLOSINGSENTENCE, textRange);
+		});
+		scope.BindResult(isSupported, textRange);
+		auto res = scope.ResolveHr();
+		if(res != S_OK) {
+			LOG_ERROR(L"Error in scope.Resolve: code "<<res);
+		}
+		if(isSupported) {
+			return (*textRange).detach();
+		} else {
+			LOG_ERROR(L"Extension not supported");
+		}
+	} catch (std::exception& e) {
+		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+		auto what = converter.from_bytes(e.what());
+		LOG_ERROR(L"msWord_expandToEnclosingSentence exception: "<<what);
+	} catch(...) {
+		LOG_ERROR(L"msWord_expandToEnclosingSentence exception: unknown");
+	}
+	return nullptr;
+}
+
 
 extern "C" __declspec(dllexport) bool __stdcall initialize(bool doRemote, IUIAutomation* client) {
 	std::wstring manifestPath = dllDirectory;
