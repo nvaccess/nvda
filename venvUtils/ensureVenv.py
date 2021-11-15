@@ -17,6 +17,7 @@ A script to ensure that the NVDA build system's Python virtual environment is cr
 top_dir: str = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..")
 venv_path: str = os.path.join(top_dir, ".venv")
 requirements_path: str = os.path.join(top_dir, "requirements.txt")
+removed_requirements_path: str = os.path.join(top_dir, "_removedRequirements.txt")
 venv_orig_requirements_path: str = os.path.join(venv_path, "_requirements.txt")
 venv_python_version_path: str = os.path.join(venv_path, "python_version")
 
@@ -51,28 +52,49 @@ def fetchRequirementsSet(path: str) -> Set[str]:
 		lines = [x for x in lines if x and not x.isspace() and not x.startswith('#')]
 	return set(lines)
 
-
-def populate():
+def installRequirements():
 	"""
-	Installs all required packages within the virtual environment.
+	Installs all required packages within the virtual environment,
+	including removing any packages that are no longer listed.
 	When called stand alone, this function only ensures that NVDA's package requirements are met,
 	without recreating the full environment.
 	This means that transitive dependencies can get out of sync with those used in automated builds.
 	"""
+	oldRequirements = fetchRequirementsSet(venv_orig_requirements_path)
+	newRequirements = fetchRequirementsSet(requirements_path)
+	removedRequirements = oldRequirements - newRequirements
+	addedRequirements = newRequirements - oldRequirements
+	if not removedRequirements and not addedRequirements:
+		# Nothing to do
+		return
 	print("Installing packages in virtual environment...", flush=True)
-	subprocess.run(
-		[
-			# Activate virtual environment
-			os.path.join(venv_path, "scripts", "activate.bat"),
-			"&&",
-			# Ensure we have the latest version of pip
-			"py", "-m", "pip",
-			"install", "--upgrade", "pip",
-			"&&",
-			# Install required packages with pip
-			"py", "-m", "pip",
+	commands = []
+	# Activate virtual environment
+	commands.extend([
+		os.path.join(venv_path, "scripts", "activate.bat"),
+	])
+	# Ensure we have the latest version of pip
+	commands.extend([
+		"&&", "py", "-m", "pip", "-q",
+		"install", "--upgrade", "pip",
+	])
+	# Remove any unneeded packages
+	if removedRequirements:
+		with open(removed_requirements_path, "w") as f:
+			for package in removedRequirements:
+				f.write(f"{package}\n")
+		commands.extend([
+			"&&", "py", "-m", "pip",
+			"uninstall", "-y", "-r", removed_requirements_path,
+		])
+	# Install needed requirements
+	if addedRequirements:
+		commands.extend([
+			"&&", "py", "-m", "pip", "-q",
 			"install", "-r", requirements_path,
-		],
+		])
+	subprocess.run(
+		commands,
 		check=True,
 		shell=True,
 	)
@@ -96,7 +118,7 @@ def createVenvAndPopulate():
 	)
 	with open(venv_python_version_path, "w") as f:
 		f.write(sys.version)
-	populate()
+	installRequirements()
 
 
 def ensureVenvAndRequirements():
@@ -127,22 +149,7 @@ def ensureVenvAndRequirements():
 	if venv_python_version != sys.version:
 		print(f"Python version changed. Was {venv_python_version}, now is {sys.version}")
 		return createVenvAndPopulate()
-	oldRequirements = fetchRequirementsSet(venv_orig_requirements_path)
-	newRequirements = fetchRequirementsSet(requirements_path)
-	addedRequirements = newRequirements - oldRequirements
-	if addedRequirements:
-		if askYesNoQuestion(
-			f"Added or changed package requirements. {addedRequirements}\n"
-			"You are encouraged to recreate the virtual environment. "
-			"If you choose no, the new requirements will be installed without recreating. "
-			"This means that transitive dependencies can get out of sync "
-			"with those used in automated builds. "
-			"Would you like to continue recreating the environment?"
-		):
-			return createVenvAndPopulate()
-		else:
-			return populate()
-
+	return installRequirements()
 
 if __name__ == '__main__':
 	# Ensure we are not inside an already active Python virtual environment.
