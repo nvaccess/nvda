@@ -46,7 +46,7 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnContent(handle_t bindingHa
 	lvItem.iItem = item;
 	lvItem.iSubItem = subItem;
 	lvItem.cchTextMax = CBEMAXSTRLEN;
-	wchar_t textBuf[CBEMAXSTRLEN];
+	wchar_t textBuf[CBEMAXSTRLEN]{}; // Ensure that the array initialised with all zero values ('\0')
 	lvItem.pszText= textBuf;
 	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETITEM, (WPARAM)0, (LPARAM)&lvItem)) {
 		LOG_DEBUGWARNING(L"LVM_GETITEM failed");
