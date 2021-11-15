@@ -244,13 +244,12 @@ class AddonsDialog(
 
 		# the following buttons are more general and apply regardless of the current selection.
 		generalActions=guiHelper.ButtonHelper(wx.HORIZONTAL)
-		if not globalVars.appArgs.secure:
-			# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
-			self.getAddonsButton = generalActions.addButton(self, label=_("&Get add-ons..."))
-			self.getAddonsButton.Bind(wx.EVT_BUTTON, self.onGetAddonsClick)
-			# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
-			self.addButton = generalActions.addButton(self, label=_("&Install..."))
-			self.addButton.Bind(wx.EVT_BUTTON, self.onAddClick)
+		# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
+		self.getAddonsButton = generalActions.addButton(self, label=_("&Get add-ons..."))
+		self.getAddonsButton.Bind(wx.EVT_BUTTON, self.onGetAddonsClick)
+		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
+		self.addButton = generalActions.addButton(self, label=_("&Install..."))
+		self.addButton.Bind(wx.EVT_BUTTON, self.onAddClick)
 		# Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
 		self.incompatAddonsButton = generalActions.addButton(self, label=_("&View incompatible add-ons..."))
 		self.incompatAddonsButton.Bind(wx.EVT_BUTTON, self.onIncompatAddonsShowClick)
