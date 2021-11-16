@@ -7,7 +7,7 @@
 # Julien Cochuyt, Jakub Lukowicz
 
 import itertools
-from typing import Optional
+from typing import Optional, Tuple, Union
 
 import audioDucking
 import touchHandler
@@ -1067,7 +1067,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.QUERY)
 
 	@staticmethod
-	def _reportLocationText(objs) -> None:
+	def _reportLocationText(objs: Tuple[Union[None, NVDAObject, textInfos.TextInfo], ...]) -> None:
 		for obj in objs:
 			if obj is not None and obj.locationText:
 				ui.message(obj.locationText)
@@ -1078,9 +1078,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Description for a keyboard command which reports location of the
-			# review cursor falling back to the location of navigator object if needed.
+			# review cursor, falling back to the location of navigator object if needed.
 			"Reports information about the location of the text at the review cursor "
-			"or  location of the  navigator object if there is no text under review cursor."
+			"or location of the navigator object if there is no text under review cursor."
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
 	)
@@ -1102,7 +1102,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Description for a keyboard command which reports location of the
 			# current caret position falling back to the location of focused object if needed.
 			"Reports information about the location of the text at the caret, "
-			"or  location of the  currently focused object if there is no caret."
+			"or location of the currently focused object if there is no caret."
 		),
 		category=SCRCAT_SYSTEMCARET,
 	)
@@ -1142,7 +1142,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Description for a keyboard command
 			# which reports location of the text at the caret position
 			# or object with focus if there is no caret.
-			"Reports information about the location of the text or object at the positionn of system caret "
+			"Reports information about the location of the text or object at the position of system caret "
 			"Pressing twice may provide further detail."
 		),
 		category=SCRCAT_SYSTEMCARET,
@@ -1868,9 +1868,12 @@ class GlobalCommands(ScriptableObject):
 			)
 
 	@staticmethod
-	def _getTIAtCaret(fallbackToPOSITION_FIRST=False, reportFailure=True):
+	def _getTIAtCaret(
+			fallbackToPOSITION_FIRST: bool = False,
+			reportFailure: bool = True
+	) -> Optional[textInfos.TextInfo]:
 		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
-		# Note that if there is  no caret this fact is announced  in speech and braille
+		# Note that if there is no caret this fact is announced in speech and braille
 		# unless reportFailure is set to C{False}
 		obj = api.getFocusObject()
 		treeInterceptor = obj.treeInterceptor
