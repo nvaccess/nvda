@@ -1101,7 +1101,10 @@ the NVDAObject for IAccessible
 				event_windowHandle=self.event_windowHandle, event_objectID=self.event_objectID, event_childID=child[1])
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0], IAccessibleChildID=child[1]))
 
-	def _get_IA2Attributes(self):
+	#: Type definition for auto prop '_get_IA2Attributes'
+	IA2Attributes: typing.Dict[str, str]
+
+	def _get_IA2Attributes(self) -> typing.Dict[str, str]:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return {}
 		try:
