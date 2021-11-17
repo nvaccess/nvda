@@ -234,6 +234,12 @@ setup(
 		],
 		"packages": [
 			"NVDAObjects",
+			# As of py2exe 0.11.0.0 if the forcibly included package contains subpackages
+			# they need to  be listed explicitly (py2exe issue 113).
+			"NVDAObjects.IAccessible",
+			"NVDAObjects.JAB",
+			"NVDAObjects.UIA",
+			"NVDAObjects.window",
 			"virtualBuffers",
 			"appModules",
 			"comInterfaces",
