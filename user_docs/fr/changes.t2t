@@ -71,16 +71,16 @@ Si vous souhaitez cette fonctionnalité, veuillez assigner un geste au script ap
 - Lors de l'accès à MS Word avec UIA, l'indentation des paragraphes est maintenant annoncée. (#12899)
 - Lors de l'accès à MS Word avec UIA, la commande de suivi des modifications et d'autres commandes localisées sont maintenant reportées dans Word. (#12904)
 - Correction d'un doublon en Braille et vocal quand 'description' est identique 'content' ou 'name'. (#12888)
-- Dans MS Word avec UIA activé, la lecture du son d'erreur d'orthographe est plus précise au fur et à mesure que vous tapez. (#12161)
+- Dans MS Word avec UIA activé, la génération du son d'erreur d'orthographe lors de la frappe est plus fiable. (#12161)
 - Sous Windows 11, NVDA n'annoncera plus "volet" lors de l'appui sur Alt+Tab pour circuler entre les programmes. (#12648)
 - Le nouveau volet latéral des commentaires modernes est désormais pris en charge dans MS Word lorsque vous n'accédez pas au document via UIA. Appuyez sur Alt+F12 pour naviguer entre le volet latéral et le document. (#12982)
 -
 
 
 == Changements pour les Développeurs ==
-- Compiler NVDA requiert maintenant Visual Studio 2019 16.10.4 ou supérieur.
+- La compilation de NVDA requiert maintenant Visual Studio 2019 16.10.4 ou supérieur.
 Pour correspondre à l'environnement de compilation de production, mettez à jour Visual Studio pour rester synchronisé avec la [version actuellement utilisée par AppVeyor https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019]. (#12728)
-- ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` a été dépréciée pour suppression dans NVDA 2022.1. (#12660)
+- ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` a été rendu obsolète pour suppression dans NVDA 2022.1. (#12660)
   - Utiliser ``apiLevel`` à la place (voir les commentaires dans ``_UIAConstants.WinConsoleAPILevel`` pour les détails).
   -
 - La transparence de la couleur d'arrière-plan du texte provenant des applications GDI (via le modèle d'affichage) est désormais exposée pour les extensions ou les appModules. (#12658)
