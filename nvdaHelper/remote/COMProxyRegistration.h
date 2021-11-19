@@ -49,7 +49,7 @@ typedef struct {
 	@param dllPath the relative path to the proxy dll (relative from this dll)
 	@return registration data which can be later passed to UnregisterCOMProxy.
 	*/
-COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath);
+COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath);
 
 /* Unregisters a COM proxy dll originally registered with registerCOMProxy
 	@param reg the registration data returned by registerCOMProxy.

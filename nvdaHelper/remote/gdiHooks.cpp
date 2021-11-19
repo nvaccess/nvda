@@ -183,7 +183,7 @@ void swapBuffer(WORD* array, int length) {
 }
 
 //Retrieves table data from font selected in DC using GetFontData [SynPdf]
-std::vector<BYTE> getTTFData(HDC hdc, char* tableName) {
+std::vector<BYTE> getTTFData(HDC hdc, const char* tableName) {
 	DWORD len=GetFontData(hdc,*((LPDWORD)tableName),0,NULL,0);
 	if(len==GDI_ERROR) {
 		LOG_DEBUG("getTTFData for table "<<tableName<<" result GDI_ERROR");

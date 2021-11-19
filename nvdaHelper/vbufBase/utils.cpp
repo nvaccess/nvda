@@ -28,7 +28,7 @@ wstring getNameForURL(const wstring &url) {
 	if (colonPos != wstring::npos && url.compare(colonPos, 3, L"://") != 0) {
 		// This URL specifies a protocol, but it is not a path-based protocol; e.g. it is a javascript: or mailto: URL.
 		wstring imgCheck = url.substr(0, 11);
-		transform(imgCheck.begin(), imgCheck.end(), imgCheck.begin(), tolower);
+		transform(imgCheck.begin(), imgCheck.end(), imgCheck.begin(), [](wchar_t c) -> wchar_t { return tolower(c); });
 		if (imgCheck.compare(0, 11, L"data:image/") == 0)
 			return L""; // This URL is not useful.
 		// Return the URL as is with the protocol stripped.
