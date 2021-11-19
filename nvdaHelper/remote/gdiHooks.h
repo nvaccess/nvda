@@ -22,7 +22,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 template <typename t> class displayModelsMap_t: public std::map<t,displayModel_t*>, public LockableObject {
 	public:
-	displayModelsMap_t(): map<t,displayModel_t*>(), LockableObject() {
+	displayModelsMap_t(): std::map<t,displayModel_t*>(), LockableObject() {
 	}
 };
 

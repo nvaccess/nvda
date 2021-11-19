@@ -92,9 +92,6 @@ env.Append(
 		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
 	]
 )
-env.Append(CCFLAGS=[
-	'/std:c++17',
-])
 
 env.Append(CXXFLAGS=['/EHsc'])
 
@@ -139,6 +136,11 @@ env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we h
 win10env=env.Clone()
 win10env.Append(CXXFLAGS='/ZW')
 Export('win10env')
+
+env.Append(CCFLAGS=[
+	'/std:c++17',
+	'/permissive-'
+])
 
 if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])
