@@ -21,10 +21,15 @@ What's New in NVDA
 - On a system where the user has chosen to swap the primary mouse button from the left to the right, NVDA will no longer accidentally bring up a context menu instead of activating an item, in applications such as web browsers. (#12642)
 - When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)
 - NVDA can report the application name and version for binaries placed in system32 when running under 64-bit version of Windows. (#12943)
+- Improved consistency of output reading in terminal programs. (#12974)
+  - Note that in some situations, when inserting or deleting characters in the middle of a line, the characters after the caret may again be read out.
+  -
+- MS word with UIA: heading quick nav in browse mode no longer gets stuck on the final heading of a document, nor is this heading shown twice in the NVDA elements list. (#9540)
 -
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+- Updated py2exe to version 0.11.0.1. (#12357, #13066)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
 - ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
 - ``MessageItem`` has been removed from the Outlook appModule. (#12935)
@@ -49,6 +54,7 @@ This ensures code will honor the Windows user setting for swapping the primary m
 - ``config.getSystemConfigPath`` has been removed - there is no replacement. (#12943)
 - ``shlobj.SHGetFolderPath`` has been removed - please use ``shlobj.SHGetKnownFolderPath`` instead. (#12943)
 - ``shlobj`` constants have been removed. A new enum has been created, ``shlobj.FolderId`` for usage with ``SHGetKnownFolderPath``. (#12943)
+- ``diffHandler.get_dmp_algo`` and ``diffHandler.get_difflib_algo`` have been replaced with ``diffHandler.prefer_dmp`` and ``diffHandler.prefer_difflib`` respectively. (#12974)
 -
 
 

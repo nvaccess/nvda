@@ -27,15 +27,7 @@ class LegacyWinConsole(winConsole.WinConsole, IAccessible):
 		NVDA's original console support, used by default on Windows versions
 		before 1607.
 	"""
-
-	def _get_diffAlgo(self):
-		# Non-enhanced legacy consoles use caret proximity to detect
-		# typed/deleted text.
-		# Single-character changes are not reported as
-		# they are confused for typed characters.
-		# Force difflib to keep meaningful edit reporting in these consoles.
-		from diffHandler import get_difflib_algo
-		return get_difflib_algo()
+	pass
 
 
 def findExtraOverlayClasses(obj, clsList):
