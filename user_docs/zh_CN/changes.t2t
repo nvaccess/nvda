@@ -2,6 +2,100 @@ NVDA更新日志
 
 
 %!includeconf: ../changes.t2tconf
+What's New in NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+
+= 2021.3 =
+本版增加了对 HID 新盲文规范的支持。
+该规范旨在标准化屏幕阅读器对盲文点显器的兼容，目标是实现一种无需特定设备驱动的即插即用能力。
+对 eSpeak-NG 和 LibLouis 的更新， 支持了俄语和 Tshivenda 盲文表。
+新增了高级选项，可以在 NVDA 稳定版中开启错误音效提示。
+当在 Word 中使用全文朗读时，确保当前阅读位置与视觉显示保持一致。
+本版包括在 Office 中使用 UIA 接口的一系列重要改进。
+其中一个关于 UIA 的修复是在 Outlook 中，将一些表识别为布局表（默认状态下不在读出）。
+
+重要提示
+
+由于 NVDA 安全证书的更新，可能少数用户在使用 NVDA 2021.2 检查更新时会显示错误提示。
+NVDA 会请求 Windows 更新安全证书，以避免日后再次出现该错误。
+受影响的用户需手动下载本版并完成更新。
+
+
+== New Features ==
+- Adds an input gesture for toggling settings for reporting the style of cell borders. (#10408)
+- Support for the new HID Braille specification which aims to standardise support for Braille Displays. (#12523)
+  - Devices that support this specification will be auto detected by NVDA.
+  - For technical details on NVDA's implementation of this specification, see https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+  -
+- Add support for the VisioBraille Vario 4 Braille Device. (#12607)
+- Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
+- In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
+- Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
+-
+
+
+== Changes ==
+- Espeak-ng has been updated to 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+- NVDA will default to eSpeak if no installed OneCore voices support the NVDA preferred language. (#10451)
+- If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)
+- When reading status bar with ``NVDA+end``, the review cursor is no longer moved to its location.
+If you need this functionality please assign a gesture to the appropriate script in the Object Navigation category in the Input Gestures dialog. (#8600)
+- When opening a settings dialog which is already open, NVDA sets focus on the existing dialog rather than raise an error. (#5383)
+- Updated liblouis braille translator to [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
+  - New braille tables: Russian grade 1, Tshivenda grade 1, Tshivenda grade 2
+  -
+- Instead of "marked content" or "mrkd", "highlight" or "hlght" will be announced for speech and braille respectively. (#12892)
+- NVDA will no longer attempt to exit when dialogs are awaiting a required action (eg Confirm/Cancel). (#12984)
+-
+
+
+== Bug Fixes ==
+- Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
+- It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
+- NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
+- In ARIA data grid cells on the web, the Escape key will now be passed through to the grid and no longer turn off focus mode unconditionally. (#12413)
+- When reading a header cell of a table in Chrome, fix the column name being announced twice. (#10840)
+- NVDA no longer reports a numerical value for UIA sliders that have a textual representation of their value defined. (UIA ValuePattern is now preferred over RangeValuePattern). (#12724)
+- NVDA no longer treats the value of UIA sliders as always percentage based.
+- Reporting the location of a cell in Microsoft Excel when accessed via UI Automation again works correctly on Windows 11. (#12782)
+- NVDA no longer sets invalid Python locales. (#12753)
+- If a disabled addon is uninstalled and then re-installed it is re-enabled. (#12792)
+- Fixed bugs around updating and removing addons where the addon folder has been renamed or has files opened. (#12792, #12629)
+- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA no longer redundantly announces when a single cell is selected. (#12530)
+- More dialog text is automatically read in LibreOffice Writer, such as in confirmation dialogs. (#11687)
+- Reading / navigating with browse mode in Microsoft Word via UI automation now ensures the document is always scrolled so that the current browse mode position is visible, and that the caret position in focus mode correctly reflects the browse mode position. (#9611)
+- When performing Say all in Microsoft Word via UI automation, the document is now automatically scrolled, and the caret position is correctly updated. (#9611)
+- When reading emails in Outlook and NVDA is accessing the message with UI Automation, certain tables are now marked as layout tables, which means they will no longer be reported by default. (#nn)
+- A rare error when changing audio devices has been fixed. (#12620)
+- Input with literary braille tables should behave more reliably when in edit fields. (#12667)
+- When navigating the Windows system tray calendar, NVDA now reports the day of the week in full. (#12757)
+- When using a Chinese input method such as Taiwan - Microsoft Quick in Microsoft Word, scrolling the braille display forward and backward no longer incorrectly keeps jumping back to the original caret position. (#12855)
+- When accessing Microsoft Word documents via UIA, navigating by sentence (alt+downArrow / alt+upArrow) is again possible. (#9254)
+- When accessing MS Word with UIA, paragraph indenting is now reported. (#12899)
+- When accessing MS Word with UIA, change tracking command and some other localized commands are now reported in Word . (#12904)
+- Fixed duplicate braille and speech when 'description' matches 'content' or 'name'. (#12888)
+- In MS Word with UIA enabled, more accurate playing of spelling error sounds as you type. (#12161)
+- In Windows 11, NVDA will no longer announce "pane" when pressing Alt+Tab to switch between programs. (#12648)
+- The new Modern Comments side track pane is now supported in MS Word when not accessing the document via UIA. Press alt+f12 to move between the side track pane and the document. (#12982)
+-
+
+
+== Changes for Developers ==
+- Building NVDA now requires Visual Studio 2019 16.10.4 or later.
+To match the production build environment, update Visual Studio to keep in sync with the [current version AppVeyor is using https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019]. (#12728)
+- ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been deprecated for removal in 2022.1. (#12660)
+  - Instead use ``apiLevel`` (see the comments at ``_UIAConstants.WinConsoleAPILevel`` for details).
+  -
+- Transparency of text background color sourced from GDI applications (via the display model), is now exposed for add-ons or appModules. (#12658)
+- ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` and ``LOCALE_SLANGDISPLAYNAME`` are moved to the ``LOCALE`` enum in languageHandler.
+They are still available at the module level but are deprecated and to be removed in NVDA 2022.1. (#12753)
+- The usage of functions ``addonHandler.loadState`` and ``addonHandler.saveState`` should be replaced with their equivalents ``addonHandler.state.save`` and ``addonHandler.state.load`` before 2022.1. (#12792)
+- Braille output can now be checked in system tests. (#12917)
+-
+
 
 = 2021.2 =
 
