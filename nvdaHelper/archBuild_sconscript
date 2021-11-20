@@ -138,7 +138,7 @@ win10env.Append(CXXFLAGS='/ZW')
 Export('win10env')
 
 env.Append(CCFLAGS=[
-	'/std:c++17',
+	'/std:c++20',
 	'/permissive-'
 ])
 
