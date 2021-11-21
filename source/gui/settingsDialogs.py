@@ -2647,7 +2647,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Always use UI Automation to access Microsoft &Word document controls when available")
+		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
 		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -2669,14 +2669,6 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("AdvancedSettingsConsoleUIA", self.ConsoleUIACheckBox)
 		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
 		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
-
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Speak &passwords in UIA consoles (may improve performance)")
-		self.winConsoleSpeakPasswordsCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
-		self.bindHelpEvent("AdvancedSettingsWinConsoleSpeakPasswords", self.winConsoleSpeakPasswordsCheckBox)
-		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
-		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
 
 		label = pgettext(
 			"advanced.uiaWithChromium",
@@ -2734,7 +2726,14 @@ class AdvancedPanelControls(
 		sHelper.addItem(terminalsGroup)
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Use the new t&yped character support in Windows Console when available")
+		label = _("Speak &passwords in all enhanced terminals (may improve performance)")
+		self.winConsoleSpeakPasswordsCheckBox = terminalsGroup.addItem(wx.CheckBox(terminalsBox, label=label))
+		self.bindHelpEvent("AdvancedSettingsWinConsoleSpeakPasswords", self.winConsoleSpeakPasswordsCheckBox)
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
+		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use enhanced t&yped character support in legacy Windows Console when available")
 		self.keyboardSupportInLegacyCheckBox = terminalsGroup.addItem(wx.CheckBox(terminalsBox, label=label))
 		self.bindHelpEvent("AdvancedSettingsKeyboardSupportInLegacy", self.keyboardSupportInLegacyCheckBox)
 		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
@@ -2744,21 +2743,21 @@ class AdvancedPanelControls(
 		# Translators: This is the label for a combo box for selecting a
 		# method of detecting changed content in terminals in the advanced
 		# settings panel.
-		# Choices are automatic, allow Diff Match Patch, and force Difflib.
+		# Choices are automatic, Diff Match Patch, and Difflib.
 		diffAlgoComboText = _("&Diff algorithm:")
 		diffAlgoChoices = [
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA determine the method of detecting changed
 			# content in terminals automatically.
-			_("Automatic (Diff Match Patch)"),
+			_("Automatic (prefer Diff Match Patch)"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
-			# by character when supported, using the diff match patch algorithm.
-			_("allow Diff Match Patch"),
+			# by character, using the diff match patch algorithm.
+			_("Diff Match Patch"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
 			# by line, using the difflib algorithm.
-			_("force Difflib")
+			_("Difflib")
 		]
 		#: The possible diffAlgo config values, in the order they appear
 		#: in the combo box.
@@ -2925,9 +2924,9 @@ class AdvancedPanelControls(
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
-			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
+			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
@@ -2945,8 +2944,8 @@ class AdvancedPanelControls(
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
-		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
@@ -2966,9 +2965,9 @@ class AdvancedPanelControls(
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
-		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
+		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
 		config.conf['terminals']['diffAlgo'] = (

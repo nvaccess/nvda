@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-03 00:01+0000\n"
-"PO-Revision-Date: 2021-09-06 21:16+0300\n"
+"POT-Creation-Date: 2021-10-22 00:02+0000\n"
+"PO-Revision-Date: 2021-10-26 14:49+0300\n"
 "Last-Translator: Hatoon <h.felemban@hotmail.com>\n"
 "Language-Team: AR <nvda-ar@groups.io>\n"
 "Language: ar\n"
@@ -14,8 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
 "X-Poedit-Bookmarks: -1,1664,-1,-1,1582,-1,-1,-1,-1,-1\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : "
-"5);\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -416,8 +415,8 @@ msgid "fig"
 msgstr "fig"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
-msgid "mrkd"
-msgstr "mrkd"
+msgid "hlght"
+msgstr "hlght"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -1257,6 +1256,11 @@ msgstr "روسي (literary braille (detailed))"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Russian contracted braille"
+msgstr "روسي باختصرات"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "سنسكريتي بدون اختصارات"
 
@@ -1372,6 +1376,16 @@ msgstr "فيتنامي الدرجة 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Tshivenda grade 1"
+msgstr "فيندي الدرجة الأولى"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 2"
+msgstr "فيندي الدرجة الثانية"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "فيتنامية بدون اختصاراتإسامية بدون اختصارات"
 
@@ -1448,12 +1462,8 @@ msgid "Single letter navigation on"
 msgstr "تفعيل الحركة بالأحرف المنفردة"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
-msgid ""
-"Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on "
-"the page. When off, these keys are passed to the application"
-msgstr ""
-"التبديل بين تفعيل وتعطيل الحركة بالأحرف المنفردة. عند التفعيل, ستقفز مفاتيح الأحرف المنفردة في نمط التصفح لأنواع العناصر "
-"المختلفة الموجودة بالصفحة. وعند التعطيل, ستمر هذه المفاتيح للتطبيق"
+msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
+msgstr "التبديل بين تفعيل وتعطيل الحركة بالأحرف المنفردة. عند التفعيل, ستقفز مفاتيح الأحرف المنفردة في نمط التصفح لأنواع العناصر المختلفة الموجودة بالصفحة. وعند التعطيل, ستمر هذه المفاتيح للتطبيق"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -2098,6 +2108,13 @@ msgctxt "symbolPreserve"
 msgid "only below symbol's level"
 msgstr "ما دون مستوى الرمز فقط"
 
+#. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
+#. "transparent bright orange-yellow"
+#, python-brace-format
+msgctxt "color variation"
+msgid "transparent {colorDescription}"
+msgstr "شفاف {colorDescription}"
+
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
 msgid "white"
@@ -2501,12 +2518,8 @@ msgid "Audio ducking not supported"
 msgstr "نمط خفض الأصوات غير مدعوم"
 
 #. Translators: Input help mode message for toggle input help command.
-msgid ""
-"Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated "
-"with that input, if any."
-msgstr ""
-"التبديل بين تفعيل وتعطيل نمط المساعدة التفاعلية. في وضع التشغيل ستخبرك بوظيفة أي مُدخَل، مثلا: عند الضغط على مفتاح على لوحة "
-"المفاتيح؛ سيخبرك بالأمر المرتبط به إن وُجِد."
+msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
+msgstr "التبديل بين تفعيل وتعطيل نمط المساعدة التفاعلية. في وضع التشغيل ستخبرك بوظيفة أي مُدخَل، مثلا: عند الضغط على مفتاح على لوحة المفاتيح؛ سيخبرك بالأمر المرتبط به إن وُجِد."
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -2529,11 +2542,8 @@ msgid "Sleep mode on"
 msgstr "وضع الصمت تشغيل"
 
 #. Translators: Input help mode message for report current line command.
-msgid ""
-"Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three "
-"times will spell the line using character descriptions."
-msgstr ""
-"قراءة السطر الواقع تحت مؤشر التطبيق. بالضغط على هذا المفتاح مرتين يتهجّى السطر، وبالضغط عليه ثلاث مرات يعلن التهجئة الصوتية."
+msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions."
+msgstr "قراءة السطر الواقع تحت مؤشر التطبيق. بالضغط على هذا المفتاح مرتين يتهجّى السطر، وبالضغط عليه ثلاث مرات يعلن التهجئة الصوتية."
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
@@ -2718,12 +2728,12 @@ msgid "Toggles on and off the reporting of marked text"
 msgstr "التبديل بين تفعيل وتعطيل الإعلان عن االنص المميَّز بصريًا"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked on"
-msgstr "تفعيل الإعلان عن االنص المميَّز بصريًا"
+msgid "report highlighted on"
+msgstr "تفعيل الإعلان عن التمييز البصري للنص"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked off"
-msgstr "تعطيل الإعلان عن االنص المميَّز بصريًا"
+msgid "report highlighted off"
+msgstr "تعطيل الإعلان عن التمييز البصري للنص"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -2876,6 +2886,22 @@ msgstr "تعطيل الإعلان عن مواضع الخلايا"
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
 msgstr "تفعيل الإعلان عن مواضع الخلايا"
+
+#. Translators: Input help mode message for toggle report cell borders command.
+msgid "Cycles through the cell border reporting settings"
+msgstr "التبديل بين خيارات الإعلان عن حدود الخلية"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report styles of cell borders"
+msgstr "تفعيل الإعلان عن أنماط حدود الخلية"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report colors and styles of cell borders"
+msgstr "الإعلان عن ألوان وأنماط حدود الخلايا"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report cell borders off."
+msgstr "تعطيل الإعلان عن أنماط حدود الخلية"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3037,22 +3063,16 @@ msgid "Move navigator object to mouse"
 msgstr "تحريك مؤشر NVDA إلى مؤشر الفأرة"
 
 #. Translators: Script help message for next review mode command.
-msgid ""
-"Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the "
-"navigator object"
-msgstr ""
-"ينتقل إلى نمط الاستعراض التالي (على سبيل المثال نمط استعراض الكائن أو المستند أو الشاشة) ويضع مؤشر الاستعراض عند مؤشر NVDA"
+msgid "Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
+msgstr "ينتقل إلى نمط الاستعراض التالي (على سبيل المثال نمط استعراض الكائن أو المستند أو الشاشة) ويضع مؤشر الاستعراض عند مؤشر NVDA"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
 msgstr "لا يوجد نمط استعراض تالي"
 
 #. Translators: Script help message for previous review mode command.
-msgid ""
-"Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the "
-"navigator object"
-msgstr ""
-"ينتقل إلى نمط الاستعراض السابق (على سبيل المثال نمط استعراض الكائن أو المستند أو الشاشة) ويضع مؤشر الاستعراض عند مؤشر NVDA"
+msgid "Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
+msgstr "ينتقل إلى نمط الاستعراض السابق (على سبيل المثال نمط استعراض الكائن أو المستند أو الشاشة) ويضع مؤشر الاستعراض عند مؤشر NVDA"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
@@ -3071,12 +3091,8 @@ msgid "Simple review mode on"
 msgstr "تفعيل نمط الاستعراض البسيط"
 
 #. Translators: Input help mode message for report current navigator object command.
-msgid ""
-"Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of "
-"this object to the clipboard"
-msgstr ""
-"الإعلان عن الموضع الحالي لمؤشر NVDA. بالضغط عليه مرتين سيقوم بتهجئته وبالضغط عليه ثلاث مرات سيقوم بنسخ اسم وقيمة الكائن إلى "
-"الحافظة"
+msgid "Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard"
+msgstr "الإعلان عن الموضع الحالي لمؤشر NVDA. بالضغط عليه مرتين سيقوم بتهجئته وبالضغط عليه ثلاث مرات سيقوم بنسخ اسم وقيمة الكائن إلى الحافظة"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3084,8 +3100,7 @@ msgid "No navigator object"
 msgstr "لا يوجد كائن واقع تحت مؤشر NVDA"
 
 #. Translators: Description for report review cursor location command.
-msgid ""
-"Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail."
+msgid "Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail."
 msgstr "يعلن عن موقع النص أو الكائن الواقع تحت مؤشر الاستعراض. بالضغط عليه مرتين ربما يزودك بمزيد من المعلومات."
 
 #. Translators: message when there is no location information for the review cursor
@@ -3094,17 +3109,14 @@ msgstr "لا توجد معلومات عن موقع الكائن"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr ""
-"وضع مؤشّر استعراض الكائن (مؤشّر NVDA)  في موضع مؤشّر النظام الحالي،ووضع مؤشّر الاستعراض في موضع مؤشّر التحرير إن كان ذلك ممكنًا."
+msgstr "وضع مؤشّر استعراض الكائن (مؤشّر NVDA)  في موضع مؤشّر النظام الحالي،ووضع مؤشّر الاستعراض في موضع مؤشّر التحرير إن كان ذلك ممكنًا."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
 msgstr "الانتقال لمؤشر النظام"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
-msgid ""
-"Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review "
-"cursor"
+msgid "Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
 msgstr "بالضغط عليه مرة واحدة يقوم بتحريك مؤشر النظام إلى مؤشر NVDA وبالضغط عليه مرتين يضع مؤشر التحرير في موقع مؤشر الاستعراض"
 
 #. Translators: Reported when:
@@ -3179,12 +3191,8 @@ msgid "Top"
 msgstr "بداية"
 
 #. Translators: Input help mode message for read current line under review cursor command.
-msgid ""
-"Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current "
-"line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr ""
-"استعراض السطر الحالي في موضع مؤشّر NVDA حيث مؤشّر الاستعراض. بالضغط على هذا المفتاح مرتين متعاقبتين سيتهجّى السطر، وبالضغط عليه "
-"ثلاث مرات سيتههجّاه تهجئة صوتية."
+msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
+msgstr "استعراض السطر الحالي في موضع مؤشّر NVDA حيث مؤشّر الاستعراض. بالضغط على هذا المفتاح مرتين متعاقبتين سيتهجّى السطر، وبالضغط عليه ثلاث مرات سيتههجّاه تهجئة صوتية."
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
@@ -3199,20 +3207,15 @@ msgid "Moves the review cursor to the previous word of the current navigator obj
 msgstr "استعراض الكلمة السابقة"
 
 #. Translators: Input help mode message for report current word under review cursor command.
-msgid ""
-"Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing "
-"three times spells the word using character descriptions"
-msgstr ""
-"نطق الكلمة الحالية الواقعة تحت مؤشر الاستعراض. بالضغط على هذا المفتاح مرتين متعاقبتين يقوم بتهجأتها وبالضغط عليه ثلاث مرات يقوم "
-"بتهجئة الكلمة تهجئة صوتية"
+msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
+msgstr "نطق الكلمة الحالية الواقعة تحت مؤشر الاستعراض. بالضغط على هذا المفتاح مرتين متعاقبتين يقوم بتهجأتها وبالضغط عليه ثلاث مرات يقوم بتهجئة الكلمة تهجئة صوتية"
 
 #. Translators: Input help mode message for move review cursor to next word command.
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
 msgstr "استعراض الكلمة التالية"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
-msgid ""
-"Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
+msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
 msgstr "استعراض أول حرف من السطر الحالي"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
@@ -3224,12 +3227,8 @@ msgid "Left"
 msgstr "يسار"
 
 #. Translators: Input help mode message for report current character under review cursor command.
-msgid ""
-"Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description "
-"or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr ""
-"نطق الحرف الحالي الواقع تحت مؤشر الاستعراض. بالضغط على هذا المفتاح مرتين يعطي مثال صوتي للحرف. وبالضغط عليه ثلاث مرات  ينطق "
-"القيمة الرقمية له"
+msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
+msgstr "نطق الحرف الحالي الواقع تحت مؤشر الاستعراض. بالضغط على هذا المفتاح مرتين يعطي مثال صوتي للحرف. وبالضغط عليه ثلاث مرات  ينطق القيمة الرقمية له"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
@@ -3240,17 +3239,12 @@ msgid "Right"
 msgstr "يمين"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
-msgid ""
-"Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
+msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
 msgstr "استعراض آخر حرف بالسطر"
 
 #. Translators: Input help mode message for Review Current Symbol command.
-msgid ""
-"Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in "
-"browse mode"
-msgstr ""
-"نُطق النص البديل للرمز الحالي. ينطق الرمز الذي يقع عنده مؤشّر الاستعراض. بالضغط عليه مرتين، يعرض الرمز والنص المُستخدَم لنُطقهفي نمط "
-"الاستعراض"
+msgid "Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"
+msgstr "نُطق النص البديل للرمز الحالي. ينطق الرمز الذي يقع عنده مؤشّر الاستعراض. بالضغط عليه مرتين، يعرض الرمز والنص المُستخدَم لنُطقهفي نمط الاستعراض"
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
 msgid "No symbol replacement"
@@ -3269,12 +3263,8 @@ msgid "Expanded symbol ({})"
 msgstr "الرمز الموسَّع ({})"
 
 #. Translators: Input help mode message for toggle speech mode command.
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will "
-"simply beep each time it its supposed to speak something. If talk then NVDA will just speak normally."
-msgstr ""
-"التبديل بين أنماط النُطق: تعطيل، وصفير، وكلام. عند اختيار تعطيل، لن ينطق NVDA أيّ شيء. عند اختيار الصفير، سيُصدرُ NVDA صفيرًا في كل "
-"موضع يُفترض أن ينطق فيه شيئا. عند اختيار كلام، سينطقُ NVDA بشكل عادي."
+msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA will just speak normally."
+msgstr "التبديل بين أنماط النُطق: تعطيل، وصفير، وكلام. عند اختيار تعطيل، لن ينطق NVDA أيّ شيء. عند اختيار الصفير، سيُصدرُ NVDA صفيرًا في كل موضع يُفترض أن ينطق فيه شيئا. عند اختيار كلام، سينطقُ NVDA بشكل عادي."
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -3295,11 +3285,7 @@ msgstr "الرجوع إلى المستند الذي يحتوي على الكائ
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
-#. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
-msgid ""
-"Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing "
-"you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation "
-"keys, etc."
+msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "الانتقال بين النمط التفاعلي ونمط التصفح ."
 
 #. Translators: Input help mode message for quit NVDA command.
@@ -3359,24 +3345,41 @@ msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr "الإعلان عن الكائن النشط. بالضغط عليه مرتين, يقوم بهجاء المعلومات"
 
 #. Translators: Input help mode message for report status line text command.
-msgid ""
-"Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed "
-"three times, copies the status bar to the clipboard"
-msgstr ""
-"قراءة شريط العنوان للتطبيق الحالي ونقل مؤشر NVDA إليه. بالضغط عليه مرتين سيقوم بهجاء المعلومات،. بضغطه ثلاث مرات ستُنسَخ "
-"المعلومات للحافظة"
+msgid "Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard"
+msgstr "قراءة شريط الحالة الخاص بالتطبيق الحالي ونقل مؤشّر استعراض الكائن إليه. بالضغط عليه مرتين؛ يتهجّى المعلومات. وبضغطه ثلاث مرات ينسخها للحافظة"
 
+#. Translators: Input help mode message for report status line text command.
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "لا يوجد سطر حالة"
+
+#. Translators: Input help mode message for command which reads content of the status bar.
+msgid "Reads the current application status bar."
+msgstr "قراءة شريط الحالة الخاص بالتطبيق الحالي."
 
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
 msgstr "لا توجد معلومات عن شريط الحالة"
 
+#. Translators: Input help mode message for command which spells content of the status bar.
+msgid "Spells the current application status bar."
+msgstr "تهجئة شريط الحالة الخاص بالتطبيق الحالي."
+
+#. Translators: Input help mode message for command which copies status bar content to the clipboard.
+msgid "Copies content of the status bar  of current application to the clipboard."
+msgstr "نسخ محتوى شريط الحالة للتطبيق الحالي إلى الحافظة."
+
 #. Translators: Reported when user attempts to copy content of the empty status line.
-msgid "unable to copy status bar content to clipboard"
-msgstr "تعذر نسخ شريط الحالة للحافظة"
+msgid "Unable to copy status bar content to clipboard"
+msgstr "تعذّر نسخ محتوى شريط الحالة للحافظة"
+
+#. Translators: Input help mode message for Command which moves review cursor to the status bar.
+msgid "Reads the current application status bar and moves navigator object into it."
+msgstr "قراءة شريط الحالة للتطبيق الحالي ونقل مؤشّر استعراض الكائن إليه."
+
+#. Translators: Input help mode message for report status line text command.
+msgid "Reads the current application status bar. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard"
+msgstr "قراءة شريط الحالة الخاص بالتطبيق الحالي.بالضغط عليه مرتين سيتهجى المعلومات. بضغطه ثلاث مرات ستُنسَخ للحافظة"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -3384,11 +3387,11 @@ msgstr "تفعيل وتعطيل الإعلام عن الكائنات أثناء 
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
-msgstr "تتبع مسار الفأرة تعطيل"
+msgstr "تعطيل تتبُّع الفأرة"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking on"
-msgstr "تتبع مسار الفأرة تشغيل"
+msgstr "تفعيل تتبُّع الفأرة"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 msgid "Toggles how much text will be spoken when the mouse moves"
@@ -3399,15 +3402,11 @@ msgstr "تبديل مقدار الوحدة النصية التي ستُقرأ أ
 #. For example, the full message might be "Mouse text unit resolution character"
 #, python-format
 msgid "Mouse text unit resolution %s"
-msgstr "مقدار ال&وحدة النصية المقروءة عند حركة الفأرة %s"
+msgstr "مقدار الوحدة النصية المقروءة عند حركة الفأرة %s"
 
 #. Translators: Input help mode message for report title bar command.
-msgid ""
-"Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, "
-"copies the title to the clipboard"
-msgstr ""
-"الإعلان عن عنوان التطبيق الحالي أو النافذة المرئية. بالضغط عليه مرتين, يقوم بتهجئته, وبالضغط عليه ثلاث مرات ينسخ العنوان إلى "
-"حافظة الوندوز"
+msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
+msgstr "الإعلان عن عنوان التطبيق الحالي أو النافذة المرئية. بالضغط عليه مرتين, يقوم بتهجئته, وبالضغط عليه ثلاث مرات ينسخ العنوان إلى حافظة الوندوز"
 
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
@@ -3424,13 +3423,8 @@ msgstr "يفتح أداة فحص WX GUI. يُستخدم للحصول على مز
 #. Translators: Input help mode message for developer info for current navigator object command,
 #. used by developers to examine technical info on navigator object.
 #. This command also serves as a shortcut to open NVDA log viewer.
-msgid ""
-"Logs information about the current navigator object which is useful to developers and activates the log viewer so the "
-"information can be examined."
-msgstr ""
-"يسجل المعلومات حول الكائن الحالي ويقوم بتنشيط عارض تقارير البرنامج كي يمكن فحص المعلومات الواردة بها وهو أمر مفيد للمطورين.Logs "
-"information about the current navigator object which is useful to developers and activates the log viewer so the information "
-"can be examined\t."
+msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
+msgstr "يسجل المعلومات حول الكائن الحالي ويقوم بتنشيط عارض تقارير البرنامج كي يمكن فحص المعلومات الواردة بها وهو أمر مفيد للمطورين.Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined\t."
 
 #. Translators: Input help mode message for a command to delimit then
 #. copy a fragment of the log to clipboard
@@ -3468,9 +3462,7 @@ msgstr "يفتح مجلّد إعدادات NVDA الخاص بالمستخدِم 
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr ""
-"يَتَنَقَّل بين أنماط الإعلان عن التغييرات في شريط التقدم بين صوت الصفير فقط, أو نطق النسبة المئوية فقط, أو عن طريق الاثنين معا, أو "
-"عن طريق التعطيل"
+msgstr "يَتَنَقَّل بين أنماط الإعلان عن التغييرات في شريط التقدم بين صوت الصفير فقط, أو نطق النسبة المئوية فقط, أو عن طريق الاثنين معا, أو عن طريق التعطيل"
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
@@ -3671,11 +3663,8 @@ msgid "Saves the current NVDA configuration"
 msgstr "حفظ الإعدادات الحالية للبرنامج"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
-msgid ""
-"Pressing once reverts the current configuration to the most recently saved state. Pressing three times resets to factory "
-"defaults."
-msgstr ""
-"بالضغط عليه مرة واحدة سيقوم باسترجاع الإعدادات امحفوظة مؤخرًا. بالضغط عليه ثلاث مرات سيعود بالبرنامج إلى الإعدادات الافتراضية."
+msgid "Pressing once reverts the current configuration to the most recently saved state. Pressing three times resets to factory defaults."
+msgstr "بالضغط عليه مرة واحدة سيقوم باسترجاع الإعدادات امحفوظة مؤخرًا. بالضغط عليه ثلاث مرات سيعود بالبرنامج إلى الإعدادات الافتراضية."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
@@ -3779,12 +3768,8 @@ msgstr "لا توجد علامة تحديد"
 
 #. Translators: Input help mode message for the select then copy command.
 #. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-msgid ""
-"If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is "
-"selected. If pressed twice, the text is copied to the clipboard"
-msgstr ""
-"بالضغط مرة واحدة, سيتم تحديد النص بداية من علامة التحديد إلى الموضع الحالي لمؤشر الاستعراض. بالضغط مرتين, سيتم نسخ النص إلى "
-"الحافظة"
+msgid "If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"
+msgstr "بالضغط مرة واحدة, سيتم تحديد النص بداية من علامة التحديد إلى الموضع الحالي لمؤشر الاستعراض. بالضغط مرتين, سيتم نسخ النص إلى الحافظة"
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
@@ -3969,12 +3954,8 @@ msgid "report CLDR characters on"
 msgstr "تفعيل قراءة رموز CLDR"
 
 #. Translators: Describes a command.
-msgid ""
-"Toggles the state of the screen curtain, enable to make the screen black or disable to show the contents of the screen. Pressed "
-"once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it"
-msgstr ""
-"تبديل حالة سِتار الشاشة. تفعيلُه ليُحيلُ الشاشة سوداء، أو تعطيله لإظظهار محتواها. عند الضغط لتفعيل سِتار الشاشة مرةً واحدة، سيبقى "
-"مُفعّلاً حتى تُعيد تشغيل NVDA. عند ضغطه مرتين، سيبقى سِتار الشاشة مفعّلاً حتى تُعطّلَه"
+msgid "Toggles the state of the screen curtain, enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it"
+msgstr "تبديل حالة سِتار الشاشة. تفعيلُه ليُحيلُ الشاشة سوداء، أو تعطيله لإظظهار محتواها. عند الضغط لتفعيل سِتار الشاشة مرةً واحدة، سيبقى مُفعّلاً حتى تُعيد تشغيل NVDA. عند ضغطه مرتين، سيبقى سِتار الشاشة مفعّلاً حتى تُعطّلَه"
 
 #. Translators: Reported when the screen curtain is disabled.
 msgid "Screen curtain disabled"
@@ -4415,6 +4396,17 @@ msgstr "لوحة مفاتيح %s"
 msgid "keyboard, all layouts"
 msgstr "مفتاح يجري تطبيقه على كل أنماط لوحة المفاتيح"
 
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc}, {lc}"
+
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "لغة الويندوز الافتراضية"
+
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Aragonese"
@@ -4439,17 +4431,6 @@ msgstr "برمية"
 msgctxt "languageName"
 msgid "Somali"
 msgstr "الصومالية"
-
-#. Translators: The pattern defining how languages are displayed and sorted in in the general
-#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
-#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
-#, python-brace-format
-msgid "{desc}, {lc}"
-msgstr "{desc}, {lc}"
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "لغة الويندوز الافتراضية"
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
@@ -5778,14 +5759,11 @@ msgstr "إصدار NVDA {version} تم تحميل تحديثه وينتظر تث
 msgid ""
 "\n"
 "\n"
-"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. These add-ons will be "
-"disabled after installation. If you rely on these add-ons, please review the list to decide whether to continue with the "
-"installation"
+"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. These add-ons will be disabled after installation. If you rely on these add-ons, please review the list to decide whether to continue with the installation"
 msgstr ""
 "\n"
 "\n"
-"تتضمّن إعدادات NVDA لديك إضافات غير متوافقة مع هذا الإصدار من NVDA. ستُعطَّل هذه الإضافات بعد التثبيت. إذا كانت هناك إضافات تعتمد "
-"عليها؛ فضلًا راجِعْ قائمة الإضافات لديك لتقرّر إن كنت تودُّ إكمال التثبيت"
+"تتضمّن إعدادات NVDA لديك إضافات غير متوافقة مع هذا الإصدار من NVDA. ستُعطَّل هذه الإضافات بعد التثبيت. إذا كانت هناك إضافات تعتمد عليها؛ فضلًا راجِعْ قائمة الإضافات لديك لتقرّر إن كنت تودُّ إكمال التثبيت"
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
@@ -5838,13 +5816,10 @@ msgstr "إصدار NVDA {version} متوفر.\n"
 #. unless reviewed before installation.
 msgid ""
 "\n"
-"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. These add-ons will be "
-"disabled after installation. If you rely on these add-ons, please review the list to decide whether to continue with the "
-"installation"
+"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. These add-ons will be disabled after installation. If you rely on these add-ons, please review the list to decide whether to continue with the installation"
 msgstr ""
 "\n"
-"تتضمّن إعدادات NVDA لديك إضافات غير متوافقة مع هذا الإصدار من NVDA. ستُعطَّل هذه الإضافات بعد التثبيت. إذا كانت هناك إضافات تعتمد "
-"عليها؛ فضلًا راجِعْ قائمة الإضافات لديك لتقرّر إن كنت تودُّ إكمال التثبيت"
+"تتضمّن إعدادات NVDA لديك إضافات غير متوافقة مع هذا الإصدار من NVDA. ستُعطَّل هذه الإضافات بعد التثبيت. إذا كانت هناك إضافات تعتمد عليها؛ فضلًا راجِعْ قائمة الإضافات لديك لتقرّر إن كنت تودُّ إكمال التثبيت"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -5925,16 +5900,12 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you "
-"like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to "
-"both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
 "It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions "
-"for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting "
-"Donate from the NVDA menu."
+"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
 msgstr ""
 "{longName} ({name})\n"
 "الإصدار: {version}\n"
@@ -5942,16 +5913,11 @@ msgstr ""
 "رابط الموقع العربي: https://www.nvda-ar.org\n"
 "{copyright}\n"
 "\n"
-"يخضع برنامج {name} للإصدار الثاني من رخصة GNU العمومية General Public License. وهي تتيح للمستخدم كامل الحرية بتوزيع البرنامج أو "
-"تعديل مكوّناته البرمجية بأي طريقة شاء ما دام يُرفِق الرخصة مع البرنامج ويجعل مصدر الشفرة متاحًا لكل من يطلبه. وينطبق ذلك على كل من "
-"النسخة الأصلية والنسخة المعدَّلة من البرنامج بالإضافة إلى أية برامج تستعمل شفرة برمجية مأخوذة من هذا البرنامج.\n"
+"يخضع برنامج {name} للإصدار الثاني من رخصة GNU العمومية General Public License. وهي تتيح للمستخدم كامل الحرية بتوزيع البرنامج أو تعديل مكوّناته البرمجية بأي طريقة شاء ما دام يُرفِق الرخصة مع البرنامج ويجعل مصدر الشفرة متاحًا لكل من يطلبه. وينطبق ذلك على كل من النسخة الأصلية والنسخة المعدَّلة من البرنامج بالإضافة إلى أية برامج تستعمل شفرة برمجية مأخوذة من هذا البرنامج.\n"
 "ولمزيد من المعلومات يمكنكم الاطلاع على الرخصة من خلال قائمة المساعدة\n"
-"كما يمكنكم الاطلاع عليها عبر الإنترنت فللترجمة باللغة العربية (لنصّ رخصة GNU العمومية https://www.linuxfuture.org/download/"
-"Arabic_GPL_2.0.htm)  وللاطلاع على الرخصة باللغة الانكليزية  (GNU General Public License Version 2 https://www.gnu.org/licenses/"
-"old-licenses/gpl-2.0.html\n"
+"كما يمكنكم الاطلاع عليها عبر الإنترنت فللترجمة باللغة العربية (لنصّ رخصة GNU العمومية https://www.linuxfuture.org/download/Arabic_GPL_2.0.htm)  وللاطلاع على الرخصة باللغة الانكليزية  (GNU General Public License Version 2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"والمؤسسة التي تطوِّر {name} هي مؤسسة NV Access وهي مؤسسة غير ربحية تهدف إلى العمل على تطوير حلول مفتوحة المصدر للمكفوفين وضعاف "
-"البصر.\n"
+"والمؤسسة التي تطوِّر {name} هي مؤسسة NV Access وهي مؤسسة غير ربحية تهدف إلى العمل على تطوير حلول مفتوحة المصدر للمكفوفين وضعاف البصر.\n"
 "إذا كنت ممن يهمهم أمر البرنامج وتطويره يُرجى التبرع لمؤسسة NV Access وذلك باختيار العنصر تبرّع من قائمة NVDA الرئيسة.\n"
 "أو بزيارة صفحة التبرُّع بالعربية: https://www.nvda-ar.org/donate ."
 
@@ -5970,12 +5936,8 @@ msgstr "سطح مكتب آمن"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #, python-brace-format
-msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is "
-"{width:.1f} per cent of screen, height is {height:.1f} per cent of screen"
-msgstr ""
-"موقع الكائن على الشاشة {left:.1f} بالمائة من الحد الأيسر للشاشة, {top:.1f} بالمائة من الحد الأيمن للشاشة, العرض {width:.1f} "
-"بالمائة من الشاشة, والطول{height:.1f} بالمائة من الشاشة"
+msgid "Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen"
+msgstr "موقع الكائن على الشاشة {left:.1f} بالمائة من الحد الأيسر للشاشة, {top:.1f} بالمائة من الحد الأيمن للشاشة, العرض {width:.1f} بالمائة من الشاشة, والطول{height:.1f} بالمائة من الشاشة"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -6267,12 +6229,12 @@ msgstr "طلب اجتماع"
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
-msgstr "لا توجد ملاحظات للمترجمين"
+msgstr "لا توجد ملاحظات للمترجمين."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "تعذّر العثور على ملاحظات للمترجمين"
+msgstr "تعذّر العثور على ملاحظات للمترجمين."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
@@ -6513,12 +6475,8 @@ msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "يبعد عن الحافة السفلى للشريحة بمقدار {distance:.3g} نقطة"
 
 #. Translators: The description for a script
-msgid ""
-"Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but "
-"only what the user can read with NVDA"
-msgstr ""
-"الانتقال بين تشغيل وتعطيل الإعلان عن ملاحظات المعلق أو المحتوى الفعلي للشريحة. هذا لم يغير شيء مما يظهر على الشاشة, بل سيتم "
-"الإعلان عما يمكن للمستخدم قراءته باستخدام NVDA"
+msgid "Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA"
+msgstr "الانتقال بين تشغيل وتعطيل الإعلان عن ملاحظات المعلق أو المحتوى الفعلي للشريحة. هذا لم يغير شيء مما يظهر على الشاشة, بل سيتم الإعلان عما يمكن للمستخدم قراءته باستخدام NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
@@ -6660,6 +6618,11 @@ msgstr "الإدخال عبر البرايل مُعطَّل"
 #. Translators: description of the script to toggle braille input
 msgid "Toggle braille input"
 msgstr "تفعيل أو تعطيل الإدخال عبر مفاتيح البرايل"
+
+#. Translators: The name of a series of braille displays.
+#, fuzzy
+msgid "Standard HID Braille Display"
+msgstr "أسطر Seika braille الإلكترونية"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
@@ -7377,8 +7340,8 @@ msgid "figure"
 msgstr "شكل"
 
 #. Translators: Identifies marked (highlighted) content
-msgid "marked content"
-msgstr "محتوى مُعَلَّم"
+msgid "highlighted"
+msgstr "مميَّز بصريا"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -7595,11 +7558,6 @@ msgstr "تم حفظ التعديلات"
 msgid "Could not save configuration - probably read only file system"
 msgstr "لا يمكن حفظ التعديلات- أغلب الظن أن ملف النظام معد للقراءة فقط"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-#. (example: when trying to open keyboard settings when general settings dialog is open).
-msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "يوجد مربّع حوار إعدادات مفتوح بالفعل. يرجى إغلاقه أولا."
-
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
@@ -7623,14 +7581,8 @@ msgid "About NVDA"
 msgstr "نبذة عن البرنامج"
 
 #. Translators: A message to warn the user when starting the COM Registration Fixing tool
-msgid ""
-"You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from "
-"being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the "
-"System registry and therefore requires administrative access. Are you sure you wish to proceed?"
-msgstr ""
-"أنت على وشك تشغيل أداة حل مشكلات سجل النظام الشائعة. ستحاول هذه الأداة معالجة مشكلات النظام التي تمنع NVDA من الوصول لمحتوى "
-"العديد من التطبيقات بما في ذلك فايرفوكس وإنترنت إكسبلورر. يجب على هذه الأداة القيام بتغييرات في جسل النظام, لذا فإنها تتطلب "
-"صلاحيات إدارية. هل أنت متأكد من أنك تريد الاستمرار؟"
+msgid "You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?"
+msgstr "أنت على وشك تشغيل أداة حل مشكلات سجل النظام الشائعة. ستحاول هذه الأداة معالجة مشكلات النظام التي تمنع NVDA من الوصول لمحتوى العديد من التطبيقات بما في ذلك فايرفوكس وإنترنت إكسبلورر. يجب على هذه الأداة القيام بتغييرات في جسل النظام, لذا فإنها تتطلب صلاحيات إدارية. هل أنت متأكد من أنك تريد الاستمرار؟"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -7649,11 +7601,8 @@ msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr "يرجى الانتظار حتى الانتهاء من معالجة مشكلات سجل النظام الشائعة"
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
-msgid ""
-"The COM Registration Fixing tool has finished. It is highly recommended that you restart your computer now, to make sure the "
-"changes take full effect."
-msgstr ""
-"انتهت عملية معالجة أخطاء سجل النظام تاشائعة. يُنصَحُ بشدة بإعادة تشغيل الحاسوب الآن؛ لضمان الحصول النتائج المرجوة من التغييرات."
+msgid "The COM Registration Fixing tool has finished. It is highly recommended that you restart your computer now, to make sure the changes take full effect."
+msgstr "انتهت عملية معالجة أخطاء سجل النظام تاشائعة. يُنصَحُ بشدة بإعادة تشغيل الحاسوب الآن؛ لضمان الحصول النتائج المرجوة من التغييرات."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -7935,12 +7884,8 @@ msgid "Add-ons Manager (add-ons disabled)"
 msgstr "مدير الإضافات البرمجية (الإضافات المعطَّلة)"
 
 #. Translators: A message in the add-ons manager shown when add-ons are globally disabled.
-msgid ""
-"NVDA was started with all add-ons disabled. You may modify the enabled / disabled state, and install or uninstall add-ons. "
-"Changes will not take effect until after NVDA is restarted."
-msgstr ""
-"بدء تشغيل NVDA مع تعطيل كافة الإضافات البرمجية. يمكنك التعديل على الإضافات، تفعيلها أو تعطيلها، حذفها أو تثبيت إضافات. لن يظهر "
-"أثر التعديلات إلا بعد إعادة تشغيل NVDA"
+msgid "NVDA was started with all add-ons disabled. You may modify the enabled / disabled state, and install or uninstall add-ons. Changes will not take effect until after NVDA is restarted."
+msgstr "بدء تشغيل NVDA مع تعطيل كافة الإضافات البرمجية. يمكنك التعديل على الإضافات، تفعيلها أو تعطيلها، حذفها أو تثبيت إضافات. لن يظهر أثر التعديلات إلا بعد إعادة تشغيل NVDA"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8068,16 +8013,13 @@ msgstr "تثبيت الإضافة البرمجية"
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
 #, python-brace-format
-msgid ""
-"You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to "
-"update?"
+msgid "You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?"
 msgstr "أنت على وَشك تثبيت إصدار {newVersion}  من الإضافة {summary}, ، والذي يظهر أنه مُثبّتٌ بالفعل. هل تودُّ الاستمرار؟"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
 #, python-brace-format
-msgid ""
-"A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?"
+msgid "A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?"
 msgstr "هناك إصدارٌ مُثبَّتٌ بالفعل منه هذه الإضافة، هل ترغب في تحديث {summary} الإصدار {curVersion} إلى الإصدار {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
@@ -8100,12 +8042,8 @@ msgstr "لا يمكن تثبيت الإضافة على إصدار متجر Windo
 #. Translators: The message displayed when installing an add-on package is prohibited,
 #. because it requires a later version of NVDA than is currently installed.
 #, python-brace-format
-msgid ""
-"Installation of {summary} {version} has been blocked. The minimum NVDA version required for this add-on is "
-"{minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
-msgstr ""
-"لقد حُظِرَ تثبيتُ {summary} {version}. يتطلب التثبيت إصدار NVDA {minimumNVDAVersion}, كحدٍّ أدنى. الإصدارُ المثبّت لديك من NVDA حاليا "
-"هو {NVDAVersion}."
+msgid "Installation of {summary} {version} has been blocked. The minimum NVDA version required for this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
+msgstr "لقد حُظِرَ تثبيتُ {summary} {version}. يتطلب التثبيت إصدار NVDA {minimumNVDAVersion}, كحدٍّ أدنى. الإصدارُ المثبّت لديك من NVDA حاليا هو {NVDAVersion}."
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgid "Add-on not compatible"
@@ -8114,12 +8052,8 @@ msgstr "الإضافة البرمجية غير متوافقة"
 #. Translators: A message informing the user that this addon can not be installed
 #. because it is not compatible.
 #, python-brace-format
-msgid ""
-"Installation of {summary} {version} has been blocked. An updated version of this add-on is required, the minimum add-on API "
-"supported by this version of NVDA is {backCompatToAPIVersion}"
-msgstr ""
-"حُظِرَ تثبيت {summary} {version}. يتطلب NVDA إصدارا أحدث من هذه الإضافة. الإصدار المدعوم من NVDA كحد أدنى هو "
-"{backCompatToAPIVersion}."
+msgid "Installation of {summary} {version} has been blocked. An updated version of this add-on is required, the minimum add-on API supported by this version of NVDA is {backCompatToAPIVersion}"
+msgstr "حُظِرَ تثبيت {summary} {version}. يتطلب NVDA إصدارا أحدث من هذه الإضافة. الإصدار المدعوم من NVDA كحد أدنى هو {backCompatToAPIVersion}."
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
@@ -8137,9 +8071,7 @@ msgid "Incompatible Add-ons"
 msgstr "إضافات برمجية غير متوافقة"
 
 #. Translators: The title of the Incompatible Addons Dialog
-msgid ""
-"The following add-ons are incompatible with NVDA version {}. These add-ons can not be enabled. Please contact the add-on author "
-"for further assistance."
+msgid "The following add-ons are incompatible with NVDA version {}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
 msgstr "الإضافاتُ الآتية غيرُ متوافقة مع إصدار NVDA {}. يُرجى التواصل مع كاتب هذه الإضافات لمزيد من المساعدة."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
@@ -8305,8 +8237,7 @@ msgstr "استخدم هذا الوضع في:"
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
 msgid ""
-"This trigger is already associated with another profile. If you continue, it will be removed from that profile and associated "
-"with this one.\n"
+"This trigger is already associated with another profile. If you continue, it will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
 "هذا المُشَّغِلْ يستخدم مع وضع آخر. إذا أردت الاستمرار, سيتم حذف المحرك من هذا الوضع وربطه بالوضع الحالي.\n"
@@ -8324,8 +8255,7 @@ msgstr "خطأ في إنشاء الوضع - أغلب الظن أن ملف الن
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
 msgid ""
-"To edit this profile, you will need to manually activate it. Once you have finished editing, you will need to manually "
-"deactivate it to resume normal usage.\n"
+"To edit this profile, you will need to manually activate it. Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
 "لتعديل هذا الوضع, ينبغي عليك تنشيطه يدويا. بمجرد الانتهاء من التعديل, ستحتاج إلى تعطيله يدويا كي تستأنف الاستخدام الطبيعي.\n"
@@ -8432,12 +8362,8 @@ msgid "Please wait while NVDA is being installed"
 msgstr "يرجى الانتظار بينما يجري تثبيت NVDA."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
-msgid ""
-"The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user "
-"account. Please make sure all installed copies of NVDA are shut down and try the installation again."
-msgstr ""
-"تعذر حذف أو استبدال أحد الملفات. ربما تعمل نسخة أخرى من NVDA على حساب مستخدم آخر. يرجى التأكد من تعطيل جميع نسخ NVDA العاملة "
-"وقم بإعادة التثبيت مرة أخرى."
+msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
+msgstr "تعذر حذف أو استبدال أحد الملفات. ربما تعمل نسخة أخرى من NVDA على حساب مستخدم آخر. يرجى التأكد من تعطيل جميع نسخ NVDA العاملة وقم بإعادة التثبيت مرة أخرى."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
@@ -8511,13 +8437,8 @@ msgstr "اس&تمرار"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-msgid ""
-"You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to "
-"an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier "
-"version."
-msgstr ""
-"تحاول تثبيت نسخة أقدم من تلك الموجودة حاليا. إذا كنت تريد العودة لاستخدام النسخة الأقدم, ينبغي عليك أولا حذف NVDA تماما قبل "
-"الشروع في تثبيت النسخة القديمة."
+msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
+msgstr "تحاول تثبيت نسخة أقدم من تلك الموجودة حاليا. إذا كنت تريد العودة لاستخدام النسخة الأقدم, ينبغي عليك أولا حذف NVDA تماما قبل الشروع في تثبيت النسخة القديمة."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -8716,12 +8637,8 @@ msgstr "السماح لمشروع NVDA بجمع إحصائيات الاستخد�
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
-msgid ""
-"Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you "
-"still wish to copy your settings?"
-msgstr ""
-"لقد تم اكتشاف احتواء مجلد إعدادات المستخدم لديك على إضافات برمجية. قد يؤدي نسخ تلك الإضافات لملف النظام إلى العرضة لخطورة "
-"أمنية. هل تريد الاستمرار ؟"
+msgid "Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
+msgstr "لقد تم اكتشاف احتواء مجلد إعدادات المستخدم لديك على إضافات برمجية. قد يؤدي نسخ تلك الإضافات لملف النظام إلى العرضة لخطورة أمنية. هل تريد الاستمرار ؟"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -8733,9 +8650,7 @@ msgid "Please wait while settings are copied to the system configuration."
 msgstr "يرجى الانتظار حتى الانتهاء من نسخ الإعدادات إلى إعدادات النظام."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
-msgid ""
-"Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you "
-"are copying to."
+msgid "Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to."
 msgstr "تعذر نسخ أحد الملفات. ربما حدث هذا لأن هذا الملف مستخدم من قبل تطبيق آخر أو أن مساحة محرك الأقراص الذي تنسخ به غير كافية."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
@@ -9020,6 +8935,10 @@ msgstr "الإعلان عن ال&تغيرات التي تحدث للنص الم�
 msgid "Report changes to the &composition string"
 msgstr "الإعلان عن التغيرات بالأح&رف المكتوبة"
 
+#. Translators: This is a label appearing on the Object Presentation settings panel.
+msgid "Configure how much information NVDA will present about controls. These options apply to focus reporting and NVDA object navigation, but not when reading text content e.g. web content with browse mode."
+msgstr "ضبط كمية المعلومات التي سيعرضها NVDA عن الكائن. يُطبَّق هذا عند قراءة موضع مؤشر النظام، وموضع مؤشّر NVDA، وليس عند قراءة محتوى، كمحتوى شبكة المعلومات في نمط التصفُّح."
+
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "عرض الكائن"
@@ -9152,6 +9071,8 @@ msgid "Automatically set system &focus to focusable elements"
 msgstr "نقل مؤشّر النظام تلقائيا للعناصر القابلة لذلك"
 
 #. Translators: This is the label for the document formatting panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Document Formatting"
 msgstr "تنسيق المستند"
 
@@ -9191,8 +9112,8 @@ msgstr "إبراز النص"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Mar&ked (highlighted text)"
-msgstr "ن&صٌّ مُعلَّم (مميّزٌ بصريا)"
+msgid "Highlighted (mar&ked) text"
+msgstr "نصٌّ مميَّز بصريًا (مُع&لَّم)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9411,8 +9332,8 @@ msgstr "تمكينُ ا&لتسجيل الانتقائي لأحداث أتمتة 
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Use UI Automation to access Microsoft &Word document controls when available"
-msgstr "استخدام UI Automation للوصول إلى عناصر التحكُّم في مستندات Microsoft &Word  عندما يكون متاحا"
+msgid "Always use UI Automation to access Microsoft &Word document controls when available"
+msgstr "استخدام UI Automation دائمًا للوصول إلى عناصر التحكُّم في مستندات Microsoft &Word عندما يكون متاحا"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9467,6 +9388,11 @@ msgstr "التعليقات"
 #. Advanced settings panel.
 msgid "Report details in browse mode"
 msgstr "الإعلان عن التفاصيل في نمط التصفُّح"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report aria-description always"
+msgstr "الإعلان دائمًا عن أوصاف aria (aria-description )"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9532,6 +9458,11 @@ msgstr "نصٌّ يمكن تحريره"
 msgid "Caret movement timeout (in ms)"
 msgstr "المعدل الزمني لحركة مؤشر التحرير (ملي في الثانية)"
 
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Report transparent color values"
+msgstr "الإعلان عن قيم الألوان الشفافة"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Debug logging"
@@ -9541,6 +9472,20 @@ msgstr "تسجيل الأخطاء البرمجية"
 #. Advanced settings panel
 msgid "Enabled logging categories"
 msgstr "إتاحةُ التصنيفات لسجل الأخطاء البرمجية."
+
+#. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+msgid "Play a sound for logged e&rrors:"
+msgstr "إصدار &صوت للأخطاء المسجلة في سجلّ الأخطاء"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Only in NVDA test versions"
+msgstr "في الإصدارات التجريبية فقط"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Yes"
+msgstr "نعم"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -9552,12 +9497,8 @@ msgid "Warning!"
 msgstr "تحذير!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-msgid ""
-"The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these "
-"if you know what you are doing or have been specifically instructed by NVDA developers."
-msgstr ""
-"الإعدادات الآتية للمستخدمين المتقدمين، وقد يؤدي تغييرُها لعمل NVDA بشكل غير صحيح. يُرجى تغيير هذه الإعدادات فقط في حال كنت مدركا "
-"لحقيقة ما تجريه، أو في حال توجيه خاص من قِبَل المطورين"
+msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
+msgstr "الإعدادات الآتية للمستخدمين المتقدمين، وقد يؤدي تغييرُها لعمل NVDA بشكل غير صحيح. يُرجى تغيير هذه الإعدادات فقط في حال كنت مدركا لحقيقة ما تجريه، أو في حال توجيه خاص من قِبَل المطورين"
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
@@ -9868,8 +9809,7 @@ msgstr ""
 "تتطلب معظم أوامر البرنامج الضغط على مفتاح NVDA قبيل الضغط على مفاتيح الاختصار الأخرى.\n"
 "افتراضيا، يعمل مفتاح الإدراج في اللوحة الرقمية ومفتاح الإدراج في الوحة الرئيسة كمفتاح NVDA.\n"
 "وكذلك بإمكانك ضبط البرنامج بحيث يستخدم مفتاح تفعيل تكبير الحروف كمفتاح للبرنامج.\n"
-"وفي أي وقت يمكنك الضغط على مفتاح NVDA زائد حرف\t(N) لفتح قائمة البرنامج ومن ثم إجراء اية تعديلات تفضيلية أو الحصول على "
-"التعليمات الخاصة به أو الوصول لأية وظائف أخرى في البرنامج."
+"وفي أي وقت يمكنك الضغط على مفتاح NVDA زائد حرف\t(N) لفتح قائمة البرنامج ومن ثم إجراء اية تعديلات تفضيلية أو الحصول على التعليمات الخاصة به أو الوصول لأية وظائف أخرى في البرنامج."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -9917,17 +9857,13 @@ msgstr "تجميع بيانات استخدام NVDA"
 msgid ""
 "In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA.\n"
 "\n"
-"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as "
-"current synthesizer, braille display and braille table. No spoken or braille content will be ever sent to NV Access. Please "
-"refer to the User Guide for a current list of all data collected.\n"
+"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display and braille table. No spoken or braille content will be ever sent to NV Access. Please refer to the User Guide for a current list of all data collected.\n"
 "\n"
 "Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
 msgstr ""
 "من أجل تحسين NVDA في المستقبل، ترغب مؤسّسة NV Access في جمع بيانات الاستخدام من النسخ العاملة من NVDA\n"
 "\n"
-"تشمل البيانات إصدار نظام التشغيل, إصدار NVDA، اللغة، والدولة، إضافةً لبعض الإعدادات كآلة النطق المُستخدَمة، وسطر برايل الإلكتروني "
-"وجدول برايل المستخدم. لن يُرسَلَ أي محتوى منطوق أو معروض على برايل لNV Access. يُرجى الرجوع لدليل المستخدم لمعرفة قائمة البيانات "
-"التي تُجمَع.\n"
+"تشمل البيانات إصدار نظام التشغيل, إصدار NVDA، اللغة، والدولة، إضافةً لبعض الإعدادات كآلة النطق المُستخدَمة، وسطر برايل الإلكتروني وجدول برايل المستخدم. لن يُرسَلَ أي محتوى منطوق أو معروض على برايل لNV Access. يُرجى الرجوع لدليل المستخدم لمعرفة قائمة البيانات التي تُجمَع.\n"
 "\n"
 "هل ترغب في السماح ل NV Access بجمع هذه البيانات على فترات منتظمة لتحسين NVDA?"
 
@@ -10434,8 +10370,7 @@ msgstr "&تشغيل صوت عند تبديل حالة سِتار الشاشة"
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
 msgid ""
-"Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any "
-"use of your screen before continuing. \n"
+"Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any use of your screen before continuing. \n"
 "\n"
 "Do you wish to continue?"
 msgstr ""
@@ -10486,12 +10421,8 @@ msgstr "تمت إزالة الصف {rowNumber} العمود {columnNumber} من 
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "تعذر الوصول إلى الصف {rowNumber} العمود {columnNumber} في رؤوس الأعمدة"
 
-msgid ""
-"Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. "
-"Pressing twice will forget the current column header for this cell."
-msgstr ""
-"بالضغط عليه مرة واحدة سيقوم بتعيين الخلية المحددة كأول رأس عمود للخلايا الأسفل منها والتي على يمينها في هذا الجدول. بالضغط عليه "
-"مرتين سيلغي الإعداد"
+msgid "Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."
+msgstr "بالضغط عليه مرة واحدة سيقوم بتعيين الخلية المحددة كأول رأس عمود للخلايا الأسفل منها والتي على يمينها في هذا الجدول. بالضغط عليه مرتين سيلغي الإعداد"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
@@ -10513,12 +10444,8 @@ msgstr "تمت إزالة الصف {rowNumber} العمود {columnNumber} من 
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "تمت إزالة الصف {rowNumber} العمود {columnNumber} من رؤوس الصفوف"
 
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing "
-"twice will forget the current row header for this cell."
-msgstr ""
-"بالضغط عليه مرة واحدة سيقوم بتعيين الخلية المحددة كأول رأس صف للخلايا الأسفل منها والتي على يمينها في هذا الجدول. بالضغط عليه "
-"مرتين سيلغي هذا الإعداد."
+msgid "Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
+msgstr "بالضغط عليه مرة واحدة سيقوم بتعيين الخلية المحددة كأول رأس صف للخلايا الأسفل منها والتي على يمينها في هذا الجدول. بالضغط عليه مرتين سيلغي هذا الإعداد."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "No comments"
@@ -10534,13 +10461,30 @@ msgstr "الإعلان عن النص الموجود بالتعليق حيث يو
 msgid "Not in table"
 msgstr "خارج جدول"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} in"
+msgstr "{val:.2f} بوصة"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} cm"
+msgstr "{val:.2f} سم"
+
 msgid "invoke"
 msgstr "رابط"
 
+#. Translators: part of the suggestions count message for one suggestion.
+msgid "1 suggestion"
+msgstr "مقترح 1"
+
+#. Translators: part of the suggestions count message (for example: 2 suggestions).
+msgid "{} suggestions"
+msgstr "مقترحات {}"
+
 #. Translators: the description of a script
 msgctxt "excel-UIA"
-msgid ""
-"Shows a browseable message Listing information about a cell's appearance such as outline and fill colors, rotation and size"
+msgid "Shows a browseable message Listing information about a cell's appearance such as outline and fill colors, rotation and size"
 msgstr "عرض قائمة قابلة للتصفُّح لمعلومات حول مظهر الخلية مثل: الحدود وألوان التعبئة، ودرجة الدوران والحجم."
 
 #. Translators: The width of the cell in points
@@ -10680,6 +10624,10 @@ msgstr "تعليق: {comment} كتبه {author}"
 #, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
 msgstr "تعليق: {comment} بواسطة {author} في {date}"
+
+#. Translators: a message when navigating by sentence is unavailable in MS Word
+msgid "Navigating by sentence not supported in this document"
+msgstr "التنقُّل عبر الجُمَل غير مدعوم في هذا المستند"
 
 msgid "Desktop"
 msgstr "سطح المكتب"
@@ -11324,12 +11272,8 @@ msgstr "مخطط مساحي"
 
 #. Translators: Details about the plot area of a Microsoft Office chart.
 #, python-brace-format
-msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: "
-"{plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}"
-msgstr ""
-"مساحة المخطط, داخل الارتفاع: {plotAreaInsideHeight:.0f}, داخل العرض: {plotAreaInsideWidth:.0f}, داخل العلو: "
-"{plotAreaInsideTop:.0f}, داخل اليسار: {plotAreaInsideLeft:.0f}"
+msgid "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}"
+msgstr "مساحة المخطط, داخل الارتفاع: {plotAreaInsideHeight:.0f}, داخل العرض: {plotAreaInsideWidth:.0f}, داخل العلو: {plotAreaInsideTop:.0f}, داخل اليسار: {plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Office chart.
 msgid "Plot area "
@@ -11533,12 +11477,8 @@ msgstr "حذف {address} من رأس الأعمدة"
 msgid "Cannot find {address}    in column headers"
 msgstr "تعذر وجود  {address} في رؤوس الأعمدة"
 
-msgid ""
-"Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. "
-"Pressing twice will forget the current column header for this cell."
-msgstr ""
-"الضغط مرة واحدة سيجعل هذه الخلية رأس للعمود الأول للخلايا الأسفل منها أو التي  يمينها في هذا النطاق. والضغط مرتين سيلغي رأس "
-"العمود لهذه الخلية. "
+msgid "Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
+msgstr "الضغط مرة واحدة سيجعل هذه الخلية رأس للعمود الأول للخلايا الأسفل منها أو التي  يمينها في هذا النطاق. والضغط مرتين سيلغي رأس العمود لهذه الخلية. "
 
 #. Translators: the description  for a script for Excel
 msgid "sets the current cell as start of row header"
@@ -11564,12 +11504,8 @@ msgstr "حذف {address} من رؤوس الصفوف"
 msgid "Cannot find {address}    in row headers"
 msgstr "تعذر وجود {address} في رؤوس الأعمدة"
 
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. "
-"Pressing twice will forget the current row header for this cell."
-msgstr ""
-"بالضغط عليه مرة واحدة سيقوم بتعيين الخلية المحددة كأول رأس صف للخلايا الأسفل منها والتي على يمينها في هذه المنطقة. بالضغط عليه "
-"مرتين سيلغي هذا الإعداد."
+msgid "Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
+msgstr "بالضغط عليه مرة واحدة سيقوم بتعيين الخلية المحددة كأول رأس صف للخلايا الأسفل منها والتي على يمينها في هذه المنطقة. بالضغط عليه مرتين سيلغي هذا الإعداد."
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #, python-brace-format
@@ -12024,6 +11960,24 @@ msgstr "تباعد الأسطر بمسافة مزدوجة"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 تباعد السطر"
+
+#~ msgid "mrkd"
+#~ msgstr "mrkd"
+
+#~ msgid "report marked on"
+#~ msgstr "تفعيل الإعلان عن االنص المميَّز بصريًا"
+
+#~ msgid "report marked off"
+#~ msgstr "تعطيل الإعلان عن االنص المميَّز بصريًا"
+
+#~ msgid "marked content"
+#~ msgstr "محتوى مُعَلَّم"
+
+#~ msgid "An NVDA settings dialog is already open. Please close it first."
+#~ msgstr "يوجد مربّع حوار إعدادات مفتوح بالفعل. يرجى إغلاقه أولا."
+
+#~ msgid "Mar&ked (highlighted text)"
+#~ msgstr "ن&صٌّ مُعلَّم (مميّزٌ بصريا)"
 
 #, fuzzy
 #~ msgctxt "command toggle"
