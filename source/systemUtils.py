@@ -60,6 +60,34 @@ def hasUiAccess():
 		ctypes.windll.kernel32.CloseHandle(token)
 
 
+TokenOrigin = 17
+
+
+class TOKEN_ORIGIN(ctypes.Structure):
+	_fields_ = [("OriginatingLogonSession", ctypes.c_ulonglong)]
+
+
+def getProcessTokenOrigin(processHandle):
+	token = ctypes.wintypes.HANDLE()
+	ctypes.windll.advapi32.OpenProcessToken(
+		processHandle,
+		winKernel.MAXIMUM_ALLOWED,
+		ctypes.byref(token)
+	)
+	try:
+		val = TOKEN_ORIGIN()
+		ctypes.windll.advapi32.GetTokenInformation(
+			token,
+			TokenOrigin,
+			ctypes.byref(val),
+			ctypes.sizeof(val),
+			ctypes.byref(ctypes.wintypes.DWORD())
+		)
+		return val.OriginatingLogonSession
+	finally:
+		ctypes.windll.kernel32.CloseHandle(token)
+
+
 def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 	import subprocess
 	if params is not None:

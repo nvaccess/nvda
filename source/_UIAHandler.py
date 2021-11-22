@@ -800,14 +800,9 @@ class UIAHandler(COMObject):
 			elif windowClass == "Chrome_RenderWidgetHostHWND":
 				# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
 				# As their IA2 implementation is still better at the moment.
-				# However, in cases where Chromium is running under another user,
+				# However, in cases where Chromium is running under another logon session,
 				# the IAccessible2 implementation is unavailable.
-				hasAccessToIA2 = True
-				try:
-					import oleacc
-					oleacc.AccessibleObjectFromWindow(hwnd, winUser.OBJID_CLIENT).accChild(winUser.CHILDID_SELF)
-				except COMError:
-					hasAccessToIA2 = False
+				hasAccessToIA2 = not appModule.isRunningUnderDifferentLogonSession
 				if (
 					AllowUiaInChromium.getConfig() == AllowUiaInChromium.NO
 					# Disabling is only useful if we can inject in-process (and use our older code)

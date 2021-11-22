@@ -34,11 +34,15 @@ import appModules
 import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
+from typing import Optional
+from systemUtils import getProcessTokenOrigin
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
+#: The logon session ID under which NVDA was started.
+NVDAProcessLogonSessionID: Optional[int] = None
 _importers=None
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
@@ -228,8 +232,9 @@ def reloadAppModules():
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	global NVDAProcessID,_importers
+	global NVDAProcessID, NVDAProcessLogonSessionID, _importers
 	NVDAProcessID=os.getpid()
+	NVDAProcessLogonSessionID = getProcessTokenOrigin(winKernel.GetCurrentProcess())
 	config.addConfigDirsToPythonPackagePath(appModules)
 	_importers=list(pkgutil.iter_importers("appModules.__init__"))
 
@@ -511,6 +516,16 @@ class AppModule(baseObject.ScriptableObject):
 			return True
 		self.isWindowsStoreApp = False
 		return self.isWindowsStoreApp
+
+	def _get_isRunningUnderDifferentLogonSession(self) -> bool:
+		"""Returns whether the application for this appModule was started under a different logon session.
+		This applies to applications started with the Windows runas command
+		or when choosing "run as a different user" from an application's (shortcut) context menu.
+		"""
+		self.isRunningUnderDifferentLogonSession = (
+			NVDAProcessLogonSessionID != getProcessTokenOrigin(self.processHandle)
+		)
+		return self.isRunningUnderDifferentLogonSession
 
 	def _get_appArchitecture(self):
 		"""Returns the target architecture for the specified app.
