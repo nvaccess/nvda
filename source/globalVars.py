@@ -16,10 +16,37 @@
 @type oldMouseY: int
   @var navigatorObject: holds the current navigator object
 @type navigatorObject: L{NVDAObjects.NVDAObject}
-@var navigatorTracksFocus: if true, the navigator object will follow the focus as it changes
-@type navigatorTracksFocus: boolean
 """
- 
+
+import argparse
+import os
+import typing
+
+
+class DefautAppArgs(argparse.Namespace):
+	quit: bool = False
+	check_running: bool = False
+	logFileName: typing.Optional[os.PathLike] = ""
+	logLevel: int = 0
+	configPath: typing.Optional[os.PathLike] = None
+	language: str = "en"
+	minimal: bool = False
+	secure: bool = False
+	disableAddons: bool = False
+	debugLogging: bool = False
+	noLogging: bool = False
+	changeScreenReaderFlag: bool = True
+	install: bool = False
+	installSilent: bool = False
+	createPortable: bool = False
+	createPortableSilent: bool = False
+	portablePath: typing.Optional[os.PathLike] = None
+	launcher: bool = False
+	enableStartOnLogon: typing.Optional[bool] = None
+	copyPortableConfig: bool = False
+	easeOfAccess: bool = False
+
+
 startTime=0
 desktopObject=None
 foregroundObject=None
@@ -33,7 +60,7 @@ navigatorObject=None
 reviewPosition=None
 reviewPositionObj=None
 lastProgressValue=0
-appArgs=None
+appArgs = DefautAppArgs()
 appArgsExtra=None
 settingsRing = None
 speechDictionaryProcessing=True
