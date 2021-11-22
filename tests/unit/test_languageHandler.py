@@ -162,7 +162,7 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 		`setLocale` doesn't change `languageHandler.curLang`, so reset the locale using `setLanguage` to
 		the current language for each test.
 		"""
-		languageHandler.setLanguage(languageHandler.curLang)
+		languageHandler.setLanguage(languageHandler.getLanguage())
 
 	@classmethod
 	def tearDownClass(cls):
@@ -170,7 +170,7 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 		`setLocale` doesn't change `languageHandler.curLang`, so reset the locale using `setLanguage` to
 		the current language so the tests can continue normally.
 		"""
-		languageHandler.setLanguage(languageHandler.curLang)
+		languageHandler.setLanguage(languageHandler.getLanguage())
 
 	def test_SupportedLocale_LocaleIsSet(self):
 		"""
@@ -271,7 +271,7 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 				langOnly = localeName.split("_")[0]
 				languageHandler.setLanguage(localeName)
 				# check curLang/translation service is set
-				self.assertEqual(languageHandler.curLang, localeName)
+				self.assertEqual(languageHandler.getLanguage(), localeName)
 
 				# check Windows thread is set
 				threadLocale = ctypes.windll.kernel32.GetThreadLocale()

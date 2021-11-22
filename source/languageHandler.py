@@ -366,7 +366,7 @@ def setLanguage(lang: str) -> None:
 			curLang = "en"
 
 	trans.install()
-	setLocale(curLang)
+	setLocale(getLanguage())
 	# Install our pgettext function.
 	builtins.pgettext = makePgettext(trans)
 
@@ -441,14 +441,14 @@ def setLocale(localeName: str) -> None:
 		return
 	# Either Windows does not know the locale, or Python is unable to handle it.
 	# reset to default locale
-	if originalLocaleName == curLang:
+	if originalLocaleName == getLanguage():
 		# reset to system locale default if we can't set the current lang's locale
 		locale.setlocale(locale.LC_ALL, "")
 		log.debugWarning(f"set python locale to system default")
 	else:
-		log.debugWarning(f"setting python locale to the current language {curLang}")
+		log.debugWarning(f"setting python locale to the current language {getLanguage()}")
 		# fallback and try to reset the locale to the current lang
-		setLocale(curLang)
+		setLocale(getLanguage())
 
 
 def getLanguage() -> str:

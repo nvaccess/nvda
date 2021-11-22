@@ -38,7 +38,7 @@ class MockSynth:
 class test_synthDriverHandler(unittest.TestCase):
 
 	def setUp(self) -> None:
-		self._oldLang = languageHandler.curLang
+		self._oldLang = languageHandler.getLanguage()
 		self._oldSynthConfig = config.conf["speech"]["synth"]
 		self._originalSynth = synthDriverHandler._curSynth
 		self._originalGetSynthDriver = synthDriverHandler._getSynthDriver
