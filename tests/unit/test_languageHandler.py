@@ -159,7 +159,7 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 
 	def setUp(self):
 		"""
-		`setLocale` doesn't change `languageHandler.curLang`, so reset the locale using `setLanguage` to
+		`setLocale` doesn't change current NVDA language, so reset the locale using `setLanguage` to
 		the current language for each test.
 		"""
 		languageHandler.setLanguage(languageHandler.getLanguage())
@@ -167,7 +167,7 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 	@classmethod
 	def tearDownClass(cls):
 		"""
-		`setLocale` doesn't change `languageHandler.curLang`, so reset the locale using `setLanguage` to
+		`setLocale` doesn't change current NVDA language, so reset the locale using `setLanguage` to
 		the current language so the tests can continue normally.
 		"""
 		languageHandler.setLanguage(languageHandler.getLanguage())
@@ -262,7 +262,7 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 	def test_NVDASupportedLanguages_LanguageIsSetCorrectly(self):
 		"""
 		Tests languageHandler.setLanguage, using all NVDA supported languages, which should do the following:
-		- set the translation service and languageHandler.curLang
+		- set the translation service and current NVDA language
 		- set the windows locale for the thread (fallback to system default)
 		- set the python locale for the thread (match the translation service, fallback to system default)
 		"""
@@ -270,7 +270,7 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 			with self.subTest(localeName=localeName):
 				langOnly = localeName.split("_")[0]
 				languageHandler.setLanguage(localeName)
-				# check curLang/translation service is set
+				# check current NVDA language/translation service is set
 				self.assertEqual(languageHandler.getLanguage(), localeName)
 
 				# check Windows thread is set
