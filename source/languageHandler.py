@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2021 NV access Limited, Joseph Lee
+# Copyright (C) 2007-2021 NV access Limited, Joseph Lee, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -18,7 +18,7 @@ import buildVersion
 import globalVars
 from logHandler import log
 import winKernel
-from typing import Optional
+from typing import List, Optional, Tuple
 
 #a few Windows locale constants
 LOCALE_USER_DEFAULT = 0x400
@@ -118,8 +118,12 @@ def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
 	if lang:
 		return normalizeLanguage(lang)
 
-def getLanguageDescription(language):
+
+def getLanguageDescription(language: str) -> Optional[str]:
 	"""Finds out the description (localized full name) of a given local name"""
+	if language == "Windows":
+		# Translators: the label for the Windows default NVDA interface language.
+		return _("User default")
 	desc=None
 	LCID=localeNameToWindowsLCID(language)
 	if LCID is not LCID_NONE:
@@ -218,21 +222,27 @@ def ansiCodePageFromNVDALocale(localeName: str) -> Optional[str]:
 	return None
 
 
-def getAvailableLanguages(presentational=False):
-	"""generates a list of locale names, plus their full localized language and country names.
-	@param presentational: whether this is meant to be shown alphabetically by language description
-	@type presentational: bool
-	@rtype: list of tuples
-	"""
-	#Make a list of all the locales found in NVDA's locale dir
+def listNVDALocales() -> List[str]:
+	# Make a list of all the locales found in NVDA's locale dir
 	localesDir = os.path.join(globalVars.appDir, 'locale')
 	locales = [
 		x for x in os.listdir(localesDir) if os.path.isfile(os.path.join(localesDir, x, 'LC_MESSAGES', 'nvda.mo'))
 	]
-	#Make sure that en (english) is in the list as it may not have any locale files, but is default
+	# Make sure that en (english) is in the list as it may not have any locale files, but is default
 	if 'en' not in locales:
 		locales.append('en')
 		locales.sort()
+	# include a 'user default, windows' language,
+	# which just represents the default language for this user account
+	locales.insert(0, "Windows")
+	return locales
+
+
+def getAvailableLanguages(presentational: bool = False) -> List[Tuple[str, str]]:
+	"""generates a list of locale names, plus their full localized language and country names.
+	@param presentational: whether this is meant to be shown alphabetically by language description
+	"""
+	locales = listNVDALocales()
 	# Prepare a 2-tuple list of language code and human readable language description.
 	langs = [(lc, getLanguageDescription(lc)) for lc in locales]
 	# Translators: The pattern defining how languages are displayed and sorted in in the general
@@ -243,13 +253,14 @@ def getAvailableLanguages(presentational=False):
 	isDescFirst = fullDescPattern.find("{desc}") < fullDescPattern.find("{lc}")
 	if presentational and isDescFirst:
 		langs.sort(key=lambda lang: locale.strxfrm(lang[1] if lang[1] else lang[0]))
-	langs = [(lc, (fullDescPattern.format(desc=desc, lc=lc) if desc else lc)) for lc, desc in langs]
-	#include a 'user default, windows' language, which just represents the default language for this user account
-	langs.insert(
-		0,
-		# Translators: the label for the Windows default NVDA interface language.
-		("Windows", _("User default"))
-	)
+	# Make sure that the 'user default' language is first in the list.
+	for index, lang in enumerate(langs):
+		if lang[0] == "Windows":
+			break
+	userDefault = langs.pop(index)
+	langs = [userDefault] + [
+		(lc, (fullDescPattern.format(desc=desc, lc=lc) if desc else lc)) for lc, desc in langs
+	]
 	return langs
 
 
@@ -273,6 +284,27 @@ def makePgettext(translations):
 	else:
 		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
 	return pgettext
+
+
+def getLanguageCliArgs() -> Tuple[str, ...]:
+	"""Returns all command line arguments which were used to set current NVDA language
+	or an empty tuple if language has not been specified from the CLI."""
+	for argIndex, argValue in enumerate(sys.argv):
+		if argValue == "--lang":
+			# Language was provided in a form `--lang lang_CODE`. The next position in `sys.argv` is a language code.
+			# It is impossible not to provide it in this case as it would be flagged as an error
+			# during arguments validation.
+			return (argValue, sys.argv[argIndex + 1])
+		if argValue.startswith("--lang="):
+			# Language in a form `--lang=lang_CODE`
+			return (argValue,)
+	return tuple()
+
+
+def isLanguageForced() -> bool:
+	"""Returns `True` if language is provided from the command line - `False` otherwise."""
+	return bool(getLanguageCliArgs())
+
 
 def getWindowsLanguage():
 	"""
@@ -423,7 +455,7 @@ def getLanguage() -> str:
 	return curLang
 
 
-def normalizeLanguage(lang) -> Optional[str]:
+def normalizeLanguage(lang: str) -> Optional[str]:
 	"""
 	Normalizes a  language-dialect string  in to a standard form we can deal with.
 	Converts  any dash to underline, and makes sure that language is lowercase and dialect is upercase.

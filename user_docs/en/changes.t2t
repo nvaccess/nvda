@@ -8,6 +8,7 @@ What's New in NVDA
 == New Features ==
 - Support for reporting notes in MS Excel with UI Automation enabled on Windows 11. (#12861)
 - In recent builds of Microsoft Word via UI Automation on Windows 11, the existence of bookmarks, draft comments and resolved comments are now reported in both speech and braille. (#12861)
+- The new --lang command line parameter allows overriding the configured NVDA language. (#10044)
 -
 
 == Changes ==
@@ -24,10 +25,14 @@ What's New in NVDA
 - Improved consistency of output reading in terminal programs. (#12974)
   - Note that in some situations, when inserting or deleting characters in the middle of a line, the characters after the caret may again be read out.
   -
+- MS word with UIA: heading quick nav in browse mode no longer gets stuck on the final heading of a document, nor is this heading shown twice in the NVDA elements list. (#9540)
 -
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
+- Updated SCons to version 4.3.0.
+- Updated py2exe to version 0.11.0.1. (#12357, #13066)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
 - ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
 - ``MessageItem`` has been removed from the Outlook appModule. (#12935)
