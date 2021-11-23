@@ -1,8 +1,7 @@
-#tests/unit/test_extensionPoints.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2019 NV Access Limited, Leonard de Ruijter
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2021 NV Access Limited, Joseph lee, Leonard de Ruijter, Łukasz Golonka
 
 """Unit tests for the extensionPoints module.
 """
@@ -781,3 +780,245 @@ class TestDecider(unittest.TestCase):
 		self.decider.register(handler)
 		self.decider.decide(a=1)
 		self.assertEqual(calledKwargs, {"a": 1})
+
+
+class TestAccumulatingDecider(unittest.TestCase):
+
+	def test_noHandlers(self):
+		positiveDecision = extensionPoints.AccumulatingDecider(defaultDecision=True).decide(a='a value')
+		self.assertEqual(positiveDecision, True)
+		negativeDecision = extensionPoints.AccumulatingDecider(defaultDecision=False).decide(a='a value')
+		self.assertEqual(negativeDecision, False)
+
+	def test_oneHandlerFalse(self):
+		def handler():
+			return False
+		decider = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		decider.register(handler)
+		decision = decider.decide()
+		self.assertEqual(decision, False)
+
+	def test_oneHandlerTrue(self):
+		def handler():
+			return True
+		decider = extensionPoints.AccumulatingDecider(defaultDecision=False)
+		decider.register(handler)
+		decision = decider.decide()
+		self.assertEqual(decision, True)
+
+	def test_instanceMethodHandler(self):
+		""" Test that a instance method function is called as expected
+		"""
+		calledKwargs = {}
+
+		class handlerClass():
+			def handlerMethod(self, **kwargs):
+				calledKwargs.update(kwargs)
+
+		h = handlerClass()
+		deciderDefaultDecisionTrue = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		deciderDefaultDecisionTrue.register(h.handlerMethod)
+		deciderDefaultDecisionTrue.decide(a='a value', b='b value')
+		self.assertEqual(calledKwargs, {'a': 'a value', 'b': 'b value'})
+		calledKwargs.clear()
+		deciderDefaultDecisionFalse = extensionPoints.AccumulatingDecider(defaultDecision=False)
+		deciderDefaultDecisionFalse.register(h.handlerMethod)
+		deciderDefaultDecisionFalse.decide(a='a value', b='b value')
+		self.assertEqual(calledKwargs, {'a': 'a value', 'b': 'b value'})
+
+	def test_twoHandlersNonDefaultDefault(self):
+		def handler1():
+			return False
+
+		def handler2():
+			return True
+		decider = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		decider.register(handler1)
+		decider.register(handler2)
+		decision = decider.decide()
+		self.assertEqual(decision, False)
+
+	def test_twoHandlersDefaultNonDefault(self):
+		def handler1():
+			return True
+
+		def handler2():
+			return False
+		decider = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		decider.register(handler1)
+		decider.register(handler2)
+		decision = decider.decide()
+		self.assertEqual(decision, False)
+
+	def test_handlerException(self):
+		"""Test that a handler which raises an exception doesn't affect later handlers.
+		"""
+		def handler1():
+			raise Exception("barf")
+
+		def handler2():
+			return False
+		decider = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		decider.register(handler1)
+		decider.register(handler2)
+		decision = decider.decide()
+		self.assertEqual(decision, False)
+
+	def test_handlerAcceptsKwargs(self):
+		""" Test that a handler that accepts **kwargs receives all arguments
+		"""
+		calledKwargs = {}
+
+		def handler(**kwargs):
+			calledKwargs.update(kwargs)
+
+		deciderDefaultDecisionTrue = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		deciderDefaultDecisionTrue.register(handler)
+		deciderDefaultDecisionTrue.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+		calledKwargs.clear()
+		deciderDefaultDecisionFalse = extensionPoints.AccumulatingDecider(defaultDecision=False)
+		deciderDefaultDecisionFalse.register(handler)
+		deciderDefaultDecisionFalse.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerParamsWithoutDefault(self):
+		""" Test that a handler that accepts params without a default receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(a):
+			calledKwargs["a"] = a
+
+		deciderDefaultDecisionFalse = extensionPoints.AccumulatingDecider(defaultDecision=False)
+		deciderDefaultDecisionFalse.register(handler)
+		deciderDefaultDecisionFalse.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+		calledKwargs.clear()
+
+		deciderDefaultDecisionTrue = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		deciderDefaultDecisionTrue.register(handler)
+		deciderDefaultDecisionTrue.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerParamsWithDefault(self):
+		""" Test that a handler that accepts params with a default receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(a=0):
+			calledKwargs["a"] = a
+
+		deciderDefaultDecisionFalse = extensionPoints.AccumulatingDecider(defaultDecision=False)
+		deciderDefaultDecisionFalse.register(handler)
+		deciderDefaultDecisionFalse.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+		calledKwargs.clear()
+		deciderDefaultDecisionTrue = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		deciderDefaultDecisionTrue.register(handler)
+		deciderDefaultDecisionTrue.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerParamsWithRequiredKwarg(self):
+		""" Test that a handler that accepts required keyword arguments receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(*, a):
+			calledKwargs["a"] = a
+
+		deciderDefaultDecisionTrue = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		deciderDefaultDecisionTrue.register(handler)
+		deciderDefaultDecisionTrue.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+		calledKwargs.clear()
+		deciderDefaultDecisionFalse = extensionPoints.AccumulatingDecider(defaultDecision=False)
+		deciderDefaultDecisionFalse.register(handler)
+		deciderDefaultDecisionFalse.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_allHandlersCalledAllDecisionsDefault(self):
+		"""Ensure that all handlers are called when each one returns the default decision.
+		"""
+		value = 0
+
+		def h1():
+			nonlocal value
+			value += 3
+			return False
+
+		def h2():
+			nonlocal value
+			value += 11
+			return False
+
+		def h3():
+			nonlocal value
+			value += 22
+			return False
+
+		decider = extensionPoints.AccumulatingDecider(defaultDecision=False)
+		decider.register(h1)
+		decider.register(h2)
+		decider.register(h3)
+		decision = decider.decide()
+		self.assertEqual(value, 36)
+		self.assertEqual(decision, False)
+
+	def test_allHandlersCalledAllDecisionsNonDefault(self):
+		"""Ensure that all handlers are called when each one returns the non default decision.
+		"""
+		value = 0
+
+		def h1():
+			nonlocal value
+			value += 3
+			return False
+
+		def h2():
+			nonlocal value
+			value += 11
+			return False
+
+		def h3():
+			nonlocal value
+			value += 22
+			return False
+
+		decider = extensionPoints.AccumulatingDecider(defaultDecision=True)
+		decider.register(h1)
+		decider.register(h2)
+		decider.register(h3)
+		decision = decider.decide()
+		self.assertEqual(value, 36)
+		self.assertEqual(decision, False)
+
+	def test_allHandlersCalledLastDecisionNonDefault(self):
+		"""Ensure that all handlers are called when all but last one returns the default decision.
+		"""
+		value = 0
+
+		def h1():
+			nonlocal value
+			value += 3
+			return False
+
+		def h2():
+			nonlocal value
+			value += 11
+			return False
+
+		def h3():
+			nonlocal value
+			value += 22
+			return True
+
+		decider = extensionPoints.AccumulatingDecider(defaultDecision=False)
+		decider.register(h1)
+		decider.register(h2)
+		decider.register(h3)
+		decision = decider.decide()
+		self.assertEqual(value, 36)
+		self.assertEqual(decision, True)

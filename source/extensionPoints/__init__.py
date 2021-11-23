@@ -1,18 +1,18 @@
-#extensionPoints.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2021 NV Access Limited, Joseph Lee, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Framework to enable extensibility at specific points in the code.
 This allows interested parties to register to be notified when some action occurs
 or to modify a specific kind of data.
 For example, you might wish to notify about a configuration profile switch
 or allow modification of spoken messages before they are passed to the synthesizer.
-See the L{Action}, L{Filter}, L{Decider} classes.
+See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
 from logHandler import log
 from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
+from typing import Set
 
 
 class Action(HandlerRegistrar):
@@ -152,3 +152,58 @@ class Decider(HandlerRegistrar):
 			if not decision:
 				return False
 		return True
+
+
+class AccumulatingDecider(HandlerRegistrar):
+	"""Allows interested parties to participate in deciding whether something
+	should be done.
+	For example, input gestures are normally executed,
+	but this might be used to prevent their execution
+	under specific circumstances such as when controlling a remote system.
+
+	First, a Decider is created:
+
+	>>> doSomething = extensionPoints.Decider()
+
+	Interested parties then register to participate in the decision, see
+	L{register} docstring for details of the type of handlers that can be
+	registered:
+
+	>>> def shouldDoSomething(someArg=None):
+	... 	return False
+	...
+	>>> doSomething.register(shouldDoSomething)
+
+	When the decision is to be made, registered handlers are called until
+	a handler returns False, see L{util.callWithSupportedKwargs}
+	for how args passed to notify are mapped to the handler:
+
+	>>> doSomething.decide(someArg=42)
+	False
+
+	If there are no handlers or all handlers return True,
+	the return value is True.
+	"""
+
+	def __init__(self, defaultDecision: bool) -> None:
+		super().__init__()
+		self.defaultDecision: bool = defaultDecision
+
+	def decide(self, **kwargs) -> bool:
+		"""Call handlers to make a decision.
+		If a handler returns False, processing stops
+		and False is returned.
+		If there are no handlers or all handlers return True, True is returned.
+		@param kwargs: Arguments to pass to the handlers.
+		@return: The decision.
+		"""
+		decisions: Set[bool] = set()
+		for handler in self.handlers:
+			try:
+				decisions.add(callWithSupportedKwargs(handler, **kwargs))
+			except Exception:
+				log.exception("Error running handler %r for %r" % (handler, self))
+				continue
+		if (not self.defaultDecision) in decisions:
+			return (not self.defaultDecision)
+		return self.defaultDecision
