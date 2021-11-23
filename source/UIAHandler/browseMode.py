@@ -13,7 +13,6 @@ import UIAHandler
 from .utils import (
 	createUIAMultiPropertyCondition,
 	getDeepestLastChildUIAElementInWalker,
-	getUIATextAttributeValueFromRange,
 	isUIAElementInWalker,
 	iterUIARangeByUnit,
 )
