@@ -12,7 +12,7 @@ import UIAHandler
 from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
-from UIAUtils import _getConhostAPILevel
+from UIAHandler.utils import _getConhostAPILevel
 from UIAHandler.constants import WinConsoleAPILevel
 from . import UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport

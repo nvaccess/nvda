@@ -36,7 +36,7 @@ import winUser
 import winVersion
 import eventHandler
 from logHandler import log
-import UIAUtils
+import UIAHandler.utils
 from comInterfaces import UIAutomationClient as UIA
 # F403: unable to detect undefined names
 from comInterfaces.UIAutomationClient import *  # noqa:  F403
@@ -359,7 +359,7 @@ class UIAHandler(COMObject):
 		if isinstance(self.clientObject, UIA.IUIAutomation6):
 			self.globalEventHandlerGroup = self.clientObject.CreateEventHandlerGroup()
 		else:
-			self.globalEventHandlerGroup = UIAUtils.FakeEventHandlerGroup(self.clientObject)
+			self.globalEventHandlerGroup = UIAHandler.utils.FakeEventHandlerGroup(self.clientObject)
 		self.globalEventHandlerGroup.AddPropertyChangedEventHandler(
 			UIA.TreeScope_Subtree,
 			self.baseCacheRequest,
@@ -400,7 +400,7 @@ class UIAHandler(COMObject):
 		if isinstance(self.clientObject, UIA.IUIAutomation6):
 			self.localEventHandlerGroup = self.clientObject.CreateEventHandlerGroup()
 		else:
-			self.localEventHandlerGroup = UIAUtils.FakeEventHandlerGroup(self.clientObject)
+			self.localEventHandlerGroup = UIAHandler.utils.FakeEventHandlerGroup(self.clientObject)
 		self.localEventHandlerGroup.AddPropertyChangedEventHandler(
 			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 			self.baseCacheRequest,
@@ -418,7 +418,7 @@ class UIAHandler(COMObject):
 	def addEventHandlerGroup(self, element, eventHandlerGroup):
 		if isinstance(eventHandlerGroup, UIA.IUIAutomationEventHandlerGroup):
 			self.clientObject.AddEventHandlerGroup(element, eventHandlerGroup)
-		elif isinstance(eventHandlerGroup, UIAUtils.FakeEventHandlerGroup):
+		elif isinstance(eventHandlerGroup, UIAHandler.utils.FakeEventHandlerGroup):
 			eventHandlerGroup.registerToClientObject(element)
 		else:
 			raise NotImplementedError
@@ -426,7 +426,7 @@ class UIAHandler(COMObject):
 	def removeEventHandlerGroup(self, element, eventHandlerGroup):
 		if isinstance(eventHandlerGroup, UIA.IUIAutomationEventHandlerGroup):
 			self.clientObject.RemoveEventHandlerGroup(element, eventHandlerGroup)
-		elif isinstance(eventHandlerGroup, UIAUtils.FakeEventHandlerGroup):
+		elif isinstance(eventHandlerGroup, UIAHandler.utils.FakeEventHandlerGroup):
 			eventHandlerGroup.unregisterFromClientObject(element)
 		else:
 			raise NotImplementedError
@@ -813,7 +813,7 @@ class UIAHandler(COMObject):
 			):
 				return False
 			if windowClass == "ConsoleWindowClass":
-				return UIAUtils._shouldUseUIAConsole(hwnd)
+				return UIAHandler.utils._shouldUseUIAConsole(hwnd)
 		return bool(res)
 
 	def isUIAWindow(self,hwnd):
@@ -836,7 +836,7 @@ class UIAHandler(COMObject):
 		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
 		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
 		if appModule.appName==WDAG_PROCESS_NAME:
-			condition=UIAUtils.createUIAMultiPropertyCondition({UIA_ClassNamePropertyId:[u'ApplicationFrameWindow',u'CabinetWClass']})
+			condition=UIAHandler.utils.createUIAMultiPropertyCondition({UIA_ClassNamePropertyId:[u'ApplicationFrameWindow',u'CabinetWClass']})
 			walker=self.clientObject.createTreeWalker(condition)
 		else:
 			# Not WDAG, just walk up to the nearest valid windowHandle
@@ -867,7 +867,7 @@ class UIAHandler(COMObject):
 		windowHandle = self.getNearestWindowHandle(element)
 		if winUser.getClassName(windowHandle) != MS_WORD_DOCUMENT_WINDOW_CLASS:
 			return False
-		condition = UIAUtils.createUIAMultiPropertyCondition(
+		condition = UIAHandler.utils.createUIAMultiPropertyCondition(
 			{UIA.UIA_ClassNamePropertyId: 'NetUIHWNDElement'},
 			{UIA.UIA_NativeWindowHandlePropertyId: windowHandle}
 		)

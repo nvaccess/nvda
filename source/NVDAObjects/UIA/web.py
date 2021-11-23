@@ -25,7 +25,7 @@ from UIABrowseMode import (
 	UIATextRangeQuickNavItem,
 	UIAControlQuicknavIterator,
 )
-from UIAUtils import (
+from UIAHandler.utils import (
 	createUIAMultiPropertyCondition,
 	getUIATextAttributeValueFromRange,
 )
