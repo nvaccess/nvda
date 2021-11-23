@@ -7,17 +7,17 @@ from typing import Optional, Tuple
 from comtypes import COMError
 import winVersion
 import UIAHandler
-import _UIAConstants
-from _UIAConstants import (
+import UIAHandler.constants
+from UIAHandler.constants import (
 	UIAutomationType,
 )
 import colors
 import locationHelper
 import controlTypes
-from _UIACustomProps import (
+from UIAHandler.customProps import (
 	CustomPropertyInfo,
 )
-from _UIACustomAnnotations import (
+from UIAHandler.customAnnotations import (
 	CustomAnnotationTypeInfo,
 )
 from comtypes import GUID
@@ -182,13 +182,13 @@ class ExcelCell(ExcelObject):
 		return None
 
 	#: Typing information for auto-property: _get_fillType
-	fillType: Optional[_UIAConstants.FillType]
+	fillType: Optional[UIAHandler.constants.FillType]
 
-	def _get_fillType(self) -> Optional[_UIAConstants.FillType]:
+	def _get_fillType(self) -> Optional[UIAHandler.constants.FillType]:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_FillTypePropertyId, True)
 		if isinstance(val, int):
 			try:
-				return _UIAConstants.FillType(val)
+				return UIAHandler.constants.FillType(val)
 			except ValueError:
 				pass
 		return None
@@ -274,7 +274,7 @@ class ExcelCell(ExcelObject):
 				# Translators: The fill type (pattern, gradient etc) of an Excel Cell
 				"Fill type: {0}"
 			)
-			infoList.append(tmpl.format(_UIAConstants.FillTypeLabels[self.fillType]))
+			infoList.append(tmpl.format(UIAHandler.constants.FillTypeLabels[self.fillType]))
 		numberFormat = self._getUIACacheablePropertyValue(
 			self._UIAExcelCustomProps.cellNumberFormat.id
 		)

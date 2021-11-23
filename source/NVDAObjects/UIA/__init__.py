@@ -16,8 +16,8 @@ import numbers
 import colors
 import languageHandler
 import UIAHandler
-import _UIACustomProps
-import _UIACustomAnnotations
+import UIAHandler.customProps
+import UIAHandler.customAnnotations
 import globalVars
 import eventHandler
 import controlTypes
@@ -297,7 +297,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if UIAHandler.AnnotationType_GrammarError in annotationTypes:
 					formatField["invalid-grammar"]=True
 			if formatConfig["reportComments"]:
-				cats = self.obj._UIACustomAnnotationTypes
+				cats = self.obj.UIAHandler.customAnnotationTypes
 				if cats.microsoftWord_draftComment.id and cats.microsoftWord_draftComment.id in annotationTypes:
 					formatField["comment"] = textInfos.CommentType.DRAFT
 				elif cats.microsoftWord_resolvedComment.id and cats.microsoftWord_resolvedComment.id in annotationTypes:
@@ -310,7 +310,7 @@ class UIATextInfo(textInfos.TextInfo):
 				elif UIAHandler.AnnotationType_DeletionChange in annotationTypes:
 					formatField["revision-deletion"]=True
 			if formatConfig["reportBookmarks"]:
-				cats = self.obj._UIACustomAnnotationTypes
+				cats = self.obj.UIAHandler.customAnnotationTypes
 				if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
 					formatField["bookmark"] = True
 		cultureVal=fetcher.getValue(UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
@@ -917,8 +917,8 @@ class UIATextInfo(textInfos.TextInfo):
 	updateCaret = updateSelection
 
 class UIA(Window):
-	_UIACustomProps = _UIACustomProps.CustomPropertiesCommon.get()
-	_UIACustomAnnotationTypes = _UIACustomAnnotations.CustomAnnotationTypesCommon.get()
+	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon.get()
+	_UIACustomAnnotationTypes = UIAHandler.customAnnotations.CustomAnnotationTypesCommon.get()
 
 	shouldAllowDuplicateUIAFocusEvent = False
 
