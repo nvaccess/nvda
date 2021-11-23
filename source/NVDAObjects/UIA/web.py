@@ -19,7 +19,7 @@ import cursorManager
 import re
 import aria
 import textInfos
-from UIABrowseMode import (
+from UIAHandler.browseMode import (
 	UIABrowseModeDocument,
 	UIABrowseModeDocumentTextInfo,
 	UIATextRangeQuickNavItem,

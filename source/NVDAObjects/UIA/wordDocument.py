@@ -18,7 +18,12 @@ import review
 import braille
 import api
 import browseMode
-from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator, TextAttribUIATextInfoQuickNavItem
+from UIAHandler.browseMode import (
+	UIABrowseModeDocument,
+	UIADocumentWithTableNavigation,
+	UIATextAttributeQuicknavIterator,
+	TextAttribUIATextInfoQuickNavItem
+)
 from UIAHandler.utils import *
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import (
