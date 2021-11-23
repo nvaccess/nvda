@@ -8,7 +8,7 @@
 
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import List, Optional
 import comtypes
 import sys
 import winVersion
@@ -56,7 +56,23 @@ _shuttingDownFlagLock = threading.Lock()
 def doStartupDialogs():
 	import config
 	import gui
-	# Translators: The title of the dialog to tell users that there are erros in the configuration file.
+	unknownCLIParams: List[str] = list()
+	for param in globalVars.appArgsExtra:
+		isParamKnown = addonHandler.isCLIParamKnown.decide(cliArgument=param)
+		if not isParamKnown:
+			unknownCLIParams.append(param)
+	if unknownCLIParams:
+		import wx
+		gui.messageBox(
+			# Translators: Shown when NVDA has been started with unknown command line parameters.
+			_("The following command line parameters are unknown to NVDA: {params}").format(
+				params=", ".join(unknownCLIParams)
+			),
+			# Translators: Title of the dialog letting user know
+			# that command line parameters they provided are unknown.
+			_("Unknown command line parameters!"),
+			wx.OK | wx.ICON_ERROR
+		)
 	if config.conf.baseConfigError:
 		import wx
 		gui.messageBox(
