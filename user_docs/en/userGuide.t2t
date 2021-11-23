@@ -332,6 +332,7 @@ NVDA provides the following key commands in relation to the system caret:
 | Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
 | Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
 | Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the caret is currently situated. Pressing twice shows the information in browse mode |
+| Report caret location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the position of system caret. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
 | Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
 | Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
 
@@ -380,7 +381,7 @@ To navigate by object, use the following commands:
 | Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double-tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report review cursor location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
+| Report review cursor location | NVDA+shift+numpadDelete | NVDA+shift+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
 | Move review cursor to status bar | none | none | none | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location. |
 %kc:endInclude
 
@@ -3253,6 +3254,7 @@ Following are the command line options for NVDA:
 | -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
 | -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
+| None | --lang=LANGUAGE | Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc. |
 | -m | --minimal | No sounds, no interface, no start message, etc. |
 | -s | --secure | Secure mode: disables Python console, profile features such as creation, deletion, renaming profiles etc., update check, some checkboxes in the welcome dialog and in general settings category (e.g. Use NVDA during sign-in, save configuration after exit etc.), as well as logviewer and logging features (used often in secure screens). Note also that this command will disable the possibility to save settings in system config and the gesture map will not be saved on the disk. |
 | None | --disable-addons | Add-ons will have no effect |
