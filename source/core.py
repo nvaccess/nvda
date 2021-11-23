@@ -57,7 +57,7 @@ def doStartupDialogs():
 	import config
 	import gui
 	unknownCLIParams: List[str] = list()
-	for param in globalVars.appArgsExtra:
+	for param in globalVars.unknownAppArgs:
 		isParamKnown = addonHandler.isCLIParamKnown.decide(cliArgument=param)
 		if not isParamKnown:
 			unknownCLIParams.append(param)
