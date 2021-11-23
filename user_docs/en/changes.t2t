@@ -58,6 +58,7 @@ This ensures code will honor the Windows user setting for swapping the primary m
 - ``shlobj.SHGetFolderPath`` has been removed - please use ``shlobj.SHGetKnownFolderPath`` instead. (#12943)
 - ``shlobj`` constants have been removed. A new enum has been created, ``shlobj.FolderId`` for usage with ``SHGetKnownFolderPath``. (#12943)
 - ``diffHandler.get_dmp_algo`` and ``diffHandler.get_difflib_algo`` have been replaced with ``diffHandler.prefer_dmp`` and ``diffHandler.prefer_difflib`` respectively. (#12974)
+- ``languageHandler.curLang`` has been removed - to get the current NVDA language use ``languageHandler.getLanguage()``. (#13082)
 -
 
 

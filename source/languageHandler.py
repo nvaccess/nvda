@@ -34,8 +34,6 @@ CP_ACP = "0"
 #: or because it is not a legal locale name (e.g. "zzzz").
 LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
 
-curLang="en"
-
 
 class LOCALE(enum.IntEnum):
 	# Represents NLS constants which can be used with `GetLocaleInfoEx` or `GetLocaleInfoW`
@@ -336,10 +334,9 @@ def setLanguage(lang: str) -> None:
 	Sets the following using `lang` such as "en", "ru_RU", or "es-ES". Use "Windows" to use the system locale
 	 - the windows locale for the thread (fallback to system locale)
 	 - the translation service (fallback to English)
-	 - languageHandler.curLang (match the translation service)
+	 - Current NVDA language (match the translation service)
 	 - the python locale for the thread (match the translation service, fallback to system default)
 	'''
-	global curLang
 	if lang == "Windows":
 		localeName = getWindowsLanguage()
 	else:
@@ -353,20 +350,20 @@ def setLanguage(lang: str) -> None:
 
 	try:
 		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
-		curLang = localeName
+		globalVars.appArgs.language = localeName
 	except IOError:
 		try:
 			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
 			localeName = localeName.split("_")[0]
 			trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
-			curLang = localeName
+			globalVars.appArgs.language = localeName
 		except IOError:
 			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
 			trans = gettext.translation("nvda", fallback=True)
-			curLang = "en"
+			globalVars.appArgs.language = "en"
 
 	trans.install()
-	setLocale(curLang)
+	setLocale(getLanguage())
 	# Install our pgettext function.
 	builtins.pgettext = makePgettext(trans)
 
@@ -407,7 +404,7 @@ def _setPythonLocale(localeString: str) -> bool:
 def setLocale(localeName: str) -> None:
 	'''
 	Set python's locale using a `localeName` such as "en", "ru_RU", or "es-ES".
-	Will fallback on `curLang` if it cannot be set and finally fallback to the system locale.
+	Will fallback on current NVDA language if it cannot be set and finally fallback to the system locale.
 	Passing NVDA locales straight to python `locale.setlocale` does now work since it tries to normalize the
 	parameter using `locale.normalize` which results in locales unknown to Windows (Python issue 37945).
 	For example executing: `locale.setlocale(locale.LC_ALL, "pl")`
@@ -441,18 +438,18 @@ def setLocale(localeName: str) -> None:
 		return
 	# Either Windows does not know the locale, or Python is unable to handle it.
 	# reset to default locale
-	if originalLocaleName == curLang:
+	if originalLocaleName == getLanguage():
 		# reset to system locale default if we can't set the current lang's locale
 		locale.setlocale(locale.LC_ALL, "")
 		log.debugWarning(f"set python locale to system default")
 	else:
-		log.debugWarning(f"setting python locale to the current language {curLang}")
+		log.debugWarning(f"setting python locale to the current language {getLanguage()}")
 		# fallback and try to reset the locale to the current lang
-		setLocale(curLang)
+		setLocale(getLanguage())
 
 
 def getLanguage() -> str:
-	return curLang
+	return globalVars.appArgs.language
 
 
 def normalizeLanguage(lang: str) -> Optional[str]:
