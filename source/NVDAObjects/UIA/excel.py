@@ -7,7 +7,6 @@ from typing import Optional, Tuple
 from comtypes import COMError
 import winVersion
 import UIAHandler
-import _UIAHandler
 import _UIAConstants
 from _UIAConstants import (
 	UIAutomationType,
@@ -159,7 +158,7 @@ class ExcelCell(ExcelObject):
 	outlineColor: Optional[Tuple[colors.RGB]]
 
 	def _get_outlineColor(self) -> Optional[Tuple[colors.RGB]]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_OutlineColorPropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_OutlineColorPropertyId, True)
 		if isinstance(val, tuple):
 			return tuple(colors.RGB.fromCOLORREF(v) for v in val)
 		return None
@@ -168,7 +167,7 @@ class ExcelCell(ExcelObject):
 	outlineThickness: Optional[Tuple[float]]
 
 	def _get_outlineThickness(self) -> Optional[Tuple[float]]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_OutlineThicknessPropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_OutlineThicknessPropertyId, True)
 		if isinstance(val, tuple):
 			return val
 		return None
@@ -177,7 +176,7 @@ class ExcelCell(ExcelObject):
 	fillColor: Optional[colors.RGB]
 
 	def _get_fillColor(self) -> Optional[colors.RGB]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_FillColorPropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_FillColorPropertyId, True)
 		if isinstance(val, int):
 			return colors.RGB.fromCOLORREF(val)
 		return None
@@ -186,7 +185,7 @@ class ExcelCell(ExcelObject):
 	fillType: Optional[_UIAConstants.FillType]
 
 	def _get_fillType(self) -> Optional[_UIAConstants.FillType]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_FillTypePropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_FillTypePropertyId, True)
 		if isinstance(val, int):
 			try:
 				return _UIAConstants.FillType(val)
@@ -198,7 +197,7 @@ class ExcelCell(ExcelObject):
 	rotation: Optional[float]
 
 	def _get_rotation(self) -> Optional[float]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_RotationPropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_RotationPropertyId, True)
 		if isinstance(val, float):
 			return val
 		return None
@@ -207,7 +206,7 @@ class ExcelCell(ExcelObject):
 	cellSize: locationHelper.Point
 
 	def _get_cellSize(self) -> locationHelper.Point:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_SizePropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_SizePropertyId, True)
 		x = val[0]
 		y = val[1]
 		return locationHelper.Point(x, y)
