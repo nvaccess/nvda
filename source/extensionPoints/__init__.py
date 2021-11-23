@@ -157,13 +157,14 @@ class Decider(HandlerRegistrar):
 class AccumulatingDecider(HandlerRegistrar):
 	"""Allows interested parties to participate in deciding whether something
 	should be done.
-	For example, input gestures are normally executed,
-	but this might be used to prevent their execution
-	under specific circumstances such as when controlling a remote system.
+	In contrast with L{Decider} all handlers are executed and then results are returned.
+	For example, normally user should be warned about all command line parameters
+	which are unknown to NVDA, but this extension point can be used to pass each unknown parameter
+	to all add-ons since one of them may want to process some command line arguments.
+	
+	First, a AccumulatingDecider is created with a default decision  :
 
-	First, a Decider is created:
-
-	>>> doSomething = extensionPoints.Decider()
+	>>> doSomething = AccumulatingDecider(defaultDecision=True)
 
 	Interested parties then register to participate in the decision, see
 	L{register} docstring for details of the type of handlers that can be
@@ -174,15 +175,15 @@ class AccumulatingDecider(HandlerRegistrar):
 	...
 	>>> doSomething.register(shouldDoSomething)
 
-	When the decision is to be made, registered handlers are called until
-	a handler returns False, see L{util.callWithSupportedKwargs}
+	When the decision is to be made registered handlers are called and they return values are collected,
+	see L{util.callWithSupportedKwargs}
 	for how args passed to notify are mapped to the handler:
 
 	>>> doSomething.decide(someArg=42)
 	False
 
-	If there are no handlers or all handlers return True,
-	the return value is True.
+	If there are no handlers or all handlers return defaultDecision,
+	the return value is the value of the default decision.
 	"""
 
 	def __init__(self, defaultDecision: bool) -> None:
@@ -191,9 +192,9 @@ class AccumulatingDecider(HandlerRegistrar):
 
 	def decide(self, **kwargs) -> bool:
 		"""Call handlers to make a decision.
-		If a handler returns False, processing stops
-		and False is returned.
-		If there are no handlers or all handlers return True, True is returned.
+		Results returned from all handlers are collected
+		and if at least one handler returns value different than the one specifed as default it is returned.
+		If there are no handlers or all handlers return the default value, the default value is returned.
 		@param kwargs: Arguments to pass to the handlers.
 		@return: The decision.
 		"""
