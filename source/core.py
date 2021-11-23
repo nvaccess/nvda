@@ -56,6 +56,16 @@ _shuttingDownFlagLock = threading.Lock()
 def doStartupDialogs():
 	import config
 	import gui
+
+	def handleReplaceCLIArg(cliArgument: str) -> bool:
+		"""Since #9827 NVDA replaces a currently running instance
+		and therefore `--replace` command line argument is redundant and no longer supported.
+		However for backwards compatibility the desktop shortcut created by installer
+		still starts NVDA with the now redundant switch.
+		Its presence in command line arguments should not cause a warning on startup."""
+		return cliArgument in ("-r", "--replace")
+
+	addonHandler.isCLIParamKnown.register(handleReplaceCLIArg)
 	unknownCLIParams: List[str] = list()
 	for param in globalVars.unknownAppArgs:
 		isParamKnown = addonHandler.isCLIParamKnown.decide(cliArgument=param)
