@@ -299,7 +299,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if UIAHandler.AnnotationType_GrammarError in annotationTypes:
 					formatField["invalid-grammar"]=True
 			if formatConfig["reportComments"]:
-				cats = self.obj.UIAHandler.customAnnotationTypes
+				cats = self.obj._UIACustomAnnotationTypes
 				if cats.microsoftWord_draftComment.id and cats.microsoftWord_draftComment.id in annotationTypes:
 					formatField["comment"] = textInfos.CommentType.DRAFT
 				elif cats.microsoftWord_resolvedComment.id and cats.microsoftWord_resolvedComment.id in annotationTypes:
@@ -312,7 +312,7 @@ class UIATextInfo(textInfos.TextInfo):
 				elif UIAHandler.AnnotationType_DeletionChange in annotationTypes:
 					formatField["revision-deletion"]=True
 			if formatConfig["reportBookmarks"]:
-				cats = self.obj.UIAHandler.customAnnotationTypes
+				cats = self.obj._UIACustomAnnotationTypes
 				if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
 					formatField["bookmark"] = True
 		cultureVal=fetcher.getValue(UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
