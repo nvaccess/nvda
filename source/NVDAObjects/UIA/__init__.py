@@ -154,7 +154,7 @@ class UIATextInfo(textInfos.TextInfo):
 			with values set to true for those types that should be fetched.
 		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
 			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
-			a mixed attribute value signifying that the caller may want to try again with a smaller range. 
+			a mixed attribute value signifying that the caller may want to try again with a smaller range.
 		@type: bool
 		@return: The formatting for the given text range.
 		@rtype: L{textInfos.FormatField}
@@ -334,8 +334,8 @@ class UIATextInfo(textInfos.TextInfo):
 		The indent formatting is reported according to MS Word's convention.
 		@param fetcher: the UIA fetcher used to get all formatting information.
 		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
-			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute
-			value signifying that the caller may want to try again with a smaller range.
+			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
+			a mixed attribute value signifying that the caller may want to try again with a smaller range.
 		@return: The indent formatting informations corresponding to what has been retrieved via the fetcher.
 		"""
 		

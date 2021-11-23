@@ -824,33 +824,35 @@ class UIAHandler(COMObject):
 			self.UIAWindowHandleCache[hwnd]=v
 		return v[0]
 
-	def getNearestWindowHandle(self,UIAElement):
-		if hasattr(UIAElement,"_nearestWindowHandle"):
+	def getNearestWindowHandle(self, UIAElement):
+		if hasattr(UIAElement, "_nearestWindowHandle"):
 			# Called previously. Use cached result.
 			return UIAElement._nearestWindowHandle
 		try:
-			processID=UIAElement.cachedProcessID
+			processID = UIAElement.cachedProcessID
 		except COMError:
 			return None
-		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		appModule = appModuleHandler.getAppModuleFromProcessID(processID)
 		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
 		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
-		if appModule.appName==WDAG_PROCESS_NAME:
-			condition=utils.createUIAMultiPropertyCondition({UIA_ClassNamePropertyId:[u'ApplicationFrameWindow',u'CabinetWClass']})
-			walker=self.clientObject.createTreeWalker(condition)
+		if appModule.appName == WDAG_PROCESS_NAME:
+			condition = utils.createUIAMultiPropertyCondition(
+				{UIA.UIA_ClassNamePropertyId: ['ApplicationFrameWindow', 'CabinetWClass']}
+			)
+			walker = self.clientObject.createTreeWalker(condition)
 		else:
 			# Not WDAG, just walk up to the nearest valid windowHandle
-			walker=self.windowTreeWalker
+			walker = self.windowTreeWalker
 		try:
-			new=walker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
+			new = walker.NormalizeElementBuildCache(UIAElement, self.windowCacheRequest)
 		except COMError:
 			return None
 		try:
-			window=new.cachedNativeWindowHandle
+			window = new.cachedNativeWindowHandle
 		except COMError:
-			window=None
+			window = None
 		# Cache for future use to improve performance.
-		UIAElement._nearestWindowHandle=window
+		UIAElement._nearestWindowHandle = window
 		return window
 
 	def _isNetUIEmbeddedInWordDoc(self, element: UIA.IUIAutomationElement) -> bool:
@@ -937,21 +939,23 @@ class UIAHandler(COMObject):
 
 handler: Optional[UIAHandler] = None
 
+
 def initialize():
 	global handler
 	if not config.conf["UIA"]["enabled"]:
 		raise RuntimeError("UIA forcefully disabled in configuration")
 	try:
-		handler=UIAHandler()
+		handler = UIAHandler()
 	except COMError:
-		handler=None
+		handler = None
 		raise
+
 
 def terminate():
 	global handler
 	if handler:
 		handler.terminate()
-		handler=None
+		handler = None
 
 def _isDebug():
 	return config.conf["debugLog"]["UIA"]
