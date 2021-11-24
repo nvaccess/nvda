@@ -8,7 +8,7 @@
 
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import List, Optional
 import comtypes
 import sys
 import winVersion
@@ -56,7 +56,33 @@ _shuttingDownFlagLock = threading.Lock()
 def doStartupDialogs():
 	import config
 	import gui
-	# Translators: The title of the dialog to tell users that there are erros in the configuration file.
+
+	def handleReplaceCLIArg(cliArgument: str) -> bool:
+		"""Since #9827 NVDA replaces a currently running instance
+		and therefore `--replace` command line argument is redundant and no longer supported.
+		However for backwards compatibility the desktop shortcut created by installer
+		still starts NVDA with the now redundant switch.
+		Its presence in command line arguments should not cause a warning on startup."""
+		return cliArgument in ("-r", "--replace")
+
+	addonHandler.isCLIParamKnown.register(handleReplaceCLIArg)
+	unknownCLIParams: List[str] = list()
+	for param in globalVars.unknownAppArgs:
+		isParamKnown = addonHandler.isCLIParamKnown.decide(cliArgument=param)
+		if not isParamKnown:
+			unknownCLIParams.append(param)
+	if unknownCLIParams:
+		import wx
+		gui.messageBox(
+			# Translators: Shown when NVDA has been started with unknown command line parameters.
+			_("The following command line parameters are unknown to NVDA: {params}").format(
+				params=", ".join(unknownCLIParams)
+			),
+			# Translators: Title of the dialog letting user know
+			# that command line parameters they provided are unknown.
+			_("Unknown command line parameters"),
+			wx.OK | wx.ICON_ERROR
+		)
 	if config.conf.baseConfigError:
 		import wx
 		gui.messageBox(
