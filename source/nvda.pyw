@@ -19,6 +19,9 @@ import ctypes
 from ctypes import wintypes
 import monkeyPatches
 
+for i in range(len(sys.argv)):
+	sys.argv[i] = sys.argv[i].lower()
+
 monkeyPatches.applyMonkeyPatches()
 
 #: logger to use before the true NVDA log is initialised.
