@@ -128,7 +128,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		capsByDataIndex = {}
 		relativeIndexInCollection = 0
 		lastLinkCollection = None
-		for buttonCaps in self._dev.inputButtonCaps:
+		# Walk through all the available input buttons
+		# storing them in a dictionary, keyed by their data index.
+		# Also store the index of each button, relative to the collection it is a part of,
+		# As this relative index is used as the routing index for routing keys.
+		# We must however walk through the input buttons in reverse order
+		# as windows loads the input caps arrays in reverse,
+		# See https://docs.microsoft.com/en-us/windows-hardware/drivers/hid/button-capability-arrays
+		for buttonCaps in reversed(self._dev.inputButtonCaps):
 			if buttonCaps.LinkCollection != lastLinkCollection:
 				lastLinkCollection = buttonCaps.LinkCollection
 				relativeIndexInCollection = 0
@@ -190,8 +197,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(HID):panLeft",),
-			"braille_scrollForward": ("br(HID):panRight",),
+			"braille_scrollBack": (
+				"br(HID):panLeft",
+				"br(HID):rockerUp",
+			),
+			"braille_scrollForward": (
+				"br(HID):panRight",
+				"br(HID):rockerDown",
+			),
 			"braille_previousLine": ("br(HID):space+dot1",),
 			"braille_nextLine": ("br(HID):space+dot4",),
 			"braille_routeTo": ("br(HID):routerSet1_routerKey",),
@@ -261,7 +274,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				usagePage == HID_USAGE_PAGE_BRAILLE
 				and usageID == BraillePageUsageID.ROUTER_KEY
 			):
-				self.routingIndex = buttonCapsInfo.relativeIndexInCollection + 1
+				self.routingIndex = buttonCapsInfo.relativeIndexInCollection
 				# Prefix the gesture name with the specific routing collection name (E.g. routerSet1)
 				namePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
 		name = self._usageIDToGestureName(usagePage, usageID)

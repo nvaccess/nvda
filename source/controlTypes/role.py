@@ -482,7 +482,7 @@ _roleLabels: Dict[Role, str] = {
 	# Translators: Identifies a figure (commonly seen on some websites).
 	Role.FIGURE: _("figure"),
 	# Translators: Identifies marked (highlighted) content
-	Role.MARKED_CONTENT: _("marked content"),
+	Role.MARKED_CONTENT: _("highlighted"),
 }
 
 

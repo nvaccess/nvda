@@ -3,17 +3,12 @@
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from dataclasses import dataclass
-from typing import Optional
 
 """NVDA core"""
 
-RPC_E_CALL_CANCELED = -2147418110
 
-class CallCancelled(Exception):
-	"""Raised when a call is cancelled.
-	"""
-
+from dataclasses import dataclass
+from typing import Optional
 import comtypes
 import sys
 import winVersion
@@ -23,11 +18,12 @@ import os
 import time
 import ctypes
 import logHandler
+import languageHandler
 import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
-import garbageHandler  # noqa: E402
+import garbageHandler
 
 
 # inform those who want to know that NVDA has finished starting up.
@@ -151,7 +147,9 @@ def restart(disableAddons=False, debugLogging=False):
 			log.error("NVDA already in process of exiting, this indicates a logic error.")
 		return
 	import subprocess
-	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
+	for paramToRemove in (
+		"--disable-addons", "--debug-logging", "--ease-of-access"
+	) + languageHandler.getLanguageCliArgs():
 		try:
 			sys.argv.remove(paramToRemove)
 		except ValueError:
@@ -180,7 +178,6 @@ def resetConfiguration(factoryDefaults=False):
 	import brailleInput
 	import speech
 	import vision
-	import languageHandler
 	import inputCore
 	import tones
 	log.debug("Terminating vision")
@@ -198,8 +195,11 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("Reloading config")
 	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
-	#Language
-	lang = config.conf["general"]["language"]
+	# Language
+	if languageHandler.isLanguageForced():
+		lang = globalVars.appArgs.language
+	else:
+		lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
@@ -242,7 +242,6 @@ def _setInitialFocus():
 
 
 def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
-	import languageHandler
 	import wx
 	lang = languageHandler.getLanguage()
 	wxLocaleObj = wx.Locale()
@@ -294,18 +293,23 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 	instance information with `newNVDA`.
 	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
 	"""
+	from gui.message import isInMessageBox
 	import queueHandler
 	global _hasShutdownBeenTriggered
 	with _shuttingDownFlagLock:
-		if not _hasShutdownBeenTriggered:
+		safeToExit = not isInMessageBox()
+		if not safeToExit:
+			log.error("NVDA cannot exit safely, ensure open dialogs are closed")
+			return False
+		elif _hasShutdownBeenTriggered:
+			log.debug("NVDA has already been triggered to exit safely.")
+			return False
+		else:
 			# queue this so that the calling process can exit safely (eg a Popup menu)
 			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
 			_hasShutdownBeenTriggered = True
 			log.debug("_doShutdown has been queued")
 			return True
-		else:
-			log.debug("NVDA has already been triggered to exit safely.")
-			return False
 
 
 def _closeAllWindows():
@@ -413,8 +417,10 @@ def main():
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
-	lang = config.conf["general"]["language"]
-	import languageHandler
+	if languageHandler.isLanguageForced():
+		lang = globalVars.appArgs.language
+	else:
+		lang = config.conf["general"]["language"]
 	log.debug(f"setting language to {lang}")
 	languageHandler.setLanguage(lang)
 	log.info(f"Windows version: {winVersion.getWinVer()}")
@@ -602,7 +608,7 @@ def main():
 			log.error("Failed to initialize wx locale",exc_info=True)
 		finally:
 			# Revert wx's changes to the python locale
-			languageHandler.setLocale(languageHandler.curLang)
+			languageHandler.setLocale(languageHandler.getLanguage())
 
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()

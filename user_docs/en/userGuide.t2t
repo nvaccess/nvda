@@ -332,6 +332,7 @@ NVDA provides the following key commands in relation to the system caret:
 | Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
 | Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
 | Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the caret is currently situated. Pressing twice shows the information in browse mode |
+| Report caret location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the position of system caret. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
 | Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
 | Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
 
@@ -380,7 +381,7 @@ To navigate by object, use the following commands:
 | Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double-tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report review cursor location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
+| Report review cursor location | NVDA+shift+numpadDelete | NVDA+shift+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
 | Move review cursor to status bar | none | none | none | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location. |
 %kc:endInclude
 
@@ -614,13 +615,19 @@ MathPlayer is available as a free download from: https://www.dessci.com/en/produ
 
 NVDA supports the following types of mathematical content:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
-- Design Science MathType in Microsoft Word and PowerPoint.
+- Microsoft Word 365 Modern Math Equations via UI automation:
+NVDA is able to read and interact with math equations in Microsoft Word 365/2016 build 14326 and higher.
+Note however that any previously created MathType equations must be  first converted to Office Math by selecting each and choosing Equation Options -> Convert to Office Math in the context menu. Ensure your version of MathType is the latest version before doing this.
+Microsoft Word also now provides linea symbol-based navigation through the equations itself, and supports inputting math using several syntaxes, including LateX. For further details, please see [Linear format equations using UnicodeMath and LaTeX in Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+- Microsoft Powerpoint, and older versions of Microsoft Word: 
+NVDA can read and navigate MathType equations in both Microsoft Powerpoint and Microsoft word.
 MathType needs to be installed in order for this to work.
 The trial version is sufficient.
 It can be downloaded from https://www.dessci.com/en/products/mathtype/
-- MathML in Adobe Reader.
+- Adobe Reader:
 Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
-- Math in Kindle for PC for books with accessible math.
+- Kindle Reader for PC:
+NVDA can read and navigate Math in Kindle for PC for books with accessible math.
 -
 
 When reading a document, NVDA will speak any supported mathematical content where it occurs.
@@ -1580,7 +1587,8 @@ To toggle simple review mode from anywhere, please assign a custom gesture using
 
 +++ Object Presentation (NVDA+control+o) +++[ObjectPresentationSettings]
 The Object Presentation category in the NVDA Settings dialog is used to set how much information NVDA will present about controls such as description, position information and so on.
-This category contains the following options:
+These options don't typically apply to browse mode.
+These options typically apply to focus reporting and NVDA object navigation, but not reading text content e.g. browse mode.
 
 ==== Report tooltips ====[ObjectPresentationReportToolTips]
 A checkbox that when checked tells NVDA to report tooltips as they appear.
@@ -1745,11 +1753,12 @@ You can configure reporting of:
  - Font attributes
  - Superscripts and subscripts
  - Emphasis
- - Marked (Highlighted text)
+ - Highlighted (Marked) text
  - Style
  - Colours
 - Document information
  - Comments
+ - Bookmarks
  - Editor revisions
  - Spelling errors
 - Pages and spacing
@@ -1845,9 +1854,6 @@ We still do not recommend that  the majority of users turn this on by default, t
 ==== Use UI Automation to access the Windows Console when available ====[AdvancedSettingsConsoleUIA]
 When this option is enabled, NVDA will use a new, work in progress version of its support for Windows Console which takes advantage of [accessibility improvements made by Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. This feature is highly experimental and is still incomplete, so its use is not yet recommended. However, once completed, it is anticipated that this new support will become the default, improving NVDA's performance and stability in Windows command consoles.
 
-==== Speak passwords in UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
-This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in the Windows Console with UI automation support enabled. For security purposes, this setting should be left disabled. However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting while using NVDA's new experimental console support.
-
 ==== Use UIA with Microsoft Edge and other Chromium based browsers when available ====[ChromiumUIA]
 Allows specifying when UIA will be used when it is available in Chromium based browsers such as Microsoft Edge.
 UIA support for Chromium based browsers is early in development and may not provide the same level of access as IA2.
@@ -1883,8 +1889,13 @@ However, for basic spreadsheet navigating / editing, this option may provide a v
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Microsoft Excel  build 16.0.13522.10000 or higher to test this feature and provide feedback.
 Microsoft Excel's UI automation implementation is ever changing, and  versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
 
-==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
-This option enables an alternative method for detecting typed characters in Windows command consoles.
+==== Speak passwords in all enhanced terminals ====[AdvancedSettingsWinConsoleSpeakPasswords]
+This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in some terminal programs, such as the Windows Console with UI automation support enabled and Mintty.
+For security purposes, this setting should be left disabled.
+However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting in consoles, or work in trusted environments and prefer password announcement.
+
+==== Use enhanced typed character support in legacy Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
+This option enables an alternative method for detecting typed characters in legacy Windows consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
 This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
@@ -1893,14 +1904,14 @@ In untrusted environments, you may temporarily disable [speak typed characters #
 ==== Diff algorithm ====[DiffAlgo]
 This setting controls how NVDA determines the new text to speak in terminals.
 The diff algorithm combo box has three options:
-- Automatic: as of NVDA 2021.2, this option is equivalent to "allow Diff Match Patch".
-- allow Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character.
+- Automatic: This option causes NVDA to prefer Diff Match Patch in most situations, but fall back to Difflib in problematic applications, such as older versions of the Windows Console and Mintty.
+- Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character, even in situations where it is not recommended.
 It may improve performance when large volumes of text are written to the console and allow more accurate reporting of changes made in the middle of lines.
-However, it may be incompatible with some applications, so Diff Match Patch is not always used.
-This feature is supported in Windows Console on Windows 10 versions 1607 and later.
-Additionally, it may be available in other terminals on earlier Windows releases.
-- force Difflib: this option causes NVDA to calculate changes to terminal text by line.
+However, in some applications, reading of new text may be choppy or inconsistent.
+- Difflib: this option causes NVDA to calculate changes to terminal text by line, even in situations where it is not recommended.
 It is identical to NVDA's behaviour in versions 2020.4 and earlier.
+This setting may stabilize reading of incoming text in some applications.
+However, in terminals, when inserting or deleting a character in the middle of a line, the text after the caret will be read out.
 -
 
 ==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
@@ -3188,8 +3199,8 @@ NVDA's automatic braille display detection will also recognize any display that 
 Following are the current key assignments for these displays.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | pan left |
-| Scroll braille display forward | pan right |
+| Scroll braille display back | pan left or rocker up |
+| Scroll braille display forward | pan right or rocker down |
 | Move braille display to previous line | space + dot1 |
 | Move braille display to next line | space + dot4 |
 | Route to braille cell | routing set 1|
@@ -3243,6 +3254,7 @@ Following are the command line options for NVDA:
 | -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
 | -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
+| None | --lang=LANGUAGE | Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc. |
 | -m | --minimal | No sounds, no interface, no start message, etc. |
 | -s | --secure | Secure mode: disables Python console, profile features such as creation, deletion, renaming profiles etc., update check, some checkboxes in the welcome dialog and in general settings category (e.g. Use NVDA during sign-in, save configuration after exit etc.), as well as logviewer and logging features (used often in secure screens). Note also that this command will disable the possibility to save settings in system config and the gesture map will not be saved on the disk. |
 | None | --disable-addons | Add-ons will have no effect |

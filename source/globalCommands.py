@@ -7,7 +7,7 @@
 # Julien Cochuyt, Jakub Lukowicz
 
 import itertools
-from typing import Optional
+from typing import Optional, Tuple, Union
 
 import audioDucking
 import touchHandler
@@ -108,11 +108,11 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Audio ducking not supported"))
 			return
 		curMode=config.conf['audio']['audioDuckingMode']
-		numModes=len(audioDucking.audioDuckingModes)
+		numModes = len(audioDucking.AudioDuckingMode)
 		nextMode=(curMode+1)%numModes
 		audioDucking.setAudioDuckingMode(nextMode)
 		config.conf['audio']['audioDuckingMode']=nextMode
-		nextLabel=audioDucking.audioDuckingModes[nextMode]
+		nextLabel = audioDucking.AudioDuckingMode(nextMode).displayString
 		ui.message(nextLabel)
 
 	@script(
@@ -480,7 +480,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report marked (highlighted) content command.
-		description=_("Toggles on and off the reporting of marked text"),
+		description=_("Toggles on and off the reporting of highlighted text"),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportHighlightedText(self, gesture):
@@ -488,10 +488,10 @@ class GlobalCommands(ScriptableObject):
 		config.conf["documentFormatting"]["reportHighlight"] = shouldReport
 		if shouldReport:
 			# Translators: The message announced when toggling the report marked document formatting setting.
-			state = _("report marked on")
+			state = _("report highlighted on")
 		else:
 			# Translators: The message announced when toggling the report marked document formatting setting.
-			state = _("report marked off")
+			state = _("report highlighted off")
 		ui.message(state)
 
 	@script(
@@ -1066,6 +1066,62 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.QUERY)
 
+	@staticmethod
+	def _reportLocationText(objs: Tuple[Union[None, NVDAObject, textInfos.TextInfo], ...]) -> None:
+		for obj in objs:
+			if obj is not None and obj.locationText:
+				ui.message(obj.locationText)
+				return
+		# Translators: message when there is no location information
+		ui.message(_("No location information"))
+
+	@script(
+		description=_(
+			# Translators: Description for a keyboard command which reports location of the
+			# review cursor, falling back to the location of navigator object if needed.
+			"Reports information about the location of the text at the review cursor "
+			"or location of the navigator object if there is no text under review cursor."
+		),
+		category=SCRCAT_OBJECTNAVIGATION,
+	)
+	def script_reportReviewCursorLocation(self, gesture):
+		self._reportLocationText((api.getReviewPosition(), api.getNavigatorObject()))
+
+	@script(
+		description=_(
+			# Translators: Description for a keyboard command which reports location of the navigator object.
+			"Reports information about the location of the current navigator object."
+		),
+		category=SCRCAT_OBJECTNAVIGATION,
+	)
+	def script_reportCurrentNavigatorObjectLocation(self, gesture):
+		self._reportLocationText((api.getNavigatorObject(),))
+
+	@script(
+		description=_(
+			# Translators: Description for a keyboard command which reports location of the
+			# current caret position falling back to the location of focused object if needed.
+			"Reports information about the location of the text at the caret, "
+			"or location of the currently focused object if there is no caret."
+		),
+		category=SCRCAT_SYSTEMCARET,
+	)
+	def script_reportCaretLocation(self, gesture):
+		self._reportLocationText(
+			(self._getTIAtCaret(fallbackToPOSITION_FIRST=True, reportFailure=False), api.getFocusObject())
+		)
+
+	@script(
+		description=_(
+			# Translators: Description for a keyboard command which reports location of the
+			# currently focused object.
+			"Reports information about the location of the currently focused object"
+		),
+		category=SCRCAT_FOCUS,
+	)
+	def script_reportFocusObjectLocation(self, gesture):
+		self._reportLocationText((api.getFocusObject(),))
+
 	@script(
 		description=_(
 			# Translators: Description for report review cursor location command.
@@ -1073,18 +1129,30 @@ class GlobalCommands(ScriptableObject):
 			"Pressing twice may provide further detail."
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+shift+numpadDelete", "kb(laptop):NVDA+shift+delete")
+	)
+	def script_navigatorObject_currentDimensions(self, gesture):
+		if scriptHandler.getLastScriptRepeatCount() == 0:
+			self.script_reportReviewCursorLocation(gesture)
+		else:
+			self.script_reportCurrentNavigatorObjectLocation(gesture)
+
+	@script(
+		description=_(
+			# Translators: Description for a keyboard command
+			# which reports location of the text at the caret position
+			# or object with focus if there is no caret.
+			"Reports information about the location of the text or object at the position of system caret "
+			"Pressing twice may provide further detail."
+		),
+		category=SCRCAT_SYSTEMCARET,
 		gestures=("kb:NVDA+numpadDelete", "kb(laptop):NVDA+delete")
 	)
-	def script_navigatorObject_currentDimensions(self,gesture):
-		count=scriptHandler.getLastScriptRepeatCount()
-		locationText=api.getReviewPosition().locationText if count==0 else None
-		if not locationText:
-			locationText=api.getNavigatorObject().locationText
-		if not locationText:
-			# Translators: message when there is no location information for the review cursor
-			ui.message(_("No location information"))
-			return
-		ui.message(locationText)
+	def script_caretPos_currentDimensions(self, gesture):
+		if scriptHandler.getLastScriptRepeatCount() == 0:
+			self.script_reportCaretLocation(gesture)
+		else:
+			self.script_reportFocusObjectLocation(gesture)
 
 	@script(
 		description=_(
@@ -1324,18 +1392,23 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad9", "kb(laptop):NVDA+downArrow", "ts(text):flickDown")
 	)
-	def script_review_nextLine(self,gesture):
-		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
-		res=info.move(textInfos.UNIT_LINE,1)
-		if res==0:
+	def script_review_nextLine(self, gesture):
+		origInfo = api.getReviewPosition().copy()
+		origInfo.collapse()
+		info = origInfo.copy()
+		res = info.move(textInfos.UNIT_LINE, 1)
+		newLine = info.copy()
+		newLine.expand(textInfos.UNIT_LINE)
+		# #12808: Some implementations of move forward by one line may succeed one more time than expected,
+		# landing on the exclusive end of the document.
+		# Therefore, verify that expanding after the move does result in being on a new line,
+		# i.e. the new line starts after the original review cursor position.
+		if res == 0 or newLine.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
 		else:
 			api.setReviewPosition(info)
-		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
+		speech.speakTextInfo(newLine, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	@script(
 		# Translators: Input help mode message for move review cursor to bottom line command.
@@ -1395,18 +1468,23 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad6", "kb(laptop):NVDA+control+rightArrow", "ts(text):2finger_flickRight")
 	)
-	def script_review_nextWord(self,gesture):
-		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
-		info.collapse()
-		res=info.move(textInfos.UNIT_WORD,1)
-		if res==0:
+	def script_review_nextWord(self, gesture):
+		origInfo = api.getReviewPosition().copy()
+		origInfo.collapse()
+		info = origInfo.copy()
+		res = info.move(textInfos.UNIT_WORD, 1)
+		newWord = info.copy()
+		newWord.expand(textInfos.UNIT_WORD)
+		# #12808: Some implementations of move forward by one word may succeed one more time than expected,
+		# landing on the exclusive end of the document.
+		# Therefore, verify that expanding after the move does result in being on a new word,
+		# i.e. the new word starts after the original review cursor position.
+		if res == 0 or newWord.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
 		else:
 			api.setReviewPosition(info)
-		info.expand(textInfos.UNIT_WORD)
-		speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_WORD)
+		speech.speakTextInfo(newWord, unit=textInfos.UNIT_WORD, reason=controlTypes.OutputReason.CARET)
 
 	@script(
 		description=_(
@@ -1790,9 +1868,13 @@ class GlobalCommands(ScriptableObject):
 			)
 
 	@staticmethod
-	def _getTIAtCaret(fallbackToPOSITION_FIRST=False):
+	def _getTIAtCaret(
+			fallbackToPOSITION_FIRST: bool = False,
+			reportFailure: bool = True
+	) -> Optional[textInfos.TextInfo]:
 		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
-		# Note that if there is  no caret this fact is announced  in speech and braille.
+		# Note that if there is no caret this fact is announced in speech and braille
+		# unless reportFailure is set to C{False}
 		obj = api.getFocusObject()
 		treeInterceptor = obj.treeInterceptor
 		if(
@@ -1806,8 +1888,9 @@ class GlobalCommands(ScriptableObject):
 			if fallbackToPOSITION_FIRST:
 				return obj.makeTextInfo(textInfos.POSITION_FIRST)
 			else:
-				# Translators: Reported when there is no caret.
-				ui.message(_("No caret"))
+				if reportFailure:
+					# Translators: Reported when there is no caret.
+					ui.message(_("No caret"))
 
 	@script(
 		# Translators: Input help mode message for report formatting command.

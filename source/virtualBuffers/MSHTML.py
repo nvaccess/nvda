@@ -20,7 +20,7 @@ import textInfos
 import api
 import aria
 import config
-import watchdog
+import exceptions
 
 FORMATSTATE_INSERTED=1
 FORMATSTATE_DELETED=2
@@ -229,7 +229,7 @@ class MSHTML(VirtualBuffer):
 			if not root.IAccessibleRole:
 				# The root object is dead.
 				return False
-		except watchdog.CallCancelled:
+		except exceptions.CallCancelled:
 			# #1831: If the root object isn't responding, treat the buffer as dead.
 			# Otherwise, we'll keep querying it on every focus change and freezing.
 			return False

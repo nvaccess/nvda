@@ -28,7 +28,7 @@ import ui
 import braille
 import nvwave
 import globalVars
-from typing import List
+from typing import List, Union
 import diffHandler
 
 
@@ -89,7 +89,7 @@ class Dialog(NVDAObject):
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (
-				controlTypes.ROLE_OPTIONPANE,
+				controlTypes.Role.OPTIONPANE,
 				controlTypes.Role.PROPERTYPAGE,
 				controlTypes.Role.PANE,
 				controlTypes.Role.PANEL,
@@ -266,17 +266,20 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _get_diffAlgo(self):
+	def _get_diffAlgo(self) -> Union[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
 		"""
 			This property controls which diffing algorithm should be used by
-			this object. Most subclasses should simply use the base
-			implementation, which returns DMP (character-based diffing).
+			this object. If the object contains a strictly contiguous
+			span of text (i.e. textInfos.POSITION_ALL refers to the entire
+			contents of the object and not just one visible screen of text),
+			then diffHandler.prefer_dmp (character-based diffing) is suitable.
+			Otherwise, use diffHandler.prefer_difflib.
 			
-			@Note: DMP is experimental, and can be disallowed via user
-			preference. In this case, the prior stable implementation, Difflib
-			(line-based diffing), will be used.
+			@Note: Return either diffHandler.prefer_dmp() or
+			diffHandler.prefer_difflib() so that the diffAlgo user
+			preference can override this choice.
 		"""
-		return diffHandler.get_dmp_algo()
+		return diffHandler.prefer_dmp()
 
 	def _get_devInfo(self):
 		info = super().devInfo

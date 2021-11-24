@@ -341,7 +341,13 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, ImmersiveLauncher)
 			elif uiaClassName == "ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
 				clsList.insert(0, SuggestionListItem)
-			elif uiaClassName == "MultitaskingViewFrame" and role == controlTypes.Role.WINDOW:
+			# Multitasking view frame window
+			elif (
+				# Windows 10 and earlier
+				(uiaClassName == "MultitaskingViewFrame" and role == controlTypes.Role.WINDOW)
+				# Windows 11 where a pane window receives focus when switching tasks
+				or (uiaClassName == "Windows.UI.Input.InputSite.WindowClass" and role == controlTypes.Role.PANE)
+			):
 				clsList.insert(0, MultitaskingViewFrameWindow)
 			# Windows 10 task switch list
 			elif role == controlTypes.Role.LISTITEM and (
