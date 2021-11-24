@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
+# Copyright (C) 2006-2021 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
 # Davy Kager, Babbage B.V., Leonard de Ruijter, Joseph Lee, Accessolutions, Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -374,6 +374,10 @@ def getStatusBarText(obj):
 	@return: The status bar text.
 	@rtype: str
 	"""
+	try:
+		return obj.appModule.getStatusBarText(obj)
+	except NotImplementedError:
+		pass
 	text = obj.name or ""
 	if text:
 		text += " "
