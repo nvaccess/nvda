@@ -698,6 +698,23 @@ class AppModule(appModuleHandler.AppModule):
 --- end ---
 ```
 
+++ Parsing additional command line arguments in your plugin ++
+By default NVDA accepts limited set of command line arguments and shows an error for an unknown ones.
+However if you want to react to an additional arguments this is possible by adding a handler to the appropriate extension point in the addonHandler.
+Note that since command line arguments are processed just after NVDA starts your add-on needs to process them in the global plugin since app modules or other drivers may not be loaded at this stage.
+A sample handler can be written as follows:
+```
+def processArgs(cliArgument: str) -> bool:
+	if cliArgument == "--enable-addon-feature":
+		...
+		return True  # Argument is known to the add-on and should not be flagged by NVDA
+	return False  # unknown argument - NVDA should warn user
+```
+Then the handler needs to be registered - preferably in the constructor of your global plugin:
+```
+addonHandler.isCLIParamKnown.register(processArgs)
+```
+
 + Packaging Code as NVDA Add-ons +[Addons]
 To make it easy for users to share and install plugins and drivers, they can be packaged in to a single NVDA add-on package which the user can then install into a copy of NVDA via the Add-ons Manager found under Tools in the NVDA menu.
 Add-on packages are only supported in NVDA 2012.2 and later.

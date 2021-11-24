@@ -46,8 +46,9 @@ _blockedAddons=set()
 
 
 # Allows add-ons to process additional command line arguments when NVDA starts.
-# Each handler is called with one keywod argument `cliArgument`
+# Each handler is called with one keyword argument `cliArgument`
 # and should return `False` if it is not interested in it, `True` otherwise.
+# For more details see appropriate section of the developer guide.
 isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
 
 

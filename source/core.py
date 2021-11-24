@@ -80,7 +80,7 @@ def doStartupDialogs():
 			),
 			# Translators: Title of the dialog letting user know
 			# that command line parameters they provided are unknown.
-			_("Unknown command line parameters!"),
+			_("Unknown command line parameters"),
 			wx.OK | wx.ICON_ERROR
 		)
 	if config.conf.baseConfigError:
