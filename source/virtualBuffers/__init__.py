@@ -278,12 +278,12 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		if not text:
 			return [""]
 		commandList = XMLFormatting.XMLTextParser().parse(text)
-		commandList = list([
+		commandList = [
 			self._normalizeCommand(command)
 			for command in commandList
 			# drop None to convert from XMLFormatting.CommandListT to textInfos.TextInfo.TextWithFieldsT
 			if command is not None
-		])
+		]
 		return commandList
 
 	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
