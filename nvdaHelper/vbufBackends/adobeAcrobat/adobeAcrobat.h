@@ -28,10 +28,10 @@ typedef struct {
 	int type;
 } TableHeaderInfo;
 
-typedef struct {
-	long tableID;
-	int curRowNumber;
-	int curColumnNumber;
+typedef struct TableInfo_t {
+	long tableID{ 0 };
+	int curRowNumber{ 0 };
+	int curColumnNumber{ 0 };
 	// Maps column numbers to remaining row spans.
 	std::map<int, int> columnRowSpans;
 	// Maps column numbers to table-columnheadercells attribute values.
@@ -55,9 +55,9 @@ class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 		TableInfo* tableInfo = NULL, std::wstring* pageNum = NULL
 	);
 
-	bool isXFA;
+	bool isXFA = true;
 
-	IPDDomDocPagination* docPagination;
+	IPDDomDocPagination* docPagination = nullptr;
 
 	protected:
 

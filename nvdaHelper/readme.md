@@ -19,8 +19,8 @@ You should still build on the command line to verify errors.
 - Other defaults are fine, press next
 - Select "use external build system" for "How do you want to build the project?", press next
 - Build command line: `scons source`
-- Include search paths: `../include;../miscDeps/include;./;../build\x86_64;%(AdditionalIncludeDirectories)`
-- Preprocessor definitions: `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL;_WIN32_WINNT;_WIN32_WINNT_WIN7;`
+- Include search paths: `../include;../miscDeps/include;./;../build\x86_64;../include/minhook/include`
+- Preprocessor definitions: `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WIN7;`
 - Forced Included files: `winuser.h`
 - Press next
 - Ensure "same as Debug configuration" is checked and press finish
