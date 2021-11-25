@@ -544,7 +544,7 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 			# #13098: However, limit this specifically to UIA Word documents,
 			# As other UIA documents (E.g. Visual Studio)
 			# Seem to rely on MSAA caret events,
-			# as they do not fire their own UIA caret events. 
+			# as they do not fire their own UIA caret events.
 			from NVDAObjects.UIA.wordDocument import WordDocument
 			if isinstance(focus, WordDocument):
 				if isMSAADebugLoggingEnabled():
