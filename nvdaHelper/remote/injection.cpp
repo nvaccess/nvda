@@ -181,7 +181,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	}
 	// Initialize in-process subsystems
 	inProcess_initialize();
-	// Enable all registered API hooks by commiting the transaction
+	// Enable all registered API hooks by committing the transaction
 	apiHook_commitTransaction();
 	// Initialize our rpc server interfaces and request registration with NVDA
 	rpcSrv_initialize();
