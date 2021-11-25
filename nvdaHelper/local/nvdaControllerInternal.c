@@ -79,3 +79,8 @@ error_status_t(__stdcall *_nvdaControllerInternal_reportLiveRegion)(const wchar_
 error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* text, const wchar_t* politeness) {
 	return _nvdaControllerInternal_reportLiveRegion(text, politeness);
 }
+
+error_status_t(__stdcall *_nvdaControllerInternal_openConfigDirectory)();
+error_status_t __stdcall nvdaControllerInternal_openConfigDirectory() {
+	return _nvdaControllerInternal_openConfigDirectory();
+}
