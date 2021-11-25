@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "apiHook.h"
 #include "displayModel.h"
 #include <common/log.h>
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include <common/lock.h>
 #include "gdiHooks.h"
 
@@ -204,7 +204,7 @@ std::vector<BYTE> getTTFData(HDC hdc, const char* tableName) {
 //This class contains glyphIndex to wchar_t mapping. See [cmap], subheading "Format 4: Segment mapping to delta values"
 class GlyphTranslator {
 	private:
-	volatile long _refCount;
+	unsigned volatile long _refCount;
 	map<int,wchar_t> _glyphs;
 
 	public:

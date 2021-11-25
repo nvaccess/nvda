@@ -2,6 +2,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2010-2021 NV Access Limited, Bram Duvigneau
+from typing import (
+	Optional,
+	Dict,
+)
+
 import textUtils
 import winUser
 import textInfos
@@ -271,7 +276,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		text = info._getTextRange(0, info._startOffset)
 		return text.count(textUtils.OBJ_REPLACEMENT_CHAR)
 
-	def getTextWithFields(self, formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		# Get the initial control fields.
 		fields = []
 		rootObj = self.obj.rootNVDAObject

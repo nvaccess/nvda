@@ -6,6 +6,11 @@
 
 import ctypes
 import time
+from typing import (
+	Optional,
+	Dict,
+)
+
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
@@ -721,7 +726,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def getTextWithFields(self,formatConfig=None):
+	# C901 'getTextWithFields' is too complex
+	# Note: when working on getTextWithFields, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def getTextWithFields(  # noqa: C901
+		self,
+		formatConfig: Optional[Dict] = None
+	) -> textInfos.TextInfo.TextWithFieldsT:
 		if self.isCollapsed: return []
 		if self.obj.ignoreFormatting:
 			return [self.text]

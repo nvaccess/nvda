@@ -12,7 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include "nvdaControllerInternal.h"
+#include <local/nvdaControllerInternal.h>
 
 error_status_t(__stdcall *_nvdaControllerInternal_requestRegistration)(const wchar_t*);
 error_status_t __stdcall nvdaControllerInternal_requestRegistration(const wchar_t* uuidString) {

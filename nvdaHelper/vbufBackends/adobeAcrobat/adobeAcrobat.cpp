@@ -856,7 +856,11 @@ void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHand
 	LOG_DEBUG(L"Rendering done");
 }
 
-AdobeAcrobatVBufBackend_t::AdobeAcrobatVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
+AdobeAcrobatVBufBackend_t::AdobeAcrobatVBufBackend_t(int docHandle, int ID)
+	: VBufBackend_t(docHandle,ID)
+	, isXFA(true)
+	, docPagination(nullptr)
+{
 	LOG_DEBUG(L"AdobeAcrobat backend constructor");
 }
 

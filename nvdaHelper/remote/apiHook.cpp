@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <delayimp.h>
 #include <minhook/include/minhook.h>
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
 #include "dllmain.h"
 #include "apiHook.h"
