@@ -71,9 +71,9 @@ class AppModule(appModuleHandler.AppModule):
 			obj.editValueUnit=textInfos.UNIT_STORY
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if obj.windowClassName=="SysListView32" and obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
+		if obj.windowClassName=="SysListView32" and obj.windowControlID in (128,129,130) and obj.role==controlTypes.Role.LISTITEM:
 			clsList.insert(0,MessageRuleListItem)
-		elif "SysListView32" in obj.windowClassName and obj.role==controlTypes.ROLE_LISTITEM and obj.parent.name=="Outlook Express Message List":
+		elif "SysListView32" in obj.windowClassName and obj.role==controlTypes.Role.LISTITEM and obj.parent.name=="Outlook Express Message List":
 			clsList.insert(0,MessageListItem)
 
 	def event_gainFocus(self,obj,nextHandler):
@@ -81,18 +81,18 @@ class AppModule(appModuleHandler.AppModule):
 		#Force focus to move to something sane when landing on an outlook express message window
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==winUser.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
-			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
+			if obj==api.getFocusObject() and controlTypes.State.FOCUSED in obj.states:
 				return KeyboardInputGesture.fromName("shift+tab").send()
 
 class MessageRuleListItem(sysListView32.ListItem):
 	"""Used for the checkbox list items used to select message rule types in in message filters"""
 
-	role=controlTypes.ROLE_CHECKBOX
+	role=controlTypes.Role.CHECKBOX
 
 	def _get_states(self):
 		states=super(MessageRuleListItem,self).states
 		if (watchdog.cancellableSendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12)==8:
-			states.add(controlTypes.STATE_CHECKED)
+			states.add(controlTypes.State.CHECKED)
 		return states
 
 class MessageListItem(sysListView32.ListItem):
@@ -119,9 +119,9 @@ class MessageListItem(sysListView32.ListItem):
 		nameList=[]
 		imageState=watchdog.cancellableSendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12
 		if imageState==5:
-			nameList.append(controlTypes.stateLabels[controlTypes.STATE_COLLAPSED])
+			nameList.append(controlTypes.State.COLLAPSED.displayString)
 		elif imageState==6:
-			nameList.append(controlTypes.stateLabels[controlTypes.STATE_EXPANDED])
+			nameList.append(controlTypes.State.EXPANDED.displayString)
 		if self.isUnread:
 			# Translators: Displayed in outlook or live mail to indicate an email is unread
 			nameList.append(_("unread"))

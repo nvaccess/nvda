@@ -1,12 +1,17 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2015-2020 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2015-2021 NV Access Limited, Babbage B.V., Leonard de Ruijter
+from typing import (
+	Optional,
+	Dict,
+)
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
 from ctypes import byref
 
+import textUtils
 from . import (
 	UIATextInfo,
 	UIA,
@@ -190,8 +195,8 @@ class UIAWebTextInfo(UIATextInfo):
 				self.setEndPoint(tempInfo, "endToEnd" if endPoint == "end" else "startToStart")
 			return res
 
-	def _getControlFieldForObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
-		field = super()._getControlFieldForObject(
+	def _getControlFieldForUIAObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
+		field = super()._getControlFieldForUIAObject(
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
@@ -202,12 +207,12 @@ class UIAWebTextInfo(UIATextInfo):
 		# Fields should be treated as block for certain roles.
 		# This can affect whether the field is presented as a container (e.g.  announcing entering and exiting)
 		if role in (
-			controlTypes.ROLE_GROUPING,
-			controlTypes.ROLE_SECTION,
-			controlTypes.ROLE_PARAGRAPH,
-			controlTypes.ROLE_ARTICLE,
-			controlTypes.ROLE_LANDMARK,
-			controlTypes.ROLE_REGION,
+			controlTypes.Role.GROUPING,
+			controlTypes.Role.SECTION,
+			controlTypes.Role.PARAGRAPH,
+			controlTypes.Role.ARTICLE,
+			controlTypes.Role.LANDMARK,
+			controlTypes.Role.REGION,
 		):
 			field['isBlock'] = True
 		ariaProperties = splitUIAElementAttribs(
@@ -218,8 +223,8 @@ class UIAWebTextInfo(UIATextInfo):
 		# provide landmarks
 		field['landmark'] = obj.landmark
 		# Combo boxes with a text pattern are editable
-		if obj.role == controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
-			field['states'].add(controlTypes.STATE_EDITABLE)
+		if obj.role == controlTypes.Role.COMBOBOX and obj.UIATextPattern:
+			field['states'].add(controlTypes.State.EDITABLE)
 		# report if the field is 'current'
 		field['current'] = obj.isCurrent
 		if obj.placeholder and obj._isTextEmpty:
@@ -239,21 +244,21 @@ class UIAWebTextInfo(UIATextInfo):
 				# embedded object characters (which can appear in Edgium)
 				# should also be treated as whitespace
 				# allowing to be replaced by an overridden label
-				text = text.replace('\ufffc', '')
+				text = text.replace(textUtils.OBJ_REPLACEMENT_CHAR, '')
 				if not text or text.isspace():
 					content = obj.name or field.pop('description', None)
 			if content:
 				field['content'] = content
 		elif isEmbedded:
 			field['content'] = obj.value
-			if field['role'] == controlTypes.ROLE_GROUPING:
-				field['role'] = controlTypes.ROLE_EMBEDDEDOBJECT
+			if field['role'] == controlTypes.Role.GROUPING:
+				field['role'] = controlTypes.Role.EMBEDDEDOBJECT
 				if not obj.value:
 					field['content'] = obj.name
 		elif hasAriaLabel or hasAriaLabelledby:
 			field['alwaysReportName'] = True
 		# Give lists an item count
-		if obj.role == controlTypes.ROLE_LIST:
+		if obj.role == controlTypes.Role.LIST:
 			child = UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
 			if child:
 				field['_childcontrolcount'] = child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
@@ -262,7 +267,10 @@ class UIAWebTextInfo(UIATextInfo):
 	# C901 'getTextWithFields' is too complex
 	# Note: when working on getTextWithFields, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def getTextWithFields(self, formatConfig=None):  # noqa: C901
+	def getTextWithFields(  # noqa: C901
+		self,
+		formatConfig: Optional[Dict] = None
+	) -> textInfos.TextInfo.TextWithFieldsT:
 		# We don't want fields for collapsed ranges.
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges,
 		# thus this code is not in the base.
@@ -275,8 +283,8 @@ class UIAWebTextInfo(UIATextInfo):
 			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
 				states = field.field['states']
 				if clickableField:
-					states.discard(controlTypes.STATE_CLICKABLE)
-				elif controlTypes.STATE_CLICKABLE in states:
+					states.discard(controlTypes.State.CLICKABLE)
+				elif controlTypes.State.CLICKABLE in states:
 					clickableField = field.field
 			elif (
 				clickableField
@@ -344,13 +352,13 @@ class UIAWeb(UIA):
 	def _isIframe(self):
 		role = super().role
 		return (
-			role == controlTypes.ROLE_PANE
+			role == controlTypes.Role.PANE
 			and self.UIATextPattern
 		)
 
 	def _get_role(self):
 		if self._isIframe():
-			return controlTypes.ROLE_INTERNALFRAME
+			return controlTypes.Role.INTERNALFRAME
 		ariaRole = self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# The role used is the first role in the list that has an associated NVDA role in aria.ariaRolesToNVDARoles
@@ -363,12 +371,12 @@ class UIAWeb(UIA):
 	def _get_states(self):
 		states = super().states
 		if self.role in (
-			controlTypes.ROLE_STATICTEXT,
-			controlTypes.ROLE_GROUPING,
-			controlTypes.ROLE_SECTION,
-			controlTypes.ROLE_GRAPHIC,
+			controlTypes.Role.STATICTEXT,
+			controlTypes.Role.GROUPING,
+			controlTypes.Role.SECTION,
+			controlTypes.Role.GRAPHIC,
 		) and self.UIAInvokePattern:
-			states.add(controlTypes.STATE_CLICKABLE)
+			states.add(controlTypes.State.CLICKABLE)
 		return states
 
 	def _get_ariaProperties(self):
@@ -425,8 +433,8 @@ class List(UIAWeb):
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
 	def _get_states(self):
 		states = super().states
-		if controlTypes.STATE_FOCUSABLE not in states:
-			states.add(controlTypes.STATE_READONLY)
+		if controlTypes.State.FOCUSABLE not in states:
+			states.add(controlTypes.State.READONLY)
 		return states
 
 
@@ -498,8 +506,8 @@ class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocu
 		# Enter focus mode for selectable list items (<select> and role=listbox)
 		if (
 			reason == controlTypes.OutputReason.FOCUS
-			and obj.role == controlTypes.ROLE_LISTITEM
-			and controlTypes.STATE_SELECTABLE in obj.states
+			and obj.role == controlTypes.Role.LISTITEM
+			and controlTypes.State.SELECTABLE in obj.states
 		):
 			return True
 		return super().shouldPassThrough(obj, reason=reason)

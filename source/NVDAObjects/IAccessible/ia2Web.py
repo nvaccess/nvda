@@ -1,16 +1,15 @@
-#NVDAObjects/IAccessible/ia2Web.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2021 NV Access Limited
 
 """Base classes with common support for browsers exposing IAccessible2.
 """
-
+import typing
 from ctypes import c_short
 from comtypes import COMError, BSTR
 import oleacc
-import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
@@ -34,6 +33,15 @@ class Ia2Web(IAccessible):
 				info['level']=level
 		return info
 
+	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
+		ia2attrDescriptionFrom: typing.Optional[str] = self.IA2Attributes.get("description-from")
+		try:
+			return controlTypes.DescriptionFrom(ia2attrDescriptionFrom)
+		except ValueError:
+			if ia2attrDescriptionFrom:
+				log.debugWarning(f"Unknown 'description-from' IA2Attribute value: {ia2attrDescriptionFrom}")
+			return controlTypes.DescriptionFrom.UNKNOWN
+
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
 		try:
@@ -47,7 +55,7 @@ class Ia2Web(IAccessible):
 		return placeholder
 
 	def _get_isPresentableFocusAncestor(self):
-		if self.role==controlTypes.ROLE_TABLEROW:
+		if self.role==controlTypes.Role.TABLEROW:
 			# It is not useful to present IAccessible2 table rows in the focus ancestry as  cells contain row and column information anyway.
 			# Also presenting the rows would cause duplication of information
 			return False
@@ -64,10 +72,10 @@ class Ia2Web(IAccessible):
 		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
 		# This is necessary for other code that calculates how selection of cells should be spoken.
 		if 'gridcell' in self.IA2Attributes.get('xml-roles','').split(' '):
-			states.add(controlTypes.STATE_FOCUSABLE)
+			states.add(controlTypes.State.FOCUSABLE)
 		# Google has a custom ARIA attribute to force a node's editable state off (such as in Google Slides).
 		if self.IA2Attributes.get('goog-editable')=="false":
-			states.discard(controlTypes.STATE_EDITABLE)
+			states.discard(controlTypes.State.EDITABLE)
 		return states
 
 	def _get_landmark(self):
@@ -75,7 +83,7 @@ class Ia2Web(IAccessible):
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if (
 			landmark
-			and self.IAccessibleRole != IAccessibleHandler.IA2_ROLE_LANDMARK
+			and self.IAccessibleRole != IA2.IA2_ROLE_LANDMARK
 			and landmark != xmlRoles[0]
 		):
 			# Ignore the landmark role
@@ -109,29 +117,29 @@ class Document(Ia2Web):
 	value = None
 
 	def _get_shouldCreateTreeInterceptor(self):
-		return controlTypes.STATE_READONLY in self.states
+		return controlTypes.State.READONLY in self.states
 
 class Application(Document):
 	shouldCreateTreeInterceptor = False
 
 class BlockQuote(Ia2Web):
-	role = controlTypes.ROLE_BLOCKQUOTE
+	role = controlTypes.Role.BLOCKQUOTE
 
 
 class Treegrid(Ia2Web):
-	role = controlTypes.ROLE_TABLE
+	role = controlTypes.Role.TABLE
 
 
 class Article(Ia2Web):
-	role = controlTypes.ROLE_ARTICLE
+	role = controlTypes.Role.ARTICLE
 
 
 class Region(Ia2Web):
-	role = controlTypes.ROLE_REGION
+	role = controlTypes.Role.REGION
 
 
 class Figure(Ia2Web):
-	role = controlTypes.ROLE_FIGURE
+	role = controlTypes.Role.FIGURE
 
 
 class Editor(Ia2Web, DocumentWithTableNavigation):
@@ -150,10 +158,12 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			# We support either IAccessibleTable or IAccessibleTable2 interfaces for locating table cells. 
 			# We will be able to get at least one of these.  
 			try:
-				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IA2.IAccessible2)
 			except AttributeError:
 				# No IAccessibleTable2, try IAccessibleTable instead.
-				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+				cell = table.IAccessibleTableObject.accessibleAt(
+					destRow - 1, destCol - 1
+				).QueryInterface(IA2.IAccessible2)
 			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
 			if cell.IA2Attributes.get('hidden'):
@@ -209,11 +219,11 @@ class Switch(Ia2Web):
 	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
 	# checked state instead of pressed. The simplest way to deal with this
 	# identity crisis is to map it to a check box.
-	role = controlTypes.ROLE_CHECKBOX
+	role = controlTypes.Role.CHECKBOX
 
 	def _get_states(self):
 		states = super().states
-		states.discard(controlTypes.STATE_PRESSED)
+		states.discard(controlTypes.State.PRESSED)
 		return states
 
 
@@ -225,12 +235,12 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""
 	if not documentClass:
 		raise ValueError("documentClass cannot be None")
-	if not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
+	if not isinstance(obj.IAccessibleObject, IA2.IAccessible2):
 		return
 
 	iaRole = obj.IAccessibleRole
 	xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
-	if iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
+	if iaRole == IA2.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
 		clsList.append(BlockQuote)
 	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINE and "treegrid" in xmlRoles:
 		clsList.append(Treegrid)
@@ -264,7 +274,7 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	):
 		clsList.append(documentClass)
 
-	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE:
+	if obj.IA2States & IA2.IA2_STATE_EDITABLE:
 		if obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
 			clsList.append(Editor)
 		else:

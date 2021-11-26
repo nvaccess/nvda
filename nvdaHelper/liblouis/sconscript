@@ -17,8 +17,8 @@ import re
 import glob
 from SCons.Tool.MSCommon.vc import find_vc_pdir
 import typing
-from include.scons.SCons.Environment import Environment
-from include.scons.SCons.Environment import Base
+from SCons.Environment import Environment
+from SCons.Environment import Base
 
 Import([
 	"thirdPartyEnv",
@@ -53,7 +53,6 @@ if len(clangDirs) == 0:
 		"Could not find the Clang compiler. "
 		"Perhaps the C++ Clang tools for Windows component in visual Studio is not installed"
 	) 
-env['ENV']['PATH'] += "".join(f";{d}" for d in clangDirs)
 env['CC'] = 'clang-cl'
 
 # Don't analyze the code as not our project

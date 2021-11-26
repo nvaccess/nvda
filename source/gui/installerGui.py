@@ -1,27 +1,44 @@
-#gui/installerGui.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2011-2018 NV Access Limited, Babbage B.v.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2011-2021 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
+# Bill Dengler, Joseph Lee, Takuya Nishimoto
 
 import os
-import ctypes
 
-import buildVersion
 import shellapi
 import winUser
 import wx
 import config
+import core
 import globalVars
-import versionInfo
 import installer
 from logHandler import log
 import gui
 from gui import guiHelper
 import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-import tones
 import systemUtils
+
+
+def _canPortableConfigBeCopied() -> bool:
+	# In some cases even though user requested to copy config from the portable copy during installation
+	# it should not be done.
+	if globalVars.appArgs.launcher:
+		# Normally when running from the launcher
+		# and configPath is not overridden by the user copying config during installation is rather pointless
+		# as we would  copy it into itself.
+		# However, if a user wants to run the launcher with a custom configPath,
+		# it is likely that he wants to copy that configuration when installing.
+		return globalVars.appArgs.configPath != config.getUserDefaultConfigPath(useInstalledPathIfExists=True)
+	else:
+		# For portable copies we want to avoid copying the configuration to itself,
+		# so return True only if the configPath
+		# does not point to the config of the installed copy in appdata.
+		confPath = config.getInstalledUserConfigPath()
+		if confPath and confPath == globalVars.appArgs.configPath:
+			return False
+		return True
 
 
 def doInstall(
@@ -52,7 +69,8 @@ def doInstall(
 		if copyPortableConfig:
 			installedUserConfigPath=config.getInstalledUserConfigPath()
 			if installedUserConfigPath:
-				gui.ExecAndPump(installer.copyUserConfig,installedUserConfigPath)
+				if _canPortableConfigBeCopied():
+					gui.ExecAndPump(installer.copyUserConfig, installedUserConfigPath)
 	except Exception as e:
 		res=e
 		log.error("Failed to execute installer",exc_info=True)
@@ -91,18 +109,14 @@ def doInstall(
 		gui.messageBox(msg+_("Please press OK to start the installed copy."),
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
+
+	newNVDA = None
 	if startAfterInstall:
-		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
-		shellapi.ShellExecute(
-			None,
-			None,
-			os.path.join(installer.defaultInstallPath,'nvda.exe'),
-			None,
-			None,
-			winUser.SW_SHOWNORMAL
+		newNVDA = core.NewNVDAInstance(
+			filePath=os.path.join(installer.defaultInstallPath, 'nvda.exe'),
 		)
-	else:
-		wx.GetApp().ExitMainLoop()
+	if not core.triggerNVDAExit(newNVDA):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 def doSilentInstall(
@@ -175,18 +189,15 @@ class InstallerDialog(
 			self.bindHelpEvent("InstallWithIncompatibleAddons", self.confirmationCheckbox)
 			self.confirmationCheckbox.SetFocus()
 
-		optionsSizer = guiHelper.BoxSizerHelper(self, sizer=sHelper.addItem(wx.StaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA installation dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
-		)))
+		# Translators: The label for a group box containing the NVDA installation dialog options.
+		optionsLabel = _("Options")
+		optionsSizer = sHelper.addItem(wx.StaticBoxSizer(wx.VERTICAL, self, label=optionsLabel))
+		optionsHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
+		optionsBox = optionsSizer.GetStaticBox()
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA during sign-in")
-		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=startOnLogonText))
+		self.startOnLogonCheckbox = optionsHelper.addItem(wx.CheckBox(optionsBox, label=startOnLogonText))
 		self.bindHelpEvent("StartAtWindowsLogon", self.startOnLogonCheckbox)
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
@@ -197,25 +208,27 @@ class InstallerDialog(
 		if self.isUpdate and shortcutIsPrevInstalled:
 			# Translators: The label of a checkbox option in the Install NVDA dialog.
 			keepShortCutText = _("&Keep existing desktop shortcut")
-			self.createDesktopShortcutCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=keepShortCutText))
+			keepShortCutBox = wx.CheckBox(optionsBox, label=keepShortCutText)
+			self.createDesktopShortcutCheckbox = optionsHelper.addItem(keepShortCutBox)
 		else:
 			# Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 			# If the shortcut key has been changed for this locale,
 			# this change must also be reflected here.
 			createShortcutText = _("Create &desktop icon and shortcut key (control+alt+n)")
-			self.createDesktopShortcutCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createShortcutText))
+			createShortcutBox = wx.CheckBox(optionsBox, label=createShortcutText)
+			self.createDesktopShortcutCheckbox = optionsHelper.addItem(createShortcutBox)
 		self.bindHelpEvent("CreateDesktopShortcut", self.createDesktopShortcutCheckbox)
 		self.createDesktopShortcutCheckbox.Value = shortcutIsPrevInstalled if self.isUpdate else True 
 		
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		createPortableText = _("Copy &portable configuration to current user account")
-		self.copyPortableConfigCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createPortableText))
+		createPortableBox = wx.CheckBox(optionsBox, label=createPortableText)
+		self.copyPortableConfigCheckbox = optionsHelper.addItem(createPortableBox)
 		self.bindHelpEvent("CopyPortableConfigurationToCurrentUserAccount", self.copyPortableConfigCheckbox)
-		self.copyPortableConfigCheckbox.Value = bool(globalVars.appArgs.copyPortableConfig)
-		if globalVars.appArgs.copyPortableConfig is None:
-			# copyPortableConfig is set to C{None} in the main loop,
-			# when copying the portable configuration should be disabled at all costs.
-			self.copyPortableConfigCheckbox.Disable()
+		self.copyPortableConfigCheckbox.Value = (
+			bool(globalVars.appArgs.copyPortableConfig) and _canPortableConfigBeCopied()
+		)
+		self.copyPortableConfigCheckbox.Enable(_canPortableConfigBeCopied())
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		if shouldAskAboutAddons:
@@ -250,9 +263,9 @@ class InstallerDialog(
 			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
 			startOnLogon=self.startOnLogonCheckbox.Value,
 			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
-			silent=self.isUpdate
+			isUpdate=self.isUpdate
 		)
-		self.Destroy()
+		wx.GetApp().ScheduleForDestruction(self)
 
 	def onCancel(self, evt):
 		self.Destroy()
@@ -349,13 +362,16 @@ class PortableCreaterDialog(
 		# Translators: The label of a grouping containing controls to select the destination directory
 		# in the Create Portable NVDA dialog.
 		directoryGroupText = _("Portable &directory:")
-		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=directoryGroupText), wx.VERTICAL)))
+		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=directoryGroupText)
+		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
+		groupBox = groupSizer.GetStaticBox()
 		# Translators: The label of a button to browse for a directory.
 		browseText = _("Browse...")
 		# Translators: The title of the dialog presented when browsing for the
 		# destination directory when creating a portable copy of NVDA.
 		dirDialogTitle = _("Select portable  directory")
-		directoryEntryControl = groupHelper.addItem(gui.guiHelper.PathSelectionHelper(self, browseText, dirDialogTitle))
+		directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
+		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 		self.portableDirectoryEdit = directoryEntryControl.pathControl
 		if globalVars.appArgs.portablePath:
 			self.portableDirectoryEdit.Value = globalVars.appArgs.portablePath
@@ -446,20 +462,16 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 			wx.OK | wx.ICON_ERROR)
 		return
 	d.done()
-	if silent:
-		wx.GetApp().ExitMainLoop()
-	else:
+	if not silent:
 		# Translators: The message displayed when a portable copy of NVDA has been successfully created.
 		# %s will be replaced with the destination directory.
 		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
 			_("Success"))
+	if silent or startAfterCreate:
+		newNVDA = None
 		if startAfterCreate:
-			# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
-			shellapi.ShellExecute(
-				None,
-				None,
-				os.path.join(portableDirectory, 'nvda.exe'),
-				None,
-				None,
-				winUser.SW_SHOWNORMAL
+			newNVDA = core.NewNVDAInstance(
+				filePath=os.path.join(portableDirectory, 'nvda.exe'),
 			)
+		if not core.triggerNVDAExit(newNVDA):
+			log.error("NVDA already in process of exiting, this indicates a logic error.")

@@ -3,6 +3,10 @@
 #Copyright (C) 2012-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+from typing import (
+	Optional,
+	Dict,
+)
 
 import comtypes
 from comtypes.automation import IDispatch
@@ -15,7 +19,7 @@ import queueHandler
 import colors
 import api
 import speech
-import sayAllHandler
+from speech import sayAll
 import NVDAHelper
 import winUser
 import msoAutoShapeTypes
@@ -220,17 +224,17 @@ msoInkComment = 23
 msoSmartArt = 24
 
 msoShapeTypesToNVDARoles={
-	msoChart:controlTypes.ROLE_CHART,
-	msoGroup:controlTypes.ROLE_GROUPING,
-	msoEmbeddedOLEObject:controlTypes.ROLE_EMBEDDEDOBJECT,
-	msoLine:controlTypes.ROLE_LINE,
-	msoLinkedOLEObject:controlTypes.ROLE_EMBEDDEDOBJECT,
-	msoLinkedPicture:controlTypes.ROLE_GRAPHIC,
-	msoPicture:controlTypes.ROLE_GRAPHIC,
-	msoTextBox:controlTypes.ROLE_TEXTFRAME,
-	msoTable:controlTypes.ROLE_TABLE,
-	msoCanvas:controlTypes.ROLE_CANVAS,
-	msoDiagram:controlTypes.ROLE_DIAGRAM,
+	msoChart:controlTypes.Role.CHART,
+	msoGroup:controlTypes.Role.GROUPING,
+	msoEmbeddedOLEObject:controlTypes.Role.EMBEDDEDOBJECT,
+	msoLine:controlTypes.Role.LINE,
+	msoLinkedOLEObject:controlTypes.Role.EMBEDDEDOBJECT,
+	msoLinkedPicture:controlTypes.Role.GRAPHIC,
+	msoPicture:controlTypes.Role.GRAPHIC,
+	msoTextBox:controlTypes.Role.TEXTFRAME,
+	msoTable:controlTypes.Role.TABLE,
+	msoCanvas:controlTypes.Role.CANVAS,
+	msoDiagram:controlTypes.Role.DIAGRAM,
 }
 
 # PpMouseActivation
@@ -258,7 +262,7 @@ class PaneClassDC(Window):
 	"""Handles fetching of the Powerpoint object model."""
 
 	presentationType=Window.presType_content
-	role=controlTypes.ROLE_PANE
+	role=controlTypes.Role.PANE
 	value=None
 	TextInfo=DisplayModelTextInfo
 
@@ -440,7 +444,7 @@ class DocumentWindow(PaneClassDC):
 
 class OutlinePane(EditableTextWithoutAutoSelectDetection,PaneClassDC):
 	TextInfo=EditableTextDisplayModelTextInfo
-	role=controlTypes.ROLE_EDITABLETEXT
+	role=controlTypes.Role.EDITABLETEXT
 
 class PpObject(Window):
 	"""
@@ -482,7 +486,7 @@ class SlideBase(PpObject):
 	def _isEqual(self,other):
 		return super(SlideBase,self)._isEqual(other) and self.name==other.name
 
-	role=controlTypes.ROLE_PANE
+	role=controlTypes.Role.PANE
 
 class Slide(SlideBase):
 	"""Represents a single slide in Powerpoint."""
@@ -519,9 +523,9 @@ class Shape(PpObject):
 
 	def __init__(self, **kwargs):
 		super(Shape, self).__init__(**kwargs)
-		if self.role == controlTypes.ROLE_EMBEDDEDOBJECT:
+		if self.role == controlTypes.Role.EMBEDDEDOBJECT:
 			if self.ppObject.OLEFormat.ProgID.startswith(MATHTYPE_PROGID):
-				self.role = controlTypes.ROLE_MATH
+				self.role = controlTypes.Role.MATH
 
 	def _get__overlapInfo(self):
 		slideWidth=self.appModule._ppApplication.activePresentation.pageSetup.slideWidth
@@ -778,17 +782,17 @@ class Shape(PpObject):
 		if ppShapeType==msoMedia:
 			ppMediaType=self.ppMediaType
 			if ppMediaType==ppVideo:
-				return controlTypes.ROLE_VIDEO
+				return controlTypes.Role.VIDEO
 			elif ppMediaType==ppAudio:
-				return controlTypes.ROLE_AUDIO
-		role=msoShapeTypesToNVDARoles.get(self.ppShapeType,controlTypes.ROLE_SHAPE)
-		if role==controlTypes.ROLE_SHAPE:
+				return controlTypes.Role.AUDIO
+		role=msoShapeTypesToNVDARoles.get(self.ppShapeType,controlTypes.Role.SHAPE)
+		if role==controlTypes.Role.SHAPE:
 			ppAutoShapeType=self.ppAutoShapeType
-			role=msoAutoShapeTypes.msoAutoShapeTypeToRole.get(ppAutoShapeType,controlTypes.ROLE_SHAPE)
+			role=msoAutoShapeTypes.msoAutoShapeTypeToRole.get(ppAutoShapeType,controlTypes.Role.SHAPE)
 		return role
 
 	def _get_roleText(self):
-		if self.role!=controlTypes.ROLE_SHAPE:
+		if self.role!=controlTypes.Role.SHAPE:
 			return None
 		ppAutoShapeType=self.ppAutoShapeType
 		return msoAutoShapeTypes.msoAutoShapeTypeToRoleText.get(ppAutoShapeType)
@@ -800,9 +804,9 @@ class Shape(PpObject):
 	def _get_states(self):
 		states=super(Shape,self).states
 		if self._overlapInfo[1] is not None:
-			states.add(controlTypes.STATE_OBSCURED)
+			states.add(controlTypes.State.OBSCURED)
 		if any(x for x in self._edgeDistances if x<0):
-			states.add(controlTypes.STATE_OFFSCREEN)
+			states.add(controlTypes.State.OFFSCREEN)
 		return states
 
 	def _get_mathMl(self):
@@ -843,7 +847,7 @@ class ChartShape(Shape):
 			return chartObj.chartTitle.text
 		return super(ChartShape,self).name
 
-	role=controlTypes.ROLE_CHART
+	role=controlTypes.Role.CHART
 
 	def _get_chart(self):
 		return OfficeChart(windowHandle=self.windowHandle , officeApplicationObject = self.ppObject.Application , officeChartObject = self.ppObject.chart, initialDocument=self )
@@ -955,7 +959,7 @@ class Table(Shape):
 class TableCell(PpObject):
 	"""Represents a table cell in Powerpoint. Accepts a table and a row and column number as this cannot be calculated directly."""
 	name=None
-	role=controlTypes.ROLE_TABLECELL
+	role=controlTypes.Role.TABLECELL
 
 	def _isEqual(self,other):
 		return self.table==other.table and (self.columnNumber,self.rowNumber)==(other.columnNumber,other.rowNumber)
@@ -983,8 +987,8 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 		return super(TextFrame,self)._isEqual(other) and self.ppObject.parent.ID==other.ppObject.parent.ID
 
 	name=None
-	role=controlTypes.ROLE_EDITABLETEXT
-	states = {controlTypes.STATE_MULTILINE}
+	role=controlTypes.Role.EDITABLETEXT
+	states = {controlTypes.State.MULTILINE}
 
 	def _get_parent(self):
 		parent=self.ppObject.parent
@@ -1024,7 +1028,7 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 			return (0,self._getStoryLength())
 		raise LookupError
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = self.obj.rootNVDAObject.basicTextFields
 		text = self.obj.rootNVDAObject.basicText
 		out = []
@@ -1097,7 +1101,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 
 	def reportNewSlide(self):
 		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
-		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
+		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
 
 	def script_toggleNotesMode(self,gesture):
 		self.rootNVDAObject.notesMode=not self.rootNVDAObject.notesMode
@@ -1170,7 +1174,7 @@ class SlideShowWindow(PaneClassDC):
 		if shapeType==msoEmbeddedOLEObject:
 			oleFormat=shape.OLEFormat
 			if oleFormat.ProgID.startswith(MATHTYPE_PROGID):
-				yield textInfos.ControlField(role=controlTypes.ROLE_MATH,
+				yield textInfos.ControlField(role=controlTypes.Role.MATH,
 					oleFormat=oleFormat, _startOfNode=True)
 			return
 		label=shape.alternativeText
@@ -1335,7 +1339,7 @@ class AppModule(appModuleHandler.AppModule):
 		return m
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if obj.windowClassName in objectModelWindowClasses and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
+		if obj.windowClassName in objectModelWindowClasses and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.State.FOCUSED in obj.states:
 			m=self.fetchPpObjectModel(windowHandle=obj.windowHandle)
 			if not m:
 				log.debugWarning("no object model")

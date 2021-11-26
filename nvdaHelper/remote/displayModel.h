@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2021 NV Access Limited, Babbage B.V.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -21,14 +21,64 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <common/lock.h>
 
+/* Represent an RGB color (plus isTransparent flag).
+*
+* Used instead of COLORREF to prevent problems being introduced accidentally
+* when high-order bytes is non-zero.
+* Note the following about COLORREF:
+* The low-order byte contains a value for the relative intensity of red;
+* the second byte contains a value for green;
+* and the third byte contains a value for blue.
+* The high-order byte must be zero.
+* 0x00bbggrr
+*/
+class displayModelFormatColor_t {
+public:
+	displayModelFormatColor_t(BYTE r, BYTE g, BYTE b, const bool _isTransparent)
+		: red(r), green(g), blue(b), isTransparent(_isTransparent)
+	{}
+
+	explicit displayModelFormatColor_t(const COLORREF& cr)
+	: red(GetRValue(cr))
+	, green(GetGValue(cr))
+	, blue(GetBValue(cr))
+	, isTransparent(false)
+	{}
+
+	displayModelFormatColor_t(const COLORREF& cr, const bool _isTransparent)
+	: displayModelFormatColor_t(cr)
+	{
+		isTransparent = _isTransparent;
+	}
+
+	displayModelFormatColor_t() = default;
+
+	displayModelFormatColor_t inverted() {
+		return displayModelFormatColor_t(
+			0xFF - red,
+			0xFF - green,
+			0xFF - blue,
+			isTransparent
+		);
+	}
+
+	BYTE red = 0;
+	BYTE green = 0;
+	BYTE blue = 0;
+	bool isTransparent = false;
+
+	static constexpr DWORD TRANSPARENT_BIT = 1 << 24;
+};
+
 struct displayModelFormatInfo_t {
-	wchar_t fontName[32];
-	int fontSize;
-	bool bold;
-	bool italic;
-	bool underline;
-	COLORREF color;
-	COLORREF backgroundColor;
+	std::wstring fontName;
+	int fontSize = 0;
+	bool bold = false;
+	bool italic = false;
+	bool underline = false;
+
+	displayModelFormatColor_t color;
+	displayModelFormatColor_t backgroundColor;
 };
 
 struct displayModelChunk_t{

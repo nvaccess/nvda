@@ -1,9 +1,7 @@
-# -*- coding: UTF-8 -*-
-# brailleInput.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2019 NV Access Limited, Rui Batista, Babbage B.V.
+# Copyright (C) 2012-2021 NV Access Limited, Rui Batista, Babbage B.V.
 
 import os.path
 import time
@@ -253,7 +251,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			if self._translate(endWord):
 				if not endWord:
 					self.cellsWithText.add(pos)
-			elif self.bufferText and not self.useContractedForCurrentFocus:
+			elif self.bufferText and not self.useContractedForCurrentFocus and self._table.contracted:
 				# Translators: Reported when translation didn't succeed due to unsupported input.
 				speech.speakMessage(_("Unsupported input"))
 				self.flushBuffer()

@@ -1,8 +1,8 @@
-#pythonConsole.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2008-2019 NV Access Limited, Leonard de Ruijter
+# pythonConsole.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2020 NV Access Limited, Leonard de Ruijter, Julien Cochuyt
 
 import watchdog
 
@@ -12,6 +12,7 @@ To use, call L{initialize} to create a singleton instance of the console GUI. Th
 
 import builtins
 import os
+from typing import Sequence
 import code
 import codeop
 import sys
@@ -253,6 +254,7 @@ class ConsoleUI(
 		# Even the most recent line has a position in the history, so initialise with one blank line.
 		self.inputHistory = [""]
 		self.inputHistoryPos = 0
+		self.outputPositions: Sequence[int] = [0]
 
 	def onActivate(self, evt):
 		if evt.GetActive():
@@ -267,6 +269,12 @@ class ConsoleUI(
 		self.outputCtrl.write(data)
 		if data and not data.isspace():
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, data)
+
+	def clear(self):
+		"""Clear the output.
+		"""
+		self.outputCtrl.Clear()
+		self.outputPositions[:] = [0]
 
 	def echo(self, data):
 		self.outputCtrl.write(data)
@@ -292,6 +300,8 @@ class ConsoleUI(
 			self.inputHistory.append("")
 		self.inputHistoryPos = len(self.inputHistory) - 1
 		self.inputCtrl.ChangeValue("")
+		if self.console.prompt != "...":
+			self.outputPositions.append(self.outputCtrl.GetInsertionPoint())
 
 	def historyMove(self, movement):
 		newIndex = self.inputHistoryPos + movement
@@ -399,8 +409,8 @@ class ConsoleUI(
 			self.execute()
 			return
 		elif key in (wx.WXK_UP, wx.WXK_DOWN):
-			if self.historyMove(-1 if key == wx.WXK_UP else 1):
-				return
+			self.historyMove(-1 if key == wx.WXK_UP else 1)
+			return
 		elif key == wx.WXK_F6:
 			self.outputCtrl.SetFocus()
 			return

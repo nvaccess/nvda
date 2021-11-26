@@ -23,7 +23,7 @@ class NonDefaultAppTile(UIA):
 
 class ImmersiveOpenWithFlyout(Dialog,UIA):
 
-	role=controlTypes.ROLE_DIALOG
+	role=controlTypes.Role.DIALOG
 
 	#win8hack: This window never actually gets the physical focus thus tabbing etc goes to the original window
 	#So Force it to get focus

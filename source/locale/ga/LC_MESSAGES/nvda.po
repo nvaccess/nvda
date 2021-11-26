@@ -6,10 +6,10 @@
 # Ronan McGuirk <ronan.p.mcguirk@gmail.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA 2020.3\n"
+"Project-Id-Version: NVDA 2021.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-29 00:01+1000\n"
-"PO-Revision-Date: 2021-02-02 19:31+0000\n"
+"POT-Creation-Date: 2021-11-05 00:03+0000\n"
+"PO-Revision-Date: 2021-11-07 14:43+0000\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -99,6 +99,31 @@ msgstr "litriú {text}"
 #, python-brace-format
 msgid "grammar: {text}"
 msgstr "gramadach {text}"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "dada"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "Dath"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "Grádán"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr "pictiúr"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "Patrún"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -394,8 +419,8 @@ msgid "fig"
 msgstr "fig"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
-msgid "mrkd"
-msgstr "marcáilte"
+msgid "hlght"
+msgstr "aibhsithe"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -448,6 +473,10 @@ msgstr "sórtáilte in ord ardaitheach"
 #. Translators: Displayed in braille when an object is sorted descending.
 msgid "sorted desc"
 msgstr "sórtáilte in ord íslitheach"
+
+#. Translators: Displayed in braille when an object has additional details (such as a comment section).
+msgid "details"
+msgstr "sonraí"
 
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
@@ -721,8 +750,23 @@ msgstr "Beangáilis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Belarusian computer braille"
+msgstr "ríomhbhraille Bealarúisise "
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Belarusian literary braille"
+msgstr "Braille Bealarúisise liteartha "
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
 msgstr "Bulgáiris, ríomhbhraille 8-ponc"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Bulgarian grade 1"
+msgstr "Bulgárais , grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -951,11 +995,6 @@ msgstr "Braille Gréigise Idirnáisiúnta"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Hebrew 8 dot computer braille"
-msgstr "Eabhrais, ríomhbhraille 8-ponc"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "Israeli grade 1"
 msgstr ""
 "Braille Iosraelach Grád 1\v\vBraille Iosraelach Grád 1\v\v Gaelach gan "
@@ -963,8 +1002,8 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Israeli 8 dot computer braille"
-msgstr "Braille Iosraelach 8 bponc"
+msgid "Hebrew computer braille"
+msgstr "Eabhrais, ríomhbhraille 8-ponc"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1015,6 +1054,21 @@ msgstr "Iodáilis, ríomhbhraille 8-ponc"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Kannada, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Kazakh grade 1"
+msgstr "Casaicis Grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Khmer grade 1"
+msgstr "Caismírí, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Northern Kurdish grade 0"
+msgstr "Coirdis Thuaidh"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1074,7 +1128,7 @@ msgstr "Malaeis Grád 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Mongolian grade 1"
-msgstr ", grád 1"
+msgstr "Mongóilis , grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1085,6 +1139,16 @@ msgstr "Mongóilis Grád 2"
 #. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Manipuri grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Burmese grade 1"
+msgstr "Assaiméis grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Burmese grade 2"
+msgstr ", grád 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1130,6 +1194,16 @@ msgstr "Ioruais, grád 3"
 #. braille settings dialog.
 msgid "Nepali grade 1"
 msgstr "Neipeáilis , grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sepedi grade 1"
+msgstr "Seipidis, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sepedi grade 2"
+msgstr "Seipidis, grád 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1188,8 +1262,18 @@ msgstr "Braille Rúisise liteartha mionsonraithe"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Russian contracted braille"
+msgstr "Braille  Rúisis  gearraithe"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sanscrait, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Yakut grade 1"
+msgstr "Sachais grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1218,6 +1302,16 @@ msgstr "Slóivéinis,  Grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Sesotho grade 1"
+msgstr "Seasóitis, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sesotho grade 2"
+msgstr "Breatnais, grád 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "Seirbis, grád 1"
 
@@ -1225,6 +1319,11 @@ msgstr "Seirbis, grád 1"
 #. braille settings dialog.
 msgid "Tamil grade 1"
 msgstr "Tamailis, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tatar grade 1"
+msgstr "Tatairis Grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1238,6 +1337,16 @@ msgstr "Tuircis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Setswana grade 1"
+msgstr "Setswana, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Setswana grade 2"
+msgstr "Setswana Grád 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Ukrainian grade 1"
 msgstr "Úcráinis Grád 1"
 
@@ -1245,6 +1354,16 @@ msgstr "Úcráinis Grád 1"
 #. braille settings dialog.
 msgid "Ukrainian computer braille"
 msgstr "RíomhBhraille Úcráinise"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Urdu grade 1"
+msgstr "Braille Gaelach gan ghiorrúchán"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Urdu grade 2"
+msgstr "Braille Gaelach Giorraithe"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1258,8 +1377,44 @@ msgstr "Braille Unicode"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 0"
+msgstr "Vítneaimis  Grád 0"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 1"
+msgstr "Tshivenda grád 1 "
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Tshivenda grade 2"
+msgstr "Vítneaimis  Grád 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vítneaimis  Grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 2"
+msgstr "Vítneaimis  Grád 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Southern Vietnamese grade 1"
+msgstr "Vítneaimis  an deiscirt Grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 1"
+msgstr "Cóiréis, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 2"
+msgstr "Cóiréis, grád 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1280,6 +1435,16 @@ msgstr "Sínis (Hong Cong, Cantainis)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Sínis (An Téaváin, Mandairínis)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 1"
+msgstr "Súlúis, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 2"
+msgstr "Braille Gaelach Giorraithe"
 
 #. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
@@ -1850,10 +2015,12 @@ msgstr "Cineál:"
 msgid "Filter b&y:"
 msgstr "scag de réir"
 
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "&Gníomhachtaigh"
+#. Translators: The label of a button to activate an element in the browse mode Elements List dialog.
+#. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
+#. element type radio label.
+#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+msgid "Activate"
+msgstr "Gníomhachtaigh"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
@@ -1868,6 +2035,16 @@ msgstr "Gan cur síos fada"
 msgid "Shows the long description at this position if one is found."
 msgstr "Taispeáin an cur síos fada ag an ionad seo, má tá a leithéid ann."
 
+#. Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
+msgid "Shows a summary of the details at this position if found."
+msgstr ""
+"Taispeáin  cur síos ar na sonraí  ag an ionad seo, má tá a leithéid ann."
+
+#. Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
+#. set of details to read.
+msgid "No additional details"
+msgstr "Níl sonraí eile ar fáil. "
+
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
@@ -1881,12 +2058,27 @@ msgstr "Téigh go dtí tús an choimeádáin, mar shampla liosta nó tábla"
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+#. Translators: Reported when attempting to move to the next result in the Python Console
+#. output pane while there is no next result.
 msgid "Bottom"
 msgstr "bun"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Téigh thar dheireadh an choimeádáin, mar shampla liosta nó tábla"
+
+#. Translators: the description for the toggleScreenLayout script.
+#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+msgstr ""
+"Tosaítear nó múchtar má tá leagan amach an scáileáin caomhnaithe agus "
+"inneachar na cáipéise á rindreáil."
+
+#. Translators: The message reported for not supported toggling of screen layout
+msgid "Not supported in this document."
+msgstr "Ní féidir é sin a dhéanamh sa doiciméad seo."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1930,6 +2122,13 @@ msgstr "caomhnaigh I gcónaí"
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
 msgstr "faoi leibhéal na siombaile fiú amháin"
+
+#. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
+#. "transparent bright orange-yellow"
+#, python-brace-format
+msgctxt "color variation"
+msgid "transparent {colorDescription}"
+msgstr "{colorDescription} trédhearcach"
 
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
@@ -2068,7 +2267,7 @@ msgstr "{color} dorcha"
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
-msgstr " {color}an-dorcha "
+msgstr "{color} an-dorcha "
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
 #, python-brace-format
@@ -2132,819 +2331,6 @@ msgstr "donn"
 msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "donnBhuí"
-
-#. Translators: The word for window of a program such as document window.
-msgid "window"
-msgstr "fuinneog"
-
-#. Translators: Used to identify title bar of a program.
-msgid "title bar"
-msgstr "barra teidil"
-
-#. Translators: The word used for pane such as desktop pane.
-msgid "pane"
-msgstr "pána"
-
-#. Translators: The word used to denote a dialog box such as open dialog.
-msgid "dialog"
-msgstr "dialóg"
-
-#. Translators: The text used to identify check boxes such as select check box.
-msgid "check box"
-msgstr "ticbhosca"
-
-#. Translators: The text used to identify radio buttons such as yes or no radio button.
-msgid "radio button"
-msgstr "cnaipe raidió"
-
-#. Translators: The word used to identify a static text such as dialog text.
-msgid "text"
-msgstr "téacs"
-
-#. Translators: The word used to identify edit fields such as subject edit field.
-msgid "edit"
-msgstr "eagar"
-
-#. Translators: The word used to identify a button such as OK button.
-msgid "button"
-msgstr "cnaipe"
-
-#. Translators: Text used to identify menu bar of a program.
-msgid "menu bar"
-msgstr "barra roghchláir"
-
-#. Translators: Used to identify a menu item such as an item in file menu.
-msgid "menu item"
-msgstr "mír roghchláir"
-
-#. Translators: The word used for menus such as edit menu.
-#. Translators: Identifies a menu such as file menu.
-msgid "menu"
-msgstr "roghchlár"
-
-#. Translators: Used to identify combo boxes such as file type combo box.
-msgid "combo box"
-msgstr "bosca teaglama"
-
-#. Translators: The word used for lists such as folder list.
-msgid "list"
-msgstr "liosta"
-
-#. Translators: Used to identify a list item such as email list items.
-msgid "list item"
-msgstr "mír liosta"
-
-#. Translators: The word used to identify graphics such as webpage graphics.
-msgid "graphic"
-msgstr "grafaic"
-
-#. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
-msgid "help balloon"
-msgstr "balún cabhrach"
-
-#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
-msgid "tool tip"
-msgstr "Leid uirlise"
-
-#. Translators: Identifies a link in webpage documents.
-msgid "link"
-msgstr "nasc"
-
-#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
-msgid "tree view"
-msgstr "amharc crainn"
-
-#. Translators: Identifies a tree view item.
-msgid "tree view item"
-msgstr "mír chrainn"
-
-#. Translators: The word presented for tabs in a tab enabled window.
-msgctxt "controlType"
-msgid "tab"
-msgstr "Tab"
-
-#. Translators: Identifies a tab control such as webpage tabs in web browsers.
-msgid "tab control"
-msgstr "Rialtán taib"
-
-#. Translators: Identifies a slider such as volume slider.
-msgid "slider"
-msgstr "Barra sleamhnáin"
-
-#. Translators: Identifies a progress bar such as NvDA update progress.
-msgid "progress bar"
-msgstr "barra dul chun cinn"
-
-#. Translators: Identifies a scroll bar.
-msgid "scroll bar"
-msgstr "scrollbharra"
-
-#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
-msgid "status bar"
-msgstr "barra stádais"
-
-#. Translators: Identifies a table such as ones used in various websites.
-msgid "table"
-msgstr "tábla"
-
-#. Translators: Identifies a cell in a table.
-msgid "cell"
-msgstr "cill"
-
-#. Translators: Identifies a column (a group of vertical cells in a table).
-msgid "column"
-msgstr "colún"
-
-#. Translators: Identifies a row (a group of horizontal cells in a table).
-msgid "row"
-msgstr "ró"
-
-#. Translators: Identifies a frame (a smaller window in a webpage or a document).
-#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
-msgid "frame"
-msgstr "fráma"
-
-#. Translators: Identifies a tool bar.
-msgid "tool bar"
-msgstr "barra uirlisí"
-
-#. Translators: Identifies a column header in tables and spreadsheets.
-msgid "column header"
-msgstr "Ceanntásc colúin"
-
-#. Translators: Identifies a row header in tables and spreadsheets.
-msgid "row header"
-msgstr "ceanntásc ró"
-
-#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
-msgid "drop down button"
-msgstr "cnaipe anuas"
-
-#. Translators: Identifies an element.
-msgid "clock"
-msgstr "clog"
-
-#. Translators: Identifies a separator (a horizontal line drawn on the screen).
-msgid "separator"
-msgstr "deighilteoir"
-
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
-msgid "form"
-msgstr "foirm"
-
-#. Translators: Identifies a heading (a bold text used for identifying a section).
-msgid "heading"
-msgstr "ceanntásc"
-
-#. Translators: Identifies a heading level.
-msgid "heading 1"
-msgstr "ceanntásc 1"
-
-#. Translators: Identifies a heading level.
-msgid "heading 2"
-msgstr "ceanntásc 2"
-
-#. Translators: Identifies a heading level.
-msgid "heading 3"
-msgstr "ceanntásc 3"
-
-#. Translators: Identifies a heading level.
-msgid "heading 4"
-msgstr "ceanntásc 4"
-
-#. Translators: Identifies a heading level.
-msgid "heading 5"
-msgstr "ceanntásc 5"
-
-#. Translators: Identifies a heading level.
-msgid "heading 6"
-msgstr "ceanntásc 6"
-
-#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
-msgid "paragraph"
-msgstr "alt"
-
-#. Translators: Presented for a section in a document which is a block quotation;
-#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
-msgid "block quote"
-msgstr "athfhriotal eangaithe"
-
-#. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
-msgid "table header"
-msgstr "ceanntásc tábla"
-
-#. Translators: Identifies a table body (the main body of the table).
-msgid "table body"
-msgstr "corp tábla"
-
-#. Translators: Identifies a table footer (text placed at the end of the table).
-msgid "table footer"
-msgstr "buntásc tábla"
-
-#. Translators: Identifies a document (for example, a webpage document).
-msgid "document"
-msgstr "cáipéis"
-
-#. Translators: Identifies an animation in a document or a webpage.
-msgid "animation"
-msgstr "beochan"
-
-#. Translators: Identifies an application in webpages.
-msgid "application"
-msgstr "feidhmchlár"
-
-#. Translators: Identifies a box element.
-msgid "box"
-msgstr "bosca"
-
-#. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
-msgid "grouping"
-msgstr "grúpáil"
-
-#. Translators: Identifies a property page such as drive properties dialog.
-msgid "property page"
-msgstr "leathanach airíonna"
-
-#. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
-msgid "canvas"
-msgstr "canbhás"
-
-#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
-msgid "caption"
-msgstr "Ceannscríbhinn"
-
-#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
-msgid "check menu item"
-msgstr "Ticeáil mír roghchláir"
-
-#. Translators: Identifies a data edit field.
-msgid "date edit"
-msgstr "bosca dáta"
-
-#. Translators: Identifies an icon.
-msgid "icon"
-msgstr "deilbhín"
-
-#. Translators: Identifies a directory pane.
-msgid "directory pane"
-msgstr "pána eolaire"
-
-#. Translators: Identifies an embedded object such as flash content on webpages.
-msgid "embedded object"
-msgstr "Oibiacht leabaithe"
-
-#. Translators: Identifies an end note.
-msgid "end note"
-msgstr "iarnóta"
-
-#. Translators: Identifies a footer (usually text).
-msgid "footer"
-msgstr "buntásc"
-
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
-msgid "foot note"
-msgstr "fonóta"
-
-#. Translators: Reported for an object which is a glass pane; i.e.
-#. a pane that is guaranteed to be on top of all panes beneath it.
-msgid "glass pane"
-msgstr "pána gloine"
-
-#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
-msgid "header"
-msgstr "ceanntásc"
-
-#. Translators: Identifies an image map (a type of graphical link).
-msgid "image map"
-msgstr "mapa íomhá"
-
-#. Translators: Identifies an input window.
-msgid "input window"
-msgstr "Fuinneog ionchuir"
-
-#. Translators: Identifies a label.
-msgid "label"
-msgstr "lipéad"
-
-#. Translators: Identifies a note field.
-msgid "note"
-msgstr "nóta"
-
-#. Translators: Identifies a page.
-msgid "page"
-msgstr "leathanach"
-
-#. Translators: Identifies a radio menu item.
-msgid "radio menu item"
-msgstr "Mír roghchláir raidió"
-
-#. Translators: Identifies a layered pane.
-msgid "layered pane"
-msgstr "pána srathaithe"
-
-#. Translators: Identifies a redundant object.
-msgid "redundant object"
-msgstr "Oibiacht iomarcach"
-
-#. Translators: Identifies a root pane.
-msgid "root pane"
-msgstr "príomhphána"
-
-#. Translators: May be reported for an editable text object in a toolbar.
-#. This is deprecated and is not often (if ever) used.
-msgid "edit bar"
-msgstr "barra eagair"
-
-#. Translators: Identifies a terminal window such as command prompt.
-msgid "terminal"
-msgstr "teirminéal"
-
-#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
-msgid "rich edit"
-msgstr "Eagarthóireacht mhaise"
-
-#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
-msgid "ruler"
-msgstr "rialóir"
-
-#. Translators: Identifies a scroll pane.
-msgid "scroll pane"
-msgstr "scrollphána"
-
-#. Translators: Identifies a section of text.
-msgid "section"
-msgstr "rannán"
-
-#. Translators: Identifies a shape.
-msgid "shape"
-msgstr "cruth"
-
-#. Translators: Identifies a split pane.
-msgid "split pane"
-msgstr "pána roinnte"
-
-#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
-#. which represents the portion of the entire data that the user can see.
-#. As the user manipulates the scroll bars, the contents of the view port can change.
-msgid "view port"
-msgstr "port infheicthe"
-
-#. Translators: Reported for an object that forms part of a menu system
-#. but which can be undocked from or torn off the menu system
-#. to exist as a separate window.
-msgid "tear off menu"
-msgstr "roghchlár inscoite"
-
-#. Translators: Identifies a text frame (a frame window which contains text).
-msgid "text frame"
-msgstr "Fráma téacs"
-
-#. Translators: Identifies a toggle button (a button used to toggle something).
-msgid "toggle button"
-msgstr "cnaipe scoránaithe"
-
-msgid "border"
-msgstr "teorainn"
-
-#. Translators: Identifies a caret object.
-msgid "caret"
-msgstr "carait"
-
-#. Translators: Identifies a character field (should not be confused with edit fields).
-msgid "character"
-msgstr "carachtar"
-
-#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
-msgid "chart"
-msgstr "cairt"
-
-#. Translators: Identifies a cursor object.
-msgid "cursor"
-msgstr "cúrsóir"
-
-#. Translators: Identifies a diagram (seen on some websites and on Office documents).
-msgid "diagram"
-msgstr "léaráid"
-
-#. Translators: Identifies a dial object.
-msgid "dial"
-msgstr "diail"
-
-#. Translators: Identifies a drop list.
-msgid "drop list"
-msgstr "liosta anuas"
-
-#. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
-msgid "split button"
-msgstr "cnaipe roinnte"
-
-#. Translators: Identifies a menu button (a button which opens a menu of items).
-msgid "menu button"
-msgstr "cnaipe roghchláir"
-
-#. Translators: Reported for a button which expands a grid when it is pressed.
-msgid "drop down button grid"
-msgstr "greille cnaipí anuas"
-
-#. Translators: Identifies mathematical content.
-msgid "math"
-msgstr "matamaitic"
-
-#. Translators: Identifies a grip control.
-msgid "grip"
-msgstr "greim"
-
-#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
-msgid "hot key field"
-msgstr "réimse eochrach aicearra"
-
-#. Translators: Identifies an indicator control.
-msgid "indicator"
-msgstr "táscaire"
-
-#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
-msgid "spin button"
-msgstr "caschnaipe"
-
-#. Translators: Identifies a sound clip on websites.
-msgid "sound"
-msgstr "fuaim"
-
-#. Translators: Identifies a whitespace.
-msgid "white space"
-msgstr "spás bán"
-
-#. Translators: Identifies a tree view button.
-msgid "tree view button"
-msgstr "cnaipe amhairc crainn"
-
-#. Translators: Identifies an IP address (an IP address field element).
-msgid "IP address"
-msgstr "seoladh IP"
-
-#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
-msgid "desktop icon"
-msgstr "deilbhín deisce"
-
-#. Translators: Identifies desktop pane (the desktop window).
-msgid "desktop pane"
-msgstr "pána deisce"
-
-#. Translators: Identifies an option pane.
-msgid "option pane"
-msgstr "pána roghanna"
-
-#. Translators: Identifies a color chooser.
-msgid "color chooser"
-msgstr "roghnóir datha"
-
-#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
-msgid "file chooser"
-msgstr "Roghnóir comhaid"
-
-msgid "filler"
-msgstr "líontóir"
-
-#. Translators: Identifies a panel control for grouping related options.
-msgid "panel"
-msgstr "painéal"
-
-#. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
-msgid "password edit"
-msgstr "ionchur focail fhaire"
-
-#. Translators: Identifies a font chooser.
-msgid "font chooser"
-msgstr "Roghnóir clófhoirne"
-
-msgid "line"
-msgstr "líne"
-
-#. Translators: Identifies a font name.
-msgid "font name"
-msgstr "ainm clófhoirne"
-
-#. Translators: Identifies font size.
-msgid "font size"
-msgstr "Méid clófhoirne"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is bolded.
-msgid "bold"
-msgstr "trom"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "iodálach"
-
-#. Translators: Describes text formatting.
-msgid "underline"
-msgstr "líne faoi"
-
-#. Translators: Describes text formatting.
-msgid "foreground color"
-msgstr "dath tulra"
-
-#. Translators: Describes text formatting.
-msgid "background color"
-msgstr "dath cúlra"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for superscript text.
-msgid "superscript"
-msgstr "forscript"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for subscript text.
-msgid "subscript"
-msgstr "foscript"
-
-#. Translators: Describes style of text.
-#. Translators: a Microsoft Word revision type (style change)
-msgid "style"
-msgstr "stíl"
-
-#. Translators: Describes text formatting.
-msgid "indent"
-msgstr "eangú"
-
-#. Translators: Describes text formatting.
-msgid "alignment"
-msgstr "ailíniú"
-
-#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-msgid "alert"
-msgstr "foláireamh"
-
-#. Translators: Identifies a data grid control (a grid which displays data).
-msgid "data grid"
-msgstr "Greille  sonraíochtaí"
-
-msgid "data item"
-msgstr "Mír sonraíochtaí"
-
-msgid "header item"
-msgstr "mír cheanntáisc"
-
-#. Translators: Identifies a thumb control (a button-like control for changing options).
-msgid "thumb control"
-msgstr "rialtán ordóige"
-
-msgid "calendar"
-msgstr "féilire"
-
-msgid "video"
-msgstr "físeán"
-
-msgid "audio"
-msgstr "fuaim"
-
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "Eilimint cairte"
-
-#. Translators: Identifies deleted content.
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "scriosta"
-
-#. Translators: Identifies inserted content.
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "ionsáite"
-
-#. Translators: Identifies a landmark.
-msgid "landmark"
-msgstr "Sainchomhartha"
-
-#. Translators: Identifies an article.
-msgid "article"
-msgstr "airteagal"
-
-#. Translators: Identifies a region.
-msgid "region"
-msgstr "Réigiún"
-
-#. Translators: Identifies a figure (commonly seen on some websites).
-msgid "figure"
-msgstr "léaráid"
-
-#. Translators: Identifies marked (highlighted) content
-msgid "marked content"
-msgstr "inneachar marcáilte"
-
-#. Translators: This is presented when a control or document is unavailable.
-msgid "unavailable"
-msgstr "dofhaighte"
-
-#. Translators: This is presented when a control has focus.
-msgid "focused"
-msgstr "i bhfócas"
-
-#. Translators: This is presented when the control is selected.
-msgid "selected"
-msgstr "roghnaithe"
-
-#. Translators: This is presented when a document is busy.
-msgid "busy"
-msgstr "gnóthach"
-
-#. Translators: This is presented when a button is pressed.
-msgid "pressed"
-msgstr "brúite"
-
-#. Translators: This is presented when a check box is checked.
-msgid "checked"
-msgstr "ticeáilte"
-
-#. Translators: This is presented when a three state check box is half checked.
-msgid "half checked"
-msgstr "leath-thiceáilte"
-
-#. Translators: This is presented when the control is a read-only control such as read-only edit box.
-msgid "read only"
-msgstr "inléite amháin"
-
-#. Translators: This is presented when a tree view or submenu item is expanded.
-msgid "expanded"
-msgstr "leathnaithe"
-
-#. Translators: This is presented when a tree view or submenu is collapsed.
-msgid "collapsed"
-msgstr "laghdaithe"
-
-#. Translators: This is presented when a control or a document becomes invisible.
-msgid "invisible"
-msgstr "dofheicthe"
-
-#. Translators: This is presented when a visited link is encountered.
-msgid "visited"
-msgstr "feicthe"
-
-#. Translators: This is presented when a link is encountered.
-msgid "linked"
-msgstr "nasctha"
-
-#. Translators: This is presented when the control menu item has a submenu.
-msgid "subMenu"
-msgstr "fo-roghchlár"
-
-#. Translators: This is presented when a protected control or a document is encountered.
-msgid "protected"
-msgstr "cosanta"
-
-#. Translators: This is presented when a required form field is encountered.
-msgid "required"
-msgstr "riachtanach"
-
-#. Translators: Reported when an object no longer exists in the user interface;
-#. i.e. it is dead and is no longer usable.
-msgid "defunct"
-msgstr "éagtha"
-
-#. Translators: This is presented when an invalid entry has been made.
-msgid "invalid entry"
-msgstr "iontráil neamhbhailí"
-
-msgid "modal"
-msgstr "módúil"
-
-#. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
-msgid "has auto complete"
-msgstr "comhlánú uathoibríoch ann"
-
-#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
-msgid "multi line"
-msgstr "il-líne"
-
-msgid "iconified"
-msgstr "Deilbhínithe"
-
-#. Translators: Presented when the current control is located off screen.
-msgid "off screen"
-msgstr "as an scáileán"
-
-#. Translators: Presented when the control allows selection such as text fields.
-msgid "selectable"
-msgstr "inroghnaithe"
-
-#. Translators: Presented when a control can be moved to using system focus.
-msgid "focusable"
-msgstr "infhócasaithe"
-
-#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
-msgid "clickable"
-msgstr "inchliceáilte"
-
-msgid "editable"
-msgstr "ineagarthóireachta"
-
-msgid "checkable"
-msgstr "inticeáilte"
-
-msgid "draggable"
-msgstr "intarraingte"
-
-msgid "dragging"
-msgstr "Ag tarraingt"
-
-#. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects that support accessible drag and drop.
-msgid "drop target"
-msgstr "sprioc scaoilte"
-
-msgid "sorted"
-msgstr "sórtáilte"
-
-msgid "sorted ascending"
-msgstr "sórtáilte in ord ardaitheach"
-
-msgid "sorted descending"
-msgstr "sórtáilte in ord íslitheach"
-
-#. Translators: a state that denotes that an object (usually a graphic) has a long description.
-msgid "has long description"
-msgstr "cur síos fada"
-
-#. Translators: a state that denotes that an object is pinned in its current location
-msgid "pinned"
-msgstr "ceangailte"
-
-#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
-msgid "has formula"
-msgstr "foirmle ann"
-
-#. Translators: a state that denotes the existance of a comment.
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "nóta tráchta ann "
-
-#. Translators: a state that denotes that the object is covered partially or fully by another object
-msgid "obscured"
-msgstr "dofheicthe"
-
-#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
-msgid "cropped"
-msgstr "bearrtha"
-
-#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
-msgid "overflowing"
-msgstr "ag forsceitheadh"
-
-#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
-msgid "unlocked"
-msgstr "gan ghlas"
-
-#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-msgid "not selected"
-msgstr "gan roghnú"
-
-#. Translators: This is presented when a button is not pressed.
-msgid "not pressed"
-msgstr "Níl sé brúite"
-
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "gan tic"
-
-#. Translators: This is presented when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "tarraingt críochnaithe"
-
-#. Translators: Presented when an item is marked as current in a collection of items
-msgid "current"
-msgstr "an mír reatha"
-
-#. Translators: Presented when a page item is marked as current in a collection of page items
-msgid "current page"
-msgstr "leathanach reatha"
-
-#. Translators: Presented when a step item is marked as current in a collection of step items
-msgid "current step"
-msgstr "an chéim reatha"
-
-#. Translators: Presented when a location item is marked as current in a collection of location items
-msgid "current location"
-msgstr "suíomh reatha"
-
-#. Translators: Presented when a date item is marked as current in a collection of date items
-msgid "current date"
-msgstr "data reatha"
-
-#. Translators: Presented when a time item is marked as current in a collection of time items
-msgid "current time"
-msgstr "an t-am reatha"
-
-#. Translators: Indicates that a particular state of an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the full identifier of the negated state (e.g. selected).
-#, python-format
-msgid "not %s"
-msgstr "nach %s"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -3147,23 +2533,15 @@ msgstr "ionchur"
 msgid "Document formatting"
 msgstr "Formáidiú doiciméid"
 
-#. Translators: a message when audio ducking is not supported on this machine
-msgid "Audio ducking not supported"
-msgstr "Ní féidir audio eile a ísliú"
-
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 msgstr "Roghnaigh airde chlosáin ó feidhmchláir eile"
 
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help on"
-msgstr "cabhair ionchurtha: ar siúl"
-
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help off"
-msgstr "cabhair ionchurtha: stoptha"
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Ní féidir audio eile a ísliú"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
@@ -3174,6 +2552,18 @@ msgstr ""
 "inseoidh ionchur ar bith (mar shampla ag brú eochrach ar an méarchlár) duit "
 "cén scroipt a bhaineann leis."
 
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help on"
+msgstr "cabhair ionchurtha: ar siúl"
+
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help off"
+msgstr "cabhair ionchurtha: stoptha"
+
+#. Translators: Input help mode message for toggle sleep mode command.
+msgid "Toggles sleep mode on and off for the active application."
+msgstr "Scorántar an mód codlata don fheidhmchlár reatha"
+
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
 msgstr "mód codlata: stoptha"
@@ -3181,10 +2571,6 @@ msgstr "mód codlata: stoptha"
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
 msgstr "mód codlata: ar siúl"
-
-#. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles sleep mode on and off for the active application."
-msgstr "Scorántar an mód codlata don fheidhmchlár reatha"
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3196,21 +2582,25 @@ msgstr ""
 "Brúigh faoi dhó chun an líne a litriú.\n"
 "Brúigh trí huaire chun an líne a litriú le cur síos ar gach carachtar."
 
+#. Translators: Input help mode message for left mouse click command.
+msgid "Clicks the left mouse button once at the current mouse position"
+msgstr "Cliceáil an cnaipe luiche ar chlé uair amháin ag ionad na luiche"
+
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
 msgstr "clic ar chlé"
 
-#. Translators: Input help mode message for left mouse click command.
-msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Cliceáil an cnaipe luiche ar chlé uair amháin ag ionad na luiche"
+#. Translators: Input help mode message for right mouse click command.
+msgid "Clicks the right mouse button once at the current mouse position"
+msgstr "Cliceáil an cnaipe luiche ar dheis uair amháin ag ionad na luiche"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
 msgstr "clic ar dheis"
 
-#. Translators: Input help mode message for right mouse click command.
-msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "Cliceáil an cnaipe luiche ar dheis uair amháin ag ionad na luiche"
+#. Translators: Input help mode message for left mouse lock/unlock toggle command.
+msgid "Locks or unlocks the left mouse button"
+msgstr "Glasáil nó díghlasáil an cnaipe luiche ar chlé"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
@@ -3220,9 +2610,9 @@ msgstr "díghlasáil an cnaipe luiche ar chlé"
 msgid "Left mouse button lock"
 msgstr "glasáil an cnaipe luiche ar chlé"
 
-#. Translators: Input help mode message for left mouse lock/unlock toggle command.
-msgid "Locks or unlocks the left mouse button"
-msgstr "Glasáil nó díghlasáil an cnaipe luiche ar chlé"
+#. Translators: Input help mode message for right mouse lock/unlock command.
+msgid "Locks or unlocks the right mouse button"
+msgstr "Glasáil nó díghlasáil an cnaipe luiche ar dheis"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
@@ -3231,10 +2621,6 @@ msgstr "díghlasáil an cnaipe luiche ar dheis"
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 msgid "Right mouse button lock"
 msgstr "glasáil an cnaipe luiche ar dheis"
-
-#. Translators: Input help mode message for right mouse lock/unlock command.
-msgid "Locks or unlocks the right mouse button"
-msgstr "Glasáil nó díghlasáil an cnaipe luiche ar dheis"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3252,13 +2638,13 @@ msgstr ""
 "Má brúitear uair amháin é, tuairiscítear an t-am láithreach. Má brúitear "
 "faoi dhó é, tuairiscítear an dáta láithreach."
 
-#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
-msgid "No settings"
-msgstr "Gan socruithe"
-
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "Méadaigh an luach gníomhach i socruithe an tsintéiseora"
+
+#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
+msgid "No settings"
+msgstr "Gan socruithe"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
@@ -3272,6 +2658,10 @@ msgstr "Téigh go dtí an chéad luach eile i socruithe an tsintéiseora"
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "Téigh go dtí an luach roimhe seo i socruithe an tsintéiseora"
 
+#. Translators: Input help mode message for toggle speaked typed characters command.
+msgid "Toggles on and off the speaking of typed characters"
+msgstr "Léigh nó ná léigh carachtair chlóscríofa"
+
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
 msgstr "ná léigh carachtair chlóscríofa"
@@ -3280,9 +2670,9 @@ msgstr "ná léigh carachtair chlóscríofa"
 msgid "speak typed characters on"
 msgstr "léigh carachtair chlóscríofa"
 
-#. Translators: Input help mode message for toggle speaked typed characters command.
-msgid "Toggles on and off the speaking of typed characters"
-msgstr "Léigh nó ná léigh carachtair chlóscríofa"
+#. Translators: Input help mode message for toggle speak typed words command.
+msgid "Toggles on and off the speaking of typed words"
+msgstr "Léigh nó ná léigh focail chlóscríofa"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -3292,9 +2682,11 @@ msgstr "ná léigh focail chlóscríofa"
 msgid "speak typed words on"
 msgstr "léigh focail chlóscríofa"
 
-#. Translators: Input help mode message for toggle speak typed words command.
-msgid "Toggles on and off the speaking of typed words"
-msgstr "Léigh nó ná léigh focail chlóscríofa"
+#. Translators: Input help mode message for toggle speak command keys command.
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
+msgstr "Léigh nó ná léigh eochracha ordaithe"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -3304,11 +2696,9 @@ msgstr "ná léigh eochracha ordaithe"
 msgid "speak command keys on"
 msgstr "léigh eochracha ordaithe"
 
-#. Translators: Input help mode message for toggle speak command keys command.
-msgid ""
-"Toggles on and off the speaking of typed keys, that are not specifically "
-"characters"
-msgstr "Léigh nó ná léigh eochracha ordaithe"
+#. Translators: Input help mode message for toggle report font name command.
+msgid "Toggles on and off the reporting of font changes"
+msgstr "Léigh nó ná léigh athruithe chlófhoirne"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -3318,9 +2708,9 @@ msgstr "Ná léigh ai&nm na clófhoirne"
 msgid "report font name on"
 msgstr "Léigh ai&nm na clófhoirne"
 
-#. Translators: Input help mode message for toggle report font name command.
-msgid "Toggles on and off the reporting of font changes"
-msgstr "Léigh nó ná léigh athruithe chlófhoirne"
+#. Translators: Input help mode message for toggle report font size command.
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "Léigh nó ná léigh an clómhéid"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
@@ -3330,9 +2720,9 @@ msgstr "Ná léigh an c&hlómhéid"
 msgid "report font size on"
 msgstr "Léigh an c&hlómhéid"
 
-#. Translators: Input help mode message for toggle report font size command.
-msgid "Toggles on and off the reporting of font size changes"
-msgstr "Léigh nó ná léigh an clómhéid"
+#. Translators: Input help mode message for toggle report font attributes command.
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "Léigh nó ná léigh aitreabúidí clófhoirne"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
@@ -3342,14 +2732,9 @@ msgstr "Ná léigh airíonna na clófhoirne"
 msgid "report font attributes on"
 msgstr "Léigh airíonna na clófhoirne"
 
-#. Translators: Input help mode message for toggle report font attributes command.
-msgid "Toggles on and off the reporting of font attributes"
-msgstr "Léigh nó ná léigh aitreabúidí clófhoirne"
-
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
-#, fuzzy
 msgid "Toggles on and off the reporting of superscripts and subscripts"
-msgstr "Tuairiscigh nó ná tuairiscigh arbéim"
+msgstr "Scorántar tuairisciú forscripteanna agus foscripteanna"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
@@ -3361,6 +2746,11 @@ msgstr "Tabhair tuairisc ar fhorscripteanna agus ar fhoscripteanna."
 msgid "report superscripts and subscripts off"
 msgstr "Ná tabhair tuairisc ar fhorscripteanna ná ar fhoscripteanna"
 
+#. Translators: Input help mode message for toggle report revisions command.
+msgid "Toggles on and off the reporting of revisions"
+msgstr ""
+"Tabhair nó ná tabhair tuairisc maidir le hathbhreithnithe an eagarthóra."
+
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
 msgstr "Ná tabhair tuairisc maidir le hathbhreithnithe an eagarthóra."
@@ -3369,10 +2759,9 @@ msgstr "Ná tabhair tuairisc maidir le hathbhreithnithe an eagarthóra."
 msgid "report revisions on"
 msgstr "Tabhair tuairisc maidir le hathbhreithnithe an eagarthóra."
 
-#. Translators: Input help mode message for toggle report revisions command.
-msgid "Toggles on and off the reporting of revisions"
-msgstr ""
-"Tabhair nó ná tabhair tuairisc maidir le hathbhreithnithe an eagarthóra."
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Tuairiscigh nó ná tuairiscigh arbéim"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
@@ -3382,21 +2771,21 @@ msgstr "Ná tabhair tuairisc ar treise"
 msgid "report emphasis on"
 msgstr "Tabhair tuairisc ar treise"
 
-#. Translators: Input help mode message for toggle report emphasis command.
-msgid "Toggles on and off the reporting of emphasis"
-msgstr "Tuairiscigh nó ná tuairiscigh arbéim"
-
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "Scorántar tuairisciú an téacs marcáilte "
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "Scorántar tuairisciú an téacs aibhsithe "
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked on"
-msgstr "tuairisciú ar théacs marcáilte ar siúl"
+msgid "report highlighted on"
+msgstr "Tabhair tuairisc ar théacs aibhsithe. "
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked off"
-msgstr "Ná tabhair tuairisc ar théacs marcá "
+msgid "report highlighted off"
+msgstr "Ná tabhair tuairisc ar théacs aibhsithe. "
+
+#. Translators: Input help mode message for toggle report colors command.
+msgid "Toggles on and off the reporting of colors"
+msgstr "Léigh nó ná léigh dathanna"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3406,9 +2795,9 @@ msgstr "Ná Tabhair tuairisc ar &dhathanna"
 msgid "report colors on"
 msgstr "Tabhair tuairisc ar &dhathanna"
 
-#. Translators: Input help mode message for toggle report colors command.
-msgid "Toggles on and off the reporting of colors"
-msgstr "Léigh nó ná léigh dathanna"
+#. Translators: Input help mode message for toggle report alignment command.
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "Léigh nó ná léigh ailíniú"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
@@ -3418,9 +2807,9 @@ msgstr "Ná tabhair tuairisc ar ailíniú"
 msgid "report alignment on"
 msgstr "Tabhair tuairisc ar ailíniú"
 
-#. Translators: Input help mode message for toggle report alignment command.
-msgid "Toggles on and off the reporting of text alignment"
-msgstr "Léigh nó ná léigh ailíniú"
+#. Translators: Input help mode message for toggle report style command.
+msgid "Toggles on and off the reporting of style changes"
+msgstr "Léigh nó ná léigh athruithe stíle"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
@@ -3430,9 +2819,9 @@ msgstr "Ná tabhair tuairisc ar s&tíl"
 msgid "report style on"
 msgstr "Tabhair tuairisc ar s&tíl"
 
-#. Translators: Input help mode message for toggle report style command.
-msgid "Toggles on and off the reporting of style changes"
-msgstr "Léigh nó ná léigh athruithe stíle"
+#. Translators: Input help mode message for toggle report spelling errors command.
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "Léigh nó ná léigh botúin litrithe"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
@@ -3442,9 +2831,9 @@ msgstr "Ná Tabhair tuairisc ar bhotúin litrithe"
 msgid "report spelling errors on"
 msgstr "Tabhair tuairisc ar bhotúin litrithe"
 
-#. Translators: Input help mode message for toggle report spelling errors command.
-msgid "Toggles on and off the reporting of spelling errors"
-msgstr "Léigh nó ná léigh botúin litrithe"
+#. Translators: Input help mode message for toggle report pages command.
+msgid "Toggles on and off the reporting of pages"
+msgstr "Tuairiscigh nó ná tuairiscigh ar  leathnacha"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -3454,9 +2843,9 @@ msgstr "Ná tabhair tuairisc ar leat&hanaigh"
 msgid "report pages on"
 msgstr "Tabhair tuairisc ar leat&hanaigh"
 
-#. Translators: Input help mode message for toggle report pages command.
-msgid "Toggles on and off the reporting of pages"
-msgstr "Tuairiscigh nó ná tuairiscigh ar  leathnacha"
+#. Translators: Input help mode message for toggle report line numbers command.
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "Léigh nó ná léigh uimhreacha líne"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
@@ -3466,9 +2855,9 @@ msgstr "Ná léigh &uimhreacha líne"
 msgid "report line numbers on"
 msgstr "Léigh &uimhreacha líne"
 
-#. Translators: Input help mode message for toggle report line numbers command.
-msgid "Toggles on and off the reporting of line numbers"
-msgstr "Léigh nó ná léigh uimhreacha líne"
+#. Translators: Input help mode message for toggle report line indentation command.
+msgid "Cycles through line indentation settings"
+msgstr "Sainroghanna eanguithe"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
@@ -3486,9 +2875,9 @@ msgstr "Tabhair tuairisc ar eangú trí urlabhra agus toin"
 msgid "Report line indentation off"
 msgstr "Ná tabhair tuairisc ar eangú"
 
-#. Translators: Input help mode message for toggle report line indentation command.
-msgid "Cycles through line indentation settings"
-msgstr "Sainroghanna eanguithe"
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "Tuairiscigh nó ná tuairiscigh eangU paragraif"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3498,9 +2887,9 @@ msgstr "Ná tuairiscigh eangú paragraif"
 msgid "report paragraph indentation on"
 msgstr "Tuairiscigh eangú paragraif."
 
-#. Translators: Input help mode message for toggle report paragraph indentation command.
-msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "Tuairiscigh nó ná tuairiscigh eangU paragraif"
+#. Translators: Input help mode message for toggle report line spacing command.
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "Léigh nó ná léigh spásáil línte"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -3510,9 +2899,9 @@ msgstr "Ná tabhair tuairisc ar spásáil línte "
 msgid "report line spacing on"
 msgstr "Tabhair tuairisc ar spásáil línte"
 
-#. Translators: Input help mode message for toggle report line spacing command.
-msgid "Toggles on and off the reporting of line spacing"
-msgstr "Léigh nó ná léigh spásáil línte"
+#. Translators: Input help mode message for toggle report tables command.
+msgid "Toggles on and off the reporting of tables"
+msgstr "Tuairiscigh nó ná tuairiscigh táblaí"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3522,9 +2911,9 @@ msgstr "Ná tabhair tuairisc ar táblaí"
 msgid "report tables on"
 msgstr "Tabhair tuairisc ar táblaí"
 
-#. Translators: Input help mode message for toggle report tables command.
-msgid "Toggles on and off the reporting of tables"
-msgstr "Tuairiscigh nó ná tuairiscigh táblaí"
+#. Translators: Input help mode message for toggle report table row/column headers command.
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr "Tuairiscigh nó ná tuairiscigh ceanntáisc I dtáblaí"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
@@ -3534,9 +2923,9 @@ msgstr "Ná Léigh ceanntásca ró nó colúin"
 msgid "report table row and column headers on"
 msgstr "Léigh ceanntásca ró agus colúin "
 
-#. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "Tuairiscigh nó ná tuairiscigh ceanntáisc I dtáblaí"
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "Léigh nó ná léigh comhordanáidí cille i dtáblaí"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
@@ -3546,9 +2935,25 @@ msgstr "Ná léigh comhordanáidí cille i dtáblaí"
 msgid "report table cell coordinates on"
 msgstr "Léigh comhordanáidí cille i dtáblaí"
 
-#. Translators: Input help mode message for toggle report table cell coordinates command.
-msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "Léigh nó ná léigh comhordanáidí cille i dtáblaí"
+#. Translators: Input help mode message for toggle report cell borders command.
+msgid "Cycles through the cell border reporting settings"
+msgstr "Sainroghanna Déantar tuairisc ar roghanna teorainneacha na gceall"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report styles of cell borders"
+msgstr "Tabhair tuairisc ar stíl teorainneacha na gceall."
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report colors and styles of cell borders"
+msgstr "Tabhair tuairisc ar dhath agus ar stíl teorainneacha na gceall."
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report cell borders off."
+msgstr "Ná Tabhair tuairisc ar theorainneacha na gceall "
+
+#. Translators: Input help mode message for toggle report links command.
+msgid "Toggles on and off the reporting of links"
+msgstr "Léigh nó ná léigh naisc"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -3557,10 +2962,6 @@ msgstr "Ná léigh nascanna"
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
 msgstr "Léigh naisc"
-
-#. Translators: Input help mode message for toggle report links command.
-msgid "Toggles on and off the reporting of links"
-msgstr "Léigh nó ná léigh naisc"
 
 #. Translators: Input help mode message for toggle report graphics command.
 msgid "Toggles on and off the reporting of graphics"
@@ -3574,6 +2975,10 @@ msgstr "Ná tabhair tuairisc ar ghrafaicí\v "
 msgid "report graphics on"
 msgstr "Tuairisciú ar grafaicí ar siúl"
 
+#. Translators: Input help mode message for toggle report comments command.
+msgid "Toggles on and off the reporting of comments"
+msgstr "Léigh nó ná léigh nóta tráchta"
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
 msgstr "Ná léigh nóta tráchta."
@@ -3582,9 +2987,9 @@ msgstr "Ná léigh nóta tráchta."
 msgid "report comments on"
 msgstr "Léigh  nóta tráchta."
 
-#. Translators: Input help mode message for toggle report comments command.
-msgid "Toggles on and off the reporting of comments"
-msgstr "Léigh nó ná léigh nóta tráchta"
+#. Translators: Input help mode message for toggle report lists command.
+msgid "Toggles on and off the reporting of lists"
+msgstr "Tuairiscigh nó ná tuairiscigh liostaí"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
@@ -3594,9 +2999,9 @@ msgstr "Ná tabhair tuairisc ar l&iostaí"
 msgid "report lists on"
 msgstr "Tabhair tuairisc ar l&iostaí"
 
-#. Translators: Input help mode message for toggle report lists command.
-msgid "Toggles on and off the reporting of lists"
-msgstr "Tuairiscigh nó ná tuairiscigh liostaí"
+#. Translators: Input help mode message for toggle report headings command.
+msgid "Toggles on and off the reporting of headings"
+msgstr "Tuairiscigh nó ná tuairiscigh ceanntáisc"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
@@ -3605,10 +3010,6 @@ msgstr "Ná Léig&h ceanntásca"
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
 msgstr "Léig&h ceanntásca"
-
-#. Translators: Input help mode message for toggle report headings command.
-msgid "Toggles on and off the reporting of headings"
-msgstr "Tuairiscigh nó ná tuairiscigh ceanntáisc"
 
 #. Translators: Input help mode message for toggle report groupings command.
 msgid "Toggles on and off the reporting of groupings"
@@ -3622,6 +3023,10 @@ msgstr "Ná tabhair tuairisc ar ghrúpálacha "
 msgid "report groupings on"
 msgstr "Tabhair tuairisc ar ghrúpálacha"
 
+#. Translators: Input help mode message for toggle report block quotes command.
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "Tabhair tuairisc, nó ná tabhair tuairisc ar athfhriotail bloic"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "Ná tabhair tuairisc ar athfhriotail bloic"
@@ -3630,9 +3035,9 @@ msgstr "Ná tabhair tuairisc ar athfhriotail bloic"
 msgid "report block quotes on"
 msgstr "Tabhair tuairisc ar athfhriotail bloic"
 
-#. Translators: Input help mode message for toggle report block quotes command.
-msgid "Toggles on and off the reporting of block quotes"
-msgstr "Tabhair tuairisc, nó ná tabhair tuairisc ar athfhriotail bloic"
+#. Translators: Input help mode message for toggle report landmarks command.
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "Tuairiscigh nó ná tuairiscigh saincomharthaí"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions off"
@@ -3641,10 +3046,6 @@ msgstr "Ná tabhair tuairisc ar sainchomharthaí ná ar réigiúin"
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions on"
 msgstr "Tabhair tuairisc ar sainchomharthaí agus ar réigiúin"
-
-#. Translators: Input help mode message for toggle report landmarks command.
-msgid "Toggles on and off the reporting of landmarks"
-msgstr "Tuairiscigh nó ná tuairiscigh saincomharthaí"
 
 #. Translators: Input help mode message for toggle report articles command.
 msgid "Toggles on and off the reporting of articles"
@@ -3658,6 +3059,10 @@ msgstr "Ná tabhair tuairisc ar airteagail"
 msgid "report articles on"
 msgstr "Tabhair tuairisc ar airteagail"
 
+#. Translators: Input help mode message for toggle report frames command.
+msgid "Toggles on and off the reporting of frames"
+msgstr "Léigh nó ná léigh frámaí"
+
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
 msgstr "Ná léigh frá&maí"
@@ -3666,9 +3071,9 @@ msgstr "Ná léigh frá&maí"
 msgid "report frames on"
 msgstr "Léigh frá&maí"
 
-#. Translators: Input help mode message for toggle report frames command.
-msgid "Toggles on and off the reporting of frames"
-msgstr "Léigh nó ná léigh frámaí"
+#. Translators: Input help mode message for toggle report if clickable command.
+msgid "Toggles on and off reporting if clickable"
+msgstr "Tuairiscigh nó ná tuairiscigh ar read inchliceáilte"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
@@ -3678,9 +3083,12 @@ msgstr "Ná tabhair tuairisc ar réad in&chliceáilte"
 msgid "report if clickable on"
 msgstr "Tabhair tuairisc ar réad in&chliceáilte"
 
-#. Translators: Input help mode message for toggle report if clickable command.
-msgid "Toggles on and off reporting if clickable"
-msgstr "Tuairiscigh nó ná tuairiscigh ar read inchliceáilte"
+#. Translators: Input help mode message for cycle speech symbol level command.
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr ""
+"Rothaítear trí leibhéil na siombail labhartha a chineann ar na siombailí a "
+"bheith le rá."
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3689,24 +3097,13 @@ msgstr "Tuairiscigh nó ná tuairiscigh ar read inchliceáilte"
 msgid "Symbol level %s"
 msgstr "leibhéal siombalach %s"
 
-#. Translators: Input help mode message for cycle speech symbol level command.
-msgid ""
-"Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr ""
-"Rothaítear trí leibhéil na siombail labhartha a chineann ar na siombailí a "
-"bheith le rá."
-
-#. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "Object has no location"
-msgstr "réad gan suíomh"
-
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Bog pointeoir na luiche go dtí an réad reatha nascleantóra"
 
-#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
-msgid "Move navigator object to mouse"
-msgstr "Bog an réad nascleantóra go dtí an luch"
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "Object has no location"
+msgstr "réad gan suíomh"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 msgid ""
@@ -3716,9 +3113,9 @@ msgstr ""
 "Socraítear an oibiacht nascleantóra mar a gcéanna leis an oibiacht atá faoi "
 "phointeoir na luiche faoi láthair., agus labhairítear é."
 
-#. Translators: reported when there are no other available review modes for this object
-msgid "No next review mode"
-msgstr "Níl aon mód athbhreithnithe eile ann "
+#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
+msgid "Move navigator object to mouse"
+msgstr "Bog an réad nascleantóra go dtí an luch"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
@@ -3730,8 +3127,8 @@ msgstr ""
 "nascleantóra. "
 
 #. Translators: reported when there are no other available review modes for this object
-msgid "No previous review mode"
-msgstr "níl aon mód athbhreithnithe roimhe seo"
+msgid "No next review mode"
+msgstr "Níl aon mód athbhreithnithe eile ann "
 
 #. Translators: Script help message for previous review mode command.
 msgid ""
@@ -3742,6 +3139,14 @@ msgstr ""
 "má táthar istigh i gceachtar acu faoi láthair, agus cuir cúrsóir an "
 "athbhreithnithe ag áit na hoibiachta."
 
+#. Translators: reported when there are no other available review modes for this object
+msgid "No previous review mode"
+msgstr "níl aon mód athbhreithnithe roimhe seo"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Cuir nó ná cuir mód athbhreithnithe simplí ar siúl"
+
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
 msgstr "mód simplí athbhreithnithe múchta"
@@ -3749,15 +3154,6 @@ msgstr "mód simplí athbhreithnithe múchta"
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
 msgstr "mód simplí athbhreithnithe ar siúl"
-
-#. Translators: Input help mode message for toggle simple review mode command.
-msgid "Toggles simple review mode on and off"
-msgstr "Cuir nó ná cuir mód athbhreithnithe simplí ar siúl"
-
-#. Translators: Reported when the user tries to perform a command related to the navigator object
-#. but there is no current navigator object.
-msgid "No navigator object"
-msgstr "gan réad nascleantóra"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -3769,15 +3165,20 @@ msgstr ""
 "litreofar an t-eolas seo, agus má bhrúitear trí huaire í, cóipeálfar ainm "
 "agus luach na hoibiachta seo."
 
-#. Translators: message when there is no location information for the review cursor
-msgid "No location information"
-msgstr "Gan faisnéis súiomh"
+#. Translators: Reported when the user tries to perform a command related to the navigator object
+#. but there is no current navigator object.
+msgid "No navigator object"
+msgstr "gan réad nascleantóra"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr "Tuairiscítear eolas ar áit an téacs nó áit na hoibiachta ag cúrsóir an"
+
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "Gan faisnéis súiomh"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3790,6 +3191,15 @@ msgstr ""
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
 msgstr "bog go dtí an fócas"
+
+#. Translators: Input help mode message for move focus to current navigator object command.
+msgid ""
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"Brúitear uair amháin chun fócas an mhéarchláir a bhogadh chuig oibiacht an "
+"nascleantóra.  Brúitear faoi dhó chun carat an chórais a shocrú mar shuíomh "
+"chúrsóra an athbhreithnithe."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3806,56 +3216,39 @@ msgstr "bog an fócas"
 msgid "No caret"
 msgstr "gan carait"
 
-#. Translators: Input help mode message for move focus to current navigator object command.
-msgid ""
-"Pressed once sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
-msgstr ""
-"Brúitear uair amháin chun fócas an mhéarchláir a bhogadh chuig oibiacht an "
-"nascleantóra.  Brúitear faoi dhó chun carat an chórais a shocrú mar shuíomh "
-"chúrsóra an athbhreithnithe."
+#. Translators: Input help mode message for move to parent object command.
+msgid "Moves the navigator object to the object containing it"
+msgstr "Bog an réad nascleantóra go dtí an réad ina bhfuil sé"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
 msgstr "Níl sé taobh istigh de réad eile"
 
-#. Translators: Input help mode message for move to parent object command.
-msgid "Moves the navigator object to the object containing it"
-msgstr "Bog an réad nascleantóra go dtí an réad ina bhfuil sé"
+#. Translators: Input help mode message for move to next object command.
+msgid "Moves the navigator object to the next object"
+msgstr "Bog an réad nascleantóra go dtí an chéad réad eile"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Níl aon réad ina dhiaidh seo"
 
-#. Translators: Input help mode message for move to next object command.
-msgid "Moves the navigator object to the next object"
-msgstr "Bog an réad nascleantóra go dtí an chéad réad eile"
+#. Translators: Input help mode message for move to previous object command.
+msgid "Moves the navigator object to the previous object"
+msgstr "Bog an réad nascleantóra go dtí an réad roimhe seo"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Níl aon réad roimhe seo"
 
-#. Translators: Input help mode message for move to previous object command.
-msgid "Moves the navigator object to the previous object"
-msgstr "Bog an réad nascleantóra go dtí an réad roimhe seo"
-
-#. Translators: Reported when there is no contained (first child) object such as inside a document.
-msgid "No objects inside"
-msgstr "Níl aon réad taobh istigh de"
-
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
 msgstr "Bog an réad nascleantóra go dtí an chéad réad taobh istigh de"
 
-#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "Activate"
-msgstr "Gníomhachtaigh"
-
-#. Translators: the message reported when there is no action to perform on the review position or navigator object.
-msgid "No action"
-msgstr "Gan gníomh"
+#. Translators: Reported when there is no contained (first child) object such as inside a document.
+msgid "No objects inside"
+msgstr "Níl aon réad taobh istigh de"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
@@ -3865,6 +3258,10 @@ msgstr ""
 "Déan an gníomh réamhshocraithe sa réad nascleantóra (mar shampla: brúigh é "
 "más cnaipe é)"
 
+#. Translators: the message reported when there is no action to perform on the review position or navigator object.
+msgid "No action"
+msgstr "Gan gníomh"
+
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
@@ -3873,10 +3270,6 @@ msgstr ""
 "Bog an cursóir athbhreithnithe go dtí an chéad líne sa réad nascleantóra "
 "agus léigh é"
 
-#. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "Top"
-msgstr "barr"
-
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
@@ -3884,6 +3277,12 @@ msgid ""
 msgstr ""
 "Bog an cursóir athbhreithnithe go dtí an líne roimhe seo sa réad "
 "nascleantóra agus léigh é"
+
+#. Translators: a message reported when review cursor is at the top line of the current navigator object.
+#. Translators: Reported when attempting to move to the previous result in the Python Console
+#. output pane while there is no previous result.
+msgid "Top"
+msgstr "barr"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
@@ -3947,10 +3346,6 @@ msgstr ""
 "Bog an cursóir athbhreithnithe go dtí an chéad charachtar sa líne ina bhfuil "
 "sé sa réad nascleantóra, agus léigh é"
 
-#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-msgid "Left"
-msgstr "clé"
-
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
@@ -3958,6 +3353,10 @@ msgid ""
 msgstr ""
 "Bog an cursóir athbhreithnithe go dtí an carachtar roimhe seo sa réad "
 "nascleantóra, agus léigh é"
+
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "clé"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
@@ -3972,10 +3371,6 @@ msgstr ""
 "tuairiscítear luach uimhruichiúil an charactair sa chóras deachúil agus "
 "heicseadheachúil."
 
-#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-msgid "Right"
-msgstr "deas"
-
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
@@ -3983,6 +3378,10 @@ msgid ""
 msgstr ""
 "Bog an cursóir athbhreithnithe go dtí an chéad charachtar eile sa réad "
 "nascleantóra, agus léigh é"
+
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "deas"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
@@ -4017,6 +3416,16 @@ msgstr ""
 msgid "Expanded symbol ({})"
 msgstr "siombail leathnaithe ({})"
 
+#. Translators: Input help mode message for toggle speech mode command.
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA will just speak normally."
+msgstr ""
+"Scoránaigh idir na móid  labhartha (bíp,  labhairt) agus as feidhm.  Nuair a "
+"múchtar é,  ní dhéarfaidh NVDA dada; má táthar i mód na mbípeanna, déanfaidh "
+"NVDA bíp nuair a iartar air rad a rá. "
+
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
 msgstr "mód cainte múchta"
@@ -4029,21 +3438,13 @@ msgstr "mód cainte: bípeanna"
 msgid "Speech mode talk"
 msgstr "mód cainte: gnáth"
 
-#. Translators: Input help mode message for toggle speech mode command.
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it "
-"its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr ""
-"Scoránaigh idir an dá mhódh labhartha (bíp agus labhairt).  Nuair a múchtar "
-"é,  ní dhéarfaidh NVDA dada; má táthar i mód na mbípeanna, déanfaidh NVDA "
-"bíp ag gach aon líne seachas labhairt mar ba ghnáthach leis."
-
-#. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
+#. Translators: Input help mode message for move to next document with focus command,
+#. mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "Bogtar an fócas chuig an cháipéis is gaire ina bhfuil an fóca anns."
 
-#. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
+#. Translators: Input help mode message for toggle focus and browse mode command
+#. in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -4137,24 +3538,50 @@ msgstr ""
 msgid "No status line found"
 msgstr "Líne stádais gan aimsiú"
 
+#. Translators: Input help mode message for command which reads content of the status bar.
+msgid "Reads the current application status bar."
+msgstr "Léitear barra stádais an fheidhmchláir reatha."
+
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
 msgstr "Níl aon fhaisnéis sa bharra stádais"
 
+#. Translators: Input help mode message for command which spells content of the status bar.
+msgid "Spells the current application status bar."
+msgstr "Litrítear barra stádais an fheidhmchláir reatha."
+
+#. Translators: Input help mode message for command which copies status bar content to the clipboard.
+msgid ""
+"Copies content of the status bar  of current application to the clipboard."
+msgstr ""
+"Déantar cóipeáil ar an méid atá ar bharra stádais an fheidhmchláir reatha go "
+"dtí an gearrthaisce."
+
 #. Translators: Reported when user attempts to copy content of the empty status line.
-msgid "unable to copy status bar content to clipboard"
+msgid "Unable to copy status bar content to clipboard"
 msgstr "Ní féidir an barra stádais a chóipeáil go dtí an ghearrthaisce."
 
-#. Translators: Input help mode message for report status line text command.
+#. Translators: Input help mode message for Command which moves review cursor to the status bar.
 msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
+"Reads the current application status bar and moves navigator object into it."
+msgstr ""
+"Léitear barra stádais an fheidhmchláir reatha agus bogtar an oibiacht "
+"nascleanúna isteach ann."
+
+#. Translators: Input help mode message for report status line text command.
+#, fuzzy
+msgid ""
+"Reads the current application status bar. If pressed twice, spells the "
+"information. If pressed three times, copies the status bar to the clipboard"
 msgstr ""
 "léitear barra stádais an fheidhmchláir reatha agus bogtar an nascleantóir "
 "ann. Má bhrútar  faoi dhó, litrítear an fhaisnéis. Má bhrúitear trí huaire, "
 "cóipeálfar an barra stádais go dtí an gearrthaisce.\n"
 "  "
+
+#. Translators: Input help mode message for toggle mouse tracking command.
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr "Rianaigh nó ná rianaigh an luch"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4164,9 +3591,9 @@ msgstr "Ná rianaigh an luch"
 msgid "Mouse tracking on"
 msgstr "Rianaigh an luch"
 
-#. Translators: Input help mode message for toggle mouse tracking command.
-msgid "Toggles the reporting of information as the mouse moves"
-msgstr "Rianaigh nó ná rianaigh an luch"
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "Scorántar an méad téacs a labhrófar nuair a bhogtar an cúrsóir luiche"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
@@ -4174,14 +3601,6 @@ msgstr "Rianaigh nó ná rianaigh an luch"
 #, python-format
 msgid "Mouse text unit resolution %s"
 msgstr "Gléine téacs na luiche %s"
-
-#. Translators: Input help mode message for toggle mouse text unit resolution command.
-msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "Scorántar an méad téacs a labhrófar nuair a bhogtar an cúrsóir luiche"
-
-#. Translators: Reported when there is no title text for current program or window.
-msgid "No title"
-msgstr "gan teideal"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -4192,6 +3611,10 @@ msgstr ""
 "Léigh teideal an fheidhmchláir reatha nó an fhuinneog sa tulra. Má bhrúnn tú "
 "faoi dhó é, litreofar an teideal. Trí huaire agus cóipeálfar an teideal go "
 "dtí an ghearrthaisce."
+
+#. Translators: Reported when there is no title text for current program or window.
+msgid "No title"
+msgstr "gan teideal"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Reads all controls in the active window"
@@ -4205,7 +3628,9 @@ msgstr ""
 "Osclaítear an uirlis WX  um GUI a fhiosrú. Úsáidtear í seo chun tuilleadh "
 "eolais a fháil faoi staid na  gcomhpháirteanna GUI."
 
-#. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
+#. Translators: Input help mode message for developer info for current navigator object command,
+#. used by developers to examine technical info on navigator object.
+#. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -4256,6 +3681,14 @@ msgstr "ní féidir cóipeáil"
 msgid "Opens NVDA configuration directory for the current user."
 msgstr "Osclaítear eolaire cumriachta NVDA don úsáideoir reatha."
 
+#. Translators: Input help mode message for toggle progress bar output command.
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Scoránaítear idir bípeanna, labhairt, bípeanna agus labhairt, agus múchta ar "
+"fad, maidir le nuashonruithe an bharra dul chun cinn."
+
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
 msgstr "ná tabhair tuairiscí ar dhul chun cinn"
@@ -4272,13 +3705,13 @@ msgstr "déan bíp ar dhul chun cinn"
 msgid "Beep and speak progress bar updates"
 msgstr "tabhair tuairisc labhartha agus bíp ar dhul chun cinn"
 
-#. Translators: Input help mode message for toggle progress bar output command.
+#. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting "
-"progress bar updates"
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
 msgstr ""
-"Scoránaítear idir bípeanna, labhairt, bípeanna agus labhairt, agus múchta ar "
-"fad, maidir le nuashonruithe an bharra dul chun cinn."
+"Tosaítear nó múchtar tuairisciú ar athraithe an inneachair dinimiciúila, mar "
+"shampla téacs nua in san fhuinneog dos consól."
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -4288,13 +3721,12 @@ msgstr "ná tabhair tuairisc nuair a athraíonn ábhar dinimiciúil"
 msgid "report dynamic content changes on"
 msgstr "tabhair tuairisc nuair a athraíonn ábhar dinimiciúil"
 
-#. Translators: Input help mode message for toggle dynamic content changes command.
+#. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new "
-"text in dos console windows"
+"Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
-"Tosaítear nó múchtar tuairisciú ar athraithe an inneachair dinimiciúila, mar "
-"shampla téacs nua in san fhuinneog dos consól."
+"Tosaítear nó múchtar gluaiseacht cúrsóra an athbhreithnithe dá bhrí "
+"gluaiseacht an charait."
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -4304,12 +3736,12 @@ msgstr "ní bhogann an charait an cursóir athbhreithnithe"
 msgid "caret moves review cursor on"
 msgstr "bogann an charait an cursóir athbhreithnithe"
 
-#. Translators: Input help mode message for toggle caret moves review cursor command.
+#. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
-"Toggles on and off the movement of the review cursor due to the caret moving."
+"Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
-"Tosaítear nó múchtar gluaiseacht cúrsóra an athbhreithnithe dá bhrí "
-"gluaiseacht an charait."
+"Tosaítear nó múchtar gluaiseacht oibiachta an nascleantóra mar gheall ar "
+"athraithe fócais."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -4319,12 +3751,13 @@ msgstr "ní bhogann an fócas an réad nascleantóra"
 msgid "focus moves navigator object on"
 msgstr "bogann an fócas an réad nascleantóra"
 
-#. Translators: Input help mode message for toggle focus moves navigator object command.
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
 msgid ""
-"Toggles on and off the movement of the navigator object due to focus changes"
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
 msgstr ""
-"Tosaítear nó múchtar gluaiseacht oibiachta an nascleantóra mar gheall ar "
-"athraithe fócais."
+"Scorántar bogadh uathoibríoch fócais an chórais mar thoradh ar orduithe an "
+"mhodha brábhsála."
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements off"
@@ -4338,13 +3771,11 @@ msgstr ""
 "Cuirtear eilimintí infhócasaithe ar siúl go huathoibríoch  ar fhócais an "
 "gcórais."
 
-#. Translators: Input help mode message for toggle auto focus focusable elements command.
-msgid ""
-"Toggles on and off automatic movement of the system focus due to browse mode "
-"commands"
+#. Translators: Input help mode message for report battery status command.
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"Scorántar bogadh uathoibríoch fócais an chórais mar thoradh ar orduithe an "
-"mhodha brábhsála."
+"taispeáin stádas an chadhnra agus an t-am fágtha mura bhfuil sé plugáilte "
+"isteach"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4364,16 +3795,6 @@ msgstr "Cumhacht SA ceangailte"
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} uair agus {minutes:d} nóiméad fágtha"
 
-#. Translators: Input help mode message for report battery status command.
-msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr ""
-"taispeáin stádas an chadhnra agus an t-am fágtha mura bhfuil sé plugáilte "
-"isteach"
-
-#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
-msgid "Pass next key through"
-msgstr "Ná próiseáil an chéad eochair eile le NVDA"
-
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
@@ -4381,6 +3802,18 @@ msgid ""
 msgstr ""
 "Ní phróiseálfaidh NVDA an chéad eochair eile. Seolfar go díreach ar aghaidh "
 "chuig Windows é."
+
+#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
+msgid "Pass next key through"
+msgstr "Ná próiseáil an chéad eochair eile le NVDA"
+
+#. Translators: Input help mode message for report current program name and app module name command.
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr ""
+"Léigh ainm comhaid an fheidhmchláir ghníomaigh, chomh maith le hainm an "
+"appModule atá luchtaithe faoi láthair"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
@@ -4394,14 +3827,6 @@ msgstr "Tá an modúl  %s luchtaithe.  "
 #, python-format
 msgid " %s is currently running."
 msgstr "á %s ar siúl faoi láthair"
-
-#. Translators: Input help mode message for report current program name and app module name command.
-msgid ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
-msgstr ""
-"Léigh ainm comhaid an fheidhmchláir ghníomaigh, chomh maith le hainm an "
-"appModule atá luchtaithe faoi láthair"
 
 #. Translators: Input help mode message for go to general settings command.
 msgid "Shows NVDA's general settings"
@@ -4510,6 +3935,12 @@ msgid ""
 msgstr ""
 "Cuirtear bainisteoir breiseáin ar siúl chun breiseáin a shuiteáil ar NVDA "
 
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr "Cuir nó ná cuir an amharcóir ar siúl"
+
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
 msgstr "Amharcán cainte díchumastha"
@@ -4518,11 +3949,11 @@ msgstr "Amharcán cainte díchumastha"
 msgid "speech viewer enabled"
 msgstr "Amharcán cainte cumasaithe"
 
-#. Translators: Input help mode message for toggle speech viewer command.
-msgid ""
-"Toggles the NVDA Speech viewer, a floating window that allows you to view "
-"all the text that NVDA is currently speaking"
-msgstr "Cuir nó ná cuir an amharcóir ar siúl"
+#. Translators: Input help mode message for toggle braille tether to command
+#. (tethered means connected to or follows).
+msgid "Toggle tethering of braille between the focus and the review position"
+msgstr ""
+"Scoránaigh ceangal braille idir an fócas agus an suíomh athbhreithnithe."
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
@@ -4530,10 +3961,10 @@ msgstr "Cuir nó ná cuir an amharcóir ar siúl"
 msgid "Braille tethered %s"
 msgstr "Braille ceangailte le %s"
 
-#. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
-msgid "Toggle tethering of braille between the focus and the review position"
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
 msgstr ""
-"Scoránaigh ceangal braille idir an fócas agus an suíomh athbhreithnithe."
+"Scoránaigh an bealach ina dtaispeáintear eolas comhthéacsúil i mBraille."
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4542,10 +3973,9 @@ msgstr ""
 msgid "Braille focus context presentation: %s"
 msgstr "Fócas Braille  ar %s"
 
-#. Translators: Input help mode message for toggle braille focus context presentation command.
-msgid "Toggle the way context information is presented in braille"
-msgstr ""
-"Scoránaigh an bealach ina dtaispeáintear eolas comhthéacsúil i mBraille."
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Cuir nó ná cuir an cúrsóir Bhraille ar siúl."
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -4555,9 +3985,9 @@ msgstr "Cúrsóir Bhraille stopaithe"
 msgid "Braille cursor on"
 msgstr "Cúrsóir Bhraille ar siúl"
 
-#. Translators: Input help mode message for toggle braille cursor command.
-msgid "Toggle the braille cursor on and off"
-msgstr "Cuir nó ná cuir an cúrsóir Bhraille ar siúl."
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Romhnaigh cruth an chursóra Bhraille."
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
@@ -4568,9 +3998,9 @@ msgstr "Níl an cúrsóir Bhraille ar siúl."
 msgid "Braille cursor %s"
 msgstr "cúrsóir Bhraille %s"
 
-#. Translators: Input help mode message for cycle braille cursor shape command.
-msgid "Cycle through the braille cursor shapes"
-msgstr "Romhnaigh cruth an chursóra Bhraille."
+#. Translators: Input help mode message for report clipboard text command.
+msgid "Reports the text on the Windows clipboard"
+msgstr "Léigh an téacs sa ghearrthaisce Windows"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4583,21 +4013,18 @@ msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Tá go leor téacs sa ghearrthaisce, %s carachtar ar fad"
 
-#. Translators: Input help mode message for report clipboard text command.
-msgid "Reports the text on the Windows clipboard"
-msgstr "Léigh an téacs sa ghearrthaisce Windows"
-
-#. Translators: Indicates start of review cursor text to be copied to clipboard.
-msgid "Start marked"
-msgstr "Tús an téacs roghnaithe"
-
-#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command
+#. (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr ""
 "Comharthaítear suíomh reatha an chúrsóra athbhreithnithe mar thús an téacs a "
 "bheith cóipeáilte."
+
+#. Translators: Indicates start of review cursor text to be copied to clipboard.
+msgid "Start marked"
+msgstr "Tús an téacs roghnaithe"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
@@ -4613,6 +4040,17 @@ msgstr ""
 msgid "No start marker set"
 msgstr "Gan marcóir tosaithe"
 
+#. Translators: Input help mode message for the select then copy command.
+#. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+msgid ""
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
+msgstr ""
+"Má bhrúitear uair amháin, roghnaítear an téacs ón marcóir tosaigh go dtí "
+"suíomh reatha an chursóra. Má bhrúitear faoi dhó, cóipeáiltear  an teacs go "
+"dtí an gearrthaisce."
+
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
 msgstr "Brúigh faoi dhó chun an marcóir tosaigh a nuashonrú. "
@@ -4624,16 +4062,6 @@ msgstr "Níl aon téacs le cóipeáil"
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
 msgstr "Ní féidir an téacs a roghnú. Brú fao dhó chun é a chóipeáil."
-
-#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-msgid ""
-"If pressed once, the text from the previously set start marker up to and "
-"including the current position of the review cursor is selected. If pressed "
-"twice, the text is copied to the clipboard"
-msgstr ""
-"Má bhrúitear uair amháin, roghnaítear an téacs ón marcóir tosaigh go dtí "
-"suíomh reatha an chursóra. Má bhrúitear faoi dhó, cóipeáiltear  an teacs go "
-"dtí an gearrthaisce."
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -4721,10 +4149,6 @@ msgstr ""
 "Scorántar  eochair NVDA go fíorúil, chun aithris a dhéanamh ar aicearra "
 "méarchláir le hionchur Braille    "
 
-#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
-msgid "Plugins reloaded"
-msgstr "Breiseáin athluchtaithe"
-
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
@@ -4732,6 +4156,10 @@ msgid ""
 msgstr ""
 "Athluchtaigh modúil agus breiseáin chomhchoiteanna gan NVDA a atosú. "
 "Úsáideach d'fhorbróirí"
+
+#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
+msgid "Plugins reloaded"
+msgstr "Breiseáin athluchtaithe"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4750,9 +4178,8 @@ msgstr ""
 "oibiachta."
 
 #. Translators: Describes a command.
-#, fuzzy
 msgid "Toggles the support of touch interaction"
-msgstr "Tuairiscigh nó ná tuairiscigh eangU paragraif"
+msgstr "Scorántar tacaíocht maidir le hidirghníomhú tadhaill"
 
 #. Translators: Presented when attempting to toggle touch interaction support
 msgid "Touch interaction not supported"
@@ -4766,14 +4193,14 @@ msgstr "Idirghníomhú tadhaill ar siúl"
 msgid "Touch interaction disabled"
 msgstr "Idirghníomhú tadhaill díchumasaithe"
 
+#. Translators: Input help mode message for a touchscreen gesture.
+msgid "Cycles between available touch modes"
+msgstr "téigh trí na móid tadhaill atá ar fáil"
+
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
 msgid "%s mode"
 msgstr "Mód %s"
-
-#. Translators: Input help mode message for a touchscreen gesture.
-msgid "Cycles between available touch modes"
-msgstr "téigh trí na móid tadhaill atá ar fáil"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4787,10 +4214,6 @@ msgstr ""
 "Tuairiscítear an oibiacht nua nó an t-inneachar faoi do mhéar má tá sé "
 "éagsúil leis an áit dheireannach ina raibh do mhéar."
 
-#. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
-msgstr "Oibiacht gan suíomh"
-
 #. Translators: Input help mode message for touch right click command.
 msgid ""
 "Clicks the right mouse button at the current touch position. This is "
@@ -4799,17 +4222,13 @@ msgstr ""
 "Cliceáil an cnaipe luiche ar dheis uair amháin ag ionad reatha tadhail. "
 "Déantar é seo go hiondúil chun roghchlár comhthéics a chur ar fáil.  "
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "Oibiacht gan suíomh"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Próifílí cumraíochta"
-
-#. Translators: The message announced when temporarily disabling all configuration profile triggers.
-msgid "Configuration profile triggers disabled"
-msgstr "Tá truicir na próifíle cumriachta díchumasaithe."
-
-#. Translators: The message announced when re-enabling all configuration profile triggers.
-msgid "Configuration profile triggers enabled"
-msgstr "Tá truicir na próifíle cumriachta cumasaithe."
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 msgid ""
@@ -4819,24 +4238,35 @@ msgstr ""
 "Scorántar díchumasú na truicir próifílí cumriachta go léir. Fanfaidh an "
 "díchumasú seo i bhfeidhm go dtí go gcuirfear tús arís le NVDA.  "
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Tá truicir na próifíle cumriachta díchumasaithe."
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Tá truicir na próifíle cumriachta cumasaithe."
+
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr "Tosaigh idirghníomhú le réimse matamaitice "
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
 msgstr "ní matamaitic é seo."
 
 #. Translators: Describes a command.
-msgid "Begins interaction with math content"
-msgstr "Tosaigh idirghníomhú le réimse matamaitice "
-
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "Níl OCR Windows 10 le fáil"
-
-#. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr ""
 "Aithnítear inneachar na hoibiachta nascleanúna reatha le OCR Windows 10"
+
+#. Translators: Reported when Windows OCR is not available.
+msgid "Windows OCR not available"
+msgstr "Níl OCR Windows ar fáil"
+
+#. Translators: Reported when screen curtain is enabled.
+msgid "Please disable screen curtain before using Windows OCR."
+msgstr "Díchumasaigh an cuirtín scáileáin sula n-úsáidtear Windows OCR"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -5298,11 +4728,22 @@ msgstr "as"
 #. For example, in English, this might produce "laptop keyboard".
 #, python-format
 msgid "%s keyboard"
-msgstr " méarchlár %s"
+msgstr "méarchlár %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
 msgid "keyboard, all layouts"
 msgstr "Leagan amach  gach  mhéarchláir"
+
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc}, {lc}"
+
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "réamhshocrú an úsáideora"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -5328,17 +4769,6 @@ msgstr "Burmais"
 msgctxt "languageName"
 msgid "Somali"
 msgstr "Somáilis"
-
-#. Translators: The pattern defining how languages are displayed and sorted in in the general
-#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
-#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
-#, python-brace-format
-msgid "{desc}, {lc}"
-msgstr "{desc}, {lc}"
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "réamhshocrú an úsáideora"
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
@@ -6537,17 +5967,17 @@ msgstr "{action} dúbalta"
 #. Translators: a touch screen action performed 3 times
 #, python-brace-format
 msgid "tripple {action}"
-msgstr "{action} tríreach "
+msgstr "{action} trí huaire"
 
 #. Translators: a touch screen action performed 4 times
 #, python-brace-format
 msgid "quadruple {action}"
-msgstr " {action} ceathrach "
+msgstr " {action} ceithre huaire"
 
 #. Translators: a touch screen action using multiple fingers
 #, python-brace-format
 msgid "{numFingers} finger {action}"
-msgstr " {action} le {numFingers} méar "
+msgstr " {action}  {numFingers} méar "
 
 #. Translators: a very quick touch and release of a finger on a touch screen
 msgctxt "touch action"
@@ -6669,6 +6099,7 @@ msgstr "Tá leagan NVDA {version} íoslódáilte agus ag feitheamh ar shuiteáil
 #. unless reviewed before installation.
 #. Translators: A message in the installer to let the user know that
 #. some addons are not compatible.
+#, fuzzy
 msgid ""
 "\n"
 "\n"
@@ -6677,12 +6108,10 @@ msgid ""
 "you rely on these add-ons, please review the list to decide whether to "
 "continue with the installation"
 msgstr ""
-"\n"
-"\n"
-"Tá breiseáin I do chumriacht NVDA, áfach, nach bhfuil comhoiriúnach leis an "
-"leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na suiteála. Má tá tú "
-"ag brath ar na breiseáin seo, déan athbhreithniú ar an liosta sula leanann "
-"tú ar aghaidh leis an suiteáil.    "
+"Tá breiseáin sa chumriacht NVDA seo, áfach, nach bhfuil comhoiriúnach leis "
+"an leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na suiteála. Má tá "
+"tú ag brath ar na breiseáin seo, déan athbhreithniú ar an liosta sula "
+"leannán tú ar aghaidh leis an suiteáil."
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
@@ -6733,6 +6162,7 @@ msgstr "Tá leagan {version} de NVDA ar fáil le haghaidh suiteála.\n"
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
+#, fuzzy
 msgid ""
 "\n"
 "However, your NVDA configuration contains add-ons that are incompatible with "
@@ -6740,7 +6170,6 @@ msgid ""
 "you rely on these add-ons, please review the list to decide whether to "
 "continue with the installation"
 msgstr ""
-"\n"
 "Tá breiseáin sa chumriacht NVDA seo, áfach, nach bhfuil comhoiriúnach leis "
 "an leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na suiteála. Má tá "
 "tú ag brath ar na breiseáin seo, déan athbhreithniú ar an liosta sula "
@@ -6824,7 +6253,7 @@ msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "© {years} Rannpháirtithe NVDA"
 
 #. Translators: "About NVDA" dialog box message
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -7082,6 +6511,33 @@ msgstr "BCC:"
 msgid "unread"
 msgstr "gan léamh"
 
+#. Translators: The name of a category of NVDA commands.
+msgid "Python Console"
+msgstr "Consól Python"
+
+#. Translators: Description of a command to clear the Python Console output pane
+msgid "Clear the output pane"
+msgstr "Glan an pána aschuir."
+
+#. Translators: Description of a command to move to the next result in the Python Console output pane
+msgid "Move to the next result"
+msgstr "téigh go dtí an chéad toradh eile. "
+
+#. Translators: Description of a command to move to the previous result
+#. in the Python Console output pane
+msgid "Move to the previous result"
+msgstr "téigh go dtí an toradh roimhe seo"
+
+#. Translators: Description of a command to select from the current caret position to the end
+#. of the current result in the Python Console output pane
+msgid "Select until the end of the current result"
+msgstr "Roghnaigh go dtí deireadh na torthaí reatha"
+
+#. Translators: Description of a command to select from the current caret position to the start
+#. of the current result in the Python Console output pane
+msgid "Select until the start of the current result"
+msgstr "Roghnaigh go dtí tús na dtorthaí reatha"
+
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
@@ -7140,7 +6596,13 @@ msgstr "An lá go léir {date}"
 msgid "{startTime} to {endTime}"
 msgstr "ó {startTime} go {endTime}"
 
-#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#. Translators: Part of a message reported when on a calendar appointment with one or more categories
+#. in Microsoft Outlook.
+#, python-brace-format
+msgid "categories {categories}"
+msgstr "cagóirí {categories}"
+
+#. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Coinne {subject}, {time}"
@@ -7555,6 +7017,11 @@ msgid "Toggle braille input"
 msgstr "Scoránaigh ionchur Braille"
 
 #. Translators: The name of a series of braille displays.
+#, fuzzy
+msgid "Standard HID Braille Display"
+msgstr "Taispeántais bhraille Seika"
+
+#. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 msgstr "Sraith HIMS Braille Sense/Braille EDGE/Smart Beetle"
 
@@ -7579,8 +7046,12 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Seansamhlacha: Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
+msgid "Seika Braille Displays"
 msgstr "Taispeántais bhraille Seika"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr "Breacaire Nótaí Seika"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -7629,6 +7100,841 @@ msgstr "Ag aithint"
 msgid "Recognition failed"
 msgstr "Theip ar an aithint"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "an mír reatha"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "leathanach reatha"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "an chéim reatha"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "suíomh reatha"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "data reatha"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "an t-am reatha"
+
+#. Translators: The word for window of a program such as document window.
+msgid "window"
+msgstr "fuinneog"
+
+#. Translators: Used to identify title bar of a program.
+msgid "title bar"
+msgstr "barra teidil"
+
+#. Translators: The word used for pane such as desktop pane.
+msgid "pane"
+msgstr "pána"
+
+#. Translators: The word used to denote a dialog box such as open dialog.
+msgid "dialog"
+msgstr "dialóg"
+
+#. Translators: The text used to identify check boxes such as select check box.
+msgid "check box"
+msgstr "ticbhosca"
+
+#. Translators: The text used to identify radio buttons such as yes or no radio button.
+msgid "radio button"
+msgstr "cnaipe raidió"
+
+#. Translators: The word used to identify a static text such as dialog text.
+msgid "text"
+msgstr "téacs"
+
+#. Translators: The word used to identify edit fields such as subject edit field.
+msgid "edit"
+msgstr "eagar"
+
+#. Translators: The word used to identify a button such as OK button.
+msgid "button"
+msgstr "cnaipe"
+
+#. Translators: Text used to identify menu bar of a program.
+msgid "menu bar"
+msgstr "barra roghchláir"
+
+#. Translators: Used to identify a menu item such as an item in file menu.
+msgid "menu item"
+msgstr "mír roghchláir"
+
+#. Translators: The word used for menus such as edit menu.
+#. Translators: Identifies a menu such as file menu.
+msgid "menu"
+msgstr "roghchlár"
+
+#. Translators: Used to identify combo boxes such as file type combo box.
+msgid "combo box"
+msgstr "bosca teaglama"
+
+#. Translators: The word used for lists such as folder list.
+msgid "list"
+msgstr "liosta"
+
+#. Translators: Used to identify a list item such as email list items.
+msgid "list item"
+msgstr "mír liosta"
+
+#. Translators: The word used to identify graphics such as webpage graphics.
+msgid "graphic"
+msgstr "grafaic"
+
+#. Translators: Used to identify help balloon (a circular window with helpful text such as notification
+#. text).
+msgid "help balloon"
+msgstr "balún cabhrach"
+
+#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as
+#. file information).
+msgid "tool tip"
+msgstr "Leid uirlise"
+
+#. Translators: Identifies a link in webpage documents.
+msgid "link"
+msgstr "nasc"
+
+#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
+msgid "tree view"
+msgstr "amharc crainn"
+
+#. Translators: Identifies a tree view item.
+msgid "tree view item"
+msgstr "mír chrainn"
+
+#. Translators: The word presented for tabs in a tab enabled window.
+msgctxt "controlType"
+msgid "tab"
+msgstr "Tab"
+
+#. Translators: Identifies a tab control such as webpage tabs in web browsers.
+msgid "tab control"
+msgstr "Rialtán taib"
+
+#. Translators: Identifies a slider such as volume slider.
+msgid "slider"
+msgstr "Barra sleamhnáin"
+
+#. Translators: Identifies a progress bar such as NvDA update progress.
+msgid "progress bar"
+msgstr "barra dul chun cinn"
+
+#. Translators: Identifies a scroll bar.
+msgid "scroll bar"
+msgstr "scrollbharra"
+
+#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
+#. document).
+msgid "status bar"
+msgstr "barra stádais"
+
+#. Translators: Identifies a table such as ones used in various websites.
+msgid "table"
+msgstr "tábla"
+
+#. Translators: Identifies a cell in a table.
+msgid "cell"
+msgstr "cill"
+
+#. Translators: Identifies a column (a group of vertical cells in a table).
+msgid "column"
+msgstr "colún"
+
+#. Translators: Identifies a row (a group of horizontal cells in a table).
+msgid "row"
+msgstr "ró"
+
+#. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
+#. embedded within a web page.
+msgid "frame"
+msgstr "fráma"
+
+#. Translators: Identifies a tool bar.
+msgid "tool bar"
+msgstr "barra uirlisí"
+
+#. Translators: Identifies a column header in tables and spreadsheets.
+msgid "column header"
+msgstr "Ceanntásc colúin"
+
+#. Translators: Identifies a row header in tables and spreadsheets.
+msgid "row header"
+msgstr "ceanntásc ró"
+
+#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
+msgid "drop down button"
+msgstr "cnaipe anuas"
+
+#. Translators: Identifies an element.
+msgid "clock"
+msgstr "clog"
+
+#. Translators: Identifies a separator (a horizontal line drawn on the screen).
+msgid "separator"
+msgstr "deighilteoir"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "foirm"
+
+#. Translators: Identifies a heading (a bold text used for identifying a section).
+msgid "heading"
+msgstr "ceanntásc"
+
+#. Translators: Identifies a heading level.
+msgid "heading 1"
+msgstr "ceanntásc 1"
+
+#. Translators: Identifies a heading level.
+msgid "heading 2"
+msgstr "ceanntásc 2"
+
+#. Translators: Identifies a heading level.
+msgid "heading 3"
+msgstr "ceanntásc 3"
+
+#. Translators: Identifies a heading level.
+msgid "heading 4"
+msgstr "ceanntásc 4"
+
+#. Translators: Identifies a heading level.
+msgid "heading 5"
+msgstr "ceanntásc 5"
+
+#. Translators: Identifies a heading level.
+msgid "heading 6"
+msgstr "ceanntásc 6"
+
+#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
+msgid "paragraph"
+msgstr "alt"
+
+#. Translators: Presented for a section in a document which is a block quotation;
+#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+#. See http://en.wikipedia.org/wiki/Block_quotation
+msgid "block quote"
+msgstr "athfhriotal eangaithe"
+
+#. Translators: Identifies a table header (a short text at the start of a table which describes what the
+#. table is about).
+msgid "table header"
+msgstr "ceanntásc tábla"
+
+#. Translators: Identifies a table body (the main body of the table).
+msgid "table body"
+msgstr "corp tábla"
+
+#. Translators: Identifies a table footer (text placed at the end of the table).
+msgid "table footer"
+msgstr "buntásc tábla"
+
+#. Translators: Identifies a document (for example, a webpage document).
+msgid "document"
+msgstr "cáipéis"
+
+#. Translators: Identifies an animation in a document or a webpage.
+msgid "animation"
+msgstr "beochan"
+
+#. Translators: Identifies an application in webpages.
+msgid "application"
+msgstr "feidhmchlár"
+
+#. Translators: Identifies a box element.
+msgid "box"
+msgstr "bosca"
+
+#. Translators: Identifies a grouping (a number of related items grouped together, such as related options
+#. in dialogs).
+msgid "grouping"
+msgstr "grúpáil"
+
+#. Translators: Identifies a property page such as drive properties dialog.
+msgid "property page"
+msgstr "leathanach airíonna"
+
+#. Translators: Identifies a canvas element on webpages (a box with some background color with some text
+#. drawn on the box, like a canvas).
+msgid "canvas"
+msgstr "canbhás"
+
+#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
+msgid "caption"
+msgstr "Ceannscríbhinn"
+
+#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
+#. name).
+msgid "check menu item"
+msgstr "Ticeáil mír roghchláir"
+
+#. Translators: Identifies a data edit field.
+msgid "date edit"
+msgstr "bosca dáta"
+
+#. Translators: Identifies an icon.
+msgid "icon"
+msgstr "deilbhín"
+
+#. Translators: Identifies a directory pane.
+msgid "directory pane"
+msgstr "pána eolaire"
+
+#. Translators: Identifies an object that is embedded in a document.
+msgid "embedded object"
+msgstr "Oibiacht leabaithe"
+
+#. Translators: Identifies an end note.
+msgid "end note"
+msgstr "iarnóta"
+
+#. Translators: Identifies a footer (usually text).
+msgid "footer"
+msgstr "buntásc"
+
+#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+msgid "foot note"
+msgstr "fonóta"
+
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+msgid "glass pane"
+msgstr "pána gloine"
+
+#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
+msgid "header"
+msgstr "ceanntásc"
+
+#. Translators: Identifies an image map (a type of graphical link).
+msgid "image map"
+msgstr "mapa íomhá"
+
+#. Translators: Identifies an input window.
+msgid "input window"
+msgstr "Fuinneog ionchuir"
+
+#. Translators: Identifies a label.
+msgid "label"
+msgstr "lipéad"
+
+#. Translators: Identifies a note field.
+msgid "note"
+msgstr "nóta"
+
+#. Translators: Identifies a page.
+msgid "page"
+msgstr "leathanach"
+
+#. Translators: Identifies a radio menu item.
+msgid "radio menu item"
+msgstr "Mír roghchláir raidió"
+
+#. Translators: Identifies a layered pane.
+msgid "layered pane"
+msgstr "pána srathaithe"
+
+#. Translators: Identifies a redundant object.
+msgid "redundant object"
+msgstr "Oibiacht iomarcach"
+
+#. Translators: Identifies a root pane.
+msgid "root pane"
+msgstr "príomhphána"
+
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+msgid "edit bar"
+msgstr "barra eagair"
+
+#. Translators: Identifies a terminal window such as command prompt.
+msgid "terminal"
+msgstr "teirminéal"
+
+#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
+#. addition to text; encountered on webpages and NvDA log viewer).
+msgid "rich edit"
+msgstr "Eagarthóireacht mhaise"
+
+#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
+msgid "ruler"
+msgstr "rialóir"
+
+#. Translators: Identifies a scroll pane.
+msgid "scroll pane"
+msgstr "scrollphána"
+
+#. Translators: Identifies a section of text.
+msgid "section"
+msgstr "rannán"
+
+#. Translators: Identifies a shape.
+msgid "shape"
+msgstr "cruth"
+
+#. Translators: Identifies a split pane.
+msgid "split pane"
+msgstr "pána roinnte"
+
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+msgid "view port"
+msgstr "port infheicthe"
+
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+msgid "tear off menu"
+msgstr "roghchlár inscoite"
+
+#. Translators: Identifies a text frame (a frame window which contains text).
+msgid "text frame"
+msgstr "Fráma téacs"
+
+#. Translators: Identifies a toggle button (a button used to toggle something).
+msgid "toggle button"
+msgstr "cnaipe scoránaithe"
+
+msgid "border"
+msgstr "teorainn"
+
+#. Translators: Identifies a caret object.
+msgid "caret"
+msgstr "carait"
+
+#. Translators: Identifies a character field (should not be confused with edit fields).
+msgid "character"
+msgstr "carachtar"
+
+#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
+msgid "chart"
+msgstr "cairt"
+
+#. Translators: Identifies a cursor object.
+msgid "cursor"
+msgstr "cúrsóir"
+
+#. Translators: Identifies a diagram (seen on some websites and on Office documents).
+msgid "diagram"
+msgstr "léaráid"
+
+#. Translators: Identifies a dial object.
+msgid "dial"
+msgstr "diail"
+
+#. Translators: Identifies a drop list.
+msgid "drop list"
+msgstr "liosta anuas"
+
+#. Translators: Identifies a split button (a control which performs different actions when different parts
+#. are clicked).
+msgid "split button"
+msgstr "cnaipe roinnte"
+
+#. Translators: Identifies a menu button (a button which opens a menu of items).
+msgid "menu button"
+msgstr "cnaipe roghchláir"
+
+#. Translators: Reported for a button which expands a grid when it is pressed.
+msgid "drop down button grid"
+msgstr "greille cnaipí anuas"
+
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr "matamaitic"
+
+#. Translators: Identifies a grip control.
+msgid "grip"
+msgstr "greim"
+
+#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
+#. assigning shortcut for icons on the desktop).
+msgid "hot key field"
+msgstr "réimse eochrach aicearra"
+
+#. Translators: Identifies an indicator control.
+msgid "indicator"
+msgstr "táscaire"
+
+#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
+msgid "spin button"
+msgstr "caschnaipe"
+
+#. Translators: Identifies a sound clip on websites.
+msgid "sound"
+msgstr "fuaim"
+
+#. Translators: Identifies a whitespace.
+msgid "white space"
+msgstr "spás bán"
+
+#. Translators: Identifies a tree view button.
+msgid "tree view button"
+msgstr "cnaipe amhairc crainn"
+
+#. Translators: Identifies an IP address (an IP address field element).
+msgid "IP address"
+msgstr "seoladh IP"
+
+#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts
+#. for programs).
+msgid "desktop icon"
+msgstr "deilbhín deisce"
+
+#. Translators: Identifies desktop pane (the desktop window).
+msgid "desktop pane"
+msgstr "pána deisce"
+
+#. Translators: Identifies an option pane.
+msgid "option pane"
+msgstr "pána roghanna"
+
+#. Translators: Identifies a color chooser.
+msgid "color chooser"
+msgstr "roghnóir datha"
+
+#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
+msgid "file chooser"
+msgstr "Roghnóir comhaid"
+
+msgid "filler"
+msgstr "líontóir"
+
+#. Translators: Identifies a panel control for grouping related options.
+msgid "panel"
+msgstr "painéal"
+
+#. Translators: Identifies a password field (a protected edit field for entering passwords such as when
+#. logging into web-based email sites).
+msgid "password edit"
+msgstr "ionchur focail fhaire"
+
+#. Translators: Identifies a font chooser.
+msgid "font chooser"
+msgstr "Roghnóir clófhoirne"
+
+msgid "line"
+msgstr "líne"
+
+#. Translators: Identifies a font name.
+msgid "font name"
+msgstr "ainm clófhoirne"
+
+#. Translators: Identifies font size.
+msgid "font size"
+msgstr "Méid clófhoirne"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is bolded.
+msgid "bold"
+msgstr "trom"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "iodálach"
+
+#. Translators: Describes text formatting.
+msgid "underline"
+msgstr "líne faoi"
+
+#. Translators: Describes text formatting.
+msgid "foreground color"
+msgstr "dath tulra"
+
+#. Translators: Describes text formatting.
+msgid "background color"
+msgstr "dath cúlra"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for superscript text.
+msgid "superscript"
+msgstr "forscript"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for subscript text.
+msgid "subscript"
+msgstr "foscript"
+
+#. Translators: Describes style of text.
+#. Translators: a Microsoft Word revision type (style change)
+msgid "style"
+msgstr "stíl"
+
+#. Translators: Describes text formatting.
+msgid "indent"
+msgstr "eangú"
+
+#. Translators: Describes text formatting.
+msgid "alignment"
+msgstr "ailíniú"
+
+#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such
+#. as file downloads or pop-up blocker).
+msgid "alert"
+msgstr "foláireamh"
+
+#. Translators: Identifies a data grid control (a grid which displays data).
+msgid "data grid"
+msgstr "Greille  sonraíochtaí"
+
+msgid "data item"
+msgstr "Mír sonraíochtaí"
+
+msgid "header item"
+msgstr "mír cheanntáisc"
+
+#. Translators: Identifies a thumb control (a button-like control for changing options).
+msgid "thumb control"
+msgstr "rialtán ordóige"
+
+msgid "calendar"
+msgstr "féilire"
+
+msgid "video"
+msgstr "físeán"
+
+msgid "audio"
+msgstr "fuaim"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "Eilimint cairte"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "scriosta"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ionsáite"
+
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "Sainchomhartha"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "airteagal"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "Réigiún"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "léaráid"
+
+#. Translators: Identifies marked (highlighted) content
+msgid "highlighted"
+msgstr "Aibhsithe"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not
+#. checked), but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "nach %s"
+
+#. Translators: This is presented when a control or document is unavailable.
+msgid "unavailable"
+msgstr "dofhaighte"
+
+#. Translators: This is presented when a control has focus.
+msgid "focused"
+msgstr "i bhfócas"
+
+#. Translators: This is presented when the control is selected.
+msgid "selected"
+msgstr "roghnaithe"
+
+#. Translators: This is presented when a document is busy.
+msgid "busy"
+msgstr "gnóthach"
+
+#. Translators: This is presented when a button is pressed.
+msgid "pressed"
+msgstr "brúite"
+
+#. Translators: This is presented when a check box is checked.
+msgid "checked"
+msgstr "ticeáilte"
+
+#. Translators: This is presented when a three state check box is half checked.
+msgid "half checked"
+msgstr "leath-thiceáilte"
+
+#. Translators: This is presented when the control is a read-only control such as read-only edit box.
+msgid "read only"
+msgstr "inléite amháin"
+
+#. Translators: This is presented when a tree view or submenu item is expanded.
+msgid "expanded"
+msgstr "leathnaithe"
+
+#. Translators: This is presented when a tree view or submenu is collapsed.
+msgid "collapsed"
+msgstr "laghdaithe"
+
+#. Translators: This is presented when a control or a document becomes invisible.
+msgid "invisible"
+msgstr "dofheicthe"
+
+#. Translators: This is presented when a visited link is encountered.
+msgid "visited"
+msgstr "feicthe"
+
+#. Translators: This is presented when a link is encountered.
+msgid "linked"
+msgstr "nasctha"
+
+#. Translators: This is presented when the control menu item has a submenu.
+msgid "subMenu"
+msgstr "fo-roghchlár"
+
+#. Translators: This is presented when a protected control or a document is encountered.
+msgid "protected"
+msgstr "cosanta"
+
+#. Translators: This is presented when a required form field is encountered.
+msgid "required"
+msgstr "riachtanach"
+
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+msgid "defunct"
+msgstr "éagtha"
+
+#. Translators: This is presented when an invalid entry has been made.
+msgid "invalid entry"
+msgstr "iontráil neamhbhailí"
+
+msgid "modal"
+msgstr "módúil"
+
+#. Translators: This is presented when a field supports auto completion of entered text such as email
+#. address field in Microsoft Outlook.
+msgid "has auto complete"
+msgstr "comhlánú uathoibríoch ann"
+
+#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment
+#. fields on websites.
+msgid "multi line"
+msgstr "il-líne"
+
+msgid "iconified"
+msgstr "Deilbhínithe"
+
+#. Translators: Presented when the current control is located off screen.
+msgid "off screen"
+msgstr "as an scáileán"
+
+#. Translators: Presented when the control allows selection such as text fields.
+msgid "selectable"
+msgstr "inroghnaithe"
+
+#. Translators: Presented when a control can be moved to using system focus.
+msgid "focusable"
+msgstr "infhócasaithe"
+
+#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
+msgid "clickable"
+msgstr "inchliceáilte"
+
+msgid "editable"
+msgstr "ineagarthóireachta"
+
+msgid "checkable"
+msgstr "inticeáilte"
+
+msgid "draggable"
+msgstr "intarraingte"
+
+msgid "dragging"
+msgstr "Ag tarraingt"
+
+#. Translators: Reported where an object which is being dragged can be dropped.
+#. This is only reported for objects that support accessible drag and drop.
+msgid "drop target"
+msgstr "sprioc scaoilte"
+
+msgid "sorted"
+msgstr "sórtáilte"
+
+msgid "sorted ascending"
+msgstr "sórtáilte in ord ardaitheach"
+
+msgid "sorted descending"
+msgstr "sórtáilte in ord íslitheach"
+
+#. Translators: a state that denotes that an object (usually a graphic) has a long description.
+msgid "has long description"
+msgstr "cur síos fada"
+
+#. Translators: a state that denotes that an object has additional details (such as a comment section).
+msgid "has details"
+msgstr "Tá sonraí ann."
+
+#. Translators: a state that denotes that an object is pinned in its current location
+msgid "pinned"
+msgstr "ceangailte"
+
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "foirmle ann"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "nóta tráchta ann "
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "dofheicthe"
+
+#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the
+#. allocated/available space
+msgid "cropped"
+msgstr "bearrtha"
+
+#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
+msgid "overflowing"
+msgstr "ag forsceitheadh"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
+#. Excel spreadsheet).
+msgid "unlocked"
+msgstr "gan ghlas"
+
+#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+msgid "not selected"
+msgstr "gan roghnú"
+
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "Níl sé brúite"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "gan tic"
+
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "tarraingt críochnaithe"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "Cumraíocht curtha i bhfeidhm"
@@ -7651,28 +7957,10 @@ msgstr ""
 "Níorbh fhéidir an chumraíocht a shábháil - córas comhad inléite amháin is "
 "dócha"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-#. (example: when trying to open keyboard settings when general settings dialog is open).
-msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "Tá dialóg shocruithe  NVDA ar oscailt fós. Dún an dialóg sin ar dtús. "
-
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr "Níl an painéal socruithe atá uait ar fáil ar an gcóras seo."
-
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Foclóir réamhshocraithe"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Foclóir gutha (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Foclóir sealadach"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -7713,8 +8001,12 @@ msgstr ""
 "do chóras."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
-msgid "COM Registration Fixing tool complete"
-msgstr "Tá an uirlis um chlárúchán COM críochnaithe anois"
+msgid ""
+"The COM Registration Fixing tool has finished. It is highly recommended that "
+"you restart your computer now, to make sure the changes take full effect."
+msgstr ""
+"Tá Uirlis Chlárúchán COM críochnaithe anois. Moltar go láidir an ríomhaire a "
+"atosú ionas go gcuirfear na hathruithe i bhfeidhm go hiomlán.   "
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -7901,82 +8193,6 @@ msgstr "S&coir"
 msgid "Exit NVDA"
 msgstr "Scoir ó NVDA"
 
-#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
-msgid ""
-"Most commands for controlling NVDA require you to hold down the NVDA key "
-"while pressing other keys.\n"
-"By default, the numpad Insert and main Insert keys may both be used as the "
-"NVDA key.\n"
-"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-"Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA "
-"functions."
-msgstr ""
-"D’fhormhór éalaíonn na horduithe a rialaíonn NVDA ort an eochair NVDA a "
-"choinneáil síos agus tú ag brú eochracha eile\n"
-"Mar réamhshocrú, is féidir na heochracha “ionsáigh” an uimhirchip agus an "
-"príomheochair “ionsáigh” araon a úsáid mar eochair an NVDA. \n"
-" Is féidir leat, freisin, NVDA a chumrú chun glais ceannlitreacha a úsáid "
-"mar an eochair NVDA. \n"
-"Brúigh NVDA+N am ar bith chun an roghchlár NVDA a ghníomhachtú.\n"
-"  Ón roghnúchán seo, féadann tú NVDA a chumrú,cabhair a fháil, agus "
-"feidhmeanna NVDA eile a rochtainiú."
-
-#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
-msgid "Welcome to NVDA"
-msgstr "Fáilte go NVDA"
-
-#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
-#. bold lettering
-msgid "Welcome to NVDA!"
-msgstr "Fáilte go NVDA!"
-
-#. Translators: The label for a group box containing the NVDA welcome dialog options.
-#. Translators: The label for a group box containing the NVDA installation dialog options.
-msgid "Options"
-msgstr "Roghanna"
-
-#. Translators: The label of a combobox in the Welcome dialog.
-#. Translators: This is the label for a combobox in the
-#. keyboard settings panel.
-msgid "&Keyboard layout:"
-msgstr "&Leagan amach an mhéarchláir:"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "&Úsáid CapsLock mar eochair mhionathraithe in NVDA"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
-#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
-#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-msgid "St&art NVDA after I sign in"
-msgstr "Cuir tús le NVDA t&ar éis dom síniú isteach."
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-msgid "&Show this dialog when NVDA starts"
-msgstr "Taispeáin an dialóg &seo nuair a thosaíonn NVDA"
-
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "Comhaontú um Cheadúnas"
-
-#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-msgid "I &agree"
-msgstr "Gl&acaim Leis"
-
-#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
-msgid "&Install NVDA on this computer"
-msgstr "&Suiteáil NVDA ar an ríomhaire seo"
-
-#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
-msgid "Create &portable copy"
-msgstr "Cruthaigh cói&p inaistrithe"
-
-#. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
-msgid "&Continue running"
-msgstr "&coinnigh ar siúl"
-
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -8013,51 +8229,6 @@ msgstr "Suiteáil an Nuashonrú atá ag feitheamh"
 msgid "Please wait"
 msgstr "Fan nóiméad"
 
-#. Translators: The title of the dialog asking if usage data can be collected
-msgid "NVDA  Usage Data Collection"
-msgstr "Bailiú sonraí ar úsáid NVDA"
-
-#. Translators: A message asking the user if they want to allow usage stats gathering
-msgid ""
-"In order to improve NVDA in the future, NV Access wishes to collect usage "
-"data from running copies of NVDA.\n"
-"\n"
-"Data includes Operating System version, NVDA version, language, country of "
-"origin, plus certain NVDA configuration such as current synthesizer, braille "
-"display and braille table. No spoken or braille content will be ever sent to "
-"NV Access.  Please refer to the User Guide for a current list of all data "
-"collected.\n"
-"\n"
-"Do you wish to allow NV Access to periodically collect this data in order to "
-"improve NVDA?"
-msgstr ""
-"Chun feabhas a chur ar NVDA as seo amach, ba mhian le NVAccess sonraí úsáide "
-"a fháil ó chóipeanna NVDA atá i bhfeidhm.    \n"
-"\n"
-"Áireofar leagan an chóras oibríochta, leagan NVDA, an teanga, an tír agus "
-"roinnt cumriachtaí NVDA mar shampla sintéiseoir, aonad taispeána Braille, "
-"Tábla Braille. Ní seolfar inneachar labhartha ná inneachair Braille choíche. "
-"Féach ar an treoir úsáideora le do thoil chun liosta reatha a fháil de na "
-"sonraí go léir a bheidh bailithe.\n"
-"Ar mhian leat cead a thabhairt do NV Access na sonraí seo a bhailiú ó am go "
-"chéile, chun feabhas a chur ar NVDA?  "
-
-#. Translators: The label of a Yes button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
-#. the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. agree to enabling the curtain.
-msgid "&Yes"
-msgstr "Yes"
-
-#. Translators: The label of a No button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
-#. install the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. disagree to enabling the curtain.
-msgid "&No"
-msgstr "No"
-
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -8076,6 +8247,22 @@ msgstr "Atosaigh NVDA"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&Maidir leis an mbreiseán..."
+
+#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+#. the add-on
+#. Translators: The label of a Yes button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
+msgid "&Yes"
+msgstr "Yes"
+
+#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
+#. install the add-on
+#. Translators: The label of a No button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
+msgid "&No"
+msgstr "No"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -8722,6 +8909,11 @@ msgid ""
 msgstr ""
 "D’aithrigh cosán na suiteála NVDA.  Beidh sé suiteáilte anois sa {path}."
 
+#. Translators: The label for a group box containing the NVDA installation dialog options.
+#. Translators: The label for a group box containing the NVDA welcome dialog options.
+msgid "Options"
+msgstr "Roghanna"
+
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA during sign-in"
 msgstr "Bain úsáid as NVDA agus tú ag síniú isteach."
@@ -8802,11 +8994,12 @@ msgstr "Roghnaigh comhadlann chun cóip inaistrithe a chruthú inti."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#, fuzzy
 msgid ""
 "Please specify an absolute path (including drive letter)  in which to create "
 "the portable copy."
-msgstr "Roghnaigh comhadlann chun cóip inaistrithe a chruthú inti."
+msgstr ""
+"Sainigh dearbhchosán chun cóip inaistrithe a chruthú ann agus bíodh an litir "
+"thiomántáin ann."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -8924,6 +9117,13 @@ msgstr "&Sein fuaimeanna agus NVDA ag tosú nó ag stopadh."
 msgid "L&ogging level:"
 msgstr "Leibhéal l&ogála:"
 
+#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
+#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
+#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "St&art NVDA after I sign in"
+msgstr "Cuir tús le NVDA t&ar éis dom síniú isteach."
+
 #. Translators: The label for a setting in general settings to
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
@@ -8937,13 +9137,12 @@ msgstr ""
 #. current user settings to system settings (to allow current
 #. settings to be used in secure screens such as User Account
 #. Control (UAC) dialog).
-#, fuzzy
 msgid ""
 "Use currently saved settings during sign-in and on secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Úsáid na socruithe sábháilte ar an scáileán logála isteach agus ar scáileáin "
-"shlána eile (riarthóir an chórais amháin)"
+"Bain úsáid as socruithe sábháilte reatha agus tú ar an scáileán logála "
+"isteach"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -9050,7 +9249,7 @@ msgstr "Gléas aschurtha fuaime:"
 
 #. Translators: name for default (Microsoft Sound Mapper) audio output device.
 msgid "Microsoft Sound Mapper"
-msgstr "{category} ({nbResults} results)"
+msgstr "Microsoft Sound Mapper"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio d&ucking mode:"
@@ -9126,6 +9325,12 @@ msgstr "Bain úsáid asfeidhm an &litriúithe má tá sé tacaithe.H1."
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
 msgstr "méarchlár"
+
+#. Translators: This is the label for a combobox in the
+#. keyboard settings panel.
+#. Translators: The label of a combobox in the Welcome dialog.
+msgid "&Keyboard layout:"
+msgstr "&Leagan amach an mhéarchláir:"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
@@ -9274,6 +9479,16 @@ msgstr "Tuairiscigh athraithe ar an dteaghrán &léitheoireachta."
 msgid "Report changes to the &composition string"
 msgstr "Tuairiscigh athraithe ar an dteaghrán &chomhshuímh"
 
+#. Translators: This is a label appearing on the Object Presentation settings panel.
+msgid ""
+"Configure how much information NVDA will present about controls. These "
+"options apply to focus reporting and NVDA object navigation, but not when "
+"reading text content e.g. web content with browse mode."
+msgstr ""
+"Cumraigh an méid eolais faoi rialtáin  a chuirfidh NVDA ar fáil. Baineann na "
+"roghanna seo le tuairisciú fócais agus le nascleanúint oibiachta NVDA, ach "
+"ní bhaineann siad le brabhsáil téacs."
+
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "Léiriú na h-oibiachta"
@@ -9400,7 +9615,7 @@ msgstr "Tásc fuaimiúil i gcomhair mód fócais agus brabhsála"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
-msgstr "        &Ná lig aon ghotha neamhordaithe tríd go dtí an doiciméad."
+msgstr "&Ná lig aon ghotha neamhordaithe tríd go dtí an doiciméad."
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9410,6 +9625,8 @@ msgstr ""
 "gcórais."
 
 #. Translators: This is the label for the document formatting panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Document Formatting"
 msgstr "Formáidiú cáipéise"
 
@@ -9451,8 +9668,8 @@ msgstr "le béim"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Mar&ked (highlighted text)"
-msgstr "(highlighted text) marcáilte"
+msgid "Highlighted (mar&ked) text"
+msgstr "téacs aibhsithe (marcáilte)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9639,11 +9856,11 @@ msgstr "Cumasaigh tacaíocht le hidirghníomhú tadhaill"
 msgid "&Touch typing mode"
 msgstr "mód clóscríofa &tadhaill"
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr "OCR Windows 10"
+#. Translators: The title of the Windows OCR panel.
+msgid "Windows OCR"
+msgstr "OCR Windows"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "teanga aithinte "
 
@@ -9680,8 +9897,17 @@ msgstr ""
 msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Bain úsáid as uathoibriú UI Microsoft nuair atá sí ar fáil, chun chun "
-"rochtain a fháil ar rialtáin Microsoft agus ar rialtáin Microsoft Word."
+"Bain úsáid as uathoibriú UI Microsoft nuair atá sé ar fáil, chun rochtain a "
+"fháil ar rialtáin Microsoft agus ar rialtáin Microsoft Word."
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use UI Automation to access Microsoft &Excel spreadsheet controls when "
+"available"
+msgstr ""
+"Bain úsáid as uathoibriú UI Microsoft nuair atá sí ar fáil, chun rochtain a "
+"fháil ar rialtáin Microsoft agus ar rialtáin Microsoft Excel."
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9697,6 +9923,56 @@ msgstr ""
 "Labhair &pasfhocail i gconsóil UIA. D’fhéadfadh feabhas feidhmíochta a "
 "bheith ann."
 
+#. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
+#. Note the '\n' is used to split this long label approximately in half.
+msgctxt "advanced.uiaWithChromium"
+msgid ""
+"Use UIA with Microsoft Edge and other \n"
+"&Chromium based browsers when available:"
+msgstr ""
+"Bain úsáid as an gcomhéadan úsáideora ar Microsoft Edge agus ar "
+"bhrabhsálaithe Chromium eile.\n"
+"\n"
+"Use UIA with Microsoft Edge and other \n"
+"&Chromium based browsers when available:"
+
+#. Translators: Label for the default value of the Use UIA with Chromium combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Default (Only when necessary)"
+msgstr "Rogha réamhsocraithe (nuair is gá amháin)"
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Only when necessary"
+msgstr "Ach amháin nuair is gá."
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Yes"
+msgstr "Cealaigh"
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "No"
+msgstr "Ná húsáid"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Annotations"
+msgstr "&Anótáil"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report details in browse mode"
+msgstr "Sonraí tuarascála i mód brabhsála"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+#, fuzzy
+msgid "Report aria-description always"
+msgstr "Tuairiscigh cur síos ar oibiachtaí"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Terminal programs"
@@ -9709,9 +9985,34 @@ msgstr ""
 "Más féidir, bain úsáid as an tacaíocht nua do charachtair chlóscríofa i "
 "gconsól Windows."
 
+#. Translators: This is the label for a combo box for selecting a
+#. method of detecting changed content in terminals in the advanced
+#. settings panel.
+#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+msgid "&Diff algorithm:"
+msgstr "algartam diff"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine the method of detecting changed
+#. content in terminals automatically.
+msgid "Automatic (Diff Match Patch)"
+msgstr "Paiste Diff Uathoibríoch"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by character when supported, using the diff match patch algorithm.
+msgid "allow Diff Match Patch"
+msgstr "Ceadaigh paiste meaitseála DIFF."
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by line, using the difflib algorithm.
+msgid "force Difflib"
+msgstr "Bain úsáid as DIFFLIB"
+
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-msgid "Default (No)"
+msgid "Default (Yes)"
 msgstr "(No) réamhshocraithe"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -9741,6 +10042,11 @@ msgstr "téacs ineagarthóireachta"
 msgid "Caret movement timeout (in ms)"
 msgstr "Am istigh do ghluaiseacht na caraite in milleasoicindí"
 
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Report transparent color values"
+msgstr "Tabhair tuairisc ar luachanna na ndathanna trédhearcacha "
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Debug logging"
@@ -9750,6 +10056,20 @@ msgstr "Logáil dífhabhtaithe "
 #. Advanced settings panel
 msgid "Enabled logging categories"
 msgstr "Na catagóirí logála atácumasaithe"
+
+#. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+msgid "Play a sound for logged e&rrors:"
+msgstr "Déan fuaim le haghaidh earráidí."
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Only in NVDA test versions"
+msgstr "ar fáil i leagan tástála NVDA."
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Yes"
+msgstr "Lean ar aghaidh"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -9860,6 +10180,20 @@ msgstr "&Eagar"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Cuir Iontráil Fhoclóra Leis"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Foclóir réamhshocraithe"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Foclóir gutha (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Foclóir sealadach"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -10081,6 +10415,94 @@ msgstr "&Bain"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Tá an tsiombail \"%s\" faoi láthair cheana."
+
+#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+msgid ""
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad Insert and main Insert keys may both be used as the "
+"NVDA key.\n"
+"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions."
+msgstr ""
+"D’fhormhór éalaíonn na horduithe a rialaíonn NVDA ort an eochair NVDA a "
+"choinneáil síos agus tú ag brú eochracha eile\n"
+"Mar réamhshocrú, is féidir na heochracha “ionsáigh” an uimhirchip agus an "
+"príomheochair “ionsáigh” araon a úsáid mar eochair an NVDA. \n"
+" Is féidir leat, freisin, NVDA a chumrú chun glais ceannlitreacha a úsáid "
+"mar an eochair NVDA. \n"
+"Brúigh NVDA+N am ar bith chun an roghchlár NVDA a ghníomhachtú.\n"
+"  Ón roghnúchán seo, féadann tú NVDA a chumrú,cabhair a fháil, agus "
+"feidhmeanna NVDA eile a rochtainiú."
+
+#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
+msgid "Welcome to NVDA"
+msgstr "Fáilte go NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time.
+#. This is in larger, bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Fáilte go NVDA!"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "&Úsáid CapsLock mar eochair mhionathraithe in NVDA"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr "Taispeáin an dialóg &seo nuair a thosaíonn NVDA"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "Comhaontú um Cheadúnas"
+
+#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
+msgid "I &agree"
+msgstr "Gl&acaim Leis"
+
+#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
+msgid "&Install NVDA on this computer"
+msgstr "&Suiteáil NVDA ar an ríomhaire seo"
+
+#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
+msgid "Create &portable copy"
+msgstr "Cruthaigh cói&p inaistrithe"
+
+#. Translators: The label of the button in NVDA installation program
+#. to continue using the installation program as a temporary copy of NVDA.
+msgid "&Continue running"
+msgstr "&coinnigh ar siúl"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Bailiú sonraí ar úsáid NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access. Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"Chun feabhas a chur ar NVDA as seo amach, ba mhian le NVAccess sonraí úsáide "
+"a fháil ó chóipeanna NVDA atá i bhfeidhm.    \n"
+"\n"
+"Áireofar leagan an chóras oibríochta, leagan NVDA, an teanga, an tír agus "
+"roinnt cumriachtaí NVDA mar shampla sintéiseoir, aonad taispeána Braille, "
+"Tábla Braille. Ní seolfar inneachar labhartha ná inneachair Braille choíche. "
+"Féach ar an treoir úsáideora le do thoil chun liosta reatha a fháil de na "
+"sonraí go léir a bheidh bailithe.\n"
+"Ar mhian leat cead a thabhairt do NV Access na sonraí seo a bhailiú ó am go "
+"chéile, chun feabhas a chur ar NVDA?  "
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10425,7 +10847,7 @@ msgstr "ailínigh go hingearach dáilte"
 
 #. Translators: Reported when text has reverted to default vertical alignment.
 msgid "vertical align default"
-msgstr "        réamhshochrú ailíúcháin ingreachailíniú "
+msgstr "réamhshochrú ailíúcháin ingreachailíniú "
 
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
@@ -10543,14 +10965,6 @@ msgstr "úsáid leagan amach scáileáin  ar siúl "
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout off"
 msgstr "Leagan amach scáileáin stoptha"
-
-#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
-msgid ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-msgstr ""
-"Tosaítear nó múchtar má tá leagan amach an scáileáin caomhnaithe agus "
-"inneachar na cáipéise á rindreáil."
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
@@ -10704,6 +11118,7 @@ msgid "No comments"
 msgstr "Gan nóta tráchta."
 
 #. Translators: a description for a script
+#. Translators: a description for a script that reports the comment at the caret.
 msgid "Reports the text of the comment where the System caret is located."
 msgstr "tuairiscítear   nóta tráchta an áit ina bhfuil an carait suite."
 
@@ -10712,8 +11127,141 @@ msgstr "tuairiscítear   nóta tráchta an áit ina bhfuil an carait suite."
 msgid "Not in table"
 msgstr "As tábla"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} in"
+msgstr "{val:.2f} in"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} cm"
+msgstr "{val:.2f} cm"
+
 msgid "invoke"
 msgstr "gair"
+
+#. Translators: part of the suggestions count message for one suggestion.
+msgid "1 suggestion"
+msgstr "moladh amháin"
+
+#. Translators: part of the suggestions count message (for example: 2 suggestions).
+msgid "{} suggestions"
+msgstr "{} moladh"
+
+#. Translators: the description of a script
+msgctxt "excel-UIA"
+msgid ""
+"Shows a browseable message Listing information about a cell's appearance "
+"such as outline and fill colors, rotation and size"
+msgstr ""
+"Taispeántar fógra inbhrabhsáilte ina bhfuil eolas faoi chuma na cille ar nós "
+"imlíne, dathanna agus méid."
+
+#. Translators: The width of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell width: {0.x:.1f} pt"
+msgstr "leithead na cille: {0.x:.1f} pt"
+
+#. Translators: The height of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell height: {0.y:.1f} pt"
+msgstr "Airde na cille: {0.y:.1f} pt"
+
+#. Translators: The rotation in degrees of an Excel cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Rotation: {0} degrees"
+msgstr "Rothlú: {0} degrees"
+
+#. Translators: The outline (border) colors of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid ""
+"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
+msgstr ""
+"Dath imlínithe: Barr={0.name}, Bun={1.name}, Taobh clé={2.name}, Taobh "
+"dheas={3.name}"
+
+#. Translators: The outline (border) thickness values of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
+msgstr "Tiús imlíníochta: barr={0}, bun={1}, taobh clé={2}, taobh deas={3}"
+
+#. Translators: The fill color of an Excel cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill color: {0.name}"
+msgstr "Dath: {0.name}"
+
+#. Translators: The fill type (pattern, gradient etc) of an Excel Cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill type: {0}"
+msgstr "cineáil líonta {0}"
+
+#. Translators: the number format of an Excel cell
+#, python-brace-format
+msgid "Number format: {0}"
+msgstr "Formáidiú uimhreach {0}"
+
+#. Translators: If an excel cell has data validation set
+msgid "Has data validation"
+msgstr "Tá bailíochtú sonraí ar siúl"
+
+#. Translators: the data validation prompt (input message) for an Excel cell
+#, python-brace-format
+msgid "Data validation prompt: {0}"
+msgstr "Leid um bailíochtú sonraí: {0}"
+
+#. Translators: If an excel cell has conditional formatting
+msgid "Has conditional formatting"
+msgstr "Formáidiú doiciméid"
+
+#. Translators: If an excel cell has visible gridlines
+msgid "Gridlines are visible"
+msgstr "Tá na línte greille infheicthe"
+
+#. Translators: Title for a browsable message that describes the appearance of a cell in Excel
+msgctxt "excel-UIA"
+msgid "Cell Appearance"
+msgstr "Cuma na cille"
+
+#. Translators:  an error message on a cell in Microsoft Excel.
+#, python-brace-format
+msgid "Error: {errorText}"
+msgstr "Earáid: {errorText}"
+
+#. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
+#, python-brace-format
+msgid "{author} is editing"
+msgstr "Tá {author} ag déanamh eagarthóireachta."
+
+#. Translators: Excel, report range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "{firstAddress} {firstValue} go dtí {lastAddress} {lastValue}"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the note or comment thread on the current cell"
+msgstr "Léitear an nóta tráchta ar an gcill reatha."
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "{comment}  by {author}"
+msgstr "{comment} le {author}"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "{comment}  by {author} with {numReplies} replies"
+msgstr "{comment}  le {author} le {numReplies} fhreagra"
+
+#. Translators: A message in Excel when there is no note
+msgid "No note or comment thread on this cell"
+msgstr "Níl nóta ná nóta tráchtaí ar an gcill seo"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10742,13 +11290,17 @@ msgstr "Rianaigh an t-athrú: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
-msgid "Comment: {comment} by {author} on {date}"
-msgstr "Nóta tráchta: {comment} le {author} ar an  {date}"
+msgid "Comment: {comment} by {author}"
+msgstr "Nóta tráchta: {comment} le {author} "
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
-msgid "{comment} by {author} on {date}"
-msgstr "{comment} le {author} ar {date}"
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "Nóta tráchta: {comment} le {author} ar an  {date}"
+
+#. Translators: a message when navigating by sentence is unavailable in MS Word
+msgid "Navigating by sentence not supported in this document"
+msgstr "Ní féidir nascleanúint de réir abairte   a dhéanamh sa doiciméad seo."
 
 msgid "Desktop"
 msgstr "Deasc"
@@ -11242,7 +11794,7 @@ msgstr "Eilimintí cairte"
 #. For example, this might report "foo series 1 of 2"
 #, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr " Srath {seriesName}  {seriesIndex} as {seriesCount}"
+msgstr "Srath {seriesName}  {seriesIndex} as {seriesCount}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
 #, python-brace-format
@@ -12111,6 +12663,50 @@ msgstr "spásáil línte dúbalta"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "spásáil línte 1.5"
+
+#~ msgid "mrkd"
+#~ msgstr "marcáilte"
+
+#~ msgid "report marked on"
+#~ msgstr "tuairisciú ar théacs marcáilte ar siúl"
+
+#~ msgid "report marked off"
+#~ msgstr "Ná tabhair tuairisc ar théacs marcá "
+
+#~ msgid "marked content"
+#~ msgstr "inneachar marcáilte"
+
+#~ msgid "An NVDA settings dialog is already open. Please close it first."
+#~ msgstr ""
+#~ "Tá dialóg shocruithe  NVDA ar oscailt fós. Dún an dialóg sin ar dtús. "
+
+#~ msgid "Mar&ked (highlighted text)"
+#~ msgstr "(highlighted text) marcáilte"
+
+#, fuzzy
+#~ msgctxt "command toggle"
+#~ msgid "off"
+#~ msgstr "as"
+
+#, fuzzy
+#~ msgctxt "command toggle"
+#~ msgid "on"
+#~ msgstr "ann"
+
+#~ msgid "Israeli 8 dot computer braille"
+#~ msgstr "Braille Iosraelach 8 bponc"
+
+#~ msgid "COM Registration Fixing tool complete"
+#~ msgstr "Tá an uirlis um chlárúchán COM críochnaithe anois"
+
+#, fuzzy
+#~ msgid "category"
+#~ msgid_plural "categories"
+#~ msgstr[0] "&catagóirí"
+#~ msgstr[1] "&catagóirí"
+
+#~ msgid "&Activate"
+#~ msgstr "&Gníomhachtaigh"
 
 #~ msgctxt "line spacing value"
 #~ msgid "exact"

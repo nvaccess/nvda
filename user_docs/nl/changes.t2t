@@ -3,6 +3,139 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.2 =
+Deze release introduceert voorlopige ondersteuning voor Windows 11.
+Hoewel Windows 11 nog moet worden uitgebracht, is deze release getest op preview-versies van Windows 11.
+Dit omvat een belangrijke oplossing voor Schermgordijn (zie belangrijke opmerkingen).
+De Probleemoplosser voor COM-registratie kan nu meer problemen oplossen terwijl NVDA wordt uitgevoerd.
+Er zijn updates voor de synthesizer eSpeak en braillevertaler LibLouis.
+Er zijn ook verschillende bugfixes en verbeteringen, met name voor brailleondersteuning en Windows-terminals, rekenmachine, emoji-paneel en klembordgeschiedenis.
+
+
+== Belangrijke opmerkingen ==
+Vanwege een wijziging in de Windows Magnification API moest Schermgordijn worden bijgewerkt om de nieuwste versies van Windows te ondersteunen.
+Gebruik NVDA 2021.2 om Schermgordijn te activeren met Windows 10 21H2 (10.0.19044) of hoger.
+Dit omvat Windows 10 Insiders en Windows 11.
+Als u een nieuwe versie van Windows gebruikt, moet u om veiligheidsredenen om een bevestiging vragen van iemand die kan zien dat het schermgordijn het scherm volledig zwart maakt.
+
+
+== Nieuwe functies ==
+- Experimentele ondersteuning voor ARIA-annotaties:
+  - voegt een commando toe om een ​​samenvatting van details van een object met aria-details te lezen. (#12364)
+  - voegt een optie toe in geavanceerde instellingen om te melden of een object details heeft in bladermodus. (#12439)
+  -
+- In Windows 10 versie 1909 en later (inclusief Windows 11) zal NVDA het aantal suggesties aankondigen bij het uitvoeren van zoekopdrachten in Verkenner. (#10341, #12628)
+- In Microsoft Word kondigt NVDA nu het resultaat aan van sneltoetsen voor inspringen en verkeerd-om inspringen wanneer ze worden uitgevoerd. (#6269)
+-
+
+
+== Veranderingen ==
+- Espeak-ng is bijgewerkt naar 1.51-dev commit `` ab11439b18238b7a08b965d1d5a6ef31cbb05cbb ''. (#12449, #12202, #12280, #12568)
+- Als artikel is ingeschakeld in de gebruikersinstellingen voor documentopmaak, kondigt NVDA "artikel" aan na de inhoud. (#11103)
+- Liblouis braillevertaler bijgewerkt naar [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Nieuwe brailletabellen: Bulgaars graad 1, Birmees graad 1, Birmees graad 2, Kazachs graad 1, Khmer graad 1, Noord-Koerdische graad 0, Sepedi graad 1, Sepedi graad 2, Sesotho graad 1, Sesotho graad 2, Setswana graad 1, Setswana graad 2, Tatar graad 1, Vietnamees graad 0, Vietnamees graad 2, Zuid-Vietnamees graad 1, Xhosa graad 1, Xhosa graad 2, Yakut graad 1, Zulu graad 1, Zulu graad 2
+  -
+- Windows 10 OCR is hernoemd naar Windows OCR. (#12690)
+-
+
+
+== Opgeloste problemen ==
+- In Windows 10 Rekenmachine toont NVDA rekenmachine-uitdrukkingen op een brailleleesregel. (#12268)
+- In terminalprogramma's in Windows 10 versie 1607 en later worden bij het invoegen of verwijderen van tekens in het midden van een regel de tekens rechts van de cursor niet meer voorgelezen. (#3200)
+  - Diff Match Patch nu standaard ingeschakeld. (#12485)
+  -
+- De braille-invoer werkt correct met de volgende gecontracteerde tabellen: Arabisch graad 2, Spaans graad 2, Urdu graad 2, Chinees (China, Mandarijn) graad 2. (#12541)
+- Het COM-registratiehulpprogramma lost nu meer problemen op, vooral op 64-bits Windows. (#12560)
+- Verbeteringen aan het gebruik van de knoppen voor de Seika Notetaker braille leesregel van Nippon Telesoft. (#12598)
+- Verbeteringen in het melden van het Windows Emoji-paneel en de klembordgeschiedenis. (#11485)
+- De karakterbeschrijvingen van het Bengaalse alfabet bijgewerkt. (#12502)
+- NVDA sluit veilig af wanneer een nieuw proces wordt gestart. (#12605)
+- Het opnieuw selecteren van het Handy Tech brailleleesregelstuurprogramma in het dialoogvenster Brailleleesregel selecteren veroorzaakt geen fouten meer. (#12618)
+- Windows versie 10.0.22000 of later wordt herkend als Windows 11, niet als Windows 10. (#12626)
+- Ondersteuning voor schermgordijn is hersteld en getest voor Windows-versies tot 10.0.22000. (#12684)
+- Als er geen resultaten worden weergegeven bij het filteren van invoerhandelingen, blijft het dialoogvenster voor het configureren van invoerhandelingen werken zoals verwacht. (#12673)
+- Een bug opgelost waarbij het eerste menu-item van een submenu in sommige contexten niet werd aangekondigd. (#12624)
+-
+
+
+== Veranderingen voor ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
+= 2021.1 =
+Deze release bevat optionele experimentele ondersteuning voor UIA in Excel- en Chromium-browsers.
+Er zijn verbeteringen voor verschillende talen en voor het openen van koppelingen in braille.
+Er zijn updates voor Unicode CLDR, wiskundige symbolen en LibLouis.
+En verder Veel bugfixes en verbeteringen, o.a.  in Office, Visual Studio en verschillende talen.
+
+Opmerking:
+ add-ons moeten worden bijgewerkt om met deze release van NVDA gebruikt te kunnen worden.
+ Deze release heeft ook geen ondersteuning meer voor Adobe Flash.
+ -
+
+
+== Nieuwe functies ==
+- Vroege ondersteuning voor UIA met op Chromium gebaseerde browsers (zoals Edge). (#12025)
+- Optionele experimentele ondersteuning voor Microsoft Excel via UI Automation. Alleen aanbevolen voor Microsoft Excel build 16.0.13522.10000 of hoger. (#12210)
+- Gemakkelijkere navigatie door uitvoer in de NVDA Python Console. (#9784)
+  - alt + pijl omhoog / omlaag springt naar het vorige / volgende uitvoer resultaat (met shift erbij kun je selecteren).
+  - control + l wist de uitvoer.
+- NVDA meldt nu de categorieën die zijn toegewezen aan een afspraak in Microsoft Outlook, indien van toepassing. (#11598)
+- Ondersteuning voor de Seika Notetaker brailleleesregel van Nippon Telesoft. (#11514)
+
+
+== Veranderingen ==
+- In bladermodus kunnen besturingselementen nu worden geactiveerd met de braillecursorrouterings knoppen bij de beschrijvende afkorting (o.a. "Lnk" voor een link). Dit is vooral handig voor het activeren van bijv. Selectievakjes zonder labels. (#7447)
+- NVDA voorkomt nu dat de gebruiker Windows 10 OCR kan uitvoeren als schermgordijn is ingeschakeld. (#11911)
+- Unicode Common Locale Data Repository (CLDR) bijgewerkt naar 39.0. (#11943, #12314)
+- Meer wiskundige symbolen toegevoegd aan het symbolenwoordenboek. (#11467)
+- De gebruikershandleiding, het Wat is er nieuw bestand en de lijst met sneltoetsen hebben nu een vernieuwd uiterlijk. (#12027)
+- "Niet-ondersteund" wordt nu gemeld bij een poging om de schermindeling te wijzigen in toepassingen die dit niet ondersteunen, zoals Microsoft Word. (#7297)
+- De optie 'Poging om spraak te annuleren voor verlopen focusgebeurtenissen' in het paneel met geavanceerde instellingen is nu standaard ingeschakeld. (#10885)
+  - Dit gedrag kan worden uitgeschakeld door deze optie in te stellen op "Nee".
+- In webapplicaties (bijv. Gmail) wordt niet langer verouderde informatie meer uitgesproken wanneer de focus snel wordt verplaatst.
+- Liblouis braillevertaler bijgewerkt naar [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - Nieuwe brailletabellen: Wit-Russische literaire braille, Wit-Russische computerbraille, Urdu graad 1, Urdu graad 2.
+- Ondersteuning voor Adobe Flash-inhoud is verwijderd uit NVDA omdat het gebruik van Flash actief wordt ontmoedigd door Adobe. (#11131)
+- NVDA zal afsluiten, zelfs als de vensters nog open zijn, het afsluitproces sluit nu alle NVDA-vensters en dialoogvensters. (#1740)
+- Het Spraakweergavevenster kan nu worden afgesloten met `` alt + F4 '' en heeft een standaard sluitknop voor eenvoudigere interactie met gebruikers van aanwijsapparaten. (#12330)
+- Het Brailleweergavevenster heeft nu een standaard sluitknop voor eenvoudigere interactie met gebruikers van aanwijsapparaten. (#12328)
+- In het dialoogvenster Elementenlijst is de sneltoets voor de knop "Activeren" in sommige landen verwijderd om een konflikt met een label van een keuzerondje van het elementtype te voorkomen. Indien beschikbaar, is de knop nog steeds de standaardinstelling van het dialoogvenster en kan als zodanig nog steeds worden opgeroepen door simpelweg op enter te drukken vanuit de elementenlijst zelf. (#6167)
+
+
+== Opgeloste problemen ==
+- De lijst met berichten in Outlook 2010 is weer leesbaar. (#12241)
+- In terminalprogramma's op Windows 10 versie 1607 en later worden bij het invoegen of verwijderen van tekens in het midden van een regel de tekens rechts van de cursor niet meer voorgelezen. (#3200)
+  - Deze experimentele oplossing moet handmatig worden ingeschakeld in het paneel met geavanceerde instellingen van NVDA door het diff-algoritme te wijzigen in Diff Match Patch.
+- In MS Outlook zullen onnodige afstandsmeldingen bij het shift + tabben van de berichttekst naar het onderwerpveld niet meer moeten voorkomen. (#10254)
+- In de Python-console wordt nu het invoegen van een tab voor inspringen aan het begin van een niet-lege invoerregel en het uitvoeren van tabaanvulling in het midden van een invoerregel ondersteund. (#11532)
+- Opmaakinformatie en andere doorzoekbare berichten bevatten niet langer onverwachte lege regels wanneer de schermindeling is uitgeschakeld. (#12004)
+- Het is nu mogelijk om opmerkingen in MS Word te lezen met UIA ingeschakeld. (#9285)
+- De prestaties bij interactie met Visual Studio zijn verbeterd. (#12171)
+- Grafische bugs zoals ontbrekende elementen bij gebruik van NVDA met een rechts-naar-links lay-out opgelost. (#8859)
+- Baseer de GUI-lay-outrichting op de NVDA-taal, niet de landinstelling van het systeem. (#638)
+  - bekend probleem voor talen die van rechts naar links worden geschreven: de rechterrand van groeperingsclips met labels / bedieningselementen. (#12181)
+- De Python-locale is zo ingesteld dat deze consistent overeenkomt met de taal die is geselecteerd in de Instellingen, en zal voorkomen bij gebruik van de standaardtaal. (#12214)
+- TextInfo.getTextInChunks loopt niet langer vast wanneer gebruikt op Rich Edit-besturingselementen zoals de NVDA-logviewer. (#11613)
+- Het is weer mogelijk om NVDA te gebruiken in talen met onderstrepingstekens in de locale naam zoals de_CH op Windows 10 1803 en 1809. (#12250)
+- In WordPad werkt de configuratie van superscript / subscript-meldingen zoals verwacht. (#12262)
+- NVDA verzuimt niet langer om de nieuw gefocuste inhoud op een webpagina aan te kondigen als de oude focus verdwijnt en wordt vervangen door de nieuwe focus op dezelfde positie. (#12147)
+- Doorhalen, superscript en subscript-opmaak voor hele Excel-cellen worden nu gerapporteerd als de overeenkomstige optie is ingeschakeld. (#12264)
+- Probleem opgelost met het kopiëren van config tijdens installatie vanaf een draagbare kopie als de standaard bestemmingsconfiguratiemap leeg is. (# 12071, #12205)
+- Opgelost: onjuiste aankondiging van sommige letters met accenten of diakritische tekens wanneer de optie 'Het woord "Hoofdletter" uitspreken voor hoofdletters' is aangevinkt. (#11948)
+- Probleem met toonhoogteverandering opgelost in SAPI4-spraaksynthesizer. (#12311)
+- Het NVDA-installatieprogramma respecteert nu ook de ``--minimal'' opdrachtregelparameter en speelt het opstartgeluid niet af, volgens hetzelfde gedocumenteerde gedrag als een geïnstalleerd of draagbaar exemplaar van NVDA. (#12289)
+- In MS Word of Outlook kan de snelnavigatietoets voor tabellen nu naar de lay-outtabel springen als de optie "Lay-outtabellen opnemen" is ingeschakeld in de instellingen van de bladermodus. (#11899)
+- NVDA zal niet langer "↑↑↑" aankondigen voor emoji's in bepaalde talen. (#11963)
+- Espeak ondersteunt nu weer Kantonees en Mandarijn. (#10418)
+- In de nieuwe op Chromium gebaseerde Microsoft Edge worden tekstvelden, zoals de adresbalk, nu aangekondigd als ze leeg zijn. (#12474)
+- Probleem met Seika Braille-stuurprogramma opgelost. (#10787)
+
+
+== Veranderingen voor ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2020.4 =
 Deze release bevat nieuwe Chinese invoermethoden, een update van Liblouis en de elementenlijst (NVDA + f7) werkt nu in focusmodus.
 Contextgevoelige hulp is nu beschikbaar wanneer u op F1 drukt in NVDA-dialoogvensters.

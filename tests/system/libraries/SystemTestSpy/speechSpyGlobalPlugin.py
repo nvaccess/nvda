@@ -11,6 +11,7 @@ of a package.
 import typing
 from typing import Optional
 
+import extensionPoints
 import globalPluginHandler
 import threading
 from .blockUntilConditionMet import _blockUntilConditionMet
@@ -21,6 +22,7 @@ import inputCore
 import queueHandler
 import watchdog
 
+import ctypes
 import sys
 import os
 
@@ -36,6 +38,32 @@ def _importRobotRemoteServer() -> typing.Type:
 	return RobotRemoteServer
 
 
+class BrailleViewerSpy:
+	postBrailleUpdate = extensionPoints.Action()
+
+	def __init__(self):
+		self._last = ""
+
+	def updateBrailleDisplayed(
+			self,
+			cells,  # ignored
+			rawText,
+			currentCellCount,  # ignored
+	):
+		rawText = rawText.strip()
+		if rawText and rawText != self._last:
+			self._last = rawText
+			self.postBrailleUpdate.notify(rawText=rawText)
+
+	isDestroyed: bool = False
+
+	def saveInfoAndDestroy(self):
+		if not self.isDestroyed:
+			self.isDestroyed = True
+			import brailleViewer
+			brailleViewer._onGuiDestroyed()
+
+
 class NVDASpyLib:
 	""" Robot Framework Library to spy on NVDA during system tests.
 	Used to determine if NVDA has finished starting, and various ways of getting speech output.
@@ -49,10 +77,20 @@ class NVDASpyLib:
 			[""],  # initialise with an empty string, this allows for access via [-1]. This is equiv to no speech.
 		]
 		self._lastSpeechTime_requiresLock = _timer()
-		#: Lock to protect members written in _onNvdaSpeech.
+		#: Lock to protect members that are written to in _onNvdaSpeech.
 		self._speechLock = threading.RLock()
+
+		# braille raw text (not dots) cache is ordered temporally,
+		# oldest at low indexes, most recent at highest index.
+		self._nvdaBraille_requiresLock = [  # requires thread locking before read/write
+			"",  # initialise with an empty string, this allows for access via [-1]. This is equiv to no braille.
+		]
+		#: Lock to protect members that are written to in _onNvdaBraille.
+		self._brailleLock = threading.RLock()
+
 		self._isNvdaStartupComplete = False
 		self._allSpeechStartIndex = self.get_last_speech_index()
+		self._allBrailleStartIndex = self.get_last_braille_index()
 		self._maxKeywordDuration = 30
 		self._registerWithExtensionPoints()
 
@@ -66,9 +104,44 @@ class NVDASpyLib:
 		from synthDrivers.speechSpySynthDriver import post_speech
 		post_speech.register(self._onNvdaSpeech)
 
+		self._brailleSpy = BrailleViewerSpy()
+		self._brailleSpy.postBrailleUpdate.register(self._onNvdaBraille)
+
+	def set_configValue(self, keyPath: typing.List[str], val: typing.Union[str, bool, int]):
+		import config
+		if not keyPath or len(keyPath) < 1:
+			raise ValueError("Key path not provided")
+		penultimateConf = config.conf
+		for key in keyPath[:-1]:
+			penultimateConf = penultimateConf[key]
+		ultimateKey = keyPath[-1]
+		penultimateConf[ultimateKey] = val
+
+	def queueNVDAMainThreadCrash(self):
+		from queueHandler import queueFunction, eventQueue
+		queueFunction(eventQueue, _crashNVDA)
+
+	def queueNVDABrailleThreadCrash(self):
+		from braille import _BgThread
+		_BgThread.queueApc(ctypes.windll.Kernel32.DebugBreak)
+
+	def queueNVDAUIAHandlerThreadCrash(self):
+		from UIAHandler import handler
+		handler.MTAThreadQueue.put(_crashNVDA)
+
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
 		self._isNvdaStartupComplete = True
+		import brailleViewer
+		brailleViewer._brailleGui = self._brailleSpy
+		self.setBrailleCellCount(120)
+		brailleViewer.postBrailleViewerToolToggledAction.notify(created=True)
+
+	def _onNvdaBraille(self, rawText: str):
+		if not rawText:
+			return
+		with self._brailleLock:
+			self._nvdaBraille_requiresLock.append(rawText)
 
 	def _onNvdaSpeech(self, speechSequence=None):
 		if not speechSequence:
@@ -120,6 +193,27 @@ class NVDASpyLib:
 			finished = self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
 			return started and finished
 
+	def setBrailleCellCount(self, brailleCellCount: int):
+		import brailleViewer
+		brailleViewer.DEFAULT_NUM_CELLS = brailleCellCount
+
+	def _getBrailleAtIndex(self, brailleIndex: int) -> str:
+		with self._brailleLock:
+			return self._nvdaBraille_requiresLock[brailleIndex]
+
+	def get_braille_at_index_until_now(self, brailleIndex: int) -> str:
+		""" All raw braille text from (and including) the index until now.
+		@param brailleIndex:
+		@return: The raw text, each update on a new line
+		"""
+		with self._brailleLock:
+			rangeOfInterest = self._nvdaBraille_requiresLock[brailleIndex:]
+			return "\n".join(rangeOfInterest)
+
+	def get_last_braille_index(self) -> int:
+		with self._brailleLock:
+			return len(self._nvdaBraille_requiresLock) - 1
+
 	def _devInfoToLog(self):
 		import api
 		obj = api.getNavigatorObject()
@@ -140,6 +234,14 @@ class NVDASpyLib:
 			except Exception:
 				log.error("Unable to log speech")
 
+	def dump_braille_to_log(self):
+		log.debug("dump_braille_to_log.")
+		with self._brailleLock:
+			try:
+				log.debug(f"All braille:\n{repr(self._nvdaBraille_requiresLock)}")
+			except Exception:
+				log.error("Unable to log braille")
+
 	def _minTimeout(self, timeout: float) -> float:
 		"""Helper to get the minimum value, the timeout passed in, or self._maxKeywordDuration"""
 		return min(timeout, self._maxKeywordDuration)
@@ -159,8 +261,7 @@ class NVDASpyLib:
 			giveUpAfterSeconds=self._minTimeout(10),
 			errorMessage="Unable to connect to nvdaSpy",
 		)
-		if self._isNvdaStartupComplete:
-			self.reset_all_speech_index()
+		self.reset_all_speech_index()
 
 	def get_last_speech(self) -> str:
 		return self._getSpeechAtIndex(-1)
@@ -214,6 +315,28 @@ class NVDASpyLib:
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			errorMessage="Speech did not finish before timeout"
 		)
+
+	def wait_for_braille_update(
+			self,
+			nextBrailleIndex: int,
+			maxWaitSeconds=5.0,
+	):
+		"""Wait until there is at least a single update.
+		@note there may be subsequent braille updates. This method does not confirm updates are finished.
+		"""
+		_blockUntilConditionMet(
+			getValue=lambda: self.get_last_braille_index() == nextBrailleIndex,
+			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
+			errorMessage=None
+		)
+
+	def get_last_braille(self) -> str:
+		return self._getBrailleAtIndex(-1)
+
+	def get_next_braille_index(self) -> int:
+		""" @return: the next index that will be used.
+		"""
+		return self.get_last_braille_index() + 1
 
 	def emulateKeyPress(self, kbIdentifier: str, blockUntilProcessed=True):
 		"""
@@ -275,6 +398,10 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 	def terminate(self):
 		log.debug("Terminating the SystemTestSpyServer")
 		self._server.stop()
+
+
+def _crashNVDA():
+	ctypes.windll.Kernel32.DebugBreak()
 
 
 GlobalPlugin = SystemTestSpyServer

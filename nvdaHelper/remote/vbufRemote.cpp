@@ -13,7 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <map>
-#include "vbufRemote.h"
+#include <remote/vbufRemote.h>
 #include <vbufBase/backend.h>
 #include "dllmain.h"
 #include <common/log.h>
@@ -22,7 +22,6 @@ using namespace std;
 
 const map<wstring,VBufBackend_create_proc> VBufBackendFactoryMap {
 	{L"adobeAcrobat",AdobeAcrobatVBufBackend_t_createInstance},
-	{L"adobeFlash",AdobeFlashVBufBackend_t_createInstance},
 	{L"gecko_ia2",GeckoVBufBackend_t_createInstance},
 	{L"mshtml",MshtmlVBufBackend_t_createInstance},
 	{L"lotusNotesRichText",lotusNotesRichTextVBufBackend_t_createInstance},

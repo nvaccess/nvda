@@ -10,6 +10,10 @@ import threading
 import ctypes
 import collections
 import itertools
+from typing import (
+	Optional,
+	Dict,
+)
 import weakref
 import wx
 import review
@@ -20,7 +24,6 @@ from scriptHandler import script
 import speech
 import NVDAObjects
 import api
-import sayAllHandler
 import controlTypes
 import textInfos.offsets
 import config
@@ -197,7 +200,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			# Interactive list/combo box/tree view descendants aren't rendered into the buffer, even though they are still considered part of it.
 			# Use the container in this case.
 			obj = obj.parent
-			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_GROUPING, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM):
+			if not obj or obj.role not in (controlTypes.Role.LIST, controlTypes.Role.COMBOBOX, controlTypes.Role.GROUPING, controlTypes.Role.TREEVIEW, controlTypes.Role.TREEVIEWITEM):
 				break
 		raise LookupError
 
@@ -260,21 +263,30 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 					return placeholder
 		return None
 
-	def _getFieldsInRange(self,start,end):
+	def _normalizeCommand(self, command: XMLFormatting.CommandsT) -> XMLFormatting.CommandsT:
+		if not isinstance(command, textInfos.FieldCommand):
+			return command  # no need to normalize str or None
+		field = command.field
+		if isinstance(field, textInfos.ControlField):
+			command.field = self._normalizeControlField(field)
+		elif isinstance(field, textInfos.FormatField):
+			command.field = self._normalizeFormatField(field)
+		return command
+
+	def _getFieldsInRange(self, start: int, end: int) -> textInfos.TextInfo.TextWithFieldsT:
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
 		if not text:
-			return ""
-		commandList=XMLFormatting.XMLTextParser().parse(text)
-		for index in range(len(commandList)):
-			if isinstance(commandList[index],textInfos.FieldCommand):
-				field=commandList[index].field
-				if isinstance(field,textInfos.ControlField):
-					commandList[index].field=self._normalizeControlField(field)
-				elif isinstance(field,textInfos.FormatField):
-					commandList[index].field=self._normalizeFormatField(field)
+			return [""]
+		commandList = XMLFormatting.XMLTextParser().parse(text)
+		commandList = [
+			self._normalizeCommand(command)
+			for command in commandList
+			# drop None to convert from XMLFormatting.CommandListT to textInfos.TextInfo.TextWithFieldsT
+			if command is not None
+		]
 		return commandList
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
@@ -301,7 +313,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		NVDAHelper.localLib.VBuf_getLineOffsets(self.obj.VBufHandle,offset,0,True,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		return lineStart.value,lineEnd.value
 
-	def _normalizeControlField(self,attrs):
+	def _normalizeControlField(self, attrs: textInfos.ControlField):
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
@@ -325,6 +337,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			# Get the text for the header cells.
 			textList = []
 			for docHandle, ID in cellIdentifiers:
+				if attrs.get("controlIdentifier_docHandle") == docHandle and attrs.get("controlIdentifier_ID") == ID:
+					# This is a self-reference to a column or row header
+					# Do not double up the cell header name. This is happening in Chrome.
+					continue
 				try:
 					start, end = self._getOffsetsFromFieldIdentifier(int(docHandle), int(ID))
 				except (LookupError, ValueError):
@@ -332,7 +348,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
 			attrs["table-%sheadertext" % axis] = "\n".join(textList)
 
-		if attrs.get("role") in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION):
+		if attrs.get("role") in (controlTypes.Role.LANDMARK, controlTypes.Role.REGION):
 			attrs['alwaysReportName'] = True
 
 		# Expose a unique ID on the controlField for quick and safe comparison using the virtualBuffer field's docHandle and ID
@@ -343,7 +359,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 
 		return attrs
 
-	def _normalizeFormatField(self, attrs):
+	def _normalizeFormatField(self, attrs: textInfos.FormatField):
 		strippedCharsFromStart = attrs.get("strippedCharsFromStart")
 		if strippedCharsFromStart is not None:
 			assert strippedCharsFromStart.isdigit(), "strippedCharsFromStart isn't a digit, %r" % strippedCharsFromStart

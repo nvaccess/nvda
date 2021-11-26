@@ -1,18 +1,22 @@
-#audioDucking.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015-2016 NV Access Limited 
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+from enum import IntEnum
+from utils.displayString import DisplayStringIntEnum
 import threading
-from ctypes import *
-from ctypes import oledll
+from typing import Dict
+from ctypes import oledll, wintypes, windll
 import time
 import config
 from logHandler import log
+import systemUtils
+
 
 def _isDebug():
 	return config.conf["debugLog"]["audioDucking"]
+
 
 class AutoEvent(wintypes.HANDLE):
 
@@ -25,24 +29,33 @@ class AutoEvent(wintypes.HANDLE):
 			windll.kernel32.CloseHandle(self)
 
 WAIT_TIMEOUT=0x102
-AUDIODUCKINGMODE_NONE=0
-AUDIODUCKINGMODE_OUTPUTTING=1
-AUDIODUCKINGMODE_ALWAYS=2
 
-audioDuckingModes=[
-	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-	# See the Audio Ducking Mode section of the User Guide for details.
-	_("No ducking"),
-	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-	# See the Audio Ducking Mode section of the User Guide for details.
-	_("Duck when outputting speech and sounds"),
-	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-	# See the Audio Ducking Mode section of the User Guide for details.
-	_("Always duck"),
-]
 
-ANRUS_ducking_AUDIO_ACTIVE=4
-ANRUS_ducking_AUDIO_ACTIVE_NODUCK=8
+class AudioDuckingMode(DisplayStringIntEnum):
+	NONE = 0
+	OUTPUTTING = 1
+	ALWAYS = 2
+
+	@property
+	def _displayStringLabels(self) -> Dict[IntEnum, str]:
+		return {
+			# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+			# See the Audio Ducking Mode section of the User Guide for details.
+			AudioDuckingMode.NONE: _("No ducking"),
+			# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+			# See the Audio Ducking Mode section of the User Guide for details.
+			AudioDuckingMode.OUTPUTTING: _("Duck when outputting speech and sounds"),
+			# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+			# See the Audio Ducking Mode section of the User Guide for details.
+			AudioDuckingMode.ALWAYS: _("Always duck"),
+		}
+
+
+class ANRUSDucking(IntEnum):
+	# https://docs.microsoft.com/en-us/windows/win32/api/oleacc/nf-oleacc-accsetrunningutilitystate#anrus_priority_audio_active_noduck
+	AUDIO_ACTIVE = 4
+	AUDIO_ACTIVE_NODUCK = 8
+
 
 INITIAL_DUCKING_DELAY=0.15
 
@@ -52,6 +65,7 @@ _duckingRefCountLock = threading.RLock()
 _modeChangeEvent=None
 _lastDuckedTime=0
 
+
 def _setDuckingState(switch):
 	global _lastDuckedTime
 	with _duckingRefCountLock:
@@ -59,10 +73,18 @@ def _setDuckingState(switch):
 			import gui
 			ATWindow=gui.mainFrame.GetHandle()
 			if switch:
-				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK)
+				oledll.oleacc.AccSetRunningUtilityState(
+					ATWindow,
+					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
+					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK
+				)
 				_lastDuckedTime=time.time()
 			else:
-				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK,ANRUS_ducking_AUDIO_ACTIVE_NODUCK)
+				oledll.oleacc.AccSetRunningUtilityState(
+					ATWindow,
+					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
+					ANRUSDucking.AUDIO_ACTIVE_NODUCK
+				)
 		except WindowsError as e:
 			# When the NVDA build is not signed, audio ducking fails with access denied.
 			# A developer built launcher is unlikely to be signed. Catching this error stops developers from looking into
@@ -81,18 +103,20 @@ def _setDuckingState(switch):
 				)
 				raise e
 
+
 def _ensureDucked():
 	global _duckingRefCount
 	with _duckingRefCountLock:
 		_duckingRefCount+=1
 		if _isDebug():
 			log.debug("Increased ref count, _duckingRefCount=%d"%_duckingRefCount)
-		if _duckingRefCount==1  and _audioDuckingMode!=AUDIODUCKINGMODE_NONE:
+		if _duckingRefCount == 1 and _audioDuckingMode != AudioDuckingMode.NONE:
 			_setDuckingState(True)
 			delta=0
 		else:
 			delta=time.time()-_lastDuckedTime
 		return delta,_modeChangeEvent
+
 
 def _unensureDucked(delay=True):
 	global _duckingRefCount
@@ -106,14 +130,15 @@ def _unensureDucked(delay=True):
 		_duckingRefCount-=1
 		if _isDebug():
 			log.debug("Decreased  ref count, _duckingRefCount=%d"%_duckingRefCount)
-		if _duckingRefCount==0 and _audioDuckingMode!=AUDIODUCKINGMODE_NONE:
+		if _duckingRefCount == 0 and _audioDuckingMode != AudioDuckingMode.NONE:
 			_setDuckingState(False)
+
 
 def setAudioDuckingMode(mode):
 	global _audioDuckingMode, _modeChangeEvent
 	if not isAudioDuckingSupported():
 		raise RuntimeError("audio ducking not supported")
-	if mode<0 or mode>=len(audioDuckingModes):
+	if mode < 0 or mode >= len(AudioDuckingMode):
 		raise ValueError("%s is not an audio ducking mode")
 	with _duckingRefCountLock:
 		oldMode=_audioDuckingMode
@@ -122,14 +147,15 @@ def setAudioDuckingMode(mode):
 		_modeChangeEvent=AutoEvent()
 		if _isDebug():
 			log.debug("Switched modes from %s, to %s"%(oldMode,mode))
-		if oldMode==AUDIODUCKINGMODE_NONE and mode!=AUDIODUCKINGMODE_NONE and _duckingRefCount>0:
+		if oldMode == AudioDuckingMode.NONE and mode != AudioDuckingMode.NONE and _duckingRefCount > 0:
 			_setDuckingState(True)
-		elif oldMode!=AUDIODUCKINGMODE_NONE and mode==AUDIODUCKINGMODE_NONE and _duckingRefCount>0:
+		elif oldMode != AudioDuckingMode.NONE and mode == AudioDuckingMode.NONE and _duckingRefCount > 0:
 			_setDuckingState(False)
-		if oldMode!=AUDIODUCKINGMODE_ALWAYS and mode==AUDIODUCKINGMODE_ALWAYS:
+		if oldMode != AudioDuckingMode.ALWAYS and mode == AudioDuckingMode.ALWAYS:
 			_ensureDucked()
-		elif oldMode==AUDIODUCKINGMODE_ALWAYS and mode!=AUDIODUCKINGMODE_ALWAYS:
+		elif oldMode == AudioDuckingMode.ALWAYS and mode != AudioDuckingMode.ALWAYS:
 			_unensureDucked(delay=False)
+
 
 def initialize():
 	if not isAudioDuckingSupported():
@@ -138,7 +164,10 @@ def initialize():
 	setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
+
 _isAudioDuckingSupported=None
+
+
 def isAudioDuckingSupported():
 	global _isAudioDuckingSupported
 	if _isAudioDuckingSupported is None:
@@ -146,10 +175,13 @@ def isAudioDuckingSupported():
 			config.isInstalledCopy()
 			or config.isAppX
 		) and hasattr(oledll.oleacc, 'AccSetRunningUtilityState')
+		_isAudioDuckingSupported &= systemUtils.hasUiAccess()
 	return _isAudioDuckingSupported
+
 
 def handlePostConfigProfileSwitch():
 	setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
+
 
 class AudioDucker(object):
 	""" Create one of these objects to manage ducking of background audio. 
@@ -188,7 +220,7 @@ class AudioDucker(object):
 			disableEvent=self._disabledEvent=AutoEvent()
 			if debug:
 				log.debug("whenWasDucked %s, deltaMS %s"%(whenWasDucked,deltaMS))
-			if deltaMS<=0 or _audioDuckingMode==AUDIODUCKINGMODE_NONE:
+			if deltaMS <= 0 or _audioDuckingMode == AudioDuckingMode.NONE:
 				return True
 		import NVDAHelper
 		if not NVDAHelper.localLib.audioDucking_shouldDelay():

@@ -1,9 +1,8 @@
-# -*- coding: UTF-8 -*-
-#addonHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V., Arnold Loubriat
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2012-2021 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
+# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import sys
 import os.path
@@ -17,19 +16,22 @@ import shutil
 from io import StringIO
 import pickle
 from six import string_types
+import typing
 import globalVars
 import zipfile
 from configobj import ConfigObj
 from configobj.validate import Validator
 
 import config
-import globalVars
 import languageHandler
 from logHandler import log
 import winKernel
 import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
+import extensionPoints
+import buildVersion
+
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -39,42 +41,94 @@ NVDA_ADDON_PROG_ID = "NVDA.Addon.1"
 ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
 DELETEDIR_SUFFIX=".delete"
 
-state={}
-
 # Add-ons that are blocked from running because they are incompatible
 _blockedAddons=set()
 
-def loadState():
-	global state
-	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
-	try:
-		# #9038: Python 3 requires binary format when working with pickles.
-		with open(statePath, "rb") as f:
-			state = pickle.load(f)
-		if "disabledAddons" not in state:
-			state["disabledAddons"] = set()
-		if "pendingDisableSet" not in state:
-			state["pendingDisableSet"] = set()
-		if "pendingEnableSet" not in state:
-			state["pendingEnableSet"] = set()
-	except:
-		# Defaults.
-		state = {
-			"pendingRemovesSet":set(),
-			"pendingInstallsSet":set(),
-			"disabledAddons":set(),
-			"pendingEnableSet":set(),
-			"pendingDisableSet":set(),
-		}
 
-def saveState():
-	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
-	try:
-		# #9038: Python 3 requires binary format when working with pickles.
-		with open(statePath, "wb") as f:
-			pickle.dump(state, f, protocol=0)
-	except:
-		log.debugWarning("Error saving state", exc_info=True)
+# Allows add-ons to process additional command line arguments when NVDA starts.
+# Each handler is called with one keyword argument `cliArgument`
+# and should return `False` if it is not interested in it, `True` otherwise.
+# For more details see appropriate section of the developer guide.
+isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
+
+
+class AddonsState(collections.UserDict):
+	"""Subclasses `collections.UserDict` to preserve backwards compatibility."""
+
+	_DEFAULT_STATE_CONTENT = {
+		"pendingRemovesSet": set(),
+		"pendingInstallsSet": set(),
+		"disabledAddons": set(),
+		"pendingEnableSet": set(),
+		"pendingDisableSet": set(),
+	}
+
+	@property
+	def statePath(self) -> os.PathLike:
+		"""Returns path to the state file. """
+		return os.path.join(globalVars.appArgs.configPath, stateFilename)
+
+	def load(self) -> None:
+		"""Populates state with the default content and then loads values from the config."""
+		self.update(self._DEFAULT_STATE_CONTENT)
+		try:
+			# #9038: Python 3 requires binary format when working with pickles.
+			with open(self.statePath, "rb") as f:
+				state = pickle.load(f)
+				self.update(state)
+		except FileNotFoundError:
+			pass  # Clean config - no point logging in this case
+		except IOError:
+			log.debug("Error when reading state file", exc_info=True)
+		except pickle.UnpicklingError:
+			log.debugWarning("Failed to unpickle state", exc_info=True)
+
+	def removeStateFile(self) -> None:
+		try:
+			os.remove(self.statePath)
+		except FileNotFoundError:
+			pass  # Probably clean config - no point in logging in this case.
+		except OSError:
+			log.error(f"Failed to remove state file {self.statePath}", exc_info=True)
+
+	def save(self) -> None:
+		"""Saves content of the state to a file unless state is empty in which case this would be pointless."""
+		if any(self.values()):
+			try:
+				# #9038: Python 3 requires binary format when working with pickles.
+				with open(self.statePath, "wb") as f:
+					# We cannot pickle instance of `AddonsState` directly
+					# since older versions of NVDA aren't aware about this clas and they're expecting state
+					# to be a standard `dict`.
+					pickle.dump(self.data, f, protocol=0)
+			except (IOError, pickle.PicklingError):
+				log.debugWarning("Error saving state", exc_info=True)
+		else:
+			# Empty state - just delete state file and don't save anything.
+			self.removeStateFile()
+
+	def cleanupRemovedDisabledAddons(self) -> None:
+		"""Versions of NVDA before #12792 failed to remove add-on from list of disabled add-ons
+		during uninstallation. As a result after reinstalling add-on with the same name it was disabled
+		by default confusing users. Fix this by removing all add-ons no longer present in the config
+		from the list of disabled add-ons in the state."""
+		installedAddonNames = tuple(a.name for a in getAvailableAddons())
+		for disabledAddonName in list(self["disabledAddons"]):
+			if disabledAddonName not in installedAddonNames:
+				self["disabledAddons"].discard(disabledAddonName)
+
+
+state = AddonsState()
+
+
+# Deprecated - use `state.save` and `state.load` instead.
+if buildVersion.version_year < 2022:
+	def saveState():
+		state.save()
+
+	def loadState():
+		state.load()
+
 
 def getRunningAddons():
 	""" Returns currently loaded add-ons.
@@ -95,53 +149,21 @@ def getIncompatibleAddons(
 		)
 	))
 
-def completePendingAddonRemoves():
-	"""Removes any add-ons that could not be removed on the last run of NVDA"""
-	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
-	pendingRemovesSet=state['pendingRemovesSet']
-	for addonName in list(pendingRemovesSet):
-		addonPath=os.path.join(user_addons,addonName)
-		if os.path.isdir(addonPath):
-			addon=Addon(addonPath)
-			try:
-				addon.completeRemove()
-			except RuntimeError:
-				log.exception("Failed to remove %s add-on"%addonName)
-				continue
-		pendingRemovesSet.discard(addonName)
 
-def completePendingAddonInstalls():
-	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
-	pendingInstallsSet=state['pendingInstallsSet']
-	for addonName in pendingInstallsSet:
-		newPath=os.path.join(user_addons,addonName)
-		oldPath=newPath+ADDON_PENDINGINSTALL_SUFFIX
-		try:
-			os.rename(oldPath,newPath)
-		except:
-			log.error("Failed to complete addon installation for %s"%addonName,exc_info=True)
-	pendingInstallsSet.clear()
+def removeFailedDeletion(path: os.PathLike):
+	shutil.rmtree(path, ignore_errors=True)
+	if os.path.exists(path):
+		log.error(f"Failed to delete path {path}, try removing manually")
 
-def removeFailedDeletions():
-	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
-	for p in os.listdir(user_addons):
-		if p.endswith(DELETEDIR_SUFFIX):
-			path=os.path.join(user_addons,p)
-			shutil.rmtree(path,ignore_errors=True)
-			if os.path.exists(path):
-				log.error("Failed to delete path %s, try removing manually"%path)
 
-_disabledAddons = set()
 def disableAddonsIfAny():
 	"""
 	Disables add-ons if told to do so by the user from add-ons manager.
 	This is usually executed before refreshing the list of available add-ons.
 	"""
-	global _disabledAddons
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
 	state["disabledAddons"] |= state["pendingDisableSet"]
 	state["disabledAddons"] -= state["pendingEnableSet"]
-	_disabledAddons = state["disabledAddons"]
 	state["pendingDisableSet"].clear()
 	state["pendingEnableSet"].clear()
 
@@ -150,14 +172,12 @@ def initialize():
 	if config.isAppX:
 		log.info("Add-ons not supported when running as a Windows Store application")
 		return
-	loadState()
-	removeFailedDeletions()
-	completePendingAddonRemoves()
-	completePendingAddonInstalls()
+	state.load()
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
-	getAvailableAddons(refresh=True)
-	saveState()
+	getAvailableAddons(refresh=True, isFirstLoad=True)
+	state.cleanupRemovedDisabledAddons()
+	state.save()
 
 
 def terminate():
@@ -175,7 +195,8 @@ def _getDefaultAddonPaths():
 		addon_paths.append(user_addons)
 	return addon_paths
 
-def _getAvailableAddonsFromPath(path):
+
+def _getAvailableAddonsFromPath(path, isFirstLoad=False):
 	""" Gets available add-ons from path.
 	An addon is only considered available if the manifest file is loaded with no errors.
 	@param path: path from where to find addon directories.
@@ -184,7 +205,10 @@ def _getAvailableAddonsFromPath(path):
 	"""
 	log.debug("Listing add-ons from %s", path)
 	for p in os.listdir(path):
-		if p.endswith(DELETEDIR_SUFFIX): continue
+		if p.endswith(DELETEDIR_SUFFIX):
+			if isFirstLoad:
+				removeFailedDeletion(os.path.join(path, p))
+			continue
 		addon_path = os.path.join(path, p)
 		if os.path.isdir(addon_path) and addon_path not in ('.', '..'):
 			if not len(os.listdir(addon_path)):
@@ -194,6 +218,23 @@ def _getAvailableAddonsFromPath(path):
 				try:
 					a = Addon(addon_path)
 					name = a.manifest['name']
+					if (
+						isFirstLoad
+						and name in state["pendingRemovesSet"]
+						and not a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
+					):
+						try:
+							a.completeRemove()
+						except RuntimeError:
+							log.exception(f"Failed to remove {name} add-on")
+						continue
+					if(
+						isFirstLoad
+						and (name in state["pendingInstallsSet"] or a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX))
+					):
+						newPath = a.completeInstall()
+						if newPath:
+							a = Addon(newPath)
 					log.debug(
 						"Found add-on {name} - {a.version}."
 						" Requires API: {a.minimumNVDAVersion}."
@@ -209,23 +250,28 @@ def _getAvailableAddonsFromPath(path):
 					yield a
 				except:
 					log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
-				
+
 _availableAddons = collections.OrderedDict()
-def getAvailableAddons(refresh=False, filterFunc=None):
+
+
+def getAvailableAddons(
+		refresh: bool = False,
+		filterFunc: typing.Optional[typing.Callable[["Addon"], bool]] = None,
+		isFirstLoad: bool = False
+) -> typing.Generator["Addon", None, None]:
 	""" Gets all available addons on the system.
 	@param refresh: Whether or not to query the file system for available add-ons.
-	@type refresh: bool
 	@param filterFunc: A function that allows filtering of add-ons.
-		It takes an L{Addon} as its only argument
-		and returns a C{bool} indicating whether the add-on matches the provided filter.
-	@type filterFunc: callable
-	@rtype generator of Addon instances.
+	It takes an L{Addon} as its only argument
+	and returns a C{bool} indicating whether the add-on matches the provided filter.
+	: isFirstLoad: Should add-ons that are pending installations / removal from the file system
+	be installed / removed.
 	"""
 	if filterFunc and not callable(filterFunc):
 		raise TypeError("The provided filterFunc is not callable")
 	if refresh:
 		_availableAddons.clear()
-		generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
+		generators = [_getAvailableAddonsFromPath(path, isFirstLoad) for path in _getDefaultAddonPaths()]
 		for addon in itertools.chain(*generators):
 			_availableAddons[addon.path] = addon
 	return (addon for addon in _availableAddons.values() if not filterFunc or filterFunc(addon))
@@ -246,7 +292,7 @@ def installAddonBundle(bundle):
 		addon.completeRemove(runUninstallTask=False)
 		raise AddonError("Installation failed")
 	state['pendingInstallsSet'].add(bundle.manifest['name'])
-	saveState()
+	state.save()
 	return addon
 
 class AddonError(Exception):
@@ -306,6 +352,16 @@ class Addon(AddonBase):
 		"""True if this addon is marked for removal."""
 		return not self.isPendingInstall and self.name in state['pendingRemovesSet']
 
+	def completeInstall(self):
+		newPath = self.path.replace(ADDON_PENDINGINSTALL_SUFFIX, "")
+		oldPath = self.path
+		try:
+			os.rename(oldPath, newPath)
+			state['pendingInstallsSet'].discard(self.name)
+			return newPath
+		except OSError:
+			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
+
 	def requestRemove(self):
 		"""Markes this addon for removal on NVDA restart."""
 		if self.isPendingInstall:
@@ -316,10 +372,10 @@ class Addon(AddonBase):
 		else:
 			state['pendingRemovesSet'].add(self.name)
 			# There's no point keeping a record of this add-on pending being disabled now.
-			# However, if the addon is in _disabledAddons, then it needs to stay there so that
+			# However, if the addon is disabled, then it needs to remain disabled so that
 			# the status in addonsManager continues to say "disabled"
 			state['pendingDisableSet'].discard(self.name)
-		saveState()
+		state.save()
 
 	def completeRemove(self,runUninstallTask=True):
 		if runUninstallTask:
@@ -342,10 +398,11 @@ class Addon(AddonBase):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
 		# clean up the addons state. If an addon with the same name is installed, it should not be automatically
 		# disabled / blocked.
-		log.debug("removing addon {} from _disabledAddons/_blockedAddons".format(self.name))
-		_disabledAddons.discard(self.name)
+		log.debug(f"removing addon {self.name} from the list of disabled / blocked add-ons")
+		state["disabledAddons"].discard(self.name)
+		state['pendingRemovesSet'].discard(self.name)
 		_blockedAddons.discard(self.name)
-		saveState()
+		state.save()
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
@@ -360,7 +417,7 @@ class Addon(AddonBase):
 		"""
 		# #3090: Ensure that we don't add disabled / blocked add-ons to package path.
 		# By returning here the addon does not "run"/ become active / registered.
-		if self.isDisabled or self.isBlocked:
+		if self.isDisabled or self.isBlocked or self.isPendingInstall:
 			return
 
 		extension_path = os.path.join(self.path, package.__name__)
@@ -401,7 +458,7 @@ class Addon(AddonBase):
 			elif self.name not in state["disabledAddons"]:
 				state["pendingDisableSet"].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
-		saveState()
+		state.save()
 
 	@property
 	def isRunning(self):
@@ -409,7 +466,7 @@ class Addon(AddonBase):
 
 	@property
 	def isDisabled(self):
-		return self.name in _disabledAddons
+		return self.name in state["disabledAddons"]
 
 	@property
 	def isBlocked(self):
@@ -507,7 +564,6 @@ def getCodeAddon(obj=None, frameDist=1):
 	@return: L{Addon} instance or None if no code does not belong to a add-on package.
 	@rtype: C{Addon}
 	"""
-	global _availableAddons
 	if obj is None:
 		obj = sys._getframe(frameDist)
 	fileName  = inspect.getfile(obj)

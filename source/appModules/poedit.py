@@ -20,30 +20,6 @@ import NVDAObjects.IAccessible
 import winUser
 
 
-def getPath(obj, ancestor):
-	"""Gets the path of the object with respect to its ancestor.
-	the ancestor is typically the forground object.
-
-	@returns: A list of coordinates relative to the ansestor.
-	@rtype: L{list}
-	"""
-	path = []
-	cancel = 0
-	if obj == stopObj: return []
-	p = obj
-	while p != stopObj:
-		counter = 0
-		while p.previous:
-			p = p.previous
-			counter += 1
-			cancel += 1
-			# Looks like we have an infinite ancestry, so get out
-			if cancel == 50: return [-1]
-		path.append(counter)
-		p = p.parent
-	path.reverse()
-	return path
-
 def fetchObject(obj, path):
 	"""Fetch the child object  described by path.
 	@returns: requested object if found, or None
@@ -116,11 +92,11 @@ class AppModule(appModuleHandler.AppModule):
 	}
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if "SysListView32" in obj.windowClassName and obj.role==controlTypes.ROLE_LISTITEM:
+		if "SysListView32" in obj.windowClassName and obj.role==controlTypes.Role.LISTITEM:
 			clsList.insert(0,PoeditListItem)
 
 	def event_NVDAObject_init(self, obj):
-		if obj.role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE in obj.states and obj.isInForeground:
+		if obj.role == controlTypes.Role.EDITABLETEXT and controlTypes.State.MULTILINE in obj.states and obj.isInForeground:
 			# Oleacc often gets the name wrong.
 			# The label object is positioned just above the field on the screen.
 			l, t, w, h = obj.location

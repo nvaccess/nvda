@@ -6,6 +6,11 @@
 
 import ctypes
 import time
+from typing import (
+	Optional,
+	Dict,
+)
+
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
@@ -14,7 +19,6 @@ import operator
 import locale
 import collections
 import colorsys
-import sayAllHandler
 import eventHandler
 import braille
 from scriptHandler import script
@@ -272,20 +276,20 @@ storyTypeLocalizedLabels={
 }
 
 wdFieldTypesToNVDARoles={
-	wdFieldFormTextInput:controlTypes.ROLE_EDITABLETEXT,
-	wdFieldFormCheckBox:controlTypes.ROLE_CHECKBOX,
-	wdFieldFormDropDown:controlTypes.ROLE_COMBOBOX,
+	wdFieldFormTextInput:controlTypes.Role.EDITABLETEXT,
+	wdFieldFormCheckBox:controlTypes.Role.CHECKBOX,
+	wdFieldFormDropDown:controlTypes.Role.COMBOBOX,
 }
 
 wdContentControlTypesToNVDARoles={
-	wdContentControlRichText:controlTypes.ROLE_EDITABLETEXT,
-	wdContentControlText:controlTypes.ROLE_EDITABLETEXT,
-	wdContentControlPicture:controlTypes.ROLE_GRAPHIC,
-	wdContentControlComboBox:controlTypes.ROLE_COMBOBOX,
-	wdContentControlDropdownList:controlTypes.ROLE_COMBOBOX,
-	wdContentControlDate:controlTypes.ROLE_EDITABLETEXT,
-	wdContentControlGroup:controlTypes.ROLE_GROUPING,
-	wdContentControlCheckBox:controlTypes.ROLE_CHECKBOX,
+	wdContentControlRichText:controlTypes.Role.EDITABLETEXT,
+	wdContentControlText:controlTypes.Role.EDITABLETEXT,
+	wdContentControlPicture:controlTypes.Role.GRAPHIC,
+	wdContentControlComboBox:controlTypes.Role.COMBOBOX,
+	wdContentControlDropdownList:controlTypes.Role.COMBOBOX,
+	wdContentControlDate:controlTypes.Role.EDITABLETEXT,
+	wdContentControlGroup:controlTypes.Role.GROUPING,
+	wdContentControlCheckBox:controlTypes.Role.CHECKBOX,
 }
 
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
@@ -544,8 +548,10 @@ class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator
 class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.tables
+
 	def filter(self,item):
-		return item.borders.enable
+		return config.conf["documentFormatting"]["includeLayoutTables"] or item.borders.enable
+
 
 class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentChartQuickNavItem
@@ -720,7 +726,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def getTextWithFields(self,formatConfig=None):
+	# C901 'getTextWithFields' is too complex
+	# Note: when working on getTextWithFields, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def getTextWithFields(  # noqa: C901
+		self,
+		formatConfig: Optional[Dict] = None
+	) -> textInfos.TextInfo.TextWithFieldsT:
 		if self.isCollapsed: return []
 		if self.obj.ignoreFormatting:
 			return [self.text]
@@ -764,36 +776,36 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _normalizeControlField(self,field):
 		role=field.pop('role',None)
 		if role=="heading":
-			role=controlTypes.ROLE_HEADING
+			role=controlTypes.Role.HEADING
 		elif role=="table":
-			role=controlTypes.ROLE_TABLE
+			role=controlTypes.Role.TABLE
 			field['table-rowcount']=int(field.get('table-rowcount',0))
 			field['table-columncount']=int(field.get('table-columncount',0))
 		elif role=="tableCell":
-			role=controlTypes.ROLE_TABLECELL
+			role=controlTypes.Role.TABLECELL
 			field['table-rownumber']=int(field.get('table-rownumber',0))
 			field['table-columnnumber']=int(field.get('table-columnnumber',0))
 		elif role=="footnote":
-			role=controlTypes.ROLE_FOOTNOTE
+			role=controlTypes.Role.FOOTNOTE
 		elif role=="endnote":
-			role=controlTypes.ROLE_ENDNOTE
+			role=controlTypes.Role.ENDNOTE
 		elif role=="graphic":
-			role=controlTypes.ROLE_GRAPHIC
+			role=controlTypes.Role.GRAPHIC
 		elif role=="chart":
-			role=controlTypes.ROLE_CHART
+			role=controlTypes.Role.CHART
 		elif role=="object":
 			progid=field.get("progid")
 			if progid and progid.startswith("Equation.DSMT"):
 				# MathType.
-				role=controlTypes.ROLE_MATH
+				role=controlTypes.Role.MATH
 			else:
-				role=controlTypes.ROLE_EMBEDDEDOBJECT
+				role=controlTypes.Role.EMBEDDEDOBJECT
 		else:
 			fieldType=int(field.pop('wdFieldType',-1))
 			if fieldType!=-1:
-				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
+				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.Role.UNKNOWN)
 				if fieldType==wdFieldFormCheckBox and int(field.get('wdFieldResult','0'))>0:
-					field['states']=set([controlTypes.STATE_CHECKED])
+					field['states']=set([controlTypes.State.CHECKED])
 				elif fieldType==wdFieldFormDropDown:
 					field['value']=field.get('wdFieldResult',None)
 			fieldStatusText=field.pop('wdFieldStatusText',None)
@@ -803,25 +815,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			else:
 				fieldType=int(field.get('wdContentControlType',-1))
 				if fieldType!=-1:
-					role=wdContentControlTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
-					if role==controlTypes.ROLE_CHECKBOX:
+					role=wdContentControlTypesToNVDARoles.get(fieldType,controlTypes.Role.UNKNOWN)
+					if role==controlTypes.Role.CHECKBOX:
 						fieldChecked=bool(int(field.get('wdContentControlChecked','0')))
 						if fieldChecked:
-							field['states']=set([controlTypes.STATE_CHECKED])
+							field['states']=set([controlTypes.State.CHECKED])
 					fieldTitle=field.get('wdContentControlTitle',None)
 					if fieldTitle:
 						field['name']=fieldTitle
 						field['alwaysReportName']=True
 		if role is not None: field['role']=role
-		if role==controlTypes.ROLE_TABLE and field.get('longdescription'):
-			field['states']=set([controlTypes.STATE_HASLONGDESC])
+		if role==controlTypes.Role.TABLE and field.get('longdescription'):
+			field['states']=set([controlTypes.State.HASLONGDESC])
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)
 			if name:
 				field['name']=name
 				field['alwaysReportName']=True
-				field['role']=controlTypes.ROLE_FRAME
+				field['role']=controlTypes.Role.FRAME
 		newField = LazyControlField_RowAndColumnHeaderText(self)
 		newField.update(field)
 		return newField
@@ -946,7 +958,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			newEndOffset = self._rangeObj.end
 			# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
 			# a case where you called move end then collapse until the size of the range is no longer being reduced.
-			# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+			# For an example of this see sayAll (specifically readTextHelper_generator in sayAll.py)
 			if newEndOffset < oldEndOffset :
 				raise RuntimeError
 
@@ -1068,14 +1080,6 @@ class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeI
 		return self.obj.rootNVDAObject
 
 class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
-
-	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
-	disableAutoPassThrough = True
-
-	def __init__(self, rootNVDAObject):
-		super(WordDocumentTreeInterceptor, self).__init__(rootNVDAObject)
-		self.passThrough = True
-		browseMode.reportPassThrough.last = True
 
 	TextInfo=BrowseModeWordDocumentTextInfo
 
@@ -1313,6 +1317,22 @@ class WordDocument(Window):
 		msg=alignmentMessages.get(val)
 		if msg:
 			ui.message(msg)
+
+	@script(gestures=["kb:control+m", "kb:control+shift+m", "kb:control+t", "kb:control+shift+t"])
+	def script_changeParagraphLeftIndent(self, gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		margin = self.WinwordDocumentObject.PageSetup.LeftMargin
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordSelectionObject.paragraphFormat.LeftIndent
+		)
+		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
+		ui.message(msg)
 
 	def script_toggleSuperscriptSubscript(self,gesture):
 		if not self.WinwordSelectionObject:
