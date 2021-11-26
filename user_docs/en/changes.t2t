@@ -9,6 +9,11 @@ What's New in NVDA
 - Support for reporting notes in MS Excel with UI Automation enabled on Windows 11. (#12861)
 - In recent builds of Microsoft Word via UI Automation on Windows 11, the existence of bookmarks, draft comments and resolved comments are now reported in both speech and braille. (#12861)
 - The new --lang command line parameter allows overriding the configured NVDA language. (#10044)
+- NVDA now warns about command line parameters which are unknown and not used by any add-ons. (#12795)
+- In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
+    - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
+    - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
+    -
 -
 
 == Changes ==
@@ -28,6 +33,7 @@ What's New in NVDA
   - Note that in some situations, when inserting or deleting characters in the middle of a line, the characters after the caret may again be read out.
   -
 - MS word with UIA: heading quick nav in browse mode no longer gets stuck on the final heading of a document, nor is this heading shown twice in the NVDA elements list. (#9540)
+- In Windows 8 and later , the File Explorer status bar can now be retrieved using the standard gesture NVDA+end (desktop) / NVDA+shift+end (laptop). (#12845)
 -
 
 == Changes for Developers ==
@@ -61,6 +67,10 @@ This ensures code will honor the Windows user setting for swapping the primary m
 - ``shlobj`` constants have been removed. A new enum has been created, ``shlobj.FolderId`` for usage with ``SHGetKnownFolderPath``. (#12943)
 - ``diffHandler.get_dmp_algo`` and ``diffHandler.get_difflib_algo`` have been replaced with ``diffHandler.prefer_dmp`` and ``diffHandler.prefer_difflib`` respectively. (#12974)
 - ``languageHandler.curLang`` has been removed - to get the current NVDA language use ``languageHandler.getLanguage()``. (#13082)
+- A `getStatusBarText` method can be implemented on an appModule to customize the way NVDA fetches the text from the status bar. (#12845)
+- ``globalVars.appArgsExtra`` has been removed. (#13087)
+  - If your add-on need to process additional command line arguments see the documentation of ``addonHandler.isCLIParamKnown`` and the developer guide for details.
+  -
 -
 
 
@@ -90,10 +100,6 @@ Affected users will need to download this update manually.
 - Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
 - In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
 - Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
-- In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
-    - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
-    - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
-    -
 -
 
 

@@ -94,6 +94,10 @@ env.Append(
 )
 env.Append(CCFLAGS=[
 	'/std:c++17',
+	# '/showIncludes': Useful to understand which file causes some other file to be included.
+	# It will output a list of the include files.
+	# The option also displays nested include files, that is, the files
+	# included by the files that you include.
 ])
 
 env.Append(CXXFLAGS=['/EHsc'])
@@ -147,9 +151,9 @@ else:
 
 # Don't enable warnings and warnings as errors or analysis to 3rd party code.
 thirdPartyEnv = env.Clone()
+
 env.Append(CCFLAGS=[
-	'/W3',
-	'/WX',
+	'/W3',  # warning level 3
 ])
 if 'analyze' in debug:
 	env.Append(CCFLAGS=['/analyze'])
@@ -159,6 +163,10 @@ if 'analyze' in debug:
 	# Disable: 'x': unreferenced formal parameter
 	# We use a great deal of hook functions where we have no need for various parameters
 	env.Append(CCFLAGS='/wd4100')
+else:
+	env.Append(CCFLAGS=[
+		'/WX',  # warnings as error, don't do this with analyze, the build stops too early
+	])
 
 Export('thirdPartyEnv')
 Export('env')

@@ -22,8 +22,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sddl.h>
 #include <common/log.h>
 #include "apiHook.h"
-#include "nvdaController.h"
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaController.h>
+#include <remote/nvdaControllerInternal.h>
 #include <common/lock.h>
 #include <common/winIPCUtils.h>
 #include "dllmain.h"

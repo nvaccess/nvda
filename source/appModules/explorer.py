@@ -360,6 +360,90 @@ class AppModule(appModuleHandler.AppModule):
 			elif uiaClassName == "UIProperty" and role == controlTypes.Role.EDITABLETEXT:
 				clsList.insert(0, UIProperty)
 
+	def _get_statusBar(self):
+		foreground = api.getForegroundObject()
+		if not isinstance(foreground, UIA) or not foreground.windowClassName == "CabinetWClass":
+			# This is not the file explorer window. Resort to standard behavior.
+			raise NotImplementedError
+		import UIAHandler
+		clientObject = UIAHandler.handler.clientObject
+		condition = clientObject.createPropertyCondition(
+			UIAHandler.UIA_ControlTypePropertyId,
+			UIAHandler.UIA_StatusBarControlTypeId
+		)
+		walker = clientObject.createTreeWalker(condition)
+		try:
+			element = walker.getFirstChildElement(foreground.UIAElement)
+		except COMError:
+			# We could not find the expected object. Resort to standard behavior.
+			raise NotImplementedError()
+		element = element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		statusBar = UIA(UIAElement=element)
+		return statusBar
+
+	@staticmethod
+	def _getStatusBarTextWin7(obj) -> str:
+		"""For status bar in Windows 7 Windows Explorer we're interested only in the name of the first child
+		the rest are either empty or contain garbage."""
+		if obj.firstChild and obj.firstChild.name:
+			return obj.firstChild.name
+		raise NotImplementedError
+
+	@staticmethod
+	def _getStatusBarTextPostWin7(obj) -> str:
+		# The expected status bar, as of Windows 10 20H2 at least, contains:
+		#  - A grouping with a single static text child presenting the total number of elements
+		#  - Optionally, a grouping with a single static text child presenting the number of
+		#    selected elements and their total size, missing if no element is selected.
+		#  - A grouping with two radio buttons to control the display mode.
+		parts = []
+		for index, child in enumerate(obj.children):
+			if (
+				child.role == controlTypes.Role.GROUPING
+				and child.childCount == 1
+				and child.firstChild.role == controlTypes.Role.STATICTEXT
+			):
+				parts.append(child.firstChild.name)
+			elif (
+				child.role == controlTypes.Role.GROUPING
+				and child.childCount > 1
+				and not any(
+					grandChild for grandChild in child.children
+					if grandChild.role != controlTypes.Role.RADIOBUTTON
+				)
+			):
+				selected = next(iter(
+					grandChild for grandChild in child.children
+					if controlTypes.State.CHECKED in grandChild.states
+				), None)
+				if selected is not None:
+					parts.append(" ".join(
+						[child.name]
+						+ ([selected.name] if selected is not None else [])
+					))
+			else:
+				# Unexpected child, try to retrieve something useful.
+				parts.append(" ".join(
+					chunk
+					for chunk in (child.name, child.value)
+					if chunk and isinstance(chunk, str) and not chunk.isspace()
+				))
+		if not parts:
+			# We couldn't retrieve anything. Resort to standard behavior.
+			raise NotImplementedError
+		return ", ".join(parts)
+
+	def getStatusBarText(self, obj) -> str:
+		if obj.windowClassName == "msctls_statusbar32":  # Windows 7
+			return self._getStatusBarTextWin7(obj)
+		if (
+			isinstance(obj, UIA) or obj.UIAElement.cachedClassname == "StatusBarModuleInner"
+		):  # Windows 8 or later
+			return self._getStatusBarTextPostWin7(obj)
+		else:
+			# This is not the file explorer status bar. Resort to standard behavior.
+			raise NotImplementedError
+
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
 		role = obj.role

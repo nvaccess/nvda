@@ -3,6 +3,11 @@
 # See the file COPYING for more details.
 # Copyright (C) 2016-2021 NV Access Limited, Joseph Lee, Jakub Lukowicz
 
+from typing import (
+	Optional,
+	Dict,
+)
+
 from comtypes import COMError
 from collections import defaultdict
 import mathPres
@@ -280,7 +285,13 @@ class WordDocumentTextInfo(UIATextInfo):
 				docInfo=self.obj.makeTextInfo(textInfos.POSITION_ALL)
 				self.setEndPoint(docInfo,"endToEnd")
 
-	def getTextWithFields(self,formatConfig=None):
+	# C901 'getTextWithFields' is too complex
+	# Note: when working on getTextWithFields, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def getTextWithFields(  # noqa: C901
+		self,
+		formatConfig: Optional[Dict] = None
+	) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = None
 		# #11043: when a non-collapsed text range is positioned within a blank table cell
 		# MS Word does not return the table  cell as an enclosing element,

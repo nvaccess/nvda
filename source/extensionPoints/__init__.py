@@ -1,18 +1,18 @@
-#extensionPoints.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2021 NV Access Limited, Joseph Lee, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Framework to enable extensibility at specific points in the code.
 This allows interested parties to register to be notified when some action occurs
 or to modify a specific kind of data.
 For example, you might wish to notify about a configuration profile switch
 or allow modification of spoken messages before they are passed to the synthesizer.
-See the L{Action}, L{Filter}, L{Decider} classes.
+See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
 from logHandler import log
 from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
+from typing import Set
 
 
 class Action(HandlerRegistrar):
@@ -152,3 +152,59 @@ class Decider(HandlerRegistrar):
 			if not decision:
 				return False
 		return True
+
+
+class AccumulatingDecider(HandlerRegistrar):
+	"""Allows interested parties to participate in deciding whether something
+	should be done.
+	In contrast with L{Decider} all handlers are executed and then results are returned.
+	For example, normally user should be warned about all command line parameters
+	which are unknown to NVDA, but this extension point can be used to pass each unknown parameter
+	to all add-ons since one of them may want to process some command line arguments.
+	
+	First, a AccumulatingDecider is created with a default decision  :
+
+	>>> doSomething = AccumulatingDecider(defaultDecision=True)
+
+	Interested parties then register to participate in the decision, see
+	L{register} docstring for details of the type of handlers that can be
+	registered:
+
+	>>> def shouldDoSomething(someArg=None):
+	... 	return False
+	...
+	>>> doSomething.register(shouldDoSomething)
+
+	When the decision is to be made registered handlers are called and they return values are collected,
+	see L{util.callWithSupportedKwargs}
+	for how args passed to notify are mapped to the handler:
+
+	>>> doSomething.decide(someArg=42)
+	False
+
+	If there are no handlers or all handlers return defaultDecision,
+	the return value is the value of the default decision.
+	"""
+
+	def __init__(self, defaultDecision: bool) -> None:
+		super().__init__()
+		self.defaultDecision: bool = defaultDecision
+
+	def decide(self, **kwargs) -> bool:
+		"""Call handlers to make a decision.
+		Results returned from all handlers are collected
+		and if at least one handler returns value different than the one specifed as default it is returned.
+		If there are no handlers or all handlers return the default value, the default value is returned.
+		@param kwargs: Arguments to pass to the handlers.
+		@return: The decision.
+		"""
+		decisions: Set[bool] = set()
+		for handler in self.handlers:
+			try:
+				decisions.add(callWithSupportedKwargs(handler, **kwargs))
+			except Exception:
+				log.exception("Error running handler %r for %r" % (handler, self))
+				continue
+		if (not self.defaultDecision) in decisions:
+			return (not self.defaultDecision)
+		return self.defaultDecision
