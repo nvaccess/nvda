@@ -29,8 +29,6 @@ from UIAHandler.browseMode import (
 	UIATextAttributeQuicknavIterator,
 	TextAttribUIATextInfoQuickNavItem
 )
-# F403: unable to detect undefined names
-from UIAHandler.utils import *  # noqa:  F403
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import (
 	WordDocument as WordDocumentBase,
