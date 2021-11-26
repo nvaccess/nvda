@@ -1836,12 +1836,12 @@ Esto tiene un mayor impacto negativo en el rendimiento, especialmente en aplicac
 Por lo tanto, cuando se activa esta opción, NVDA limitará el registro de eventos al foco del sistema para la mayoría de los eventos.
 Si sufres problemas de rendimiento en una o más aplicaciones, te recomendamos que pruebes esta funcionalidad para ver si el rendimiento mejora.
 
-==== Utilizar siempre UI automation para acceder a controles de documento de Microsoft Word cuando esté disponible ====[AdvancedSettingsUseUiaForWord]
-Cuando esta opción esté activada, NVDA siempre intentará utilizar la API de accesibilidad de Microsoft UI Automation para obtener información de los controles de documentos de Microsoft Word, incluso en las versiones menos recientes de Microsoft Office 2016/365.
+==== Utilizar UI automation para acceder a controles de documento de Microsoft Word cuando esté disponible ====[AdvancedSettingsUseUiaForWord]
+Cuando esta opción esté activada, NVDA intentará utilizar la API de accesibilidad de Microsoft UI Automation para obtener información de los controles de documentos de Microsoft Word.
 Esto incluye el mismo Microsoft Word, y también el visor de mensajes y el compositor de Microsoft Outlook.
-Para Microsoft Office con una versión de compilación 16.0.13901 o superior, NVDA siempre utilizará UI Automation para acceder a los documentos de Microsoft Word, independientemente de cómo se configure esta opción. 
-Para las versiones más recientes de Microsoft Office 2016/365 que se ejecutan en Windows 10 y posteriores, la compatibilidad con UI Automation es lo suficientemente completa como para proporcionar acceso a los documentos de Microsoft Word casi igual a la compatibilidad existente con Microsoft Word de NVDA, con la ventaja añadida de que la capacidad de respuesta aumenta considerablemente.
-Sin embargo, puede haber alguna información que no se exponga, o que esté expuesta de forma incorrecta en algunas versiones antiguas de Microsoft Office, lo que significa que no siempre se puede confiar en este soporte de UI Automation.
+Para las versiones más recientes de Microsoft Office 2016/365 que se ejecuten en Windows 10 y posteriores, la compatibilidad con UI Automation  es lo suficientemente completa como para proporcionar acceso a los documentos de Microsoft Word casi igual a la compatibilidad con Microsoft Word existente de NVDA, con la ventaja añadida de que la capacidad de respuesta aumenta considerablemente.
+Sin embargo, puede haber alguna información que no esté expuesta, o que esté expuesta de forma incorrecta en algunas versiones de Microsoft Office, lo que significa que no siempre se puede confiar en este soporte de UI Automation.
+Todavía no recomendamos que la mayoría de los usuarios activen esta función por defecto, aunque invitamos a los usuarios de Office 2016/365 a probar esta función y a dar su opinión.
 
 ==== Utilizar UI Automation para acceder a la Consola de Windows cuando esté disponible ====[AdvancedSettingsConsoleUIA]
 Cuando esta opción esté activada, NVDA utilizará una versión nueva en progreso de su soporte para la Consola de Windows que tiene la ventaja de [la mejora de accesibilidad hecha por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica es muy experimental y todavía está incompleta, así que su uso aún no está recomendado. No obstante, una vez completada, se prevé que este nuevo soporte se convertirá en el predeterminado, mejorando el rendimiento y la estabilidad de NVDA en las consolas de órdenes de Windows.
@@ -3189,8 +3189,8 @@ La detección automática de pantallas braille de NVDA también reconocerá cual
 Seguidamente van las asignaciones de teclas actuales para estas pantallas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar la pantalla braille hacia atrás | pan a la izquierda |
-| Desplazar la pantalla braille hacia adelante | pan a la derecha |
+| Desplazar la pantalla braille hacia atrás | pan a la izquierda o balancín arriba |
+| Desplazar la pantalla braille hacia adelante | pan a la derecha o balancín abajo |
 | Mover la pantalla braille a la línea anterior | espacio+punto1 |
 | Mover la pantalla braille a la línea siguiente | espacio+punto4
 | Llevar a la celda braille | conjunto de sensores de enrutamiento 1|
