@@ -1,8 +1,4 @@
-NVDA更新日志
-
-
-%!includeconf: ../changes.t2tconf
-What's New in NVDA
+NVDA 更新日志
 
 
 %!includeconf: ../changes.t2tconf
@@ -11,11 +7,11 @@ What's New in NVDA
 = 2021.3 =
 本版增加了对 HID 新盲文规范的支持。
 该规范旨在标准化屏幕阅读器对盲文点显器的兼容，目标是实现一种无需特定设备驱动的即插即用能力。
-对 eSpeak-NG 和 LibLouis 的更新， 支持了俄语和 Tshivenda 盲文表。
-新增了高级选项，可以在 NVDA 稳定版中开启错误音效提示。
-当在 Word 中使用全文朗读时，确保当前阅读位置与视觉显示保持一致。
-本版包括在 Office 中使用 UIA 接口的一系列重要改进。
-其中一个关于 UIA 的修复是在 Outlook 中，将一些表识别为布局表（默认状态下不在读出）。
+其次是对 eSpeak-NG 和 LibLouis 的更新， 支持了俄语和 Tshivenda 盲文表。
+新增了一个高级选项，能够在 NVDA 稳定版中开启错误音效提示。
+一个重要修复是在 Word 中使用全文朗读时，确保当前阅读位置与视觉显示保持一致。
+除此之外，本版对 Office 的 UIA 接口进行了一系列改进。
+例如，在开启 UIA 的 Outlook 中，把一些表视为布局表（默认状态下不会读出）。
 
 重要提示
 
@@ -24,43 +20,41 @@ NVDA 会请求 Windows 更新安全证书，以避免日后再次出现该错误
 受影响的用户需手动下载本版并完成更新。
 
 
-== New Features ==
-- Adds an input gesture for toggling settings for reporting the style of cell borders. (#10408)
-- Support for the new HID Braille specification which aims to standardise support for Braille Displays. (#12523)
-  - Devices that support this specification will be auto detected by NVDA.
-  - For technical details on NVDA's implementation of this specification, see https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+== 新特性 ==
+- 添加了用于切换是否读出单元格边框样式的按键手势。 (#10408)
+- 增加了对 HID 新盲文规范的支持。 (#12523)
+  - 支持该规范的设备 NVDA 会自动检测连接。
+  - 有关 NVDA 实现本规范的技术细节，请参阅 https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
   -
-- Add support for the VisioBraille Vario 4 Braille Device. (#12607)
-- Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
-- In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
-- Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
+- 增加了对 VisioBraille Vario 4 盲文点显器的支持。 (#12607)
+- 无论使用哪个版本的 NVDA 都可以开启错误音效提示（高级设置）。 (#12672)
+- 在 Windows 10 及更高版本中，NVDA 支持在设置和 Microsoft Store 等应用中输入搜索关键词时，读出搜索建议数量。 (#7330, #12758, #12790)
+- 使用 PowerShell 中的 Out-GridView 创建的网格控件现在支持表格导航。 (#n)
 -
 
 
-== Changes ==
-- Espeak-ng has been updated to 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
-- NVDA will default to eSpeak if no installed OneCore voices support the NVDA preferred language. (#10451)
-- If OneCore voices consistently fail to speak, revert to eSpeak as a synthesizer. (#11544)
-- When reading status bar with ``NVDA+end``, the review cursor is no longer moved to its location.
-If you need this functionality please assign a gesture to the appropriate script in the Object Navigation category in the Input Gestures dialog. (#8600)
-- When opening a settings dialog which is already open, NVDA sets focus on the existing dialog rather than raise an error. (#5383)
-- Updated liblouis braille translator to [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
-  - New braille tables: Russian grade 1, Tshivenda grade 1, Tshivenda grade 2
+== 改进 ==
+- 将 Espeak-ng 更新到 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+- 如果没有符合 NVDA 首选语言的语音，则默认到 eSpeak 语音合成器。 (#10451)
+- 如果 OneCore 始终无法朗读，则默认到 eSpeak 语音合成器。 (#11544)
+- 使用 NVDA + End 朗读状态栏时，现在不会把对象导航焦点设置到该状态栏。
+  - 如果您需要在朗读状态栏时同时移动对象导航焦点，请在“按键与手势”对话框中为此功能单独分配手势。 (#8600)
+- 将 liblouis 盲文翻译模块更新到 [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]。 (#12810)
+  - 新增的盲文表：俄语 1 级、Tshivenda 1 级、Tshivenda 2 级
   -
-- Instead of "marked content" or "mrkd", "highlight" or "hlght" will be announced for speech and braille respectively. (#12892)
-- NVDA will no longer attempt to exit when dialogs are awaiting a required action (eg Confirm/Cancel). (#12984)
+- 将语音提示的“标记内容”和盲文简写的“mrkd”分别改为“突出显示”和“hlght”。 (#12892)
+- 如果当前有一个对话框正在等待用户操作（“确认”或“取消”），则不允许 NVDA 退出。 (#12984)
 -
 
 
-== Bug Fixes ==
-- Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
-- It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
-- NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
+== 错误修复 ==
+- 当 watchdog 正在恢复时，使修饰键（如 Ctrl 或 Insert）状态更加稳定。 (#12609)
+- 修复了在某些环境（如新安装的操作系统）下检查 NVDA 更新失败的错误。 (#12729)
+- 在 Word 中使用 UIA 模式时，可以正常读出表格中的空白单元格。 (#11043)
 - In ARIA data grid cells on the web, the Escape key will now be passed through to the grid and no longer turn off focus mode unconditionally. (#12413)
 - When reading a header cell of a table in Chrome, fix the column name being announced twice. (#10840)
 - NVDA no longer reports a numerical value for UIA sliders that have a textual representation of their value defined. (UIA ValuePattern is now preferred over RangeValuePattern). (#12724)
-- NVDA no longer treats the value of UIA sliders as always percentage based.
-- Reporting the location of a cell in Microsoft Excel when accessed via UI Automation again works correctly on Windows 11. (#12782)
+- NVDA no longer treats the value of UIA sliders as always percentage based.- Reporting the location of a cell in Microsoft Excel when accessed via UI Automation again works correctly on Windows 11. (#12782)
 - NVDA no longer sets invalid Python locales. (#12753)
 - If a disabled addon is uninstalled and then re-installed it is re-enabled. (#12792)
 - Fixed bugs around updating and removing addons where the addon folder has been renamed or has files opened. (#12792, #12629)
