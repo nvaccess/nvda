@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 00:03+0000\n"
-"PO-Revision-Date: 2021-11-07 14:18+0900\n"
+"POT-Creation-Date: 2021-11-19 00:02+0000\n"
+"PO-Revision-Date: 2021-11-20 15:13+0900\n"
 "Last-Translator: ungjinPark <ungjin312@kakao.com>\n"
 "Language-Team: NVDA Korean users and translations forum <advck1123@gmail."
 "com>\n"
@@ -419,7 +419,7 @@ msgstr "fig"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
 msgid "hlght"
-msgstr ""
+msgstr "hight"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -1380,15 +1380,13 @@ msgstr "베트남어 0종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Tshivenda grade 1"
-msgstr "인도어 1종"
+msgstr "벤다어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Tshivenda grade 2"
-msgstr "베트남어 2종"
+msgstr "벤다어 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2125,10 +2123,10 @@ msgstr "기호 레벨 이하일 때 처리"
 
 #. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
 #. "transparent bright orange-yellow"
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "color variation"
 msgid "transparent {colorDescription}"
-msgstr "상세 설명 있음"
+msgstr "투명 {colorDescription}"
 
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
@@ -2173,7 +2171,7 @@ msgstr "빨강"
 #. Translators: The color between  red and orange (HSV hue 15 degrees)
 msgctxt "color hue"
 msgid "red-orange"
-msgstr "빨강"
+msgstr "다홍"
 
 #. Translators: The color orange (HSV hue 30 degrees)
 msgctxt "color hue"
@@ -2183,7 +2181,7 @@ msgstr "주황"
 #. Translators: The color between  orange and yellow (HSV hue 45 degrees)
 msgctxt "color hue"
 msgid "orange-yellow"
-msgstr "주황"
+msgstr "금"
 
 #. Translators: The color yellow (HSV hue 60 degrees)
 msgctxt "color hue"
@@ -2203,17 +2201,17 @@ msgstr "초록"
 #. Translators: The color between  green and aqua (HSV hue 150 degrees)
 msgctxt "color hue"
 msgid "green-aqua"
-msgstr "초록"
+msgstr "초록빛 청록"
 
 #. Translators: The color aqua (HSV hue 180 degrees)
 msgctxt "color hue"
 msgid "aqua"
-msgstr "밝은 파랑"
+msgstr "청록"
 
 #. Translators: The color between  aqua and blue (HSV hue 210 degrees)
 msgctxt "color hue"
 msgid "aqua-blue"
-msgstr "밝은 파랑"
+msgstr "푸른빛 청록"
 
 #. Translators: The color blue (HSV hue 240 degrees)
 msgctxt "color hue"
@@ -2223,7 +2221,7 @@ msgstr "파랑"
 #. Translators: The color between  blue and purple (HSV hue 270 degrees)
 msgctxt "color hue"
 msgid "blue-purple"
-msgstr "파랑"
+msgstr "푸른빛 보라"
 
 #. Translators: The color purple (HSV hue 300 degrees)
 msgctxt "color hue"
@@ -2233,7 +2231,7 @@ msgstr "보라"
 #. Translators: The color between  purple and pink (HSV hue 312 degrees)
 msgctxt "color hue"
 msgid "purple-pink"
-msgstr "보라"
+msgstr "보라빛 분홍"
 
 #. Translators: The color pink (HSV hue 324 degrees)
 msgctxt "color hue"
@@ -2330,7 +2328,7 @@ msgstr "갈색"
 #. Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
 msgctxt "color hue"
 msgid "brown-yellow"
-msgstr "누런 갈색"
+msgstr "황갈색"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2667,11 +2665,11 @@ msgstr "입력 글자 읽기와 읽지 않기 중에서 토글합니다"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "입력한 글자 알림 해제"
+msgstr "입력한 글자 알림 끔"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "입력한 글자 알림 선택"
+msgstr "입력한 글자 알림 켬"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
@@ -2679,11 +2677,11 @@ msgstr "입력 단어 읽기와 읽지 않기 중에서 토글합니다"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "입력한 단어 알림 해제"
+msgstr "입력한 단어 알림 끔"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "입력한 단어 알림 선택"
+msgstr "입력한 단어 알림 켬"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
@@ -2693,11 +2691,11 @@ msgstr "입력 글자가 아닌 명령어 읽기와 읽지않기 중 토글합�
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "기능키 알림 해제"
+msgstr "기능키 알림 끔"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "기능키 알림 선택"
+msgstr "기능키 알림 켬"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -2771,22 +2769,19 @@ msgstr "강조 알림 해제"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "강조 알림 선택"
+msgstr "강조 알림"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-#, fuzzy
 msgid "Toggles on and off the reporting of highlighted text"
-msgstr "표시된 문구에 대한 알림을 토글합니다"
+msgstr "하이라이트된 글자에 대한 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report highlighted on"
-msgstr "목록 알림"
+msgstr "하이라이트된 글자 알림"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report highlighted off"
-msgstr "목록 알림 해제"
+msgstr "하이라이트된 글자 알림 해제"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -2941,23 +2936,20 @@ msgid "report table cell coordinates on"
 msgstr "테이블 셀 위치 알림"
 
 #. Translators: Input help mode message for toggle report cell borders command.
-#, fuzzy
 msgid "Cycles through the cell border reporting settings"
-msgstr "줄 들여쓰기 알림을 설정합니다"
+msgstr "테이블 셀 테두리 알림 설정을 순환합니다"
 
 #. Translators: A message reported when cycling through cell borders settings.
-#, fuzzy
 msgid "Report styles of cell borders"
-msgstr "테이블 셀 위치 알림"
+msgstr "테이블 테두리 모양 알림"
 
 #. Translators: A message reported when cycling through cell borders settings.
 msgid "Report colors and styles of cell borders"
-msgstr ""
+msgstr "테이블 셀 테두리 모양 및 색상 알림"
 
 #. Translators: A message reported when cycling through cell borders settings.
-#, fuzzy
 msgid "Report cell borders off."
-msgstr "색상 알림 해제"
+msgstr "테두리 모양 및 색상 알림 해제"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3518,26 +3510,23 @@ msgid "No status line found"
 msgstr "표시줄을 찾을 수 없음"
 
 #. Translators: Input help mode message for command which reads content of the status bar.
-#, fuzzy
 msgid "Reads the current application status bar."
-msgstr "현재 프로그램 (%s) 사용 시 적용"
+msgstr "현재 응용프로그램의 상태표시줄을 읽습니다."
 
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
 msgstr "상태 표시줄 정보 없음"
 
 #. Translators: Input help mode message for command which spells content of the status bar.
-#, fuzzy
 msgid "Spells the current application status bar."
-msgstr "현재 셀을 열 헤더의 처음으로 지정"
+msgstr "현재 응용프로그램의 상태표시줄을 한 글자씩 읽습니다."
 
 #. Translators: Input help mode message for command which copies status bar content to the clipboard.
 msgid ""
 "Copies content of the status bar  of current application to the clipboard."
-msgstr ""
+msgstr "클립보드에 현재 응용프로그램의 상태표시줄의 내용을 복사합니다. "
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
-#, fuzzy
 msgid "Unable to copy status bar content to clipboard"
 msgstr "상태 표시줄 내용을 클립보드에 복사할 수 없음"
 
@@ -3545,15 +3534,16 @@ msgstr "상태 표시줄 내용을 클립보드에 복사할 수 없음"
 msgid ""
 "Reads the current application status bar and moves navigator object into it."
 msgstr ""
+"현재 응용프로그램의 상태표시줄을 읽고, 상태표시줄로 탐색 객체을 이동합니다."
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "Reads the current application status bar. If pressed twice, spells the "
 "information. If pressed three times, copies the status bar to the clipboard"
 msgstr ""
-"현재 응용 프로그램의 상태 표시줄을 읽고 탐색 객체를 그곳으로 이동합니다. 두 "
-"번 누르면 한 글자씩 읽습니다"
+"현재 응용 프로그램의 상태 표시줄을 읽고 탐색 객체를 상태표시줄로 이동합니다. "
+"두 번 누르면 한 글자씩 읽습니다. 세 번 누르면 클립보드에 상태표시줄 내용이 복"
+"사됩니다."
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -9841,9 +9831,8 @@ msgstr "브라우즈 모드에서 상세정보 알려주기"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Report aria-description always"
-msgstr "객체 설명 알림 (&D)"
+msgstr "언제나 aria-description 내용 알림"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9912,7 +9901,7 @@ msgstr "커서 이동 시간제한 (천분의 일초 단위)"
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
 msgid "Report transparent color values"
-msgstr ""
+msgstr "투명 색상 알림"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9925,21 +9914,18 @@ msgid "Enabled logging categories"
 msgstr "활성화된 기록 유형"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#, fuzzy
 msgid "Play a sound for logged e&rrors:"
-msgstr "입력 중 철자 오류 경고음 재생 (&S)"
+msgstr "로그에 오류 기록 시 소리 재생 (&R)"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#, fuzzy
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
-msgstr "NVDA 버전 {version} 설치 (&I)"
+msgstr "NVDA 테스트 버전에서만"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#, fuzzy
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
-msgstr "예 (&Y)"
+msgstr "예"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -10602,15 +10588,15 @@ msgstr "표시되지 않음"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
-msgstr "strong"
+msgstr "중요 표시"
 
 #. Translators: Reported when text is no longer marked as strong (e.g. bold)
 msgid "not strong"
-msgstr "strong 없음"
+msgstr "중요 표시 없음"
 
 #. Translators: Reported when text is marked as emphasised
 msgid "emphasised"
-msgstr "강조됨"
+msgstr "강조"
 
 #. Translators: Reported when text is no longer marked as emphasised
 msgid "not emphasised"
@@ -10995,14 +10981,12 @@ msgid "invoke"
 msgstr "적용"
 
 #. Translators: part of the suggestions count message for one suggestion.
-#, fuzzy
 msgid "1 suggestion"
-msgstr "검색 결과"
+msgstr "1개의 제안 항목"
 
 #. Translators: part of the suggestions count message (for example: 2 suggestions).
-#, fuzzy
 msgid "{} suggestions"
-msgstr "검색 결과"
+msgstr "{}개의 제안 항목"
 
 #. Translators: the description of a script
 msgctxt "excel-UIA"
@@ -11153,9 +11137,8 @@ msgid "Comment: {comment} by {author} on {date}"
 msgstr "주석: {comment}; 저자: {author}; 날짜: {date}"
 
 #. Translators: a message when navigating by sentence is unavailable in MS Word
-#, fuzzy
 msgid "Navigating by sentence not supported in this document"
-msgstr "이 문서에서는 지원되지 않습니다"
+msgstr "문장 단위로 이동 기능은 이 문서에서는 지원되지 않습니다."
 
 msgid "Desktop"
 msgstr "바탕 화면"
