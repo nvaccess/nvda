@@ -51,9 +51,13 @@ bool getTextFromIAccessible(
 						fetchIA2Attributes(pacc2Child, childAttribsMap);
 						auto liveItr = childAttribsMap.find(L"live");
 						if (liveItr == childAttribsMap.end() || liveItr->second.compare(L"off") != 0) {
-							if (getTextFromIAccessible(textBuf, pacc2Child)) {
-								gotText = true;
-							}
+							gotText |= getTextFromIAccessible(
+								textBuf,
+								pacc2Child,
+								false, // useNewText
+								true, // recurse
+								true // includeTopLevelText
+							);
 						}
 						pacc2Child->Release();
 					}
