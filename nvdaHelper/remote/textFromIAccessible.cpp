@@ -46,8 +46,8 @@ bool getTextFromIAccessible(
 					if (varChildren[i].pdispVal && varChildren[i].pdispVal->QueryInterface(IID_IAccessible2, (void**)&pacc2Child) == S_OK) {
 						map<wstring, wstring> childAttribsMap;
 						fetchIA2Attributes(pacc2Child, childAttribsMap);
-						auto i = childAttribsMap.find(L"live");
-						if (i == childAttribsMap.end() || i->second.compare(L"off") != 0) {
+						auto liveItr = childAttribsMap.find(L"live");
+						if (liveItr == childAttribsMap.end() || liveItr->second.compare(L"off") != 0) {
 							if (getTextFromIAccessible(textBuf, pacc2Child)) {
 								gotText = true;
 							}
@@ -92,8 +92,8 @@ bool getTextFromIAccessible(
 							if (paccHyperlink->QueryInterface(IID_IAccessible2, (void**)&pacc2Child) == S_OK) {
 								map<wstring, wstring> childAttribsMap;
 								fetchIA2Attributes(pacc2Child, childAttribsMap);
-								auto i = childAttribsMap.find(L"live");
-								if (i == childAttribsMap.end() || i->second.compare(L"off") != 0) {
+								auto liveItr = childAttribsMap.find(L"live");
+								if (liveItr == childAttribsMap.end() || liveItr->second.compare(L"off") != 0) {
 									if (getTextFromIAccessible(textBuf, pacc2Child)) {
 										gotText = true;
 									}
