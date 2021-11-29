@@ -30,6 +30,8 @@ bool getTextFromIAccessible(
 	bool recurse,
 	bool includeTopLevelText
 ) {
+	if (!pacc2) {
+		return false;
 	bool gotText = false;
 	IAccessibleText* paccText = NULL;
 	if (pacc2->QueryInterface(IID_IAccessibleText, (void**)&paccText) != S_OK) {
