@@ -1408,15 +1408,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		)
 	)
 	def script_activateAriaDetailsSummary(self, gesture):
-		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand("character")
-		for field in reversed(info.getTextWithFields()):
-			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
-				states = field.field.get('states')
-				if states and controlTypes.State.HAS_ARIA_DETAILS in states:
-					ui.message(field.field['detailsSummary'])
-					return
-
 		# Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
 		# set of details to read.
 		ui.message(_("No additional details"))

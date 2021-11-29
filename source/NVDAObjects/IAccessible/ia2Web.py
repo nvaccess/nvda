@@ -8,6 +8,7 @@
 import typing
 from ctypes import c_short
 from comtypes import COMError, BSTR
+
 import oleacc
 from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
@@ -41,6 +42,13 @@ class Ia2Web(IAccessible):
 			if ia2attrDescriptionFrom:
 				log.debugWarning(f"Unknown 'description-from' IA2Attribute value: {ia2attrDescriptionFrom}")
 			return controlTypes.DescriptionFrom.UNKNOWN
+
+	def _get_detailsSummary(self) -> typing.Optional[str]:
+		return None
+
+	@property
+	def hasDetails(self) -> bool:
+		return bool(self.IA2Attributes.get("details-roles"))
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")

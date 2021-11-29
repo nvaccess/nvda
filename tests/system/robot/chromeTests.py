@@ -90,7 +90,7 @@ def test_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  details hlght cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Read line with details.",
 	)
 	# this word has no details attached
@@ -102,7 +102,7 @@ def test_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  details hlght cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word without details",
 	)
 
@@ -128,19 +128,19 @@ def test_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  details hlght cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word with details",
 	)
 	# read the details summary
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
+		"No additional details",
 		message="Browse mode: Report details on word with details"
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"Cats go woof BTW —Jonathon CommentorNo they don't —Zara",
+		"No additional details",
 		message="Browse mode: Report details on word with details",
 	)
 
@@ -172,6 +172,7 @@ def test_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
+			"has details",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -180,7 +181,7 @@ def test_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"The word  hlght cat hlght end  has a comment tied to it.",
+		"The word  hlght details cat hlght end  has a comment tied to it.",
 		message="Focus mode: report content editable with details",
 	)
 
@@ -196,7 +197,7 @@ def test_mark_aria_details():
 	_asserts.braille_matches(
 		actualBraille,
 		# a backslash character is typed, gesture only mapped in browse mode
-		r"\The word  hlght cat hlght end  has a comment tied to it.",
+		r"\The word  hlght details cat hlght end  has a comment tied to it.",
 		message="Focus mode: Try to read details, caret not on details word.",
 	)
 
@@ -207,6 +208,7 @@ def test_mark_aria_details():
 		actualSpeech,
 		SPEECH_SEP.join([
 			"highlighted",
+			"has details",
 			"cat",  # highlighted content
 			"out of highlighted",
 		]),
@@ -215,7 +217,7 @@ def test_mark_aria_details():
 	_asserts.braille_matches(
 		actualBraille,
 		# a backslash character was typed when the gesture was used
-		expected=r"\The word  hlght cat hlght end  has a comment tied to it.",
+		expected=r"\The word  hlght details cat hlght end  has a comment tied to it.",
 		message="Focus mode: Move by word to word with details",
 	)
 
@@ -229,7 +231,7 @@ def test_mark_aria_details():
 	_asserts.braille_matches(
 		actualBraille,
 		# a backslash character was typed when the gesture was used
-		expected=r"\The word \ hlght cat hlght end  has a comment tied to it.",
+		expected=r"\The word \ hlght details cat hlght end  has a comment tied to it.",
 		message="Focus mode:  Report details on word with details.",
 	)
 
