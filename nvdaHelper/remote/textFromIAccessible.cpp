@@ -44,9 +44,9 @@ bool getTextFromIAccessible(
 			VARIANT* varChildren = new VARIANT[childCount];
 			AccessibleChildren(pacc2, 0, childCount, varChildren, &childCount);
 			for (int i = 0; i < childCount; ++i) {
-				if (varChildren[i].vt == VT_DISPATCH) {
-					IAccessible2* pacc2Child = NULL;
-					if (varChildren[i].pdispVal && varChildren[i].pdispVal->QueryInterface(IID_IAccessible2, (void**)&pacc2Child) == S_OK) {
+				if (varChildren[i].vt == VT_DISPATCH && varChildren[i].pdispVal) {
+					CComQIPtr<IAccessible2, &IID_IAccessible2> pacc2Child(varChildren[i].pdispVal);
+					if (pacc2Child) {
 						map<wstring, wstring> childAttribsMap;
 						fetchIA2Attributes(pacc2Child, childAttribsMap);
 						auto liveItr = childAttribsMap.find(L"live");
@@ -59,7 +59,6 @@ bool getTextFromIAccessible(
 								true // includeTopLevelText
 							);
 						}
-						pacc2Child->Release();
 					}
 				}
 				VariantClear(varChildren + i);
