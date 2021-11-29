@@ -32,11 +32,11 @@ bool getTextFromIAccessible(
 ) {
 	if (!pacc2) {
 		return false;
-	bool gotText = false;
-	IAccessibleText* paccText = NULL;
-	if (pacc2->QueryInterface(IID_IAccessibleText, (void**)&paccText) != S_OK) {
-		paccText = NULL;
 	}
+
+	bool gotText = false;
+	CComQIPtr<IAccessibleText, &IID_IAccessibleText> paccText(pacc2);
+
 	if (!paccText && recurse && !useNewText) {
 		//no IAccessibleText interface, so try children instead
 		long childCount = 0;
@@ -120,7 +120,6 @@ bool getTextFromIAccessible(
 			SysFreeString(bstrText);
 			textBuf.append(1, L' ');
 		}
-		paccText->Release();
 	}
 	if (!gotText && !useNewText) {
 		//We got no text from IAccessibleText interface or children, so try name and/or description
