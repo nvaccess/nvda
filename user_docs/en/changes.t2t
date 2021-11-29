@@ -71,6 +71,12 @@ This ensures code will honor the Windows user setting for swapping the primary m
 - ``globalVars.appArgsExtra`` has been removed. (#13087)
   - If your add-on need to process additional command line arguments see the documentation of ``addonHandler.isCLIParamKnown`` and the developer guide for details.
   -
+- The UIA handler module and other UIA support modules are now part of a UIAHandler package. (#10916)
+  - ``UIAUtils`` is now ``UIAHandler.utils``
+  - ``UIABrowseMode`` is now ``UIAHandler.browseMode``
+  - ``_UIAConstants`` is now ``UIAHandler.constants``
+  - ``_UIACustomProps`` is now ``UIAHandler.customProps``
+  - ``_UIACustomAnnotations`` is now ``UIAHandler.customAnnotations``
 -
 
 
