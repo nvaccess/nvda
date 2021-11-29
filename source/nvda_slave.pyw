@@ -11,7 +11,6 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 import sys
 import os
 import globalVars
-import winKernel
 import monkeyPatches.comtypesMonkeyPatches
 
 # Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
@@ -42,8 +41,24 @@ except:
 	gettext.install('nvda')
 
 
-import versionInfo
 import logHandler
+
+
+def getNvdaHelperRemote():
+	import buildVersion
+	import ctypes
+	import winKernel
+	# Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
+	h = winKernel.kernel32.LoadLibraryExW(
+		os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll"),
+		0,
+		# Using an altered search path is necessary here
+		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
+		# such as minhook.dll.
+		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
+	)
+	remoteLib = ctypes.WinDLL("nvdaHelperRemote", handle=h)
+	return remoteLib
 
 
 def main():
@@ -79,25 +94,16 @@ def main():
 			import config
 			config._setStartOnLogonScreen(enable)
 		elif action == "explore_userConfigPath":
-			import systemUtils
-			systemUtils.openUserConfigurationDirectory()
+			ret = getNvdaHelperRemote().nvdaControllerInternal_openConfigDirectory()
+			if ret != 0:  # NVDA is not running
+				import systemUtils
+				systemUtils.openDefaultConfigurationDirectory()
 		elif action == "addons_installAddonPackage":
 			try:
 				addonPath=args[0]
 			except IndexError:
 				raise ValueError("Addon path was not provided.")
-			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-			import ctypes
-			h = ctypes.windll.kernel32.LoadLibraryExW(
-				os.path.join(globalVars.appDir, "lib", versionInfo.version, "nvdaHelperRemote.dll"),
-				0,
-				# Using an altered search path is necessary here
-				# As NVDAHelperRemote needs to locate dependent dlls in the same directory
-				# such as minhook.dll.
-				winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
-			)
-			remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
-			ret = remoteLib.nvdaControllerInternal_installAddonPackageFromPath(addonPath)
+			ret = getNvdaHelperRemote().nvdaControllerInternal_installAddonPackageFromPath(addonPath)
 			if ret != 0:
 				import winUser
 				winUser.MessageBox(0,
