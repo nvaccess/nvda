@@ -18,6 +18,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <atlcomcli.h>
 #include <string>
 #include <map>
+#include <vector>
+#include <utility>
 #include <memory>
 #include <ia2.h>
 
@@ -33,6 +35,12 @@ bool fetchIA2Attributes(IAccessible2* pacc2, std::map<std::wstring, std::wstring
  * @param attribsMap: The map into which the attributes should be placed, with keys and values as strings.
  */
 void IA2AttribsToMap(const std::wstring &attribsString, std::map<std::wstring, std::wstring> &attribsMap);
+
+/**
+* Helper to collect the children for an IAccessible, uses memory managed types that will clear / delete automatically.
+*/
+std::pair<std::vector<CComVariant>, HRESULT>
+getAccessibleChildren(IAccessible* pacc, long indexOfFirstChild, long maxChildCount);
 
 /**
  * Base class to support retrieving hyperlinks (embedded objects) from

@@ -74,6 +74,28 @@ void IA2AttribsToMap(const wstring &attribsString, map<wstring, wstring> &attrib
 	}
 }
 
+std::pair<std::vector<CComVariant>, HRESULT>
+getAccessibleChildren(IAccessible* pacc, long indexOfFirstChild, long maxChildCount) {
+	std::vector<CComVariant> varChildren(maxChildCount);
+	const auto res = AccessibleChildren(
+		pacc,
+		indexOfFirstChild,
+		maxChildCount,
+		varChildren.data(),
+		&maxChildCount
+	);
+	if (res != S_OK) {
+		return std::make_pair(
+			std::vector<CComVariant>(0),
+			res
+		);
+	}
+	// shrink the vector in case less children were returned.
+	varChildren.resize(maxChildCount); // so that varChildren.size() will equal actual filled size
+	varChildren.shrink_to_fit(); // so that excess capacity isn't kept
+	return std::make_pair(varChildren, S_OK);
+}
+
 CComPtr<IAccessibleHyperlink> HyperlinkGetter::next() {
 	return this->get(this->index++);
 }
