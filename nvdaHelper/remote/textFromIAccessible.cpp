@@ -20,6 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/ia2utils.h>
 
 using namespace std;
+auto constexpr OBJ_REPLACEMENT_CHAR = L'\xfffc';
 
 
 bool getTextFromIAccessible(
@@ -83,7 +84,7 @@ bool getTextFromIAccessible(
 			for (long index = 0; index < textLength; ++index) {
 				wchar_t realChar = bstrText[index];
 				bool charAdded = false;
-				if (realChar == L'\xfffc') {
+				if (realChar == OBJ_REPLACEMENT_CHAR) {
 					long hyperlinkIndex;
 					if (paccHypertext && paccHypertext->get_hyperlinkIndex(startOffset + index, &hyperlinkIndex) == S_OK) {
 						IAccessibleHyperlink* paccHyperlink = NULL;
@@ -108,7 +109,7 @@ bool getTextFromIAccessible(
 				if (!charAdded && includeTopLevelText) {
 					textBuf.append(1, realChar);
 					charAdded = true;
-					if (realChar != L'\xfffc' && !iswspace(realChar)) {
+					if (realChar != OBJ_REPLACEMENT_CHAR && !iswspace(realChar)) {
 						gotText = true;
 					}
 				}
@@ -129,7 +130,7 @@ bool getTextFromIAccessible(
 		pacc2->get_accName(varChild, &val);
 		if (val) {
 			for (int i = 0; val[i] != L'\0'; ++i) {
-				if (val[i] != L'\xfffc' && !iswspace(val[i])) {
+				if (val[i] != OBJ_REPLACEMENT_CHAR && !iswspace(val[i])) {
 					valEmpty = false;
 					break;
 				}
@@ -146,7 +147,7 @@ bool getTextFromIAccessible(
 		pacc2->get_accDescription(varChild, &val);
 		if (val) {
 			for (int i = 0; val[i] != L'\0'; ++i) {
-				if (val[i] != L'\xfffc' && !iswspace(val[i])) {
+				if (val[i] != OBJ_REPLACEMENT_CHAR && !iswspace(val[i])) {
 					valEmpty = false;
 					break;
 				}
