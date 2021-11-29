@@ -1,6 +1,5 @@
 /*
 This file is a part of the NVDA project.
-URL: http://www.nvda-project.org/
 Copyright 2006-2021 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
@@ -13,11 +12,16 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 #include <string>
 
-#ifndef IA2LIVEREGIONS_H
-#define IA2LIVEREGIONS_H
+#ifndef IA2TEXTFROMIACCESSIBLE_H
+#define IA2TEXTFROMIACCESSIBLE_H
+struct IAccessible2;
 
+bool getTextFromIAccessible(
+    std::wstring& textBuf,
+    IAccessible2* pacc2,
+    bool useNewText = false,
+    bool recurse = true,
+    bool includeTopLevelText = true
+);
 
-void ia2LiveRegions_inProcess_initialize();
-void ia2LiveRegions_inProcess_terminate();
-
-#endif  // IA2LIVEREGIONS_H
+#endif  // IA2TEXTFROMIACCESSIBLE_H

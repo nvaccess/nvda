@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "COMProxyRegistration.h"
 #include "IA2Support.h"
 #include <atlcomcli.h>
-#include "ia2LiveRegions.h"  // should be more specific, for getTextFromIAccessible
+#include "textFromIAccessible.h"
 
 using namespace std;
 
