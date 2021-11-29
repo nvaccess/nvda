@@ -13,6 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include "textFromIAccessible.h"
 #include <string>
+#include <vector>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <atlcomcli.h>
@@ -41,11 +42,10 @@ bool getTextFromIAccessible(
 		//no IAccessibleText interface, so try children instead
 		long childCount = 0;
 		if (!useNewText && pacc2->get_accChildCount(&childCount) == S_OK && childCount > 0) {
-			VARIANT* varChildren = new VARIANT[childCount];
-			AccessibleChildren(pacc2, 0, childCount, varChildren, &childCount);
-			for (int i = 0; i < childCount; ++i) {
-				if (varChildren[i].vt == VT_DISPATCH && varChildren[i].pdispVal) {
-					CComQIPtr<IAccessible2, &IID_IAccessible2> pacc2Child(varChildren[i].pdispVal);
+			auto[varChildren, accChildRes] = getAccessibleChildren(pacc2, 0, childCount);
+			for(auto& child : varChildren){
+				if (child.vt == VT_DISPATCH && child.pdispVal) {
+					CComQIPtr<IAccessible2, &IID_IAccessible2> pacc2Child(child.pdispVal);
 					if (pacc2Child) {
 						map<wstring, wstring> childAttribsMap;
 						fetchIA2Attributes(pacc2Child, childAttribsMap);
@@ -61,9 +61,7 @@ bool getTextFromIAccessible(
 						}
 					}
 				}
-				VariantClear(varChildren + i);
 			}
-			delete[] varChildren;
 		}
 	}
 	else if (paccText) {
