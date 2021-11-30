@@ -1101,7 +1101,10 @@ the NVDAObject for IAccessible
 				event_windowHandle=self.event_windowHandle, event_objectID=self.event_objectID, event_childID=child[1])
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0], IAccessibleChildID=child[1]))
 
-	def _get_IA2Attributes(self):
+	#: Type definition for auto prop '_get_IA2Attributes'
+	IA2Attributes: typing.Dict[str, str]
+
+	def _get_IA2Attributes(self) -> typing.Dict[str, str]:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return {}
 		try:
@@ -1442,7 +1445,10 @@ the NVDAObject for IAccessible
 				pass
 		raise NotImplementedError
 
-	def _get__IA2Relations(self):
+	#: Type definition for auto prop '_get__IA2Relations'
+	_IA2Relations: typing.List[IA2.IAccessibleRelation]
+
+	def _get__IA2Relations(self) -> typing.List[IA2.IAccessibleRelation]:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			raise NotImplementedError
 		import ctypes
@@ -1452,7 +1458,7 @@ the NVDAObject for IAccessible
 		except COMError:
 			raise NotImplementedError
 		if size <= 0:
-			return ()
+			return list()
 		relations = (ctypes.POINTER(IA2.IAccessibleRelation) * size)()
 		count = ctypes.c_int()
 		# The client allocated relations array is an [out] parameter instead of [in, out], so we need to use the raw COM method.
@@ -1461,11 +1467,21 @@ the NVDAObject for IAccessible
 			raise NotImplementedError
 		return list(relations)
 
-	def _getIA2RelationFirstTarget(self, relationType):
+	def _getIA2RelationFirstTarget(
+			self,
+			relationType: str
+	) -> typing.Optional["IAccessible"]:
+		""" Get the first target for the relation of type.
+		@param relationType: A IAccessibleHandler.IA2_RELATION_* constant.
+		"""
+
 		for relation in self._IA2Relations:
 			try:
 				if relation.relationType == relationType:
-					return IAccessible(IAccessibleObject=IAccessibleHandler.normalizeIAccessible(relation.target(0)), IAccessibleChildID=0)
+					return IAccessible(
+						IAccessibleObject=IAccessibleHandler.normalizeIAccessible(relation.target(0)),
+						IAccessibleChildID=0
+					)
 			except COMError:
 				pass
 		return None

@@ -9,7 +9,12 @@ from .types import RelationType  # noqa: F401
 
 import re
 import struct
-from typing import Optional, Tuple
+from typing import (
+	Optional,
+	Tuple,
+	Dict,
+	Union,
+)
 import weakref
 from ctypes import (
 	wintypes,
@@ -540,12 +545,20 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 		winUser.EVENT_OBJECT_SHOW
 	):
 		if not isinstance(focus, NVDAObjects.IAccessible.IAccessible):
-			if isMSAADebugLoggingEnabled():
-				log.debug(
-					f"Ignoring MSAA caret event on non-MSAA focus {focus}, "
-					f"winEvent {getWinEventLogInfo(window, objectID, childID)}"
-				)
-			return False
+			# #12855: Ignore MSAA caret event on non-MSAA focus.
+			# as Chinese input method fires MSAA caret events over and over on UIA Word documents.
+			# #13098: However, limit this specifically to UIA Word documents,
+			# As other UIA documents (E.g. Visual Studio)
+			# Seem to rely on MSAA caret events,
+			# as they do not fire their own UIA caret events.
+			from NVDAObjects.UIA.wordDocument import WordDocument
+			if isinstance(focus, WordDocument):
+				if isMSAADebugLoggingEnabled():
+					log.debug(
+						f"Ignoring MSAA caret event on focused UIA Word document"
+						f"winEvent {getWinEventLogInfo(window, objectID, childID)}"
+					)
+				return False
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				"handling winEvent as caret event on focus. "
@@ -1115,15 +1128,15 @@ ATTRIBS_STRING_BASE64_THRESHOLD = 4096
 
 
 # C901: splitIA2Attribs is too complex
-def splitIA2Attribs(attribsString):  # noqa: C901
+def splitIA2Attribs(  # noqa: C901
+		attribsString: str
+) -> Dict[str, Union[str, Dict]]:
 	"""Split an IAccessible2 attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
 	Subattributes are handled. Subattribute keys and values are placed into a dict which becomes the value
 	of the attribute.
 	@param attribsString: The IAccessible2 attributes string to convert.
-	@type attribsString: str
 	@return: A dict of the attribute keys and values, where values are strings or dicts.
-	@rtype: {str: str or {str: str}}
 	"""
 	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
 	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:

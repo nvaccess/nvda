@@ -315,7 +315,7 @@ Der er nogle nyttige kommandoer, når du flytter fokus rundt i systemet:
 | Sig det aktuelle fokus | NVDA+Tab | NVDA+Tab | annoncerer det aktuelle objekt eller kontrol, der er i fokus. Tryk to gange for at få oplysningerne stavet |
 | Sig titel | NVDA+t | NVDA+t | Rapporterer titlen på det aktive vindue. Tryk to gange for at få oplysningerne stavet. Tryk tre gange for at kopiere til udklipsholderen. |
 | Læs det aktive vindue | NVDA+b | NVDA+b | Læser alle kontrolelementerne i det aktive vindue (nyttigt i dialogbokse) |
-| Læs statuslinje | NVDA+End | NVDA+Shift+End | Annoncerer statuslinjen hvis NVDA kan finde den. Det flytter også navigatorobjektet til denne position. Tryk to gange for at få stavet informationen. Et tredje tryk vil kopiere informationen til udklipsholderen. |
+| Læs statuslinje | NVDA+End | NVDA+Shift+End | Annoncerer statuslinjen, hvis NVDA kan finde den. Tryk to gange for at få stavet informationen. Et tredje tryk vil kopiere informationen til udklipsholderen. |
 %kc:endInclude
 
 ++ Navigering med systemmarkøren ++[SystemCaret]
@@ -381,6 +381,7 @@ For at navigere imellem objekter, skal du benytte følgende kommandoer:
 | Aktivér aktuelle navigatorobjekt | NVDA+Numpad-Enter | NVDA+Enter | Dobbelttryk | Aktiverer det nuværende navigatorobjekt (svarende til at klikke med musen eller trykke på mellemrums tasten, når det er i fokus) |
 | Flyt systemfokus eller systemmarkør til den aktuelle læseposition | NVDA+Shift+Numpad-Minus | NVDA+Shift+Backmellemrum | Ingen | Tryk en gang for at flytte systemfokus til det nuværende navigatorobjekt. Tryk to gange for at flytte systemmarkøren til læsemarkøren.
 | Sig læsemarkørens position | NVDA+Numpad-del | NVDA+Del | Ingen | Giver information om placeringen af teksten eller objektet ved læsemarkøren. Fx. procentdel af dokumentet, afstand fra venstre kant af siden eller den præcise position på skærmen. To tryk kan give flere detaljer. |
+| Flyt læsemarkøren til statuslinjen | ingen | ingen | ingen | Oplyser, hvad der står på statuslinjen, hvis NVDA kan finde den. Dette flytter også læsemarkøren til statuslinjens placering. |
 %kc:endInclude
 
 Bemærk: For at det numeriske tastatur skal fungere korrekt, skal Num Lock-tasten være slået fra.
@@ -1184,11 +1185,6 @@ Her kan du vælge, hvor mange sætningstegn og andre symboler, der skal udtales 
 Hvis du f.eks. sætter niveauet til "alt", vil alle symboler blive udtalt.
 Denne indstilling gælder for alle talesynteser og ikke kun den, der er aktiv i øjeblikket.
 
-==== Læs alle sætningstegn og symboler, når du gennemgår tekst ord for ord ====[SpeechSettingsSymbolLevelWord]
-Når man gennemgår en tekst ord for ord, er det ofte ønskeligt at få flere detaljer, end når man læser en hel sætning.
-Når denne indstilling er markeret (som standard), udtaler NVDA navnet på al tegnsætning og andre symboler, når det gennemgås ord for ord, som om ovenstående tegnsætningsniveau var sat til "alle".
-Bemærk: Under alle omstændigheder, ved gennemgang af en tekst tegn for tegn, rapporterer NVDA altid tegnsætningen og andre symboler.
-
 ==== Brug stemmens aktuelle sprog til behandling af specialtegn og symboler ====[SpeechSettingsTrust]
 Med den indstilling, som er slået til som standard, kan du vælge om du vil benytte sproget for den aktuelle stemme til udtale af tegn og symboler.
 Hvis du opdager, at NVDA læser tegn og symboler på et forkert sprog med en bestemt talesyntese eller stemme, kan du slå denne indstilling fra for at tvinge NVDA til at benytte sin globale sprogindstilling.
@@ -1404,7 +1400,11 @@ Almindelige indstillinger er "Automatisk" (hvilket gør at NVDA anvender standar
 
 Denne indstilling er ikke tilgængelig, hvis dit display kun understøtter automatisk tilkobling.
 
-Se i dokumentationen for dit punktdisplay i afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for at læse om de mulige tilkoblingsmuligheder og tilgængelige porte.
+Læs dokumentationen for dit punktdisplay i afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for at læse om de mulige tilkoblingsmuligheder og tilgængelige porte.
+
+Bemærk: Hvis du forbinder to punktdisplays, der bruger den samme driver til din maskine på samme tid (f.eks. to Seika displays),
+vil det ikke i øjeblikket være muligt at fortælle NVDA, hvilket display, der skal benyttes.
+Derfor anbefales det, at du kun forbinder ét display af en bestemt type og af et bestemt mærke til din maskine ad gangen.
 
 +++ Syn +++[VisionSettings]
 Indstillingskategorien "Syn" lader dig aktivere, deaktivere samt konfigurere diverse [synshjælpemidler #Vision].
@@ -1580,9 +1580,10 @@ For at kunne slå simpel læsetilstand til og fra hvor som helst, tildel en bev�
 
 +++ Objektpræsentation (NVDA+control+o) +++[ObjectPresentationSettings]
 Denne indstillingskategori benyttes til at bestemme hvor meget information NVDA skal rapportere om kontrolelementer, såsom beskrivelse og positionsinformation osv.
-Denne indstillingskategori indeholder følgende indstillingsmuligheder:
+Disse indstillinger bliver som udgangspunkt ikke anvendt, når du er i gennemsynstilstand.
+Indstillingerne gælder som udgangspunkt kun for rapportering af fokus, eller når du bruger objektnavigation, men dog ikke, når du læser tekstindhold (f.eks. gennemsynstilstand).
 
-==== Oplys værktøjstips ====[ObjectPresentationReportToolTips]
+==== Oplys 	værktøjstips ====[ObjectPresentationReportToolTips]
 Dette er en check box der, når den er markeret, bevirker, at NVDA oplyser værktøjstips, når de kommer til syne.
 En del vinduer og kontroller viser en lille meddelelse (eller et værktøjstip), når musemarkøren flyttes hen over dem, eller i visse tilfælde når fokus flyttes til dem.
 
@@ -1745,7 +1746,7 @@ Du kan tilpasse annoncering af:
  - Skrifttypeattributter
  - hævet og sænket skrift
  - fremhævelse
- - Markeret (fremhævet tekst)
+ - Fremhævet (markeret) tekst
  - Typografi 
  - Farve
 - Dokumentinformation
@@ -1835,8 +1836,8 @@ Dette har en meget negativ indflydelse på ydelsen, særligt i programmer som Mi
 Når denne indstilling er aktiveret, vil NVDA hovedsageligt begrænse registreringen af disse hændelser til systemfokus.
 Hvis du oplever at NVDA forekommer langsom, kan du forsøge dig med denne indstilling.
 
-==== Benyt UI Automation til at få adgang til kontrolelementer for Microsoft &Word-dokumenter, når disse er tilgængelige ====
-Når denne indstilling er aktiveret, vil NVDA forsøge at benytte Microsoft UI Automation Accessibility API for at indfange information om diverse kontrolelementer i Microsoft Word-dokumenter.
+==== Benyt UI Automation til at få adgang til kontrolelementer for Microsoft &Word-dokumenter, når dette er tilgængeligt ====
+Når denne indstilling er aktiveret, vil NVDA forsøgsvis benytte Microsoft UI Automation Accessibility API for at indfange information om diverse kontrolelementer i Microsoft Word-dokumenter. Dette gælder også ældre versioner af Microsoft Office 2016/365.
 Dette omfatter selve Microsoft Word, samt under skrivning og læsning af meddelelser i Microsoft Outlook.
 For de seneste versioner af Microsoft Office 2016/365 kørende på windows 10 og nyere er understøttelse af UI Automation komplet nok til næsten at give samme oplevelse, der allerede leveres med NVDA. Denne indstilling har også den fordel, at reaktionshastigheden er øget markant.
 Vær dog opmærksom på, at dette også kan betyde at noget information ikke er synligt, eller vises forkert, hvilket betyder at denne understøttelse ikke altid kan forekomme pålidelig.
@@ -1858,15 +1859,24 @@ Du kan vælge følgende indstillinger:
 - Nej: Brug ikke UIA, selv hvis NVDA ikke kan forbinde sig selv med processen. Dette kan være nyttigt, hvis udviklere er i færd med at problemløse IA2 og vil sikre sig, at NVDA ikke benytter UIA.
 -
 
-==== Aktivér eksperimentel understøttelse for ARIA-annotationer ====[Annotations]
-Denne indstilling bruges til at aktivere funktioner, der er afhængige af ARIA-annotationer.
+==== Annotationer ====[Annotations]
+Denne gruppe af indstillinger bruges til at aktivere eksperimentel understøttelse af ARIA-annotationer.
 Nogle af disse funktioner er ufuldstændige.
 Følgende indstillinger er tilgængelige:
-- "Rapportér detaljer i gennemsynstilstand": Denne indstilling giver besked, hvis et objekt har yderligere detaljer i gennemsynstilstand.
+- "Oplys detaljer i gennemsynstilstand": Denne indstilling giver besked, hvis et objekt har yderligere detaljer i gennemsynstilstand.
 Du kan få en oversigt over detaljerne, hvis du tildeler en kommando til funktionen via [dialogen "Håndtér Kommandoer" #InputGestures].
+- "Oplys altid aria-beskrivelse":
+  Når kilden af ``accDescription`` er aria-description, vil beskrivelsen blive oplyst.
+  Dette er brugbart for annotationer på internettet.
+  Bemærk:
+  - Der er mange kilder for ``accDescription``, hvor flere har blandede eller upålidelig semantik.
+    Historisk set, så har hjælpeteknologier ikke været i stand til at kende forskel på diverse kilder for ``accDescription``. Typisk blev dette ignoreret, navnligt pga. af de upålidelige kilder.
+  - Denne funktion er under meget tidlig udvikling, hvilket betyder, at funktionaliten ikke er bredt tilgængelig i alle browsere.
+  - Denne funktionalitet forventes at virke med Chromium 92.0.4479.0+
+  -
 -
 
-==== Benyt UI Automation til at få adgang til kontrolelementer for Microsoft &Excel-regneark, når disse er tilgængelige ====[UseUiaForExcel]
+==== Benyt UI Automation til at få adgang til kontrolelementer for Microsoft &Excel-regneark, når dette er tilgængeligt ====[UseUiaForExcel]
 Når denne indstilling er aktiveret, vil NVDA forsøge at benytte Microsoft UI Automation Accessibility API til at få informationer fra kontrolelementer for Microsoft Excel-regneark.
 Dette er en eksperimental funktion, og nogle funktioner vil ikke være tilgængelig i denne tilstand.
 Du kan f.eks. ikke bruge elementlisten til at vise formularer og kommentarer, og du kan heller ikke benytte bogstavnavigation i gennemsynstilstand til at springe til formularfelter i et regneark.
@@ -1903,10 +1913,21 @@ Denne indstilling er automatisk aktiveret som standard i NVDA 2021.1.
 Denne indstilling lader dig konfigurere hvor mange millisekunder NVDA skal vente på systemmarkøren (indsættelsesmarkøren) i redigerbare tekstfelter.
 Hvis du opdager, at NVDA har problemer med at følge systemmarkøren (f.eks. hvis NVDA konsekvent er et tegn bagud eller gentager linjer), kan du forøge denne værdi.
 
+==== Oplys gennemsigtige farveværdier ====[ReportTransparentColors]
+Denne indstilling lader NVDA oplyse, når farver er gennemsigtige. Dette er brugbart, hvis man er ved at udvikle en tilføjelse eller et app-modul, der har til hensigt at forbedre brugeroplevelsen for tredjepartsprogrammer.
+Nogle GDI-applikationer vil fremhæve tekst med en baggrundsfarve. NVDA (via display model) vil forsøge at oplyse farven.
+I nogle tilfælde kan det være, at tekstens baggrund er fuldstændig gennemsigtig, hvor selve teksten befinder sig i lag på et andet gui-element.
+Med flere historisk populære GUI API'er kan teksten gengives med en gennemsigtig baggrund, men visuelt er baggrundsfarven nøjagtig. 
+
 ==== Aktiverede logningskategorier ====
 Check boxene i denne liste lader dig vælge, hvilke logningskategorier der skal benyttes under skrivning af NVDAs logfil.
 Logning af disse hændelser kan resultere i lavere ydeevne og store logfiler.
 Slå kun dette til, hvis du er blevet bedt om det af en NVDA-udvikler (f.eks. for at finde ud af, hvorfor et punktdisplay ikke fungere som forventet).
+
+==== Afspil en lyd, når fejl opstår ====[PlayErrorSound]
+Denne indstilling lader dig vælge om NVDA skal afspille en lyd, når fejl logføres.
+Ved at vælge "Kun i testversioner af NVDA", vil NVDA kun afspille lyden, hvis din version er en testversion (alpha, beta eller NVDA køres fra kildekoden). Denne indstilling er standard.
+Ved at vælge "Ja" vil en lyd afspilles, uanset din version af NVDA.
 
 ++ Yderligere indstillinger ++[MiscSettings]
 Udover [NVDAs indstillingsdialog #NVDASettings], indeholder menuen "Opsætning" under NVDA-menuen yderligere indstillinger, der beskrives nedenfor.
@@ -2334,6 +2355,7 @@ Følgende displays understøtter denne funktionalitet:
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
+- Ethvert punktdisplay, der understøtter HID Braille-protokollen.
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -3156,6 +3178,37 @@ Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brlt
 | Flyt punktdisplay til forrige linje | lnup (gå en linje op) |
 | Flyt punktdisplay til næste linje | lndn (gå en linje ned) |
 | Flyt til punktcelle | fly (bring markør til tegn) |
+%kc:endInclude
+
+++ Standard HID Braille displays ++[HIDBraille]
+Dette er en eksperimentel driver for den nye HID Braille standard, som firmaerne Microsoft, Google, Apple samt flere virksomheder bag hjælpeteknologier nåede til enighed om, herunder NV Access.
+Håbet er, at denne standard vil blive vedtaget og benyttet af fremtidige fabrikanter af punktdisplays, hvilket vil fjerne behovet for særskilte drivere.
+
+NVDAs automatiske tilkobling vil også automatisk genkende punktdisplays, der bruger denne standard.
+ 
+Følgende er tastekombinationerne ved brug af displays, der bruger denne standard.
+%kc:beginInclude
+|| Navn | Tast |
+| Rul punktdisplay tilbage | panorer til venstre eller vippeknap op|
+| Rul punktdisplay fremad | panorer til højre eller vippeknap ned |
+| Flyt punktdisplay til forrige linje | mellemrum + punkt1 |
+| Flyt punktdisplay til næste linje | mellemrum + punkt4 |
+| Flyt til punktcelle | markørflytteknap|
+| Skift indstillingen Punkt følger | op+ned |
+| Pil op | joystick op |
+| Pil ned | joystick ned |
+| Venstre pil | mellemrum+punkt3 eller joystick venstre |
+| Højre pil | mellemrum+punkt6 eller joystick højre |
+| shift+tab | mellemrum+punkt1+punkt3 |
+| tab | mellemrum+punkt4+punkt6 |
+| alt | mellemrum+punkt1+punkt3+punkt4 (mellemrum+m) |
+| escape | mellemrum+punkt1+punkt5 (mellemrum+e) |
+| Enter | punkt8 eller tryk på midten af joystick|
+| windows | mellemrum+punkt3+punkt4 |
+| alt+tab | mellemrum+punkt2+punkt3+punkt4+punkt5 (mellemrum+t) |
+| NVDA-menu | mellemrum+punkt1+punkt3+punkt4+punkt5 (mellemrum+n) |
+| Windows+d (minimer alle programmer og gå til skrivebordet) | mellemrum+punkt1+punkt4+punkt5 (mellemrum+d) |
+| Sig alt | Mellemrum+punkt1+punkt2+punkt3+punkt4+punkt5+punkt6 |
 %kc:endInclude
 
 + Avancerede emner +[AdvancedTopics]

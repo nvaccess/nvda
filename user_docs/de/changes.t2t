@@ -5,8 +5,8 @@ Was ist neu in NVDA
 
 = 2021.3 =
 Diese Version bietet Unterstützung für die neue HID-Braille-Spezifikation.
-Diese Spezifikation zielt darauf ab, die Unterstützung für Braillezeilen zu standardisieren, ohne dass individuelle Treiber benötigt werden.
-Es gibt Updates für eSpeak-NG und LibLouis, einschließlich neue Braille-Tabellen für Russisch und Tshivenda.
+Diese Spezifikation vereinfacht die Unterstützung für Braillezeilen zu standardisieren, ohne dass individuelle Treiber benötigt werden.
+Neue Updates für eSpeak-NG und Liblouis, einschließlich neue Braille-Tabellen für Russisch und Tshivenda.
 Fehlertöne können in stabilen Builds von NVDA über eine neue Option für erweiterte Einstellungen aktiviert werden.
 Alles Lesen in Microsoft Word scrollt nun durch die Ansicht, um die aktuelle Position sichtbar zu halten.
 Es gibt viele Verbesserungen bei der Verwendung von UIA in Office-Anwendungen.
@@ -14,7 +14,7 @@ Ein Problem mit UIA wurde behoben, dass Outlook jetzt mehr Arten von Layouttabel
 
 Wichtige Anmerkungen:
 
-Auf Grund einer Aktualisierung unseres Sicherheitszertifikats erhalten einige Benutzer einen Fehler, wenn NVDA 2021.2 nach Updates suchen.
+Auf Grund einer Aktualisierung unseres Sicherheitszertifikats erhalten einige Benutzer einen Fehler, wenn NVDA 2021.2 nach Updates sucht.
 NVDA fordert nun Windows auf, Sicherheitszertifikate zu aktualisieren, wodurch dieser Fehler in Zukunft verhindert wird.
 Betroffene Benutzer müssen dieses Update manuell herunterladen.
 
@@ -39,25 +39,25 @@ Betroffene Benutzer müssen dieses Update manuell herunterladen.
 - Beim Lesen der Statusleiste mit ``NVDA+Ende`` wird der NVDA-Cursor nicht mehr an die Position verschoben.
 Wenn Sie jedoch diese Funktionalität benötigen, weisen Sie dem entsprechenden Skript in der Kategorie "Objekt-Navigation" im Dialogfeld für die Tastenbefehle einen entsprechenden Tastenbefehl zu. (#8600)
 - Beim Öffnen eines bereits geöffneten Einstellungsdialogs legt NVDA den Fokus auf den vorhandenen Dialog, anstatt einen Fehler auszulösen. (#5383)
-- Für Builds von Microsoft Office 2016 / 365 ab der Build-Nummer 13900 verwendet NVDA nun immer die UIA, um auf Microsoft Word-Dokumentsteuerelemente zuzugreifen, unabhängig davon, ob der Benutzer die erweiterte Einstellung UIA für den Zugriff auf Microsoft Word-Dokumentsteuerelemente verwenden aktiviert oder deaktiviert hat. (#12770)
 - Liblouis Braille-Übersetzer aktualisiert auf [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
   - Neue Braille-Tabellen: Russisch Vollschrift, Tshivenda Vollschrift, Tshivenda Kurzschrift
   -
 - Anstelle von "Markierter Inhalt" oder "mrkd" wird "hervorgehoben" in Braille oder mit der Sprachausgabe mitgeteilt. (#12892)
+- NVDA versucht nicht länger unter manchen Umständen das geöffnete Dialogfeld selbst zu schließen, wenn Dialogfelder auf eine erforderliche Aktion warten (z. B. bei Bestätigen bzw. Abbrechen). (#12984)
 -
 
 
 == Fehlerbehebung ==
 - Das Verfolgen von NVDA-Tasten (wie Strg oder Einfügen) ist robuster, wenn "Watchdog" wiederhergestellt wird. (#12609)
 - Es ist wieder möglich, auf bestimmten Systemen nach NVDA-Updates zu suchen; z. B. nach einer Bereinigung oder kompletten Neuinstallationen von Windows. (#12729)
-- NVDA teilt leere Tabellenzellen in Microsoft Word nun korrekt mit, wenn die UIA verwendet wird. (#11043)
+- NVDA teilt leere Tabellenzellen in Microsoft Word nun korrekt mit, wenn UIA verwendet wird. (#11043)
 - In ARIA-Datenrasterzellen im Web wird die Escape-Taste jetzt an das Raster weitergegeben und deaktiviert den Fokusmodus nicht mehr bedingungslos. (#12413)
 - Beim Lesen einer Kopfzeile einer Tabelle in Chrome wurde korrigiert, dass der Spaltenname zweimal angesagt wird. (#10840)
 - NVDA meldet keinen numerischen Wert mehr für UIA-Schieberegler, für die eine Textdarstellung ihres Wertes definiert ist. (UIA ValuePattern wird jetzt RangeValuePattern vorgezogen). (#12724)
 - NVDA behandelt den Wert von UIA-Schiebereglern nicht mehr immer prozentual.
 - Das Mitteilen des Standorts einer Zelle in Microsoft Excel beim Zugriff über die UIA funktioniert unter Windows 11 wieder ordnungsgemäß. (#12782)
 - NVDA legt keine ungültigen Python-Gebietsschemas mehr fest. (#12753)
-- Wenn eine deaktivierte Erweiterung deinstalliert und dann erneut wieder installiert wird, wird dieses nun automatisch aktiviert. (#12792)
+- Wenn eine deaktivierte Erweiterung deinstalliert und dann erneut wieder installiert wird, wird diese nun automatisch aktiviert. (#12792)
 - Fehler beim Aktualisieren und Entfernen von Erweiterungen behoben, bei denen der Ordner der Erweiterung umbenannt wurde oder Dateien geöffnet wurden. (#12792, #12629)
 - Bei Verwendung der UIA für den Zugriff auf Steuerelemente in Microsoft Excel-Tabellenkalkulationen gibt NVDA nicht mehr redundant an, wenn eine einzelne Zelle ausgewählt wird. (#12530)
 - Weitere Dialogtexte werden in LibreOffice Writer automatisch vorgelesen, beispielsweise in Bestätigungsdialogen. (#11687)
@@ -73,7 +73,8 @@ Wenn Sie jedoch diese Funktionalität benötigen, weisen Sie dem entsprechenden 
 - Beim Zugriff auf MS Word mit UIA werden der Befehl zur Änderungsverfolgung und einige andere lokalisierte Befehle jetzt in Word mitgeteilt. (#12904)
 - Doppelte Ausgaben in Braille und der Sprachausgabe behoben, wenn "description" mit "content" oder "name" übereinstimmt. (#12888)
 - Bei der Eingabe in Microsoft Word mit aktiviertem UIA teilt NVDA die Rechtschreibfehler exakter mit. (#12161)
-- In Windows 11 teilt NVDA "Fenster" nicht mehr mit, wenn Sie Alt+Tab drücken, um zwischen den Anwendungen zu wechseln. (#12648)
+- In Windows 11 sagt NVDA nicht mehr "Fenster", wenn Sie Alt+Tab drücken, um zwischen den Anwendungen zu wechseln. (#12648)
+- Der neue Bereich der Modernen Kommentare wird nun in Microsoft Word unterstützt, wenn nicht über UIA auf das Dokument zugegriffen wird. Drücken Sie Alt+F12, um zwischen dem Panel und dem Dokument zu wechseln. (#12982)
 -
 
 
@@ -533,7 +534,7 @@ Zu den Highlights dieser Version gehört die Unterstützung mehrerer neuer Brail
 
 
 == Änderungen ==
-- NVDA verhindert nun, dass das System sich abschaltet oder in den Schlafmodus wechselt, während alles lesen aktiviert ist. (#10643)
+- NVDA verhindert nun, dass das System sich abschaltet oder in den Schlafmodus wechselt, während Alles Lesen aktiviert ist. (#10643)
 - Unterstützung für Out-of-Process iFrames in Mozilla Firefox. (#10707)
 - Der Liblouis Braille-Übersetzer wurde auf Version 3.12 aktualisiert. (#10161)
 
@@ -1952,7 +1953,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 - NVDA verhält sich nun korrekt, wenn Sie bei eingeschalteter Eingabehilfe die Taste für den Nummernblock drücken, um den Nummernblock ein- oder auszuschalten. (#4226)
 - In Google Chrome wird der Titel des Dokuments gelesen, wenn Sie die Registerkarte wechseln. (#4222)
 - In Google Chrome und Chrome-basierten Browsern wird die Adresse des Dokuments nicht mehr gelesen, wenn Sie das Dokument lesen. (#4223)
-- Der Treiber für die Sprachausgaben "Keine Sprache" simuliert nun ein vollständiges "alles lesen", Dies ist insbesondere für automatisierte Tests nützlich. (#4225)
+- Der Treiber für die Sprachausgaben "Keine Sprache" simuliert nun ein vollständiges "Alles Lesen", Dies ist insbesondere für automatisierte Tests nützlich. (#4225)
 - Der Dialogfeld zum Bearbeiten von Signaturen in Outlook ist nun voll zugänglich (Incl. Formaterkennung und Cursor-Verfolgung). (#3833)
 - Wenn Sie in Microsoft Word die letzte Zeile einer Tabellenzelle lesen, wird nicht mehr die gesamte Zelle gelesen. (#3421)
 - In Microsoft Word wird nicht mehr das gesamte Inhaltsverzeichnis gelesen, wenn Sie die erste oder letzte Zeile in einem Inhaltsverzeichnis lesen. (#3421)
@@ -2000,7 +2001,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 - Hinweisdialoge werden in Mozilla-Anwendungen nicht mehr doppelt angesagt. (#3481)
 - Wenn im Lesemodus eine Webseite automatisch aktualisiert wird, werden Sprungmarken und Container-Inhalte nicht doppelt vorgelesen, sobald darin navigiert wird (z. B. Twitter und Facebook). (#2199)
 - Wenn Sie den Fokus von einer Anwendung wegschalten, die nicht mehr reagiert, wird sich NVDA zuverlässiger neu starten. (#3825)
-- Wenn sich der System-Cursor in einem Eingabefeld befindet, das direkt auf den Bildschirm geschrieben wird, wird die Position des System-Cursors zuverlässiger aktualisiert, wenn Sie die Funktion "alles lesen" verwenden. (#4125)
+- Wenn sich der System-Cursor in einem Eingabefeld befindet, das direkt auf den Bildschirm geschrieben wird, wird die Position des System-Cursors zuverlässiger aktualisiert, wenn Sie die Funktion "Alles Lesen" verwenden. (#4125)
 
 
 = 2014.1 =
@@ -2036,8 +2037,8 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 - Problem behoben, wonach bestimmte Unicode-Zeichen im Lesemodus die anzeige von Beschriftungen für Elemente verhindert haben. (#2963).
 - Problem behoben, wonach die Eingabe Ostasiatischer Sonderzeichen in PUTTY fehlschlug (#3432)
 - Wenn Sie in einem Dokument im Lesemodus navigieren, nachdem Sie das Vorlesen des Dokuments abgebrochen haben, wird nun nicht mehr fälschlicherweise das Ende eines Containerobjektes (z. B. einer Tabelle) gemeldet (#3688).
-- Wenn Sie die Schnellnavigationstasten im Lesemodus verwenden, um das Vorlesen eines Dokumentes zu unterbrechen, während die Option "Navigation während alles Lesen erlauben" aktiviert ist, wird das aktuelle Element an der neuen Position korrekt angesagt. (#3689)
-- Die Navigationsbefehle zum Springen an den Anfang bzw. an das Ende eines Containerobjekts berücksichtigen jetzt die Option "Navigation während alles Lesen erlauben" (#3675).
+- Wenn Sie die Schnellnavigationstasten im Lesemodus verwenden, um das Vorlesen eines Dokumentes zu unterbrechen, während die Option "Navigation während Alles Lesen erlauben" aktiviert ist, wird das aktuelle Element an der neuen Position korrekt angesagt. (#3689)
+- Die Navigationsbefehle zum Springen an den Anfang bzw. an das Ende eines Containerobjekts berücksichtigen jetzt die Option "Navigation während Alles Lesen erlauben" (#3675).
 - Die Namen der Tastenbefehle werden nun im Dialogfeld "Einstellungen" -> "Eingaben" in übersetzter Form angezeigt. (#3624)
 - NVDA wird keine Abstürze mehr verursachen, wenn Sie die Maus über die Dokumentfenster (TRichEdit) mancher Programme bewegen. Dies betrifft u. a. Jarte 5.1 und BRfácil. (#3693, #3603, #3581)
 - ARIA-Elemente, die als Präsentation gekennzeichnet sind, werden nicht mehr angezeigt. (#3713)
@@ -2374,7 +2375,7 @@ Schwerpunkte in dieser Version sind: Unterstützung für asiatische Eingabemetod
 - Im Lesemodus werden Grafiken korrekterweise ignoriert, die als Platzhalter gekennzeichnet sind (z. B. durch die Angabe von alt="")
 - In Webbrowsern verbirgt NVDA nun Inhalte, die vor Bildschirmlesern versteckt gehalten werden sollen. Dies gilt insbesondere für solche Inhalte, die mit dem Attribut "aria-hidden" gekennzeichnet sind. (#2117)
 - Negative Währungsangaben (wie z. B. -$123) werden nun unabhängig von der eingestellten Symbolebene korrekt verarbeitet (#2625).
-- Während "Alles lesen" wird nun nicht mehr unerwartet auf die Standardsprache gewechselt, wenn eine Zeile nicht mit einem Satz endet. (#2630)
+- Während "Alles Lesen" wird nun nicht mehr unerwartet auf die Standardsprache gewechselt, wenn eine Zeile nicht mit einem Satz endet. (#2630)
 - Die Schriftarteninformationen werden nun in Adobe Reader 10.1 und neuer korrekt erkannt. (#2175)
 - Stellt ein Dokument im Adobe Reader Alternativtexte zur verfügung, so werden diese nun ausschließlich verwendet. Bisher wurden manchmal nutzlose Informationen angezeigt. (#2174)
 - Wenn ein Dokument eine Anwendung enthält, wird bei der Navigation im Lesemodus nicht mehr unerwartet in die anwendung gewechselt. Sie können dennoch mit der Anwendung arbeiten. Dies geschieht auf die gleiche Weise wie bei eingebetteten Objekten. (#990)
@@ -2472,7 +2473,7 @@ Die wichtigsten Neuerungen für diese Version beinhalten Funktionen, um Braille 
 - Text kann auf der Braillezeile Absatzweise anstatt Zeilenweise angezeigt werden. Dies erlaubt ein flüssigeres Lesen großer Textmengen. Die Einstellung kann über die Option "absatzweise lesen" in den Braille-Einstellungen konfiguriert werden. (#1891)
 - Im Lesemodus können Sie nun durch einmaliges Drücken einer Routing-Taste der Braillezeile das Objekt unter dem Cursor aktivieren. Dies bedeutet, dass Sie die Routing-Taste zweimal drücken müssen, falls sich der Cursor noch nicht auf dem Objekt befindet. (#1893)
 - Grundlegende Unterstützung für Internet-Bereiche in iTunes wie z. B. der Store. Andere Anwendungen, welche auf WebKit 1 beruhen, werden möglicherweise ebenfalls unterstützt. (#734)
-- In Büchern in Adobe Digital Editions 1.8.1 und neuer erfolgt nun ein automatischer Seitenwechsel, wenn Sie die Funktion "Alles lesen" verwenden. (#1978)
+- In Büchern in Adobe Digital Editions 1.8.1 und neuer erfolgt nun ein automatischer Seitenwechsel, wenn Sie die Funktion "Alles Lesen" verwenden. (#1978)
 - Neue Braillezeichensätze: Portugiesische Kurzschrift, Isländisches 8-Punkt-Computerbraille, Tamilische Vollschrift, Spanisches 8-Punkt-Computerbraille, Persische Vollschrift. (#2014)
 - In den Einstellungen für Dokumentformatierungen kann nun eingestellt werden, ob Rahmen in Dokumenten angesagt werden sollen. (#1900)
 - Bei der Verwendung von OpenBook wird automatisch der Schlafmodus aktiviert. (#1209)
@@ -2528,7 +2529,7 @@ Die wichtigsten Neuerungen für diese Version beinhalten Funktionen, um Braille 
 - Aus Gründen der besseren lesbarkeit wird beim Zurückverfolgen von Fehlern in den protokollen der Basispfad aus Dateireferenzen gestrichen. (#1880)
 - TextInfo-Objekte haben nun eine Methode namens Activate(), die das Aktivieren der von textinfo zurückgegebenen Position erlaubt.
  - Dies erlaubt das Aktivieren unter Verwendung der Routing-Tasten einer Braillezeile. Hierfür könnte es jedoch in Zukunft andere Methoden geben.
-- "TreeInterceptors" und "NVDAObjects", die nur eine Seite beinhalten, können automatischen Seitenwechsel während alles lesen unterstützen, wenn sie textInfos.DocumentWithPageTurns verwenden. (#1978)
+- "TreeInterceptors" und "NVDAObjects", die nur eine Seite beinhalten, können automatischen Seitenwechsel während Alles Lesen unterstützen, wenn sie textInfos.DocumentWithPageTurns verwenden. (#1978)
 - Einige Konstanten für Steuerelemente und ausgaben wurden umbenannt oder verschoben. (#228)
  - Die Konstanten "speech.REASON_*" wurden in die Steuerelemente verschoben.
  - Bei den Steuerelementen wurden "speechRoleLabels" und "speechStateLabel" in "roleLabels" bzw. "stateLabels" umbenannt.
@@ -2561,7 +2562,7 @@ Die wichtigsten neuerungen sind u. a. das automatische Wechseln der Synthesizers
 - Das Skript zum Lesen des aktiven Fensters wurde verbessert. Nun werden nutzlose Informationen ausgefiltert. (#1499)
 - Im Dialogfeld für den Lesemodus kann nun eingestellt werden, ob ein virtuelles Dokument nach dem Laden automatisch gelesen werden soll. (#414)
 - Wenn Sie versuchen, die statuszeile auszulesen (beispielsweise mit der Tastenkombination NVDA+Ende) und es existiert keine Statuszeile, so wird die unterste Zeile des Hauptfensters der aktiven Anwendung ausgelesen. (#649)
-- Wenn Sie im lesemodus ein virtuelles Dokument über die Funktion "alles lesen" lesen, wird NVDA nun nach Überschriften eine Pause einlegen, anstatt die Überschrift zusammen mit dem nachfolgenden Text als einen langen Satz zu lesen.
+- Wenn Sie im lesemodus ein virtuelles Dokument über die Funktion "Alles Lesen" lesen, wird NVDA nun nach Überschriften eine Pause einlegen, anstatt die Überschrift zusammen mit dem nachfolgenden Text als einen langen Satz zu lesen.
 - Wenn Sie im Lesemodus auf einer Registerkarte die Leer- oder Eingabetaste drücken, wird diese aktiviert, anstatt in den Fokusmodus zu wechseln. (#1760)
 - Sprachausgabe eSpeak auf Version 1.45.47 aktualisiert.
 
@@ -2602,7 +2603,7 @@ Die wichtigsten neuerungen sind u. a. das automatische Wechseln der Synthesizers
 
 
 = 2011.2 =
-Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserungen im Bereich der Satzzeichen und Symbole, einschließlich einstellbarer Ebenen, selbstwählbare Bezeichnungen und phonetisches Buchstabieren; keine Pausen am Zeilenende während alles lesen; verbesserte Unterstützung für ARIA im Internet Explorer; verbesserte Unterstützung für XFA/LiveCycle PDF dokumente in Adobe REader; Zugriff auf Text, der auf den Bildschirm geschriben wurde in mehr Anwendungen; und Zugriff auf Farb- und Formatierungsinformationen für text, der auf den Bildschirm geschrieben wurde.
+Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserungen im Bereich der Satzzeichen und Symbole, einschließlich einstellbarer Ebenen, selbstwählbare Bezeichnungen und phonetisches Buchstabieren; keine Pausen am Zeilenende während Alles Lesen; verbesserte Unterstützung für ARIA im Internet Explorer; verbesserte Unterstützung für XFA/LiveCycle PDF dokumente in Adobe REader; Zugriff auf Text, der auf den Bildschirm geschriben wurde in mehr Anwendungen; und Zugriff auf Farb- und Formatierungsinformationen für text, der auf den Bildschirm geschrieben wurde.
 
 
 == Neue Funktionen ==
@@ -2611,7 +2612,7 @@ Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserun
 - Sie können nun zwischen mehreren Ausführlichkeitsstufen für Satzzeichen und Sonderzeichen wählen. (#332)
 - Wenn ein Satzzeichen oder Symbol öfter als viermal auftaucht, wird die Anzahl der Zeichen angegeben, anstatt die Zeichen zu wiederholen. (#43)
 - Neue Braille-Übersetzungstabellen: Norwegisches 8-Punkt-Braille, Ethiopische Vollschrift, Slovenische Vollschrift, Serbische Vollschrift. (#1456)
-- Bei der Verwendung des Befehls "Alles lesen" macht die Sprachausgabe keine unnatürlichen Pausen mehr. (#149)
+- Bei der Verwendung des Befehls "Alles Lesen" macht die Sprachausgabe keine unnatürlichen Pausen mehr. (#149)
 - NVDA sagt nun an, wenn ettwas sortiert wurde (gemäß der "aria-sort-Richtlinie) in Internetbrowsern. (#1500)
 - Braillezeichen im Unicode-Format werden jetzt auf der Braillezeile richtig angezeigt. (#1505)
 - Wenn sich der Fokus im Internet Explorer und anderen MSHTML-Dokumenten über eine Gruppe von Elementen bewegt, welche von einem Attribut "fieldset" umgeben ist, sagt NVDA den Namen der Gruppe, also die Legende an. (#535)

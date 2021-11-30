@@ -5,7 +5,7 @@
 
 = 2021.3 =
 Ova inačica uvodi podršku za novu HID specifikaciju za brajične retke.
-Ova speciffikacija ima za cilj standardizaciju podrške za brajične retke bez potrebe za pojedinačnim upravljačkim programima.
+Ova specifikacija ima za cilj standardizaciju podrške za brajične retke bez potrebe za pojedinačnim upravljačkim programima.
 Nadograđeni su eSpeak-NG i LibLouis, uključujući nove tablice za ruski i Tshivenda jezike.
 Zvuci pogrešaka mogu biti omogućeni u stabilnim inačicama NVDA koristeći novu opciju u naprednim postavkama.
 Prečac čitaj sve u Wordu sada prebacuje kako bi trenutna pozicija bila vidljiva.
@@ -38,11 +38,11 @@ Korisnici koji su se susreli sa tom greškom će trebati ručno preuzeti ovu nad
 - Prilikom čitanja statusne trake koristeći ``NVDA+end``, pregledni kursor se neće pomicati na statusnu traku.
 Ako vam je ta značajka potrebna molimo dodijelite odgovarajući tipkovnički prečac u kategoriji objektna navigacija u dijaloškom okviru ulazne geste. (#8600)
 - Prilikom otvaranja postavki koje su već otvorene, NVDA će postaviti fokus na dijaloški okvir koji je već otvoren što je bolje od prikazivanja pogreške. (#5383)
-- Za međuverzije Microsoft Officea 2016/365 veće od 13900, NVDA će uvijek koristiti UI automation za pristup kontrolama dokumenta Microsoft Worda neovisno od uključene ili isključene opcije "Koristi UI Automation za pristup kontrolama Mocrosoft word dokumenata u naprednim postavkama. (#12770)
 - Nadograđen liblouis brajični prevoditelj na inačicu [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
  - Nove brajične tablice: ruski kratkopis, Tshivenda puno pismo, Tshivenda kratkopis
  -
 - Umjesto "označeni sadržaj" ili "mrkd", "istaknuto" ili "istk." biti će prikazano na brajičnom retku. (#12892)
+- NVDA više se neće pokušati isključiti kada se očekuje konkretna izvršena akcija u dijaloškom okviru (eg Confirm/Cancel). (#12984)
 -
 
 
@@ -73,6 +73,7 @@ Ako vam je ta značajka potrebna molimo dodijelite odgovarajući tipkovnički pr
 - Ispravljena pogreška dvostrukog izgovora i prikaza na brajičnom redku kada se poklapao  'opis' sa 'sadržajem' ili 'nazivom'. (#12888)
 - U MS Wordu sa uključenim UIA sučeljem, sada se točnije reproduciraju zvukovi koji označavaju pravopisnu ili gramatičku pogrešku prilikom pisanja. (#12161)
 - U Windowsima 11, NVDA više neće izgovarati "prozor" prilikom pritiska Alt+Tab kada se prebacujete između programa. (#12648)
+- Nova suvremena  prozor-stranica za komentare sada je podržana u MS Wordu kada se dokumentu ne pristupa koristeći UIA. Press alt+f12 to move between the side track pane and the document. (#12982)
 -
 
 

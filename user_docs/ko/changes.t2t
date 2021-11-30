@@ -3,6 +3,86 @@ NVDA 변경 이력
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3 =
+이번 릴리즈는 새로운 HID 점자 사양 지원을 소개합니다.
+이번 사양은 점자 디스플레이를 별도의 드라이버 필요없이 지원하기 위해 표준화하는 것을 목표로 합니다.
+eSpeak-NG와 LibLouis 엔진이 업데이트 되었으며, 러시아어와 벤다어 점자표가 포함되었습니다.
+NVDA 고급설정의 새로운 옵션을 통해 오류 효과음을 NVDA 안정화 버전에서도 활성화할 수 있습니다.
+이제 Word에서 모두 읽기 사용 시, 현재 스크롤 위치에서 보이는 만큼을 읽습니다.
+UIA와 Office를 사용할 때의 많은 개선사항이 있습니다. 
+UIA의 수정사항 중 한가지로, Outlook의 메시지에서 더 많은 종류의 레이아웃 테이블 무시할 수 있습니다.
+
+중요사항:
+
+NVDA 2021.2에서 보안 인증서의 업데이트로 인해 업데이트를 확인할 때 소수의 사용자에게 오류가 발생합니다.
+NVDA는 이제 Windows에 보안 인증서 업데이트를 요청하여 향후 이 오류를 방지할 수 있습니다.
+이에 영향을 받는 사용자는 이 업데이트를 수동으로 다운로드해야 합니다.
+
+
+== 새로운 기능 ==
+- 테이블 셀 테두리의 모양 알림을 토글할 수 있는 입력 제스처가 추가됩니다. (#10408)
+- 점자디스플레이 표준화를 목표로 지원 새로운 HID 점자 사양을 지원합니다. (#12523)
+  - 이 사양을 지원하는 점자 디스플레이를 NVDA에서 자동으로 감지됩니다.
+  - NVDA의 이 규격 구현에 대한 기술적 세부 사항은 다음을 확인하세요. https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+  -
+- VisioBraille Vario 4 Braille 기기를 지원을 추가합니다.. (#12607)
+- 아무 NVDA 버전에서 오류 알림을 활성화 할 수 있습니다(고급 설정에서). (#12672)
+- Windows 10 이상에서, 설정이나 Microsoft Store와 같은 앱에 있는 검색요소에 진입할 때, NVDA가 제안사항 개수를 알립니다.  (#7330, #12758, #12790)
+- PowerShell의 Out-GridView cmdlet을 사용하여 만들어진 그리드 컨트롤에서 테이블 탐색을 지원합니다. (#12928)
+-
+
+
+== Changes ==
+- ESpeak-NG가 업데이트되었습니다(버전 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``). (#12665)
+- OneCore 음성이 설치되어 있지 않으면 NVDA 기본음성을 eSpeak로 설정합니다. (#10451)
+- NVDA 기본 언어를 지원하는 설치된 OneCore 음성이 없을 경우 NVDA는 기본적으로 eSpeak으로 설정됩니다. (#10451)
+- OneCore 음성이 발화에 실패하면 음성엔진을 eSpeak로 설정합니다. (#11544)
+- ``NVDA+end``로 상태표시줄을 읽을 때, 더이상 해당 영역으로 리뷰커서를 이동하지 않습니다.
+이 기능이 필요하면 제스처 설정 대화상자의 객체 탐색 범주에 있는 해당 스크립트에 제스처를 할당하십시오. (#8600)
+- 이미 열려 있는 설정 대화 상자를 열 때 NVDA는 오류가 발생하기 보다는 기존 대화 상자에 초점을 맞춥니다. (#5383)
+- Liblouis 점역 엔진이 다음 버전으로 업데이트되었습니다. [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0] (#12810)
+  - 새 점자표: 러시아어 1종, 벤다어 1종, 벤다어 2종
+  -
+- 이제 말하기와 점자 출력에서 "표시된 문구"나 "mrkd" 대신에 "하이라이트"나 "hlght"를 출력합니다. (#12892)
+- 대화상자가 필요한 작업(예: 확인/취소)을 기다리고 있을 때 NVDA는 더 이상 종료 시도를 하지 않습니다. (#12984)
+-
+
+
+== Bug Fixes ==
+- Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
+- It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
+- NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
+- In ARIA data grid cells on the web, the Escape key will now be passed through to the grid and no longer turn off focus mode unconditionally. (#12413)
+- When reading a header cell of a table in Chrome, fix the column name being announced twice. (#10840)
+- NVDA no longer reports a numerical value for UIA sliders that have a textual representation of their value defined. (UIA ValuePattern is now preferred over RangeValuePattern). (#12724)
+- NVDA no longer treats the value of UIA sliders as always percentage based.
+- Reporting the location of a cell in Microsoft Excel when accessed via UI Automation again works correctly on Windows 11. (#12782)
+- NVDA no longer sets invalid Python locales. (#12753)
+- If a disabled addon is uninstalled and then re-installed it is re-enabled. (#12792)
+- Fixed bugs around updating and removing addons where the addon folder has been renamed or has files opened. (#12792, #12629)
+- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA no longer redundantly announces when a single cell is selected. (#12530)
+- LibreOffice Writer에서 확인 대화상자와 같이 더 많은 대화상자 텍스트를 자동으로 읽습니다. (#11687)
+- Reading / navigating with browse mode in Microsoft Word via UI automation now ensures the document is always scrolled so that the current browse mode position is visible, and that the caret position in focus mode correctly reflects the browse mode position. (#9611)
+- When performing Say all in Microsoft Word via UI automation, the document is now automatically scrolled, and the caret position is correctly updated. (#9611)
+- When reading emails in Outlook and NVDA is accessing the message with UI Automation, certain tables are now marked as layout tables, which means they will no longer be reported by default. (#11430)
+- 오디오 장치 변경 시 드물게 발생하던 오류가 수정되었습니다. (#12620)
+- Input with literary braille tables should behave more reliably when in edit fields. (#12667)
+- Windows 시스템 트레이 달력을 탐색할 때 NVDA는 전체 요일을 알립니다. (#12757)
+- When using a Chinese input method such as Taiwan - Microsoft Quick in Microsoft Word, scrolling the braille display forward and backward no longer incorrectly keeps jumping back to the original caret position. (#12855)
+- UIA를 통해 Microsoft Word 문서를 탐색할 때, 문장으로 탐색(alt+downArrow / alt+upArrow)이 다시 동작합니다. (#9254)
+- When accessing Microsoft Word documents via UIA, navigating by sentence (alt+downArrow / alt
+- UIA가 활성화된 MS Word 문서를 탐색할 때 단락 들여쓰기를 알립니다. (#12899)
+- When accessing MS Word with UIA, change tracking command and some other localized commands are now reported in Word . (#12904)
+- Fixed duplicate braille and speech when 'description' matches 'content' or 'name'. (#12888)
+- In MS Word with UIA enabled, more accurate playing of spelling error sounds as you type. (#12161)
+- Windows 11에서 NVDA는 Alt+Tab을 눌러 프로그램 간 전환할 때 더 이상 "창"을 알리지 않습니다. (#12648)
+- The new Modern Comments side track pane is now supported in MS Word when not accessing the document via UIA. Press alt+f12 to move between the side track pane and the document. (#12982)
+-
+
+
+== 개발자를 위한 내용 ==
+개발자를 위한 내용에 대해서는 영어판 changes.html 문서를 참조하세요. 
+
 = 2021.2 =
 이번 릴리즈는 Windows 11 지원을 위한 예비 지원이 도입됩니다.
 Windows 11은 아직 출시되지 않았지만 이 릴리스는 Windows 11의 미리 보기 버전에서 테스트되었습니다.

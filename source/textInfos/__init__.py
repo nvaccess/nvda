@@ -359,12 +359,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> List[Union[str, FieldCommand]]:
+	TextWithFieldsT = List[Union[str, FieldCommand]]
+
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> "TextInfo.TextWithFieldsT":
 		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
 			configuration for a particular task.
-		@type formatConfig: dict
 		@return: A sequence of text strings interspersed with associated field commands.
 		""" 
 		return [self.text]
@@ -506,8 +507,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		""" 
 		raise NotImplementedError
 
-	def _get_NVDAObjectAtStart(self):
-		"""retreaves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+	#: Typing information for auto-property: _get_NVDAObjectAtStart
+	NVDAObjectAtStart: "NVDAObjects.NVDAObject"
+
+	def _get_NVDAObjectAtStart(self) -> "NVDAObjects.NVDAObject":
+		"""Get the NVDAObject related to the start of the range.
+		Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
 		@returns: the NVDAObject at the start
 		"""
 		return self.obj
