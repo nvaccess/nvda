@@ -18,7 +18,7 @@ import config
 import winVersion
 import controlTypes
 from NVDAObjects.UIA import UIA
-from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
+from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior, EditableTextWithAutoSelectDetection
 
 
 class ImeCandidateUI(UIA):
@@ -280,3 +280,8 @@ class AppModule(appModuleHandler.AppModule):
 				"IME_Prediction_Window"
 			):
 				clsList.insert(0, ImeCandidateUI)
+			# #13104: newer revisions of Windows 11 build 22000 moves focus to emoji search field.
+			# However this means NVDA's own edit field scripts will override emoji panel commands.
+			# Therefore remove text field movement commands so emoji panel commands can be used directly.
+			elif obj.UIAAutomationId == "Windows.Shell.InputApp.FloatingSuggestionUI.DelegationTextBox":
+				clsList.remove(EditableTextWithAutoSelectDetection)
