@@ -1486,11 +1486,17 @@ the NVDAObject for IAccessible
 				pass
 		return None
 
-	def _get_flowsTo(self):
-		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_TO)
+	#: Type definition for auto prop '_get_flowsTo'
+	flowsTo: typing.Optional["IAccessible"]
 
-	def _get_flowsFrom(self):
-		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
+	def _get_flowsTo(self) -> typing.Optional["IAccessible"]:
+		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_TO)
+
+	#: Type definition for auto prop '_get_flowsFrom'
+	flowsFrom: typing.Optional["IAccessible"]
+
+	def _get_flowsFrom(self) -> typing.Optional["IAccessible"]:
+		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_FROM)
 
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithAutoSelectDetection):
