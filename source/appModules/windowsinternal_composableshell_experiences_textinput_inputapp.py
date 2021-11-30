@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""App module for Windows 10 Modern Keyboard aka new touch keyboard panel.
+"""App module for Windows 10/11 Modern Keyboard aka new touch keyboard panel.
 The chief feature is allowing NVDA to announce selected emoji when using the keyboard to search for and select one.
 Other features include announcing candidates for misspellings if suggestions for hardware keyboard is selected, and managing cloud clipboard paste.
 This is applicable on Windows 10 Fall Creators Update and later."""
