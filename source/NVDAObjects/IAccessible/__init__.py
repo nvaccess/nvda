@@ -1469,17 +1469,27 @@ the NVDAObject for IAccessible
 
 	def _getIA2RelationFirstTarget(
 			self,
-			relationType: str
+			relationType: typing.Union[str, "IAccessibleHandler.RelationType"]
 	) -> typing.Optional["IAccessible"]:
 		""" Get the first target for the relation of type.
-		@param relationType: A IAccessibleHandler.IA2_RELATION_* constant.
+		@param relationType: The type of relation to fetch.
 		"""
+		if not isinstance(relationType, IAccessibleHandler.RelationType):
+			if isinstance(relationType, str):
+				relationType = IAccessibleHandler.RelationType(relationType)
+			else:
+				raise TypeError(f"Bad type for 'relationType' arg, got: {type(relationType)}")
+
+		relationType = typing.cast(IAccessibleHandler.RelationType, relationType)
 
 		for relation in self._IA2Relations:
 			try:
 				if relation.relationType == relationType:
+					# Take the first of 'relation.nTargets' see IAccessibleRelation._methods_
+					target = relation.target(0)
+					ia2Object = IAccessibleHandler.normalizeIAccessible(target)
 					return IAccessible(
-						IAccessibleObject=IAccessibleHandler.normalizeIAccessible(relation.target(0)),
+						IAccessibleObject=ia2Object,
 						IAccessibleChildID=0
 					)
 			except COMError:
