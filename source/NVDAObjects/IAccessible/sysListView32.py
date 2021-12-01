@@ -156,9 +156,23 @@ class LVCOLUMN64(Structure):
 		('cxIdeal',c_int),
 	]
 
+
 class AutoFreeBSTR(BSTR):
-	"""A BSTR that *always* frees itself on deletion.""" 
+	"""A BSTR that *always* frees itself on deletion.
+	A BSTR (Basic string or binary string) is a string data type that is used by COM,
+	Automation, and Interop functions.
+
+	AutoFreeBSTR is useful where another library allocates (SysAllocString/SysAllocStringLen)
+	and you want to ensure that it will be deallocated (SysFreeString).
+	@note The conditions requiring the use of this class are not clear.
+		The current usage is considered legacy.
+	@note The BSTR (base class) from comtypes will free the string when it
+		is from an outparam (indicating that memory was allocated in the library).
+	@warning Don't use this unless you are certain about taking ownership of the memory.
+	@warning Deprecated, may be removed in future versions.
+	"""
 	_needsfree=True
+
 
 class List(List):
 

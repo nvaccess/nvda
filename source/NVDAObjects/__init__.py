@@ -372,11 +372,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	def _get_treeInterceptor(self):
+	#: Type definition for auto prop '_get_treeInterceptor'
+	treeInterceptor: treeInterceptorHandler.TreeInterceptor
+
+	def _get_treeInterceptor(self) -> treeInterceptorHandler.TreeInterceptor:
 		"""Retrieves the treeInterceptor associated with this object.
-		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
+		If a treeInterceptor has not been specifically set,
+		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
 		@return: the treeInterceptor
-		@rtype: L{treeInterceptorHandler.TreeInterceptor}
 		""" 
 		if hasattr(self,'_treeInterceptor'):
 			ti=self._treeInterceptor

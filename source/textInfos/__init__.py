@@ -507,8 +507,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		""" 
 		raise NotImplementedError
 
-	def _get_NVDAObjectAtStart(self):
-		"""retreaves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+	#: Typing information for auto-property: _get_NVDAObjectAtStart
+	NVDAObjectAtStart: "NVDAObjects.NVDAObject"
+
+	def _get_NVDAObjectAtStart(self) -> "NVDAObjects.NVDAObject":
+		"""Get the NVDAObject related to the start of the range.
+		Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
 		@returns: the NVDAObject at the start
 		"""
 		return self.obj
