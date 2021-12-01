@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
-#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2021/5/21
+#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2021/11/15
 # 在本檔案內，當一個符號的解釋出現多音字（或破音字）時，為使其報讀正確，得用另一同音字代替，以避免混淆。
 
 complexSymbols:
@@ -86,20 +86,20 @@ _	半形底線	most
 ′	prime	some
 ″	double prime	some
 ‴	triple prime	some
+·	middle dot	most
 
 # Other characters
-•	項目符號	most
+•	項目符號	some
 …	點點點	all	always
 ...	點點點	all	always
-	項目符號	most
 “	左雙引號	most
 ”	右雙引號	most
 ‘	左單引號	most
 ’	右單引號	most
 –	en dash	most	always
-—	破折號	most
 ­	soft hyphen	most
 ⁃	橫線項目符號	none
+○	空心圓	most
 ●	實心圓	most
 ¨	分音符號	most	# 多用於德語、西班牙語、葡萄牙語
 ¯	macron	most
@@ -108,10 +108,12 @@ _	半形底線	most
 ‎	左至右符號	char
 ‏	右至左符號	char
 ¶	段落符號	most
+□	空心方形	some
 ■	實心方形	some
-▪	實心小方形	most
-◾	空心小方形	most
-◦	白色項目符號	most
+◆	實心菱形	some
+▪	實心小方形	some
+◾	實心中小方形	some
+◦	空心項目符號	some
 ⇨	向右粗箭頭	some
 ➔	向右鍵頭	some
 ➢	right arrowhead	some
@@ -120,11 +122,9 @@ _	半形底線	most
 ♦	實心方塊	some
 §	章節符號	all
 °	度	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
+«	double left pointing angle bracket	none
+»	double right pointing angle bracket	none
 µ	micro	some
-º	ordinal	some
-ª	superscript a	some
 ⁰	上標0	some
 ¹	上標1	some
 ²	上標2	some
@@ -170,7 +170,6 @@ _	半形底線	most
 ‡	雙拉丁十字	some
 ‣	三角形項目符號	none
 ✗	x形項目符號	none
-￼	物件替代字元	none
 ⊕	圓圈加號	none
 ⊖	圓圈減號	none
 ⇄	向右箭頭在上，向左箭頭在下	none
@@ -214,7 +213,7 @@ _	半形底線	most
 ≄	非漸近於	none
 ≅	約等於	none
 ≆	約等於但不等於	none
-≈	約等於none
+≈	約等於	none
 ≌	全等於	none
 ≍	等價於	none
 ≭	非等價於	none
@@ -361,7 +360,6 @@ _	半形底線	most
 
 # 中文標點
 　	全形空格	all
-·	間隔號	most
 ，	逗號	all	always
 、	頓號	all	always
 。	句號	all	always
@@ -372,13 +370,13 @@ _	半形底線	most
 ：	冒號	all	always
 ‥	刪節號	most
 ︱	直破折號	most
-─	破折號	most
+─	夾注號	most
 ︳	直底線	most
 ╴	左邊直線框	most
 ＿	底線	most
 ︴	直波浪號	some
-（	左括號	most	always
-）	右括號	most	always
+（	左夾注號	most	always
+）	右夾注號	most	always
 ︵	上括號	most	always
 ︶	下括號	most	always
 ｛	左大括號	most	always
@@ -414,18 +412,16 @@ _	半形底線	most
 〖	空心左粗中括號	most	always
 〗	空心右粗中括號	most	always
 ＃	井字號	most
+—	連接號	most
 ＆	連接號	most
 ＊	星號	most
 ※	重點符號	most
 〃	同上符號	most
-○	0	none
 ▲	上實心三角形	some
 ◎	雙圓圈	most
 ☆	空心星號	most
 ★	實心星號	most
 ◇	空心菱形	most
-◆	實心菱形	most
-□	空心方形	some
 ▽	下三角形	most
 ▼	下實心三角形	some
 ㊣	正字標記	none
@@ -436,7 +432,7 @@ _	半形底線	most
 ＝	等於	some
 ﹢	正號	some
 ﹣	負號	some
-～	波浪號	some
+～	連接號	some
 ⊿	直角三角形	some
 ㏒	常用對數	some
 ㏑	自然對數	some

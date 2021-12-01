@@ -39,11 +39,11 @@ Etkilenen kullanıcıların bu güncellemeyi manuel olarak indirmeleri gerekecek
 - Durum çubuğunu ``NVDA+end`` ile okurken, inceleme imleci artık bu konuma taşınmaz.
 Bu işlevselliğe ihtiyacınız varsa, lütfen Girdi Hareketleri iletişim kutusundaki Nesne dolaşımı kategorisindeki ilgili komut için bir hareket atayın. (#8600)
 - Zaten açık olan bir ayarlar iletişim kutusunu açarken, NVDA, hata vermek yerine odağı mevcut iletişim kutusuna taşıyor. (#5383)
-- 13900'den büyük Microsoft Office 2016/365 derlemeleri için, NVDA artık Microsoft Word belge kontrollerine erişmek için UI Otomasyonu'nu, kullanıcının Microsoft word belgesi kontrollerine erişmek için UIA Kullan gelişmiş ayarını açıp kapatmış olmasına bakmaksızın kullanacaktır. (#12770)
 - liblouis braille çevirmen [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0] sürümüne güncellendi. (#12810)
   - Yeni braille tabloları: Rusça derece 1, Tshivenda derece 1, Tshivenda derece 2
   -
 - "işaretli içerik" veya "işrl" yerine artık "vurgulanan" veya "vrgl" konuşma ve braille için kullanılacak. (#12892)
+- NVDA artık diyaloglar gerekli bir eylemi beklerken (örneğin Onayla/İptal) diyalogu kapatmaya kalkmayacaktır. (#12984)
 -
 
 
@@ -74,6 +74,7 @@ Bu işlevselliğe ihtiyacınız varsa, lütfen Girdi Hareketleri iletişim kutus
 - 'Açıklama' 'içerik' veya 'ad' ile eşleştiğinde yinelenen braille ve konuşma düzeltildi. (#12888)
 - UIA etkinleştirilmiş MS Word'de, yazarken yazım hatası seslerinin daha doğru çalınması söz konusu. (#12161)
 - Windows 11'de NVDA, programlar arasında geçiş yapmak için Alt+Tab tuşlarına basıldığında artık "pano" demeyecektir. (#12648)
+- Yeni Modern Yorumlar yan izleme bölmesi, belgeye UIA aracılığıyla erişilmediğinde artık MS Word'de desteklenmektedir. Yan izleme bölmesi ile belge arasında hareket etmek için alt+f12 tuşlarına basın. (#12982)
 -
 
 
