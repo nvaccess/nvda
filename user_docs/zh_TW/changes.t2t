@@ -3,6 +3,17 @@ NVDA 新版資訊
 
 %!includeconf: ../changes.t2tconf
 
+== 重要新功能摘譯 ==
+- 新增用於切換讀出儲存格框線樣式的輸入手勢。 (#10408)
+- 支援新的 HID 點字規格，用來使點顯器支援標準化。支援此規格的裝置能夠讓 NVDA 自動偵測。
+- 使用任何版本的 NVDA 時都可以在進階設定中啟用錯誤通知。(#12672)
+- 在 Windows 10 及更高版本中，當輸入搜尋字詞時，NVDA 將讀出自動建議的數量，如在設定及 Microsoft Store 等應用程式中。(#7330、#12758、#12790)
+- 如果安裝的 OneCore 語音語言不支援 NVDA 的偏好語言，則 NVDA 將預設使用 eSpeak。
+- 如果 OneCore 語音持續無法使用，合成器將回復為 eSpeak。 (#11544)
+- 當開啟一個已經開啟的設定對話框時，NVDA 會將焦點移到現有對話框上，而不會顯示錯誤。 (#5383)
+-
+
+
 = 2021.3 =
 This release introduces support for the new HID Braille specification.
 This specification aims to standardise support for Braille Displays without needing individual drivers.
