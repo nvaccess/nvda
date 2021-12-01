@@ -5,7 +5,12 @@
 import typing
 
 from comtypes.automation import IEnumVARIANT, VARIANT
-from comtypes import COMError, IServiceProvider, GUID
+from comtypes import (
+	COMError,
+	IServiceProvider,
+	GUID,
+	IUnknown,
+)
 from comtypes.hresult import S_OK, S_FALSE
 import ctypes
 import os
@@ -1467,6 +1472,34 @@ the NVDAObject for IAccessible
 			raise NotImplementedError
 		return list(relations)
 
+	def _getIA2TargetsForRelationsOfType(
+			self,
+			relationType: "IAccessibleHandler.RelationType",
+			maxRelations: int = 1,
+	) -> typing.List[ctypes.POINTER(IUnknown)]:
+		"""Gets the target IAccessible (actually IUnknown; use QueryInterface or
+		normalizeIAccessible to resolve) for the relations with given type."""
+		acc = self.IAccessibleObject
+		if not isinstance(acc, IA2.IAccessible2):
+			raise NotImplementedError
+		if not isinstance(relationType, IAccessibleHandler.RelationType):
+			raise NotImplementedError
+		if 1 > maxRelations:
+			raise ValueError
+		if not isinstance(acc, IA2.IAccessible2_2):
+			acc = acc.QueryInterface(IA2.IAccessible2_2)
+		targets, count = acc.relationTargetsOfType(
+			relationType.value,
+			maxRelations
+		)
+		if count == 0:
+			return list()
+		relationsGen = (
+			targets[i]
+			for i in range(min(maxRelations, count))
+		)
+		return list(relationsGen)
+
 	def _getIA2RelationFirstTarget(
 			self,
 			relationType: typing.Union[str, "IAccessibleHandler.RelationType"]
@@ -1482,6 +1515,15 @@ the NVDAObject for IAccessible
 
 		relationType = typing.cast(IAccessibleHandler.RelationType, relationType)
 
+		try:
+			# rather than fetch all the relations and querying the type, do that in process for performance reasons
+			targets = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=1)
+			if targets:
+				return targets[0]
+		except (NotImplementedError, COMError):
+			log.debugWarning("Unable to use _getIA2TargetsForRelationsOfType, fallback to _IA2Relations.")
+
+		# eg IA2_2 is not available, fall back to old approach
 		for relation in self._IA2Relations:
 			try:
 				if relation.relationType == relationType:
