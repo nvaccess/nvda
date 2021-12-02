@@ -1,8 +1,7 @@
-#appModules/taskmgr.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2018 NV Access Limited, Derek Riemer
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2018 NV Access Limited, Derek Riemer
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import appModuleHandler
 from NVDAObjects import NVDAObject
@@ -20,13 +19,13 @@ def isChildOfRow(obj):
 	return False
 
 class BrokenUIAChild(UIA):
-	#This is A child which is layout, but should be content.
+	# This is A child which is layout, but should be content.
 	presentationType = NVDAObject.presType_content
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA) and obj.UIAAutomationId == "TmRowIcon":
-			#This is an icon and really is layout. Don't show it.
+			# This is an icon and really is layout. Don't show it.
 			return
 		if obj.presentationType == obj.presType_layout and isChildOfRow(obj):
 			clsList.insert(0, BrokenUIAChild)
