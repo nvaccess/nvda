@@ -70,8 +70,8 @@ bool getTextFromIAccessible(
 		long startOffset = 0;
 		//If requested, get the text from IAccessibleText::newText rather than just IAccessibleText::text.
 		if (useNewText) {
-			IA2TextSegment newSeg = { 0 };
-			if (paccText->get_newText(&newSeg) == S_OK && newSeg.text) {
+			IA2TextSegment newSeg {};
+			if (S_OK == paccText->get_newText(&newSeg) && newSeg.text) {
 				bstrText = newSeg.text;
 				startOffset = newSeg.start;
 			}
@@ -90,8 +90,9 @@ bool getTextFromIAccessible(
 				wchar_t realChar = bstrText[index];
 				bool charAdded = false;
 				if (realChar == OBJ_REPLACEMENT_CHAR) {
-					long hyperlinkIndex;
-					if (paccHypertext && paccHypertext->get_hyperlinkIndex(startOffset + index, &hyperlinkIndex) == S_OK) {
+					const long charIndex = startOffset + index;
+					long hyperlinkIndex = 0;
+					if (paccHypertext && paccHypertext->get_hyperlinkIndex(charIndex, &hyperlinkIndex) == S_OK) {
 						IAccessibleHyperlink* paccHyperlink = NULL;
 						if (paccHypertext->get_hyperlink(hyperlinkIndex, &paccHyperlink) == S_OK) {
 							IAccessible2* pacc2Child = NULL;
