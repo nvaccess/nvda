@@ -82,8 +82,10 @@ bool getTextFromIAccessible(
 		//If we got text, add it to  the string provided, however if there are embedded objects in the text, recurse in to these
 		if (bstrText) {
 			long textLength = SysStringLen(bstrText);
-			IAccessibleHypertext* paccHypertext = NULL;
-			if (!recurse || pacc2->QueryInterface(IID_IAccessibleHypertext, (void**)&paccHypertext) != S_OK) paccHypertext = NULL;
+			CComQIPtr<IAccessibleHypertext, &IID_IAccessibleHypertext> paccHypertext;
+			if (recurse) {
+				paccHypertext = pacc2;
+			}
 			for (long index = 0; index < textLength; ++index) {
 				wchar_t realChar = bstrText[index];
 				bool charAdded = false;
@@ -117,7 +119,6 @@ bool getTextFromIAccessible(
 					}
 				}
 			}
-			if (paccHypertext) paccHypertext->Release();
 			textBuf.append(1, L' ');
 		}
 	}
