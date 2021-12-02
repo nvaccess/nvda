@@ -185,13 +185,9 @@ class GridGroup(UIA):
 	# Normally the name is the first tile which is rather redundant
 	# However some groups have custom header text which should be read instead
 	def _get_name(self):
-		child=self.firstChild
-		if isinstance(child,UIA):
-			try:
-				automationID=child.UIAElement.currentAutomationID
-			except COMError:
-				automationID=None
-			if automationID=="GridListGroupHeader":
+		child = self.firstChild
+		if isinstance(child, UIA):
+			if child.UIAAutomationId == "GridListGroupHeader":
 				return child.name
 
 

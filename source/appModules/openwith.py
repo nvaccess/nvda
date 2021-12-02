@@ -33,16 +33,13 @@ class ImmersiveOpenWithFlyout(Dialog,UIA):
 
 class AppModule(appModuleHandler.AppModule):
 
-	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if isinstance(obj,UIA):
-			try:
-				automationID=obj.UIAElement.currentAutomationID
-			except COMError:
-				automationID=None
-			if automationID=="NonDefaultAppTile":
-				clsList.insert(0,NonDefaultAppTile)
-			elif automationID=="ImmersiveOpenWithFlyout":
-				clsList.insert(0,ImmersiveOpenWithFlyout)
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if isinstance(obj, UIA):
+			automationId = obj.UIAAutomationId
+			if automationId == "NonDefaultAppTile":
+				clsList.insert(0, NonDefaultAppTile)
+			elif automationId == "ImmersiveOpenWithFlyout":
+				clsList.insert(0, ImmersiveOpenWithFlyout)
 
 	def isGoodUIAWindow(self, hwnd):
 		# #11335: Open With dialog isn't read in Windows 10 Version 2004 (May 2020 Update).
