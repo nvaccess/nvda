@@ -3,6 +3,7 @@
 --xunit systemTests.xml
 --pythonpath .\tests\system\libraries
 --suite NVDASettings
+--include readGui
 --variable whichNVDA:source
 --variable currentVersion:source
 --variable cacheFolder:.\tests\system\settingsCache
