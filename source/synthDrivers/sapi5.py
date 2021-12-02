@@ -121,7 +121,7 @@ class SynthDriver(SynthDriver):
 			return False
 
 	ttsAudioStream=None #: Holds the ISPAudio interface for the current voice, to aid in stopping and pausing audio
-	_audioDucker: Optional[audioDucking.AudioDucker] = None 
+	_audioDucker: Optional[audioDucking.AudioDucker] = None
 
 	def __init__(self,_defaultVoiceToken=None):
 		"""
@@ -203,7 +203,9 @@ class SynthDriver(SynthDriver):
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(weakref.ref(self)))
-		self.tts.EventInterests = SpeechVoiceEvents.StartInputStream | SpeechVoiceEvents.Bookmark | SpeechVoiceEvents.EndInputStream
+		self.tts.EventInterests = (
+			SpeechVoiceEvents.StartInputStream | SpeechVoiceEvents.Bookmark | SpeechVoiceEvents.EndInputStream
+		)
 		from comInterfaces.SpeechLib import ISpAudio
 		try:
 			self.ttsAudioStream=self.tts.audioOutputStream.QueryInterface(ISpAudio)
@@ -338,14 +340,16 @@ class SynthDriver(SynthDriver):
 
 		text = "".join(textList)
 		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
-		# Although background audio is ducked in SAPISink.StartStream 
+		# Although background audio is ducked in SAPISink.StartStream
 		# and unducks in SAPISink.EndStream,
-		# those events are asynchronous and therefor enabling audio ducking cannot enforce a delay before the speech stream starts,
+		# those events are asynchronous and therefor enabling audio ducking
+		# cannot enforce a delay before the speech stream starts,
 		# while audio is being faded down.
-		# Therefore, create a temporary AudioDucker object, and enable and disable it directly around the call to speak,
+		# Therefore, create a temporary AudioDucker object,
+		# and enable and disable it directly around the call to speak,
 		# So that enabling audio ducking suitably delays the speak call if necessary.
 		# Although speak does not block and audio ducking is disabled straight after,
-		# Audio will be still ducked for enough time for the subsequent StartStream to keep it enabled. 
+		# Audio will be still ducked for enough time for the subsequent StartStream to keep it enabled.
 		if audioDucking.isAudioDuckingSupported():
 			tempAudioDucker = audioDucking.AudioDucker()
 		else:
@@ -370,7 +374,7 @@ class SynthDriver(SynthDriver):
 		self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
 		if self._audioDucker:
 			if audioDucking._isDebug():
-				log.debug("Disabling audio ducking due to setting output audio state to stop") 
+				log.debug("Disabling audio ducking due to setting output audio state to stop")
 			self._audioDucker.disable()
 
 	def pause(self, switch: bool):
@@ -383,13 +387,13 @@ class SynthDriver(SynthDriver):
 				# pausing
 				if self._audioDucker:
 					if audioDucking._isDebug():
-						log.debug("Disabling audio ducking due to setting output audio state to pause") 
+						log.debug("Disabling audio ducking due to setting output audio state to pause")
 					self._audioDucker.disable()
 				self.ttsAudioStream.setState(SPAudioState.PAUSE, 0)
 			elif not switch and oldState == SPAudioState.PAUSE:
 				# unpausing
 				if self._audioDucker:
 					if audioDucking._isDebug():
-						log.debug("Enabling audio ducking due to setting output audio state to run") 
+						log.debug("Enabling audio ducking due to setting output audio state to run")
 					self._audioDucker.enable()
 				self.ttsAudioStream.setState(SPAudioState.RUN, 0)
