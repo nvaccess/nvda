@@ -17,7 +17,7 @@ import time
 class IntelliSenseItem(UIA):
 
 	def _get_name(self):
-		return self.UIAElement.cachedAutomationID
+		return self.UIAAutomationId
 
 	def event_UIA_elementSelected(self):
 		# Cancel speech to have speech announce the selection as soon as possible.

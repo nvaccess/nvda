@@ -402,9 +402,9 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 
 
 def findExtraOverlayClasses(obj, clsList):
-	if obj.UIAElement.cachedAutomationId == "Text Area":
+	if obj.UIAAutomationId == "Text Area":
 		clsList.append(WinConsoleUIA)
-	elif obj.UIAElement.cachedAutomationId == "Console Window":
+	elif obj.UIAAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)
 
 

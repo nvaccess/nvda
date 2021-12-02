@@ -1076,7 +1076,7 @@ class UIA(Window):
 				clsList.append(chromium.ChromiumUIA)
 		elif (
 			self.role == controlTypes.Role.DOCUMENT
-			and self.UIAElement.cachedAutomationId == "Microsoft.Windows.PDF.DocumentView"
+			and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView"
 		):
 			# PDFs
 			from . import spartanEdge
