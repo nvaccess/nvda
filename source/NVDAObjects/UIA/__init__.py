@@ -1122,17 +1122,11 @@ class UIA(Window):
 		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
-		try:
-			if UIAAutomationId in ("SearchTextBox", "TextBox"):
-				clsList.append(SearchField)
-		except COMError:
-			log.debug("Failed to locate UIA search field", exc_info=True)
+		if UIAAutomationId in ("SearchTextBox", "TextBox"):
+			clsList.append(SearchField)
 		# #12790: detect suggestions list views firing layout invalidated event.
-		try:
-			if UIAAutomationId == "SuggestionsList":
-				clsList.append(SuggestionsList)
-		except COMError:
-			log.debug("Could not detect suggestions list", exc_info=True)
+		if UIAAutomationId == "SuggestionsList":
+			clsList.append(SuggestionsList)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
