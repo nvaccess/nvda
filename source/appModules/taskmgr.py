@@ -14,7 +14,7 @@ def isChildOfRow(obj):
 	If obj is a child of a row, this returns true.
 	"""
 	while obj.parent and obj.parent.presentationType != obj.presType_content:
-		if isinstance(obj.parent, UIA) and obj.parent.UIAElement.CachedAutomationID == u"TmViewRow":
+		if isinstance(obj.parent, UIA) and obj.parent.UIAAutomationId == "TmViewRow":
 			return True
 		obj = obj.parent
 	return False
@@ -25,7 +25,7 @@ class BrokenUIAChild(UIA):
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if isinstance(obj, UIA) and obj.UIAElement.CachedAutomationID == u"TmRowIcon":
+		if isinstance(obj, UIA) and obj.UIAAutomationId == "TmRowIcon":
 			#This is an icon and really is layout. Don't show it.
 			return
 		if obj.presentationType == obj.presType_layout and isChildOfRow(obj):

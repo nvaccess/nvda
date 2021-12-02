@@ -335,7 +335,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridGroup)
 			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.Role.PANE:
 				clsList.insert(0, ImmersiveLauncher)
-			elif uiaClassName == "ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
+			elif uiaClassName == "ListViewItem" and obj.UIAAutomationId.startswith('Suggestion_'):
 				clsList.insert(0, SuggestionListItem)
 			# Multitasking view frame window
 			elif (
@@ -350,7 +350,7 @@ class AppModule(appModuleHandler.AppModule):
 				# RS4 and below we can match on a window class
 				windowClass == "MultitaskingViewFrame" or
 				# RS5 and above we must look for a particular UIA automationID on the list
-				isinstance(obj.parent,UIA) and obj.parent.UIAElement.cachedAutomationID=="SwitchItemListControl"
+				isinstance(obj.parent, UIA) and obj.parent.UIAAutomationId == "SwitchItemListControl"
 			):
 				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.Role.EDITABLETEXT:

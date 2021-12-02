@@ -19,10 +19,10 @@ class AppModule(appModuleHandler.AppModule):
 				# the progress bar's sibling might not be a UIA object at all.
 				try:
 					if (
-						obj.next.UIAElement.cachedAutomationID.startswith(
+						obj.next.UIAAutomationId.startswith(
 							"SystemSettings_Audio_Output_VolumeValue_"
 						)
-						or obj.simplePrevious.UIAElement.cachedAutomationID.startswith(
+						or obj.simplePrevious.UIAAutomationId.startswith(
 							"SystemSettings_Audio_Input_VolumeValue_"
 						)
 					):

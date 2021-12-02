@@ -119,7 +119,7 @@ class AppModule(appModuleHandler.AppModule):
 		# However, in recent builds, name change event is also fired.
 		# For consistent experience, report the new category first by traversing through controls.
 		# #8189: do not announce candidates list itself (not items), as this is repeated each time candidate items are selected.
-		if obj.UIAElement.cachedAutomationID == "CandidateList":
+		if obj.UIAAutomationId == "CandidateList":
 			return
 		speech.cancelSpeech()
 		# Sometimes, due to bad tree traversal or wrong item getting selected, something other than the selected item sees this event.
@@ -131,7 +131,11 @@ class AppModule(appModuleHandler.AppModule):
 			else:
 				obj = obj.parent.parent.firstChild
 		candidate = obj
-		if obj and obj.UIAElement.cachedClassName == "ListViewItem" and obj.parent and isinstance(obj.parent, UIA) and obj.parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList":
+		if (
+			obj and obj.UIAElement.cachedClassName == "ListViewItem"
+			and obj.parent and isinstance(obj.parent, UIA)
+			and obj.parent.UIAAutomationId != "TEMPLATE_PART_ClipboardItemsList"
+		):
 			# The difference between emoji panel and suggestions list is absence of categories/emoji separation.
 			# Turns out automation ID for the container is different, observed in build 17666 when opening clipboard copy history.
 			candidate = obj.parent.previous
@@ -237,14 +241,16 @@ class AppModule(appModuleHandler.AppModule):
 		elif isinstance(obj, ImeCandidateUI):
 			return nextHandler()
 
-		# On some systems, touch keyboard keys keeps firing name change event.
-		# In build 17704, whenever skin tones are selected, name change is fired by emoji entries (GridViewItem).
-		if ((obj.UIAElement.cachedClassName in ("CRootKey", "GridViewItem"))
-		# Just ignore useless clipboard status.
-		# Also top emoji search result must be announced for better user experience.
-		or (obj.UIAElement.cachedAutomationID in ("TEMPLATE_PART_ClipboardItemsList", "TEMPLATE_PART_Search_TextBlock"))
-		# And no, emoji entries should not be announced here.
-		or (self._recentlySelected is not None and self._recentlySelected in obj.name)):
+		if (
+			# On some systems, touch keyboard keys keeps firing name change event.
+			# In build 17704, whenever skin tones are selected, name change is fired by emoji entries (GridViewItem).
+			(obj.UIAElement.cachedClassName in ("CRootKey", "GridViewItem"))
+			# Just ignore useless clipboard status.
+			# Also top emoji search result must be announced for better user experience.
+			or (obj.UIAAutomationId in ("TEMPLATE_PART_ClipboardItemsList", "TEMPLATE_PART_Search_TextBlock"))
+			# And no, emoji entries should not be announced here.
+			or (self._recentlySelected is not None and self._recentlySelected in obj.name)
+		):
 			return
 		# The word "blank" is kept announced, so suppress this on build 17666 and later.
 		if winVersion.getWinVer() > winVersion.WIN10_1803:
@@ -252,13 +258,22 @@ class AppModule(appModuleHandler.AppModule):
 			# return immediately when element selected event on clipboard item was fired just prior to this.
 			# In some cases, parent will be None, as seen when emoji panel is closed in build 18267.
 			try:
-				if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemIndex" or obj.parent.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList": return
+				if (
+					obj.UIAAutomationId == "TEMPLATE_PART_ClipboardItemIndex"
+					or obj.parent.UIAAutomationId == "TEMPLATE_PART_ClipboardItemsList"
+				):
+					return
 			except AttributeError:
 				return
-			if not self._emojiPanelJustOpened or obj.UIAElement.cachedAutomationID != "TEMPLATE_PART_ExpressionGroupedFullView": speech.cancelSpeech()
+			if not self._emojiPanelJustOpened or obj.UIAAutomationId != "TEMPLATE_PART_ExpressionGroupedFullView":
+				speech.cancelSpeech()
 			self._emojiPanelJustOpened = False
 		# Don't forget to add "Microsoft Candidate UI" as something that should be suppressed.
-		if obj.UIAElement.cachedAutomationID not in ("TEMPLATE_PART_ExpressionFullViewItemsGrid", "TEMPLATE_PART_ClipboardItemIndex", "CandidateWindowControl"):
+		if obj.UIAAutomationId not in (
+			"TEMPLATE_PART_ExpressionFullViewItemsGrid",
+			"TEMPLATE_PART_ClipboardItemIndex",
+			"CandidateWindowControl"
+		):
 			ui.message(obj.name)
 		nextHandler()
 

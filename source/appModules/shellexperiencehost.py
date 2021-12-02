@@ -51,7 +51,7 @@ class AppModule(appModuleHandler.AppModule):
 		if isinstance(obj, UIA):
 			# #8845: Brightness button in Action Center is a button, not a toggle button.
 			# Brightness control is now a slider in build 18277.
-			if obj.UIAElement.cachedAutomationID == "Microsoft.QuickAction.Brightness":
+			if obj.UIAAutomationId == "Microsoft.QuickAction.Brightness":
 				obj.role = controlTypes.Role.BUTTON
 				obj.states.discard(controlTypes.State.CHECKABLE)
 
