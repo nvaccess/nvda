@@ -66,7 +66,7 @@ bool getTextFromIAccessible(
 	}
 	else if (paccText) {
 		//We can use IAccessibleText because it exists
-		BSTR bstrText = NULL;
+		CComBSTR bstrText;
 		long startOffset = 0;
 		//If requested, get the text from IAccessibleText::newText rather than just IAccessibleText::text.
 		if (useNewText) {
@@ -118,7 +118,6 @@ bool getTextFromIAccessible(
 				}
 			}
 			if (paccHypertext) paccHypertext->Release();
-			SysFreeString(bstrText);
 			textBuf.append(1, L' ');
 		}
 	}
