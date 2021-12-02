@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018 NV Access Limited, Derek Riemer
+# Copyright (C) 2018-2021 NV Access Limited, Derek Riemer
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
