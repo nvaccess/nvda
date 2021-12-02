@@ -19,7 +19,7 @@ IAccessibleObjectIdentifierType = Tuple[
 
 # IAccessible2 relations (not included in the typelib)
 @enum.unique
-class RelationType(enum.Enum):
+class RelationType(str, enum.Enum):
 	FLOWS_FROM = "flowsFrom"
 	FLOWS_TO = "flowsTo"
 	CONTAINING_DOCUMENT = "containingDocument"
