@@ -93,10 +93,10 @@ bool getTextFromIAccessible(
 					const long charIndex = startOffset + index;
 					long hyperlinkIndex = 0;
 					if (paccHypertext && paccHypertext->get_hyperlinkIndex(charIndex, &hyperlinkIndex) == S_OK) {
-						IAccessibleHyperlink* paccHyperlink = NULL;
-						if (paccHypertext->get_hyperlink(hyperlinkIndex, &paccHyperlink) == S_OK) {
-							IAccessible2* pacc2Child = NULL;
-							if (paccHyperlink->QueryInterface(IID_IAccessible2, (void**)&pacc2Child) == S_OK) {
+						CComPtr<IAccessibleHyperlink> paccHyperlink;
+						if (S_OK == paccHypertext->get_hyperlink(hyperlinkIndex, &paccHyperlink)) {
+							CComQIPtr <IAccessible2> pacc2Child(paccHyperlink);
+							if (pacc2Child) {
 								map<wstring, wstring> childAttribsMap;
 								fetchIA2Attributes(pacc2Child, childAttribsMap);
 								auto liveItr = childAttribsMap.find(L"live");
@@ -106,9 +106,7 @@ bool getTextFromIAccessible(
 									}
 								}
 								charAdded = true;
-								pacc2Child->Release();
 							}
-							paccHyperlink->Release();
 						}
 					}
 				}
