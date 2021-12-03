@@ -24,6 +24,44 @@ using namespace std;
 auto constexpr OBJ_REPLACEMENT_CHAR = L'\xfffc';
 
 
+bool isEmpty(CComBSTR& val) {
+	if (!val) {
+		return true;
+	}
+	for (int i = 0; val[i] != L'\0'; ++i) {
+		if (val[i] != OBJ_REPLACEMENT_CHAR && !iswspace(val[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool appendNameDescription(CComPtr<IAccessible> pacc, wstring& textBuf) {
+	bool gotText = false;
+	CComVariant varChild;
+	varChild.vt = VT_I4;
+	varChild.lVal = 0;
+
+	CComBSTR val;
+	pacc->get_accName(varChild, &val);
+	bool valEmpty = isEmpty(val);
+	if (!valEmpty) {
+		gotText = true;
+		textBuf.append(val);
+		textBuf.append(L" ");
+	}
+
+	val = nullptr;
+	pacc->get_accDescription(varChild, &val);
+	valEmpty = isEmpty(val);
+	if (!valEmpty) {
+		gotText = true;
+		textBuf.append(val);
+	}
+	return gotText;
+}
+
+
 bool getTextFromIAccessible(
 	wstring& textBuf,
 	IAccessible2* pacc2,
@@ -123,42 +161,7 @@ bool getTextFromIAccessible(
 	}
 	if (!gotText && !useNewText) {
 		//We got no text from IAccessibleText interface or children, so try name and/or description
-		BSTR val = NULL;
-		bool valEmpty = true;
-		VARIANT varChild;
-		varChild.vt = VT_I4;
-		varChild.lVal = 0;
-		pacc2->get_accName(varChild, &val);
-		if (val) {
-			for (int i = 0; val[i] != L'\0'; ++i) {
-				if (val[i] != OBJ_REPLACEMENT_CHAR && !iswspace(val[i])) {
-					valEmpty = false;
-					break;
-				}
-			}
-			if (!valEmpty) {
-				gotText = true;
-				textBuf.append(val);
-				textBuf.append(L" ");
-			}
-			SysFreeString(val);
-			val = NULL;
-		}
-		valEmpty = true;
-		pacc2->get_accDescription(varChild, &val);
-		if (val) {
-			for (int i = 0; val[i] != L'\0'; ++i) {
-				if (val[i] != OBJ_REPLACEMENT_CHAR && !iswspace(val[i])) {
-					valEmpty = false;
-					break;
-				}
-			}
-			if (!valEmpty) {
-				gotText = true;
-				textBuf.append(val);
-			}
-			SysFreeString(val);
-		}
+		gotText = appendNameDescription(pacc2, textBuf);
 	}
 	return gotText;
 }
