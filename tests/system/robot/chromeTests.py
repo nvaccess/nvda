@@ -61,6 +61,9 @@ def test_mark_aria_details():
 		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
 			<p>The word <mark aria-details="cat-details">cat</mark> has a comment tied to it.</p>
 		</div>
+		<p>Hello <span
+			aria-details="xx"
+			role="mark">this is a <a href="https://www.google.com/">test</a></span></p>
 		<div>
 			<div id="cat-details" role="comment">Cats go woof BTW<br>&mdash;Jonathon Commentor
 				<div role="comment">No they don't<br>&mdash;Zara</div>
@@ -144,7 +147,45 @@ def test_mark_aria_details():
 		message="Browse mode: Report details on word with details",
 	)
 
+	# move down to the link nested in a container with details
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("downArrow")
+	_asserts.speech_matches(
+		actualSpeech,
+		"out of edit  Hello  highlighted  this is a  link  test",
+		message="Browse mode: Move by line to paragraph with link nested in a container with details",
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"Hello  hlght this is a  lnk test hlght end",
+		message="Browse mode: Move by line to paragraph with link nested in a container with details",
+	)
+	# Jump to the link
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("k")
+	_asserts.speech_matches(
+		actualSpeech,
+		"test  link",
+		message="Browse mode: Jump to link nested in a container with details",
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"Hello  hlght this is a  lnk test hlght end",
+		message="Browse mode: Jump to link nested in a container with details",
+	)
+	# read the details summary
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
+	_asserts.speech_matches(
+		actualSpeech,
+		"No additional details",
+		message="Browse mode: Report details on nested link with details"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"No additional details",
+		message="Browse mode: Report details on nested link with details"
+	)
+
 	# Reset caret
+	actualSpeech = _NvdaLib.getSpeechAfterKey("upArrow")
 	actualSpeech = _NvdaLib.getSpeechAfterKey("upArrow")
 	_asserts.speech_matches(
 		actualSpeech,
@@ -232,6 +273,39 @@ def test_mark_aria_details():
 		message="Focus mode:  Report details on word with details.",
 	)
 
+	# Tab to the link
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			"highlighted",
+			SPEECH_SEP.join([
+				"test",
+				"link",
+			])
+		]),
+		message="Focus mode: tab to link nested in container with details",
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"hlght test lnk",
+		message="Focus mode: tab to link nested in container with details"
+	)
+
+	# Try to read the details
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"No additional details",
+		]),
+		message="Focus mode: Try to read details, link nested in container with details.",
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"No additional details",
+		message="Focus mode: Try to read details, link nested in container with details.",
+	)
 
 def announce_list_item_when_moving_by_word_or_character():
 	_chrome.prepareChrome(
