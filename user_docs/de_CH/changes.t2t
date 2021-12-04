@@ -2,6 +2,7 @@ Was ist neu in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: locale.t2tconf
 
 = 2020.3 =
 Diese Version enthält mehrere große Verbesserungen der Stabilität und Leistung, insbesondere bei Microsoft Office-Anwendungen. Es gibt neue Einstellungen zum Umschalten zwischen Touchscreen-Unterstützung und Ansage von Grafiken.
@@ -2995,4 +2996,3 @@ Die wichtigsten Neuerungen dieser Version sind u. a. die Unterstützung von 64-B
 - NVDA fragt nun nach, ob nach einem Sprachenwechsel die Konfiguration gespeichert und neu gestartet werden soll. Ein Neustart von NVDA ist nach einem sprachenwechsel notwendig.
 - Wenn bei der Auswahl eines Synthesizers aus dem Sprachausgabendialog dieser nicht geladen werden kann, wird der Anwender darüber informiert.
 - Wird ein Synthesizer das erste mal geladen, wird nach einer passenden Stimme gesucht bzw. passende Werte für Geschwindigkeit, Lautstärke und Stimmhöhe eingestellt. Dies behebt Probleme mit den sapi4-Versionen von Eloquence und viavoice, die bisher zu schnell gesprochen haben.
-
