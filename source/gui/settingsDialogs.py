@@ -3706,7 +3706,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			index=0
 		self.focusContextPresentationList.SetSelection(index)
 
-		# Translators: The label for a setting in braille settings to enable interrupting speech while scrolling the braille display
+		# Translators: The label for a setting in braille settings to enable interrupting speech
+		# while scrolling the braille display
 		interruptSpeechText = _("I&nterrupt speech while scrolling")
 		self.interruptSpeechCheckBox = sHelper.addItem(wx.CheckBox(self, label=interruptSpeechText))
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.interruptSpeechCheckBox)
