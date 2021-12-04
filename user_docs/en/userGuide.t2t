@@ -1381,6 +1381,12 @@ However, in order for you to read the context (i.e. that you are in a list and t
 
 To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
+==== Interrupt speech while scrolling ====[BrailleSettingsInterruptSpeech]
+This setting determines if speech is interrupted when the braille display is scrolled.
+This option is enabled by default.
+
+Note that this only applies when scrolling the display backwards/forwards, previous/next line commands are not affected.
+
 +++ Select Braille Display (NVDA+control+a) +++[SelectBrailleDisplay]
 The Select Braille Display dialog, which can be opened by activating the Change... button in the Braille category of the NVDA settings dialog, allows you to select which Braille display NVDA should use for braille output.
 Once you have selected your braille display of choice, you can press Ok and NVDA will load the selected display.
