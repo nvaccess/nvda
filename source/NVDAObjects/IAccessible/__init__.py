@@ -1786,7 +1786,7 @@ the NVDAObject for IAccessible
 			True,
 		)
 		if res != 0:
-			log.error("Error")
+			log.error(f"Error calling nvdaInProcUtils_getTextFromIAccessible, res: {res}")
 			raise ctypes.WinError(res)
 		return text.value
 
