@@ -8,12 +8,20 @@ What's New in NVDA
 == New Features ==
 - Support for reporting notes in MS Excel with UI Automation enabled on Windows 11. (#12861)
 - In recent builds of Microsoft Word via UI Automation on Windows 11, the existence of bookmarks, draft comments and resolved comments are now reported in both speech and braille. (#12861)
+- The new --lang command line parameter allows overriding the configured NVDA language. (#10044)
+- NVDA now warns about command line parameters which are unknown and not used by any add-ons. (#12795)
+- In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
+    - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
+    - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
+    -
 -
 
 == Changes ==
 - Espeak-ng has been updated to 1.51-dev commit ``7e5457f91e10``. (#12950)
 - NVDA will report selection and merged cells in LibreOffice Calc 7.3 and above. (#9310, #6897)
 - Updated Unicode Common Locale Data Repository (CLDR) to 40.0. (#12999)
+- ``NVDA+Numpad Delete`` reports the location of the caret or focused object by default. (#13060)
+- ``NVDA+Shift+Numpad Delete`` reports the location of the review cursor. (#13060)
 -
 
 == Bug Fixes ==
@@ -24,10 +32,16 @@ What's New in NVDA
 - Improved consistency of output reading in terminal programs. (#12974)
   - Note that in some situations, when inserting or deleting characters in the middle of a line, the characters after the caret may again be read out.
   -
+- MS word with UIA: heading quick nav in browse mode no longer gets stuck on the final heading of a document, nor is this heading shown twice in the NVDA elements list. (#9540)
+- In Windows 8 and later , the File Explorer status bar can now be retrieved using the standard gesture NVDA+end (desktop) / NVDA+shift+end (laptop). (#12845)
+- Incoming messages in the chat of Skype for Business are reported again. (#9295)
 -
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
+- Updated SCons to version 4.3.0.
+- Updated py2exe to version 0.11.0.1. (#12357, #13066)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
 - ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
 - ``MessageItem`` has been removed from the Outlook appModule. (#12935)
@@ -53,6 +67,22 @@ This ensures code will honor the Windows user setting for swapping the primary m
 - ``shlobj.SHGetFolderPath`` has been removed - please use ``shlobj.SHGetKnownFolderPath`` instead. (#12943)
 - ``shlobj`` constants have been removed. A new enum has been created, ``shlobj.FolderId`` for usage with ``SHGetKnownFolderPath``. (#12943)
 - ``diffHandler.get_dmp_algo`` and ``diffHandler.get_difflib_algo`` have been replaced with ``diffHandler.prefer_dmp`` and ``diffHandler.prefer_difflib`` respectively. (#12974)
+- ``languageHandler.curLang`` has been removed - to get the current NVDA language use ``languageHandler.getLanguage()``. (#13082)
+- A `getStatusBarText` method can be implemented on an appModule to customize the way NVDA fetches the text from the status bar. (#12845)
+- ``globalVars.appArgsExtra`` has been removed. (#13087)
+  - If your add-on need to process additional command line arguments see the documentation of ``addonHandler.isCLIParamKnown`` and the developer guide for details.
+  -
+- The UIA handler module and other UIA support modules are now part of a UIAHandler package. (#10916)
+  - ``UIAUtils`` is now ``UIAHandler.utils``
+  - ``UIABrowseMode`` is now ``UIAHandler.browseMode``
+  - ``_UIAConstants`` is now ``UIAHandler.constants``
+  - ``_UIACustomProps`` is now ``UIAHandler.customProps``
+  - ``_UIACustomAnnotations`` is now ``UIAHandler.customAnnotations``
+- The ``IAccessibleHandler`` ``IA2_RELATION_*`` constants have been replaced with the ``IAccessibleHandler.RelationType`` enum. (#13096)
+  - Removed ``IA2_RELATION_FLOWS_FROM``
+  - Removed ``IA2_RELATION_FLOWS_TO``
+  - Removed ``IA2_RELATION_CONTAINING_DOCUMENT``
+  -
 -
 
 
@@ -82,10 +112,6 @@ Affected users will need to download this update manually.
 - Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
 - In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
 - Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
-- In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
-    - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
-    - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
-    -
 -
 
 

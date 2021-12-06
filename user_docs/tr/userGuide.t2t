@@ -1836,12 +1836,12 @@ Bunun, özellikle Microsoft Visual Studio gibi uygulamalarda performans üzerind
 Bu nedenle, bu seçenek etkinleştirildiğinde, NVDA çoğu olay için olay kaydını sistem odağıyla sınırlayacaktır.
 Bir veya daha fazla uygulamada performans sorunları yaşıyorsanız, performansın iyileşip iyileşmediğini görmek için bu işlevi denemenizi öneririz.
 
-==== Kullanılabilir olduğunda Microsoft Word belge denetimlerine erişmek için her zaman UI otomasyonunu kullan ====[AdvancedSettingsUseUiaForWord]
-Bu seçenek etkinleştirildiğinde, NVDA, Microsoft Office 2016/365'in daha yeni sürümleri için bile Microsoft Word belge denetimlerinden bilgi almak için her zaman Microsoft UI Otomasyonu erişilebilirlik API'sini kullanmaya çalışacaktır.
+==== Uygunsa Microsoft Word belge kontrollerine erişmek için UI otomasyonunu kullan ====[AdvancedSettingsUseUiaForWord]
+Bu seçenek etkinleştirildiğinde, NVDA, Microsoft Word belge kontrollerinden bilgi almak için Microsoft UI Otomasyonu erişilebilirlik API'sini kullanmayı deneyecektir.
 Buna, Microsoft Word’ün yanı sıra,  Microsoft Outlook mesaj görüntüleyicisi ve oluşturucusu dahildir.
-16.0.13901 veya üzeri bir sürümüne sahip Microsoft Office için, NVDA, bu ayar nasıl yapılandırılırsa yapılandırılsın Microsoft Word belgelerine erişmek için her zaman UI Otomasyonunu kullanacaktır.
-Windows 10 ve sonraki sürümlerde çalışan Microsoft Office 2016/365'in en yeni sürümleri için, UI Otomasyonu desteği, Microsoft Word belgelerine neredeyse NVDA'nın mevcut Microsoft Word desteğine eşit erişim sağlayacak kadar eksiksizdir ve yanıt hızının büyük ölçüde artması avantajını da beraberinde getirir.
-Ancak, Microsoft Office'in bazı eski sürümlerinde gösterilmeyen veya yanlış gösterilen bazı bilgiler olabilir; bu,  UI otomasyon desteğine her zaman güvenilemeyeceği anlamına gelir.
+ Windows 10 ve sonraki sürümlerde çalışan Microsoft Office 2016/365'in en son sürümleri için, UI Otomasyonu desteği, Microsoft Word belgelerine neredeyse NVDA'nın mevcut Microsoft Word desteğine eşit erişim sağlayacak kadar eksiksizdir ve yanıt hızının büyük ölçüde artması avantajını da beraberinde getirir.
+Ancak, Microsoft Office'in bazı sürümlerinde gösterilmeyen veya yanlış gösterilen bazı bilgiler olabilir; bu, UI otomasyon desteğine her zaman güvenilemeyeceği anlamına gelir.
+Office 2016/365 kullanıcılarının bu özelliği test etmesini ve geri bildirimde bulunmasını memnuniyetle karşılarız, bununla birlikte kullanıcıların çoğunluğunun bunu varsayılan olarak açmasını önermiyoruz.
 
 ==== Windows Konsoluna erişmek için mevcut olduğunda UI Otomasyonunu kullan ====[AdvancedSettingsConsoleUIA]
 Bu seçenek etkinleştirildiğinde, NVDA, [Microsoft tarafından yapılan erişilebilirlik geliştirmelerinin https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Windows Konsolu desteğinden yararlanan yeni ve devam eden bir çalışmadan faydalanacaktır. Bu özellik oldukça deneyseldir ve hala eksiktir, bu nedenle kullanımı henüz tavsiye edilmez. Ancak tamamlandığında, bu yeni desteğin varsayılan olacağı ve NVDA'nın Windows komut konsollarındaki performansını ve kararlılığını artıracağı tahmin edilmektedir.
@@ -3199,8 +3199,8 @@ NVDA's automatic braille display detection will also recognize any display that 
 Following are the current key assignments for these displays.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | pan left |
-| Scroll braille display forward | pan right |
+| Scroll braille display back | pan left or rocker up |
+| Scroll braille display forward | pan right or rocker down |
 | Move braille display to previous line | space + dot1 |
 | Move braille display to next line | space + dot4 |
 | Route to braille cell | routing set 1|

@@ -17,14 +17,16 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <rpc.h>
 #include <sddl.h>
 #include <DbgHelp.h>
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
-#include "vbufRemote.h"
+#include <remote/vbufRemote.h>
+
 #ifndef _M_ARM64
-#include "displayModelRemote.h"
-#endif
-#include "NvdaInProcUtils.h"
-#include "nvdaControllerInternal.h"
+	#include <remote/displayModelRemote.h>
+#endif //_M_ARM64
+
+#include <remote/NvdaInProcUtils.h>
+#include <remote/nvdaControllerInternal.h>
 #include "rpcSrv.h"
 
 typedef RPC_STATUS(RPC_ENTRY *RpcServerRegisterIf3_functype)(RPC_IF_HANDLE,UUID __RPC_FAR*,RPC_MGR_EPV __RPC_FAR*,unsigned int,unsigned int,unsigned int,RPC_IF_CALLBACK_FN __RPC_FAR*,void __RPC_FAR*);

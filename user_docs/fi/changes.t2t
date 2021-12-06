@@ -39,11 +39,11 @@ Asianomaisten käyttäjien on ladattava tämä päivitys manuaalisesti.
 - Kun tilarivi luetaan ``NVDA+End``-näppäinkomennolla, tarkastelukohdistinta ei enää siirretä sen kohdalle.
 Mikäli tarvitset tätä toiminnallisuutta, määritä syötekomento asianmukaiselle skriptille Syötekomennot-valintaikkunan Objektinavigointi-kategoriassa. (#8600)
 - Kun avaat jo avatun valintaikkunan, NVDA ei näytä enää virhettä vaan siirtää kohdistuksen avoimeen valintaikkunaan. (#5383)
-- Microsoft Office 2016:n/365:n uudemmissa koontiversioissa kuin 13900 NVDA käyttää nyt aina UI Automation -rajapintaa Word-asiakirjasäätimissä riippumatta siitä, onko Lisäasetukset-paneelin "Käytä UI Automation -rajapintaa Microsoft word -asiakirjasäätimissä" -asetus valittuna vai ei. (#12770)
 - Päivitetty liblouis-pistekirjoituskääntäjä versioksi [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
  - Uusia pistetaulukoita: venäläinen taso 1, venda taso 1, venda taso 2
  -
 - "Merkitty sisältö" tai "mrkt" -ilmoitusten asemesta sanotaan "korostus" tai näytetään pistenäytöllä "krt". (#12892)
+- NVDA ei enää yritä sulkeutua, kun valintaikkunat odottavat vaadittua toimenpidettä (esim. OK/Peruuta). (#12984)
 -
 
 
@@ -74,6 +74,7 @@ Mikäli tarvitset tätä toiminnallisuutta, määritä syötekomento asianmukais
 - Korjattu kaksinkertainen pistekirjoituksen ja puheen tuottaminen, kun "kuvaus" on sama kuin "sisältö" tai "nimi". (#12888)
 - Kirjoitusvirheäänien toistaminen on nyt tarkempaa kirjoitettaessa MS Wordissa UIA:n ollessa käytössä. (#12161)
 - NVDA ei enää sano "ruutu" Windows 11:ssä vaihdettaessa ohjelmien välillä Alt+Sarkain-näppäinyhdistelmällä. (#12648)
+- Modernien kommenttien sivupaneelia tuetaan nyt MS Wordissa, kun UIA ei ole käytössä. Siirry sivupaneelin ja asiakirjan välillä painamalla Alt+F12. (#12982)
 -
 
 

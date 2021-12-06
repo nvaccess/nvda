@@ -38,11 +38,11 @@ Los usuarios afectados tendrán que descargar esta actualización manualmente.
 - Al leer la barra de estado con ``NVDA+fin``, el cursor de revisión ya no se mueve a su localización.
 Si necesitas esta funcionalidad por favor asigna un gesto al script apropiado en la categoría Navegador de objetos en el diálogo Gestos de Entrada. (#8600)
 - Al abrir un cuadro de diálogo de opciones que ya esté abierto, NVDA pone el foco en el cuadro de diálogo existente en lugar de generar un error. (#5383)
-- En las versiones de Microsoft Office 2016/365 superiores a la 13900, NVDA utilizará siempre UI Automation para acceder a los controles de los documentos de Microsoft Word, independientemente de que el usuario haya activado o desactivado la opción avanzada Utilizar UI Automation  para acceder a los controles de los documentos de Microsoft Word. (#12770)
 - Actualizado el transcriptor braille liblouis a [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
   - Nuevas tablas braille: Ruso grado 1, Tshivenda grado 1, Tshivenda grado 2
   -
 - En lugar de "contenido marcado" o "mar", se anunciará "resaltado" o "rstd" para la voz y el braille respectivamente. (#12892)
+- NVDA ya no intentará salir cuando los diálogos estén esperando una acción requerida (ej.: Confirmar/Cancelar). (#12984)
 -
 
 
@@ -73,6 +73,7 @@ Si necesitas esta funcionalidad por favor asigna un gesto al script apropiado en
 - Corregidos los duplicados en braille y voz cuando la 'descripción' coincida con el 'contenido' o el 'nombre'. (#12888)
 - En MS Word con UIA activado, hay una reproducción más precisa de los sonidos de errores ortográficos mientras se escribe. (#12161)
 - En Windows 11, NVDA ya no anunciará "panel" al pulsar Alt+Tab para cambiar de programa. (#12648)
+- El nuevo panel lateral de seguimiento de Comentarios Modernos ahora es compatible con MS Word cuando no se acceda al documento a través de UIA. Pulsa alt+f12 para moverte entre el panel lateral de seguimiento y el documento. (#12982)
 -
 
 

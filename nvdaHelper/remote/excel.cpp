@@ -19,7 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <oleacc.h>
 #include <common/log.h>
 #include "inProcess.h"
-#include "nvdaInProcUtils.h"
+#include <remote/nvdaInProcUtils.h>
 #include "excel/constants.h"
 
 long getCellTextWidth(HWND hwnd, IDispatch* pDispatchRange) {

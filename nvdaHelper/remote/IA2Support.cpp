@@ -18,12 +18,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <objbase.h>
 #include <ia2.h>
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
 #include "nvdaHelperRemote.h"
 #include "dllmain.h"
 #include "inProcess.h"
-#include "nvdaInProcUtils.h"
+#include <remote/nvdaInProcUtils.h>
 #include "COMProxyRegistration.h"
 #include "IA2Support.h"
 
@@ -142,7 +142,11 @@ void IA2Support_inProcess_terminate() {
 		return;
 	}
 	//Instruct the UI thread to uninstall IA2
-	IA2UIThreadUninstalledEvent=CreateEvent(NULL,true,false,NULL);
+	IA2UIThreadUninstalledEvent = CreateEvent(NULL, true, false, NULL);
+	if (IA2UIThreadUninstalledEvent == 0){
+		// unable to create the event, can't continue
+		return;
+	}
 	registerWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
 	wm_uninstallIA2Support=RegisterWindowMessage(L"wm_uninstallIA2Support");
 	PostThreadMessage(IA2UIThreadID,wm_uninstallIA2Support,0,0);

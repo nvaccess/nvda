@@ -1836,12 +1836,12 @@ Ovo ima veliki negativni utjecaj na performanse, pogotovo na Microsoft visual st
 Stoga, ako je ova opcija uključena, NVDA će ograničiti registraciju događaja samo na fokus sustava za većinu događaja.
 Ako vam smetaju problemi sa performansama u jednoj ili više aplikacija, preporučujemo vam da isprobate ovu funkciju i vodite postoji li poboljšanje u performansama.
 
-==== Uvijek koristi UI automation za pristup kontrolama Microsoft Word dokumenata kada ej to moguće ====[AdvancedSettingsUseUiaForWord]
-Kada ej ova opcija uključena, NVDA će uvijek pokušavati koristiti Microsoft UI Automation API pristupačnosti u svrhu dohvaćanja informacija iz kontrola Microsoft Word dokumenata, čak i za malo starije međuverzije paketa Microsoft Office 2016/365.
+==== Koristi UI automation za pristup kontrolama Microsoft Word dokumenata kada je to moguće ====[AdvancedSettingsUseUiaForWord]
+Kada  je ova opcija uključena, NVDA će pokušavati koristiti Microsoft UI Automation API pristupačnosti u svrhu dohvaćanja informacija iz kontrola Microsoft Word dokumenata.
 Ovo uključuje Microsoft Word, te sastavljač i preglednik poruka u Microsoft Outlooku.
- U međuverzijama Microsoft Office 16.0.13901 i novijim, NVDA će uvijek koristiti UI Automation za pristup Microsoft Word dokumentima neovisno o tome kako je konfigurirana ova postavka. 
-Za najposljednjije verzije Microsoft Office paketa 2016/365 koje se pokreću na Windows 10 i novijim, podrška za UI Automation je dovoljno kompletna kako bi omogućila pristup Microsoft word dokumentima skoro jednako kao postojeća podrška Microsoft office paketa u NVDA, sa dodanom prednošću unapređenih performansi.
-Međutim, postoje neke informacije koje se ne pokazuju, ili se pokazuju neispravno u starijim međuverzijama paketa Microsoft Office, što znaći, da se na ovu UIA implementaciju ne može potpuno osloniti.
+ Za posljednje verzije Microsoft Office 2016/365 koje su pokretane u Windowsima 10 i novijim, podrška UI automation je dovoljno dovršena u cilju omogućavanja dostupa do Microsoft Word dokumentima koja je jednaka ili ista sa postojećom podrškom u NVDA, sa dodanom prednošću da su poboljšane performanse.
+Međutim, postoje neke informacije, koje se pokazuju ili uopće ne pokazuju u nekim verzijama Microsoft officea, što znači da nije moguće ovisiti sasvim o toj podršci.
+Ne proporučujemo da korisnici uključuju ovo kao podrazumjevanu opciju, ali podržavamo korisnike Microsoft Office 2016/365 da testiruju ovu značajku i daju povratnu informaciju.
 
 ==== Koristi UI Automation za pristup windows naredbenom retku kada je to dostupno ====[AdvancedSettingsConsoleUIA]
 Kada je ova opcija uključena, NVDA će koristiti nove, u toku razvoja [unapređenja pristupačnosti koje je napravio Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ova je značajka još uvijek eksperimentalna, te njeno korištenje se ne preporučuje. Međutim, ista će podrazumjevano postati standard, kada se isprave sve pogreške.
@@ -3189,8 +3189,8 @@ NVDA funkcija automatskog prepoznavanja brajičnih redaka će prepoznavati bilo 
 Slijede dodjeljeni prečaci za te brajične retke.
 %kc:beginInclude
 || Naziv | prečac |
-| premještanje brajičnog retka u natrag | pan left |
-| Premještanje brajičnog redka u narped | pan right |
+| premještanje brajičnog retka u natrag | pan left ili rocker up |
+| Premještanje brajičnog redka u narped | pan right ili rocker down |
 | Premjesti brajični redak na prethodni redak | razmak + točkica1 |
 | premjesti brajični redak na sljedeći redak | razmak + točkica4 |
 | premjesti se na brajičnu ćeliju | routing set 1|

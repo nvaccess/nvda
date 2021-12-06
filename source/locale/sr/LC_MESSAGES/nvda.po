@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 00:02+0000\n"
+"POT-Creation-Date: 2021-11-12 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -93,7 +93,7 @@ msgstr "Pravopis i gramatika: {text}"
 #. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
-msgstr "Pisanje: {text}"
+msgstr "Pravopis: {text}"
 
 #. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -136,7 +136,7 @@ msgstr "nepoznat"
 #. (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
-msgstr "Greška u aplikacijskom modulu %s"
+msgstr "Greška u modulu aplikacije %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgctxt "aria"
@@ -455,7 +455,7 @@ msgstr "Neispravan"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
 msgid "..."
-msgstr "... ..."
+msgstr "..."
 
 #. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "mln"
@@ -543,13 +543,13 @@ msgstr "sve tačke"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr "Ubaci promene sadržaja na brajev red"
+msgstr "Popuni brajev red za promene sadržaja"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 #. This was the pre NVDA 2017.3 default.
 msgid "Always fill display"
-msgstr "Uvek prikaži na brajevom redu"
+msgstr "Uvek  popuni brajev red"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. always shows the object with focus at the very left of the braille display
@@ -640,7 +640,7 @@ msgstr "Na pregled"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
-msgstr "Č&vrstoća tačaka"
+msgstr "Č&vrstina tačaka"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Braille inp&ut"
@@ -700,7 +700,7 @@ msgstr "Brajeva tastatura"
 #. Translators: Used to describe the press of space
 #. along with any dots on a braille keyboard.
 msgid "space with any dots"
-msgstr "Razmak sa bilo kom tačkom"
+msgstr "Razmak sa bilo kojom tačkom"
 
 #. Translators: Used to describe the press of any dots
 #. on a braille keyboard.
@@ -1493,7 +1493,7 @@ msgstr "Prebacuje komandu aplikaciji"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
-msgstr "premešta se na sledeći naslov"
+msgstr "premešta se na naredni naslov"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading"
@@ -1509,7 +1509,7 @@ msgstr "nema prethodnog naslova"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 1"
-msgstr "premešta se na sledeći naslov na nivou 1"
+msgstr "premešta se na naredni naslov na nivou 1"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 1"
@@ -1525,7 +1525,7 @@ msgstr "nema prethodnog naslova na nivou 1"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 2"
-msgstr "premešta se na sledeći naslov na nivou 2"
+msgstr "premešta se na naredni naslov na nivou 2"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 2"
@@ -1733,19 +1733,19 @@ msgstr "nema prethodnog dugmeta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next edit field"
-msgstr "premešta se na naredno polje za unos teksta"
+msgstr "premešta se na naredno polje za uređivanje"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next edit field"
-msgstr "nema narednog polja za unos teksta"
+msgstr "nema narednog polja za uređivanje"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous edit field"
-msgstr "premešta se na prethodno polje za unos teksta"
+msgstr "premešta se na prethodno polje za uređivanje"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous edit field"
-msgstr "nema prethodnog polja za unos teksta"
+msgstr "nema prethodnog polja za uređivanje"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next frame"
@@ -1825,7 +1825,7 @@ msgstr "premešta se na prethodno izborno polje"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous check box"
-msgstr "nema prethodnog izbornog okvira"
+msgstr "nema prethodnog izbornog polja"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
@@ -1861,7 +1861,7 @@ msgstr "nema prethodnog citata"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
-msgstr "preskače blok linkova"
+msgstr "preskače napred nakon bloka linkova"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text after a block of links"
@@ -1869,7 +1869,7 @@ msgstr "nema više teksta posle bloka linkova"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips backward past a block of links"
-msgstr "preskače nazad blok linkova"
+msgstr "preskače nazad nakon bloka linkova"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text before a block of links"
@@ -1983,7 +1983,7 @@ msgstr "Lin&kovi"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Headings"
-msgstr "&Zaglavlja"
+msgstr "&Naslovi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1998,7 +1998,7 @@ msgstr "&Dugmići"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "Lan&dmarks"
-msgstr "&Regioni"
+msgstr "&Orjentiri"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
@@ -2046,7 +2046,7 @@ msgstr "Nema dodatnih detalja"
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
-msgstr "Nije u sadrživaču"
+msgstr "Niste u sadrživaču"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
@@ -2369,12 +2369,12 @@ msgstr "Uspravno"
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
 msgid "Charging battery. %d percent"
-msgstr "Punjenje baterije. %d procenata"
+msgstr "%d procenata, punjenje baterije."
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #, python-format
 msgid "Not charging battery. %d percent"
-msgstr "Punjenje baterije zaustavljeno. %d procenata"
+msgstr "%d procenata, punjenje baterije zaustavljeno."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -2428,7 +2428,7 @@ msgstr "bez izbora "
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
-msgstr "Nije u ćeliji tabele"
+msgstr "Niste u ćeliji tabele"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
@@ -2437,27 +2437,27 @@ msgstr "Ivica tabele"
 
 #. Translators: the description for the next table row script on browseMode documents.
 msgid "moves to the next table row"
-msgstr "premešta se u naredni red tabele"
+msgstr "premešta se na naredni red tabele"
 
 #. Translators: the description for the previous table row script on browseMode documents.
 msgid "moves to the previous table row"
-msgstr "premešta se u prethodni red tabele"
+msgstr "premešta se na prethodni red tabele"
 
 #. Translators: the description for the next table column script on browseMode documents.
 msgid "moves to the next table column"
-msgstr "premešta se u narednu kolonu tabele"
+msgstr "premešta se na narednu kolonu tabele"
 
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
-msgstr "premešta se u prethodnu kolonu tabele"
+msgstr "premešta se na prethodnu kolonu tabele"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
-msgstr "Isključeno prijavljivanje tabela za izgled"
+msgstr "Isključene tabele za izgled"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables on"
-msgstr "Uključeno prijavljivanje tabela za izgled"
+msgstr "Uključene tabele za izgled"
 
 #. Translators: Input help mode message for include layout tables command.
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
@@ -2555,11 +2555,11 @@ msgstr ""
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
-msgstr "pomoć za unos uključena"
+msgstr "Uključena pomoć za unos"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help off"
-msgstr "pomoć za unos isključena"
+msgstr "Isključena pomoć za unos"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles sleep mode on and off for the active application."
@@ -2567,11 +2567,11 @@ msgstr "Uključuje i isključuje režim spavanja za trenutnu aplikaciju."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
-msgstr "Režim spavanja isključen"
+msgstr "Isključen režim spavanja"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
-msgstr "Režim spavanja uključen"
+msgstr "Uključen režim spavanja"
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -2763,18 +2763,18 @@ msgstr "uključeno prijavljivanje izmena"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "Uključuje i isključuje objavu naglašenog"
+msgstr "Uključuje i isključuje prijavljivanje naglašenog"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
-msgstr "isključena objava naglašenog teksta"
+msgstr "isključeno prijavljivanje naglašenog teksta"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "uključena objava naglašenog teksta"
+msgstr "uključeno prijavljivanje naglašenog teksta"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
+msgid "Toggles on and off the reporting of highlighted text"
 msgstr "Uključuje i isključuje prijavljivanje obeleženog teksta"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
@@ -3526,9 +3526,8 @@ msgid ""
 "Reports formatting info for the text under the caret. If pressed twice, "
 "presents the information in browse mode"
 msgstr ""
-"Prijavljuje informacije o formatiranju tekstat na trenutnoj poziciji "
-"kursora. Ako se pritisne dva puta, prikazuje informacije u režimu "
-"pretraživanja"
+"Prijavljuje informacije o formatiranju teksta na trenutnoj poziciji kursora. "
+"Ako se pritisne dva puta, prikazuje informacije u režimu pretraživanja"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -7948,19 +7947,6 @@ msgstr ""
 "Panel sa podešavanjima koji ste pokušali da otvorite nije dostupan na ovom "
 "sistemu."
 
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Zadani rečnik"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Rečnik glasova (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Privremeni rečnik"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "O NVDA"
@@ -9881,11 +9867,10 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Always use UI Automation to access Microsoft &Word document controls when "
-"available"
+"Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Uvek koristi UI Automation za pristup kontrolama dokumenata u programu "
-"Microsoft &Word kada je dostupan"
+"Koristi UI Automation za pristup kontrolama dokumenata u programu Microsoft "
+"&Word kada je dostupan"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10155,6 +10140,20 @@ msgstr "&Uredi"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Dodaj unos u rečnik"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Zadani rečnik"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Rečnik glasova (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Privremeni rečnik"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
