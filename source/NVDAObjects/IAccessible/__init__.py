@@ -1778,8 +1778,6 @@ the NVDAObject for IAccessible
 			# // Params for getTextFromIAccessible
 			# [out, string] BSTR* textBuf
 			ctypes.byref(text),
-			# [in, defaultvalue(FALSE)] const boolean useNewText,
-			False,
 			# [in, defaultvalue(TRUE)] const boolean recurse,
 			True,
 			# [in, defaultvalue(TRUE)] const boolean includeTopLevelText

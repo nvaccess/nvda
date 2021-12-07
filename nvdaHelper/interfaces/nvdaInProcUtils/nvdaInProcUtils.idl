@@ -83,7 +83,6 @@ interface NvdaInProcUtils {
 		[in] long parentID,
 		// Params for getTextFromIAccessible
 		[out, string] BSTR* textBuf,
-		[in, defaultvalue(FALSE)] const boolean useNewText,
 		[in, defaultvalue(TRUE)] const boolean recurse,
 		[in, defaultvalue(TRUE)] const boolean includeTopLevelText
 	);

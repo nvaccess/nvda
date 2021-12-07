@@ -308,7 +308,6 @@ error_status_t nvdaInProcUtils_getTextFromIAccessible(
 	long parentID,
 	// Params for getTextFromIAccessible
 	BSTR* outBuf,
-	const boolean useNewText,
 	const boolean recurse,
 	const boolean includeTopLevelText
 ) {
@@ -327,7 +326,7 @@ error_status_t nvdaInProcUtils_getTextFromIAccessible(
 		const auto gotText = getTextFromIAccessible(
 			textBuf,
 			pacc2,
-			useNewText,
+			false,  // useNewText, only valid in reponse to an event (indicating changing text)
 			recurse,
 			includeTopLevelText
 		);
