@@ -62,7 +62,7 @@ def test_mark_aria_details():
 			<p>The word <mark aria-details="cat-details">cat</mark> has a comment tied to it.</p>
 		</div>
 		<p>Hello <span
-			aria-details="xx"
+			aria-details="link-details"
 			role="mark">this is a <a href="https://www.google.com/">test</a></span></p>
 		<div>
 			<div id="cat-details" role="comment">Cats go woof BTW<br>&mdash;Jonathon Commentor
@@ -72,6 +72,9 @@ def test_mark_aria_details():
 				<textarea cols="80" placeholder="Add reply..."></textarea>
 				<input type="submit">
 			</div>
+		</div>
+		<div id="link-details" role="note">
+			<p>Nested in a container</p>
 		</div>
 		"""
 	)
@@ -151,12 +154,12 @@ def test_mark_aria_details():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("downArrow")
 	_asserts.speech_matches(
 		actualSpeech,
-		"out of edit  Hello  highlighted  this is a  link  test",
+		"out of edit  Hello  highlighted  has details  this is a  link  test",
 		message="Browse mode: Move by line to paragraph with link nested in a container with details",
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"Hello  hlght this is a  lnk test hlght end",
+		"Hello  hlght details this is a  lnk test hlght end",
 		message="Browse mode: Move by line to paragraph with link nested in a container with details",
 	)
 	# Jump to the link
@@ -168,7 +171,7 @@ def test_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"Hello  hlght this is a  lnk test hlght end",
+		"Hello  hlght details this is a  lnk test hlght end",
 		message="Browse mode: Jump to link nested in a container with details",
 	)
 	# read the details summary
@@ -278,7 +281,10 @@ def test_mark_aria_details():
 	_asserts.speech_matches(
 		actualSpeech,
 		SPEECH_CALL_SEP.join([
-			"highlighted",
+			SPEECH_SEP.join([
+				"highlighted",
+				"has details",
+			]),
 			SPEECH_SEP.join([
 				"test",
 				"link",
