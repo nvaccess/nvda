@@ -4,7 +4,8 @@
 # See the file COPYING for more details.
 
 """Language and localization support.
-This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
+This module assists in NVDA going global through language services
+such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
 import builtins
@@ -14,7 +15,6 @@ import ctypes
 import locale
 import gettext
 import enum
-import buildVersion
 import globalVars
 from logHandler import log
 import winKernel
@@ -46,14 +46,6 @@ class LOCALE(enum.IntEnum):
 	SENGLISHLANGUAGENAME = 0x00001001
 	SENGLISHCOUNTRYNAME = 0x00001002
 	IDEFAULTANSICODEPAGE = 0x00001004
-
-
-# These constants are deprecated and  members of LOCALE enum should be used instead
-# They would be removed in NVDA 2022.1
-if buildVersion.version_year < 2022:
-	LOCALE_SLANGUAGE = LOCALE.SLANGUAGE
-	LOCALE_SLIST = LOCALE.SLIST
-	LOCALE_SLANGDISPLAYNAME = LOCALE.SLANGDISPLAYNAME
 
 
 def isNormalizedWin32Locale(localeName: str) -> bool:
