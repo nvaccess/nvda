@@ -116,13 +116,12 @@ class ChromeLib:
 		@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
 		@return: None
 		"""
-		for i in range(10):  # set a limit on the number of tries.
+		for i in range(3):  # set a limit on the number of tries.
 			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
 			spy.wait_for_speech_to_finish()
 			actualSpeech = spy.get_speech_at_index_until_now(lastSpeechIndex)
 			if self._wasStartMarkerSpoken(actualSpeech):
 				break
-			spy.emulateKeyPress('F6')
 			lastSpeechIndex = spy.get_last_speech_index()
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
