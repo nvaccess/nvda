@@ -1977,9 +1977,14 @@ class GlobalCommands(ScriptableObject):
 		"""
 		log.info("Report annotation details summary at current location.")
 		# Common cases, vbuf available: Eg editable text, or regular web content
-		ti = api.getReviewPosition()
-		ti.expand("character")
-		log.debug(f"Trying with reviewPosition: {ti}")
+		try:
+			caret: textInfos.TextInfo = api.getCaretPosition()
+		except ValueError:
+			log.debugWarning("Unable to get the caret position.", exc_info=True)
+			return
+		caret.expand(textInfos.UNIT_CHARACTER)
+		nvdaObject: Optional[NVDAObject] = caret.NVDAObjectAtStart
+		log.debug(f"Trying with nvdaObject : {nvdaObject}")
 		# So far NVDAObjectAtStart works in all situations tested.
 		#
 		# An alternative might be to:
@@ -2001,13 +2006,10 @@ class GlobalCommands(ScriptableObject):
 		# docHandle = f.field.get("controlIdentifier_docHandle")
 		# ID = f.field.get("controlIdentifier_ID")
 		# objWithDetails = IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
-		annotation: Optional[str] = None
-		if ti.NVDAObjectAtStart:
-			annotation = ti.NVDAObjectAtStart.detailsSummary
-			if annotation:
-				log.debug("ti.NVDAObjectAtStart has details.")
-
-		if not annotation and api.getNavigatorObject():
+		annotation: Optional[str] = nvdaObject.detailsSummary
+		if annotation:
+			log.debug("NVDAObjectAtStart of caret has details.")
+		elif api.getNavigatorObject():
 			# Check the nav object
 			nav = api.getNavigatorObject()
 			log.debug(f"Trying nav object: {nav}")

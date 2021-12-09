@@ -61,6 +61,10 @@ ARIA details
 	[Documentation]	Ensure a summary of aria-details is read on command from a mark element
 	[Tags]	annotations
 	test_mark_aria_details
+ARIA details with review cursor doesnt follow caret
+	[Documentation]	Variation on the ARIA details test with the config changed so the review cursor does not follow the caret.
+	[Tags]	annotations
+	test_mark_aria_details_FreeReviewCursor
 i12147
 	[Documentation]	New focus target should be announced if the triggering element is removed when activated
 	test_i12147

@@ -55,7 +55,22 @@ def checkbox_labelled_by_inner_element():
 	)
 
 
+REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
+
+
 def test_mark_aria_details():
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
+	exercise_mark_aria_details()
+
+
+def test_mark_aria_details_FreeReviewCursor():
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
+	exercise_mark_aria_details()
+
+
+def exercise_mark_aria_details():
 	_chrome.prepareChrome(
 		"""
 		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
@@ -312,6 +327,7 @@ def test_mark_aria_details():
 		"No additional details",
 		message="Focus mode: Try to read details, link nested in container with details.",
 	)
+
 
 def announce_list_item_when_moving_by_word_or_character():
 	_chrome.prepareChrome(
