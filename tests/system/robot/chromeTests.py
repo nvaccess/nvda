@@ -309,7 +309,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"hlght test lnk",
+		"hlght details test lnk",
 		message="Focus mode: tab to link nested in container with details"
 	)
 
