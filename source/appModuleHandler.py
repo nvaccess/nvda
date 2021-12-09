@@ -17,7 +17,6 @@ import os
 import sys
 from typing import (
 	Optional,
-	Any,
 )
 
 import winVersion
@@ -351,7 +350,7 @@ class AppModule(baseObject.ScriptableObject):
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
 
-		self.helperLocalBindingHandle: Optional[Any] = None
+		self.helperLocalBindingHandle: Optional[ctypes.c_long] = None
 		"""RPC binding handle pointing to the RPC server for this process"""
 
 		self._inprocRegistrationHandle=None
