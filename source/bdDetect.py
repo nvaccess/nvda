@@ -123,13 +123,14 @@ def getDriversForConnectedUsbDevices():
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		# check for the Braille HID protocol before any other device matching.
-		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
-			yield ("hid", match)
 		for driver, devs in _driverDevices.items():
 			for type, ids in devs.items():
 				if match.type==type and match.id in ids:
 					yield driver, match
+		# check for the Braille HID protocol after any other device matching.
+		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+			yield ("hid", match)
+
 
 def getDriversForPossibleBluetoothDevices():
 	"""Get any matching drivers for possible Bluetooth devices.
@@ -144,15 +145,16 @@ def getDriversForPossibleBluetoothDevices():
 			for port in deviceInfoFetcher.hidDevices if port["provider"]=="bluetooth"),
 	)
 	for match in btDevs:
-		# check for the Braille HID protocol before any other device matching.
-		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
-			yield ("hid", match)
 		for driver, devs in _driverDevices.items():
 			matchFunc = devs[KEY_BLUETOOTH]
 			if not callable(matchFunc):
 				continue
 			if matchFunc(match):
 				yield driver, match
+		# check for the Braille HID protocol after any other device matching.
+		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+			yield ("hid", match)
+
 
 class _DeviceInfoFetcher(AutoPropertyObject):
 	"""Utility class that caches fetched info for available devices for the duration of one core pump cycle."""
@@ -343,7 +345,6 @@ def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		# check for the Braille HID protocol before any other device matching.
 		if driver == "hid":
 			if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
 				yield match
@@ -361,7 +362,6 @@ def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	if driver == "hid":
-		# check for the Braille HID protocol before any other device matching.
 		def matchFunc(match):
 			return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
 	else:
