@@ -224,14 +224,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if not self.numCells:
 			# If no connection, Albatross sends continuously byte \xff
 			# followed by byte containing various settings like number of cells.
+			# But there may be garbage before \xff.
 			if data != b"\xff":
-				# Read another byte, if the first one was value byte.
-				data = self._dev.read(1)
-				if len(data) == 0 or data != b"\xff":
+				while data != b"\xff" and len(data):
+					data = self._dev.read(1)
+				if not len(data):
+					log.debugWarning("No init byte")
 					return
 			log.debugWarning("Init byte: %r" % data)
 			data = self._dev.read(1)
-			if len(data) == 0:
+			if not len(data):
+				log.debugWarning("No value byte")
 				return
 			log.debugWarning("Value byte: %r" % data)
 			if not self._sendToDisplay(ESTABLISHED):
@@ -267,41 +270,50 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# display indexing starts from 1
 				writeBytes.append(intToByte(i + 1))
 				# Bits have to be reversed.
+				# Source: https://stackoverflow.com/questions/12681945/reversing-bits-of-python-integer
 				writeBytes.append(intToByte(int('{:08b}'.format(cell)[::-1], 2)))
 		writeBytes.append(END_BYTE)
 		self._sendToDisplay(b"".join(writeBytes))
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(albatross):left",),
-			"braille_scrollForward": ("br(albatross):right",),
-			"braille_previousLine": ("br(albatross):up1", "br(albatross):up2", "br(albatross):up3",),
-			"braille_nextLine": ("br(albatross):down1", "br(albatross):down2", "br(albatross):down3",),
-			"braille_routeTo": ("br(albatross):routing",),
-			"braille_reportFormatting": ("br(albatross):secondRouting",),
-			"braille_toggleTether": ("br(albatross):eCursor1", "br(albatross):eCursor2",),
-			"braille_toFocus": ("br(albatross):cursor1", "br(albatross):cursor2",),
 			"review_top": ("br(albatross):home1", "br(albatross):home2",),
 			"review_bottom": ("br(albatross):end1", "br(albatross):end2",),
-			"braille_toggleFocusContextPresentation": ("br(albatross):eCursor1+eCursor2",),
+			"navigatorObject_toFocus": ("br(albatross):eCursor1", "br(albatross):eCursor2",),
+			"braille_toFocus": ("br(albatross):cursor1", "br(albatross):cursor2",),
+			"moveMouseToNavigatorObject": ("br(albatross):home1+home2",),
+			"moveNavigatorObjectToMouse": ("br(albatross):end1+end2",),
+			"navigatorObject_moveFocus": ("br(albatross):eCursor1+eCursor2",),
+			"braille_toggleTether": ("br(albatross):cursor1+cursor2",),
+			"braille_previousLine": ("br(albatross):up1", "br(albatross):up2", "br(albatross):up3",),
+			"braille_nextLine": ("br(albatross):down1", "br(albatross):down2", "br(albatross):down3",),
+			"braille_scrollBack": ("br(albatross):left", "br(albatross):lWheelLeft", "br(albatross):rWheelLeft",),
+			"braille_scrollForward": (
+				"br(albatross):right", "br(albatross):lWheelRight", "br(albatross):rWheelRight",),
+			"braille_routeTo": ("br(albatross):routing",),
+			"braille_reportFormatting": ("br(albatross):secondRouting",),
+			"braille_toggleFocusContextPresentation": ("br(albatross):attribute1+attribute3",),
+			"speechMode": ("br(albatross):attribute2+attribute4",),
 			"reviewMode_previous": ("br(albatross):f1",),
 			"reviewMode_next": ("br(albatross):f2",),
 			"navigatorObject_parent": ("br(albatross):f3",),
 			"navigatorObject_firstChild": ("br(albatross):f4",),
 			"navigatorObject_previous": ("br(albatross):f5",),
 			"navigatorObject_next": ("br(albatross):f6",),
-			"navigatorObject_moveFocus": ("br(albatross):f7",),
-			"review_activate": ("br(albatross):f8",),
-			"navigatorObject_toFocus": ("br(albatross):f1+f2",),
-			"navigatorObject_current": ("br(albatross):f7+f8",),
+			"navigatorObject_current": ("br(albatross):f7",),
+			"navigatorObject_currentDimensions": ("br(albatross):f8",),
+			"review_activate": ("br(albatross):f7+f8",),
 			"dateTime": ("br(albatross):f9",),
-			"showGui": ("br(albatross):f10",),
+			"say_battery_status": ("br(albatross):f10",),
 			"title": ("br(albatross):f11",),
 			"reportStatusLine": ("br(albatross):f12",),
 			"reportCurrentLine": ("br(albatross):f13",),
-			"review_currentCharacter": ("br(albatross):f14",),
-			"sayAll": ("br(albatross):f15",),
-			"speechMode": ("br(albatross):f16",),
+			"sayAll": ("br(albatross):f14",),
+			"review_currentCharacter": ("br(albatross):f15",),
+			"review_currentLine": ("br(albatross):f16",),
+			"review_currentWord": ("br(albatross):f15+f16",),
+			"review_previousLine": ("br(albatross):lWheelUp", "br(albatross):rWheelUp",),
+			"review_nextLine": ("br(albatross):lWheelDown", "br(albatross):rWheelDown",),
 			"kb:windows+d": ("br(albatross):attribute1"),
 			"kb:windows+e": ("br(albatross):attribute2"),
 			"kb:windows+b": ("br(albatross):attribute3"),

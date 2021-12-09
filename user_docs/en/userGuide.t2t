@@ -3201,33 +3201,40 @@ Please see the display's documentation for descriptions of where these keys can 
 || Name | Key |
 | Move to top line in review | home1, home2 |
 | Move to bottom line in review | end1, end2 |
-| Toggle braille tethered to | eCursor1, eCursor2 |
+| Sets the navigator object to the current focus | eCursor1, eCursor2 |
 | Move to current focus | cursor1, cursor2 |
-| Toggle the way context information is presented in braille | eCursor1+eCursor2 |
+| Moves the mouse pointer to the current navigator object | home1+home2 |
+| Sets the navigator object to the current object under the mouse pointer and speaks it | end1+end2 |
+| Moves focus to current navigator object | eCursor1+eCursor2 |
+| Toggle braille tethered to | cursor1+cursor2 |
 | Move braille display to previous line | up1, up2, up3 |
 | Move braille display to next line | down1, down2, down3 |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
+| Scroll braille display back | left, lWheelLeft, rWheelLeft |
+| Scroll braille display forward | right, lWheelRight, rWheelRight |
 | Route to braille cell | routing |
 | Report text formatting under braille cell | secondary routing |
+| Toggle the way context information is presented in braille | attribute1+attribute3 |
+| Toggles between the speech modes of off, beep and talk | attribute2+attribute4 |
 | Switches to the previous review mode (e.g. object, document or screen) | f1 |
 | Switches to the next review mode (e.g. object, document or screen) | f2 |
-| Sets the navigator object to the current focus | f1+f2 |
 | Moves the navigator object to the object containing it | f3 |
 | Moves the navigator object to the first object inside it | f4 |
 | Moves the navigator object to the previous object | f5 |
 | Moves the navigator object to the next object | f6 |
-| Moves focus to current navigator object | f7 |
-| Performs the default action on the current navigator object | f8 |
-| Reports the current navigator object | f7+f8 |
+| Reports the current navigator object | f7 |
+| Reports information about the location of the text or object at the review cursor | f8 |
+| Performs the default action on the current navigator object | f7+f8 |
 | Reports date/time | f9 |
-| NVDA Menu | f10 |
+| Reports battery status and time remaining if AC is not plugged in | f10 |
 | Reports title | f11 |
 | Reports status bar | f12 |
 | Reports the current line under the application cursor | f13 |
-| Reports current character under review cursor | f14 |
-| Say all | f15 |
-| Toggles between the speech modes of off, beep and talk | f16 |
+| Say all | f14 |
+| Reports current character under review cursor | f15 |
+| Reports the line of the current navigator object where the review cursor is situated | f16 |
+| Speaks the word of the current navigator object where the review cursor is situated | f15+f16 |
+| Moves the review cursor to the previous line of the current navigator object and speaks it | lWheelUp, rWheelUp |
+| Moves the review cursor to the next line of the current navigator object and speaks it | lWheelDown, rWheelDown |
 | windows+d key (minimize all applications) | attribute1 |
 | windows+e key (this computer) | attribute2 |
 | windows+b key (focus system tray) | attribute3 |
