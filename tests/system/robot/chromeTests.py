@@ -177,17 +177,46 @@ def exercise_mark_aria_details():
 		"Hello  hlght details this is a  lnk test hlght end",
 		message="Browse mode: Move by line to paragraph with link nested in a container with details",
 	)
-	# Jump to the link
+	# Jump to the link from same line
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("k")
 	_asserts.speech_matches(
 		actualSpeech,
 		"test  link",
-		message="Browse mode: Jump to link nested in a container with details",
+		message="Browse mode: From same line jump to link nested in a container with details",
 	)
 	_asserts.braille_matches(
 		actualBraille,
 		"Hello  hlght details this is a  lnk test hlght end",
-		message="Browse mode: Jump to link nested in a container with details",
+		message="Browse mode: From same line jump to link nested in a container with details",
+	)
+
+	# reset to prior line before jump to the link from different line
+	actualSpeech = _NvdaLib.getSpeechAfterKey('upArrow')
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"out of highlighted",  # Leaving the highlighted link
+			"edit",
+			"multi line",
+			"The word",  # content
+			"highlighted",
+			"has details",
+			"cat",  # highlighted content
+			"out of highlighted",
+			"has a comment tied to it.",  # content
+		]),
+		message="Browse mode: Reset to prior line before jump to the link."
+	)
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("k")
+	_asserts.speech_matches(
+		actualSpeech,
+		"highlighted  has details  test  link",
+		message="Browse mode: From prior line jump to link nested in a container with details",
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"Hello  hlght details this is a  lnk test hlght end",
+		message="Browse mode: From prior line jump to link nested in a container with details",
 	)
 	# read the details summary
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
