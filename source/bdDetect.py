@@ -127,7 +127,9 @@ def getDriversForConnectedUsbDevices():
 			for type, ids in devs.items():
 				if match.type==type and match.id in ids:
 					yield driver, match
-		# check for the Braille HID protocol after any other device matching.
+		# Check for the Braille HID protocol after any other device matching.
+		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
+		# This preference may change in the future.
 		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
 			yield ("hid", match)
 
@@ -151,7 +153,9 @@ def getDriversForPossibleBluetoothDevices():
 				continue
 			if matchFunc(match):
 				yield driver, match
-		# check for the Braille HID protocol after any other device matching.
+		# Check for the Braille HID protocol after any other device matching.
+		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
+		# This preference may change in the future.
 		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
 			yield ("hid", match)
 
