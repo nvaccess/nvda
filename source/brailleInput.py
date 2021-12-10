@@ -133,7 +133,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		mode = louis.dotsIO | louis.noUndefinedDots
 		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
-			mode |=  louis.partialTrans
+			mode |= louis.partialTrans
 		self.bufferText = louis.backTranslate(
 			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
 			"braille-patterns.cti"],
@@ -266,17 +266,17 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def toggleModifiers(self, modifiers: List[str]):
 		# Check modifier validity
-		validModifiers: bool =\
-			all(keyboardHandler.KeyboardInputGesture.fromName(m).isModifier
-				for m in modifiers)
+		validModifiers: bool = all(
+			keyboardHandler.KeyboardInputGesture.fromName(m).isModifier
+			for m in modifiers)
 		if not validModifiers:
-			raise ValueError("%r contains unknown modifiers"%modifiers)
+			raise ValueError("%r contains unknown modifiers" % modifiers)
 
 		# Ensure input buffer is clear for the modified key
 		if self.bufferText:
 			self._translate(True)
 
-		toToggle:  frozenset[str] = frozenset(modifiers)
+		toToggle: frozenset[str] = frozenset(modifiers)
 		added = toToggle - self.currentModifiers
 		removed = toToggle & self.currentModifiers
 		self.currentModifiers.difference_update(toToggle)
