@@ -3044,8 +3044,8 @@ class GlobalCommands(ScriptableObject):
 		brailleInput.handler.toggleModifier("NVDA")
 
 	@script(
-		# Translators: Input help mode message for a braille command.
 		description=_(
+			# Translators: Input help mode message for a braille command.
 			"Virtually toggles the control and shift keys to emulate a "
 			"keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
@@ -3055,8 +3055,8 @@ class GlobalCommands(ScriptableObject):
 		brailleInput.handler.toggleModifiers(["control", "shift"])
 
 	@script(
-		# Translators: Input help mode message for a braille command.
 		description=_(
+			# Translators: Input help mode message for a braille command.
 			"Virtually toggles the alt and shift keys to emulate a "
 			"keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
@@ -3066,8 +3066,8 @@ class GlobalCommands(ScriptableObject):
 		brailleInput.handler.toggleModifiers(["alt", "shift"])
 
 	@script(
-		# Translators: Input help mode message for a braille command.
 		description=_(
+			# Translators: Input help mode message for a braille command.
 			"Virtually toggles the left windows and shift keys to emulate a "
 			"keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
@@ -3077,8 +3077,8 @@ class GlobalCommands(ScriptableObject):
 		brailleInput.handler.toggleModifiers(["leftWindows", "shift"])
 
 	@script(
-		# Translators: Input help mode message for a braille command.
 		description=_(
+			# Translators: Input help mode message for a braille command.
 			"Virtually toggles the NVDA and shift keys to emulate a "
 			"keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
@@ -3088,8 +3088,8 @@ class GlobalCommands(ScriptableObject):
 		brailleInput.handler.toggleModifiers(["NVDA", "shift"])
 
 	@script(
-		# Translators: Input help mode message for a braille command.
 		description=_(
+			# Translators: Input help mode message for a braille command.
 			"Virtually toggles the control and alt keys to emulate a "
 			"keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
@@ -3099,8 +3099,8 @@ class GlobalCommands(ScriptableObject):
 		brailleInput.handler.toggleModifiers(["control", "alt"])
 
 	@script(
-		# Translators: Input help mode message for a braille command.
 		description=_(
+			# Translators: Input help mode message for a braille command.
 			"Virtually toggles the control, alt, and shift keys to emulate a "
 			"keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
