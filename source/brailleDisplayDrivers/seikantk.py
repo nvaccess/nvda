@@ -83,8 +83,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return True
 
 	@classmethod
-	def getManualPorts(cls):
-		return cls.path
+	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
+		"""@return: An iterator containing the name and description for each port.
+		"""
+		return braille.getSerialPorts()
 
 	def __init__(self, port="hid"):
 		super().__init__()

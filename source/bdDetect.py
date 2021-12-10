@@ -18,6 +18,7 @@ from collections import namedtuple, defaultdict, OrderedDict
 import threading
 from typing import Iterable
 
+import typing
 import wx
 import hwPortUtils
 import braille
@@ -184,13 +185,22 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 	"""Utility class that caches fetched info for available devices for the duration of one core pump cycle."""
 	cachePropertiesByDefault = True
 
-	def _get_comPorts(self):
+	#: Type info for auto property: _get_comPorts
+	comPorts: typing.List[typing.Dict]
+
+	def _get_comPorts(self) -> typing.List[typing.Dict]:
 		return list(hwPortUtils.listComPorts(onlyAvailable=True))
 
-	def _get_usbDevices(self):
+	#: Type info for auto property: _get_usbDevices
+	usbDevices: typing.List[typing.Dict]
+
+	def _get_usbDevices(self) -> typing.List[typing.Dict]:
 		return list(hwPortUtils.listUsbDevices(onlyAvailable=True))
 
-	def _get_hidDevices(self):
+	#: Type info for auto property: _get_hidDevices
+	hidDevices: typing.List[typing.Dict]
+
+	def _get_hidDevices(self) -> typing.List[typing.Dict]:
 		return list(hwPortUtils.listHidDevices(onlyAvailable=True))
 
 #: The single instance of the device info fetcher.
@@ -353,7 +363,8 @@ class Detector(object):
 		core.post_windowMessageReceipt.unregister(self.handleWindowMessage)
 		self._stopBgScan()
 
-def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
+
+def getConnectedUsbDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]:
 	"""Get any connected USB devices associated with a particular driver.
 	@param driver: The name of the driver.
 	@type driver: str
@@ -378,7 +389,8 @@ def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 				if match.type == type and match.id in ids:
 					yield match
 
-def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
+
+def getPossibleBluetoothDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]:
 	"""Get any possible Bluetooth devices associated with a particular driver.
 	@param driver: The name of the driver.
 	@type driver: str
