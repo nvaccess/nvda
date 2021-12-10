@@ -3044,6 +3044,60 @@ class GlobalCommands(ScriptableObject):
 		brailleInput.handler.toggleModifier("NVDA")
 
 	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Virtually toggles the control and shift keys to emulate a keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleControlShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["control", "shift"])
+
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Virtually toggles the alt and shift keys to emulate a keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleAltShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["alt", "shift"])
+
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Virtually toggles the left windows and shift keys to emulate a keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleWindowsShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["leftWindows", "shift"])
+
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleNVDAKeyShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["NVDA", "shift"])
+
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Virtually toggles the control and alt keys to emulate a keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleControlAlt(self, gesture):
+		brailleInput.handler.toggleModifiers(["control", "alt"])
+
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Virtually toggles the control, alt, and shift keys to emulate a keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleControlAltShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["control", "alt", "shift"])
+
+	@script(
 		description=_(
 			# Translators: Input help mode message for reload plugins command.
 			"Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"

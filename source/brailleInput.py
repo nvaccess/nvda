@@ -262,20 +262,30 @@ class BrailleInputHandler(AutoPropertyObject):
 			self._reportUntranslated(pos)
 
 	def toggleModifier(self, modifier: str):
+		self.toggleModifiers([modifier])
+
+	def toggleModifiers(self, modifiers: List[str]):
 		# Check modifier validity
-		isModifier: bool = keyboardHandler.KeyboardInputGesture.fromName(modifier).isModifier
-		if not isModifier:
-			raise ValueError("%r is not a valid modifier"%modifier)
-		if modifier in self.currentModifiers:
-			self.currentModifiers.discard(modifier)
+		validModifiers: bool =\
+			all(keyboardHandler.KeyboardInputGesture.fromName(m).isModifier
+				for m in modifiers)
+		if not validModifiers:
+			raise ValueError("%r contains unknown modifiers"%modifiers)
+
+		# Ensure input buffer is clear for the modified key
+		if self.bufferText:
+			self._translate(True)
+
+		toToggle:  frozenset[str] = frozenset(modifiers)
+		added = toToggle - self.currentModifiers
+		removed = toToggle & self.currentModifiers
+		self.currentModifiers.difference_update(toToggle)
+		self.currentModifiers.update(added)
+		for modifier in added:
+			speech.speakMessage(keyLabels.getKeyCombinationLabel(modifier))
+		for modifier in removed:
 			# Translators: Reported when a braille input modifier is released.
 			speech.speakMessage(_("{modifier} released").format(
-				modifier=keyLabels.getKeyCombinationLabel(modifier)
-			))
-		else: # modifier not in self.currentModifiers
-			self.currentModifiers.add(modifier)
-			# Translators: Reported when a braille input modifier is pressed.
-			speech.speakMessage(_("{modifier} pressed").format(
 				modifier=keyLabels.getKeyCombinationLabel(modifier)
 			))
 
