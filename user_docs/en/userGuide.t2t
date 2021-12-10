@@ -774,17 +774,17 @@ Dot 8 translates any braille input and presses the enter key.
 Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
 %kc:endInclude
 
-+++ Inputting keyboard shortcuts +++[BraillKeyboardShortcuts]
++++ Inputting keyboard shortcuts +++[BrailleKeyboardShortcuts]
 NVDA supports inputting keyboard shortcuts and emulating keypresses using the braille display.
-Teis emulation comes in two forms: assigning a Braille input directly to some key press and using the virtual modifier keys.
+This emulation comes in two forms: assigning a Braille input directly to some key press and using the virtual modifier keys.
 
-Commonly-used keys, such as the arrow keys or pressing Alt to reach menus, can be mapped directly to Braille niputs.
+Commonly-used keys, such as the arrow keys or pressing Alt to reach menus, can be mapped directly to Braille inputs.
 The driver for each Braille display comes pre-equipped with some of these assignments.
 You can change these assignments or add new emulated keys from the [Input Gestures dialog #InputGestures].
 
 While this approach is useful for commonly-pressed or unique keys (such as Tab), you may not want to assign a unique set of keys to each keyboard shortcut.
-To allow emulating keypresses where modifier keys are held down, NVDA provides commands to toggle the control, alt, shift, windwos, and NVDA keys, along with commands for some combinations of those keys.
-To use thesse toggles, first press the command (or sequence of commands) for the modifier keys you want pressed, than input the character that's part of the keyboard shortcut you want to input.
+To allow emulating keypresses where modifier keys are held down, NVDA provides commands to toggle the control, alt, shift, windows, and NVDA keys, along with commands for some combinations of those keys.
+To use these toggles, first press the command (or sequence of commands) for the modifier keys you want pressed, than input the character that's part of the keyboard shortcut you want to input.
 For example, to produce control+f, use the "Toggle control key" command and then type an f,
 and to input control+alt+t, use either the "Toggle control key" and "Toggle alt key" commands, in either order, or the "Toggle control and alt keys" command, followed by typing a t.
 
