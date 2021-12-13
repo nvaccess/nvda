@@ -719,7 +719,7 @@ def getControlFieldBraille(  # noqa: C901
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
-		roleText = f"{controlTypes.Role.LANDMARK.displayString} {landmarkLabels[landmark]}"
+		roleText = f"{roleLabels[controlTypes.Role.LANDMARK]} {landmarkLabels[landmark]}"
 
 	content = field.get("content")
 
