@@ -315,7 +315,7 @@ Hai algunhas ordes de teclado útis cando nos movamos co foco:
 | Anunciar foco actual | NVDA+tab | NVDA+tab | anuncia o obxecto actual ou control que teña o foco do sistema. Premendo dúas veces deletreará a información  |
 | Anunciar título | NVDA+t | NVDA+t | Anuncia o título da ventá activa actualmente. Premendo dúas veces deletreará a información. Premendo tres veces copiaráa ao portapapeis |
 | Ler a ventá activa | NVDA+b | NVDA+b | le todos os controis na ventá actualmente activa (útil para diálogos) |
-| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia a barra de estado se NVDA atopa unha. Tamén move o navegador de obxectos a esta localización. preméndo dúas veces deletreará a información. Premendo tres veces copiaráa ao portapapeis |
+| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia a barra de estado se NVDA atopa unha. preméndo dúas veces deletreará a información. Premendo tres veces copiaráa ao portapapeis |
 %kc:endInclude
 
 ++ Navegar co Cursor do Sistema ++[SystemCaret]
@@ -381,6 +381,7 @@ Para navegar por obxectos, utiliza as seguintes ordes:
 | Activar actual navegador de obxectos | NVDA+Intro teclado numérico | NVDA+Intro | doble toque | Activa o actual navegador de obxectos (similar a facer clic co rato ou premer espazo cando ten o foco do sistema) |
 | Mover foco do Sistema a actual navegador de obxectos | NVDA+shift+Menos teclado numérico | NVDA+shift+retroceso | non | premedo unha vez Move o foco do Sistema ao navegador de obxectos actual, premedo dúas veces move o cursor do sistema á posición do cursor de revisión |
 | Anunciar dimensións do navegador de obxectos | NVDA+Suprimir teclado numérico | NVDA+suprimir | non | Anuncia información acerca da localización do texto ou obxecto no cursor de revisión. Por exemplo, esto podería incluir a porcentaxe do documento, a distancia dende o borde da páxina ou a posición exacta na pantalla. ao se premer dúas veces poderá  proporcionar detalles adicionais.  |
+| Mover cursor de revisión a barra de estado | non | non | no | Anuncia a Barra de Estado se o NVDA atopa unha.  Tamén move o navegador de obxectos a este lugar. |
 %kc:endInclude
 
 nota: as teclas do teclado numérico requiren que a tecla BloqNum estea desactivada para funcionar apropriadamente.
@@ -1401,6 +1402,10 @@ Esta opción non estará dispoñible se a túa pantalla braille só admite detec
 
 Podes consultar a documentación para a túa pantalla braille na seción [Pantallas Braille Admitidas #SupportedBrailleDisplays] para procurar máis detalles sobre os tipos compatibles de comunicación e portos dispoñibles.
 
+Nota importante: se conectas varias Pantallas Braille a túa máquina ao mesmo tempo que usan o mesmo controlador (Ex.: connectar dúas pantallas Seika),
+actualmente é imposible decirlle ao NVDA que pantalla debe usr.
+Polo tanto, recoméndase conectar só unha Pantalla Braille dun determinado tipo de fabricante a túa máquina ao mesmo tempo.
+ 
 +++ Visión +++[VisionSettings]
 A categoría Visión no diálogo opcións do NVDA permíteche activar, desactivar e configurar [axudas visuais #Vision].
 
@@ -1575,7 +1580,8 @@ Para conmutar o modo de revisión sinxela dende calquera lado, por favor asigna 
 
 +++ Presentación de Obxectos (NVDA+control+o) +++[ObjectPresentationSettings]
 A categoría Presentación de obxectos na caixa de diálogo Opcións do NVDA úsase para establecer a cantidade de información que o NVDA presentará sobre controis como descripción, información de posición, etc.
-Esta categoría contén as seguintes opcións:
+Estas opcións non acostuman a se aplicar ao modo exploración.
+Estas opcións acostuman a se aplicar ao anunciado do foco e ao navegador de obxectos de NVDA, pero non á lectura de contido de texto, por exemplo, no modo exploración.
 
 ==== Anunciar Consellos ====[ObjectPresentationReportToolTips]
 Unha caixa de verificación que cando está marcada di ao NVDA que anuncie consellos segundo aparezan. 
@@ -1740,7 +1746,7 @@ Podes configurar o anunciado de:
  - Atributos de fonte
  - Superíndices e subíndices
  - Énfase
- - Marcado (texto resaltado)
+ - Resaltado (texto marcado)
  - Estilo
  - Cores
 - Información de documento
@@ -1833,9 +1839,9 @@ Se sofres problemas de rendemento nunha ou máis aplicacións, recomendámosche 
 ==== Usar UI automation para acesar a controis de documento de Microsoft Word cando estea dispoñible ====[AdvancedSettingsUseUiaForWord]
 Cando esta opción estea activada, o NVDA tentará usar a API de accesibilidade de Microsoft UI Automation para obter información dos controis de documentos de Microsoft Word.
 Esto inclúe ao mesmo Microsoft Word, e tamén o visor de mensajes e o compositor de Microsoft Outlook.
-Para as versións máis recentes de Microsoft Office 2016/365 que se executan en Windows 10 ou posterior, a compatibilidade coa UI Automation  é o suficentemente compreta como para proporcionar acceso a documentos de Microsoft Word case igual á compatibilidade con Microsoft Word existente de NVDA, coa ventaxa engadida de que a capacidade de resposta aumenta considerablemente.
-Sen embargo, pode haber algunha información que non estea exposta ou que estea incorrectamente exposta nalgunhas versións de Microsoft Office, o que significa que non sempre se pode confiar neste soporte da UI automation.
-Aínda non recomendamos que a maioría dos usuarios activen esta opción de xeito predeterminado, aínda que invitamos aos usuarios de Office 2016/365 a que proben esta función e que nos envíen os seus comentarios.
+Para as versións máis recentes de Microsoft Office 2016/365 que se executen en Windows 10 e posteriores, a compatibilidade con UI Automation  é o suficentemente compreta como para proporcionar acceso aos documentos de Microsoft Word case que igual á compatibilidade con Microsoft Word existente do NVDA, coa ventaxa engadida de que a capacidade de resposta aumenta considerablemente.
+Sen embargo, pode haber algunha información que non estea exposta, ou que estea exposta de xeito incorrecto nalgunhas versións de Microsoft Office, o que significa que non sempre se pode confiar neste soporte de UI Automation.
+Aínda non recomendamos que a maioría dos usuarios activen esta función por defecto, aíndaque convidamos aos usuarios de Office 2016/365 a probar esta función e a dar a súa opinión.
 
 ==== Usar UI Automation para acesar á Consola de Windows cando estea dispoñible ====[AdvancedSettingsConsoleUIA]
 Cando esta opción estea activada, o NVDA usará unha versión nova en progreso do seu soporte para a Consola de Windows que ten a ventalla da [mellora de accesibilidade feita por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica é moi experimental e aínda está incompreta, así que o seu uso aínda non está recomendado. Sen embargo, unha vez compretada, cóidase que este novo soporte se converterá no predeterminado, mellorando o rendemento e a estabilidade do NVDA Nas consolas de ordes de Windows.
@@ -1853,12 +1859,21 @@ A caixa combinada ten as seguintes opcións:
 - Non: non usa UIA, incluso se o NVDA non pode inxectar no proceso. Esto pode seren útil para os desenvolvedores que depuren problemas con IA2 e queren asegurarse de que o NVDA non volte a usar UIA.
 -
 
-==== Habilitar o soporte Experimental de anotacións ARIA ====[Annotations]
-Utilízase para activar as características que engaden soporte experimental para anotacións ARIA.
+==== Anotacións ====[Annotations]
+Este grupo de opcións úsanse para habilitar as características que engaden soporte experimental para as anotacións ARIA.
 Algunhas destas características poden estar incompretas.
 Existen as seguintes opcións: 
 - "Anunciar detalles en modo exploración": activa o anunciado se un obxecto ten detalles en modo exploración.
-O anunciado do resumo desos detalles pode facerse asignando un xesto usando o [diálogo Xestos de Entrada #InputGestures].
+  O anunciado do resumo desos detalles pode facerse asignando un xesto usando o [diálogo Xestos de Entrada #InputGestures].
+- "Informar sempre de aria-description":
+  Cando a fonte de ``accDescription`` é aria-description, anúnciase a descripción.
+  Esto é útil para as anotacións na web.
+  Nota:
+ - Hai moitas fontes para ``accDescription`` varias teñen unha semántica mixta ou puoco fiable.
+   Históricamente AT non foi quen de diferenciar as fontes de ``accDescription`` típicamente non se falaba debido á semántica mixta.
+ - Esta opción está nun desenvolvemento moi primitivo, baséase nas características do navegador que aínda non están ampliamente dispoñibles.
+ - Espérase que funcione con Chromium 92.0.4479.0+
+ -
 -
 
 ==== Usar UI automation para acesar a controis en follas de cálculo de Microsoft  Excel cando estea dispoñible ====[UseUiaForExcel]
@@ -1898,10 +1913,21 @@ Esta funcionalidade está predeterminada a partires do NVDA 2021.1.
 Esta opción permíteche configurar o número de milésimas de segundo que o NVDA esperará a que o cursor (punto de inserción) se mova nos controis de texto editables.
 Se ves que o NVDA semella estar seguindo incorrectamente o cursor, por exemplo, parece estar sempre un carácter por detrás ou repetindo liñas, entón podes tentar aumentar este valor.
 
+==== Anunciar transparencia das cores ====[ReportTransparentColors]
+Esta opción permite anunciar cando as cores son transparentes, útil para os desenvolvedores de complementos e módulos de aplicación que reúnen información para mellorar a experiencia do usuario cunha aplicación de terceiros.
+Algunhas aplicacións GDI resaltan o texto cunha cor de fondo, o NVDA (a través do modelo de visualización) tenta informar desta cor.
+Nalgunhas situacións, o fondo do texto pode ser compretamente transparente, co texto en capas sobre algún outro elemento da GUI.
+Con varias APIs de GUI históricamente populares, o texto pode seren renderizado cun fondo transparente, pero visualmente a cor de fondo é precisa.
+
 ==== Categorías de rexistro de depuración ====[AdvancedSettingsDebugLoggingCategories]
 As caixas de verificación desta listaxe permíteche habilitar categorías específicas de mensaxes de depuración no rexistro do NVDA.
 O rexistro destas mensaxes pode incurrir nun menor rendemento e en arquivos de rexistro de gran tamaño.
 Activa só un deles se un desenvolvedor do NVDA che dou instrucións específicas, por exemplo, ao depurar por que un controlador de pantalla braille non está funcionando correctamente.
+
+==== Reproducir un son para os erros rexistrados ====[PlayErrorSound]
+Esta opción permite especificar se o NVDA reproducirá un son de erro en caso de que se rexistre un erro.
+Escollendo Só en versións de proba (por defecto) fai que o NVDA reproduza sons de erro só se a versión actual do NVDA é unha versión de proba (alfa, beta ou executada dende o código fonte).
+Escollendo Si permite habilitar os sons de erro calquera que sexa a versión actual do NVDA.
 
 ++ Miscelánea de Opcións ++[MiscSettings]
 Ademáis da caixa de diálogo [Opcións do NVDA #NVDASettings], o submenú Preferencias do menú NVDA contén outros elementos que se describen a continuación.
@@ -2329,6 +2355,7 @@ As seguintes pantallas admiten esta funcionalidade de detección automática.
 - Series das HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Pantallas Eurobraille Esys/Esytime/Iris
 - Pantallas Nattiq nBraille
+- Calquera Pantalla que admita o protocolo braille estándar HID
 -
 
 ++ Series das Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
@@ -3153,6 +3180,37 @@ Por favor consulta as [listas de claves de vínculos de BRLTTY http://mielke.cc/
 | Guiar á celda braille | route (leva o cursor ao caracter) |
 %kc:endInclude
 
+++ Pantallas HID Braille estándar ++[HIDBraille]
+Este é un controlador experimental para a nova Especificación Estándar HID Braille, acordada en 2018 por Microsoft, Google, Apple e varias empresas de tecnoloxía de asistencia, incluindo NV Access. 
+A esperanza é que todos os futuros modelos de pantallas Braille creados por calquer fabricante, usen este protocolo estándar que eliminará a necesidade de controladores Braille específicos do fabricante.
+
+A detección automática de pantallas braille do NVDA tamén recoñecerá calquera pantalla que soporte este protocolo.
+ 
+Seguidamente van as asignacións de teclas actuales para estas pantallas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar a pantalla braille cara atrás | pan á esquerda ou balancín arriba |
+| Desprazar a pantalla braille cara adiante | pan á dereita ou balancín abaixo |
+| Mover a pantalla braille á liña anterior | espazo+punto1 |
+| Mover a pantalla braille á liña seguinte | espazo+punto4
+| Levar á celda braille | conxunto de sensores de enrutamento 1|
+| Alternar o seguemento de braille | arriba+abaixo |
+| Tecla frecha arriba | joystick arriba |
+| Tecla frecha abaixo | joystick cara abaixo |
+| Tecla frecha esquerda | espazo+punto3 ou joystick esquerdo |
+| Tecla frecha dereita | espazo+punto6 ou joystick dereita |
+| Teclas shift+tab | espazo+punto1+punto3 |
+| tecla tab | espazo+punto4+punto6 |
+| tecla alt | espazo+punto1+punto3+punto4 (espazo+m) |
+| tecla escape | espazo+punto1+punto5 (espazo+e) |
+| tecla intro | punto8 ou intro do joystick |
+| tecla windows | espazo+punto3+punto4 |
+| teclas alt+tab | espazo+punto2+punto3+punto4+punto5 (espazo+t) |
+| Menú NVDA | espazo+punto1+punto3+punto4+punto5 (espazo+n) |
+| teclas windows+d (minimizar todas as aplicacións) | espazo+punto1+punto4+punto5 (espazo+d) |
+| Falar todo | espazo+punto1+punto2+punto3+punto4+punto5+punto6 |
+%kc:endInclude
+ 
 + Temas Avanzados +[AdvancedTopics]
 
 ++ Opcións de Liña de Ordes ++[CommandLineOptions]

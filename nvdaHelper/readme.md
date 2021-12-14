@@ -11,18 +11,37 @@ You should still build on the command line to verify errors.
 
 - Ensure you have built NVDA on the command line first.
 - Create a new project from existing code
-- Type: Visual C++
+- Type: Visual C++, press next.
 - Set the `<repo root>/nvdaHelper/` directory as the project file location.
 - Project name: "nvdaHelper"
 - Add files to the project from these folders: checked.
-- Other defaults are fine
-- Includes: `../include;../miscdeps/include;./;../build\x86_64;%(AdditionalIncludeDirectories)`
-- Defines: `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL;_WIN32_WINNT;_WIN32_WINNT_WIN7;`
-- Force Includes: `winuser.h`
-- Create the project.
+  - This should have a single 'checked' item, the path to nvdaHelper
+- Other defaults are fine, press next
+- Select "use external build system" for "How do you want to build the project?", press next
+- Build command line: `scons source`
+- Include search paths: `../include;../miscDeps/include;./;../build\x86_64;../include/minhook/include`
+- Preprocessor definitions: `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WIN7;`
+- Forced Included files: `winuser.h`
+- Press next
+- Ensure "same as Debug configuration" is checked and press finish
 - Open the project settings and change the following:
-  - General -> Windows SDK: 10.0.17763.0 (or whatever is the latest on your system)
-  - C/C++ -> Language -> C++ Language Standard -> ISO C++14 Standard (/std:c++14)
+  - NMake -> Additional Options -> `/std:c++17`
+
+#### To confirm these settings
+- Build NVDA normally
+- Look for lines in the build output that start with `cl`
+  - EG
+  ```
+  cl /Fobuild\x86\vbufBackends\gecko_ia2\gecko_ia2.obj /c build\x86\vbufBackends\gecko_ia2\gecko_ia2.cpp
+  /TP /EHsc /nologo /std:c++17 /Od /MT /W3 /WX
+  /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WIN7 /DNDEBUG
+  /Iinclude /Imiscdeps\include /Ibuild\x86
+  /Z7
+  ```
+- This shows the:
+  - defines beginning with `/D`
+  - includes directories beginning with `/I`
+  - Additional options like `/std:c++17`
 
 ### Virtual Buffer Backends
 

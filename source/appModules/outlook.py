@@ -22,7 +22,7 @@ import braille
 import appModuleHandler
 import eventHandler
 import UIAHandler
-from UIAUtils import createUIAMultiPropertyCondition
+from UIAHandler.utils import createUIAMultiPropertyCondition
 import api
 import controlTypes
 import config
@@ -256,29 +256,6 @@ class SuperGridClient2010(IAccessible):
 		obj.parent=self.parent
 		eventHandler.executeEvent("gainFocus",obj)
 
-class MessageItem(Window):
-
-	def __init__(self,windowHandle=None,parent=None,msg=None):
-		if not parent or not msg:
-			raise ArguementError("__init__ needs windowHandle, parent and msg arguments")
-		if not windowHandle:
-			windowHandle=parent.windowHandle
-		self.msg=msg
-		self.parent=parent
-		Window.__init__(self,windowHandle=windowHandle)
-
-	def _get_name(self):
-		typeID=self.msg.Class
-		if typeID==40:
-			return getContactString(self.msg)
-		elif typeID==43:
-			return getReceivedMessageString(self.msg)
-
-	def _get_role(self):
-		return controlTypes.Role.LISTITEM
-
-	def _get_states(self):
-		return frozenset([controlTypes.State.SELECTED])
 
 class AddressBookEntry(IAccessible):
 

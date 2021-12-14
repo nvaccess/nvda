@@ -57,18 +57,19 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019:
+* Microsoft Visual Studio 2019 or 2022:
 	* To replicate the production build environment, use the [version of Visual Studio that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
-	* Download from https://visualstudio.microsoft.com/downloads/
-		* When you do not use the Visual Studio IDE itself, you can download the build tools under the Tools for Visual Studio 2019 expandable heading
-		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download the community version under the Visual Studio 2019 expandable heading
+		* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/16/release/vs_BuildTools.exe)
+		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
+		* The Professional and Enterprise versions are also supported
+		* Preview versions are *not* supported
 	* When installing Visual Studio, you need to enable the following:
 		* In the list  on the Workloads tab
 			* in the Windows grouping:
 				* Desktop development with C++
 			* Then in the Installation details tree view, under Desktop for C++, Optional, ensure the following are selected:
 				* MSVC v142 - VS 2019 C++ x64/x86 build tools
-				* Windows 10 SDK (10.0.19041.0)
+				* Windows 11 SDK (10.0.22000.0)
 				* C++ ATL for v142 build tools (x86 & x64)
 				* C++ Clang tools for Windows
 		* On the Individual components tab, ensure the following items are selected:
@@ -84,11 +85,11 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 74068b91bcd578b
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 7e5457f91e10
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.org/), version 3.19.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 39.0
+* [liblouis](http://www.liblouis.org/), version 3.20.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 40.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2

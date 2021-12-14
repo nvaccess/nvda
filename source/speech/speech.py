@@ -451,6 +451,14 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				except NotImplementedError:
 					continue
 				break
+
+	if (
+		newPropertyValues.get("description")  # has a value
+		and newPropertyValues.get("name") == newPropertyValues.get("description")  # value is equal to name
+		and reason != controlTypes.OutputReason.CHANGE  # if the value has changed, report it.
+	):
+		del newPropertyValues['description']  # prevent duplicate speech due to description matching name
+
 	if positionInfo:
 		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
 			newPropertyValues['positionInfo_level']=positionInfo['level']
@@ -1233,7 +1241,7 @@ def getTextInfoSpeech(  # noqa: C901
 	speechSequence: SpeechSequence = []
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
 	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
-	if reason != OutputReason.FOCUS:
+	if reason not in [OutputReason.FOCUS, OutputReason.QUICKNAV]:
 		endingBlock=False
 		for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
 			fieldSequence = info.getControlFieldSpeech(
@@ -1546,7 +1554,8 @@ def getPropertiesSpeech(  # noqa: C901
 			or reason not in (
 				OutputReason.SAYALL,
 				OutputReason.CARET,
-				OutputReason.FOCUS
+				OutputReason.FOCUS,
+				OutputReason.QUICKNAV
 			)
 			or not (
 				name
@@ -1724,7 +1733,7 @@ def _shouldSpeakContentFirst(
 		controlTypes.Role.REGION,
 	)
 	return (
-		reason == OutputReason.FOCUS
+		reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		and (
 			# the category is not a container, unless it's an article (#11103)
 			presCat != attrs.PRESCAT_CONTAINER
@@ -1761,7 +1770,7 @@ def getControlFieldSpeech(  # noqa: C901
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	role = attrs.get('role', controlTypes.Role.UNKNOWN)
 	if (
-		reason == OutputReason.FOCUS
+		reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		or attrs.get('alwaysReportName', False)
 	):
 		name = attrs.get('name', "")
@@ -1775,28 +1784,33 @@ def getControlFieldSpeech(  # noqa: C901
 
 	description: Optional[str] = None
 	_descriptionFrom = attrs.get('_description-from', controlTypes.DescriptionFrom.UNKNOWN)
+	_descriptionIsContent: bool = attrs.get("descriptionIsContent", False)
+	_reportDescriptionAsAnnotation: bool = (
+		# Don't report other sources of description like "title" all the time
+		# The usages of these is not consistent and often does not seem to have
+		# Screen Reader users in mind
+		config.conf["annotations"]["reportAriaDescription"]
+		and not _descriptionIsContent
+		and controlTypes.DescriptionFrom.ARIA_DESCRIPTION == _descriptionFrom
+		and reason in (
+			OutputReason.FOCUS,
+			OutputReason.QUICKNAV,
+			OutputReason.CARET,
+			OutputReason.SAYALL,
+		)
+	)
 	if (
 		(
 			config.conf["presentation"]["reportObjectDescriptions"]
-			and (
-				reason == OutputReason.FOCUS
-				# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
-				# Not used internally, but may be used by addons.
-				or attrs.get('alwaysReportDescription', False)
-			)
+			and not _descriptionIsContent
+			and reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		)
 		or (
-			# Don't report other sources of description like "title" all the time
-			# The usages of these is not consistent and often does not seem to have
-			# Screen Reader users in mind
-			config.conf["annotations"]["reportAriaDescription"]
-			and controlTypes.DescriptionFrom.ARIA_DESCRIPTION == _descriptionFrom
-			and reason in (
-				OutputReason.FOCUS,
-				OutputReason.CARET,
-				OutputReason.SAYALL,
-			)
+			# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
+			# Not used internally, but may be used by addons.
+			attrs.get('alwaysReportDescription', False)
 		)
+		or _reportDescriptionAsAnnotation
 	):
 		description = attrs.get('description')
 
@@ -1894,7 +1908,7 @@ def getControlFieldSpeech(  # noqa: C901
 		return tableSeq
 	elif (
 		nameSequence
-		and reason == OutputReason.FOCUS
+		and reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		and fieldType == "start_addedToControlFieldStack"
 		and role in (controlTypes.Role.GROUPING, controlTypes.Role.PROPERTYPAGE)
 	):
@@ -2013,7 +2027,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if isCurrent != controlTypes.IsCurrent.NO:
 			out.extend(isCurrentSequence)
-		if descriptionSequence:
+		if descriptionSequence and _reportDescriptionAsAnnotation:
 			out.extend(descriptionSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
 		if role == controlTypes.Role.TREEVIEWITEM:
@@ -2125,7 +2139,10 @@ def getFormatFieldSpeech(  # noqa: C901
 			headingLevel
 			and (
 				initialFormat
-				and (reason == OutputReason.FOCUS or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH))
+				and (
+					reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
+					or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH)
+				)
 				or headingLevel != oldHeadingLevel
 			)
 		):
@@ -2439,12 +2456,31 @@ def getFormatFieldSpeech(  # noqa: C901
 		oldComment=attrsCache.get("comment") if attrsCache is not None else None
 		if (comment or oldComment is not None) and comment!=oldComment:
 			if comment:
-				# Translators: Reported when text contains a comment.
-				text=_("has comment")
+				if comment is textInfos.CommentType.DRAFT:
+					# Translators: Reported when text contains a draft comment.
+					text = _("has draft comment")
+				elif comment is textInfos.CommentType.RESOLVED:
+					# Translators: Reported when text contains a resolved comment.
+					text = _("has resolved comment")
+				else:  # generic
+					# Translators: Reported when text contains a generic comment.
+					text = _("has comment")
 				textList.append(text)
 			elif extraDetail:
 				# Translators: Reported when text no longer contains a comment.
 				text=_("out of comment")
+				textList.append(text)
+	if formatConfig["reportBookmarks"]:
+		bookmark = attrs.get("bookmark")
+		oldBookmark = attrsCache.get("bookmark") if attrsCache is not None else None
+		if (bookmark or oldBookmark is not None) and bookmark != oldBookmark:
+			if bookmark:
+				# Translators: Reported when text contains a bookmark
+				text = _("bookmark")
+				textList.append(text)
+			elif extraDetail:
+				# Translators: Reported when text no longer contains a bookmark
+				text = _("out of bookmark")
 				textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")

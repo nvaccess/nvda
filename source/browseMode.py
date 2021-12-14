@@ -202,7 +202,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
-		speech.speakTextInfo(info, reason=OutputReason.FOCUS)
+		speech.speakTextInfo(info, reason=OutputReason.QUICKNAV)
 
 	def activate(self):
 		self.textInfo.obj._activatePosition(info=self.textInfo)

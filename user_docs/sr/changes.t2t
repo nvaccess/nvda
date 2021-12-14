@@ -3,6 +3,79 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3 =
+Ova verzija uključuje podršku za novi brajev HID standard.
+Ovaj standard ima za cilj da standardizuje podršku za različite brajeve redove bez potrebe da se instaliraju različiti drajveri.
+Ažurirani su eSpeak-NG i LibLouis, koji sada uključuje nove Ruske i Tshivenda tabele.
+Zvukovi za greške se sada mogu omogućiti u stabilnim NVDA verzijama novom opcijom u naprednim podešavanjima.
+Režim izgovori sve sada pomera dokument kako bi trenutna pozicija bila vidljiva.
+Brojna poboljšanja kada se koristi Office uz UIA.
+Jedno od ovih UIA poboljšanja je da Outlook ignoriše veći broj tabela koje služe samo za izgled u porukama.
+
+Važne napomene:
+
+Zbog ažuriranja naših bezbednosnih sertifikata, manji broj korisnika dobija grešku kada NVDA 2021.2 proverava ažuriranja.
+NVDA će sada zahtevati da Windows ažurira bezbednosne sertifikate, što će u budućnosti sprečiti ovu grešku.
+Korisnici koji su dobili ovu grešku moraju ručno da preuzmu ovo ažuriranje.
+
+
+== Nove karakteristike ==
+- Dodata ulazna komanda za uključivanje i isključivanje prijavljivanja stilova granica ćelija. (#10408)
+- Podrška za novi HID brajev standard koji za cilj ima standardizaciju podrške za brajeve redove. (#12523)
+  - NVDA će automatski prepoznati uređaje koji podržavaju ovaj standard.
+  - Za tehničke napomene o implementaciji ovog standarda od strane programa NVDA, pogledajte https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+  -
+- Dodata podrška za VisioBraille Vario 4 brajev uređaj. (#12607)
+- Obaveštenja o greškama se mogu omogućiti (iz naprednih podešavanja) u bilo kojoj NVDA verziji. (#12672)
+- U Windowsu 10 i novijim, NVDA će izgovoriti broj predloga kada upisujete termine pretrage u aplikacijama kao što su podešavanja i Microsoft prodavnica. (#7330, #12758, #12790)
+- Navigacija kroz tabele je sada podržana u kontrolama koje su napravljene korišćenjem Out-GridView cmdlet u  PowerShell. (#12928)
+-
+
+
+== Promene ==
+- Espeak-ng je ažuriran na 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+- NVDA će podrazumevano koristiti eSpeak ako nijedan instaliran OneCore glas ne podržava željeni NVDA jezik. (#10451)
+- Ako OneCore ne govore nakon više pokušaja, ESpeak će biti korišćen kao sintetizator. (#11544)
+- Kada čitate statusnu traku prečicom ``NVDA+end``, pregledni kursor se više ne prebacuje na njenu lokaciju.
+Ako vam je ova funkcija potrebna molimo dodelite prečicu odgovarajućoj komandi u kategoriji objektne navigacije dijaloga ulaznih komandi. (#8600)
+- Kada otvarate dijalog sa podešavanjima koji je već otvoren, NVDA će postaviti fokus na postojeći dijalog umesto da izbacuje grešku. (#5383)
+- Ažuriran liblouis brajev prevodilac na [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
+  - Nove brajeve tabele: Ruski stepen 1, Tshivenda stepen 1, Tshivenda stepen 2
+  - NVDA neće više pokušavati da se zatvori kada su otvoreni dijalozi koji zahtevaju potvrdu (na primer uz dostupne opcije potvrdi / otkaži). (#12984)
+--
+
+
+== Ispravljene greške ==
+- Praćenje modifikatorskih tastera na tastaturi (kao što su Kontrol, ili Insert) bolje radi u situacijama u kojima se watchdog oporavlja. (#12609)
+- Provera NVDA ažuriranja na određenim sistemima je ponovo moguća; na primer nove Windows instalacije. (#12729)
+- NVDA ispravno izgovara prazne ćelije tabele u programu Microsoft Word kada koristite UI automation. (#11043)
+- U ćelijama ARIA mreža podataka na Webu, taster Escape će sada biti prosleđen i neće izlaziti iz režima fokusiranja. (#12413)
+- Kada se čitaju zaglavlja ćelija u tabelama u programu Chrome, ispravljeno dvostruko izgovaranje naziva kolone. (#10840)
+- NVDA više ne izgovara brojčanu vrednost za UIA klizače koji imaju tekstualnu oznaku. (UIA ValuePattern se sada preferira u odnosu na RangeValuePattern). (#12724)
+- NVDA više ne smatra da UIA klizači uvek imaju procentualnu vrednost.
+- Prijavljivanje lokacije ćelija u programu Microsoft Excel kada se koristi UI Automation ponovo ispravno radi uz Windows 11. (#12782)
+- NVDA više ne postavlja neispravne Python lokalizacije. (#12753)
+- Ako se onemogućeni dodatak deinstalira a zatim ponovo instalira biće omogućen. (#12792)
+- Ispravljene greške sa ažuriranjem i uklanjanjem dodataka kada folder sa dodatkom promeni svoj naziv ili ostane otvoren. (#12792, #12629)
+- Kada se koristi UI Automation za pristup Microsoft Excel kontrolama ćelija, NVDA više neće bespotrebno izgovarati da je jedna ćelija izabrana. (#12530)
+- Više tekstualnih informacija će biti pročitano u dijalozima programa LibreOffice Writer, na primer u potvrdnim dijalozima. (#11687)
+- Čitanje i navigacija u režimu pretraživanja programa Microsoft Word kada se koristi UI automation sada uvek proverava da je trenutna pozicija u režimu pretraživanja uvek vidljiva, kao i da pozicija kursora u režimu fokusiranja odgovara poziciji režima pretraživanja. (#9611)
+- Kada koristite komandu izgovori sve u programu Microsoft Word uz UI automation, dokument se sada automatski pomera, i pozicija kursora se ispravno ažurira. (#9611)
+- Kada čitate EMail poruke u programu Outlook i NVDA pristupa poruci uz UI Automation, određene tabele su sada označene kao tabele za izgled, što znači da podrazumevano neće biti prijavljene. (#11430)
+- Retka greška kada se menjaju zvučni uređaji je ispravljena. (#12620)
+- Unos u književnim brajevim tabelama bi trebao da radi stabilnije u poljima za uređivanje. (#12667)
+- Kada se krećete kroz Windows kalendar u sistemskoj traci, NVDA sada prijavljuje ceo dan u nedelji. (#12757)
+- Kada koristite Kineski metod unosa kao što je Tajvanski - Microsoft Quick u programu Microsoft Word, pomeranje brajevog reda napred i nazad više neće neispravno vraćati kursor na prethodnu poziciju. (#12855)
+- Kada pristupate dokumentima u programu Microsoft Word uz UIA, navigacija po rečenicama (alt+StrelicaDole / alt+StrelicaGore) ponovo radi ispravno. (#9254)
+- Kada se pristupa programu MS Word uz UIA, uvlačenje pasusa se ponovo prijavljuje. (#12899)
+- Kada se pristupa programu MS Word uz UIA, komanda za praćenje izmena kao i određene druge lokalizovane komande biće ispravno prijavljene . (#12904)
+- Ispravljena dupla izgovaranja ili informacije na brajevom redu kada se 'opis' podudara sa  'sadržajem' ili 'nazivom'. (#12888)
+- U programu MS Word sa omogućenom UIA podrškom, preciznija reprodukcija zvukova za pravopisne greške u toku pisanja. (#12161)
+- U Windowsu 11, NVDA više neće izgovarati "Okno" kada pritiskate alt plus tab da se prebacujete između otvorenih programa. (#12648)
+- Novo moderno okno za praćenje komentara je sada podržano u programu MS Word kada se dokumentu ne pristupa uz UIA. Pritisnite alt+f12 da se prebacujete između okna i dokumenta. (#12982)
+-
+
+
 = 2021.2 =
 Ova verzija uključuje preliminarnu Windows 11 podršku.
 Iako Windows 11 još uvek nije zvanično dostupan, ova verzija je testirana na insajderskim verzijama Windowsa 11.

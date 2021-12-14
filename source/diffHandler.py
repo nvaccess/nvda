@@ -176,7 +176,7 @@ class Difflib(DiffAlgo):
 		return "\n".join(ti.getTextInChunks(UNIT_LINE))
 
 
-def get_dmp_algo():
+def prefer_dmp():
 	"""
 		This function returns a Diff Match Patch object if allowed by the user.
 		DMP is new and can be explicitly disabled by a user setting. If config
@@ -189,9 +189,17 @@ def get_dmp_algo():
 	)
 
 
-def get_difflib_algo():
-	"Returns an instance of the difflib diffAlgo."
-	return _difflib
+def prefer_difflib():
+	"""
+		This function returns a Difflib object if allowed by the user.
+		Difflib can be explicitly disabled by a user setting. If config
+		does not allow Difflib, this function returns a DMP instance instead.
+	"""
+	return (
+		_dmp
+		if config.conf["terminals"]["diffAlgo"] == "dmp"
+		else _difflib
+	)
 
 
 _difflib = Difflib()

@@ -36,6 +36,20 @@ Quits from keyboard
 	[Documentation]	Starts NVDA and ensures that it can be quit using the keyboard
 	quits_from_keyboard	# run test
 
+Quits from keyboard with welcome dialog open
+	[Documentation]	Starts NVDA and ensures that it can be quit with the welcome dialog open
+	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
+	open welcome dialog from menu
+	quits from keyboard	# run test
+
+Quits from keyboard with about dialog open
+	[Documentation]	Starts NVDA and ensures that it can be quit with the about dialog open
+	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
+	# Excluded to be fixed still (#12976)
+	[Tags]	excluded_from_build
+	open about dialog from menu
+	quits from keyboard	# run test
+
 Quits from menu
 	[Documentation]	Starts NVDA and ensures that it can be quit using the keyboard
 	[Setup]	start NVDA	standard-dontShowExitDialog.ini

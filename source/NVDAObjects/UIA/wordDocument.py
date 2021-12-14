@@ -3,8 +3,15 @@
 # See the file COPYING for more details.
 # Copyright (C) 2016-2021 NV Access Limited, Joseph Lee, Jakub Lukowicz
 
+from typing import (
+	Optional,
+	Dict,
+)
+
 from comtypes import COMError
 from collections import defaultdict
+import mathPres
+from scriptHandler import isScriptWaiting
 import textInfos
 import eventHandler
 import UIAHandler
@@ -12,12 +19,22 @@ from logHandler import log
 import controlTypes
 import ui
 import speech
+import review
+import braille
 import api
 import browseMode
-from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator, TextAttribUIATextInfoQuickNavItem
-from UIAUtils import *
+from UIAHandler.browseMode import (
+	UIABrowseModeDocument,
+	UIADocumentWithTableNavigation,
+	UIATextAttributeQuicknavIterator,
+	TextAttribUIATextInfoQuickNavItem
+)
 from . import UIA, UIATextInfo
-from NVDAObjects.window.winword import WordDocument as WordDocumentBase
+from NVDAObjects.window.winword import (
+	WordDocument as WordDocumentBase,
+	WordDocumentTextInfo as LegacyWordDocumentTextInfo
+)
+from NVDAObjects import NVDAObject
 from scriptHandler import script
 
 
@@ -25,6 +42,7 @@ from scriptHandler import script
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
 END_OF_ROW_MARK = '\x07'
+
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
@@ -74,7 +92,12 @@ def getCommentInfoFromPosition(position):
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
 		# Use Annotation Type Comment if available
-		if typeID == UIAHandler.AnnotationType_Comment:
+		cats = position.obj._UIACustomAnnotationTypes
+		if (
+			typeID == UIAHandler.AnnotationType_Comment
+			or (typeID and typeID == cats.microsoftWord_draftComment)
+			or (typeID and typeID == cats.microsoftWord_resolvedComment)
+		):
 			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
@@ -117,6 +140,12 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 		return getPresentableCommentInfoFromPosition(commentInfo)
 
 class WordDocumentTextInfo(UIATextInfo):
+
+	def getMathMl(self, field):
+		mathml = field.get('mathml')
+		if not mathml:
+			raise LookupError("No MathML")
+		return mathml
 
 	def _ensureRangeVisibility(self):
 		try:
@@ -180,6 +209,8 @@ class WordDocumentTextInfo(UIATextInfo):
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_GroupControlTypeId and obj.name:
 			field['role']=controlTypes.Role.EMBEDDEDOBJECT
 			field['alwaysReportName']=True
+		elif obj.role == controlTypes.Role.MATH:
+			field['mathml'] = obj.mathMl
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_CustomControlTypeId and obj.name:
 			# Include foot note and endnote identifiers
 			field['content']=obj.name
@@ -252,7 +283,13 @@ class WordDocumentTextInfo(UIATextInfo):
 				docInfo=self.obj.makeTextInfo(textInfos.POSITION_ALL)
 				self.setEndPoint(docInfo,"endToEnd")
 
-	def getTextWithFields(self,formatConfig=None):
+	# C901 'getTextWithFields' is too complex
+	# Note: when working on getTextWithFields, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def getTextWithFields(  # noqa: C901
+		self,
+		formatConfig: Optional[Dict] = None
+	) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = None
 		# #11043: when a non-collapsed text range is positioned within a blank table cell
 		# MS Word does not return the table  cell as an enclosing element,
@@ -275,6 +312,32 @@ class WordDocumentTextInfo(UIATextInfo):
 		if len(fields)==0: 
 			# Nothing to do... was probably a collapsed range.
 			return fields
+
+		# MS Word tries to produce speakable math content within equations.
+		# However, using mathPlayer with the exposed mathml property on the equation is much nicer.
+		# But, we therefore need to remove the inner math content if reading by line
+		if not formatConfig or not formatConfig.get('extraDetail'):
+			# We really only want to remove content if we can guarantee that mathPlayer is available.
+			mathPres.ensureInit()
+			if mathPres.speechProvider or mathPres.brailleProvider:
+				curLevel = 0
+				mathLevel = None
+				mathStartIndex = None
+				mathEndIndex = None
+				for index in range(len(fields)):
+					field = fields[index]
+					if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
+						curLevel += 1
+						if mathLevel is None and field.field.get('mathml'):
+							mathLevel = curLevel
+							mathStartIndex = index
+					elif isinstance(field, textInfos.FieldCommand) and field.command == "controlEnd":
+						if curLevel == mathLevel:
+							mathEndIndex = index
+						curLevel -= 1
+				if mathEndIndex is not None:
+					del fields[mathStartIndex + 1:mathEndIndex]
+
 		# Sometimes embedded objects and graphics In MS Word can cause a controlStart then a controlEnd with no actual formatChange / text in the middle.
 		# SpeakTextInfo always expects that the first lot of controlStarts will always contain some text.
 		# Therefore ensure that the first lot of controlStarts does contain some text by inserting a blank formatChange and empty string in this case.
@@ -356,15 +419,21 @@ class WordDocumentTextInfo(UIATextInfo):
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 
-	def shouldSetFocusToObj(self,obj):
+	def _shouldSetFocusToObj(self, obj: NVDAObject) -> bool:
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
-		return super(WordBrowseModeDocument,self).shouldSetFocusToObj(obj)
+		elif obj.role == controlTypes.Role.MATH:
+			# Don't set focus to math equations otherwise they cannot be interacted  with mathPlayer.
+			return False
+		return super()._shouldSetFocusToObj(obj)
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
+			return False
+		elif obj.role == controlTypes.Role.MATH:
+			# Don't  activate focus mode for math equations otherwise they cannot be interacted  with mathPlayer.
 			return False
 		return super(WordBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
 
@@ -391,7 +460,16 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
 
+	def _get_mathMl(self):
+		try:
+			return self._getUIACacheablePropertyValue(self._UIACustomProps.word_mathml.id)
+		except COMError:
+			pass
+		return None
+
 	def _get_role(self):
+		if self.mathMl:
+			return controlTypes.Role.MATH
 		role=super(WordDocumentNode,self).role
 		# Footnote / endnote elements currently have a role of unknown. Force them to editableText so that theyr text is presented correctly
 		if role==controlTypes.Role.UNKNOWN:
@@ -406,12 +484,57 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
 	name=u""
 
+	def event_textChange(self):
+		# Ensure Braille is updated when text changes,
+		# As Microsoft Word does not fire caret events when typing text, even though the caret does move.
+		braille.handler.handleCaretMove(self)
+
 	def event_UIA_notification(self, activityId=None, **kwargs):
 		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
 		# such as "delete back word" when Control+Backspace is pressed.
 		if activityId == "AccSN2":  # Delete activity ID
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
+
+	# The following overide of the EditableText._caretMoveBySentenceHelper private method
+	# Falls back to the MS Word object model if available.
+	# This override should be removed as soon as UI Automation in MS Word has the ability to move by sentence.
+	def _caretMoveBySentenceHelper(self, gesture, direction):
+		if isScriptWaiting():
+			return
+		if not self.WinwordSelectionObject:
+			# Legacy object model not available.
+			# Translators: a message when navigating by sentence is unavailable in MS Word
+			ui.message(_("Navigating by sentence not supported in this document"))
+			gesture.send()
+			return
+		# Using the legacy object model,
+		# Move the caret to the next sentence in the requested direction.
+		legacyInfo = LegacyWordDocumentTextInfo(self, textInfos.POSITION_CARET)
+		legacyInfo.move(textInfos.UNIT_SENTENCE, direction)
+		# Save the start of the sentence for future use
+		legacyStart = legacyInfo.copy()
+		# With the legacy object model,
+		# Move the caret to the end of the new sentence.
+		legacyInfo.move(textInfos.UNIT_SENTENCE, 1)
+		legacyInfo.updateCaret()
+		# Fetch the caret position (end of the next sentence) with UI automation.
+		endInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		# Move the caret back to the start of the next sentence,
+		# where it should be left for the user.
+		legacyStart.updateCaret()
+		# Fetch the new caret position (start of the next sentence) with UI Automation.
+		startInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		# Make a UI automation text range spanning the entire next sentence.
+		info = startInfo.copy()
+		info.end = endInfo.end
+		# Speak the sentence moved to
+		speech.speakTextInfo(info, unit=textInfos.UNIT_SENTENCE, reason=controlTypes.OutputReason.CARET)
+		# Forget the word currently being typed as the user has moved the caret somewhere else.
+		speech.clearTypedWordBuffer()
+		# Alert review and braille the caret has moved to its new position
+		review.handleCaretMove(info)
+		braille.handler.handleCaretMove(self)
 
 	@script(
 		gesture="kb:NVDA+alt+c",

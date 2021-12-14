@@ -315,7 +315,7 @@ Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim foku
  | Prijavi trenutni fokus | NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče |
  | Prijavi naslov | NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju |
  | Čitaj aktivan prozor | NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
- | Prijavi statusnu traku | NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju |
+ | Prijavi statusnu traku | NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju |
 %kc:endInclude
 
 ++ Navigacija sa sistemskim kursorom++[SystemCaret]
@@ -381,6 +381,7 @@ Za navigaciju između objekata, koristite sledeće komande:
  | Aktiviraj trenutni navigacioni objekat | NVDA+numerički enter | NVDA+enter | dupli dodir | aktivira trenutni navigacioni objekat(slično kliku mišem ili pritiskanju tastera razmak kada ima sistemski fokus) |
  | Premesti sistemski fokus ili kursor na poziciju pregleda | NVDA+šift+numerički minus | NVDA+šift+taster za brisanje unazad | Nema komande | Ako se pritisne jednom pomera sistemski fokus na mesto navigacionog objekta, ako se pritisne dva puta pomera sistemski kursor na poziciju preglednog kursora |
  | Prijavi lokaciju preglednog kursora | NVDA+numerički taster za brisanje | NVDA+taster za brisanje | nema komande | Prijavljuje informacije o lokaciji teksta ispod preglednog kursora. Na primer, ovo može uključiti procente u dokumentu, daljinu od ivica strana ili poziciju na ekranu. Ako se pritisne dva puta može se dobiti više informacija. |
+| Pomera pregledni kursor na statusnu traku | Nema komande | Nema komande | Nema komande | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat na ovu lokaciju. |
 %kc:endInclude
 
 Napomena: Komande sa numeričke tastature zahtevaju da num lock taster  bude isključen kako bi ispravno radile.
@@ -1401,6 +1402,10 @@ Ova opcija neće biti dostupna ako vaš brajev red podržava samo automatsko pre
 
 Možete pogledati dokumentaciju za vaš brajev red u delu [podržani brajevi redovi #SupportedBrailleDisplays] da proverite vrste komunikacije i dostupne portove.
 
+Molimo imajte na umu sledeće: Ako povežete više brajevih redova na vaš računar koji koriste isti drajver u isto vreme (na primer povezivanjem dva Seika uređaja),
+trenutno je nemoguće da kažete programu NVDA koji red da koristi.
+Tako da je preporučeno da povežete jedan brajev red jednog proizvođača / vrste u datom trenutku.
+ 
 +++ Vid +++[VisionSettings]
 Kategorija vid u NVDA podešavanjima vam dozvoljava da omogućite, onemogućite i podesite  [vizuelne pomoćnike #Vision].
 
@@ -1575,7 +1580,8 @@ Da isključite i uključite režim jednostavnog pregleda bilo gde, dodajte prila
 
 +++ Predstavljanje objekata (NVDA+kontrol+o) +++[ObjectPresentationSettings]
 Kategorija predstavljanje objekata u dijalogu NVDA podešavanja se koristi za podešavanje koliko informacija će prijavljivati o kontrolama kao što su opis, informacije o poziciji i tako dalje.
-Ova kategorija sadrži sledeće opcije:
+Ove opcije se obično ne primenjuju u režimu pretraživanja.
+Ove opcije obično važe za prijavljivanje fokusa i objektnu navigaciju, ali ne i za čitanje tekstualnog sadržaja na primer u režimu pretraživanja.
 
 ==== Prijavi opise alata ====[ObjectPresentationReportToolTips]
 Izborno polje koje kada je označeno govori programu NVDA da čita opise alata kada se pojave.
@@ -1830,12 +1836,12 @@ Ovo ima ogroman negativan uticaj na brzinu, posebno u aplikacijama kao što je M
 Zato, kada je ova opcija omogućena, NVDA će ograničiti registraciju događaja na sistemski fokus za većinu događaja.
 Ako imate probleme u brzini jedne ili više aplikacija, preporučujemo da probate ovu opciju i proverite da li se brzina poboljšala.
 
-==== Koristi UI automation za pristup Microsoft Word kontrolama kada je dostupan====[AdvancedSettingsUseUiaForWord]
-Kada je ova opcija omogućena, NVDA će pokušati da koristi Microsoft UI Automation API za pristupačnost kako bi preuzeo informacije iz Microsoft Word kontrola.
+==== Koristi UI Automation za pristup kontrolama dokumenata u programu Microsoft Word kada je dostupan ====[AdvancedSettingsUseUiaForWord]
+Kada je ova opcija omogućena, NVDA će pokušati da koristi Microsoft UI Automation API za pristupačnost kako bi preuzeo informacije iz Microsoft Word kontrola dokumenta.
 Ovo uključuje sam Microsoft Word, kao i pregledač poruka i pisanje poruka u programu Microsoft Outlook.
- Za najnovije verzije aplikacije Microsoft Office 2016/365 na windowsu 10 i novijim, UI Automation podrška je dovoljno kompletna za pružanje pristupa Microsoft Word dokumentima skoro identično već postojećoj NVDA Microsoft Word podršci, uz dodatu prednost velikog poboljšanja u brzini.
-Ali, moguće je da postoje određene informacije koje ili nisu pružene, ili su neispravne u određenim verzijama aplikacije Microsoft Office, što znači da se na ovu UI automation podršku ne može uvek u potpunosti osloniti.
-I dalje ne preporučujemo većini korisnika da ovo uključe, ali preporučujemo korisnicima aplikacije Office 2016/365 da testiraju ovu opciju i pruže dodatne informacije.
+ Za najnovije verzije paketa Microsoft Office 2016/365 na Windowsu 10 i novijim, UI Automation podrška je dovoljno potpuna da pruži pristup Microsoft Word dokumentima skoro jednako starijoj NVDA Word podršci, uz dodatnu prednost da je brzina značajno poboljšana.
+Ali, moguće je da postoje određene informacije koje ova podrška ne pruža, ili ih pruža neispravno u nekim verzijama paketa Microsoft Office, što znači da se na ovu UI automation podršku ne možete uvek osloniti.
+I dalje ne preporučujemo većini korisnika da omogući ovu opciju kao podrazumevanu, ali korisnici paketa Office 2016/365 mogu da testiraju ovu opciju i pruže povratne informacije.
 
 ==== Koristi UI Automation za pristup Windows konzolama kada je dostupan====[AdvancedSettingsConsoleUIA]
 Kada je ova opcija omogućena, NVDA će koristiti novu, eksperimentalnu podršku za Windows konzole koja koristi nova [poboljšanja u pristupačnosti od strane Microsofta https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ova opcija je još uvek eksperimentalna i nije kompletna, tako da njeno korišćenje još nije preporučeno. Ali, kada se završi, ova podrška će verovatno postati podrazumevana, što će poboljšati stabilnost i brzinu programa NVDA u Windows konzoli.
@@ -1850,12 +1856,21 @@ Izborni okvir ima sledeće opcije:
 - Ne: Ne koristi UIA podršku, čak iako NVDA nema pristup procesu. Ovo može biti korisno za programere koji žele da otkriju problem u podršci IA2 i žele da budu sigurni da NVDA neće koristiti UIA podršku.
 -
 
-==== Omogući eksperimentalnu podršku za ARIA napomene  ====[Annotations]
-Koristi se da bi se omogućile opcije koje dodaju eksperimentalnu podršku za ARIA napomene.
+==== Napomene  ====[Annotations]
+Ova grupa se koristi da bi se omogućile opcije koje dodaju eksperimentalnu podršku za ARIA napomene.
 Neke od ovih opcija mogu biti nepotpune.
 Sledeće opcije su dostupne: 
 - "Prijavi detalje u režimu pretraživanja": Omogućava prijavljivanje kada objekat sadrži detalje u režimu pretraživanja.
 Prijavljivanje kratkog opisa ovih detalja se može izvršiti dodavanjem prečice u dijalogu [ulaznih komandi  #InputGestures].
+- "Uvek prijavi aria-description opis":
+  Kada je izvor  ``accDescription`` aria-description, opis će biti prijavljen.
+  Ovo je korisno za napomene na Webu.
+  Napomena:
+  - Postoji puno izvora za ``accDescription`` mnogi su simantički neispravni.
+    Ranije asistivne tehnologije nisu mogle da razlikuju izvore za ``accDescription`` i obično nisu bili korišćeni zbog semantičkih neispravnosti.
+  - Ova opcija je u veoma ranom razvoju, zavisi od opcija pretraživača koje još nisu u širokoj primeni.
+  - Očekuje se da radi uz Chromium 92.0.4479.0+
+  -
 -
 
 ==== koristi UI automation za pristup Microsoft Excel kontrolama ćelija kada je dostupan ====[UseUiaForExcel]
@@ -1899,10 +1914,21 @@ Ova funkcija je podrazumevano omogućena od NVDA verzije 2021.1.
 Ova opcija vam dozvoljava da podesite vreme za koje će NVDA čekati na kursor  da se pomeri u kontrolama za uređivanje teksta.
 Ako primetite da NVDA neispravno prati kursor, na primer često je iza jednog znaka ili se redovi ponavljaju, možda će pomoći povećanje ove vrednosti.
 
+==== Prijavi transparentnost boja ====[ReportTransparentColors]
+Ova opcija omogućava prijavljivanje transparentnosti boja, korisno za programere dodataka za aplikacije kako bi poboljšali iskustvo korisnika uz neku aplikaciju.
+Neke GDI će obeležiti tekst pozadinskom bojom, NVDA (uz display model) pokušava da prijavi ovu boju.
+U nekim situacijama, pozadina teksta može da bude potpuno transparentna, a tekst da bude na nekom drugom elementu interfejsa.
+Uz nekoliko istorijski popularnih API-a za interfejse, tekst može biti sa transparentnom pozadinom, ali je vizuelno pozadinska boja precizna.
+
 ==== Kategorije za evidentiranje otklanjanja grešaka ====[AdvancedSettingsDebugLoggingCategories]
 Izborna polja u ovoj listi dozvoljavaju vam da omogućite određene vrste poruka u NVDA dnevniku za otklanjanje grešaka.
 Evidentiranje ovih poruka može dovesti do velikih dnevnika i smanjenja brzine.
 Omogućite ih samo ako ste dobili uputstva od NVDA programera, na primer za otklanjanje grešaka u radu određenih drajvera za brajev red.
+
+==== Reprodukuj zvuk za evidentirane greške ====[PlayErrorSound]
+Ova opcija vam dozvoljava da odredite da li će NVDA reprodukovati zvuk kada se evidentira greška.
+Izborom opcije samo u verzijama za testiranje (koja je podrazumevana) NVDA će reprodukovati zvukove za greške samo ako je trenutna verzija za testiranje (alpha, beta ili pokrenuta iz izvornog koda).
+Opcija da će omogućiti zvukove za greške bez obzira na to koja je verzija.
 
 ++ Razna podešavanja ++[MiscSettings]
 Osim dijaloga [NVDA podešavanja #NVDASettings], podmeni opcije NVDA menija sadrži nekoliko dodatnih stavki koje su opisane ispod.
@@ -2330,6 +2356,7 @@ Sledeći redovi podržavaju ovu funkciju automatskog prepoznavanja.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille serije
 - Eurobraille Esys/Esytime/Iris redovi
 - Nattiq nBraille redovi
+- Bilo koji red koji podržava standardni HID brajev protokol
 -
 
 ++ Brajevi redovi Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
@@ -3154,6 +3181,37 @@ Molimo pogledajte [BRLTTY tabele tasterskih prečica http://mielke.cc/brltty/doc
  | Pomeri se na brajevu ćeliju | route (Pomeri kursor na znak) |
 %kc:endInclude
 
+++ Standardni HID brajevi redovi ++[HIDBraille]
+Ovo je eksperimentalan brajev drajver za novi HID brajev standard, na koji su se 2018 složile različite kompanije kao što su Microsoft, Google, Apple i različiti proizvođači asistivnih tehnologija uključujući i NV Access. 
+Cilj je da svi budući brajevi redovi od bilo kog proizvođača, zajedno koriste ovaj protokol što će ukloniti potrebu za posebne drajvere svakog proizvođača.
+
+Automatsko prepoznavanje brajevih redova od strane programa NVDA će takođe raditi za sve redove koji koriste ovaj protokol.
+ 
+Slede trenutne tasterske prečice za ove redove.
+%kc:beginInclude
+|| Ime | komanda |
+| Pomeri brajev red nazad | pan levo ili rocker gore |
+| Pomeri brajev red napred | pan desno ili rocker dole |
+| Pomeri brajev red na prethodni red | Razmak + Tačka1 |
+| Pomeri brajev red na sledeći red | Razmak + tačka4 |
+| Prebaci na brajevu ćeliju | routing set 1|
+| Promeni vezivanje brajevog reda | Gore+Dole |
+| Strelica gore | Džojstik  gore |
+| Strelica dole | Džojstik dole |
+| Strelica levo | Razmak+tačka3 ili džojstik levo |
+| Strelica desno | Razmak+tačka6 ili džojstik desno |
+| Šift plus tab | razmak+tačka1+tačka3 |
+| tab | Razmak+tačka4+tačka6 |
+| alt | Razmak+tačka1+tačka3+tačka4 (razmak+m) |
+| escape | Razmak+tačka1+tačka5 (razmak+e) |
+| enter | tačka8 ili centar džojstika |
+| windows | Razmak+tačka3+tačka4 |
+| alt+tab | Razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
+| NVDA meni | Razmak+tačka1+tačka3+tačka4+tačka5 (razmak+n) |
+| windows+d (umanji sve aplikacije) | Razmak+tačka1+tačka4+tačka5 (razmak+d) |
+| Izgovori sve | Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6 |
+%kc:endInclude
+ 
 + Napredne teme +[AdvancedTopics]
 
 ++ Opcije komandne linije ++[CommandLineOptions]

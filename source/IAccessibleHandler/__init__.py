@@ -3,9 +3,18 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+# F401 imported but unused. RelationType should be exposed from IAccessibleHandler, in future __all__
+# should be used to export it.
+from .types import RelationType  # noqa: F401
+
 import re
 import struct
-from typing import Optional, Tuple
+from typing import (
+	Optional,
+	Tuple,
+	Dict,
+	Union,
+)
 import weakref
 from ctypes import (
 	wintypes,
@@ -52,9 +61,6 @@ NAVRELATION_LABELLED_BY = 0x1003
 NAVRELATION_NODE_CHILD_OF = 0x1005
 NAVRELATION_EMBEDS = 0x1009
 
-# IAccessible2 relations (not included in the typelib)
-IA2_RELATION_FLOWS_FROM = "flowsFrom"
-IA2_RELATION_FLOWS_TO = "flowsTo"
 
 # A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,
 # childID event params.
@@ -534,12 +540,30 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	# Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus = eventHandler.lastQueuedFocusObject
-	if focus and objectID == winUser.OBJID_CARET and eventID in (
+	if objectID == winUser.OBJID_CARET and eventID in (
 		winUser.EVENT_OBJECT_LOCATIONCHANGE,
 		winUser.EVENT_OBJECT_SHOW
 	):
+		if not isinstance(focus, NVDAObjects.IAccessible.IAccessible):
+			# #12855: Ignore MSAA caret event on non-MSAA focus.
+			# as Chinese input method fires MSAA caret events over and over on UIA Word documents.
+			# #13098: However, limit this specifically to UIA Word documents,
+			# As other UIA documents (E.g. Visual Studio)
+			# Seem to rely on MSAA caret events,
+			# as they do not fire their own UIA caret events.
+			from NVDAObjects.UIA.wordDocument import WordDocument
+			if isinstance(focus, WordDocument):
+				if isMSAADebugLoggingEnabled():
+					log.debug(
+						f"Ignoring MSAA caret event on focused UIA Word document"
+						f"winEvent {getWinEventLogInfo(window, objectID, childID)}"
+					)
+				return False
 		if isMSAADebugLoggingEnabled():
-			log.debug("handling winEvent as caret event on focus")
+			log.debug(
+				"handling winEvent as caret event on focus. "
+				f"winEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		NVDAEvent = ("caret", focus)
 	else:
 		NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
@@ -550,10 +574,17 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 			log.debug("Handling winEvent as mouse shape change")
 		mouseHandler.updateMouseShape(NVDAEvent[1].name)
 		return
-	if NVDAEvent[1] == focus:
+	# if the winEvent is for the object with focus,
+	# Ensure that that the event is send to the existing focus instance,
+	# rather than a new instance of the object with focus.
+	if (
+		NVDAEvent[1] is not focus
+		and NVDAEvent[1] == focus
+	):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
-				f"Directing winEvent to focus object {focus}. WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+				f"Directing winEvent to existing focus object {focus}. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
 			)
 		NVDAEvent = (NVDAEvent[0], focus)
 	eventHandler.queueEvent(*NVDAEvent)
@@ -1097,15 +1128,15 @@ ATTRIBS_STRING_BASE64_THRESHOLD = 4096
 
 
 # C901: splitIA2Attribs is too complex
-def splitIA2Attribs(attribsString):  # noqa: C901
+def splitIA2Attribs(  # noqa: C901
+		attribsString: str
+) -> Dict[str, Union[str, Dict]]:
 	"""Split an IAccessible2 attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
 	Subattributes are handled. Subattribute keys and values are placed into a dict which becomes the value
 	of the attribute.
 	@param attribsString: The IAccessible2 attributes string to convert.
-	@type attribsString: str
 	@return: A dict of the attribute keys and values, where values are strings or dicts.
-	@rtype: {str: str or {str: str}}
 	"""
 	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
 	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:

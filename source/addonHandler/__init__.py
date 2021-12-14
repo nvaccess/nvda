@@ -29,6 +29,7 @@ import winKernel
 import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
+import extensionPoints
 import buildVersion
 
 
@@ -42,6 +43,13 @@ DELETEDIR_SUFFIX=".delete"
 
 # Add-ons that are blocked from running because they are incompatible
 _blockedAddons=set()
+
+
+# Allows add-ons to process additional command line arguments when NVDA starts.
+# Each handler is called with one keyword argument `cliArgument`
+# and should return `False` if it is not interested in it, `True` otherwise.
+# For more details see appropriate section of the developer guide.
+isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
 
 
 class AddonsState(collections.UserDict):

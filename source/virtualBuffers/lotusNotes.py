@@ -90,8 +90,7 @@ class LotusNotesRichText(VirtualBuffer):
 			return
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(*l.center)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def _shouldSetFocusToObj(self, obj):

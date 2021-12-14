@@ -17,6 +17,12 @@ NVDA and its components are primarily written in the Python programming language
 It is not the goal of this guide to teach you Python, though examples are provided through out this guide which will help to familiarise you with the Python syntax.
 Documentation and other resources related to the Python language can be found at www.python.org/
 
+++ C++ ++
+Some of NVDA is written in C++, EG nvdaHelper.
+For an overview of nvdaHelper, including how to configure Visual Studio to enable intellisense see the
+[nvdaHelper readme nvdaHelper_readme.md]
+
+
 + Translation +
 In order to support multiple languages/locales, NVDA must be translated and data specific to the locale must be provided.
 This section only includes information on custom NVDA file formats required for translation.
@@ -690,6 +696,23 @@ class AppModule(appModuleHandler.AppModule):
 		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
 			obj.name = "Content"
 --- end ---
+```
+
+++ Parsing additional command line arguments in your plugin ++
+By default NVDA accepts limited set of command line arguments and shows an error for an unknown ones.
+However if you want to use any additional arguments, this is possible by adding a handler to the extension point ``addonHandler.isCLIParamKnown``.
+Note that since command line arguments are processed just after NVDA starts, your add-on needs to process them in the global plugin, since app modules or other drivers may not be loaded at this stage.
+A sample handler can be written as follows:
+```
+def processArgs(cliArgument: str) -> bool:
+	if cliArgument == "--enable-addon-feature":
+		...
+		return True  # Argument is known to the add-on and should not be flagged by NVDA
+	return False  # unknown argument - NVDA should warn user
+```
+Then the handler needs to be registered - preferably in the constructor of your global plugin:
+```
+addonHandler.isCLIParamKnown.register(processArgs)
 ```
 
 + Packaging Code as NVDA Add-ons +[Addons]

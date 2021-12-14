@@ -13,7 +13,7 @@ import time
 import re
 import typing
 import weakref
-
+import core
 import textUtils
 from logHandler import log
 import review
@@ -372,11 +372,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	def _get_treeInterceptor(self):
+	#: Type definition for auto prop '_get_treeInterceptor'
+	treeInterceptor: treeInterceptorHandler.TreeInterceptor
+
+	def _get_treeInterceptor(self) -> treeInterceptorHandler.TreeInterceptor:
 		"""Retrieves the treeInterceptor associated with this object.
-		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
+		If a treeInterceptor has not been specifically set,
+		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
 		@return: the treeInterceptor
-		@rtype: L{treeInterceptorHandler.TreeInterceptor}
 		""" 
 		if hasattr(self,'_treeInterceptor'):
 			ti=self._treeInterceptor
@@ -1053,21 +1056,34 @@ Tries to force this object to take the focus.
 			# The one before that is the last of the word, which is what we want.
 			info.move(textInfos.UNIT_CHARACTER, -2)
 			info.expand(textInfos.UNIT_CHARACTER)
-			fields = info.getTextWithFields()
-		except RuntimeError:
-			return
-		except:
+		except Exception:
 			# Focus probably moved.
 			log.debugWarning("Error fetching last character of previous word", exc_info=True)
 			return
-		for command in fields:
-			if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):
-				break
-		else:
-			# No error.
-			return
-		import nvwave
-		nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+
+		# Fetch the formatting for the last word to see if it is marked as a spelling error,
+		# However perform the fetch and check in a future core cycle
+		# To give the content control more time to detect and mark the error itself.
+		# #12161: MS Word's UIA implementation certainly requires this delay.
+		def _delayedDetection():
+			try:
+				fields = info.getTextWithFields()
+			except Exception:
+				log.debugWarning("Error fetching formatting for last character of previous word", exc_info=True)
+				return
+			for command in fields:
+				if (
+					isinstance(command, textInfos.FieldCommand)
+					and command.command == "formatChange"
+					and command.field.get("invalid-spelling")
+				):
+					break
+			else:
+				# No error.
+				return
+			import nvwave
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+		core.callLater(50, _delayedDetection)
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
 		""" Retrieves the priority with which  updates to live regions should be treated.
