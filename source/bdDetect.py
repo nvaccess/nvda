@@ -114,19 +114,21 @@ def getDriversForConnectedUsbDevices():
 	@return: Pairs of drivers and device information.
 	@rtype: generator of (str, L{DeviceMatch}) tuples
 	"""
-	usbDevs = itertools.chain(
+	usbDevsForCustom, usbDevsForHID = itertools.tee(itertools.chain(
 		(DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.usbDevices),
 		(DeviceMatch(KEY_HID, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices if port["provider"]=="usb"),
 		(DeviceMatch(KEY_SERIAL, port["usbID"], port["port"], port)
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
-	)
-	for match in usbDevs:
+	))
+	for match in usbDevsForCustom:
 		for driver, devs in _driverDevices.items():
 			for type, ids in devs.items():
 				if match.type==type and match.id in ids:
 					yield driver, match
+
+	for match in usbDevsForHID:
 		# Check for the Braille HID protocol after any other device matching.
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
@@ -139,20 +141,21 @@ def getDriversForPossibleBluetoothDevices():
 	@return: Pairs of drivers and port information.
 	@rtype: generator of (str, L{DeviceMatch}) tuples
 	"""
-	btDevs = itertools.chain(
+	btDevsForCustom, btDevsForHID = itertools.tee(itertools.chain(
 		(DeviceMatch(KEY_SERIAL, port["bluetoothName"], port["port"], port)
 			for port in deviceInfoFetcher.comPorts
 			if "bluetoothName" in port),
 		(DeviceMatch(KEY_HID, port["hardwareID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices if port["provider"]=="bluetooth"),
-	)
-	for match in btDevs:
+	))
+	for match in btDevsForCustom:
 		for driver, devs in _driverDevices.items():
 			matchFunc = devs[KEY_BLUETOOTH]
 			if not callable(matchFunc):
 				continue
 			if matchFunc(match):
 				yield driver, match
+	for match in btDevsForHID:
 		# Check for the Braille HID protocol after any other device matching.
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
