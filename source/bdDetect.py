@@ -132,8 +132,12 @@ def getDriversForConnectedUsbDevices():
 		# Check for the Braille HID protocol after any other device matching.
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
-		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+		if _isHIDBrailleMatch(match):
 			yield ("hid", match)
+
+
+def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
+	return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
 
 
 def getDriversForPossibleBluetoothDevices():
@@ -159,7 +163,7 @@ def getDriversForPossibleBluetoothDevices():
 		# Check for the Braille HID protocol after any other device matching.
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
-		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+		if _isHIDBrailleMatch(match):
 			yield ("hid", match)
 
 
@@ -353,7 +357,7 @@ def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	)
 	for match in usbDevs:
 		if driver == "hid":
-			if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+			if _isHIDBrailleMatch(match):
 				yield match
 		else:
 			devs = _driverDevices[driver]
@@ -370,7 +374,7 @@ def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	"""
 	if driver == "hid":
 		def matchFunc(match):
-			return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
+			return _isHIDBrailleMatch(match)
 	else:
 		matchFunc = _driverDevices[driver][KEY_BLUETOOTH]
 		if not callable(matchFunc):
