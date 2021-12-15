@@ -2258,10 +2258,15 @@ class _BgThread:
 			if cls.exit:
 				break
 
-#: Maps old braille display driver names to new drivers that supersede old drivers.
+
+# Maps old braille display driver names to new drivers that supersede old drivers.
+# Ensure that if a user has set a preferred driver which has changed name, the new
+# user preference is retained.
 RENAMED_DRIVERS = {
-	"syncBraille":"hims",
-	"alvaBC6":"alva"
+	# "oldDriverName": "newDriverName"
+	"syncBraille": "hims",
+	"alvaBC6": "alva",
+	"hid": "hidBrailleStandard",
 }
 
 handler: BrailleHandler

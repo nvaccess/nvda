@@ -73,7 +73,7 @@ class ButtonCapsInfo:
 
 class HidBrailleDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.hid.Hid
-	name = "hid"
+	name = "hidBrailleStandard"
 	# Translators: The name of a series of braille displays.
 	description = _("Standard HID Braille Display")
 	isThreadSafe = True
