@@ -143,7 +143,7 @@ def _getStandardHidDriverName() -> str:
 	"""Return the name of the standard HID Braille device driver
 	"""
 	import brailleDisplayDrivers.hid
-	return brailleDisplayDrivers.hid.BrailleDisplayDriver.name
+	return brailleDisplayDrivers.hid.HidBrailleDriver.name
 
 
 def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
