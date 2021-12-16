@@ -643,5 +643,10 @@ addUsbDevices("nattiqbraille", KEY_SERIAL, {
 
 # superBrl
 addUsbDevices("superBrl", KEY_SERIAL, {
-	"VID_10C4&PID_EA60", # SuperBraille 3.2
+	"VID_10C4&PID_EA60",  # SuperBraille 3.2
+})
+
+# seika
+addUsbDevices("seikantk", KEY_HID, {
+	"VID_10C4&PID_EA80",  # Seika Notetaker
 })
