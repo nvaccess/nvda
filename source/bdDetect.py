@@ -128,15 +128,16 @@ def getDriversForConnectedUsbDevices():
 				if match.type==type and match.id in ids:
 					yield driver, match
 
-	for match in usbDevsForHID:
-		# Check for the Braille HID protocol after any other device matching.
-		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
-		# This preference may change in the future.
-		if _isHIDBrailleMatch(match):
-			yield (
-				_getStandardHidDriverName(),
-				match
-			)
+	if config.conf["featureFlag"]["hidBrailleAutoDetect"]:
+		for match in usbDevsForHID:
+			# Check for the Braille HID protocol after any other device matching.
+			# This ensures that a vendor specific driver is preferred over the braille HID protocol.
+			# This preference may change in the future.
+			if _isHIDBrailleMatch(match):
+				yield (
+					_getStandardHidDriverName(),
+					match
+				)
 
 
 def _getStandardHidDriverName() -> str:
@@ -169,15 +170,17 @@ def getDriversForPossibleBluetoothDevices():
 				continue
 			if matchFunc(match):
 				yield driver, match
-	for match in btDevsForHID:
-		# Check for the Braille HID protocol after any other device matching.
-		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
-		# This preference may change in the future.
-		if _isHIDBrailleMatch(match):
-			yield (
-				_getStandardHidDriverName(),
-				match
-			)
+
+	if config.conf["featureFlag"]["hidBrailleAutoDetect"]:
+		for match in btDevsForHID:
+			# Check for the Braille HID protocol after any other device matching.
+			# This ensures that a vendor specific driver is preferred over the braille HID protocol.
+			# This preference may change in the future.
+			if _isHIDBrailleMatch(match):
+				yield (
+					_getStandardHidDriverName(),
+					match
+				)
 
 
 class _DeviceInfoFetcher(AutoPropertyObject):
