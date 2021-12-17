@@ -231,13 +231,15 @@ SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
 #: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
 NVDA_REGKEY = r"SOFTWARE\NVDA"
 
-def getStartOnLogonScreen():
+
+def getStartOnLogonScreen() -> bool:
 	if easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		return bool(winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
-	except WindowsError:
+		return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
+	except WindowsError as winError:
+		log.exception(f"Unable to query registry value for startOnLogonScreen. Error: {winError}")
 		return False
 
 def _setStartOnLogonScreen(enable):
