@@ -71,9 +71,9 @@ class ButtonCapsInfo:
 	relativeIndexInCollection: int = 0
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class HidBrailleDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.hid.Hid
-	name = "hid"
+	name = "hidBrailleStandard"
 	# Translators: The name of a series of braille displays.
 	description = _("Standard HID Braille Display")
 	isThreadSafe = True
@@ -235,7 +235,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
-	source = BrailleDisplayDriver.name
+	source = HidBrailleDriver.name
 
 	def __init__(self, driver, dataIndices):
 		super().__init__()
@@ -307,3 +307,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		# Join the words together as  camelcase.
 		name = "".join(wordList)
 		return name
+
+
+BrailleDisplayDriver = HidBrailleDriver

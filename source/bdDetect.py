@@ -14,6 +14,7 @@ For drivers in add-ons, this must be done in a global plugin.
 """
 
 import itertools
+import typing
 from collections import namedtuple, defaultdict, OrderedDict
 import threading
 from typing import Iterable
@@ -110,55 +111,98 @@ def addBluetoothDevices(driver, matchFunc):
 	devs = _getDriver(driver)
 	devs[KEY_BLUETOOTH] = matchFunc
 
-def getDriversForConnectedUsbDevices():
+
+def getDriversForConnectedUsbDevices() -> typing.Iterator[typing.Tuple[str, DeviceMatch]]:
 	"""Get any matching drivers for connected USB devices.
-	@return: Pairs of drivers and device information.
-	@rtype: generator of (str, L{DeviceMatch}) tuples
+	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
+	Standard HID Braille spec.
+	@return: Generator of pairs of drivers and device information.
 	"""
-	usbDevs = itertools.chain(
-		(DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
-			for port in deviceInfoFetcher.usbDevices),
-		(DeviceMatch(KEY_HID, port["usbID"], port["devicePath"], port)
-			for port in deviceInfoFetcher.hidDevices if port["provider"]=="usb"),
-		(DeviceMatch(KEY_SERIAL, port["usbID"], port["port"], port)
-			for port in deviceInfoFetcher.comPorts if "usbID" in port)
+	usbCustomDeviceMatches = (
+		DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
+		for port in deviceInfoFetcher.usbDevices
 	)
-	for match in usbDevs:
+	usbComDeviceMatches = (
+		DeviceMatch(KEY_SERIAL, port["usbID"], port["port"], port)
+		for port in deviceInfoFetcher.comPorts
+		if "usbID" in port
+	)
+	# Tee is used to ensure that the DeviceMatches aren't created multiple times.
+	# The processing of these HID device matches, looking for a custom driver, means that all
+	# HID device matches are created, and by teeing the output the matches don't need to be created again.
+	# The corollary is that clients of this method don't have to process all devices (and create all
+	# device matches), if one is found early the iteration can stop.
+	usbHidDeviceMatches, usbHidDeviceMatchesForCustom = itertools.tee((
+		DeviceMatch(KEY_HID, port["usbID"], port["devicePath"], port)
+		for port in deviceInfoFetcher.hidDevices
+		if port["provider"] == "usb"
+	))
+	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			for type, ids in devs.items():
 				if match.type==type and match.id in ids:
 					yield driver, match
+
+	for match in usbHidDeviceMatches:
 		# Check for the Braille HID protocol after any other device matching.
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
-		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
-			yield ("hid", match)
+		if _isHIDBrailleMatch(match):
+			yield (
+				_getStandardHidDriverName(),
+				match
+			)
 
 
-def getDriversForPossibleBluetoothDevices():
-	"""Get any matching drivers for possible Bluetooth devices.
-	@return: Pairs of drivers and port information.
-	@rtype: generator of (str, L{DeviceMatch}) tuples
+def _getStandardHidDriverName() -> str:
+	"""Return the name of the standard HID Braille device driver
 	"""
-	btDevs = itertools.chain(
-		(DeviceMatch(KEY_SERIAL, port["bluetoothName"], port["port"], port)
-			for port in deviceInfoFetcher.comPorts
-			if "bluetoothName" in port),
-		(DeviceMatch(KEY_HID, port["hardwareID"], port["devicePath"], port)
-			for port in deviceInfoFetcher.hidDevices if port["provider"]=="bluetooth"),
+	import brailleDisplayDrivers.hidBrailleStandard
+	return brailleDisplayDrivers.hidBrailleStandard.HidBrailleDriver.name
+
+
+def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
+	return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
+
+
+def getDriversForPossibleBluetoothDevices() -> typing.Iterator[typing.Tuple[str, DeviceMatch]]:
+	"""Get any matching drivers for possible Bluetooth devices.
+	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
+	Standard HID Braille spec.
+	@return: Generator of pairs of drivers and port information.
+	"""
+	btSerialMatchesForCustom = (
+		DeviceMatch(KEY_SERIAL, port["bluetoothName"], port["port"], port)
+		for port in deviceInfoFetcher.comPorts
+		if "bluetoothName" in port
 	)
-	for match in btDevs:
+	# Tee is used to ensure that the DeviceMatches aren't created multiple times.
+	# The processing of these HID device matches, looking for a custom driver, means that all
+	# HID device matches are created, and by teeing the output the matches don't need to be created again.
+	# The corollary is that clients of this method don't have to process all devices (and create all
+	# device matches), if one is found early the iteration can stop.
+	btHidDevMatchesForHid, btHidDevMatchesForCustom = itertools.tee((
+		DeviceMatch(KEY_HID, port["hardwareID"], port["devicePath"], port)
+		for port in deviceInfoFetcher.hidDevices
+		if port["provider"] == "bluetooth"
+	))
+	for match in itertools.chain(btSerialMatchesForCustom, btHidDevMatchesForCustom):
 		for driver, devs in _driverDevices.items():
 			matchFunc = devs[KEY_BLUETOOTH]
 			if not callable(matchFunc):
 				continue
 			if matchFunc(match):
 				yield driver, match
+
+	for match in btHidDevMatchesForHid:
 		# Check for the Braille HID protocol after any other device matching.
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
-		if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
-			yield ("hid", match)
+		if _isHIDBrailleMatch(match):
+			yield (
+				_getStandardHidDriverName(),
+				match
+			)
 
 
 class _DeviceInfoFetcher(AutoPropertyObject):
@@ -360,8 +404,8 @@ def getConnectedUsbDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]:
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		if driver == "hid":
-			if match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE:
+		if driver == _getStandardHidDriverName():
+			if _isHIDBrailleMatch(match):
 				yield match
 		else:
 			devs = _driverDevices[driver]
@@ -377,9 +421,8 @@ def getPossibleBluetoothDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]
 	@return: Port information for each port.
 	@raise LookupError: If there is no detection data for this driver.
 	"""
-	if driver == "hid":
-		def matchFunc(match):
-			return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
+	if driver == _getStandardHidDriverName():
+		matchFunc = _isHIDBrailleMatch
 	else:
 		matchFunc = _driverDevices[driver][KEY_BLUETOOTH]
 		if not callable(matchFunc):
