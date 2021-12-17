@@ -200,6 +200,7 @@ def getStartAfterLogon():
 		val = winreg.QueryValueEx(k, u"nvda")[0]
 		return os.stat(val) == os.stat(sys.argv[0])
 	except (WindowsError, OSError):
+		log.error("Unable to query registry value for getStartAfterLogon", exc_info=True)
 		return False
 
 def setStartAfterLogon(enable):
@@ -221,6 +222,7 @@ def setStartAfterLogon(enable):
 		try:
 			winreg.DeleteValue(k, u"nvda")
 		except WindowsError:
+			log.error("Unable to query registry value for setStartAfterLogon", exc_info=True)
 			pass
 
 
@@ -239,7 +241,7 @@ def getStartOnLogonScreen() -> bool:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
 		return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
 	except WindowsError as winError:
-		log.exception(f"Unable to query registry value for startOnLogonScreen. Error: {winError}")
+		log.error("Unable to query registry value for startOnLogonScreen.", exc_info=True)
 		return False
 
 def _setStartOnLogonScreen(enable):
