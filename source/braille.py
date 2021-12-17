@@ -2454,11 +2454,11 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			pass
 
 	@classmethod
-	def getManualPorts(cls) -> Iterable[str]:
+	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""Get possible manual hardware ports for this driver.
 		This is for ports which cannot be detected automatically
 		such as serial ports.
-		@return: The name and description for each port.
+		@return: An iterator containing the name and description for each port.
 		"""
 		raise NotImplementedError
 
@@ -2723,7 +2723,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
 
 
-def getSerialPorts(filterFunc=None):
+def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
 	"""Get available serial ports in a format suitable for L{BrailleDisplayDriver.getManualPorts}.
 	@param filterFunc: a function executed on every dictionary retrieved using L{hwPortUtils.listComPorts}.
 		For example, this can be used to filter by USB or Bluetooth com ports.
