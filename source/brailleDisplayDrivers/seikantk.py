@@ -77,10 +77,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			path = d["devicePath"]
 
 	@classmethod
-	def check(cls):
-		return True
-
-	@classmethod
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""@return: An iterator containing the name and description for each port.
 		"""
