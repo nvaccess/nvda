@@ -200,6 +200,7 @@ def getStartAfterLogon():
 		val = winreg.QueryValueEx(k, u"nvda")[0]
 		return os.stat(val) == os.stat(sys.argv[0])
 	except (WindowsError, OSError):
+		log.error("Unable to query registry value for getStartAfterLogon", exc_info=True)
 		return False
 
 def setStartAfterLogon(enable):
@@ -221,6 +222,7 @@ def setStartAfterLogon(enable):
 		try:
 			winreg.DeleteValue(k, u"nvda")
 		except WindowsError:
+			log.error("Unable to query registry value for setStartAfterLogon", exc_info=True)
 			pass
 
 
@@ -231,13 +233,15 @@ SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
 #: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
 NVDA_REGKEY = r"SOFTWARE\NVDA"
 
-def getStartOnLogonScreen():
+
+def getStartOnLogonScreen() -> bool:
 	if easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		return bool(winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
+		return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
 	except WindowsError:
+		log.error("Unable to query registry value for startOnLogonScreen.", exc_info=True)
 		return False
 
 def _setStartOnLogonScreen(enable):
