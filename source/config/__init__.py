@@ -240,7 +240,7 @@ def getStartOnLogonScreen() -> bool:
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
 		return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
-	except WindowsError as winError:
+	except WindowsError:
 		log.error("Unable to query registry value for startOnLogonScreen.", exc_info=True)
 		return False
 
