@@ -189,7 +189,9 @@ def initConfigPath(configPath=None):
 
 RUN_REGKEY = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
-def getStartAfterLogon():
+
+def getStartAfterLogon() -> bool:
+	"""Not to be confused with getStartOnLogonScreen"""
 	if (
 		easeOfAccess.canConfigTerminateOnDesktopSwitch
 		and easeOfAccess.willAutoStart(winreg.HKEY_CURRENT_USER)
@@ -199,11 +201,15 @@ def getStartAfterLogon():
 		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY)
 		val = winreg.QueryValueEx(k, u"nvda")[0]
 		return os.stat(val) == os.stat(sys.argv[0])
+	except FileNotFoundError:
+		log.debug("Unable to find registry key for getStartAfterLogon", exc_info=True)
+		return False
 	except (WindowsError, OSError):
 		log.error("Unable to query registry value for getStartAfterLogon", exc_info=True)
 		return False
 
-def setStartAfterLogon(enable):
+
+def setStartAfterLogon(enable: bool) -> None:
 	if getStartAfterLogon() == enable:
 		return
 	if easeOfAccess.canConfigTerminateOnDesktopSwitch:
@@ -217,14 +223,14 @@ def setStartAfterLogon(enable):
 		run = enable
 	k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, winreg.KEY_WRITE)
 	if run:
-		winreg.SetValueEx(k, u"nvda", None, winreg.REG_SZ, sys.argv[0])
+		winreg.SetValueEx(k, "nvda", None, winreg.REG_SZ, sys.argv[0])
 	else:
 		try:
-			winreg.DeleteValue(k, u"nvda")
+			winreg.DeleteValue(k, "nvda")
+		except FileNotFoundError:
+			log.debug("Unable to find registry key for setStartAfterLogon", exc_info=True)
 		except WindowsError:
-			log.error("Unable to query registry value for setStartAfterLogon", exc_info=True)
-			pass
-
+			log.error("Unable to delete registry value for setStartAfterLogon", exc_info=True)
 
 
 SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
@@ -235,13 +241,17 @@ NVDA_REGKEY = r"SOFTWARE\NVDA"
 
 
 def getStartOnLogonScreen() -> bool:
+	"""Not to be confused with getStartAfterLogon"""
 	if easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
 		return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
+	except FileNotFoundError:
+		log.debug("Unable to find registry key for startOnLogonScreen", exc_info=True)
+		return False
 	except WindowsError:
-		log.error("Unable to query registry value for startOnLogonScreen.", exc_info=True)
+		log.error("Unable to query registry value for startOnLogonScreen", exc_info=True)
 		return False
 
 def _setStartOnLogonScreen(enable):
