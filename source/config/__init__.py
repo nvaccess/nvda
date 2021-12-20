@@ -73,17 +73,20 @@ def saveOnExit():
 		except:
 			pass
 
-def isInstalledCopy():
+
+def isInstalledCopy() -> bool:
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
 		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
 		instDir=winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
+		log.exception(f"Unable to query registry value for UninstallDirectory", exc_info=True)
 		return False
 	winreg.CloseKey(k)
 	try:
 		return os.stat(instDir) == os.stat(globalVars.appDir)
 	except WindowsError:
+		log.exception(f"Unable to check if copy is installed", exc_info=True)
 		return False
 
 
@@ -96,11 +99,13 @@ def isInstalledCopy():
 #: @type: str
 CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
 
-def getInstalledUserConfigPath():
+
+def getInstalledUserConfigPath() -> Optional[str]:
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
 		configInLocalAppData = bool(winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
 	except WindowsError:
+		log.exception(f"Unable to query registry value for {CONFIG_IN_LOCAL_APPDATA_SUBKEY}", exc_info=True)
 		configInLocalAppData=False
 	configParent = shlobj.SHGetKnownFolderPath(
 		shlobj.FolderId.LOCAL_APP_DATA if configInLocalAppData else shlobj.FolderId.ROAMING_APP_DATA
@@ -108,6 +113,7 @@ def getInstalledUserConfigPath():
 	try:
 		return os.path.join(configParent, "nvda")
 	except WindowsError:
+		log.exception(f"Unable to join path for config {configParent}", exc_info=True)
 		return None
 
 def getUserDefaultConfigPath(useInstalledPathIfExists=False):
@@ -183,7 +189,8 @@ def initConfigPath(configPath=None):
 
 RUN_REGKEY = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
-def getStartAfterLogon():
+
+def getStartAfterLogon() -> bool:
 	if (
 		easeOfAccess.canConfigTerminateOnDesktopSwitch
 		and easeOfAccess.willAutoStart(winreg.HKEY_CURRENT_USER)
@@ -194,9 +201,11 @@ def getStartAfterLogon():
 		val = winreg.QueryValueEx(k, u"nvda")[0]
 		return os.stat(val) == os.stat(sys.argv[0])
 	except (WindowsError, OSError):
+		log.exception(f"Unable to get registry key for getStartAfterLogon", exc_info=True)
 		return False
 
-def setStartAfterLogon(enable):
+
+def setStartAfterLogon(enable: bool) -> None:
 	if getStartAfterLogon() == enable:
 		return
 	if easeOfAccess.canConfigTerminateOnDesktopSwitch:
@@ -215,7 +224,7 @@ def setStartAfterLogon(enable):
 		try:
 			winreg.DeleteValue(k, u"nvda")
 		except WindowsError:
-			pass
+			log.exception(f"Unable to delete registry key value {k}", exc_info=True)
 
 
 
@@ -225,13 +234,15 @@ SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
 #: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
 NVDA_REGKEY = r"SOFTWARE\NVDA"
 
-def getStartOnLogonScreen():
+
+def getStartOnLogonScreen() -> bool:
 	if easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		return bool(winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
+		return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
 	except WindowsError:
+		log.exception(f"Unable to query registry value for startOnLogonScreen", exc_info=True)
 		return False
 
 def _setStartOnLogonScreen(enable):
