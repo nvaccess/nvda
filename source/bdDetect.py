@@ -14,10 +14,8 @@ For drivers in add-ons, this must be done in a global plugin.
 """
 
 import itertools
-import typing
 from collections import namedtuple, defaultdict, OrderedDict
 import threading
-from typing import Iterable
 
 import typing
 import wx
@@ -143,15 +141,16 @@ def getDriversForConnectedUsbDevices() -> typing.Iterator[typing.Tuple[str, Devi
 				if match.type==type and match.id in ids:
 					yield driver, match
 
-	for match in usbHidDeviceMatches:
-		# Check for the Braille HID protocol after any other device matching.
-		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
-		# This preference may change in the future.
-		if _isHIDBrailleMatch(match):
-			yield (
-				_getStandardHidDriverName(),
-				match
-			)
+	if _isHidBrailleStandardSupported():
+		for match in usbHidDeviceMatches:
+			# Check for the Braille HID protocol after any other device matching.
+			# This ensures that a vendor specific driver is preferred over the braille HID protocol.
+			# This preference may change in the future.
+			if _isHIDBrailleMatch(match):
+				yield (
+					_getStandardHidDriverName(),
+					match
+				)
 
 
 def _getStandardHidDriverName() -> str:
@@ -159,6 +158,12 @@ def _getStandardHidDriverName() -> str:
 	"""
 	import brailleDisplayDrivers.hidBrailleStandard
 	return brailleDisplayDrivers.hidBrailleStandard.HidBrailleDriver.name
+
+
+def _isHidBrailleStandardSupported() -> bool:
+	"""Check if standard HID braille is supported"""
+	import brailleDisplayDrivers.hidBrailleStandard
+	return brailleDisplayDrivers.hidBrailleStandard.isSupportEnabled()
 
 
 def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
@@ -194,15 +199,16 @@ def getDriversForPossibleBluetoothDevices() -> typing.Iterator[typing.Tuple[str,
 			if matchFunc(match):
 				yield driver, match
 
-	for match in btHidDevMatchesForHid:
-		# Check for the Braille HID protocol after any other device matching.
-		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
-		# This preference may change in the future.
-		if _isHIDBrailleMatch(match):
-			yield (
-				_getStandardHidDriverName(),
-				match
-			)
+	if _isHidBrailleStandardSupported():
+		for match in btHidDevMatchesForHid:
+			# Check for the Braille HID protocol after any other device matching.
+			# This ensures that a vendor specific driver is preferred over the braille HID protocol.
+			# This preference may change in the future.
+			if _isHIDBrailleMatch(match):
+				yield (
+					_getStandardHidDriverName(),
+					match
+				)
 
 
 class _DeviceInfoFetcher(AutoPropertyObject):
@@ -405,7 +411,10 @@ def getConnectedUsbDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]:
 	)
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
-			if _isHIDBrailleMatch(match):
+			if(
+				_isHidBrailleStandardSupported()
+				and _isHIDBrailleMatch(match)
+			):
 				yield match
 		else:
 			devs = _driverDevices[driver]
@@ -422,7 +431,11 @@ def getPossibleBluetoothDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	if driver == _getStandardHidDriverName():
-		matchFunc = _isHIDBrailleMatch
+		def matchFunc(checkMatch: DeviceMatch) -> bool:
+			return (
+				_isHidBrailleStandardSupported()
+				and _isHIDBrailleMatch(checkMatch)
+			)
 	else:
 		matchFunc = _driverDevices[driver][KEY_BLUETOOTH]
 		if not callable(matchFunc):
