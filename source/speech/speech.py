@@ -1687,7 +1687,10 @@ def getPropertiesSpeech(  # noqa: C901
 	# are there further details
 	hasDetails = propertyValues.get('hasDetails', False)
 	if hasDetails:
-		textList.append(_("has details"))
+		textList.append(
+			# Translators: Speaks when there a further details/annotations that can be fetched manually.
+			_("has details")
+		)
 
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
