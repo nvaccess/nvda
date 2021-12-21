@@ -10,6 +10,7 @@ from comtypes import (
 	IServiceProvider,
 	GUID,
 	IUnknown,
+	BSTR,
 )
 from comtypes.hresult import S_OK, S_FALSE
 import ctypes
@@ -44,6 +45,7 @@ import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
+import NVDAHelper
 
 
 # Custom object ID used for clipboard pane in some versions of MS Office
@@ -1763,9 +1765,6 @@ the NVDAObject for IAccessible
 		"""Uses nvdaInProcUtils to get the text for an IAccessible.
 		Can be used without a virtual buffer loaded.
 		"""
-		from comtypes import BSTR
-		import ctypes
-		import NVDAHelper
 		text = BSTR()
 		log.debug("Calling nvdaInProcUtils_getTextFromIAccessible")
 		res = NVDAHelper.localLib.nvdaInProcUtils_getTextFromIAccessible(
