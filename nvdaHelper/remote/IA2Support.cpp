@@ -326,7 +326,7 @@ error_status_t nvdaInProcUtils_getTextFromIAccessible(
 		const auto gotText = getTextFromIAccessible(
 			textBuf,
 			pacc2,
-			false,  // useNewText, only valid in reponse to an event (indicating changing text)
+			false,  // useNewText, only valid in response to an event (indicating changing text)
 			recurse,
 			includeTopLevelText
 		);
