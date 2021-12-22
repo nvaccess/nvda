@@ -13,7 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <windows.h>
-#include <minhook.h>
+#include <MinHook.h>
 
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	//Process exiting, we must clean up any pending hooks

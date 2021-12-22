@@ -2,7 +2,10 @@
 # Copyright (C) 2016-2021 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import Optional, Dict
+from typing import (
+	Optional,
+	Dict,
+)
 
 from comtypes import COMError
 from comtypes.hresult import S_OK
@@ -127,10 +130,8 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				return
 			log.debug("Double clicking")
 			winUser.setCursorPos(p.x, p.y)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+			mouseHandler.doPrimaryClick()
+			mouseHandler.doPrimaryClick()
 			return
 
 		# The user makes a selection using browse mode virtual selection.
@@ -262,7 +263,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			text+=", "+_("Page {pageNumber}").format(pageNumber=pageNumber)
 		return text
 
-	def getTextWithFields(self, formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		items = super(BookPageViewTextInfo, self).getTextWithFields(formatConfig=formatConfig)

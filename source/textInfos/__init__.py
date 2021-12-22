@@ -10,6 +10,7 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 """
 
 from abc import abstractmethod
+from enum import Enum
 import weakref
 import re
 import typing
@@ -88,7 +89,7 @@ class ControlField(Field):
 
 		name = self.get("name")
 		landmark = self.get("landmark")
-		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS) and (
+		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS, OutputReason.QUICKNAV) and (
 			(role == controlTypes.Role.LINK and not formatConfig["reportLinks"])
 			or (role == controlTypes.Role.GRAPHIC and not formatConfig["reportGraphics"])
 			or (role == controlTypes.Role.HEADING and not formatConfig["reportHeadings"])
@@ -358,12 +359,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> List[Union[str, FieldCommand]]:
+	TextWithFieldsT = List[Union[str, FieldCommand]]
+
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> "TextInfo.TextWithFieldsT":
 		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
 			configuration for a particular task.
-		@type formatConfig: dict
 		@return: A sequence of text strings interspersed with associated field commands.
 		""" 
 		return [self.text]
@@ -505,8 +507,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		""" 
 		raise NotImplementedError
 
-	def _get_NVDAObjectAtStart(self):
-		"""retreaves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+	#: Typing information for auto-property: _get_NVDAObjectAtStart
+	NVDAObjectAtStart: "NVDAObjects.NVDAObject"
+
+	def _get_NVDAObjectAtStart(self) -> "NVDAObjects.NVDAObject":
+		"""Get the NVDAObject related to the start of the range.
+		Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
 		@returns: the NVDAObject at the start
 		"""
 		return self.obj
@@ -629,8 +635,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		p=self.pointAtStart
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(p.x,p.y)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def getMathMl(self, field):
@@ -734,3 +739,12 @@ class TextInfoEndpoint:
 	def __repr__(self):
 		endpointLabel = "start" if self.isStart else "end"
 		return f"{endpointLabel} endpoint of {self.textInfo}"
+
+
+class CommentType(Enum):
+	"""
+	a value exposed by the 'comment' key of a L{Formatfield}.
+	"""
+	GENERAL = "general"
+	DRAFT = "draft"
+	RESOLVED = "resolved"
