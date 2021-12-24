@@ -706,3 +706,8 @@ addUsbDevices("superBrl", KEY_SERIAL, {
 addUsbDevices("seikantk", KEY_HID, {
 	"VID_10C4&PID_EA80",  # Seika Notetaker
 })
+
+# Bluetooth name of the Seika devices is "TSM abcd", where the "abcd" is a four-digit
+# number, e.g. "TSM 3366", "TSM 0001", etc. There is a space between "TSM" and "abcd".
+seikaBluetoothNameRegex = re.compile(r"TSM \d\d\d\d")
+addBluetoothDevices("seikantk", lambda m: bool(seikaBluetoothNameRegex.match(m.deviceInfo["bluetoothName"])))
