@@ -3,6 +3,19 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3.1 =
+
+== Änderungen ==
+- Das neue HID-Braillezeilen-Protokoll wird nicht mehr bevorzugt, wenn ein anderer Braillezeilen-Treiber verwendet wird. (#13153)
+-
+
+
+== Fehlerbehebungen ==
+- Landmark wird wieder auf der Braillezeile abgekürzt. #13158
+- Die automatische Erkennung der Braillezeilen für Humanware Brailliant und APH Mantis Q40 in Verwendung mit Bluetooth wurde behoben. (#13153)
+-
+
+
 = 2021.3 =
 Diese Version bietet Unterstützung für die neue HID-Braille-Spezifikation.
 Diese Spezifikation vereinfacht die Unterstützung für Braillezeilen zu standardisieren, ohne dass individuelle Treiber benötigt werden.
