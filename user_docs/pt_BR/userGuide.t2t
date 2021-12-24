@@ -269,7 +269,7 @@ O Menu do NVDA permite-lhe controlar suas opções, ir à ajuda, salvar/restaura
 
 Para acessar o menu do NVDA de qualquer lugar do Windows enquanto o NVDA estiver em execução, pressione NVDA+n no teclado ou toque duas vezes com dois dedos na tela de toque.
 Também é possível acessá-lo através da área de notificação do Windows ""[bandeja do sistema]"".
-Basta clicar com o botão direito no ícone do NVDA que lá se encontra ou mova-se para a área de notificação com a tecla do logotipo do Windows+B, desloque-se com a Seta Abaixo até ao ícone deste leitor de tela e pressione a Tecla de Aplicações que se encontra em muitos teclados antes do Control direito.
+Basta clicar com o botão direito no ícone do NVDA que lá se encontra ou mova-se para a área de notificação com a tecla do logotipo do Windows+B, desloque-se com a Seta para Baixo até o ícone deste leitor de tela e pressione a Tecla de Aplicações que se encontra em muitos teclados antes do Control direito.
 Quando o menu se abrir, pode usar as setas direcionais para navegar pelo mesmo e ativar um item com a tecla Enter.
 
 ++ Comandos Básicos do NVDA ++[BasicNVDACommands]
@@ -315,7 +315,7 @@ Existem alguns comandos de teclado úteis quando se move com o foco:
 | Informar o foco atual | NVDA+tab | NVDA+tab | Anuncia o objeto atual ou controle que tem o foco do sistema. Ao pressionar duas vezes soletrará a informação |
 | Anunciar o título | NVDA+t | NVDA+t | Anuncia o título da janela atualmente em execução. Ao pressionar duas vezes soletrará a informação. Três vezes copiará o conteúdo para a área de transferência |
 | Ler janela ativa | NVDA+b | NVDA+b | Lê todos os controles na janela atual em execução (muito útil para diálogos) |
-| Ler a Barra de Status | NVDA+end | NVDA+shift+end | Lê a barra de status caso o NVDA a encontre. Este comando também move a navegação de objetos para sua localização. Pressionando-se duas vezes, soletrará a informação. Pressionando três vezes copiará para a área de transferência |
+| Ler a Barra de Status | NVDA+end | NVDA+shift+end | Lê a barra de status caso o NVDA a encontre. Pressionando-se duas vezes, soletrará a informação. Pressionando três vezes copiará para a área de transferência |
 %kc:endInclude
 
 ++ Navegando com o Cursor do Sistema ++[SystemCaret]
@@ -328,19 +328,19 @@ O NVDA anunciará enquanto você se move por Caractere, palavra, linha e também
 Este leitor de telas fornece os seguintes comandos em relação ao cursor do sistema:
 %kc:beginInclude
 || Nome | Tecla de desktop | Tecla de laptop | Descrição |
-| Leitura contínua | NVDA+seta abaixo | NVDA+a | Inicia a leitura a partir da posição atual do cursor do sistema, movendo-o pelo texto |
-| Ler linha atual | NVDA+seta acima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado atualmente. Ao pressionar duas vezes soletra a linha. Pressionando-se três vezes, soletra-a usando descrições de caracteres. |
-| Ler texto atualmente selecionado | NVDA+Shift+seta acima | NVDA+shift+s | Lê qualquer texto selecionado atualmente |
+| Leitura contínua | NVDA+seta para baixo | NVDA+a | Inicia a leitura a partir da posição atual do cursor do sistema, movendo-o pelo texto |
+| Ler linha atual | NVDA+seta para cima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado atualmente. Ao pressionar duas vezes soletra a linha. Pressionando-se três vezes, soletra-a usando descrições de caracteres. |
+| Ler texto atualmente selecionado | NVDA+Shift+seta para cima | NVDA+shift+s | Lê qualquer texto selecionado atualmente |
 | Informar formatação de texto | NVDA+f | NVDA+f | Informa a formatação do texto onde o cursor está localizado atualmente. Pressionar duas vezes mostra as informações no modo de navegação |
-| Próxima Sentença | alt+seta abaixo | alt+seta abaixo | Move o cursor do sistema para a próxima sentença e a anuncia. (suportado apenas no Microsoft Word e Outlook) |
-| Sentença anterior | alt+seta acima | alt+seta acima | Move o cursor do sistema para a sentença anterior e a anuncia. (suportado apenas no Microsoft Word e Outlook) |
+| Próxima Sentença | alt+seta para baixo | alt+seta para baixo | Move o cursor do sistema para a próxima sentença e a anuncia. (suportado apenas no Microsoft Word e Outlook) |
+| Sentença anterior | alt+seta para cima | alt+seta para cima | Move o cursor do sistema para a sentença anterior e a anuncia. (suportado apenas no Microsoft Word e Outlook) |
 
 Quando estiver numa tabela, as seguintes teclas de atalho também estarão disponíveis:
 || Nome | Tecla | Descrição |
 | Mover para a coluna anterior | control+alt+seta a esquerda | Move o cursor do sistema para a coluna anterior (permanecendo na mesma linha) |
 | Mover para a próxima coluna | control+alt+seta a direita | Move o cursor do sistema para a próxima coluna (permanecendo na mesma linha) |
-| Mover para a linha anterior | control+alt+seta acima | Move o cursor do sistema para a linha anterior (permanecendo na mesma coluna) |
-| Mover para a próxima linha | control+alt+seta abaixo | Move o cursor do sistema para a linha seguinte (permanecendo na mesma coluna) |
+| Mover para a linha anterior | control+alt+seta para cima | Move o cursor do sistema para a linha anterior (permanecendo na mesma coluna) |
+| Mover para a próxima linha | control+alt+seta para baixo | Move o cursor do sistema para a linha seguinte (permanecendo na mesma coluna) |
 %kc:endInclude
 
 ++ Navegação de Objetos ++[ObjectNavigation]
@@ -373,14 +373,15 @@ Para navegar pelos objetos utilize as seguintes teclas de atalho:
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Toque ""[Gesto]"" | Descrição |
 | Anunciar o objeto atual | NVDA+5 do teclado numérico | NVDA+shift+o | nenhum | Anuncia o objeto de navegação atual. Se pressionada duas vezes, soletra o objeto e, pressionando 3 vezes, copia o nome e o valor desse objeto para a área de transferência. |
-| Mover para o pai do objeto atual | NVDA+8 do teclado Numérico | NVDA+shift+seta acima | Varredura para Cima (Modo de objeto) | Move para o objeto que contém o atual objeto de navegação |
+| Mover para o pai do objeto atual | NVDA+8 do teclado Numérico | NVDA+shift+seta para cima | Varredura para Cima (Modo de objeto) | Move para o objeto que contém o atual objeto de navegação |
 | Mover para o objeto anterior | NVDA+4 do teclado numérico | NVDA+shift+seta a esquerda | Varredura para a esquerda (Modo de objeto) | Move para o objeto anterior ao objeto de navegação atual |
 | Mover para o objeto seguinte | NVDA+6 do teclado numérico | NVDA+shift+seta a direita | Varredura para a direita (Modo de objeto) | Move para o objeto seguinte ao objeto de navegação atual |
-| Mover para o primeiro objeto filho | NVDA+2 do teclado numérico | NVDA+shift+seta abaixo | Varredura para baixo (Modo de objeto) | Move para o primeiro objeto contido no objeto de navegação atual |
+| Mover para o primeiro objeto filho | NVDA+2 do teclado numérico | NVDA+shift+seta para baixo | Varredura para baixo (Modo de objeto) | Move para o primeiro objeto contido no objeto de navegação atual |
 | Mover para o objeto em foco | NVDA+Menos do teclado numérico | NVDA+backspace | nenhum | Move para o objeto que tem o foco do sistema atual, e também posiciona o cursor de exploração na posição do cursor do sistema, se o mesmo estiver visível |
 | Ativar objeto de navegação atual | NVDA+Enter do teclado numérico | NVDA+enter | Duplo Toque | Ativa o objeto de navegação atual (o mesmo que clicar com o mouse ou pressionar a barra de espaços quando se tem o foco) |
 | Mover o foco ou o cursor do sistema para a posição atual da exploração | NVDA+shift+Menos do teclado numérico | NVDA+shift+backspace | nenhum | Se pressionada uma vez, coloca o foco sobre o objeto de navegação atual. Duas vezes, coloca o cursor do sistema na posição do cursor de exploração |
 | Anunciar a localização do cursor de exploração | NVDA+del do bloco numérico | NVDA+del | nenhum | Anuncia informações sobre a localização do texto ou objeto sob o cursor de exploração. Por exemplo, isso pode incluir a percentagem do documento, a distância da borda da página ou a exata posição na tela. Pressionando duas vezes, poderá fornecer detalhes adicionais. |
+| Move o cursor de exploração para a barra de status | nenhuma | nenhuma | nenhuma | Lê a barra de status caso o NVDA a encontre. Este comando também move a navegação de objetos para sua localização. |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam desempenhar suas funções adequadamente.
@@ -400,9 +401,9 @@ As seguintes teclas de atalho estão disponíveis para a exploração de texto:
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Toque ""[Gesto]"" | Descrição |
 | Mover para a primeira linha em exploração | shift+7 do teclado numérico | NVDA+control+home | nenhum | Move o cursor de exploração para a primeira linha do texto |
-| Mover para a linha anterior em exploração | 7 do teclado numérico | NVDA+seta acima | Varredura para cima (Modo de texto) | Move o cursor de exploração para a linha anterior do texto |
+| Mover para a linha anterior em exploração | 7 do teclado numérico | NVDA+seta para cima | Varredura para cima (Modo de texto) | Move o cursor de exploração para a linha anterior do texto |
 | Ler linha atual em exploração | 8 do teclado numérico | NVDA+shift+ponto | nenhum | Lê a linha atual do texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a linha. Pressionando-se três vezes, soletra-a usando descrições de caracteres. |
-| Mover para a próxima linha em exploração | 9 do teclado numérico | NVDA+seta abaixo | Varredura para baixo (Modo de texto) | Move o cursor de exploração para a próxima linha do texto |
+| Mover para a próxima linha em exploração | 9 do teclado numérico | NVDA+seta para baixo | Varredura para baixo (Modo de texto) | Move o cursor de exploração para a próxima linha do texto |
 | Mover para a última linha em exploração | shift+9 do teclado numérico | NVDA+control+end | nenhum | Move o cursor de exploração para a última linha do texto |
 | Mover para a palavra anterior em exploração | 4 do teclado numérico | NVDA+control+seta a esquerda | Varredura para a esquerda com 2 dedos (Modo de texto) | Move o cursor de exploração para a palavra anterior no texto |
 | Ler palavra atual em exploração | 5 do teclado numérico | NVDA+control+ponto | nenhum | Anuncia a palavra atual no texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a palavra. Três vezes, soletra usando descrições de caracteres. |
@@ -642,7 +643,7 @@ Por padrão, o cursor de exploração segue o cursor do sistema, de modo que voc
 %kc:endInclude
 
 A partir desse ponto, você pode usar os comandos do MathPlayer tais como as setas para explorar a expressão.
-Por exemplo, você pode mover-se pela expressão com as setas à direita e à esquerda e ampliar uma porção da expressão, tal como uma fração usando a seta abaixo.
+Por exemplo, você pode mover-se pela expressão com as setas à direita e à esquerda e ampliar uma porção da expressão, tal como uma fração usando a seta para baixo.
 Por favor consulte a [documentação do MathPlayer sobre comandos de navegação https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] para informações adicionais.
 
 Quando quiser retornar ao documento, simplesmente pressione a tecla escape.
@@ -1258,8 +1259,8 @@ Se desejar alterar rapidamente as configurações de voz sem ir à categoria Fal
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
 | Mover para a próxima configuração de voz | NVDA+control+seta a direita | NVDA+shift+control+seta a direita | Move para a próxima configuração de voz disponível depois da atual e circula novamente para a primeira configuração depois da última |
 | Mover para a configuração de voz anterior | NVDA+control+seta a esquerda | NVDA+shift+control+seta a esquerda | Move para a configuração de voz anterior disponível depois da atual e circula novamente para a última depois da primeira |
-| Aumentar a configuração de voz atual | NVDA+control+seta acima | NVDA+shift+control+seta acima | aumenta a configuração de voz atual onde estiver. Ex: aumenta a velocidade, escolhe a voz seguinte, aumenta o volume |
-| Diminuir a configuração de voz atual | NVDA+control+seta abaixo | NVDA+shift+control+seta abaixo | Diminui a configuração de voz atual onde estiver. Ex: diminui a velocidade, escolhe a voz anterior, diminui o volume |
+| Aumentar a configuração de voz atual | NVDA+control+seta para cima | NVDA+shift+control+seta para cima | aumenta a configuração de voz atual onde estiver. Ex: aumenta a velocidade, escolhe a voz seguinte, aumenta o volume |
+| Diminuir a configuração de voz atual | NVDA+control+seta para baixo | NVDA+shift+control+seta para baixo | Diminui a configuração de voz atual onde estiver. Ex: diminui a velocidade, escolhe a voz anterior, diminui o volume |
 %kc:endInclude
 
 +++ Braille +++[BrailleSettings]
@@ -1400,6 +1401,10 @@ As opções Comuns são "Automática" (que informa ao NVDA para aplicar o proced
 Esta opção não estará disponível se sua linha braille suporta apenas a detecção automática de porta.
 
 Você pode consultar a documentação sobre sua linha braille na seção [Linhas Braille Suportadas, #SupportedBrailleDisplays] com vistas a obter mais detalhes sobre os tipos de comunicação suportados e portas disponíveis.
+
+Por favor observe: Se você conectar várias linhas Braille à sua máquina ao mesmo tempo que usam o mesmo driver (por exemplo, conectar duas linhas Seika),
+atualmente é impossível dizer ao NVDA qual linha usar.
+Portanto, é recomendável conectar apenas uma Linha Braille dum determinado tipo / fabricante à sua máquina por vez.
 
 +++ Visão +++[VisionSettings]
 A categoria Visão no diálogo Configurações do NVDA permite habilitar, desabilitar e configurar [recursos visuais #Vision].
@@ -1575,7 +1580,8 @@ Para alternar o modo de exploração simples de qualquer lugar, atribua um coman
 
 +++ Apresentação de Objetos (NVDA+control+o) +++[ObjectPresentationSettings]
 A categoria Apresentação de Objetos no diálogo de Configurações do NVDA é usada para definir quanta informação o NVDA apresentará sobre os controles, como descrição, informações de posição e assim por diante.
-Essa categoria contém as seguintes opções:
+Estas opções normalmente não se aplicam ao modo de navegação.
+Estas opções normalmente se aplicam a informações de foco e navegação de objetos do NVDA, mas não à leitura de conteúdo de texto, por exemplo modo de navegação.
 
 ==== Anunciar dicas de ferramentas ====[ObjectPresentationReportToolTips]
 Uma caixa de seleção que quando marcada informa ao NVDA para anunciar as dicas de ferramentas conforme apareçam.
@@ -1740,7 +1746,7 @@ As opções de formatação de documentos são organizadas em grupos.
  - Atributos da Fonte
  - Sobrescritos e subscritos
  - Ênfase
- - Marcado (Texto destacado)
+ - Texto destacado (marcado)
  - Estilo
  - Cores
 - Informações do documento
@@ -1853,12 +1859,21 @@ A caixa de combinação tem as seguintes opções:
 - Não: Não use UIA, mesmo se o NVDA não puder injetar no processo. Isso pode ser útil para desenvolvedores que estão depurando problemas com IA2 e desejam garantir que o NVDA não volte ao UIA.
 -
 
-==== Habilitar suporte Experimental para anotações ARIA ====[Annotations]
-Usado para habilitar recursos que adicionam suporte experimental para anotações ARIA ""[Accessible Rich Internet Applications — Aplicativos de Internet Ricos e Acessíveis]"".
+==== Anotações ====[Annotations]
+Este grupo de opções é usado para habilitar recursos que adicionam suporte experimental para anotações ARIA ""[Accessible Rich Internet Applications — Aplicativos de Internet Ricos e Acessíveis]"".
 Alguns desses recursos podem estar incompletos.
 Existem as seguintes opções:
-- "Relatar detalhes no modo de navegação": possibilita informar se um objeto tem detalhes no modo de navegação.
+- "Anunciar detalhes no modo de navegação": possibilita informar se um objeto tem detalhes no modo de navegação.
 A comunicação do resumo desses detalhes pode ser feita atribuindo um comando usando o [diálogo Definir Comandos #InputGestures].
+- "Sempre anunciar descrição aria":
+  Quando a fonte de ``accDescription`` é aria-description, a descrição é informada.
+  Isso é útil para anotações na web.
+  Nota:
+  - Existem muitas fontes para ``accDescription``; várias têm semântica mista ou não confiável.
+    Historicamente, AT não foi capaz de diferenciar as fontes de ``accDescription``; normalmente, não era falada devido à semântica mista.
+  - Esta opção está em um desenvolvimento inicial e depende de recursos do navegador que ainda não estão amplamente disponíveis.
+  - Espera-se que funcione com Chromium 92.0.4479.0+
+  -
 -
 
 ==== Use UI automation para acessar os controles de planilha no Microsoft Excel quando disponível ====[UseUiaForExcel]
@@ -1898,10 +1913,21 @@ Esta funcionalidade está habilitada por padrão a partir do NVDA 2021.1.
 Essa opção permite-lhe configurar o número de milissegundos que o NVDA irá aguardar até que o cursor (ponto de inserção) se mova em controles de texto editáveis.
 Se você achar que o NVDA parece estar rastreando incorretamente o cursor, por exemplo parece estar sempre um caractere por trás ou está repetindo linhas, então você pode tentar aumentar esse valor.
 
+==== Anunciar transparência para cores ====[ReportTransparentColors]
+esta opção permite informar quando as cores são transparentes, útil para desenvolvedores de complemento/Módulo de aplicativo ""[addon/appModule]"" coletando informações para melhorar a experiência do usuário com um aplicativo de terceiros.
+Alguns aplicativos GDI ""[Interface de Dispositivo Gráfico]"" destacam o texto com uma cor de fundo, o NVDA (via modelo de exibição) tenta informar essa cor.
+Em algumas situações, o fundo do texto pode ser totalmente transparente, com o texto em camadas em algum outro elemento da GUI ""[Interface Gráfica do Usuário]"".
+Com várias APIs de GUI historicamente populares, o texto pode ser renderizado com um fundo transparente, mas visualmente a cor do fundo é precisa.
+
 ==== Categorias de log de depuração ====[AdvancedSettingsDebugLoggingCategories]
 As caixas de seleção nesta lista permitem habilitar categorias específicas de mensagens de depuração no registro do NVDA.
 Registrar essas mensagens pode resultar em desempenho reduzido e arquivos de log grandes.
 Apenas ligue um destes se for especificamente instruído por um desenvolvedor do NVDA, por exemplo ao depurar porque um controlador ""[driver]"" de linha braille não está funcionando corretamente.
+
+==== Tocar um som para erros registrados ====[PlayErrorSound]
+Esta opção permite que você especifique se o NVDA irá tocar um som de erro no caso de um erro ser registrado.
+Escolher Apenas em versões de teste (padrão) faz com que o NVDA reproduza sons de erro apenas se a versão atual do NVDA for uma versão de teste (alpha, beta ou executado a partir do código fonte).
+Escolher Sim permite habilitar sons de erro seja qual for a sua versão atual do NVDA.
 
 ++ Configurações diversas ++[MiscSettings]
 Além da caixa de diálogo de [Configurações do NVDA #NVDASettings], o submenu Preferências do menu do NVDA contém vários outros itens que são descritos abaixo.
@@ -2329,6 +2355,7 @@ As linhas a seguir suportam essa funcionalidade de detecção automática.
 - HIMS Séries Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Linhas Eurobraille Esys/Esytime/Iris
 - Linhas Nattiq nBraille
+- Qualquer linha compatível com o protocolo HID Braille Padrão.
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -2360,12 +2387,12 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Guiar para a cela braille | sensor |
 | Comando shift+tab | barraDeEspaçoBraille+ponto 1+ponto 2 |
 | Tecla tab | barraDeEspaçoBraille+ponto 4+ponto 5 |
-| Tecla seta cima | barraDeEspaçoBraille+ponto 1 |
-| Tecla seta baixo | barraDeEspaçoBraille+ponto 4 |
+| Tecla seta para cima | barraDeEspaçoBraille+ponto 1 |
+| Tecla seta para baixo | barraDeEspaçoBraille+ponto 4 |
 | Tecla control+seta a esquerda | barraDeEspaçoBraille+ponto 2 |
 | Tecla control+seta direita | barraDeEspaçoBraille+ponto 5 |
-| Tecla seta esquerda | barraDeEspaçoBraille+ponto 3 |
-| Tecla seta direita | barraDeEspaçoBraille+ponto 6 |
+| Tecla seta para esquerda | barraDeEspaçoBraille+ponto 3 |
+| Tecla seta para direita | barraDeEspaçoBraille+ponto 6 |
 | Tecla home | barraDeEspaçoBraille+ponto 1+ponto 3 |
 | tecla end | barraDeEspaçoBraille+ponto 4+ponto 6 |
 | Tecla control+home | barraDeEspaçoBraille+ponto 1+ponto 2ponto3 |
@@ -2381,7 +2408,7 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Anunciar a linha atual | barraDeEspaçoBraille+ponto 1+ponto 4 |
 | Menu do NVDA | barraDeEspaçoBraille+ponto 1+ponto 3+ponto 4+ponto 5 |
 
-Para modelos mais recentes da Focus que possuam teclas "rocker bar" ""[barra oscilante]"" (focus 40, focus 80 e focus blue):
+Para modelos mais recentes da Focus que possuam teclas rocker bar ""[barra oscilante]"" (focus 40, focus 80 e focus blue):
 || Nome | Tecla |
 | Mover linha braille para a linha anterior | rockerBarEsquerdaParaCima, rockerBarDireitaParaCima |
 | Mover linha braille para a linha seguinte | rockerBarEsquerdaParaBaixo, rockerBarDireitaParaBaixo |
@@ -2426,8 +2453,8 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | tecla alt | sp2, alt |
 | tecla escape | sp3 |
 | tecla tab | sp4 |
-| tecla seta acima | spCima |
-| tecla seta abaixo | spBaixo |
+| tecla seta para cima | spCima |
+| tecla seta para baixo | spBaixo |
 | tecla seta a esquerda | spEsquerda |
 | tecla seta a direita | spDireita |
 | tecla enter | spEnter, enter |
@@ -2467,8 +2494,8 @@ Por favor consulte a documentação da linha para descrições de onde essas tec
 | tecla escape | b4+b6 |
 | tecla tab | enter, tecla de ação tripla direita para cima + para baixo |
 | tecla enter | esc+enter, tecla de tripla ação esquerda+direita para cima + para baixo, joystickAction ""[açãoDeJoystick]"" |
-| tecla seta acima | joystickParaCima |
-| tecla seta abaixo | joystickParaBaixo |
+| tecla seta para cima | joystickParaCima |
+| tecla seta para baixo | joystickParaBaixo |
 | tecla seta para esquerda | joystickParaEsquerda |
 | tecla seta para direita | joystickParaDireita |
 | Menu do NVDA | b2+b4+b5+b6 |
@@ -2529,8 +2556,8 @@ Por favor consulte a documentação da mesma para informações sobre onde essas
 
 Para linhas que tenham joystick:
 || Nome | Tecla |
-| tecla seta acima | cima |
-| tecla seta abaixo | baixo |
+| tecla seta para cima | cima |
+| tecla seta para baixo | baixo |
 | tecla seta a esquerda | esquerda |
 | tecla seta a direita | direita |
 | tecla enter | selecionar |
@@ -2597,8 +2624,8 @@ Por favor consulte a documentação da mesma para obter descrições de onde ess
 | Mover linha braille para a linha seguinte | baixo |
 | Guiar para a cela braille | sensor |
 | Alternar vínculo do braille | cima+baixo |
-| Tecla seta acima | espaço+ponto1 |
-| Tecla seta abaixo | espaço+ponto4 |
+| Tecla seta para cima | espaço+ponto1 |
+| Tecla seta para baixo | espaço+ponto4 |
 | Tecla seta a esquerda | espaço+ponto3 |
 | Tecla seta a direita | espaço+ponto6 |
 | Tecla shift+tab | espaço+ponto1+ponto3 |
@@ -2932,8 +2959,8 @@ Por favor consulte a documentação de seu BrailleNote para informações sobre 
 | Guiar para a cela braille | sensor |
 | Menu NVDA | espaço+ponto1+ponto3+ponto4+ponto5 (espaço+n) |
 | Alternar vínculo do braille | previous+next |
-| Tecla seta acima | espaço+ponto1 |
-| Tecla seta abaixo | espaço+ponto4 |
+| Tecla seta para cima | espaço+ponto1 |
+| Tecla seta para baixo | espaço+ponto4 |
 | Tecla seta a esquerda | espaço+ponto3 |
 | Tecla seta a direita | espaço+ponto6 |
 | Tecla page up | espaço+ponto1+ponto3 |
@@ -3150,7 +3177,38 @@ Por favor consulte as [tabelas de documentação de teclas para o BRLTTY http://
 | Rolar linha braille para frente | fwinrt (Caminha uma janela à direita) |
 | Mover linha braille para a linha anterior | lnup (sobe uma linha) |
 | Mover linha braille para a linha seguinte | lndn (desce uma linha) |
-| Guiar para a cela braille | route (leva o cursor ao caractere) |
+| Encaminhar para a cela braille | route (leva o cursor ao caractere) |
+%kc:endInclude
+
+++ Linhas Braille HID Padrão ++[HIDBraille]
+Este é um driver experimental para a nova Especificação Padrão HID Braille, acordada em 2018 pela Microsoft, Google, Apple e várias empresas de tecnologia assistiva, incluindo NV Access.
+A esperança é que todos os futuros modelos de Linha Braille, criados por qualquer fabricante, usem este protocolo padrão que eliminará a necessidade de drivers específicos do fabricante Braille.
+
+A detecção automática de linha braille do NVDA também reconhecerá qualquer linha que suporte esse protocolo.
+
+A seguir estão as teclas de comando atuais para essas linhas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Rolar a linha braille para trás | movimentar para a esquerda ou oscilador para cima |
+| Rolar a linha braille para frente | movimentar para a direita ou oscilador para baixo |
+| Mover a linha braille para a linha anterior | espaço + ponto1 |
+| Mover a linha braille para a próxima linha | espaço + ponto4 |
+| Encaminhar para a cela braille | apontar encaminhamento |
+| Alternar braille vinculado a | cima+baixo |
+| tecla Seta para cima | joystick para cima |
+| tecla Seta para baixo | joystick para baixo |
+| tecla Seta para esquerda | espaço+ponto3 ou joystick para esquerda |
+| tecla Seta para a direita | espaço+ponto6 ou joystick para direita |
+| tecla shift+tab | espaço+ponto1+ponto3 |
+| tecla tab | espaço+ponto4+ponto6 |
+| tecla alt | espaço+ponto1+ponto3+ponto4 (espaço+m) |
+| tecla Esc | espaço+ponto1+ponto5 (espaço+e) |
+| tecla enter | ponto8 ou centro do joystick |
+| tecla windows | espaço+ponto3+ponto4 |
+| tecla alt+tab | espaço+ponto2+ponto3+ponto4+ponto5 (espaço+t) |
+| Menu NVDA | espaço+ponto1+ponto3+ponto4+ponto5 (espaço+n) |
+| tecla windows+d (minimizar todos os aplicativos) | espaço+ponto1+ponto4+ponto5 (espaço+d) |
+| Leitura contínua | espaço+ponto1+ponto2+ponto3+ponto4+ponto5+ponto6 |
 %kc:endInclude
 
 + Tópicos Avançados +[AdvancedTopics]
