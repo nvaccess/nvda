@@ -3,6 +3,22 @@
 
 %!includeconf: ../changes.t2tconf
 
+= Važna napomena za programere=
+Da biste pročitali promene koje su bitne za programere, molimo pogledajte [Englesku verziju ovog dokumenta ../en/changes.html].
+
+= 2021.3.1 =
+
+== Promene ==
+- Novi HID brajev protokol više nije izabran u situacijama kada postoji drugi drajver za brajev red koji se može koristiti. (#13153)
+-
+
+
+== Ispravljene greške ==
+- Orjentiri će ponovo imati skraćenice na brajevom redu. #13158
+- Ispravljjena nestabilnost u automatskom prepoznavanju brajevih redova Humanware Brailliant i  APH Mantis Q40 kada se koriste putem  Bluetooth veze. (#13153)
+-
+
+
 = 2021.3 =
 Ova verzija uključuje podršku za novi brajev HID standard.
 Ovaj standard ima za cilj da standardizuje podršku za različite brajeve redove bez potrebe da se instaliraju različiti drajveri.
@@ -131,10 +147,6 @@ Kako biste se uverili u svoju privatnost, kada koristite noviju Windows verziju,
 -
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
 = 2021.1 =
 Ova verzija sadrži opciju koja se može omogućiti za UIA podršku u programu Excel i Chromium pretraživačima.
 Ispravljeni su problemi vezani za određene jezike, kao i  pristup linkovima na brajevom redu.
@@ -203,10 +215,6 @@ Napomena:
 - Espeak Sada ponovo podržava Cantonese i Mandarinski. (#10418)
 - U novom pretraživaču Microsoft Edge baziranom na Chromium tehnologiji, polja za unos teksta kao što je traka za adresu se sada izgovaraju i kada su prazna. (#12474)
 - Ispravljen Seika brajev drajver. (#10787)
-
-
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
 
 
 = 2020.4 =
@@ -284,10 +292,6 @@ Takođe puno drugih poboljšanja i ispravljenih grešaka.
 - QWERTY unos na Papenmeier brajevim redovima koji ga podržavaju ponovo radi i više ne izaziva nasumična smrzavanja programa NVDA. (#11944)
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
 = 2020.3 =
 Ova verzija uključuje značajna poboljšanja u stabilnosti i brzini posebno u Microsoft Office aplikacijama. Takođe su dodata nova podešavanja za podršku ekrana osetljivog na dodir i prijavljivanje slika.
 Postojanje obeleženog (markiranog) sadržaja se može prijaviti u pretraživačima, i takođe su dodate nove Nemačke brajeve tabele.
@@ -344,10 +348,6 @@ Postojanje obeleženog (markiranog) sadržaja se može prijaviti u pretraživač
 - Značajno poboljšana brzina korišćenja aplikacije Visual Studio Code. (#11533)
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
 = 2020.2 =
 Glavne karakteristike ove verzije uključuju podršku za novi brajev red kompanije Nattiq, bolju podršku za ESET antivirus interfejs i Windows Terminal, poboljšanja u brzini korišćenja aplikacije 1Password, kao i uz Windows OneCore sintetizator. Uz puno dodatnih ispravljenih grešaka i poboljšanja.
 
@@ -394,10 +394,6 @@ Glavne karakteristike ove verzije uključuju podršku za novi brajev red kompani
 - Fokus u Java aplikacijama se neće menjati kada se izbor promeni u tabelama, listama ili prikazima stabla koji nisu fokusirani. (#5989)
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
 = 2020.1 =
 Glavne karakteristike ove verzije uključuju podršku za nove brajeve redove proizvođača HumanWare i APH, kao i puno drugih važnih ispravljenih grešaka kao što su mogućnost čitanja matematičkih izraza u programu Microsoft Word korišćenjem programa MathPlayer / MathType.
 
@@ -426,10 +422,6 @@ Glavne karakteristike ove verzije uključuju podršku za nove brajeve redove pro
 - Greške u prečicama koje su izazvane unikodnim prevodima više ne zaustavljaju instalaciju, ovo se rešava tako što se tekst prečica vraća na Engleski. (#5166, #6326)
 - Izlazak ili pomeranje iz liste i tabele u režimu pretraživanja  uz opciju izgovori sve i površno čitanje više neće neprekidno izgovarati izlazak iz tabele i liste. (#10706)
 - Ispravljeno praćenje miša za neke MSHTML elemente u  programu Internet Explorer. (#10736)
-
-
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
 
 
 = 2019.3 =
@@ -511,10 +503,6 @@ Iako ove promene izazivaju nekompatibilnosti starijih NVDA dodataka, ažuriranje
 - U programu Mozilla Firefox, pomeranje fokusa u režimu pretraživanja je brže. Ovo čini pomeranje kursora u režimu pretraživanja brže u više slučajeva. (#10584)
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
 = 2019.2.1 =
 Ovo je manje ažuriranje kako bi se ispravile neke nestabilnosti u verziji 2019.2. Ispravke uključuju:
 - Windows Explorer na  Windowsu 7 se više ne ruši kada se pristupa  poljima sa detaljima o podacima. (#5337) 
@@ -584,10 +572,6 @@ Glavne karakteristike ove verzije uključuju automatsko prepoznavanje brajevih r
 - HTCom se može koristiti sa Handy Tech brajevim redom u kombinaciji sa NVDA. (#9691)
 - U programu  Mozilla Firefox, ažuriranja za live region se više ne prijavljuju ako je live region u kartici koja je u pozadini. (#1318)
 - NVDA dijalog za pretragu u režimu pretraživanja više neće neispravno funkcionisati ako je dijalog o programu NVDA otvoren u pozadini. (#8566)
-
-
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
 
 
 = 2019.1.1 =
@@ -665,10 +649,6 @@ Molimo pogledajte listu promena ispod kako biste videli kako dodaci mogu osigura
 - Ispravljena greška u programu Firefox koja se nekada pojaljuje u navigaciji kroz regione, ako se koristi dodatak enhanced ARIA. (#8980)
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
 = 2018.4.1 =
 Ova verzija ispravlja grešku pri pokretanju programa NVDA ako je jezik podešen na Aragoneski. (#9089)
 
@@ -710,14 +690,10 @@ Glavne karakteristike ove verzije uključuju poboljšanja brzine u novijim verzi
 - U Web aplikaciji Google Slides sa programom Mozilla Firefox, NVDA više ne prijavljuje izabran tekst nakon fokusiranja na svaku kontrolu. (#8964)
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
 = 2018.3.2 =
 Ovo je manje ažuriranje koje ispravlja grešku u programu Google Chrome u toku navigacije tvitova na sajtu  www.twitter.com. (#8777)
-+
-+ 
+
+ 
 = 2018.3.1 =
 Ovo je manje ažuriranje koje ispravlja  NVDA grešku koja izaziva da  32 bitne verzije programa Mozilla Firefox prestaju sa radom. (#8759)
 
@@ -780,10 +756,6 @@ Glavne karakteristike ove verzije uključuju automatsko prepoznavanje puno braje
 - ITunes 12.9 i novije verzije se  ponovo mogu koristiti. (#8744)
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
 = 2018.2.1 =
 Ova verzija sadrži ažurirane prevode zbog uklonjene karakteristike u poslednjem trenutku koja je izazvala probleme.
 
@@ -844,10 +816,6 @@ Glavne karakteristike ove verzije uključuju podršku za tabele u programu Kindl
 - U Windowsu 10 verzija RS5, NVDA više ne prijavljuje suvišne informacije kada menjate aplikacije komandom alt+tab. (#8258)
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
 = 2018.1.1 =
 Ovo je posebna verzija programa NVDA koja ispravlja grešku u drajveru za Onecore Windows sintetizator govora, koji je zvučao kao da ima povećanu visinu i brzinu u Windows 10 Redstone 4 (1803). (#8082)  
 
@@ -895,10 +863,6 @@ Glavne karakteristike ove verzije uključuju podršku za grafikone u programima 
 - U aplikacijama kao što je  Windows 10 Mail, NVDA će uvek izgovarati obrisane znakove kada se pritisne Backspace. (#7456)
 - Svi tasteri  na Hims Braille Sense Polaris redovima sada rade kako je predviđeno. (#7865)
 - NVDA više nema problema sa pokretanjem na Windowsu 7 uz grešku o internoj  api-ms dll datoteci, kada je određena verzija Visual Studio 2017 redistributables instalirana od strane neke druge aplikacije. (#7975)
-
-
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
 
 
 = 2017.4 =
@@ -952,10 +916,6 @@ Molimo imajte na umu da ova verzija programa  NVDA više ne podržava Windows XP
 - Druge aplikacije i sam operativni sistem bi trebalo da budu stabilniji nakon instalacije programa NVDA bez ponovnog pokretanja, u poređenju sa instalacijom prethodnih verzija. (#7563)
 - Kada se koristi komanda za prepoznavanje sadržaja (na primer NVDA+r), NVDA sada prijavljuje grešku umesto ničega ako navigacioni objekat nestane. (#7567)
 - Pomeranje brajevih redova unazad je popravljeno za Freedom scientific brajeve redove koji poseduju levu liniju za pomeranje. (#7713)
-
-
-== Promene za programere ==
-Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
 
 
 = 2017.3 =
@@ -1031,11 +991,6 @@ Glavne karakteristike ove verzije uključuju unos skraćenog brajevog pisma, pod
 - U programima  Firefox i  Chrome, komande za navigaciju kroz tabele sada preskaču skrivene ćelije u tabelama. (#6652, #5655)
 
 
-== Promene za programere ==
-Ove promene nisu prevedene. Molimo pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
-
-
-
 = 2017.2 =
 Glavne karakteristike ove verzije uključuju podršku za stišavanje pozadinskih zvukova u Windows 10 creators ažuriranju; ispravljeni problemi sa izborom teksta u režimu pretraživanja, uključujući probleme sa komandom izaberi sve; velika poboljšanja za Microsoft Edge podršku; i poboljšanja Web podrške što uključuje izgovor elemenata koji su označeni kao trenutni(koristeći aria-current).
 
@@ -1075,10 +1030,6 @@ Glavne karakteristike ove verzije uključuju podršku za stišavanje pozadinskih
 - U režimu pretraživanja, komanda šift+home nakon biranja teksta napred ispravno poništava izbor do početka reda. (#5746)
 - U režimu pretraživanja, izaberi sve(kontrol+a) više neće neispravno birati tekst ako kursor nije na početku teksta. (#6909)
 - Popravljeni ostali retki problemi sa izborom teksta u režimu pretraživanja. (#7131)
-
-
-== Promene za programere ==
-Ove promene nisu prevedene. Molimo pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
 
 
 = Starije verzije =

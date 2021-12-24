@@ -3,6 +3,19 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3.1 =
+
+== Changements ==
+- Le nouveau protocole HID Braille n'est plus privilégié lorsqu'un autre pilote d'afficheur braille peut être utilisé. (#13153)
+-
+
+
+== Corrections de Bogues ==
+- Région est à nouveau abrégé en braille. #13158
+- Correction de la détection automatique de l'afficheur braille instable pour les afficheurs braille Humanware Brailliant et APH Mantis Q40 lors de l'utilisation de Bluetooth. (#13153)
+-
+
+
 = 2021.3 =
 Cette version introduit le support de la nouvelle spécification Braille HID.
 Cette spécification entend standardiser le support des afficheurs Braille sans nécessiter de pilotes individuels.
