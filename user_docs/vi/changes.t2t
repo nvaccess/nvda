@@ -3,6 +3,19 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3.1 =
++
+== Các thay đổi ==
+- Giao thức chữ nổi HID mới không còn được ưu tiên khi có thể sử dụng một trình điều khiển màn hình nổi khác. (#13153)
+-
+
+
+== Sửa lỗi ==
+- Lại một lần nữa, các cột mốc đã được viết tắt trong chữ nổi. #13158
+- Sửa lỗi hoạt động không ổn định trong việc  tự dò tìm các màn hình nổi của Humanware Brailliant và APH Mantis Q40 khi dùng Bluetooth. (#13153)
+ -
+
+
 = 2021.3 =
 Bản phát hành này bắt đầu hỗ trợ cho chuẩn kết nối (HID)  mới của màn hình nổi.
 Chuẩn kết nối này hướng đến tiêu chuẩn hóa việc hỗ trợ các màn hình nổi mà không cần trình điều khiển riêng biệt.
