@@ -3,6 +3,19 @@ NVDA'daki Yenilikler
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3.1 =
+
+== Değişiklikler ==
+- Yeni HID Braille protokolü, başka bir braille ekran sürücüsü kullanılabilir  ise birincil olarak kullanılmaz. (#13153)
+-
+
+
+== Hata Düzeltmeleri ==
+- Sınır imleri önceden olduğu gibi braillede kısaltıldı. #13158
+- Humanware Brailliant ve APH Mantis Q40 braille ekranlarını bluetoothta kullanırken oluşabilecek kararsız otomatik ekran algılama sorunu düzeltildi. (#13153)
+-
+
+
 = 2021.3 =
 Bu sürüm, yeni HID Braille spesifikasyonu için destek sunar.
 Bu spesifikasyon, ayrı sürücülere ihtiyaç duymadan Braille Ekranları için desteği standartlaştırmayı amaçlamaktadır.
