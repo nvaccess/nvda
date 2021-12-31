@@ -13,7 +13,6 @@ import sys
 import os
 import functools
 import winreg
-from buildVersion import version_year
 
 
 # Records a mapping between Windows builds and release names.
