@@ -18,7 +18,7 @@ from buildVersion import version_year
 
 # Records a mapping between Windows builds and release names.
 # These include build 10240 for Windows 10 1507 and releases with multiple release builds.
-# These are applicable to Windows 10 as they report the same system version (10.0).
+# These are applicable to Windows 10 and later as they report the same system version (10.0).
 _BUILDS_TO_RELEASE_NAMES = {
 	10240: "Windows 10 1507",
 	10586: "Windows 10 1511",
