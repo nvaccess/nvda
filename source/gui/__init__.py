@@ -656,20 +656,35 @@ class ExitDialog(wx.Dialog):
 			# Translators: An option in the combo box to choose exit action.
 			_("Restart")
 		]
-		# Windows Store version of NVDA does not support add-ons yet.
-		if not config.isAppX:
-			# Translators: An option in the combo box to choose exit action.
-			self.actions.append(_("Restart with add-ons disabled"))
-		# Translators: An option in the combo box to choose exit action.
-		self.actions.append(_("Restart with debug logging enabled"))
 		if updateCheck and updateCheck.isPendingUpdate():
 			# Translators: An option in the combo box to choose exit action.
 			self.actions.append(_("Install pending update"))
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
-		contentSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL)
+		# Translators: Label for restart options group.
+		restartOptionsLabel = _("Restart options.")
+		restartGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, restartOptionsLabel)
+		self.restartGroupBox = restartGroupSizer.GetStaticBox()
+		self.restartGroup = guiHelper.BoxSizerHelper(self, sizer=restartGroupSizer)
 
+		self.disableAddonsCB = self.restartGroup.addItem(
+			# Translators: An option in the group to choose restart action.
+			wx.CheckBox(self.restartGroupBox, label=_("Restart with add-ons disabled")))
+		if config.isAppX:
+			# Windows Store version of NVDA does not support add-ons yet.
+			self.disableAddonsCB.Disable()
+			self.disableAddonsCB.Hide()
+
+		self.debugLoggingCB = self.restartGroup.addItem(
+			# Translators: An option in the group to choose restart action.
+			wx.CheckBox(self.restartGroupBox, label=_("Restart with debug logging enabled")))
+
+		# Disable the Restart options group because selection will be on exit by default.
+		self.restartGroupBox.Enable(False)
+		contentSizerHelper.addItem(self.restartGroup)
+		contentSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL)
+		self.Bind(wx.EVT_CHOICE, self.onSelectionChange, self.actionsList)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 
@@ -679,11 +694,13 @@ class ExitDialog(wx.Dialog):
 		self.actionsList.SetFocus()
 		self.CentreOnScreen()
 
+	def onSelectionChange(self, evt):
+		if self.actionsList.GetSelection() == 1:
+			self.restartGroupBox.Enable(True)
+		elif self.actionsList.GetSelection() != 1:
+			self.restartGroupBox.Enable(False)
 	def onOk(self, evt):
 		action=self.actionsList.GetSelection()
-		# Because Windows Store version of NVDA does not support add-ons yet, add 1 if action is 2 or above if this is such a case.
-		if action >= 2 and config.isAppX:
-			action += 1
 		if action == 0:
 			WelcomeDialog.closeInstances()
 			if core.triggerNVDAExit():
@@ -693,12 +710,11 @@ class ExitDialog(wx.Dialog):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 				return
 		elif action == 1:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
-		elif action == 2:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,disableAddons=True)
+			disableAddonsVal = self.disableAddonsCB.GetValue()
+			debugLogVal = self.debugLoggingCB.GetValue()
+			queueHandler.queueFunction(
+				queueHandler.eventQueue, core.restart, disableAddonsVal, debugLogVal)
 		elif action == 3:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
-		elif action == 4:
 			if updateCheck:
 				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
 				from addonHandler import getIncompatibleAddons
