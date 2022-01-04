@@ -663,22 +663,22 @@ class ExitDialog(wx.Dialog):
 		self.actionsList.SetSelection(0)
 
 		# Translators: Label for restart options group.
-		restartOptionsLabel = _("Restart options.")
+		restartOptionsLabel = _("Restart options:")
 		restartGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, restartOptionsLabel)
 		self.restartGroupBox = restartGroupSizer.GetStaticBox()
 		self.restartGroup = guiHelper.BoxSizerHelper(self, sizer=restartGroupSizer)
 
 		self.disableAddonsCB = self.restartGroup.addItem(
 			# Translators: An option in the group to choose restart action.
-			wx.CheckBox(self.restartGroupBox, label=_("Restart with add-ons disabled")))
+			wx.CheckBox(self.restartGroupBox, label=_("Disable add-ons")))
 		if config.isAppX:
 			# Windows Store version of NVDA does not support add-ons yet.
 			self.disableAddonsCB.Disable()
 			self.disableAddonsCB.Hide()
 
 		self.debugLoggingCB = self.restartGroup.addItem(
-			# Translators: An option in the group to choose restart action.
-			wx.CheckBox(self.restartGroupBox, label=_("Restart with debug logging enabled")))
+			# Translators: An option in the group to choose restart options.
+			wx.CheckBox(self.restartGroupBox, label=_("Enable debug logging")))
 
 		# Disable the Restart options group because selection will be on exit by default.
 		self.restartGroupBox.Enable(False)
@@ -695,10 +695,7 @@ class ExitDialog(wx.Dialog):
 		self.CentreOnScreen()
 
 	def onSelectionChange(self, evt):
-		if self.actionsList.GetSelection() == 1:
-			self.restartGroupBox.Enable(True)
-		elif self.actionsList.GetSelection() != 1:
-			self.restartGroupBox.Enable(False)
+		self.restartGroupBox.Enable(self.actionsList.GetSelection() == 1)
 	def onOk(self, evt):
 		action=self.actionsList.GetSelection()
 		if action == 0:
