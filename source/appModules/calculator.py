@@ -76,6 +76,10 @@ class AppModule(appModuleHandler.AppModule):
 			)
 		except AttributeError:
 			resultElement = api.getForegroundObject().children[1].lastChild
+			# Descend one more time in Windows 11 Calculator.
+			calculatorVersion = int(self.productVersion.split(".")[0])
+			if calculatorVersion >= 11:
+				resultElement = resultElement.firstChild
 			# Redesigned in 2019 due to introduction of "always on top" i.e. compact overlay mode.
 			if resultElement.UIAElement.cachedClassName != "LandmarkTarget":
 				resultElement = resultElement.parent.children[1]
