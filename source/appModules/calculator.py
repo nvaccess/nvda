@@ -66,12 +66,12 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def event_UIA_notification(self, obj, nextHandler, displayString=None, activityId=None, **kwargs):
+		calculatorVersion = int(self.productVersion.split(".")[0])
 		# #12268: for "DisplayUpdated", announce display strings in braille  no matter what they are.
 		if activityId == "DisplayUpdated":
 			braille.handler.message(displayString)
 			resultElement = api.getForegroundObject().children[1].lastChild
 			# Descend one more time in Windows 11 Calculator.
-			calculatorVersion = int(self.productVersion.split(".")[0])
 			if calculatorVersion >= 11:
 				resultElement = resultElement.firstChild
 			# Redesigned in 2019 due to introduction of "always on top" i.e. compact overlay mode.
