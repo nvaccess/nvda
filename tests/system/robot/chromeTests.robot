@@ -61,8 +61,8 @@ ARIA details
 	[Documentation]	Ensure a summary of aria-details is read on command from a mark element
 	[Tags]	annotations
 	test_mark_aria_details
-ARIA details with review cursor doesnt follow caret
-	[Documentation]	Variation on the ARIA details test with the config changed so the review cursor does not follow the caret.
+ARIA details with free review and nav
+	[Documentation]	Variation on the ARIA details test with the config changed so the review cursor does not follow the caret and the nav object doesn't follow focus.
 	[Tags]	annotations
 	test_mark_aria_details_FreeReviewCursor
 i12147

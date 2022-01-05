@@ -56,17 +56,20 @@ def checkbox_labelled_by_inner_element():
 
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
+REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
 
 
 def test_mark_aria_details():
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
+	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
 	exercise_mark_aria_details()
 
 
 def test_mark_aria_details_FreeReviewCursor():
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
+	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
 	exercise_mark_aria_details()
 
 
