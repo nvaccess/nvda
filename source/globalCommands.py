@@ -2692,6 +2692,8 @@ class GlobalCommands(ScriptableObject):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()
+		# Take a snapshot of the vars before opening the window. Once the python console window is opened calls
+		# to the 'api' module will refer to this new focus.
 		pythonConsole.consoleUI.console.updateNamespaceSnapshotVars()
 		pythonConsole.activate()
 
