@@ -20,8 +20,13 @@ struct IAccessible2;
 * Summarizes the text for an IAccessible
 * @param textBuf: An out-param, the string to fill with the text from the IAccessible
 * @param pacc2: The IAccessible2 object to get the text from.
-* @param useNewText: Only valid during an in-process winEvent callback (ie text changed). Specifies
-*    to use the new text (ie post change) should be used instead of the old text.
+* @param useNewText: Only valid during an in-process winEvent callback
+* (ie IA2_EVENT_TEXT_INSERTED, IA2_EVENT_TEXT_REMOVED, IA2_EVENT_TEXT_UPDATED).
+* When true, only the added text is returned.
+* There is no equivalent way to get
+* Example: "abcd" has "xx" inserted to become "abxxcd"
+*    When useNewText is true, only "xx" is returned.
+*    when useNewText is false, the full text "abxxcd" is returned.
 * @param recurse: Should text from child objects also be gathered.
 * @param includeTopLevelText: If true, text from the top level pacc2 should be included.
 * @return: true if text was collected.
