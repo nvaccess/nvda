@@ -37,7 +37,13 @@ bool apiHook_hookFunction(void* realFunction, void* fakeFunction, void** targetP
  * @param targetPointerRef Pointer to the target pointer to which the detour will be attached.
 */ 
 template<typename funcType>
-bool apiHook_hookFunction_safe(funcType realFunction, funcType fakeFunction, funcType* targetPointerRef) { return apiHook_hookFunction((void*)realFunction,(void*)fakeFunction,(void**)targetPointerRef); }
+bool apiHook_hookFunction_safe(funcType realFunction, funcType fakeFunction, funcType* targetPointerRef) {
+	return apiHook_hookFunction(
+		reinterpret_cast<void*>(realFunction),
+		reinterpret_cast<void*>(fakeFunction),
+		reinterpret_cast<void**>(targetPointerRef)
+	);
+}
 
 /**
  * Commits an API hooking transaction.
