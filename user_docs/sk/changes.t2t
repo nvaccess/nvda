@@ -3,6 +3,79 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3 =
+Táto verzia prináša podporu pre braillovské riadky podporujúce HID štandard.
+Tento štandard má v budúcnosti zaručiť, že nebude potrebné mať pre každý riadok samostatný ovládač.
+V tejto verzii je aktualizovaný hlasový výstup eSpeak-NG a braillovská tabuľka LibLouis. LibLouis prináša nové tabuľky pre Ruštinu a Tshivenda.
+V pokročilých nastaveniach pribudla možnosť prepínať zvukové hlásenie chýb zapísaných do logu. Teraz je možné takéto hlásenie zapnúť aj pre stabilné verzie NVDA.
+Počas plynulého čítania v dokumente MS Word sa posúva aj zobrazenie, aby bolo možné sledovať pozíciu kurzora.
+Táto verzia prináša tiež mnohé vylepšenia pre aplikácie MS Office s využitím technológie UIA.
+Spomeňme, že vďaka tomu je napríklad v Outlooku možné ignorovať viac tabuliek formujúcich vzhľad.
+
+Dôležité poznámky:
+
+Z dôvodu aktualizácie nášho bezpečnostného certifikátu sa môže niektorým používateľom stať, že NVDA 2021.2 pri kontrole aktualizácií vypíše chybu.
+Preto NVDA odteraz pravidelne žiada systém Windows o aktualizovanie certifikátov, čo v budúcnosti odstráni podobné problémy.
+Používatelia, ktorí narazia na túto chybu, musia NVDA aktualizovať ručne.
+
+== Nové vlastnosti ==
+- Pridaná možnosť definovať skratku pre oznamovanie orámovania buniek tabuľky. (#10408)
+- Pridaná podpora pre HID Štandard, ktorý umožňuje používať braillovské riadky bez nutnosti mať samostatný ovládač pre každý riadok. (#12523)
+  - Zariadenia, ktoré podporujú tento štandard, NVDA automaticky rozpozná.
+  - Technickú špecifikáciu a spôsob inplementácie na strane NVDA je možné nájsť na https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md (anglicky).
+  -
+- Pridaná podpora pre braillovský riadok VisioBraille Vario 4. (#12607)
+- NVDA odteraz môže oznamovať chyby zapísané do logu aj v stabilných verziách. Nastavenie sa nachádza v pokročilých nastaveniach. (#12672)
+- V systéme Windows od verzie 10 NVDA pri vyhľadávaní v ponuke štart a iných oknách (napríklad nastaveniach) oznamuje počet návrhov. (#7330, #12758, #12790)
+- Odteraz je podporovaná navigácia v tabuľkách v mriežkovom zobrazení (prvok grid control vytvorený v PowerShell ako Out-GridView cmdlet). (#12928)
+-
+
+
+== Zmeny ==
+- Hlasový výstup Espeak-ng aktualizovaný na verziu 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+- Ak nie sú v systéme onecore hlasy, ktoré dokážu hovoriť nastaveným jazykom NVDA, potom sa predvolene používa eSpeak. (#10451)
+- Ak sa nedarí inicializovať Onecore hlasy, NVDA nastaví ako predvolený hlas eSpeak. (#11544)
+- Pri čítaní stavového riadka sa odteraz nepresúva prehliadací kurzor na pozíciu stavového riadka.
+Pokiaľ potrebujete presúvať kurzor na pozíciu stavového riadka, nastavte skratku v dialógu klávesové skratky, časť objektová navigácia. (#8600)
+- Ak otvoríte dialóg s nastaveniami a súčasne je už takýto dialóg otvorený, NVDA viac nevypíše chybu, ale presunie fokus do otvoreného okna na príslušné miesto. (#5383)
+- Braillovská prekladová tabuľka liblouis aktualizovaná na verziu [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
+  - Nové tabuľky: Ruština plnopis, Tshivenda skratkopis a plnopis.
+  -
+- NVDA odteraz oznamuje označený text (aria atribút 'mark' alebo 'amark') ako vyznačený resp. vyzn na braillovskom riadku. (#12892)
+- NVDA viac nie je možné ukončiť, ak je otvorený nejaký dialóg NVDA. (#12984)
+-
+
+
+== Opravy ==
+- Sledovanie stavu kláves ako ctrl a shift je robustnejšie aj v oknách, ktoré na chvíľu zamrznú. (#12609)
+- Odteraz je možné skontrolovať aktualizácie NVDA aj na nových čistých inštaláciách systému Windows. (#12729)
+- NVDA odteraz správne oznamuje prázdne bunky tabuľky v dokumentoch MS Word cez UIA (#11043)
+- Ak stlačíte kláves ESC na webe v mriežke s dátami zobrazenej cez aria data grid, kláves je odoslaný do prehliadača a nevypína viac režim fokusu. (#12413)
+- NVDA viac dvakrát neopakuje názov stĺpca pri čítaní hlavičky bunky tabuľky v prehliadači Chrome. (#10840)
+- NVDA viac nečíta numerickú hodnotu posuvníkov v oknách prezentovaných cez UIA, ak je dostupný aj textový popis. (Preferujeme UIA ValuePattern pred RangeValuePattern) (#12724)
+- NVDA viac nespracúva všetky UIA posuvníky v percentách.
+- Oznamovanie pozície bunky v tabuľke MS Excel funguje správne pri použití UIA v systéme Windows 11. (#12782)
+- Vylepšená synchronizácia jazyka NVDA a jazyka systému Windows. (#12753)
+- Ak je zakázaný doplnok odinštalovaný a neskôr opätovne nainštalovaný, je aj automaticky povolený. (#12792)
+- Opravené problémy, ktoré nastávali počas aktualizácie a odstraňovania doplnkov v súvislosti s premenovaním priečinkov prípadne otvorenými súbormi. (#12792, #12629)
+- Ak sa na prezentovanie tabuľky MS Excel používa UIA, NVDA neopakuje vybratie jednej bunky. (#12530)
+- NVDA dokáže identifikovať viac textu v dialógoch aplikácie LibreOffice Writer, napríklad v potvrdzovacích oknách. (#11687)
+- Pri pohybe v dokumente MS Word v režime prehliadania s použitím UIA sa mení aj zobrazenie, takže je možné sledovať pozíciu kurzora. Súčasne s tým sa mení aj pozícia kurzora v režime fokusu. (#9611)
+- Pri plynulom čítaní v dokumente MS Word sa automaticky posúva aj zobrazenie a poloha kurzora. (#9611)
+- Pri čítaní správ v MS outlooku cez UIA NVDA dokáže rozpoznať a ignorovať viacej tabuliek formujúcich vzhľad. (#11430)
+- Opravené problémy, ktoré nastávali pri zmene zvukového zariadenia. (#12620)
+- Písanie v plnopise je odteraz presnejšie. (#12667)
+- Pri prezeraní kalendára na panely úloh, NVDA oznamuje plným názvom deň v týždni. (#12757)
+- Pri písaní pomocou čínskych metód vstupu, ako napríklad Taiwan - Microsoft Quick v MS Worde, posúvanie braillovského riadka viac nespôsobí posunutie na pôvodnú pozíciu kurzora. (#12855)
+- V dokumentoch MS Word je aj s použitím UIA odteraz možné pohybovať sa po vetách skratkami alt+šípka hore a alt+šípka dole. (#9254)
+- V dokumentoch MS Word je aj s použitím UIA oznamované odsadenie odsekov. (#12899)
+- V dokumentoch MS Word s použitím UIA je oznamované sledovanie zmien a iné lokalizované funkcie. (#12904)
+- Odstránené opakované oznamovanie cez hlasový výstup a braillovský riadok,  ak sa v režime prehliadania zhoduje názov, obsah a popis prvku. (#12888)
+- V dokumentoch MS Word s použitím UIA sú zvukom presnejšie oznamované pravopisné chyby. (#12161)
+- V systéme Windows 11 NVDA viac pri prechádzaní medzi oknami cez alt+tab neoznamuje "pane". (#12648)
+- Moderné stromové zobrazenie komentárov v dokumentoch MS Word je možné prezerať aj s použitím NVDA v prípade, že je vypnutá podpora UIA. Medzi dokumentom a zobrazením komentárov sa prepínajte skratkou alt+f12. (#12982)
+
+
 = 2021.2 =
 Prednosti tejto verzie zahŕňajú prvotnú podporu pre operačný systém Windows 11.
 NVDA bolo testované s aktuálne dostupnými verziami Windows 11.

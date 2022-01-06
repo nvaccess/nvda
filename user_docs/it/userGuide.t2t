@@ -315,7 +315,7 @@ Esistono alcuni comandi da tastiera utili per seguire il focus:
 | Legge il focus | NVDA+tab | NVDA+tab | Annuncia l'oggetto o il controllo attualmente focalizzato. Premendo la combinazione due volte ne verrà fatto lo spelling  |
 | Legge il Titolo | NVDA+t | NVDA+t | Legge il titolo della finestra attiva in quel momento. Premendo la combinazione due volte ne verrà fatto lo spelling. Premendo per tre volte il contenuto verrà copiato negli appunti. |
 | Legge la Finestra Attiva | NVDA+b | NVDA+b | Legge il contenuto della finestra in primo piano (utile nelle finestre di dialogo). |
-| Legge la barra di stato | NVDA+fine | NVDA+shift+fine | Legge la barra di stato sempre che NVDA sia in grado di individuarne una. Inoltre sposta in quella posizione il navigatore ad oggetti. Una doppia pressione provocherà lo spelling delle informazioni. Una tripla pressione copierà il contenuto della barra di stato negli appunti |
+| Legge la barra di stato | NVDA+fine | NVDA+shift+fine | Legge la barra di stato nel caso in cui NVDA sia in grado di individuarla. Una doppia pressione provocherà lo spelling delle informazioni. Una tripla pressione copierà il contenuto della barra di stato negli appunti |
 %kc:endInclude
 
 ++ Esplorare con il cursore di sistema ++[SystemCaret]
@@ -381,6 +381,7 @@ Per navigare ad oggetti, utilizzare i tasti seguenti:
 | Attivare l'oggetto corrente | NVDA+Invio del tastierino numerico | NVDA+Invio | Doppio tap | Attiva l'oggetto corrente (l'equivalente di cliccare col mouse o premere la barra spazio in presenza del focus) |
 | Spostare il focus o il cursore di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+Backspace | Nessuno | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
 | Annuncia posizione del cursore di controllo | NVDA+Canc del tastierino numerico | NVDA+Canc | Nessuno | Legge la posizione del testo o dell'oggetto sul cursore di controllo. Ad esempio, può significare la percentuale in un documento, la distanza dal bordo della pagina o l'esatta posizione sullo schermo. Una doppia pressione fornirà se possibile ulteriori dettagli. |
++ | Sposta il cursore di controllo sulla barra di stato | nessuno | nessuno | nessuno | Legge il contenuto della barra di stato, se individuata. Inoltre sposta il navigatore ad oggetti su quella posizione. |
 %kc:endInclude
 
 Nota, Per utilizzare il tastierino numerico, il tasto NumLock deve essere impostato su spento.
@@ -1401,6 +1402,10 @@ Quest'ultima opzione non sarà disponibile se il display braille supporta soltan
 
 Si consiglia di consultare la documentazione presente nella sezione [Display braille supportati #SupportedBrailleDisplays] per avere maggiori informazioni sulle porte e le connessioni disponibili per il display braille che si sta utilizzando.
 
+Nota: se si collegano contemporaneamente al computer più display Braille che utilizzano lo stesso driver (ad es. due display braille Seika),
+risulta attualmente impossibile far sapere a NVDA quale display usare.
+Pertanto si consiglia di collegare al pc un solo Display Braille di un determinato tipo/produttore alla volta.
+
 +++ Visione +++[VisionSettings]
 La categoria visione nelle impostazioni di NVDA consente di attivare, disattivare e configurare i [miglioramenti visivi #Vision].
 
@@ -1575,7 +1580,8 @@ Per abilitare o disabilitare la modalità semplice da qualsiasi punto ci si trov
 
 +++ Presentazione oggetti (NVDA+Control+o) +++[ObjectPresentationSettings]
 La categoria presentazione oggetti delle impostazioni di NVDA è utilizzata per impostare la quantità di informazioni che dovranno essere fornite in merito ai controlli quali descrizione, informazioni sulla posizione, e così via.
-Contiene le seguenti opzioni:
+Queste opzioni in genere non si applicano alla modalità di navigazione.
+Esse si riferiscono agli annunci inerenti il focus e la navigazione ad oggetti di NVDA, ma non alla lettura del testo, come può avvenire per le modalità usate sul web che implicano l'uso del cursore virtuale.
 
 ==== Leggi i suggerimenti ====[ObjectPresentationReportToolTips]
 Una casella di controllo che, se attivata, istruisce NVDA ad annunciare i suggerimenti man mano che appaiono.
@@ -1739,7 +1745,7 @@ Le opzioni di formattazione documento sono divise in gruppi.
  - dimensione carattere
  - attributi carattere
  - Testo enfatizzato
- - Contrassegnato (testo evidenziato)
+ - Evidenziato (testo contrassegnato)
  - Stile
  - Colori
 - Informazioni documento
@@ -1830,9 +1836,10 @@ Questo può risultare molto dispendioso in termini di risorse soprattutto in app
 Invece, se l'opzione risulta attivata, NVDA si limiterà a tener conto degli eventi UIA che riguardano unicamente il focus.
 Nel caso in cui si riscontrino problemi di stabilità o di prestazioni, si consiglia di attivare la funzione per vedere se il problema può risolversi.
 
-==== Utilizza UI Automation per accedere ai controlli dei documenti Microsoft Word quando disponibili ====[AdvancedSettingsUseUiaForWord]
-Quando quest'opzione viene attivata, NVDA tenterà di utilizzare le API di accessibilità dell'interfaccia Microsoft UI Automation per recuperare informazioni dai controlli dei documenti di Microsoft Word.
+==== Utilizza sempre UI Automation per accedere ai controlli dei documenti Microsoft Word quando disponibili ====[AdvancedSettingsUseUiaForWord]
+Quando quest'opzione viene attivata, NVDA tenterà sempre di utilizzare le API di accessibilità dell'interfaccia Microsoft UI Automation per recuperare informazioni dai controlli dei documenti di Microsoft Word, anche per build meno recenti di Microsoft Office 2016/365.
 Ciò comprende sia Word stesso, ma anche la finestra di visualizzazione e di composizione dei messaggi di Microsoft Outlook.
+Per Microsoft Office con una versione build a partire da 16.0.13901 o successiva, NVDA utilizzerà sempre le UI Automation per accedere ai documenti di Microsoft Word, indipendentemente dalla configurazione di questa impostazione.
 Per le versioni più recenti di Microsoft Office 2016/365 eseguite su Windows10 e versioni successive, il supporto Ui Automation risulta sufficientemente completo da fornire un accesso ai documenti Word paragonabile a quello presente finora in NVDA, con il grande vantaggio costituito da una reattività e una risposta ai comandi molto più efficente.
 Tuttavia, in alcune versioni di Microsoft Office, certe informazioni potrebbero non essere fornite, o essere esposte in modo errato, il che significa che non è sempre possibile fare affidamento sul supporto UI Automation.
 In linea generale, la maggior parte degli utenti non dovrebbe attivare questa funzione, a meno che non si stia utilizzando Office2016/365, nel qual caso sono graditi feedback e osservazioni  durante i test.
@@ -1853,12 +1860,21 @@ Nella casella combinata sono presenti le opzioni seguenti:
 - No: Non verrà mai utilizzata UIA, anche quando NVDA non sarà in grado di agganciarsi al processo attivo.  Ciò può essere utile per gli sviluppatori che eseguono il debug di problemi con IA2 e vogliano essere certi che NVDA non si serva di UIA.
 -
 
-==== Attiva il supporto sperimentale per le annotazioni aria ====[Annotations]
-Come suggerisce il titolo della casella di controllo, abilita il supporto sperimentale per le annotazioni ARIA..
+==== Annotazioni ====[Annotations]
+Questo gruppo di opzioni viene utilizzato per abilitare le funzionalità che aggiungono il supporto sperimentale per le annotazioni ARIA.
 Alcune di queste funzionalità potrebbero essere incomplete.
-Sono presenti le seguenti opzioni: 
+Sono disponibili le seguenti opzioni:
 - "Leggi dettagli in modalità navigazione": abilita la lettura nel caso in cui un oggetto contenga dettagli.
 è possibile ottenere un riepilogo di tali dettagli assegnando un gesto personalizzato dalla finestra [tasti e gesti di immissione #InputGestures].
+- "Annuncia sempre descrizioni-aria":
+  Quando la fonte di ``accDescription`` è aria-description, viene sempre annunciata la descrizione.
+  Questo è utile per le annotazioni sul web.
+  Nota:
+  - Ci sono molte fonti per ``accDescription``, molte hanno una semantica mista o inaffidabile.
+    Storicamente AT non è stato in grado di differenziare le fonti di ``accDescription``, in genere non venivano pronunciate a causa della semantica mista.
+  - Questa opzione è in fase di sviluppo molto prematuro, si basa su funzionalità del browser non ancora ampiamente disponibili.
+  - Ci si aspetta un funzionamento completo con Chromium 92.0.4479.0+
+  -
 -
 
 ==== Utilizza UI Automation per accedere ai controlli dei fogli di calcolo di Microsoft Excel quando disponibile ====[UseUiaForExcel]
@@ -1898,10 +1914,21 @@ Questa funzionalità è attiva per impostazione predefinita a partire da NVDA 20
 Questa opzione consente di impostare per quanti millisecondi NVDA dovrà attendere un movimento del cursore nei campi editazione.
 Se ci si rende conto che NVDA sembra aver difficoltà nel seguire il cursore (ad esempio è sempre un carattere indietro oppure ripete la stessa riga), si può provare ad aumentare questo valore.
 
+==== Annuncia trasparenza per i colori ====[ReportTransparentColors]
+Questa opzione consente di segnalare quando i colori sono trasparenti, utile per gli sviluppatori di addon/appModule che raccolgono informazioni per migliorare l'esperienza dell'utente con un'applicazione di terze parti.
+Alcune applicazioni GDI evidenzieranno il testo con un colore di sfondo, NVDA (tramite l'intercettatore video) tenta di leggere questo colore.
+In alcuni casi, lo sfondo del testo potrebbe essere completamente trasparente, con il testo sovrapposto a qualche altro elemento della GUI.
+Con diverse API GUI storicamente popolari, il testo può essere visualizzato con uno sfondo trasparente, ma visivamente il colore di sfondo è accurato.
+
 ==== Categorie Debug Logging ====[AdvancedSettingsDebugLoggingCategories]
 Le caselle di controllo presenti  in questo elenco consentono di abilitare  categorie specifiche di messaggi log di NVDA.
 Si tenga presente che il log di questi messaggi può comportare un calo delle prestazioni e file di registro di grandi dimensioni.
 Attivare quindi le caselle di controllo soltanto se viene richiesto da uno sviluppatore.
+
+==== Riproduci un suono per gli errori loggati ====[PlayErrorSound]
+Questa opzione consente di specificare se NVDA riprodurrà un suono di errore nel caso in cui venga registrato un errore.
+Scegliendo Solo nelle versioni di prova (impostazione predefinita) viene emesso un suono di errore solo se la versione corrente di NVDA è una versione di prova (alpha, beta o eseguita dai sorgenti).
+Scegliendo Sì, è possibile abilitare i suoni di errore qualunque sia la versione attuale di NVDA.
 
 ++ Impostazioni varie ++[MiscSettings]
 Oltre alla finestra [Impostazioni NVDA #NVDASettings], il sottomenu preferenze del menu di NVDA contiene molti altri elementi che sono elencati qui di seguito.
@@ -2329,6 +2356,7 @@ Segue l'elenco di tutti i display braille che supportano il rilevamento automati
 - modelli Braille Sense/Braille EDGE/Smart Beetle/Sync della Hims.
 - Display Esys/Esytime/Iris di Eurobraille
 - Display Braille Nattiq serie N
+- Qualsiasi display che supporti il protocollo Braille standard HID
 -
 
 ++ Freedom Scientific Serie Focus/PAC Mate ++[FreedomScientificFocus]
@@ -3145,11 +3173,42 @@ Seguono i tasti che sono stati assegnati con NVDA a Brltty.
 Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/KeyBindings/] per comprendere come i comandi di Brltty sono mappati sul Display Braille.
 %kc:beginInclude
 || Nome | comando BRLTTY  |
-| Scorre Display Braille indietro | fwinlt (go left one window) |
-| Scorre Display Braille avanti | fwinrt (go right one window) |
-| Sposta il Display Braille alla riga precedente  | lnup (go up one line) |
-| Sposta il Display Braille alla riga successiva | lndn (go down one line) |
-| Route to braille cell | route (bring cursor to character) |
+| Scorre Display Braille indietro | fwinlt (va indietro di una finestra) |
+| Scorre Display Braille avanti | fwinrt (va avanti di una finestra) |
+| Sposta il Display Braille alla riga precedente  | lnup (va su di una riga) |
+| Sposta il Display Braille alla riga successiva | lndn (va già di una riga) |
+| Route to braille cell | route (porta il cursore al carattere) |
+%kc:endInclude
+
+++ Display Standard HID Braille ++[HIDBraille]
+Questo è un driver sperimentale per la nuova specifica standard HID Braille, concordata nel 2018 da Microsoft, Google, Apple e diverse società di tecnologie assistive, tra cui NV Access.
+La speranza è che tutti i modelli futuri di display Braille creati da qualsiasi produttore utilizzino questo protocollo standard che eliminerà la necessità di driver Braille specifici.
+
+Il rilevamento automatico display braille di NVDA riconoscerà anche qualsiasi barra che supporti questo protocollo.
+ 
+Di seguito sono riportate le assegnazioni dei tasti per questi display.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri il display braille indietro | pan left or rocker up |
+| Scorri il display braille avanti | pan right or rocker down |
+| Sposta il display braille alla riga precedente | spazio + punto1 |
+| Sposta il display braille alla riga successiva | spazio + punto4 |
+| Route to braille cell | routing set 1|
+| Attiva/disattiva inseguimento braille | su+giù |
+| Tasto freccia su | joystick su |
+| Tasto freccia giù | joystick giù |
+| Tasto freccia sinistra | spazio+punto3 o joystick sinistra |
+| Tasto freccia destra | spazio+punto6 o joystick destra |
+| tasto MAIUSC+TAB | spazio+punto1+punto3 |
+| Tasto tab | spazio+punto4+punto6 |
+| tasto alt | spazio+punto1+punto3+punto4 (spazio+m) |
+| tasto esc | spazio+punto1+punto5 (spazio+e) |
+| tasto invio | punto8 o centro del joystick |
+| tasto windows | spazio+punto3+punto4 |
+| tasto alt+tab | spazio+punto2+punto3+punto4+punto5 (spazio+t) |
+| Menu NVDA | spazio+punto1+punto3+punto4+punto5 (spazio+n) |
+| tasto windows+d (minimizzare tutte le applicazioni) | spazio+punto1+punto4+punto5 (spazio+d) |
+| Dire tutto | spazio+punto1+punto2+punto3+punto4+punto5+punto6 |
 %kc:endInclude
 
 + Argomenti avanzati +[AdvancedTopics]

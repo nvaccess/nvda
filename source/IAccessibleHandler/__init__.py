@@ -3,9 +3,18 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+# F401 imported but unused. RelationType should be exposed from IAccessibleHandler, in future __all__
+# should be used to export it.
+from .types import RelationType  # noqa: F401
+
 import re
 import struct
-from typing import Optional, Tuple
+from typing import (
+	Optional,
+	Tuple,
+	Dict,
+	Union,
+)
 import weakref
 from ctypes import (
 	wintypes,
@@ -52,9 +61,6 @@ NAVRELATION_LABELLED_BY = 0x1003
 NAVRELATION_NODE_CHILD_OF = 0x1005
 NAVRELATION_EMBEDS = 0x1009
 
-# IAccessible2 relations (not included in the typelib)
-IA2_RELATION_FLOWS_FROM = "flowsFrom"
-IA2_RELATION_FLOWS_TO = "flowsTo"
 
 # A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,
 # childID event params.
@@ -1122,15 +1128,15 @@ ATTRIBS_STRING_BASE64_THRESHOLD = 4096
 
 
 # C901: splitIA2Attribs is too complex
-def splitIA2Attribs(attribsString):  # noqa: C901
+def splitIA2Attribs(  # noqa: C901
+		attribsString: str
+) -> Dict[str, Union[str, Dict]]:
 	"""Split an IAccessible2 attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
 	Subattributes are handled. Subattribute keys and values are placed into a dict which becomes the value
 	of the attribute.
 	@param attribsString: The IAccessible2 attributes string to convert.
-	@type attribsString: str
 	@return: A dict of the attribute keys and values, where values are strings or dicts.
-	@rtype: {str: str or {str: str}}
 	"""
 	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
 	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
