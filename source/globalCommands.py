@@ -1971,13 +1971,15 @@ class GlobalCommands(ScriptableObject):
 		"""Report the annotation details summary for the single character under the caret or the current nav object.
 		@note: It is tempting to try to report any annotation details that exists in the range formed by prior
 			and current location. This would be a new paradigm in NVDA, and may feel natural when moving by line
-			to be able to more quickly have the 'details' reported. However there may be more than one 'details
-			relation' in that range and we don't yet have a way for the user to select which one to report.
-			For now we minimise this risk by only reporting details at the current location.
+			to be able to more quickly have the 'details' reported. However, there may be more than one 'details
+			relation' in that range and, we don't yet have a way for the user to select which one to report.
+			For now, we minimise this risk by only reporting details at the current location.
 		"""
 		log.info("Report annotation details summary at current location.")
-		# Common cases, vbuf available: Eg editable text, or regular web content
 		try:
+			# Common cases use Caret Position: vbuf available or object supports text range
+			# Eg editable text, or regular web content
+			# Firefox and Chromium support this even in a button within a role=application.
 			caret: textInfos.TextInfo = api.getCaretPosition()
 		except ValueError:
 			log.debugWarning("Unable to get the caret position.", exc_info=True)
@@ -1985,37 +1987,21 @@ class GlobalCommands(ScriptableObject):
 		caret.expand(textInfos.UNIT_CHARACTER)
 		nvdaObject: Optional[NVDAObject] = caret.NVDAObjectAtStart
 		log.debug(f"Trying with nvdaObject : {nvdaObject}")
-		# So far NVDAObjectAtStart works in all situations tested.
-		#
-		# An alternative might be to:
-		# - Iterate over the FieldCommands looking for a ControlField with the "hasDetails" attribute.
-		# Example:
-		# for f in ti.getTextWithFields():
-		# 	if(
-		# 		f
-		# 		and isinstance(f, textInfos.FieldCommand)
-		# 		and isinstance(f.field, textInfos.ControlField)
-		# 		and f.field.get("hasDetails")
-		# 	):
-		#
-		# - Use controlIdentifier_* or UniqueID (keys in the FieldCommand's ControlField) to create an
-		# IAccessible NVDAObject. Note, in focus mode UniqueID will only contain one value (the
-		# controlIdentifier_ID) the docHandle will need to be fetched another way.
-		# Example:
-		#
-		# docHandle = f.field.get("controlIdentifier_docHandle")
-		# ID = f.field.get("controlIdentifier_ID")
-		# objWithDetails = IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
+
 		annotation: Optional[str] = nvdaObject.detailsSummary
 		if annotation:
 			log.debug("NVDAObjectAtStart of caret has details.")
-		elif api.getNavigatorObject():
-			# Check the nav object
-			nav = api.getNavigatorObject()
-			log.debug(f"Trying nav object: {nav}")
-			annotation = nav.detailsSummary
+		elif api.getFocusObject() and False:
+			# If fetching from the caret position fails, try via the focus object
+			# This case is to support where there is no virtual buffer or text interface and a caret position can
+			# not be fetched.
+			# There may still be an object with focus that has details.
+			# There isn't a known test case for this, however there isn't a known downside to attempt this.
+			focus = api.getFocusObject()
+			log.debug(f"Trying focus object: {focus}")
+			annotation = focus.detailsSummary
 			if annotation:
-				log.debug("nav object has details, able to proceed")
+				log.debug("focus object has details, able to proceed")
 
 		if not annotation:
 			log.debug("no details annotation found")

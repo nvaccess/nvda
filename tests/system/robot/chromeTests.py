@@ -57,6 +57,73 @@ def checkbox_labelled_by_inner_element():
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
 REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
+READ_DETAILS_GESTURE = "NVDA+\\"  # see chrome-gestures.ini
+
+
+def _getNoVBuf_AriaDetails_sample() -> str:
+	return """
+		<div role="application">
+			<button>focus in app</button>
+			<p>this is an application, it contains a button with details</p>
+			<button aria-details="button-details">push me</button>
+		</div>
+		<div id="button-details" role="note">
+			<p>Press to self-destruct</p>
+		</div>
+		"""
+
+
+def _doTestAriaDetails_NoVBufNoTextInterface():
+	_chrome.prepareChrome(_getNoVBuf_AriaDetails_sample())
+	actualSpeech = _NvdaLib.getSpeechAfterKey("tab")
+	_builtIn.should_contain(actualSpeech, "focus in app")
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"push me",
+			"button",
+			"has details",
+		]),
+		message="Tab to button"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"push me btn details",
+		message="Tab to button",
+	)
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
+	_asserts.speech_matches(
+		actualSpeech,
+		"Press to self destruct",
+		message="Report details"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"Press to self-destruct",
+		message="Report details",
+	)
+
+
+def test_aria_details_noVBufNoTextInterface():
+	"""The uncommon case, but for completeness, a role=application containing an element that does not have a text
+	interface.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
+	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
+	_doTestAriaDetails_NoVBufNoTextInterface()
+
+
+def test_aria_details_noVBufNoTextInterface_freeReview():
+	"""The uncommon case, but for completeness, a role=application containing an element without a text
+	interface. Test with the review cursor configured not to follow focus or caret.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
+	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
+	_doTestAriaDetails_NoVBufNoTextInterface()
 
 
 def test_mark_aria_details():
@@ -131,7 +198,6 @@ def exercise_mark_aria_details():
 	)
 
 	# check that there is no summary reported
-	READ_DETAILS_GESTURE = "NVDA+\\"  # see chrome-gestures.ini
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
