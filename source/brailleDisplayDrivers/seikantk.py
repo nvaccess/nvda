@@ -159,7 +159,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		cellBytes = SEIKA_SEND_TEXT + self.numCells.to_bytes(1, 'little') + bytes(cells)
+		cellBytes = SEIKA_SEND_TEXT + bytes([self.numCells]) + bytes(cells)
 		self._dev.write(cellBytes)
 
 	def _onReceive(self, data: bytes):
