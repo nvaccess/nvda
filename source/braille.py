@@ -2497,7 +2497,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def _getTryPorts(
 			cls, port: Union[str, bdDetect.DeviceMatch]
-	) -> Iterable[bdDetect.DeviceMatch]:
+	) -> typing.Iterator[bdDetect.DeviceMatch]:
 		"""Returns the ports for this driver to which a connection attempt should be made.
 		This generator function is usually used in L{__init__} to connect to the desired display.
 		@param port: the port to connect to.

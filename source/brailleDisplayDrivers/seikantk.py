@@ -6,15 +6,15 @@
 # This file represents the braille display driver for
 # Seika Notetaker, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
-
 from io import BytesIO
 import typing
 from typing import Dict, List, Set
 
+import serial
+
 import braille
 import brailleInput
 import inputCore
-import hwPortUtils
 import bdDetect
 import hwIo
 from serial.win32 import INVALID_HANDLE_VALUE
@@ -57,24 +57,24 @@ SEIKA_ROUTING = b"\xff\xff\xa4"
 SEIKA_KEYS = b"\xff\xff\xa6"
 SEIKA_KEYS_ROU = b"\xff\xff\xa8"
 
-SEIKA_CONFIG = b"\x50\x00\x00\x25\x80\x00\x00\x03\x00"
+BAUD = 9600
+SEIKA_HID_FEATURES = b"".join([
+	b"\x50\x00\x00",
+	int.to_bytes(BAUD, length=2, byteorder="big", signed=False),  # b"\x25\x80"
+	b"\x00\x00\x03\x00",
+	])
 SEIKA_CMD_ON = b"\x41\x01"
 
 vidpid = "VID_10C4&PID_EA80"
 hidvidpid = "HID\\VID_10C4&PID_EA80"
 SEIKA_NAME = "seikantk"
 
-
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = SEIKA_NAME
 	# Translators: Name of a braille display.
 	description = _("Seika Notetaker")
-	path = ""
 	isThreadSafe = True
-	for d in hwPortUtils.listHidDevices():
-		if d["hardwareID"].startswith(hidvidpid):
-			path = d["devicePath"]
 
 	@classmethod
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
@@ -82,41 +82,74 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		return braille.getSerialPorts()
 
-	def __init__(self, port="hid"):
+	def __init__(self, port=bdDetect.KEY_HID):
 		super().__init__()
 		self.numCells = 0
 		self.numBtns = 0
 		self.numRoutingKeys = 0
 		self.handle = None
-
 		self._hidBuffer = b""
 		self._command: typing.Optional[bytes] = None
 		self._argsLen: typing.Optional[int] = None
-		log.info(f"Seika Notetaker braille driver path: {self.path}")
 
-		if self.path == "":
-			raise RuntimeError("No MINI-SEIKA display found, no path found")
-		self._dev = dev = hwIo.Hid(path=self.path, onReceive=self._onReceive)
-		if dev._file == INVALID_HANDLE_VALUE:
-			raise RuntimeError("No MINI-SEIKA display found, open error")
-		dev.setFeature(SEIKA_CONFIG)  # baud rate, stop bit usw
-		dev.setFeature(SEIKA_CMD_ON)  # device on
+		log.debug(f"Seika Notetaker braille driver: ({port!r})")
+		dev: typing.Optional[typing.Union[hwIo.Hid, hwIo.Serial]] = None
+		for match in self._getTryPorts(port):
+			self.isHid = match.portType == bdDetect.KEY_HID
+			self.isSerial = match.portType == bdDetect.KEY_SERIAL
+			try:
+				if self.isHid:
+					log.info(f"Trying Seika notetaker on USB-HID")
+					self._dev = dev = hwIo.Hid(path=match.port, onReceive=self._onReceive)
+					dev.setFeature(SEIKA_HID_FEATURES)  # baud rate, stop bit usw
+					dev.setFeature(SEIKA_CMD_ON)  # device on
+				elif self.isSerial:
+					log.info(f"Trying Seika notetaker on Bluetooth (serial) port:{port}")
+					self._dev = dev = hwIo.Serial(
+						port=port,
+						onReceive=self._onReceive,
+						baudrate=BAUD,
+						parity=serial.PARITY_NONE,
+						bytesize=serial.EIGHTBITS,
+						stopbits=serial.STOPBITS_ONE,
+					)
+					# Does the device need to be sent SEIKA_CMD_ON as per USB-HID?
+				else:
+					log.debug(f"Port type not handled: {match.portType}")
+					continue
+			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
+				continue
+			if self._getDeviceInfo(dev):
+				break
+			elif dev:
+				dev.close()
+
+		if not dev:
+			RuntimeError("No MINI-SEIKA display found")
+		elif self.numCells == 0:
+			dev.close()
+			raise RuntimeError("No MINI-SEIKA display found, no response")
+		else:
+			log.info(
+				f"Seika notetaker,"
+				f" Cells {self.numCells}"
+				f" Buttons {self.numBtns}"
+			)
+
+	def _getDeviceInfo(self, dev: hwIo.IoBase) -> bool:
+		if not dev or dev._file == INVALID_HANDLE_VALUE:
+			log.debug("No MINI-SEIKA display found, open error")
+			return False
+
 		dev.write(SEIKA_REQUEST_INFO)  # Request the Info from the device
 
 		# wait and try to get info from the Braille display
 		for i in range(MAX_READ_ATTEMPTS):  # the info-block is about
 			dev.waitForRead(READ_TIMEOUT_SECS)
 			if self.numCells:
-				log.info(
-					f"Seika notetaker on USB-HID,"
-					f" Cells {self.numCells}"
-					f" Buttons {self.numBtns}"
-				)
-				break
-
-		if self.numCells == 0:
-			dev.close()
-			raise RuntimeError("No MINI-SEIKA display found, no response")
+				return True
+		return False
 
 	def terminate(self):
 		try:
