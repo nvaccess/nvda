@@ -1964,15 +1964,16 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: the description for the reportDetailsSummary script.
-			"Report summary of any annotation details at the current location."
-		)
+			"Report summary of any annotation details at the system caret."
+		),
+		category=SCRCAT_SYSTEMCARET,
 	)
 	def script_reportDetailsSummary(self, gesture):
-		"""Report the annotation details summary for the single character under the caret or the current nav object.
+		"""Report the annotation details summary for the single character under the caret or the object with system focus.
 		@note: It is tempting to try to report any annotation details that exists in the range formed by prior
 			and current location. This would be a new paradigm in NVDA, and may feel natural when moving by line
 			to be able to more quickly have the 'details' reported. However, there may be more than one 'details
-			relation' in that range and, we don't yet have a way for the user to select which one to report.
+			relation' in that range, and we don't yet have a way for the user to select which one to report.
 			For now, we minimise this risk by only reporting details at the current location.
 		"""
 		log.info("Report annotation details summary at current location.")
