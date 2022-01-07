@@ -1976,23 +1976,23 @@ class GlobalCommands(ScriptableObject):
 			relation' in that range, and we don't yet have a way for the user to select which one to report.
 			For now, we minimise this risk by only reporting details at the current location.
 		"""
-		log.info("Report annotation details summary at current location.")
+		log.debug("Report annotation details summary at current location.")
 		try:
 			# Common cases use Caret Position: vbuf available or object supports text range
 			# Eg editable text, or regular web content
 			# Firefox and Chromium support this even in a button within a role=application.
 			caret: textInfos.TextInfo = api.getCaretPosition()
-		except ValueError:
+		except RuntimeError:
 			log.debugWarning("Unable to get the caret position.", exc_info=True)
 			return
 		caret.expand(textInfos.UNIT_CHARACTER)
-		nvdaObject: Optional[NVDAObject] = caret.NVDAObjectAtStart
+		nvdaObject: NVDAObject = caret.NVDAObjectAtStart
 		log.debug(f"Trying with nvdaObject : {nvdaObject}")
 
 		annotation: Optional[str] = nvdaObject.detailsSummary
 		if annotation:
 			log.debug("NVDAObjectAtStart of caret has details.")
-		elif api.getFocusObject() and False:
+		elif api.getFocusObject():
 			# If fetching from the caret position fails, try via the focus object
 			# This case is to support where there is no virtual buffer or text interface and a caret position can
 			# not be fetched.
