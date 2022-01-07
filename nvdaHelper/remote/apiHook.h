@@ -23,7 +23,7 @@ bool apiHook_beginTransaction();
 
 /**
  * Requests that the given function from the given module should be hooked with the given hook procedure. 
- * Warning, this function has no safety checks, you should usually use the apiHook_hookFunction_safe macro
+ * Warning, this function has no safety checks, you should usually use the apiHook_hookFunction_safe template
  * @param realFunction the function you wish to hook.
  * @param fakeFunction the function you wish  to be called instead of the original one.
  * @param targetPointerRef Pointer variable that will contain a pointer to the original function after hooking. This is used to unhook.
