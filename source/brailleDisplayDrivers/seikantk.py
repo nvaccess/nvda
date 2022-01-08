@@ -62,7 +62,7 @@ SEIKA_HID_FEATURES = b"".join([
 	b"\x50\x00\x00",
 	int.to_bytes(BAUD, length=2, byteorder="big", signed=False),  # b"\x25\x80"
 	b"\x00\x00\x03\x00",
-	])
+])
 SEIKA_CMD_ON = b"\x41\x01"
 
 vidpid = "VID_10C4&PID_EA80"
