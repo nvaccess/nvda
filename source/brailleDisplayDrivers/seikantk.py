@@ -95,18 +95,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		log.debug(f"Seika Notetaker braille driver: ({port!r})")
 		dev: typing.Optional[typing.Union[hwIo.Hid, hwIo.Serial]] = None
 		for match in self._getTryPorts(port):
-			self.isHid = match.portType == bdDetect.KEY_HID
-			self.isSerial = match.portType == bdDetect.KEY_SERIAL
+			self.isHid = match.type == bdDetect.KEY_HID
+			self.isSerial = match.type == bdDetect.KEY_SERIAL
 			try:
 				if self.isHid:
 					log.info(f"Trying Seika notetaker on USB-HID")
-					self._dev = dev = hwIo.Hid(path=match.port, onReceive=self._onReceive)
+					self._dev = dev = hwIo.Hid(
+						path=match.port, # for a Hid match type 'port' is actually 'path'.
+						onReceive=self._onReceive
+					)
 					dev.setFeature(SEIKA_HID_FEATURES)  # baud rate, stop bit usw
 					dev.setFeature(SEIKA_CMD_ON)  # device on
 				elif self.isSerial:
 					log.info(f"Trying Seika notetaker on Bluetooth (serial) port:{port}")
 					self._dev = dev = hwIo.Serial(
-						port=port,
+						port=match.port,
 						onReceive=self._onReceive,
 						baudrate=BAUD,
 						parity=serial.PARITY_NONE,
@@ -115,7 +118,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					)
 					# Does the device need to be sent SEIKA_CMD_ON as per USB-HID?
 				else:
-					log.debug(f"Port type not handled: {match.portType}")
+					log.debug(f"Port type not handled: {match.type}")
 					continue
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
