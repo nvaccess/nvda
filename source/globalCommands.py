@@ -1969,7 +1969,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SYSTEMCARET,
 	)
 	def script_reportDetailsSummary(self, gesture):
-		"""Report the annotation details summary for the single character under the caret or the object with system focus.
+		"""Report the annotation details summary for the single character under the caret or the object with
+		system focus.
 		@note: It is tempting to try to report any annotation details that exists in the range formed by prior
 			and current location. This would be a new paradigm in NVDA, and may feel natural when moving by line
 			to be able to more quickly have the 'details' reported. However, there may be more than one 'details
