@@ -102,15 +102,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					log.info(f"Trying Seika notetaker on USB-HID")
 					self._dev = dev = hwIo.Hid(
 						path=match.port,  # for a Hid match type 'port' is actually 'path'.
-						onReceive=self._onReceive
+						onReceive=self._onReceiveHID
 					)
 					dev.setFeature(SEIKA_HID_FEATURES)  # baud rate, stop bit usw
 					dev.setFeature(SEIKA_CMD_ON)  # device on
 				elif self.isSerial:
-					log.info(f"Trying Seika notetaker on Bluetooth (serial) port:{port}")
+					log.info(f"Trying Seika notetaker on Bluetooth (serial) port:{match.port}")
 					self._dev = dev = hwIo.Serial(
 						port=match.port,
-						onReceive=self._onReceive,
+						onReceive=self._onReceiveSerial,
 						baudrate=BAUD,
 						parity=serial.PARITY_NONE,
 						bytesize=serial.EIGHTBITS,
@@ -127,11 +127,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				break
 			elif dev:
 				dev.close()
+				dev = None
 
 		if not dev:
 			RuntimeError("No MINI-SEIKA display found")
 		elif self.numCells == 0:
 			dev.close()
+			dev = None
 			raise RuntimeError("No MINI-SEIKA display found, no response")
 		else:
 			log.info(
@@ -165,14 +167,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		cellBytes = SEIKA_SEND_TEXT + bytes([self.numCells]) + bytes(cells)
 		self._dev.write(cellBytes)
 
-	def _onReceive(self, data: bytes):
+	def _onReceiveHID(self, data: bytes):
+		"""Three bytes at a time expected, only the middle byte is used to construct the command, the first
+		and third byte are discarded.
+		"""
+		stream = BytesIO(data)
+		cmd = stream.read(3)  # Note, first and third bytes are discarded
+		newByte: bytes = cmd[1:2]  # use range to return bytes type, containing only index 1
+		self._onReceive(newByte)
+
+	def _onReceiveSerial(self, data: bytes):
+		"""One byte at a time is expected"""
+		self._onReceive(data)
+
+	def _onReceive(self, newByte: bytes):
 		"""
 		Note: Further insight into this function would be greatly appreciated.
 		This function is a very simple state machine, each stage represents the collection of a field, when all
 		fields are collected the command they represent can be processed.
 
-		On each call to _onReceive three bytes are read from the device.
-		The first and third bytes are discarded, the second byte is appended to a buffer.
+		On each call to _onReceive the new byte is appended to a buffer.
 		The buffer is accumulated until the buffer has the required number of bytes for the field being collected.
 		There are 3 fields to be collected before a command can be processed:
 		1: first 3 bytes: command
@@ -182,9 +196,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		After accumulating enough bytes for each phase, the buffer is cleared and the next stage is entered.
 		"""
 		COMMAND_LEN = 3
-		stream = BytesIO(data)
-		cmd = stream.read(3)  # Note, first and third bytes are discarded
-		newByte: bytes = cmd[1:2]  # use range to return bytes
 		self._hidBuffer += newByte
 		hasCommandBeenCollected = self._command is not None
 		hasArgLenBeenCollected = self._argsLen is not None
