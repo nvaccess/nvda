@@ -101,7 +101,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if self.isHid:
 					log.info(f"Trying Seika notetaker on USB-HID")
 					self._dev = dev = hwIo.Hid(
-						path=match.port, # for a Hid match type 'port' is actually 'path'.
+						path=match.port,  # for a Hid match type 'port' is actually 'path'.
 						onReceive=self._onReceive
 					)
 					dev.setFeature(SEIKA_HID_FEATURES)  # baud rate, stop bit usw
