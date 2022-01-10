@@ -191,7 +191,15 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 	def updateNamespaceSnapshotVars(self):
 		"""Update the console namespace with a snapshot of NVDA's current state.
 		This creates/updates variables for the current focus, navigator object, etc.
+		Typically, used before the NVDA python console is opened, after which, calls
+		to the 'api' module will refer to this new focus.
 		"""
+		try:
+			caretPos = api.getCaretPosition()
+		except RuntimeError:
+			log.debug("Unable to set caretPos snapshot variable for python console.")
+			caretPos = None
+
 		self._namespaceSnapshotVars = {
 			"focus": api.getFocusObject(),
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
@@ -199,7 +207,9 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 			"fdl": api.getFocusDifferenceLevel(),
 			"fg": api.getForegroundObject(),
 			"nav": api.getNavigatorObject(),
-			"review":api.getReviewPosition(),
+			"caretObj": api.getCaretObject(),
+			"caretPos": caretPos,
+			"review": api.getReviewPosition(),
 			"mouse": api.getMouseObject(),
 			"brlRegions": braille.handler.buffer.regions,
 		}
