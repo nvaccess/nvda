@@ -1868,8 +1868,8 @@ The combo box has the following options:
 This group of options is used to enable features which add experimental support for ARIA annotations.
 Some of these features may be incomplete.
 The following options exist: 
-- "Report details in browse mode": enables reporting if an object has details in browse mode.
-Reporting the summary of those details can be done by assigning a gesture using the [Input Gestures dialog #InputGestures].
+- "Report 'has details' for structured annotations": enables reporting if the text or control has further details.
+A summary of the extra details can be reported by assigning a gesture to "Report summary of any annotation details at the system caret" using the [Input Gestures dialog #InputGestures].
 - "Report aria-description always":
   When the source of ``accDescription`` is aria-description, the description is reported.
   This is useful for annotations on the web.
