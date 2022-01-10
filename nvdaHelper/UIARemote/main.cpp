@@ -20,30 +20,41 @@ wchar_t dllDirectory[MAX_PATH];
 
 winrt::guid guid_msWord_extendedTextRangePattern{ 0x93514122, 0xff04, 0x4b2c, { 0xa4, 0xad, 0x4a, 0xb0, 0x45, 0x87, 0xc1, 0x29 } };
 winrt::guid guid_msWord_getCustomAttributeValue{ 0x81aca91, 0x32f2, 0x46f0, { 0x9f, 0xb9, 0x1, 0x70, 0x38, 0xbc, 0x45, 0xf8 } };
-winrt::guid guid_msWord_moveEndpointBySentence{ 0x368e89a2, 0x1bc2, 0x4402, { 0x8c, 0x58, 0x33, 0xc6, 0x3e, 0xcf, 0xfa, 0x3b } };
-winrt::guid guid_msWord_moveBySentence{ 0xf39655ac, 0x133a, 0x435b, { 0xa3, 0x18, 0xc1, 0x97, 0xf0, 0xd3, 0xd2, 0x3 } };
-winrt::guid guid_msWord_expandToEnclosingSentence { 0x98fe8b34, 0xf317, 0x459a, { 0x96, 0x27, 0x21, 0x12, 0x3e, 0xa9, 0x5b, 0xea } };
-winrt::guid guid_msWord_getMathText{ 0x380198e5, 0xa51f, 0x4618, { 0xa7, 0x8d, 0x57, 0xe9, 0x56, 0x8a, 0x38, 0x62 } };
 
-extern "C" __declspec(dllexport) IUIAutomationTextRange* __stdcall msWord_expandToEnclosingSentence(IUIAutomationTextRange* pTextRangeArg) {
+extern "C" __declspec(dllexport) bool __stdcall msWord_getCustomAttributeValue(IUIAutomationTextRange* pTextRangeArg, int customAttribIDArg, VARIANT* pCustomAttribValueArg) {
 	try {
 		auto scope=UiaOperationScope::StartNew();
-		UiaBool isPatternSupported{false};
+		UiaBool isExtensionSupported{false};
 		UiaTextRange textRange{pTextRangeArg};
+		UiaInt customAttribID{customAttribIDArg};
+		UiaVariant customAttribValue;
 		auto element = textRange.GetEnclosingElement();
-		isPatternSupported = element.IsExtensionSupported(guid_msWord_extendedTextRangePattern);
-		scope.If(isPatternSupported,[&]() {
+		scope.If(element.IsExtensionSupported(guid_msWord_extendedTextRangePattern),[&]() {
 			UiaElement patternElement{nullptr};
 			element.CallExtension(guid_msWord_extendedTextRangePattern, patternElement);
-			patternElement.CallExtension(guid_msWord_expandToEnclosingSentence, textRange);
+			scope.If(patternElement.IsExtensionSupported(guid_msWord_getCustomAttributeValue),[&]() {
+				isExtensionSupported = true;
+				patternElement.CallExtension(guid_msWord_getCustomAttributeValue, textRange, customAttribID, customAttribValue);
+			});
 		});
-		scope.BindResult(isPatternSupported, textRange);
+		scope.BindResult(isExtensionSupported, customAttribValue);
 		auto res = scope.ResolveHr();
 		if(res != S_OK) {
 			LOG_ERROR(L"Error in scope.Resolve: code "<<res);
 		}
-		if(isPatternSupported) {
-			return (*textRange).detach();
+		if(isExtensionSupported) {
+			if(customAttribValue.IsInt()) {
+				pCustomAttribValueArg->vt = VT_I4;
+				pCustomAttribValueArg->lVal = customAttribValue.AsInt();
+				return true;
+			} else if(customAttribValue.IsString()) {
+				pCustomAttribValueArg->vt = VT_BSTR;
+				pCustomAttribValueArg->bstrVal = customAttribValue.AsString().get();
+				return true;
+			} else {
+				LOG_ERROR(L"Unknown data type");
+				return false;
+			}
 		} else {
 			LOG_ERROR(L"Extension not supported");
 		}
@@ -54,9 +65,8 @@ extern "C" __declspec(dllexport) IUIAutomationTextRange* __stdcall msWord_expand
 	} catch(...) {
 		LOG_ERROR(L"msWord_expandToEnclosingSentence exception: unknown");
 	}
-	return nullptr;
+	return false;
 }
-
 
 extern "C" __declspec(dllexport) bool __stdcall initialize(bool doRemote, IUIAutomation* client) {
 	std::wstring manifestPath = dllDirectory;
