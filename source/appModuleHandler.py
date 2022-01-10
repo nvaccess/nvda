@@ -10,6 +10,7 @@
 @type runningTable: dict
 """
 
+from __future__ import annotations
 import itertools
 import ctypes
 import ctypes.wintypes

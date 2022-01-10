@@ -1084,7 +1084,7 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Description for a keyboard command which reports location of the
 			# review cursor, falling back to the location of navigator object if needed.
-			"Reports information about the location of the text at the review cursor "
+			"Reports information about the location of the text at the review cursor, "
 			"or location of the navigator object if there is no text under review cursor."
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
@@ -1120,7 +1120,7 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Description for a keyboard command which reports location of the
 			# currently focused object.
-			"Reports information about the location of the currently focused object"
+			"Reports information about the location of the currently focused object."
 		),
 		category=SCRCAT_FOCUS,
 	)
@@ -1147,7 +1147,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Description for a keyboard command
 			# which reports location of the text at the caret position
 			# or object with focus if there is no caret.
-			"Reports information about the location of the text or object at the position of system caret "
+			"Reports information about the location of the text or object at the position of system caret. "
 			"Pressing twice may provide further detail."
 		),
 		category=SCRCAT_SYSTEMCARET,

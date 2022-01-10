@@ -315,7 +315,7 @@ NVDA 允许您使用多种方式对系统进行浏览和导航，包括传统交
 | 朗读当前焦点 | NVDA+tab | NVDA+tab | 朗读当前焦点所在的对象和控件，连按两次将拼读此信息。 |
 | 朗读标题 | NVDA+t | NVDA+t | 朗读当前激活窗口的标题，连按两次将拼读此信息，连按三次将复制此信息到剪贴板。 |
 | 朗读激活的窗口 | NVDA+b | NVDA+b | 朗读当前窗口的所有控件(常用在对话框中)。 |
-| 朗读状态栏 | NVDA+end | NVDA+shift+end | 朗读状态栏(如果 NVDA 能找到)并将浏览光标移动到其位置之上。 |
+| 朗读状态栏 | NVDA+end | NVDA+shift+end | 读出当前应用程序的状态栏，连按两次拼读该信息，连按三次复制该信息到剪贴板。 |
 %kc:endInclude
 
 ++ 使用系统输入焦点进行导航 ++[SystemCaret]
@@ -381,6 +381,7 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 | 激活当前的浏览对象 | NVDA+小键盘回车 | NVDA+回车 | 点击两次 | 激活当前的导航对象(类似点击鼠标或者在有焦点的对象上按空格键)。 |
 | 移动焦点或系统输入焦点到当前浏览位置 | NVDA+shift+小键盘减号 | NVDA+shift+退格 | 无 | 按一次把系统焦点移动到当前浏览的对象，按两次把系统输入焦点移动到浏览光标所在的位置。 |
 | 朗读浏览光标的位置 | NVDA+小键盘删除 | NVDA+删除 | 无 | 朗读浏览光标所在的文本或对象的位置信息。如，这可能包括在文档位置的百分比，与页面边界的距离，或与屏幕的精确位置，连按两次读出更精确的信息。 |
+| 将导航对象移动到状态栏 | 无 | 无 | 无 | 读出当前应用程序的状态栏，并将导航对象移动到该状态栏（如果可能）。 |
 %kc:endInclude
 
 请注意，数字键盘必须处于关闭状态下小键盘的按键才能正常工作。
@@ -448,10 +449,10 @@ NVDA 的[文本查看命令 #ReviewingText] 可以查看当前导航对象的内
 当[对象导航 #ObjectNavigation]处于一个浏览模式文档时(例如web 页面)或其他复杂文档(例如一个 Lotus 交响乐文档)，可能会切换到文档浏览模式。
 文档浏览模式允许您浏览整个文档的内容。
 
-当切换对象浏览为文档浏览时，浏览光标将被放置在导航对象所在位置的文档上。
+当您从对象浏览切换为文档浏览时，浏览光标会被放置在导航对象所在位置的文档上。
  当使用查看命令在文档中移动时，对象导航将自动地更新到当前浏览光标所在位置的对象上。
 
-请注意，当在浏览模式文档中移动时，NVDA 将自动的从对象浏览切换到文档浏览。
+请注意，在浏览模式文档中移动时，NVDA 会自动从对象浏览切换到文档浏览。
 
 +++屏幕浏览 +++[ScreenReview]
 屏幕浏览模式允许您查看包含在当前程序内、实际上出现在屏幕上的文本。
@@ -1404,6 +1405,10 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 
 您或许可以在[支持的点显器 #SupportedBrailleDisplays]章节中查阅您的点显器设备的文档，已了解支持的可用端口的通讯类型的更多信息。
 
+请注意：如果您同时将多个盲文点显器连接到您的计算机，使用相同的驱动程序（例如连接两个 Seika 点显器），
+目前 NVDA 无法选择使用哪个点显器输出。
+因此，建议依次只连接一个类型 / 制造商的点显器。
+
 +++ 视觉辅助 +++[VisionSettings]
 NVDA设置对话框中的视觉辅助类别允许您启用，禁用和配置 [视觉辅助 #Vision].
 
@@ -1578,7 +1583,9 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 
 +++ 对象查看设置 (NVDA+control+o) +++[ObjectPresentationSettings]
 “对象查看...”这个部分控制NVDA展示的对象信息，例如对象的描述和位置信息。
-这个分类包含以下选项
+
+这些选项通常不适用于浏览模式。
+这些选项通常适用于系统焦点导航和 NVDA 对象导航，但不适用于阅读文本内容的场景，例如浏览模式。
 
 ==== 读出工具提示 ====[ObjectPresentationReportToolTips]
 一个复选框，如果选中则告诉 NVDA 朗读出现在屏幕的工具提示。
@@ -1741,9 +1748,9 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
  - 字体名称
  - 字体大小
  - 字体属性
- - 上角标和下角标
+ - 上标和下标
  - 强调
- - 高亮标注
+ - 突出显示（高亮）文本
  - 缩进
  - 颜色
 - 文档信息
@@ -1833,11 +1840,11 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 因此，启用此选项后，对于大多数事件，NVDA会将事件注册限制到系统焦点。
 如果您在一个或多个应用程序中遇到性能问题，我们建议您尝试使用此功能以查看性能是否有所提高。
 
-==== 在 Word 里使用Microsoft UI Automation （如果可用）====[AdvancedSettingsUseUiaForWord]
-Microsoft UI Automation是微软的最新无障碍接口 简称UIA，启用此选项后，NVDA将尝试使用Microsoft UI Automation这个无障碍接口从Word文档控件中获取信息。
-这包括Microsoft Word本身，以及Microsoft Outlook消息查看器和编写器。
-  对于在 Windows 10 或其后版本的操作系统上运行的最新版本的Office 2016或者Office 365，Microsoft UI Automation能够获取的信息和原来的方式差不多，而且响应速度更快。
-但是，在某些版本的 Office 中可能存在某些未能正确读取或读取信息有错误的可能，这也说明 UI Automation并不必然可用。
+==== 在 Word 中使用 UIA 接口（如果可用） ====[AdvancedSettingsUseUiaForWord]
+Microsoft UI Automation是微软的最新无障碍接口 简称 UIA，启用此选项后，NVDA 将尝试使用 Microsoft UIA 辅助功能 API 从 Microsoft Word 文档控件中获取信息。
+本选项应用于 Microsoft Word 本身，以及 Microsoft Outlook 消息查看器和编辑器。
+ 对于在 Windows 10 或其后版本的操作系统上运行的最新版本的Office 2016或者Office 365，Microsoft UI Automation能够获取的信息和原来的方式差不多，而且响应速度更快。
+但是，在某些版本的 Office 中可能存在某些未能正确读取或读取信息有错误的可能，这也说明 UI Automation 尚有待完善。
 我们建议大多数用户不要启用此功能，但我们欢迎Office 2016或者Office 365的用户测试此功能并提供反馈。
 
 ==== 使用Microsoft UI Automation支持命令提示符 ====[AdvancedSettingsConsoleUIA]
@@ -1856,13 +1863,21 @@ UIA 对基于 Chromium 的浏览器的支持目前处于早期开发阶段，可
 - 否：不使用 UIA ，即使 NVDA 无法在进程中注入。这可能对开发人员调试 IA2 的问题很有用，或者希望确保 NVDA 不会自动退回到 UIA 。
 -
 
-==== 启用实验性的 ARIA 注释支持====[Annotations]
-为 ARIA 注释启用实验性质的朗读支持特性。
-当中的某些特性可能并不完整。
+==== 注释 ====[Annotations]
+这组选项为 ARIA 注释启用实验性的朗读支持特性。
+其中的某些特性可能并不完整。
 存在如下选项：
 - “在浏览模式启用详细信息朗读”：当对象包含详细信息时朗读该信息。
 可在[按键与手势对话框 #InputGestures]添加快捷方式以定义朗读详细内容的摘要。
--
+- “始终读出 aria-description”：
+  当 ``accDescription`` 的来源是 aria-description 时，则读出描述。
+  这对于 Web 上的注释很有用。
+  注意：
+  - ``accDescription`` 有很多来源，其中一些具有混合或不可靠的语义。
+  从历史上看，AT 无法区分 ``accDescription`` 的来源，由于混合语义，通常不会朗读。
+  - 此选项正处于初期开发阶段，依赖于尚未广泛使用的浏览器功能。
+  - 预计适用于 Chromium 92.0.4479.0 以上。
+  -
 
 ==== 在 Excel 调用 UI Automation 接口（如果可用） ====[UseUiaForExcel]
 启用该选项后，NVDA 将尝试使用 Microsoft UI Automation 接口从 Excel 表格中获取信息。
@@ -1901,10 +1916,21 @@ Windows 10 版本 1607 及更高版本上的 Windows 控制台支持此功能。
 此选项允许您配置NVDA等多长时间之后才从编辑框获取光标位置。
 如果您发现NVDA光标朗读有问题，比如位置不对，那么你可以增加这个时间试试。
 
+==== 读出透明色值 ====[ReportTransparentColors]
+启用此选项可在颜色透明时朗读，这对于插件开发者收集信息以改善用户使用第三方应用程序的体验非常有用。
+一些 GDI 应用程序会用背景颜色突出显示文本，NVDA（通过显示模型）尝试读出这些颜色。
+在某些情况下，文本背景可能是完全透明的，文本分层在其他一些 GUI 元素上。
+使用几个历史上流行的 GUI API，文本可能会以透明背景渲染，但在视觉上背景颜色是准确的。
+
 ==== 调试日志 ====[AdvancedSettingsDebugLoggingCategories]
 此列表中的复选框允许您在NVDA日志中启用特定类别的调试信息。
 记录这些信息可能会影响性能而且会增大日志文件的体积。
 例如 调试盲文显示器驱动程序时，NVDA开发者会让你打开其中一个，请不要同时开启多个。
+
+==== 日志记录后播放错误提示音 ====[PlayErrorSound]
+此选项允许您选择 NVDA 是否在捕捉到错误时播放错误提示音。
+选择“仅测试版”（默认）仅当 NVDA 版本是测试版本（alpha、beta 或从源代码运行）时 NVDA 会播放错误提示音。
+选择“是”，启用错误声音，无论您当前的 NVDA 是什么版本。
 
 ++ 杂项设置 ++[MiscSettings]
 除了[NVDA 设置 #NVDASettings]对话框以外，NVDA菜单的“首选项”子菜单包含下面列出的其他几个项目。
@@ -2332,6 +2358,7 @@ NVDA能够通过USB或蓝牙自动检测后台的许多点显器。
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
+- 任何支持 HID 协议的点显器
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -3154,6 +3181,37 @@ Please see the [BRLTTY key binding lists https://mielke.cc/brltty/doc/KeyBinding
 | Move braille display to previous line | lnup (go up one line) |
 | Move braille display to next line | lndn (go down one line) |
 | Route to braille cell | route (bring cursor to character) |
+%kc:endInclude
+
+++ Standard HID Braille displays ++[HIDBraille]
+This is an experimental driver for the new Standard HID Braille Specification, agreed upon in 2018 by Microsoft, Google, Apple and several assistive technology companies including NV Access. 
+The hope is that all future Braille Display models created by any manufacturer, will use this standard protocol which will remove the need for manufacturer-specific Braille drivers.
+
+NVDA's automatic braille display detection will also recognize any display that supports this protocol.
+ 
+Following are the current key assignments for these displays.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | pan left or rocker up |
+| Scroll braille display forward | pan right or rocker down |
+| Move braille display to previous line | space + dot1 |
+| Move braille display to next line | space + dot4 |
+| Route to braille cell | routing set 1 |
+| Toggle braille tethered to | up+down |
+| upArrow key | joystick up |
+| downArrow key | joystick down |
+| leftArrow key | space+dot3 or joystick left |
+| rightArrow key | space+dot6 or joystick right |
+| shift+tab key | space+dot1+dot3 |
+| tab key | space+dot4+dot6 |
+| alt key | space+dot1+dot3+dot4 (space+m) |
+| escape key | space+dot1+dot5 (space+e) |
+| enter key | dot8 or joystick center |
+| windows key | space+dot3+dot4 |
+| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
 %kc:endInclude
 
 + 进阶内容 +[AdvancedTopics]
