@@ -20,11 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
 #include <remote/vbufRemote.h>
-
-#ifndef _M_ARM64
-	#include <remote/displayModelRemote.h>
-#endif //_M_ARM64
-
+#include <remote/displayModelRemote.h>
 #include <remote/NvdaInProcUtils.h>
 #include <remote/nvdaControllerInternal.h>
 #include "rpcSrv.h"
@@ -33,9 +29,7 @@ typedef RPC_STATUS(RPC_ENTRY *RpcServerRegisterIf3_functype)(RPC_IF_HANDLE,UUID 
 
 RPC_IF_HANDLE availableInterfaces[]={
 	nvdaInProcUtils_NvdaInProcUtils_v1_0_s_ifspec,
-#ifndef _M_ARM64
 	displayModelRemote_DisplayModel_v1_0_s_ifspec,
-#endif
 	VBufRemote_VBuf_v2_0_s_ifspec,
 };
 
