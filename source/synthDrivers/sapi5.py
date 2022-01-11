@@ -342,7 +342,7 @@ class SynthDriver(SynthDriver):
 		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
 		# Ducking should be complete before the synth starts producing audio.
 		# For this to happen, the speech method must block until ducking is complete.
-		# Ducking should be disabled when the synch is finished producing audio.
+		# Ducking should be disabled when the synth is finished producing audio.
 		# Note that there may be calls to speak with a string that results in no audio,
 		# it is important that in this case the audio does not get stuck ducked.
 		# When there is no audio produced the startStream and endStream handlers are not called.
