@@ -348,9 +348,10 @@ class SynthDriver(SynthDriver):
 		# When there is no audio produced the startStream and endStream handlers are not called.
 		# To prevent audio getting stuck ducked, it is unducked at the end of speech.
 		# There are some known issues:
-		# When there is no audio produced by the synth, a user may notice volume lowering (ducking) temporarily.
-		# If the call to startStream handler is delayed significantly, users may notice a variation in volume
+		# - When there is no audio produced by the synth, a user may notice volume lowering (ducking) temporarily.
+		# - If the call to startStream handler is delayed significantly, users may notice a variation in volume
 		# (as ducking is disabled at the end of speak, and re-enabled when the startStream handler is called)
+		
 		# A note on the synchronicity of components of this approach:
 		# SAPISink.StartStream event handler (callback):
 		# the synth speech is not blocked by this event callback.
