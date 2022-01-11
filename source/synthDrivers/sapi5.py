@@ -340,16 +340,29 @@ class SynthDriver(SynthDriver):
 
 		text = "".join(textList)
 		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
-		# Although background audio is ducked in SAPISink.StartStream
-		# and unducks in SAPISink.EndStream,
-		# those events are asynchronous and therefor enabling audio ducking
-		# cannot enforce a delay before the speech stream starts,
-		# while audio is being faded down.
-		# Therefore, create a temporary AudioDucker object,
-		# and enable and disable it directly around the call to speak,
-		# So that enabling audio ducking suitably delays the speak call if necessary.
-		# Although speak does not block and audio ducking is disabled straight after,
-		# Audio will be still ducked for enough time for the subsequent StartStream to keep it enabled.
+		# Ducking should be complete before the synth starts producing audio.
+		# For this to happen, the speech method must block until ducking is complete.
+		# Ducking should be disabled when the synch is finished producing audio.
+		# Note that there may be calls to speak with a string that results in no audio,
+		# it is important that in this case the audio does not get stuck ducked.
+		# When there is no audio produced the startStream and endStream handlers are not called.
+		# To prevent audio getting stuck ducked, it is unducked at the end of speech.
+		# There are some known issues:
+		# When there is no audio produced by the synth, a user may notice volume lowering (ducking) temporarily.
+		# If the call to startStream handler is delayed significantly, users may notice a variation in volume
+		# (as ducking is disabled at the end of speak, and re-enabled when the startStream handler is called)
+		# A note on the synchronicity of components of this approach:
+		# SAPISink.StartStream event handler (callback):
+		# the synth speech is not blocked by this event callback.
+		# SAPISink.EndStream event handler (callback):
+		# assumed also to be async but not confirmed. Synchronicity is irrelevant to the current approach.
+		# AudioDucker.disable returns before the audio is completely unducked.
+		# AudioDucker.enable() ducking will complete before the function returns.
+		# It is not possible to "double duck the audio", calling twice yields the same result as calling once.
+		# AudioDucker class instances count the number of enables/disables,
+		# in order to unduck there must be no remaining enabled audio ducker instances.
+		# Due to this a temporary audio ducker is used around the call to speak.
+		# SAPISink.StartStream: Ducking here may allow the early speech to start before ducking is completed.
 		if audioDucking.isAudioDuckingSupported():
 			tempAudioDucker = audioDucking.AudioDucker()
 		else:
