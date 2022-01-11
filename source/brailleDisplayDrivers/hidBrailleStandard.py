@@ -18,6 +18,14 @@ from hwIo import intToByte
 from bdDetect import HID_USAGE_PAGE_BRAILLE
 
 
+def isSupportEnabled() -> bool:
+	import config
+	return config.conf["braille"]["enableHidBrailleSupport"] in [
+		1,  # yes
+		0,  # Use default/recommended value, currently "yes"
+	]
+
+
 class BraillePageUsageID(enum.IntEnum):
 	UNDEFINED = 0
 	BRAILLE_DISPLAY = 0x1
@@ -71,12 +79,19 @@ class ButtonCapsInfo:
 	relativeIndexInCollection: int = 0
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class HidBrailleDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.hid.Hid
-	name = "hid"
+	name = "hidBrailleStandard"
 	# Translators: The name of a series of braille displays.
 	description = _("Standard HID Braille Display")
 	isThreadSafe = True
+
+	@classmethod
+	def check(cls):
+		return (
+			isSupportEnabled()
+			and super().check()
+		)
 
 	def __init__(self, port="auto"):
 		super().__init__()
@@ -235,7 +250,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
-	source = BrailleDisplayDriver.name
+	source = HidBrailleDriver.name
 
 	def __init__(self, driver, dataIndices):
 		super().__init__()
@@ -307,3 +322,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		# Join the words together as  camelcase.
 		name = "".join(wordList)
 		return name
+
+
+BrailleDisplayDriver = HidBrailleDriver

@@ -61,6 +61,18 @@ ARIA details
 	[Documentation]	Ensure a summary of aria-details is read on command from a mark element
 	[Tags]	annotations
 	test_mark_aria_details
+ARIA details with free review and nav
+	[Documentation]	Variation on the ARIA details test with the config changed so the review cursor does not follow the caret and the nav object doesn't follow focus.
+	[Tags]	annotations
+	test_mark_aria_details_FreeReviewCursor
+ARIA details noVbuf
+	[Documentation]	Test for retrieving ARIA details from a button inside a role=application
+	[Tags]	annotations
+	test_aria_details_noVBufNoTextInterface
+ARIA details noVbuf with free review and nav
+	[Documentation]	Test for retrieving ARIA details from a button inside a role=application with the config changed so the review cursor does not follow the caret and the nav object doesn't follow focus.
+	[Tags]	annotations
+	test_aria_details_noVBufNoTextInterface
 i12147
 	[Documentation]	New focus target should be announced if the triggering element is removed when activated
 	test_i12147

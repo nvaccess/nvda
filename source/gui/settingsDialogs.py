@@ -2703,7 +2703,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Report details in browse mode")
+		label = _("Report 'has details' for structured annotations")
 		self.annotationsDetailsCheckBox = AnnotationsGroup.addItem(wx.CheckBox(AnnotationsBox, label=label))
 		self.annotationsDetailsCheckBox.SetValue(config.conf["annotations"]["reportDetails"])
 		self.annotationsDetailsCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportDetails"])
@@ -2716,6 +2716,42 @@ class AdvancedPanelControls(
 		)
 		self.ariaDescCheckBox.SetValue(config.conf["annotations"]["reportAriaDescription"])
 		self.ariaDescCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportAriaDescription"])
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("HID Braille Standard")
+		hidBrailleSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		hidBrailleBox = hidBrailleSizer.GetStaticBox()
+		hidBrailleGroup = guiHelper.BoxSizerHelper(self, sizer=hidBrailleSizer)
+		self.bindHelpEvent("HIDBraille", hidBrailleBox)
+		sHelper.addItem(hidBrailleGroup)
+
+		supportHidBrailleChoices = [
+			# Translators: Label for option in the 'Enable support for HID braille' combobox
+			# in the Advanced settings panel.
+			_("Default (Yes)"),
+			# Translators: Label for option in the 'Enable support for HID braille' combobox
+			# in the Advanced settings panel.
+			_("Yes"),
+			# Translators: Label for option in the 'Enable support for HID braille' combobox
+			# in the Advanced settings panel.
+			_("No"),
+		]
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Enable support for HID braille")
+		self.supportHidBrailleCombo: wx.Choice = hidBrailleGroup.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=wx.Choice,
+			choices=supportHidBrailleChoices,
+		)
+		self.supportHidBrailleCombo.SetSelection(
+			config.conf["braille"]["enableHidBrailleSupport"]
+		)
+		self.supportHidBrailleCombo.defaultValue = self._getDefaultValue(
+			["braille", "enableHidBrailleSupport"]
+		)
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2934,6 +2970,7 @@ class AdvancedPanelControls(
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
+			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
@@ -2951,6 +2988,7 @@ class AdvancedPanelControls(
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
+		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
@@ -2979,6 +3017,8 @@ class AdvancedPanelControls(
 		)
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
+		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
+
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()

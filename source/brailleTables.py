@@ -77,7 +77,7 @@ RENAMED_TABLES = {
 	"he.ctb": "he-IL-comp8.utb",
 	"hr.ctb":"hr-comp8.utb",
 	"mn-MN.utb":"mn-MN-g1.utb",
-	"nl-BE-g1.ctb":"nl-BE-g0.utb",
+	"nl-BE-g0.utb": "nl-NL-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
 	"no-no.ctb":"no-no-8dot.utb",
 	"no-no-comp8.ctb":"no-no-8dot.utb",
@@ -299,6 +299,9 @@ addTable("it-it-comp6.utb", _("Italian 6 dot computer braille"))
 addTable("it-it-comp8.utb", _("Italian 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("ja-kantenji.utb", _("Japanese (Kantenji) literary braille"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("ka-in-g1.utb", _("Kannada grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -359,10 +362,7 @@ addTable("my-g1.utb", _("Burmese grade 1"))
 addTable("my-g2.ctb", _("Burmese grade 2"), contracted=True, input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("nl-BE-g0.utb", _("Dutch (Belgium) 6 dot"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("nl-NL-g0.utb", _("Dutch (Netherlands) 6 dot"))
+addTable("nl-NL-g0.utb", _("Dutch 6 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("nl-comp8.utb", _("Dutch 8 dot"))
@@ -398,7 +398,7 @@ addTable("or-in-g1.utb", _("Oriya grade 1"))
 addTable("pl-pl-comp8.ctb", _("Polish 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("Pl-Pl-g1.utb", _("Polish grade 1"))
+addTable("Pl-Pl-g1.utb", _("Polish literary braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("pt-pt-comp8.ctb", _("Portuguese 8 dot computer braille"))
