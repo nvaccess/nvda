@@ -221,8 +221,6 @@ positiveStateLabels = {
 	controlTypes.State.SORTED_ASCENDING: _("sorted asc"),
 	# Translators: Displayed in braille when an object is sorted descending.
 	controlTypes.State.SORTED_DESCENDING: _("sorted desc"),
-	# Translators: Displayed in braille when an object has additional details (such as a comment section).
-	controlTypes.State.HAS_ARIA_DETAILS: _("details"),
 	# Translators: Displayed in braille when an object (usually a graphic) has a long description.
 	controlTypes.State.HASLONGDESC: _("ldesc"),
 	# Translators: Displayed in braille when there is a formula on a spreadsheet cell.
@@ -543,6 +541,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	description = propertyValues.get("description")
 	if description:
 		textList.append(description)
+	hasDetails = propertyValues.get("hasDetails")
+	if hasDetails:
+		textList.append("details")
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
@@ -643,6 +644,7 @@ class NVDAObjectRegion(Region):
 			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
+			hasDetails=obj.hasDetails,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,
@@ -716,6 +718,7 @@ def getControlFieldBraille(  # noqa: C901
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
+	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
@@ -762,6 +765,7 @@ def getControlFieldBraille(  # noqa: C901
 			"placeholder": placeholder,
 			"roleText": roleText,
 			"description": description,
+			"hasDetails": hasDetails,
 		}
 		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
