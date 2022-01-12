@@ -221,8 +221,6 @@ positiveStateLabels = {
 	controlTypes.State.SORTED_ASCENDING: _("sorted asc"),
 	# Translators: Displayed in braille when an object is sorted descending.
 	controlTypes.State.SORTED_DESCENDING: _("sorted desc"),
-	# Translators: Displayed in braille when an object has additional details (such as a comment section).
-	controlTypes.State.HAS_ARIA_DETAILS: _("details"),
 	# Translators: Displayed in braille when an object (usually a graphic) has a long description.
 	controlTypes.State.HASLONGDESC: _("ldesc"),
 	# Translators: Displayed in braille when there is a formula on a spreadsheet cell.
@@ -543,6 +541,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	description = propertyValues.get("description")
 	if description:
 		textList.append(description)
+	hasDetails = propertyValues.get("hasDetails")
+	if hasDetails:
+		textList.append("details")
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
@@ -643,6 +644,7 @@ class NVDAObjectRegion(Region):
 			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
+			hasDetails=obj.hasDetails,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,
@@ -716,10 +718,11 @@ def getControlFieldBraille(  # noqa: C901
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
+	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
-		roleText = f"{controlTypes.Role.LANDMARK.displayString} {landmarkLabels[landmark]}"
+		roleText = f"{roleLabels[controlTypes.Role.LANDMARK]} {landmarkLabels[landmark]}"
 
 	content = field.get("content")
 
@@ -762,6 +765,7 @@ def getControlFieldBraille(  # noqa: C901
 			"placeholder": placeholder,
 			"roleText": roleText,
 			"description": description,
+			"hasDetails": hasDetails,
 		}
 		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
@@ -2281,10 +2285,15 @@ class _BgThread:
 			if cls.exit:
 				break
 
-#: Maps old braille display driver names to new drivers that supersede old drivers.
+
+# Maps old braille display driver names to new drivers that supersede old drivers.
+# Ensure that if a user has set a preferred driver which has changed name, the new
+# user preference is retained.
 RENAMED_DRIVERS = {
-	"syncBraille":"hims",
-	"alvaBC6":"alva"
+	# "oldDriverName": "newDriverName"
+	"syncBraille": "hims",
+	"alvaBC6": "alva",
+	"hid": "hidBrailleStandard",
 }
 
 handler: BrailleHandler
@@ -2477,11 +2486,11 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			pass
 
 	@classmethod
-	def getManualPorts(cls) -> Iterable[str]:
+	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""Get possible manual hardware ports for this driver.
 		This is for ports which cannot be detected automatically
 		such as serial ports.
-		@return: The name and description for each port.
+		@return: An iterator containing the name and description for each port.
 		"""
 		raise NotImplementedError
 
@@ -2746,7 +2755,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
 
 
-def getSerialPorts(filterFunc=None):
+def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
 	"""Get available serial ports in a format suitable for L{BrailleDisplayDriver.getManualPorts}.
 	@param filterFunc: a function executed on every dictionary retrieved using L{hwPortUtils.listComPorts}.
 		For example, this can be used to filter by USB or Bluetooth com ports.

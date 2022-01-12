@@ -219,12 +219,8 @@ if signExec:
 	env.AddPostAction(clientLib[0],[signExec])
 env.Install(clientInstallDir,clientLib)
 
-if TARGET_ARCH != 'arm64':
-	minHookLib=env.SConscript('minHook/sconscript')
-	Export('minHookLib')
-	if signExec:
-		env.AddPostAction(minHookLib[0],[signExec])
-	env.Install(libInstallDir,minHookLib)
+detoursLib = env.SConscript('detours/sconscript')
+Export('detoursLib')
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')

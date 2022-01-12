@@ -140,6 +140,8 @@ class NVDASpyLib:
 	def _onNvdaBraille(self, rawText: str):
 		if not rawText:
 			return
+		if not isinstance(rawText, str):
+			raise TypeError(f"rawText expected as str, got: {type(rawText)}, {rawText!r}")
 		with self._brailleLock:
 			self._nvdaBraille_requiresLock.append(rawText)
 
