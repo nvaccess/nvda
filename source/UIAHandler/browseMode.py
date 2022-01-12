@@ -166,21 +166,6 @@ def UIAHeadingQuicknavIterator(
 		direction: str = "next"
 ):
 	reverse=(direction=="previous")
-	entireDocument=document.makeTextInfo(textInfos.POSITION_ALL)
-	if not position:
-		searchArea=entireDocument
-	else:
-		searchArea=position.copy()
-		if reverse:
-			searchArea.setEndPoint(entireDocument,"startToStart")
-		else:
-			searchArea.setEndPoint(entireDocument,"endToEnd")
-	maxItems = 1 if position else 0
-	level = int(itemType[7:]) if len(itemType)>7 else 0
-	for foundLevel, foundLabel, foundRange in UIARemote.findHeadingsInTextRange(searchArea._rangeObj, maxItems=maxItems, backwards=reverse, level=level):
-		foundRange = document.makeTextInfo(foundRange)
-		yield HeadingUIATextInfoQuickNavItem(itemType,document,foundRange,level=foundLevel, label=foundLabel)
-	return
 	if position:
 		curPosition=position
 	else:
