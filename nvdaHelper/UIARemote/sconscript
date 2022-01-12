@@ -28,8 +28,7 @@ UIARemoteLib=env.SharedLibrary(
 	target="UIARemote",
 	source=[
 		env['projectResFile'],
-		"main.cpp",
-		"findHeadings.cpp",
+		"UIARemote.cpp",
 	],
 	LIBS=[
 		"runtimeobject",
