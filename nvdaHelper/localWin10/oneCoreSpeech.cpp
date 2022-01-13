@@ -78,7 +78,8 @@ fire_and_forget OcSpeech::speak(hstring text) {
 		// speechStream.Size() is 64 bit, but Buffer can only take 32 bit.
 		// We shouldn't get values above 32 bit in reality.
 		const unsigned int size = static_cast<unsigned int>(speechStream.Size());
-		Buffer buffer = Buffer{ size };
+		Buffer buffer { size };
+
 		IVectorView<IMediaMarker> markers = speechStream.Markers();
 		for (auto const& marker : markers) {
 			if (markersStr->length() > 0) {
