@@ -8,6 +8,7 @@ from typing import (
 	Dict,
 )
 
+import enum
 from comtypes import COMError
 from collections import defaultdict
 import mathPres
@@ -15,6 +16,7 @@ from scriptHandler import isScriptWaiting
 import textInfos
 import eventHandler
 import UIAHandler
+import UIARemote
 from logHandler import log
 import controlTypes
 import ui
@@ -39,6 +41,14 @@ from scriptHandler import script
 
 
 """Support for Microsoft Word via UI Automation."""
+
+class UIACustomAttributeID(enum.IntEnum):
+	LINE_NUMBER = 0
+	PAGE_NUMBER = 1
+	COLUMN_NUMBER = 2
+	SECTION_NUMBER =3
+	BOOKMARK_NAME = 4
+
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
 END_OF_ROW_MARK = '\x07'
@@ -416,6 +426,21 @@ class WordDocumentTextInfo(UIATextInfo):
 			else:
 				index+=1
 		return fields
+
+	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
+		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
+		if not formatField:
+			return formatField
+		if formatConfig['reportLineNumber']:
+			lineNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.LINE_NUMBER)
+			if isinstance(lineNumber, int):
+				formatField.field['line-number'] = lineNumber
+		if formatConfig['reportPage']:
+			sectionNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.SECTION_NUMBER)
+			if isinstance(sectionNumber, int):
+				formatField.field['section-number'] = sectionNumber
+		return formatField
+
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 
