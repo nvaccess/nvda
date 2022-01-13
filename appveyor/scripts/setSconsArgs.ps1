@@ -16,7 +16,7 @@ if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
 }
 $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
 # Use only 1 concurrent job when building
-$sconsArgs += "-j1"
+$sconsArgs += " -j1"
 # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
 # It's possible to work around this, but the workarounds have annoying side effects.
 Set-AppveyorBuildVariable "sconsOutTargets" $sconsOutTargets
