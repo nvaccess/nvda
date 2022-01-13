@@ -7,6 +7,7 @@
 import sys
 import os
 import platform
+import multiprocessing
 
 # Ensure we are inside the Python virtual environment.
 nvdaVenv = os.getenv("NVDA_VENV")
@@ -121,8 +122,13 @@ env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"recursiveInstall"
 ])
 
-# speed up subsiquent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
+# speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
+
+# Make sure to run the build on multiple threads so it runs faster
+env.SetOption('num_jobs', multiprocessing.cpu_count())
+realNumJobs = env.GetOption('num_jobs')
+print(f"Building using {realNumJobs} job{'s' if realNumJobs != 1 else ''}")
 
 #Make our recursiveCopy function available to any script using this environment
 env.AddMethod(recursiveCopy)
