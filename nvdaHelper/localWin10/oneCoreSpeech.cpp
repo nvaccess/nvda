@@ -66,7 +66,7 @@ fire_and_forget OcSpeech::speak(hstring text) {
 		// Ensure that work is performed on a background thread.
 		co_await resume_background();
 
-		auto markersStr = make_shared<wstring>();
+		wstring markersStr;
 		SpeechSynthesisStream speechStream{ nullptr };
 		try {
 			speechStream = co_await synth.SynthesizeSsmlToStreamAsync(text);
@@ -82,19 +82,19 @@ fire_and_forget OcSpeech::speak(hstring text) {
 
 		IVectorView<IMediaMarker> markers = speechStream.Markers();
 		for (auto const& marker : markers) {
-			if (markersStr->length() > 0) {
-				*markersStr += L"|";
+			if (markersStr.length() > 0) {
+				markersStr += L"|";
 			}
-			*markersStr += marker.Text();
-			*markersStr += L":";
-			*markersStr += to_wstring(marker.Time().count());
+			markersStr += marker.Text();
+			markersStr += L":";
+			markersStr += to_wstring(marker.Time().count());
 		}
 		try {
 			co_await speechStream.ReadAsync(buffer, size, InputStreamOptions::None);
 			// Data has been read from the speech stream.
 			// Pass it to the callback.
 			BYTE* bytes = buffer.data();
-			callback(bytes, buffer.Length(), markersStr->c_str());
+			callback(bytes, buffer.Length(), markersStr.c_str());
 		} catch (hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
 			callback(nullptr, 0, nullptr);
