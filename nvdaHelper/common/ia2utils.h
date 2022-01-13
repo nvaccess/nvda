@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2019 NV Access Limited, Mozilla Corporation
+Copyright 2007-2021 NV Access Limited, Mozilla Corporation
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -20,6 +20,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <map>
 #include <memory>
 #include <ia2.h>
+
+bool fetchIA2Attributes(IAccessible2* pacc2, std::map<std::wstring, std::wstring>& attribsMap);
 
 /**
  * Convert an IAccessible2 attributes string to a map of attribute keys and values.
