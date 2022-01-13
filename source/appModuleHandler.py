@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
-# Babbage B.V., Mozilla Corporation
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Babbage B.V., Mozilla Corporation, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,11 +10,16 @@
 @type runningTable: dict
 """
 
+from __future__ import annotations
 import itertools
 import ctypes
 import ctypes.wintypes
 import os
 import sys
+from typing import (
+	Optional,
+)
+
 import winVersion
 import pkgutil
 import importlib
@@ -345,7 +350,10 @@ class AppModule(baseObject.ScriptableObject):
 		#: @type: str
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
-		self.helperLocalBindingHandle=None
+
+		self.helperLocalBindingHandle: Optional[ctypes.c_long] = None
+		"""RPC binding handle pointing to the RPC server for this process"""
+
 		self._inprocRegistrationHandle=None
 
 	def _getExecutableFileInfo(self):
@@ -599,6 +607,13 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError()
 
+	def getStatusBarText(self, obj: NVDAObjects.NVDAObject) -> str:
+		"""Get the text from the given status bar.
+		If C{NotImplementedError} is raised, L{api.getStatusBarText} will resort to
+		retrieve the name of the status bar and the names and values of all of its children.
+		"""
+		raise NotImplementedError()
+
 	def _get_statusBarTextInfo(self):
 		"""Retrieve a L{TextInfo} positioned at the status bar of the application.
 		This is used by L{GlobalCommands.script_reportStatusLine} in cases where
@@ -608,6 +623,7 @@ class AppModule(baseObject.ScriptableObject):
 		@rtype: TextInfo
 		"""
 		raise NotImplementedError()
+
 
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.

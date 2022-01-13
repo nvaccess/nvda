@@ -16,8 +16,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #include <rpc.h>
 #include <sddl.h>
-#include "nvdaController.h"
-#include "nvdaControllerInternal.h"
+#include <local/nvdaController.h>
+#include <local/nvdaControllerInternal.h>
 #include <common/winIPCUtils.h>
 #include <common/log.h>
 #include "rpcSrv.h"

@@ -1,10 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
+# Copyright (C) 2006-2021 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
 # Davy Kager, Babbage B.V., Leonard de Ruijter, Joseph Lee, Accessolutions, Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""General functions for NVDA"""
+"""General functions for NVDA
+Functions should mostly refer to getting an object (NVDAObject) or a position (TextInfo).
+"""
+import typing
 
 import config
 import textInfos
@@ -24,6 +27,9 @@ import exceptions
 import appModuleHandler
 import cursorManager
 from typing import Any, Optional
+
+if typing.TYPE_CHECKING:
+	import documentBase
 
 
 #User functions
@@ -182,8 +188,10 @@ def setDesktopObject(obj):
 	"""Tells NVDA to remember the given object as the desktop object"""
 	globalVars.desktopObject=obj
 
-def getReviewPosition():
-	"""Retreaves the current TextInfo instance representing the user's review position. If it is not set, it uses the user's set navigator object and creates a TextInfo from that.
+
+def getReviewPosition() -> textInfos.TextInfo:
+	"""Retrieves the current TextInfo instance representing the user's review position.
+	If it is not set, it uses navigator object to create a TextInfo.
 	"""
 	if globalVars.reviewPosition: 
 		return globalVars.reviewPosition
@@ -374,6 +382,10 @@ def getStatusBarText(obj):
 	@return: The status bar text.
 	@rtype: str
 	"""
+	try:
+		return obj.appModule.getStatusBarText(obj)
+	except NotImplementedError:
+		pass
 	text = obj.name or ""
 	if text:
 		text += " "
@@ -419,13 +431,24 @@ def isObjectInActiveTreeInterceptor(obj: NVDAObjects.NVDAObject) -> bool:
 	)
 
 
-def getCaretObject():
+def getCaretPosition() -> "textInfos.TextInfo":
+	"""Gets a text info at the position of the caret.
+	"""
+	textContainerObj = getCaretObject()
+	if not textContainerObj:
+		raise RuntimeError("No Caret Object available, this is expected while NVDA is still starting up.")
+	return textContainerObj.makeTextInfo("caret")
+
+
+def getCaretObject() -> "documentBase.TextContainerObject":
 	"""Gets the object which contains the caret.
-	This is normally the focus object.
-	However, if the focus object has a tree interceptor which is not in focus mode,
-	the tree interceptor will be returned.
+	This is normally the NVDAObject with focus, unless it has a browse mode tree interceptor to return instead.
 	@return: The object containing the caret.
-	@rtype: L{baseObject.ScriptableObject}
+	@note: Note: this may not be the NVDA Object closest to the caret, EG an edit text box may have focus,
+	and contain multiple NVDAObjects closer to the caret position, consider instead:
+		ti = getCaretPosition()
+		ti.expand(textInfos.UNIT_CHARACTER)
+		closestObj = ti.NVDAObjectAtStart
 	"""
 	obj = getFocusObject()
 	ti = obj.treeInterceptor

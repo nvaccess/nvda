@@ -10,7 +10,10 @@ import threading
 import ctypes
 import collections
 import itertools
-import typing
+from typing import (
+	Optional,
+	Dict,
+)
 import weakref
 import wx
 import review
@@ -260,23 +263,30 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 					return placeholder
 		return None
 
-	def _getFieldsInRange(self,start,end):
+	def _normalizeCommand(self, command: XMLFormatting.CommandsT) -> XMLFormatting.CommandsT:
+		if not isinstance(command, textInfos.FieldCommand):
+			return command  # no need to normalize str or None
+		field = command.field
+		if isinstance(field, textInfos.ControlField):
+			command.field = self._normalizeControlField(field)
+		elif isinstance(field, textInfos.FormatField):
+			command.field = self._normalizeFormatField(field)
+		return command
+
+	def _getFieldsInRange(self, start: int, end: int) -> textInfos.TextInfo.TextWithFieldsT:
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
 		if not text:
-			return ""
-		commandList: typing.List[textInfos.FieldCommand] = XMLFormatting.XMLTextParser().parse(text)
-		for command in commandList:
-			if not isinstance(command, textInfos.FieldCommand):
-				continue  # no need to normalize str or None
-
-			field = command.field
-			if isinstance(field, textInfos.ControlField):
-				command.field = self._normalizeControlField(field)
-			elif isinstance(field, textInfos.FormatField):
-				command.field = self._normalizeFormatField(field)
+			return [""]
+		commandList = XMLFormatting.XMLTextParser().parse(text)
+		commandList = [
+			self._normalizeCommand(command)
+			for command in commandList
+			# drop None to convert from XMLFormatting.CommandListT to textInfos.TextInfo.TextWithFieldsT
+			if command is not None
+		]
 		return commandList
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:

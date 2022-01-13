@@ -10,10 +10,9 @@ from comtypes.automation import VARIANT
 import array
 import winUser
 import UIAHandler
-from UIAUtils import (
+from .utils import (
 	createUIAMultiPropertyCondition,
 	getDeepestLastChildUIAElementInWalker,
-	getUIATextAttributeValueFromRange,
 	isUIAElementInWalker,
 	iterUIARangeByUnit,
 )

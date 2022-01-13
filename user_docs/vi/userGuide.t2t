@@ -1836,12 +1836,12 @@ Khi tắt tùy chọn này, NVDA đăng kí cho nhiều sự kiện UIA được
 Vậy nên, khi bật tùy chọn này, NVDA sẽ giới hạn các sự kiện đăng kí cho focus hệ thống cho hầu hết các sự kiện.
 Nếu bạn thấy mệt mỏi với việc vận hành của một hay vài ứng dụng, chúng tôi khuyên bạn thử dùng tính năng này để cải thiện khả năng vận hành.
 
-==== Luôn sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word khi có thể ====[AdvancedSettingsUseUiaForWord]
-Khi bật tùy chọn này, NVDA sẽ luôn nỗ lực dùng  Microsoft UI Automation accessibility API để lấy các thông tin từ các điều khiển của tài liệu Microsoft Word, thậm chí là vài bản dừng nhỏ gần đây của Microsoft Office 2016/365.
+==== Sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word khi có thể ====[AdvancedSettingsUseUiaForWord]
+Khi bật tùy chọn này, NVDA sẽ nỗ lực dùng  Microsoft UI Automation accessibility API để lấy thông tin từ các điều khiển của tài liệu Microsoft Word.
 Nó được tích hợp trong chính Microsoft Word cũng như trình xem và soạn thư của Microsoft Outlook.
-  Với Microsoft Office 2016/365 có số bản dựng là 16.0.13901 hay cao hơn, NVDA sẽ luôn sử dụng UI Automation để truy cập các  tài liệu  Microsoft Word, bất kể thiết lập của nó được cấu hình như thế nào.
-Với hầu hết các phiên bản gần đây của Microsoft Office 2016/365 chạy trên Windows 10 trở lên, hỗ trợ của UI Automation là hoàn toàn đủ để truy cập các tài liệu Microsoft Word, gần như bằng với hỗ trợ sẵn có của NVDA cho Microsoft Word, với thuận lợi là khả năng phản hồi có thể tăng lên.
+ Với hầu hết các phiên bản gần đây của Microsoft Office 2016/365 chạy trên Windows 10 trở lên, hỗ trợ của UI Automation là hoàn toàn đủ để truy cập các tài liệu Microsoft Word, gần như bằng với hỗ trợ sẵn có của NVDA cho Microsoft Word, với thuận lợi là khả năng phản hồi có thể tăng lên.
  Tuy nhiên, có thể một vài thông tin không được thể hiện hoặc thể hiện không chính xác trong vài phiên bản của Microsoft Office, có nghĩa là hỗ trợ UI automation không thể luôn được dựa vào.
+Chúng tôi vẫn không khuyến khích đa số người dùng bật tính năng này làm mặc định, dù rằng vẫn hoan nghênh những người dùng Office 2016/365 thử nghiệm tính năng này và cung cấp phản hồi.
  
 ==== Sử dụng UI Automation để truy cập Windows Console khi có thể ====[AdvancedSettingsConsoleUIA]
 Khi bật tùy chọn này, NVDA sẽ sử dụng một phiên bản mới, đang được hoàn thiện hỗ trợ cho Windows Console, có lợi thế trong việc  [cải tiến tính tiếp cận bởi Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Tính năng này đang được thử nghiệm và vẫn chưa hoàn chỉnh nên việc sử dụng nó chưa được khuyến khích. Tuy nhiên, khi hoàn chỉnh, nó được dự đoán  sẽ là hỗ trợ mặc định, cải thiện hiệu năng và tính ổn định của NVDA trong Windows command consoles.
@@ -3181,7 +3181,7 @@ Vui lòng xem [Danh sách phím kết hợp của BRLTTY http://mielke.cc/brltty
 %kc:endInclude
 
 ++ Các màn hình nổi tiêu chuẩn ++[HIDBraille]
-Đây là một trình điều khiển thử nghiệm cho một chuẩn màn hình chữ nổi mới, được cho phép vào năm 2018 bởi Microsoft, Google, Apple và vài công ty về công nghệ trợ giúp bao gồm NV Access.
+Đây là một trình điều khiển thử nghiệm cho chuẩn kết nối (HID) màn hình chữ nổi mới, được cho phép vào năm 2018 bởi Microsoft, Google, Apple và vài công ty về công nghệ trợ giúp bao gồm NV Access.
 Niềm hi vọng là tất cả các mẫu màn hình nổi trong tương lai tạo bởi bất kì nhà sản xuất nào, đều dùng giao thức tiêu chuẩn này, sẽ gỡ bỏ các trình điều khiển nhất định của nhà sản xuất.
 
 Tính năng tự nhận màn hình nổi của NVDA cũng sẽ nhận các màn hình có hỗ trợ giao thức này.
@@ -3189,8 +3189,8 @@ Tính năng tự nhận màn hình nổi của NVDA cũng sẽ nhận các màn 
 Sau đây là các phím hiện được gán cho những màn hình nổi này.
 %kc:beginInclude
 || Tên | Phím |
-| Cuộn màn hình nổi về trước | pan left |
-| Cuộn màn hình nổi về sau | pan right |
+| Cuộn màn hình nổi về trước | pan left hoặc rocker up |
+| Cuộn màn hình nổi về sau | pan right hoặc rocker down |
 | Di chuyển màn hình về dòng trước | khoảng trắng + chấm 1 |
 | Di chuyển màn hình về dòng trước | khoảng trắng + chấm 4 |
 | Đưa về ô chữ nổi | routing set 1|

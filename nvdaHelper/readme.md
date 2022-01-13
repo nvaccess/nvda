@@ -5,6 +5,20 @@ This cache is called a virtual buffer.
 While virtual buffers apply to several different application types, it may first be easiest to think about how they
 work with browsers, the rest of this document will take a web browser centric view unless specified otherwise.
 
+### Output
+Internal code is built into three DLLs:
+- `nvdaHelperLocal.dll`
+- `nvdaHelperLocalWin10.dll`
+- `nvdaHelperRemote.dll`
+ 
+Several COM Proxy DLLs are built from IDL files. A COM Proxy tells windows how to marshal data over COM when calling
+ the target API interface.
+For instance:
+- IAccessible2 IDL files are built into `IAccessible2Proxy.dll`
+- ISimpleDOM IDL files are built into `ISimpleDOM.dll`
+ 
+The `*local*.dll`'s are built for x86 (ie to match NVDA's arch), others are built for x86, x64, and arm64.
+
 ### Configuring Visual Studio
 The following steps won't prepare a buildable solution, but it will enable intellisense.
 You should still build on the command line to verify errors.
@@ -19,8 +33,8 @@ You should still build on the command line to verify errors.
 - Other defaults are fine, press next
 - Select "use external build system" for "How do you want to build the project?", press next
 - Build command line: `scons source`
-- Include search paths: `../include;../miscDeps/include;./;../build\x86_64;%(AdditionalIncludeDirectories)`
-- Preprocessor definitions: `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL;_WIN32_WINNT;_WIN32_WINNT_WIN7;`
+- Include search paths: `../include;../miscDeps/include;./;../build\x86_64;../include/minhook/include`
+- Preprocessor definitions: `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WIN7;`
 - Forced Included files: `winuser.h`
 - Press next
 - Ensure "same as Debug configuration" is checked and press finish
@@ -71,3 +85,15 @@ When `fillVBuf` is called, it recursively descends through the child elements th
 `controlFieldNode`s or `textFieldNode`s for them.
 This code is responsible for interacting with the IA2 accessibility API, these calls should be minimised for
  performance reasons.
+
+
+### Overview of calling to remote code.
+
+- NVDA's python code calls into the local DLL (`NVDAHelperLocal.dll`).
+- Generated RPC Wrappers are called
+- The RPC Wrappers call through to the "remote in-process DLL" (ie `nvdaHelperRemote.dll`)
+
+#### Build notes
+IDL/ACF files are input to MSRPCStubs to generate headers in `build/<arch>`
+- See `MSRPCStubs` in `*scons*` files.
+- Note these set a prefix, making whole word searches for methods difficult.

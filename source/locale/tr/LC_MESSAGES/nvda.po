@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 00:02+0000\n"
+"POT-Creation-Date: 2021-12-10 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: \n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -2761,8 +2761,8 @@ msgid "report emphasis on"
 msgstr "Vurguyu bildir"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "İşaretli metnin bildirimini açıp kapatır"
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "Vurgulanan metnin bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 msgid "report highlighted on"
@@ -5999,11 +5999,11 @@ msgstr "Kopyalandı: {text}"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
-msgstr "Güncel Versiyon Denetleniyor"
+msgstr "Güncel sürüm Denetleniyor"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 msgid "Checking for update"
-msgstr "Güncel Versiyon denetleniyor"
+msgstr "Güncel Sürüm denetleniyor"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
@@ -6229,12 +6229,11 @@ msgstr ""
 "Web sayfası: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} GNU General Public License (Versiyon 2) tarafından lisanslanmıştır. "
-"Bu yazılımı, lisansla birlikte dağıttığınız ve isteyen herkesle kaynak "
-"kodları paylaştığınız sürece istediğiniz herhangi bir yolla paylaşmakta ya "
-"da değiştirmekte özgürsünüz. Bu, yazılımın orjinal ve değiştirilmiş "
-"kopyaları için olduğu gibi, bağlantılı herhangi bir çalışma için de "
-"geçerlidir.\n"
+"{name} GNU General Public License (Sürüm 2) tarafından lisanslanmıştır. Bu "
+"yazılımı, lisansla birlikte dağıttığınız ve isteyen herkesle kaynak kodları "
+"paylaştığınız sürece istediğiniz herhangi bir yolla paylaşmakta ya da "
+"değiştirmekte özgürsünüz. Bu, yazılımın orjinal ve değiştirilmiş kopyaları "
+"için olduğu gibi, bağlantılı herhangi bir çalışma için de geçerlidir.\n"
 "Ayrıntı için, yardım menüsü altında lisansı görüntüleyin.\n"
 "Çevrimiçi olarak görüntülemek için şu adresi kullanabilirsiniz: https://www."
 "gnu.org/licenses/old-licenses/gpl-2.0.html\n"
@@ -7899,19 +7898,6 @@ msgstr "Konfigürasyon kaydedilemiyor. Muhtemelen salt okunur dosya sistemi"
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr "Açmaya çalıştığınız ayarlar paneli bu sistemde mevcut değil."
 
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Varsayılan sözlük"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Ses sözlüğü (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Geçici sözlük"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "NVDA hakkında"
@@ -8402,7 +8388,7 @@ msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
 msgstr ""
-"Sisteminizde kurulu gözüken {summary} eklentisinin {newVersion} versiyonunu "
+"Sisteminizde kurulu gözüken {summary} eklentisinin {newVersion} sürümünü "
 "kurmak üzeresiniz, . Güncellemek istediğinizden emin misiniz?"
 
 #. Translators: A message asking if the user wishes to update a previously installed
@@ -8412,8 +8398,8 @@ msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
 msgstr ""
-"Bu eklentinin bir versiyonu zaten kurulu. {summary} eklentisinin "
-"{curVersion} versiyonunu {newVersion} versiyonuna yükseltmek ister misiniz?"
+"Bu eklentinin bir sürümü zaten kurulu. {summary} eklentisinin {curVersion} "
+"sürümünü {newVersion} sürümüne yükseltmek ister misiniz?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -9831,11 +9817,10 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Always use UI Automation to access Microsoft &Word document controls when "
-"available"
+"Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Mümkün olduğunda Microsoft &Word belge kontrollerine erişmek için her zaman "
-"UI Otomasyonunu kullan"
+"Uygunsa Microsoft &Word belge kontrollerine erişmek için UI Otomasyonu'nu "
+"kullan"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10104,6 +10089,20 @@ msgstr "&Düzenle"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Sözlük girişi ekle"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Varsayılan sözlük"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Ses sözlüğü (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Geçici sözlük"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -10403,7 +10402,7 @@ msgstr ""
 "NVDA'nın iyileştirilmesi ve geliştirilmesi için NVAccess çalışan NVDA "
 "kopyalarından kullanım verilerini toplamak istiyor.\n"
 "\n"
-"Toplanacak veriler, İşletim Sistemi sürümü, NVDA versiyonu, dil, menşe ülke, "
+"Toplanacak veriler, İşletim Sistemi sürümü, NVDA sürümü, dil, menşe ülke, "
 "artı mevcut synthesizer, braille ekran ve braille tablo gibi bazı NVDA "
 "konfigürasyon öğeleridir. Konuşmaya ya da kabartmaya çevrilen hiçbir içerik "
 "hiçbir suretle NVAccess'e gönderilmez. Toplanacak veri listesi  için "
@@ -10796,7 +10795,7 @@ msgstr "satır aralığı %s"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "Yorum dışı"
+msgstr "Açıklama dışı"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -11019,7 +11018,7 @@ msgstr ""
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "No comments"
-msgstr "Yorum yok."
+msgstr "Açıklama yok."
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
@@ -12346,7 +12345,7 @@ msgid "cell merge"
 msgstr "hücre birleştirme"
 
 msgid "Comments"
-msgstr "Yorumlar"
+msgstr "Açıklamalar"
 
 msgid "Endnotes"
 msgstr "son notlar"
@@ -12379,7 +12378,7 @@ msgstr "metin çerçevesi"
 #. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
-msgstr "Yorum: {text} {author} tarafından, {date} tarihinde"
+msgstr "Açıklama: {text} {author} tarafından, {date} tarihinde"
 
 #. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
 #. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.

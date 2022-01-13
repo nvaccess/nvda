@@ -2,6 +2,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2010-2021 NV Access Limited, Bram Duvigneau
+from typing import (
+	Optional,
+	Dict,
+)
+
 import textUtils
 import winUser
 import textInfos
@@ -150,6 +155,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 		field['roleText'] = obj.roleText
 		field['description'] = obj.description
 		field['_description-from'] = obj.descriptionFrom
+		field['hasDetails'] = obj.hasDetails
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.State.EDITABLE)
 		states.discard(controlTypes.State.MULTILINE)
@@ -271,7 +277,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		text = info._getTextRange(0, info._startOffset)
 		return text.count(textUtils.OBJ_REPLACEMENT_CHAR)
 
-	def getTextWithFields(self, formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		# Get the initial control fields.
 		fields = []
 		rootObj = self.obj.rootNVDAObject

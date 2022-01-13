@@ -372,11 +372,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	def _get_treeInterceptor(self):
+	#: Type definition for auto prop '_get_treeInterceptor'
+	treeInterceptor: treeInterceptorHandler.TreeInterceptor
+
+	def _get_treeInterceptor(self) -> treeInterceptorHandler.TreeInterceptor:
 		"""Retrieves the treeInterceptor associated with this object.
-		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
+		If a treeInterceptor has not been specifically set,
+		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
 		@return: the treeInterceptor
-		@rtype: L{treeInterceptorHandler.TreeInterceptor}
 		""" 
 		if hasattr(self,'_treeInterceptor'):
 			ti=self._treeInterceptor
@@ -401,10 +404,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
 			self._treeInterceptor=None
 
-	def _get_appModule(self):
-		"""Retrieves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
+	#: Type definition for auto prop '_get_appModule'
+	appModule: "appModuleHandler.AppModule"
+
+	def _get_appModule(self) -> "appModuleHandler.AppModule":
+		"""Retrieves the appModule representing the application this object is a part of by
+		asking L{appModuleHandler}.
 		@return: the appModule
-		@rtype: L{appModuleHandler.AppModule}
 		"""
 		if not hasattr(self,'_appModuleRef'):
 			a=appModuleHandler.getAppModuleForNVDAObject(self)
@@ -475,6 +481,16 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
 		return controlTypes.DescriptionFrom.UNKNOWN
+
+	#: Typing information for auto property _get_detailsSummary
+	detailsSummary: typing.Optional[str]
+
+	def _get_detailsSummary(self) -> typing.Optional[str]:
+		return None
+
+	@property
+	def hasDetails(self) -> bool:
+		return bool(self.detailsSummary)
 
 	def _get_controllerFor(self):
 		"""Retrieves the object/s that this object controls."""
