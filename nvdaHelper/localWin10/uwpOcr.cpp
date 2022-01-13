@@ -55,12 +55,15 @@ fire_and_forget UwpOcr::recognize(SoftwareBitmap bitmap) {
 
 		auto result = co_await engine.RecognizeAsync(bitmap);
 		auto lines = result.Lines();
-		auto jLines = JsonArray{};
+		JsonArray jLines {};
+
 		for (auto const& line : lines) {
 			auto words = line.Words();
-			auto jWords = JsonArray{};
+			JsonArray jWords {};
+
 			for (auto const& word : words) {
-				auto jWord = JsonObject{};
+				JsonObject jWord {};
+
 				auto rect = word.BoundingRect();
 				jWord.Insert(L"x", JsonValue::CreateNumberValue(rect.X));
 				jWord.Insert(L"y", JsonValue::CreateNumberValue(rect.Y));
@@ -83,7 +86,7 @@ fire_and_forget UwpOcr::recognize(SoftwareBitmap bitmap) {
 
 void __stdcall uwpOcr_recognize(UwpOcr* instance, const RGBQUAD* image, unsigned int width, unsigned int height) {
 	unsigned int numBytes = sizeof(RGBQUAD) * width * height;
-	auto buf = Buffer{ numBytes };
+	Buffer buf { numBytes };
 	buf.Length(numBytes);
 	BYTE* bytes = buf.data();
 	memcpy(bytes, image, numBytes);
