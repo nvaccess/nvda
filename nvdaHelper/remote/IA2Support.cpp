@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2021 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -26,6 +26,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <remote/nvdaInProcUtils.h>
 #include "COMProxyRegistration.h"
 #include "IA2Support.h"
+#include <atlcomcli.h>
+#include "textFromIAccessible.h"
 
 using namespace std;
 
@@ -251,26 +253,106 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 	return foundDescendant;
 }
 
-error_status_t nvdaInProcUtils_IA2Text_findContentDescendant(handle_t bindingHandle, const unsigned long windowHandle, long parentID, long what, long* descendantID, long* descendantOffset) {
-	HWND hwnd=(HWND)UlongToHandle(windowHandle);
-	auto func=[&] {
-		IAccessible* pacc=NULL;
-		VARIANT varChild;
-		AccessibleObjectFromEvent((HWND)hwnd,OBJID_CLIENT,parentID,&pacc,&varChild);
-		if(!pacc) return;
-		IAccessible2* pacc2=NULL;
-		IServiceProvider* pserv=NULL;
-		pacc->QueryInterface(IID_IServiceProvider,(void**)&pserv);
-		pacc->Release();
-		if(!pserv) return; 
-		pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)&pacc2);
-		pserv->Release();
-		if(!pacc2) return;
-		findContentDescendant(pacc2,what,descendantID,descendantOffset);
-		pacc2->Release();
+
+CComPtr<IAccessible2> getIA2(const HWND hwnd, const long parentID) {
+	VARIANT varChild;
+	CComPtr<IAccessible> pacc;
+	AccessibleObjectFromEvent(
+		hwnd,
+		OBJID_CLIENT,
+		parentID,
+		&pacc.p,
+		&varChild
+	);
+
+	if (!pacc) {
+		return nullptr;
 	};
-	if(!execInThread(GetWindowThreadProcessId(hwnd,NULL),func)) {
-			LOG_DEBUGWARNING(L"Could not execute findContentDescendant in UI thread");
+
+	CComQIPtr<IServiceProvider, &IID_IServiceProvider> pserv(pacc);
+	if (!pserv) {
+		return nullptr;
+	}
+
+	CComPtr<IAccessible2> pacc2;
+	{ // scoping for: ppvObject
+		void** ppvObject = reinterpret_cast<void**>(&pacc2.p);
+		pserv->QueryService(IID_IAccessible, IID_IAccessible2, ppvObject);
+	}
+	
+	return pacc2;
+}
+
+error_status_t nvdaInProcUtils_IA2Text_findContentDescendant(handle_t bindingHandle, const unsigned long windowHandle, long parentID, long what, long* descendantID, long* descendantOffset) {
+	HWND hwnd = static_cast<HWND>(UlongToHandle(windowHandle));
+	auto func=[&] {
+		auto pacc2 = getIA2(hwnd, parentID);
+		if (!pacc2) {
+			return;
+		}
+		findContentDescendant(pacc2, what, descendantID, descendantOffset);
+	};
+
+	auto windowThreadProcId = GetWindowThreadProcessId(hwnd, nullptr);
+	auto res = execInThread(windowThreadProcId, func);
+	if(!res) {
+		LOG_DEBUGWARNING(L"Could not execute findContentDescendant in UI thread");
+	}
+	return 0;
+}
+
+
+error_status_t nvdaInProcUtils_getTextFromIAccessible(
+	handle_t bindingHandle,
+	const unsigned long windowHandle,
+	long parentID,
+	// Params for getTextFromIAccessible
+	BSTR* outBuf,
+	const boolean recurse,
+	const boolean includeTopLevelText
+) {
+	LOG_DEBUG(L"Called nvdaInProcUtils_getTextFromIAccessible");
+	if (outBuf == nullptr) {
+		LOG_ERROR(L"outBuff is null.");
+		return 0;
+	}
+	HWND hwnd = static_cast<HWND>(UlongToHandle(windowHandle));
+	auto func = [&] () -> void{
+		auto pacc2 = getIA2(hwnd, parentID);
+		if (!pacc2) {
+			return;
+		}
+		wstring textBuf;
+		const auto gotText = getTextFromIAccessible(
+			textBuf,
+			pacc2,
+			false,  // useNewText, only valid in response to an event (indicating changing text)
+			recurse,
+			includeTopLevelText
+		);
+		if (!gotText) {
+			LOG_DEBUGWARNING(L"Unable to get text.");
+			return;
+		}
+		if (textBuf.empty()) {
+			LOG_DEBUGWARNING(L"textBuf empty.");
+			return;
+		}
+		auto copySize = size_t(std::numeric_limits<UINT>::max);
+		if (copySize < textBuf.size()) {
+			LOG_ERROR(L"Size of buffer larger than can be allocated with SysAllocStringLen, buffer will be truncated.");
+		}
+		else {
+			copySize = textBuf.size();
+		}
+		*outBuf = SysAllocStringLen(textBuf.data(), UINT(copySize));
+		return;
+	};
+
+	auto windowThreadProcId = GetWindowThreadProcessId(hwnd, nullptr);
+	auto res = execInThread(windowThreadProcId, func);
+	if (!res) {
+		LOG_DEBUGWARNING(L"Could not execute getTextFromIAccessible in UI thread");
 	}
 	return 0;
 }
