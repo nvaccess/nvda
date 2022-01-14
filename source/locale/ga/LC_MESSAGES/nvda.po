@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2021.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 00:03+0000\n"
-"PO-Revision-Date: 2021-11-07 14:43+0000\n"
+"POT-Creation-Date: 2022-01-07 00:02+0000\n"
+"PO-Revision-Date: 2022-01-08 14:32+0000\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -1387,9 +1387,8 @@ msgstr "Tshivenda grád 1 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Tshivenda grade 2"
-msgstr "Vítneaimis  Grád 2"
+msgstr "Tshivendis Grád 2 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3569,15 +3568,13 @@ msgstr ""
 "nascleanúna isteach ann."
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "Reads the current application status bar. If pressed twice, spells the "
 "information. If pressed three times, copies the status bar to the clipboard"
 msgstr ""
-"léitear barra stádais an fheidhmchláir reatha agus bogtar an nascleantóir "
-"ann. Má bhrútar  faoi dhó, litrítear an fhaisnéis. Má bhrúitear trí huaire, "
-"cóipeálfar an barra stádais go dtí an gearrthaisce.\n"
-"  "
+"léitear barra stádais an fheidhmchláir reatha Má bhrútar  faoi dhó, "
+"litrítear an fhaisnéis. Má bhrúitear trí huaire, cóipeálfar an barra stádais "
+"go dtí an gearrthaisce."
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -6099,7 +6096,6 @@ msgstr "Tá leagan NVDA {version} íoslódáilte agus ag feitheamh ar shuiteáil
 #. unless reviewed before installation.
 #. Translators: A message in the installer to let the user know that
 #. some addons are not compatible.
-#, fuzzy
 msgid ""
 "\n"
 "\n"
@@ -6108,6 +6104,8 @@ msgid ""
 "you rely on these add-ons, please review the list to decide whether to "
 "continue with the installation"
 msgstr ""
+"\n"
+"\n"
 "Tá breiseáin sa chumriacht NVDA seo, áfach, nach bhfuil comhoiriúnach leis "
 "an leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na suiteála. Má tá "
 "tú ag brath ar na breiseáin seo, déan athbhreithniú ar an liosta sula "
@@ -6162,7 +6160,6 @@ msgstr "Tá leagan {version} de NVDA ar fáil le haghaidh suiteála.\n"
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
-#, fuzzy
 msgid ""
 "\n"
 "However, your NVDA configuration contains add-ons that are incompatible with "
@@ -6170,6 +6167,7 @@ msgid ""
 "you rely on these add-ons, please review the list to decide whether to "
 "continue with the installation"
 msgstr ""
+"\n"
 "Tá breiseáin sa chumriacht NVDA seo, áfach, nach bhfuil comhoiriúnach leis "
 "an leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na suiteála. Má tá "
 "tú ag brath ar na breiseáin seo, déan athbhreithniú ar an liosta sula "
@@ -6253,7 +6251,7 @@ msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "© {years} Rannpháirtithe NVDA"
 
 #. Translators: "About NVDA" dialog box message
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6276,28 +6274,26 @@ msgid ""
 "donating to NV Access. You can do this by selecting Donate from the NVDA "
 "menu."
 msgstr ""
-"{longName}  ({name})\n"
+"Tá {longName} ({name})\n"
 "Leagan: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} atá clúdaithe leis an nGNU Ceadúnas Ginearálta Poiblí (Leagan 2).  Tá "
-"tú anseo chun an bogearraí seo a roinnt nó a athrú in aon chaoi is maith "
-"leat chomh fada agus atá an ceadúnas in éineacht leis agus go gcuireann tú "
-"an bunchód ar fáil ag aon duine a bhfuil sé ag teastáil uaidh nó uaithi.  "
-"Baineann sin le bunchóipeanna agus cóipeanna mhionathraithe araon móide aon "
-"saothar eascartha.\n"
-"Le breis eolais a fháil is féidir leat amharc ar an cheadúnas sa roghchlár "
-"“Cabhair”. \n"
-"Freisin is féidir leat amharc air ar líne ag: https://www.gnu.org/licenses/"
-"old-licenses/gpl-2.0.html\n"
+"{name} cumhdaithe ag an gCeadúnas GNU Poiblí Ginearálta (Leagan 2). Tá tú "
+"saor na bogearraí seo a roinnt nó a athrú pé bealach ar mhian leat, ar "
+"choinníoll go bhfuil an ceadúnas in éineacht leo agus go bhfuil an cód "
+"foinseach go léir curtha ar fáil agat do gach duine ar mhaith leis é. "
+"Baineann sé seo leis an bhunchóip agus cóipeanna athraithe de na bogearraí "
+"seo, nó le haon rud bunaithe orthu. Chun tuilleadh sonraí a fháil, is féidir "
+"breathnú ar an gceadúnas  ar an roghchlár cabhrach. Tá sé ar fáil ar líne "
+"chomh maith ag: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} atá forbatha ag NV Access, eagraíocht neamhbhrabúsach a chaitheann a "
-"dúthracht le cabhrú agus cur chun cinn réitigh an tsaorchóid ar son na dall "
-"agus na daoine a bhfuil radharc oirbhearnach acu. \n"
-"Má bhaineann tú feidhm as NVDA agus más maith leat go leanntar a feabhsúchán "
-"ar aghaidh, le do thoil, smaoinigh ar síntiús a thabhairt do NV Access. "
-"Féadann tú é seo  a dhéanamh, trí roghnú Bronn as an roghchlár NVDA."
+"Tá {name} forbartha ag NV Access.  Is eagraíocht neamhbhrabúis í seo atá "
+"tiomanta réitigh saor le cód foinseach oscailte a chabhrú agus a chur ar "
+"fáil do dhaoine dalla agus do dhaoine faoi mhíchumas radhairc.\n"
+"   Má tá NVDA úsáideach duit, agus más mian leat go mbeadh feabhas curtha "
+"air as seo amach, le do thoil, smaoinigh ar dheontas a bhronnadh ar \n"
+"NV Access. "
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -7017,9 +7013,8 @@ msgid "Toggle braille input"
 msgstr "Scoránaigh ionchur Braille"
 
 #. Translators: The name of a series of braille displays.
-#, fuzzy
 msgid "Standard HID Braille Display"
-msgstr "Taispeántais bhraille Seika"
+msgstr "Taispeántóir Braille HID caighdeánach"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
@@ -9969,9 +9964,39 @@ msgstr "Sonraí tuarascála i mód brabhsála"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Report aria-description always"
-msgstr "Tuairiscigh cur síos ar oibiachtaí"
+msgstr "Tabhair cursíos ar ARIA i gcónaí"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "HID Braille Standard"
+msgstr "Taispeántóir Braille HID caighdeánach"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "(No) réamhshocraithe"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "Cealaigh"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "Ná cealaigh"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Enable support for HID braille"
+msgstr "Cumasaigh tacaíocht leis an Taispeántóir Braille HID"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10009,21 +10034,6 @@ msgstr "Ceadaigh paiste meaitseála DIFF."
 #. by line, using the difflib algorithm.
 msgid "force Difflib"
 msgstr "Bain úsáid as DIFFLIB"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "(No) réamhshocraithe"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "Cealaigh"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "Ná cealaigh"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -10960,7 +10970,7 @@ msgstr "Athnuaigh ábhar na cáipéise"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout on"
-msgstr "úsáid leagan amach scáileáin  ar siúl "
+msgstr "leagan amach scáileáin  ar siúl "
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout off"
@@ -12000,9 +12010,7 @@ msgstr "dath anaithnid"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Excel controls the pattern.
 msgid "automatic"
-msgstr ""
-"Uathoibríoch\n"
-" "
+msgstr "Uathoibríoch"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
