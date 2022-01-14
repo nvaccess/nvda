@@ -6,6 +6,7 @@
 # This file represents the braille display driver for
 # Seika Notetaker, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
+import re
 from io import BytesIO
 import typing
 from typing import Dict, List, Set
@@ -13,6 +14,7 @@ from typing import Dict, List, Set
 import serial
 
 import braille
+from bdDetect import DeviceMatch
 import brailleInput
 import inputCore
 import bdDetect
@@ -69,6 +71,23 @@ vidpid = "VID_10C4&PID_EA80"
 hidvidpid = "HID\\VID_10C4&PID_EA80"
 SEIKA_NAME = "seikantk"
 
+# Bluetooth name of the Seika devices is "TSM abcd", where the "abcd" is a four-digit
+# number, e.g. "TSM 3366", "TSM 0001", etc. There is a space between "TSM" and "abcd".
+seikaBluetoothNameRegex = re.compile(r"TSM \d\d\d\d")
+
+
+def isSeikaBluetoothName(bluetoothName: str) -> bool:
+	return bool(seikaBluetoothNameRegex.match(bluetoothName))
+
+
+def isSeikaBluetoothDeviceInfo(deviceInfo: typing.Dict[str, str]) -> bool:
+	return isSeikaBluetoothName(deviceInfo["bluetoothName"])
+
+
+def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
+	return isSeikaBluetoothDeviceInfo(match.deviceInfo)
+
+
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = SEIKA_NAME
@@ -80,7 +99,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""@return: An iterator containing the name and description for each port.
 		"""
-		return braille.getSerialPorts()
+		return braille.getSerialPorts(isSeikaBluetoothDeviceInfo)
 
 	def __init__(self, port=bdDetect.KEY_HID):
 		super().__init__()
