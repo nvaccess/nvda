@@ -22,7 +22,7 @@ import cursorManager
 import textInfos
 import browseMode
 from NVDAObjects.UIA import UIA
-import UIARemote
+
 
 class UIADocumentWithTableNavigation(documentBase.DocumentWithTableNavigation):
 

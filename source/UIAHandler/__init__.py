@@ -44,7 +44,7 @@ import textInfos
 from typing import Dict
 from queue import Queue
 import aria
-import UIARemote
+from . import remote as UIARemote
 
 
 #: The window class name for Microsoft Word documents.

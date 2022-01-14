@@ -17,7 +17,7 @@ from scriptHandler import isScriptWaiting
 import textInfos
 import eventHandler
 import UIAHandler
-import UIARemote
+import UIAHandler.remote as UIARemote
 from logHandler import log
 import controlTypes
 import ui
