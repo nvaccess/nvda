@@ -11,6 +11,7 @@ from typing import (
 import enum
 from comtypes import COMError
 from collections import defaultdict
+import winVersion
 import mathPres
 from scriptHandler import isScriptWaiting
 import textInfos
@@ -431,14 +432,15 @@ class WordDocumentTextInfo(UIATextInfo):
 		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
 		if not formatField:
 			return formatField
-		if formatConfig['reportLineNumber']:
-			lineNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.LINE_NUMBER)
-			if isinstance(lineNumber, int):
-				formatField.field['line-number'] = lineNumber
-		if formatConfig['reportPage']:
-			sectionNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.SECTION_NUMBER)
-			if isinstance(sectionNumber, int):
-				formatField.field['section-number'] = sectionNumber
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			if formatConfig['reportLineNumber']:
+				lineNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.LINE_NUMBER)
+				if isinstance(lineNumber, int):
+					formatField.field['line-number'] = lineNumber
+			if formatConfig['reportPage']:
+				sectionNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.SECTION_NUMBER)
+				if isinstance(sectionNumber, int):
+					formatField.field['section-number'] = sectionNumber
 		return formatField
 
 
