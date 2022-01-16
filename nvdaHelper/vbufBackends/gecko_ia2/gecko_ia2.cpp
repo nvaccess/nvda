@@ -952,7 +952,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			// The object has no text, but we do want to render its children.
 			auto [varChildren, accChildRes] = getAccessibleChildren(pacc, 0, childCount);
 			if (S_OK != accChildRes || varChildren.size() == 0) {
-				LOG_DEBUG(L"AccessibleChildren failed, res: " << accChildRes);
+				LOG_ERROR(L"AccessibleChildren failed (count: " << childCount << L"), res: " << accChildRes);
 			}
 			LOG_DEBUG(L"got " << varChildren.size() << L" children");
 

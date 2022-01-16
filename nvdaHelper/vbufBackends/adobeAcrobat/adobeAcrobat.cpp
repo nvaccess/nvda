@@ -623,7 +623,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		LOG_DEBUG(L"Fetch children with AccessibleChildren");
 		auto[varChildren, accChildRes] = getAccessibleChildren(pacc, 0, childCount);
 		if(S_OK != accChildRes || varChildren.size() == 0) {
-			LOG_DEBUG(L"Failed to get AccessibleChildren, res: " << accChildRes);
+			LOG_DEBUG(L"Failed to get AccessibleChildren (count: " << childCount << L"), res: " << accChildRes);
 			childCount=0;
 		}
 		LOG_DEBUG(L"got "<< varChildren.size() << L" children");
