@@ -101,7 +101,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		return braille.getSerialPorts(isSeikaBluetoothDeviceInfo)
 
-	def __init__(self, port=bdDetect.KEY_HID):
+	def __init__(self, port: typing.Union[None, str, DeviceMatch]):
 		super().__init__()
 		self.numCells = 0
 		self.numBtns = 0
