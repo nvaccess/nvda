@@ -97,7 +97,7 @@ getAccessibleChildren(IAccessible* pacc, long indexOfFirstChild, long maxChildCo
 		// no need to shrink to fit, make_pair will copy the vector, using only the first varChildren.size() elements.
 		return std::make_pair(varChildren, S_OK);
 	}
-	catch (std::bad_array_new_length& e) {
+	catch (std::bad_array_new_length&) {
 		return std::make_pair(
 			std::vector<CComVariant>(0),
 			S_FALSE
