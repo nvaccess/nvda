@@ -81,7 +81,13 @@ def isSeikaBluetoothName(bluetoothName: str) -> bool:
 
 
 def isSeikaBluetoothDeviceInfo(deviceInfo: typing.Dict[str, str]) -> bool:
-	return isSeikaBluetoothName(deviceInfo["bluetoothName"])
+	# bluetoothName is listed in information from L{hwPortUtils.listComPorts} when 'hwIo' debug logging
+	# category is enabled.
+	btNameKey = "bluetoothName"
+	return (
+		btNameKey in deviceInfo
+		and isSeikaBluetoothName(deviceInfo["bluetoothName"])
+	)
 
 
 def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
