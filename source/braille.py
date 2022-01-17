@@ -2321,7 +2321,7 @@ def initialize():
 	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
-	bdDetect.initialiseDetectionData()
+	bdDetect.initializeDetectionData()
 	handler = BrailleHandler()
 	# #7459: the syncBraille has been dropped in favor of the native hims driver.
 	# Migrate to renamed drivers as smoothly as possible.

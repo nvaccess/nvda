@@ -474,8 +474,8 @@ def driverSupportsAutoDetection(driver):
 	return driver in _driverDevices
 
 
-def initialiseDetectionData():
-	""" Initialise detection data.
+def initializeDetectionData():
+	""" Initialize detection data.
 	Calls to addUsbDevices, and addBluetoothDevices.
 	Specify the requirements for a detected device to be considered a
 	match for a specific driver.
