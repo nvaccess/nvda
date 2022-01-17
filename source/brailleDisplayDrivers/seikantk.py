@@ -66,6 +66,8 @@ SEIKA_HID_FEATURES = b"".join([
 	b"\x00\x00\x03\x00",
 ])
 SEIKA_CMD_ON = b"\x41\x01"
+""" Unknown why this is required. Used for HID (via setFeature), but not for serial.
+"""
 
 vidpid = "VID_10C4&PID_EA80"
 hidvidpid = "HID\\VID_10C4&PID_EA80"
@@ -141,7 +143,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						bytesize=serial.EIGHTBITS,
 						stopbits=serial.STOPBITS_ONE,
 					)
-					# Does the device need to be sent SEIKA_CMD_ON as per USB-HID?
+					# Note: SEIKA_CMD_ON not sent as per USB-HID, testing from users hasn't indicated any problems.
+					# The exact purpose of SEIKA_CMD_ON isn't known/documented here.
 				else:
 					log.debug(f"Port type not handled: {match.type}")
 					continue
