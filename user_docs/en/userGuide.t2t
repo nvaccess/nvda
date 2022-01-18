@@ -2365,7 +2365,7 @@ The following displays support this automatic detection functionality.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
-- Seika Notetaker
+- Seika Notetaker: MiniSeika (16, 24 cells), V6Pro (40 cells)
 - Any Display that supports the Standard HID Braille protocol
 -
 
@@ -2742,14 +2742,21 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Seika Braille Displays ++[Seika]
-The Seika Version 3, 4 and 5 (40 cells), Seika80 (80 cells), and Notetaker (16 cells) braille displays from [Nippon Telesoft https://www.nippontelesoft.com/] are supported.
-You can find more information about the displays and the required drivers at https://en.seika-braille.com/down/index.html
-You must first install the USB drivers provided by the manufacturer.
+The following Seika Braille displays from Nippon Telesoft are supported in two groups with different functionality:
+- [Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) #SeikaBrailleDisplays]
+- [MiniSeika (16, 24 cells), V6Pro (40 cells) #SeikaNotetaker]
+-
+You can find more information about the displays at https://en.seika-braille.com/down/index.html.
 
-The Notetaker does support NVDA's automatic background braille display detection functionality via USB and Bluetooth.
-Other displays do not yet support NVDA's automatic background braille display detection functionality.
 
-Following are the key assignments for this display with NVDA.
++++ Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) +++[SeikaBrailleDisplays]
+- These displays do not yet support NVDA's automatic background braille display detection functionality.
+- Select "Seika Braille Displays" to manually configure
+- A device drivers must be installed before using Seika v3/4/5/80.
+The drivers are [provided by the manufacturer https://en.seika-braille.com/down/index.html].
+-
+
+The Seika Braille Display key assignments follow.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
@@ -2766,7 +2773,15 @@ Please see the display's documentation for descriptions of where these keys can 
 | Route to braille cell | routing |
 %kc:endInclude
 
-The Seika Braille Notetaker has the following key assignments with NVDA:
+
++++ MiniSeika (16, 24 cells), V6Pro (40 cells) +++[SeikaNotetaker]
+- NVDA's automatic background braille display detection functionality is supported via USB and Bluetooth.
+- Select "Seika Notetaker" or "auto" to configure.
+- No extra drivers are required when using a Seika Notetaker braille display.
+-
+
+The Seika Notetaker key assignments follow.
+Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
 | Scroll braille display back | left |
