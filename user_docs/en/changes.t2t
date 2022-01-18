@@ -95,6 +95,7 @@ This ensures code will honor the Windows user setting for swapping the primary m
 - ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` is removed. (#13211)
 - SCons now builds with multiple concurrent jobs, equal to the number of logical processors in the system.
 This can dramatically decrease build times on multi core systems. (#13226)
+- ``characterProcessing.SYMLVL_*`` constants are removed - please use ``characterProcessing.SymbolLevel.*`` instead. (#13248)
 -
 
 
