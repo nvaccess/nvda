@@ -960,13 +960,17 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					// This is certainly an error, and indicates a bug in the IA2 provider.
 					LOG_ERROR(msg.str());
 					break;
-				case CO_E_OBJNOTCONNECTED:
-					msg << L" (CO_E_OBJNOTCONNECTED, Object is not connected to server)";
-					// CO_E_OBJNOTCONNECTED indicates that the parent died since the query
+				case RPC_E_DISCONNECTED:
+					msg << L" (RPC_E_DISCONNECTED, object invoked has disconnected from its clients.)";
+					// RPC_E_DISCONNECTED indicates that the parent died since the query
 					// to accChildCount, and returning no children indicates that all children
 					// died since the call to accChildCount.
 					// Even if the children had been rendered, they were removed immediately thereafter.
 					// Therfore log at debug level, this is expected to occur in dynamic content.
+					LOG_DEBUG(msg.str());
+					break;
+				case CO_E_OBJNOTCONNECTED:
+					msg << L" (CO_E_OBJNOTCONNECTED, Object is not connected to server)";
 					LOG_DEBUG(msg.str());
 					break;
 				default:
