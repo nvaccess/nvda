@@ -952,7 +952,27 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			// The object has no text, but we do want to render its children.
 			auto [varChildren, accChildRes] = getAccessibleChildren(pacc, 0, childCount);
 			if (S_OK != accChildRes || varChildren.size() == 0) {
-				LOG_ERROR(L"AccessibleChildren failed (count: " << childCount << L"), res: " << accChildRes);
+				std::wstringstream msg;
+				msg << L"AccessibleChildren failed (count: " << childCount << L"), res: " << accChildRes;
+				switch (accChildRes) {
+				case E_NOINTERFACE:
+					msg << L" (E_NOINTERFACE, No such interface supported)";
+					// This is certainly an error, and indicates a bug in the IA2 provider.
+					LOG_ERROR(msg.str());
+					break;
+				case CO_E_OBJNOTCONNECTED:
+					msg << L" (CO_E_OBJNOTCONNECTED, Object is not connected to server)";
+					// CO_E_OBJNOTCONNECTED indicates that the parent died since the query
+					// to accChildCount, and returning no children indicates that all children
+					// died since the call to accChildCount.
+					// Even if the children had been rendered, they were removed immediately thereafter.
+					// Therfore log at debug level, this is expected to occur in dynamic content.
+					LOG_DEBUG(msg.str());
+					break;
+				default:
+					// Other unknown failures, log at error.
+					LOG_ERROR(msg.str());
+				}
 			}
 			LOG_DEBUG(L"got " << varChildren.size() << L" children");
 
