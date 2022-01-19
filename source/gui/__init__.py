@@ -679,8 +679,8 @@ class ExitDialog(wx.Dialog):
 		self.debugLoggingCB = self.restartGroup.addItem(
 			# Translators: An option in the group to choose restart option.
 			wx.CheckBox(self.restartGroupBox, label=_("Enable debug logging")))
-
-		# Disable the Restart options group because selection will be on exit by default.
+		# Hide and disable the Restart options group because selection will be on exit by default.
+		self.restartGroupBox.Show(False)
 		self.restartGroupBox.Enable(False)
 		contentSizerHelper.addItem(self.restartGroup)
 		contentSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL)
@@ -689,13 +689,18 @@ class ExitDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 
 		mainSizer.Add(contentSizerHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		mainSizer.Layout()
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.actionsList.SetFocus()
 		self.CentreOnScreen()
 
 	def onSelectionChange(self, evt):
-		self.restartGroupBox.Enable(self.actionsList.GetSelection() == 1)
+		selection = self.actionsList.GetSelection() == 1
+		self.restartGroupBox.Show(selection)
+		self.restartGroupBox.Enable(selection)
+		self.Sizer.Layout()
+		self.Sizer.Fit(self)
 
 	def onOk(self, evt):
 		action=self.actionsList.GetSelection()
