@@ -49,7 +49,8 @@ void __stdcall uwpOcr_terminate(UwpOcr* instance) {
 }
 
 fire_and_forget UwpOcr::recognize(SoftwareBitmap bitmap) {
-	// Ensure we catch al exceptions in this method,
+	// Ensure we catch all exceptions in this method,
+
 	// as an unhandled exception causes std::terminate to get called, resulting in a crash.
 	// See https://devblogs.microsoft.com/oldnewthing/20190320-00/?p=102345
 	try {
