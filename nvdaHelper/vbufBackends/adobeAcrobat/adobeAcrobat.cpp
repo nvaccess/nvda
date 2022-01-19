@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <iomanip>
 #include <windows.h>
 #include <oleacc.h>
+#include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include <common/log.h>
@@ -619,30 +620,22 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 
 	} else if (childCount > 0) {
 		// Iterate through the children.
-		LOG_DEBUG(L"Allocate memory to hold children");
-		VARIANT* varChildren;
-		if((varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))==NULL) {
-			LOG_DEBUG(L"Error allocating varChildren memory");
-			if (stdName)
-				SysFreeString(stdName);
-			return NULL;
-		}
 		LOG_DEBUG(L"Fetch children with AccessibleChildren");
-		if((res=AccessibleChildren(pacc,0,childCount,varChildren,(long*)(&childCount)))!=S_OK) {
-			LOG_DEBUG(L"AccessibleChildren returned "<<res);
+		auto[varChildren, accChildRes] = getAccessibleChildren(pacc, 0, childCount);
+		if(S_OK != accChildRes || varChildren.size() == 0) {
+			LOG_DEBUG(L"Failed to get AccessibleChildren (count: " << childCount << L"), res: " << accChildRes);
 			childCount=0;
 		}
-		LOG_DEBUG(L"got "<<childCount<<L" children");
-		for(int i=0;i<childCount;++i) {
-			LOG_DEBUG(L"child "<<i);
-			if(varChildren[i].vt==VT_DISPATCH) {
+		LOG_DEBUG(L"got "<< varChildren.size() << L" children");
+		for(auto i = 0u; i < varChildren.size(); ++i) {
+			LOG_DEBUG(L"child " << i);
+			if(VT_DISPATCH == varChildren[i].vt) {
 				LOG_DEBUG(L"QueryInterface dispatch child to IID_IAccesible");
-				IAccessible* childPacc=NULL;
-				if((res=varChildren[i].pdispVal->QueryInterface(IID_IAccessible,(void**)(&childPacc)))!=S_OK) {
-					LOG_DEBUG(L"varChildren["<<i<<L"].pdispVal->QueryInterface to IID_iAccessible returned "<<res);
-					childPacc=NULL;
+				CComQIPtr<IAccessible, &IID_IAccessible> childPacc(varChildren[i].pdispVal);
+				if(!childPacc) {
+					LOG_DEBUG(L"varChildren[" << i << L"]: QueryInterface to IID_iAccessible failed.");
 				}
-				if(childPacc) {
+				else {
 					if (this->isXFA) {
 						// HACK: If this is an XFA document, we must call WindowFromAccessibleObject() so that AccessibleObjectFromEvent() will work for this node.
 						HWND tempHwnd;
@@ -654,15 +647,9 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 					} else {
 						LOG_DEBUG(L"Error in calling fillVBuf");
 					}
-					LOG_DEBUG(L"releasing child IAccessible object");
-					childPacc->Release();
 				}
 			}
-			VariantClear(&(varChildren[i]));
 		}
-		LOG_DEBUG(L"Freeing memory holding children");
-		free(varChildren);
-
 	} else {
 		// No children, so this is a leaf node.
 		if (!this->isXFA && !stdName) {
