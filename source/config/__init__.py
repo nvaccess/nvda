@@ -145,8 +145,11 @@ A value of 1 means loading the configuration from the local application data fol
 def getInstalledUserConfigPath() -> Optional[str]:
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+	except FileNotFoundError:
+		log.debug("Could not find nvda registry key, NVDA is not currently installed")
+		return None
 	except WindowsError:
-		log.error("Could not find nvda registry key", exc_info=True)
+		log.error("Could not open nvda registry key", exc_info=True)
 		return None
 
 	try:
