@@ -957,38 +957,25 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				switch (accChildRes) {
 				case E_NOINTERFACE:
 					msg << L" (E_NOINTERFACE, No such interface supported)";
-					// This is certainly an error, and indicates a bug in the IA2 provider.
-					LOG_ERROR(msg.str());
+					LOG_ERROR(msg.str());  // Indicates a bug in the IA2 provider.
 					break;
 				case RPC_E_DISCONNECTED:
 					msg << L" (RPC_E_DISCONNECTED, object invoked has disconnected from its clients.)";
-					// RPC_E_DISCONNECTED indicates that the parent died since the query
-					// to accChildCount, and returning no children indicates that all children
-					// died since the call to accChildCount.
-					// Even if the children had been rendered, they were removed immediately thereafter.
-					// Therefore log at debug level, this is expected to occur in dynamic content.
-					LOG_DEBUG(msg.str());
+					// RPC_E_DISCONNECTED indicates that the parent died since the query to accChildCount.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
 					break;
 				case CO_E_OBJNOTCONNECTED:
 					msg << L" (CO_E_OBJNOTCONNECTED, Object is not connected to server)";
 					LOG_DEBUG(msg.str());
 					break;
-				case S_FALSE:
-					if (varChildren.size() == 0 && childCount > 0) {
-						msg << L" (S_FALSE, expected childcount, got no children, children may have been removed from document.)";
-						// Returning no children indicates that all children
-						// died since the call to accChildCount.
-						// Even if the children had been rendered, they were removed immediately thereafter.
-						// Therefore log at debug level, this is expected to occur in dynamic content.
-						LOG_DEBUG(msg.str());
-						break;
-					}
-					else {
-						// theoretically this cause can not be hit, included only for the benefit of developers
-						msg << L" (S_FALSE, unknown cause)";
-						LOG_ERROR(msg.str());
-						break;
-					}
+				case S_FALSE:  // Success, but unexpeced number of children were returned.
+					msg << L" (S_FALSE, expected childcount, got "
+						<< varChildren.size()
+						<< L". Children may have been removed from document.)";
+					// Returning no children indicates that all children died since the call to accChildCount.
+					// Even if the children had been rendered, they were removed immediately thereafter.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
+					break;
 				default:
 					// Other unknown failures, log at error.
 					LOG_ERROR(msg.str());
