@@ -2715,6 +2715,28 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		description=_(
+			# Translators: Input help mode message for toggle Braille viewer command.
+			"Toggles the NVDA Braille viewer, a floating window that allows you to view braille output, "
+			"and the text equivalent for each braille character"
+		),
+		category=SCRCAT_TOOLS
+	)
+	def script_toggleBrailleViewer(self, gesture):
+		import brailleViewer
+		if brailleViewer.isBrailleViewerActive():
+			# Translators: The message announced when disabling braille viewer.
+			state = _("Braille viewer disabled")
+			brailleViewer.destroyBrailleViewer()
+			gui.mainFrame.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(False)
+		else:
+			# Translators: The message announced when enabling Braille viewer.
+			state = _("Braille viewer enabled")
+			brailleViewer.createBrailleViewerTool()
+			gui.mainFrame.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(True)
+		ui.message(state)
+
+	@script(
 		# Translators: Input help mode message for toggle braille tether to command
 		# (tethered means connected to or follows).
 		description=_("Toggle tethering of braille between the focus and the review position"),
