@@ -4,6 +4,7 @@
 # Copyright (C) 2006-2021 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
 from comtypes import COMError
+import oleacc
 from IAccessibleHandler import IA2, splitIA2Attribs
 import appModuleHandler
 import controlTypes
@@ -208,11 +209,18 @@ class SymphonyIATableCell(SymphonyTableCell):
 
 	def _get_cellCoordsText(self):
 		if self.hasSelection and controlTypes.State.FOCUSED in self.states:
-			selected, count = self.table.IAccessibleTable2Object.selectedCells
-			firstAccessible = selected[0].QueryInterface(IA2.IAccessible2)
+			count = self.table.IAccessibleTable2Object.nSelectedCells
+			selection = self.table.IAccessibleObject.accSelection
+			enumObj = selection.QueryInterface(oleacc.IEnumVARIANT)
+			tableAccessible = self.table.IAccessibleTable2Object.QueryInterface(IA2.IAccessible2)
+			firstChildId, _retrievedCount = enumObj.Next(1)
+			firstAccessible = tableAccessible.accChild(firstChildId).QueryInterface(IA2.IAccessible2)
 			firstAddress = firstAccessible.accName(0)
 			firstValue = firstAccessible.accValue(0) or ''
-			lastAccessible = selected[count - 1].QueryInterface(IA2.IAccessible2)
+			# skip over all except the last element
+			enumObj.Skip(count - 2)
+			lastChildId, _retrievedCount = enumObj.Next(1)
+			lastAccessible = tableAccessible.accChild(lastChildId).QueryInterface(IA2.IAccessible2)
 			lastAddress = lastAccessible.accName(0)
 			lastValue = lastAccessible.accValue(0) or ''
 			# Translators: LibreOffice, report selected range of cell coordinates with their values
