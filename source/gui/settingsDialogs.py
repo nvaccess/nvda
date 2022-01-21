@@ -3195,6 +3195,8 @@ class DictionaryDialog(SettingsDialog):
 	helpId = "SpeechDictionaries"
 
 	def __init__(self,parent,title,speechDict):
+		if type(self) == DictionaryDialog:
+			raise Exception("DictionaryDialog must be subclassed.")
 		self.title = title
 		self.speechDict = speechDict
 		self.tempSpeechDict=speechDictHandler.SpeechDict()
