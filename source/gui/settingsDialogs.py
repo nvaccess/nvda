@@ -3191,8 +3191,8 @@ class DictionaryEntryDialog(
 
 
 class DictionaryDialog(
-	SettingsDialog,
-	metaclass=guiHelper.SIPABCMeta,
+		SettingsDialog,
+		metaclass=guiHelper.SIPABCMeta,
 ):
 	"""A dictionary dialog.
 	A dictionary dialog is a setting dialog containing a list of dictionary entries and buttons to manage them.
