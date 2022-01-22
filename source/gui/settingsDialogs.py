@@ -3190,13 +3190,21 @@ class DictionaryEntryDialog(
 		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
 
 
-class DictionaryDialog(SettingsDialog):
+class DictionaryDialog(
+	SettingsDialog,
+	metaclass=guiHelper.SIPABCMeta,
+):
+	"""A dictionary dialog.
+	A dictionary dialog is a setting dialog containing a list of dictionary entries and buttons to manage them.
+	
+	To use this dialog, override L{__init__} calling super().__init__.
+	"""
+	
 	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
 	helpId = "SpeechDictionaries"
 
+	@abstractmethod
 	def __init__(self,parent,title,speechDict):
-		if type(self) == DictionaryDialog:
-			raise Exception("DictionaryDialog must be subclassed.")
 		self.title = title
 		self.speechDict = speechDict
 		self.tempSpeechDict=speechDictHandler.SpeechDict()
