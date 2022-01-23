@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA_georgian_translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 20:07+1000\n"
-"PO-Revision-Date: 2020-05-02 14:33-0700\n"
+"POT-Creation-Date: 2022-01-21 00:02+0000\n"
+"PO-Revision-Date: 2022-01-20 18:40-0800\n"
 "Last-Translator: Nikoloz\n"
 "Language-Team: Georgian translation team <admin@gozaltech.org>\n"
 "Language: ka\n"
@@ -95,6 +95,35 @@ msgstr "გრამატიკული შეცდომა "
 #, python-brace-format
 msgid "grammar: {text}"
 msgstr ""
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "არაფერი "
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "{color}"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "წრფივი გრადიენტი"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr ""
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "ნიმუში"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -417,7 +446,7 @@ msgid "fig"
 msgstr ""
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
-msgid "mrkd"
+msgid "hlght"
 msgstr ""
 
 #. Translators: Displayed in braille when an object is selected.
@@ -476,6 +505,10 @@ msgstr "sorted ascending"
 #, fuzzy
 msgid "sorted desc"
 msgstr "sorted descending"
+
+#. Translators: Displayed in braille when an object has additional details (such as a comment section).
+msgid "details"
+msgstr ""
 
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
@@ -766,8 +799,26 @@ msgstr "ბენგალიური საფეხური 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Belarusian computer braille"
+msgstr "გერმანული რვაწერტილიანი ბრაილი კომპიუტერისთვის"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Belarusian literary braille"
+msgstr "გერმანული რვაწერტილიანი ბრაილი კომპიუტერისთვის"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
 msgstr "ბულგარული რვა წერტილიანი ბრაილი კომპიუტერისთვის"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Bulgarian grade 1"
+msgstr "უნგრული საფეხური 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1008,11 +1059,6 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Hebrew 8 dot computer braille"
-msgstr "ებრაული რვაწერტილიანი ბრაილი, კომპიუტერისთვის"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 #, fuzzy
 msgid "Israeli grade 1"
 msgstr "ირლანდიური საფეხური 1"
@@ -1020,8 +1066,8 @@ msgstr "ირლანდიური საფეხური 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
-msgid "Israeli 8 dot computer braille"
-msgstr "იტალიური რვაწერტილიანი ბრაილი, კომპიუტერისთვის"
+msgid "Hebrew computer braille"
+msgstr "ებრაული რვაწერტილიანი ბრაილი, კომპიუტერისთვის"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1074,6 +1120,24 @@ msgstr "იტალიური რვაწერტილიანი ბრ�
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "კანადური საფეხური 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Kazakh grade 1"
+msgstr "კანადური საფეხური 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Khmer grade 1"
+msgstr "Kashmiri grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Northern Kurdish grade 0"
+msgstr "Swedish grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1152,6 +1216,18 @@ msgstr "Marathi grade 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
+msgid "Burmese grade 1"
+msgstr "ასამიური საფეხური  1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Burmese grade 2"
+msgstr "Portuguese grade 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
 msgid "Dutch (Belgium) 6 dot"
 msgstr "ჰოლანდიური (ბელგია)"
 
@@ -1195,6 +1271,18 @@ msgstr "Norwegian grade 3"
 #. braille settings dialog.
 msgid "Nepali grade 1"
 msgstr "Nepali grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Sepedi grade 1"
+msgstr "Swedish grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Sepedi grade 2"
+msgstr "ესპანური  საფეხური 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1256,7 +1344,19 @@ msgstr "გერმანული რვაწერტილიანი ბ�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Russian contracted braille"
+msgstr "გერმანული რვაწერტილიანი ბრაილი კომპიუტერისთვის"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
+msgstr "Sanskrit grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Yakut grade 1"
 msgstr "Sanskrit grade 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -1289,6 +1389,18 @@ msgstr "Slovene grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Sesotho grade 1"
+msgstr "Swedish grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Sesotho grade 2"
+msgstr "უელსური საფეხური 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "Serbian grade 1"
 
@@ -1299,6 +1411,12 @@ msgstr "Tamil grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Tatar grade 1"
+msgstr "Latvian grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Telugu grade 1"
 msgstr "ტელუგუ საფეხური 1"
 
@@ -1306,6 +1424,18 @@ msgstr "ტელუგუ საფეხური 1"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "Turkish grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Setswana grade 1"
+msgstr "Serbian grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Setswana grade 2"
+msgstr "გერმანული საფეხური 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1322,6 +1452,18 @@ msgstr "გერმანული რვაწერტილიანი ბ�
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
+msgid "Urdu grade 1"
+msgstr "ირლანდიური საფეხური 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Urdu grade 2"
+msgstr "ირლანდიური საფეხური 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
 msgid "Uzbek grade 1"
 msgstr "ჩეხური საფეხური  1"
 
@@ -1334,8 +1476,50 @@ msgstr "ბრაილი არ არის"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
+msgid "Vietnamese grade 0"
+msgstr "ასამიური საფეხური  1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Tshivenda grade 1"
+msgstr "ინდური საფეხური 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Tshivenda grade 2"
+msgstr "ასამიური საფეხური  1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
 msgid "Vietnamese grade 1"
 msgstr "ასამიური საფეხური  1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Vietnamese grade 2"
+msgstr "ასამიური საფეხური  1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Southern Vietnamese grade 1"
+msgstr "ასამიური საფეხური  1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Xhosa grade 1"
+msgstr "კორეული საფეხური 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Xhosa grade 2"
+msgstr "კორეული საფეხური 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1358,6 +1542,18 @@ msgstr "Chinese (Hong Kong, Cantonese)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chinese (Taiwan, Mandarin)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Zulu grade 1"
+msgstr "ტელუგუ საფეხური 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Zulu grade 2"
+msgstr "ირლანდიური საფეხური 2"
 
 #. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
@@ -1947,10 +2143,12 @@ msgstr "ტიპი"
 msgid "Filter b&y:"
 msgstr "&ფილტრი"
 
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "&გააქტიურება "
+#. Translators: The label of a button to activate an element in the browse mode Elements List dialog.
+#. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
+#. element type radio label.
+#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+msgid "Activate"
+msgstr "გააქტიურება "
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
@@ -1967,6 +2165,17 @@ msgstr "არ არის სრული აღწერა"
 msgid "Shows the long description at this position if one is found."
 msgstr "თუ პოზიციაზე მოიძებნა სრული აღწერა, აჩვენებს მას"
 
+# იგივე შემთხვევაა. გამოყენებულია სიტყვა სრული იგივე მიზეზით, როგორც ზევით.
+#. Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
+#, fuzzy
+msgid "Shows a summary of the details at this position if found."
+msgstr "თუ პოზიციაზე მოიძებნა სრული აღწერა, აჩვენებს მას"
+
+#. Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
+#. set of details to read.
+msgid "No additional details"
+msgstr ""
+
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
@@ -1980,12 +2189,27 @@ msgstr "გადადის კონტეინერის ელემე�
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+#. Translators: Reported when attempting to move to the next result in the Python Console
+#. output pane while there is no next result.
 msgid "Bottom"
 msgstr "ქვედა"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "გადადის კონტეინერის ელემენტების ბოლოში, სიასთან ან ცხრილთან"
+
+#. Translators: the description for the toggleScreenLayout script.
+#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+msgstr ""
+"დოკუმენტის მიმოხილვისას, რთავს ეკრანის წარმოდგენის რეჟიმს თუ ეს შესაძლებელია."
+
+#. Translators: The message reported for not supported toggling of screen layout
+#, fuzzy
+msgid "Not supported in this document."
+msgstr "არ არის მხარდაჭერილი ამ დოკუმენტში"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2032,6 +2256,13 @@ msgstr "ყოველთვის"
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
 msgstr "მხოლოდ   სიმბოლოს დონის შემდეგ"
+
+#. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
+#. "transparent bright orange-yellow"
+#, fuzzy, python-brace-format
+msgctxt "color variation"
+msgid "transparent {colorDescription}"
+msgstr "შეიცავს მთლიან აღწერას"
 
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
@@ -2234,828 +2465,6 @@ msgstr "ყავისფერი"
 msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "მოყავისფრო ყვითელი"
-
-# An open-source (and free) Screen Reader for the Windows Operating System
-# Created by Michael Curran, with help from James Teh and others
-# Copyright (C) 2006-2008 Michael Curran <mick@kulgan.net>
-#. Translators: The word for window of a program such as document window.
-msgid "window"
-msgstr "ფანჯარა"
-
-#. Translators: Used to identify title bar of a program.
-msgid "title bar"
-msgstr "ფანჯრის სათაური"
-
-#. Translators: The word used for pane such as desktop pane.
-msgid "pane"
-msgstr "პანელი"
-
-#. Translators: The word used to denote a dialog box such as open dialog.
-msgid "dialog"
-msgstr "დიალოგი"
-
-#. Translators: The text used to identify check boxes such as select check box.
-msgid "check box"
-msgstr "ალამი"
-
-#. Translators: The text used to identify radio buttons such as yes or no radio button.
-msgid "radio button"
-msgstr "რადიო ღილაკი"
-
-#. Translators: The word used to identify a static text such as dialog text.
-msgid "text"
-msgstr "ტექსტი"
-
-#. Translators: The word used to identify edit fields such as subject edit field.
-msgid "edit"
-msgstr "რედაქტორი"
-
-#. Translators: The word used to identify a button such as OK button.
-msgid "button"
-msgstr "ღილაკი"
-
-#. Translators: Text used to identify menu bar of a program.
-msgid "menu bar"
-msgstr "მენიუს სტრიქონი"
-
-#. Translators: Used to identify a menu item such as an item in file menu.
-msgid "menu item"
-msgstr "მენიუს ელემენტი"
-
-#. Translators: The word used for menus such as edit menu.
-#. Translators: Identifies a menu such as file menu.
-msgid "menu"
-msgstr "მენიუ"
-
-#. Translators: Used to identify combo boxes such as file type combo box.
-msgid "combo box"
-msgstr "კომბინირებული სია"
-
-#. Translators: The word used for lists such as folder list.
-msgid "list"
-msgstr "სია"
-
-#. Translators: Used to identify a list item such as email list items.
-msgid "list item"
-msgstr "სიის ელემენტი"
-
-#. Translators: The word used to identify graphics such as webpage graphics.
-msgid "graphic"
-msgstr "გრაფიკა"
-
-#. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
-msgid "help balloon"
-msgstr "დამხმარე სისტემური შეტყობინება"
-
-#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
-msgid "tool tip"
-msgstr "რჩევა"
-
-#. Translators: Identifies a link in webpage documents.
-msgid "link"
-msgstr "ბმული"
-
-#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
-msgid "tree view"
-msgstr "ხე"
-
-#. Translators: Identifies a tree view item.
-msgid "tree view item"
-msgstr "ხის ელემენტი"
-
-#. Translators: The word presented for tabs in a tab enabled window.
-msgctxt "controlType"
-msgid "tab"
-msgstr "tab"
-
-#. Translators: Identifies a tab control such as webpage tabs in web browsers.
-msgid "tab control"
-msgstr "წყობა"
-
-#. Translators: Identifies a slider such as volume slider.
-msgid "slider"
-msgstr "ცოცია"
-
-#. Translators: Identifies a progress bar such as NvDA update progress.
-msgid "progress bar"
-msgstr "შესრულების ინდიკატორი"
-
-#. Translators: Identifies a scroll bar.
-msgid "scroll bar"
-msgstr "გადახვევის სტრიქონი"
-
-#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
-msgid "status bar"
-msgstr "მდგომარეობის ხაზი"
-
-#. Translators: Identifies a table such as ones used in various websites.
-msgid "table"
-msgstr "ცხრილი"
-
-#. Translators: Identifies a cell in a table.
-msgid "cell"
-msgstr "უჯრა"
-
-#. Translators: Identifies a column (a group of vertical cells in a table).
-msgid "column"
-msgstr "სვეტი"
-
-#. Translators: Identifies a row (a group of horizontal cells in a table).
-msgid "row"
-msgstr "ხაზი"
-
-#. Translators: Identifies a frame (a smaller window in a webpage or a document).
-#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
-msgid "frame"
-msgstr "ფრეიმ"
-
-#. Translators: Identifies a tool bar.
-msgid "tool bar"
-msgstr "ინსტრუმენტების პანელი"
-
-#. Translators: Identifies a column header in tables and spreadsheets.
-msgid "column header"
-msgstr "სვეტის სათაური"
-
-#. Translators: Identifies a row header in tables and spreadsheets.
-msgid "row header"
-msgstr "ხაზის სათაური"
-
-#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
-msgid "drop down button"
-msgstr "დაჭერილი ღილაკი"
-
-#. Translators: Identifies an element.
-msgid "clock"
-msgstr "საათი"
-
-#. Translators: Identifies a separator (a horizontal line drawn on the screen).
-msgid "separator"
-msgstr "გამყოფი"
-
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
-msgid "form"
-msgstr "ფორმა"
-
-#. Translators: Identifies a heading (a bold text used for identifying a section).
-msgid "heading"
-msgstr "სათაური"
-
-#. Translators: Identifies a heading level.
-msgid "heading 1"
-msgstr "სათაური 1"
-
-#. Translators: Identifies a heading level.
-msgid "heading 2"
-msgstr "სათაური 2"
-
-#. Translators: Identifies a heading level.
-msgid "heading 3"
-msgstr "სათაური 3"
-
-#. Translators: Identifies a heading level.
-msgid "heading 4"
-msgstr "სათაური 4"
-
-#. Translators: Identifies a heading level.
-msgid "heading 5"
-msgstr "სათაური 5"
-
-#. Translators: Identifies a heading level.
-msgid "heading 6"
-msgstr "სათაური 6"
-
-#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
-msgid "paragraph"
-msgstr "აბზაცი"
-
-#. Translators: Presented for a section in a document which is a block quotation;
-#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
-msgid "block quote"
-msgstr "ციტატა"
-
-#. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
-msgid "table header"
-msgstr "ცხრილის სათაური"
-
-#. Translators: Identifies a table body (the main body of the table).
-msgid "table body"
-msgstr "ცხრილის სხეული"
-
-#. Translators: Identifies a table footer (text placed at the end of the table).
-msgid "table footer"
-msgstr "ცხრილის ქვედა კოლონა"
-
-#. Translators: Identifies a document (for example, a webpage document).
-msgid "document"
-msgstr "დოკუმენტი"
-
-#. Translators: Identifies an animation in a document or a webpage.
-msgid "animation"
-msgstr "ანიმაცია"
-
-#. Translators: Identifies an application in webpages.
-msgid "application"
-msgstr "პროგრამა"
-
-#. Translators: Identifies a box element.
-msgid "box"
-msgstr "ბლოკი"
-
-#. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
-msgid "grouping"
-msgstr "დაჯგუფება"
-
-#. Translators: Identifies a property page such as drive properties dialog.
-msgid "property page"
-msgstr "მახასიათებლების გვერდი"
-
-#. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
-msgid "canvas"
-msgstr "საფენი"
-
-#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
-msgid "caption"
-msgstr "ხელმოწერა"
-
-#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
-msgid "check menu item"
-msgstr "ელემენტი ალმით"
-
-#. Translators: Identifies a data edit field.
-msgid "date edit"
-msgstr "თარიღის რედაქტორი"
-
-#. Translators: Identifies an icon.
-msgid "icon"
-msgstr "ნიშანი"
-
-#. Translators: Identifies a directory pane.
-msgid "directory pane"
-msgstr "საქაღალდეთა პანელი"
-
-#. Translators: Identifies an embedded object such as flash content on webpages.
-msgid "embedded object"
-msgstr "ჩადგმული ობიეკტი"
-
-#. Translators: Identifies an end note.
-msgid "end note"
-msgstr "განმარტება"
-
-#. Translators: Identifies a footer (usually text).
-msgid "footer"
-msgstr "ქვედა კოლონა"
-
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
-msgid "foot note"
-msgstr "განადგურება"
-
-#. Translators: Reported for an object which is a glass pane; i.e.
-#. a pane that is guaranteed to be on top of all panes beneath it.
-msgid "glass pane"
-msgstr "მინის პანელი"
-
-#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
-msgid "header"
-msgstr "სათაური"
-
-#. Translators: Identifies an image map (a type of graphical link).
-msgid "image map"
-msgstr "სურათი"
-
-#. Translators: Identifies an input window.
-msgid "input window"
-msgstr "შესავსები ფანჯარა"
-
-#. Translators: Identifies a label.
-msgid "label"
-msgstr "იარლიყი"
-
-#. Translators: Identifies a note field.
-msgid "note"
-msgstr "შენიშვნა"
-
-#. Translators: Identifies a page.
-msgid "page"
-msgstr "გვერდი"
-
-#. Translators: Identifies a radio menu item.
-msgid "radio menu item"
-msgstr "რადიოღილაკის ელემენტი"
-
-#. Translators: Identifies a layered pane.
-msgid "layered pane"
-msgstr "მრავალშრიანი ფანჯარა"
-
-#. Translators: Identifies a redundant object.
-msgid "redundant object"
-msgstr "ზედმეტი ობიექტი"
-
-#. Translators: Identifies a root pane.
-msgid "root pane"
-msgstr "ძირეული პანელი"
-
-#. Translators: May be reported for an editable text object in a toolbar.
-#. This is deprecated and is not often (if ever) used.
-msgid "edit bar"
-msgstr "რედაქტირების ხაზი"
-
-#. Translators: Identifies a terminal window such as command prompt.
-msgid "terminal"
-msgstr "ტერმინალი"
-
-#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
-msgid "rich edit"
-msgstr "მრავალ ხაზიანი რედაქტორი"
-
-#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
-msgid "ruler"
-msgstr "ზოლი"
-
-#. Translators: Identifies a scroll pane.
-msgid "scroll pane"
-msgstr "გადახვევის პანელი"
-
-#. Translators: Identifies a section of text.
-msgid "section"
-msgstr "სექცია"
-
-#. Translators: Identifies a shape.
-msgid "shape"
-msgstr "მოყვანილობა"
-
-#. Translators: Identifies a split pane.
-msgid "split pane"
-msgstr "გაყოფილი პანელი"
-
-#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
-#. which represents the portion of the entire data that the user can see.
-#. As the user manipulates the scroll bars, the contents of the view port can change.
-msgid "view port"
-msgstr "სამზერი ფანჯარა"
-
-#. Translators: Reported for an object that forms part of a menu system
-#. but which can be undocked from or torn off the menu system
-#. to exist as a separate window.
-msgid "tear off menu"
-msgstr "გახლეჩილი მენიუ"
-
-#. Translators: Identifies a text frame (a frame window which contains text).
-msgid "text frame"
-msgstr "ტექსტური ფრეიმი"
-
-#. Translators: Identifies a toggle button (a button used to toggle something).
-msgid "toggle button"
-msgstr "გადამრთველი ღილაკი"
-
-msgid "border"
-msgstr "ჩარჩო"
-
-#. Translators: Identifies a caret object.
-msgid "caret"
-msgstr "საცობი"
-
-#. Translators: Identifies a character field (should not be confused with edit fields).
-msgid "character"
-msgstr "სიმბოლო"
-
-#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
-msgid "chart"
-msgstr "სქემა"
-
-#. Translators: Identifies a cursor object.
-msgid "cursor"
-msgstr "კურსორი"
-
-#. Translators: Identifies a diagram (seen on some websites and on Office documents).
-msgid "diagram"
-msgstr "დიაგრამა"
-
-#. Translators: Identifies a dial object.
-msgid "dial"
-msgstr "ასაკრეფი დისკი"
-
-#. Translators: Identifies a drop list.
-msgid "drop list"
-msgstr "სიის ჩამოყრა"
-
-#. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
-msgid "split button"
-msgstr "გაყოფილი ღილაკი"
-
-#. Translators: Identifies a menu button (a button which opens a menu of items).
-msgid "menu button"
-msgstr "მენიუს ღილაკი"
-
-#. Translators: Reported for a button which expands a grid when it is pressed.
-msgid "drop down button grid"
-msgstr "უჯრის დაჭერილი ღილაკი"
-
-#. Translators: Identifies mathematical content.
-msgid "math"
-msgstr "მათემატიკური გამოთქმები"
-
-#. Translators: Identifies a grip control.
-msgid "grip"
-msgstr "უჯრა"
-
-#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
-msgid "hot key field"
-msgstr "ცხელი ღილაკების ველი"
-
-#. Translators: Identifies an indicator control.
-msgid "indicator"
-msgstr "ინდიკატორი"
-
-#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
-msgid "spin button"
-msgstr "საბრუნავი ღილაკი"
-
-#. Translators: Identifies a sound clip on websites.
-msgid "sound"
-msgstr "ხმა"
-
-#. Translators: Identifies a whitespace.
-msgid "white space"
-msgstr "თეთრი სივრცე"
-
-#. Translators: Identifies a tree view button.
-msgid "tree view button"
-msgstr "ხის ღილაკი"
-
-#. Translators: Identifies an IP address (an IP address field element).
-msgid "IP address"
-msgstr "I P მისამართი"
-
-#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
-msgid "desktop icon"
-msgstr "სამუშაო მაგიდის ნიშანი"
-
-#. Translators: Identifies desktop pane (the desktop window).
-msgid "desktop pane"
-msgstr "სამუშაო მაგიდის პანელი"
-
-#. Translators: Identifies an option pane.
-msgid "option pane"
-msgstr "პარამეტრების პანელი"
-
-#. Translators: Identifies a color chooser.
-msgid "color chooser"
-msgstr "ფერის ამრჩევი"
-
-#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
-msgid "file chooser"
-msgstr "ფაილის ამრჩევი"
-
-msgid "filler"
-msgstr "შემავსებელი"
-
-#. Translators: Identifies a panel control for grouping related options.
-msgid "panel"
-msgstr "პანელი"
-
-#. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
-msgid "password edit"
-msgstr "პაროლის რედაქტორი"
-
-#. Translators: Identifies a font chooser.
-msgid "font chooser"
-msgstr "შრიფტის ამრჩევი"
-
-msgid "line"
-msgstr "ხაზი"
-
-#. Translators: Identifies a font name.
-msgid "font name"
-msgstr "შრიფტის სახელწოდება"
-
-#. Translators: Identifies font size.
-msgid "font size"
-msgstr "შრიფტის ზომა"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is bolded.
-msgid "bold"
-msgstr "ნახევრად მუქი"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "კურსივი"
-
-#. Translators: Describes text formatting.
-msgid "underline"
-msgstr "ქვედა ხაზი"
-
-#. Translators: Describes text formatting.
-msgid "foreground color"
-msgstr "შრიფტის ფერი"
-
-#. Translators: Describes text formatting.
-msgid "background color"
-msgstr "ფონის ფერი"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for superscript text.
-msgid "superscript"
-msgstr "ხაზზედა"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for subscript text.
-msgid "subscript"
-msgstr "ხაზქვედა"
-
-#. Translators: Describes style of text.
-#. Translators: a Microsoft Word revision type (style change)
-msgid "style"
-msgstr "სტილი"
-
-#. Translators: Describes text formatting.
-msgid "indent"
-msgstr "დაცილება"
-
-#. Translators: Describes text formatting.
-msgid "alignment"
-msgstr "გათანაბრება"
-
-#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-msgid "alert"
-msgstr "გაფრთხილება"
-
-#. Translators: Identifies a data grid control (a grid which displays data).
-msgid "data grid"
-msgstr "მონაცემთა ცხრილი"
-
-msgid "data item"
-msgstr "მონაცემთა ელემენტი"
-
-msgid "header item"
-msgstr "სათაურის ელემენტი"
-
-#. Translators: Identifies a thumb control (a button-like control for changing options).
-msgid "thumb control"
-msgstr "ხაზის მორბენალის გადასახვევი"
-
-msgid "calendar"
-msgstr "კალენდარი"
-
-msgid "video"
-msgstr ""
-
-msgid "audio"
-msgstr ""
-
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr ""
-
-#. Translators: Identifies deleted content.
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "წაიშალა"
-
-#. Translators: Identifies inserted content.
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "ჩასმულია"
-
-#. Translators: Identifies a landmark.
-#, fuzzy
-msgid "landmark"
-msgstr "ორიენტირი %s"
-
-#. Translators: Identifies an article.
-msgid "article"
-msgstr ""
-
-#. Translators: Identifies a region.
-#, fuzzy
-msgid "region"
-msgstr "არე"
-
-#. Translators: Identifies a figure (commonly seen on some websites).
-msgid "figure"
-msgstr ""
-
-#. Translators: Identifies marked (highlighted) content
-#, fuzzy
-msgid "marked content"
-msgstr "მონიშნულია"
-
-#. Translators: This is presented when a control or document is unavailable.
-msgid "unavailable"
-msgstr "მიუწვდომელია"
-
-#. Translators: This is presented when a control has focus.
-msgid "focused"
-msgstr "აქტიური"
-
-#. Translators: This is presented when the control is selected.
-msgid "selected"
-msgstr "მონიშნულია"
-
-#. Translators: This is presented when a document is busy.
-msgid "busy"
-msgstr "დაკავებულია"
-
-#. Translators: This is presented when a button is pressed.
-msgid "pressed"
-msgstr "დაჭერილია"
-
-#. Translators: This is presented when a check box is checked.
-msgid "checked"
-msgstr "მონიშნულია"
-
-#. Translators: This is presented when a three state check box is half checked.
-msgid "half checked"
-msgstr "მონიშნულია ნაწილობრივ "
-
-#. Translators: This is presented when the control is a read-only control such as read-only edit box.
-msgid "read only"
-msgstr "მხოლოდ კითხვისთვის"
-
-#. Translators: This is presented when a tree view or submenu item is expanded.
-msgid "expanded"
-msgstr "გახსნილია"
-
-#. Translators: This is presented when a tree view or submenu is collapsed.
-msgid "collapsed"
-msgstr "დახურულია"
-
-#. Translators: This is presented when a control or a document becomes invisible.
-msgid "invisible"
-msgstr "უჩინარია"
-
-#. Translators: This is presented when a visited link is encountered.
-msgid "visited"
-msgstr "ნანახი"
-
-#. Translators: This is presented when a link is encountered.
-msgid "linked"
-msgstr "დაკავშირებულია"
-
-#. Translators: This is presented when the control menu item has a submenu.
-msgid "subMenu"
-msgstr "ქვემენიუ"
-
-#. Translators: This is presented when a protected control or a document is encountered.
-msgid "protected"
-msgstr "დაცულია"
-
-#. Translators: This is presented when a required form field is encountered.
-msgid "required"
-msgstr "საჭიროა"
-
-#. Translators: Reported when an object no longer exists in the user interface;
-#. i.e. it is dead and is no longer usable.
-msgid "defunct"
-msgstr "არ არსებული"
-
-#. Translators: This is presented when an invalid entry has been made.
-msgid "invalid entry"
-msgstr "არასწორი ჩანაწერი"
-
-msgid "modal"
-msgstr "მოდალური"
-
-#. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
-msgid "has auto complete"
-msgstr "შესაძლებელია ავტომატურად შევსება"
-
-#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
-msgid "multi line"
-msgstr "მრავალხაზიანი"
-
-msgid "iconified"
-msgstr "აღნიშნული"
-
-#. Translators: Presented when the current control is located off screen.
-msgid "off screen"
-msgstr "ეკრანის"
-
-#. Translators: Presented when the control allows selection such as text fields.
-msgid "selectable"
-msgstr "მონიშვნადი"
-
-#. Translators: Presented when a control can be moved to using system focus.
-msgid "focusable"
-msgstr "ფოკუსირებადი"
-
-#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
-msgid "clickable"
-msgstr "დაწკაპუნებადი"
-
-msgid "editable"
-msgstr "რედაქტირებადი"
-
-msgid "checkable"
-msgstr "მონიშვნადი"
-
-msgid "draggable"
-msgstr "გადასათრევი"
-
-msgid "dragging"
-msgstr "გადათრევა"
-
-#. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects that support accessible drag and drop.
-msgid "drop target"
-msgstr "სამიზნე პუნქტი გადათრევისათვის"
-
-msgid "sorted"
-msgstr "sorted"
-
-msgid "sorted ascending"
-msgstr "sorted ascending"
-
-msgid "sorted descending"
-msgstr "sorted descending"
-
-#. Translators: a state that denotes that an object (usually a graphic) has a long description.
-msgid "has long description"
-msgstr "შეიცავს მთლიან აღწერას"
-
-#. Translators: a state that denotes that an object is pinned in its current location
-msgid "pinned"
-msgstr "ფიქსირებულია"
-
-#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
-msgid "has formula"
-msgstr "შეიცავს ფორმულას"
-
-#. Translators: a state that denotes the existance of a comment.
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "შეიცავს კომენტარს"
-
-#. Translators: a state that denotes that the object is covered partially or fully by another object
-msgid "obscured"
-msgstr "გადაფარულია"
-
-#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
-msgid "cropped"
-msgstr "მოჭრილია"
-
-#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
-msgid "overflowing"
-msgstr "ფარავს"
-
-#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
-msgid "unlocked"
-msgstr "ახსნილია"
-
-#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-msgid "not selected"
-msgstr "არაა მონიშნული"
-
-#. Translators: This is presented when a button is not pressed.
-#, fuzzy
-msgid "not pressed"
-msgstr "დაჭერილია"
-
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "არაა მონიშნული"
-
-#. Translators: This is presented when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "გადათრევა დასრულებულია"
-
-#. Translators: Presented when an item is marked as current in a collection of items
-msgid "current"
-msgstr ""
-
-#. Translators: Presented when a page item is marked as current in a collection of page items
-#, fuzzy
-msgid "current page"
-msgstr "მახასიათებლების გვერდი"
-
-#. Translators: Presented when a step item is marked as current in a collection of step items
-msgid "current step"
-msgstr ""
-
-#. Translators: Presented when a location item is marked as current in a collection of location items
-#, fuzzy
-msgid "current location"
-msgstr "მოქმედი პროგრამა (%s)"
-
-#. Translators: Presented when a date item is marked as current in a collection of date items
-msgid "current date"
-msgstr ""
-
-#. Translators: Presented when a time item is marked as current in a collection of time items
-msgid "current time"
-msgstr ""
-
-#. Translators: Indicates that a particular state of an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the full identifier of the negated state (e.g. selected).
-#, python-format
-msgid "not %s"
-msgstr "არა %s"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -3262,10 +2671,6 @@ msgstr "შეყვანა"
 msgid "Document formatting"
 msgstr "დოკუმენტის ფორმატირება"
 
-#. Translators: a message when audio ducking is not supported on this machine
-msgid "Audio ducking not supported"
-msgstr "ხმის დაწევის ფუნქცია მიუწვდომელია"
-
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
@@ -3274,13 +2679,9 @@ msgstr ""
 "რთავს აუდიო ხმის დაწევის რეჟიმებს, რომლებიც არეგულირებენ როდის უნდა დაუწიოს "
 "nvda-მ სხვა ხმები."
 
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help on"
-msgstr "დახმარება აკრეფისას ჩართულია"
-
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help off"
-msgstr "დახმარება აკრეფისას გამორთულია"
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "ხმის დაწევის ფუნქცია მიუწვდომელია"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
@@ -3291,6 +2692,19 @@ msgstr ""
 "ჟესტით აკრეფისას(მაგალითად: კლავიატურაზე კლავიშის დაჭერით), კითხულობს, "
 "ჟესტზე დამაგრებული, შესაბამისი ბრზანების აღწერას. "
 
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help on"
+msgstr "დახმარება აკრეფისას ჩართულია"
+
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help off"
+msgstr "დახმარება აკრეფისას გამორთულია"
+
+#. Translators: Input help mode message for toggle sleep mode command.
+#, fuzzy
+msgid "Toggles sleep mode on and off for the active application."
+msgstr "აქტიური პროგრამისათვის რთავს ან თიშავს ძილის რეჟიმს "
+
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
 msgstr "ძილის რეჟიმი გამორთულია"
@@ -3298,11 +2712,6 @@ msgstr "ძილის რეჟიმი გამორთულია"
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
 msgstr "ძილის რეჟიმი ჩართულია"
-
-#. Translators: Input help mode message for toggle sleep mode command.
-#, fuzzy
-msgid "Toggles sleep mode on and off for the active application."
-msgstr "აქტიური პროგრამისათვის რთავს ან თიშავს ძილის რეჟიმს "
 
 #. Translators: Input help mode message for report current line command.
 #, fuzzy
@@ -3313,24 +2722,28 @@ msgid ""
 msgstr ""
 "კითხულობს კურსორის ქვეშ სტრიქონს, თუ დავაწვებით ორჯერ კითხულობს სიმბოლოებით."
 
-#. Translators: Reported when left mouse button is clicked.
-msgid "Left click"
-msgstr "თაგვის მარცხენა ღილაკის დაწკაპუნება"
-
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr ""
 "მაჩვენებელის პოზიციაზე ასრულებს ერთ დაწკაპუნებას თაგვის მარცხენა ღილაკიტ. "
 
-#. Translators: Reported when right mouse button is clicked.
-msgid "Right click"
-msgstr "თაგვის მარჯვენა ღილაკის დაწკაპუნება"
+#. Translators: Reported when left mouse button is clicked.
+msgid "Left click"
+msgstr "თაგვის მარცხენა ღილაკის დაწკაპუნება"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr ""
 "მაჩვენებლის პოზიციაზე ასრულებს ერთ დაწკაპუნებას თაგვის მარჯვენა ღილაკის "
 "დაჭერით.. "
+
+#. Translators: Reported when right mouse button is clicked.
+msgid "Right click"
+msgstr "თაგვის მარჯვენა ღილაკის დაწკაპუნება"
+
+#. Translators: Input help mode message for left mouse lock/unlock toggle command.
+msgid "Locks or unlocks the left mouse button"
+msgstr "იჭერს, ან უშვებს თაგვის მარცხენა ღილაკს."
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
@@ -3340,9 +2753,9 @@ msgstr "თაგვის მარცხენა ღილაკის აშ
 msgid "Left mouse button lock"
 msgstr "თაგვის მარცხენა ღილაკის ჩაჭერა"
 
-#. Translators: Input help mode message for left mouse lock/unlock toggle command.
-msgid "Locks or unlocks the left mouse button"
-msgstr "იჭერს, ან უშვებს თაგვის მარცხენა ღილაკს."
+#. Translators: Input help mode message for right mouse lock/unlock command.
+msgid "Locks or unlocks the right mouse button"
+msgstr "იჭერს ან უშვებს თაგვის მარჯვენა რილაკს."
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
@@ -3351,10 +2764,6 @@ msgstr "თაგვის მარჯვენა ღილაკის აშ
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 msgid "Right mouse button lock"
 msgstr "თაგვის მარჯვენა ღილაკის ჩაჭერა."
-
-#. Translators: Input help mode message for right mouse lock/unlock command.
-msgid "Locks or unlocks the right mouse button"
-msgstr "იჭერს ან უშვებს თაგვის მარჯვენა რილაკს."
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3370,13 +2779,13 @@ msgid ""
 "current date"
 msgstr "ერთხელ დაჭერისას აცხადებს დროს, ხოლო ორჯერ, თარიღს."
 
-#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
-msgid "No settings"
-msgstr "ხმის პარამეტრები არ არის"
-
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "სინთეზატორის რგოლში ზრდის პარამეტრების მნიშვნელობას."
+
+#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
+msgid "No settings"
+msgstr "ხმის პარამეტრები არ არის"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
@@ -3390,6 +2799,10 @@ msgstr "სინთეზატორის რგოლში გადად�
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "სინთეზატორის რგოლში გადადის წინა პარამეტრზე."
 
+#. Translators: Input help mode message for toggle speaked typed characters command.
+msgid "Toggles on and off the speaking of typed characters"
+msgstr "გადართავს სიმბოლოების აკრეფის გახმოვანებას."
+
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
 msgstr "აკრეფილი სიმბოლოების გახმოვანება გამორთულია"
@@ -3398,9 +2811,9 @@ msgstr "აკრეფილი სიმბოლოების გახმ�
 msgid "speak typed characters on"
 msgstr "აკრეფილი სიმბოლოების გახმოვანება ჩართულია"
 
-#. Translators: Input help mode message for toggle speaked typed characters command.
-msgid "Toggles on and off the speaking of typed characters"
-msgstr "გადართავს სიმბოლოების აკრეფის გახმოვანებას."
+#. Translators: Input help mode message for toggle speak typed words command.
+msgid "Toggles on and off the speaking of typed words"
+msgstr "გადარტავს სიტყვების წაკითხვას აკრეფისას"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -3410,9 +2823,11 @@ msgstr "აკრეფილი სიტყვების გახმოვ�
 msgid "speak typed words on"
 msgstr "აკრეფილი სიტყვების გახმოვანება ჩართულია"
 
-#. Translators: Input help mode message for toggle speak typed words command.
-msgid "Toggles on and off the speaking of typed words"
-msgstr "გადარტავს სიტყვების წაკითხვას აკრეფისას"
+#. Translators: Input help mode message for toggle speak command keys command.
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
+msgstr "გადართავს არასიმბოლური კლავიშების გახმოვანებას."
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -3422,11 +2837,9 @@ msgstr "ბრძანებითი კლავიშების გახ�
 msgid "speak command keys on"
 msgstr "ბრძანებითი კლავიშების გახმოვანება ჩართულია"
 
-#. Translators: Input help mode message for toggle speak command keys command.
-msgid ""
-"Toggles on and off the speaking of typed keys, that are not specifically "
-"characters"
-msgstr "გადართავს არასიმბოლური კლავიშების გახმოვანებას."
+#. Translators: Input help mode message for toggle report font name command.
+msgid "Toggles on and off the reporting of font changes"
+msgstr "გადართავს ფონტის გამოცხადებას"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -3436,9 +2849,9 @@ msgstr "ფონტის გამოცხადება გამორთ�
 msgid "report font name on"
 msgstr "ფონტის გამოცხადება ჩართულია"
 
-#. Translators: Input help mode message for toggle report font name command.
-msgid "Toggles on and off the reporting of font changes"
-msgstr "გადართავს ფონტის გამოცხადებას"
+#. Translators: Input help mode message for toggle report font size command.
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "გადართავს ფონტის ზომის ცვლილებების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
@@ -3448,9 +2861,9 @@ msgstr "ფონტის ზომის გამოცხადება გ
 msgid "report font size on"
 msgstr "ფონტის ზომის გამოცხადება ჩართულია"
 
-#. Translators: Input help mode message for toggle report font size command.
-msgid "Toggles on and off the reporting of font size changes"
-msgstr "გადართავს ფონტის ზომის ცვლილებების გახმოვანებას"
+#. Translators: Input help mode message for toggle report font attributes command.
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "გადართავს ფონტის ატრიბუტების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
@@ -3459,10 +2872,6 @@ msgstr "ფონტის ატრიბუტების გახმოვ�
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
 msgstr "ფონტის ატრიბუტების გახმოვანება ჩართულია"
-
-#. Translators: Input help mode message for toggle report font attributes command.
-msgid "Toggles on and off the reporting of font attributes"
-msgstr "გადართავს ფონტის ატრიბუტების გახმოვანებას"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 #, fuzzy
@@ -3480,6 +2889,10 @@ msgstr ""
 msgid "report superscripts and subscripts off"
 msgstr "ორიენტირების გამოცხადება გამორთულია"
 
+#. Translators: Input help mode message for toggle report revisions command.
+msgid "Toggles on and off the reporting of revisions"
+msgstr "რთავს ან თიშავს შესწორებების გახმოვანებას"
+
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
 msgstr "შესწორებების წაკითხვა გამორთულია"
@@ -3488,9 +2901,9 @@ msgstr "შესწორებების წაკითხვა გამ�
 msgid "report revisions on"
 msgstr "შესწორებების წაკითხვა ჩართულია"
 
-#. Translators: Input help mode message for toggle report revisions command.
-msgid "Toggles on and off the reporting of revisions"
-msgstr "რთავს ან თიშავს შესწორებების გახმოვანებას"
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "რთავს სიმბოლოების აკრეფის გახმოვანებას."
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
@@ -3500,24 +2913,24 @@ msgstr "ტექსტში ხაზგასმის გამოცხა�
 msgid "report emphasis on"
 msgstr "ტექსტში ხაზგასმის გამოცხადება ჩართულია"
 
-#. Translators: Input help mode message for toggle report emphasis command.
-msgid "Toggles on and off the reporting of emphasis"
-msgstr "რთავს სიმბოლოების აკრეფის გახმოვანებას."
-
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
 #, fuzzy
-msgid "Toggles on and off the reporting of marked text"
+msgid "Toggles on and off the reporting of highlighted text"
 msgstr "გადართავს ცხრილების წაკითხვას"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 #, fuzzy
-msgid "report marked on"
-msgstr "გვერდების წაკითხვა ჩართულია"
+msgid "report highlighted on"
+msgstr "ცხრილების გახმოვანება ჩართულია"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 #, fuzzy
-msgid "report marked off"
-msgstr "გვერდების წაკითხვა გამორთულია"
+msgid "report highlighted off"
+msgstr "ცხრილების გახმოვანება გამორთულია"
+
+#. Translators: Input help mode message for toggle report colors command.
+msgid "Toggles on and off the reporting of colors"
+msgstr "რთავს ფერების გამოცხადების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3527,9 +2940,9 @@ msgstr "ფერების გამოცხადება გამორ�
 msgid "report colors on"
 msgstr "ფერების გამოცხადება ჩართულია"
 
-#. Translators: Input help mode message for toggle report colors command.
-msgid "Toggles on and off the reporting of colors"
-msgstr "რთავს ფერების გამოცხადების გახმოვანებას"
+#. Translators: Input help mode message for toggle report alignment command.
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "ჩართავს ან გამორთავს ტექსტის სწორების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
@@ -3539,9 +2952,9 @@ msgstr "ტექსტის სწორების გახმოვან�
 msgid "report alignment on"
 msgstr "ტექსტის სწორების გახმოვანება ჩართულია"
 
-#. Translators: Input help mode message for toggle report alignment command.
-msgid "Toggles on and off the reporting of text alignment"
-msgstr "ჩართავს ან გამორთავს ტექსტის სწორების გახმოვანებას"
+#. Translators: Input help mode message for toggle report style command.
+msgid "Toggles on and off the reporting of style changes"
+msgstr "გადართავს სტილის ცვლილების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
@@ -3551,9 +2964,9 @@ msgstr "სტილის წაკითხვა გამორთული�
 msgid "report style on"
 msgstr "სტილის წაკითხვა ჩართულია"
 
-#. Translators: Input help mode message for toggle report style command.
-msgid "Toggles on and off the reporting of style changes"
-msgstr "გადართავს სტილის ცვლილების გახმოვანებას"
+#. Translators: Input help mode message for toggle report spelling errors command.
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "გადართავს გრამატიკული შეცდომების წაკითხვას"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
@@ -3563,9 +2976,9 @@ msgstr "გრამატიკული შეცდომების წა�
 msgid "report spelling errors on"
 msgstr "გრამატიკული შეცდომების წაკითხვა ჩართულია"
 
-#. Translators: Input help mode message for toggle report spelling errors command.
-msgid "Toggles on and off the reporting of spelling errors"
-msgstr "გადართავს გრამატიკული შეცდომების წაკითხვას"
+#. Translators: Input help mode message for toggle report pages command.
+msgid "Toggles on and off the reporting of pages"
+msgstr "გადართავს გვერდების წაკითხვას"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -3575,9 +2988,9 @@ msgstr "გვერდების წაკითხვა გამორთ�
 msgid "report pages on"
 msgstr "გვერდების წაკითხვა ჩართულია"
 
-#. Translators: Input help mode message for toggle report pages command.
-msgid "Toggles on and off the reporting of pages"
-msgstr "გადართავს გვერდების წაკითხვას"
+#. Translators: Input help mode message for toggle report line numbers command.
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "გადართავს ხაზების ნომრის გამოცხადებას"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
@@ -3587,9 +3000,9 @@ msgstr "ხაზების ნომრის გამოცხადებ�
 msgid "report line numbers on"
 msgstr "ხაზების ნომრის გამოცხადება ჩართულია"
 
-#. Translators: Input help mode message for toggle report line numbers command.
-msgid "Toggles on and off the reporting of line numbers"
-msgstr "გადართავს ხაზების ნომრის გამოცხადებას"
+#. Translators: Input help mode message for toggle report line indentation command.
+msgid "Cycles through line indentation settings"
+msgstr "გადართავს ხაზის სწორების პარამეტრებს"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
@@ -3607,9 +3020,9 @@ msgstr "ხაზების სწორების გახმოვან�
 msgid "Report line indentation off"
 msgstr "ხაზის სწორების გამოცხადება გამორთულია"
 
-#. Translators: Input help mode message for toggle report line indentation command.
-msgid "Cycles through line indentation settings"
-msgstr "გადართავს ხაზის სწორების პარამეტრებს"
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "რთავს პარაგრაფის გასწორების გამოცხადებას"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3619,9 +3032,9 @@ msgstr "პარაგრაფის გასწორების გამ�
 msgid "report paragraph indentation on"
 msgstr "პარაგრაფის გასწორების გამოცხადება ჩართულია"
 
-#. Translators: Input help mode message for toggle report paragraph indentation command.
-msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "რთავს პარაგრაფის გასწორების გამოცხადებას"
+#. Translators: Input help mode message for toggle report line spacing command.
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "რთავს ხაზებს შორის ინტერვალების გამოცხადებას"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -3631,9 +3044,9 @@ msgstr "ხაზებს შორის ინტერვალების 
 msgid "report line spacing on"
 msgstr "ხაზებს შორის ინტერვალების გამოცხადება ჩართულია"
 
-#. Translators: Input help mode message for toggle report line spacing command.
-msgid "Toggles on and off the reporting of line spacing"
-msgstr "რთავს ხაზებს შორის ინტერვალების გამოცხადებას"
+#. Translators: Input help mode message for toggle report tables command.
+msgid "Toggles on and off the reporting of tables"
+msgstr "გადართავს ცხრილების წაკითხვას"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3643,9 +3056,9 @@ msgstr "ცხრილების კითხვა გამორთულ�
 msgid "report tables on"
 msgstr "ცხრილების კითხვა ჩართულია"
 
-#. Translators: Input help mode message for toggle report tables command.
-msgid "Toggles on and off the reporting of tables"
-msgstr "გადართავს ცხრილების წაკითხვას"
+#. Translators: Input help mode message for toggle report table row/column headers command.
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr "რთავს ცხრილის ხაზებისა და სვეტების სათაურების გამოცხადებას"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
@@ -3655,9 +3068,9 @@ msgstr "ცხრილის ხაზებისა და სვეტებ
 msgid "report table row and column headers on"
 msgstr "ცხრილის ხაზებისა და სვეტების სათაურების გამოცხადება ჩართულია"
 
-#. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "რთავს ცხრილის ხაზებისა და სვეტების სათაურების გამოცხადებას"
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "გადართავს ცხრილის უჯრის კოორდინატების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
@@ -3667,9 +3080,28 @@ msgstr "ცხრილის უჯრის კოორდინატებ�
 msgid "report table cell coordinates on"
 msgstr "ცხრილის უჯრის კოორდინატების გახმოვანება ჩართულია"
 
-#. Translators: Input help mode message for toggle report table cell coordinates command.
-msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "გადართავს ცხრილის უჯრის კოორდინატების გახმოვანებას"
+#. Translators: Input help mode message for toggle report cell borders command.
+#, fuzzy
+msgid "Cycles through the cell border reporting settings"
+msgstr "გადართავს ხაზის სწორების პარამეტრებს"
+
+#. Translators: A message reported when cycling through cell borders settings.
+#, fuzzy
+msgid "Report styles of cell borders"
+msgstr "ცხრილის უჯრის კოორდინატების გახმოვანება ჩართულია"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report colors and styles of cell borders"
+msgstr ""
+
+#. Translators: A message reported when cycling through cell borders settings.
+#, fuzzy
+msgid "Report cell borders off."
+msgstr "ფერების გამოცხადება გამორთულია"
+
+#. Translators: Input help mode message for toggle report links command.
+msgid "Toggles on and off the reporting of links"
+msgstr "რთავს ან თიშავს ბმულების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -3678,10 +3110,6 @@ msgstr "ბმულების წაკითხვა გამორთუ�
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
 msgstr "ბმულების წაკითხვა ჩართულია"
-
-#. Translators: Input help mode message for toggle report links command.
-msgid "Toggles on and off the reporting of links"
-msgstr "რთავს ან თიშავს ბმულების გახმოვანებას"
 
 #. Translators: Input help mode message for toggle report graphics command.
 #, fuzzy
@@ -3698,6 +3126,10 @@ msgstr "გვერდების წაკითხვა გამორთ�
 msgid "report graphics on"
 msgstr "გვერდების წაკითხვა ჩართულია"
 
+#. Translators: Input help mode message for toggle report comments command.
+msgid "Toggles on and off the reporting of comments"
+msgstr "გადართავს კომენტარების გახმოვანებას"
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
 msgstr "კომენტარების გახმოვანება გამორთულია"
@@ -3706,9 +3138,9 @@ msgstr "კომენტარების გახმოვანება �
 msgid "report comments on"
 msgstr "კომენტარების გახმოვანება ჩართულია"
 
-#. Translators: Input help mode message for toggle report comments command.
-msgid "Toggles on and off the reporting of comments"
-msgstr "გადართავს კომენტარების გახმოვანებას"
+#. Translators: Input help mode message for toggle report lists command.
+msgid "Toggles on and off the reporting of lists"
+msgstr "გადართავს ცხრილების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
@@ -3718,9 +3150,9 @@ msgstr "ცხრილების გახმოვანება გამ�
 msgid "report lists on"
 msgstr "ცხრილების გახმოვანება ჩართულია"
 
-#. Translators: Input help mode message for toggle report lists command.
-msgid "Toggles on and off the reporting of lists"
-msgstr "გადართავს ცხრილების გახმოვანებას"
+#. Translators: Input help mode message for toggle report headings command.
+msgid "Toggles on and off the reporting of headings"
+msgstr "გადართავს სათაურების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
@@ -3729,10 +3161,6 @@ msgstr "სათაურების გახმოვანება გა�
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
 msgstr "სათაურების გახმოვანება ჩართულია"
-
-#. Translators: Input help mode message for toggle report headings command.
-msgid "Toggles on and off the reporting of headings"
-msgstr "გადართავს სათაურების გახმოვანებას"
 
 #. Translators: Input help mode message for toggle report groupings command.
 #, fuzzy
@@ -3749,6 +3177,10 @@ msgstr "გვერდების წაკითხვა გამორთ�
 msgid "report groupings on"
 msgstr "გვერდების წაკითხვა ჩართულია"
 
+#. Translators: Input help mode message for toggle report block quotes command.
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "გადართავს ციტატების გახმოვანებას"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "ციტატების გახმოვანება გამორთულია"
@@ -3757,9 +3189,9 @@ msgstr "ციტატების გახმოვანება გამ�
 msgid "report block quotes on"
 msgstr "ციტატების გახმოვანება ჩართულია"
 
-#. Translators: Input help mode message for toggle report block quotes command.
-msgid "Toggles on and off the reporting of block quotes"
-msgstr "გადართავს ციტატების გახმოვანებას"
+#. Translators: Input help mode message for toggle report landmarks command.
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "რთავს ორიენტირების გამოცხადებას"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 #, fuzzy
@@ -3770,10 +3202,6 @@ msgstr "ორიენტირების გამოცხადება �
 #, fuzzy
 msgid "report landmarks and regions on"
 msgstr "ორიენტირების გამოცხადება ჩართულია"
-
-#. Translators: Input help mode message for toggle report landmarks command.
-msgid "Toggles on and off the reporting of landmarks"
-msgstr "რთავს ორიენტირების გამოცხადებას"
 
 #. Translators: Input help mode message for toggle report articles command.
 #, fuzzy
@@ -3790,6 +3218,10 @@ msgstr "ცხრილების კითხვა გამორთულ�
 msgid "report articles on"
 msgstr "ცხრილების კითხვა ჩართულია"
 
+#. Translators: Input help mode message for toggle report frames command.
+msgid "Toggles on and off the reporting of frames"
+msgstr "რთავს ჩარჩოების გამოცხადებას"
+
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
 msgstr "ჩარჩოების გამოცხადება გამორთულია"
@@ -3798,9 +3230,9 @@ msgstr "ჩარჩოების გამოცხადება გამ�
 msgid "report frames on"
 msgstr "ჩარჩოების გამოცხადება ჩართულია"
 
-#. Translators: Input help mode message for toggle report frames command.
-msgid "Toggles on and off the reporting of frames"
-msgstr "რთავს ჩარჩოების გამოცხადებას"
+#. Translators: Input help mode message for toggle report if clickable command.
+msgid "Toggles on and off reporting if clickable"
+msgstr "გადართავს დაწკაპუნებითი ელემენტების გახმოვანებას"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
@@ -3810,9 +3242,11 @@ msgstr "დაწკაპუნებითი ელემენტები�
 msgid "report if clickable on"
 msgstr "დაწკაპუნებითი ელემენტების გახმოვანება ჩართულია"
 
-#. Translators: Input help mode message for toggle report if clickable command.
-msgid "Toggles on and off reporting if clickable"
-msgstr "გადართავს დაწკაპუნებითი ელემენტების გახმოვანებას"
+#. Translators: Input help mode message for cycle speech symbol level command.
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3821,23 +3255,13 @@ msgstr "გადართავს დაწკაპუნებითი ე�
 msgid "Symbol level %s"
 msgstr "სიმბოლოების დონე %s"
 
-#. Translators: Input help mode message for cycle speech symbol level command.
-msgid ""
-"Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr ""
-"Cycles through speech symbol levels which determine what symbols are spoken"
-
-#. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "Object has no location"
-msgstr "ობიექტს არ აქვს მდებარეობა"
-
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "თაგვის მაჩვენებელს გადაადგილებს ნავიგატორის ობიექტთან"
 
-#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
-msgid "Move navigator object to mouse"
-msgstr "ნავიგატორის თაგვთან მიყვანა"
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "Object has no location"
+msgstr "ობიექტს არ აქვს მდებარეობა"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 msgid ""
@@ -3845,9 +3269,9 @@ msgid ""
 "speaks it"
 msgstr "ნავიგატორს აყენებს თაგვის მაჩვენებლის ქვეს და კითხულობს მას"
 
-#. Translators: reported when there are no other available review modes for this object
-msgid "No next review mode"
-msgstr "არ არის შემდეგი ნახვის რეჟიმი"
+#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
+msgid "Move navigator object to mouse"
+msgstr "ნავიგატორის თაგვთან მიყვანა"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
@@ -3858,8 +3282,8 @@ msgstr ""
 "აყენებს ნახვის რეჟიმს ობიექტის ნავიგატორთან."
 
 #. Translators: reported when there are no other available review modes for this object
-msgid "No previous review mode"
-msgstr "არ არის წინა ნახვის რეჟიმი"
+msgid "No next review mode"
+msgstr "არ არის შემდეგი ნახვის რეჟიმი"
 
 #. Translators: Script help message for previous review mode command.
 msgid ""
@@ -3869,6 +3293,14 @@ msgstr ""
 "გადართავს წინა ნახვის რეჟიმზე (მაგ: ობიექტზე, დოკუმენტზე, ან ეკრანზე) და "
 "აყენებს ნახვის რეჟიმს ობიექტის ნავიგატორთან."
 
+#. Translators: reported when there are no other available review modes for this object
+msgid "No previous review mode"
+msgstr "არ არის წინა ნახვის რეჟიმი"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "რთავს გამარტივებულ მიმოხილვის რეჟიმს"
+
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
 msgstr "გამარტივებული მიმოხილვის რეჟიმის ჩართვა"
@@ -3876,15 +3308,6 @@ msgstr "გამარტივებული მიმოხილვის �
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
 msgstr "გამარტივებული მიმოხილვის რეჟიმი ჩართულია"
-
-#. Translators: Input help mode message for toggle simple review mode command.
-msgid "Toggles simple review mode on and off"
-msgstr "რთავს გამარტივებულ მიმოხილვის რეჟიმს"
-
-#. Translators: Reported when the user tries to perform a command related to the navigator object
-#. but there is no current navigator object.
-msgid "No navigator object"
-msgstr "ნავიგატორის ობიექტი არ არის."
 
 #. Translators: Input help mode message for report current navigator object command.
 #, fuzzy
@@ -3896,9 +3319,10 @@ msgstr ""
 "ერთხელ დაჭერით აცხადებს ნავიგატორის ობიექტს, ორჯერ დაჭერისას ასო-ასო, ხოლო "
 "სამჯერ, ნავიგატორის დასახელებასა და მნიშვნელობას აკოპირებს ბუფერში."
 
-#. Translators: message when there is no location information for the review cursor
-msgid "No location information"
-msgstr "არ არის ინფორმაცია ადგილმდებარეობის შესახებ"
+#. Translators: Reported when the user tries to perform a command related to the navigator object
+#. but there is no current navigator object.
+msgid "No navigator object"
+msgstr "ნავიგატორის ობიექტი არ არის."
 
 #. Translators: Description for report review cursor location command.
 msgid ""
@@ -3907,6 +3331,10 @@ msgid ""
 msgstr ""
 "აცხადებს ინფორმაციას მიმოხილვის კურსორის ქვეშ მყოფი ობიექტის ან ტექსტის "
 "შესახებ, ორჯერ დაჭერის შემთხვევაში გამოაქვს უფრო დაწვრილებითი ინფორმაცია"
+
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "არ არის ინფორმაცია ადგილმდებარეობის შესახებ"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 #, fuzzy
@@ -3920,6 +3348,14 @@ msgstr ""
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
 msgstr "ფოკუსთან მიყვანა"
+
+#. Translators: Input help mode message for move focus to current navigator object command.
+msgid ""
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"ერთხელ დაჭერის შემთხვევაში ფოკუსი მიყავს ნავიგატორის ობიექტთან. ორჯერ "
+"დაჭერისას კი სისტემურ ფოკუსს აყენებს ხილული კურსორის პოზიციაში"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3936,57 +3372,41 @@ msgstr "ფოკუსის მოყვანა"
 msgid "No caret"
 msgstr "არ არის კურსორი"
 
-#. Translators: Input help mode message for move focus to current navigator object command.
-msgid ""
-"Pressed once sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
-msgstr ""
-"ერთხელ დაჭერის შემთხვევაში ფოკუსი მიყავს ნავიგატორის ობიექტთან. ორჯერ "
-"დაჭერისას კი სისტემურ ფოკუსს აყენებს ხილული კურსორის პოზიციაში"
-
-#. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
-msgid "No containing object"
-msgstr "არ არის შემცველობითი ობიექტი"
-
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
 msgstr ""
 "გადააქვს ნავიგაციური ობიექტი, იმ ობიექტთან რომელიც შეიცავს ამ ნავიგაციურ "
 "ობიექტს"
 
+#. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
+msgid "No containing object"
+msgstr "არ არის შემცველობითი ობიექტი"
+
+#. Translators: Input help mode message for move to next object command.
+msgid "Moves the navigator object to the next object"
+msgstr "ნავიგატორს გადაადგილებს მომდევნო ობიექტზე"
+
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "არ არის შემდეგი."
 
-#. Translators: Input help mode message for move to next object command.
-msgid "Moves the navigator object to the next object"
-msgstr "ნავიგატორს გადაადგილებს მომდევნო ობიექტზე"
+#. Translators: Input help mode message for move to previous object command.
+msgid "Moves the navigator object to the previous object"
+msgstr "ნავიგატორს გადაადგილებს წინა ობიექტზე"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "არ არის წინა"
 
-#. Translators: Input help mode message for move to previous object command.
-msgid "Moves the navigator object to the previous object"
-msgstr "ნავიგატორს გადაადგილებს წინა ობიექტზე"
-
-#. Translators: Reported when there is no contained (first child) object such as inside a document.
-msgid "No objects inside"
-msgstr "არ შეიცავს ობიექტს"
-
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
 msgstr "მიყავს ობიექტის ნავიგატორი მასში შემცველ პირველ ობიექტთან"
 
-#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "Activate"
-msgstr "გააქტიურება "
-
-#. Translators: the message reported when there is no action to perform on the review position or navigator object.
-msgid "No action"
-msgstr "არ არის მოქმედება"
+#. Translators: Reported when there is no contained (first child) object such as inside a document.
+msgid "No objects inside"
+msgstr "არ შეიცავს ობიექტს"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
@@ -3996,6 +3416,10 @@ msgstr ""
 "ასრულებს დათქმულ ქმედებას ნავიგატორის ობიექტზე. მაგალითად: თუ ღილაკია, "
 "აწვება "
 
+#. Translators: the message reported when there is no action to perform on the review position or navigator object.
+msgid "No action"
+msgstr "არ არის მოქმედება"
+
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
@@ -4003,16 +3427,18 @@ msgid ""
 msgstr ""
 "გადაადგილებს ხილულ კურსორს ნავიგატორის პირველ სტრიქონზე და ახმოვანებს მას."
 
-#. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "Top"
-msgstr "ზედა"
-
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr ""
 "გადაადგილებს ხილულ კურსორს ნავიგატორის წინა სტრიქონზე და ახმოვანებს მას."
+
+#. Translators: a message reported when review cursor is at the top line of the current navigator object.
+#. Translators: Reported when attempting to move to the previous result in the Python Console
+#. output pane while there is no previous result.
+msgid "Top"
+msgstr "ზედა"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
@@ -4074,10 +3500,6 @@ msgstr ""
 "გადაადგილებს ხილულ კურსორს ნავიგატორის ობიექტის მიმდინარე სტრიქონის "
 "დასაწყისში და ახმოვანებს კურსორის ქვეს სიმბოლოს."
 
-#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-msgid "Left"
-msgstr "მარცხენა"
-
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
@@ -4085,6 +3507,10 @@ msgid ""
 msgstr ""
 "გადაადგილებს ხილულ კურსორს ნავიგატორის ობიექტის წინა სიმბოლოზე და კითხულობს "
 "მას."
+
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "მარცხენა"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
@@ -4098,10 +3524,6 @@ msgstr ""
 "დაჭერის შემთხვევაში, ახმოვანებს ციფრულ მნიშვნელობას ათობით და თექვსმეტობით "
 "სისტემებში"
 
-#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-msgid "Right"
-msgstr "მარჯვენა"
-
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
@@ -4109,6 +3531,10 @@ msgid ""
 msgstr ""
 "გადაადგილებს ხილულ კურსორს ნავიგატორის ობიექტის შემდეგ სიმბოლოზე და "
 "კითხულობს მას."
+
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "მარჯვენა"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
@@ -4143,6 +3569,19 @@ msgstr ""
 msgid "Expanded symbol ({})"
 msgstr ""
 
+#. Translators: Input help mode message for toggle speech mode command.
+#, fuzzy
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA will just speak normally."
+msgstr ""
+"რთავს NVDA-ს გახმოვანების რეჟიმს გამორთულს, სიგნალებსა და მეტყველებას შორის. "
+"გამორთულ რეჟიმში NVDA  არაფერს არ კითხულობს. სიგნალების რეჟიმში NVDA "
+"გამოსცემს მაღალი სიხშირის ხმებს. მეტყველების რეჟიმში ეკრანზე ახალი "
+"ინფორმაციის გამოჩენის შემთხვევაში NVDA მოვლენას ახმოვანებს აქტიური "
+"სინთეზატორით."
+
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
 msgstr "ხმის რეჟიმი გამორთული"
@@ -4155,23 +3594,13 @@ msgstr "ხმის რეჟიმი სიგნალები"
 msgid "Speech mode talk"
 msgstr "ხმის რეჟიმი მეტყველება"
 
-#. Translators: Input help mode message for toggle speech mode command.
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it "
-"its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr ""
-"რთავს NVDA-ს გახმოვანების რეჟიმს გამორთულს, სიგნალებსა და მეტყველებას შორის. "
-"გამორთულ რეჟიმში NVDA  არაფერს არ კითხულობს. სიგნალების რეჟიმში NVDA "
-"გამოსცემს მაღალი სიხშირის ხმებს. მეტყველების რეჟიმში ეკრანზე ახალი "
-"ინფორმაციის გამოჩენის შემთხვევაში NVDA მოვლენას ახმოვანებს აქტიური "
-"სინთეზატორით."
-
-#. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
+#. Translators: Input help mode message for move to next document with focus command,
+#. mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "გადართავს ფოკუსს დოკუმენტებს შორის."
 
-#. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
+#. Translators: Input help mode message for toggle focus and browse mode command
+#. in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -4273,24 +3702,47 @@ msgstr ""
 msgid "No status line found"
 msgstr "ვერ მოხერხდა მდგომარეობის ხაზის მოძებნა."
 
+#. Translators: Input help mode message for command which reads content of the status bar.
+#, fuzzy
+msgid "Reads the current application status bar."
+msgstr "მოქმედი პროგრამა (%s)"
+
 #. Translators: Reported when status line exist, but is empty.
 #, fuzzy
 msgid "no status bar information"
 msgstr "არ არის ინფორმაცია ადგილმდებარეობის შესახებ"
 
+#. Translators: Input help mode message for command which spells content of the status bar.
+#, fuzzy
+msgid "Spells the current application status bar."
+msgstr "დაყენდეს {address} სვეტის სათაურების დასაწყისად"
+
+#. Translators: Input help mode message for command which copies status bar content to the clipboard.
+msgid ""
+"Copies content of the status bar  of current application to the clipboard."
+msgstr ""
+
 #. Translators: Reported when user attempts to copy content of the empty status line.
-msgid "unable to copy status bar content to clipboard"
+msgid "Unable to copy status bar content to clipboard"
+msgstr ""
+
+#. Translators: Input help mode message for Command which moves review cursor to the status bar.
+msgid ""
+"Reads the current application status bar and moves navigator object into it."
 msgstr ""
 
 #. Translators: Input help mode message for report status line text command.
 #, fuzzy
 msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
+"Reads the current application status bar. If pressed twice, spells the "
+"information. If pressed three times, copies the status bar to the clipboard"
 msgstr ""
 "კითხულობს მიმდინარე პროგრამის მდგომარეობის ხაზს და მიყავს ნავიგატორი მასთან. "
 "ორჯერ დაჭერის შემთხვევაში, ინფორმაცია ასო-ასო წაიკითხება"
+
+#. Translators: Input help mode message for toggle mouse tracking command.
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr "თაგვის მაჩვენებლის გადაადგილებისას გადართავს ინფორმაციის გახმოვანებას."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4300,8 +3752,9 @@ msgstr "თაგვის თვალყური გამორთული�
 msgid "Mouse tracking on"
 msgstr "თაგვის თვალყური ჩართულია"
 
-#. Translators: Input help mode message for toggle mouse tracking command.
-msgid "Toggles the reporting of information as the mouse moves"
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+#, fuzzy
+msgid "Toggles how much text will be spoken when the mouse moves"
 msgstr "თაგვის მაჩვენებლის გადაადგილებისას გადართავს ინფორმაციის გახმოვანებას."
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
@@ -4311,15 +3764,6 @@ msgstr "თაგვის მაჩვენებლის გადაად�
 msgid "Mouse text unit resolution %s"
 msgstr "&ტექსტის ზომის ერთეული"
 
-#. Translators: Input help mode message for toggle mouse text unit resolution command.
-#, fuzzy
-msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "თაგვის მაჩვენებლის გადაადგილებისას გადართავს ინფორმაციის გახმოვანებას."
-
-#. Translators: Reported when there is no title text for current program or window.
-msgid "No title"
-msgstr "არ არის სათაური"
-
 #. Translators: Input help mode message for report title bar command.
 msgid ""
 "Reports the title of the current application or foreground window. If "
@@ -4328,6 +3772,10 @@ msgid ""
 msgstr ""
 "ახმოვანებს მიმდინარე პროგრამის სათაურს. ორჯერ დაჭერისას ასო-ასო კითხულობს, "
 "ხოლო სამჯერ დაჭერისას სათაურს აკოპირებს ბუფერში"
+
+#. Translators: Reported when there is no title text for current program or window.
+msgid "No title"
+msgstr "არ არის სათაური"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 #, fuzzy
@@ -4340,7 +3788,9 @@ msgid ""
 "state of GUI components."
 msgstr ""
 
-#. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
+#. Translators: Input help mode message for developer info for current navigator object command,
+#. used by developers to examine technical info on navigator object.
+#. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -4392,6 +3842,14 @@ msgstr "კოპირება შეუძლებელია"
 msgid "Opens NVDA configuration directory for the current user."
 msgstr "NVDA-ს მომხმარებლის კონფიგურაციების ფოლდერის გაშვება"
 
+#. Translators: Input help mode message for toggle progress bar output command.
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"გახმოვანების სხვადასხვა საშუალებებს შორის გადართავს  შესრულების ინდიკატორის "
+"განახლებას."
+
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
 msgstr "სრულებით არ გახმოვანდეს შესრულების ინდიკატორის განახლება."
@@ -4410,13 +3868,13 @@ msgstr ""
 "შესრულების ინდიკატორის განახლების გახმოვანება სიგნალებით და მეტყველების "
 "საშუალებით."
 
-#. Translators: Input help mode message for toggle progress bar output command.
+#. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting "
-"progress bar updates"
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
 msgstr ""
-"გახმოვანების სხვადასხვა საშუალებებს შორის გადართავს  შესრულების ინდიკატორის "
-"განახლებას."
+"გადართავს შემცველობის დინამიური ცვლილებების წაკითხვას. მაგალითად: ახალი "
+"ტექსტის გახმოვანება დოს კონსოლში. "
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -4426,13 +3884,12 @@ msgstr "დინამიური ცვლილებების წაკ�
 msgid "report dynamic content changes on"
 msgstr "დინამიური ცვლილებების წაკითხვა ჩართულია"
 
-#. Translators: Input help mode message for toggle dynamic content changes command.
+#. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new "
-"text in dos console windows"
+"Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
-"გადართავს შემცველობის დინამიური ცვლილებების წაკითხვას. მაგალითად: ახალი "
-"ტექსტის გახმოვანება დოს კონსოლში. "
+"სისტემური კურსორის მოძრაობისას რთავს, ან გამორთავს ხილული კურსორის "
+"გადაადგილებას"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -4442,12 +3899,10 @@ msgstr "ხილული კურსორის მოძრაობა ს
 msgid "caret moves review cursor on"
 msgstr "ხილული კურსორის მოძრაობა სისტემური კურსორის მიერ ჩართულია"
 
-#. Translators: Input help mode message for toggle caret moves review cursor command.
+#. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
-"Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr ""
-"სისტემური კურსორის მოძრაობისას რთავს, ან გამორთავს ხილული კურსორის "
-"გადაადგილებას"
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr "ფოკუსის შეცვლისას ჩარტთავს ან გამორთავს ნავიგატორის გადაადგილებას"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -4457,9 +3912,11 @@ msgstr "ობიექტის ნავიგატორის მოძრ�
 msgid "focus moves navigator object on"
 msgstr "ობიექტის ნავიგატორის მოძრაობა ფოკუსის მიერ ჩართულია"
 
-#. Translators: Input help mode message for toggle focus moves navigator object command.
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
+#, fuzzy
 msgid ""
-"Toggles on and off the movement of the navigator object due to focus changes"
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
 msgstr "ფოკუსის შეცვლისას ჩარტთავს ან გამორთავს ნავიგატორის გადაადგილებას"
 
 #. Translators: presented when toggled.
@@ -4472,12 +3929,11 @@ msgstr "კურსორის გადაადგილებისას �
 msgid "Automatically set system focus to focusable elements on"
 msgstr "კურსორის გადაადგილებისას ავტომატური გადასვლა რედაქტირების რეჟიმში"
 
-#. Translators: Input help mode message for toggle auto focus focusable elements command.
-#, fuzzy
-msgid ""
-"Toggles on and off automatic movement of the system focus due to browse mode "
-"commands"
-msgstr "ფოკუსის შეცვლისას ჩარტთავს ან გამორთავს ნავიგატორის გადაადგილებას"
+#. Translators: Input help mode message for report battery status command.
+msgid "Reports battery status and time remaining if AC is not plugged in"
+msgstr ""
+"ელექტრო ქსელიდან კვების გათიშვისას აცხადებს აკუმულატორის მდგომარეობასა და "
+"სრულ განმუხტვამდე დარჩენილ დროს."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4497,16 +3953,6 @@ msgstr "ელექტრო ქსელიდან კვება ჩარ
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "დარჩენილია {hours:d} საათი და {minutes:d} წუთი"
 
-#. Translators: Input help mode message for report battery status command.
-msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr ""
-"ელექტრო ქსელიდან კვების გათიშვისას აცხადებს აკუმულატორის მდგომარეობასა და "
-"სრულ განმუხტვამდე დარჩენილ დროს."
-
-#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
-msgid "Pass next key through"
-msgstr "კლავიშების გატარება"
-
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
@@ -4514,6 +3960,18 @@ msgid ""
 msgstr ""
 "ამის შემდგომ კლავიშზე, ან კლავიშთა ჯგუფზე დაჭერა არ დამუშავდება NVDA, იგი "
 "უშუალოდ გადაეცემა  Windows."
+
+#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
+msgid "Pass next key through"
+msgstr "კლავიშების გატარება"
+
+#. Translators: Input help mode message for report current program name and app module name command.
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr ""
+"აცხადებს აქტიური დანართის შესრულებადი ფაილის სატაურს და მისთვის ჩატვირთულ "
+"მოდულს. "
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
@@ -4527,14 +3985,6 @@ msgstr ""
 #, python-format
 msgid " %s is currently running."
 msgstr ""
-
-#. Translators: Input help mode message for report current program name and app module name command.
-msgid ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
-msgstr ""
-"აცხადებს აქტიური დანართის შესრულებადი ფაილის სატაურს და მისთვის ჩატვირთულ "
-"მოდულს. "
 
 #. Translators: Input help mode message for go to general settings command.
 #, fuzzy
@@ -4659,14 +4109,6 @@ msgstr ""
 "ააქტიურებს NVDA დამატებების მენეჯერს, რომელიც საშუალებას იძლევა დააყენოტ ან "
 "წაშალოთ NVDA-ს დამატებები"
 
-#. Translators: The message announced when disabling speech viewer.
-msgid "speech viewer disabled"
-msgstr "მეტყველებაზე თვალყურის დევნება გამოირთო"
-
-#. Translators: The message announced when enabling speech viewer.
-msgid "speech viewer enabled"
-msgstr "მეტყველებაზე თვალყურის დევნება ჩაირთო"
-
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
@@ -4675,15 +4117,28 @@ msgstr ""
 "რთავს nvda-ს მეტყველებაზე თვალყურის დევნების რეჟიმს, მოძრავ ფანჯარას, "
 "რომელიც იძლევა nvda-ს მიერ წარმოთქმული ტექსტის დათვალიერების საშუალებას."
 
+#. Translators: The message announced when disabling speech viewer.
+msgid "speech viewer disabled"
+msgstr "მეტყველებაზე თვალყურის დევნება გამოირთო"
+
+#. Translators: The message announced when enabling speech viewer.
+msgid "speech viewer enabled"
+msgstr "მეტყველებაზე თვალყურის დევნება ჩაირთო"
+
+#. Translators: Input help mode message for toggle braille tether to command
+#. (tethered means connected to or follows).
+msgid "Toggle tethering of braille between the focus and the review position"
+msgstr "გადართავს ბრაილის მიბმას ფოკუსისა და ხილულის პოზიციებს შორის"
+
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
 #, fuzzy, python-format
 msgid "Braille tethered %s"
 msgstr "ბრაილი მიბმულია %s"
 
-#. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
-msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "გადართავს ბრაილის მიბმას ფოკუსისა და ხილულის პოზიციებს შორის"
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr ""
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4692,9 +4147,9 @@ msgstr "გადართავს ბრაილის მიბმას ფ
 msgid "Braille focus context presentation: %s"
 msgstr "ბრაილი მიბმულია %s"
 
-#. Translators: Input help mode message for toggle braille focus context presentation command.
-msgid "Toggle the way context information is presented in braille"
-msgstr ""
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "რთავს ბრაილის კურსორს"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -4704,9 +4159,9 @@ msgstr "ბრაილის კურსორი გამორთული�
 msgid "Braille cursor on"
 msgstr "ბრაილის კურსორი ჩართულია"
 
-#. Translators: Input help mode message for toggle braille cursor command.
-msgid "Toggle the braille cursor on and off"
-msgstr "რთავს ბრაილის კურსორს"
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "რთავს ბრაილის კურსორის ფორმის რეჟიმებს"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
@@ -4717,9 +4172,9 @@ msgstr "ბრაილის კურსორი გამორთული�
 msgid "Braille cursor %s"
 msgstr "ბრაილის კურსორი %s"
 
-#. Translators: Input help mode message for cycle braille cursor shape command.
-msgid "Cycle through the braille cursor shapes"
-msgstr "რთავს ბრაილის კურსორის ფორმის რეჟიმებს"
+#. Translators: Input help mode message for report clipboard text command.
+msgid "Reports the text on the Windows clipboard"
+msgstr "გაცვლის ბუფერში კიტხულობს ტექსტს"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4733,21 +4188,18 @@ msgid ""
 msgstr ""
 "გაცვლის ბუფერი შეიცავს დიდი მოცულობის ტექსტს, რომელიც შეადგენს %s სიმბოლოს."
 
-#. Translators: Input help mode message for report clipboard text command.
-msgid "Reports the text on the Windows clipboard"
-msgstr "გაცვლის ბუფერში კიტხულობს ტექსტს"
-
-#. Translators: Indicates start of review cursor text to be copied to clipboard.
-msgid "Start marked"
-msgstr "ფრაგმენტის დასაწყისი"
-
-#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command
+#. (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr ""
 "მონიშნავს ხილული კურსორის მიმდინარე პოზიციას როგორც ტექსტის გასაკოპირებელი "
 "ფრაგმენტის დასაწყისს. "
+
+#. Translators: Indicates start of review cursor text to be copied to clipboard.
+msgid "Start marked"
+msgstr "ფრაგმენტის დასაწყისი"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
@@ -4764,6 +4216,16 @@ msgstr ""
 msgid "No start marker set"
 msgstr "ფრაგმენტის დასაწყისი დადგენილი არ არის"
 
+#. Translators: Input help mode message for the select then copy command.
+#. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+msgid ""
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
+msgstr ""
+" ერთხელ დაჭერისას ფრაგმენტის დასაწყისიდან ხილული კურსორის ჩათვლიტ იღებს "
+"ტექსტს, ორჯერ დაჭერისას კი აკოპირებს მას გაცვლის ბუფერში"
+
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
 msgstr "გადასაკოპირებლად, ან მარკერის მოსახსნელად დააჭირეთ ორჯერ"
@@ -4775,15 +4237,6 @@ msgstr "კოპირებისათვის ფრაგმენტი �
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
 msgstr "ტექსტის მონიშვნა შეუძლებელია, დააჭირეთ ორჯერ გადასაკოპირებლად."
-
-#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-msgid ""
-"If pressed once, the text from the previously set start marker up to and "
-"including the current position of the review cursor is selected. If pressed "
-"twice, the text is copied to the clipboard"
-msgstr ""
-" ერთხელ დაჭერისას ფრაგმენტის დასაწყისიდან ხილული კურსორის ჩათვლიტ იღებს "
-"ტექსტს, ორჯერ დაჭერისას კი აკოპირებს მას გაცვლის ბუფერში"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -4860,10 +4313,6 @@ msgid ""
 "input"
 msgstr ""
 
-#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
-msgid "Plugins reloaded"
-msgstr "პლაგინები გადატვირთულია"
-
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
@@ -4871,6 +4320,10 @@ msgid ""
 msgstr ""
 "NVDA გადატვირთვის გარეშე გადატვირთავს დანართის მოდულსა და გლობალურ "
 "პლაგინებს, მოხერხებულია შემქმნელებისათვის. "
+
+#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
+msgid "Plugins reloaded"
+msgstr "პლაგინები გადატვირთულია"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4908,14 +4361,14 @@ msgstr "მათემატიკურ კონტენტთან წვ�
 msgid "Touch interaction disabled"
 msgstr "მათემატიკურ კონტენტთან წვდომის გამორთვა"
 
+#. Translators: Input help mode message for a touchscreen gesture.
+msgid "Cycles between available touch modes"
+msgstr "რთავს შესაძლებელ სენსორულ რეჟიმებს"
+
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
 msgid "%s mode"
 msgstr "%s რეჟიმი"
-
-#. Translators: Input help mode message for a touchscreen gesture.
-msgid "Cycles between available touch modes"
-msgstr "რთავს შესაძლებელ სენსორულ რეჟიმებს"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4927,11 +4380,6 @@ msgid ""
 "your finger was last"
 msgstr "ახმოვანებს ახალ ობიექტს, თითის გადაადგილების შემთხვევაში"
 
-#. Translators: Reported when the object has no location for the mouse to move to it.
-#, fuzzy
-msgid "object has no location"
-msgstr "ობიექტს არ აქვს მდებარეობა"
-
 #. Translators: Input help mode message for touch right click command.
 #, fuzzy
 msgid ""
@@ -4941,9 +4389,23 @@ msgstr ""
 "მაჩვენებლის პოზიციაზე ასრულებს ერთ დაწკაპუნებას თაგვის მარჯვენა ღილაკის "
 "დაჭერით.. "
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+#, fuzzy
+msgid "object has no location"
+msgstr "ობიექტს არ აქვს მდებარეობა"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "იძახებს NVDA პარამეტრების პროფილების დიალოგს"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+#, fuzzy
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"შეცდომა კონფიგურაციის პროფილის ტრიგერის შენახვისას, სავარაუდოდ ფაილის "
+"სისტემის მხოლოდ კითხვის რეჟიმის გამო."
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
 #, fuzzy
@@ -4955,14 +4417,9 @@ msgstr "კონფიგურაციის პროფილები"
 msgid "Configuration profile triggers enabled"
 msgstr "კონფიგურაციის პროფილები"
 
-#. Translators: Input help mode message for toggle configuration profile triggers command.
-#, fuzzy
-msgid ""
-"Toggles disabling of all configuration profile triggers. Disabling remains "
-"in effect until NVDA is restarted"
-msgstr ""
-"შეცდომა კონფიგურაციის პროფილის ტრიგერის შენახვისას, სავარაუდოდ ფაილის "
-"სისტემის მხოლოდ კითხვის რეჟიმის გამო."
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr "იწყებს მათემატიკური შინაარსის მქონე ტექსტის გახმოვანებას"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4970,18 +4427,18 @@ msgid "Not math"
 msgstr "არ არის მათემატიკური გამოთქმები"
 
 #. Translators: Describes a command.
-msgid "Begins interaction with math content"
-msgstr "იწყებს მათემატიკური შინაარსის მქონე ტექსტის გახმოვანებას"
-
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr ""
-
-#. Translators: Describes a command.
 #, fuzzy
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr "თაგვის მაჩვენებელს გადაადგილებს ნავიგატორის ობიექტთან"
+
+#. Translators: Reported when Windows OCR is not available.
+#, fuzzy
+msgid "Windows OCR not available"
+msgstr "მიუწვდომელია"
+
+#. Translators: Reported when screen curtain is enabled.
+msgid "Please disable screen curtain before using Windows OCR."
+msgstr ""
 
 #. Translators: Input help mode message for toggle report CLDR command.
 #, fuzzy
@@ -5456,6 +4913,17 @@ msgstr "%s კლავიატურა"
 msgid "keyboard, all layouts"
 msgstr "კლავიატურა ყველა წყობა"
 
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr ""
+
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "იგივე რაც ოპერაციულ სისტემაშია."
+
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Aragonese"
@@ -5480,17 +4948,6 @@ msgstr ""
 msgctxt "languageName"
 msgid "Somali"
 msgstr ""
-
-#. Translators: The pattern defining how languages are displayed and sorted in in the general
-#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
-#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
-#, python-brace-format
-msgid "{desc}, {lc}"
-msgstr ""
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "იგივე რაც ოპერაციულ სისტემაშია."
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
@@ -7277,6 +6734,38 @@ msgstr "ბრმა ასლი"
 msgid "unread"
 msgstr "წაუკითხავი"
 
+#. Translators: The name of a category of NVDA commands.
+#, fuzzy
+msgid "Python Console"
+msgstr "Python კონსოლი"
+
+#. Translators: Description of a command to clear the Python Console output pane
+msgid "Clear the output pane"
+msgstr ""
+
+#. Translators: Description of a command to move to the next result in the Python Console output pane
+#, fuzzy
+msgid "Move to the next result"
+msgstr "გადადის შემდეგ სიაზე"
+
+#. Translators: Description of a command to move to the previous result
+#. in the Python Console output pane
+#, fuzzy
+msgid "Move to the previous result"
+msgstr "გადადის წინა სიაზე"
+
+#. Translators: Description of a command to select from the current caret position to the end
+#. of the current result in the Python Console output pane
+#, fuzzy
+msgid "Select until the end of the current result"
+msgstr "ახმოვანებს კომენტარს მოცემულ უჯრაზე"
+
+#. Translators: Description of a command to select from the current caret position to the start
+#. of the current result in the Python Console output pane
+#, fuzzy
+msgid "Select until the start of the current result"
+msgstr "ახმოვანებს კომენტარს მოცემულ უჯრაზე"
+
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
@@ -7338,7 +6827,13 @@ msgstr ""
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} დან {endTime} მდე"
 
-#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#. Translators: Part of a message reported when on a calendar appointment with one or more categories
+#. in Microsoft Outlook.
+#, fuzzy, python-brace-format
+msgid "categories {categories}"
+msgstr "კატეგორია {categoryAxisData}: "
+
+#. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "დანიშნულების {subject}, {time}"
@@ -7762,6 +7257,11 @@ msgstr "ბრაილი არ არის"
 
 #. Translators: The name of a series of braille displays.
 #, fuzzy
+msgid "Standard HID Braille Display"
+msgstr "Seika braille displays"
+
+#. Translators: The name of a series of braille displays.
+#, fuzzy
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 
@@ -7787,8 +7287,13 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Papenmeier BRAILLEX-ის მოძველებული მოდელები"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
+#, fuzzy
+msgid "Seika Braille Displays"
 msgstr "Seika braille displays"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr ""
 
 #. Translators: Names of braille displays.
 #, fuzzy
@@ -7841,6 +7346,850 @@ msgstr ""
 msgid "Recognition failed"
 msgstr "კონფიგურაცია მინიჭებულია"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr ""
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+#, fuzzy
+msgid "current page"
+msgstr "მახასიათებლების გვერდი"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr ""
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+#, fuzzy
+msgid "current location"
+msgstr "მოქმედი პროგრამა (%s)"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr ""
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr ""
+
+# An open-source (and free) Screen Reader for the Windows Operating System
+# Created by Michael Curran, with help from James Teh and others
+# Copyright (C) 2006-2008 Michael Curran <mick@kulgan.net>
+#. Translators: The word for window of a program such as document window.
+msgid "window"
+msgstr "ფანჯარა"
+
+#. Translators: Used to identify title bar of a program.
+msgid "title bar"
+msgstr "ფანჯრის სათაური"
+
+#. Translators: The word used for pane such as desktop pane.
+msgid "pane"
+msgstr "პანელი"
+
+#. Translators: The word used to denote a dialog box such as open dialog.
+msgid "dialog"
+msgstr "დიალოგი"
+
+#. Translators: The text used to identify check boxes such as select check box.
+msgid "check box"
+msgstr "ალამი"
+
+#. Translators: The text used to identify radio buttons such as yes or no radio button.
+msgid "radio button"
+msgstr "რადიო ღილაკი"
+
+#. Translators: The word used to identify a static text such as dialog text.
+msgid "text"
+msgstr "ტექსტი"
+
+#. Translators: The word used to identify edit fields such as subject edit field.
+msgid "edit"
+msgstr "რედაქტორი"
+
+#. Translators: The word used to identify a button such as OK button.
+msgid "button"
+msgstr "ღილაკი"
+
+#. Translators: Text used to identify menu bar of a program.
+msgid "menu bar"
+msgstr "მენიუს სტრიქონი"
+
+#. Translators: Used to identify a menu item such as an item in file menu.
+msgid "menu item"
+msgstr "მენიუს ელემენტი"
+
+#. Translators: The word used for menus such as edit menu.
+#. Translators: Identifies a menu such as file menu.
+msgid "menu"
+msgstr "მენიუ"
+
+#. Translators: Used to identify combo boxes such as file type combo box.
+msgid "combo box"
+msgstr "კომბინირებული სია"
+
+#. Translators: The word used for lists such as folder list.
+msgid "list"
+msgstr "სია"
+
+#. Translators: Used to identify a list item such as email list items.
+msgid "list item"
+msgstr "სიის ელემენტი"
+
+#. Translators: The word used to identify graphics such as webpage graphics.
+msgid "graphic"
+msgstr "გრაფიკა"
+
+#. Translators: Used to identify help balloon (a circular window with helpful text such as notification
+#. text).
+msgid "help balloon"
+msgstr "დამხმარე სისტემური შეტყობინება"
+
+#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as
+#. file information).
+msgid "tool tip"
+msgstr "რჩევა"
+
+#. Translators: Identifies a link in webpage documents.
+msgid "link"
+msgstr "ბმული"
+
+#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
+msgid "tree view"
+msgstr "ხე"
+
+#. Translators: Identifies a tree view item.
+msgid "tree view item"
+msgstr "ხის ელემენტი"
+
+#. Translators: The word presented for tabs in a tab enabled window.
+msgctxt "controlType"
+msgid "tab"
+msgstr "tab"
+
+#. Translators: Identifies a tab control such as webpage tabs in web browsers.
+msgid "tab control"
+msgstr "წყობა"
+
+#. Translators: Identifies a slider such as volume slider.
+msgid "slider"
+msgstr "ცოცია"
+
+#. Translators: Identifies a progress bar such as NvDA update progress.
+msgid "progress bar"
+msgstr "შესრულების ინდიკატორი"
+
+#. Translators: Identifies a scroll bar.
+msgid "scroll bar"
+msgstr "გადახვევის სტრიქონი"
+
+#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
+#. document).
+msgid "status bar"
+msgstr "მდგომარეობის ხაზი"
+
+#. Translators: Identifies a table such as ones used in various websites.
+msgid "table"
+msgstr "ცხრილი"
+
+#. Translators: Identifies a cell in a table.
+msgid "cell"
+msgstr "უჯრა"
+
+#. Translators: Identifies a column (a group of vertical cells in a table).
+msgid "column"
+msgstr "სვეტი"
+
+#. Translators: Identifies a row (a group of horizontal cells in a table).
+msgid "row"
+msgstr "ხაზი"
+
+#. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
+#. embedded within a web page.
+msgid "frame"
+msgstr "ფრეიმ"
+
+#. Translators: Identifies a tool bar.
+msgid "tool bar"
+msgstr "ინსტრუმენტების პანელი"
+
+#. Translators: Identifies a column header in tables and spreadsheets.
+msgid "column header"
+msgstr "სვეტის სათაური"
+
+#. Translators: Identifies a row header in tables and spreadsheets.
+msgid "row header"
+msgstr "ხაზის სათაური"
+
+#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
+msgid "drop down button"
+msgstr "დაჭერილი ღილაკი"
+
+#. Translators: Identifies an element.
+msgid "clock"
+msgstr "საათი"
+
+#. Translators: Identifies a separator (a horizontal line drawn on the screen).
+msgid "separator"
+msgstr "გამყოფი"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "ფორმა"
+
+#. Translators: Identifies a heading (a bold text used for identifying a section).
+msgid "heading"
+msgstr "სათაური"
+
+#. Translators: Identifies a heading level.
+msgid "heading 1"
+msgstr "სათაური 1"
+
+#. Translators: Identifies a heading level.
+msgid "heading 2"
+msgstr "სათაური 2"
+
+#. Translators: Identifies a heading level.
+msgid "heading 3"
+msgstr "სათაური 3"
+
+#. Translators: Identifies a heading level.
+msgid "heading 4"
+msgstr "სათაური 4"
+
+#. Translators: Identifies a heading level.
+msgid "heading 5"
+msgstr "სათაური 5"
+
+#. Translators: Identifies a heading level.
+msgid "heading 6"
+msgstr "სათაური 6"
+
+#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
+msgid "paragraph"
+msgstr "აბზაცი"
+
+#. Translators: Presented for a section in a document which is a block quotation;
+#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+#. See http://en.wikipedia.org/wiki/Block_quotation
+msgid "block quote"
+msgstr "ციტატა"
+
+#. Translators: Identifies a table header (a short text at the start of a table which describes what the
+#. table is about).
+msgid "table header"
+msgstr "ცხრილის სათაური"
+
+#. Translators: Identifies a table body (the main body of the table).
+msgid "table body"
+msgstr "ცხრილის სხეული"
+
+#. Translators: Identifies a table footer (text placed at the end of the table).
+msgid "table footer"
+msgstr "ცხრილის ქვედა კოლონა"
+
+#. Translators: Identifies a document (for example, a webpage document).
+msgid "document"
+msgstr "დოკუმენტი"
+
+#. Translators: Identifies an animation in a document or a webpage.
+msgid "animation"
+msgstr "ანიმაცია"
+
+#. Translators: Identifies an application in webpages.
+msgid "application"
+msgstr "პროგრამა"
+
+#. Translators: Identifies a box element.
+msgid "box"
+msgstr "ბლოკი"
+
+#. Translators: Identifies a grouping (a number of related items grouped together, such as related options
+#. in dialogs).
+msgid "grouping"
+msgstr "დაჯგუფება"
+
+#. Translators: Identifies a property page such as drive properties dialog.
+msgid "property page"
+msgstr "მახასიათებლების გვერდი"
+
+#. Translators: Identifies a canvas element on webpages (a box with some background color with some text
+#. drawn on the box, like a canvas).
+msgid "canvas"
+msgstr "საფენი"
+
+#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
+msgid "caption"
+msgstr "ხელმოწერა"
+
+#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
+#. name).
+msgid "check menu item"
+msgstr "ელემენტი ალმით"
+
+#. Translators: Identifies a data edit field.
+msgid "date edit"
+msgstr "თარიღის რედაქტორი"
+
+#. Translators: Identifies an icon.
+msgid "icon"
+msgstr "ნიშანი"
+
+#. Translators: Identifies a directory pane.
+msgid "directory pane"
+msgstr "საქაღალდეთა პანელი"
+
+#. Translators: Identifies an object that is embedded in a document.
+msgid "embedded object"
+msgstr "ჩადგმული ობიეკტი"
+
+#. Translators: Identifies an end note.
+msgid "end note"
+msgstr "განმარტება"
+
+#. Translators: Identifies a footer (usually text).
+msgid "footer"
+msgstr "ქვედა კოლონა"
+
+#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+msgid "foot note"
+msgstr "განადგურება"
+
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+msgid "glass pane"
+msgstr "მინის პანელი"
+
+#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
+msgid "header"
+msgstr "სათაური"
+
+#. Translators: Identifies an image map (a type of graphical link).
+msgid "image map"
+msgstr "სურათი"
+
+#. Translators: Identifies an input window.
+msgid "input window"
+msgstr "შესავსები ფანჯარა"
+
+#. Translators: Identifies a label.
+msgid "label"
+msgstr "იარლიყი"
+
+#. Translators: Identifies a note field.
+msgid "note"
+msgstr "შენიშვნა"
+
+#. Translators: Identifies a page.
+msgid "page"
+msgstr "გვერდი"
+
+#. Translators: Identifies a radio menu item.
+msgid "radio menu item"
+msgstr "რადიოღილაკის ელემენტი"
+
+#. Translators: Identifies a layered pane.
+msgid "layered pane"
+msgstr "მრავალშრიანი ფანჯარა"
+
+#. Translators: Identifies a redundant object.
+msgid "redundant object"
+msgstr "ზედმეტი ობიექტი"
+
+#. Translators: Identifies a root pane.
+msgid "root pane"
+msgstr "ძირეული პანელი"
+
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+msgid "edit bar"
+msgstr "რედაქტირების ხაზი"
+
+#. Translators: Identifies a terminal window such as command prompt.
+msgid "terminal"
+msgstr "ტერმინალი"
+
+#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
+#. addition to text; encountered on webpages and NvDA log viewer).
+msgid "rich edit"
+msgstr "მრავალ ხაზიანი რედაქტორი"
+
+#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
+msgid "ruler"
+msgstr "ზოლი"
+
+#. Translators: Identifies a scroll pane.
+msgid "scroll pane"
+msgstr "გადახვევის პანელი"
+
+#. Translators: Identifies a section of text.
+msgid "section"
+msgstr "სექცია"
+
+#. Translators: Identifies a shape.
+msgid "shape"
+msgstr "მოყვანილობა"
+
+#. Translators: Identifies a split pane.
+msgid "split pane"
+msgstr "გაყოფილი პანელი"
+
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+msgid "view port"
+msgstr "სამზერი ფანჯარა"
+
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+msgid "tear off menu"
+msgstr "გახლეჩილი მენიუ"
+
+#. Translators: Identifies a text frame (a frame window which contains text).
+msgid "text frame"
+msgstr "ტექსტური ფრეიმი"
+
+#. Translators: Identifies a toggle button (a button used to toggle something).
+msgid "toggle button"
+msgstr "გადამრთველი ღილაკი"
+
+msgid "border"
+msgstr "ჩარჩო"
+
+#. Translators: Identifies a caret object.
+msgid "caret"
+msgstr "საცობი"
+
+#. Translators: Identifies a character field (should not be confused with edit fields).
+msgid "character"
+msgstr "სიმბოლო"
+
+#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
+msgid "chart"
+msgstr "სქემა"
+
+#. Translators: Identifies a cursor object.
+msgid "cursor"
+msgstr "კურსორი"
+
+#. Translators: Identifies a diagram (seen on some websites and on Office documents).
+msgid "diagram"
+msgstr "დიაგრამა"
+
+#. Translators: Identifies a dial object.
+msgid "dial"
+msgstr "ასაკრეფი დისკი"
+
+#. Translators: Identifies a drop list.
+msgid "drop list"
+msgstr "სიის ჩამოყრა"
+
+#. Translators: Identifies a split button (a control which performs different actions when different parts
+#. are clicked).
+msgid "split button"
+msgstr "გაყოფილი ღილაკი"
+
+#. Translators: Identifies a menu button (a button which opens a menu of items).
+msgid "menu button"
+msgstr "მენიუს ღილაკი"
+
+#. Translators: Reported for a button which expands a grid when it is pressed.
+msgid "drop down button grid"
+msgstr "უჯრის დაჭერილი ღილაკი"
+
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr "მათემატიკური გამოთქმები"
+
+#. Translators: Identifies a grip control.
+msgid "grip"
+msgstr "უჯრა"
+
+#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
+#. assigning shortcut for icons on the desktop).
+msgid "hot key field"
+msgstr "ცხელი ღილაკების ველი"
+
+#. Translators: Identifies an indicator control.
+msgid "indicator"
+msgstr "ინდიკატორი"
+
+#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
+msgid "spin button"
+msgstr "საბრუნავი ღილაკი"
+
+#. Translators: Identifies a sound clip on websites.
+msgid "sound"
+msgstr "ხმა"
+
+#. Translators: Identifies a whitespace.
+msgid "white space"
+msgstr "თეთრი სივრცე"
+
+#. Translators: Identifies a tree view button.
+msgid "tree view button"
+msgstr "ხის ღილაკი"
+
+#. Translators: Identifies an IP address (an IP address field element).
+msgid "IP address"
+msgstr "I P მისამართი"
+
+#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts
+#. for programs).
+msgid "desktop icon"
+msgstr "სამუშაო მაგიდის ნიშანი"
+
+#. Translators: Identifies desktop pane (the desktop window).
+msgid "desktop pane"
+msgstr "სამუშაო მაგიდის პანელი"
+
+#. Translators: Identifies an option pane.
+msgid "option pane"
+msgstr "პარამეტრების პანელი"
+
+#. Translators: Identifies a color chooser.
+msgid "color chooser"
+msgstr "ფერის ამრჩევი"
+
+#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
+msgid "file chooser"
+msgstr "ფაილის ამრჩევი"
+
+msgid "filler"
+msgstr "შემავსებელი"
+
+#. Translators: Identifies a panel control for grouping related options.
+msgid "panel"
+msgstr "პანელი"
+
+#. Translators: Identifies a password field (a protected edit field for entering passwords such as when
+#. logging into web-based email sites).
+msgid "password edit"
+msgstr "პაროლის რედაქტორი"
+
+#. Translators: Identifies a font chooser.
+msgid "font chooser"
+msgstr "შრიფტის ამრჩევი"
+
+msgid "line"
+msgstr "ხაზი"
+
+#. Translators: Identifies a font name.
+msgid "font name"
+msgstr "შრიფტის სახელწოდება"
+
+#. Translators: Identifies font size.
+msgid "font size"
+msgstr "შრიფტის ზომა"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is bolded.
+msgid "bold"
+msgstr "ნახევრად მუქი"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "კურსივი"
+
+#. Translators: Describes text formatting.
+msgid "underline"
+msgstr "ქვედა ხაზი"
+
+#. Translators: Describes text formatting.
+msgid "foreground color"
+msgstr "შრიფტის ფერი"
+
+#. Translators: Describes text formatting.
+msgid "background color"
+msgstr "ფონის ფერი"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for superscript text.
+msgid "superscript"
+msgstr "ხაზზედა"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for subscript text.
+msgid "subscript"
+msgstr "ხაზქვედა"
+
+#. Translators: Describes style of text.
+#. Translators: a Microsoft Word revision type (style change)
+msgid "style"
+msgstr "სტილი"
+
+#. Translators: Describes text formatting.
+msgid "indent"
+msgstr "დაცილება"
+
+#. Translators: Describes text formatting.
+msgid "alignment"
+msgstr "გათანაბრება"
+
+#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such
+#. as file downloads or pop-up blocker).
+msgid "alert"
+msgstr "გაფრთხილება"
+
+#. Translators: Identifies a data grid control (a grid which displays data).
+msgid "data grid"
+msgstr "მონაცემთა ცხრილი"
+
+msgid "data item"
+msgstr "მონაცემთა ელემენტი"
+
+msgid "header item"
+msgstr "სათაურის ელემენტი"
+
+#. Translators: Identifies a thumb control (a button-like control for changing options).
+msgid "thumb control"
+msgstr "ხაზის მორბენალის გადასახვევი"
+
+msgid "calendar"
+msgstr "კალენდარი"
+
+msgid "video"
+msgstr ""
+
+msgid "audio"
+msgstr ""
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr ""
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "წაიშალა"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ჩასმულია"
+
+#. Translators: Identifies a landmark.
+#, fuzzy
+msgid "landmark"
+msgstr "ორიენტირი %s"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr ""
+
+#. Translators: Identifies a region.
+#, fuzzy
+msgid "region"
+msgstr "არე"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr ""
+
+#. Translators: Identifies marked (highlighted) content
+#, fuzzy
+msgid "highlighted"
+msgstr "სწორება მარჯვენა ნაპირთან"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not
+#. checked), but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "არა %s"
+
+#. Translators: This is presented when a control or document is unavailable.
+msgid "unavailable"
+msgstr "მიუწვდომელია"
+
+#. Translators: This is presented when a control has focus.
+msgid "focused"
+msgstr "აქტიური"
+
+#. Translators: This is presented when the control is selected.
+msgid "selected"
+msgstr "მონიშნულია"
+
+#. Translators: This is presented when a document is busy.
+msgid "busy"
+msgstr "დაკავებულია"
+
+#. Translators: This is presented when a button is pressed.
+msgid "pressed"
+msgstr "დაჭერილია"
+
+#. Translators: This is presented when a check box is checked.
+msgid "checked"
+msgstr "მონიშნულია"
+
+#. Translators: This is presented when a three state check box is half checked.
+msgid "half checked"
+msgstr "მონიშნულია ნაწილობრივ "
+
+#. Translators: This is presented when the control is a read-only control such as read-only edit box.
+msgid "read only"
+msgstr "მხოლოდ კითხვისთვის"
+
+#. Translators: This is presented when a tree view or submenu item is expanded.
+msgid "expanded"
+msgstr "გახსნილია"
+
+#. Translators: This is presented when a tree view or submenu is collapsed.
+msgid "collapsed"
+msgstr "დახურულია"
+
+#. Translators: This is presented when a control or a document becomes invisible.
+msgid "invisible"
+msgstr "უჩინარია"
+
+#. Translators: This is presented when a visited link is encountered.
+msgid "visited"
+msgstr "ნანახი"
+
+#. Translators: This is presented when a link is encountered.
+msgid "linked"
+msgstr "დაკავშირებულია"
+
+#. Translators: This is presented when the control menu item has a submenu.
+msgid "subMenu"
+msgstr "ქვემენიუ"
+
+#. Translators: This is presented when a protected control or a document is encountered.
+msgid "protected"
+msgstr "დაცულია"
+
+#. Translators: This is presented when a required form field is encountered.
+msgid "required"
+msgstr "საჭიროა"
+
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+msgid "defunct"
+msgstr "არ არსებული"
+
+#. Translators: This is presented when an invalid entry has been made.
+msgid "invalid entry"
+msgstr "არასწორი ჩანაწერი"
+
+msgid "modal"
+msgstr "მოდალური"
+
+#. Translators: This is presented when a field supports auto completion of entered text such as email
+#. address field in Microsoft Outlook.
+msgid "has auto complete"
+msgstr "შესაძლებელია ავტომატურად შევსება"
+
+#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment
+#. fields on websites.
+msgid "multi line"
+msgstr "მრავალხაზიანი"
+
+msgid "iconified"
+msgstr "აღნიშნული"
+
+#. Translators: Presented when the current control is located off screen.
+msgid "off screen"
+msgstr "ეკრანის"
+
+#. Translators: Presented when the control allows selection such as text fields.
+msgid "selectable"
+msgstr "მონიშვნადი"
+
+#. Translators: Presented when a control can be moved to using system focus.
+msgid "focusable"
+msgstr "ფოკუსირებადი"
+
+#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
+msgid "clickable"
+msgstr "დაწკაპუნებადი"
+
+msgid "editable"
+msgstr "რედაქტირებადი"
+
+msgid "checkable"
+msgstr "მონიშვნადი"
+
+msgid "draggable"
+msgstr "გადასათრევი"
+
+msgid "dragging"
+msgstr "გადათრევა"
+
+#. Translators: Reported where an object which is being dragged can be dropped.
+#. This is only reported for objects that support accessible drag and drop.
+msgid "drop target"
+msgstr "სამიზნე პუნქტი გადათრევისათვის"
+
+msgid "sorted"
+msgstr "sorted"
+
+msgid "sorted ascending"
+msgstr "sorted ascending"
+
+msgid "sorted descending"
+msgstr "sorted descending"
+
+#. Translators: a state that denotes that an object (usually a graphic) has a long description.
+msgid "has long description"
+msgstr "შეიცავს მთლიან აღწერას"
+
+#. Translators: a state that denotes that an object has additional details (such as a comment section).
+msgid "has details"
+msgstr ""
+
+#. Translators: a state that denotes that an object is pinned in its current location
+msgid "pinned"
+msgstr "ფიქსირებულია"
+
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "შეიცავს ფორმულას"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "შეიცავს კომენტარს"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "გადაფარულია"
+
+#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the
+#. allocated/available space
+msgid "cropped"
+msgstr "მოჭრილია"
+
+#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
+msgid "overflowing"
+msgstr "ფარავს"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
+#. Excel spreadsheet).
+msgid "unlocked"
+msgstr "ახსნილია"
+
+#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+msgid "not selected"
+msgstr "არაა მონიშნული"
+
+#. Translators: This is presented when a button is not pressed.
+#, fuzzy
+msgid "not pressed"
+msgstr "დაჭერილია"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "არაა მონიშნული"
+
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "გადათრევა დასრულებულია"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "კონფიგურაცია მინიჭებულია"
@@ -7863,28 +8212,10 @@ msgstr ""
 "კონფიგურაციის შენახვა ვერ მოხერხდა, სავარაუდოდ ფაილის სისტემის მხოლოდ "
 "კითხვისთვის რეჟიმის გამო."
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-#. (example: when trying to open keyboard settings when general settings dialog is open).
-msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "NVDA-ს პარამეტრების დიალოგი უკვე გახსნილია. ჯერ დახურეთ ის."
-
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr ""
-
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "სტანდარტული ლექსიკონი"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "ხმის ლექსიკონი (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "დროებიტი ლექსიკონი"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -7917,7 +8248,9 @@ msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr "გთხოვთ დაიცადოთ სანამ პარამეტრები კოპირდება სისტემურ კონფიგურაციაში."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
-msgid "COM Registration Fixing tool complete"
+msgid ""
+"The COM Registration Fixing tool has finished. It is highly recommended that "
+"you restart your computer now, to make sure the changes take full effect."
 msgstr ""
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
@@ -8109,85 +8442,6 @@ msgstr "გამოსვლა"
 msgid "Exit NVDA"
 msgstr "NVDA მუშაობის დასრულება"
 
-#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
-#, fuzzy
-msgid ""
-"Most commands for controlling NVDA require you to hold down the NVDA key "
-"while pressing other keys.\n"
-"By default, the numpad Insert and main Insert keys may both be used as the "
-"NVDA key.\n"
-"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-"Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA "
-"functions."
-msgstr ""
-"nvda-ს სამართავად განკუთვნილი თითქმის ყველა ბრძანება ითხოვს ჯერ nvda "
-"კლავიშის დაჭერას და შემდეგ მასთან ერთად, თითის აუშვებლად, სხვადასხვა "
-"კლავიშების გამოყენებას\n"
-"nvda კლავიშად გამოიყენება ინსერტი, განლაგებული, როგორც ძირითად, ისე ციფრულ "
-"კლავიატურაზე\n"
-"თქვენ ასევე შეგიძლიათ დააყენოთ nvda კლავიშად ქაფსლოკის გამოყენებაც \n"
-"ნებისმიერდროს  აკრიფეთ  NVDA+n ნვდას მენიუს გასააქტიურებლად. ამ მენიუდან "
-"თქვენ შეძლებთ გაასწოროთ nvda-ს პარამეტრები, მიიღოთ დახმარება და გამოიყენოთ "
-"nvda-ს დამატებითი ფუნქციები და სერვისები\n"
-
-#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
-msgid "Welcome to NVDA"
-msgstr "მოგესალმებით NVDA-ში"
-
-#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
-#. bold lettering
-msgid "Welcome to NVDA!"
-msgstr "მოგესალმებათ NVDA"
-
-#. Translators: The label for a group box containing the NVDA welcome dialog options.
-#. Translators: The label for a group box containing the NVDA installation dialog options.
-msgid "Options"
-msgstr "პარამეტრები"
-
-#. Translators: The label of a combobox in the Welcome dialog.
-#. Translators: This is the label for a combobox in the
-#. keyboard settings panel.
-msgid "&Keyboard layout:"
-msgstr "ღილაკების&წყობა "
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
-msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "ქაპსლოკის nvda-ს მოდიფიკატორად გამოყენება "
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
-#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
-#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-msgid "St&art NVDA after I sign in"
-msgstr ""
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
-msgid "&Show this dialog when NVDA starts"
-msgstr "ამ დიალოგის ჩვენება nvdas გაშვებისას"
-
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "სალიცენზიო შეთანხმება"
-
-#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-msgid "I &agree"
-msgstr "ვეთანხმები"
-
-#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
-msgid "&Install NVDA on this computer"
-msgstr "ამ კომპიუტერზე NVDA-ს დაყენება"
-
-#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
-msgid "Create &portable copy"
-msgstr "&პორტაბელური კოპიის შექმნა"
-
-#. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
-msgid "&Continue running"
-msgstr "მუშაობის გაგრძელება"
-
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -8227,41 +8481,6 @@ msgstr "განახლების დაყენება"
 msgid "Please wait"
 msgstr "გთხოვთ დაიცადოთ"
 
-#. Translators: The title of the dialog asking if usage data can be collected
-msgid "NVDA  Usage Data Collection"
-msgstr ""
-
-#. Translators: A message asking the user if they want to allow usage stats gathering
-msgid ""
-"In order to improve NVDA in the future, NV Access wishes to collect usage "
-"data from running copies of NVDA.\n"
-"\n"
-"Data includes Operating System version, NVDA version, language, country of "
-"origin, plus certain NVDA configuration such as current synthesizer, braille "
-"display and braille table. No spoken or braille content will be ever sent to "
-"NV Access.  Please refer to the User Guide for a current list of all data "
-"collected.\n"
-"\n"
-"Do you wish to allow NV Access to periodically collect this data in order to "
-"improve NVDA?"
-msgstr ""
-
-#. Translators: The label of a Yes button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
-#. the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. agree to enabling the curtain.
-msgid "&Yes"
-msgstr ""
-
-#. Translators: The label of a No button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
-#. install the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. disagree to enabling the curtain.
-msgid "&No"
-msgstr ""
-
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -8280,6 +8499,22 @@ msgstr "NVDA-ს გადატვირთვა"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "დამატების &შესახებ..."
+
+#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+#. the add-on
+#. Translators: The label of a Yes button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
+msgid "&Yes"
+msgstr ""
+
+#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
+#. install the add-on
+#. Translators: The label of a No button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
+msgid "&No"
+msgstr ""
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -8914,6 +9149,11 @@ msgid ""
 "{path}"
 msgstr "nvda-ს დაყენების გზა შეიცვალა ის ახლა დაყენდება ამ მისამართზე {path}"
 
+#. Translators: The label for a group box containing the NVDA installation dialog options.
+#. Translators: The label for a group box containing the NVDA welcome dialog options.
+msgid "Options"
+msgstr "პარამეტრები"
+
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA during sign-in"
 msgstr ""
@@ -9124,6 +9364,13 @@ msgstr "ხმა NVDA-ს ჩართვა-გამორთვისას"
 msgid "L&ogging level:"
 msgstr "ლოგირების დონე"
 
+#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
+#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
+#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "St&art NVDA after I sign in"
+msgstr ""
+
 #. Translators: The label for a setting in general settings to
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
@@ -9333,6 +9580,12 @@ msgstr "გამოიყენოს&სიმბოლოებით წა�
 msgid "Keyboard"
 msgstr "%s კლავიატურა"
 
+#. Translators: This is the label for a combobox in the
+#. keyboard settings panel.
+#. Translators: The label of a combobox in the Welcome dialog.
+msgid "&Keyboard layout:"
+msgstr "ღილაკების&წყობა "
+
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
 #, fuzzy
@@ -9486,6 +9739,13 @@ msgstr "წინასწარი ფორმირების ხაზი�
 msgid "Report changes to the &composition string"
 msgstr "შეყვანის ფორმირების ცვლილებების წაკითხვა"
 
+#. Translators: This is a label appearing on the Object Presentation settings panel.
+msgid ""
+"Configure how much information NVDA will present about controls. These "
+"options apply to focus reporting and NVDA object navigation, but not when "
+"reading text content e.g. web content with browse mode."
+msgstr ""
+
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "ობიექტის წარმოდგენა"
@@ -9622,6 +9882,8 @@ msgid "Automatically set system &focus to focusable elements"
 msgstr "კურსორის გადაადგილებისას ავტომატური გადასვლა რედაქტირების რეჟიმში"
 
 #. Translators: This is the label for the document formatting panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Document Formatting"
 msgstr "დოკუმენტის ფორმატირება"
 
@@ -9666,7 +9928,7 @@ msgstr "ხ&აზგასმულია"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Mar&ked (highlighted text)"
+msgid "Highlighted (mar&ked) text"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
@@ -9864,11 +10126,15 @@ msgstr "არ აქვს მათემატიკურ კონტენ
 msgid "&Touch typing mode"
 msgstr ""
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr ""
+# An open-source (and free) Screen Reader for the Windows Operating System
+# Created by Michael Curran, with help from James Teh and others
+# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#. Translators: The title of the Windows OCR panel.
+#, fuzzy
+msgid "Windows OCR"
+msgstr "windows"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 #, fuzzy
 msgid "Recognition &language:"
 msgstr "უცნობი ენა"
@@ -9906,12 +10172,97 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid ""
+"Use UI Automation to access Microsoft &Excel spreadsheet controls when "
+"available"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+
+#. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
+#. Note the '\n' is used to split this long label approximately in half.
+msgctxt "advanced.uiaWithChromium"
+msgid ""
+"Use UIA with Microsoft Edge and other \n"
+"&Chromium based browsers when available:"
+msgstr ""
+
+#. Translators: Label for the default value of the Use UIA with Chromium combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Default (Only when necessary)"
+msgstr ""
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Only when necessary"
+msgstr ""
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Yes"
+msgstr ""
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "No"
+msgstr ""
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+#, fuzzy
+msgid "Annotations"
+msgstr "&ანოტაციები"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report details in browse mode"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+#, fuzzy
+msgid "Report aria-description always"
+msgstr "ობიექტის აღწერის&წაკითხვა "
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "HID Braille Standard"
+msgstr ""
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+#, fuzzy
+msgid "Default (Yes)"
+msgstr "სტანდარტული ფერი"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr ""
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Enable support for HID braille"
 msgstr ""
 
 #. Translators: This is the label for a group of advanced options in the
@@ -9924,20 +10275,30 @@ msgstr ""
 msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
 
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-#, fuzzy
-msgid "Default (No)"
-msgstr "სტანდარტული ფერი"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
+#. Translators: This is the label for a combo box for selecting a
+#. method of detecting changed content in terminals in the advanced
+#. settings panel.
+#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+msgid "&Diff algorithm:"
 msgstr ""
 
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine the method of detecting changed
+#. content in terminals automatically.
+#, fuzzy
+msgid "Automatic (Diff Match Patch)"
+msgstr "ავტომატურად"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by character when supported, using the diff match patch algorithm.
+msgid "allow Diff Match Patch"
+msgstr ""
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by line, using the difflib algorithm.
+msgid "force Difflib"
 msgstr ""
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
@@ -9955,6 +10316,11 @@ msgstr "რედაქტირებადი"
 msgid "Caret movement timeout (in ms)"
 msgstr ""
 
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Report transparent color values"
+msgstr ""
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #, fuzzy
@@ -9964,6 +10330,23 @@ msgstr "გაფრთხილება საშიშროებაზე"
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
 msgid "Enabled logging categories"
+msgstr ""
+
+#. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+#, fuzzy
+msgid "Play a sound for logged e&rrors:"
+msgstr ""
+"ხმოვანი სიგნალის ჩართვა, &გრამატიკული შეცდომებისათვის ტექსტის აკრეფისას"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+#, fuzzy
+msgctxt "advanced.playErrorSound"
+msgid "Only in NVDA test versions"
+msgstr "NVDA-ს დაყენება"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Yes"
 msgstr ""
 
 #. Translators: This is the label for the Advanced settings panel.
@@ -10072,6 +10455,20 @@ msgstr "&რედაქტირება"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "ლექსიკონში სტატიის დამატება"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "სტანდარტული ლექსიკონი"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "ხმის ლექსიკონი (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "დროებიტი ლექსიკონი"
 
 #. Translators: A label for the braille display on the braille panel.
 #, fuzzy
@@ -10301,6 +10698,87 @@ msgstr "წა&შლა"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "სიმბოლო \"%s\" უკვე არსებობს."
+
+#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+#, fuzzy
+msgid ""
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad Insert and main Insert keys may both be used as the "
+"NVDA key.\n"
+"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions."
+msgstr ""
+"nvda-ს სამართავად განკუთვნილი თითქმის ყველა ბრძანება ითხოვს ჯერ nvda "
+"კლავიშის დაჭერას და შემდეგ მასთან ერთად, თითის აუშვებლად, სხვადასხვა "
+"კლავიშების გამოყენებას\n"
+"nvda კლავიშად გამოიყენება ინსერტი, განლაგებული, როგორც ძირითად, ისე ციფრულ "
+"კლავიატურაზე\n"
+"თქვენ ასევე შეგიძლიათ დააყენოთ nvda კლავიშად ქაფსლოკის გამოყენებაც \n"
+"ნებისმიერდროს  აკრიფეთ  NVDA+n ნვდას მენიუს გასააქტიურებლად. ამ მენიუდან "
+"თქვენ შეძლებთ გაასწოროთ nvda-ს პარამეტრები, მიიღოთ დახმარება და გამოიყენოთ "
+"nvda-ს დამატებითი ფუნქციები და სერვისები\n"
+
+#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
+msgid "Welcome to NVDA"
+msgstr "მოგესალმებით NVDA-ში"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time.
+#. This is in larger, bold lettering
+msgid "Welcome to NVDA!"
+msgstr "მოგესალმებათ NVDA"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+#, fuzzy
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "ქაპსლოკის nvda-ს მოდიფიკატორად გამოყენება "
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+#, fuzzy
+msgid "&Show this dialog when NVDA starts"
+msgstr "ამ დიალოგის ჩვენება nvdas გაშვებისას"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "სალიცენზიო შეთანხმება"
+
+#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
+msgid "I &agree"
+msgstr "ვეთანხმები"
+
+#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
+msgid "&Install NVDA on this computer"
+msgstr "ამ კომპიუტერზე NVDA-ს დაყენება"
+
+#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
+msgid "Create &portable copy"
+msgstr "&პორტაბელური კოპიის შექმნა"
+
+#. Translators: The label of the button in NVDA installation program
+#. to continue using the installation program as a temporary copy of NVDA.
+msgid "&Continue running"
+msgstr "მუშაობის გაგრძელება"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr ""
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access. Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10767,13 +11245,6 @@ msgstr "ეკრანის წარმოდგენის გამოყ�
 msgid "Use screen layout off"
 msgstr "ეკრანის წარმოდგენის გამოყენება გამორთულია"
 
-#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
-msgid ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-msgstr ""
-"დოკუმენტის მიმოხილვისას, რთავს ეკრანის წარმოდგენის რეჟიმს თუ ეს შესაძლებელია."
-
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 #, fuzzy
@@ -10928,6 +11399,7 @@ msgid "No comments"
 msgstr "არ არის კომენტარი."
 
 #. Translators: a description for a script
+#. Translators: a description for a script that reports the comment at the caret.
 msgid "Reports the text of the comment where the System caret is located."
 msgstr "აცხადებს სისტემური კურსორის ქვეშ არსებულ კომენტარის ტექსტს "
 
@@ -10936,8 +11408,142 @@ msgstr "აცხადებს სისტემური კურსორ�
 msgid "Not in table"
 msgstr "ცხრილს გარეთ"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} in"
+msgstr ""
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} cm"
+msgstr ""
+
 msgid "invoke"
 msgstr "გააქტიურება"
+
+#. Translators: part of the suggestions count message for one suggestion.
+#, fuzzy
+msgid "1 suggestion"
+msgstr "სექცია"
+
+#. Translators: part of the suggestions count message (for example: 2 suggestions).
+msgid "{} suggestions"
+msgstr ""
+
+#. Translators: the description of a script
+msgctxt "excel-UIA"
+msgid ""
+"Shows a browseable message Listing information about a cell's appearance "
+"such as outline and fill colors, rotation and size"
+msgstr ""
+
+#. Translators: The width of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell width: {0.x:.1f} pt"
+msgstr ""
+
+#. Translators: The height of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell height: {0.y:.1f} pt"
+msgstr ""
+
+#. Translators: The rotation in degrees of an Excel cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Rotation: {0} degrees"
+msgstr ""
+
+#. Translators: The outline (border) colors of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid ""
+"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
+msgstr ""
+
+#. Translators: The outline (border) thickness values of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
+msgstr ""
+
+#. Translators: The fill color of an Excel cell
+#, fuzzy, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill color: {0.name}"
+msgstr "ხაზების ფერი {colorName} "
+
+#. Translators: The fill type (pattern, gradient etc) of an Excel Cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill type: {0}"
+msgstr ""
+
+#. Translators: the number format of an Excel cell
+#, python-brace-format
+msgid "Number format: {0}"
+msgstr ""
+
+#. Translators: If an excel cell has data validation set
+#, fuzzy
+msgid "Has data validation"
+msgstr "%s აპლიკაცია"
+
+#. Translators: the data validation prompt (input message) for an Excel cell
+#, python-brace-format
+msgid "Data validation prompt: {0}"
+msgstr ""
+
+#. Translators: If an excel cell has conditional formatting
+#, fuzzy
+msgid "Has conditional formatting"
+msgstr "დოკუმენტის ფორმატირება"
+
+#. Translators: If an excel cell has visible gridlines
+#, fuzzy
+msgid "Gridlines are visible"
+msgstr "უჩინარია"
+
+#. Translators: Title for a browsable message that describes the appearance of a cell in Excel
+msgctxt "excel-UIA"
+msgid "Cell Appearance"
+msgstr ""
+
+#. Translators:  an error message on a cell in Microsoft Excel.
+#, python-brace-format
+msgid "Error: {errorText}"
+msgstr ""
+
+#. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
+#, python-brace-format
+msgid "{author} is editing"
+msgstr ""
+
+#. Translators: Excel, report range of cell coordinates
+#, fuzzy, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "{firstAddress} {firstContent}-დან  {lastAddress} {lastContent}-მდე"
+
+#. Translators: the description  for a script for Excel
+#, fuzzy
+msgid "Reports the note or comment thread on the current cell"
+msgstr "ახმოვანებს კომენტარს მოცემულ უჯრაზე"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, fuzzy, python-brace-format
+msgid "{comment}  by {author}"
+msgstr "შენიშვნა: {text} {author} {date}-ში"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, fuzzy, python-brace-format
+msgid "{comment}  by {author} with {numReplies} replies"
+msgstr "შენიშვნა: {text} {author} {date}-ში"
+
+#. Translators: A message in Excel when there is no note
+msgid "No note or comment thread on this cell"
+msgstr ""
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10967,13 +11573,18 @@ msgstr ""
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, fuzzy, python-brace-format
-msgid "Comment: {comment} by {author} on {date}"
+msgid "Comment: {comment} by {author}"
 msgstr "შენიშვნა: {text} {author} {date}-ში"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, fuzzy, python-brace-format
-msgid "{comment} by {author} on {date}"
+msgid "Comment: {comment} by {author} on {date}"
 msgstr "შენიშვნა: {text} {author} {date}-ში"
+
+#. Translators: a message when navigating by sentence is unavailable in MS Word
+#, fuzzy
+msgid "Navigating by sentence not supported in this document"
+msgstr "არ არის მხარდაჭერილი ამ დოკუმენტში"
 
 msgid "Desktop"
 msgstr "სამუშაო დაფა"
@@ -12368,34 +12979,3 @@ msgstr "ხაზებს შორის ინტერვალი ორმ
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ხაზებს შორის ინტერვალი 1.5 "
-
-#~ msgctxt "line spacing value"
-#~ msgid "exact"
-#~ msgstr "ზუსტი"
-
-#~ msgid "Russian grade 1"
-#~ msgstr "Russian grade 1"
-
-#~ msgid "%s copied to clipboard"
-#~ msgstr "%s დაკოპირებულია ბუფერში"
-
-#~ msgid "Review selection copied to clipboard"
-#~ msgstr "არჩეული ფრაგმენტი კოპირებულია გაცვლის ბუფერში"
-
-#~ msgid "Co&mments"
-#~ msgstr "კო&მენტარები"
-
-#~ msgid "C&omments"
-#~ msgstr "კომენტარი"
-
-#~ msgid "Russian braille for computer code"
-#~ msgstr "Russian braille for computer code"
-
-#~ msgid "Speaks the current foreground object"
-#~ msgstr "კითხულობს წინა პლანზე  გამოტანილ ობიექტს "
-
-#~ msgid "&Automatically start NVDA after I log on to Windows"
-#~ msgstr "&Windows-ის გაშვების თანავე &ავტომატურად ჩაირთოს NVDA "
-
-#~ msgid "Use NVDA on the Windows &logon screen"
-#~ msgstr "windows-ის შესვლის ეკრანზე nvda-ს გამოყენება"
