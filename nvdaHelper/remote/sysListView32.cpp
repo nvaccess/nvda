@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2020 NV Access Limited, Leonard de Ruijter.
+Copyright 2006-2022 NV Access Limited, Leonard de Ruijter.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -16,6 +16,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <windows.h>
 #include <commctrl.h>
+#include <algorithm>
+#include <iterator>
 #include <common/log.h>
 #include <remote/nvdaInProcUtils.h>
 
@@ -24,6 +26,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 // Therefore, round it up to the nearest power of 2.
 #undef CBEMAXSTRLEN
 #define CBEMAXSTRLEN 512
+
+using namespace std;
 
 error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle, const unsigned long windowHandle, int groupIndex, BSTR* header, BSTR* footer, int* state) {
 	LVGROUP group={0};
@@ -57,5 +61,48 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnContent(handle_t bindingHa
 		return 1;
 	}
 	*text = SysAllocString(lvItem.pszText);
+	return 0;
+}
+
+error_status_t nvdaInProcUtils_sysListView32_getColumnLocation(handle_t bindingHandle, const unsigned long windowHandle, int item, int subItem, RECT* location) {
+	RECT localRect {
+		// Returns the bounding rectangle of the entire item, including the icon and label.
+		LVIR_LABEL,  // left
+		// According to Microsoft, top should be the one-based index of the subitem.
+		// However, indexes coming from LVM_GETCOLUMNORDERARRAY are zero based.
+		subItem // top
+	};
+	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETSUBITEMRECT, (WPARAM)item, (LPARAM)&localRect)) {
+		LOG_DEBUGWARNING(L"LVM_GETSUBITEMRECT failed");
+		return 1;
+	}
+	*location = localRect;
+	return 0;
+}
+
+error_status_t nvdaInProcUtils_sysListView32_getColumnHeader(handle_t bindingHandle, const unsigned long windowHandle, int subItem, BSTR* text) {
+	LVCOLUMN lvColumn = {0};
+	lvColumn.mask = LVCF_TEXT;
+	lvColumn.iSubItem = subItem;
+	lvColumn.cchTextMax = CBEMAXSTRLEN;
+	wchar_t textBuf[CBEMAXSTRLEN]{}; // Ensure that the array initialised with all zero values ('\0')
+	lvColumn.pszText= textBuf;
+	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETCOLUMN, (WPARAM)subItem, (LPARAM)&lvColumn)) {
+		LOG_DEBUGWARNING(L"LVM_GETCOLUMN failed");
+		return 1;
+	}
+	if(!lvColumn.pszText) {
+		LOG_DEBUGWARNING(L"LVM_GETCOLUMN didn't retrieve any text");
+		return 1;
+	}
+	*text = SysAllocString(lvColumn.pszText);
+	return 0;
+}
+
+error_status_t nvdaInProcUtils_sysListView32_getColumnOrderArray(handle_t bindingHandle, const unsigned long windowHandle, const int columnCount, int* coa) {
+	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETCOLUMNORDERARRAY, (WPARAM)columnCount, (LPARAM)coa)) {
+		LOG_DEBUGWARNING(L"LVM_GETCOLUMNORDERARRAY failed");
+		return 1;
+	}
 	return 0;
 }
