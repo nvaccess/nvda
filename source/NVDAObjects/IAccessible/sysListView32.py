@@ -264,7 +264,7 @@ class List(List):
 
 	def _get__columnOrderArray(self):
 		if not self.appModule.helperLocalBindingHandle:
-			return self._getColumnOrderArrayRawOutproc(self.columnCount)
+			return self._getColumnOrderArrayRawOutProc(self.columnCount)
 		return self._getColumnOrderArrayRaw(self.columnCount)
 
 
