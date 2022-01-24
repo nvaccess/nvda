@@ -2522,28 +2522,28 @@ def getFormatFieldSpeech(  # noqa: C901
 		oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None
 		if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling!=oldInvalidSpelling:
 			if invalidSpelling:
-				# Translators: Reported when text contains a spelling error.
-				text=_("spelling error")
+				textList.append(UserInterface(_(
+					# Translators: Reported when text contains a spelling error.
+					"spelling error"
+				)))
 			elif extraDetail:
-				# Translators: Reported when moving out of text containing a spelling error.
-				text=_("out of spelling error")
-			else:
-				text=""
-			if text:
-				textList.append(text)
+				textList.append(UserInterface(_(
+					# Translators: Reported when moving out of text containing a spelling error.
+					"out of spelling error"
+				)))
 		invalidGrammar=attrs.get("invalid-grammar")
 		oldInvalidGrammar=attrsCache.get("invalid-grammar") if attrsCache is not None else None
 		if (invalidGrammar or oldInvalidGrammar is not None) and invalidGrammar!=oldInvalidGrammar:
 			if invalidGrammar:
-				# Translators: Reported when text contains a grammar error.
-				text=_("grammar error")
+				textList.append(UserInterface(_(
+					# Translators: Reported when text contains a grammar error.
+					"grammar error"
+				)))
 			elif extraDetail:
-				# Translators: Reported when moving out of text containing a grammar error.
-				text=_("out of grammar error")
-			else:
-				text=""
-			if text:
-				textList.append(text)
+				textList.append(UserInterface(_(
+					# Translators: Reported when moving out of text containing a grammar error.
+					"out of grammar error"
+				)))
 	# The line-prefix formatField attribute contains the text for a bullet or number for a list item, when the bullet or number does not appear in the actual text content.
 	# Normally this attribute could be repeated across formatFields within a list item and therefore is not safe to speak when the unit is word or character.
 	# However, some implementations (such as MS Word with UIA) do limit its useage to the very first formatField of the list item.
