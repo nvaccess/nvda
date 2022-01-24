@@ -16,8 +16,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <windows.h>
 #include <commctrl.h>
-#include <algorithm>
-#include <iterator>
 #include <common/log.h>
 #include <remote/nvdaInProcUtils.h>
 
@@ -26,8 +24,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 // Therefore, round it up to the nearest power of 2.
 #undef CBEMAXSTRLEN
 #define CBEMAXSTRLEN 512
-
-using namespace std;
 
 error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle, const unsigned long windowHandle, int groupIndex, BSTR* header, BSTR* footer, int* state) {
 	LVGROUP group={0};
