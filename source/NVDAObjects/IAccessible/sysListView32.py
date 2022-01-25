@@ -230,17 +230,17 @@ class List(List):
 		return count
 
 	def _getColumnOrderArrayRaw(self, columnCount: int):
-		coa = (ctypes.c_int * columnCount)()
+		columnOrderArray = (ctypes.c_int * columnCount)()
 		res = watchdog.cancellableExecute(
 			NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getColumnOrderArray,
 			self.appModule.helperLocalBindingHandle,
 			self.windowHandle,
 			columnCount,
-			coa
+			columnOrderArray
 		)
 		if res:
 			return None
-		return coa
+		return columnOrderArray
 
 	def _getColumnOrderArrayRawOutProc(self, columnCount: int):
 		coa = (ctypes.c_int * columnCount)()
