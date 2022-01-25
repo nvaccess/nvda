@@ -388,7 +388,7 @@ def getCharDescListFromText(text,locale):
 	return charDescList
 
 
-def speakObjectProperties(  # noqa: C901
+def speakObjectProperties(
 		obj,
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
