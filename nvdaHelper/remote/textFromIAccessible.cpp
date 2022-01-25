@@ -74,7 +74,7 @@ bool getTextFromIAccessible(
 	}
 
 	bool gotText = false;
-	CComQIPtr<IAccessibleText, &IID_IAccessibleText> paccText(pacc2);
+	CComQIPtr<IAccessibleText> paccText(pacc2);
 
 	if (!paccText && recurse && !useNewText) {
 		//no IAccessibleText interface, so try children instead
@@ -83,7 +83,7 @@ bool getTextFromIAccessible(
 			auto[varChildren, accChildRes] = getAccessibleChildren(pacc2, 0, childCount);
 			for(auto& child : varChildren){
 				if (child.vt == VT_DISPATCH && child.pdispVal) {
-					CComQIPtr<IAccessible2, &IID_IAccessible2> pacc2Child(child.pdispVal);
+					CComQIPtr<IAccessible2> pacc2Child(child.pdispVal);
 					if (pacc2Child) {
 						map<wstring, wstring> childAttribsMap;
 						fetchIA2Attributes(pacc2Child, childAttribsMap);
@@ -120,7 +120,7 @@ bool getTextFromIAccessible(
 		//If we got text, add it to  the string provided, however if there are embedded objects in the text, recurse in to these
 		if (bstrText) {
 			long textLength = SysStringLen(bstrText);
-			CComQIPtr<IAccessibleHypertext, &IID_IAccessibleHypertext> paccHypertext;
+			CComQIPtr<IAccessibleHypertext> paccHypertext;
 			if (recurse) {
 				paccHypertext = pacc2;
 			}
