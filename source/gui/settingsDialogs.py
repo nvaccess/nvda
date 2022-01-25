@@ -2934,6 +2934,8 @@ class AdvancedPanelControls(
 			pgettext("advanced.playErrorSound", "Only in NVDA test versions"),
 			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
 			pgettext("advanced.playErrorSound", "Yes"),
+			# Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+			pgettext("advanced.playErrorSound", "No"),
 		)
 		self.playErrorSoundCombo = debugLogGroup.addLabeledControl(label, wx.Choice, choices=playErrorSoundChoices)
 		self.bindHelpEvent("PlayErrorSound", self.playErrorSoundCombo)

@@ -280,8 +280,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [featureFlag]
 	# 0:default, 1:yes, 2:no
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
-	# 0:Only in test versions, 1:yes
-	playErrorSound = integer(0, 1, default=0)
+	# 0:Only in test versions, 1:yes, 2: no
+	playErrorSound = integer(0, 2, default=0)
 """
 
 #: The configuration specification

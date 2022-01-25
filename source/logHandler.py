@@ -111,6 +111,9 @@ def shouldPlayErrorSound() -> bool:
 		return False
 
 	import config
+	# Don't play the error sound if this is disabled in config.
+	if (config.conf is not None and config.conf["featureFlag"]["playErrorSound"] == 2):
+		return False
 	# Only play the error sound if this is a test version or if the config states it explicitly.
 	return (
 		buildVersion.isTestVersion
