@@ -1,4 +1,4 @@
-# appModules/1password.py
+# appModules/bitwarden.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2020 James Teh
 # This file is covered by the GNU General Public License.
