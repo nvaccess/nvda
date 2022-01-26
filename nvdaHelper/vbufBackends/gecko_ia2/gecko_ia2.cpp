@@ -950,25 +950,47 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 
 		} else if (renderChildren && childCount > 0) {
 			// The object has no text, but we do want to render its children.
-			VARIANT* varChildren;
-			if(!(varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))) {
-				LOG_DEBUG(L"Error allocating varChildren memory");
-				return NULL;
+			auto [varChildren, accChildRes] = getAccessibleChildren(pacc, 0, childCount);
+			if (S_OK != accChildRes || varChildren.size() == 0) {
+				std::wstringstream msg;
+				msg << L"AccessibleChildren failed (count: " << childCount << L"), res: " << accChildRes;
+				switch (accChildRes) {
+				case E_NOINTERFACE:
+					msg << L" (E_NOINTERFACE, No such interface supported)";
+					LOG_ERROR(msg.str());  // Indicates a bug in the IA2 provider.
+					break;
+				case RPC_E_DISCONNECTED:
+					msg << L" (RPC_E_DISCONNECTED, object invoked has disconnected from its clients.)";
+					// RPC_E_DISCONNECTED indicates that the parent died since the query to accChildCount.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
+					break;
+				case CO_E_OBJNOTCONNECTED:
+					msg << L" (CO_E_OBJNOTCONNECTED, Object is not connected to server)";
+					LOG_DEBUG(msg.str());
+					break;
+				case S_FALSE:  // Success, but unexpeced number of children were returned.
+					msg << L" (S_FALSE, expected childcount, got "
+						<< varChildren.size()
+						<< L". Children may have been removed from document.)";
+					// Returning no children indicates that all children died since the call to accChildCount.
+					// Even if the children had been rendered, they were removed immediately thereafter.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
+					break;
+				default:
+					// Other unknown failures, log at error.
+					LOG_ERROR(msg.str());
+				}
 			}
-			long accessibleChildrenCount = 0;
-			if(AccessibleChildren(pacc,0,childCount,varChildren,&accessibleChildrenCount)!=S_OK) {
-				LOG_DEBUG(L"AccessibleChildren failed");
-				accessibleChildrenCount=0;
-			}
-			for(long i=0;i<accessibleChildrenCount;++i) {
-				if (varChildren[i].vt != VT_DISPATCH) {
-					VariantClear(&(varChildren[i]));
+			LOG_DEBUG(L"got " << varChildren.size() << L" children");
+
+			for(CComVariant& child : varChildren) {
+				if (child.vt != VT_DISPATCH || !child.pdispVal) {
+					child.Clear();
 					continue;
 				}
-				IAccessible2* childPacc=NULL;
-				if(varChildren[i].pdispVal) varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
+				CComQIPtr< IAccessible2, &IID_IAccessible2> childPacc(child.pdispVal);
 				if (!childPacc) {
-					VariantClear(&(varChildren[i]));
+					child.Clear();
 					continue;
 				}
 				tempNode = this->fillVBuf(
@@ -986,11 +1008,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				}
 				else
 					LOG_DEBUG(L"Error in calling fillVBuf");
-				childPacc->Release();
-				VariantClear(&(varChildren[i]));
+				child.Clear();
 			}
-			free(varChildren);
-
 		} else if (renderSelectedItemOnly) {
 			CComPtr<IAccessible2> item = this->getSelectedItem(pacc, IA2AttribsMap);
 			if (item) {
