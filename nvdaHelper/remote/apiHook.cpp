@@ -17,7 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <delayimp.h>
-#include <minhook/include/minhook.h>
+#include <detours/src/detours.h>
 #include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
 #include "dllmain.h"
@@ -25,126 +25,73 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-typedef multiset<HMODULE> moduleSet_t;
-typedef set<void*> functionSet_t;
+typedef set<pair<void**, void*>> functionSet_t;
 
-moduleSet_t g_hookedModules;
 functionSet_t g_hookedFunctions;
-HMODULE minhookLibHandle=NULL;
-bool error_setNHFP=false;
 
-//function pointer typedefs for all minHook functions for use with getProcAddress
-typedef MH_STATUS(WINAPI *MH_Initialize_funcType)();
-typedef MH_STATUS(WINAPI *MH_Uninitialize_funcType)();
-typedef MH_STATUS(WINAPI *MH_CreateHook_funcType)(LPVOID,LPVOID,LPVOID*);
-typedef MH_STATUS(WINAPI *MH_EnableHook_funcType)(LPVOID);
-typedef MH_STATUS(WINAPI *MH_DisableHook_funcType)(LPVOID);
-
-#define defMHFP(funcName) funcName##_funcType funcName##_fp=NULL
-
-#define setMHFP(funcName) {\
-	funcName##_fp=(funcName##_funcType)GetProcAddress(minhookLibHandle,#funcName);\
-	if(!funcName##_fp) {\
-		error_setNHFP=true;\
-		LOG_ERROR(L"Error setting minHook function pointer "<<L#funcName);\
-	}\
+bool apiHook_beginTransaction() {
+	LOG_DEBUG("Initializing an API hook transaction");
+	auto res = DetourTransactionBegin();
+	if (res != NO_ERROR) {
+		LOG_ERROR("DetourTransactionBegin failed with " << res);
+		return false;
+	}
+	res = DetourUpdateThread(GetCurrentThread());
+	if (res != NO_ERROR) {
+		LOG_ERROR("DetourUpdateThread failed with " << res);
+		DetourTransactionAbort();
+		return false;
+	}
+	return true;
 }
 
-defMHFP(MH_Initialize);
-defMHFP(MH_Uninitialize);
-defMHFP(MH_CreateHook);
-defMHFP(MH_EnableHook);
-defMHFP(MH_DisableHook);
+bool apiHook_hookFunction(void* realFunction, void* fakeFunction, void** targetPointerRef) {
+	if (targetPointerRef == nullptr) {
+		return false;
+	}
+	*targetPointerRef = realFunction;
+	LOG_DEBUG("requesting to hook function at address 0X" << std::hex << realFunction << " with  new function at address 0X" << fakeFunction);
+	auto res = DetourAttach(targetPointerRef, fakeFunction);
+	if(res != NO_ERROR) {
+		LOG_ERROR("DetourAttach for function at address 0X" << std::hex << realFunction << " with  new function at address 0X" << fakeFunction << " failed with " << res);
+		return false;
+	}
+	g_hookedFunctions.insert(make_pair(targetPointerRef, fakeFunction));
+	LOG_DEBUG("successfully hooked function at address 0X" << std::hex << realFunction << " with  new function at address 0X" << fakeFunction << ", new pointer will be written to variable at address 0X" << std::hex << targetPointerRef << " add transaction commit time");
+	return true;
+}
 
- bool apiHook_initialize() {
-	LOG_DEBUG("calling MH_Initialize");
-	wstring dllPath=dllDirectory;
-	dllPath+=L"\\minhook.dll";
-	if((minhookLibHandle=LoadLibrary(dllPath.c_str()))==NULL) {
-		LOG_ERROR(L"LoadLibrary failed to load "<<dllPath);
-		return false;
-	}
-	error_setNHFP=false;
-	setMHFP(MH_Initialize);
-	setMHFP(MH_Uninitialize);
-	setMHFP(MH_CreateHook);
-	setMHFP(MH_EnableHook);
-	setMHFP(MH_DisableHook);
-	if(error_setNHFP) {
-		LOG_ERROR(L"Error setting minHook function pointers");
-		FreeLibrary(minhookLibHandle);
-		minhookLibHandle=NULL;
-		return false;
-	}
-	MH_STATUS res = MH_Initialize_fp();
-	if (res!=MH_OK) {
-		LOG_ERROR("MH_Initialize failed with " << res);
-		FreeLibrary(minhookLibHandle);
-		minhookLibHandle=NULL;
+bool apiHook_commitTransaction() {
+	LOG_DEBUG("About to commit an API hook transaction");
+	void** failedPointerRef = nullptr;
+	auto res = DetourTransactionCommitEx(&failedPointerRef);
+	if (res != NO_ERROR) {
+		LOG_ERROR("DetourTransactionCommit failed with " << res << " due to variable at address 0X" << std::hex << failedPointerRef << " that should hold a function pointer");
 		return false;
 	} 
-	else return true;
-}
-
-void* apiHook_hookFunction(const char* moduleName, const char* functionName, void* newHookProc) {
-	if(!minhookLibHandle) {
-		LOG_ERROR(L"apiHooks not initialized");
-		return NULL;
-	}
-	HMODULE moduleHandle=LoadLibraryA(moduleName);
-	if(!moduleHandle) {
-		LOG_ERROR("module " << moduleName << " not loaded");
-		return NULL;
-	}
-	void* realFunc=GetProcAddress(moduleHandle,functionName);
-	if(!realFunc) {
-		LOG_ERROR("function " << functionName << " does not exist in module " << moduleName);
-		FreeLibrary(moduleHandle);
-		return NULL;
-	}
-	LOG_DEBUG("requesting to hook function " << functionName << " at address 0X" << std::hex << realFunc << " in module " << moduleName << " at address 0X" << moduleHandle << " with  new function at address 0X" << newHookProc);
-	void* origFunc;
-	MH_STATUS res = MH_CreateHook_fp(realFunc,newHookProc,&origFunc);
-	if(res!=MH_OK) {
-		LOG_ERROR("MH_CreateHook for function " << functionName << " in module " << moduleName << " failed with " << res);
-		FreeLibrary(moduleHandle);
-		return NULL;
-	}
-	g_hookedModules.insert(moduleHandle);
-	g_hookedFunctions.insert(realFunc);
-	LOG_DEBUG("successfully hooked function " << functionName << " in module " << moduleName << " with hook procedure at address 0X" << std::hex << newHookProc << ", returning true");
-	return origFunc;
-}
-
-bool apiHook_enableHooks() {
-	if(!minhookLibHandle) {
-		LOG_ERROR(L"apiHooks not initialized");
-		return false;
-	}
-	MH_STATUS res=MH_EnableHook_fp(MH_ALL_HOOKS);
-	nhAssert(res==MH_OK);
+	LOG_DEBUG("DetourTransactionCommit succeeded");
 	return TRUE;
 }
 
 bool apiHook_terminate() {
-	//If the process is exiting then minHook will have already removed all hooks and unloaded
-	if(isProcessExiting) return true;
-	if(!minhookLibHandle) {
-		LOG_ERROR(L"apiHooks not initialized");
+	auto res = apiHook_beginTransaction();
+	if (!res) {
 		return false;
 	}
-	MH_STATUS res=MH_DisableHook_fp(MH_ALL_HOOKS);
-	nhAssert(res==MH_OK);
-	g_hookedFunctions.clear();
-	//Give enough time for all hook functions to complete.
-	Sleep(250);
-	res=MH_Uninitialize_fp();
-	nhAssert(res==MH_OK);
-	for(moduleSet_t::iterator i=g_hookedModules.begin();i!=g_hookedModules.end();++i) {
-		FreeLibrary(*i);
+	long detourRes = NO_ERROR;
+	for (const auto& iter : g_hookedFunctions) {
+		void** pointerRec = iter.first;
+		void* fakeFunc = iter.second;
+		LOG_DEBUG("Detaching function hook at address 0X" << std::hex << *pointerRec << " with hook procedure at address 0X" << std::hex << fakeFunc);
+		detourRes = DetourDetach(pointerRec, fakeFunc);
+		if (detourRes != NO_ERROR) {
+			LOG_ERROR("Error detaching function hook at address 0X" << std::hex << *pointerRec << " with hook procedure at address 0X" << std::hex << fakeFunc);
+		}
 	}
-	g_hookedModules.clear();
-	FreeLibrary(minhookLibHandle);
-	minhookLibHandle=NULL;
+	res = apiHook_commitTransaction();
+	if (!res) {
+		return false;
+	}
+	g_hookedFunctions.clear();
 	return TRUE;
 }

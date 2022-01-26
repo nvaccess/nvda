@@ -1219,30 +1219,30 @@ void gdiHooks_inProcess_initialize() {
 	//Initialize critical sections and access variables for various maps
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;
-	//Hook needed functions
-	hookClass_TextOut<char>::realFunction=apiHook_hookFunction_safe("GDI32.dll",TextOutA,hookClass_TextOut<char>::fakeFunction);
-	hookClass_TextOut<wchar_t>::realFunction=apiHook_hookFunction_safe("GDI32.dll",TextOutW,hookClass_TextOut<wchar_t>::fakeFunction);
-	hookClass_PolyTextOut<POLYTEXTA>::realFunction=apiHook_hookFunction_safe("GDI32.dll",PolyTextOutA,hookClass_PolyTextOut<POLYTEXTA>::fakeFunction);
-	hookClass_PolyTextOut<POLYTEXTW>::realFunction=apiHook_hookFunction_safe("GDI32.dll",PolyTextOutW,hookClass_PolyTextOut<POLYTEXTW>::fakeFunction);
-	hookClass_ExtTextOut<char>::realFunction=apiHook_hookFunction_safe("GDI32.dll",ExtTextOutA,hookClass_ExtTextOut<char>::fakeFunction);
-	hookClass_ExtTextOut<wchar_t>::realFunction=apiHook_hookFunction_safe("GDI32.dll",ExtTextOutW,hookClass_ExtTextOut<wchar_t>::fakeFunction);
-	real_CreateCompatibleDC=apiHook_hookFunction_safe("GDI32.dll",CreateCompatibleDC,fake_CreateCompatibleDC);
-	real_SelectObject=apiHook_hookFunction_safe("GDI32.dll",SelectObject,fake_SelectObject);
-	real_DeleteDC=apiHook_hookFunction_safe("GDI32.dll",DeleteDC,fake_DeleteDC);
-	real_FillRect=apiHook_hookFunction_safe("USER32.dll",FillRect,fake_FillRect);
-	real_DrawFocusRect=apiHook_hookFunction_safe("USER32.dll",DrawFocusRect,fake_DrawFocusRect);
-	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
-	real_BitBlt=apiHook_hookFunction_safe("GDI32.dll",BitBlt,fake_BitBlt);
-	real_StretchBlt=apiHook_hookFunction_safe("GDI32.dll",StretchBlt,fake_StretchBlt);
-	real_GdiTransparentBlt=apiHook_hookFunction_safe("GDI32.dll",GdiTransparentBlt,fake_GdiTransparentBlt);
-	real_PatBlt=apiHook_hookFunction_safe("GDI32.dll",PatBlt,fake_PatBlt);
-	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
-	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);
-	real_DestroyWindow=apiHook_hookFunction_safe("USER32.dll",DestroyWindow,fake_DestroyWindow);
-	real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
-	real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
-	real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
-	real_ScriptTextOut=apiHook_hookFunction_safe("USP10.dll",ScriptTextOut,fake_ScriptTextOut);
+	// Hook needed functions
+	apiHook_hookFunction_safe(TextOutA, hookClass_TextOut<char>::fakeFunction, &hookClass_TextOut<char>::realFunction);
+	apiHook_hookFunction_safe(TextOutW, hookClass_TextOut<wchar_t>::fakeFunction, &hookClass_TextOut<wchar_t>::realFunction);
+	apiHook_hookFunction_safe(PolyTextOutA, hookClass_PolyTextOut<POLYTEXTA>::fakeFunction, &hookClass_PolyTextOut<POLYTEXTA>::realFunction);
+	apiHook_hookFunction_safe(PolyTextOutW, hookClass_PolyTextOut<POLYTEXTW>::fakeFunction, &hookClass_PolyTextOut<POLYTEXTW>::realFunction);
+	apiHook_hookFunction_safe(ExtTextOutA, hookClass_ExtTextOut<char>::fakeFunction, &hookClass_ExtTextOut<char>::realFunction);
+	apiHook_hookFunction_safe(ExtTextOutW, hookClass_ExtTextOut<wchar_t>::fakeFunction, &hookClass_ExtTextOut<wchar_t>::realFunction);
+	apiHook_hookFunction_safe(CreateCompatibleDC, fake_CreateCompatibleDC, &real_CreateCompatibleDC);
+	apiHook_hookFunction_safe(SelectObject, fake_SelectObject, &real_SelectObject);
+	apiHook_hookFunction_safe(DeleteDC, fake_DeleteDC, &real_DeleteDC);
+	apiHook_hookFunction_safe(FillRect, fake_FillRect, &real_FillRect);
+	apiHook_hookFunction_safe(DrawFocusRect, fake_DrawFocusRect, &real_DrawFocusRect);
+	apiHook_hookFunction_safe(BeginPaint, fake_BeginPaint, &real_BeginPaint);
+	apiHook_hookFunction_safe(BitBlt, fake_BitBlt, &real_BitBlt);
+	apiHook_hookFunction_safe(StretchBlt, fake_StretchBlt, &real_StretchBlt);
+	apiHook_hookFunction_safe(GdiTransparentBlt, fake_GdiTransparentBlt, &real_GdiTransparentBlt);
+	apiHook_hookFunction_safe(PatBlt, fake_PatBlt, &real_PatBlt);
+	apiHook_hookFunction_safe(ScrollWindow, fake_ScrollWindow, &real_ScrollWindow);
+	apiHook_hookFunction_safe(ScrollWindowEx, fake_ScrollWindowEx, &real_ScrollWindowEx);
+	apiHook_hookFunction_safe(DestroyWindow, fake_DestroyWindow, &real_DestroyWindow);
+	apiHook_hookFunction_safe(ScriptStringAnalyse, fake_ScriptStringAnalyse, &real_ScriptStringAnalyse);
+	apiHook_hookFunction_safe(ScriptStringFree, fake_ScriptStringFree, &real_ScriptStringFree);
+	apiHook_hookFunction_safe(ScriptStringOut, fake_ScriptStringOut, &real_ScriptStringOut);
+	apiHook_hookFunction_safe(ScriptTextOut, fake_ScriptTextOut, &real_ScriptTextOut);
 }
 
 void gdiHooks_inProcess_terminate() {

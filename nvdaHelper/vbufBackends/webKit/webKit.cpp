@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <ia2.h>
 #include <remote/nvdaHelperRemote.h>
 #include <common/log.h>
+#include <common/ia2utils.h>
 #include <vbufBase/backend.h>
 #include "webKit.h"
 
@@ -123,20 +124,19 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 
 	// Iterate through the children.
 	if (childCount > 0) {
-		auto varChildren = make_unique<CComVariant[]>(childCount);
-		if(AccessibleChildren(pacc,0,childCount,varChildren.get(),(long*)(&childCount))!=S_OK) {
-			childCount=0;
-		}
-		for(int i=0;i<childCount;i++) {
-			if(varChildren[i].vt!=VT_DISPATCH) {
-				continue;
-			}
-			CComQIPtr<IAccessible2> childPacc = varChildren[i].pdispVal;
-			if(!childPacc) {
-				continue;
-			}
-			if((tempNode=this->fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode))!=NULL) {
-				previousNode=tempNode;
+		auto [varChildren, accChildrenRes] = getAccessibleChildren(pacc, 0, childCount);
+		if (S_OK == accChildrenRes) {
+			for (CComVariant& child : varChildren) {
+				if (VT_DISPATCH != child.vt) {
+					continue;
+				}
+				CComQIPtr<IAccessible2> childPacc(child.pdispVal);
+				if (!childPacc) {
+					continue;
+				}
+				if ((tempNode = this->fillVBuf(docHandle, childPacc, buffer, parentNode, previousNode)) != NULL) {
+					previousNode = tempNode;
+				}
 			}
 		}
 	} else {

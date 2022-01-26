@@ -540,7 +540,7 @@ msgstr "滿點"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr "將變更的內容填入點顯器"
+msgstr "將變更的脈絡填入點顯器"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
@@ -680,12 +680,12 @@ msgstr "{modifier} 按下了"
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
 msgid "dot"
-msgstr "dot"
+msgstr "點字鍵"
 
 # 為使整個點顯器按鍵的幫助模式中報讀文字一致，此條目的 dot 未被翻譯。
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
-msgstr "space 加"
+msgstr "space 加點字鍵"
 
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
@@ -700,12 +700,12 @@ msgstr "點字鍵盤"
 #. Translators: Used to describe the press of space
 #. along with any dots on a braille keyboard.
 msgid "space with any dots"
-msgstr "空白鍵與任何點"
+msgstr "space 與任何點字鍵"
 
 #. Translators: Used to describe the press of any dots
 #. on a braille keyboard.
 msgid "any dots"
-msgstr "任何凸點"
+msgstr "任何點字鍵"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3137,7 +3137,8 @@ msgid ""
 "Reports the current navigator object. Pressing twice spells this "
 "information, and pressing three times Copies name and value of this object "
 "to the clipboard"
-msgstr "讀出目前應用程式的狀態列"
+msgstr ""
+"讀出目前導航器物件，連按兩下拼讀資訊，連按三下複製物件名稱或內容到剪貼簿"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3195,7 +3196,7 @@ msgstr "沒有母物件"
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
-msgstr "將導航器移到下一個物件"
+msgstr "將導航器物件移到下一個物件"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
@@ -3204,7 +3205,7 @@ msgstr "沒有下一個物件了"
 
 #. Translators: Input help mode message for move to previous object command.
 msgid "Moves the navigator object to the previous object"
-msgstr "將導航器移到上一個物件"
+msgstr "將導航器物件移到上一個物件"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
@@ -3213,7 +3214,7 @@ msgstr "沒有上一個物件了"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr "將導航器移至第一個子物件"
+msgstr "將導航器物件移至第一個子物件"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
@@ -3518,7 +3519,7 @@ msgstr "跟隨鼠標朗讀 開"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "切換鼠標移動時的報讀文字量"
+msgstr "切換鼠標移動時讀出的文字量"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
@@ -3854,14 +3855,14 @@ msgstr "點字跟隨 %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
-msgstr "切換在點字顯示器中的內容資訊顯示方式"
+msgstr "切換點顯器的脈絡資訊呈現方式"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
 #, python-format
 msgid "Braille focus context presentation: %s"
-msgstr "點字焦點內容呈現方式: %s"
+msgstr "點字焦點脈絡呈現方式: %s"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 msgid "Toggle the braille cursor on and off"
@@ -9099,7 +9100,7 @@ msgstr "大寫字母發出嗶嗶聲(&B)"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "Use &spelling functionality if supported"
-msgstr "使用拼字功能(若有支援)(&S)"
+msgstr "使用拼字功能 (若有支援)(&S)"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -9154,7 +9155,7 @@ msgstr "讀出指令鍵(&O)"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
-msgstr "打字拼字錯誤時 播放音效(&S)"
+msgstr "打字拼字錯誤時播放音效(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -9168,12 +9169,12 @@ msgstr "至少要有一個鍵必須是 NVDA 鍵。"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "Report mouse &shape changes"
-msgstr "讀出鼠標圖案的改變(&S)"
+msgstr "讀出鼠標圖案變化(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "Enable mouse &tracking"
-msgstr "啟用讀出鼠標所指文字或物件(&T)"
+msgstr "啟用跟隨鼠標朗讀(&T)"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
@@ -9629,7 +9630,7 @@ msgstr "Windows OCR"
 
 #. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
-msgstr "識別語言(&L)"
+msgstr "辨識語言(&L)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9845,7 +9846,7 @@ msgstr "我了解更改這些設定可能會導致 NVDA 執行異常。"
 
 #. Translators: This is the label for a button in the Advanced settings panel
 msgid "Restore defaults"
-msgstr "還原成預設值"
+msgstr "還原為預設值"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -9980,7 +9981,7 @@ msgstr "將游標所指的文字展開成完整的電腦點字(&X)"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
-msgstr "顯示游標(&S)"
+msgstr "顯示點字游標(&S)"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
 msgid "Blink cursor"
@@ -10031,7 +10032,7 @@ msgstr "儘量避免斷字(&W)"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr "焦點內容呈現方式:"
+msgstr "焦點脈絡呈現方式:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
