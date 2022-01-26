@@ -135,10 +135,6 @@ env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we h
 
 # Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
 win10env = env.Clone()  # noqa: F821
-# Swap C++17 for C++20 for co-routine support, used by C++/WinRT.
-win10env.Replace(CCFLAGS=[
-	'/std:c++20',
-])
 Export('win10env')
 
 env.Append(CCFLAGS=[
