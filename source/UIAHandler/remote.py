@@ -21,10 +21,11 @@ initialize=_dll.initialize
 
 
 def msWord_getCustomAttributeValue(
+		docElement: POINTER(UIA.IUIAutomationElement),
 		textRange: POINTER(UIA.IUIAutomationTextRange),
 		customAttribID: int
 ) -> Optional[Union[int, str]]:
 	customAttribValue = VARIANT()
-	if _dll.msWord_getCustomAttributeValue(textRange, customAttribID, byref(customAttribValue)):
+	if _dll.msWord_getCustomAttributeValue(docElement, textRange, customAttribID, byref(customAttribValue)):
 				return customAttribValue.value
 	return None

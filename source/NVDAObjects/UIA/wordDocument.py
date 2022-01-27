@@ -433,15 +433,16 @@ class WordDocumentTextInfo(UIATextInfo):
 		if not formatField:
 			return formatField
 		if winVersion.getWinVer() >= winVersion.WIN11:
+			docElement = self.obj.UIAElement
 			if formatConfig['reportLineNumber']:
-				lineNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.LINE_NUMBER)
+				lineNumber = UIARemote.msWord_getCustomAttributeValue(docElement, textRange, UIACustomAttributeID.LINE_NUMBER)
 				if isinstance(lineNumber, int):
 					formatField.field['line-number'] = lineNumber
 			if formatConfig['reportPage']:
-				sectionNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.SECTION_NUMBER)
+				sectionNumber = UIARemote.msWord_getCustomAttributeValue(docElement, textRange, UIACustomAttributeID.SECTION_NUMBER)
 				if isinstance(sectionNumber, int):
 					formatField.field['section-number'] = sectionNumber
-				textColumnNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.COLUMN_NUMBER)
+				textColumnNumber = UIARemote.msWord_getCustomAttributeValue(docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER)
 				if isinstance(textColumnNumber, int):
 					formatField.field['text-column-number'] = textColumnNumber
 		return formatField
