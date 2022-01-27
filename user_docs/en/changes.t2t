@@ -19,6 +19,7 @@ What's New in NVDA
   - This affects the following devices: MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)
   - Manually selecting the bluetooth COM port is also now supported.
   -
+- Added a command to toggle the braille viewer; there is no default associated gesture. (#13258)
 -
 
 
@@ -73,14 +74,14 @@ What's New in NVDA
 - ``core.CallCancelled`` is now ``exceptions.CallCancelled``. (#12940)
 - All constants starting with RPC from ``core`` and ``logHandler`` are moved into ``RPCConstants.RPC`` enum. (#12940)
 - It is recommended that ``mouseHandler.doPrimaryClick`` and ``mouseHandler.doSecondaryClick`` functions should be used to click the mouse to perform a logical action such as activating (primary) or secondary (show context menu),
-rather than using executeMouseEvent and specifying the left or right mouse button specifically.
+rather than using ``executeMouseEvent`` and specifying the left or right mouse button specifically.
 This ensures code will honor the Windows user setting for swapping the primary mouse button. (#12642)
 - ``config.getSystemConfigPath`` has been removed - there is no replacement. (#12943)
 - ``shlobj.SHGetFolderPath`` has been removed - please use ``shlobj.SHGetKnownFolderPath`` instead. (#12943)
 - ``shlobj`` constants have been removed. A new enum has been created, ``shlobj.FolderId`` for usage with ``SHGetKnownFolderPath``. (#12943)
 - ``diffHandler.get_dmp_algo`` and ``diffHandler.get_difflib_algo`` have been replaced with ``diffHandler.prefer_dmp`` and ``diffHandler.prefer_difflib`` respectively. (#12974)
 - ``languageHandler.curLang`` has been removed - to get the current NVDA language use ``languageHandler.getLanguage()``. (#13082)
-- A `getStatusBarText` method can be implemented on an appModule to customize the way NVDA fetches the text from the status bar. (#12845)
+- A ``getStatusBarText`` method can be implemented on an appModule to customize the way NVDA fetches the text from the status bar. (#12845)
 - ``globalVars.appArgsExtra`` has been removed. (#13087)
   - If your add-on need to process additional command line arguments see the documentation of ``addonHandler.isCLIParamKnown`` and the developer guide for details.
   -
