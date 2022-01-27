@@ -229,7 +229,7 @@ class List(List):
 			return 1
 		return count
 
-	def _getColumnOrderArrayRaw(self, columnCount: int):
+	def _getColumnOrderArrayRaw(self, columnCount: int) -> Optional[ctypes.Array]:
 		columnOrderArray = (ctypes.c_int * columnCount)()
 		res = watchdog.cancellableExecute(
 			NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getColumnOrderArray,
@@ -242,7 +242,7 @@ class List(List):
 			return None
 		return columnOrderArray
 
-	def _getColumnOrderArrayRawOutProc(self, columnCount: int):
+	def _getColumnOrderArrayRawOutProc(self, columnCount: int) -> Optional[ctypes.Array]:
 		coa = (ctypes.c_int * columnCount)()
 		processHandle=self.processHandle
 		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -262,7 +262,7 @@ class List(List):
 			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
 		return coa
 
-	def _get__columnOrderArray(self):
+	def _get__columnOrderArray(self) -> Optional[ctypes.Array]:
 		if not self.appModule.helperLocalBindingHandle:
 			return self._getColumnOrderArrayRawOutProc(self.columnCount)
 		return self._getColumnOrderArrayRaw(self.columnCount)
