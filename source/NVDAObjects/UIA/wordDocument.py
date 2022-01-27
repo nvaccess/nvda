@@ -441,6 +441,9 @@ class WordDocumentTextInfo(UIATextInfo):
 				sectionNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.SECTION_NUMBER)
 				if isinstance(sectionNumber, int):
 					formatField.field['section-number'] = sectionNumber
+				textColumnNumber = UIARemote.msWord_getCustomAttributeValue(textRange, UIACustomAttributeID.COLUMN_NUMBER)
+				if isinstance(textColumnNumber, int):
+					formatField.field['text-column-number'] = textColumnNumber
 		return formatField
 
 
