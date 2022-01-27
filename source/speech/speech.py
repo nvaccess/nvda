@@ -2131,7 +2131,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				textList.append(text)
 			elif textColumnNumber:
 				# Translators: Indicates the text column number in a document.
-				text=_("column {columnNumber}").format(columnNumber=textColumnNumber)
+				text = _("column {columnNumber}").format(columnNumber=textColumnNumber)
 				textList.append(text)
 
 	sectionBreakType=attrs.get("section-break")

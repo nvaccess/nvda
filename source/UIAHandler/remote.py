@@ -5,19 +5,15 @@
 
 
 from typing import Optional, Union
-import time
 import os
 from ctypes import windll, byref, POINTER
-from comtypes import BSTR
-from comtypes.safearray import _midlSAFEARRAY as SAFEARRAY
 from comtypes.automation import VARIANT
 import NVDAHelper
-from logHandler import log
 from comInterfaces import UIAutomationClient as UIA
 
 
-_dll=windll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
-initialize=_dll.initialize
+_dll = windll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
+initialize = _dll.initialize
 
 
 def msWord_getCustomAttributeValue(
@@ -27,5 +23,5 @@ def msWord_getCustomAttributeValue(
 ) -> Optional[Union[int, str]]:
 	customAttribValue = VARIANT()
 	if _dll.msWord_getCustomAttributeValue(docElement, textRange, customAttribID, byref(customAttribValue)):
-				return customAttribValue.value
+		return customAttribValue.value
 	return None

@@ -43,11 +43,12 @@ from scriptHandler import script
 
 """Support for Microsoft Word via UI Automation."""
 
+
 class UIACustomAttributeID(enum.IntEnum):
 	LINE_NUMBER = 0
 	PAGE_NUMBER = 1
 	COLUMN_NUMBER = 2
-	SECTION_NUMBER =3
+	SECTION_NUMBER = 3
 	BOOKMARK_NAME = 4
 
 
@@ -435,14 +436,20 @@ class WordDocumentTextInfo(UIATextInfo):
 		if winVersion.getWinVer() >= winVersion.WIN11:
 			docElement = self.obj.UIAElement
 			if formatConfig['reportLineNumber']:
-				lineNumber = UIARemote.msWord_getCustomAttributeValue(docElement, textRange, UIACustomAttributeID.LINE_NUMBER)
+				lineNumber = UIARemote.msWord_getCustomAttributeValue(
+					docElement, textRange, UIACustomAttributeID.LINE_NUMBER
+				)
 				if isinstance(lineNumber, int):
 					formatField.field['line-number'] = lineNumber
 			if formatConfig['reportPage']:
-				sectionNumber = UIARemote.msWord_getCustomAttributeValue(docElement, textRange, UIACustomAttributeID.SECTION_NUMBER)
+				sectionNumber = UIARemote.msWord_getCustomAttributeValue(
+					docElement, textRange, UIACustomAttributeID.SECTION_NUMBER
+				)
 				if isinstance(sectionNumber, int):
 					formatField.field['section-number'] = sectionNumber
-				textColumnNumber = UIARemote.msWord_getCustomAttributeValue(docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER)
+				textColumnNumber = UIARemote.msWord_getCustomAttributeValue(
+					docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER
+				)
 				if isinstance(textColumnNumber, int):
 					formatField.field['text-column-number'] = textColumnNumber
 		return formatField
