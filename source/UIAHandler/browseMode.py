@@ -23,7 +23,6 @@ import textInfos
 import browseMode
 from NVDAObjects.UIA import UIA
 
-
 class UIADocumentWithTableNavigation(documentBase.DocumentWithTableNavigation):
 
 	def _getTableCellAt(self,tableID,startPos,row,column):
@@ -143,15 +142,9 @@ def UIATextAttributeQuicknavIterator(ItemClass,itemType,document,position,direct
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
-	def __init__(self,itemType,document,position,level=0, label=None):
+	def __init__(self,itemType,document,position,level=0):
 		super(HeadingUIATextInfoQuickNavItem,self).__init__(itemType,document,position)
 		self.level=level
-		if label:
-			self._label = label
-
-	@property
-	def label(self):
-		return self._label
 
 	def isChild(self,parent):
 		if not isinstance(parent,HeadingUIATextInfoQuickNavItem):
