@@ -68,11 +68,17 @@ interface NvdaInProcUtils {
 
 	error_status_t sysListView32_getColumnContent([in] const unsigned long windowHandle, [in] int item,  [in] int subItem, [out,string] BSTR* text);
 
+	cpp_quote("/* Actually maps to nvdaInProcUtils_sysListView32_getColumnLocation")
+	cpp_quote("*/")
 	error_status_t sysListView32_getColumnLocation([in] const unsigned long windowHandle, [in] int item,  [in] int subItem, [out] RECT* location);
 
+	cpp_quote("/* Actually maps to nvdaInProcUtils_sysListView32_getColumnHeader")
+	cpp_quote("*/")
 	error_status_t sysListView32_getColumnHeader([in] const unsigned long windowHandle, [in] int subItem, [out,string] BSTR* text);
 
-	error_status_t sysListView32_getColumnOrderArray([in] const unsigned long windowHandle, [in] const int columnCount, [out,size_is(columnCount)] int* coa);
+	cpp_quote("/* Actually maps to nvdaInProcUtils_sysListView32_getColumnOrderArray")
+	cpp_quote("*/")
+	error_status_t sysListView32_getColumnOrderArray([in] const unsigned long windowHandle, [in] const int columnCount, [out,size_is(columnCount)] int* columnOrderArray);
 
 	error_status_t getActiveObject([in] handle_t bindingHandle, [in,string] const wchar_t* progid, [out] IUnknown** ppUnknown);
 

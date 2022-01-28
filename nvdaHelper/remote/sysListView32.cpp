@@ -41,14 +41,18 @@ error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle
 }
 
 error_status_t nvdaInProcUtils_sysListView32_getColumnContent(handle_t bindingHandle, const unsigned long windowHandle, int item, int subItem, BSTR* text) {
-	LVITEM lvItem = {0};
+	if (text == nullptr) {
+		LOG_ERROR(L"text was not provided");
+		return ERROR_INVALID_PARAMETER;
+	}
+	LVITEM lvItem {};
 	lvItem.mask = LVIF_TEXT | LVIF_COLUMNS;
 	lvItem.iItem = item;
 	lvItem.iSubItem = subItem;
 	lvItem.cchTextMax = CBEMAXSTRLEN;
 	wchar_t textBuf[CBEMAXSTRLEN]{}; // Ensure that the array initialised with all zero values ('\0')
 	lvItem.pszText= textBuf;
-	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETITEM, (WPARAM)0, (LPARAM)&lvItem)) {
+	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETITEM, static_cast<WPARAM>(0), reinterpret_cast<LPARAM>(&lvItem))) {
 		LOG_DEBUGWARNING(L"LVM_GETITEM failed");
 		return 1;
 	}
@@ -56,49 +60,69 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnContent(handle_t bindingHa
 		LOG_DEBUGWARNING(L"LVM_GETITEM didn't retrieve any text");
 		return 1;
 	}
+	// cchTextMax won't be changed to the actual number of characters in the buffer, so we can't use SysAllocStringLen here.
+	// It would result in many null characters in the resulting BSTR.
 	*text = SysAllocString(lvItem.pszText);
 	return 0;
 }
 
 error_status_t nvdaInProcUtils_sysListView32_getColumnLocation(handle_t bindingHandle, const unsigned long windowHandle, int item, int subItem, RECT* location) {
+	if (location == nullptr) {
+		LOG_ERROR(L"location was not provided");
+		return ERROR_INVALID_PARAMETER;
+	}
+	// LVM_GETSUBITEMRECT receives a pointer to a RECT structure
+	// that will receive the subitem bounding rectangle information. Its left and top members must be initialized with infomration about the rectangle to retrieve.
+	// See https://docs.microsoft.com/en-us/windows/win32/controls/lvm-getsubitemrect
 	RECT localRect {
 		// Returns the bounding rectangle of the entire item, including the icon and label.
 		LVIR_LABEL,  // left
 		// According to Microsoft, top should be the one-based index of the subitem.
 		// However, indexes coming from LVM_GETCOLUMNORDERARRAY are zero based.
 		subItem // top
+		// Note: the remaining members (right, bottom) are zero initialized.
 	};
-	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETSUBITEMRECT, (WPARAM)item, (LPARAM)&localRect)) {
+	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETSUBITEMRECT, static_cast<WPARAM>(item), reinterpret_cast<LPARAM>(&localRect))) {
 		LOG_DEBUGWARNING(L"LVM_GETSUBITEMRECT failed");
-		return 1;
+		return ERROR_INVALID_FUNCTION;
 	}
+	// Location will only be changed on success.
 	*location = localRect;
-	return 0;
+	return ERROR_SUCCESS;
 }
 
 error_status_t nvdaInProcUtils_sysListView32_getColumnHeader(handle_t bindingHandle, const unsigned long windowHandle, int subItem, BSTR* text) {
-	LVCOLUMN lvColumn = {0};
+	if (text == nullptr) {
+		LOG_ERROR(L"text was not provided");
+		return ERROR_INVALID_PARAMETER;
+	}
+	LVCOLUMN lvColumn {};
 	lvColumn.mask = LVCF_TEXT;
 	lvColumn.iSubItem = subItem;
 	lvColumn.cchTextMax = CBEMAXSTRLEN;
 	wchar_t textBuf[CBEMAXSTRLEN]{}; // Ensure that the array initialised with all zero values ('\0')
 	lvColumn.pszText= textBuf;
-	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETCOLUMN, (WPARAM)subItem, (LPARAM)&lvColumn)) {
+	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETCOLUMN, static_cast<WPARAM>(subItem), reinterpret_cast<LPARAM>(&lvColumn))) {
 		LOG_DEBUGWARNING(L"LVM_GETCOLUMN failed");
-		return 1;
+		return ERROR_INVALID_FUNCTION;
 	}
 	if(!lvColumn.pszText) {
 		LOG_DEBUGWARNING(L"LVM_GETCOLUMN didn't retrieve any text");
-		return 1;
+		return ERROR_INVALID_FUNCTION;
 	}
+	// cchTextMax won't be changed to the actual number of characters in the buffer, so we can't use SysAllocStringLen here.
+	// It would result in many null characters in the resulting BSTR.
 	*text = SysAllocString(lvColumn.pszText);
-	return 0;
+	return ERROR_SUCCESS;
 }
-
-error_status_t nvdaInProcUtils_sysListView32_getColumnOrderArray(handle_t bindingHandle, const unsigned long windowHandle, const int columnCount, int* coa) {
-	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETCOLUMNORDERARRAY, (WPARAM)columnCount, (LPARAM)coa)) {
-		LOG_DEBUGWARNING(L"LVM_GETCOLUMNORDERARRAY failed");
-		return 1;
+error_status_t nvdaInProcUtils_sysListView32_getColumnOrderArray(handle_t bindingHandle, const unsigned long windowHandle, const int columnCount, int* columnOrderArray) {
+	if (columnOrderArray == nullptr) {
+		LOG_ERROR(L"columnOrderArray was not provided");
+		return ERROR_INVALID_PARAMETER;
 	}
-	return 0;
+	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETCOLUMNORDERARRAY, static_cast<WPARAM>(columnCount), reinterpret_cast<LPARAM>(columnOrderArray))) {
+		LOG_DEBUGWARNING(L"LVM_GETCOLUMNORDERARRAY failed");
+		return ERROR_INVALID_FUNCTION;
+	}
+	return ERROR_SUCCESS;
 }
