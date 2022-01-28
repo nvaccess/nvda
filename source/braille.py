@@ -221,8 +221,6 @@ positiveStateLabels = {
 	controlTypes.State.SORTED_ASCENDING: _("sorted asc"),
 	# Translators: Displayed in braille when an object is sorted descending.
 	controlTypes.State.SORTED_DESCENDING: _("sorted desc"),
-	# Translators: Displayed in braille when an object has additional details (such as a comment section).
-	controlTypes.State.HAS_ARIA_DETAILS: _("details"),
 	# Translators: Displayed in braille when an object (usually a graphic) has a long description.
 	controlTypes.State.HASLONGDESC: _("ldesc"),
 	# Translators: Displayed in braille when there is a formula on a spreadsheet cell.
@@ -543,6 +541,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	description = propertyValues.get("description")
 	if description:
 		textList.append(description)
+	hasDetails = propertyValues.get("hasDetails")
+	if hasDetails:
+		textList.append("details")
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
@@ -643,6 +644,7 @@ class NVDAObjectRegion(Region):
 			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
+			hasDetails=obj.hasDetails,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,
@@ -716,6 +718,7 @@ def getControlFieldBraille(  # noqa: C901
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
+	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
@@ -762,6 +765,7 @@ def getControlFieldBraille(  # noqa: C901
 			"placeholder": placeholder,
 			"roleText": roleText,
 			"description": description,
+			"hasDetails": hasDetails,
 		}
 		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
@@ -1774,8 +1778,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _get_enabled(self):
 		return bool(self.displaySize)
 
-	_lastRequestedDisplayName=None #: the name of the last requested braille display driver with setDisplayByName, even if it failed and has fallen back to no braille.
-	def setDisplayByName(self, name, isFallback=False, detected=None):
+	_lastRequestedDisplayName = None
+	"""The name of the last requested braille display driver with setDisplayByName,
+	even if it failed and has fallen back to no braille.
+	"""
+
+	# C901 'setDisplayByName' is too complex
+	# Note: when working on setDisplayByName, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def setDisplayByName(  # noqa: C901
+			self,
+			name: str,
+			isFallback=False,
+			detected: typing.Optional[bdDetect.DeviceMatch] = None,
+	):
 		if not isFallback:
 			# #8032: Take note of the display requested, even if it is going to fail.
 			self._lastRequestedDisplayName=name
@@ -1787,7 +1803,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		kwargs = {}
 		if detected:
-			kwargs["port"]=detected
+			kwargs["port"] = detected
 		else:
 			# See if the user has defined a specific port to connect to
 			try:
@@ -2305,6 +2321,7 @@ def initialize():
 	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
+	bdDetect.initializeDetectionData()
 	handler = BrailleHandler()
 	# #7459: the syncBraille has been dropped in favor of the native hims driver.
 	# Migrate to renamed drivers as smoothly as possible.
@@ -2372,6 +2389,17 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	#: @type: float
 	timeout = 0.2
 
+	def __init__(self, port: typing.Union[None, str, bdDetect.DeviceMatch] = None):
+		"""Constructor
+		@param port: Information on how to connect to the device.
+			Use L{_getTryPorts} to normalise to L{DeviceMatch} instances.
+			- A string (from config "config.conf["braille"][name]["port"]"). When manually configured.
+				This value is set via the settings dialog, the source of the options provided to the user
+				is the BrailleDisplayDriver.getPossiblePorts method.
+			- A L{DeviceMatch} instance. When automatically detected.
+		"""
+		super().__init__()
+
 	@classmethod
 	def check(cls):
 		"""Determine whether this braille display is available.
@@ -2427,14 +2455,18 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	AUTOMATIC_PORT = AUTOMATIC_PORT
 
 	@classmethod
-	def getPossiblePorts(cls):
+	def getPossiblePorts(cls) -> typing.OrderedDict[str, str]:
 		""" Returns possible hardware ports for this driver.
+		Optionally and in addition to the values from L{getManualPorts},
+		three special values may be returned if the driver supports
+		them, "auto", "usb", and "bluetooth".
+
 		Generally, drivers shouldn't implement this method directly.
 		Instead, they should provide automatic detection data via L{bdDetect}
 		and implement L{getPossibleManualPorts} if they support manual ports
 		such as serial ports.
-		@return: ordered dictionary of name : description for each port
-		@rtype: OrderedDict
+
+		@return: Ordered dictionary for each port a (key : value) of name : translated description.
 		"""
 		try:
 			next(bdDetect.getConnectedUsbDevicesForDriver(cls.name))
@@ -2493,7 +2525,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def _getTryPorts(
 			cls, port: Union[str, bdDetect.DeviceMatch]
-	) -> Iterable[bdDetect.DeviceMatch]:
+	) -> typing.Iterator[bdDetect.DeviceMatch]:
 		"""Returns the ports for this driver to which a connection attempt should be made.
 		This generator function is usually used in L{__init__} to connect to the desired display.
 		@param port: the port to connect to.

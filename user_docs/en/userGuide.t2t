@@ -1888,8 +1888,8 @@ The combo box has the following options:
 This group of options is used to enable features which add experimental support for ARIA annotations.
 Some of these features may be incomplete.
 The following options exist: 
-- "Report details in browse mode": enables reporting if an object has details in browse mode.
-Reporting the summary of those details can be done by assigning a gesture using the [Input Gestures dialog #InputGestures].
+- "Report 'has details' for structured annotations": enables reporting if the text or control has further details.
+A summary of the extra details can be reported by assigning a gesture to "Report summary of any annotation details at the system caret" using the [Input Gestures dialog #InputGestures].
 - "Report aria-description always":
   When the source of ``accDescription`` is aria-description, the description is reported.
   This is useful for annotations on the web.
@@ -2220,6 +2220,8 @@ To prevent unintentionally routing to cells, the command is delayed.
 The mouse must hover until the cell turns green.
 The cell will start as a light yellow colour, transition to orange, then suddenly become green.
 
+To toggle the braille viewer from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ++ Python Console ++[PythonConsole]
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2384,6 +2386,7 @@ The following displays support this automatic detection functionality.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
+- Seika Notetaker: MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)
 - Any Display that supports the Standard HID Braille protocol
 -
 
@@ -2771,13 +2774,21 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Seika Braille Displays ++[Seika]
-The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays from [Nippon Telesoft https://www.nippontelesoft.com/] are supported.
-You can find more information about the displays and the required drivers at https://en.seika-braille.com/down/index.html
-You must first install the USB drivers provided by the manufacturer.
+The following Seika Braille displays from Nippon Telesoft are supported in two groups with different functionality:
+- [Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) #SeikaBrailleDisplays]
+- [MiniSeika (16, 24 cells), V6, and V6Pro (40 cells) #SeikaNotetaker]
+-
+You can find more information about the displays at https://en.seika-braille.com/down/index.html.
 
-These displays do not yet support NVDA's automatic background braille display detection functionality.
 
-Following are the key assignments for this display with NVDA.
++++ Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) +++[SeikaBrailleDisplays]
+- These displays do not yet support NVDA's automatic background braille display detection functionality.
+- Select "Seika Braille Displays" to manually configure
+- A device drivers must be installed before using Seika v3/4/5/80.
+The drivers are [provided by the manufacturer https://en.seika-braille.com/down/index.html].
+-
+
+The Seika Braille Display key assignments follow.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
@@ -2793,6 +2804,48 @@ Please see the display's documentation for descriptions of where these keys can 
 | NVDA Menu | left+right |
 | Route to braille cell | routing |
 %kc:endInclude
+
+
++++ MiniSeika (16, 24 cells), V6, and V6Pro (40 cells) +++[SeikaNotetaker]
+- NVDA's automatic background braille display detection functionality is supported via USB and Bluetooth.
+- Select "Seika Notetaker" or "auto" to configure.
+- No extra drivers are required when using a Seika Notetaker braille display.
+-
+
+The Seika Notetaker key assignments follow.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Say all | space+Backspace |
+| NVDA Menu | Left+Right |
+| Move braille display to previous line | LJ up |
+| Move braille display to next line | LJ down |
+| Toggle braille tethered to | LJ center |
+| tab | LJ right |
+| shift+tab | LJ left |
+| upArrow key | RJ up |
+| downArrow key | RJ down |
+| leftArrow key | RJ left |
+| rightArrow key | RJ right |
+| Route to braille cell | routing |
+| shift+upArrow key | Space+RJ up, Backspace+RJ up |
+| shift+downArrow key | Space+RJ down, Backspace+RJ down |
+| shift+leftArrow key | Space+RJ left, Backspace+RJ left |
+| shift+rightArrow key | Space+RJ right, Backspace+RJ right |
+| enter key | RJ center, dot8
+| escape key | Space+RJ center |
+| windows key | Backspace+RJ center |
+| space key | Space, Backspace |
+| backspace key | dot7 |
+| pageup key | space+LJ right |
+| pagedown key | space+LJ left |
+| home key | space+LJ up |
+| end key | space+LJ down |
+| control+home key | backspace+LJ up |
+| control+end key | backspace+LJ down |
+
 
 ++ Papenmeier BRAILLEX Newer Models ++[Papenmeier]
 The following Braille displays are supported: 

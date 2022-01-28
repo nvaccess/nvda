@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Bill Dengler, Joseph Lee
+# Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,12 +13,11 @@ import sys
 import os
 import functools
 import winreg
-from buildVersion import version_year
 
 
 # Records a mapping between Windows builds and release names.
 # These include build 10240 for Windows 10 1507 and releases with multiple release builds.
-# These are applicable to Windows 10 as they report the same system version (10.0).
+# These are applicable to Windows 10 and later as they report the same system version (10.0).
 _BUILDS_TO_RELEASE_NAMES = {
 	10240: "Windows 10 1507",
 	10586: "Windows 10 1511",
@@ -196,25 +195,6 @@ UWP_OCR_DATA_PATH = os.path.expandvars(r"$windir\OCR")
 
 def isUwpOcrAvailable():
 	return os.path.isdir(UWP_OCR_DATA_PATH)
-
-
-# Deprecated: Windows 10 releases will be obtained from Windows Registry, no entries will be added.
-# The below map will be removed in 2022.1.
-if version_year < 2022:
-	WIN10_RELEASE_NAME_TO_BUILDS = {
-		"1507": 10240,
-		"1511": 10586,
-		"1607": 14393,
-		"1703": 15063,
-		"1709": 16299,
-		"1803": 17134,
-		"1809": 17763,
-		"1903": 18362,
-		"1909": 18363,
-		"2004": 19041,
-		"20H2": 19042,
-		"21H1": 19043,
-	}
 
 
 def isFullScreenMagnificationAvailable() -> bool:

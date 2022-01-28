@@ -155,6 +155,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 		field['roleText'] = obj.roleText
 		field['description'] = obj.description
 		field['_description-from'] = obj.descriptionFrom
+		field['hasDetails'] = obj.hasDetails
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.State.EDITABLE)
 		states.discard(controlTypes.State.MULTILINE)
