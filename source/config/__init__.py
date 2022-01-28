@@ -316,7 +316,7 @@ def setStartAfterLogon(enable: bool) -> None:
 
 	On Windows 7 this sets the registry run key.
 
-	When toggling off, always delete the registry run key to
+	When toggling off, always delete the registry run key
 	in case it was set by an earlier version of NVDA or on Windows 7 or earlier.
 	"""
 	if getStartAfterLogon() == enable:
