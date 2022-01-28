@@ -12,8 +12,18 @@ import NVDAHelper
 from comInterfaces import UIAutomationClient as UIA
 
 
-_dll = windll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
-initialize = _dll.initialize
+_dll = None
+
+
+def initialize(doRemote: bool, UIAClient: POINTER(UIA.IUIAutomation)):
+	"""
+	Initializes UI Automation remote operations.
+	@param doRemote: true if code should be executed remotely, or false for locally.
+	@param UIAClient: the current instance of the UI Automation client library running in NVDA.
+	"""
+	global _dll
+	_dll = windll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
+	_dll.initialize(doRemote, UIAClient)
 
 
 def msWord_getCustomAttributeValue(
@@ -21,6 +31,8 @@ def msWord_getCustomAttributeValue(
 		textRange: POINTER(UIA.IUIAutomationTextRange),
 		customAttribID: int
 ) -> Optional[Union[int, str]]:
+	if _dll is None:
+		raise RuntimeError("UIARemote not initialized")
 	customAttribValue = VARIANT()
 	if _dll.msWord_getCustomAttributeValue(docElement, textRange, customAttribID, byref(customAttribValue)):
 		return customAttribValue.value
