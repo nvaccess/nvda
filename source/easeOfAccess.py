@@ -128,7 +128,8 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 	 - AutoStartContext.ON_LOGON_SCREEN : on the logon screen
 	 - AutoStartContext.AFTER_LOGON : after logging on
 
-	May set to False if checking if currently enabled fails.
+	May incorrectly set autoStart to False upon failing to fetch the previously set value from the registry.
+
 	Raises `Union[WindowsError, FileNotFoundError]`
 	"""
 	conf = _getAutoStartConfiguration(autoStartContext)
