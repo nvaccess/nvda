@@ -212,15 +212,21 @@ class SymphonyIATableCell(SymphonyTableCell):
 			count = self.table.IAccessibleTable2Object.nSelectedCells
 			selection = self.table.IAccessibleObject.accSelection
 			enumObj = selection.QueryInterface(oleacc.IEnumVARIANT)
-			tableAccessible = self.table.IAccessibleTable2Object.QueryInterface(IA2.IAccessible2)
-			firstChildId, _retrievedCount = enumObj.Next(1)
-			firstAccessible = tableAccessible.accChild(firstChildId).QueryInterface(IA2.IAccessible2)
-			firstAddress = firstAccessible.accName(0)
-			firstValue = firstAccessible.accValue(0) or ''
+			firstChild, _retrievedCount = enumObj.Next(1)
 			# skip over all except the last element
 			enumObj.Skip(count - 2)
-			lastChildId, _retrievedCount = enumObj.Next(1)
-			lastAccessible = tableAccessible.accChild(lastChildId).QueryInterface(IA2.IAccessible2)
+			lastChild, _retrieveCount = enumObj.Next(1)
+			# in LibreOffice 7.3.0, the IEnumVARIANT returns a child ID,
+			# in LibreOffice >= 7.4, it returns an IDispatch
+			if isinstance(firstChild, int):
+				tableAccessible = self.table.IAccessibleTable2Object.QueryInterface(IA2.IAccessible2)
+				firstAccessible = tableAccessible.accChild(firstChild).QueryInterface(IA2.IAccessible2)
+				lastAccessible = tableAccessible.accChild(lastChild).QueryInterface(IA2.IAccessible2)
+			else:
+				firstAccessible = firstChild.QueryInterface(IA2.IAccessible2)
+				lastAccessible = lastChild.QueryInterface(IA2.IAccessible2)
+			firstAddress = firstAccessible.accName(0)
+			firstValue = firstAccessible.accValue(0) or ''
 			lastAddress = lastAccessible.accName(0)
 			lastValue = lastAccessible.accValue(0) or ''
 			# Translators: LibreOffice, report selected range of cell coordinates with their values
