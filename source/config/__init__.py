@@ -10,6 +10,8 @@ In addition, this module provides three actions: profile switch notifier, an act
 For the latter two actions, one can perform actions prior to and/or after they take place.
 """
 
+
+from buildVersion import version_year
 from enum import Enum
 import globalVars
 import winreg
@@ -83,6 +85,20 @@ class RegistryKey(str, Enum):
 	The name of the registry key stored under HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 	Note that NVDA is a 32-bit application, so on X64 systems,
 	this will evaluate to `r"SOFTWARE\WOW6432Node\nvda"`
+	"""
+
+
+if version_year < 2023:
+	RUN_REGKEY = RegistryKey.RUN.value
+	"""
+	Deprecated, for removal in 2023.
+	Use L{RegistryKey.RUN} instead.
+	"""
+
+	NVDA_REGKEY = RegistryKey.NVDA.value
+	"""
+	Deprecated, for removal in 2023.
+	Use L{RegistryKey.NVDA} instead.
 	"""
 
 
