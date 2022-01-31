@@ -24,7 +24,7 @@ class MailWordDocument(WordDocument):
 		if controlTypes.State.READONLY in self.states:
 			return True
 
-		# For older versions of Mail (before Windows 11), determine the readonly state
+		# For older versions of Mail (Windows 10), determine the readonly state
 		# based on being in an email with set headers, rather than draft headers.
 
 		# Locate the Reading pane in the ancestors
