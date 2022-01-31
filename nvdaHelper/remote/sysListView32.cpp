@@ -30,6 +30,9 @@ error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle
 	group.cbSize=sizeof(group);
 	group.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE;
 	group.stateMask=0xffffffff;
+	// ListView_GetGroupInfoByIndex macro has no return value, using SendMessage directly so errors are caught.
+	// The meaning of the return value depends on the message sent, for LVM_GETGROUPINFOBYINDEX,
+	// it returns TRUE if successful, or FALSE otherwise.
 	if(!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)),LVM_GETGROUPINFOBYINDEX,(WPARAM)groupIndex,(LPARAM)&group)) {
 		LOG_DEBUGWARNING(L"LVM_GETGROUPINFOBYINDEX failed");
 		return 1;
@@ -52,6 +55,9 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnContent(handle_t bindingHa
 	lvItem.cchTextMax = CBEMAXSTRLEN;
 	wchar_t textBuf[CBEMAXSTRLEN]{}; // Ensure that the array initialised with all zero values ('\0')
 	lvItem.pszText= textBuf;
+	// ListView_GetItem macro has no return value, using SendMessage directly so errors are caught.
+	// The meaning of the return value depends on the message sent, for LVM_GETCOLUMN,
+	// it returns TRUE if successful, or FALSE otherwise.
 	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETITEM, static_cast<WPARAM>(0), reinterpret_cast<LPARAM>(&lvItem))) {
 		LOG_DEBUGWARNING(L"LVM_GETITEM failed");
 		return 1;
@@ -82,11 +88,17 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnLocation(handle_t bindingH
 		subItem // top
 		// Note: the remaining members (right, bottom) are zero initialized.
 	};
-	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETSUBITEMRECT, static_cast<WPARAM>(item), reinterpret_cast<LPARAM>(&localRect))) {
+	// ListView_GetSubItemRect macro has no return value, using SendMessage directly so errors are caught.
+	// The meaning of the return value depends on the message sent, for LVM_GETSUBITEMRECT,
+	// it returns nonzero if successful, or 0 otherwise.
+	if (SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETSUBITEMRECT, static_cast<WPARAM>(item), reinterpret_cast<LPARAM>(&localRect)) == 0) {
 		LOG_DEBUGWARNING(L"LVM_GETSUBITEMRECT failed");
 		return ERROR_INVALID_FUNCTION;
 	}
-	// Location will only be changed on success.
+	// Location will only be changed on success, as it is undesirable to modify the struct passed by the caller
+	// if the function fails.
+	// It is also easier to initialize a fresh struct and pass that to SendMessage
+	// than zero out and initialize an existing one.
 	*location = localRect;
 	return ERROR_SUCCESS;
 }
@@ -102,6 +114,9 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnHeader(handle_t bindingHan
 	lvColumn.cchTextMax = CBEMAXSTRLEN;
 	wchar_t textBuf[CBEMAXSTRLEN]{}; // Ensure that the array initialised with all zero values ('\0')
 	lvColumn.pszText= textBuf;
+	// ListView_GetColumn macro has no return value, using SendMessage directly so errors are caught.
+	// The meaning of the return value depends on the message sent, for LVM_GETCOLUMN,
+	// it returns TRUE if successful, or FALSE otherwise.
 	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETCOLUMN, static_cast<WPARAM>(subItem), reinterpret_cast<LPARAM>(&lvColumn))) {
 		LOG_DEBUGWARNING(L"LVM_GETCOLUMN failed");
 		return ERROR_INVALID_FUNCTION;
@@ -120,7 +135,10 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnOrderArray(handle_t bindin
 		LOG_ERROR(L"columnOrderArray was not provided");
 		return ERROR_INVALID_PARAMETER;
 	}
-	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETCOLUMNORDERARRAY, static_cast<WPARAM>(columnCount), reinterpret_cast<LPARAM>(columnOrderArray))) {
+	// ListView_GetColumnOrderArray macro has no return value, using SendMessage directly so errors are caught.
+	// The meaning of the return value depends on the message sent, for LVM_GETCOLUMNORDERARRAY,
+	// it returns nonzero if successful, or 0 otherwise.
+	if (SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETCOLUMNORDERARRAY, static_cast<WPARAM>(columnCount), reinterpret_cast<LPARAM>(columnOrderArray)) ==0) {
 		LOG_DEBUGWARNING(L"LVM_GETCOLUMNORDERARRAY failed");
 		return ERROR_INVALID_FUNCTION;
 	}
