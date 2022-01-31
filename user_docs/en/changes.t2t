@@ -45,11 +45,12 @@ What's New in NVDA
   - Note that in some situations, when inserting or deleting characters in the middle of a line, the characters after the caret may again be read out.
   -
 - MS word with UIA: heading quick nav in browse mode no longer gets stuck on the final heading of a document, nor is this heading shown twice in the NVDA elements list. (#9540)
-- In Windows 8 and later , the File Explorer status bar can now be retrieved using the standard gesture NVDA+end (desktop) / NVDA+shift+end (laptop). (#12845)
+- In Windows 8 and later, the File Explorer status bar can now be retrieved using the standard gesture NVDA+end (desktop) / NVDA+shift+end (laptop). (#12845)
 - Incoming messages in the chat of Skype for Business are reported again. (#9295)
 - NVDA can again duck audio when using the SAPI5 synthesizer on Windows 11. (#12913)
 - In Windows 10 Calculator, NVDA will announce labels for history and memory list items. (#11858)
 - Gestures such as scrolling and routing again work with HID Braille devices. (#13228)
+- Windows 11 Mail: After switching focus between apps, while reading a long email, NVDA would get stuck on a line of the email. (#13050)
 -
 
 == Changes for Developers ==
