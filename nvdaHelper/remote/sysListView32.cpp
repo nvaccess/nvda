@@ -30,7 +30,7 @@ error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle
 	group.cbSize=sizeof(group);
 	group.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE;
 	group.stateMask=0xffffffff;
-	if(!SendMessage((HWND)UlongToHandle(windowHandle),LVM_GETGROUPINFOBYINDEX,(WPARAM)groupIndex,(LPARAM)&group)) {
+	if(!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)),LVM_GETGROUPINFOBYINDEX,(WPARAM)groupIndex,(LPARAM)&group)) {
 		LOG_DEBUGWARNING(L"LVM_GETGROUPINFOBYINDEX failed");
 		return 1;
 	}
@@ -52,7 +52,7 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnContent(handle_t bindingHa
 	lvItem.cchTextMax = CBEMAXSTRLEN;
 	wchar_t textBuf[CBEMAXSTRLEN]{}; // Ensure that the array initialised with all zero values ('\0')
 	lvItem.pszText= textBuf;
-	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETITEM, static_cast<WPARAM>(0), reinterpret_cast<LPARAM>(&lvItem))) {
+	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETITEM, static_cast<WPARAM>(0), reinterpret_cast<LPARAM>(&lvItem))) {
 		LOG_DEBUGWARNING(L"LVM_GETITEM failed");
 		return 1;
 	}
@@ -82,7 +82,7 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnLocation(handle_t bindingH
 		subItem // top
 		// Note: the remaining members (right, bottom) are zero initialized.
 	};
-	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETSUBITEMRECT, static_cast<WPARAM>(item), reinterpret_cast<LPARAM>(&localRect))) {
+	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETSUBITEMRECT, static_cast<WPARAM>(item), reinterpret_cast<LPARAM>(&localRect))) {
 		LOG_DEBUGWARNING(L"LVM_GETSUBITEMRECT failed");
 		return ERROR_INVALID_FUNCTION;
 	}
@@ -102,7 +102,7 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnHeader(handle_t bindingHan
 	lvColumn.cchTextMax = CBEMAXSTRLEN;
 	wchar_t textBuf[CBEMAXSTRLEN]{}; // Ensure that the array initialised with all zero values ('\0')
 	lvColumn.pszText= textBuf;
-	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETCOLUMN, static_cast<WPARAM>(subItem), reinterpret_cast<LPARAM>(&lvColumn))) {
+	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETCOLUMN, static_cast<WPARAM>(subItem), reinterpret_cast<LPARAM>(&lvColumn))) {
 		LOG_DEBUGWARNING(L"LVM_GETCOLUMN failed");
 		return ERROR_INVALID_FUNCTION;
 	}
@@ -120,7 +120,7 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnOrderArray(handle_t bindin
 		LOG_ERROR(L"columnOrderArray was not provided");
 		return ERROR_INVALID_PARAMETER;
 	}
-	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETCOLUMNORDERARRAY, static_cast<WPARAM>(columnCount), reinterpret_cast<LPARAM>(columnOrderArray))) {
+	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETCOLUMNORDERARRAY, static_cast<WPARAM>(columnCount), reinterpret_cast<LPARAM>(columnOrderArray))) {
 		LOG_DEBUGWARNING(L"LVM_GETCOLUMNORDERARRAY failed");
 		return ERROR_INVALID_FUNCTION;
 	}
