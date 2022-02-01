@@ -102,7 +102,7 @@ def getCommentInfoFromPosition(position):
 			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
-			return dict(comment=f"kaas {comment}", author=author, date=date)
+			return dict(comment=comment, author=author, date=date)
 		elif (
 			not obj.parent
 			# Because the name of this object is language sensetive check if it has UIA Annotation Pattern
