@@ -99,3 +99,16 @@ def upgradeConfigFrom_5_to_6(profile: dict):
 	if useInMSWord:
 		from . import AllowUiaInMSWord
 		profile['UIA']['allowInMSWord'] = AllowUiaInMSWord.ALWAYS.value
+
+
+def upgradeConfigFrom_6_to_7(profile: dict):
+	"""
+	Selective UIA registration check box has been replaced with event registration multi choice.
+	"""
+	try:
+		selectiveEventRegistration = profile['UIA']['selectiveEventRegistration']
+		del profile['UIA']['selectiveEventRegistration']
+	except KeyError:
+		selectiveEventRegistration = False
+	if selectiveEventRegistration:
+		profile['UIA']['eventRegistration'] = "selective"
