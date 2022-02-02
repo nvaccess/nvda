@@ -6,6 +6,7 @@
 """Logic for reading text using NVDA in the notepad text editor.
 """
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
+import enum as _enum
 import typing as _typing
 
 from SystemTestSpy import (
@@ -22,9 +23,27 @@ _builtIn: BuiltIn = BuiltIn()
 _notepad: _NotepadLib = _getLib("NotepadLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
-navToNextCharKey = "numpad3"
-navToNextWordKey = "numpad6"
-navToNextLineKey = "numpad9"
+
+class Move(_enum.Enum):
+	"""Gestures to move by different amounts"""
+	CHAR = "numpad3"
+	WORD = "numpad6"
+	LINE = "numpad9"
+	HOME = "control+home"
+
+
+class SymLevel(_enum.Enum):
+	"""Symbol levels, should match characterProcessing.SymbolLevel
+	"""
+	NONE = 0
+	ALL = 300
+
+
+class EndSpeech(_enum.Enum):
+	""" Speech given when reaching the end of the movement direction.
+	"""
+	BOTTOM = "Bottom"
+	RIGHT = "Right"
 
 
 def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> _typing.List[str]:
@@ -36,172 +55,203 @@ def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> _typing.List[str]
 	return actual
 
 
-def _doMoveByWordTest(expected: _typing.List[str]):
-	_moveByWordData = (
-		'Say (quietly) "Hello, Jim ". ➔ 👕 \n'
+def _getMoveByWordTestSample() -> str:
+	return (
+		"Test: "  # first word won't be spoken
+		'Say (quietly) "Hello, Jim ".'
+		" don't"  # test punctuation inside a word.
+		# symbols have space before and after, so it is considered a word
+		" ➔ 👕 \n"  # test Symbols containing punctuations (right-pointing arrow, t-shirt)
 		' \n'  # single space
-		'\t\n'
+		'\t\n'  # single tab
 		'    \n'  # 4 spaces
-		'➔\n'
-		'👕\n'  # no space after symbol
-		'👕'  # no character (no newline) after symbol
+		'➔\n'  # no space before, only newline after symbol
+		'👕\n'  # no space before, only newline after symbol
+		'👕'  # no space before, no newline after symbol
 	)
-	_notepad.prepareNotepad(f"Test: {_moveByWordData}")
-	actual = _pressKeyAndCollectSpeech(navToNextWordKey, numberOfTimes=len(expected))
-	_builtIn.should_be_equal(actual, expected)
-	# ensure all words tested
-	actual = _pressKeyAndCollectSpeech(navToNextWordKey, 1)
-	_builtIn.should_be_equal(actual, [f"Bottom\n{expected[-1]}", ])
 
 
-def test_moveByWord_symbolLevelWord():
-	"""Disabled due to revert of PR #11856 is: "Speak all symbols when moving by words (#11779)
-	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(["speech", "symbolLevelWordAll"], True)
-
-	# unlike other symbols used, symbols.dic doesn't preserve quote symbols with SYMPRES_ALWAYS
-	_doMoveByWordTest(expected=[
+def _getMoveByLineTestSample() -> str:
+	testData = [
+		"Test:",  # initial new line which isn't spoken
 		'Say',
-		'(quietly)',
-		'Hello,',
-		'Jim',
-		'.',
-		'right pointing arrow',  # has space before and after symbol
-		't shirt',  # has space before and after symbol
-		# end of first line
-		'blank',  # single space and newline
-		'',  # tab and newline
-		'blank',  # 4 spaces and newline
-		'right pointing arrow',  # no space before or after symbol
-		't shirt',  # no space before or after symbol
-		't shirt',  # no character before or after symbol (no newline)
-		'blank',  # end of doc
-	])
+		'(quietly)',  # test parenthesis
+		'"Hello,',  # test quote, comma
+		'Jim".',  # test quote, dot
+		" don't ",  # test punctuation inside a word.
+		'➔', '👕',  # test Symbols containing punctuations (right-pointing arrow, t-shirt)
+		'➔ ', '👕 ',  # test Symbols containing punctuations with joined space
+		'➔👕',  # test Symbols containing punctuations without space
+		' ',  # single space
+		'\t',  # single tab
+		'    ',  # 4 spaces
+		'',  # to ensure prior entry ends with newline.
+	]
+	return '\n'.join(testData)
+
+
+def _getMoveByCharTestSample() -> str:
+	# Intentionally concat the following strings, there should be no trailing commas
+	return (
+		'T'  # An initial character, that isn't spoken (because it isn't traversed during nav).
+		'S ()"'
+		"'e,➔👕\t"
+		'\na'  # Note: The 'a' character will be on the next line, thus won't be spoken
+	)
 
 
 def test_moveByWord():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(["speech", "symbolLevelWordAll"], False)
-
-	_doMoveByWordTest(expected=[
-		'Say',
-		'(quietly)',
-		'Hello,',
-		'Jim',
-		'.',
-		'right pointing arrow',  # has space before and after symbol
-		't shirt',  # has space before and after symbol
-		# end of first line
-		'blank',  # single space and newline
-		'',  # tab and newline
-		'blank',  # 4 spaces and newline
-		'right pointing arrow',  # no space before or after symbol
-		't shirt',  # no space before or after symbol
-		't shirt',  # no character before or after symbol (no newline)
-		'blank',  # end of doc
-	])
-
-
-def _doMoveByLineTest():
-	testData = [
-		'Say',
-		'(quietly)',
-		'"Hello,',
-		'Jim".',
-		'➔',
-		'👕',
-		'➔ ',
-		'👕 ',
-		'➔👕',
-		' ',
-		'\t',
-		'    ',
-		'',
-	]
-
-	expected = [
-		'Say',
-		'(quietly)',
-		'Hello,',
-		'Jim .',
-		'right-pointing arrow',
-		't-shirt',
-		'right-pointing arrow',
-		't-shirt',
-		'right-pointing arrow  t-shirt',
-		'blank',  # single space
-		'',  # tab
-		'blank',  # four spaces
-		'blank',  # end of doc
-	]
-
-	textStr = '\n'.join(testData)
-
-	_notepad.prepareNotepad(f"Test:\n{textStr}")  # initial new line which isn't spoken
-	actual = _pressKeyAndCollectSpeech(navToNextLineKey, numberOfTimes=len(expected))
-	_builtIn.should_be_equal(actual, expected)
-	# ensure all lines tested
-	actual = _pressKeyAndCollectSpeech(navToNextLineKey, 1)
-	_builtIn.should_be_equal(actual, [f"Bottom\n{expected[-1]}", ])
+	"""Move by word with symbol level 'all' then with symbol level 'none'
+	"""
+	_notepad.prepareNotepad(_getMoveByWordTestSample())
+	_doTest(
+		navKey=Move.WORD,
+		reportedAfterLast=EndSpeech.BOTTOM,
+		symbolLevel=SymLevel.ALL,
+		expectedSpeech=[
+			'Say',
+			'left paren(quietly right paren)',  # parenthesis are named
+			'quote Hello comma,', 'Jim', 'quote  dot.',  # quote, comma and dot are named
+			'don tick t',  # mid-word symbol
+			'right dash pointing arrow', 't dash shirt',
+			# end of first line
+			'blank',  # single space and newline
+			'tab',  # tab and newline
+			'blank',  # 4 spaces and newline
+			'right dash pointing arrow',  # no space before or after symbol
+			't dash shirt',  # no space before or after symbol
+			't dash shirt',  # no character before or after symbol (no newline)
+			'blank'  # end of doc
+		]
+	)
+	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position
+	_doTest(
+		navKey=Move.WORD,
+		reportedAfterLast=EndSpeech.BOTTOM,
+		symbolLevel=SymLevel.NONE,
+		expectedSpeech=[
+			'Say',
+			'(quietly)', 'Hello,', 'Jim', '.',  # no symbols named
+			"don't",  # mid-word symbol
+			'right pointing arrow', 't shirt',
+			# end of first line
+			'blank',  # single space and newline
+			'',  # tab and newline
+			'blank',  # 4 spaces and newline
+			'right pointing arrow',
+			't shirt',  # no space before or after symbol
+			't shirt',  # no character before or after symbol (no newline)
+			'blank',  # end of doc
+		],
+	)
 
 
 def test_moveByLine():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(["speech", "symbolLevelWordAll"], False)
-	_doMoveByLineTest()
-
-
-def test_moveByLine_symbolLevelWord():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(["speech", "symbolLevelWordAll"], True)
-	_doMoveByLineTest()
-
-
-def _doMoveByCharTest(expected: _typing.List[str]):
-	_text = 'S ()e,➔👕\t\na'  # note, 'a' is on next line and won't be spoken
-
-	_notepad.prepareNotepad(f" {_text}")
-	actual = _pressKeyAndCollectSpeech(navToNextCharKey, numberOfTimes=len(expected))
-	_builtIn.should_be_equal(actual, expected)
-	# ensure all chars tested
-	actual = _pressKeyAndCollectSpeech(navToNextCharKey, 1)
-	_builtIn.should_be_equal(actual, [f"Right\n{expected[-1]}", ])
+	_notepad.prepareNotepad(_getMoveByLineTestSample())
+	_doTest(
+		navKey=Move.LINE,
+		symbolLevel=SymLevel.ALL,
+		reportedAfterLast=EndSpeech.BOTTOM,
+		expectedSpeech=[
+			'Say',
+			'left paren(quietly right paren)',
+			'quote Hello comma,', 'Jim quote  dot.',
+			'don tick t',
+			'right-pointing arrow', 't-shirt',  # symbols each on a line
+			'right-pointing arrow', 't-shirt',  # symbols and a space each on a line
+			'right-pointing arrow  t-shirt',  # symbols joined no space
+			'blank',  # single space
+			'tab',  # single tab
+			'blank',  # 4 spaces
+			'blank',  # end of doc
+		],
+	)
+	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position
+	_doTest(
+		navKey=Move.LINE,
+		reportedAfterLast=EndSpeech.BOTTOM,
+		symbolLevel=SymLevel.NONE,
+		expectedSpeech=[
+			'Say', '(quietly)', 'Hello,', 'Jim .', "don't",
+			'',  # right arrow symbol
+			't-shirt',
+			'',  # right arrow symbol
+			't-shirt',
+			't-shirt',  # note missing right arrow symbol
+			'blank',  # single space
+			'',  # tab
+			'blank',  # four spaces
+			'blank',  # end of doc
+		]
+	)
 
 
 def test_moveByChar():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(["speech", "symbolLevelWordAll"], False)
-
-	_doMoveByCharTest(expected=[
-		'S',
-		'space',
-		'left paren',
-		'right paren',
-		'e',
-		'comma',
-		'right pointing arrow',
-		't shirt',
+	_notepad.prepareNotepad(_getMoveByCharTestSample())
+	# Symbol level should not affect move by character
+	# use the same expected speech with symbol level none and all.
+	symLevelNoneExpected = [
+		'S', 'space',
+		'left paren', 'right paren',
+		'quote', 'tick',
+		'e', 'comma',
+		'right pointing arrow', 't shirt',
 		'tab',
 		'carriage return',  # on Windows/notepad newline is \r\n
 		'line feed',  # on Windows/notepad newline is \r\n
-	])
+	]
+	# Bug: With symbol level ALL text due to a symbol substitution has further substitutions applied:
+	# IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
+	exceptions = {
+		'right pointing arrow': 'right dash pointing arrow',
+		't shirt': 't dash shirt',
+	}
+	symLevelAllExpected = [
+		e if e not in exceptions.keys() else exceptions[e]
+		for e in symLevelNoneExpected
+	]
+
+	_doTest(
+		navKey=Move.CHAR,
+		reportedAfterLast=EndSpeech.RIGHT,
+		symbolLevel=SymLevel.NONE,
+		expectedSpeech=symLevelNoneExpected,
+	)
+
+	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position.
+
+	_doTest(
+		navKey=Move.CHAR,
+		reportedAfterLast=EndSpeech.RIGHT,
+		symbolLevel=SymLevel.ALL,
+		expectedSpeech=symLevelAllExpected,
+	)
 
 
-def test_moveByChar_symbolLevelWord():
+def _doTest(
+		navKey: Move,
+		expectedSpeech: _typing.List[str],
+		reportedAfterLast: EndSpeech,
+		symbolLevel: SymLevel,
+) -> None:
 	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(["speech", "symbolLevelWordAll"], True)
+	SYMBOL_LEVEL_KEY = ["speech", "symbolLevel"]
+	spy.set_configValue(SYMBOL_LEVEL_KEY, symbolLevel.value)
+	_builtIn.log(message=f"Doing test at symbol level: {symbolLevel}")
 
-	_doMoveByCharTest([
-		'S',
-		'space',
-		'left paren',
-		'right paren',
-		'e',
-		'comma',
-		'right pointing arrow',
-		't shirt',
-		'tab',
-		'carriage return',  # on Windows/notepad newline is \r\n
-		'line feed',  # on Windows/notepad newline is \r\n
-	])
+	actual = _pressKeyAndCollectSpeech(navKey.value, numberOfTimes=len(expectedSpeech))
+	_builtIn.should_be_equal(
+		actual,
+		expectedSpeech,
+		msg=f"actual vs expected. With symbolLevel {symbolLevel}"
+	)
+
+	# ensure all content tested, ie the end of the sample should be reached
+	finalItem = expectedSpeech[-1]
+	endReached = f"{reportedAfterLast.value}\n{finalItem}"
+	actual = _pressKeyAndCollectSpeech(navKey.value, 1)
+	_builtIn.should_be_equal(
+		actual,
+		[endReached, ],
+		msg=f"End reached failure. actual vs expected. With symbolLevel {symbolLevel}"
+	)
