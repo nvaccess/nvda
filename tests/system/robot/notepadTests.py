@@ -107,27 +107,6 @@ def test_moveByWord():
 	_doTest(
 		navKey=Move.WORD,
 		reportedAfterLast=EndSpeech.BOTTOM,
-		symbolLevel=SymLevel.ALL,
-		expectedSpeech=[
-			'Say',
-			'left paren(quietly right paren)',  # parenthesis are named
-			'quote Hello comma,', 'Jim', 'quote  dot.',  # quote, comma and dot are named
-			'don tick t',  # mid-word symbol
-			'right dash pointing arrow', 't dash shirt',
-			# end of first line
-			'blank',  # single space and newline
-			'tab',  # tab and newline
-			'blank',  # 4 spaces and newline
-			'right dash pointing arrow',  # no space before or after symbol
-			't dash shirt',  # no space before or after symbol
-			't dash shirt',  # no character before or after symbol (no newline)
-			'blank'  # end of doc
-		]
-	)
-	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position
-	_doTest(
-		navKey=Move.WORD,
-		reportedAfterLast=EndSpeech.BOTTOM,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
 			'Say',
@@ -145,28 +124,32 @@ def test_moveByWord():
 		],
 	)
 
+	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position
+
+	_doTest(
+		navKey=Move.WORD,
+		reportedAfterLast=EndSpeech.BOTTOM,
+		symbolLevel=SymLevel.ALL,
+		expectedSpeech=[
+			'Say',
+			'left paren(quietly right paren)',  # parenthesis are named
+			'quote Hello comma,', 'Jim', 'quote  dot.',  # quote, comma and dot are named
+			'don tick t',  # mid-word symbol
+			'right dash pointing arrow', 't dash shirt',
+			# end of first line
+			'blank',  # single space and newline
+			'tab',  # tab and newline
+			'blank',  # 4 spaces and newline
+			'right dash pointing arrow',  # no space before or after symbol
+			't dash shirt',  # no space before or after symbol
+			't dash shirt',  # no character before or after symbol (no newline)
+			'blank'  # end of doc
+		]
+	)
+
 
 def test_moveByLine():
 	_notepad.prepareNotepad(_getMoveByLineTestSample())
-	_doTest(
-		navKey=Move.LINE,
-		symbolLevel=SymLevel.ALL,
-		reportedAfterLast=EndSpeech.BOTTOM,
-		expectedSpeech=[
-			'Say',
-			'left paren(quietly right paren)',
-			'quote Hello comma,', 'Jim quote  dot.',
-			'don tick t',
-			'right-pointing arrow', 't-shirt',  # symbols each on a line
-			'right-pointing arrow', 't-shirt',  # symbols and a space each on a line
-			'right-pointing arrow  t-shirt',  # symbols joined no space
-			'blank',  # single space
-			'tab',  # single tab
-			'blank',  # 4 spaces
-			'blank',  # end of doc
-		],
-	)
-	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position
 	_doTest(
 		navKey=Move.LINE,
 		reportedAfterLast=EndSpeech.BOTTOM,
@@ -185,37 +168,49 @@ def test_moveByLine():
 		]
 	)
 
+	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position
+
+	_doTest(
+		navKey=Move.LINE,
+		symbolLevel=SymLevel.ALL,
+		reportedAfterLast=EndSpeech.BOTTOM,
+		expectedSpeech=[
+			'Say',
+			'left paren(quietly right paren)',
+			'quote Hello comma,', 'Jim quote  dot.',
+			'don tick t',
+			'right-pointing arrow', 't-shirt',  # symbols each on a line
+			'right-pointing arrow', 't-shirt',  # symbols and a space each on a line
+			'right-pointing arrow  t-shirt',  # symbols joined no space
+			'blank',  # single space
+			'tab',  # single tab
+			'blank',  # 4 spaces
+			'blank',  # end of doc
+		],
+	)
+
 
 def test_moveByChar():
 	_notepad.prepareNotepad(_getMoveByCharTestSample())
 	# Symbol level should not affect move by character
 	# use the same expected speech with symbol level none and all.
-	symLevelNoneExpected = [
-		'S', 'space',
-		'left paren', 'right paren',
-		'quote', 'tick',
-		'e', 'comma',
-		'right pointing arrow', 't shirt',
-		'tab',
-		'carriage return',  # on Windows/notepad newline is \r\n
-		'line feed',  # on Windows/notepad newline is \r\n
-	]
 	# Bug: With symbol level ALL text due to a symbol substitution has further substitutions applied:
 	# IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
-	exceptions = {
-		'right pointing arrow': 'right dash pointing arrow',
-		't shirt': 't dash shirt',
-	}
-	symLevelAllExpected = [
-		e if e not in exceptions.keys() else exceptions[e]
-		for e in symLevelNoneExpected
-	]
 
 	_doTest(
 		navKey=Move.CHAR,
 		reportedAfterLast=EndSpeech.RIGHT,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=symLevelNoneExpected,
+		expectedSpeech=[
+			'S', 'space',
+			'left paren', 'right paren',
+			'quote', 'tick',
+			'e', 'comma',
+			'right pointing arrow', 't shirt',   # note no dash, sym level All has
+			'tab',
+			'carriage return',  # on Windows/notepad newline is \r\n
+			'line feed',  # on Windows/notepad newline is \r\n
+		],
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position.
@@ -224,7 +219,16 @@ def test_moveByChar():
 		navKey=Move.CHAR,
 		reportedAfterLast=EndSpeech.RIGHT,
 		symbolLevel=SymLevel.ALL,
-		expectedSpeech=symLevelAllExpected,
+		expectedSpeech=[
+			'S', 'space',
+			'left paren', 'right paren',
+			'quote', 'tick',
+			'e', 'comma',
+			'right dash pointing arrow', 't dash shirt',  # note has dash, sym level None doesn't
+			'tab',
+			'carriage return',  # on Windows/notepad newline is \r\n
+			'line feed',  # on Windows/notepad newline is \r\n
+		],
 	)
 
 
