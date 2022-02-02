@@ -28,6 +28,10 @@ default setup
 
 *** Test Cases ***
 
+symbolInSpeechUI
+	[Documentation]	Ensure symbols aren't substituted within NVDA speech UI.
+	test_symbolInSpeechUI
+
 moveByWord
 	[Documentation]	Ensure symbols announced as expected when navigating by word (numpad 6).
 	test_moveByWord

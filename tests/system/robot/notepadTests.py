@@ -232,16 +232,60 @@ def test_moveByChar():
 	)
 
 
+def test_symbolInSpeechUI():
+	_notepad.prepareNotepad((
+		"t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
+	))
+	_setSymbolLevel(SymLevel.ALL)
+	spy = _NvdaLib.getSpyLib()
+	expected = "shouldn't sub tick symbol"
+	spy.override_translationString(EndSpeech.RIGHT.value, expected)
+
+	# get to the end char
+	actual = _pressKeyAndCollectSpeech(Move.CHAR.value, numberOfTimes=1)
+	_builtIn.should_be_equal(
+		actual,
+		["blank", ],
+		msg="actual vs expected. Unexpected speech when moving to final character.",
+	)
+
+	actual = _pressKeyAndCollectSpeech(Move.CHAR.value, numberOfTimes=1)
+	_builtIn.should_be_equal(
+		actual,
+		# Illustrates a bug in NVDA. The internal speech UI is processed substituting symbols.
+		# This can be a major issue in languages other than English.
+		[
+			# 'tick' is a bug
+			"shouldn tick t sub tick symbol"  # intentionally concatenate strings
+			"\nblank",
+		],
+		msg="actual vs expected. NVDA speech UI substitutes symbols",
+	)
+
+	# Show that with symbol level None, the speech UI symbols are not substituted.
+	_setSymbolLevel(SymLevel.NONE)
+	actual = _pressKeyAndCollectSpeech(Move.CHAR.value, numberOfTimes=1)
+	_builtIn.should_be_equal(
+		actual,
+		[f"{expected}\nblank", ],
+		msg="actual vs expected. NVDA speech UI substitutes symbols",
+	)
+
+
+def _setSymbolLevel(symbolLevel: SymLevel) -> None:
+	spy = _NvdaLib.getSpyLib()
+	SYMBOL_LEVEL_KEY = ["speech", "symbolLevel"]
+	spy.set_configValue(SYMBOL_LEVEL_KEY, symbolLevel.value)
+	_builtIn.log(message=f"Doing test at symbol level: {symbolLevel}")
+
+
 def _doTest(
 		navKey: Move,
 		expectedSpeech: _typing.List[str],
 		reportedAfterLast: EndSpeech,
 		symbolLevel: SymLevel,
 ) -> None:
-	spy = _NvdaLib.getSpyLib()
-	SYMBOL_LEVEL_KEY = ["speech", "symbolLevel"]
-	spy.set_configValue(SYMBOL_LEVEL_KEY, symbolLevel.value)
-	_builtIn.log(message=f"Doing test at symbol level: {symbolLevel}")
+	_setSymbolLevel(symbolLevel)
 
 	actual = _pressKeyAndCollectSpeech(navKey.value, numberOfTimes=len(expectedSpeech))
 	_builtIn.should_be_equal(
