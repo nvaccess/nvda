@@ -275,9 +275,17 @@ class SettingsDialog(
 		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
 
-	def _onWindowDestroy(self, evt):
-		evt.Skip()
-		self._setInstanceDestroyedState()
+	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent):
+		# Destroy events are sent to parent windows for handling.
+		# If a child window is being destroyed, we don't want to
+		# set this object as destroyed.
+		# The ExpandoTextCtrl creates a destroy event as part of
+		# initialization, this caused the NVDASettings dialog
+		# to be incorrectly set to destroyed, causing #12818.
+		isSelfAlive = bool(self)
+		if not isSelfAlive:
+			evt.Skip()
+			self._setInstanceDestroyedState()
 
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
