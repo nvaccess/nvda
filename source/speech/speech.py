@@ -388,7 +388,7 @@ def getCharDescListFromText(text,locale):
 	return charDescList
 
 
-def speakObjectProperties(  # noqa: C901
+def speakObjectProperties(
 		obj,
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
@@ -428,6 +428,9 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			# getPropertiesSpeech names this "current", but the NVDAObject property is
 			# named "isCurrent", it's type should always be controltypes.IsCurrent
 			newPropertyValues['current'] = obj.isCurrent
+
+		elif value and name == "hasDetails":
+			newPropertyValues['hasDetails'] = obj.hasDetails
 		elif value and name == "descriptionFrom" and (
 			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		):
@@ -640,6 +643,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'states': True,
 		'value': True,
 		'description': True,
+		'hasDetails': config.conf["annotations"]["reportDetails"],
 		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
@@ -1680,6 +1684,14 @@ def getPropertiesSpeech(  # noqa: C901
 	if isCurrent != controlTypes.IsCurrent.NO:
 		textList.append(isCurrent.displayString)
 
+	# are there further details
+	hasDetails = propertyValues.get('hasDetails', False)
+	if hasDetails:
+		textList.append(
+			# Translators: Speaks when there a further details/annotations that can be fetched manually.
+			_("has details")
+		)
+
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)
@@ -1779,6 +1791,7 @@ def getControlFieldSpeech(  # noqa: C901
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
+	hasDetails = attrs.get('hasDetails', False)
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 
@@ -1838,6 +1851,7 @@ def getControlFieldSpeech(  # noqa: C901
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
 	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
+	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
 	valueSequence = getPropertiesSpeech(reason=reason, value=value)
@@ -1942,6 +1956,7 @@ def getControlFieldSpeech(  # noqa: C901
 		tableCellSequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellSequence.extend(stateTextSequence)
 		tableCellSequence.extend(isCurrentSequence)
+		tableCellSequence.extend(hasDetailsSequence)
 		types.logBadSequenceTypes(tableCellSequence)
 		return tableCellSequence
 
@@ -1991,6 +2006,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out.extend(roleTextSequence if speakStatesFirst else stateTextSequence)
 		out.append(containerContainsText)
 		out.extend(isCurrentSequence)
+		out.extend(hasDetailsSequence)
 		out.extend(valueSequence)
 		out.extend(descriptionSequence)
 		out.extend(levelSequence)
@@ -2027,6 +2043,8 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if isCurrent != controlTypes.IsCurrent.NO:
 			out.extend(isCurrentSequence)
+		if hasDetails:
+			out.extend(hasDetailsSequence)
 		if descriptionSequence and _reportDescriptionAsAnnotation:
 			out.extend(descriptionSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)

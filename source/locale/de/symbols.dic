@@ -7,9 +7,9 @@ complexSymbols:
 # identifier	regexp
 
 # Sentence endings.
-. Satzende	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! Satzende	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? Satzende	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 
 # Phrase endings.
 ; Satzzeichen	(?<=[^\s;]);(?=\s|$)

@@ -10,11 +10,16 @@
 @type runningTable: dict
 """
 
+from __future__ import annotations
 import itertools
 import ctypes
 import ctypes.wintypes
 import os
 import sys
+from typing import (
+	Optional,
+)
+
 import winVersion
 import pkgutil
 import importlib
@@ -345,7 +350,10 @@ class AppModule(baseObject.ScriptableObject):
 		#: @type: str
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
-		self.helperLocalBindingHandle=None
+
+		self.helperLocalBindingHandle: Optional[ctypes.c_long] = None
+		"""RPC binding handle pointing to the RPC server for this process"""
+
 		self._inprocRegistrationHandle=None
 
 	def _getExecutableFileInfo(self):

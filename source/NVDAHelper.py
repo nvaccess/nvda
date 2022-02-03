@@ -559,7 +559,7 @@ def initialize():
 		0,
 		# Using an altered search path is necessary here
 		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
-		# such as minhook.dll.
+		# such as IAccessible2proxy.dll.
 		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
 	)
 	if not h:
