@@ -356,23 +356,6 @@ class EnhancedInputSlider(wx.Slider):
 		self.SetValue(newValue)
 
 
-class FocusableReadonlyTextCtrl(wx.TextCtrl):
-	"""
-	The standard wx.TextCtrl does not accept focus from keyboard when set to readonly mode
-	with `wx.TE_READONLY`.
-	In #7302, an ExpandoTextCtrl was used instead, because even when readonly it accepts focus from keyboard.
-	When instantiating an ExpandoTextCtrl, by changing panels to Braille or Speech settings,
-	a WX_EVENT_DESTROY was sent to the parent window (NVDASettingsDialog),
-	causing #12818. While the parent window remained alive, it was treated as if it was destroyed,
-	allowing multiple NVDASettingsDialogs.
-	"""
-	def __init__(self, *args, **kw):
-		super().__init__(*args, **kw, style=wx.TE_READONLY)
-
-	def AcceptsFocusFromKeyboard(self) -> True:
-		return True
-
-
 class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 	"""
 	This class was created to ensure a ScrolledPanel scrolls to nested children of the panel when navigating
