@@ -18,7 +18,6 @@ from enum import IntEnum
 import typing
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
-from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
 import winUser
 import logHandler
@@ -977,17 +976,11 @@ class SpeechSettingsPanel(SettingsPanel):
 		synthGroup = guiHelper.BoxSizerHelper(self, sizer=synthBoxSizer)
 		settingsSizerHelper.addItem(synthGroup)
 
-		# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
-		# standard readonly TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
-		# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
-		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
-		# display here.
 		synthDesc = getSynth().description
-		self.synthNameCtrl = ExpandoTextCtrl(
+		self.synthNameCtrl = nvdaControls.FocusableReadonlyTextCtrl(
 			synthBox,
 			size=(self.scaleSize(250), -1),
 			value=synthDesc,
-			style=wx.TE_READONLY,
 		)
 		self.synthNameCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeSynth)
 
@@ -3369,10 +3362,9 @@ class BrailleSettingsPanel(SettingsPanel):
 		displayBox = displaySizer.GetStaticBox()
 		displayGroup = guiHelper.BoxSizerHelper(self, sizer=displaySizer)
 		settingsSizerHelper.addItem(displayGroup)
-		self.displayNameCtrl = ExpandoTextCtrl(
+		self.displayNameCtrl = nvdaControls.FocusableReadonlyTextCtrl(
 			displayBox,
 			size=(self.scaleSize(250), -1),
-			style=wx.TE_READONLY
 		)
 		self.bindHelpEvent("BrailleSettingsChange", self.displayNameCtrl)
 		self.updateCurrentDisplay()
