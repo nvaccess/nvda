@@ -26,18 +26,14 @@ class SpeechCommand(object):
 	pass
 
 
-class Atomic(SpeechCommand):
+class Atomic(str, SpeechCommand):
 	""" Text that should not be subdivided further. Typically this text is not replaced.
+	Usage a = Atomic("don't break up this string")
 	"""
-	def __init__(self, text: str):
-		"""
-		@param text: The text to speak.
-		"""
-		self._text = text
 
 	@property
 	def text(self) -> str:
-		return self._text
+		return str(self)
 
 	def __repr__(self):
 		return f"{self.__class__.__name__} ({self.text})"

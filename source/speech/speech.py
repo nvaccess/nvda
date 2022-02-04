@@ -244,7 +244,7 @@ def _getSpellingSpeechAddCharMode(
 	"""
 	charMode = False
 	for item in seq:
-		if isinstance(item, str):
+		if isinstance(item, str) and not isinstance(item, Atomic):
 			if len(item) == 1:
 				if not charMode:
 					yield CharacterModeCommand(True)
@@ -864,7 +864,7 @@ def speak(  # noqa: C901
 			inCharacterMode=item.state
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
-		if isinstance(item,str):
+		if isinstance(item, str) and not isinstance(item, Atomic):
 			speechSequence[index]=processText(curLanguage,item,symbolLevel)
 			if not inCharacterMode:
 				speechSequence[index]+=CHUNK_SEPARATOR

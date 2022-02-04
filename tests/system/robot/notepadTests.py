@@ -313,13 +313,8 @@ def test_symbolInSpeechUI():
 	actual = _pressKeyAndCollectSpeech(Move.CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
-		# Illustrates a bug in NVDA. The internal speech UI is processed substituting symbols.
-		# This can be a major issue in languages other than English.
-		[
-			# 'tick' is a bug
-			"shouldn tick t sub tick symbol"  # intentionally concatenate strings
-			"\nblank",
-		],
+		# 'tick' would be a bug
+		[f"{expected}\nblank", ],
 		msg="actual vs expected. NVDA speech UI substitutes symbols",
 	)
 

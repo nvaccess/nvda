@@ -25,6 +25,7 @@ import api
 import textInfos
 import speech
 from speech import sayAll
+from speech.speech import UserInterface
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -998,14 +999,14 @@ class GlobalCommands(ScriptableObject):
 	def script_reviewMode_next(self,gesture):
 		label=review.nextMode()
 		if label:
-			ui.reviewMessage(label)
+			ui.reviewMessage(UserInterface(label))
 			pos=api.getReviewPosition().copy()
 			pos.expand(textInfos.UNIT_LINE)
 			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 			speech.speakTextInfo(pos)
 		else:
 			# Translators: reported when there are no other available review modes for this object 
-			ui.reviewMessage(_("No next review mode"))
+			ui.reviewMessage(UserInterface(_("No next review mode")))
 
 	@script(
 		description=_(
@@ -1017,16 +1018,16 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:NVDA+numpad1", "kb(laptop):NVDA+pageDown", "ts(object):2finger_flickDown")
 	)
 	def script_reviewMode_previous(self,gesture):
-		label=review.nextMode(prev=True)
+		label = review.nextMode(prev=True)
 		if label:
-			ui.reviewMessage(label)
+			ui.reviewMessage(UserInterface(label))
 			pos=api.getReviewPosition().copy()
 			pos.expand(textInfos.UNIT_LINE)
 			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 			speech.speakTextInfo(pos)
 		else:
 			# Translators: reported when there are no other available review modes for this object 
-			ui.reviewMessage(_("No previous review mode"))
+			ui.reviewMessage(UserInterface(_("No previous review mode")))
 
 	@script(
 		# Translators: Input help mode message for toggle simple review mode command.
@@ -1059,7 +1060,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			ui.reviewMessage(_("No navigator object"))
+			ui.reviewMessage(UserInterface(_("No navigator object")))
 			return
 		if scriptHandler.getLastScriptRepeatCount()>=1:
 			if curObject.TextInfo!=NVDAObjectTextInfo:
@@ -1241,7 +1242,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			ui.reviewMessage(_("No navigator object"))
+			ui.reviewMessage(UserInterface(_("No navigator object")))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
@@ -1250,7 +1251,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
-			ui.reviewMessage(_("No containing object"))
+			ui.reviewMessage(UserInterface(_("No containing object")))
 
 	@script(
 		# Translators: Input help mode message for move to next object command.
@@ -1263,7 +1264,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			ui.reviewMessage(_("No navigator object"))
+			ui.reviewMessage(UserInterface(_("No navigator object")))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
@@ -1272,7 +1273,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no next object (current object is the last object).
-			ui.reviewMessage(_("No next"))
+			ui.reviewMessage(UserInterface(_("No next")))
 
 	@script(
 		# Translators: Input help mode message for move to previous object command.
@@ -1285,7 +1286,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			ui.reviewMessage(_("No navigator object"))
+			ui.reviewMessage(UserInterface(_("No navigator object")))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
@@ -1294,7 +1295,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no previous object (current object is the first object).
-			ui.reviewMessage(_("No previous"))
+			ui.reviewMessage(UserInterface(_("No previous")))
 
 	@script(
 		# Translators: Input help mode message for move to first child object command.
@@ -1307,7 +1308,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			ui.reviewMessage(_("No navigator object"))
+			ui.reviewMessage(UserInterface(_("No navigator object")))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
@@ -1316,7 +1317,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no contained (first child) object such as inside a document.
-			ui.reviewMessage(_("No objects inside"))
+			ui.reviewMessage(UserInterface(_("No objects inside")))
 
 	@script(
 		description=_(
@@ -1384,7 +1385,7 @@ class GlobalCommands(ScriptableObject):
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
-			ui.reviewMessage(_("Top"))
+			ui.reviewMessage(UserInterface(_("Top")))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
@@ -1431,7 +1432,7 @@ class GlobalCommands(ScriptableObject):
 		# i.e. the new line starts after the original review cursor position.
 		if res == 0 or newLine.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
-			ui.reviewMessage(_("Bottom"))
+			ui.reviewMessage(UserInterface(_("Bottom")))
 		else:
 			api.setReviewPosition(info)
 		speech.speakTextInfo(newLine, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
@@ -1461,7 +1462,7 @@ class GlobalCommands(ScriptableObject):
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
-			ui.reviewMessage(_("Top"))
+			ui.reviewMessage(UserInterface(_("Top")))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_WORD)
@@ -1507,7 +1508,7 @@ class GlobalCommands(ScriptableObject):
 		# i.e. the new word starts after the original review cursor position.
 		if res == 0 or newWord.start <= origInfo.start:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
-			ui.reviewMessage(_("Bottom"))
+			ui.reviewMessage(UserInterface(_("Bottom")))
 		else:
 			api.setReviewPosition(info)
 		speech.speakTextInfo(newWord, unit=textInfos.UNIT_WORD, reason=controlTypes.OutputReason.CARET)
@@ -1546,7 +1547,7 @@ class GlobalCommands(ScriptableObject):
 		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			# Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-			ui.reviewMessage(_("Left"))
+			ui.reviewMessage(UserInterface(_("Left")))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
@@ -1604,7 +1605,7 @@ class GlobalCommands(ScriptableObject):
 		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			# Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-			ui.reviewMessage(_("Right"))
+			ui.reviewMessage(UserInterface(_("Right")))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
@@ -2904,7 +2905,7 @@ class GlobalCommands(ScriptableObject):
 		pos = api.getReviewPosition()
 		if not getattr(pos.obj, "_copyStartMarker", None):
 			# Translators: Presented when attempting to move to the start marker for copy but none has been set.
-			ui.reviewMessage(_("No start marker set"))
+			ui.reviewMessage(UserInterface(_("No start marker set")))
 			return
 		startMarker = pos.obj._copyStartMarker.copy()
 		api.setReviewPosition(startMarker)
@@ -3252,7 +3253,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no next object when navigating
-			ui.reviewMessage(_("No next"))
+			ui.reviewMessage(UserInterface(_("No next")))
 
 	@script(
 		# Translators: Input help mode message for a touchscreen gesture.
@@ -3273,7 +3274,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no previous object when navigating
-			ui.reviewMessage(_("No previous"))
+			ui.reviewMessage(UserInterface(_("No previous")))
 
 	@script(
 		# Translators: Describes a command.

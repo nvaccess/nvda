@@ -4,6 +4,8 @@
 #Copyright (C) 2013 Michael Curran <mick@nvaccess.org>
 
 from collections import OrderedDict
+from typing import Optional, Union
+
 import api
 import winUser
 from logHandler import log
@@ -102,13 +104,13 @@ def getCurrentMode():
 	"""Fetches the ID of the current mode"""
 	return modes[_currentMode][0]
 
-def setCurrentMode(mode,updateReviewPosition=True):
+
+def setCurrentMode(mode: Union[int, str], updateReviewPosition: bool = True) -> str:
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
 	@param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).
-	@type mode: int or string
-	@return: a presentable label for the new current mode (suitable for speaking or brailleing)
-	@rtype: string
+	@param updateReviewPosition: Should the review position be updated?
+	@return: a presentable label for the new current mode (suitable for speech or braille)
 	"""
 	global _currentMode
 	if isinstance(mode,int):
@@ -127,13 +129,13 @@ def setCurrentMode(mode,updateReviewPosition=True):
 		if updateReviewPosition: api.setReviewPosition(pos[0],clearNavigatorObject=False)
 		return label
 
-def nextMode(prev=False,startMode=None):
+
+def nextMode(prev: bool = False, startMode: Optional[int] = None) -> str:
 	"""
 	Sets the current review mode to the next available  mode and updates the review position. 
 	@param prev: if true then switch to the previous mode. If false, switch to the next mode.
-	@type prev: bool
-	@return: a presentable label for the new current mode (suitable for speaking or brailleing)
-	@rtype: string
+	@param startMode: Used to reset the cycle.
+	@return: a presentable label for the new current mode (suitable for speech or braille)
 	"""
 	if startMode is None:
 		startMode=_currentMode

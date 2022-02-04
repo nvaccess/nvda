@@ -12,6 +12,7 @@ See L{gui} for the graphical user interface.
 
 import os
 import sys
+import typing
 from ctypes import windll, byref, POINTER, addressof
 from comtypes import IUnknown
 from comtypes import automation 
@@ -73,7 +74,7 @@ def browseableMessage(message,title=None,isHtml=False):
 
 
 def message(
-		text: str,
+		text: typing.Union[str, speech.speech.Atomic],
 		speechPriority: Optional[speech.Spri] = None,
 		brailleText: Optional[str] = None,
 ):
@@ -87,7 +88,10 @@ def message(
 	braille.handler.message(brailleText if brailleText is not None else text)
 
 
-def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
+def reviewMessage(
+		text: typing.Union[str, speech.speech.Atomic],
+		speechPriority: Optional[speech.Spri] = None
+):
 	"""Present a message from review or object navigation to the user.
 	The message will always be presented in speech, and also in braille if it is tethered to review or when auto tethering is on.
 	@param text: The text of the message.
