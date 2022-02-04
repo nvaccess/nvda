@@ -865,13 +865,16 @@ def speak(  # noqa: C901
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
 		if isinstance(item, str) and not isinstance(item, Atomic):
-			speechSequence[index]=processText(curLanguage,item,symbolLevel)
+			speechSequence[index] = processText(curLanguage, item, symbolLevel)
 			if not inCharacterMode:
-				speechSequence[index]+=CHUNK_SEPARATOR
-		if isinstance(item, Symbol):
-			speechSequence[index] = Symbol(
-				processText(curLanguage, item.text, characterProcessing.SymbolLevel.NONE)
-			)
+				speechSequence[index] += CHUNK_SEPARATOR
+		elif isinstance(item, Atomic):
+			text = item.text  # convert the Atomic back to str
+			text = processText(curLanguage, text, characterProcessing.SymbolLevel.NONE)
+			if not inCharacterMode:
+				text += CHUNK_SEPARATOR
+			speechSequence[index] = text
+
 	_manager.speak(speechSequence, priority)
 
 

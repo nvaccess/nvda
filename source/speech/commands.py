@@ -29,6 +29,8 @@ class SpeechCommand(object):
 class Atomic(str, SpeechCommand):
 	""" Text that should not be subdivided further. Typically this text is not replaced.
 	Usage a = Atomic("don't break up this string")
+	@note: Potential design flaw, inheriting from str makes it very easy to slice an object, loosing its initial
+	class type. Eg type(Atomic("hello") + " world") == str
 	"""
 
 	@property
