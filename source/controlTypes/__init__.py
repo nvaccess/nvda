@@ -28,6 +28,7 @@ if version_year >= 2022:
 		"State",
 		"STATES_SORTED",
 		"DescriptionFrom",
+		"TextPosition",
 	]
 
 
