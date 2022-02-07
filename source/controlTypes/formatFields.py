@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2021 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2021 NV Access Limited, Cyrille Bougot
 
 from typing import Dict
 
