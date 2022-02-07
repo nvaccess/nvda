@@ -10,6 +10,7 @@ from comtypes import (
 	IServiceProvider,
 	GUID,
 	IUnknown,
+	BSTR,
 )
 from comtypes.hresult import S_OK, S_FALSE
 import ctypes
@@ -45,6 +46,7 @@ import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
+import NVDAHelper
 
 
 # Custom object ID used for clipboard pane in some versions of MS Office
@@ -1543,6 +1545,22 @@ the NVDAObject for IAccessible
 				pass
 		return None
 
+	#: Type definition for auto prop '_get_detailsRelations'
+	detailsRelations: typing.Iterable["IAccessible"]
+
+	def _get_detailsRelations(self) -> typing.Iterable["IAccessible"]:
+		relations = self._getIA2TargetsForRelationsOfType(
+			IAccessibleHandler.RelationType.DETAILS,
+			maxRelations=1
+		)
+		if not relations:
+			return ()
+		relationTarget = IAccessible(
+			IAccessibleObject=IAccessibleHandler.normalizeIAccessible(relations[0]),
+			IAccessibleChildID=0
+		)
+		return (relationTarget, )
+
 	#: Type definition for auto prop '_get_flowsTo'
 	flowsTo: typing.Optional["IAccessible"]
 
@@ -1747,6 +1765,32 @@ the NVDAObject for IAccessible
 			return True
 		except COMError:
 			return False
+
+	def summarizeInProcess(self) -> str:
+		"""Uses nvdaInProcUtils to get the text for an IAccessible.
+		Can be used without a virtual buffer loaded.
+		"""
+		text = BSTR()
+		log.debug("Calling nvdaInProcUtils_getTextFromIAccessible")
+		res = NVDAHelper.localLib.nvdaInProcUtils_getTextFromIAccessible(
+			# [in] handle_t bindingHandle
+			self.appModule.helperLocalBindingHandle,
+			# [in] const unsigned long hwnd
+			self.windowHandle,
+			# [in] long parentID
+			self.IAccessibleObject.uniqueID,
+			# // Params for getTextFromIAccessible
+			# [out, string] BSTR* textBuf
+			ctypes.byref(text),
+			# [in, defaultvalue(TRUE)] const boolean recurse,
+			True,
+			# [in, defaultvalue(TRUE)] const boolean includeTopLevelText
+			True,
+		)
+		if res != 0:
+			log.error(f"Error calling nvdaInProcUtils_getTextFromIAccessible, res: {res}")
+			raise ctypes.WinError(res)
+		return text.value
 
 class ContentGenericClient(IAccessible):
 

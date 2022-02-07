@@ -1,244 +1,358 @@
-﻿#slovinean symbols.dic
+﻿#locale/sl/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2012 NVDA Contributors
+#Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\,(?=\d)
+decimal point	(?<![^\d -])\,(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	pika
-! sentence ending	klicaj
-? sentence ending	vprašaj
-; phrase ending	podpičje
-: phrase ending	dvopičje
-decimal point	celih
-in-word '	opuščaj
-negative number	minus
+. sentence ending	pika	all	always
+! sentence ending	klicaj	all	always
+? sentence ending	vprašaj	all	always
+; phrase ending	podpičje	most	always
+: phrase ending	dvopičje	most	always
+decimal point	celih	none	always
+in-word '	opuščaj	all	norep
+negative number	minus	none	norep
 
 # Whitespace
-\0	prazno
+\0	prazno	char	# null
 \t	tabulator
-\n	nova vrsta
-\f	prelom strani
-\r	vračalka
- 	presledek
- 	preslednica
+\n	nova vrsta	char
+\f	prelom strani	none
+\r	vračalka	char
+ 	preslednica	char
+ 	presledek	char	# no-break space
 
 # Standard punctuation/symbols
-!	klicaj
-"	narekovaj
-\#	lestvica
-$	Dolar
-£	Funt
-€	Evro
-¢	Centi
-¥	Jen
-₹	Rupia
-ƒ	šiling
-¤	valuta
-%	odstotek
-‰	promil
-&	in
-'	opuščaj
-(	okrogli oklepaj
-)	okrogli zaklepaj
-*	zvezdica
-+	plus
-+−	minus
-,	vejica
--	kratka črtica
-.	pika
-/	desna poševnica
-:	dvopičje
-;	podpičje
-<	manjše
->	večje
-=	enačaj
-?	vprašaj
-@	afna
-[	oglati oklepaj
-]	oglati zaklepaj
-\\	leva poševnica
-^	strešica
-_	podčrtaj
-`	krativec
-{	zaviti oklepaj
-}	zaviti zaklepaj
-|	navpičnica
-¦	presledna navpičnica
-~	vijuga
-¡	obrnjeni klicaj
-¿	obrnjeni vprašaj
-·	sredinska pika
-‚	spodnji enojni narekovaj
-„	dvojni spodnji narekovaj
-′	minuta, prvi odvod
-″	sekunda, drugi odvod
-‴	stotinka, tretji odvod
+!	klicaj	all
+"	narekovaj	most
+\#	lestvica	some
+$	dolar	all	norep
+£	funt	all	norep
+€	evro	all	norep
+¢	centi	all	norep
+¥	jen	all	norep
+₹	rupia	some	norep
+ƒ	šiling	all	norep
+¤	valutni simbol	all	norep
+%	odstotek	some
+‰	promil	some
+&	in	some
+'	opuščaj	all
+(	okrogli oklepaj	most	always
+)	okrogli zaklepaj	most	always
+*	zvezdica	some
+,	vejica	all	always
+-	kratka črtica	most
+.	pika	some
+/	desna poševnica	some
+:	dvopičje	most	norep
+;	podpičje	most
+?	vprašaj	all
+@	afna	some
+[	oglati oklepaj	most
+]	oglati zaklepaj	most
+\\	leva poševnica	most
+^	strešica	most
+_	podčrtaj	most
+`	krativec	most
+{	zaviti oklepaj	most
+}	zaviti zaklepaj	most
+|	navpičnica	most
+¦	presledna navpičnica	most
+~	vijuga	most
+¡	obrnjeni klicaj	some
+¿	obrnjeni vprašaj	some
+·	sredinska pika	most
+‚	enojni spodnji narekovaj	most
+„	dvojni spodnji narekovaj	most
+′	minuta, prvi odvod	some
+″	sekunda, drugi odvod	some
+‴	stotinka, tretji odvod	some
 
 # Other characters
-•	kroglica
-…	tropičje
-...	pika pika pika
-“	začetni narekovaj
-”	zaključni narekovaj
-‘	leva kljukica
-’	desna kljukica
-–	pomišljaj
-—	črtica
-­	vezaj
-⁃	vrstična oznaka
-●	krožec
-○	beli krožec
-¨	razloka
-¯	makron
-´	ostrivec
-¸	sedij
-‎‎	z leve proti desni
-‏	z desne proti levi
-¶	odstavek
-■	črni kvadrat
-▪	črni kvadrat
-◾	črni kvadrat
-□	beli kvadrat
-◦	bela kroglica
-⇒	desna dvojna puščica
-⇨	desna bela puščica
-➔	puščica v desno
-➢	streluša
-⮚	desna streluša
-❖	črni dijamant minus beli X
-♣	črni križ
-♦	črni dijamant
-◆	črni dijamant
-§	razdelek
-°	stopinje
-«	dvojni začetni narekovaj
-»	dvojni zaključni narekovaj
-µ	mikro
-º	vrstilni
-ª	nadpisano a
-⁰	nadpisano 0
-¹	nadpisano 1
-²	nadpisano 2
-³	nadpisano 3
-⁴	nadpisano 4
-⁵	nadpisano 5
-⁶	nadpisano 6
-⁷	nadpisano 7
-⁸	nadpisano 8
-⁹	nadpisano 9
-⁺	nadpisano plus
-⁻	nadpisano minus
-⁼	nadpisano enačaj
-⁽	nadpisano okrogli oklepaj
-⁾	nadpisano okrogli zaklepaj
-ⁿ	nadpisano n
-₀	podpisano 0
-₁	podpisano 1
-₂	podpisano 2
-₃	podpisano 3
-₄	podpisano 4
-₅	podpisano 5
-₆	podpisano 6
-₇	podpisano 7
-₈	podpisano 8
-₉	podpisano 9
-₊	podpisano plus
-₋	podpisano minus
-₌	podpisano enačaj
-₍	podpisano okrogli oklepaj
-₎	podpisano okrogli zaklepaj
-®	vpisano
-™	Blagovna znamka
-©	Avtorska pravica
-±	Plus ali Minus
-×	krat
-÷	deljeno
-←	puščica levo
-↑	puščica gor
-→	puščica desno
-↓	puščica dol
-✓	kljukica
-✔	kljukica
-🡺	puščica desno
-†	križec
-‡	dvojni križec
-‣	trikotnik
-✗	x kroglica
-￼	zamenjava predmeta
+•	kroglica	some
+…	pika pika pika	all	always
+...	pika pika pika	all	always
+“	začetni narekovaj	most
+”	končni narekovaj	most
+‘	leva kljukica	most
+’	desna kljukica	most
+–	pomišljaj	most	always
+—	črtica	most
+­	vezaj	most
+⁃	vrstična oznaka	none
+●	krožec	most
+○	beli krožec	most
+¨	razloka	most
+¯	makro	most
+´	ostrivec	most
+¸	sedila	most
+‎	z leve proti desni	char
+‏	z desne proti levi	char
+¶	odstavek	most
+■	črni kvadrat	some
+▪	črni kvadrat	some
+◾	črni kvadrat	some
+□	beli kvadrat	some
+◦	bela kroglica	some
+⇨	desna bela puščica	some
+➔	puščica v desno	some
+➢	desna streluša	some
+❖	črni diamant minus beli X	some
+♣	črni križ	some
+♦	črni diamant	some
+◆	črni diamant	some
+§	razdelek	all
+°	stopinje	some
+«	double dvojni začetni narekovaj	none
+»	double dvojni zaključni narekovaj	none
+µ	mikro	some
+⁰	nadpisano 0	some
+¹	nadpisano 1	some
+²	nadpisano 2	some
+³	nadpisano 3	some
+⁴	nadpisano 4	some
+⁵	nadpisano 5	some
+⁶	nadpisano 6	some
+⁷	nadpisano 7	some
+⁸	nadpisano 8	some
+⁹	nadpisano 9	some
+⁺	nadpisano plus	some
+⁼	nadpisano enačaj	some
+⁽	nadpisano okrogli oklepaj	some
+⁾	nadpisano okrogli zaklepaj	some
+ⁿ	nadpisano n	some
+₀	podpisano 0	some
+₁	podpisano 1	some
+₂	podpisano 2	some
+₃	podpisano 3	some
+₄	podpisano 4	some
+₅	podpisano 5	some
+₆	podpisano 6	some
+₇	podpisano 7	some
+₈	podpisano 8	some
+₉	podpisano 9	some
+₊	podpisano plus	some
+₋	podpisano minus	some
+₌	podpisano enačaj	some
+₍	podpisano okrogli oklepaj	some
+₎	podpisano okrogli zaklepaj	some
+®	vpisano	some
+™	blagovna znamka	some
+©	avtorska pravica	some
+℠	servisni žig	some
+←	puščica levo	some
+↑	puščica gor	some
+→	puščica desno	some
+↓	puščica dol	some
+✓	kljukica	some
+✔	kljukica	some
+🡺	puščica desno	some
+†	križec	some
+‡	dvojni križec	some
+‣	trikotnik	none
+✗	x-oznaka	none
+⊕	obkrožen plus	none
+⊖	obkrožen minus	none
+⇄	desna puščica čez levo puščico	none
+⇒	dvojna desna puščica	none
 
-#Mathematical Operators U+2200 to U+220F
-∀	za vse
-∁	komplement
-∂	delni odvod
-∃	obstaja
-∄	ne obstaja
-∅	prazna množica
-∆	prirastek
-∇	nabla
-∈	element
-∉	ni element
-∊	najmanjši element
-∋	je člen
-∌	ni člen
-∍	je najmanjši člen
-∎	konec dokaza (Q.E.D)
-∏	n-ary zmnožek
+#Arithmetic operators
++	plus	some
+−	minus	some
+×	krat	some
+⋅	krat	some
+⨯	krat	none
+∕	deljeno	some
+⁄	deljeno	some
+÷	deli	some
+∓	minus ali plus	some
+±	plus ali Minus	some
 
-# Miscellaneous Mathematical Operators
-∑	n-ary vsota
-√	kvadratni koren
-∛	kubični koren
-∜	četrti koren
-∝	sorazmerje
-∞	neskončnost
-∟	pravi kot
-∠	kot
-∥	je vzporedno
-∦	ni vzporedno
-∧	logični in
-∨	logični ali
-¬	logični ne
-∩	presek
-∪	unija
-∫	integral
-∴	zatorej
-∵	ker
-∶	koeficient
-∷	razmerje
-≤	manjše ali enako
-≥	večje ali enako
-⊂	je podmnožica
-⊃	je nadmnožica
-⊆	podmnožica množice ali njej enaka
-⊇	nadmnožica množice ali njej enaka
+#Set operations
+∖	množiški minus	none
+⊍	množiška unija	none
+𝒫	moč množice na množici	none
+𝔓	moč množice na množici	none
+℘	moč množice na množici	none
+∁	komplement množice	none
+
+#Set relations and set constructions
+∅	prazna množica	none
+⊂	podmnožica	none
+⊄	ni podmnožica	none
+⊃	nadmnožica	none
+⊅	ni nadmnožica	none
+⊆	podmnožica ali njej enaka	none
+⊈	niti podmnožica ali njej enaka	none
+⊇	nadmnožica ali njej enaka	none
+⊉	niti nadmnožica ali njej enaka	none
+⊌	množica množic	none
+
+#Equality signs
+=	je enako	some
+≃	je asimptotično enako	none
+≄	ni asimptotično enako	none
+≅	je približno enako	none
+≆	je približno ampak ne točno enako	none
+≈	je skoraj enako	none
+≌	je vse enako	none
+≍	je ekvivalentno	none
+≭	ni ekvivalentno	none
+≎	je geometrično ekvivalentno to	none
+≑	je geometrično enako	none
+≚	je enakokotnik	none
+≬	med	none
+≠	ni enako	none
+≡	je identično	none
+≣	je striktno identično to	none
+≢	not ni identično	none
+∼	je podobno	none
+≙	je ocenjeno	none
+≟	je vprašan enako	none
+
+#comparison signs
+<	manjše	some
+>	večje	some
+≤	manjše ali enako	none
+≦	manjše ali enako	none
+≪	precej manjše kot	none
+≥	večje ali enako	none
+≧	večje ali enako	none
+≫	precej večje kot	none
+≶	manjše ali večje	none
+≷	večje ali manjše	none
+≮	ni manjše	none
+≯	ni večje	none
+
+#Functions
+⁻	inverzna	some
+∘	krožni operator	none
+∂	delni odvod	none
+∇	nabla	none
+
+#Geometry and linear Algebra
+⃗	vektor med	none
+△	trikotnik	none
+▭	pravokotnik	none
+∟	pravi kot	none
+∠	kot	none
+∥	je vzporedno	none
+∦	ni vzporedno	none
+⊥	pravokotno	none
+⟂	ortogonalno	none
+‖	vektorska norma	none
+̂	normalizira	none
+∿	sinusni val	none
+∡	izmerjen kot	none
+∢	sferični kot	none
+
+#Logical operators
+∀	za vse	none
+∃	obstaja	none
+∄	ne obstaja	none
+⇏	ne pomeni	none
+⇐	pomeni	none
+
+#Other mathematical Operators
+∈	je element	none
+∉	ni element	none
+∊	najmanjši element	none
+∋	je člen	none
+∌	ni člen	none
+∍	je najmanjši člen	none
+∎	konec dokaza (Q.E.D)	none
+∏	n-ary zmnožek	none
+∐	n-ary kozmnožek	none
+∑	n-ary vsota	none
+√	kvadratni koren	none
+∛	tretji koren	none
+∜	četrti koren	none
+∝	prosorazmerje	none
+∞	neskončnost	none
+∧	logični in	none
+∨	logični ali	none
+¬	logični ne	none
+∩	presek	none
+∪	unija	none
+∫	integral	none
+∬	ddrugi integral	none
+∭	tretji integral	none
+∮	konturni integral	none
+∯	ravninski integral	none
+∰	prostorninski integral	none
+∱	integral v smeri ure	none
+∲	konturni integral v smeri ure	none
+∳	konturni integral v nasprotni smeri ure	none
+∴	zatorej	none
+∵	ker	none
+∶	koeficient	none
+∷	razmerje	none
+∹	presežek	none
+∺	geometrično razmerje	none
+≀	kronski zmnožek	none
+≏	razlika med	none
+≐	približevanje limiti	none
+∙	bullet operator	none
+∣	deli	none
+∤	ne deli	none
+≔	dvopični enačaj	none
+≕	enačaj z dvema pikama	none
+≺	je pred	none
+≻	je za	none
+⊀	ni pred	none
+⊁	ni za	none
 
 # Vulgur Fractions U+2150 to U+215E
-¼	ena četrtina
-½	ena polovica
-¾	tri četrtine
-⅐	ena sedmina
-⅑	ena devetina
-⅒	ena desetina
-⅓	ena tretjina
-⅔	dve tretjini
-⅕	ena petina
-⅖	dve petini
-⅗	tri petine
-⅘	štiri petine
-⅙	ena šestina
-⅚	pet šestin
-⅛	ena osmina
-⅜	tri osmine
-⅝	pet osmin
-⅞	sedem osmin
+¼	ena četrtina	none
+½	ena polovica	none
+¾	tri četrtine	none
+⅐	ena sedmina	none
+⅑	ena devetina	none
+⅒	ena desetina	none
+⅓	ena tretjina	none
+⅔	dve tretjini	none
+⅕	ena petina	none
+⅖	dve petini	none
+⅗	tri petine	none
+⅘	štiri petine	none
+⅙	ena šestina	none
+⅚	pet šestin	none
+⅛	ena osmina	none
+⅜	tri osmine	none
+⅝	pet osmin	none
+⅞	sedem osmin	none
+
+#Number sets
+𝔸	algebraična števila	none
+ℂ	kompleksna števila	none
+ℑ	imaginarni del kompleksnega števila	none
+ℍ	kvaternioni	none
+ℕ	naravna števila	none
+𝕁	nenegativna (cela) števila	none
+ℚ	racionalna števila	none
+ℝ	realna števila	none
+ℜ	realni del kompleksnega števila	none
+ℤ	cela števila	none
+ℵ	alef število	none
+ℶ	bet število	none
 
 # Miscellaneous Technical
-⌘	Mac Ukazna tipka
+⌘	mac ukazna tipka	none

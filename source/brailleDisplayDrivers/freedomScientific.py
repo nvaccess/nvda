@@ -566,6 +566,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"reportCurrentLine": ("br(freedomScientific):dot1+dot4+brailleSpaceBar",),
 			"showGui": ("br(freedomScientific):dot1+dot3+dot4+dot5+brailleSpaceBar",),
 			"braille_toggleTether": ("br(freedomScientific):leftGDFButton+rightGDFButton",),
+			# Based on corresponding assignments in JAWS, modifing where Shift goes
+			"braille_toggleControl": ("br(freedomscientific):dot3+dot8+brailleSpaceBar",),
+			"braille_toggleAlt": ("br(freedomscientific):dot6+dot8+brailleSpaceBar",),
+			"braille_toggleWindows": ("br(freedomscientific):dot4+dot8+brailleSpaceBar",),
+			"braille_toggleNVDAKey": ("br(freedomscientific):dot5+dot8+brailleSpaceBar",),
+			"braille_toggleShift": ("br(freedomscientific):dot7+dot8+brailleSpaceBar",),
+			"braille_toggleControlShift": ("br(freedomscientific):dot3+dot7+dot8+brailleSpaceBar",),
+			"braille_toggleAltShift": ("br(freedomscientific):dot6+dot7+dot8+brailleSpaceBar",),
+			"braille_toggleWindowsShift": ("br(freedomscientific):dot4+dot7+dot8+brailleSpaceBar",),
+			"braille_toggleNVDAKeyShift": ("br(freedomscientific):dot5+dot7+dot8+brailleSpaceBar",),
+			"braille_toggleControlAlt": ("br(freedomscientific):dot3+dot6+dot8+brailleSpaceBar",),
+			"braille_toggleControlAltShift": ("br(freedomscientific):dot3+dot6+dot7+dot8+brailleSpaceBar",),
 		}
 	})
 
