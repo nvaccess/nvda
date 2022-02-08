@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2022 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import appModuleHandler
 import controlTypes
@@ -12,12 +12,13 @@ import config
 from NVDAObjects.UIA import UIA
 from globalCommands import GlobalCommands
 
-"""App module for the Windows 10 lock screen.
+"""App module for the Windows 10 and 11 lock screen.
 The lock screen runs as the logged in user on the default desktop,
 so we need to explicitly stop people from accessing/changing things outside of the lock screen.
+This is done in the api module by utilizing _isSecureObjectWhileLockScreenActivated.
 """
 
-# Windows 10 lock screen container
+# Windows 10 and 11 lock screen container
 class LockAppContainer(UIA):
 	# Make sure the user can get to this so they can dismiss the lock screen from a touch screen.
 	presentationType=UIA.presType_content
@@ -27,11 +28,6 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if isinstance(obj,UIA) and obj.role==controlTypes.Role.PANE and obj.UIAElement.cachedClassName=="LockAppContainer":
 			clsList.insert(0,LockAppContainer)
-
-	def event_NVDAObject_init(self, obj):
-		if obj.role == controlTypes.Role.WINDOW:
-			# Stop users from being able to object navigate out of the lock screen.
-			obj.parent = None
 
 	SAFE_SCRIPTS = {
 		GlobalCommands.script_reportCurrentFocus,
@@ -46,6 +42,7 @@ class AppModule(appModuleHandler.AppModule):
 		GlobalCommands.script_navigatorObject_next,
 		GlobalCommands.script_navigatorObject_previous,
 		GlobalCommands.script_navigatorObject_firstChild,
+		GlobalCommands.script_navigatorObject_devInfo,
 		GlobalCommands.script_review_activate,
 		GlobalCommands.script_review_top,
 		GlobalCommands.script_review_previousLine,
