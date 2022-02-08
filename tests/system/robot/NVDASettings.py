@@ -15,7 +15,6 @@ from SystemTestSpy import (
 
 # Imported for type information
 from robot.libraries.Process import Process as _ProcessLib
-from robot.utils.asserts import assert_true, assert_false
 
 from AssertsLib import AssertsLib as _AssertsLib
 
@@ -23,7 +22,6 @@ import os
 from typing import Optional
 import NvdaLib as _nvdaLib
 from NvdaLib import NvdaLib as _nvdaRobotLib
-from tests.system.libraries.SystemTestSpy.windows import GetVisibleWindowTitles
 _nvdaProcessAlias = _nvdaRobotLib.nvdaProcessAlias
 
 _builtIn: BuiltIn = BuiltIn()
@@ -40,7 +38,7 @@ def navigate_to_settings(settingsName):
 	spy.emulateKeyPress("leftWindows+upArrow")  # maximise
 	spy.wait_for_speech_to_finish()
 
-	# navigate to setting
+	# naviagte to setting
 	for letter in settingsName.lower():
 		spy.emulateKeyPress(letter)
 
@@ -72,58 +70,3 @@ def read_settings(settingsName, cacheFolder, currentVersion, compareVersion: Opt
 			compareText = f.read()
 
 		_asserts.strings_match(compareText, actualSpeech)
-
-
-def open_general_to_braille_then_speech():
-	spy = _nvdaLib.getSpyLib()
-	# open the general settings dialog
-	spy.emulateKeyPress("nvda+control+g")
-	# navigate to the panel selection
-	spy.emulateKeyPress("shift+tab")
-	# open the braille settings dialog
-	spy.emulateKeyPress("b")
-
-	# enter the panel
-	spy.wait_for_speech_to_finish()
-	spy.emulateKeyPress("tab")
-	# open the braille driver dialog
-	spy.emulateKeyPress("alt+h")
-
-	# change window focus to desktop
-	spy.emulateKeyPress("windows+d")
-
-	# open the speech settings dialog
-	spy.emulateKeyPress("nvda+control+v")
-	spy.wait_for_speech_to_finish()
-
-	windowsTitles = GetVisibleWindowTitles()
-	errMsg = f'open windows titles: {",".join(windowsTitles)}'
-	assert_true("NVDA Settings: Braille (normal configuration)" in windowsTitles, msg=errMsg)
-	assert_true("Select Braille Display" in windowsTitles, msg=errMsg)
-	assert_true("NVDA Settings: Speech (normal configuration)" in windowsTitles, msg=errMsg)
-
-
-def open_braille_then_speech():
-	spy = _nvdaLib.getSpyLib()
-	# open the braille settings dialog directly
-	# using gesture defined in settings-gestures.ini
-	spy.emulateKeyPress("control+/")
-
-	# enter the panel
-	spy.wait_for_speech_to_finish()
-	spy.emulateKeyPress("tab")
-	# open the braille driver dialog
-	spy.emulateKeyPress("alt+h")
-
-	# change window focus to desktop
-	spy.emulateKeyPress("windows+d")
-
-	# open the speech settings dialog
-	spy.emulateKeyPress("nvda+control+v")
-	spy.wait_for_speech_to_finish()
-
-	windowsTitles = GetVisibleWindowTitles()
-	errMsg = f'open windows titles: {",".join(windowsTitles)}'
-	assert_true("NVDA Settings: Braille (normal configuration)" in windowsTitles, msg=errMsg)
-	assert_true("Select Braille Display" in windowsTitles, msg=errMsg)
-	assert_false("NVDA Settings: Speech (normal configuration)" in windowsTitles, msg=errMsg)
