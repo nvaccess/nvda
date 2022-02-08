@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Callable, TYPE_CHECKING
 import appModuleHandler
 import controlTypes
 import inputCore
@@ -11,6 +12,9 @@ import eventHandler
 import config
 from NVDAObjects.UIA import UIA
 from globalCommands import GlobalCommands
+
+if TYPE_CHECKING:
+	import NVDAObjects
 
 """App module for the Windows 10 and 11 lock screen.
 The lock screen runs as the logged in user on the default desktop,
@@ -28,6 +32,13 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if isinstance(obj,UIA) and obj.role==controlTypes.Role.PANE and obj.UIAElement.cachedClassName=="LockAppContainer":
 			clsList.insert(0,LockAppContainer)
+
+	def event_foreground(self, obj: NVDAObjects.NVDAObject, nextHandler: Callable[[], None]):
+		"""Set mouse object explicitly before continuing to the next handler.
+		This is to prevent the mouse focus remaining on the desktop when locking the screen.
+		"""
+		api.setMouseObject(obj)
+		nextHandler()
 
 	SAFE_SCRIPTS = {
 		GlobalCommands.script_reportCurrentFocus,
