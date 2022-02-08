@@ -228,8 +228,6 @@ def setMouseObject(obj: NVDAObjects.NVDAObject) -> None:
 
 def getDesktopObject() -> NVDAObjects.NVDAObject:
 	"""Get the desktop object"""
-	if _isSecureObjectWhileLockScreenActivated(globalVars.desktopObject):
-		None
 	return globalVars.desktopObject
 
 
