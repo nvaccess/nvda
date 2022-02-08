@@ -1715,7 +1715,7 @@ the NVDAObject for IAccessible
 			try:
 				ret = ", ".join(r.RelationType for r in self._IA2Relations)
 			except Exception as e:
-				ret = "exception: %s" % e
+				ret = f"exception: {e}"
 			info.append(f"IAccessible2 relations: {ret}")
 		return info
 
