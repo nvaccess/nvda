@@ -29,7 +29,7 @@ class Move(_enum.Enum):
 	CHAR = "numpad3"
 	WORD = "numpad6"
 	LINE = "numpad9"
-	HOME = "control+home"
+	HOME = "shift+numpad7"
 
 
 class SymLevel(_enum.Enum):
