@@ -49,6 +49,8 @@ def _isSecureObjectWhileLockScreenActivated(obj: NVDAObjects.NVDAObject) -> bool
 	if lockAppModule is None:
 		return False
 
+	# The LockApp process might be kept alive
+	# So determine if it is active, check the foreground window
 	foregroundHWND = winUser.getForegroundWindow()
 	foregroundProcessId, _threadId = winUser.getWindowThreadProcessID(foregroundHWND)
 
