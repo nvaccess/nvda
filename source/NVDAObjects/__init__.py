@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
 # Davy Kager
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -10,7 +10,6 @@ as well as the associated TextInfo class."""
 
 import os
 import time
-import re
 import typing
 import weakref
 import core
@@ -1296,11 +1295,16 @@ This code is executed if a gain focus event is received by this object.
 			return "%r (truncated)" % string[:truncateLen]
 		return repr(string)
 
-	def _get_devInfo(self):
+	devInfo: typing.List[str]
+	"""Information about this object useful to developers."""
+
+	# C901 '_get_devInfo' is too complex
+	# Note: when working on _get_devInfo, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _get_devInfo(self) -> typing.List[str]:  # noqa: C901
 		"""Information about this object useful to developers.
 		Subclasses may extend this, calling the superclass property first.
 		@return: A list of text strings providing information about this object useful to developers.
-		@rtype: list of str
 		"""
 		info = []
 		try:
