@@ -33,12 +33,25 @@ class AppModule(appModuleHandler.AppModule):
 		if isinstance(obj,UIA) and obj.role==controlTypes.Role.PANE and obj.UIAElement.cachedClassName=="LockAppContainer":
 			clsList.insert(0,LockAppContainer)
 
-	def event_foreground(self, obj: NVDAObjects.NVDAObject, nextHandler: Callable[[], None]):
+	def event_foreground(self, obj: "NVDAObjects.NVDAObject", nextHandler: Callable[[], None]):
 		"""Set mouse object explicitly before continuing to the next handler.
 		This is to prevent the mouse focus remaining on the desktop when locking the screen.
 		"""
 		api.setMouseObject(obj)
 		nextHandler()
+
+	def event_NVDAObject_init(self, obj: "NVDAObjects.NVDAObject") -> None:
+		"""
+		Prevent users from object navigating outside of the lock screen.
+		While usages of `api._isSecureObjectWhileLockScreenActivated` in the api module prevent
+		the user from moving to the object, this event handling prevents reading the objects.
+		"""
+		if obj.parent and obj.parent.appModule.appName != "lockapp":
+			obj.parent = None
+		if obj.next and obj.next.appModule.appName != "lockapp":
+			obj.next = None
+		if obj.previous and obj.previous.appModule.appName != "lockapp":
+			obj.previous = None
 
 	SAFE_SCRIPTS = {
 		GlobalCommands.script_reportCurrentFocus,
