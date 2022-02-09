@@ -83,7 +83,7 @@ def quits_from_menu(showExitDialog=True):
 		spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
 
 	_blockUntilConditionMet(
-		getValue=lambda: _getNvdaMessageWindowhandle() == 0,
+		getValue=lambda: not _nvdaIsRunning(),
 		giveUpAfterSeconds=3,
 		errorMessage="NVDA failed to exit in the specified timeout"
 	)
