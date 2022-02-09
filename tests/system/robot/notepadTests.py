@@ -62,6 +62,7 @@ def _getMoveByWordTestSample() -> str:
 		" don't"  # test punctuation inside a word.
 		# symbols have space before and after, so it is considered a word
 		" ➔ 👕 \n"  # test Symbols containing punctuations (right-pointing arrow, t-shirt)
+		"1 | 2 || 3 ||| 4\n"  # test single/multiple symbols within a "word" issue #10855
 		' \n'  # single space
 		'\t\n'  # single tab
 		'    \n'  # 4 spaces
@@ -82,6 +83,7 @@ def _getMoveByLineTestSample() -> str:
 		'➔', '👕',  # test Symbols containing punctuations (right-pointing arrow, t-shirt)
 		'➔ ', '👕 ',  # test Symbols containing punctuations with joined space
 		'➔👕',  # test Symbols containing punctuations without space
+		"1 | 2 || 3 ||| 4",  # test single/multiple symbols within a "word" issue #10855
 		' ',  # single space
 		'\t',  # single tab
 		'    ',  # 4 spaces
@@ -113,6 +115,7 @@ def test_moveByWord():
 			'(quietly)', 'Hello,', 'Jim', '.',  # no symbols named
 			"don't",  # mid-word symbol
 			'right pointing arrow', 't shirt',
+			'1', 'bar', '2', '', '3', '', '4',  # todo: There should not be any "empty" words.
 			# end of first line
 			'blank',  # single space and newline
 			'',  # tab and newline
@@ -136,6 +139,7 @@ def test_moveByWord():
 			'quote Hello comma,', 'Jim', 'quote  dot.',  # quote, comma and dot are named
 			'don tick t',  # mid-word symbol
 			'right dash pointing arrow', 't dash shirt',
+			'1', 'bar', '2', 'bar  bar', '3', 'bar  bar  bar', '4',
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
@@ -161,6 +165,7 @@ def test_moveByLine():
 			'',  # right arrow symbol
 			't-shirt',
 			't-shirt',  # note missing right arrow symbol
+			'1   2    3     4',
 			'blank',  # single space
 			'',  # tab
 			'blank',  # four spaces
@@ -182,6 +187,7 @@ def test_moveByLine():
 			'right-pointing arrow', 't-shirt',  # symbols each on a line
 			'right-pointing arrow', 't-shirt',  # symbols and a space each on a line
 			'right-pointing arrow  t-shirt',  # symbols joined no space
+			'1  bar  2  bar  bar  3  bar  bar  bar  4',
 			'blank',  # single space
 			'tab',  # single tab
 			'blank',  # 4 spaces
