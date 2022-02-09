@@ -564,6 +564,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	#: Typing information for auto-property: _get_parent
 	parent: typing.Optional['NVDAObject']
+	"This object's parent (the object that contains this object)."
 
 	def _get_parent(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves this object's parent (the object that contains this object).
@@ -580,17 +581,23 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		self.parent = parent
 		return parent
 
-	def _get_next(self):
+	#: Typing information for auto-property: _get_next
+	next: typing.Optional['NVDAObject']
+	"The object directly after this object with the same parent."
+
+	def _get_next(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
-	def _get_previous(self):
+	#: Typing information for auto-property: _get_previous
+	previous: typing.Optional['NVDAObject']
+	"The object directly before this object with the same parent."
+
+	def _get_previous(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves the object directly before this object with the same parent.
 		@return: the previous object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
