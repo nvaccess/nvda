@@ -33,7 +33,9 @@ The logs from NVDA are saved to the `nvdaTestRunLogs` folder
 
 ### Excluding tests
 
-Tests can be excluded by adding the tag `excluded_from_build` EG:
+It is possible to exclude/disable a flaky test, ie intermittent test failures, or a test that needs
+to be disabled until there is time to investigate.
+Add the tag `excluded_from_build` EG:
 
 ```robot
 checkbox labelled by inner element
