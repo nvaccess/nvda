@@ -104,6 +104,15 @@ def _getMoveByCharTestSample() -> str:
 
 def test_moveByWord():
 	"""Move by word with symbol level 'all' then with symbol level 'none'
+	Symbol expectations:
+	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
+	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
+			symbols/punctuation.
+
+	There should not be any "empty" words. E.G. a word made of two bar chars: ||
+	Something should be reported, even at symbol level None. Possible:
+	- The names of the characters: "bar bar", what if there are many (hundreds) symbols?
+	- A placeholder speech UI E.G "symbols". Will it be obvious this is a placeholder?
 	"""
 	_notepad.prepareNotepad(_getMoveByWordTestSample())
 	_doTest(
@@ -112,17 +121,17 @@ def test_moveByWord():
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
 			'Say',
-			'(quietly)', 'Hello,', 'Jim', '.',  # no symbols named
-			"don't",  # mid-word symbol
-			'right pointing arrow', 't shirt',
+			'(quietly)', 'Hello,', 'Jim', '.',  # Expected: no symbols named
+			"don't",  # Expected: mid-word symbol
+			'right pointing arrow', 't shirt',  # todo: Expect dash
 			'1', 'bar', '2', '', '3', '', '4',  # todo: There should not be any "empty" words.
 			# end of first line
 			'blank',  # single space and newline
-			'',  # tab and newline
+			'',  # tab and newline  todo: There should not be any "empty" words.
 			'blank',  # 4 spaces and newline
 			'right pointing arrow',
-			't shirt',  # no space before or after symbol
-			't shirt',  # no character before or after symbol (no newline)
+			't shirt',  # todo: Expect dash
+			't shirt',  # todo: Expect dash
 			'blank',  # end of doc
 		],
 	)
@@ -135,39 +144,50 @@ def test_moveByWord():
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=[
 			'Say',
-			'left paren(quietly right paren)',  # parenthesis are named
-			'quote Hello comma,', 'Jim', 'quote  dot.',  # quote, comma and dot are named
-			'don tick t',  # mid-word symbol
-			'right dash pointing arrow', 't dash shirt',
-			'1', 'bar', '2', 'bar  bar', '3', 'bar  bar  bar', '4',
+			'left paren(quietly right paren)',  # Expect: parenthesis are named
+			'quote Hello comma,', 'Jim', 'quote  dot.',  # Expect: quote, comma and dot are named
+			'don tick t',  # Expect: mid-word symbol substituted
+			'right dash pointing arrow', 't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+			'1', 'bar', '2', 'bar  bar', '3', 'bar  bar  bar', '4',  # Expect no empty words.
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'right dash pointing arrow',  # no space before or after symbol
-			't dash shirt',  # no space before or after symbol
-			't dash shirt',  # no character before or after symbol (no newline)
+			'right dash pointing arrow',  # todo: Expect dash symbol not to be replaced with word.
+			't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+			't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
 			'blank'  # end of doc
 		]
 	)
 
 
 def test_moveByLine():
+	"""
+	Symbol expectations:
+	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
+	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
+			symbols/punctuation.
+
+	There should not be any "empty" lines. E.G. a line with only space / tabs
+	Something should be reported, even at symbol level None. Possible:
+	- The names of the characters: "tab space", what if there are many (hundreds)?
+	- A placeholder speech UI E.G "whitespace". Will it be obvious this is a placeholder?
+	"""
 	_notepad.prepareNotepad(_getMoveByLineTestSample())
 	_doTest(
 		navKey=Move.LINE,
 		reportedAfterLast=EndSpeech.BOTTOM,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
-			'Say', '(quietly)', 'Hello,', 'Jim .', "don't",
-			'',  # right arrow symbol
+			'Say', '(quietly)', 'Hello,', 'Jim .', "don't",  # Expect:
+			'',  # todo: Expect 'right-pointing arrow'
 			't-shirt',
-			'',  # right arrow symbol
+			'',  # todo: Expect 'right-pointing arrow'
 			't-shirt',
-			't-shirt',  # note missing right arrow symbol
-			'1   2    3     4',
+			't-shirt',  # todo: Expect 'right-pointing arrow t-shirt'
+			'1   2    3     4',  # todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
 			'blank',  # single space
-			'',  # tab
+			'',  # tab  # todo: There should not be any "empty" lines.
 			'blank',  # four spaces
 			'blank',  # end of doc
 		]
@@ -181,13 +201,13 @@ def test_moveByLine():
 		reportedAfterLast=EndSpeech.BOTTOM,
 		expectedSpeech=[
 			'Say',
-			'left paren(quietly right paren)',
-			'quote Hello comma,', 'Jim quote  dot.',
-			'don tick t',
-			'right-pointing arrow', 't-shirt',  # symbols each on a line
-			'right-pointing arrow', 't-shirt',  # symbols and a space each on a line
-			'right-pointing arrow  t-shirt',  # symbols joined no space
-			'1  bar  2  bar  bar  3  bar  bar  bar  4',
+			'left paren(quietly right paren)',  # Expect: parenthesis are named
+			'quote Hello comma,', 'Jim quote  dot.',  # Expect: quote, comma and dot are named
+			'don tick t',  # Expect: mid-word symbol substituted
+			'right-pointing arrow', 't-shirt',  # Expect dash
+			'right-pointing arrow', 't-shirt',  # Expect dash
+			'right-pointing arrow  t-shirt',  # Expect dash
+			'1  bar  2  bar  bar  3  bar  bar  bar  4',  # Expect | symbol replaced with bar.
 			'blank',  # single space
 			'tab',  # single tab
 			'blank',  # 4 spaces
@@ -197,41 +217,50 @@ def test_moveByLine():
 
 
 def test_moveByChar():
-	_notepad.prepareNotepad(_getMoveByCharTestSample())
+	"""
 	# Symbol level should not affect move by character
 	# use the same expected speech with symbol level none and all.
-	# Bug: With symbol level ALL text due to a symbol substitution has further substitutions applied:
-	# IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
+	Symbol expectations:
+	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
+	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
+			symbols/punctuation.
+
+	There should not be any "empty" characters.
+	"""
+	_notepad.prepareNotepad(_getMoveByCharTestSample())
 
 	_doTest(
 		navKey=Move.CHAR,
 		reportedAfterLast=EndSpeech.RIGHT,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
-			'S', 'space',
-			'left paren', 'right paren',
-			'quote', 'tick',
-			'e', 'comma',
-			'right pointing arrow', 't shirt',   # note no dash, sym level All has
-			'tab',
-			'carriage return',  # on Windows/notepad newline is \r\n
+			'S', 'space',  # Expect whitespace named.
+			'left paren', 'right paren',  # Expect parens named
+			'quote', 'tick',  # Expect quote and apostrophe named
+			'e', 'comma',  # Expect comma named
+			'right pointing arrow', 't shirt',   # todo: Expect dash i.e. 'right-pointing arrow', 't-shirt'
+			'tab',  # Expect tab named
+			'carriage return',  # Expect Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
 		],
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position.
 
+	# todo: Bug, with symbol level ALL text due to a symbol substitution has further substitutions applied:
+	#       IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
 	_doTest(
 		navKey=Move.CHAR,
 		reportedAfterLast=EndSpeech.RIGHT,
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=[
-			'S', 'space',
-			'left paren', 'right paren',
-			'quote', 'tick',
-			'e', 'comma',
-			'right dash pointing arrow', 't dash shirt',  # note has dash, sym level None doesn't
-			'tab',
+			'S', 'space',  # Expect whitespace named.
+			'left paren', 'right paren',  # Expect parens named
+			'quote', 'tick',  # Expect quote and apostrophe named
+			'e', 'comma',  # Expect comma named
+			# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
+			'right dash pointing arrow', 't dash shirt',
+			'tab',  # Expect whitespace named.
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
 		],
@@ -261,7 +290,7 @@ def test_symbolInSpeechUI():
 		# Illustrates a bug in NVDA. The internal speech UI is processed substituting symbols.
 		# This can be a major issue in languages other than English.
 		[
-			# 'tick' is a bug
+			# todo: 'tick' is a bug
 			"shouldn tick t sub tick symbol"  # intentionally concatenate strings
 			"\nblank",
 		],
