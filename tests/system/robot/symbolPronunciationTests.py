@@ -15,6 +15,7 @@ from SystemTestSpy import (
 
 # Imported for type information
 from NotepadLib import NotepadLib as _NotepadLib
+from ChromeLib import ChromeLib as _ChromeLib
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _NvdaLib
 from robot.libraries.BuiltIn import BuiltIn
@@ -34,6 +35,8 @@ class Move(_enum.Enum):
 	SEL_CARET_WORD = "shift+control+rightArrow"
 	SEL_CARET_LINE = "shift+downArrow"
 	CARET_HOME = "control+home"
+	CARET_CHAR = "rightArrow"
+	CARET_CHAR_BACK = "leftArrow"
 
 
 class SymLevel(_enum.Enum):
@@ -534,4 +537,77 @@ def _doTest(
 		actual,
 		[endReached, ],
 		msg=f"End reached failure. actual vs expected. With symbolLevel {symbolLevel}"
+	)
+
+
+def test_tableHeaders():
+	"""
+	Announce the correct line when placed at the end of a link at the end of a list item in a contenteditable
+	"""
+	_chrome: _ChromeLib = _getLib("ChromeLib")
+	_chrome.prepareChrome(
+		r"""
+			<table>
+				<tr>
+					<th>First-name</th>
+					<th>➔ 👕</th>
+					<th>Don't</th>
+				</tr>
+				<tr>
+					<td>a</td>
+					<td>b</td>
+					<td>c</td>
+				</tr>
+			</table>
+		"""
+	)
+	_setSymbolLevel(SymLevel.ALL)
+	# Expected to be in browse mode
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		# into the table, describe first column header
+		"table  with 2 rows and 3 columns  row 1  column 1  First dash name"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		# describe second column header
+		"column 2  right-pointing arrow   t-shirt"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		# describe third column header
+		"column 3  Don tick t"
+	)
+	# into the first (non-header) row
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		# describe third column header
+		"row 2  First dash name  column 1  a"
+	)
+
+	_doTest(
+		navKey=Move.CARET_CHAR,
+		symbolLevel=SymLevel.NONE,
+		reportedAfterLast=EndSpeech.NONE,
+		expectedSpeech=[
+			't-shirt  column 2\nb',
+			"Don't  column 3\nc",
+		]
+	)
+	# reset to start of row.
+	_NvdaLib.getSpeechAfterKey(Move.CARET_CHAR_BACK.value)
+	_NvdaLib.getSpeechAfterKey(Move.CARET_CHAR_BACK.value)
+
+	_doTest(
+		navKey=Move.CARET_CHAR,
+		symbolLevel=SymLevel.ALL,
+		reportedAfterLast=EndSpeech.NONE,
+		expectedSpeech=[
+			'right-pointing arrow   t-shirt  column 2\nb',
+			"Don tick t  column 3\nc",
+		]
 	)

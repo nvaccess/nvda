@@ -54,3 +54,8 @@ selectionByCharacter
 	[Documentation]	Ensure symbols announced as expected when selecting by character (shift+right arrow).
 	[Tags]	selection
 	test_selByChar
+
+tableHeaderSymbols
+	[Documentation]	Ensure symbols announced as expected in table headers.
+	[Tags]	table
+	test_tableHeaders
