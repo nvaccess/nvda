@@ -39,7 +39,8 @@ class IoBase(object):
 			fileHandle: Union[ctypes.wintypes.HANDLE],
 			onReceive: Callable[[bytes], None],
 			writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
-			onReceiveSize: int = 1
+			onReceiveSize: int = 1,
+			ignoreError: Optional[Callable[[int], bool]] = None
 	):
 		"""Constructor.
 		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
@@ -48,11 +49,14 @@ class IoBase(object):
 		@param onReceive: A callable taking the received data as its only argument.
 		@param writeFileHandle: A handle to an open output device opened for overlapped I/O.
 		@param onReceiveSize: The size (in bytes) of the data with which to call C{onReceive}.
+		@param ignoreError: If provided, a callback that takes the error code for failed I/O and
+		  returns true if the erro should be ignored
 		"""
 		self._file = fileHandle
 		self._onReceive = onReceive
 		self._writeFile = writeFileHandle if writeFileHandle is not None else fileHandle
 		self._readSize = onReceiveSize
+		self._ignoreError = ignoreError
 		self._readBuf = ctypes.create_string_buffer(onReceiveSize)
 		self._readOl = OVERLAPPED()
 		self._recvEvt = winKernel.createEvent()
@@ -141,8 +145,10 @@ class IoBase(object):
 			self._ioDone = None
 			return
 		elif error != 0:
-			raise ctypes.WinError(error)
-		self._notifyReceive(self._readBuf[:numberOfBytes])
+			if not self._ignoreError or not self._ignoreError(error):
+				raise ctypes.WinError(error)
+		if error == 0:
+			self._notifyReceive(self._readBuf[:numberOfBytes])
 		winKernel.kernel32.SetEvent(self._recvEvt)
 		self._asyncRead()
 
@@ -244,13 +250,16 @@ class Bulk(IoBase):
 	def __init__(
 			self, path: str, epIn: int, epOut: int,
 			onReceive: Callable[[bytes], None],
-			onReceiveSize: int = 1
+			onReceiveSize: int = 1,
+			ignoreError: Optional[Callable[[int], bool]] = None
 	):
 		"""Constructor.
 		@param path: The device path.
 		@param epIn: The endpoint to read data from.
 		@param epOut: The endpoint to write data to.
 		@param onReceive: A callable taking a received input report as its only argument.
+		@param ignoreError: An optional callable that takes an I/O error code and
+		  indicates if it should be ignored, potentially after handling it
 		"""
 		if _isDebug():
 			log.debug("Opening device %s" % path)
@@ -269,7 +278,7 @@ class Bulk(IoBase):
 				log.debug("Open write handle failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
 		super(Bulk, self).__init__(readHandle, onReceive,
-			writeFileHandle=writeHandle, onReceiveSize=onReceiveSize)
+			writeFileHandle=writeHandle, onReceiveSize=onReceiveSize, ignoreError=ignoreError)
 
 	def close(self):
 		super(Bulk, self).close()

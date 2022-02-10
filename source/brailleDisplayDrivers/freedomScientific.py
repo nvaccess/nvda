@@ -208,7 +208,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						epIn=1,
 						epOut=0,
 						onReceive=self._onReceive,
-						onReceiveSize=56
+						onReceiveSize=56,
+						ignoreError=self._handleIoError
 					)
 				else:
 					self._dev = hwIo.Serial(
@@ -316,6 +317,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			payload = FS_DATA_EMPTY
 
 		self._handlePacket(packetType, arg1, arg2, arg3, payload)
+
+	def _handleIoError(self, error: int) -> bool:
+		# TODO: Prevent multiple reinitilizations
+		if error == 995:  # Broken I/O pipe, terminate and allow restart
+			log.info("Freedom Scientific display implicitly disconnected by suspend, reinitializing")
+			self.terminate()
+			self.__init__()
+			return True
+		return False
 
 	def _handlePacket(
 			self, packetType: bytes, arg1: bytes, arg2: bytes, arg3: bytes, payload: bytes
