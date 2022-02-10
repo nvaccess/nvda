@@ -85,7 +85,7 @@ extern "C" __declspec(dllexport) bool __stdcall msWord_getCustomAttributeValue(I
 			return false;
 		}
 		logger.dumpLog();
-		// We aare back to local again 
+		// We are back to local again 
 		if(isExtensionSupported) {
 			if(customAttribValue.IsInt()) {
 				pCustomAttribValueArg->vt = VT_I4;
