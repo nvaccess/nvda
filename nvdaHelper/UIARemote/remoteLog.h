@@ -29,12 +29,18 @@ class RemoteableLogger {
 		scope.BindResult(_log);
 	}
 
-	template<typename T> RemoteableLogger& operator <<(T& message) {
-		if constexpr(std::is_base_of<UiaInt,T>::value) {
-			_log.Append(message.Stringify());
-		} else {
-			_log.Append(message);
-		}
+	RemoteableLogger& operator <<(UiaInt& message) {
+		_log.Append(message.Stringify());
+		return *this;
+	}
+
+	RemoteableLogger& operator <<(UiaString& message) {
+		_log.Append(message);
+		return *this;
+	}
+
+	RemoteableLogger& operator <<(const std::wstring message) {
+		_log.Append(message);
 		return *this;
 	}
 
