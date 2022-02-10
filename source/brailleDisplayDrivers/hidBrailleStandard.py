@@ -292,10 +292,10 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.routingIndex = buttonCapsInfo.relativeIndexInCollection
 				# Prefix the gesture name with the specific routing collection name (E.g. routerSet1)
 				namePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
-		name = self._usageIDToGestureName(usagePage, usageID)
-		if namePrefix:
-			name = "_".join([namePrefix, name])
-		names.append(name)
+			name = self._usageIDToGestureName(usagePage, usageID)
+			if namePrefix:
+				name = "_".join([namePrefix, name])
+			names.append(name)
 		self.id = "+".join(names)
 
 	def _usageIDToGestureName(self, usagePage: int, usageID: int):
