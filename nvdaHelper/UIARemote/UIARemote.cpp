@@ -12,9 +12,8 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
-#include <locale>
-#include <codecvt>
+//#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+#include <memory>
 #include <functional>
 #include <string>
 #include <windows.h>
@@ -104,9 +103,12 @@ extern "C" __declspec(dllexport) bool __stdcall msWord_getCustomAttributeValue(I
 			LOG_DEBUG(L"Extension not supported");
 		}
 	} catch (std::exception& e) {
-		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-		auto what = converter.from_bytes(e.what());
-		LOG_ERROR(L"msWord_getCustomAttributeValue exception: "<<what);
+		const std::string what{e.what()};
+		// convert exception message to unicode
+		int wideLen = MultiByteToWideChar(CP_UTF8, 0, what.c_str(), what.length(), nullptr, 0);
+		auto wideBuf = std::make_unique<wchar_t[]>(wideLen);
+		MultiByteToWideChar(CP_UTF8, 0, what.c_str(), what.length(), wideBuf.get(), wideLen);
+	LOG_ERROR(L"msWord_getCustomAttributeValue exception: "<<(wideBuf.get()));
 	} catch(...) {
 		LOG_ERROR(L"msWord_getCustomAttributeValue exception: unknown");
 	}

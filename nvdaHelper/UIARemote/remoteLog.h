@@ -47,9 +47,14 @@ class RemoteableLogger {
 				messageBlock+=message.get();
 			}
 		} catch (std::exception& e) {
-			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-			auto what = converter.from_bytes(e.what());
-			messageBlock+=L"dumpLog exception: " + what + L"\n";
+			const std::string what{e.what()};
+			// convert exception message to unicode
+			int wideLen = MultiByteToWideChar(CP_UTF8, 0, what.c_str(), what.length(), nullptr, 0);
+			auto wideBuf = std::make_unique<wchar_t[]>(wideLen);
+			MultiByteToWideChar(CP_UTF8, 0, what.c_str(), what.length(), wideBuf.get(), wideLen);
+			messageBlock += L"dumpLog exception: ";
+			messageBlock += wideBuf.get();
+			messageBlock += L"\n";
 		}
 		messageBlock+=L"Dump log end";
 		LOG_DEBUG(messageBlock);
