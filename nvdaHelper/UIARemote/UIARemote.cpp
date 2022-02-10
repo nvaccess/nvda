@@ -125,7 +125,7 @@ extern "C" __declspec(dllexport) bool __stdcall initialize(bool doRemote, IUIAut
 	actCtx.lpAssemblyDirectory = dllDirectory;
 	actCtx.dwFlags = ACTCTX_FLAG_ASSEMBLY_DIRECTORY_VALID;
 	HANDLE hActCtx=CreateActCtx(&actCtx);
-	if(hActCtx==NULL) {
+	if(hActCtx == nullptr) {
 		LOG_ERROR(L"Could not create activation context for "<<manifestPath);
 		return false;
 	}
