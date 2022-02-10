@@ -278,7 +278,8 @@ class Bulk(IoBase):
 				log.debug("Open write handle failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
 		super(Bulk, self).__init__(readHandle, onReceive,
-			writeFileHandle=writeHandle, onReceiveSize=onReceiveSize, ignoreError=ignoreError)
+		                           writeFileHandle=writeHandle, onReceiveSize=onReceiveSize,
+		                           ignoreError=ignoreError)
 
 	def close(self):
 		super(Bulk, self).close()
