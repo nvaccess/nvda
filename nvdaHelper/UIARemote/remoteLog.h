@@ -48,7 +48,8 @@ class RemoteableLogger {
 		assert(!UiaOperationAbstraction::ShouldUseRemoteApi());
 		std::wstring messageBlock{L"Dump log start:\n"};
 		try {
-			auto v = *_log;
+			// locally, a UiaArray is a shared_ptr to a vector of will_shared_bstr 
+			const std::vector<wil::shared_bstr>& v = *_log;
 			for(const auto& message: v) {
 				messageBlock+=message.get();
 			}
