@@ -3,13 +3,13 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
-Documentation	Plaintext test cases in notepad
-Force Tags	NVDA	smoke test	notepad
+Documentation	Symbol pronunciation tests
+Force Tags	NVDA	smoke test	symbols
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py
 # for test cases
-Library	notepadTests.py
+Library	symbolPronunciationTests.py
 Library	ScreenCapLibrary
 
 Test Setup	default setup
