@@ -26,10 +26,14 @@ _asserts: _AssertsLib = _getLib("AssertsLib")
 
 class Move(_enum.Enum):
 	"""Gestures to move by different amounts"""
-	CHAR = "numpad3"
-	WORD = "numpad6"
-	LINE = "numpad9"
-	HOME = "shift+numpad7"
+	REVIEW_CHAR = "numpad3"
+	REVIEW_WORD = "numpad6"
+	REVIEW_LINE = "numpad9"
+	REVIEW_HOME = "shift+numpad7"
+	SEL_CARET_CHAR = "shift+rightArrow"
+	SEL_CARET_WORD = "shift+control+rightArrow"
+	SEL_CARET_LINE = "shift+downArrow"
+	CARET_HOME = "control+home"
 
 
 class SymLevel(_enum.Enum):
@@ -44,6 +48,7 @@ class EndSpeech(_enum.Enum):
 	"""
 	BOTTOM = "Bottom"
 	RIGHT = "Right"
+	NONE = None
 
 
 def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> _typing.List[str]:
@@ -55,7 +60,7 @@ def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> _typing.List[str]
 	return actual
 
 
-def _getMoveByWordTestSample() -> str:
+def _getByWordTestSample() -> str:
 	return (
 		"Test: "  # first word won't be spoken
 		'Say (quietly) "Hello, Jim ".'
@@ -114,9 +119,9 @@ def test_moveByWord():
 	- The names of the characters: "bar bar", what if there are many (hundreds) symbols?
 	- A placeholder speech UI E.G "symbols". Will it be obvious this is a placeholder?
 	"""
-	_notepad.prepareNotepad(_getMoveByWordTestSample())
+	_notepad.prepareNotepad(_getByWordTestSample())
 	_doTest(
-		navKey=Move.WORD,
+		navKey=Move.REVIEW_WORD,
 		reportedAfterLast=EndSpeech.BOTTOM,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
@@ -136,10 +141,10 @@ def test_moveByWord():
 		],
 	)
 
-	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position
+	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position
 
 	_doTest(
-		navKey=Move.WORD,
+		navKey=Move.REVIEW_WORD,
 		reportedAfterLast=EndSpeech.BOTTOM,
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=[
@@ -175,7 +180,7 @@ def test_moveByLine():
 	"""
 	_notepad.prepareNotepad(_getMoveByLineTestSample())
 	_doTest(
-		navKey=Move.LINE,
+		navKey=Move.REVIEW_LINE,
 		reportedAfterLast=EndSpeech.BOTTOM,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
@@ -193,10 +198,10 @@ def test_moveByLine():
 		]
 	)
 
-	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position
+	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position
 
 	_doTest(
-		navKey=Move.LINE,
+		navKey=Move.REVIEW_LINE,
 		symbolLevel=SymLevel.ALL,
 		reportedAfterLast=EndSpeech.BOTTOM,
 		expectedSpeech=[
@@ -230,7 +235,7 @@ def test_moveByChar():
 	_notepad.prepareNotepad(_getMoveByCharTestSample())
 
 	_doTest(
-		navKey=Move.CHAR,
+		navKey=Move.REVIEW_CHAR,
 		reportedAfterLast=EndSpeech.RIGHT,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
@@ -245,12 +250,12 @@ def test_moveByChar():
 		],
 	)
 
-	_NvdaLib.getSpeechAfterKey(Move.HOME.value)  # reset to start position.
+	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position.
 
 	# todo: Bug, with symbol level ALL text due to a symbol substitution has further substitutions applied:
 	#       IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
 	_doTest(
-		navKey=Move.CHAR,
+		navKey=Move.REVIEW_CHAR,
 		reportedAfterLast=EndSpeech.RIGHT,
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=[
@@ -267,6 +272,196 @@ def test_moveByChar():
 	)
 
 
+def test_selByWord():
+	"""Select by word with symbol level 'all' then with symbol level 'none'
+	Symbol expectations:
+	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
+	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
+			symbols/punctuation.
+
+	There should not be any "empty" words. E.G. a word made of two bar chars: ||
+	Something should be reported, even at symbol level None. Possible:
+	- The names of the characters: "bar bar", what if there are many (hundreds) symbols?
+	- A placeholder speech UI E.G "symbols". Will it be obvious this is a placeholder?
+	"""
+	_notepad.prepareNotepad(_getByWordTestSample())
+	_doTest(
+		navKey=Move.SEL_CARET_WORD,
+		reportedAfterLast=EndSpeech.NONE,
+		symbolLevel=SymLevel.NONE,
+		expectedSpeech=list((
+			i + (" " if i else "") + "selected" for i in [
+				'Test: ',
+				'Say ',
+				'(quietly) ', 'Hello, ', 'Jim ', '. ',  # Expected: no symbols named
+				"don't ",  # Expected: mid-word symbol
+				'', 't-shirt  ',  # todo: Expect right-pointing arrow
+				# end of first line
+				'',  # This is the newline todo: There should not be any "empty" words.
+				'1 ', '', '2 ', '', '3 ', '', '4',  # todo: There should not be any "empty" words.
+				# end of second line
+				'',  # newline and single space todo: There should not be any "empty" words.
+				'',  # newline and tab  todo: There should not be any "empty" words.
+				'',  # newline and 4 spaces todo: There should not be any "empty" words.
+				'',  # newline  todo: There should not be any "empty" words.
+				'right pointing arrow',  # todo: Expect dash
+				'',  # newline  todo: There should not be any "empty" words.
+				't shirt',  # todo: Expect dash
+				'',  # newline  todo: There should not be any "empty" words.
+				't shirt',  # todo: Expect dash
+				# end of doc
+			]
+		)),
+	)
+
+	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position
+
+	_doTest(
+		navKey=Move.SEL_CARET_WORD,
+		reportedAfterLast=EndSpeech.NONE,
+		symbolLevel=SymLevel.ALL,
+		expectedSpeech=list((
+			i + (" " if i else "") + "selected" for i in [
+				'Test colon: ',
+				'Say ',
+				'left paren(quietly right paren) ',  # Expect: parenthesis are named
+				'quote Hello comma, ', 'Jim ', 'quote  dot. ',  # Expect: quote, comma and dot are named
+				'don tick t ',  # Expect: mid-word symbol substituted
+				'right-pointing arrow  ', 't-shirt  ',  # Expect dash symbol not to be replaced with word.
+				# end of first line
+				'',  # newline  todo: There should not be any "empty" words.
+				'1 ', 'bar  ', '2 ', 'bar  bar  ', '3 ', 'bar  bar  bar  ', '4',  # Expect no empty words.
+				# end of second line
+				'',  # newline and single space
+				'tab ',  # newline and tab
+				'',  # newline and 4 spaces
+				'',  # newline
+				'right dash pointing arrow',  # todo: Expect dash symbol not to be replaced with word.
+				'',  # newline  todo: There should not be any "empty" words.
+				't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+				'',  # newline  todo: There should not be any "empty" words.
+				't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+				# end of doc
+			]
+		))
+	)
+
+
+def test_selByLine():
+	"""
+	Symbol expectations:
+	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
+	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
+			symbols/punctuation.
+
+	There should not be any "empty" lines. E.G. a line with only space / tabs
+	Something should be reported, even at symbol level None. Possible:
+	- The names of the characters: "tab space", what if there are many (hundreds)?
+	- A placeholder speech UI E.G "whitespace". Will it be obvious this is a placeholder?
+	"""
+	_notepad.prepareNotepad(_getMoveByLineTestSample())
+	_doTest(
+		navKey=Move.SEL_CARET_LINE,
+		reportedAfterLast=EndSpeech.NONE,
+		symbolLevel=SymLevel.NONE,
+		expectedSpeech=list((
+			i + ("   " if i else "") + "selected" for i in [
+				'Test:',
+				'Say', '(quietly)', 'Hello,', 'Jim .', "don't ",
+				'',  # todo: Expect 'right-pointing arrow'
+				't-shirt ',
+				'',  # todo: Expect 'right-pointing arrow'
+				't-shirt  ',
+				't-shirt ',  # todo: Expect 'right-pointing arrow t-shirt'
+				'1   2    3     4',  # todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
+				'',  # single space todo: There should not be any "empty" lines.
+				'',  # tab todo: There should not be any "empty" lines.
+				'',  # four spaces todo: There should not be any "empty" lines.
+				# end of doc
+			]
+		))
+	)
+
+	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position
+
+	_doTest(
+		navKey=Move.SEL_CARET_LINE,
+		symbolLevel=SymLevel.ALL,
+		reportedAfterLast=EndSpeech.NONE,
+		expectedSpeech=list((
+			i + (" " if i else "") + "selected" for i in [
+				'Test colon:  ',
+				'Say  ',
+				'left paren(quietly right paren)  ',  # Expect: parenthesis are named
+				'quote Hello comma,  ', 'Jim quote  dot.  ',  # Expect: quote, comma and dot are named
+				'don tick t   ',  # Expect: mid-word symbol substituted
+				'right-pointing arrow   ', 't-shirt   ',  # Expect dash
+				'right-pointing arrow    ', 't-shirt    ',  # Expect dash
+				'right-pointing arrow  t-shirt   ',  # Expect dash
+				'1  bar  2  bar  bar  3  bar  bar  bar  4  ',  # Expect | symbol replaced with bar.
+				'',  # single space
+				'tab   ',  # single tab
+				'',  # 4 spaces
+				# end of doc
+			]
+		)),
+	)
+
+
+def test_selByChar():
+	"""
+	# Symbol level should not affect move by character
+	# use the same expected speech with symbol level none and all.
+	Symbol expectations:
+	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
+	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
+			symbols/punctuation.
+
+	There should not be any "empty" characters.
+	"""
+	_notepad.prepareNotepad(_getMoveByCharTestSample())
+
+	_doTest(
+		navKey=Move.SEL_CARET_CHAR,
+		reportedAfterLast=EndSpeech.NONE,
+		symbolLevel=SymLevel.NONE,
+		expectedSpeech=list((
+			i + (" " if i else "") + "selected" for i in [
+				'T',
+				'S', 'space',  # Expect whitespace named.
+				'left paren', 'right paren',  # Expect parens named
+				'quote', 'tick',  # Expect quote and apostrophe named
+				'e', 'comma',  # Expect comma named
+				'right pointing arrow', 't shirt',   # todo: Expect dash i.e. 'right-pointing arrow', 't-shirt'
+				'tab',  # Expect tab named
+				'',  # Expect Windows/notepad newline is \r\n
+			]
+		))
+	)
+
+	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position.
+
+	# todo: Bug, with symbol level ALL text due to a symbol substitution has further substitutions applied:
+	#       IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
+	_doTest(
+		navKey=Move.SEL_CARET_CHAR,
+		reportedAfterLast=EndSpeech.NONE,
+		symbolLevel=SymLevel.ALL,
+		expectedSpeech=list((
+			i + (" " if i else "") + "selected" for i in [
+				'T', 'S', 'space',  # Expect whitespace named.
+				'left paren', 'right paren',  # Expect parens named
+				'quote', 'tick',  # Expect quote and apostrophe named
+				'e', 'comma',  # Expect comma named
+				# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
+				'right dash pointing arrow', 't dash shirt',
+				'tab',  # Expect whitespace named.
+				'',  # on Windows/notepad newline is \r\n
+			]
+		))
+	)
+
+
 def test_symbolInSpeechUI():
 	_notepad.prepareNotepad((
 		"t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
@@ -277,14 +472,14 @@ def test_symbolInSpeechUI():
 	spy.override_translationString(EndSpeech.RIGHT.value, expected)
 
 	# get to the end char
-	actual = _pressKeyAndCollectSpeech(Move.CHAR.value, numberOfTimes=1)
+	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
 		["blank", ],
 		msg="actual vs expected. Unexpected speech when moving to final character.",
 	)
 
-	actual = _pressKeyAndCollectSpeech(Move.CHAR.value, numberOfTimes=1)
+	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
 		# Illustrates a bug in NVDA. The internal speech UI is processed substituting symbols.
@@ -299,7 +494,7 @@ def test_symbolInSpeechUI():
 
 	# Show that with symbol level None, the speech UI symbols are not substituted.
 	_setSymbolLevel(SymLevel.NONE)
-	actual = _pressKeyAndCollectSpeech(Move.CHAR.value, numberOfTimes=1)
+	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
 		[f"{expected}\nblank", ],
@@ -329,6 +524,8 @@ def _doTest(
 		msg=f"actual vs expected. With symbolLevel {symbolLevel}"
 	)
 
+	if reportedAfterLast == EndSpeech.NONE:
+		return
 	# ensure all content tested, ie the end of the sample should be reached
 	finalItem = expectedSpeech[-1]
 	endReached = f"{reportedAfterLast.value}\n{finalItem}"

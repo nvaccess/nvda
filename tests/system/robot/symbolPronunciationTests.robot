@@ -41,3 +41,16 @@ moveByLine
 moveByCharacter
 	[Documentation]	Ensure symbols announced as expected when navigating by character (numpad 3).
 	test_moveByChar
+
+selectionByWord
+	[Documentation]	Ensure symbols announced as expected when selecting by word (shift+control+right arrow).
+	[Tags]	selection
+	test_selByWord
+selectionByLine
+	[Documentation]	Ensure symbols announced as expected when selecting by line (shift+down arrow).
+	[Tags]	selection
+	test_selByLine
+selectionByCharacter
+	[Documentation]	Ensure symbols announced as expected when selecting by character (shift+right arrow).
+	[Tags]	selection
+	test_selByChar
