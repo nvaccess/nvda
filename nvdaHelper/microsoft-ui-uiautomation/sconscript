@@ -50,7 +50,7 @@ MSUIA_wrapper_libs = env.Command(
 		# Remove any old generated files
 		Delete(MSUIA_sourceDir.Dir('microsoft.ui.uiautomation/Generated Files')),
 		# Do the actual build
-		"msbuild /t:Build /p:Configuration=Release,Platform=x86,OutDir={outDir} $SOURCE".format(outDir=MSUIA_lib_outDir.abspath)
+		"msbuild /t:Build /p:Configuration=Release,Platform=x86,OutDir={outDir}/ $SOURCE".format(outDir=MSUIA_lib_outDir.abspath)
 	],
 )
 env.Ignore(MSUIA_wrapper_libs,MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation_h.h'))
@@ -68,7 +68,7 @@ MSUIA_abstraction_libs = env.Command(
 		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'UiaOperationAbstraction', '*.h')),
 	],
 	action = [
-		"msbuild /t:Build /p:Configuration=Release,Platform=x86,OutDir={outDir} $SOURCE".format(outDir=MSUIA_lib_outDir.abspath),
+		"msbuild /t:Build /p:Configuration=Release,Platform=x86,OutDir={outDir}/ $SOURCE".format(outDir=MSUIA_lib_outDir.abspath),
 	]
 )
 
