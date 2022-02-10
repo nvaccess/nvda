@@ -119,7 +119,7 @@ extern "C" __declspec(dllexport) bool __stdcall msWord_getCustomAttributeValue(I
 extern "C" __declspec(dllexport) bool __stdcall initialize(bool doRemote, IUIAutomation* client) {
 	std::wstring manifestPath = dllDirectory;
 	manifestPath += L"\\Microsoft.UI.UIAutomation.dll.manifest";
-	ACTCTX actCtx={0};
+	ACTCTX actCtx{};
 	actCtx.cbSize=sizeof(actCtx);
 	actCtx.lpSource = L"Microsoft.UI.UIAutomation.dll.manifest";
 	actCtx.lpAssemblyDirectory = dllDirectory;
