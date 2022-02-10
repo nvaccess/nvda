@@ -38,6 +38,7 @@ What's New in NVDA
 -
 
 == Bug Fixes ==
+- Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
 - Clipboard manager pane should no longer incorrectly steal focus when opening some Office programs. (#12736)
 - On a system where the user has chosen to swap the primary mouse button from the left to the right, NVDA will no longer accidentally bring up a context menu instead of activating an item, in applications such as web browsers. (#12642)
 - When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)
