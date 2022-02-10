@@ -21,6 +21,7 @@ What's New in NVDA
   -
 - Added a command to toggle the braille viewer; there is no default associated gesture. (#13258)
 - Added commands for toggling multiple modifiers simultaneously with a Braille display (#13152)
+- The Speech Dictionary dialog now features a "Remove all" button to help clear a whole dictionary. (#11802)
 -
 
 
@@ -51,6 +52,8 @@ What's New in NVDA
 - In Windows 10 Calculator, NVDA will announce labels for history and memory list items. (#11858)
 - Gestures such as scrolling and routing again work with HID Braille devices. (#13228)
 - Windows 11 Mail: After switching focus between apps, while reading a long email, NVDA would get stuck on a line of the email. (#13050)
+- HID braille: chorded gestures (E.g. space+dot4) can be successfully performed from the Braille display. (#13326)
+- Fixed an issue where multiple settings dialogs could be opened at the same time. (#12818)
 -
 
 == Changes for Developers ==
@@ -111,6 +114,8 @@ This can dramatically decrease build times on multi core systems. (#13226)
 - ``config.RUN_REGKEY``, ``config.NVDA_REGKEY`` are deprecated, please use ``config.RegistryKey.RUN``, ``config.RegistryKey.NVDA`` instead. These will be removed in 2023. (#13242)
 - ``easeOfAccess.ROOT_KEY``, ``easeOfAccess.APP_KEY_PATH`` are deprecated, please use``easeOfAccess.RegistryKey.ROOT``, ``easeOfAccess.RegistryKey.APP`` instead. These will be removed in 2023. (#13242)
 - ``easeOfAccess.APP_KEY_NAME`` has been deprecated, to be removed in 2023. (#13242)
+- ``DictionaryDialog`` and ``DictionaryEntryDialog`` are moved from ``gui.settingsDialogs`` to ``gui.speechDict``. (#13294)
+- IAccessible2 relations are now shown in developer info for IAccessible2 objects. (#13315)
 -
 
 
