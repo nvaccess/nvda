@@ -56,26 +56,38 @@ extern "C" __declspec(dllexport) bool __stdcall msWord_getCustomAttributeValue(I
 		UiaTextRange textRange{pTextRangeArg};
 		UiaInt customAttribID{customAttribIDArg};
 		UiaVariant customAttribValue;
-		scope.If(docElement.IsExtensionSupported(guid_msWord_extendedTextRangePattern),[&]() {
-			logger<<L"guid_msWord_extendedTextRangePattern is supported extension"<<endl;
-			UiaElement patternElement{nullptr};
-			docElement.CallExtension(guid_msWord_extendedTextRangePattern, patternElement);
-			scope.If(patternElement,[&]() {
-				logger<<L"Got custom pattern element "<<endl;
-				scope.If(patternElement.IsExtensionSupported(guid_msWord_getCustomAttributeValue),[&]() {
-					isExtensionSupported = true;
-					logger<<L"guid_msWord_getCustomAttributeValue extension supported on pattern"<<endl;
-					patternElement.CallExtension(guid_msWord_getCustomAttributeValue, textRange, customAttribID, customAttribValue);
-					logger<<L"Called guid_msWord_getCustomAttributeValue extention"<<endl;
-				}, [&]() {
-					logger<<L"No guid_msWord_getCustomAttributeValue extension supported"<<endl;
-				});
-			}, [&]() {
-				logger<<L"Could not fetch guid_msWord_extendedTextRangePattern pattern"<<endl;
-			});
-		}, [&]() {
-			logger<<L"No guid_msWord_extendedTextRangePattern extension supported"<<endl;
-		});
+		scope.If(
+			/* condition */ docElement.IsExtensionSupported(guid_msWord_extendedTextRangePattern),
+			/* body */ [&]() {
+				logger<<L"guid_msWord_extendedTextRangePattern is supported extension"<<endl;
+				UiaElement patternElement{nullptr};
+				docElement.CallExtension(guid_msWord_extendedTextRangePattern, patternElement);
+				scope.If(
+					/* condition */ patternElement,
+					/* body */ [&]() {
+						logger<<L"Got custom pattern element "<<endl;
+						scope.If(
+							/* condition */ patternElement.IsExtensionSupported(guid_msWord_getCustomAttributeValue),
+							/* body */ [&]() {
+								isExtensionSupported = true;
+								logger<<L"guid_msWord_getCustomAttributeValue extension supported on pattern"<<endl;
+								patternElement.CallExtension(guid_msWord_getCustomAttributeValue, textRange, customAttribID, customAttribValue);
+								logger<<L"Called guid_msWord_getCustomAttributeValue extention"<<endl;
+							},
+							/* else */ [&]() {
+								logger<<L"No guid_msWord_getCustomAttributeValue extension supported"<<endl;
+							}
+						);
+					},
+					/* else */ [&]() {
+						logger<<L"Could not fetch guid_msWord_extendedTextRangePattern pattern"<<endl;
+					}
+				);
+			},
+			/* else */ [&]() {
+				logger<<L"No guid_msWord_extendedTextRangePattern extension supported"<<endl;
+			}
+		);
 		// Request that certain variables be made available locally after execution remotely
 		scope.BindResult(isExtensionSupported, customAttribValue);
 		// Actually execute the remote code
