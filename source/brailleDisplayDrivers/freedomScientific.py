@@ -209,7 +209,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						epOut=0,
 						onReceive=self._onReceive,
 						onReceiveSize=56,
-						ignoreError=self._handleIoError
+						onReadError=self._handleReadError
 					)
 				else:
 					self._dev = hwIo.Serial(
@@ -246,6 +246,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"globalCommands", "GlobalCommands", "braille_scrollBack")
 		self.gestureMap.add("br(freedomScientific):topRouting%d" % self.numCells,
 			"globalCommands", "GlobalCommands", "braille_scrollForward")
+		self._restarting = False
 
 	def terminate(self):
 		try:
@@ -318,12 +319,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 		self._handlePacket(packetType, arg1, arg2, arg3, payload)
 
-	def _handleIoError(self, error: int) -> bool:
-		# TODO: Prevent multiple reinitilizations
+	def _handleReadError(self, error: int) -> bool:
 		if error == 995:  # Broken I/O pipe, terminate and allow restart
-			log.info("Freedom Scientific display implicitly disconnected by suspend, reinitializing")
-			self.terminate()
-			self.__init__()
+			if not self._restarting:
+				# Will not cause a data race since this driver runs on one thread
+				self._restarting = True
+				log.info("Freedom Scientific display implicitly disconnected by suspend, reinitializing")
+				self.terminate()
+				self.__init__()
 			return True
 		return False
 
