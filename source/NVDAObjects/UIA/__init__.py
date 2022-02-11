@@ -1156,7 +1156,12 @@ class UIA(Window):
 		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-		elif UIAClassName == "TermControl":
+		elif UIAClassName in ("TermControl", "TermControl2"):
+			# microsoft/terminal#12358: Eventually, TermControl2 should have
+			# a separate overlay class that is not a descendant of LiveText.
+			# TermControl2 sends inserted text using UIA notification events,
+			# so it is no longer necessary to diff the object as with all
+			# previous terminal implementations.
 			from . import winConsoleUIA
 			clsList.append(winConsoleUIA.WinTerminalUIA)
 
