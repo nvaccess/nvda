@@ -541,8 +541,16 @@ def _doTest(
 
 
 def test_tableHeaders():
-	"""
-	Announce the correct line when placed at the end of a link at the end of a list item in a contenteditable
+	"""Test symbol substitution for secondary content / context provided in addition to primary content.
+	For example, table headers are spoken when moving between cells.
+	The table headers are not the primary content (based on review / caret location), but supplement the
+	information for the cell.
+	The behaviour is currently questionable, when the contextual content (table headers) contain symbols,
+	should the symbols be substituted according to:
+	- the same rules as the primary content ie influenced by degree of movement,
+	- the global symbol level be used,
+	- some other specific symbol level (None, the default (some))
+	https://github.com/nvaccess/nvda/pull/12710#issuecomment-1031277294
 	"""
 	_chrome: _ChromeLib = _getLib("ChromeLib")
 	_chrome.prepareChrome(
@@ -567,26 +575,43 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# into the table, describe first column header
-		"table  with 2 rows and 3 columns  row 1  column 1  First dash name"
+		'  '.join([
+			"table",  # enter table context
+			"with 2 rows and 3 columns",  # details of the table context
+			"row 1",  # enter row 1 context
+			"column 1",  # enter column 1 context
+			"First dash name",  # the contents of the cell
+		])
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		# describe second column header
-		"column 2  right-pointing arrow   t-shirt"
+		'  '.join([
+			"column 2",  # enter column 2 context, still in row 1, still in table
+			"right-pointing arrow   t-shirt",  # the contents of the cell
+		])
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		# describe third column header
-		"column 3  Don tick t"
+		'  '.join([
+			"column 3",  # enter column 3 context, still in row 1, still in table
+			"Don tick t",  # the contents of the cell
+		])
 	)
 	# into the first (non-header) row
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		# describe third column header
-		"row 2  First dash name  column 1  a"
+		'  '.join([
+			"row 2",   # enter row 2 context, still in table
+			"First dash name",  # reminder of the column name
+			"column 1",  # explicit column 2 context,
+			"a",  # the contents of the cell
+		])
 	)
 
 	_doTest(
@@ -594,8 +619,9 @@ def test_tableHeaders():
 		symbolLevel=SymLevel.NONE,
 		reportedAfterLast=EndSpeech.NONE,
 		expectedSpeech=[
-			't-shirt  column 2\nb',
-			"Don't  column 3\nc",
+			# name of column, column number, \n cell contents
+			't-shirt  column 2\nb',  # note symbols NOT replaced in column name
+			"Don't  column 3\nc",  # note symbols NOT replaced in column name
 		]
 	)
 	# reset to start of row.
@@ -607,7 +633,8 @@ def test_tableHeaders():
 		symbolLevel=SymLevel.ALL,
 		reportedAfterLast=EndSpeech.NONE,
 		expectedSpeech=[
-			'right-pointing arrow   t-shirt  column 2\nb',
-			"Don tick t  column 3\nc",
+			# name of column, column number 2, \n cell contents
+			'right-pointing arrow   t-shirt  column 2\nb',  # note symbols ARE replaced in column name
+			"Don tick t  column 3\nc",  # note symbols ARE replaced in column name
 		]
 	)
