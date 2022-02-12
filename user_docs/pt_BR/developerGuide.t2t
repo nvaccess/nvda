@@ -325,7 +325,7 @@ Plugins make use of NVDA Objects in three particular ways:
 - Most events that plugins receive take an argument which is the NVDA Object on which the event occurred.
 For example, event_gainFocus takes the NVDA Object that represents the control gaining focus.
 - Scripts, events or other code may fetch objects of interest such as the NVDA Object with focus, NVDA's current navigator object, or perhaps the Desktop NVDA Object.
-The code may then retrieve information from that object or perhaps even retrieve another object related to it (e.g. its parent, first child, etc.).
+The code may then retreave information from that object or perhaps even retreave another object related to it (e.g. its parent, first child, etc.).
 - the Plugin may define its own custom NVDA Object classes which will be used to wrap a specific control to give it extra functionality, mutate its properties, etc.
 -
 
@@ -364,7 +364,7 @@ Atualmente, os únicos códigos de entrada no NVDA são:
 -
 
 When NVDA receives input, it looks for a matching gesture binding in a particular order.
-Once a gesture binding is found, the script is executed and no further bindings are used, nor is that particular gesture passed on automatically to the Operating System.
+Once a gesture binding is found, the script is executed and no further bindings are used, nore is that particular gesture passed on automatically to the Operating System.
 
 The order for gesture binding lookup is:
 - Loaded Global Plugins
@@ -496,7 +496,7 @@ Similarly, if you match on MSAA's accRole property, you would probably need to i
 You should also consider what properties you are going to override on the custom NVDA Object.
 For instance, if you are going to override an IAccessible specific property, such as shouldAllowIAccessibleFocusEvent, then you need to inherit from NVDAObjects.IAccessible.IAccessible.
 
-The chooseNVDAObjectOverlayClasses method can be implemented on app modules or global plugin classes.
+the chooseNVDAObjectOverlayClasses method can be implemented on app modules or global plugin classes.
 It takes 3 arguments:
 + self: the app module or global plugin instance.
 + obj: the NVDAObject for which classes are being chosen.
