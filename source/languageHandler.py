@@ -605,5 +605,6 @@ windowsPrimaryLCIDsToLocaleNames={
 	1170: 'ckb',
 	1109: 'my',
 	1143: 'so',
+	2117: 'bn',
 	9242: 'sr',
 }
