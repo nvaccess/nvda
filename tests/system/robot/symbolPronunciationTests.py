@@ -4,6 +4,28 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """Tests for symbol pronunciation within NVDA.
+General symbol expectations:
+	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
+	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
+			symbols/punctuation.
+
+By char symbol expectations:
+- Symbol level should not affect move by character
+- There should not be any "empty" characters.
+
+By word symbol expectations:
+	There should not be any "empty" words. Consider:
+	- a word made of two bar chars: ||
+	- a word with several varied symbols: @^*_
+	Something should be reported, even at symbol level None. Possible:
+	- The names of the characters: "bang at hash...", what if there are many (hundreds) symbols?
+	- A placeholder speech UI E.G "symbols". Will it be obvious this is a placeholder?
+
+By line symbol expectations:
+	There should not be any "empty" lines. E.G. a line with only space / tabs
+	Something should be reported, even at symbol level None. Possible:
+	- The names of the characters: "tab space", what if there are many (hundreds)?
+	- A placeholder speech UI E.G "whitespace". Will it be obvious this is a placeholder?
 """
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 import enum as _enum
@@ -70,7 +92,8 @@ def _getByWordTestSample() -> str:
 		" don't"  # test punctuation inside a word.
 		# symbols have space before and after, so it is considered a word
 		" ➔ 👕 \n"  # test Symbols containing punctuations (right-pointing arrow, t-shirt)
-		"1 | 2 || 3 ||| 4\n"  # test single/multiple symbols within a "word" issue #10855
+		# @^*_ used because it is treated as a single word in notepad.exe
+		"1 | 2 || 3 @^*_ 4\n"  # test single/multiple symbols within a "word" issue #10855
 		' \n'  # single space
 		'\t\n'  # single tab
 		'    \n'  # 4 spaces
@@ -91,7 +114,7 @@ def _getMoveByLineTestSample() -> str:
 		'➔', '👕',  # test Symbols containing punctuations (right-pointing arrow, t-shirt)
 		'➔ ', '👕 ',  # test Symbols containing punctuations with joined space
 		'➔👕',  # test Symbols containing punctuations without space
-		"1 | 2 || 3 ||| 4",  # test single/multiple symbols within a "word" issue #10855
+		"1 | 2 || 3 @^*_ 4",  # test single/multiple symbols within a "word" issue #10855
 		' ',  # single space
 		'\t',  # single tab
 		'    ',  # 4 spaces
@@ -111,16 +134,7 @@ def _getMoveByCharTestSample() -> str:
 
 
 def test_moveByWord():
-	"""Move by word with symbol level 'all' then with symbol level 'none'
-	Symbol expectations:
-	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
-	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
-			symbols/punctuation.
-
-	There should not be any "empty" words. E.G. a word made of two bar chars: ||
-	Something should be reported, even at symbol level None. Possible:
-	- The names of the characters: "bar bar", what if there are many (hundreds) symbols?
-	- A placeholder speech UI E.G "symbols". Will it be obvious this is a placeholder?
+	"""Move by word with symbol level 'none' then with symbol level 'all'
 	"""
 	_notepad.prepareNotepad(_getByWordTestSample())
 	_doTest(
@@ -132,7 +146,8 @@ def test_moveByWord():
 			'(quietly)', 'Hello,', 'Jim', '.',  # Expected: no symbols named
 			"don't",  # Expected: mid-word symbol
 			'right pointing arrow', 't shirt',  # todo: Expect dash
-			'1', 'bar', '2', '', '3', '', '4',  # todo: There should not be any "empty" words.
+			# todo: There should not be any "empty" words. Expect 'bar bar', and 'at  caret  star  line'
+			'1', 'bar', '2', '', '3', '', '4',
 			# end of first line
 			'blank',  # single space and newline
 			'',  # tab and newline  todo: There should not be any "empty" words.
@@ -156,7 +171,8 @@ def test_moveByWord():
 			'quote Hello comma,', 'Jim', 'quote  dot.',  # Expect: quote, comma and dot are named
 			'don tick t',  # Expect: mid-word symbol substituted
 			'right dash pointing arrow', 't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
-			'1', 'bar', '2', 'bar  bar', '3', 'bar  bar  bar', '4',  # Expect no empty words.
+			# Expect no empty words:
+			'1', 'bar', '2', 'bar  bar', '3', 'at  caret  star  line', '4',
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
@@ -170,16 +186,7 @@ def test_moveByWord():
 
 
 def test_moveByLine():
-	"""
-	Symbol expectations:
-	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
-	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
-			symbols/punctuation.
-
-	There should not be any "empty" lines. E.G. a line with only space / tabs
-	Something should be reported, even at symbol level None. Possible:
-	- The names of the characters: "tab space", what if there are many (hundreds)?
-	- A placeholder speech UI E.G "whitespace". Will it be obvious this is a placeholder?
+	""" Move by line with symbol level 'none' then with symbol level 'all'
 	"""
 	_notepad.prepareNotepad(_getMoveByLineTestSample())
 	_doTest(
@@ -193,7 +200,7 @@ def test_moveByLine():
 			'',  # todo: Expect 'right-pointing arrow'
 			't-shirt',
 			't-shirt',  # todo: Expect 'right-pointing arrow t-shirt'
-			'1   2    3     4',  # todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
+			'1   2    3      4',  # todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
 			'blank',  # single space
 			'',  # tab  # todo: There should not be any "empty" lines.
 			'blank',  # four spaces
@@ -215,7 +222,8 @@ def test_moveByLine():
 			'right-pointing arrow', 't-shirt',  # Expect dash
 			'right-pointing arrow', 't-shirt',  # Expect dash
 			'right-pointing arrow  t-shirt',  # Expect dash
-			'1  bar  2  bar  bar  3  bar  bar  bar  4',  # Expect | symbol replaced with bar.
+			# Expect symbols replaced with description.
+			'1  bar  2  bar  bar  3  at  caret  star  line  4',
 			'blank',  # single space
 			'tab',  # single tab
 			'blank',  # 4 spaces
@@ -225,18 +233,11 @@ def test_moveByLine():
 
 
 def test_moveByChar():
-	"""
-	# Symbol level should not affect move by character
-	# use the same expected speech with symbol level none and all.
-	Symbol expectations:
-	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
-	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
-			symbols/punctuation.
-
-	There should not be any "empty" characters.
+	""" Move by character with symbol level 'none', then with symbol level 'all'.
 	"""
 	_notepad.prepareNotepad(_getMoveByCharTestSample())
 
+	# todo: Symbol level should not affect the output. Use same expected speech for both.
 	_doTest(
 		navKey=Move.REVIEW_CHAR,
 		reportedAfterLast=EndSpeech.RIGHT,
@@ -276,16 +277,9 @@ def test_moveByChar():
 
 
 def test_selByWord():
-	"""Select by word with symbol level 'all' then with symbol level 'none'
-	Symbol expectations:
-	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
-	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
-			symbols/punctuation.
-
-	There should not be any "empty" words. E.G. a word made of two bar chars: ||
-	Something should be reported, even at symbol level None. Possible:
-	- The names of the characters: "bar bar", what if there are many (hundreds) symbols?
-	- A placeholder speech UI E.G "symbols". Will it be obvious this is a placeholder?
+	""" Select word by word with symbol level 'none' and symbol level 'all'.
+	Note that the number of spaces between speech content and 'selected' varies, possibly due to the number
+	of times symbols are replaced.
 	"""
 	_notepad.prepareNotepad(_getByWordTestSample())
 	_doTest(
@@ -301,7 +295,8 @@ def test_selByWord():
 				'', 't-shirt  ',  # todo: Expect right-pointing arrow
 				# end of first line
 				'',  # This is the newline todo: There should not be any "empty" words.
-				'1 ', '', '2 ', '', '3 ', '', '4',  # todo: There should not be any "empty" words.
+				# todo: There should not be any "empty" words.
+				'1 ', '', '2 ', '', '3 ', '', '4',
 				# end of second line
 				'',  # newline and single space todo: There should not be any "empty" words.
 				'',  # newline and tab  todo: There should not be any "empty" words.
@@ -333,7 +328,8 @@ def test_selByWord():
 				'right-pointing arrow  ', 't-shirt  ',  # Expect dash symbol not to be replaced with word.
 				# end of first line
 				'',  # newline  todo: There should not be any "empty" words.
-				'1 ', 'bar  ', '2 ', 'bar  bar  ', '3 ', 'bar  bar  bar  ', '4',  # Expect no empty words.
+				# Expect no empty words:
+				'1 ', 'bar  ', '2 ', 'bar  bar  ', '3 ', 'at  caret  star  line  ', '4',
 				# end of second line
 				'',  # newline and single space
 				'tab ',  # newline and tab
@@ -351,16 +347,9 @@ def test_selByWord():
 
 
 def test_selByLine():
-	"""
-	Symbol expectations:
-	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
-	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
-			symbols/punctuation.
-
-	There should not be any "empty" lines. E.G. a line with only space / tabs
-	Something should be reported, even at symbol level None. Possible:
-	- The names of the characters: "tab space", what if there are many (hundreds)?
-	- A placeholder speech UI E.G "whitespace". Will it be obvious this is a placeholder?
+	""" Select line by line with symbol level 'none' and symbol level 'all'.
+	Note: the number of spaces between speech content and 'selected' varies, possibly due to the number
+	of times symbols are replaced.
 	"""
 	_notepad.prepareNotepad(_getMoveByLineTestSample())
 	_doTest(
@@ -376,7 +365,8 @@ def test_selByLine():
 				'',  # todo: Expect 'right-pointing arrow'
 				't-shirt  ',
 				't-shirt ',  # todo: Expect 'right-pointing arrow t-shirt'
-				'1   2    3     4',  # todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
+				# todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
+				'1   2    3      4',
 				'',  # single space todo: There should not be any "empty" lines.
 				'',  # tab todo: There should not be any "empty" lines.
 				'',  # four spaces todo: There should not be any "empty" lines.
@@ -401,7 +391,8 @@ def test_selByLine():
 				'right-pointing arrow   ', 't-shirt   ',  # Expect dash
 				'right-pointing arrow    ', 't-shirt    ',  # Expect dash
 				'right-pointing arrow  t-shirt   ',  # Expect dash
-				'1  bar  2  bar  bar  3  bar  bar  bar  4  ',  # Expect | symbol replaced with bar.
+				# Expect | symbol replaced with bar, and other symbols named
+				'1  bar  2  bar  bar  3  at  caret  star  line  4  ',
 				'',  # single space
 				'tab   ',  # single tab
 				'',  # 4 spaces
@@ -412,15 +403,7 @@ def test_selByLine():
 
 
 def test_selByChar():
-	"""
-	# Symbol level should not affect move by character
-	# use the same expected speech with symbol level none and all.
-	Symbol expectations:
-	➔ - When replaced by speech "right-pointing arrow", the dash should not be removed.
-	👕 - When replaced by speech "t-shirt", the dash should not be removed, honor the replacement text for
-			symbols/punctuation.
-
-	There should not be any "empty" characters.
+	""" Select char by char with symbol level 'none' and symbol level 'all'.
 	"""
 	_notepad.prepareNotepad(_getMoveByCharTestSample())
 
@@ -466,6 +449,9 @@ def test_selByChar():
 
 
 def test_symbolInSpeechUI():
+	""" Replace a translation string to include a character that is can be substituted,
+	check if the 'speech UI' translation string the character substituted.
+	"""
 	_notepad.prepareNotepad((
 		"t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
 	))
