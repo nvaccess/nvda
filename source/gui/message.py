@@ -5,7 +5,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from buildVersion import version_year
 import threading
 from typing import Optional
 import wx
@@ -34,12 +33,10 @@ def messageBox(
 	@return: Same as for wx.MessageBox.
 	"""
 	from gui import mainFrame
-	import gui
 	global _messageBoxCounter
 	with _messageBoxCounterLock:
 		_messageBoxCounter += 1
-	if version_year < 2022:
-		gui.isInMessageBox = True
+
 	try:
 		if not parent:
 			mainFrame.prePopup()
@@ -49,6 +46,5 @@ def messageBox(
 	finally:
 		with _messageBoxCounterLock:
 			_messageBoxCounter -= 1
-		if version_year < 2022:
-			gui.isInMessageBox = isInMessageBox()
+
 	return res
