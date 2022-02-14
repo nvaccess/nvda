@@ -716,16 +716,16 @@ class ExcelWorksheet(ExcelBase):
 		# Sheet1!
 		# ''Sheet2 (4)'!
 		# 'profit and loss'!
-		u'^((?P<sheet>(\'[^\']+\'|[^!]+))!)?'
+		r"^((?P<sheet>('[^']+'|[^!]+))!)?"
 		# followed by a unique name (not containing spaces). Example:
 		# rowtitle_ab12-cd34-de45
-		u'(?P<name>\w+)'
+		r'(?P<name>\w+)'
 		# Optionally followed by minimum and maximum addresses, starting with a period (.). Example:
 		# .a1.c3
 		# .ab34
-		u'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
+		r'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
 		# Optionally followed by a period (.) and extra random data (sometimes produced by other screen readers)
-		u'(\..*)*)?)?$'
+		r'(\..*)*)?)?$'
 	)
 
 	def populateHeaderCellTrackerFromNames(self,headerCellTracker):

@@ -175,7 +175,7 @@ def terminate():
 	pass
 
 def _getDefaultAddonPaths():
-	""" Returns paths where addons can be found.
+	r""" Returns paths where addons can be found.
 	For now, only <userConfig>\addons is supported.
 	@rtype: list(string)
 	"""
@@ -517,7 +517,7 @@ class Addon(AddonBase):
 				func(*args,**kwargs)
 
 	def getDocFilePath(self, fileName=None):
-		"""Get the path to a documentation file for this add-on.
+		r"""Get the path to a documentation file for this add-on.
 		The file should be located in C{doc\lang\file} inside the add-on,
 		where C{lang} is the language code and C{file} is the requested file name.
 		Failing that, the language without country is tried.
