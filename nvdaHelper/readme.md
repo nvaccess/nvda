@@ -27,7 +27,7 @@ Contains code specific to Windows 10 and above, that aides in accessing newer te
 This code is mostly C++/WinRT. 
 
 #### nvdaHelperLocal.dll
-this dll is loaded directly in to NVDA. It provides the following features:
+This dll is loaded directly in to NVDA. It provides the following features:
 *  client stub methods for several RPC interfaces allowing NVDA to execute code in-process. These interfaces include nvdaInprocUtils, vbufBackends, and displayModel, which are implemented in nvdaHelperRemote.dll.
 * Server stub methods for several RPC interfaces allowing in-process code to execute code in NVDA. These interfaces include nvdaController and nvdaControllerInternal. 
 * Functions to aide NVDA in hooking platform dlls to make their calls easier to cancel 
@@ -40,11 +40,11 @@ It provides the following features:
 * Client stub methods for several RPC interfaces, allowing in-process code to execute code back in NVDA. These interfaces include NVDAController and NVDAControllerInternal
 
 #### UIARemote.dll
-this dll is loaded by NVDA, providing utility functions that perform certain tasks or batch procedures on Microsoft UI Automation elements.
+This dll is loaded by NVDA, providing utility functions that perform certain tasks or batch procedures on Microsoft UI Automation elements.
 It makes use of the UI Automation Remote Operations capabilities in Windows 11, allowing to declaritively define code  to  access and manipulate UI Automation elements, that will be Just-In-Time compiled by Windows and executed in the process providing the UI Automation elements.
 
 ##### microsoft-ui-uiAutomation remote ops library
-As a dependdency of UIARemote.dll, the open source [Microsoft-UI-UIAutomation Remote Operations library](https://github.com/microsoft/microsoft-ui-uiautomation)  is also built.
+As a dependency of UIARemote.dll, the open source [Microsoft-UI-UIAutomation Remote Operations library](https://github.com/microsoft/microsoft-ui-uiautomation)  is also built.
 This library contains both a low-level winrt API, and a higher-level pure C++ API which depends on the lower-level winrt API. UIARemote.dll tends to use the higher-level Operations abstraction API for its work.
 In order for the winrt API to be available, UIARemote must register it with the Windows winrt platform. this involves loading a manifest file (See `microsoft-ui-uiautomation/Microsoft.UI.UIAutomation.dll.manifest`) and activating an activation context.
 
