@@ -18,7 +18,13 @@ import enum
 import globalVars
 from logHandler import log
 import winKernel
-from typing import List, Optional, Tuple
+from typing import (
+	FrozenSet,
+	List,
+	Optional,
+	Tuple,
+	Union,
+)
 
 #a few Windows locale constants
 LOCALE_USER_DEFAULT = 0x400
@@ -33,6 +39,8 @@ CP_ACP = "0"
 #: because it is not a standardized locale name anywhere (e.g. "zz")
 #: or because it is not a legal locale name (e.g. "zzzz").
 LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
+
+LANGS_WITHOUT_TRANSLATIONS: FrozenSet[str] = frozenset(("en",))
 
 
 class LOCALE(enum.IntEnum):
@@ -76,13 +84,12 @@ def normalizeLocaleForWin32(localeName: str) -> str:
 	return localeName
 
 
-def localeNameToWindowsLCID(localeName):
-	"""Retreave the Windows locale identifier (LCID) for the given locale name
-	@param localeName: a string of 2letterLanguage_2letterCountry or just language (2letterLanguage or 3letterLanguage)
-	@type localeName: string
+def localeNameToWindowsLCID(localeName: str) -> int:
+	"""Retrieves the Windows locale identifier (LCID) for the given locale name
+	@param localeName: a string of 2letterLanguage_2letterCountry
+	or just language (2letterLanguage or 3letterLanguage)
 	@returns: a Windows LCID or L{LCID_NONE} if it could not be retrieved.
-	@rtype: integer
-	""" 
+	"""
 	# Windows Vista (NT 6.0) and later is able to convert locale names to LCIDs.
 	# Because NVDA supports Windows 7 (NT 6.1) SP1 and later, just use it directly.
 	localeName = normalizeLocaleForWin32(localeName)
@@ -321,6 +328,21 @@ def getWindowsLanguage():
 	return localeName
 
 
+def _createGettextTranslation(
+		localeName: str
+) -> Union[None, gettext.GNUTranslations, gettext.NullTranslations]:
+	if localeName in LANGS_WITHOUT_TRANSLATIONS:
+		globalVars.appArgs.language = localeName
+		return gettext.translation("nvda", fallback=True)
+	try:
+		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
+		globalVars.appArgs.language = localeName
+		return trans
+	except IOError:
+		log.debugWarning(f"couldn't set the translation service locale to {localeName}")
+		return None
+
+
 def setLanguage(lang: str) -> None:
 	'''
 	Sets the following using `lang` such as "en", "ru_RU", or "es-ES". Use "Windows" to use the system locale
@@ -334,25 +356,16 @@ def setLanguage(lang: str) -> None:
 	else:
 		localeName = lang
 		# Set the windows locale for this thread (NVDA core) to this locale.
-		try:
-			LCID = localeNameToWindowsLCID(lang)
-			ctypes.windll.kernel32.SetThreadLocale(LCID)
-		except IOError:
+		LCID = localeNameToWindowsLCID(lang)
+		if winKernel.kernel32.SetThreadLocale(LCID) == 0:
 			log.debugWarning(f"couldn't set windows thread locale to {lang}")
 
-	try:
-		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
-		globalVars.appArgs.language = localeName
-	except IOError:
-		try:
-			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
-			localeName = localeName.split("_")[0]
-			trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
-			globalVars.appArgs.language = localeName
-		except IOError:
-			log.debugWarning(f"couldn't set the translation service locale to {localeName}")
-			trans = gettext.translation("nvda", fallback=True)
-			globalVars.appArgs.language = "en"
+	trans = _createGettextTranslation(localeName)
+	if trans is None and "_" in localeName:
+		localeName = localeName.split("_")[0]
+		trans = _createGettextTranslation(localeName)
+	if trans is None:
+		trans = _createGettextTranslation("en")
 
 	trans.install()
 	setLocale(getLanguage())

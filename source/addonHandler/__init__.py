@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2021 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
+# Copyright (C) 2012-2022 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
 # Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -30,7 +30,6 @@ import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
 import extensionPoints
-import buildVersion
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -119,15 +118,6 @@ class AddonsState(collections.UserDict):
 
 
 state = AddonsState()
-
-
-# Deprecated - use `state.save` and `state.load` instead.
-if buildVersion.version_year < 2022:
-	def saveState():
-		state.save()
-
-	def loadState():
-		state.load()
 
 
 def getRunningAddons():
