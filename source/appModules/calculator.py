@@ -77,6 +77,9 @@ class AppModule(appModuleHandler.AppModule):
 	def event_UIA_notification(self, obj, nextHandler, displayString=None, activityId=None, **kwargs):
 		calculatorVersion = int(self.productVersion.split(".")[0])
 		# #12268: for "DisplayUpdated", announce display strings in braille  no matter what they are.
+		# There are other activity Id's such as "MemorySlotAdded" and "MemoryCleared"
+		# but they do not involve number entry.
+		# Therefore, only handle the below activity Id.
 		if activityId == "DisplayUpdated":
 			braille.handler.message(displayString)
 			resultElement = api.getForegroundObject().children[1].lastChild
