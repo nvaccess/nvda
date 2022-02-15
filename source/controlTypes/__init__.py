@@ -1,9 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
+# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
 
-from .formatFields import TextPosition
+from .formatFields import TextPosition, TextAlign, VerticalTextAlign
 from .isCurrent import IsCurrent
 from .outputReason import OutputReason
 from .processAndLabelStates import processAndLabelStates
@@ -31,7 +31,9 @@ __all__ = [
 	"State",
 	"STATES_SORTED",
 	"DescriptionFrom",
+	"TextAlign",
 	"TextPosition",
 	"transformRoleStates",
+	"VerticalTextAlign",
 	*deprecatedAliases.__all__
 ]

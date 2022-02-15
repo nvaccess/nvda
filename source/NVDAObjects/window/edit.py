@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -28,7 +28,7 @@ from winAPI.winUser.constants import SysColorIndex
 import textInfos
 import textInfos.offsets
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign
 from . import Window
 from ..behaviors import EditableTextWithAutoSelectDetection
 import watchdog
@@ -520,13 +520,16 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				paraFormatObj = textRange.para
 			alignment=paraFormatObj.alignment
 			if alignment==comInterfaces.tom.tomAlignLeft:
-				formatField["text-align"]="left"
+				formatField["text-align"] = TextAlign.LEFT
 			elif alignment==comInterfaces.tom.tomAlignCenter:
-				formatField["text-align"]="center"
+				formatField["text-align"] = TextAlign.CENTER
 			elif alignment==comInterfaces.tom.tomAlignRight:
-				formatField["text-align"]="right"
+				formatField["text-align"] = TextAlign.RIGHT
 			elif alignment==comInterfaces.tom.tomAlignJustify:
-				formatField["text-align"]="justify"
+				formatField["text-align"] = TextAlign.JUSTIFY
+			else:
+				log.debugWarning(f'Unsupported text-align: {alignment}')
+				formatField["text-align"] = TextAlign.UNDEFINED
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"] = textRange.getIndex(comInterfaces.tom.tomLine)
 		if formatConfig["reportFontName"]:

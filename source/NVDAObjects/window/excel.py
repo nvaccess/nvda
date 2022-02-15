@@ -39,7 +39,7 @@ from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign, VerticalTextAlign
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
@@ -54,28 +54,48 @@ excel2010VersionMajor=14
 xlNone=-4142
 xlSimple=-4154
 xlExtended=3
-xlCenter=-4108
-xlJustify=-4130
-xlLeft=-4131
-xlRight=-4152
-xlDistributed=-4117
-xlBottom=-4107
-xlTop=-4160
+
+# XlHAlign enumeration  from https://docs.microsoft.com/en-us/office/vba/api/excel.xlhalign
+xlHAlignCenter = -4108
+xlHAlignCenterAcrossSelection = 7
+xlHAlignDistributed = -4117
+xlHAlignFil = 5
+xlHAlignGeneral = 1
+xlHAlignJustify = -4130
+xlHAlignLeft = -4131
+xlHAlignRight = -4152
+
+# XlVAlign enumeration from https://docs.microsoft.com/en-us/office/vba/api/excel.xlvalign
+xlVAlignBottom = -4107
+xlVAlignCenter = -4108
+xlVAlignDistributed = -4117
+xlVAlignJustify = -4130
+xlVAlignTop = -4160
+
 xlDown=-4121
 xlToLeft=-4159
 xlToRight=-4161
 xlUp=-4162
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
 xlSheetVisible=-1
-alignmentLabels={
-	xlCenter:"center",
-	xlJustify:"justify",
-	xlLeft:"left",
-	xlRight:"right",
-	xlDistributed:"distributed",
-	xlBottom:"botom",
-	xlTop:"top",
-	1:"default",
+
+horizontalAlignmentLabels = {
+	xlHAlignCenter: TextAlign.CENTER,
+	xlHAlignCenterAcrossSelection: TextAlign.CENTER_ACROSS_SELECTION,
+	xlHAlignDistributed: TextAlign.DISTRIBUTE,
+	xlHAlignFil: TextAlign.FILL,
+	xlHAlignGeneral: TextAlign.GENERAL,
+	xlHAlignJustify: TextAlign.JUSTIFY,
+	xlHAlignLeft: TextAlign.LEFT,
+	xlHAlignRight: TextAlign.RIGHT,
+}
+
+verticalAlignmentLabels = {
+	xlVAlignBottom: VerticalTextAlign.BOTTOM,
+	xlVAlignCenter: VerticalTextAlign.CENTER,
+	xlVAlignDistributed: VerticalTextAlign.DISTRIBUTE,
+	xlVAlignJustify: VerticalTextAlign.JUSTIFY,
+	xlVAlignTop: VerticalTextAlign.TOP,
 }
 
 xlA1 = 1
@@ -1097,10 +1117,10 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			cellObj=self.obj.excelCellObject
 		fontObj=cellObj.font
 		if formatConfig['reportAlignment']:
-			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
+			value = horizontalAlignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
 			if value:
 				formatField['text-align']=value
-			value=alignmentLabels.get(self.obj.excelCellObject.verticalAlignment)
+			value = verticalAlignmentLabels.get(self.obj.excelCellObject.verticalAlignment)
 			if value:
 				formatField['vertical-align']=value
 		if formatConfig['reportFontName']:

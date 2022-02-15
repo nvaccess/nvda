@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2016 NVDA contributers.
+Copyright 2016-2023 NVDA contributors.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -186,10 +186,12 @@ constexpr int wdMaximumNumberOfColumns = 18;
 constexpr int wdHorizontalPositionRelativeToPage = 5;
 
 // WdParagraphAlignment Enumeration
+// (see https://docs.microsoft.com/en-us/office/vba/api/word.wdparagraphalignment)
 constexpr int wdAlignParagraphLeft = 0;
 constexpr int wdAlignParagraphCenter = 1;
 constexpr int wdAlignParagraphRight = 2;
 constexpr int wdAlignParagraphJustify = 3;
+constexpr int wdAlignParagraphDistribute = 4;
 
 // WdLanguageID Enumeration
 constexpr int wdLanguageNone = 0;  //&H0
