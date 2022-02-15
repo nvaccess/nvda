@@ -30,6 +30,7 @@ import winUser
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
+from controlTypes import TextPosition
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
@@ -996,10 +997,16 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['underline']=False if underline is None or underline==xlUnderlineStyleNone else True
 			formatField['strikethrough'] = fontObj.strikethrough
 		if formatConfig['reportSuperscriptsAndSubscripts']:
-			if fontObj.superscript:
-				formatField['text-position'] = 'super'
-			elif fontObj.subscript:
-				formatField['text-position'] = 'sub'
+			# For cells, in addition to True and False, fontObj.superscript or fontObj.subscript may have the value
+			# None in case of mixed text position, e.g. characters on baseline and in superscript in the same cell.
+			if fontObj.superscript is True:
+				formatField['text-position'] = TextPosition.SUPERSCRIPT
+			elif fontObj.subscript is True:
+				formatField['text-position'] = TextPosition.SUBSCRIPT
+			elif fontObj.superscript is False and fontObj.subscript is False:
+				formatField['text-position'] = TextPosition.BASELINE
+			else:
+				formatField['text-position'] = TextPosition.UNDEFINED
 		if formatConfig['reportStyle']:
 			try:
 				styleName=self.obj.excelCellObject.style.nameLocal
