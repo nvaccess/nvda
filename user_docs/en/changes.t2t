@@ -35,6 +35,7 @@ What's New in NVDA
 - ``NVDA+Numpad Delete`` reports the location of the caret or focused object by default. (#13060)
 - ``NVDA+Shift+Numpad Delete`` reports the location of the review cursor. (#13060)
 - Added default bindings for toggling modifier keys to Freedom Scientific displays (#13152)
+- 'Baseline' is no longer reported via the report text formatting command (NVDA+F). (#11815)
 -
 
 == Bug Fixes ==
@@ -56,6 +57,7 @@ What's New in NVDA
 - HID braille: chorded gestures (E.g. space+dot4) can be successfully performed from the Braille display. (#13326)
 - Fixed an issue where multiple settings dialogs could be opened at the same time. (#12818)
 - Fixed a problem where some Focus Blue Braille displays would stop working after waking the computer from sleep. (#9830)
+- 'Baseline' is no longer spuriously reported when the 'report superscript and subscript' option is active. (#11078)
 -
 
 == Changes for Developers ==
