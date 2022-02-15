@@ -14,6 +14,14 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #pragma once
 
+// Converts a utf8 encoded string into a utf16 encoded wstring
+std::wstring stringToWstring(const std::string& from) {
+	int wideLen = MultiByteToWideChar(CP_UTF8, 0, from.c_str(), from.length(), nullptr, 0);
+	std::vector<wchar_t> wideBuf (wideLen + 1, L'\0');
+	MultiByteToWideChar(CP_UTF8, 0, from.c_str(), from.length(), wideBuf.data(), wideLen);
+	return std::wstring(wideBuf.data());
+}
+
 const std::wstring endl{L"\n"};
 
 class RemoteableLogger;
@@ -54,13 +62,9 @@ class RemoteableLogger {
 				messageBlock+=message.get();
 			}
 		} catch (std::exception& e) {
-			const std::string what{e.what()};
-			// convert exception message to unicode
-			int wideLen = MultiByteToWideChar(CP_UTF8, 0, what.c_str(), what.length(), nullptr, 0);
-			auto wideBuf = std::make_unique<wchar_t[]>(wideLen);
-			MultiByteToWideChar(CP_UTF8, 0, what.c_str(), what.length(), wideBuf.get(), wideLen);
+			auto wideWhat = stringToWstring(e.what());
 			messageBlock += L"dumpLog exception: ";
-			messageBlock += wideBuf.get();
+			messageBlock += wideWhat;
 			messageBlock += L"\n";
 		}
 		messageBlock+=L"Dump log end";

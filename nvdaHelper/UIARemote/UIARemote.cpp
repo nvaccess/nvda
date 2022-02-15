@@ -114,12 +114,8 @@ extern "C" __declspec(dllexport) bool __stdcall msWord_getCustomAttributeValue(I
 			LOG_DEBUG(L"Extension not supported");
 		}
 	} catch (std::exception& e) {
-		const std::string what{e.what()};
-		// convert exception message to unicode
-		int wideLen = MultiByteToWideChar(CP_UTF8, 0, what.c_str(), what.length(), nullptr, 0);
-		auto wideBuf = std::make_unique<wchar_t[]>(wideLen);
-		MultiByteToWideChar(CP_UTF8, 0, what.c_str(), what.length(), wideBuf.get(), wideLen);
-	LOG_ERROR(L"msWord_getCustomAttributeValue exception: "<<(wideBuf.get()));
+		auto wideWhat = stringToWstring(e.what());
+	LOG_ERROR(L"msWord_getCustomAttributeValue exception: "<<wideWhat);
 	} catch(...) {
 		LOG_ERROR(L"msWord_getCustomAttributeValue exception: unknown");
 	}
