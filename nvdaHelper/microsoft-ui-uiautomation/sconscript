@@ -15,6 +15,21 @@
 import os
 import glob
 
+"""
+Builds the  open source Microsoft-UI-UIAutomation Remote Operations library from https://github.com/microsoft/microsoft-ui-uiautomation.
+This library contains both a low-level winrt API, and a higher-level pure C++ API.
+The outputs of this sconscript are:
+* a 'lib' directory, containing:
+	* microsoft.ui.uiAutomation.dll and .lib: the dll containing the low-level winrt implementation.
+		To use in other code, link against the .lib, and also load the included microsoft.ui.uiAutomation.dll.manifest file into an activation context and activate it. 
+	* UiaOperationAbstraction.lib: a static library containing runtime code for the higher-level pure C++ API.
+		This should be linked into any compiled executable or library that needs to use the higher-level C++ API. 
+* an 'include' directory, containing:
+	* a 'UIAOperationAbstraction' directory containing all the public headers for the high-level C++ API
+	* a 'winrt' directory containing the generated C++/winrt language bindings of the low-level API, required by the high-level C++ API headers
+"""
+
+
 Import(
 	'env',
 	'sourceDir',
