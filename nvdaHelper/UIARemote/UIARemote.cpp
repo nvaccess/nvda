@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-//#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
 #include <memory>
 #include <functional>
 #include <string>
