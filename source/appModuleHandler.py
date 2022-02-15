@@ -1,13 +1,12 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
 # Babbage B.V., Mozilla Corporation, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """Manages appModules.
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
-@type runningTable: dict
 """
 
 from __future__ import annotations
@@ -17,6 +16,7 @@ import ctypes.wintypes
 import os
 import sys
 from typing import (
+	Dict,
 	Optional,
 )
 
@@ -27,10 +27,8 @@ import threading
 import tempfile
 import comtypes.client
 import baseObject
-import globalVars
 from logHandler import log
 import NVDAHelper
-import winUser
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
@@ -40,8 +38,8 @@ import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
 
-#Dictionary of processID:appModule paires used to hold the currently running modules
-runningTable={}
+# Dictionary of processID:appModule pairs used to hold the currently running modules
+runningTable: Dict[int, AppModule] = {}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 _importers=None
@@ -108,12 +106,11 @@ def getAppModuleForNVDAObject(obj):
 		return
 	return getAppModuleFromProcessID(obj.processID)
 
-def getAppModuleFromProcessID(processID):
+
+def getAppModuleFromProcessID(processID: int) -> AppModule:
 	"""Finds the appModule that is for the given process ID. The module is also cached for later retreavals.
 	@param processID: The ID of the process for which you wish to find the appModule.
-	@type processID: int
-	@returns: the appModule, or None if there isn't one
-	@rtype: appModule 
+	@returns: the appModule
 	"""
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
@@ -339,18 +336,19 @@ class AppModule(baseObject.ScriptableObject):
 	#: @type: bool
 	sleepMode=False
 
+	processID: int
+	"""The ID of the process this appModule is for"""
+
+	appName: str
+	"""The application name"""
+
 	def __init__(self,processID,appName=None):
 		super(AppModule,self).__init__()
-		#: The ID of the process this appModule is for.
-		#: @type: int
 		self.processID=processID
 		if appName is None:
 			appName=getAppNameFromProcessID(processID)
-		#: The application name.
-		#: @type: str
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
-
 		self.helperLocalBindingHandle: Optional[ctypes.c_long] = None
 		"""RPC binding handle pointing to the RPC server for this process"""
 
@@ -430,6 +428,8 @@ class AppModule(baseObject.ScriptableObject):
 
 	def _get_appModuleName(self):
 		return self.__class__.__module__.split('.')[-1]
+
+	isAlive: bool
 
 	def _get_isAlive(self):
 		return bool(winKernel.waitForSingleObject(self.processHandle,0))

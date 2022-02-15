@@ -1,26 +1,25 @@
-#globalVars.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NVDA Contributors <http://www.nvda-project.org/>
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 """global variables module
 @var foregroundObject: holds the current foreground object. The object for the last foreground event received.
-@type foregroundObject: L{NVDAObjects.NVDAObject}
-  @var focusObject: holds the current focus object
-@type focusObject: L{NVDAObjects.NVDAObject}
+@var focusObject: holds the current focus object
 @var mouseObject: holds the object that is at the position of the mouse pointer
-@type mouseObject: L{NVDAObjects.NVDAObject}
 @var mouseOldX: the last x coordinate of the mouse pointer before its current position
 @type oldMouseX: int
 @var mouseOldY: the last y coordinate of the mouse pointer before its current position
 @type oldMouseY: int
-  @var navigatorObject: holds the current navigator object
-@type navigatorObject: L{NVDAObjects.NVDAObject}
+@var navigatorObject: holds the current navigator object
 """
 
 import argparse
 import os
 import typing
+
+if typing.TYPE_CHECKING:
+	import NVDAObjects  # noqa: F401 used for type checking only
 
 
 class DefautAppArgs(argparse.Namespace):
@@ -48,15 +47,15 @@ class DefautAppArgs(argparse.Namespace):
 
 
 startTime=0
-desktopObject=None
-foregroundObject=None
-focusObject=None
-focusAncestors=[]
+desktopObject: typing.Optional['NVDAObjects.NVDAObject'] = None
+foregroundObject: typing.Optional['NVDAObjects.NVDAObject'] = None
+focusObject: typing.Optional['NVDAObjects.NVDAObject'] = None
+focusAncestors: typing.List['NVDAObjects.NVDAObject'] = []
 focusDifferenceLevel=None
-mouseObject=None
+mouseObject: typing.Optional['NVDAObjects.NVDAObject'] = None
 mouseOldX=None
 mouseOldY=None
-navigatorObject=None
+navigatorObject: typing.Optional['NVDAObjects.NVDAObject'] = None
 reviewPosition=None
 reviewPositionObj=None
 lastProgressValue=0

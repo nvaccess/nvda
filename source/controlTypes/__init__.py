@@ -5,6 +5,7 @@
 
 from buildVersion import version_year
 
+from .formatFields import TextPosition
 from .isCurrent import IsCurrent
 from .outputReason import OutputReason
 from .processAndLabelStates import processAndLabelStates
@@ -27,6 +28,7 @@ if version_year >= 2022:
 		"State",
 		"STATES_SORTED",
 		"DescriptionFrom",
+		"TextPosition",
 	]
 
 
