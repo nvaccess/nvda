@@ -24,7 +24,7 @@ For instance:
 
 #### nvdaHelperLocalWin10.dll
 Contains code specific to Windows 10 and above, that aides in accessing newer technologies such as Windows OneCore speech synthesis, the Windows in-built OCR service.
-This code is usually either written in C++/CX or C++/WinRT. 
+This code is mostly C++/WinRT. 
 
 #### nvdaHelperLocal.dll
 this dll is loaded directly in to NVDA. It provides the following features:
