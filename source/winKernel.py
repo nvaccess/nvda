@@ -482,19 +482,10 @@ def SetThreadExecutionState(esFlags):
 
 
 def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
-	# NVDA cannot run with this imported at the top level
-	from logHandler import log
 	bufSize = 32
 	buf = ctypes.create_unicode_buffer(bufSize)
 	dwFlags = 0
-	try:
-		kernel32.LCIDToLocaleName(windowsLCID, buf, bufSize, dwFlags)
-	except AttributeError:
-		# This exception was previously passed.
-		# More information is needed on the cause of this exception
-		# for improving this comment or handling.
-		log.exception("Unexpected AttributeError raised:", exc_info=True)
-		return None
+	kernel32.LCIDToLocaleName(windowsLCID, buf, bufSize, dwFlags)
 	# An empty string is returned for unknown LCIDs
 	if not buf.value:
 		return None
