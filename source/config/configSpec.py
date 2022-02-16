@@ -31,6 +31,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [speech]
 	# The synthesizer to use
 	synth = string(default=auto)
+	# symbolLevel values:
+	#  NONE = 0
+	#  SOME = 100
+	#  MOST = 200
+	#  ALL = 300
+	#  CHAR = 1000
+	#  UNCHANGED = -1
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
 	includeCLDR = boolean(default=True)

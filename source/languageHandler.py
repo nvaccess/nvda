@@ -12,6 +12,9 @@ import builtins
 import os
 import sys
 import ctypes
+
+import weakref
+
 import locale
 import gettext
 import enum
@@ -41,6 +44,9 @@ CP_ACP = "0"
 LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
 
 LANGS_WITHOUT_TRANSLATIONS: FrozenSet[str] = frozenset(("en",))
+installedTranslation: Optional[weakref.ReferenceType] = None
+"""Saved copy of the installed translation for ease of wrapping.
+"""
 
 
 class LOCALE(enum.IntEnum):
@@ -371,6 +377,9 @@ def setLanguage(lang: str) -> None:
 	setLocale(getLanguage())
 	# Install our pgettext function.
 	builtins.pgettext = makePgettext(trans)
+
+	global installedTranslation
+	installedTranslation = weakref.ref(trans)
 
 
 def localeStringFromLocaleCode(localeCode: str) -> str:
