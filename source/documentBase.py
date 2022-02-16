@@ -1,12 +1,35 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2022 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+from dataclasses import dataclass
+from enum import Enum
+from typing import Optional
 from baseObject import AutoPropertyObject, ScriptableObject
 import config
 import textInfos
 import controlTypes
+
+
+class _Axis(str, Enum):
+	row = "row"
+	column = "column"
+
+
+class _Movement(str, Enum):
+	next = "next"
+	previous = "previous"
+
+
+@dataclass
+class _TableSelection:
+	selection: textInfos.TextInfo
+	axis: _Axis
+	row: int
+	rowSpan: int
+	col: int
+	colSpan: int
 
 
 class TextContainerObject(AutoPropertyObject):
@@ -21,6 +44,8 @@ class TextContainerObject(AutoPropertyObject):
 	def makeTextInfo(self, position) -> textInfos.TextInfo:
 		return self.TextInfo(self,position)
 
+	selection: textInfos.TextInfo
+
 	def _get_selection(self):
 		return self.makeTextInfo(textInfos.POSITION_SELECTION)
 
@@ -32,6 +57,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	A document that supports standard table navigiation comments (E.g. control+alt+arrows to move between table cells).
 	The document could be an NVDAObject, or a BrowseModeDocument treeIntercepter for example.
 	"""
+
+	_lastTableSelection: Optional[_TableSelection] = None
 
 	def _getTableCellCoords(self, info):
 		"""
@@ -87,28 +114,31 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		raise NotImplementedError
 
 	_missingTableCellSearchLimit=3 #: The number of missing  cells L{_getNearestTableCell} is allowed to skip over to locate the next available cell
-	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+
+	def _getNearestTableCell(
+			self,
+			tableID,
+			startPos: textInfos.TextInfo,
+			origRow: int,
+			origCol: int,
+			origRowSpan: int,
+			origColSpan: int,
+			movement: _Movement,
+			axis: _Axis,
+	) -> textInfos.TextInfo:
 		"""
 		Locates the nearest table cell relative to another table cell in a given direction, given its coordinates.
 		For example, this is used to move to the cell in the next column, previous row, etc.
 		This method will skip over missing table cells (where L{_getTableCellAt} raises LookupError), up to the number of times set by _missingTableCellSearchLimit set on this instance.
 		@param tableID: the ID of the table
 		@param startPos: the position in the document to start searching from.
-		@type startPos: L{textInfos.TextInfo}
 		@param origRow: the row number of the starting cell
-		@type origRow: int
 		@param origCol: the column number  of the starting cell
-		@type origCol: int
 		@param origRowSpan: the row span of the row of the starting cell
-		@type origRowSpan: int
 		@param origColSpan: the column span of the column of the starting cell
-		@type origColSpan: int
 		@param movement: the direction ("next" or "previous")
-		@type movement: string
 		@param axis: the axis of movement ("row" or "column")
-		@type axis: string
 		@returns: the position of the nearest table cell
-		@rtype: L{textInfos.TextInfo}
 		"""
 		if not axis:
 			raise ValueError("Axis must be row or column")
@@ -138,13 +168,11 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				destCol+=1 if movement=="next" else -1
 		raise LookupError
 
-	_lastTableSelection = None
-	_lastTableAxis = None
-	_lastTableRow = None
-	_lastTableRowSpan = None
-	_lastTableCol = None
-	_lastTableColSpan = None
-	def _tableMovementScriptHelper(self, movement="next", axis=None):
+	def _tableMovementScriptHelper(
+			self,
+			movement: _Movement = _Movement.next,
+			axis: Optional[_Axis] = None
+	):
 		# documentBase is a core module and should not depend on these UI modules and so they are imported
 		# at run-time. (#12404)
 		from scriptHandler import isScriptWaiting
@@ -167,13 +195,17 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		# In this case, instead of using current column/row index, we used cached value
 		# to allow users being able to skip merged cells without affecting the initial column/row index.
 		# For more info see issue #11919 and #7278.
-		if (self.selection == self._lastTableSelection) and (self._lastTableAxis == axis):
-			if axis == "row":
-				origCol = self._lastTableCol
-				origColSpan = self._lastTableColSpan
+		if (
+			self._lastTableSelection
+			and self.selection == self._lastTableSelection.selection
+			and self._lastTableSelection.axis == axis
+		):
+			if axis == _Axis.row:
+				origCol = self._lastTableSelection.col
+				origColSpan = self._lastTableSelection.colSpan
 			else:
-				origRow = self._lastTableRow
-				origRowSpan = self._lastTableRowSpan
+				origRow = self._lastTableSelection.row
+				origRowSpan = self._lastTableSelection.rowSpan
 
 		try:
 			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
@@ -187,15 +219,14 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		speakTextInfo(info, formatConfig=formatConfig, reason=controlTypes.OutputReason.CARET)
 		info.collapse()
 		self.selection = info
-		self._lastTableSelection = self.selection
-		self._lastTableAxis = axis
-		if axis == "row":
-			self._lastTableCol = origCol
-			self._lastTableColSpan = origColSpan
-		else:
-			self._lastTableRow = origRow
-			self._lastTableRowSpan = origRowSpan
-
+		self._lastTableSelection = _TableSelection(
+			selection=self.selection,
+			axis=axis,
+			row=origRow,
+			rowSpan=origRow,
+			col=origCol,
+			colSpan=origColSpan,
+		)
 
 	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="next")
