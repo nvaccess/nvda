@@ -62,7 +62,7 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnContent(handle_t bindingHa
 	wchar_t textBuf[CBEMAXSTRLEN]{}; // Ensure that the array initialised with all zero values ('\0')
 	lvItem.pszText= textBuf;
 	// ListView_GetItem macro has no return value, using SendMessage directly so errors are caught.
-	// The meaning of the return value depends on the message sent, for LVM_GETCOLUMN,
+	// The meaning of the return value depends on the message sent, for LVM_GETITEM,
 	// it returns TRUE if successful, or FALSE otherwise.
 	const auto sendMsgRes = SendMessage(
 		static_cast<HWND>(UlongToHandle(windowHandle)),
