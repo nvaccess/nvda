@@ -1678,7 +1678,7 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Input help mode message for move to next document with focus command,
 			# mostly used in web browsing to move from embedded object to the webpage document.
-			"Moves the focus to the next closest document that contains the focus"
+			"Moves the focus out of the current embedded object and into the document that contains it"
 		),
 		category=SCRCAT_FOCUS,
 		gesture="kb:NVDA+control+space"
