@@ -6,12 +6,12 @@
 
 """Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
 
-from typing import Union
+from typing import Optional, Union
 import contextlib
 import ctypes
 import ctypes.wintypes
 from ctypes import byref, c_byte, POINTER, sizeof, Structure, windll, WinError
-from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LPWSTR, LPVOID, WORD
+from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPWSTR, LPVOID, WORD
 
 kernel32=ctypes.windll.kernel32
 advapi32 = windll.advapi32
@@ -479,3 +479,14 @@ def SetThreadExecutionState(esFlags):
 	if not res:
 		raise WinError()
 	return res
+
+
+def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
+	bufSize = 32
+	buf = ctypes.create_unicode_buffer(bufSize)
+	dwFlags = 0
+	try:
+		kernel32.LCIDToLocaleName(windowsLCID, buf, bufSize, dwFlags)
+	except AttributeError:
+		return None
+	return buf.value
