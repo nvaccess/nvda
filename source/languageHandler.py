@@ -12,6 +12,9 @@ import builtins
 import os
 import sys
 import ctypes
+
+import weakref
+
 import locale
 import gettext
 import enum
@@ -41,6 +44,9 @@ CP_ACP = "0"
 LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
 
 LANGS_WITHOUT_TRANSLATIONS: FrozenSet[str] = frozenset(("en",))
+"""Saved copy of the installed translation for ease of wrapping.
+"""
+
 LCIDS_TO_TRANSLATED_LOCALES = {
 	# Windows maps this to "ku-Arab-IQ", however a translation is added for
 	# Central Kurdish in localesData.LANG_NAMES_TO_LOCALIZED_DESCS["ckb"]
@@ -52,6 +58,7 @@ Map Windows locale identifiers to language codes.
 These are Windows LCIDs that are used in NVDA but are not found in locale.windows_locale.
 These have been added when new locales have been introduced to the translation system and
 we cannot use the results from the Windows function LCIDToLocaleName.
+installedTranslation: Optional[weakref.ReferenceType] = None
 """
 
 
@@ -377,6 +384,9 @@ def setLanguage(lang: str) -> None:
 	setLocale(getLanguage())
 	# Install our pgettext function.
 	builtins.pgettext = makePgettext(trans)
+
+	global installedTranslation
+	installedTranslation = weakref.ref(trans)
 
 
 def localeStringFromLocaleCode(localeCode: str) -> str:

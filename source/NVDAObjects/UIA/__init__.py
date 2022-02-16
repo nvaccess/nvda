@@ -25,6 +25,7 @@ import UIAHandler.customAnnotations
 import globalVars
 import eventHandler
 import controlTypes
+from controlTypes import TextPosition
 import config
 import speech
 import api
@@ -239,15 +240,14 @@ class UIATextInfo(textInfos.TextInfo):
 			textPosition=None
 			val=fetcher.getValue(UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-				textPosition='super'
+				textPosition = TextPosition.SUPERSCRIPT
 			else:
 				val=fetcher.getValue(UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 				if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-					textPosition="sub"
+					textPosition = TextPosition.SUBSCRIPT
 				else:
-					textPosition="baseline"
-			if textPosition:
-				formatField['text-position']=textPosition
+					textPosition = TextPosition.BASELINE
+			formatField['text-position'] = textPosition
 		if formatConfig['reportStyle']:
 			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
@@ -1156,7 +1156,12 @@ class UIA(Window):
 		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-		elif UIAClassName == "TermControl":
+		elif UIAClassName in ("TermControl", "TermControl2"):
+			# microsoft/terminal#12358: Eventually, TermControl2 should have
+			# a separate overlay class that is not a descendant of LiveText.
+			# TermControl2 sends inserted text using UIA notification events,
+			# so it is no longer necessary to diff the object as with all
+			# previous terminal implementations.
 			from . import winConsoleUIA
 			clsList.append(winConsoleUIA.WinTerminalUIA)
 

@@ -400,6 +400,17 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 				"probably due to a switch to/from the alt buffer."
 			), exc_info=True)
 
+	def event_UIA_notification(self, **kwargs):
+		"""
+		In Windows Sun Valley 2 (SV2 M2), UIA notification events will be sent
+		to announce new text. Block these for now to avoid double-reporting of
+		text changes.
+		@note: In the longer term, NVDA should leverage these events in place
+		of the current LiveText strategy, as performance will likely be
+		significantly improved and #11002 can be completely mitigated.
+		"""
+		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")
+
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
@@ -409,4 +420,13 @@ def findExtraOverlayClasses(obj, clsList):
 
 
 class WinTerminalUIA(EnhancedTermTypedCharSupport):
-	pass
+	def event_UIA_notification(self, **kwargs):
+		"""
+		In an upcoming terminal release, UIA notification events will be sent
+		to announce new text. Block these for now to avoid double-reporting of
+		text changes.
+		@note: In the longer term, NVDA should leverage these events in place
+		of the current LiveText strategy, as performance will likely be
+		significantly improved and #11002 can be completely mitigated.
+		"""
+		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")

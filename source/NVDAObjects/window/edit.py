@@ -30,6 +30,7 @@ import textInfos.offsets
 from keyboardHandler import KeyboardInputGesture
 from scriptHandler import isScriptWaiting
 import controlTypes
+from controlTypes import TextPosition
 from . import Window
 from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
@@ -272,9 +273,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			if charFormat is None:
 				charFormat = self._getCharFormat(offset)
 			if charFormat.dwEffects&CFE_SUBSCRIPT:
-				formatField["text-position"]="sub"
+				formatField["text-position"] = TextPosition.SUBSCRIPT
 			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
-				formatField["text-position"]="super"
+				formatField["text-position"] = TextPosition.SUPERSCRIPT
+			else:
+			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportColor"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["color"]=colors.RGB.fromCOLORREF(charFormat.crTextColor) if not charFormat.dwEffects&CFE_AUTOCOLOR else _("default color")
@@ -516,9 +519,11 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			if not fontObj:
 				fontObj = textRange.font
 			if fontObj.superscript:
-				formatField["text-position"]="super"
+				formatField["text-position"] = TextPosition.SUPERSCRIPT
 			elif fontObj.subscript:
-				formatField["text-position"]="sub"
+				formatField["text-position"] = TextPosition.SUBSCRIPT
+			else:
+			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportLinks"]:
 			linkRange = textRange.Duplicate
 			linkRange.Collapse(comInterfaces.tom.tomStart)
