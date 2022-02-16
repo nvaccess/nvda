@@ -13,13 +13,13 @@ import controlTypes
 
 
 class _Axis(str, Enum):
-	row = "row"
-	column = "column"
+	ROW = "row"
+	COLUMN = "column"
 
 
 class _Movement(str, Enum):
-	next = "next"
-	previous = "previous"
+	NEXT = "next"
+	PREVIOUS = "previous"
 
 
 @dataclass
@@ -170,7 +170,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 	def _tableMovementScriptHelper(
 			self,
-			movement: _Movement = _Movement.next,
+			movement: _Movement = _Movement.NEXT,
 			axis: Optional[_Axis] = None
 	):
 		# documentBase is a core module and should not depend on these UI modules and so they are imported
@@ -200,7 +200,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			and self.selection == self._lastTableSelection.selection
 			and self._lastTableSelection.axis == axis
 		):
-			if axis == _Axis.row:
+			if axis == _Axis.ROW:
 				origCol = self._lastTableSelection.col
 				origColSpan = self._lastTableSelection.colSpan
 			else:
