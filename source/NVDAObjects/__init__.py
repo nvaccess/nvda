@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
 # Davy Kager
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -10,7 +10,6 @@ as well as the associated TextInfo class."""
 
 import os
 import time
-import re
 import typing
 import weakref
 import core
@@ -372,11 +371,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	def _get_treeInterceptor(self):
+	#: Type definition for auto prop '_get_treeInterceptor'
+	treeInterceptor: treeInterceptorHandler.TreeInterceptor
+
+	def _get_treeInterceptor(self) -> treeInterceptorHandler.TreeInterceptor:
 		"""Retrieves the treeInterceptor associated with this object.
-		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
+		If a treeInterceptor has not been specifically set,
+		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
 		@return: the treeInterceptor
-		@rtype: L{treeInterceptorHandler.TreeInterceptor}
 		""" 
 		if hasattr(self,'_treeInterceptor'):
 			ti=self._treeInterceptor
@@ -401,10 +403,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
 			self._treeInterceptor=None
 
-	def _get_appModule(self):
-		"""Retrieves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
+	#: Type definition for auto prop '_get_appModule'
+	appModule: "appModuleHandler.AppModule"
+
+	def _get_appModule(self) -> "appModuleHandler.AppModule":
+		"""Retrieves the appModule representing the application this object is a part of by
+		asking L{appModuleHandler}.
 		@return: the appModule
-		@rtype: L{appModuleHandler.AppModule}
 		"""
 		if not hasattr(self,'_appModuleRef'):
 			a=appModuleHandler.getAppModuleForNVDAObject(self)
@@ -475,6 +480,16 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
 		return controlTypes.DescriptionFrom.UNKNOWN
+
+	#: Typing information for auto property _get_detailsSummary
+	detailsSummary: typing.Optional[str]
+
+	def _get_detailsSummary(self) -> typing.Optional[str]:
+		return None
+
+	@property
+	def hasDetails(self) -> bool:
+		return bool(self.detailsSummary)
 
 	def _get_controllerFor(self):
 		"""Retrieves the object/s that this object controls."""
@@ -549,6 +564,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	#: Typing information for auto-property: _get_parent
 	parent: typing.Optional['NVDAObject']
+	"This object's parent (the object that contains this object)."
 
 	def _get_parent(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves this object's parent (the object that contains this object).
@@ -565,17 +581,23 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		self.parent = parent
 		return parent
 
-	def _get_next(self):
+	#: Typing information for auto-property: _get_next
+	next: typing.Optional['NVDAObject']
+	"The object directly after this object with the same parent."
+
+	def _get_next(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
-	def _get_previous(self):
+	#: Typing information for auto-property: _get_previous
+	previous: typing.Optional['NVDAObject']
+	"The object directly before this object with the same parent."
+
+	def _get_previous(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves the object directly before this object with the same parent.
 		@return: the previous object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
@@ -1280,11 +1302,16 @@ This code is executed if a gain focus event is received by this object.
 			return "%r (truncated)" % string[:truncateLen]
 		return repr(string)
 
-	def _get_devInfo(self):
+	devInfo: typing.List[str]
+	"""Information about this object useful to developers."""
+
+	# C901 '_get_devInfo' is too complex
+	# Note: when working on _get_devInfo, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _get_devInfo(self) -> typing.List[str]:  # noqa: C901
 		"""Information about this object useful to developers.
 		Subclasses may extend this, calling the superclass property first.
 		@return: A list of text strings providing information about this object useful to developers.
-		@rtype: list of str
 		"""
 		info = []
 		try:
