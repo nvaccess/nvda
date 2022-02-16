@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2021 NV Access Limited, Joseph Lee
+# Copyright (C) 2017-2022 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -123,7 +123,7 @@ class AppModule(appModuleHandler.AppModule):
 		# For consistent experience, report the new category first by traversing through controls.
 		# #8189: do not announce candidates list itself (not items),
 		# as this is repeated each time candidate items are selected.
-		if obj.UIAElement.cachedAutomationID == "CandidateList":
+		if obj.UIAAutomationId == "CandidateList":
 			return
 		speech.cancelSpeech()
 		# Sometimes, due to bad tree traversal or wrong item getting selected,
@@ -139,7 +139,7 @@ class AppModule(appModuleHandler.AppModule):
 		if (
 			obj and obj.UIAElement.cachedClassName == "ListViewItem"
 			and obj.parent and isinstance(obj.parent, UIA)
-			and obj.parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList"
+			and obj.parent.UIAAutomationId != "TEMPLATE_PART_ClipboardItemsList"
 		):
 			# The difference between emoji panel and suggestions list is absence of categories/emoji separation.
 			# Turns out automation ID for the container is different,
@@ -256,7 +256,7 @@ class AppModule(appModuleHandler.AppModule):
 			(obj.UIAElement.cachedClassName in ("CRootKey", "GridViewItem"))
 			# Just ignore useless clipboard status.
 			# Also top emoji search result must be announced for better user experience.
-			or (obj.UIAElement.cachedAutomationID in (
+			or (obj.UIAAutomationId in (
 				"TEMPLATE_PART_ClipboardItemsList",
 				"TEMPLATE_PART_Search_TextBlock"
 			))
@@ -271,21 +271,21 @@ class AppModule(appModuleHandler.AppModule):
 			# In some cases, parent will be None, as seen when emoji panel is closed in build 18267.
 			try:
 				if (
-					obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemIndex"
-					or obj.parent.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList"
+					obj.UIAAutomationId == "TEMPLATE_PART_ClipboardItemIndex"
+					or obj.parent.UIAAutomationId == "TEMPLATE_PART_ClipboardItemsList"
 				):
 					return
 			except AttributeError:
 				return
 			if (
 				not self._emojiPanelJustOpened
-				or obj.UIAElement.cachedAutomationID != "TEMPLATE_PART_ExpressionGroupedFullView"
+				or obj.UIAAutomationId != "TEMPLATE_PART_ExpressionGroupedFullView"
 			):
 				speech.cancelSpeech()
 			self._emojiPanelJustOpened = False
 		# Don't forget to add "Microsoft Candidate UI" as something that should be suppressed.
 		if (
-			obj.UIAElement.cachedAutomationID not in (
+			obj.UIAAutomationId not in (
 				"TEMPLATE_PART_ExpressionFullViewItemsGrid",
 				"TEMPLATE_PART_ClipboardItemIndex",
 				"CandidateWindowControl"

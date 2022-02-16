@@ -44,6 +44,8 @@ CP_ACP = "0"
 LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
 
 LANGS_WITHOUT_TRANSLATIONS: FrozenSet[str] = frozenset(("en",))
+
+installedTranslation: Optional[weakref.ReferenceType] = None
 """Saved copy of the installed translation for ease of wrapping.
 """
 
@@ -58,7 +60,6 @@ Map Windows locale identifiers to language codes.
 These are Windows LCIDs that are used in NVDA but are not found in locale.windows_locale.
 These have been added when new locales have been introduced to the translation system and
 we cannot use the results from the Windows function LCIDToLocaleName.
-installedTranslation: Optional[weakref.ReferenceType] = None
 """
 
 
