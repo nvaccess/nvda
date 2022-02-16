@@ -121,5 +121,5 @@ Focus reports target first
 	[Documentation]	Focus target should always be reported before ancestors. Ancestors should be reported from inner to outer.
 	test_focusTargetReporting
 Table navigation with merged columns
-	[Documentation] When navigating through a merged cell, preserve the column/row position from the previous cell.
+	[Documentation]	When navigating through a merged cell, preserve the column/row position from the previous cell.
 	test_tableNavigationWithMergedColumns
