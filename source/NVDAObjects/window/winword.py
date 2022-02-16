@@ -36,6 +36,7 @@ import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
+from controlTypes import TextPosition
 import treeInterceptorHandler
 import browseMode
 import review
@@ -875,6 +876,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
 			if revisionLabel:
 				field['revision']=revisionLabel
+		textPosition = field.pop('text-position', TextPosition.BASELINE)
+		field['text-position'] = TextPosition(textPosition)
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=self.obj.winwordColorToNVDAColor(int(color))
