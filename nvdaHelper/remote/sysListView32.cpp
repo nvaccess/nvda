@@ -40,7 +40,6 @@ error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle
 		reinterpret_cast<LPARAM>(&group)
 	);
 	if(TRUE != sendMsgRes) {
-
 		LOG_DEBUGWARNING(L"LVM_GETGROUPINFOBYINDEX failed");
 		return 1;
 	}
@@ -65,7 +64,13 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnContent(handle_t bindingHa
 	// ListView_GetItem macro has no return value, using SendMessage directly so errors are caught.
 	// The meaning of the return value depends on the message sent, for LVM_GETCOLUMN,
 	// it returns TRUE if successful, or FALSE otherwise.
-	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETITEM, static_cast<WPARAM>(0), reinterpret_cast<LPARAM>(&lvItem))) {
+	const auto sendMsgRes = SendMessage(
+		static_cast<HWND>(UlongToHandle(windowHandle)),
+		LVM_GETITEM,
+		static_cast<WPARAM>(0),
+		reinterpret_cast<LPARAM>(&lvItem)
+	);
+	if (TRUE != sendMsgRes) {
 		LOG_DEBUGWARNING(L"LVM_GETITEM failed");
 		return 1;
 	}
@@ -98,7 +103,13 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnLocation(handle_t bindingH
 	// ListView_GetSubItemRect macro has no return value, using SendMessage directly so errors are caught.
 	// The meaning of the return value depends on the message sent, for LVM_GETSUBITEMRECT,
 	// it returns nonzero if successful, or 0 otherwise.
-	if (SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETSUBITEMRECT, static_cast<WPARAM>(item), reinterpret_cast<LPARAM>(&localRect)) == 0) {
+	const auto sendMsgRes = SendMessage(
+		static_cast<HWND>(UlongToHandle(windowHandle)),
+		LVM_GETSUBITEMRECT,
+		static_cast<WPARAM>(item),
+		reinterpret_cast<LPARAM>(&localRect)
+	);
+	if (TRUE != sendMsgRes) {
 		LOG_DEBUGWARNING(L"LVM_GETSUBITEMRECT failed");
 		return ERROR_INVALID_FUNCTION;
 	}
@@ -124,7 +135,13 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnHeader(handle_t bindingHan
 	// ListView_GetColumn macro has no return value, using SendMessage directly so errors are caught.
 	// The meaning of the return value depends on the message sent, for LVM_GETCOLUMN,
 	// it returns TRUE if successful, or FALSE otherwise.
-	if (!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETCOLUMN, static_cast<WPARAM>(subItem), reinterpret_cast<LPARAM>(&lvColumn))) {
+	const auto sendMsgRes = SendMessage(
+		static_cast<HWND>(UlongToHandle(windowHandle)),
+		LVM_GETCOLUMN,
+		static_cast<WPARAM>(subItem),
+		reinterpret_cast<LPARAM>(&lvColumn)
+	);
+	if (TRUE != sendMsgRes) {
 		LOG_DEBUGWARNING(L"LVM_GETCOLUMN failed");
 		return ERROR_INVALID_FUNCTION;
 	}
@@ -145,7 +162,13 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnOrderArray(handle_t bindin
 	// ListView_GetColumnOrderArray macro has no return value, using SendMessage directly so errors are caught.
 	// The meaning of the return value depends on the message sent, for LVM_GETCOLUMNORDERARRAY,
 	// it returns nonzero if successful, or 0 otherwise.
-	if (SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)), LVM_GETCOLUMNORDERARRAY, static_cast<WPARAM>(columnCount), reinterpret_cast<LPARAM>(columnOrderArray)) ==0) {
+	const auto sendMsgRes = SendMessage(
+		static_cast<HWND>(UlongToHandle(windowHandle)),
+		LVM_GETCOLUMNORDERARRAY,
+		static_cast<WPARAM>(columnCount),
+		reinterpret_cast<LPARAM>(columnOrderArray)
+	);
+	if (TRUE != sendMsgRes) {
 		LOG_DEBUGWARNING(L"LVM_GETCOLUMNORDERARRAY failed");
 		return ERROR_INVALID_FUNCTION;
 	}
