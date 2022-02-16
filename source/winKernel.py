@@ -482,11 +482,11 @@ def SetThreadExecutionState(esFlags):
 
 
 def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
-	bufSize = 32
-	buf = ctypes.create_unicode_buffer(bufSize)
 	dwFlags = 0
-	kernel32.LCIDToLocaleName(windowsLCID, buf, bufSize, dwFlags)
+	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, None, 0, dwFlags)
+	buffer = ctypes.create_unicode_buffer("", bufferLength)
+	kernel32.LCIDToLocaleName(windowsLCID, buffer, bufferLength, dwFlags)
 	# An empty string is returned for unknown LCIDs
-	if not buf.value:
+	if not buffer.value:
 		return None
-	return buf.value
+	return buffer.value
