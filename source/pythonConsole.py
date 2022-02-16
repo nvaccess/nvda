@@ -1,8 +1,8 @@
-#pythonConsole.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2008-2019 NV Access Limited, Leonard de Ruijter
+# pythonConsole.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2020 NV Access Limited, Leonard de Ruijter, Julien Cochuyt
 
 import watchdog
 
@@ -12,6 +12,7 @@ To use, call L{initialize} to create a singleton instance of the console GUI. Th
 
 import builtins
 import os
+from typing import Sequence
 import code
 import codeop
 import sys
@@ -190,7 +191,15 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 	def updateNamespaceSnapshotVars(self):
 		"""Update the console namespace with a snapshot of NVDA's current state.
 		This creates/updates variables for the current focus, navigator object, etc.
+		Typically, used before the NVDA python console is opened, after which, calls
+		to the 'api' module will refer to this new focus.
 		"""
+		try:
+			caretPos = api.getCaretPosition()
+		except RuntimeError:
+			log.debug("Unable to set caretPos snapshot variable for python console.")
+			caretPos = None
+
 		self._namespaceSnapshotVars = {
 			"focus": api.getFocusObject(),
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
@@ -198,7 +207,9 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 			"fdl": api.getFocusDifferenceLevel(),
 			"fg": api.getForegroundObject(),
 			"nav": api.getNavigatorObject(),
-			"review":api.getReviewPosition(),
+			"caretObj": api.getCaretObject(),
+			"caretPos": caretPos,
+			"review": api.getReviewPosition(),
 			"mouse": api.getMouseObject(),
 			"brlRegions": braille.handler.buffer.regions,
 		}
@@ -253,6 +264,7 @@ class ConsoleUI(
 		# Even the most recent line has a position in the history, so initialise with one blank line.
 		self.inputHistory = [""]
 		self.inputHistoryPos = 0
+		self.outputPositions: Sequence[int] = [0]
 
 	def onActivate(self, evt):
 		if evt.GetActive():
@@ -267,6 +279,12 @@ class ConsoleUI(
 		self.outputCtrl.write(data)
 		if data and not data.isspace():
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, data)
+
+	def clear(self):
+		"""Clear the output.
+		"""
+		self.outputCtrl.Clear()
+		self.outputPositions[:] = [0]
 
 	def echo(self, data):
 		self.outputCtrl.write(data)
@@ -292,6 +310,8 @@ class ConsoleUI(
 			self.inputHistory.append("")
 		self.inputHistoryPos = len(self.inputHistory) - 1
 		self.inputCtrl.ChangeValue("")
+		if self.console.prompt != "...":
+			self.outputPositions.append(self.outputCtrl.GetInsertionPoint())
 
 	def historyMove(self, movement):
 		newIndex = self.inputHistoryPos + movement
@@ -306,9 +326,11 @@ class ConsoleUI(
 		return True
 
 	RE_COMPLETE_UNIT = re.compile(r"[\w.]*$")
+
 	def complete(self):
+		textBeforeCursor = self.inputCtrl.GetRange(0, self.inputCtrl.GetSelection()[0])
 		try:
-			original = self.RE_COMPLETE_UNIT.search(self.inputCtrl.GetValue()).group(0)
+			original = self.RE_COMPLETE_UNIT.search(textBeforeCursor).group(0)
 		except AttributeError:
 			return False
 
@@ -373,16 +395,20 @@ class ConsoleUI(
 		insert = completed[len(original):]
 		if not insert:
 			return
-		self.inputCtrl.SetValue(self.inputCtrl.GetValue() + insert)
+		inputCtrl = self.inputCtrl
+		selStartPos, selEndPos = inputCtrl.GetSelection()
+		prefix = inputCtrl.GetRange(0, selStartPos)
+		suffix = inputCtrl.GetRange(selEndPos, inputCtrl.GetLastPosition())
+		inputCtrl.SetValue(prefix + insert + suffix)
 		queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
-		self.inputCtrl.SetInsertionPointEnd()
+		inputCtrl.SetInsertionPoint(selStartPos + len(insert))
 
 	def onInputChar(self, evt):
 		key = evt.GetKeyCode()
 
 		if key == wx.WXK_TAB:
-			line = self.inputCtrl.GetValue()
-			if line and not line.isspace():
+			textBeforeCursor = self.inputCtrl.GetRange(0, self.inputCtrl.GetSelection()[0])
+			if textBeforeCursor and not textBeforeCursor.isspace():
 				if not self.complete():
 					wx.Bell()
 				return
@@ -393,8 +419,8 @@ class ConsoleUI(
 			self.execute()
 			return
 		elif key in (wx.WXK_UP, wx.WXK_DOWN):
-			if self.historyMove(-1 if key == wx.WXK_UP else 1):
-				return
+			self.historyMove(-1 if key == wx.WXK_UP else 1)
+			return
 		elif key == wx.WXK_F6:
 			self.outputCtrl.SetFocus()
 			return

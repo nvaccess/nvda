@@ -1,8 +1,8 @@
-#appModules/outlook.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager,
+# Babbage B.V., Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from comtypes import COMError
 from comtypes.hresult import S_OK
@@ -11,6 +11,7 @@ import comtypes.automation
 import ctypes
 from hwPortUtils import SYSTEMTIME
 import scriptHandler
+from scriptHandler import script
 import winKernel
 import comHelper
 import NVDAHelper
@@ -21,7 +22,7 @@ import braille
 import appModuleHandler
 import eventHandler
 import UIAHandler
-from UIAUtils import createUIAMultiPropertyCondition
+from UIAHandler.utils import createUIAMultiPropertyCondition
 import api
 import controlTypes
 import config
@@ -29,11 +30,14 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
+from NVDAObjects.window.winword import WordDocument as BaseWordDocument
 from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
+import languageHandler
+
 
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
@@ -155,17 +159,17 @@ class AppModule(appModuleHandler.AppModule):
 		controlID=obj.windowControlID
 		#The control showing plain text messages has very stuffed parents
 		#Use the grandparent window as its parent
-		if role==controlTypes.ROLE_EDITABLETEXT and windowClassName=="RichEdit20W" and controlID==8224:
+		if role==controlTypes.Role.EDITABLETEXT and windowClassName=="RichEdit20W" and controlID==8224:
 			obj.parent=Window._get_parent(Window._get_parent(obj))
 		#The control that shows HTML messages has stuffed parents. Use the control's parent window as its parent
-		if windowClassName=="Internet Explorer_Server" and role==controlTypes.ROLE_PANE and not isinstance(obj,MSHTML):
+		if windowClassName=="Internet Explorer_Server" and role==controlTypes.Role.PANE and not isinstance(obj,MSHTML):
 			obj.parent=Window._get_parent(Window._get_parent(obj))
-		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
+		if role in (controlTypes.Role.MENUBAR,controlTypes.Role.MENUITEM):
 			obj.description=None
-		if role in (controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM):
+		if role in (controlTypes.Role.TREEVIEW,controlTypes.Role.TREEVIEWITEM,controlTypes.Role.LIST,controlTypes.Role.LISTITEM):
 			obj.shouldAllowIAccessibleFocusEvent=True
-		if ((windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109)) and role==controlTypes.ROLE_UNKNOWN:
-			obj.role=controlTypes.ROLE_LISTITEM
+		if ((windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109)) and role==controlTypes.Role.UNKNOWN:
+			obj.role=controlTypes.Role.LISTITEM
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if UIAWordDocument in clsList:
@@ -177,7 +181,7 @@ class AppModule(appModuleHandler.AppModule):
 		windowClassName=obj.windowClassName
 		# AutoComplete listItems.
 		# This class is abstract enough to  support both UIA and MSAA
-		if role==controlTypes.ROLE_LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
+		if role==controlTypes.Role.LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
 			clsList.insert(0,AutoCompleteListItem)
 		#  all   remaining classes are IAccessible
 		if not isinstance(obj,IAccessible):
@@ -193,13 +197,13 @@ class AppModule(appModuleHandler.AppModule):
 		states=obj.states
 		controlID=obj.windowControlID
 		# Support the date picker in Outlook Meeting / Appointment creation forms 
-		if controlID==4352 and role==controlTypes.ROLE_BUTTON:
+		if controlID==4352 and role==controlTypes.Role.BUTTON:
 			clsList.insert(0,DatePickerButton)
-		elif role==controlTypes.ROLE_TABLECELL and windowClassName=="rctrl_renwnd32":
+		elif role==controlTypes.Role.TABLECELL and windowClassName=="rctrl_renwnd32":
 			clsList.insert(0,DatePickerCell)
-		elif windowClassName=="REListBox20W" and role==controlTypes.ROLE_CHECKBOX:
+		elif windowClassName=="REListBox20W" and role==controlTypes.Role.CHECKBOX:
 			clsList.insert(0,REListBox20W_CheckBox)
-		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
+		if role==controlTypes.Role.LISTITEM and windowClassName=="OUTEXVLB":
 			clsList.insert(0, AddressBookEntry)
 			return
 		if (windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109):
@@ -242,39 +246,16 @@ class SuperGridClient2010(IAccessible):
 			return super(SuperGridClient2010,self).event_gainFocus()
 		try:
 			kwargs = {}
-			UIA.kwargsFromSuper(kwargs, relation="focus")
-			obj=UIA(**kwargs)
-		except:
-			log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+			UIA.kwargsFromSuper(kwargs, relation="focus", ignoreNonNativeElementsWithFocus=False)
+			obj = UIA(**kwargs)
+		except Exception:
+			log.error("Retrieving UIA focus failed", exc_info=True)
 			return super(SuperGridClient2010,self).event_gainFocus()
 		if not isinstance(obj,UIAGridRow):
 			return super(SuperGridClient2010,self).event_gainFocus()
 		obj.parent=self.parent
 		eventHandler.executeEvent("gainFocus",obj)
 
-class MessageItem(Window):
-
-	def __init__(self,windowHandle=None,parent=None,msg=None):
-		if not parent or not msg:
-			raise ArguementError("__init__ needs windowHandle, parent and msg arguments")
-		if not windowHandle:
-			windowHandle=parent.windowHandle
-		self.msg=msg
-		self.parent=parent
-		Window.__init__(self,windowHandle=windowHandle)
-
-	def _get_name(self):
-		typeID=self.msg.Class
-		if typeID==40:
-			return getContactString(self.msg)
-		elif typeID==43:
-			return getReceivedMessageString(self.msg)
-
-	def _get_role(self):
-		return controlTypes.ROLE_LISTITEM
-
-	def _get_states(self):
-		return frozenset([controlTypes.STATE_SELECTED])
 
 class AddressBookEntry(IAccessible):
 
@@ -299,7 +280,7 @@ class AutoCompleteListItem(Window):
 	def event_stateChange(self):
 		states=self.states
 		focus=api.getFocusObject()
-		if (focus.role==controlTypes.ROLE_EDITABLETEXT or focus.role==controlTypes.ROLE_BUTTON) and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
+		if (focus.role==controlTypes.Role.EDITABLETEXT or focus.role==controlTypes.Role.BUTTON) and controlTypes.State.SELECTED in states and controlTypes.State.INVISIBLE not in states and controlTypes.State.UNAVAILABLE not in states and controlTypes.State.OFFSCREEN not in states:
 			speech.cancelSpeech()
 			text=self.name
 			# Some newer versions of Outlook don't put the contact as the name of the listItem, rather it is on the parent 
@@ -332,6 +313,28 @@ class CalendarView(IAccessible):
 		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
 
+	@staticmethod
+	def _generateCategoriesText(appointment):
+		categories = appointment.Categories
+		if not categories:
+			return None
+		# Categories is a delimited string of category names that have been assigned to an Outlook item.
+		# This property uses the user locale's list separator to separate entries.
+		# See also https://docs.microsoft.com/en-us/office/vba/api/outlook.appointmentitem.categories
+		bufLength = 4
+		separatorBuf = ctypes.create_unicode_buffer(bufLength)
+		if ctypes.windll.kernel32.GetLocaleInfoW(
+			languageHandler.LOCALE_USER_DEFAULT,
+			languageHandler.LOCALE.SLIST,
+			separatorBuf,
+			bufLength
+		) == 0:
+			raise ctypes.WinError()
+
+		# Translators: Part of a message reported when on a calendar appointment with one or more categories
+		# in Microsoft Outlook.
+		return _("categories {categories}").format(categories=categories)
+
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
 
@@ -353,8 +356,15 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				t=self._generateTimeRangeText(start,end)
-				# Translators: A message reported when on a calendar appointment in Microsoft Outlook
-				ui.message(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
+				# Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
+				message = _("Appointment {subject}, {time}").format(subject=p.subject, time=t)
+				try:
+					categoriesText = self._generateCategoriesText(p)
+				except COMError:
+					categoriesText = None
+				if categoriesText is not None:
+					message = f"{message}, {categoriesText}"
+				ui.message(message)
 			else:
 				v=e.currentView
 				try:
@@ -363,9 +373,31 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
-				startLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
-				endLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
-				query=u'[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
+				startDate = winKernel.GetDateFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.DATE_LONGDATE,
+					selectedStartTime,
+					None
+				)
+				startTime = winKernel.GetTimeFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.TIME_NOSECONDS,
+					selectedStartTime,
+					None
+				)
+				endDate = winKernel.GetDateFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.DATE_LONGDATE,
+					selectedEndTime,
+					None
+				)
+				endTime = winKernel.GetTimeFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.TIME_NOSECONDS,
+					selectedEndTime,
+					None
+				)
+				query = f'[Start] < "{endDate} {endTime}" And [End] > "{startDate} {startTime}"'
 				i=e.currentFolder.items
 				i.sort('[Start]')
 				i.IncludeRecurrences =True
@@ -383,10 +415,10 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 
 	def _get_name(self):
 		textList=[]
-		if controlTypes.STATE_EXPANDED in self.states:
-			textList.append(controlTypes.stateLabels[controlTypes.STATE_EXPANDED])
-		elif controlTypes.STATE_COLLAPSED in self.states:
-			textList.append(controlTypes.stateLabels[controlTypes.STATE_COLLAPSED])
+		if controlTypes.State.EXPANDED in self.states:
+			textList.append(controlTypes.State.EXPANDED.displayString)
+		elif controlTypes.State.COLLAPSED in self.states:
+			textList.append(controlTypes.State.COLLAPSED.displayString)
 		selection=None
 		if self.appModule.nativeOm:
 			try:
@@ -508,10 +540,10 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 
 	def _get_role(self):
 		role=super(UIAGridRow,self).role
-		if role==controlTypes.ROLE_TREEVIEW:
-			role=controlTypes.ROLE_TREEVIEWITEM
-		elif role==controlTypes.ROLE_DATAITEM:
-			role=controlTypes.ROLE_LISTITEM
+		if role==controlTypes.Role.TREEVIEW:
+			role=controlTypes.Role.TREEVIEWITEM
+		elif role==controlTypes.Role.DATAITEM:
+			role=controlTypes.Role.LISTITEM
 		return role
 
 	def setFocus(self):
@@ -544,7 +576,7 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 			info.expand(textInfos.UNIT_CELL)
 			isCollapsed=False
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 
 	__gestures={
@@ -552,7 +584,20 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 		"kb:shift+tab":"tab",
 	}
 
-class OutlookWordDocument(WordDocument):
+
+class BaseOutlookWordDocument(BaseWordDocument):
+
+	@script(gestures=["kb:tab", "kb:shift+tab"])
+	def script_tab(self, gesture):
+		bookmark = self.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
+		gesture.send()
+		info, caretMoved = self._hasCaretMoved(bookmark)
+		if not caretMoved:
+			return
+		self.reportTab()
+
+
+class OutlookWordDocument(WordDocument, BaseOutlookWordDocument):
 
 	def _get_isReadonlyViewer(self):
 		# #2975: The only way we know an email is read-only is if the underlying email has been sent.
@@ -570,16 +615,17 @@ class OutlookWordDocument(WordDocument):
 		return self.isReadonlyViewer
 
 	def _get_role(self):
-		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
+		return controlTypes.Role.DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
 
 	ignoreEditorRevisions=True
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
 
-class OutlookUIAWordDocument(UIAWordDocument):
+
+class OutlookUIAWordDocument(UIAWordDocument, BaseOutlookWordDocument):
 	""" Forces browse mode to be used on the UI Automation Outlook message viewer if the message is being read)."""
 
 	def _get_isReadonlyViewer(self):
-		return controlTypes.STATE_READONLY in self.states
+		return controlTypes.State.READONLY in self.states
 
 	def _get_shouldCreateTreeInterceptor(self):
 		return self.isReadonlyViewer

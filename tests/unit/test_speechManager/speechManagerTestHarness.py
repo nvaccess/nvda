@@ -30,6 +30,10 @@ from speech.commands import (
 	BeepCommand,
 	WaveFileCommand,
 	EndUtteranceCommand,
+	BaseProsodyCommand,
+	RateCommand,
+	VolumeCommand,
+	PitchCommand,
 	ConfigProfileTriggerCommand,
 )
 from speech.types import _IndexT
@@ -60,15 +64,15 @@ class ExpectedProsody:
 	commands that are sent to the synth. This may be as a result of resuming a previous utterance.
 	"""
 	expectedProsody: Union[
-		speech.commands.PitchCommand,
-		speech.commands.RateCommand,
-		speech.commands.VolumeCommand
+		PitchCommand,
+		RateCommand,
+		VolumeCommand
 	]
 
 	def __eq__(self, other):
 		if type(self.expectedProsody) != type(other):
 			return False
-		if isinstance(other, speech.commands.BaseProsodyCommand):
+		if isinstance(other, BaseProsodyCommand):
 			return repr(other) == repr(self.expectedProsody)
 		return False
 
@@ -135,7 +139,7 @@ class SpeechManagerInteractions:
 
 		# Install the mock synth
 		synthDriverHandler._curSynth = self.synthMock
-		synthDriverHandler.getSynthInstance = mock.Mock(return_value=self.synthMock)
+		synthDriverHandler._getSynthDriver = lambda name: mock.Mock(return_value=self.synthMock)
 		#: Sequences sent to the speechManager so far.
 		self._knownSequences = []
 		#: Map ExpectedIndexes (IndexCommand) to knownSequences index
@@ -223,7 +227,7 @@ class SpeechManagerInteractions:
 		"""
 		startOfUtteranceIndexes = set(
 			i + 1 for i, item in enumerate(seq)
-			if isinstance(item, speech.commands.EndUtteranceCommand)
+			if isinstance(item, EndUtteranceCommand)
 		)
 		startOfUtteranceIndexes.add(len(seq))  # ensure the last index is included
 		start = 0

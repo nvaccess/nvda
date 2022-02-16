@@ -1,10 +1,9 @@
-#contentRecog/uwpOcr.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""Recognition of text using the UWP OCR engine included in Windows 10.
+"""Recognition of text using the UWP OCR engine included in Windows 10 and later.
 """
 
 import ctypes

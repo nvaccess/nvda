@@ -12,7 +12,7 @@ import speech
 import braille
 import ui
 import api
-import sayAllHandler
+from speech import sayAll
 import eventHandler
 import keyboardHandler
 from scriptHandler import script
@@ -90,17 +90,17 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 					# In some editors the help document is a HTML ones
 					# On XML documents, for example, it is a simple read-only editable text
-					if documentObj.role in (controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_EDITABLETEXT):
+					if documentObj.role in (controlTypes.Role.DOCUMENT, controlTypes.Role.EDITABLETEXT):
 						break
 				else:
 					break
 
-			if documentObj.role == controlTypes.ROLE_DOCUMENT:
+			if documentObj.role == controlTypes.Role.DOCUMENT:
 				api.setNavigatorObject(documentObj)
 				braille.handler.handleReviewMove()
-				sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
+				sayAll.SayAllHandler.readText(sayAll.CURSOR.REVIEW)
 
-			elif documentObj.role == controlTypes.ROLE_EDITABLETEXT:
+			elif documentObj.role == controlTypes.Role.EDITABLETEXT:
 				ui.message(documentObj.value)
 
 		else:
@@ -162,22 +162,22 @@ class AppModule(appModuleHandler.AppModule):
 		super(AppModule,self).__init__(processID,appName)
 
 	def event_NVDAObject_init(self, obj):
-		if obj.windowClassName == "SysTreeView32" and obj.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_CHECKBOX) and controlTypes.STATE_FOCUSED not in obj.states:
+		if obj.windowClassName == "SysTreeView32" and obj.role in (controlTypes.Role.TREEVIEWITEM, controlTypes.Role.CHECKBOX) and controlTypes.State.FOCUSED not in obj.states:
 			# Eclipse tree views seem to fire a focus event on the previously focused item before firing focus on the new item (EclipseBug:315339).
 			# Try to filter this out.
 			obj.shouldAllowIAccessibleFocusEvent = False
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "SWT_Window0" and obj.role == controlTypes.ROLE_EDITABLETEXT:
+		if obj.windowClassName == "SWT_Window0" and obj.role == controlTypes.Role.EDITABLETEXT:
 			clsList.insert(0, EclipseTextArea)
 
 		try:
 
 			# Autocompletion items are placed outside the main eclipse window
-			if (obj.role == controlTypes.ROLE_LISTITEM
-				and obj.parent.parent.parent.role == controlTypes.ROLE_DIALOG
+			if (obj.role == controlTypes.Role.LISTITEM
+				and obj.parent.parent.parent.role == controlTypes.Role.DIALOG
 				and obj.parent.parent.parent.parent.parent == api.getDesktopObject()
-				and obj.parent.parent.parent.parent.simpleNext.role == controlTypes.ROLE_BUTTON):
+				and obj.parent.parent.parent.parent.simpleNext.role == controlTypes.Role.BUTTON):
 				clsList.insert(0, AutocompletionListItem)
 		except:
 			pass

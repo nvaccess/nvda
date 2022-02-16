@@ -1,18 +1,23 @@
-#NVDAObjects/IAccessible/ia2TextMozilla.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2015-2019 NV Access Limited, Mozilla Corporation
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2015-2021 NV Access Limited, Mozilla Corporation
 
 """Support for the IAccessible2 rich text model first implemented by Mozilla.
 This is now used by other applications as well.
 """
+import typing
+from typing import (
+	Optional,
+	Dict,
+)
 
 from comtypes import COMError
 import winUser
 import textInfos
+from textInfos import offsets
 import controlTypes
-import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
 import api
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
@@ -20,28 +25,35 @@ from compoundDocuments import CompoundTextInfo
 import locationHelper
 from logHandler import log
 
-class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+class FakeEmbeddingTextInfo(offsets.OffsetsTextInfo):
 	encoding = None
 
 	def _getStoryLength(self):
 		return self.obj.childCount
 
-	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
-		return range(self._startOffset, self._endOffset)
+	def _iterTextWithEmbeddedObjects(
+			self,
+			withFields,
+			formatConfig=None
+	) -> typing.Generator[int, None, None]:
+		yield from range(self._startOffset, self._endOffset)
 
 	def _getUnitOffsets(self,unit,offset):
 		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
 			unit=textInfos.UNIT_CHARACTER
 		return super(FakeEmbeddingTextInfo,self)._getUnitOffsets(unit,offset)
 
-def _getRawTextInfo(obj):
-	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLEROW):
+
+def _getRawTextInfo(obj) -> type(offsets.OffsetsTextInfo):
+	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.Role.TABLE, controlTypes.Role.TABLEROW):
 		return FakeEmbeddingTextInfo
 	elif obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
 	return IA2TextTextInfo
 
-def _getEmbedded(obj, offset):
+
+def _getEmbedded(obj, offset) -> typing.Optional[IAccessible]:
 	if not hasattr(obj, "IAccessibleTextObject"):
 		return obj.getChild(offset)
 	# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
@@ -50,7 +62,7 @@ def _getEmbedded(obj, offset):
 		hi = ht.hyperlinkIndex(offset)
 		if hi != -1:
 			hl = ht.hyperlink(hi)
-			return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
+			return IAccessible(IAccessibleObject=hl.QueryInterface(IA2.IAccessible2), IAccessibleChildID=0)
 	except COMError:
 		pass
 	return None
@@ -127,7 +139,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
 		elif isinstance(position, locationHelper.Point):
 			startObj = api.getDesktopObject().objectFromPoint(position.x, position.y)
-			while startObj and startObj.role == controlTypes.ROLE_STATICTEXT:
+			while startObj and startObj.role == controlTypes.Role.STATICTEXT:
 				# Skip text leaf nodes.
 				startObj = startObj.parent
 			if not startObj:
@@ -179,7 +191,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			return ti, obj
 		raise RuntimeError("No selection or caret")
 
-	def _makeRawTextInfo(self, obj, position):
+	def _makeRawTextInfo(self, obj, position) -> offsets.OffsetsTextInfo:
 		return _getRawTextInfo(obj)(obj, position)
 
 	def _getEmbedding(self, obj):
@@ -194,7 +206,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			info._endOffset = info._startOffset + 1
 			return info
 		try:
-			hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
+			hl = obj.IAccessibleObject.QueryInterface(IA2.IAccessibleHyperlink)
 			hlOffset = hl.startIndex
 			info._startOffset = hlOffset
 			info._endOffset = hlOffset + 1
@@ -244,7 +256,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		ti._startOffset=ti._endOffset=descendantOffset.value
 		return ti,obj
 
-	def _iterRecursiveText(self, ti, controlStack, formatConfig):
+	def _iterRecursiveText(self, ti: offsets.OffsetsTextInfo, controlStack, formatConfig):
 		if ti.obj == self._endObj:
 			end = True
 			ti.setEndPoint(self._end, "endToEnd")
@@ -257,7 +269,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			elif isinstance(item, str):
 				yield item
 			elif isinstance(item, int): # Embedded object.
-				embedded = _getEmbedded(ti.obj, item)
+				embedded: typing.Optional[IAccessible] = _getEmbedded(ti.obj, item)
 				notText = _getRawTextInfo(embedded) is NVDAObjectTextInfo
 				if controlStack is not None:
 					controlField = self._getControlFieldForObject(embedded)
@@ -272,8 +284,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					# Note #11291:
 					# Using a space character (EG " ") causes 'space' to be announced after objects like graphics.
 					# If this is replaced with an empty string, routing to cell becomes innaccurate.
-					# Using the OBJECT REPLACEMENT CHARACTER (EG "\uFFFC") results in '"0xFFFC' being displayed on
-					# the braille device.
+					# Using the textUtils.OBJ_REPLACEMENT_CHAR which is the
+					# "OBJECT REPLACEMENT CHARACTER" (EG "\uFFFC")
+					# results in '"0xFFFC' being displayed on the braille device.
 					yield " "
 				else:
 					for subItem in self._iterRecursiveText(self._makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
@@ -386,7 +399,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 	def _get_text(self):
 		return "".join(self._getText(False))
 
-	def getTextWithFields(self, formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self._getText(True, formatConfig)
 
 	def _findUnitEndpoints(self, baseTi, unit, findStart=True, findEnd=True):

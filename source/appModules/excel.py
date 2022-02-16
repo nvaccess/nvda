@@ -5,6 +5,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import time
+import config
 import eventHandler
 import api
 import UIAHandler
@@ -15,6 +16,8 @@ from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.window.edit import UnidentifiedEdit
 from NVDAObjects.window import Window
 from NVDAObjects.window.excel import ExcelCell
+from NVDAObjects.IAccessible import IAccessible
+
 
 class Excel6(Window):
 	"""
@@ -23,7 +26,7 @@ class Excel6(Window):
 	"""
 
 	def _get_focusRedirect(self):
-		if self.role==controlTypes.ROLE_UNKNOWN:
+		if self.role==controlTypes.Role.UNKNOWN:
 			# The control is inaccessible, try several times to find the CellEdit UIA element with focus and use that instead.
 			for count in range(10):
 				if count>=1:
@@ -43,6 +46,17 @@ class Excel6(Window):
 					self.focusRedirect=obj
 					return obj
 
+
+class Excel6_WhenUIAEnabled(IAccessible):
+	"""
+	#12303: When accessing Microsoft Excel via UI Automation
+	MSAA focus events on the old formula edit window should be completely ignored.
+	UI Automation will fire its own ones.
+	"""
+
+	shouldAllowIAccessibleFocusEvent = False
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -55,4 +69,14 @@ class AppModule(appModuleHandler.AppModule):
 				pass
 			clsList.insert(0, DisplayModelEditableText)
 		if windowClass=="EXCEL6":
-			clsList.insert(0,Excel6)
+			if config.conf["UIA"]["useInMSExcelWhenAvailable"]:
+				# #12303: When accessing Microsoft Excel via UI Automation
+				# MSAA focus events on the old formula edit window should be completely ignored.
+				# UI Automation will fire its own ones.
+				clsList.insert(0, Excel6_WhenUIAEnabled)
+			else:
+				# #12303: The old Formula Edit window in recent versions of Excel
+				# may not be accessible with display models as GDI is no longer used.
+				# However, UI Automation does expose an accessible edit control within the active cell,
+				# So use a class that will redirect focus to that.
+				clsList.insert(0, Excel6)

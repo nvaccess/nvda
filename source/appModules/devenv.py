@@ -55,7 +55,7 @@ class AppModule(appModuleHandler.AppModule):
 			(self.vsMajor == 15 and self.vsMinor >= 3)
 			or self.vsMajor >= 16
 		):
-			if obj.role == controlTypes.ROLE_TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
+			if obj.role == controlTypes.Role.TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
 				clsList.insert(0, ObjectsTreeItem)
 
 	def _getDTE(self):
@@ -186,7 +186,7 @@ class ObjectsTreeItem(IAccessible):
 		Returns the correct focused item in the object explorer trees
 		"""
 
-		if controlTypes.STATE_FOCUSED not in self.states:
+		if controlTypes.State.FOCUSED not in self.states:
 			# Object explorer tree views have a bad IAccessible implementation.
 			# When expanding a primary node and going to secondary node, the
 			# focus is placed to the next root node, so we need to redirect

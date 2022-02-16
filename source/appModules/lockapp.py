@@ -1,37 +1,72 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2022 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+from typing import Callable, Optional
 import appModuleHandler
 import controlTypes
 import inputCore
 import api
 import eventHandler
 import config
+import NVDAObjects
 from NVDAObjects.UIA import UIA
 from globalCommands import GlobalCommands
 
-"""App module for the Windows 10 lock screen.
+"""App module for the Windows 10 and 11 lock screen.
 The lock screen runs as the logged in user on the default desktop,
 so we need to explicitly stop people from accessing/changing things outside of the lock screen.
+This is done in the api module by utilizing _isSecureObjectWhileLockScreenActivated.
 """
 
-# Windows 10 lock screen container
+
+# Windows 10 and 11 lock screen container
 class LockAppContainer(UIA):
 	# Make sure the user can get to this so they can dismiss the lock screen from a touch screen.
 	presentationType=UIA.presType_content
 
+
+# Any object in the Lock App
+class LockAppObject(NVDAObjects.NVDAObject):
+	"""
+	Prevent users from object navigating outside of the lock screen.
+	While usages of `api._isSecureObjectWhileLockScreenActivated` in the api module prevent
+	the user from moving to the object, this overlay class prevents reading the objects.
+	"""
+
+	def _get_next(self) -> Optional[NVDAObjects.NVDAObject]:
+		nextObject = super()._get_next()
+		if nextObject and nextObject.appModule.appName == self.appModule.appName:
+			return nextObject
+		return None
+
+	def _get_previous(self) -> Optional[NVDAObjects.NVDAObject]:
+		previousObject = super()._get_previous()
+		if previousObject and previousObject.appModule.appName == self.appModule.appName:
+			return previousObject
+		return None
+
+	def _get_parent(self) -> Optional[NVDAObjects.NVDAObject]:
+		parentObject = super()._get_parent()
+		if parentObject and parentObject.appModule.appName == self.appModule.appName:
+			return parentObject
+		return None
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if isinstance(obj,UIA) and obj.role==controlTypes.ROLE_PANE and obj.UIAElement.cachedClassName=="LockAppContainer":
+		if isinstance(obj,UIA) and obj.role==controlTypes.Role.PANE and obj.UIAElement.cachedClassName=="LockAppContainer":
 			clsList.insert(0,LockAppContainer)
+		clsList.insert(0, LockAppObject)
 
-	def event_NVDAObject_init(self, obj):
-		if obj.role == controlTypes.ROLE_WINDOW:
-			# Stop users from being able to object navigate out of the lock screen.
-			obj.parent = None
+	def event_foreground(self, obj: NVDAObjects.NVDAObject, nextHandler: Callable[[], None]):
+		"""Set mouse object explicitly before continuing to the next handler.
+		This is to prevent the mouse focus remaining on the desktop when locking the screen.
+		"""
+		api.setMouseObject(obj)
+		nextHandler()
 
 	SAFE_SCRIPTS = {
 		GlobalCommands.script_reportCurrentFocus,
@@ -46,6 +81,7 @@ class AppModule(appModuleHandler.AppModule):
 		GlobalCommands.script_navigatorObject_next,
 		GlobalCommands.script_navigatorObject_previous,
 		GlobalCommands.script_navigatorObject_firstChild,
+		GlobalCommands.script_navigatorObject_devInfo,
 		GlobalCommands.script_review_activate,
 		GlobalCommands.script_review_top,
 		GlobalCommands.script_review_previousLine,

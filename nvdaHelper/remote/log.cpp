@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <queue>
 #include <mutex>
 #include <crtdbg.h>
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include "nvdaHelperRemote.h"
 #include <common/log.h>
 

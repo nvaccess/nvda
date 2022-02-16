@@ -18,10 +18,10 @@ from virtualBuffers import VirtualBufferTextInfo
 class LotusNotesRichText_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
-		role=controlTypes.ROLE_STATICTEXT
+		role=controlTypes.Role.STATICTEXT
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		if controlTypes.STATE_LINKED in states:
-			role=controlTypes.ROLE_LINK
+		if controlTypes.State.LINKED in states:
+			role=controlTypes.Role.LINK
 		attrs['role']=role
 		attrs['states']=states
 		return super(LotusNotesRichText_TextInfo, self)._normalizeControlField(attrs)
@@ -41,7 +41,7 @@ class LotusNotesRichText(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.ROLE_UNKNOWN:
+		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.Role.UNKNOWN:
 			return False
 		return True
 
@@ -90,13 +90,12 @@ class LotusNotesRichText(VirtualBuffer):
 			return
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(*l.center)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def _shouldSetFocusToObj(self, obj):
 		states=obj.states
-		return controlTypes.STATE_FOCUSABLE in states or controlTypes.STATE_LINKED in states
+		return controlTypes.State.FOCUSABLE in states or controlTypes.State.LINKED in states
 
 	def shouldPassThrough(self,obj,reason=None):
 		return False

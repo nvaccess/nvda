@@ -1,20 +1,25 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
-# Babbage B.V., Mozilla Corporation
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Babbage B.V., Mozilla Corporation, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """Manages appModules.
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
-@type runningTable: dict
 """
 
+from __future__ import annotations
 import itertools
 import ctypes
 import ctypes.wintypes
 import os
 import sys
+from typing import (
+	Dict,
+	Optional,
+)
+
 import winVersion
 import pkgutil
 import importlib
@@ -22,21 +27,19 @@ import threading
 import tempfile
 import comtypes.client
 import baseObject
-import globalVars
 from logHandler import log
 import NVDAHelper
-import winUser
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
 import api
 import appModules
-import watchdog
+import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
 
-#Dictionary of processID:appModule paires used to hold the currently running modules
-runningTable={}
+# Dictionary of processID:appModule pairs used to hold the currently running modules
+runningTable: Dict[int, AppModule] = {}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 _importers=None
@@ -103,12 +106,11 @@ def getAppModuleForNVDAObject(obj):
 		return
 	return getAppModuleFromProcessID(obj.processID)
 
-def getAppModuleFromProcessID(processID):
+
+def getAppModuleFromProcessID(processID: int) -> AppModule:
 	"""Finds the appModule that is for the given process ID. The module is also cached for later retreavals.
 	@param processID: The ID of the process for which you wish to find the appModule.
-	@type processID: int
-	@returns: the appModule, or None if there isn't one
-	@rtype: appModule 
+	@returns: the appModule
 	"""
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
@@ -264,7 +266,7 @@ def handleAppSwitch(oldMods, newMods):
 		if not mod.sleepMode and hasattr(mod,'event_appModule_loseFocus'):
 			try:
 				mod.event_appModule_loseFocus()
-			except watchdog.CallCancelled:
+			except exceptions.CallCancelled:
 				pass
 
 	nvdaGuiLostFocus = nextStage and nextStage[-1].appName == "nvda"
@@ -334,18 +336,22 @@ class AppModule(baseObject.ScriptableObject):
 	#: @type: bool
 	sleepMode=False
 
+	processID: int
+	"""The ID of the process this appModule is for"""
+
+	appName: str
+	"""The application name"""
+
 	def __init__(self,processID,appName=None):
 		super(AppModule,self).__init__()
-		#: The ID of the process this appModule is for.
-		#: @type: int
 		self.processID=processID
 		if appName is None:
 			appName=getAppNameFromProcessID(processID)
-		#: The application name.
-		#: @type: str
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
-		self.helperLocalBindingHandle=None
+		self.helperLocalBindingHandle: Optional[ctypes.c_long] = None
+		"""RPC binding handle pointing to the RPC server for this process"""
+
 		self._inprocRegistrationHandle=None
 
 	def _getExecutableFileInfo(self):
@@ -389,9 +395,7 @@ class AppModule(baseObject.ScriptableObject):
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
 		# No need to worry about immersive (hosted) apps and friends until Windows 8.
-		# Python 3.7 introduces platform_version to sys.getwindowsversion tuple,
-		# which returns major, minor, build.
-		if winVersion.winVersion.platform_version >= (6, 2, 9200):
+		if winVersion.getWinVer() >= winVersion.WIN8:
 			# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
 			# Therefore resort to file version info behavior because it is not a hosted app.
 			# Others such as Store version of Office are not truly hosted apps,
@@ -424,6 +428,8 @@ class AppModule(baseObject.ScriptableObject):
 
 	def _get_appModuleName(self):
 		return self.__class__.__module__.split('.')[-1]
+
+	isAlive: bool
 
 	def _get_isAlive(self):
 		return bool(winKernel.waitForSingleObject(self.processHandle,0))
@@ -501,7 +507,7 @@ class AppModule(baseObject.ScriptableObject):
 		e.g. File Explorer reports itself as immersive when it is not.
 		@rtype: bool
 		"""
-		if winVersion.winVersion.platform_version < (6, 2, 9200):
+		if winVersion.getWinVer() < winVersion.WIN8:
 			# Windows Store/UWP apps were introduced in Windows 8.
 			self.isWindowsStoreApp = False
 			return False
@@ -601,6 +607,13 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError()
 
+	def getStatusBarText(self, obj: NVDAObjects.NVDAObject) -> str:
+		"""Get the text from the given status bar.
+		If C{NotImplementedError} is raised, L{api.getStatusBarText} will resort to
+		retrieve the name of the status bar and the names and values of all of its children.
+		"""
+		raise NotImplementedError()
+
 	def _get_statusBarTextInfo(self):
 		"""Retrieve a L{TextInfo} positioned at the status bar of the application.
 		This is used by L{GlobalCommands.script_reportStatusLine} in cases where
@@ -610,6 +623,7 @@ class AppModule(baseObject.ScriptableObject):
 		@rtype: TextInfo
 		"""
 		raise NotImplementedError()
+
 
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.

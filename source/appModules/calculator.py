@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited, Joseph Lee
+# Copyright (C) 2020-2022 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,6 +11,7 @@ from NVDAObjects.UIA import UIA
 import queueHandler
 import ui
 import scriptHandler
+import braille
 
 # #9428: do not announce current values until calculations are done in order to avoid repetitions.
 noCalculatorEntryAnnouncements = [
@@ -39,6 +40,15 @@ class AppModule(appModuleHandler.AppModule):
 	# Name change says the same thing multiple times for some items.
 	_resultsCache = ""
 
+	def event_NVDAObject_init(self, obj):
+		if not isinstance(obj, UIA):
+			return
+		# #11858: version 10.2009 introduces a regression where history and memory items have no names
+		# but can be fetched through its children.
+		# Resolved in version 10.2109 which is exclusive to Windows 11.
+		if not obj.name and obj.parent.UIAAutomationId in ("HistoryListView", "MemoryListView"):
+			obj.name = "".join([item.name for item in obj.children])
+
 	def event_nameChange(self, obj, nextHandler):
 		if not isinstance(obj, UIA):
 			return
@@ -64,29 +74,38 @@ class AppModule(appModuleHandler.AppModule):
 		self._shouldAnnounceResult = False
 		nextHandler()
 
-	def event_UIA_notification(self, obj, nextHandler, activityId=None, **kwargs):
-		try:
-			shouldAnnounceNotification = (
-				obj.previous.UIAAutomationId in
-				("numberPad", "UnitConverterRootGrid")
-			)
-		except AttributeError:
+	def event_UIA_notification(self, obj, nextHandler, displayString=None, activityId=None, **kwargs):
+		calculatorVersion = int(self.productVersion.split(".")[0])
+		# #12268: for "DisplayUpdated", announce display strings in braille  no matter what they are.
+		# There are other activity Id's such as "MemorySlotAdded" and "MemoryCleared"
+		# but they do not involve number entry.
+		# Therefore, only handle the below activity Id.
+		if activityId == "DisplayUpdated":
+			braille.handler.message(displayString)
 			resultElement = api.getForegroundObject().children[1].lastChild
+			# Descend one more time in Windows 11 Calculator.
+			if calculatorVersion >= 11:
+				resultElement = resultElement.firstChild
 			# Redesigned in 2019 due to introduction of "always on top" i.e. compact overlay mode.
 			if resultElement.UIAElement.cachedClassName != "LandmarkTarget":
 				resultElement = resultElement.parent.children[1]
-			shouldAnnounceNotification = (
+			# Display string announcement is redundant if speak typed characters is on.
+			if (
 				resultElement
 				and resultElement.firstChild
-				and resultElement.firstChild.UIAAutomationId not in noCalculatorEntryAnnouncements
-			)
-		# Display updated activity ID seen when entering calculations should be ignored
-		# as as it is redundant if speak typed characters is on.
-		if shouldAnnounceNotification or activityId != "DisplayUpdated":
-			nextHandler()
+				and resultElement.firstChild.UIAAutomationId in noCalculatorEntryAnnouncements
+			):
+				return
+		nextHandler()
 
 	# A list of native commands to handle calculator result announcement.
-	_calculatorResultGestures = ("kb:enter", "kb:numpadEnter", "kb:escape")
+	_calculatorResultGestures = (
+		"kb:enter",
+		"kb:numpadEnter",
+		"kb:escape",
+		"kb:delete",
+		"kb:numpadDelete"
+	)
 
 	@scriptHandler.script(gestures=_calculatorResultGestures)
 	def script_calculatorResult(self, gesture):
@@ -100,9 +119,9 @@ class AppModule(appModuleHandler.AppModule):
 		# In redstone, pressing enter does not move focus to equals button.
 		if isinstance(focus, UIA):
 			if focus.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
-				queueHandler.queueFunction(queueHandler.eventQueue, focus.reportFocus)
+				queueHandler.queueFunction(queueHandler.eventQueue, ui.message, focus.name)
 			else:
 				resultsScreen = api.getForegroundObject().children[1].lastChild
 				if isinstance(resultsScreen, UIA) and resultsScreen.UIAElement.cachedClassName == "LandmarkTarget":
 					# And no, do not allow focus to move.
-					queueHandler.queueFunction(queueHandler.eventQueue, resultsScreen.firstChild.reportFocus)
+					queueHandler.queueFunction(queueHandler.eventQueue, ui.message, resultsScreen.firstChild.name)

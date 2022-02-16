@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Utilities for converting NVDA speech sequences to XML.
 Several synthesizers accept XML, either SSML or their own schemas.
@@ -13,6 +13,8 @@ L{SsmlConverter} is an implementation for conversion to SSML.
 from collections import namedtuple, OrderedDict
 import re
 import speech
+import textUtils
+from speech.commands import SpeechCommand
 from logHandler import log
 
 XML_ESCAPES = {
@@ -45,8 +47,7 @@ def _buildInvalidXmlRegexp():
 			trailing=trailingSurrogate))
 
 RE_INVALID_XML_CHARS = _buildInvalidXmlRegexp()
-# The Unicode replacement character. See https://en.wikipedia.org/wiki/Specials_(Unicode_block)#Replacement_character
-REPLACEMENT_CHAR = u"\uFFFD"
+REPLACEMENT_CHAR = textUtils.REPLACEMENT_CHAR
 
 def toXmlLang(nvdaLang):
 	"""Convert an NVDA language to an XML language.
@@ -196,7 +197,7 @@ class SpeechXmlConverter(object):
 	Subclasses implement specific XML schemas by implementing methods which convert each speech command.
 	The method for a speech command should be named with the prefix "convert" followed by the command's class name.
 	For example, the handler for C{IndexCommand} should be named C{convertIndexCommand}.
-	These methods receive the L{speech.SpeechCommand} instance as their only argument.
+	These methods receive the L{SpeechCommand} instance as their only argument.
 	They should return an appropriate XmlBalancer command.
 	Subclasses may wish to extend L{generateBalancerCommands}
 	to produce additional XmlBalancer commands at the start or end;
@@ -210,7 +211,7 @@ class SpeechXmlConverter(object):
 		for item in speechSequence:
 			if isinstance(item, str):
 				yield item
-			elif isinstance(item, speech.SpeechCommand):
+			elif isinstance(item, SpeechCommand):
 				name = type(item).__name__
 				# For example: self.convertIndexCommand
 				func = getattr(self, "convert%s" % name, None)

@@ -7,269 +7,53 @@ branches:
   - beta
   - rc
   - /try-.*/
-  # For tags, branch = tag if GitHub couldn't work out the base branch.
   - /release-.*/
   
 environment:
  PY_PYTHON: 3.7-32
- encFileKey:
-  secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
+ secure_authenticode_pass:
+  secure: Way+hJyhbiLG/cmCo4+dHHzS5DiSvk/45o6frnIQ27GBX6nVDsh7jwQ7fSnqxBRP
+ secure_ssh_pass:
+  secure: Iql/RhSathGacONacsyr6gis+rjL75UFZ/R+nPAJpo3asAzQSQQd8hfxq0iv8+Th
  mozillaSymsAuthToken:
   secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
 
-init:
- - ps: |
-     # iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-     $pythonVersion = (py --version)
-     echo $pythonVersion
-     if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
-      # Strip "release-" prefix.
-      $version = $env:APPVEYOR_REPO_TAG_NAME.Substring(8)
-      Set-AppveyorBuildVariable "release" "1"
-      if ($env:APPVEYOR_REPO_TAG_NAME.Contains("rc") -or $env:APPVEYOR_REPO_TAG_NAME.Contains("beta")) {
-       $versionType = "beta"
-      } else {
-       $versionType = "stable"
-      }
-     } else {
-      if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
-       $version = "pr$env:APPVEYOR_PULL_REQUEST_NUMBER-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
-      } elseif($env:APPVEYOR_REPO_BRANCH -eq "master") {
-       $version = "alpha-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
-      } else {
-       $version = "$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
-       if($env:APPVEYOR_REPO_BRANCH.StartsWith("try-release-")) {
-        Set-AppveyorBuildVariable "release" "1"
-       }
-      }
-      # The version is unique even for rebuilds, so we can use it for the AppVeyor version.
-      Update-AppveyorBuild -Version $version
-      if($env:APPVEYOR_REPO_BRANCH -eq "master") {
-       $versionType = "snapshot:alpha"
-      } elseif (!$env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
-       $versionType = "snapshot:$env:APPVEYOR_REPO_BRANCH"
-      }
-     }
-     Set-AppveyorBuildVariable "version" $version
-     if ($versionType) {
-      Set-AppveyorBuildVariable "versionType" $versionType
-     }
-
-clone_depth: 1
-
 install:
- - cd appveyor
- # Decrypt files.
- - ps: |
-    if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
-     openssl enc -md md5 -aes-256-cbc -d -pass pass:$env:encFileKey -in authenticode.pfx.enc -out authenticode.pfx
-     openssl enc -md md5 -aes-256-cbc -d -pass pass:$env:encFileKey -in ssh_id_rsa.enc -out ssh_id_rsa
-     # Install ssh stuff.
-     copy ssh_id_rsa $env:userprofile\.ssh\id_rsa
-    }
- - type ssh_known_hosts >> %userprofile%\.ssh\known_hosts
- - cd ..
+ - ps: appveyor\scripts\setBuildVersionVars.ps1
+ - ps: appveyor\scripts\decryptFilesForSigning.ps1
+ - py -m pip install --upgrade --no-warn-script-location pip
  - git submodule update --init
 
 build_script:
- - ps: |
-     $sconsOutTargets = "launcher developerGuide  changes userGuide client"
-     if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
-      $sconsOutTargets += " appx"
-     }
-     $sconsArgs = "version=$env:version"
-     if ($env:release) {
-      $sconsArgs += " release=1"
-     }
-     if ($env:versionType) {
-      $sconsArgs += " updateVersionType=$env:versionType"
-     }
-     $sconsArgs += ' publisher="NV Access"'
-     if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
-      $sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
-     }
-     $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
-     # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
-     # It's possible to work around this, but the workarounds have annoying side effects.
-     Set-AppveyorBuildVariable "sconsOutTargets" $sconsOutTargets
-     Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
- - 'echo scons args: %sconsArgs%'
- - py scons.py source %sconsArgs%
- # We don't need launcher to run checkPot, so run the checkPot before launcher.
- - py scons.py checkPot %sconsArgs%
- # The pot gets built by tests, but we don't actually need it as a build artifact.
- - 'echo scons output targets: %sconsOutTargets%'
- - py scons.py %sconsOutTargets% %sconsArgs%
- # Build symbol store.
- - ps: |
-     foreach ($syms in
-      # We don't just include source\*.dll because that would include system dlls.
-      "source\liblouis.dll", "source\*.pdb",
-      "source\lib\*.dll", "source\lib\*.pdb",
-      # We include source\lib64\*.exe to cover nvdaHelperRemoteLoader.
-      "source\lib64\*.dll", "source\lib64\*.exe", "source\lib64\*.pdb",
-      "source\synthDrivers\*.dll", "source\synthDrivers\*.pdb"
-     ) {
-      & $env:symstore add /s symbols /compress -:NOREFS /t NVDA /f $syms
-     }
- - cd symbols
- - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
- - cd ..
+ - ps: appveyor\scripts\setSconsArgs.ps1
+ - scons source %sconsArgs%
+ - scons %sconsOutTargets% %sconsArgs%
+ - ps: appveyor\scripts\buildSymbolStore.ps1
+ - 7z a -tzip -r output\symbols.zip symbols\*.dl_ symbols\*.ex_ symbols\*.pd_
 
 before_test:
- # install required packages
- - py -m pip install --upgrade pip
- - py -m pip install -r tests/system/requirements.txt -r tests/lint/lintInstall/requirements.txt
- - mkdir testOutput
- - mkdir testOutput\unit
- - mkdir testOutput\system
- - mkdir testOutput\lint
- - ps: |
-     $errorCode=0
-     $nvdaLauncherFile=".\output\nvda"
-     if(!$env:release) {
-      $nvdaLauncherFile+="_snapshot"
-     }
-     $nvdaLauncherFile+="_${env:version}.exe"
-     echo NVDALauncherFile: $NVDALauncherFile
-     $outputDir=$(resolve-path .\testOutput)
-     $installerLogFilePath="$outputDir\nvda_install.log"
-     $installerProcess=start-process -FilePath "$nvdaLauncherFile" -ArgumentList "--install-silent --debug-logging --log-file $installerLogFilePath" -passthru
-     try {
-      $installerProcess | wait-process -Timeout 180
-      $errorCode=$installerProcess.ExitCode
-     } catch {
-      echo "NVDA installer process timed out"
-      $errorCode=1
-      Add-AppveyorMessage "Unable to install NVDA prior to tests."
-     }
-     Push-AppveyorArtifact $installerLogFilePath
-     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+ - ps: appveyor\scripts\tests\beforeTests.ps1
+ - ps: appveyor\scripts\installNVDA.ps1
 
 test_script:
-# Unit Tests (Python)
- - ps: |
-     $errorCode=0
-     $outDir = (Resolve-Path .\testOutput\unit\)
-     $unitTestsXml = "$outDir\unitTests.xml"
-     py -m nose -sv --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
-     if($LastExitCode -ne 0) {
-      $errorCode=$LastExitCode
-      Add-AppveyorMessage "Unit test failure"
-     }
-     Push-AppveyorArtifact $unitTestsXml
-     $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $unitTestsXml)
-     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+ - ps: appveyor\scripts\tests\translationCheck.ps1
+ - ps: appveyor\scripts\tests\unitTests.ps1
+ - ps: appveyor\scripts\tests\lintCheck.ps1
+ - ps: appveyor\scripts\tests\systemTests.ps1
 
-# Flake8 Linting
- - ps: |
-    if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
-      $lintOutput = (Resolve-Path .\testOutput\lint\)
-      $lintSource = (Resolve-Path .\tests\lint\)
-      git fetch -q origin $env:APPVEYOR_REPO_BRANCH
-      $prDiff = "$lintOutput\prDiff.patch"
-      git diff -U0 FETCH_HEAD...HEAD > $prDiff
-      $flake8Config = "$lintSource\flake8.ini"
-      $flake8Output = "$lintOutput\PR-Flake8.txt"
-      type "$prDiff" | py -Xutf8 -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
-      if($LastExitCode -ne 0) {
-       $errorCode=$LastExitCode
-       Add-AppveyorMessage "PR introduces Flake8 errors"
-      }
-      Push-AppveyorArtifact $flake8Output
-      $junitXML = "$lintOutput\PR-Flake8.xml"
-      py "$lintSource\createJunitReport.py" "$flake8Output" "$junitXML"
-      Push-AppveyorArtifact $junitXML
-      $wc = New-Object 'System.Net.WebClient'
-      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $junitXML)
-      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
-    }
+after_test:
+ - ps: appveyor\scripts\tests\checkTestFailure.ps1
 
-# System tests
- - ps: |
-     $testOutput = (Resolve-Path .\testOutput\)
-     $systemTestOutput = (Resolve-Path "$testOutput\system")
-     $testSource = ".\tests\system\robot"
-
-     $robotArgs = '--argumentfile', '.\tests\system\robotArgs.robot'
-     # useInstalledNVDA must come after args file to override the whichNVDA value
-     $useInstalledNVDA = '--variable', 'whichNVDA:installed'
-
-     py -m robot $robotArgs $useInstalledNVDA $testSource
-     Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
-     Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
-     if($LastExitCode -ne 0) {
-      $errorCode=$LastExitCode
-      Add-AppveyorMessage "System test failure"
-     }
-     $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
-     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
-
-# Artifacts are required by deploy code,
 artifacts:
-  - path: output\*
-  - path: output\*\*
+ - path: output\*
+ - path: output\*\*
 
-# Still upload artifacts on failure, they are useful for testing PR builds despite the build perhaps
-# failing for a minor reason (eg linting)
-on_failure:
-#  `- path` is not allowed in `on_failure` use powerShell instead
- - ps: |
-    # Upload artifacts, preserving directory structure.
-    $uploadFromFolder = "output\"
-    if( Test-Path $uploadFromFolder ){
-      $root = Resolve-Path .\
-      $output = Resolve-Path $uploadFromFolder
-      $paths = [IO.Directory]::GetFiles($output.Path, '*.*', 'AllDirectories')
-      $paths | % {
-        Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1)
-      }
-    }
-
-# The server side deploy code ('nvdaAppveyorHook') relies on artifacts, they must be uploaded first.
-# For ordering of appveyor yml phases, see: https://www.appveyor.com/docs/build-configuration/#build-pipeline
 deploy_script:
- - ps: |
-     if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
-      # Not a try build.
-      # Notify our server.
-      $exe = Get-ChildItem -Name output\*.exe
-      $hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
-      $apiVersion = (py -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))")
-      echo apiversion: $apiVersion
-      $apiCompatTo = (py -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))")
-      echo apiBackCompatTo: $apiCompatTo
-      $data = @{
-       jobId=$env:APPVEYOR_JOB_ID;
-       commit=$env:APPVEYOR_REPO_COMMIT;
-       version=$env:version; versionType=$env:versionType;
-       apiVersion=$apiVersion; apiCompatTo=$apiCompatTo;
-       avVersion=$env:APPVEYOR_BUILD_VERSION;
-       branch=$env:APPVEYOR_REPO_BRANCH;
-       exe=$exe; hash=$hash;
-       artifacts=$artifacts
-      }
-      ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+ - ps: appveyor\scripts\deployScript.ps1
 
-      # Upload symbols to Mozilla.
-      py -m pip install --no-warn-script-location requests
-      py appveyor\mozillaSyms.py
-      if($LastExitCode -ne 0) {
-        $errorCode=$LastExitCode
-        echo "Unable to upload symbols to Mozilla"
-        Add-AppveyorMessage "Unable to upload symbols to Mozilla"
-      }
-     }
+on_failure:
+ - ps: appveyor\scripts\uploadArtifacts.ps1
 
 on_finish:
-  # add a message to point to the NVDA build, to make testing PR's easier.
-  - ps: |
-      $appVeyorUrl = "https://ci.appveyor.com"
-      $exe = Get-ChildItem -Name output\*.exe
-      if($?){
-        $exeUrl="$appVeyorUrl/api/buildjobs/$env:APPVEYOR_JOB_ID/artifacts/output/$exe"
-        Add-AppveyorMessage "[Build (for testing PR)]($exeUrl)"
-      }
+ - ps: appveyor\scripts\pushPackagingInfo.ps1

@@ -33,7 +33,7 @@ class MathPresentationProvider(object):
 		@param mathMl: The MathML markup.
 		@type mathMl: str
 		@return: A speech sequence.
-		@rtype: List[str, speech.SpeechCommand]
+		@rtype: List[str, SpeechCommand]
 		"""
 		raise NotImplementedError
 
@@ -97,7 +97,7 @@ class MathInteractionNVDAObject(Window):
 	Pressing escape exits interaction.
 	"""
 
-	role = controlTypes.ROLE_MATH
+	role = controlTypes.Role.MATH
 	# Override the window name.
 	name = None
 	# Any tree interceptor should not apply here.
@@ -148,7 +148,7 @@ def getMathMlFromTextInfo(pos):
 		if not isinstance(item, textInfos.FieldCommand) or item.command != "controlStart":
 			continue
 		field = item.field
-		if field.get("role") != controlTypes.ROLE_MATH:
+		if field.get("role") != controlTypes.Role.MATH:
 			continue
 		try:
 			return pos.getMathMl(field)

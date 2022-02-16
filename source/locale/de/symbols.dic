@@ -1,28 +1,29 @@
 #locale/de/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2020 NVDA Contributors
+#Copyright (c) 2011-2021 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
+
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 
 # Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
+; Satzzeichen	(?<=[^\s;]);(?=\s|$)
+: Satzzeichen	(?<=[^\s:]):(?=\s|$)
 
 # Others
-decimal point	(?<![^\d -])\,(?=\d)
+Dezimalpunkt	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
-thousands separator	(?<=\d)\.(?=\d{3})
-date separator	(?<=\d\d)\.(?=\d\d)
+negative Zahl	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+Tausender Punkt	(?<=\d)\.(?=\d{3})
+Datumstrennzeichen	(?<=\d\d)\.(?=\d\d)
 
 symbols:
-# identifier	replacement[[level][preserve]][	# display name]
+# identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
 . sentence ending	Punkt	all	always
@@ -30,56 +31,49 @@ symbols:
 ? sentence ending	Fragezeichen	all	always
 ; phrase ending	Semikolon	most	always
 : phrase ending	Doppelpunkt	most	always
-decimal Komma		none	always
+decimal point		none	always
 in-word '	Apostroph	all	norep
 negative number	Minus	none	norep
-thousands separator	Punkt	all	norep
-date separator		none	always
 
 # Whitespace
-\0	Leer	# Null
+\0	Leer	char	# null
 \t	Tab
 \n	Zeilenumbruch	char
 \f	Seitenwechsel	none
 \r	Neue Zeile	char
  	Leerzeichen	char
- 	Geschütztes Leerzeichen	char
+ 	Geschütztes Leerzeichen	char	# no-break space
 
-# Standard-Satzzeichen/-Symbole
+# Standard Punctuation/Symbols
 !	Ausrufezeichen	all
 "	Anführungszeichen	most
 \#	Nummernzeichen	some
 $	Dollar	all	norep
 £	Pfund	all	norep
 €	Euro	all	norep
-¢	Cent	all	norep
+¢	Cents	all	norep
 ¥	Yen	all	norep
 ₹	Rupie	some	norep
-ƒ	Lateinischer Kleinbuchstabe F mit Haken	all	norep
-¤	Allgemeines Währungssymbol	all	norep
+ƒ	Lateinischer Kleinbuchstabe F mit Häkchen	all	norep
+¤	Währungszeichen	all	norep
 %	Prozent	some
 ‰	Promille	some
-&	Und	some
+&	und	some
 '	Apostroph	all
 (	Runde Klammer auf	most	always
 )	Runde Klammer zu	most	always
 *	Stern	some
-+	Plus	some
-−	Minus	some
 ,	Komma	all	always
--	Bindestrich	most
+-	Strich	most
 .	Punkt	some
 /	Schrägstrich	some
 :	Doppelpunkt	most	norep
 ;	Semikolon	most
-<	Kleiner Als	some
->	Größer Als	some
-=	Gleichheitszeichen	some
 ?	Fragezeichen	all
 @	ätt	some
 [	Eckige Klammer auf	most
 ]	Eckige Klammer zu	most
-\	Bäcksläsch	most
+\\	Bäcksläsch	most
 ^	Dach	most
 _	Unterstrich	most
 `	Gravis	most
@@ -91,27 +85,27 @@ _	Unterstrich	most
 ¡	Umgekehrtes Ausrufezeichen	some
 ¿	Umgekehrtes Fragezeichen	some
 ·	Mittelpunkt	most
-‚	Einfaches Anführungszeichen unten	most
+‚	Einfaches Aführungszeichen unten	most
+„	Typografisches Anführungszeichen links	most
 ′	Minuten	some
 ″	Sekunden	some
 ‴	Dreistrich	some
 ⁗	Vierstrich	some
 
-# Andere Zeichen
+# Other Characters
 •	Aufzählungszeichen	some
-…	Waagerechtes Auslassungszeichen	all	always
+…	Punkt Punkt Punkt	all	always
 ...	Punkt Punkt Punkt	all	always
-“	Typografisches Anführungszeichen rechts	most
+“	Typografishes Anführungszeichen rechts	most
 ”	Anführungszeichen rechts	most
-„	Typografisches Anführungszeichen links	most
 ‘	Apostroph links	most
 ’	Apostroph rechts	most
 –	Bindestrich	most	always
 —	Gedankenstrich	most
-­	Weiches Trennzeichen	most
+­	Silbentrennzeichen	most
 ⁃	Bindestrich-Aufzählungszeichen	none
 ●	Kreis	most
-○	Weißer kreis	most
+○	Weißer Kreis	most
 ¨	Trema	most
 ¯	Makron	most
 ´	Akut	most
@@ -124,137 +118,288 @@ _	Unterstrich	most
 ◾	Schwarzes mittelkleines Quadrat	some
 □	Weißes Quadrat	some
 ◦	Weißes Aufzählungszeichen	some
-⇒	Doppelter rechtsweisender Pfeil	some
-⇨	Nach rechtsweisender weißer Pfeil	some
+⇨	Weißer Pfeil nach rechts	some
 ➔	Nach rechtsweisender Pfeil	some
 ➢	Rechtsweisende Pfeilspitze	some
-⮚	Rechtsweisende Pfeilspitze	some
 ❖	Schwarzes Karo ohne weißes X	some
 ♣	Schwarzes Kreuz	some
+♦	Karo	some
 ◆	Schwarzes Karo	some
 §	Paragraf	all
 °	Grad	some
-«	Doppelte, gewinkelte Klammer auf
-»	Doppelte, gewinkelte Klammer zu
+«	Doppelt gewinkelte Klammer auf	none
+»	Doppelt gewinkelte Klammer zu	none
 µ	Mikro	some
-º	Ordnung	some
-ª	Hochgestelltes a	some
-⁰	Hochgestellte 0	some
-¹	Hochgestellte 1	some
-²	Hochgestellte 2	some
-³	Hochgestellte 3	some
-⁴	Hochgestellte 4	some
-⁵	Hochgestellte 5	some
-⁶	Hochgestellte 6	some
-⁷	Hochgestellte 7	some
-⁸	Hochgestellte 8	some
-⁹	Hochgestellte 9	some
-⁺	Hochgestelltes Plus	some
-⁻	Hochgestelltes Minus	some
-⁼	Hochgestelltes Gleichheitszeichen	some
-⁽	Hochgestellte runde Klammer links	some
-⁾	Hochgestellte runde Klammer rechts	some
-ⁿ	Hochgestelltes n	some
-₀	Tiefgestellte 0	some
-₁	Tiefgestellte 1	some
-₂	Tiefgestellte 2	some
-₃	Tiefgestellte 3	some
-₄	Tiefgestellte 4	some
-₅	Tiefgestellte 5	some
-₆	Tiefgestellte 6	some
-₇	Tiefgestellte 7	some
-₈	Tiefgestellte 8	some
-₉	Tiefgestellte 9	some
-₊	Tiefgestelltes Plus	some
-₋	Tiefgestelltes Minus	some
-₌	Tiefgestelltes Gleichheitszeichen	some
-₍	Tiefgestellte runde Klammer links	some
-₎	Tiefgestellte runde Klammer rechts	some
+⁰	hochgestellte 0	some
+¹	hochgestellte 1	some
+²	hochgestellte 2	some
+³	hochgestellte 3	some
+⁴	hochgestellte 4	some
+⁵	hochgestellte 5	some
+⁶	hochgestellte 6	some
+⁷	hochgestellte 7	some
+⁸	hochgestellte 8	some
+⁹	hochgestellte 9	some
+⁺	hochgestelltes plus	some
+⁼	hochgestelltes Gleichheitszeichen	some
+⁽	hochgestellte Klammer auf	some
+⁾	hochgestellte Klammer zu	some
+ⁿ	hochgestelltes n	some
+₀	tiefgestellte 0	some
+₁	tiefgestellte 1	some
+₂	tiefgestellte 2	some
+₃	tiefgestellte 3	some
+₄	tiefgestellte 4	some
+₅	tiefgestellte 5	some
+₆	tiefgestellte 6	some
+₇	tiefgestellte 7	some
+₈	tiefgestellte 8	some
+₉	tiefgestellte 9	some
+₊	tiefgestelltes plus	some
+₋	tiefgestelltes minus	some
+₌	tiefgestelltes Gleichheitszeichen	some
+₍	thiefgestellte runde Klammer auf	some
+₎	tiefgestellte runde Klammer zu	some
 ®	Registriertes Warenzeichen	some
 ™	Eingetragenes Warenzeichen	some
 ©	Copyright	some
-±	Plus oder Minus	some
-×	Mal	some
-÷	Geteilt Durch	some
+℠	Service-Mark-Zeichen	some
 ←	Pfeil nach links	some
 ↑	Pfeil nach oben	some
 →	Pfeil nach rechts	some
 ↓	Pfeil nach unten	some
 ✓	Häkchen	some
 ✔	Fettes Häkchen	some
-🡺	Rechtsweisender Pfeil	some
+🡺	Nach rechtsweisender Pfeil	some
 †	Dolch	some
-‡	Doppeldolch	some
-‣	Dreieckiges Aufzählungszeichen	none
-✗	Kreuzkästchen	none
-℃	Grad Celsius	some
-℉	Grad Fahrenheit	some
+‡	Doppel-Dolch	some
+‣	dreieckiges Aufzählungszeichen	none
+✗	X-förmige Aufzählungszeichen	none
+⊕	Eingekreistes Plus	none
+⊖	Eingekreistes Minus	none
+⇄	Pfeil nach rechts über Pfeil nach links	none
+⇒	Doppelter nach rechtsweisender Pfeil	none
+―	Waagerechter Strich
+،	Arabisches Komma
+、	Ideografisches Komma
+؛	Arabisches Semikolon
+؟	Arabisches Fragezeichen
+。	Ideografischer Punkt
+“	Typografisches Anführungszeichen rechts
+〈	Spitze Klammer auf
+〉	Spitze Klammer zu
+《	Doppelte, spitze Klammer auf
+》	Doppelte, spitze Klammer zu
+「	Eckige Klammer auf
+」	Eckige Klammer zu
+『	Weiße, eckige Klammer auf
+』	Weiße, eckige Klammer zu
+【	Schwarze, konkave Klammer auf
+】	Schwarze, konkave Klammer zu
+〔	Stumpfe Klammer auf
+〕	Stumpfe Klammer zu
+〖	Hohle, konkave Klammer auf
+〗	Hohle, konkave Klammer zu
+&	Und
+‧	Silbentrennzeichen
+‸	Dach
+⁂	Asterismus
+℗	Copyright-Zeichen für Audio-Aufnahme
+↚	Durchgestrichener Pfeil nach links
+↛	Durchgestrichener Pfeil nach rechts
+↜	Wellenförmiger Pfeil nach links
+↝	Wellenförmiger Pfeil nach rechts
+↢	Pfeilende nach links
+↣	Pfeilende nach rechts
+↤	Pfeil nach links von Strich wegführend
+↥	Pfeil nach oben von Strich wegführend
+↦	Pfeil nach rechts von Strich wegführend
+↧	Pfeil nach unten von Strich wegführend
+↭	Wellenförmiger Pfeil nach links und rechts
+↶	Halbkreisförmiger Pfeil gegen den Uhrzeigersinn nach oben
+↷	Halbkreisförmiger Pfeil im Uhrzeigersinn nach oben
+↺	Kreisförmiger Pfeil gegen den Uhrzeigersinn
+⇅	Nach oben und nach unten weisende Pfeile
 
-# Mathematische Operatoren U+2200 bis U+220F
-∀	Für Alles	none
-∁	Komplement	none
-∂	Partielles Differential	none
-∃	Es existiert	none
-∄	Es existiert kein	none
+# Arithmetic Operators
++	plus	some
+−	minus	some
+×	mal	some
+⋅	mal	some
+⨯	mal	none
+∕	geteilt durch	some
+⁄	geteilt durch	some
+÷	geteilt durch	some
+∓	minus oder plus	some
+±	plus oder minus	some
+
+# Set Operations
+∖	Differenzmenge	none
+⊍	Multimengen-Multiplikation	none
+𝒫	Mathematischer Großbuchstabe Schreibschrift-P	none
+𝔓	Mathematischer Großbuchstabe Fraktur-P	none
+℘	Großbuchstabe Schreibschrift-P	none
+∁	Komplement der Menge	none
+
+# Set Relations and Constructions
 ∅	Leere Menge	none
-∆	Inkrement	none
-∇	Nabla	none
-∈	Element von	none
-∉	Kein Element von	none
-∊	Kleines Element von	none
-∋	Enthält als Element	none
-∌	Enthält nicht als Element	none
-∍	Kleines enhält als Element	none
-∎	Ende des Beweises	none
-∏	Produkt	none
+⊂	ist Teilmenge von	none
+⊄	Keine Teilmenge von	none
+⊃	Obermenge von	none
+⊅	Keine Obermenge von	none
+⊆	Teilmenge von oder Gleichheit	none
+⊈	Weder Teilmenge von noch Gleichheit	none
+⊇	Obermenge von oder Gleichheit	none
+⊉	Weder Obermenge von noch Gleichheit	none
+⊌	Multimenge	none
 
-# Übliche mathematische Operatoren
-∑	Summe	none
+# Equality Signs
+=	gleich	some
+≃	Asymptotisch Gleichheit	none
+≄	Keine asymptotische Gleichheit	none
+≅	ungefähr gleich zu	none
+≆	ungefähr, aber nicht wirklich gleich	none
+≈	fast gleich	none
+≌	alle gleich	none
+≍	gleichwertig	none
+≭	nicht gleichwertig mit	none
+≎	geometrisch äquivalent zu	none
+≑	geometrisch gleich	none
+≚	gleichwinklig zu	none
+≬	zwischen	none
+≠	Nicht gleichwertig mit	none
+≡	identisch mit	none
+≣	genau äquivalent mit	none
+≢	nicht identisch mit	none
+∼	ähnlich mit	none
+≙	entspricht	none
+≟	fraglich gleich mit	none
+
+# Comparison Signs
+<	kleiner als	some
+>	größer als	some
+≤	gleich oder kleiner als	none
+≦	gleich oder kleiner als	none
+≪	viel kleiner als	none
+≥	größer als oder gleich wie	none
+≧	größer als oder gleich wie	none
+≫	viel größer als	none
+≶	kleiner oder größer als	none
+≷	größer oder kleiner als	none
+≮	nicht weniger als	none
+≯	nicht größer als	none
+
+# Functions
+⁻	Hochgestelltes Minuszeichen	some
+∘	Ring-Operator	none
+∂	Partielles Differential	none
+∇	Nabla	none
+
+# Geometry and Linear Algebra
+⃗	Vektor zwischen	none
+△	Dreieck	none
+▭	Rechteck	none
+∟	Rechter Winkel	none
+∠	Winkel	none
+∥	parallel zu	none
+∦	nicht parallel zu	none
+⊥	senkrecht zu	none
+⟂	orthogonal zu	none
+‖	Vektornorm	none
+̂	normalisiert	none
+∿	Sinus	none
+∡	gemessener Winkel	none
+∢	Kugelwinkel	none
+
+# Logical Operators
+∀	für alle	none
+∃	es gibt	none
+∄	es gibt kein	none
+⇏	does not imply	none
+⇐	wird impliziert durch	none
+
+# Other Mathematical Operators
+∈	Element von	none
+∉	kein Element von	none
+∊	kleines Element von	none
+∋	enthält als Mitglied	none
+∌	enthält nicht als Mitglied	none
+∍	klein enthält als Mitglied	none
+∎	Ende des Beweises	none
+∏n-äres Produkt	none
+∐n-äres Kuppelprodukt	none
+∑	n-äre Summation	none
 √	Quadratwurzel	none
 ∛	Kubikwurzel	none
-∜	Vierte Wurzel	none
-∝	Proportional zu	none
-∞	Unendlich	none
-∟	Rechter Winkel	none
-∠	Ebener Winkel	none
-∥	Parallel zu	none
-∦	Nicht parallel zu	none
+∜	vierte Wurzel	none
+∝	proportional zu	none
+∞	unendlich	none
 ∧	Logisches Und	none
 ∨	Logisches Oder	none
-¬	Nicht	none
+¬	Logisches Nicht	none
 ∩	Schnittmenge	none
 ∪	Vereinigungsmenge	none
 ∫	Integral	none
-∴	Folglich	none
-∵	Weil	none
+∬	Doppelintegral	none
+∭	Dreifachintegral	none
+∮	Kurvenintegral	none
+∯	Oberflächenintegral	none
+∰	Volumenintegral	none
+∱	Integral im Uhrzeiger	none
+∲	Kurvenintegral im Uhrzeiger	none
+∳	Konturintegral gegen den Uhrzeiger	none
+∴	folglich	none
+∵	weil	none
 ∶	Verhältnis	none
 ∷	Proportion	none
-≤	Kleiner gleich	none
-≥	Größer gleich	none
-⊂	Ist Teilmenge von	none
-⊃	Ist Obermenge von	none
-⊆	Teilmenge oder gleich	none
-⊇	Obermenge oder gleich	none
+∹	exzess	none
+∺	geometrische Proportion	none
+≀	Kranzprodukt	none
+≏	Unterschied zwischen	none
+≐	nähert sich der Grenze	none
+∙	Kreis-Operator	none
+∣	teilt	none
+∤	teilt nicht	none
+≔	Doppelpunkt und Gleichheitszeichen	none
+≕	Gleichheitszeichen und Doppelpunkt	none
+≺	geht voran	none
+≻	gelingt	none
+⊀	geht nicht voran	none
+⊁	gelingt nicht	none
 
-# Vulgur-Teilmengen U+2150 bis U+215E
-¼	Ein Viertel	none
-½	Ein Halb	none
-¾	Drei Viertel	none
-⅐	Ein Siebtel	none
-⅑	Ein Neuntel	none
-⅒	Ein Zehntel	none
-⅓	Ein Drittel	none
-⅔	Zwei Drittel	none
-⅕	Ein Fünftel	none
-⅖	Zwei Fünftel	none
-⅗	Drei Fünftel	none
-⅘	Vier Fünftel	none
-⅙	Ein Sechstel	none
-⅚	Fünf Sechstel	none
-⅛	Ein Achtel	none
-⅜	Drei Achtel	none
-⅝	Fünf Achtel	none
-⅞	Sieben Achtel	none
+# Vulgur Fractions U+2150 to U+215E
+¼	ein Viertel	none
+½	einhalb	none
+¾	dreiviertel	none
+⅐	ein Siebtel	none
+⅑	ein Neuntel	none
+⅒	ein Zehntel	none
+⅓	ein Drittel	none
+⅔	zwei Drittel	none
+⅕	ein Fünftel	none
+⅖	zwei Fünftel	none
+⅗	drei Fünftel	none
+⅘	vier Fünftel	none
+⅙	ein Sechstel	none
+⅚	fünf Sechstel	none
+⅛	ein Achtel	none
+⅜	drei Achtel	none
+⅝	fünf Achtel	none
+⅞	sieben Achtel	none
 
-# Technisch und verschiedenes
+# Number Sets
+𝔸	Mathematischer Großbuchstabe A mit Doppelstrich	none
+ℂ	Großbuchstabe C mit Doppelstrich	none
+ℑ	Großbuchstabe Fraktur-I	none
+ℍ	Großbuchstabe H mit Doppelstrich	none
+ℕ	Großbuchstabe N mit Doppelstrich	none
+𝕁	Mathematischer Großbuchstabe J mit Doppelstrich	none
+ℚ	Großbuchstabe Q mit Doppelstrich	none
+ℝ	Großbuchstabe R mit Doppelstrich	none
+ℜ	Großbuchstabe Fraktur-R	none
+ℤ	Großbuchstabe Z mit Doppelstrich	none
+ℵ	Alef-Symbol	none
+ℶ	Bet-Symbol	none
+
+# Miscellaneous Technical
 ⌘	Mac-Befehlstaste	none

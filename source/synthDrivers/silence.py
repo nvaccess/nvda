@@ -1,11 +1,11 @@
-#synthDrivers/silence.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+from collections import OrderedDict
 import synthDriverHandler
-import speech
+from speech.commands import IndexCommand
 
 class SynthDriver(synthDriverHandler.SynthDriver):
 	"""A dummy synth driver used to disable speech in NVDA.
@@ -18,13 +18,17 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def check(cls):
 		return True
 
-	supportedSettings=[]
+	supportedSettings = frozenset()
+	_availableVoices = OrderedDict({name: synthDriverHandler.VoiceInfo(name, description)})
 
 	def speak(self, speechSequence):
 		self.lastIndex = None
 		for item in speechSequence:
-			if isinstance(item, speech.IndexCommand):
+			if isinstance(item, IndexCommand):
 				self.lastIndex = item.index
 
 	def cancel(self):
 		self.lastIndex = None
+
+	def _get_voice(self):
+		return self.name

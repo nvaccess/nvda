@@ -21,6 +21,8 @@ import globalPluginHandler
 import config
 import winUser
 import extensionPoints
+import oleacc
+
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -175,22 +177,25 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
 			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
-	def _checkIfValid(self):
+	def _checkIfValid(self) -> bool:
 		stillValid = (
 			self.isLastFocusObj()
 			or not self.previouslyHadFocus()
 			or self.isAncestorOfCurrentFocus()
 			# Ensure titles for dialogs gaining focus are reported, EG NVDA Find dialog
 			or self.isForegroundObject()
+			# Ensure menu items are reported when focus is gained to the menu start (see #12624).
+			or self.isMenuItemOfCurrentFocus()
 		)
 		return stillValid
 
-	def _getDevInfo(self):
+	def _getDevInfo(self) -> str:
 		return (
 			f"isLast: {self.isLastFocusObj()}"
 			f", previouslyHad: {self.previouslyHadFocus()}"
 			f", isAncestorOfCurrentFocus: {self.isAncestorOfCurrentFocus()}"
 			f", is foreground obj {self.isForegroundObject()}"
+			f", isMenuItemOfCurrentFocus: {self.isMenuItemOfCurrentFocus()}"
 		)
 
 	def isLastFocusObj(self):
@@ -208,12 +213,45 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		foreground = api.getForegroundObject()
 		return self._obj is foreground or self._obj == foreground
 
+	def isMenuItemOfCurrentFocus(self) -> bool:
+		"""
+		Checks if the current object is a menu item of the current focus.
+		The only known case where this returns True is the following (see #12624):
+		
+		When opening a submenu in certain applications (like Thunderbird 78.12),
+		NVDA can process a menu start event after the first item in the menu is focused.
+		The menu start event causes a focus event on the menu, taking NVDA's focus from the menu item.
+		Additionally, the "menu" parent of the submenu item is not keyboard focusable, and is separate from
+		the menu item which triggered the submenu.
+		The object tree in this case (menu item > submenu (not keyboard focusable) > submenu item).
+		The focus event order after activating the menu item's sub menu is (submenu item, submenu).
+		"""
+		from NVDAObjects import IAccessible
+		lastFocus = api.getFocusObject()
+		_isMenuItemOfCurrentFocus = (
+			self._obj.parent
+			and isinstance(self._obj, IAccessible.IAccessible)
+			and isinstance(lastFocus, IAccessible.IAccessible)
+			and self._obj.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUITEM
+			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
+			and self._obj.parent == lastFocus
+		)
+		if _isMenuItemOfCurrentFocus:
+			# Change this to log.error for easy debugging
+			log.debugWarning(
+				"This parent menu was not announced properly, "
+				"and should have been focused before the submenu item.\n"
+				f"Object info: {self._obj.devInfo}\n"
+				f"Object parent info: {self._obj.parent.devInfo}\n"
+			)
+		return _isMenuItemOfCurrentFocus
+
 
 def _getFocusLossCancellableSpeechCommand(
 		obj,
 		reason: controlTypes.OutputReason
 ) -> Optional[_CancellableSpeechCommand]:
-	if reason != controlTypes.REASON_FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
+	if reason != controlTypes.OutputReason.FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
 		return None
 	from NVDAObjects import NVDAObject
 	if not isinstance(obj, NVDAObject):

@@ -2,50 +2,28 @@
 
 ### Dependencies
 
-To install all required packages move to the root directory of this repo and execute:
-
-`python -m pip install -r tests/system/requirements.txt`
-
+This build system uses the Robot test framework to execute the system tests.
+Dependencies such as Robot are automatically installed for you when NVDA's build system Python virtual environment is set up, when running any of the high-level commands such as runsystemtests.bat, thus a developer should usually not have to worry about dependencies.
+ 
 ### Running the tests
 
-You can run the tests with `scons` or manually
-
-#### Scons (easier)
-`scons systemTests`
-
-To run only specific system tests,
- specify them using the `filter` variable on the command line.
-This filter accepts wildcard characters.
-
-```
-scons systemTests filter="Read welcome dialog"
-```
-
-#### Manually (faster)
-
-SCons takes quite a long time to initialize and actually start running the tests,
-if you are running the tests repeatedly consider running them manually.
-These tests should be run from the windows command prompt (cmd.exe) from the root directory
- of your NVDA repository.
-
-```
-python -m robot --argumentfile ./tests/system/robotArgs.robot ./tests/system/robot
-```
-Note that the path to the tests directory is required and must be the final argument.
+You can run the tests with `runsystemtests.bat`.
+Running this script with no arguments will run all system tests found in tests\system\robot, against the current source copy of NVDA.
+Any extra arguments provided to this script are forwarded on to Robot.
 
 To run a single test, add the `--test` argument (wildcards accepted).
 
 ```
-python -m robot --test "starts" ...
+runsystemtests --test "starts" ...
 ```
 
 To run all tests with a particular tag use `-i`:
 ```
-python -m robot -i "chrome" ...
+runsystemtests -i "chrome" ...
 ```
 
 Other options exit for specifying tests to run (e.g. by suite, tag, etc).
-Consult `python -m robot --help`
+Consult `runsystemtests --help`
 
 ### Getting the results
 
@@ -55,7 +33,9 @@ The logs from NVDA are saved to the `nvdaTestRunLogs` folder
 
 ### Excluding tests
 
-Tests can be excluded by adding the tag `excluded_from_build` EG:
+It is possible to exclude/disable a flaky test, i.e. intermittent test failures, or a test that needs
+to be disabled until there is time to investigate.
+Add the tag `excluded_from_build` EG:
 
 ```robot
 checkbox labelled by inner element
@@ -65,17 +45,20 @@ checkbox labelled by inner element
 	checkbox_labelled_by_inner_element
 ```
 
-When the tests are run, the option `--exclude excluded_from_build` is given to Robot.
+When the tests are run, the option `--exclude excluded_from_build` is given to Robot internally.
 See [description of test args](#test-args)
 
 ### Test args
-Common arguments (for both `scons` and AppVeyor) are kept in the `tests\system\robotArgs.robot` file.
+Common arguments are kept in the `tests\system\robotArgs.robot` file.
 
 The `whichNVDA` argument allows the tests to be run against an installed copy
 of NVDA (first ensure it is compatible with the tests). Note valid values are:
 * "installed" - when running against the installed version of NVDA, you are likely to get errors in the log unless
 the tests are run from an administrator command prompt.
 * "source"
+
+The `installDir` argument performs a smoke test on the installation process given a path to the installer exe. For example `--variable installDir:".\path\to\nvda_installer.exe"`.
+This should be used with `--variable whichNVDA:installed --include installer`.
 
 ### Overview
 
@@ -122,3 +105,29 @@ NVDA is started with the `-c` option to specify this profile directory to be use
 Both Robot Framework and NVDA logs are captured in the `testOutput` directory in the repo root.
 NVDA logs (NVDA log, stdOut, and stdErr for each test) are under the `nvdaTestRunLogs` directory. 
 The log files are named by suite and test name.
+
+### Comparing changes to NVDA Settings
+`.\runsettingsdiff.bat` is a tool used to compare the settings dialog by reading text and generating screenshots for comparison.  The default behaviour is to run using the source code and output to `.\tests\system\settingsCache\source`. 
+
+
+#### Usage
+To check for unreleased changes to the settings dialogs, one can use this tool to compare against two copies of NVDA. 
+
+The following arguments should be used with the script.
+
+Default arguments used are stored  in `.\tests\system\guiDiff.robot`
+
+- `--variable whichNVDA:[installed|source]` to decide where to run NVDA from
+- `--variable cacheFolder:[filePath]` screenshots and text files of each settings panel are generated in `$cacheFolder\$currentVersion`
+- `--variable currentVersion:[nvdaVersion]` where `[nvdaVersion]` is used to name the generated screenshot and cache folder
+- `--variable compareVersion:[nvdaVersion]` using a `$nvdaVersion` that this script has already been run against, run the system tests and fail if there are differences between the read text. This generates a multiline diff. 
+
+#### Example usage to compare settings between NVDA 2020.4 and the current source
+
+1. Install NVDA 2020.4
+1. Run `.\runsettingsdiff.bat -v whichNVDA:installed -v currentVersion:2020.4`
+1. Run `.\runsettingsdiff.bat -v whichNVDA:source -v currentVersion:source -v compareVersion:2020.4`
+   - The test will fail and display a diff of any read changes
+1. Use a diff tool to compare folders:
+   - `diff ./tests/system/settingsCache/2020.4 ./tests/system/settingsCache/source`
+   - [ImageMagick Compare](https://imagemagick.org/script/compare.php) can be used to compare images

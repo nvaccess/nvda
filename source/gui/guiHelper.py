@@ -9,32 +9,34 @@
 """ Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
 Example usage:
 
-class myDialog(class wx.Dialog):
+class myDialog(wx.Dialog):
 
-	def __init__(self,parent):
-		super(SettingsDialog, self).__init__(parent, title=self.title)
-		dialog = self
+	def __init__(self, parent):
+		super().__init__(parent, title='Usage example of guiHelper')
 
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-		sHelper = guiHelper.BoxSizerHelper( wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
 
-		filterElement = guiHelper.LabeledControlHelper(dialog, "Filter:", wx.TextCtrl)
-		symbols = wx.ListCtrl()
-		sHelper.addItem(guiHelper.associateElement(filterElement, symbols)
+		# Adding controls with their associated label
+		# according on the control type, they are associated horizontally or vertically.
+		filterElement = sHelper.addLabeledControl("Filter:", wx.TextCtrl)
+		symbols = sHelper.addLabeledControl("Select a row:", wx.ListCtrl)
 
-		sHelper.addItem(guiHelper.LabeledControlHelper(dialog, "Choose option", wx.Choice, choices=[1,2,3]))
+		# A control with its associated label
+		choice = sHelper.addLabeledControl("Choose option", wx.Choice, choices=["1", "2", "3"])
 
-		button = sHelper.addItem( wx.Button("Does stuff"))
+		# A single button
+		button = sHelper.addItem(wx.Button(self, label="Does stuff"))
 
 		# for general items
-		checkbox = sHelper.addItem(wx.CheckBox("always do something"))
+		checkbox = sHelper.addItem(wx.CheckBox(self, label="always do something"))
 
 		# for groups of buttons
-		buttonGroup = guiHelper.ButtonHelper(wx.VERTICAL)
-		oneButton = buttonHelper.addButton(wx.Button("one"))
-		twoButton = buttonHelper.addButton(wx.Button("one"))
-		threeButton = buttonHelper.addButton(wx.Button("three")
+		buttonGroup = gui.guiHelper.ButtonHelper(wx.VERTICAL)
+		oneButton = buttonGroup.addButton(self, label="one")
+		twoButton = buttonGroup.addButton(self, label="two")
+		threeButton = buttonGroup.addButton(self, label="three")
 		sHelper.addItem(buttonGroup)
 
 		mainSizer.Add(sHelper.sizer, border=10, flag=wx.ALL)
@@ -112,7 +114,7 @@ def associateElements( firstElement, secondElement):
 	""" Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
 		pairings used in the NVDA GUI.
 		Currently handles:
-			wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider or wx.Button) - Horizontal layout
+			wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider, wx.Button or wx.SpinCtrl) - Horizontal layout
 			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
 			wx.Button and wx.CheckBox - Horizontal layout
 			wx.TextCtrl and wx.Button - Horizontal layout
@@ -324,7 +326,10 @@ class BoxSizerHelper(object):
 			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
 			limitations from there.
 		"""
-		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
+		parent = self._parent
+		if isinstance(self.sizer, wx.StaticBoxSizer):
+			parent = self.sizer.GetStaticBox()
+		labeledControl = LabeledControlHelper(parent, labelText, wxCtrlClass, **kwargs)
 		if(isinstance(labeledControl.control, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl))):
 			self.addItem(labeledControl.sizer, flag=wx.EXPAND, proportion=1)
 		else:
@@ -345,6 +350,9 @@ class BoxSizerHelper(object):
 		  Should be set to L{False} for message or single input dialogs, L{True} otherwise.
 		@type separated: L{bool}
 		"""
+		parent = self._parent
+		if isinstance(self.sizer, wx.StaticBoxSizer):
+			parent = self.sizer.GetStaticBox()
 		if self.sizer.GetOrientation() != wx.VERTICAL:
 			raise NotImplementedError(
 				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented."
@@ -354,11 +362,11 @@ class BoxSizerHelper(object):
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
 		elif isinstance(buttons, int):
-			toAdd = self._parent.CreateButtonSizer(buttons)
+			toAdd = parent.CreateButtonSizer(buttons)
 		else:
 			raise NotImplementedError("Unknown type: {}".format(buttons))
 		if separated:
-			self.addItem(wx.StaticLine(self._parent), flag=wx.EXPAND)
+			self.addItem(wx.StaticLine(parent), flag=wx.EXPAND)
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons
@@ -366,4 +374,3 @@ class BoxSizerHelper(object):
 class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 	pass
-

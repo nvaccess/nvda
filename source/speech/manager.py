@@ -2,8 +2,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited
+# Copyright (C) 2006-2021 NV Access Limited
 import typing
+from languageHandler import normalizeLanguage
 
 import queueHandler
 import synthDriverHandler
@@ -12,31 +13,14 @@ from .types import SpeechSequence, _IndexT
 from .commands import (
 	# Commands that are used in this file.
 	EndUtteranceCommand,
+	LangChangeCommand,
 	SynthParamCommand,
 	BaseCallbackCommand,
 	ConfigProfileTriggerCommand,
 	IndexCommand,
 	_CancellableSpeechCommand,
 )
-from .commands import (  # noqa: F401
-	# F401 imported but unused:
-	# These are imported explicitly to maintain backwards compatibility and will be removed in
-	# 2021.1. Rather than rely on these imports, import directly from the commands module.
-	# New commands added to commands.py should be directly imported only where needed.
-	SpeechCommand,
-	PitchCommand,
-	LangChangeCommand,
-	BeepCommand,
-	CharacterModeCommand,
-	SynthCommand,
-	BreakCommand,
-	BaseProsodyCommand,
-	VolumeCommand,
-	RateCommand,
-	PhonemeCommand,
-	CallbackCommand,
-	WaveFileCommand,
-)
+
 from .priorities import Spri, SPEECH_PRIORITIES
 from logHandler import log
 from synthDriverHandler import getSynth
@@ -45,15 +29,14 @@ from typing import (
 	Any,
 	List,
 	Tuple,
-	Callable,
 	Optional,
 	cast,
 )
 
 
 def _shouldCancelExpiredFocusEvents():
-	# 0: default (no), 1: yes, 2: no
-	return config.conf["featureFlag"]["cancelExpiredFocusSpeech"] == 1
+	# 0: default (yes), 1: yes, 2: no
+	return config.conf["featureFlag"]["cancelExpiredFocusSpeech"] != 2
 
 
 def _shouldDoSpeechManagerLogging():
@@ -308,43 +291,55 @@ class SpeechManager(object):
 			return True
 		return False
 
+	def _ensureEndUtterance(self, seq: SpeechSequence, outSeqs, paramsToReplay, paramTracker):
+		"""
+		We split at EndUtteranceCommands so the ends of utterances are easily found.
+		This function ensures the given sequence ends with an EndUtterance command,
+		Ensures that the sequence also includes an index command at the end,
+		It places the complete sequence in outSeqs,
+		It clears the given sequence list ready to build a new one,
+		And clears the paramsToReplay list
+		and refills it with any params that need to be repeated if a new sequence is going to be built.
+		"""
+		if seq:
+			# There have been commands since the last split.
+			lastOutSeq = paramsToReplay + seq
+			outSeqs.append(lastOutSeq)
+			paramsToReplay.clear()
+			seq.clear()
+			# Re-apply parameters that have been changed from their defaults.
+			paramsToReplay.extend(paramTracker.getChanged())
+		else:
+			lastOutSeq = outSeqs[-1] if outSeqs else None
+		lastCommand = lastOutSeq[-1] if lastOutSeq else None
+		if lastCommand is None or isinstance(lastCommand, (EndUtteranceCommand, ConfigProfileTriggerCommand)):
+			# It doesn't make sense to start with or repeat EndUtteranceCommands.
+			# We also don't want an EndUtteranceCommand immediately after a ConfigProfileTriggerCommand.
+			return
+		if not isinstance(lastCommand, IndexCommand):
+			# Add an index so we know when we've reached the end of this utterance.
+			reachedIndex = next(self._indexCounter)
+			lastOutSeq.append(IndexCommand(reachedIndex))
+		outSeqs.append([EndUtteranceCommand()])
+
 	def _processSpeechSequence(self, inSeq: SpeechSequence):
 		paramTracker = ParamChangeTracker()
 		enteredTriggers = []
 		outSeqs = []
 		paramsToReplay = []
-
-		def ensureEndUtterance(seq: SpeechSequence):
-			# We split at EndUtteranceCommands so the ends of utterances are easily found.
-			# This function ensures the given sequence ends with an EndUtterance command,
-			# Ensures that the sequence also includes an index command at the end,
-			# It places the complete sequence in outSeqs,
-			# It clears the given sequence list ready to build a new one,
-			# And clears the paramsToReplay list
-			# and refills it with any params that need to be repeated if a new sequence is going to be built.
-			if seq:
-				# There have been commands since the last split.
-				lastOutSeq = paramsToReplay + seq
-				outSeqs.append(lastOutSeq)
-				paramsToReplay.clear()
-				seq.clear()
-				# Re-apply parameters that have been changed from their defaults.
-				paramsToReplay.extend(paramTracker.getChanged())
-			else:
-				lastOutSeq = outSeqs[-1] if outSeqs else None
-			lastCommand = lastOutSeq[-1] if lastOutSeq else None
-			if lastCommand is None or isinstance(lastCommand, (EndUtteranceCommand, ConfigProfileTriggerCommand)):
-				# It doesn't make sense to start with or repeat EndUtteranceCommands.
-				# We also don't want an EndUtteranceCommand immediately after a ConfigProfileTriggerCommand.
-				return
-			if not isinstance(lastCommand, IndexCommand):
-				# Add an index so we know when we've reached the end of this utterance.
-				reachedIndex = next(self._indexCounter)
-				lastOutSeq.append(IndexCommand(reachedIndex))
-			outSeqs.append([EndUtteranceCommand()])
+		currentSynth = getSynth()
 
 		outSeq = []
 		for command in inSeq:
+			if isinstance(command, LangChangeCommand) and currentSynth.name == 'oneCore':
+				langCode = command.lang.split('_')[0]
+				langSupported = False
+				currentSynthLanguages = currentSynth.availableLanguages
+				for lang in currentSynthLanguages:
+					if lang and normalizeLanguage(lang).split('_')[0] == langCode:
+						langSupported = True
+				if not langSupported:
+					log.warning(f"Language {command.lang} not supported by {currentSynth.name} ({currentSynthLanguages})")
 			if isinstance(command, BaseCallbackCommand):
 				# When the synth reaches this point, we want to call the callback.
 				speechIndex = next(self._indexCounter)
@@ -365,7 +360,7 @@ class SpeechManager(object):
 				if not command.enter and command.trigger not in enteredTriggers:
 					log.debugWarning("Request to exit trigger which wasn't entered: %r" % command.trigger.spec)
 					continue
-				ensureEndUtterance(outSeq)
+				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
 				outSeqs.append([command])
 				if command.enter:
 					enteredTriggers.append(command.trigger)
@@ -373,13 +368,13 @@ class SpeechManager(object):
 					enteredTriggers.remove(command.trigger)
 				continue
 			if isinstance(command, EndUtteranceCommand):
-				ensureEndUtterance(outSeq)
+				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
 				continue
 			if isinstance(command, SynthParamCommand):
 				paramTracker.update(command)
 			outSeq.append(command)
 		# Add the last sequence and make sure the sequence ends the utterance.
-		ensureEndUtterance(outSeq)
+		self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
 		# Exit any profile triggers the caller didn't exit.
 		for trigger in reversed(enteredTriggers):
 			command = ConfigProfileTriggerCommand(trigger, False)

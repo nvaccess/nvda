@@ -4,12 +4,10 @@
 #See the file COPYING for more details.
 
 from baseObject import AutoPropertyObject, ScriptableObject
-from scriptHandler import isScriptWaiting
 import config
 import textInfos
-import speech
-import ui
 import controlTypes
+
 
 class TextContainerObject(AutoPropertyObject):
 	"""
@@ -19,8 +17,8 @@ class TextContainerObject(AutoPropertyObject):
 
 	def _get_TextInfo(self):
 		raise NotImplementedError
- 
-	def makeTextInfo(self,position):
+
+	def makeTextInfo(self, position) -> textInfos.TextInfo:
 		return self.TextInfo(self,position)
 
 	def _get_selection(self):
@@ -147,6 +145,12 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	_lastTableCol = None
 	_lastTableColSpan = None
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
+		# documentBase is a core module and should not depend on these UI modules and so they are imported
+		# at run-time. (#12404)
+		from scriptHandler import isScriptWaiting
+		from speech import speakTextInfo
+		import ui
+
 		if isScriptWaiting():
 			return
 		formatConfig=config.conf["documentFormatting"].copy()
@@ -180,7 +184,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			# Retrieve the cell on which we started.
 			info = self._getTableCellAt(tableID, self.selection,origRow, origCol)
 
-		speech.speakTextInfo(info,formatConfig=formatConfig,reason=controlTypes.REASON_CARET)
+		speakTextInfo(info, formatConfig=formatConfig, reason=controlTypes.OutputReason.CARET)
 		info.collapse()
 		self.selection = info
 		self._lastTableSelection = self.selection
@@ -214,6 +218,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
 	def script_toggleIncludeLayoutTables(self,gesture):
+		# documentBase is a core module and should not depend on UI, so it is imported at run-time. (#12404)
+		import ui
 		if config.conf["documentFormatting"]["includeLayoutTables"]:
 			# Translators: The message announced when toggling the include layout tables browse mode setting.
 			state = _("layout tables off")
@@ -232,5 +238,3 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
 	}
-
-

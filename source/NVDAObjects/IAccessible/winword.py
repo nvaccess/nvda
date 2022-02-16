@@ -21,6 +21,9 @@ from displayModel import EditableTextDisplayModelTextInfo
 from NVDAObjects.window import DisplayModelEditableText
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from NVDAObjects.window.winword import *
+from NVDAObjects.window.winword import WordDocumentTreeInterceptor
+from speech import sayAll
+
 
 class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocument):
  
@@ -53,11 +56,11 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		super(WordDocument,self).event_caret()
 
 	def _get_role(self):
-		return controlTypes.ROLE_EDITABLETEXT
+		return controlTypes.Role.EDITABLETEXT
 
 	def _get_states(self):
 		states=super(WordDocument,self).states
-		states.add(controlTypes.STATE_MULTILINE)
+		states.add(controlTypes.State.MULTILINE)
 		return states
 
 	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
@@ -269,7 +272,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		isCollapsed=info.isCollapsed
 		if inTable:
 			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 
 	def script_reportCurrentComment(self,gesture):
@@ -300,7 +303,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		formatConfig=config.conf['documentFormatting'].copy()
 		formatConfig['reportTables']=True
 		commandList=info.getTextWithFields(formatConfig)
-		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.ROLE_TABLE or commandList[2].field.get('role',None)!=controlTypes.ROLE_TABLECELL:
+		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.Role.TABLE or commandList[2].field.get('role',None)!=controlTypes.Role.TABLECELL:
 			# Translators: The message reported when a user attempts to use a table movement command
 			# when the cursor is not withnin a table.
 			ui.message(_("Not in table"))
@@ -339,7 +342,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 			ui.message(_("Edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
-		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_CELL)
+		speech.speakTextInfo(newInfo, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_CELL)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		return True
@@ -362,7 +365,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		info._rangeObj.move(wdParagraph,1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
-	script_nextParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_previousParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -370,7 +373,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		info._rangeObj.move(wdParagraph,-1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
-	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start
@@ -462,4 +465,3 @@ class ProtectedDocumentPane(IAccessible):
 			ctypes.windll.user32.AttachThreadInput(curThreadID,document.windowThreadID,False)
 			if not document.WinwordWindowObject.active:
 				document.WinwordWindowObject.activate()
-				

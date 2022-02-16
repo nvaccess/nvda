@@ -25,10 +25,12 @@ import eventHandler
 import api
 from logHandler import log
 import gui
+import gui.contextHelp
 import winUser
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
+from controlTypes import TextPosition
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
@@ -597,7 +599,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 
 
 class EditCommentDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "ExcelReportingComments"
@@ -702,7 +704,7 @@ class ExcelWorksheet(ExcelBase):
 
 	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
 
-	role=controlTypes.ROLE_TABLE
+	role=controlTypes.Role.TABLE
 
 	def _get_excelApplicationObject(self):
 		self.excelApplicationObject=self.excelWorksheetObject.application
@@ -715,16 +717,16 @@ class ExcelWorksheet(ExcelBase):
 		# Sheet1!
 		# ''Sheet2 (4)'!
 		# 'profit and loss'!
-		u'^((?P<sheet>(\'[^\']+\'|[^!]+))!)?'
+		r"^((?P<sheet>('[^']+'|[^!]+))!)?"
 		# followed by a unique name (not containing spaces). Example:
 		# rowtitle_ab12-cd34-de45
-		u'(?P<name>\w+)'
+		r'(?P<name>\w+)'
 		# Optionally followed by minimum and maximum addresses, starting with a period (.). Example:
 		# .a1.c3
 		# .ab34
-		u'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
+		r'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
 		# Optionally followed by a period (.) and extra random data (sometimes produced by other screen readers)
-		u'(\..*)*)?)?$'
+		r'(\..*)*)?)?$'
 	)
 
 	def populateHeaderCellTrackerFromNames(self,headerCellTracker):
@@ -889,7 +891,7 @@ class ExcelWorksheet(ExcelBase):
 	def _get_states(self):
 		states=super(ExcelWorksheet,self).states
 		if self.excelWorksheetObject.ProtectContents:
-			states.add(controlTypes.STATE_PROTECTED)
+			states.add(controlTypes.State.PROTECTED)
 		return states
 
 	@scriptHandler.script(gestures=(
@@ -993,6 +995,18 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['italic']=fontObj.italic
 			underline=fontObj.underline
 			formatField['underline']=False if underline is None or underline==xlUnderlineStyleNone else True
+			formatField['strikethrough'] = fontObj.strikethrough
+		if formatConfig['reportSuperscriptsAndSubscripts']:
+			# For cells, in addition to True and False, fontObj.superscript or fontObj.subscript may have the value
+			# None in case of mixed text position, e.g. characters on baseline and in superscript in the same cell.
+			if fontObj.superscript is True:
+				formatField['text-position'] = TextPosition.SUPERSCRIPT
+			elif fontObj.subscript is True:
+				formatField['text-position'] = TextPosition.SUBSCRIPT
+			elif fontObj.superscript is False and fontObj.subscript is False:
+				formatField['text-position'] = TextPosition.BASELINE
+			else:
+				formatField['text-position'] = TextPosition.UNDEFINED
 		if formatConfig['reportStyle']:
 			try:
 				styleName=self.obj.excelCellObject.style.nameLocal
@@ -1290,9 +1304,9 @@ class ExcelCell(ExcelBase):
 		return self.excelCellObject
 
 	def _get_role(self):
-		if controlTypes.STATE_LINKED in self.states:
-			return controlTypes.ROLE_LINK
-		return controlTypes.ROLE_TABLECELL
+		if controlTypes.State.LINKED in self.states:
+			return controlTypes.Role.LINK
+		return controlTypes.Role.TABLECELL
 
 	TextInfo=ExcelCellTextInfo
 
@@ -1369,16 +1383,16 @@ class ExcelCell(ExcelBase):
 		if not cellInfo:
 			return states
 		stateBits=cellInfo.states
-		for k,v in vars(controlTypes).items():
-			if k.startswith('STATE_') and stateBits&v:
-				states.add(v)
+		for state in controlTypes.State:
+			if stateBits & state.value:
+				states.add(state)
 		return states
 
 	def event_typedCharacter(self,ch):
 		# #6570: You cannot type into protected cells.
 		# Apart from speaking characters being miss-leading, Office 2016 protected view doubles characters as well.
 		# Therefore for any character from space upwards (not control characters)  on protected cells, play the default sound rather than speaking the character
-		if ch>=" " and controlTypes.STATE_UNLOCKED not in self.states and controlTypes.STATE_PROTECTED in self.parent.states: 
+		if ch>=" " and controlTypes.State.UNLOCKED not in self.states and controlTypes.State.PROTECTED in self.parent.states: 
 			winsound.PlaySound("Default",winsound.SND_ALIAS|winsound.SND_NOWAIT|winsound.SND_ASYNC)
 			return
 		super(ExcelCell,self).event_typedCharacter(ch)
@@ -1470,7 +1484,7 @@ class ExcelCell(ExcelBase):
 				formatField.update(field.field)
 		if not hasattr(self.parent,'_formatFieldSpeechCache'):
 			self.parent._formatFieldSpeechCache = textInfos.Field()
-		if formatField:
+		if formatField or self.parent._formatFieldSpeechCache:
 			sequence = speech.getFormatFieldSpeech(
 				formatField,
 				attrsCache=self.parent._formatFieldSpeechCache,
@@ -1481,7 +1495,7 @@ class ExcelCell(ExcelBase):
 
 class ExcelSelection(ExcelBase):
 
-	role=controlTypes.ROLE_TABLECELL
+	role=controlTypes.Role.TABLECELL
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelRangeObject=None):
 		self.excelWindowObject=excelWindowObject
@@ -1490,7 +1504,7 @@ class ExcelSelection(ExcelBase):
 
 	def _get_states(self):
 		states=super(ExcelSelection,self).states
-		states.add(controlTypes.STATE_SELECTED)
+		states.add(controlTypes.State.SELECTED)
 		return states
 
 	def _get_name(self):
@@ -1533,7 +1547,7 @@ class ExcelDropdownItem(Window):
 	firstChild=None
 	lastChild=None
 	children=[]
-	role=controlTypes.ROLE_LISTITEM
+	role=controlTypes.Role.LISTITEM
 
 	def __init__(self,parent=None,name=None,states=None,index=None):
 		self.name=name
@@ -1564,7 +1578,7 @@ class ExcelDropdown(Window):
 	def kwargsFromSuper(cls,kwargs,relation=None):
 		return kwargs
 
-	role=controlTypes.ROLE_LIST
+	role=controlTypes.Role.LIST
 	excelCell=None
 
 	def _get__highlightColors(self):
@@ -1579,11 +1593,11 @@ class ExcelDropdown(Window):
 		states=set()
 		for item in DisplayModelTextInfo(self,textInfos.POSITION_ALL).getTextWithFields():
 			if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange":
-				states=set([controlTypes.STATE_SELECTABLE])
+				states=set([controlTypes.State.SELECTABLE])
 				foreground=item.field.get('color',None)
 				background=item.field.get('background-color',None)
 				if (background,foreground)==self._highlightColors:
-					states.add(controlTypes.STATE_SELECTED)
+					states.add(controlTypes.State.SELECTED)
 			if isinstance(item,str):
 				obj=ExcelDropdownItem(parent=self,name=item,states=states,index=index)
 				children.append(obj)
@@ -1600,7 +1614,7 @@ class ExcelDropdown(Window):
 		return self.children[0]
 	def _get_selection(self):
 		for child in self.children:
-			if controlTypes.STATE_SELECTED in child.states:
+			if controlTypes.State.SELECTED in child.states:
 				return child
 
 	@script(
@@ -1641,16 +1655,16 @@ class ExcelMergedCell(ExcelCell):
 class ExcelFormControl(ExcelBase):
 	isFocusable=True
 	_roleMap = {
-		xlButtonControl: controlTypes.ROLE_BUTTON,
-		xlCheckBox: controlTypes.ROLE_CHECKBOX,
-		xlDropDown: controlTypes.ROLE_COMBOBOX,
-		xlEditBox: controlTypes.ROLE_EDITABLETEXT,
-		xlGroupBox: controlTypes.ROLE_BOX,
-		xlLabel: controlTypes.ROLE_LABEL,
-		xlListBox: controlTypes.ROLE_LIST,
-		xlOptionButton: controlTypes.ROLE_RADIOBUTTON,
-		xlScrollBar: controlTypes.ROLE_SCROLLBAR,
-		xlSpinner: controlTypes.ROLE_SPINBUTTON,
+		xlButtonControl: controlTypes.Role.BUTTON,
+		xlCheckBox: controlTypes.Role.CHECKBOX,
+		xlDropDown: controlTypes.Role.COMBOBOX,
+		xlEditBox: controlTypes.Role.EDITABLETEXT,
+		xlGroupBox: controlTypes.Role.BOX,
+		xlLabel: controlTypes.Role.LABEL,
+		xlListBox: controlTypes.Role.LIST,
+		xlOptionButton: controlTypes.Role.RADIOBUTTON,
+		xlScrollBar: controlTypes.Role.SCROLLBAR,
+		xlSpinner: controlTypes.Role.SPINBUTTON,
 	}
 
 	def _get_excelControlFormatObject(self):
@@ -1677,15 +1691,15 @@ class ExcelFormControl(ExcelBase):
 	def _get_states(self):
 		states=super(ExcelFormControl,self).states
 		if self is api.getFocusObject():
-			states.add(controlTypes.STATE_FOCUSED)
+			states.add(controlTypes.State.FOCUSED)
 		newState=None
-		if self.role==controlTypes.ROLE_RADIOBUTTON:
-			newState=controlTypes.STATE_CHECKED if self.excelOLEFormatObject.Value==checked else None
-		elif self.role==controlTypes.ROLE_CHECKBOX:
+		if self.role==controlTypes.Role.RADIOBUTTON:
+			newState=controlTypes.State.CHECKED if self.excelOLEFormatObject.Value==checked else None
+		elif self.role==controlTypes.Role.CHECKBOX:
 			if self.excelOLEFormatObject.Value==checked:
-				newState=controlTypes.STATE_CHECKED
+				newState=controlTypes.State.CHECKED
 			elif self.excelOLEFormatObject.Value==mixed:
-				newState=controlTypes.STATE_HALFCHECKED
+				newState=controlTypes.State.HALFCHECKED
 		if newState:
 			states.add(newState)
 		return states
@@ -1752,8 +1766,7 @@ class ExcelFormControl(ExcelBase):
 		(x,y)=self._getFormControlScreenCoordinates()
 		winUser.setCursorPos(x,y)
 		#perform Mouse Left-Click
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		self.invalidateCache()
 		wx.CallLater(100,eventHandler.executeEvent,"stateChange",self)
 
@@ -1891,9 +1904,9 @@ class ExcelFormControlListBox(ExcelFormControl):
 
 	def getChildAtIndex(self,index):
 		name=str(self.excelOLEFormatObject.List(index+1))
-		states=set([controlTypes.STATE_SELECTABLE])
+		states=set([controlTypes.State.SELECTABLE])
 		if self.excelOLEFormatObject.Selected[index+1]==True:
-			states.add(controlTypes.STATE_SELECTED)
+			states.add(controlTypes.State.SELECTED)
 		return ExcelDropdownItem(parent=self,name=name,states=states,index=index)
 
 	def _get_childCount(self):

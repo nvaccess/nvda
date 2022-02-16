@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
+# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Joseph Lee, Dawid Pieper, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -30,6 +31,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [speech]
 	# The synthesizer to use
 	synth = string(default=auto)
+	# symbolLevel values:
+	#  NONE = 0
+	#  SOME = 100
+	#  MOST = 200
+	#  ALL = 300
+	#  CHAR = 1000
+	#  UNCHANGED = -1
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
 	includeCLDR = boolean(default=True)
@@ -68,6 +76,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
+	enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
 
 	# Braille display driver settings
 	[[__many__]]
@@ -183,6 +192,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportHighlight = boolean(default=true)
 	reportSuperscriptsAndSubscripts = boolean(default=false)
 	reportColor = boolean(default=False)
+	reportTransparentColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
 	reportLineSpacing = boolean(default=false)
 	reportStyle = boolean(default=false)
@@ -201,6 +211,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLinks = boolean(default=true)
 	reportGraphics = boolean(default=True)
 	reportComments = boolean(default=true)
+	reportBookmarks = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
@@ -219,12 +230,20 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [UIA]
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
+	useInMSExcelWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
 	selectiveEventRegistration = boolean(default=false)
+	# 0:default, 1:Only when necessary, 2:yes, 3:no
+	allowInChromium = integer(0, 3, default=0)
+
+[annotations]
+	reportDetails = boolean(default=false)
+	reportAriaDescription = boolean(default=true)
 
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
+	diffAlgo = option("auto", "dmp", "difflib", default="auto")
 
 [update]
 	autoCheck = boolean(default=true)
@@ -268,6 +287,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [featureFlag]
 	# 0:default, 1:yes, 2:no
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
+	# 0:Only in test versions, 1:yes
+	playErrorSound = integer(0, 1, default=0)
 """
 
 #: The configuration specification
