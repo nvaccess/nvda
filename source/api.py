@@ -457,7 +457,7 @@ def filterFileName(name):
 	@returns: The filtered file name.
 	@rtype: str
 	"""
-	invalidChars=':?*\|<>/"'
+	invalidChars = r':?*\|<>/"'
 	for c in invalidChars:
 		name=name.replace(c,'_')
 	return name
