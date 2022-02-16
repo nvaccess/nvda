@@ -1,10 +1,11 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2019 NV Access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2022 NV Access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""An appModule for the Windows 10 Mail app"""
+"""An appModule for the Windows Mail app, for Windows 10 and 11."""
 
+import controlTypes
 import appModuleHandler
 from comtypes import COMError
 import UIAHandler
@@ -19,6 +20,13 @@ class MailWordDocument(WordDocument):
 
 	treeInterceptorClass=MailWordDocumentTreeInterceptor
 	def _get_shouldCreateTreeInterceptor(self):
+		# Newer versions of Mail (Windows 11+) correctly set the readonly state for emails
+		if controlTypes.State.READONLY in self.states:
+			return True
+
+		# For older versions of Mail (Windows 10), determine the readonly state
+		# based on being in an email with set headers, rather than draft headers.
+
 		# Locate the Reading pane in the ancestors
 		condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ClassNamePropertyId,"ReadingPaneModern")
 		walker=UIAHandler.handler.clientObject.createTreeWalker(condition)

@@ -275,7 +275,7 @@ Quando o menu surgir, pode usar as setas direccionais para navegar pelo mesmo e 
 ++ Comandos Básicos do NVDA ++[BasicNVDACommands]
 %kc:beginInclude
 || Nome | Comando de Teclado de Desktop | Comando de Teclado de Laptop | Toque | Descrição |
-| Iniciar ou reiniciar o NVDA | Control+alt+n | Control+alt+n | none | Inicia ou reinicia o NVDA pelo ícone na Ambiente de trabalho, se este atalho do Windows for activado na instalação do NVDA. Este é um atalho do Windows, por isso não pode ser alterado no diálogo "Definir comandos" do NVDA. |
+| Iniciar ou reiniciar o NVDA | Control+alt+n | Control+alt+n | none | Inicia ou reinicia o NVDA pelo ícone no Ambiente de trabalho, se este atalho do Windows for activado na instalação do NVDA. Este é um atalho do Windows, por isso não pode ser alterado no diálogo "Definir comandos" do NVDA. |
 | Parar a voz | Control | Control | Toque com dois dedos | Pára instantaneamente a voz |
 | Pausar a voz | shift | shift | nenhum | Pausa instantaneamente a voz. Se pressionar novamente, recomeçará a falar, desde onde parou (se a pausa for suportada pelo sintetizador actual) |
 | Menu do NVDA | NVDA+n | NVDA+n | Toque duplo com dois dedos | Mostra o Menu do NVDA, que lhe permite aceder às preferências, ferramentas, ajuda, etc. |
@@ -664,7 +664,7 @@ Pode configurar o Braille na secção [Braille #BrailleSettings], que pode encon
 Para que caiba o máximo de informaçãon possível na linha Braille, as seguintes abreviaturas são usadas para indicar os tipos e estados de controlos e as marcas.
 
 || Abreviatura | Tipo de controlo |
-| apl | aplicação |
+| app | aplicação |
 | art | artigo |
 | cit | citação |
 | bto | botão |
@@ -1021,8 +1021,8 @@ Portanto, é necessário deslocar o buffer para conseguir ler o texto.
 %kc:beginInclude
 Os seguintes comandos da consola do Windows podem ser usados para [rever o texto #ReviewingText] com o NVDA:
 || Nome | Comando | Descrição |
-| Deslocar para cima | control+upArrow | Desloca a consola para cima para o texto anterior ficar visível. |
-| Deslocar para baixo down | control+downArrow | Desloca a consola para baixo para o texto seguinte ficar visível. |
+| Deslocar para cima | control+seta acima | Desloca a consola para cima para o texto anterior ficar visível. |
+| Deslocar para baixo | control+seta abaixo | Desloca a consola para baixo para o texto seguinte ficar visível. |
 | Deslocar para o início | control+home | Desloca a consola para o início para o texto inicial ficar visível. |
 | Deslocar para o fim | control+end | Desloca a consola para o fim para o texto final ficar visível. |
 %kc:endInclude
@@ -2671,8 +2671,8 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 | deslocar a linha braille para a frente | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
 | Move a linha braille para a linha anterior | leftSideScrollUp+rightSideScrollUp |
 | Move a linha braille para a linha seguinte | leftSideScrollDown+rightSideScrollDown |
-| Move a linha Braille para a linha anterior em revisão | rightSideUpArrow |
-| Move a linha Braille para a linha seguinte em revisão | rightSideDownArrow |
+| Move a linha Braille para a linha anterior em revisão | rightSideseta acima |
+| Move a linha Braille para a linha seguinte em revisão | rightSideseta abaixo |
 | Move para o caracter anterior em revisão | rightSideLeftArrow |
 | Move para o caracter seguinte em revisão | rightSideRightArrow |
 | Move para o foco actual | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
@@ -2704,7 +2704,7 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 | Teclas Alt+Seta à direita | Ponto5+ponto7 |
 | Tecla pageUp | Ponto1+ponto2+ponto6+Espaço |
 | Teclas Control+PageUp | Ponto1+ponto2+ponto6+ponto8+Espaço |
-| Tecla Seta acima | Ponto1+Espaço, leftSideUpArrow |
+| Tecla Seta acima | Ponto1+Espaço, leftSideseta acima |
 | Teclas Control+Shift+Seta acima | Ponto2+ponto3+ponto8+Espaço+F1 |
 | Teclas Control+Seta acima | Ponto2+ponto3+Espaço |
 | Teclas Shift+Alt+Seta acima | Ponto2+ponto3+ponto7+F1 |
@@ -2712,7 +2712,7 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 | Teclas Shift+Seta acima | leftSideScrollDown+Espaço |
 | Tecla pageDown | Ponto3+ponto4+ponto5+Espaço |
 | Teclas Control+pageDown | Ponto3+ponto4+ponto5+ponto8+Espaço |
-| Tecla Seta abaixo | Ponto4+Espaço, leftSideDownArrow |
+| Tecla Seta abaixo | Ponto4+Espaço, leftSideseta abaixo |
 | Teclas Control+Shift+Seta abaixo | Ponto5+ponto6+ponto8+Espaço+F1 |
 | Teclas Control+Seta abaixo | Ponto5+ponto6+Espaço |
 | Teclas Shift+Alt+Seta abaixo | ponto5+ponto6+ponto7+F1 |
@@ -2981,12 +2981,12 @@ Seguem-se os comandos para o BrailleNote QT quando não está no modo de digita�
 
 || Nome | Tecla de atalho |
 | Menu do NVDA | read+n |
-| Tecla Seta acima | upArrow |
-| Tecla Seta abaixo | downArrow |
+| Tecla Seta acima | seta acima |
+| Tecla Seta abaixo | seta abaixo |
 | Tecla seta esquerda | leftArrow|
 | Tecla seta direita | rightArrow |
-| Tecla Página acima | function+upArrow |
-| Tecla Página abaixo | function+downArrow |
+| Tecla Página acima | function+seta acima |
+| Tecla Página abaixo | function+seta abaixo |
 | Tecla Home | function+leftArrow |
 | Tecla End | function+rightArrow |
 | Teclas Control+home | read+t |
@@ -3002,8 +3002,8 @@ Seguem-se os comandos para o BrailleNote QT quando não está no modo de digita�
 Seguem-se os comandos associados à roda de deslocamento:
 
 || Nome | Tecla de atalho |
-| Tecla Seta acima | upArrow |
-| Tecla Seta abaixo | downArrow |
+| Tecla Seta acima | seta acima |
+| Tecla Seta abaixo | seta abaixo |
 | Tecla Seta esquerda | leftArrow |
 | Tecla Seta direita | rightArrow |
 | Tecla Enter | center button |
@@ -3090,8 +3090,8 @@ Por favor, consulte a documentação destas linhas Braille para obter a descriç
 | Tecla End | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
 | Tecla Seta à esquerda | dot2+space, joystick2Left, leftArrow |
 | Tecla Seta à direita | dot5+space, joystick2Right, rightArrow |
-| Tecla Seta para cima | dot1+space, joystick2Up, upArrow |
-| Tecla Seta para baixo | dot6+space, joystick2Down, downArrow |
+| Tecla Seta para cima | dot1+space, joystick2Up, seta acima |
+| Tecla Seta para baixo | dot6+space, joystick2Down, seta abaixo |
 | Tecla enter | joystick2Center |
 | Tecla PageUp | dot1+dot3+space |
 | Tecla PageDown| dot4+dot6+space |
@@ -3185,29 +3185,29 @@ Espera-se que todos os dispositivos Braille futuros, desenvolvidos por qualquer 
 
 A detecção automática de dispositivos Braille do NVDA reconhecerá qualquer dispositivo que utilize este protocolo.
  
-Following are the current key assignments for these displays.
+Seguem-se as associações de teclas para este protocolo.
 %kc:beginInclude
 || Name | Key |
-\| Scroll braille display back | pan left or rocker up |
-| Scroll braille display forward | pan right or rocker down |
-| Move braille display to previous line | space + dot1 |
-| Move braille display to next line | space + dot4 |
-| Route to braille cell | routing set 1|
-| Toggle braille tethered to | up+down |
-| upArrow key | joystick up |
-| downArrow key | joystick down |
-| leftArrow key | space+dot3 or joystick left |
-| rightArrow key | space+dot6 or joystick right |
-| shift+tab key | space+dot1+dot3 |
-| tab key | space+dot4+dot6 |
-| alt key | space+dot1+dot3+dot4 (space+m) |
-| escape key | space+dot1+dot5 (space+e) |
-| enter key | dot8 or joystick center |
-| windows key | space+dot3+dot4 |
-| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
-| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+\| Deslocar a linha Braille para trás | pan left or rocker up |
+| Deslocar a linha Braille para a frente | pan right or rocker down |
+| Move a linha braille para a linha anterior | space + dot1 |
+| Move a linha braille para a linha seguinte | space + dot4 |
+| Encaminhar para a célula | routing set 1|
+| Alternar "Braille segue:" | up+down |
+| seta acima key | joystick up |
+| seta abaixo key | joystick down |
+| Seta à esquerda | space+dot3 or joystick left |
+| Seta à direita| space+dot6 or joystick right |
+| Tecla Shift+Tab | space+dot1+dot3 |
+| Tecla Tab | space+dot4+dot6 |
+| Tecla Alt | space+dot1+dot3+dot4 (space+m) |
+| Tecla Escape | space+dot1+dot5 (space+e) |
+| Tecla Enter | dot8 or joystick center |
+| Tecla Windows | space+dot3+dot4 |
+| Tecla alt+tab | space+dot2+dot3+dot4+dot5 (space+t) |
+| Menu NVDA | space+dot1+dot3+dot4+dot5 (space+n) |
 | windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
-| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Ler tudo | space+dot1+dot2+dot3+dot4+dot5+dot6 |
 %kc:endInclude
  
 + tópicos Avançados +[AdvancedTopics]
@@ -3270,6 +3270,6 @@ Os seguintes valores podem ser configurados nestas chaves:
 | serviceDebug | DWORD | 0 (padrão) para desactivar, 1 para activar | Se activo, desactiva o modo seguro em janelas do Ambiente seguro do windows, permitindo o uso da Consola de Python e Visualizador de registo. Devido às graves implicações de segurança, o uso desta opção é fortemente desaconselhado! |
 
 + Mais Informações +
-Se necessitar de mais informações ou suporte ao o NVDA, por favor, visite a página Internet do NVDA em NVDA_URL.
+Caso necessite de mais informações ou suporte ao o NVDA, por favor, visite a página Internet do NVDA em NVDA_URL.
 Aqui poderá encontrar documentação adicional, bem como suporte técnico e recursos da comunidade.
 Estas páginas também fornecem informações referentes ao desenvolvimento do NVDA.
