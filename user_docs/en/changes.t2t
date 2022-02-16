@@ -22,6 +22,7 @@ What's New in NVDA
 - Added a command to toggle the braille viewer; there is no default associated gesture. (#13258)
 - Added commands for toggling multiple modifiers simultaneously with a Braille display (#13152)
 - The Speech Dictionary dialog now features a "Remove all" button to help clear a whole dictionary. (#11802)
+- Added support for Windows 11 Calculator. (#13212)
 -
 
 
@@ -58,6 +59,8 @@ What's New in NVDA
 - Fixed an issue where multiple settings dialogs could be opened at the same time. (#12818)
 - Fixed a problem where some Focus Blue Braille displays would stop working after waking the computer from sleep. (#9830)
 - 'Baseline' is no longer spuriously reported when the 'report superscript and subscript' option is active. (#11078)
+- In Windows 11, NVDA will no longer prevent navigation in emoji panel when selecting emojis. (#13104)
+- Prevents a bug causing double-reporting when using Windows Console and Terminal. (#13261)
 -
 
 == Changes for Developers ==
@@ -120,6 +123,9 @@ This can dramatically decrease build times on multi core systems. (#13226)
 - ``easeOfAccess.APP_KEY_NAME`` has been deprecated, to be removed in 2023. (#13242)
 - ``DictionaryDialog`` and ``DictionaryEntryDialog`` are moved from ``gui.settingsDialogs`` to ``gui.speechDict``. (#13294)
 - IAccessible2 relations are now shown in developer info for IAccessible2 objects. (#13315)
+- ``UIAAutomationId`` property for UIA objects should be preferred over ``cachedAutomationId``. (#13125, #11447)
+  - ``cachedAutomationId`` can be used if obtained directly from the element.
+  -
 -
 
 

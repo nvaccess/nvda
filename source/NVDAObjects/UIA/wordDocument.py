@@ -1,7 +1,7 @@
 # This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2021 NV Access Limited, Joseph Lee, Jakub Lukowicz
+# Copyright (C) 2016-2022 NV Access Limited, Joseph Lee, Jakub Lukowicz
 
 from typing import (
 	Optional,
@@ -104,12 +104,7 @@ def getCommentInfoFromPosition(position):
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
 		# Use Annotation Type Comment if available
-		cats = position.obj._UIACustomAnnotationTypes
-		if (
-			typeID == UIAHandler.AnnotationType_Comment
-			or (typeID and typeID == cats.microsoftWord_draftComment)
-			or (typeID and typeID == cats.microsoftWord_resolvedComment)
-		):
+		if typeID == UIAHandler.AnnotationType_Comment:
 			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
@@ -209,15 +204,15 @@ class WordDocumentTextInfo(UIATextInfo):
 
 	def _getControlFieldForUIAObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
-		automationID=obj.UIAElement.cachedAutomationID
+		automationId = obj.UIAAutomationId
 		field = super(WordDocumentTextInfo, self)._getControlFieldForUIAObject(
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
 			endOfNode=endOfNode
 		)
-		if automationID.startswith('UIA_AutomationId_Word_Page_'):
-			field['page-number']=automationID.rsplit('_',1)[-1]
+		if automationId.startswith('UIA_AutomationId_Word_Page_'):
+			field['page-number'] = automationId.rsplit('_', 1)[-1]
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_GroupControlTypeId and obj.name:
 			field['role']=controlTypes.Role.EMBEDDEDOBJECT
 			field['alwaysReportName']=True
@@ -459,7 +454,10 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 
 	def _shouldSetFocusToObj(self, obj: NVDAObject) -> bool:
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
-		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
+		if (
+			obj.role == controlTypes.Role.EDITABLETEXT
+			and obj.UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
+		):
 			return False
 		elif obj.role == controlTypes.Role.MATH:
 			# Don't set focus to math equations otherwise they cannot be interacted  with mathPlayer.
@@ -468,7 +466,10 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
-		if obj.role==controlTypes.Role.EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
+		if (
+			obj.role == controlTypes.Role.EDITABLETEXT
+			and obj.UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
+		):
 			return False
 		elif obj.role == controlTypes.Role.MATH:
 			# Don't  activate focus mode for math equations otherwise they cannot be interacted  with mathPlayer.
