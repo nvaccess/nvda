@@ -5,11 +5,18 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
+from typing import Any, Optional, Tuple, Union
 from baseObject import AutoPropertyObject, ScriptableObject
 import config
 import textInfos
 import controlTypes
+
+
+_TableID = Union[int, Tuple, Any]
+"""
+A variety of types can be used for a tableID.
+Known to be a tuple for UIA, an integer for virtual buffers.
+"""
 
 
 class _Axis(str, Enum):
@@ -117,7 +124,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 	def _getNearestTableCell(
 			self,
-			tableID,
+			tableID: _TableID,
 			startPos: textInfos.TextInfo,
 			origRow: int,
 			origCol: int,
