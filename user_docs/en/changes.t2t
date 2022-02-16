@@ -123,6 +123,7 @@ This can dramatically decrease build times on multi core systems. (#13226)
 - ``easeOfAccess.APP_KEY_NAME`` has been deprecated, to be removed in 2023. (#13242)
 - ``DictionaryDialog`` and ``DictionaryEntryDialog`` are moved from ``gui.settingsDialogs`` to ``gui.speechDict``. (#13294)
 - IAccessible2 relations are now shown in developer info for IAccessible2 objects. (#13315)
+- ``languageHandler.windowsPrimaryLCIDsToLocaleNames`` has been removed, instead use ``languageHandler.windowsLCIDToLocaleName`` or ``winKernel.LCIDToLocaleName``. (#13342)
 -
 
 
