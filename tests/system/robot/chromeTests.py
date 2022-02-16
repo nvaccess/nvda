@@ -1652,3 +1652,49 @@ def test_focusTargetReporting():
 		]),
 		message="focus mode - focus with Report Articles enabled"
 	)
+
+
+def test_tableNavigationWithMergedColumns():
+	"""When navigating through a merged cell,
+	NVDA should preserve the column/row position from the previous cell.
+	Refer to #7278, #11919.
+	"""
+	_chrome.prepareChrome("""
+	<p>This is text</p>
+	<table
+	 border=0 cellpadding=0 cellspacing=0 width=192
+	 style='border-collapse: collapse;table-layout:fixed;width:144pt'
+	>
+	<col width=64 span=3 style='width:48pt'>
+	<tr height=20 style='height:15.0pt'>
+		<td height=20 width=64 style='height:15.0pt;width:48pt'>a1</td>
+		<td width=64 style='width:48pt'>b1</td>
+		<td width=64 style='width:48pt'>c1</td>
+	</tr>
+	<tr height=20 style='height:15.0pt'>
+		<td colspan=2 height=20 style='height:15.0pt'>a2 and b2</td>
+		<td>c2</td>
+	</tr>
+	</table>
+	""")
+	# Navigate to end of text, this aligns the cursor with column 2
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(actualSpeech, "This is text")
+
+	# Navigate to the table
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(actualSpeech, "table  with 2 rows and 3 columns  row 1  column 1  a 1")
+
+	# Navigate to a cell in row 1, column 2
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(actualSpeech, "column 2  b 1")
+
+	# Navigate to a merged cell below
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(actualSpeech, "row 2  column 1  through 2  a 2 and b 2")
+
+	# Return to row 1, column 2
+	# In #7278, #11919, NVDA would return to row 1, column 1
+	# This caused column position to be lost when navigating through merged cells
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+upArrow")
+	_asserts.strings_match(actualSpeech, "row 1  column 2  b 1")
