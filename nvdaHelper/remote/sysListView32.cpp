@@ -33,7 +33,14 @@ error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle
 	// ListView_GetGroupInfoByIndex macro has no return value, using SendMessage directly so errors are caught.
 	// The meaning of the return value depends on the message sent, for LVM_GETGROUPINFOBYINDEX,
 	// it returns TRUE if successful, or FALSE otherwise.
-	if(!SendMessage(static_cast<HWND>(UlongToHandle(windowHandle)),LVM_GETGROUPINFOBYINDEX,(WPARAM)groupIndex,(LPARAM)&group)) {
+	const auto sendMsgRes = SendMessage(
+		static_cast<HWND>(UlongToHandle(windowHandle)),
+		LVM_GETGROUPINFOBYINDEX,
+		static_cast<WPARAM>(groupIndex),
+		reinterpret_cast<LPARAM>(&group)
+	);
+	if(TRUE != sendMsgRes) {
+
 		LOG_DEBUGWARNING(L"LVM_GETGROUPINFOBYINDEX failed");
 		return 1;
 	}
