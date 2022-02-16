@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner,
+# Copyright (C) 2006-2022 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner,
 # Mozilla Corporation, Babbage B.V., Joseph Lee, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -482,11 +482,20 @@ def SetThreadExecutionState(esFlags):
 
 
 def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
+	# NVDA cannot run with this imported at the top level
+	from logHandler import log
 	bufSize = 32
 	buf = ctypes.create_unicode_buffer(bufSize)
 	dwFlags = 0
 	try:
 		kernel32.LCIDToLocaleName(windowsLCID, buf, bufSize, dwFlags)
 	except AttributeError:
+		# This exception was previously passed.
+		# More information is needed on the cause of this exception
+		# for improving this comment or handling.
+		log.exception("Unexpected AttributeError raised:", exc_info=True)
+		return None
+	# An empty string is returned for unknown LCIDs
+	if not buf.value:
 		return None
 	return buf.value
