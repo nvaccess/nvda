@@ -66,7 +66,7 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 
 def getStartMenuFolder(noDefault=False):
 	try:
-		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY) as k:
+		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value) as k:
 			return winreg.QueryValueEx(k,u"Start Menu Folder")[0]
 	except WindowsError:
 		return defaultStartMenuFolder if not noDefault else None
@@ -243,7 +243,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 			winreg.SetValueEx(k,name,None,winreg.REG_SZ,value.format(installDir=installDir))
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"",None,winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
-	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY,0,winreg.KEY_WRITE) as k:
+	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value, 0, winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"startMenuFolder",None,winreg.REG_SZ,startMenuFolder)
 		if configInLocalAppData:
 			winreg.SetValueEx(k,config.CONFIG_IN_LOCAL_APPDATA_SUBKEY,None,winreg.REG_DWORD,int(configInLocalAppData))
@@ -412,9 +412,12 @@ def isDesktopShortcutInstalled():
 
 def unregisterInstallation(keepDesktopShortcut=False):
 	try:
-		winreg.DeleteKeyEx(winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
-			winreg.KEY_WOW64_64KEY)
-		easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, False)
+		winreg.DeleteKeyEx(
+			winreg.HKEY_LOCAL_MACHINE,
+			easeOfAccess.RegistryKey.APP.value,
+			winreg.KEY_WOW64_64KEY
+		)
+		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
 	except WindowsError:
 		pass
 	wsh=_getWSH()
@@ -439,7 +442,7 @@ def unregisterInstallation(keepDesktopShortcut=False):
 	except WindowsError:
 		pass
 	try:
-		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY)
+		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value)
 	except WindowsError:
 		pass
 	unregisterAddonFileAssociation()
@@ -553,7 +556,7 @@ def tryCopyFile(sourceFilePath,destFilePath):
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	prevInstallPath=getInstallPath(noDefault=True)
 	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, config.NVDA_REGKEY)
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value)
 		configInLocalAppData = bool(winreg.QueryValueEx(k, config.CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
 	except WindowsError:
 		configInLocalAppData = False
@@ -615,8 +618,12 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	removeOldLibFiles(destPath,rebootOK=True)
 
 def registerEaseOfAccess(installDir):
-	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH, 0,
-			winreg.KEY_ALL_ACCESS | winreg.KEY_WOW64_64KEY) as appKey:
+	with winreg.CreateKeyEx(
+		winreg.HKEY_LOCAL_MACHINE,
+		easeOfAccess.RegistryKey.APP.value,
+		0,
+		winreg.KEY_ALL_ACCESS | winreg.KEY_WOW64_64KEY
+	) as appKey:
 		winreg.SetValueEx(appKey, "ApplicationName", None, winreg.REG_SZ,
 			versionInfo.name)
 		winreg.SetValueEx(appKey, "Description", None, winreg.REG_SZ,

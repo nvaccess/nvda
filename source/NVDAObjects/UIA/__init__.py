@@ -25,6 +25,7 @@ import UIAHandler.customAnnotations
 import globalVars
 import eventHandler
 import controlTypes
+from controlTypes import TextPosition
 import config
 import speech
 import api
@@ -239,15 +240,14 @@ class UIATextInfo(textInfos.TextInfo):
 			textPosition=None
 			val=fetcher.getValue(UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-				textPosition='super'
+				textPosition = TextPosition.SUPERSCRIPT
 			else:
 				val=fetcher.getValue(UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 				if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-					textPosition="sub"
+					textPosition = TextPosition.SUBSCRIPT
 				else:
-					textPosition="baseline"
-			if textPosition:
-				formatField['text-position']=textPosition
+					textPosition = TextPosition.BASELINE
+			formatField['text-position'] = textPosition
 		if formatConfig['reportStyle']:
 			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
