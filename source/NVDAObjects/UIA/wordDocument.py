@@ -1,7 +1,7 @@
 # This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2021 NV Access Limited, Joseph Lee, Jakub Lukowicz
+# Copyright (C) 2016-2022 NV Access Limited, Joseph Lee, Jakub Lukowicz
 
 from typing import (
 	Optional,
