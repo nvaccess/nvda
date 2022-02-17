@@ -1652,3 +1652,78 @@ def test_focusTargetReporting():
 		]),
 		message="focus mode - focus with Report Articles enabled"
 	)
+
+
+def test_focus_mode_on_focusable_read_only_lists():
+	"""
+	If a list is read-only, but is focusable, and a list element receives focus, switch to focus mode.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<a href="#">before Target</a>
+		<div role="list" aria-label="Messages" tabindex="-1">
+			<div role="listitem" tabindex="0" aria-label="Todd Kloots Hello all. At 1:30 PM">
+				<div role="document" aria-roledescription="message">
+					<a href="/kloots" class="sender">Todd Kloots</a> <a href="/time" class="time">1:30 PM</a>
+					<p>Hello all.</p>
+				</div>
+			</div>
+		</div>
+		"""
+	)
+	# Set focus
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# focus the list item
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			SPEECH_SEP.join([
+				"messages",  # name for list container
+				"list",  # role for list container
+			]),
+			SPEECH_SEP.join([
+				"Todd Kloots Hello all.At 1:30 PM",  # list element name, should read first
+				"1 of 1",  # item count, no role expected here
+			]),
+			"Focus mode",  # Focus mode should be enabled automatically and be indicated
+		]),
+		message="focus mode - focus list item and turn on focus mode"
+	)
+
+	# Tab into the document, which should turn on browse mode
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			"message",  # role description for document container
+			SPEECH_SEP.join([
+				"Todd Kloots",  # name for link
+				"link",  # role for link
+			]),
+			"Browse mode",  # Focus mode should be disabled automatically and be indicated
+		]),
+		message="focus mode - focus link in document and turn off focus mode"
+	)
+
+	# shift+tab back to the focusable list item
+	actualSpeech = _chrome.getSpeechAfterKey("shift+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			SPEECH_SEP.join([
+				"Todd Kloots Hello all. At 1:30 PM",  # list element name, should read first
+				"1 of 1",  # item count, no role expected here
+			]),
+			"Focus mode",  # Focus mode should be enabled automatically and be indicated
+		]),
+		message="focus mode - focus list item and turn on focus mode"
+	)
