@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-21 07:49+0000\n"
-"PO-Revision-Date: 2021-05-20 00:31-0700\n"
+"POT-Creation-Date: 2021-11-26 00:02+0000\n"
+"PO-Revision-Date: 2021-11-25 17:42-0800\n"
 "Last-Translator: ungjinPark <ungjin312@kakao.com>\n"
 "Language-Team: NVDA Korean users and translations forum <advck1123@gmail."
 "com>\n"
@@ -102,7 +102,6 @@ msgid "grammar: {text}"
 msgstr "문법: {text}"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "none"
 msgstr "없음"
@@ -113,21 +112,19 @@ msgid "color"
 msgstr "color"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "gradient"
-msgstr "직선 그라데이션"
+msgstr "그라데이션"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "picture"
-msgstr ""
+msgstr "그림"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
-msgstr "기존값"
+msgstr "패턴"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -421,8 +418,8 @@ msgid "fig"
 msgstr "fig"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
-msgid "mrkd"
-msgstr "mrkd"
+msgid "hlght"
+msgstr "hight"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -475,6 +472,10 @@ msgstr "sorted asc"
 #. Translators: Displayed in braille when an object is sorted descending.
 msgid "sorted desc"
 msgstr "sorted desc"
+
+#. Translators: Displayed in braille when an object has additional details (such as a comment section).
+msgid "details"
+msgstr "상세정보"
 
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
@@ -586,7 +587,7 @@ msgstr "vlnk"
 #. {total} is replaced with the total number of items in the group.
 #, python-brace-format
 msgid "{number} of {total}"
-msgstr "{number} / {total}"
+msgstr "{total}개 중 {number}번째"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
@@ -760,6 +761,11 @@ msgstr "벨라루스어 2종"
 #. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
 msgstr "불가리아어 8종 컴퓨터 점자"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Bulgarian grade 1"
+msgstr "불가리아어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -988,18 +994,13 @@ msgstr "Greek international braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Hebrew 8 dot computer braille"
-msgstr "히브리어 8점 컴퓨터 점자"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "Israeli grade 1"
 msgstr "히브리어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Israeli 8 dot computer braille"
-msgstr "히브리어 8점 컴퓨터 점자"
+msgid "Hebrew computer braille"
+msgstr "히브리어 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1050,6 +1051,21 @@ msgstr "이탈리아어 8점 컴퓨터 점자8점 컴퓨터 점자"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "칸나다어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Kazakh grade 1"
+msgstr "카자흐어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Khmer grade 1"
+msgstr "크메르어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Northern Kurdish grade 0"
+msgstr "북부 쿠르드어 0종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1123,6 +1139,16 @@ msgstr "마라타어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Burmese grade 1"
+msgstr "미얀마어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Burmese grade 2"
+msgstr "미얀마어 2종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Dutch (Belgium) 6 dot"
 msgstr "네델란드어 (벨기에) 6점 점자"
 
@@ -1165,6 +1191,16 @@ msgstr "노르웨이어 3종"
 #. braille settings dialog.
 msgid "Nepali grade 1"
 msgstr "네팔어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sepedi grade 1"
+msgstr "세페디 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sepedi grade 2"
+msgstr "세페디 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1223,8 +1259,18 @@ msgstr "러시아어 정자 점자 (상세)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Russian contracted braille"
+msgstr "러시아어 약자 점자"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "산스크리트어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Yakut grade 1"
+msgstr "야쿠트어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1253,6 +1299,16 @@ msgstr "슬로베니아어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Sesotho grade 1"
+msgstr "세소토 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sesotho grade 2"
+msgstr "세소토 2종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "세르비아어 1종"
 
@@ -1263,6 +1319,11 @@ msgstr "타밀어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Tatar grade 1"
+msgstr "타타르어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Telugu grade 1"
 msgstr "텔루구어 1종"
 
@@ -1270,6 +1331,16 @@ msgstr "텔루구어 1종"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "터키어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Setswana grade 1"
+msgstr "보츠와나어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Setswana grade 2"
+msgstr "보츠와나어 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1303,8 +1374,43 @@ msgstr "Unicode 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 0"
+msgstr "베트남어 0종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 1"
+msgstr "벤다어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 2"
+msgstr "벤다어 2종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "베트남어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 2"
+msgstr "베트남어 2종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Southern Vietnamese grade 1"
+msgstr "남베트남어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 1"
+msgstr "코사어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 2"
+msgstr "코사어 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1325,6 +1431,16 @@ msgstr "중국어 (홍콩, 광동어)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "중국어 (타이완, 북경어)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 1"
+msgstr "줄루어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 2"
+msgstr "줄루어 2종"
 
 #. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
@@ -1919,6 +2035,15 @@ msgstr "상세 설명 없음"
 msgid "Shows the long description at this position if one is found."
 msgstr "현재 위치에 상세 설명이 있다면 그 내용을 표시합니다."
 
+#. Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
+msgid "Shows a summary of the details at this position if found."
+msgstr "현재 위치에 상세 설명이 있다면 그 내용을 요약해서 표시합니다."
+
+#. Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
+#. set of details to read.
+msgid "No additional details"
+msgstr "추가정보 없음"
+
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
@@ -1995,6 +2120,13 @@ msgctxt "symbolPreserve"
 msgid "only below symbol's level"
 msgstr "기호 레벨 이하일 때 처리"
 
+#. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
+#. "transparent bright orange-yellow"
+#, python-brace-format
+msgctxt "color variation"
+msgid "transparent {colorDescription}"
+msgstr "투명 {colorDescription}"
+
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
 msgid "white"
@@ -2038,7 +2170,7 @@ msgstr "빨강"
 #. Translators: The color between  red and orange (HSV hue 15 degrees)
 msgctxt "color hue"
 msgid "red-orange"
-msgstr "빨강"
+msgstr "다홍"
 
 #. Translators: The color orange (HSV hue 30 degrees)
 msgctxt "color hue"
@@ -2048,7 +2180,7 @@ msgstr "주황"
 #. Translators: The color between  orange and yellow (HSV hue 45 degrees)
 msgctxt "color hue"
 msgid "orange-yellow"
-msgstr "주황"
+msgstr "금"
 
 #. Translators: The color yellow (HSV hue 60 degrees)
 msgctxt "color hue"
@@ -2068,17 +2200,17 @@ msgstr "초록"
 #. Translators: The color between  green and aqua (HSV hue 150 degrees)
 msgctxt "color hue"
 msgid "green-aqua"
-msgstr "초록"
+msgstr "초록빛 청록"
 
 #. Translators: The color aqua (HSV hue 180 degrees)
 msgctxt "color hue"
 msgid "aqua"
-msgstr "밝은 파랑"
+msgstr "청록"
 
 #. Translators: The color between  aqua and blue (HSV hue 210 degrees)
 msgctxt "color hue"
 msgid "aqua-blue"
-msgstr "밝은 파랑"
+msgstr "푸른빛 청록"
 
 #. Translators: The color blue (HSV hue 240 degrees)
 msgctxt "color hue"
@@ -2088,7 +2220,7 @@ msgstr "파랑"
 #. Translators: The color between  blue and purple (HSV hue 270 degrees)
 msgctxt "color hue"
 msgid "blue-purple"
-msgstr "파랑"
+msgstr "푸른빛 보라"
 
 #. Translators: The color purple (HSV hue 300 degrees)
 msgctxt "color hue"
@@ -2098,7 +2230,7 @@ msgstr "보라"
 #. Translators: The color between  purple and pink (HSV hue 312 degrees)
 msgctxt "color hue"
 msgid "purple-pink"
-msgstr "보라"
+msgstr "보라빛 분홍"
 
 #. Translators: The color pink (HSV hue 324 degrees)
 msgctxt "color hue"
@@ -2195,820 +2327,7 @@ msgstr "갈색"
 #. Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
 msgctxt "color hue"
 msgid "brown-yellow"
-msgstr "누런 갈색"
-
-#. Translators: The word for window of a program such as document window.
-msgid "window"
-msgstr "윈도우"
-
-#. Translators: Used to identify title bar of a program.
-msgid "title bar"
-msgstr "제목 표시줄"
-
-#. Translators: The word used for pane such as desktop pane.
-msgid "pane"
-msgstr "창"
-
-#. Translators: The word used to denote a dialog box such as open dialog.
-msgid "dialog"
-msgstr "대화상자"
-
-#. Translators: The text used to identify check boxes such as select check box.
-msgid "check box"
-msgstr "체크상자"
-
-#. Translators: The text used to identify radio buttons such as yes or no radio button.
-msgid "radio button"
-msgstr "라디오 버튼"
-
-#. Translators: The word used to identify a static text such as dialog text.
-msgid "text"
-msgstr "내용"
-
-#. Translators: The word used to identify edit fields such as subject edit field.
-msgid "edit"
-msgstr "편집창"
-
-#. Translators: The word used to identify a button such as OK button.
-msgid "button"
-msgstr "버튼"
-
-#. Translators: Text used to identify menu bar of a program.
-msgid "menu bar"
-msgstr "메뉴 모음"
-
-#. Translators: Used to identify a menu item such as an item in file menu.
-msgid "menu item"
-msgstr "메뉴 항목"
-
-#. Translators: The word used for menus such as edit menu.
-#. Translators: Identifies a menu such as file menu.
-msgid "menu"
-msgstr "메뉴"
-
-#. Translators: Used to identify combo boxes such as file type combo box.
-msgid "combo box"
-msgstr "콤보상자"
-
-#. Translators: The word used for lists such as folder list.
-msgid "list"
-msgstr "목록"
-
-#. Translators: Used to identify a list item such as email list items.
-msgid "list item"
-msgstr "목록항목"
-
-#. Translators: The word used to identify graphics such as webpage graphics.
-msgid "graphic"
-msgstr "그래픽"
-
-#. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
-msgid "help balloon"
-msgstr "도움말 풍선"
-
-#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
-msgid "tool tip"
-msgstr "도구 설명"
-
-#. Translators: Identifies a link in webpage documents.
-msgid "link"
-msgstr "링크"
-
-#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
-msgid "tree view"
-msgstr "트리뷰"
-
-#. Translators: Identifies a tree view item.
-msgid "tree view item"
-msgstr "트리뷰 항목"
-
-#. Translators: The word presented for tabs in a tab enabled window.
-msgctxt "controlType"
-msgid "tab"
-msgstr "탭"
-
-#. Translators: Identifies a tab control such as webpage tabs in web browsers.
-msgid "tab control"
-msgstr "탭 컨트롤"
-
-#. Translators: Identifies a slider such as volume slider.
-msgid "slider"
-msgstr "슬라이더"
-
-#. Translators: Identifies a progress bar such as NvDA update progress.
-msgid "progress bar"
-msgstr "진행률 막대"
-
-#. Translators: Identifies a scroll bar.
-msgid "scroll bar"
-msgstr "스크롤 막대"
-
-#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
-msgid "status bar"
-msgstr "상태 표시줄"
-
-#. Translators: Identifies a table such as ones used in various websites.
-msgid "table"
-msgstr "테이블"
-
-#. Translators: Identifies a cell in a table.
-msgid "cell"
-msgstr "셀"
-
-#. Translators: Identifies a column (a group of vertical cells in a table).
-msgid "column"
-msgstr "열"
-
-#. Translators: Identifies a row (a group of horizontal cells in a table).
-msgid "row"
-msgstr "행"
-
-#. Translators: Identifies a frame (a smaller window in a webpage or a document).
-#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
-msgid "frame"
-msgstr "프레임"
-
-#. Translators: Identifies a tool bar.
-msgid "tool bar"
-msgstr "도구 모음"
-
-#. Translators: Identifies a column header in tables and spreadsheets.
-msgid "column header"
-msgstr "열 머리말"
-
-#. Translators: Identifies a row header in tables and spreadsheets.
-msgid "row header"
-msgstr "행 머리말"
-
-#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
-msgid "drop down button"
-msgstr "드롭다운 버튼"
-
-#. Translators: Identifies an element.
-msgid "clock"
-msgstr "시계"
-
-#. Translators: Identifies a separator (a horizontal line drawn on the screen).
-msgid "separator"
-msgstr "구분선"
-
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
-msgid "form"
-msgstr "form"
-
-#. Translators: Identifies a heading (a bold text used for identifying a section).
-msgid "heading"
-msgstr "헤딩"
-
-#. Translators: Identifies a heading level.
-msgid "heading 1"
-msgstr "헤딩 레벨 1"
-
-#. Translators: Identifies a heading level.
-msgid "heading 2"
-msgstr "헤딩 레벨 2"
-
-#. Translators: Identifies a heading level.
-msgid "heading 3"
-msgstr "헤딩 레벨 3"
-
-#. Translators: Identifies a heading level.
-msgid "heading 4"
-msgstr "헤딩 레벨 4"
-
-#. Translators: Identifies a heading level.
-msgid "heading 5"
-msgstr "헤딩 레벨 5"
-
-#. Translators: Identifies a heading level.
-msgid "heading 6"
-msgstr "헤딩 레벨 6"
-
-#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
-msgid "paragraph"
-msgstr "문단"
-
-#. Translators: Presented for a section in a document which is a block quotation;
-#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
-msgid "block quote"
-msgstr "인용문"
-
-#. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
-msgid "table header"
-msgstr "테이블 머리글"
-
-#. Translators: Identifies a table body (the main body of the table).
-msgid "table body"
-msgstr "테이블 본문"
-
-#. Translators: Identifies a table footer (text placed at the end of the table).
-msgid "table footer"
-msgstr "테이블 바닥글"
-
-#. Translators: Identifies a document (for example, a webpage document).
-msgid "document"
-msgstr "문서"
-
-#. Translators: Identifies an animation in a document or a webpage.
-msgid "animation"
-msgstr "애니메이션"
-
-#. Translators: Identifies an application in webpages.
-msgid "application"
-msgstr "응용프로그램"
-
-#. Translators: Identifies a box element.
-msgid "box"
-msgstr "박스"
-
-#. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
-msgid "grouping"
-msgstr "그룹"
-
-#. Translators: Identifies a property page such as drive properties dialog.
-msgid "property page"
-msgstr "속성 페이지"
-
-#. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
-msgid "canvas"
-msgstr "캔버스"
-
-#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
-msgid "caption"
-msgstr "캡션"
-
-#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
-msgid "check menu item"
-msgstr "체크 메뉴 항목"
-
-#. Translators: Identifies a data edit field.
-msgid "date edit"
-msgstr "날짜 입력"
-
-#. Translators: Identifies an icon.
-msgid "icon"
-msgstr "아이콘"
-
-#. Translators: Identifies a directory pane.
-msgid "directory pane"
-msgstr "디렉토리 창"
-
-#. Translators: Identifies an object that is embedded in a document.
-msgid "embedded object"
-msgstr "임베디드 객체"
-
-#. Translators: Identifies an end note.
-msgid "end note"
-msgstr "미주"
-
-#. Translators: Identifies a footer (usually text).
-msgid "footer"
-msgstr "footer"
-
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
-msgid "foot note"
-msgstr "각주"
-
-#. Translators: Reported for an object which is a glass pane; i.e.
-#. a pane that is guaranteed to be on top of all panes beneath it.
-msgid "glass pane"
-msgstr "최상위 창"
-
-#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
-msgid "header"
-msgstr "헤더"
-
-#. Translators: Identifies an image map (a type of graphical link).
-msgid "image map"
-msgstr "이미지 맵"
-
-#. Translators: Identifies an input window.
-msgid "input window"
-msgstr "입력창"
-
-#. Translators: Identifies a label.
-msgid "label"
-msgstr "레이블"
-
-#. Translators: Identifies a note field.
-msgid "note"
-msgstr "note"
-
-#. Translators: Identifies a page.
-msgid "page"
-msgstr "페이지"
-
-#. Translators: Identifies a radio menu item.
-msgid "radio menu item"
-msgstr "라디오 메뉴 항목"
-
-#. Translators: Identifies a layered pane.
-msgid "layered pane"
-msgstr "레이어드 창"
-
-#. Translators: Identifies a redundant object.
-msgid "redundant object"
-msgstr "불필요한 객체"
-
-#. Translators: Identifies a root pane.
-msgid "root pane"
-msgstr "루트 창"
-
-#. Translators: May be reported for an editable text object in a toolbar.
-#. This is deprecated and is not often (if ever) used.
-msgid "edit bar"
-msgstr "편집 막대"
-
-#. Translators: Identifies a terminal window such as command prompt.
-msgid "terminal"
-msgstr "터미널"
-
-#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
-msgid "rich edit"
-msgstr "스타일 문서 편집"
-
-#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
-msgid "ruler"
-msgstr "눈금자"
-
-#. Translators: Identifies a scroll pane.
-msgid "scroll pane"
-msgstr "스크롤 창"
-
-#. Translators: Identifies a section of text.
-msgid "section"
-msgstr "섹션"
-
-#. Translators: Identifies a shape.
-msgid "shape"
-msgstr "도형"
-
-#. Translators: Identifies a split pane.
-msgid "split pane"
-msgstr "분할 창"
-
-#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
-#. which represents the portion of the entire data that the user can see.
-#. As the user manipulates the scroll bars, the contents of the view port can change.
-msgid "view port"
-msgstr "view port"
-
-#. Translators: Reported for an object that forms part of a menu system
-#. but which can be undocked from or torn off the menu system
-#. to exist as a separate window.
-msgid "tear off menu"
-msgstr "분리 가능한 메뉴"
-
-#. Translators: Identifies a text frame (a frame window which contains text).
-msgid "text frame"
-msgstr "텍스트 프레임"
-
-#. Translators: Identifies a toggle button (a button used to toggle something).
-msgid "toggle button"
-msgstr "토글 버튼"
-
-msgid "border"
-msgstr "테두리"
-
-#. Translators: Identifies a caret object.
-msgid "caret"
-msgstr "캐럿"
-
-#. Translators: Identifies a character field (should not be confused with edit fields).
-msgid "character"
-msgstr "글자"
-
-#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
-msgid "chart"
-msgstr "차트"
-
-#. Translators: Identifies a cursor object.
-msgid "cursor"
-msgstr "커서"
-
-#. Translators: Identifies a diagram (seen on some websites and on Office documents).
-msgid "diagram"
-msgstr "다이어그램"
-
-#. Translators: Identifies a dial object.
-msgid "dial"
-msgstr "다이얼"
-
-#. Translators: Identifies a drop list.
-msgid "drop list"
-msgstr "펼침 목록"
-
-#. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
-msgid "split button"
-msgstr "분할 버튼"
-
-#. Translators: Identifies a menu button (a button which opens a menu of items).
-msgid "menu button"
-msgstr "메뉴 버튼"
-
-#. Translators: Reported for a button which expands a grid when it is pressed.
-msgid "drop down button grid"
-msgstr "펼침 버튼 그리드"
-
-#. Translators: Identifies mathematical content.
-msgid "math"
-msgstr "수학"
-
-#. Translators: Identifies a grip control.
-msgid "grip"
-msgstr "grip"
-
-#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
-msgid "hot key field"
-msgstr "바로 가기 키 필드"
-
-#. Translators: Identifies an indicator control.
-msgid "indicator"
-msgstr "표시기"
-
-#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
-msgid "spin button"
-msgstr "스핀 버튼"
-
-#. Translators: Identifies a sound clip on websites.
-msgid "sound"
-msgstr "음향"
-
-#. Translators: Identifies a whitespace.
-msgid "white space"
-msgstr "공백"
-
-#. Translators: Identifies a tree view button.
-msgid "tree view button"
-msgstr "트리뷰 버튼"
-
-#. Translators: Identifies an IP address (an IP address field element).
-msgid "IP address"
-msgstr "IP 주소"
-
-#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
-msgid "desktop icon"
-msgstr "바탕화면 아이콘"
-
-#. Translators: Identifies desktop pane (the desktop window).
-msgid "desktop pane"
-msgstr "바탕화면"
-
-#. Translators: Identifies an option pane.
-msgid "option pane"
-msgstr "옵션 창"
-
-#. Translators: Identifies a color chooser.
-msgid "color chooser"
-msgstr "색상 선택기"
-
-#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
-msgid "file chooser"
-msgstr "파일 선택기"
-
-msgid "filler"
-msgstr "파일 선택기"
-
-#. Translators: Identifies a panel control for grouping related options.
-msgid "panel"
-msgstr "패널"
-
-#. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
-msgid "password edit"
-msgstr "암호 편집창"
-
-#. Translators: Identifies a font chooser.
-msgid "font chooser"
-msgstr "폰트 선택기"
-
-msgid "line"
-msgstr "줄"
-
-#. Translators: Identifies a font name.
-msgid "font name"
-msgstr "글꼴 이름"
-
-#. Translators: Identifies font size.
-msgid "font size"
-msgstr "글꼴 크기"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is bolded.
-msgid "bold"
-msgstr "진하게"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "기울임꼴"
-
-#. Translators: Describes text formatting.
-msgid "underline"
-msgstr "밑줄"
-
-#. Translators: Describes text formatting.
-msgid "foreground color"
-msgstr "전경 색상"
-
-#. Translators: Describes text formatting.
-msgid "background color"
-msgstr "배경 색상"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for superscript text.
-msgid "superscript"
-msgstr "위 첨자"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for subscript text.
-msgid "subscript"
-msgstr "아래 첨자"
-
-#. Translators: Describes style of text.
-#. Translators: a Microsoft Word revision type (style change)
-msgid "style"
-msgstr "스타일"
-
-#. Translators: Describes text formatting.
-msgid "indent"
-msgstr "들여쓰기"
-
-#. Translators: Describes text formatting.
-msgid "alignment"
-msgstr "정렬"
-
-#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-msgid "alert"
-msgstr "알림"
-
-#. Translators: Identifies a data grid control (a grid which displays data).
-msgid "data grid"
-msgstr "데이터 그리드"
-
-msgid "data item"
-msgstr "데이터 항목"
-
-msgid "header item"
-msgstr "헤더 항목"
-
-#. Translators: Identifies a thumb control (a button-like control for changing options).
-msgid "thumb control"
-msgstr "엄지 컨트롤"
-
-msgid "calendar"
-msgstr "달력"
-
-msgid "video"
-msgstr "비디오"
-
-msgid "audio"
-msgstr "오디오"
-
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "차트 요소"
-
-#. Translators: Identifies deleted content.
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "삭제됨"
-
-#. Translators: Identifies inserted content.
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "삽입됨"
-
-#. Translators: Identifies a landmark.
-msgid "landmark"
-msgstr "랜드마크"
-
-#. Translators: Identifies an article.
-msgid "article"
-msgstr "article"
-
-#. Translators: Identifies a region.
-msgid "region"
-msgstr "영역"
-
-#. Translators: Identifies a figure (commonly seen on some websites).
-msgid "figure"
-msgstr "figure"
-
-#. Translators: Identifies marked (highlighted) content
-msgid "marked content"
-msgstr "표시된 내용"
-
-#. Translators: This is presented when a control or document is unavailable.
-msgid "unavailable"
-msgstr "사용불가"
-
-#. Translators: This is presented when a control has focus.
-msgid "focused"
-msgstr "포커스됨"
-
-#. Translators: This is presented when the control is selected.
-msgid "selected"
-msgstr "선택됨"
-
-#. Translators: This is presented when a document is busy.
-msgid "busy"
-msgstr "작업 중"
-
-#. Translators: This is presented when a button is pressed.
-msgid "pressed"
-msgstr "눌림"
-
-#. Translators: This is presented when a check box is checked.
-msgid "checked"
-msgstr "선택됨"
-
-#. Translators: This is presented when a three state check box is half checked.
-msgid "half checked"
-msgstr "일부 선택됨"
-
-#. Translators: This is presented when the control is a read-only control such as read-only edit box.
-msgid "read only"
-msgstr "읽기 전용"
-
-#. Translators: This is presented when a tree view or submenu item is expanded.
-msgid "expanded"
-msgstr "확장됨"
-
-#. Translators: This is presented when a tree view or submenu is collapsed.
-msgid "collapsed"
-msgstr "축소됨"
-
-#. Translators: This is presented when a control or a document becomes invisible.
-msgid "invisible"
-msgstr "보이지 않음"
-
-#. Translators: This is presented when a visited link is encountered.
-msgid "visited"
-msgstr "방문함"
-
-#. Translators: This is presented when a link is encountered.
-msgid "linked"
-msgstr "링크"
-
-#. Translators: This is presented when the control menu item has a submenu.
-msgid "subMenu"
-msgstr "하위 메뉴"
-
-#. Translators: This is presented when a protected control or a document is encountered.
-msgid "protected"
-msgstr "보호됨"
-
-#. Translators: This is presented when a required form field is encountered.
-msgid "required"
-msgstr "필요함"
-
-#. Translators: Reported when an object no longer exists in the user interface;
-#. i.e. it is dead and is no longer usable.
-msgid "defunct"
-msgstr "작동 안 함"
-
-#. Translators: This is presented when an invalid entry has been made.
-msgid "invalid entry"
-msgstr "입력 오류"
-
-msgid "modal"
-msgstr "팝업창"
-
-#. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
-msgid "has auto complete"
-msgstr "자동완성"
-
-#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
-msgid "multi line"
-msgstr "멀티 라인"
-
-msgid "iconified"
-msgstr "최소화"
-
-#. Translators: Presented when the current control is located off screen.
-msgid "off screen"
-msgstr "화면 벗어남"
-
-#. Translators: Presented when the control allows selection such as text fields.
-msgid "selectable"
-msgstr "선택 가능"
-
-#. Translators: Presented when a control can be moved to using system focus.
-msgid "focusable"
-msgstr "포커스 가능"
-
-#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
-msgid "clickable"
-msgstr "클릭 가능"
-
-msgid "editable"
-msgstr "편집 가능"
-
-msgid "checkable"
-msgstr "체크 가능"
-
-msgid "draggable"
-msgstr "드레그 가능"
-
-msgid "dragging"
-msgstr "드래그 중"
-
-#. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects that support accessible drag and drop.
-msgid "drop target"
-msgstr "드래그 목적지"
-
-msgid "sorted"
-msgstr "정렬"
-
-msgid "sorted ascending"
-msgstr "오름차순 정렬"
-
-msgid "sorted descending"
-msgstr "내림차순 정렬"
-
-#. Translators: a state that denotes that an object (usually a graphic) has a long description.
-msgid "has long description"
-msgstr "상세 설명 있음"
-
-#. Translators: a state that denotes that an object is pinned in its current location
-msgid "pinned"
-msgstr "고정됨"
-
-#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
-msgid "has formula"
-msgstr "수식 있음"
-
-#. Translators: a state that denotes the existance of a comment.
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "메모 있음"
-
-#. Translators: a state that denotes that the object is covered partially or fully by another object
-msgid "obscured"
-msgstr "가려짐"
-
-#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
-msgid "cropped"
-msgstr "잘림"
-
-#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
-msgid "overflowing"
-msgstr "넘침"
-
-#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
-msgid "unlocked"
-msgstr "잠금 해제"
-
-#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-msgid "not selected"
-msgstr "선택 안 됨"
-
-#. Translators: This is presented when a button is not pressed.
-msgid "not pressed"
-msgstr "눌리지 않음"
-
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "해제됨"
-
-#. Translators: This is presented when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "드래그 마침"
-
-#. Translators: Presented when an item is marked as current in a collection of items
-msgid "current"
-msgstr "현재"
-
-#. Translators: Presented when a page item is marked as current in a collection of page items
-msgid "current page"
-msgstr "현재 페이지"
-
-#. Translators: Presented when a step item is marked as current in a collection of step items
-msgid "current step"
-msgstr "현재 단계"
-
-#. Translators: Presented when a location item is marked as current in a collection of location items
-msgid "current location"
-msgstr "현재 위치"
-
-#. Translators: Presented when a date item is marked as current in a collection of date items
-msgid "current date"
-msgstr "현재 날짜"
-
-#. Translators: Presented when a time item is marked as current in a collection of time items
-msgid "current time"
-msgstr "현재 시간"
-
-#. Translators: Indicates that a particular state of an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the full identifier of the negated state (e.g. selected).
-#, python-format
-msgid "not %s"
-msgstr "%s 해제"
+msgstr "황갈색"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -3345,11 +2664,11 @@ msgstr "입력 글자 읽기와 읽지 않기 중에서 토글합니다"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "입력한 글자 알림 해제"
+msgstr "입력한 글자 알림 끔"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "입력한 글자 알림 선택"
+msgstr "입력한 글자 알림 켬"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
@@ -3357,11 +2676,11 @@ msgstr "입력 단어 읽기와 읽지 않기 중에서 토글합니다"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "입력한 단어 알림 해제"
+msgstr "입력한 단어 알림 끔"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "입력한 단어 알림 선택"
+msgstr "입력한 단어 알림 켬"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
@@ -3371,11 +2690,11 @@ msgstr "입력 글자가 아닌 명령어 읽기와 읽지않기 중 토글합�
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "기능키 알림 해제"
+msgstr "기능키 알림 끔"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "기능키 알림 선택"
+msgstr "기능키 알림 켬"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -3449,19 +2768,19 @@ msgstr "강조 알림 해제"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "강조 알림 선택"
+msgstr "강조 알림"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "표시된 문구에 대한 알림을 토글합니다"
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "하이라이트된 글자에 대한 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked on"
-msgstr "표시된 내용 알림 활성화"
+msgid "report highlighted on"
+msgstr "하이라이트된 글자 알림"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked off"
-msgstr "표시된 내용 알림 비활성화"
+msgid "report highlighted off"
+msgstr "하이라이트된 글자 알림 해제"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -3614,6 +2933,22 @@ msgstr "테이블 셀 위치 알림 해제"
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
 msgstr "테이블 셀 위치 알림"
+
+#. Translators: Input help mode message for toggle report cell borders command.
+msgid "Cycles through the cell border reporting settings"
+msgstr "테이블 셀 테두리 알림 설정을 순환합니다"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report styles of cell borders"
+msgstr "테이블 테두리 모양 알림"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report colors and styles of cell borders"
+msgstr "테이블 셀 테두리 모양 및 색상 알림"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report cell borders off."
+msgstr "테두리 모양 및 색상 알림 해제"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -4084,7 +3419,6 @@ msgstr "포커스가 포함된 가장 가까운 다음 문서로 포커스를 �
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
-#. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -4170,26 +3504,45 @@ msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
 "포커스된 객체를 알려줍니다. 두 번 누르면 해당 정보를 한 글자씩 읽어줍니다"
 
-#. Translators: Input help mode message for report status line text command.
-msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
-msgstr ""
-"현재 응용 프로그램의 상태 표시줄을 읽고 탐색 객체를 그곳으로 이동합니다. 두 "
-"번 누르면 한 글자씩 읽습니다"
-
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "표시줄을 찾을 수 없음"
+
+#. Translators: Input help mode message for command which reads content of the status bar.
+msgid "Reads the current application status bar."
+msgstr "현재 응용프로그램의 상태표시줄을 읽습니다."
 
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
 msgstr "상태 표시줄 정보 없음"
 
+#. Translators: Input help mode message for command which spells content of the status bar.
+msgid "Spells the current application status bar."
+msgstr "현재 응용프로그램의 상태표시줄을 한 글자씩 읽습니다."
+
+#. Translators: Input help mode message for command which copies status bar content to the clipboard.
+msgid ""
+"Copies content of the status bar  of current application to the clipboard."
+msgstr "클립보드에 현재 응용프로그램의 상태표시줄의 내용을 복사합니다. "
+
 #. Translators: Reported when user attempts to copy content of the empty status line.
-msgid "unable to copy status bar content to clipboard"
+msgid "Unable to copy status bar content to clipboard"
 msgstr "상태 표시줄 내용을 클립보드에 복사할 수 없음"
+
+#. Translators: Input help mode message for Command which moves review cursor to the status bar.
+msgid ""
+"Reads the current application status bar and moves navigator object into it."
+msgstr ""
+"현재 응용프로그램의 상태표시줄을 읽고, 상태표시줄로 탐색 객체을 이동합니다."
+
+#. Translators: Input help mode message for report status line text command.
+msgid ""
+"Reads the current application status bar. If pressed twice, spells the "
+"information. If pressed three times, copies the status bar to the clipboard"
+msgstr ""
+"현재 응용 프로그램의 상태 표시줄을 읽고 탐색 객체를 상태표시줄로 이동합니다. "
+"두 번 누르면 한 글자씩 읽습니다. 세 번 누르면 클립보드에 상태표시줄 내용이 복"
+"사됩니다."
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -4831,17 +4184,16 @@ msgid "Not math"
 msgstr "수학 아님"
 
 #. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "Windows 10 OCR 기능을 사용하여 탐색 객체 컨텐츠를 인식합니다"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
+msgstr "Windows OCR 기능을 사용하여 탐색 객체 컨텐츠를 인식합니다"
 
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "Windows 10 OCR 사용할 수 없음"
+#. Translators: Reported when Windows OCR is not available.
+msgid "Windows OCR not available"
+msgstr "Windows OCR 사용할 수 없음"
 
 #. Translators: Reported when screen curtain is enabled.
-msgid "Please disable screen curtain before using Windows 10 OCR."
-msgstr "스크린 커튼 사용중, 윈도우 10 OCR을 사용하려면 스크린 커튼을 끄십시오."
+msgid "Please disable screen curtain before using Windows OCR."
+msgstr "스크린 커튼 사용중, 윈도우 OCR을 사용하려면 스크린 커튼을 끄십시오."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -5305,6 +4657,18 @@ msgstr "%s 키보드 레이아웃"
 msgid "keyboard, all layouts"
 msgstr "키보드 (모든 레이아웃에서 적용)"
 
+# KO: introducing brackets as the language doesn't use comma for hierarchical structuring the translated string should be more natural when it reads "한국어 (ko-kr)" instead of "한국어, ko-kr".
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc} ({lc})"
+
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "기본값"
+
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Aragonese"
@@ -5329,18 +4693,6 @@ msgstr "버마어"
 msgctxt "languageName"
 msgid "Somali"
 msgstr "소말리어"
-
-# KO: introducing brackets as the language doesn't use comma for hierarchical structuring the translated string should be more natural when it reads "한국어 (ko-kr)" instead of "한국어, ko-kr".
-#. Translators: The pattern defining how languages are displayed and sorted in in the general
-#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
-#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
-#, python-brace-format
-msgid "{desc}, {lc}"
-msgstr "{desc} ({lc})"
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "기본값"
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
@@ -7011,7 +6363,7 @@ msgstr "첨부 파일"
 
 #. Translators: this Outlook Express message is flagged
 msgid "flagged"
-msgstr "flagged"
+msgstr "플래그 지정됨"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -7076,30 +6428,26 @@ msgstr "파이썬 콘솔"
 
 #. Translators: Description of a command to clear the Python Console output pane
 msgid "Clear the output pane"
-msgstr ""
+msgstr "출력 영역 비우기"
 
 #. Translators: Description of a command to move to the next result in the Python Console output pane
-#, fuzzy
 msgid "Move to the next result"
-msgstr "다음 목록으로 이동합니다"
+msgstr "다음 결과로 이동"
 
 #. Translators: Description of a command to move to the previous result
 #. in the Python Console output pane
-#, fuzzy
 msgid "Move to the previous result"
-msgstr "이전 목록으로 이동합니다"
+msgstr "이전 결과로 이동"
 
 #. Translators: Description of a command to select from the current caret position to the end
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the end of the current result"
-msgstr "현재 셀의 주석을 알려줍니다"
+msgstr "현재 결과에서 끝까지 선택"
 
 #. Translators: Description of a command to select from the current caret position to the start
 #. of the current result in the Python Console output pane
-#, fuzzy
 msgid "Select until the start of the current result"
-msgstr "현재 셀의 주석을 알려줍니다"
+msgstr "현재 결과에서 처음까지 선택"
 
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
@@ -7161,9 +6509,9 @@ msgstr "{startTime} - {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "categories {categories}"
-msgstr "category {categories}"
+msgstr "{categories} 분류"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7471,22 +6819,22 @@ msgstr "오른쪽"
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
-msgstr "on"
+msgstr "켬"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now off.
 msgctxt "shuffle"
 msgid "off"
-msgstr "off"
+msgstr "끔"
 
 #. Translators: the user has pressed the repeat track toggle in winamp, repeat is now on.
 msgctxt "repeat"
 msgid "on"
-msgstr "on"
+msgstr "켬"
 
 #. Translators: the user has pressed the repeat track toggle in winamp, repeat is now off.
 msgctxt "repeat"
 msgid "off"
-msgstr "off"
+msgstr "끔"
 
 #. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
 msgid "No emoji"
@@ -7578,6 +6926,10 @@ msgid "Toggle braille input"
 msgstr "점자 입력을 토글합니다"
 
 #. Translators: The name of a series of braille displays.
+msgid "Standard HID Braille Display"
+msgstr "HID 점자 디스플레이"
+
+#. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 msgstr "HIMS 한소네/브레일 엣지/스마트 비틀/싱크브레일"
 
@@ -7602,8 +6954,12 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "베이펀마이어 브레일렉스 구형 모델"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
+msgid "Seika Braille Displays"
 msgstr "Seika 점자 디스플레이"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr "Seika 메모장"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -7652,6 +7008,841 @@ msgstr "인식 중"
 msgid "Recognition failed"
 msgstr "인식 실패"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "현재"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "현재 페이지"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "현재 단계"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "현재 위치"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "현재 날짜"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "현재 시간"
+
+#. Translators: The word for window of a program such as document window.
+msgid "window"
+msgstr "윈도우"
+
+#. Translators: Used to identify title bar of a program.
+msgid "title bar"
+msgstr "제목 표시줄"
+
+#. Translators: The word used for pane such as desktop pane.
+msgid "pane"
+msgstr "창"
+
+#. Translators: The word used to denote a dialog box such as open dialog.
+msgid "dialog"
+msgstr "대화상자"
+
+#. Translators: The text used to identify check boxes such as select check box.
+msgid "check box"
+msgstr "체크상자"
+
+#. Translators: The text used to identify radio buttons such as yes or no radio button.
+msgid "radio button"
+msgstr "라디오 버튼"
+
+#. Translators: The word used to identify a static text such as dialog text.
+msgid "text"
+msgstr "내용"
+
+#. Translators: The word used to identify edit fields such as subject edit field.
+msgid "edit"
+msgstr "편집창"
+
+#. Translators: The word used to identify a button such as OK button.
+msgid "button"
+msgstr "버튼"
+
+#. Translators: Text used to identify menu bar of a program.
+msgid "menu bar"
+msgstr "메뉴 모음"
+
+#. Translators: Used to identify a menu item such as an item in file menu.
+msgid "menu item"
+msgstr "메뉴 항목"
+
+#. Translators: The word used for menus such as edit menu.
+#. Translators: Identifies a menu such as file menu.
+msgid "menu"
+msgstr "메뉴"
+
+#. Translators: Used to identify combo boxes such as file type combo box.
+msgid "combo box"
+msgstr "콤보상자"
+
+#. Translators: The word used for lists such as folder list.
+msgid "list"
+msgstr "목록"
+
+#. Translators: Used to identify a list item such as email list items.
+msgid "list item"
+msgstr "목록항목"
+
+#. Translators: The word used to identify graphics such as webpage graphics.
+msgid "graphic"
+msgstr "그래픽"
+
+#. Translators: Used to identify help balloon (a circular window with helpful text such as notification
+#. text).
+msgid "help balloon"
+msgstr "도움말 풍선"
+
+#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as
+#. file information).
+msgid "tool tip"
+msgstr "도구 설명"
+
+#. Translators: Identifies a link in webpage documents.
+msgid "link"
+msgstr "링크"
+
+#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
+msgid "tree view"
+msgstr "트리뷰"
+
+#. Translators: Identifies a tree view item.
+msgid "tree view item"
+msgstr "트리뷰 항목"
+
+#. Translators: The word presented for tabs in a tab enabled window.
+msgctxt "controlType"
+msgid "tab"
+msgstr "탭"
+
+#. Translators: Identifies a tab control such as webpage tabs in web browsers.
+msgid "tab control"
+msgstr "탭 컨트롤"
+
+#. Translators: Identifies a slider such as volume slider.
+msgid "slider"
+msgstr "슬라이더"
+
+#. Translators: Identifies a progress bar such as NvDA update progress.
+msgid "progress bar"
+msgstr "진행률 막대"
+
+#. Translators: Identifies a scroll bar.
+msgid "scroll bar"
+msgstr "스크롤 막대"
+
+#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
+#. document).
+msgid "status bar"
+msgstr "상태 표시줄"
+
+#. Translators: Identifies a table such as ones used in various websites.
+msgid "table"
+msgstr "테이블"
+
+#. Translators: Identifies a cell in a table.
+msgid "cell"
+msgstr "셀"
+
+#. Translators: Identifies a column (a group of vertical cells in a table).
+msgid "column"
+msgstr "열"
+
+#. Translators: Identifies a row (a group of horizontal cells in a table).
+msgid "row"
+msgstr "행"
+
+#. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
+#. embedded within a web page.
+msgid "frame"
+msgstr "프레임"
+
+#. Translators: Identifies a tool bar.
+msgid "tool bar"
+msgstr "도구 모음"
+
+#. Translators: Identifies a column header in tables and spreadsheets.
+msgid "column header"
+msgstr "열 머리말"
+
+#. Translators: Identifies a row header in tables and spreadsheets.
+msgid "row header"
+msgstr "행 머리말"
+
+#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
+msgid "drop down button"
+msgstr "드롭다운 버튼"
+
+#. Translators: Identifies an element.
+msgid "clock"
+msgstr "시계"
+
+#. Translators: Identifies a separator (a horizontal line drawn on the screen).
+msgid "separator"
+msgstr "구분선"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "form"
+
+#. Translators: Identifies a heading (a bold text used for identifying a section).
+msgid "heading"
+msgstr "헤딩"
+
+#. Translators: Identifies a heading level.
+msgid "heading 1"
+msgstr "헤딩 레벨 1"
+
+#. Translators: Identifies a heading level.
+msgid "heading 2"
+msgstr "헤딩 레벨 2"
+
+#. Translators: Identifies a heading level.
+msgid "heading 3"
+msgstr "헤딩 레벨 3"
+
+#. Translators: Identifies a heading level.
+msgid "heading 4"
+msgstr "헤딩 레벨 4"
+
+#. Translators: Identifies a heading level.
+msgid "heading 5"
+msgstr "헤딩 레벨 5"
+
+#. Translators: Identifies a heading level.
+msgid "heading 6"
+msgstr "헤딩 레벨 6"
+
+#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
+msgid "paragraph"
+msgstr "문단"
+
+#. Translators: Presented for a section in a document which is a block quotation;
+#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+#. See http://en.wikipedia.org/wiki/Block_quotation
+msgid "block quote"
+msgstr "인용문"
+
+#. Translators: Identifies a table header (a short text at the start of a table which describes what the
+#. table is about).
+msgid "table header"
+msgstr "테이블 머리글"
+
+#. Translators: Identifies a table body (the main body of the table).
+msgid "table body"
+msgstr "테이블 본문"
+
+#. Translators: Identifies a table footer (text placed at the end of the table).
+msgid "table footer"
+msgstr "테이블 바닥글"
+
+#. Translators: Identifies a document (for example, a webpage document).
+msgid "document"
+msgstr "문서"
+
+#. Translators: Identifies an animation in a document or a webpage.
+msgid "animation"
+msgstr "애니메이션"
+
+#. Translators: Identifies an application in webpages.
+msgid "application"
+msgstr "응용프로그램"
+
+#. Translators: Identifies a box element.
+msgid "box"
+msgstr "박스"
+
+#. Translators: Identifies a grouping (a number of related items grouped together, such as related options
+#. in dialogs).
+msgid "grouping"
+msgstr "그룹"
+
+#. Translators: Identifies a property page such as drive properties dialog.
+msgid "property page"
+msgstr "속성 페이지"
+
+#. Translators: Identifies a canvas element on webpages (a box with some background color with some text
+#. drawn on the box, like a canvas).
+msgid "canvas"
+msgstr "캔버스"
+
+#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
+msgid "caption"
+msgstr "캡션"
+
+#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
+#. name).
+msgid "check menu item"
+msgstr "체크 메뉴 항목"
+
+#. Translators: Identifies a data edit field.
+msgid "date edit"
+msgstr "날짜 입력"
+
+#. Translators: Identifies an icon.
+msgid "icon"
+msgstr "아이콘"
+
+#. Translators: Identifies a directory pane.
+msgid "directory pane"
+msgstr "디렉토리 창"
+
+#. Translators: Identifies an object that is embedded in a document.
+msgid "embedded object"
+msgstr "임베디드 객체"
+
+#. Translators: Identifies an end note.
+msgid "end note"
+msgstr "미주"
+
+#. Translators: Identifies a footer (usually text).
+msgid "footer"
+msgstr "footer"
+
+#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+msgid "foot note"
+msgstr "각주"
+
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+msgid "glass pane"
+msgstr "최상위 창"
+
+#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
+msgid "header"
+msgstr "헤더"
+
+#. Translators: Identifies an image map (a type of graphical link).
+msgid "image map"
+msgstr "이미지 맵"
+
+#. Translators: Identifies an input window.
+msgid "input window"
+msgstr "입력창"
+
+#. Translators: Identifies a label.
+msgid "label"
+msgstr "레이블"
+
+#. Translators: Identifies a note field.
+msgid "note"
+msgstr "note"
+
+#. Translators: Identifies a page.
+msgid "page"
+msgstr "페이지"
+
+#. Translators: Identifies a radio menu item.
+msgid "radio menu item"
+msgstr "라디오 메뉴 항목"
+
+#. Translators: Identifies a layered pane.
+msgid "layered pane"
+msgstr "레이어드 창"
+
+#. Translators: Identifies a redundant object.
+msgid "redundant object"
+msgstr "불필요한 객체"
+
+#. Translators: Identifies a root pane.
+msgid "root pane"
+msgstr "루트 창"
+
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+msgid "edit bar"
+msgstr "편집 막대"
+
+#. Translators: Identifies a terminal window such as command prompt.
+msgid "terminal"
+msgstr "터미널"
+
+#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
+#. addition to text; encountered on webpages and NvDA log viewer).
+msgid "rich edit"
+msgstr "스타일 문서 편집"
+
+#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
+msgid "ruler"
+msgstr "눈금자"
+
+#. Translators: Identifies a scroll pane.
+msgid "scroll pane"
+msgstr "스크롤 창"
+
+#. Translators: Identifies a section of text.
+msgid "section"
+msgstr "섹션"
+
+#. Translators: Identifies a shape.
+msgid "shape"
+msgstr "도형"
+
+#. Translators: Identifies a split pane.
+msgid "split pane"
+msgstr "분할 창"
+
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+msgid "view port"
+msgstr "view port"
+
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+msgid "tear off menu"
+msgstr "분리 가능한 메뉴"
+
+#. Translators: Identifies a text frame (a frame window which contains text).
+msgid "text frame"
+msgstr "텍스트 프레임"
+
+#. Translators: Identifies a toggle button (a button used to toggle something).
+msgid "toggle button"
+msgstr "토글 버튼"
+
+msgid "border"
+msgstr "테두리"
+
+#. Translators: Identifies a caret object.
+msgid "caret"
+msgstr "캐럿"
+
+#. Translators: Identifies a character field (should not be confused with edit fields).
+msgid "character"
+msgstr "글자"
+
+#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
+msgid "chart"
+msgstr "차트"
+
+#. Translators: Identifies a cursor object.
+msgid "cursor"
+msgstr "커서"
+
+#. Translators: Identifies a diagram (seen on some websites and on Office documents).
+msgid "diagram"
+msgstr "다이어그램"
+
+#. Translators: Identifies a dial object.
+msgid "dial"
+msgstr "다이얼"
+
+#. Translators: Identifies a drop list.
+msgid "drop list"
+msgstr "펼침 목록"
+
+#. Translators: Identifies a split button (a control which performs different actions when different parts
+#. are clicked).
+msgid "split button"
+msgstr "분할 버튼"
+
+#. Translators: Identifies a menu button (a button which opens a menu of items).
+msgid "menu button"
+msgstr "메뉴 버튼"
+
+#. Translators: Reported for a button which expands a grid when it is pressed.
+msgid "drop down button grid"
+msgstr "펼침 버튼 그리드"
+
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr "수학"
+
+#. Translators: Identifies a grip control.
+msgid "grip"
+msgstr "grip"
+
+#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
+#. assigning shortcut for icons on the desktop).
+msgid "hot key field"
+msgstr "바로 가기 키 필드"
+
+#. Translators: Identifies an indicator control.
+msgid "indicator"
+msgstr "표시기"
+
+#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
+msgid "spin button"
+msgstr "스핀 버튼"
+
+#. Translators: Identifies a sound clip on websites.
+msgid "sound"
+msgstr "음향"
+
+#. Translators: Identifies a whitespace.
+msgid "white space"
+msgstr "공백"
+
+#. Translators: Identifies a tree view button.
+msgid "tree view button"
+msgstr "트리뷰 버튼"
+
+#. Translators: Identifies an IP address (an IP address field element).
+msgid "IP address"
+msgstr "IP 주소"
+
+#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts
+#. for programs).
+msgid "desktop icon"
+msgstr "바탕화면 아이콘"
+
+#. Translators: Identifies desktop pane (the desktop window).
+msgid "desktop pane"
+msgstr "바탕화면"
+
+#. Translators: Identifies an option pane.
+msgid "option pane"
+msgstr "옵션 창"
+
+#. Translators: Identifies a color chooser.
+msgid "color chooser"
+msgstr "색상 선택기"
+
+#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
+msgid "file chooser"
+msgstr "파일 선택기"
+
+msgid "filler"
+msgstr "파일 선택기"
+
+#. Translators: Identifies a panel control for grouping related options.
+msgid "panel"
+msgstr "패널"
+
+#. Translators: Identifies a password field (a protected edit field for entering passwords such as when
+#. logging into web-based email sites).
+msgid "password edit"
+msgstr "암호 편집창"
+
+#. Translators: Identifies a font chooser.
+msgid "font chooser"
+msgstr "폰트 선택기"
+
+msgid "line"
+msgstr "줄"
+
+#. Translators: Identifies a font name.
+msgid "font name"
+msgstr "글꼴 이름"
+
+#. Translators: Identifies font size.
+msgid "font size"
+msgstr "글꼴 크기"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is bolded.
+msgid "bold"
+msgstr "진하게"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "기울임꼴"
+
+#. Translators: Describes text formatting.
+msgid "underline"
+msgstr "밑줄"
+
+#. Translators: Describes text formatting.
+msgid "foreground color"
+msgstr "전경 색상"
+
+#. Translators: Describes text formatting.
+msgid "background color"
+msgstr "배경 색상"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for superscript text.
+msgid "superscript"
+msgstr "위 첨자"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for subscript text.
+msgid "subscript"
+msgstr "아래 첨자"
+
+#. Translators: Describes style of text.
+#. Translators: a Microsoft Word revision type (style change)
+msgid "style"
+msgstr "스타일"
+
+#. Translators: Describes text formatting.
+msgid "indent"
+msgstr "들여쓰기"
+
+#. Translators: Describes text formatting.
+msgid "alignment"
+msgstr "정렬"
+
+#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such
+#. as file downloads or pop-up blocker).
+msgid "alert"
+msgstr "알림"
+
+#. Translators: Identifies a data grid control (a grid which displays data).
+msgid "data grid"
+msgstr "데이터 그리드"
+
+msgid "data item"
+msgstr "데이터 항목"
+
+msgid "header item"
+msgstr "헤더 항목"
+
+#. Translators: Identifies a thumb control (a button-like control for changing options).
+msgid "thumb control"
+msgstr "엄지 컨트롤"
+
+msgid "calendar"
+msgstr "달력"
+
+msgid "video"
+msgstr "비디오"
+
+msgid "audio"
+msgstr "오디오"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "차트 요소"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "삭제됨"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "삽입됨"
+
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "랜드마크"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "article"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "영역"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "figure"
+
+#. Translators: Identifies marked (highlighted) content
+msgid "highlighted"
+msgstr "하이라이트"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not
+#. checked), but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "%s 해제"
+
+#. Translators: This is presented when a control or document is unavailable.
+msgid "unavailable"
+msgstr "사용불가"
+
+#. Translators: This is presented when a control has focus.
+msgid "focused"
+msgstr "포커스됨"
+
+#. Translators: This is presented when the control is selected.
+msgid "selected"
+msgstr "선택됨"
+
+#. Translators: This is presented when a document is busy.
+msgid "busy"
+msgstr "작업 중"
+
+#. Translators: This is presented when a button is pressed.
+msgid "pressed"
+msgstr "눌림"
+
+#. Translators: This is presented when a check box is checked.
+msgid "checked"
+msgstr "선택됨"
+
+#. Translators: This is presented when a three state check box is half checked.
+msgid "half checked"
+msgstr "일부 선택됨"
+
+#. Translators: This is presented when the control is a read-only control such as read-only edit box.
+msgid "read only"
+msgstr "읽기 전용"
+
+#. Translators: This is presented when a tree view or submenu item is expanded.
+msgid "expanded"
+msgstr "확장됨"
+
+#. Translators: This is presented when a tree view or submenu is collapsed.
+msgid "collapsed"
+msgstr "축소됨"
+
+#. Translators: This is presented when a control or a document becomes invisible.
+msgid "invisible"
+msgstr "보이지 않음"
+
+#. Translators: This is presented when a visited link is encountered.
+msgid "visited"
+msgstr "방문함"
+
+#. Translators: This is presented when a link is encountered.
+msgid "linked"
+msgstr "링크"
+
+#. Translators: This is presented when the control menu item has a submenu.
+msgid "subMenu"
+msgstr "하위 메뉴"
+
+#. Translators: This is presented when a protected control or a document is encountered.
+msgid "protected"
+msgstr "보호됨"
+
+#. Translators: This is presented when a required form field is encountered.
+msgid "required"
+msgstr "필요함"
+
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+msgid "defunct"
+msgstr "작동 안 함"
+
+#. Translators: This is presented when an invalid entry has been made.
+msgid "invalid entry"
+msgstr "입력 오류"
+
+msgid "modal"
+msgstr "팝업창"
+
+#. Translators: This is presented when a field supports auto completion of entered text such as email
+#. address field in Microsoft Outlook.
+msgid "has auto complete"
+msgstr "자동완성"
+
+#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment
+#. fields on websites.
+msgid "multi line"
+msgstr "멀티 라인"
+
+msgid "iconified"
+msgstr "최소화"
+
+#. Translators: Presented when the current control is located off screen.
+msgid "off screen"
+msgstr "화면 벗어남"
+
+#. Translators: Presented when the control allows selection such as text fields.
+msgid "selectable"
+msgstr "선택 가능"
+
+#. Translators: Presented when a control can be moved to using system focus.
+msgid "focusable"
+msgstr "포커스 가능"
+
+#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
+msgid "clickable"
+msgstr "클릭 가능"
+
+msgid "editable"
+msgstr "편집 가능"
+
+msgid "checkable"
+msgstr "체크 가능"
+
+msgid "draggable"
+msgstr "드레그 가능"
+
+msgid "dragging"
+msgstr "드래그 중"
+
+#. Translators: Reported where an object which is being dragged can be dropped.
+#. This is only reported for objects that support accessible drag and drop.
+msgid "drop target"
+msgstr "드래그 목적지"
+
+msgid "sorted"
+msgstr "정렬"
+
+msgid "sorted ascending"
+msgstr "오름차순 정렬"
+
+msgid "sorted descending"
+msgstr "내림차순 정렬"
+
+#. Translators: a state that denotes that an object (usually a graphic) has a long description.
+msgid "has long description"
+msgstr "상세 설명 있음"
+
+#. Translators: a state that denotes that an object has additional details (such as a comment section).
+msgid "has details"
+msgstr "상세정보 있음"
+
+#. Translators: a state that denotes that an object is pinned in its current location
+msgid "pinned"
+msgstr "고정됨"
+
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "수식 있음"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "메모 있음"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "가려짐"
+
+#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the
+#. allocated/available space
+msgid "cropped"
+msgstr "잘림"
+
+#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
+msgid "overflowing"
+msgstr "넘침"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
+#. Excel spreadsheet).
+msgid "unlocked"
+msgstr "잠금 해제"
+
+#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+msgid "not selected"
+msgstr "선택 안 됨"
+
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "눌리지 않음"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "해제됨"
+
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "드래그 마침"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "환경 적용됨"
@@ -7672,29 +7863,10 @@ msgstr "환경 저장됨"
 msgid "Could not save configuration - probably read only file system"
 msgstr "환경 파일 저장 실패 - 읽기 전용 파일 시스템일 수 있음"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-#. (example: when trying to open keyboard settings when general settings dialog is open).
-msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr ""
-"NVDA 설정 대화상자가 이미 열려 있습니다. 먼저 설정 대화상자를 닫아주십시오."
-
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr "본 시스템은 이 설정 패널에 나열된 옵션을 지원하지 않습니다."
-
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "기본 발음 사전 (&D)"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "(%s) 보이스 발음 사전"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "임시 발음 사전"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -7730,8 +7902,12 @@ msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr "COM registration을 복원하는 동안 잠시만 기다려 주십시오."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
-msgid "COM Registration Fixing tool complete"
-msgstr "COM Registration 재설정 도구를 마칩니다"
+msgid ""
+"The COM Registration Fixing tool has finished. It is highly recommended that "
+"you restart your computer now, to make sure the changes take full effect."
+msgstr ""
+"COM 등록정보 수정도구가 종료됐습니다. 변경 사항이 완전히 적용되도록 지금 컴퓨"
+"터를 다시 시작하세요."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -8862,7 +9038,7 @@ msgstr "NVDA 실행 시 설치 준비중인 업데이트 알림 (&P)"
 
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 msgid "Allow the NVDA project to gather NVDA usage statistics"
-msgstr "NVDA 프로잭트에 NVDA 사용 통계를 전송하도록 허용"
+msgstr "NVDA 프로젝트가 NVDA 사용 통계를 수집하도록 허용"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -9012,7 +9188,7 @@ msgstr "대문자 음높이 변경율"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "Say &cap before capitals"
-msgstr "대문자 앞에 Cap 붙여 읽기 (&C)"
+msgstr "대문자 앞에 \"대문자\" 붙여 읽기 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
@@ -9178,6 +9354,13 @@ msgstr "읽기 문자열 변환값 알림 (&R)"
 msgid "Report changes to the &composition string"
 msgstr "입력 문자 변환값 알림 (&C)"
 
+#. Translators: This is a label appearing on the Object Presentation settings panel.
+msgid ""
+"Configure how much information NVDA will present about controls. These "
+"options apply to focus reporting and NVDA object navigation, but not when "
+"reading text content e.g. web content with browse mode."
+msgstr ""
+
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "객체 표시 설정"
@@ -9312,6 +9495,8 @@ msgid "Automatically set system &focus to focusable elements"
 msgstr "자동으로 포커스 가능한 요소에 시스템 포커스 이동 (&F)"
 
 #. Translators: This is the label for the document formatting panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Document Formatting"
 msgstr "문서 서식 알림"
 
@@ -9353,8 +9538,8 @@ msgstr "강조 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Mar&ked (highlighted text)"
-msgstr "표시됨 (강조된 텍스트; &K)"
+msgid "Highlighted (mar&ked) text"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9539,11 +9724,11 @@ msgstr "터치 사용을 지원합니다"
 msgid "&Touch typing mode"
 msgstr "터치 타이핑 모드 (&T)"
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr "윈도우 10 OCR"
+#. Translators: The title of the Windows OCR panel.
+msgid "Windows OCR"
+msgstr "윈도우 OCR"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "문자 인식 언어 (&L)"
 
@@ -9613,7 +9798,7 @@ msgstr ""
 #. in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
-msgstr "기본값(필요시 사용)"
+msgstr "기본값 (필요시 사용)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
@@ -9632,6 +9817,21 @@ msgstr "아니요"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
+msgid "Annotations"
+msgstr "주석"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report details in browse mode"
+msgstr "브라우즈 모드에서 상세정보 알려주기"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report aria-description always"
+msgstr "언제나 aria-description 내용 알림"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Terminal programs"
 msgstr "명령줄 프로그램"
 
@@ -9645,25 +9845,25 @@ msgstr "윈도우즈 콘솔에서 가능한 경우 입력한 글자 지원 기�
 #. settings panel.
 #. Choices are automatic, allow Diff Match Patch, and force Difflib.
 msgid "&Diff algorithm:"
-msgstr ""
+msgstr "&Diff 알고리듬:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-msgid "Automatic (Difflib)"
-msgstr "자동(Difflib)"
+msgid "Automatic (Diff Match Patch)"
+msgstr "자동 (Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character when supported, using the diff match patch algorithm.
 msgid "allow Diff Match Patch"
-msgstr ""
+msgstr "Diff Match Patch 방식 사용"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 msgid "force Difflib"
-msgstr ""
+msgstr "언제나 Difflib 방식 사용"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -9694,6 +9894,11 @@ msgstr "문자 편집"
 msgid "Caret movement timeout (in ms)"
 msgstr "커서 이동 시간제한 (천분의 일초 단위)"
 
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Report transparent color values"
+msgstr "투명 색상 알림"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Debug logging"
@@ -9703,6 +9908,20 @@ msgstr "디버그 기록"
 #. Advanced settings panel
 msgid "Enabled logging categories"
 msgstr "활성화된 기록 유형"
+
+#. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+msgid "Play a sound for logged e&rrors:"
+msgstr "로그에 오류 기록 시 소리 재생 (&R)"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Only in NVDA test versions"
+msgstr "NVDA 테스트 버전에서만"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Yes"
+msgstr "예"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -9811,6 +10030,20 @@ msgstr "수정 (&E)"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "발음 사전 항목 추가"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "기본 발음 사전 (&D)"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "(%s) 보이스 발음 사전"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "임시 발음 사전"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -10351,15 +10584,15 @@ msgstr "표시되지 않음"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
-msgstr "strong"
+msgstr "중요 표시"
 
 #. Translators: Reported when text is no longer marked as strong (e.g. bold)
 msgid "not strong"
-msgstr "strong 없음"
+msgstr "중요 표시 없음"
 
 #. Translators: Reported when text is marked as emphasised
 msgid "emphasised"
-msgstr "강조됨"
+msgstr "강조"
 
 #. Translators: Reported when text is no longer marked as emphasised
 msgid "not emphasised"
@@ -10730,8 +10963,26 @@ msgstr "시스템 캐럿 위치의 주석을 알려줍니다."
 msgid "Not in table"
 msgstr "테이블 아님"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} in"
+msgstr "{val:.2f} 인치"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} cm"
+msgstr "{val:.2f} 센치미터"
+
 msgid "invoke"
 msgstr "적용"
+
+#. Translators: part of the suggestions count message for one suggestion.
+msgid "1 suggestion"
+msgstr "1개의 제안 항목"
+
+#. Translators: part of the suggestions count message (for example: 2 suggestions).
+msgid "{} suggestions"
+msgstr "{}개의 제안 항목"
 
 #. Translators: the description of a script
 msgctxt "excel-UIA"
@@ -10739,88 +10990,88 @@ msgid ""
 "Shows a browseable message Listing information about a cell's appearance "
 "such as outline and fill colors, rotation and size"
 msgstr ""
+"셀의 윤곽선, 배경색, 회전각도, 크기 등 셀의 겉모습에 대한 정보를 나열하여 브"
+"라우징할 수 있게 합니다"
 
 #. Translators: The width of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
-msgstr ""
+msgstr "셀 가로길이: {0.x:.1f} 포인트"
 
 #. Translators: The height of the cell in points
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
-msgstr ""
+msgstr "셀 세로길이: {0.y:.1f} 포인트"
 
 #. Translators: The rotation in degrees of an Excel cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degrees"
-msgstr ""
+msgstr "회전각도: {0}도"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid ""
 "Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
-msgstr ""
+msgstr "윤곽선 색: 위={0.name}, 아래={1.name}, 왼쪽={2.name}, 오른쪽={3.name}"
 
 #. Translators: The outline (border) thickness values of an Excel cell.
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
-msgstr ""
+msgstr "윤곽선 두께: 위={0}, 아래={1}, 왼쪽={2}, 오른쪽={3}"
 
 #. Translators: The fill color of an Excel cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill color: {0.name}"
-msgstr ""
+msgstr "배경색: {0.name}"
 
 #. Translators: The fill type (pattern, gradient etc) of an Excel Cell
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill type: {0}"
-msgstr ""
+msgstr "배경 유형: {0}"
 
 #. Translators: the number format of an Excel cell
 #, python-brace-format
 msgid "Number format: {0}"
-msgstr ""
+msgstr "숫자 형식: {0}"
 
 #. Translators: If an excel cell has data validation set
 msgid "Has data validation"
-msgstr ""
+msgstr "데이터 유효성 검사가 설정되어 있음"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
 #, python-brace-format
 msgid "Data validation prompt: {0}"
-msgstr ""
+msgstr "데이터 유효성 검사 프롬프트: {0}"
 
 #. Translators: If an excel cell has conditional formatting
-#, fuzzy
 msgid "Has conditional formatting"
-msgstr "문서 서식 알림"
+msgstr "조건부 서식이 설정되어 있음"
 
 #. Translators: If an excel cell has visible gridlines
-#, fuzzy
 msgid "Gridlines are visible"
-msgstr "보이지 않음"
+msgstr "가이드라인이 표시됨"
 
 #. Translators: Title for a browsable message that describes the appearance of a cell in Excel
 msgctxt "excel-UIA"
 msgid "Cell Appearance"
-msgstr ""
+msgstr "셀 형태"
 
 #. Translators:  an error message on a cell in Microsoft Excel.
 #, python-brace-format
 msgid "Error: {errorText}"
-msgstr ""
+msgstr "오류: {errorText}"
 
 #. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
 #, python-brace-format
 msgid "{author} is editing"
-msgstr ""
+msgstr "{author}님이 편집하는 중입니다"
 
 #. Translators: Excel, report range of cell coordinates
 #, python-brace-format
@@ -10829,9 +11080,8 @@ msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue}에서 {lastAddress} {lastValue}"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Reports the note or comment thread on the current cell"
-msgstr "현재 셀의 주석을 알려줍니다"
+msgstr "현재 셀에 메모 혹은 주석이 있는지 확인합니다"
 
 #. Translators: a comment on a cell in Microsoft excel.
 #, python-brace-format
@@ -10845,7 +11095,7 @@ msgstr "주석: {comment}; 저자: {author}; 답변수: {numReplies}"
 
 #. Translators: A message in Excel when there is no note
 msgid "No note or comment thread on this cell"
-msgstr ""
+msgstr "이 셀에는 메모 혹은 코멘트가 없습니다"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10881,6 +11131,10 @@ msgstr "주석: {comment}; 저자: {author}"
 #, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
 msgstr "주석: {comment}; 저자: {author}; 날짜: {date}"
+
+#. Translators: a message when navigating by sentence is unavailable in MS Word
+msgid "Navigating by sentence not supported in this document"
+msgstr "문장 단위로 이동 기능은 이 문서에서는 지원되지 않습니다."
 
 msgid "Desktop"
 msgstr "바탕 화면"
@@ -11271,7 +11525,7 @@ msgstr "보조 눈금선"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Pivot Chart Drop Zone"
-msgstr "Pivot Chart Drop Zone"
+msgstr "피벗 차트 끌어다 놓기"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Pivot Chart Field Button"
@@ -12240,6 +12494,22 @@ msgstr "두 줄 간격"
 msgid "1.5 line spacing"
 msgstr "1.5 줄 간격"
 
-#~ msgid "category"
-#~ msgid_plural "categories"
-#~ msgstr[0] "category"
+#~ msgid "mrkd"
+#~ msgstr "mrkd"
+
+#~ msgid "report marked on"
+#~ msgstr "표시된 내용 알림 활성화"
+
+#~ msgid "report marked off"
+#~ msgstr "표시된 내용 알림 비활성화"
+
+#~ msgid "marked content"
+#~ msgstr "표시된 내용"
+
+#~ msgid "An NVDA settings dialog is already open. Please close it first."
+#~ msgstr ""
+#~ "NVDA 설정 대화상자가 이미 열려 있습니다. 먼저 설정 대화상자를 닫아주십시"
+#~ "오."
+
+#~ msgid "Mar&ked (highlighted text)"
+#~ msgstr "표시됨 (강조된 텍스트; &K)"

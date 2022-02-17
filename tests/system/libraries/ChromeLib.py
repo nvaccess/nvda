@@ -116,7 +116,7 @@ class ChromeLib:
 		@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
 		@return: None
 		"""
-		for i in range(10):  # set a limit on the number of tries.
+		for i in range(3):  # set a limit on the number of tries.
 			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
 			spy.wait_for_speech_to_finish()
 			actualSpeech = spy.get_speech_at_index_until_now(lastSpeechIndex)
@@ -142,8 +142,8 @@ class ChromeLib:
 		"""
 		success, _success = _blockUntilConditionMet(
 			getValue=lambda: SetForegroundWindow(startsWithTestCaseTitle, builtIn.log),
-			giveUpAfterSeconds=3,
-			intervalBetweenSeconds=0.5
+			giveUpAfterSeconds=5,
+			intervalBetweenSeconds=0.2
 		)
 		if success:
 			return
@@ -192,17 +192,11 @@ class ChromeLib:
 		"""Ensure speech has stopped, press key, and get speech until it stops.
 		@return: The speech after key press.
 		"""
-		spy = _NvdaLib.getSpyLib()
-		spy.wait_for_speech_to_finish()
-		nextSpeechIndex = spy.get_next_speech_index()
-		spy.emulateKeyPress(key)
-		spy.wait_for_speech_to_finish(speechStartedIndex=nextSpeechIndex)
-		speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
-		return speech
+		return _NvdaLib.getSpeechAfterKey(key)
 
 	@staticmethod
 	def getSpeechAfterTab() -> str:
 		"""Ensure speech has stopped, press tab, and get speech until it stops.
 		@return: The speech after tab.
 		"""
-		return ChromeLib.getSpeechAfterKey('tab')
+		return _NvdaLib.getSpeechAfterKey('tab')

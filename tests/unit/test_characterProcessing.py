@@ -9,7 +9,7 @@
 import unittest
 import re
 from characterProcessing import SpeechSymbolProcessor
-from characterProcessing import SYMLVL_ALL
+from characterProcessing import SymbolLevel
 from characterProcessing import processSpeechSymbols as process
 
 
@@ -124,7 +124,7 @@ class TestComplex(unittest.TestCase):
 	def test_engine(self):
 		"""Test inclusion of group replacement in engine
 		"""
-		replaced = process("fr_FR", "Le 03.04.05.", SYMLVL_ALL)
+		replaced = process("fr_FR", "Le 03.04.05.", SymbolLevel.ALL)
 		self.assertEqual(replaced, "Le  03 point 04 point 05  point.")
-		replaced = process("fr_FR", "Le 03/04/05.", SYMLVL_ALL)
+		replaced = process("fr_FR", "Le 03/04/05.", SymbolLevel.ALL)
 		self.assertEqual(replaced, "Le  03 barre oblique 04 barre oblique 05  point.")

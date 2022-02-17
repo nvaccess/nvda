@@ -5,6 +5,13 @@
 
 complexSymbols:
 # identifier	regexp
+# Sentence endings
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal comma	(?<![^\d -])\,(?=\d)
 negative number	(?<!\w)[-−]{1}(?=[$£€¥,]?\d)
@@ -12,6 +19,10 @@ percent	(?<=\d)\ ?\%(?!\w)
 dates	(((0?[1-9]|[12]\d|3[01])[\.](0?[13578]|1[02])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.](0?[13456789]|1[012])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.]0?2[\.]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.]0?2[\.]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))
 euro	^(0|(([1-9]{1}|[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{2}){1}(\ [0-9]{3}){0,})),(([0-9]{2})|\-\-)([\ ]{1})(€){1}$
 thousand separators	(^(((\d)|(\d\d)|(\d\d\d))(\xA0|\x20))*((\d)|(\d\d)|(\d\d\d))([,.]\d*)?$)
+between-words -	(?<=\s)[-](?=\s)
+degrees	(?<=\d)°(?!\w)
+degrees-celsius	(?<=\d)°C(?!\w)
+degrees-fahrenheit	(?<=\d)°F(?!\w)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -24,6 +35,7 @@ symbols:
 … sentence ending	piste piste piste	all	always
 ; phrase ending	puolipiste	most	always
 : phrase ending	kaksoispiste	most	always
+
 decimal comma		none	always
 in-word '	heitto	all	norep
 negative number	miinus	none	norep
@@ -31,6 +43,10 @@ percent	prosenttia	none	norep
 dates	 	all	always
 euro	euroa	all	norep
 thousand separators	 	all	always
+between-words -	viiva	all	norep
+degrees	astetta	none	norep
+degrees-celsius	astetta selsiusta	none	norep
+degrees-fahrenheit	astetta faarenhaittia	none	norep
 
 # Whitespace
 \0	tyhjä	char	# nollamerkki
@@ -121,10 +137,10 @@ _	alaviiva	most
 ♣	musta risti	some
 ♦	musta ruutu	some
 ◆	musta timantti	some
-§	pykälä	all
+§	pykälä	some
 °	aste	some
-«	vasen kulmalainaus	none
-»	oikea kulmalainaus	none
+«	vasen kulmalainaus	most
+»	oikea kulmalainaus	most
 µ	mikro	some
 ⁰	yläindeksi 0	some
 ¹	yläindeksi 1	some
@@ -281,7 +297,7 @@ _	alaviiva	most
 ⊥	ylös osoittava nupi	none
 ⟂	kohtisuora	none
 ‖	vektorin normi	none
-	normalisoi	none
+̂	normalisoi	none
 ∿	siniaalto	none
 ∡	mitattu kulma	none
 ∢	kaarellinen kulma	none

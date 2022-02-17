@@ -1,9 +1,8 @@
-#coding=UTF-8
-#appModules/_default.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2021 NV Access Limited, Mesar Hameed, Peter Vágner
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import config
 import winUser
@@ -14,6 +13,8 @@ import textInfos
 import appModuleHandler
 import speech
 import cursorManager
+from comtypes import COMError
+
 
 lastMSNHistoryValue=None
 possibleHistoryWindowNames=frozenset([
@@ -38,11 +39,11 @@ u'المحفوظات',
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
+		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.Role.EDITABLETEXT and obj.name in possibleHistoryWindowNames:
 			from NVDAObjects.window import DisplayModelEditableText 
 			clsList.remove(DisplayModelEditableText)
 			clsList.insert(0, OldMSNHistory)
-		elif obj.windowClassName==u'WLXDUI' and obj.role==controlTypes.ROLE_ALERT and obj.IAccessibleStates&oleacc.STATE_SYSTEM_ALERT_MEDIUM:
+		elif obj.windowClassName==u'WLXDUI' and obj.role==controlTypes.Role.ALERT and obj.IAccessibleStates&oleacc.STATE_SYSTEM_ALERT_MEDIUM:
 			clsList.insert(0, MSNHistory)
 
 class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):

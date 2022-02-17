@@ -273,6 +273,15 @@ bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 	return (IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
 }
 
+std::optional<wstring> getAccDescription(IAccessible2* pacc, VARIANT childID) {
+	std::optional<wstring> desc;
+	CComBSTR rawDesc;
+	if (S_OK == pacc->get_accDescription(childID, &rawDesc)) {
+		desc = rawDesc;
+	}
+	return desc;
+}
+
 /**
  * Get the selected item or the first item if no item is selected.
  */
@@ -532,12 +541,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	if(pacc->get_accName(varChild,&name)!=S_OK)
 		name=NULL;
 
-	wstring description;
-	BSTR rawDesc=NULL;
-	if(pacc->get_accDescription(varChild,&rawDesc)==S_OK) {
-		description=rawDesc;
-		parentNode->addAttribute(L"description",description);
-		SysFreeString(rawDesc);
+	std::optional<wstring> description{ getAccDescription(pacc, varChild) };
+	if (description.has_value()) {
+		parentNode->addAttribute(L"description", description.value());
 	}
 
 	wstring locale;
@@ -793,15 +799,26 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				// Maintain curNodePaccTable2 for child rendering until any table cells are found.
 				paccTable2 = curNodePaccTable2;
 			}
-			// Add the table summary if one is present and the table is visible.
-			if (isVisible &&
-				(!description.empty() && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, description))) ||
-				// If there is no caption, the summary (if any) is the name.
-				// There is no caption if the label isn't visible.
-				(name && !labelVisible && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
-			) {
-				if(!locale.empty()) tempNode->addAttribute(L"language",locale);
-				previousNode = tempNode;
+
+			
+			{ // Add the table summary if one is present and the table is visible.
+				VBufStorage_fieldNode_t* summaryTempNode = nullptr;
+				if (isVisible && description.has_value()) {
+					tempNode = summaryTempNode = buffer->addTextFieldNode(parentNode, previousNode, description.value());
+				}
+				else if (
+						// If there is no caption, the summary (if any) is the name.
+						// There is no caption if the label isn't visible.
+						name && !labelVisible
+					) {
+					tempNode = summaryTempNode = buffer->addTextFieldNode(parentNode, previousNode, name);
+				}
+				if (summaryTempNode != nullptr) {
+					if (!locale.empty()) {
+						summaryTempNode->addAttribute(L"language", locale);
+					}
+					previousNode = summaryTempNode;
+				}
 			}
 		}
 	}
@@ -933,25 +950,47 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 
 		} else if (renderChildren && childCount > 0) {
 			// The object has no text, but we do want to render its children.
-			VARIANT* varChildren;
-			if(!(varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))) {
-				LOG_DEBUG(L"Error allocating varChildren memory");
-				return NULL;
+			auto [varChildren, accChildRes] = getAccessibleChildren(pacc, 0, childCount);
+			if (S_OK != accChildRes || varChildren.size() == 0) {
+				std::wstringstream msg;
+				msg << L"AccessibleChildren failed (count: " << childCount << L"), res: " << accChildRes;
+				switch (accChildRes) {
+				case E_NOINTERFACE:
+					msg << L" (E_NOINTERFACE, No such interface supported)";
+					LOG_ERROR(msg.str());  // Indicates a bug in the IA2 provider.
+					break;
+				case RPC_E_DISCONNECTED:
+					msg << L" (RPC_E_DISCONNECTED, object invoked has disconnected from its clients.)";
+					// RPC_E_DISCONNECTED indicates that the parent died since the query to accChildCount.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
+					break;
+				case CO_E_OBJNOTCONNECTED:
+					msg << L" (CO_E_OBJNOTCONNECTED, Object is not connected to server)";
+					LOG_DEBUG(msg.str());
+					break;
+				case S_FALSE:  // Success, but unexpeced number of children were returned.
+					msg << L" (S_FALSE, expected childcount, got "
+						<< varChildren.size()
+						<< L". Children may have been removed from document.)";
+					// Returning no children indicates that all children died since the call to accChildCount.
+					// Even if the children had been rendered, they were removed immediately thereafter.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
+					break;
+				default:
+					// Other unknown failures, log at error.
+					LOG_ERROR(msg.str());
+				}
 			}
-			long accessibleChildrenCount = 0;
-			if(AccessibleChildren(pacc,0,childCount,varChildren,&accessibleChildrenCount)!=S_OK) {
-				LOG_DEBUG(L"AccessibleChildren failed");
-				accessibleChildrenCount=0;
-			}
-			for(long i=0;i<accessibleChildrenCount;++i) {
-				if (varChildren[i].vt != VT_DISPATCH) {
-					VariantClear(&(varChildren[i]));
+			LOG_DEBUG(L"got " << varChildren.size() << L" children");
+
+			for(CComVariant& child : varChildren) {
+				if (child.vt != VT_DISPATCH || !child.pdispVal) {
+					child.Clear();
 					continue;
 				}
-				IAccessible2* childPacc=NULL;
-				if(varChildren[i].pdispVal) varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
+				CComQIPtr< IAccessible2, &IID_IAccessible2> childPacc(child.pdispVal);
 				if (!childPacc) {
-					VariantClear(&(varChildren[i]));
+					child.Clear();
 					continue;
 				}
 				tempNode = this->fillVBuf(
@@ -969,11 +1008,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				}
 				else
 					LOG_DEBUG(L"Error in calling fillVBuf");
-				childPacc->Release();
-				VariantClear(&(varChildren[i]));
+				child.Clear();
 			}
-			free(varChildren);
-
 		} else if (renderSelectedItemOnly) {
 			CComPtr<IAccessible2> item = this->getSelectedItem(pacc, IA2AttribsMap);
 			if (item) {
@@ -1099,27 +1135,21 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
+	//If the description matches the content, notify NVDA to prevent duplicate reporting
+	const bool descriptionIsContent = (
+		description.has_value()
+		&& nodeContentMatchesString(parentNode, description.value())
+	);
+	if (descriptionIsContent){
+		parentNode->addAttribute(L"descriptionIsContent", L"true");
+	}
+
 
 	/* Set the details summary by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
 	of the nodes in the relationship will not be in the buffer yet */
 	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
 	if (detailsId) {
-		auto detailsControlFieldNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
-		if (detailsControlFieldNode) {
-			std::wstring detailsSummary = L"";
-			detailsControlFieldNode->getTextInRange(0, detailsControlFieldNode->getLength(), detailsSummary, false);
-			parentNode->addAttribute(L"detailsSummary", detailsSummary);
-		}
-	}
-
-	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
-	if (detailsForId) {
-		auto detailsControlFieldNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
-		if (detailsControlFieldNode) {
-			std::wstring detailsSummary = L"";
-			parentNode->getTextInRange(0, parentNode->getLength(), detailsSummary, false);
-			detailsControlFieldNode->addAttribute(L"detailsSummary", detailsSummary);
-		}
+		parentNode->addAttribute(L"hasDetails", L"true");
 	}
 
 	// Clean up.

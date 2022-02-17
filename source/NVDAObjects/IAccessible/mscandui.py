@@ -27,7 +27,7 @@ def reportSelectedCandidate(candidateObject,allowDuplicate=False,newList=False):
 
 class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 
-	role=controlTypes.ROLE_LISTITEM
+	role=controlTypes.Role.LISTITEM
 	keyboardShortcut=""
 
 	def _get_candidateNumber(self):
@@ -64,23 +64,23 @@ class MSCandUI_candidateListItem(BaseCandidateItem):
 
 	def _get_states(self):
 		states=super(MSCandUI_candidateListItem,self).states
-		states.add(controlTypes.STATE_SELECTABLE)
+		states.add(controlTypes.State.SELECTABLE)
 		return states
 
 	def event_stateChange(self):
-		if controlTypes.STATE_SELECTED in self.states:
+		if controlTypes.State.SELECTED in self.states:
 			reportSelectedCandidate(self)
 
 class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 
 	def _get_previous(self):
 		item=super(MSCandUI21_candidateMenuItem,self).previous
-		if not item or controlTypes.STATE_INVISIBLE in item.states: return
+		if not item or controlTypes.State.INVISIBLE in item.states: return
 		return MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
 
 	def _get_next(self):
 		item=super(MSCandUI21_candidateMenuItem,self).next
-		if not item or controlTypes.STATE_INVISIBLE in item.states: return
+		if not item or controlTypes.State.INVISIBLE in item.states: return
 		return MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
 
 	def doAction(self,index=None):
@@ -91,9 +91,7 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 				y=l[1]
 				oldX,oldY=winUser.getCursorPos()
 				winUser.setCursorPos(x,y)
-				mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-				time.sleep(0.2)
-				mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+				mouseHandler.doPrimaryClick(releaseDelay=0.2)
 				winUser.setCursorPos(oldX,oldY)
 				return
 		raise NotImplementedError
@@ -152,16 +150,16 @@ class MSCandUI21(IAccessible):
 		candidateList=self.simpleFirstChild
 		if not candidateList: return
 		role=candidateList.role
-		if role==controlTypes.ROLE_LIST:
+		if role==controlTypes.Role.LIST:
 			item=candidateList.firstChild
-			while item and controlTypes.STATE_SELECTED not in item.states:
+			while item and controlTypes.State.SELECTED not in item.states:
 				item=item.next
 			if item:
 				reportSelectedCandidate(item)
 				return
 			elif config.conf["reviewCursor"]["followFocus"]:
 				api.setNavigatorObject(candidateList, isFocus=True)
-		elif role==controlTypes.ROLE_MENUBUTTON:
+		elif role==controlTypes.Role.MENUBUTTON:
 			item=candidateList.firstChild.next.next
 			item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
 			if item and isinstance(item.candidateNumber,int) and item.name:
@@ -201,11 +199,11 @@ class MSCandUIWindow(IAccessible):
 
 	# Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 	name=_("Candidate")
-	role=controlTypes.ROLE_LIST
+	role=controlTypes.Role.LIST
 
 	def _get_states(self):
 		states=super(MSCandUIWindow,self).states
-		states.discard(controlTypes.STATE_UNAVAILABLE)
+		states.discard(controlTypes.State.UNAVAILABLE)
 		return states
 
 	def event_show(self):
@@ -231,7 +229,7 @@ class ModernCandidateUICandidateItem(BaseCandidateItem):
 		textList=[]
 		candidateItems = super(ModernCandidateUICandidateItem,self).parent.children
 		for child in candidateItems:
-			if not isinstance(child,ModernCandidateUICandidateItem) or controlTypes.STATE_SELECTABLE not in child.states:
+			if not isinstance(child,ModernCandidateUICandidateItem) or controlTypes.State.SELECTABLE not in child.states:
 				continue
 			textList.append(child.candidateCharacters)
 		if not len(textList)<=1:
@@ -253,7 +251,7 @@ class ModernCandidateUICandidateItem(BaseCandidateItem):
 		return self._visibleCandidateItemsText
 
 	def event_stateChange(self):
-		if controlTypes.STATE_SELECTED in self.states:
+		if controlTypes.State.SELECTED in self.states:
 			reportSelectedCandidate(self)
 
 def findExtraOverlayClasses(obj,clsList):
@@ -262,8 +260,8 @@ def findExtraOverlayClasses(obj,clsList):
 	if (
 		windowClassName=="Microsoft.IME.CandidateWindow.View"
 		and (
-			obj.role==controlTypes.ROLE_BUTTON
-			or obj.role==controlTypes.ROLE_LISTITEM
+			obj.role==controlTypes.Role.BUTTON
+			or obj.role==controlTypes.Role.LISTITEM
 	)):
 			clsList.append(ModernCandidateUICandidateItem)
 	elif windowClassName=="MSCandUIWindow_Candidate":

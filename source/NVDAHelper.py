@@ -28,8 +28,6 @@ import queueHandler
 import api
 import globalVars
 from logHandler import log
-import time
-import globalVars
 
 versionedLibPath = os.path.join(globalVars.appDir, 'lib')
 if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
@@ -218,7 +216,7 @@ def handleInputCompositionEnd(result):
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
 	if result:
-		speech.speakText(result,symbolLevel=characterProcessing.SYMLVL_ALL)
+		speech.speakText(result, symbolLevel=characterProcessing.SymbolLevel.ALL)
 
 def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,isReading):
 	import speech
@@ -459,6 +457,14 @@ def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
 	wx.CallAfter(addonGui.handleRemoteAddonInstall, addonPath)
 	return 0
 
+
+@WINFUNCTYPE(c_long)
+def nvdaControllerInternal_openConfigDirectory():
+	import systemUtils
+	systemUtils.openUserConfigurationDirectory()
+	return 0
+
+
 class RemoteLoader64(object):
 
 	def __init__(self):
@@ -528,6 +534,7 @@ def initialize():
 		("nvdaControllerInternal_vbufChangeNotify",nvdaControllerInternal_vbufChangeNotify),
 		("nvdaControllerInternal_installAddonPackageFromPath",nvdaControllerInternal_installAddonPackageFromPath),
 		("nvdaControllerInternal_drawFocusRectNotify",nvdaControllerInternal_drawFocusRectNotify),
+		("nvdaControllerInternal_openConfigDirectory", nvdaControllerInternal_openConfigDirectory),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)
@@ -552,7 +559,7 @@ def initialize():
 		0,
 		# Using an altered search path is necessary here
 		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
-		# such as minhook.dll.
+		# such as IAccessible2proxy.dll.
 		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
 	)
 	if not h:

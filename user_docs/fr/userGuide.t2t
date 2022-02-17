@@ -66,7 +66,7 @@ Pour plus de détails, vous pouvez [lire l'intégralité de la licence. https://
 Pour les détails concernant les exceptions, veuillez consulter le document de licence depuis le menu NVDA dans la section "Aide".
 
 + Configuration Système Requise +[SystemRequirements]
-- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows 7, Windows 8, Windows 8.1 et Windows 10 (y compris les versions serveur).
+- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows 7, Windows 8, Windows 8.1, Windows 10 et Windows 11 (y compris les versions serveur).
  - Pour Windows 7, NVDA requiert le Service Pack 1 ou au-delà.
  - Pour Windows Server 2008 R2, NVDA requiert le Service Pack 1 ou au-delà.
 - Au moins 150 MO d'espace mémoire.
@@ -174,7 +174,7 @@ La deuxième spécifie si NVDA doit démarrer à l'ouverture de votre session et
 La troisième permet d'indiquer si ce dialogue d'accueil doit apparaître à chaque démarrage.
 
 +++ Dialogue de statistiques d'utilisation des données +++[UsageStatsDialog]
-Depuis NVDA 2018.3, il est demandé à l'utilisateur s'il veut autoriser l'envoi de données d'utilisation à NV Access dans le but d'aider à l'amélioration de NVDA dans le futur. 
+Depuis NVDA 2018.3, il est demandé à l'utilisateur s'il veut autoriser l'envoi de données d'utilisation à NV Access afin d'aider à l'amélioration de NVDA à l'avenir. 
 Au premier démarrage de NVDA, un dialogue vous demandant si vous désirer envoyer des données à NV Access durant l'utilisation de NVDA apparaîtra.
 Vous pouvez obtenir plus d'informations concernant les données rassemblées par NV Access dans la section paramètres généraux, [Autoriser le projet NVDA à recueillir des statistiques d'utilisation #GeneralSettingsGatherUsageStats].
 Note : l'appui sur "oui" ou "non" sauvegardera ce choix et ce dialogue n'apparaîtra plus à moins que vous réinstalliez NVDA.
@@ -315,7 +315,7 @@ Quelques touches de commandes utiles pour naviguer avec le focus :
 | Annonce du focus courant | NVDA+tab | NVDA+tab | Annonce l'objet en cours ou le contrôle qui a le focus système. Un double appui épelle l'information |
 | Annonce du titre | NVDA+t | NVDA+t | Annonce le titre de la fenêtre active. Un double appui épelle l'information, un triple appui la copie dans le presse-papiers |
 | Lecture de la fenêtre active | NVDA+b | NVDA+b | lit tous les contrôles de la fenêtre active (utile pour les dialogues) |
-| Annonce de la barre d'état | NVDA+fin | NVDA+maj+fin | Lit la barre d'état si NVDA en trouve une. Déplace aussi l'objet navigateur à la barre d'état. Un double appui épelle l'information. Un triple appui la copie dans le presse-papiers |
+| Annonce de la barre d'état | NVDA+fin | NVDA+maj+fin | Lit la barre d'état si NVDA en trouve une. Un double appui épelle l'information. Un triple appui la copie dans le presse-papiers |
 %kc:endInclude
 
 ++ Naviguer avec le Curseur Système ++[SystemCaret]
@@ -381,6 +381,7 @@ Pour naviguer par objet, utilisez les commandes suivantes :
 | Activer l'objet navigateur courant | NVDA+pavnumEntrer | NVDA+entrer | Double tape | Active l'objet navigateur courant (similaire à un clic de souris ou à appuyer la barre d'espace quand l'objet a le focus système) |
 | Amener le focus système à l'objet navigateur courant | NVDA+maj+pavnumMoins | NVDA+maj+retour arrière | Aucun | Amène le focus système à l'objet navigateur courant si c'est possible |
 | Annoncer la position du curseur de revue | NVDA+pavnumEffacement | NVDA+effacement | Aucun | Annonce la position du texte ou de l'objet sous le curseur de revue. Cela peut inclure, par exemple, le pourcentage dans le document, la distance au bord de la page ou la position exacte sur l'écran. Un double appui annonce éventuellement des informations supplémentaires. |
+| Amener le curseur de revue à la barre d'état | aucun | aucun | aucun | Annonce la barre d'état si NVDA en trouve une. Amène également l'objet navigateur à sa position. |
 %kc:endInclude
 
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
@@ -451,7 +452,7 @@ Le mode revue de document vous permet de relire le contenu du document en entier
 En passant du mode revue d'objet au mode revue de document, le curseur de revue se place là où se trouve le navigateur d'objet.
 En bougeant le curseur de revue, le navigateur d'objet est déplacé à la même position que le curseur de revue.
 
-Notez que NVDA basculera automatiquement au mode revue de document depuis le mode revue objet en bougeant dans le document en mode navigation.
+Notez que NVDA basculera automatiquement au mode revue de document depuis le mode revue d'objet lors d'un déplacement dans le document en mode navigation.
 
 +++ Revue de l'Écran +++[ScreenReview]
 Le mode revue de l'écran vous permet de lire le texte visible tel qu'il apparaît à l'écran dans l'application courante.
@@ -555,7 +556,7 @@ Les touches suivantes permettent d'aller à l'élément suivant. En les combinan
 - d : région
 - o : objet embarqué (lecteur audio et vidéo, application, dialogue etc.)
 - 1 ... 6 : Titres 1 ... 6.
-- a: annotation (commentaire, révision de l'éditeur, etc.)
+- a: annotation (commentaire, modification de l'éditeur, etc.)
 - w: fautes d'orthographe
 -
 Pour se déplacer au début ou à la fin des éléments contenants comme les listes et tableaux :
@@ -793,11 +794,15 @@ Pour cette situation, NVDA contient une fonctionnalité appelée "Rideau d'Écra
 
 Vous pouvez activer le Rideau d'Écran dans la [catégorie vision #VisionSettings] du dialogue [Paramètres NVDA Settings #NVDASettings].
 
-Quand le rideau d'écran est activé, certaines tâches directement liées à ce qui apparaît sur l'écran telles que [la reconnaissance optique de caractères #Win10Ocr] ou la prise d'une copie d'écran ne peuvent pas être effectuées.
+Quand le Rideau d'Écran est activé, certaines tâches directement liées à ce qui apparaît sur l'écran telles que [la reconnaissance optique de caractères #Win10Ocr] ou la prise d'une copie d'écran ne peuvent pas être effectuées.
+
+En raison d'un changement dans l'API de grossissement de Windows, le Rideau d'Écran a dû être mis à jour pour prendre en charge les dernières versions de Windows.
+Utilisez NVDA 2021.2 pour activer le Rideau d'Écran avec Windows 10 21H2 (10.0.19044) ou une version ultérieure.
+Pour des raisons de sécurité, lorsque vous utilisez une nouvelle version de Windows, obtenez une confirmation visuelle que le rideau d'écran rend l'écran entièrement noir.
 
 + Reconnaissance de Contenu +[ContentRecognition]
 Quand les auteurs ne fournissent pas assez d'informations pour qu'un utilisateur de revue d'écran puisse déterminer le contenu de quelque chose, divers outils peuvent être utilisés pour tenter de reconnaître le contenu à partir d'une image.
-NVDA supporte la fonctionnalité de reconnaissance optique de caractères (OCR) disponible sous Windows 10 pour reconnaître le texte dans les images.
+NVDA supporte la fonctionnalité de reconnaissance optique de caractères (OCR) disponible sous Windows 10 et versions ultérieures pour reconnaître le texte dans les images.
 Des outils de reconnaissance de contenu additionnels peuvent être fournis dans des extensions de NVDA.
 
 Quand vous utilisez une commande de reconnaissance de contenu, NVDA reconnaît le contenu de [l'objet navigateur courant #ObjectNavigation].
@@ -809,17 +814,17 @@ Une fois la reconnaissance terminée, le résultat sera présenté dans un docum
 L'appui sur la touche Entrée ou Espace activera (clic normal) le texte sous le curseur si possible.
 L'appui sur échap quitte et efface le résultat de reconnaissance.
 
-++ Reconnaissance Optique de Caractères de Windows 10 ++[Win10Ocr]
-Windows 10 inclut la reconnaissance optique de caractères pour beaucoup de langues.
+++ Reconnaissance Optique de Caractères de Windows ++[Win10Ocr]
+Windows 10 et les versions ultérieures incluent la reconnaissance optique de caractères pour beaucoup de langues.
 NVDA peut l'utiliser pour extraire le texte d'images ou d'applications inaccessibles.
 
-Vous pouvez définir la langue à utiliser pour la reconnaissance de texte dans la catégorie [Reconnaissance Optique De Caractères de Windows 10 #Win10OcrSettings] du dialogue [Paramètres #NVDASettings].
+Vous pouvez définir la langue à utiliser pour la reconnaissance de texte dans la catégorie [Reconnaissance Optique De Caractères de Windows #Win10OcrSettings] du dialogue [Paramètres #NVDASettings].
 Des langues additionnelles peuvent être installées en ouvrant le menu Démarrer, choisir Paramètres, Sélectionner Heure et Langue -> Région & Langue puis choisir Ajouter une langue.
 
-La reconnaissance optique de caractères de Windows 10 peut être partiellement ou totalement incompatible avec [les améliorations visuelles de NVDA #Vision] ou autres aides visuelles externes. Vous devrez désactiver ces aides avant de procéder à une reconnaissance.
+La reconnaissance optique de caractères de Windows peut être partiellement ou totalement incompatible avec [les améliorations visuelles de NVDA #Vision] ou autres aides visuelles externes. Vous devrez désactiver ces aides avant de procéder à une reconnaissance.
 
 %kc:beginInclude
-Pour reconnaître le texte dans l'objet navigateur courant en utilisant la reconnaissance optique de caractères de Windows 10, pressez NVDA+r.
+Pour reconnaître le texte dans l'objet navigateur courant en utilisant la reconnaissance optique de caractères de Windows, pressez NVDA+r.
 %kc:endInclude
 
 + Fonctionnalités Spécifiques à Certaines Applications +[ApplicationSpecificFeatures]
@@ -1397,6 +1402,10 @@ Cette option ne sera pas disponible si votre afficheur braille supporte seulemen
 
 Vous devrez consulter la documentation de votre afficheur braille dans la section [Afficheurs braille supportés #SupportedbrailleDisplays] pour plus de détails sur les types de communications supportés et les ports disponibles.
 
+Note : Si vous connectez plusieurs Afficheurs Braille utilisant le même pilote en même temps à votre machine  (Ex. connexion de deux afficheurs Seika),
+il est actuellement impossible de dire à NVDA quel afficheur utiliser.
+Par conséquent, il est recommandé de ne connecter qu'un seul afficheur braille d'un type/fabricant donné à votre machine à la fois.
+ 
 +++ Vision +++[VisionSettings]
 La catégorie Vision du dialogue des paramètres NVDA vous permet d'activer, désactiver et configurer les [aides visuelles #Vision].
 
@@ -1571,7 +1580,8 @@ Pour activer ou désactiver le mode de revue simple depuis n'importe où, veuill
 
 +++ Présentation des Objets (NVDA+contrôle+o) +++[ObjectPresentationSettings]
 La catégorie Présentation des Objets du dialogue Paramètres de NVDA sert à définir la quantité d'informations annoncées par NVDA pour les contrôles tels que leur description, leur position etc.
-Elle contient les options suivantes :
+Ces options ne s'appliquent généralement pas au mode navigation.
+Elles s'appliquent généralement aux annonces de focus et à la navigation par objets de NVDA, mais pas à la lecture de contenu textuel, par ex. mode navigation.
 
 ==== Annoncer les suggestions ====[ObjectPresentationReportToolTips]
 Quand cette case est cochée, NVDA annonce les suggestions à leur apparition. 
@@ -1736,12 +1746,12 @@ On peut configurer les annonces suivantes :
  - Attributs de la police,
  - Exposants et indices
  - Emphase
- - Marqué (texte surligné)
+ - Texte surligné (marqué)
  - Style
  - Couleurs
 - Informations sur le document
  - Commentaires
- - Révisions de l'éditeur
+ - Modifications de l'éditeur
  - Fautes d'orthographe
 - Pages et espacement
  - Numéros de page
@@ -1789,8 +1799,8 @@ La hauteur du son montera pour chaque espace, et pour une tabulation, la hauteur
 - Parole et sons : Cette option indique les retraits en utilisant les deux méthodes ci-dessus.
 -
 
-+++ Reconnaissance Optique de Caractères de Windows 10 +++[Win10OcrSettings]
-Les paramètres de cette catégorie vous permettent de configurer la [Reconnaissance de Caractères de Windows 10 #Win10Ocr].
++++ Reconnaissance Optique de Caractères de Windows +++[Win10OcrSettings]
+Les paramètres de cette catégorie vous permettent de configurer la [Reconnaissance de Caractères de Windows #Win10Ocr].
 Elle contient les options suivantes :
 
 ==== Langue de Reconnaissance ====[Win10OcrSettingsRecognitionLanguage]
@@ -1827,11 +1837,11 @@ En revanche, quand cette option est activée, NVDA limitera l'enregistrement des
 Si vous rencontrez des problèmes de performances dans une ou plusieurs applications, nous vous recommandons d'essayer cette fonctionnalité pour voir si les performances s'améliorent.
 
 ==== Utiliser UI automation pour accéder aux contrôles des documents Microsoft Word quand disponible ====[AdvancedSettingsUseUiaForWord]
-Quand cette option est activée, NVDA essaie d'utiliser l'API d'accessibilité Microsoft UI Automation pour récupérer les informations des contrôles de documents Microsoft Word.
+Quand cette option est activée, NVDA essaiera d'utiliser l'API d'accessibilité Microsoft UI Automation afin de récupérer les informations des contrôles de document Microsoft Word.
 Ceci inclut Microsoft Word lui-même, et aussi l'afficheur et le composeur de message de Microsoft Outlook.
-Pour les versions les plus récentes de Microsoft Office 2016/365 exécutées sous Windows 10, le support UI Automation est assez complet pour fournir un accès aux documents Microsoft Word presque égal au support existant de Microsoft Word par NVDA, avec l'avantage que la réactivité est nettement accrue.
-Cependant, il peut exister certaines informations qui ne sont pas exposées, ou exposées incorrectement sous certaines versions de Microsoft Office, ce qui signifie qu'on ne peut pas toujours se fier à ce support UI automation.
-Nous ne recommandons pas encore à la majorité des utilisateurs d'activer cette option par défaut, bien que nous encouragions les utilisateurs d'Office 2016/365 à tester cette fonctionnalité et à nous faire des retours d'expérience.
+Pour les versions les plus récentes de Microsoft Office 2016/365 fonctionnant sur Windows 10 et versions ultérieures, la prise en charge de UI Automation est suffisamment complète pour fournir un accès aux documents Microsoft Word presque égal à la prise en charge Microsoft Word existante de NVDA, avec l'avantage supplémentaire que la réactivité est considérablement augmentée.
+Cependant, certaines informations peuvent ne pas être exposées ou être exposées de manière incorrecte dans certaines versions de Microsoft Office, ce qui signifie que cette prise en charge de UI Automation n'est pas toujours fiable.
+Nous ne recommandons toujours pas à la majorité des utilisateurs d'activer cette option par défaut, bien que nous encourageons les utilisateurs d'Office 2016/365 à tester cette fonctionnalité et fournir des commentaires.
 
 ==== Utilisez UI Automation pour accéder à la console Windows quand elle est disponible ====[AdvancedSettingsConsoleUIA]
 Si cette option est activée, NVDA utilisera une nouvelle version en cours de développement de son support de la console Windows qui tire parti des [améliorations de l'accessibilité apportées par Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Cette fonctionnalité est très expérimentale et est encore incomplète, son utilisation n'est donc pas encore recommandée. Cependant, une fois terminée, il est prévu que cette nouvelle prise en charge deviendra la valeur par défaut, améliorant les performances et la stabilité de NVDA dans les consoles de commande Windows.
@@ -1840,18 +1850,35 @@ Si cette option est activée, NVDA utilisera une nouvelle version en cours de d�
 Cette option définit si les caractères sont annoncés par [Écho clavier par caractère #KeyboardSettingsSpeakTypedCharacters] ou [Écho clavier par mot #KeyboardSettingsSpeakTypedWords] dans les situation où l'écran ne se met pas à jour (telles que les zones de saisie de mot de passe) dans certains programmes de terminaux, comme la Console Windows avec le support UI automation activé. Pour des raisons de sécurité, ce paramètre devrait rester désactivé. Cependant, vous pouvez souhaiter l'activer si vous ressentez des problèmes de performances ou d'instabilité avec l'écho par caractère ou par mot dans la console, ou si vous travaillez dans un environnement de confiance et préférez l'annonce des mots de passe.
  
 ==== Utiliser UIA avec Microsoft Edge et autres navigateurs basés sur Chromium quand c'est possible ====[ChromiumUIA]
-Permet de définir quand UIA sera utilisé si disponible dans les navigateurs basés sur Chromium tels que Microsoft Edge.
+Cette option permet de définir quand UIA sera utilisé si disponible dans les navigateurs basés sur Chromium tels que Microsoft Edge.
 Le support d'UIA pour les navigateurs basés sur Chromium est au début de son développement et peut ne pas apporter le même niveau d'accessibilité que IA2.
 La liste déroulante contient les options suivantes :
-- Défaut (Seulement quand nécessaire) : C'est actuellement la valeur par défaut de NVDA. Ce défaut peut changer dans le futur en fonction l'amélioration de la technologie.
+- Défaut (Seulement quand nécessaire) : C'est actuellement la valeur par défaut de NVDA. Cette valeur par défaut peut changer à l'avenir en fonction de l'amélioration de la technologie.
 - Seulement quand nécessaire : Quand NVDA est incapable d'injecter dans le processus du navigateur de quoi utiliser IA2 et que UIA est disponible, NVDA utilisera UIA.
 - Oui : Si le navigateur rend UIA disponible, NVDA l'utilisera.
 - Non : Ne pas utiliser UIA, même si NVDA ne peut pas injecter dans le processus. Ceci peut être utile pour les développeurs corrigeant des problèmes liés à IA2 et voulant s'assurer que NVDA ne revient pas à UIA.
 -
 
+==== Annotations ====[Annotations]
+Ce groupe d'options est utilisé pour activer des fonctionnalités qui ajoutent une prise en charge expérimentale des annotations ARIA.
+Certaines de ces fonctionnalités peuvent être incomplètes.
+Les options suivantes existent :
+- "Annoncer les détails en mode navigation" : permet de signaler si un objet a des détails en mode navigation.
+L'annonce du résumé de ces détails peut être faite en attribuant un geste à l'aide du [dialogue Gestes de commandes #InputGestures].
+- "Toujours annoncer aria-description" :
+  Lorsque la source de ``accDescription`` est aria-description, la description est annoncée.
+  Ceci est utile pour les annotations sur le web.
+  Note :
+  - Il existe de nombreuses sources pour ``accDescription`` plusieurs ont une sémantique mixte ou peu fiable.
+    Historiquement, les technologies d'assistance n'ont pas été en mesure de différencier les sources de ``accDescription`` généralement, elle n'a pas été annoncée en raison de la sémantique mixte.
+  - Cette option est en développement très précoce, elle repose sur des fonctionnalités de navigateur pas encore largement disponibles.
+  - Elle devrait fonctionner avec Chromium 92.0.4479.0+
+  -
+-
+
 ==== Utiliser UI automation pour accéder aux contrôles des feuilles de calcul Microsoft Excel quand c'est possible ====[UseUiaForExcel]
 Quand cette option est activée, NVDA essaiera d'utiliser l'API d'accessibilité Microsoft UI Automation pour extraire des informations des contrôles des feuilles de calcul Microsoft Excel.
-Ceci est une fonctionnalité expérimentale, et certaines fonctionnalités de Microsoft Excel peuvent ne pas être disponibles dans ce mode.
+C'est une fonctionnalité expérimentale, et certaines fonctionnalités de Microsoft Excel peuvent ne pas être disponibles dans ce mode.
 Par exemple, la liste d'éléments de NVDA permettant de lister les formules et commentaires, et la navigation rapide en mode navigation pour sauter aux zones de formulaire dans une feuille de calcul ne sont pas disponibles.
 Cependant, pour la navigation/édition de feuilles de calcul basiques, cette option peut procurer de grandes améliorations de performances.
 Nous ne recommandons toujours pas que la majorité des utilisateurs active cette option par défaut, mais nous encourageons les utilisateurs de Microsoft Excel version 16.0.13522.10000 ou ultérieures à tester cette fonctionnalité et à nous faire part de leurs commentaires.
@@ -1864,33 +1891,43 @@ Cette fonctionnalité est disponible et activée par défaut sous Windows 10 ver
 Avertissement : quand cette option est activée, les caractères tapés qui n'apparaissent pas à l'écran comme les mots de passe, ne seront pas supprimés.
 Dans les environnement non sûrs, vous pouvez désactiver temporairement [Écho clavier par caractère #KeyboardSettingsSpeakTypedCharacters] et [Écho clavier par mot #KeyboardSettingsSpeakTypedWords] quand vous entrez un mot de passe.
 
-==== Algorithme Diff ====[DiffAlgo]
+==== Algorithme de diff ====[DiffAlgo]
 Ce paramètre définit comment NVDA détermine le nouveau texte à annoncer dans les terminaux.
-La liste déroulante algorithme diff a trois options :
-- Automatique : À partir de NVDA 2021.1, cette option est équivalente à Difflib.
-Dans une version future, cela peut changer en faveur de Diff Match Patch si les tests des utilisateurs sont positifs.
+La liste déroulante algorithme de diff a trois options :
+- Automatique : À partir de NVDA 2021.2, cette option est équivalente à "autoriser Diff Match Patch".
 - Autoriser Diff Match Patch : Cette option fait que NVDA calcule les changements de texte du terminal par caractère.
 Cela peut améliorer les performances quand de grandes quantités de texte sont écrites à la console et permet l'annonce plus précises des changements intervenant en milieu de ligne.
 Cependant, cela peut être incompatible avec certaines applications.
 Cette fonctionnalité est supportée dans la Console Windows de Windows 10 versions 1607 et ultérieures.
 Par ailleurs, elle peut être disponible dans d'autres terminaux dans des versions antérieures de Windows.
 - forcer Difflib : Cette option fait que NVDA calcule les changements de texte du terminal par ligne
-C'est identique au comportement de NVDA en version 2020.4 et antérieures.
+Ce comportement est identique à celui de NVDA en version 2020.4 et antérieures.
 -
 
 ==== Tenter d'interrompre la parole pour les événements de focus expirés ====[CancelExpiredFocusSpeech]
 Cette option active un comportement qui tente d'interrompre la parole pour les événements de focus expirés.
 En particulier se déplacer rapidement parmi les messages dans Gmail sous Chrome peut amener NVDA à annoncer des informations périmées.
-Cette fonctionnalité est expérimentale sous NVDA 2020.2.
+Cette fonctionnalité est activée par défaut à partir de NVDA 2021.1.
 
 ==== Délai d'attente de mouvement du curseur (en ms) ====[AdvancedSettingsCaretMoveTimeout]
 Cette option vous permet de configurer le nombre de millisecondes durant lequel NVDA attendra le déplacement du curseur (point d'insertion) dans les contrôles de texte éditable.
 Si vous trouvez que NVDA semble mal suivre le curseur ex : il semble être toujours un caractère en retard ou il répète les lignes, alors vous pouvez essayer d'accroître cette valeur.
 
+==== Annoncer la transparence pour les couleurs ====[ReportTransparentColors]
+Cette option permet d'annoncer lorsque les couleurs sont transparentes, utile pour les développeurs d'extensions qui collectent des informations pour améliorer l'expérience utilisateur avec une application tierce.
+Certaines applications GDI mettent en surbrillance le texte avec une couleur d'arrière-plan, NVDA (via le modèle d'affichage) tente de signaler cette couleur.
+Dans certaines situations, l'arrière-plan du texte peut être entièrement transparent, le texte étant superposé sur un autre élément de l'interface graphique.
+Pour plusieurs API GUI historiquement populaires, le texte peut être rendu avec un arrière-plan transparent, mais visuellement, la couleur d'arrière-plan est précise.
+
 ==== Catégories de journalisation de débogage ====[AdvancedSettingsDebugLoggingCategories]
 Les cases à cocher dans cette liste vous permettent d'activer des catégories spécifiques de messages de débogage dans le journal de NVDA.
 La journalisation de ces messages peut dégrader la performance et produire de gros fichiers de journal.
 N'activez l'une d'entre elle que si un développeur de NVDA vous l'a spécifiquement demandé ex : pour déboguer un pilote de terminal braille ne fonctionnant pas correctement.
+
+==== Jouer un son pour les erreurs journalisées ====[PlayErrorSound]
+Cette option vous permet de spécifier si NVDA joue un son d'erreur au cas où une erreur est enregistrée.
+En sélectionnant Uniquement dans les versions de test (par défaut), NVDA émet des sons d'erreur uniquement si la version actuelle de NVDA est une version de test (alpha, bêta ou exécutée à partir de la source).
+En sélectionnant Oui les sons d'erreur sont activés quelle que soit votre version actuelle de NVDA.
 
 ++ Autres Paramètres ++[MiscSettings]
 En plus du dialogue [Paramètres #NVDASettings], le sous-menu Préférences du menu NVDA contient plusieurs autres éléments décrits ci-dessous.
@@ -2250,7 +2287,7 @@ Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce 
 
 ++ eSpeak NG ++[eSpeakNG]
 Le synthétiseur [eSpeak nG https://github.com/espeak-ng/espeak-ng] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
-Sous Windows 7, 8 et 8.1, NVDA utilise eSpeak NG par défaut ([Windows OneCore #OneCore] est utilisé sous Windows 10 par défaut).
+Sous Windows 7, 8 et 8.1, NVDA utilise eSpeak NG par défaut ([Windows OneCore #OneCore] est utilisé sous Windows 10 et versions ultérieures par défaut).
 Comme ce synthétiseur est intégré dans NVDA, il est le plus indiqué quand vous voulez exécuter NVDA depuis une clé USB sur un autre système.
 
 Chaque voix fournie avec eSpeak NG correspond à une langue différente.
@@ -2284,9 +2321,9 @@ Pour utiliser ces voix, vous devrez installer deux composants :
 -
 
 ++ Voix Windows OneCore ++[OneCore]
-Windows 10 inclut de nouvelles voix appelées "OneCore" ou voix "mobile".
+Windows 10 et les versions ultérieures incluent de nouvelles voix appelées "OneCore" ou voix "mobile".
 Des voix sont fournies pour beaucoup de langues, et elles sont plus réactives que les voix Microsoft disponibles en utilisant Microsoft Speech API version 5.
-Sous Windows 10, NVDA utilise les voix Windows OneCore par défaut ([eSpeak NG #eSpeakNG] est utilisé dans les autres versions).
+Sous Windows 10 et versions ultérieures, NVDA utilise les voix Windows OneCore par défaut ([eSpeak NG #eSpeakNG] est utilisé dans les autres versions).
 
 Pour ajouter de nouvelles voix Windows OneCore, rendez-vous à  "Voix", dans les paramètres système de Windows. 
 Utilisez l'option "Ajouter des voix" et recherchez la langue désirée.
@@ -2318,6 +2355,7 @@ Les terminaux suivants supportent cette fonctionnalité de détection automatiqu
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Terminaux Eurobraille Esys/Esytime/Iris
 - Afficheurs Nattiq nBraille
+- N'importe quel afficheur supportant le protocole standard HID Braille
 -
 
 ++ Les Terminaux Focus et PAC Mate de chez Freedom Scientific ++[FreedomScientificFocus]
@@ -2503,7 +2541,7 @@ Si vous connectez via USB des terminaux qui n'utilisent pas le mode HID, vous de
 Le VarioUltra et le Pronto! utilisent HID.
 Le Refreshabraille et l'Orbit Reader 20 peuvent utiliser HID si configurés de manière appropriée.
 
-Le mode USB série de l'Orbit Reader 20 n'est actuellement pris en charge que sous Windows 10.
+Le mode USB série de l'Orbit Reader 20 n'est actuellement pris en charge que sous Windows 10 et versions ultérieures.
 USB HID devrait en général être utilisé à la place.
 
 Voici les assignations de touches pour ces terminaux avec NVDA.
@@ -3106,7 +3144,7 @@ Veuillez consulter la documentation du terminal pour connaître la position de c
 
 ++ Afficheurs Nattiq nBraille ++[NattiqTechnologies]
 NVDA supporte les afficheurs de [Nattiq Technologies https://www.nattiq.com/] quand ils sont connectés via USB.
-Windows 10 détecte les afficheurs Braille à la connexion, il peut être nécessaire d'installer des pilotes USB si vous utilisez des versions plus anciennes de Windows (antérieures à Win10).
+Windows 10 et les versions ultérieures détectent les afficheurs Braille à la connexion, il peut être nécessaire d'installer des pilotes USB si vous utilisez des versions plus anciennes de Windows (antérieures à Win10).
 Vous pouvez les obtenir sur le site du fabriquant.
 
 Voici les assignations de touches pour les afficheurs Nattiq Technologies sous NVDA.
@@ -3142,6 +3180,37 @@ Veuillez consulter les [listes des assignations des touches de BRLTTY http://mie
 | Aller à la cellule braille | route (amener le curseur au caractère) |
 %kc:endInclude
 
+++ Afficheurs braille au standard HID ++[HIDBraille]
+Il s'agit d'un pilote expérimental pour la nouvelle spécification standard HID Braille, convenue en 2018 par Microsoft, Google, Apple et plusieurs sociétés de technologie d'assistance, dont NV Access.
+L'espoir est que tous les futurs modèles d'afficheurs Braille créés par n'importe quel fabricant utiliseront ce protocole standard qui supprimera le besoin de pilotes Braille spécifiques au fabricant.
+
+La détection automatique de l'affichage braille de NVDA reconnaîtra également tout affichage prenant en charge ce protocole.
+ 
+Voici les affectations de touches actuelles pour ces affichages.
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement arrière de l'afficheur braille | panoramique à gauche ou rocker vers le haut |
+| Défilement avant de l'afficheur braille | panoramique à droite ou rocker vers le bas |
+| Déplacer l'affichage braille à la ligne précédente | espace+point1 |
+| Déplacer l'affichage braille à la ligne suivante | espace+point4 |
+| Aller à la cellule braille | ensemble de routage 1|
+| Basculer braille suit to | haut+bas |
+| Touche FlècheHaut | joystick vers le haut |
+| Touche FlècheBas | joystick vers le bas |
+| Touche FlècheGauche | espace+point3 ou joystick vers la gauche |
+| Touche FlècheDroite | espace+point6 ou joystick vers la droite |
+| Touche maj+tab | espace+point1+point3 |
+| Touche tab | espace+point4+point6 |
+| Touche alt | espace+point1+point3+point4 (espace+m) |
+| Touche échap | espace+point1+poin5 (espace+e) |
+| touche entrer | poin8 ou joystick centre |
+| Touche Windows | espace+point3+point4 |
+| Touche alt+tab | espace+point2+point3+point4+point5 (espace+t) |
+| Menu NVDA | espace+point1+point3+point4+point5 (espace+n) |
+| Touche windows+d (minimiser toutes les applications) | espace+point1+point4+point5 (espace+d) |
+| Dire tout | espace+point1+point2+point3+point4+point5+point6 |
+%kc:endInclude
+ 
 + Fonctions Avancées +[AdvancedTopics]
  
 ++ Options de Ligne de Commande ++[CommandLineOptions]

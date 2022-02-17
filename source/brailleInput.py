@@ -1,11 +1,8 @@
-# -*- coding: UTF-8 -*-
-# brailleInput.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2012-2021 NV Access Limited, Rui Batista, Babbage B.V., Julien Cochuyt
 
-import os.path
 import time
 from typing import Optional, List, Set
 
@@ -125,7 +122,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		mode = louis.dotsIO | louis.noUndefinedDots
 		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
-			mode |=  louis.partialTrans
+			mode |= louis.partialTrans
 		self.bufferText = louis.backTranslate(
 			[self._table.fileName, "braille-patterns.cti"],
 			data, mode=mode)[0]
@@ -241,7 +238,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			if self._translate(endWord):
 				if not endWord:
 					self.cellsWithText.add(pos)
-			elif self.bufferText and not self.useContractedForCurrentFocus:
+			elif self.bufferText and not self.useContractedForCurrentFocus and self._table.contracted:
 				# Translators: Reported when translation didn't succeed due to unsupported input.
 				speech.speakMessage(_("Unsupported input"))
 				self.flushBuffer()
@@ -252,20 +249,30 @@ class BrailleInputHandler(AutoPropertyObject):
 			self._reportUntranslated(pos)
 
 	def toggleModifier(self, modifier: str):
+		self.toggleModifiers([modifier])
+
+	def toggleModifiers(self, modifiers: List[str]):
 		# Check modifier validity
-		isModifier: bool = keyboardHandler.KeyboardInputGesture.fromName(modifier).isModifier
-		if not isModifier:
-			raise ValueError("%r is not a valid modifier"%modifier)
-		if modifier in self.currentModifiers:
-			self.currentModifiers.discard(modifier)
+		validModifiers: bool = all(
+			keyboardHandler.KeyboardInputGesture.fromName(m).isModifier
+			for m in modifiers)
+		if not validModifiers:
+			raise ValueError("%r contains unknown modifiers" % modifiers)
+
+		# Ensure input buffer is clear for the modified key
+		if self.bufferText:
+			self._translate(True)
+
+		toToggle: frozenset[str] = frozenset(modifiers)
+		added = toToggle - self.currentModifiers
+		removed = toToggle & self.currentModifiers
+		self.currentModifiers.difference_update(toToggle)
+		self.currentModifiers.update(added)
+		for modifier in added:
+			speech.speakMessage(keyLabels.getKeyCombinationLabel(modifier))
+		for modifier in removed:
 			# Translators: Reported when a braille input modifier is released.
 			speech.speakMessage(_("{modifier} released").format(
-				modifier=keyLabels.getKeyCombinationLabel(modifier)
-			))
-		else: # modifier not in self.currentModifiers
-			self.currentModifiers.add(modifier)
-			# Translators: Reported when a braille input modifier is pressed.
-			speech.speakMessage(_("{modifier} pressed").format(
 				modifier=keyLabels.getKeyCombinationLabel(modifier)
 			))
 

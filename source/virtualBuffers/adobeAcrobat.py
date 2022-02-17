@@ -54,14 +54,14 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				accRole=int(accRole)
 			else:
 				accRole = accRole.lower()
-			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
+			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
 
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 
-		if role == controlTypes.ROLE_EDITABLETEXT and {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:
+		if role == controlTypes.Role.EDITABLETEXT and {controlTypes.State.READONLY, controlTypes.State.FOCUSABLE, controlTypes.State.LINKED} <= states:
 			# HACK: Acrobat sets focus states on text nodes beneath links,
 			# making them appear as read only editable text fields.
-			states.difference_update({controlTypes.STATE_FOCUSABLE, controlTypes.STATE_FOCUSED})
+			states.difference_update({controlTypes.State.FOCUSABLE, controlTypes.State.FOCUSED})
 
 		attrs['role']=role
 		attrs['states']=states
@@ -96,7 +96,7 @@ class AdobeAcrobat(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.ROLE_UNKNOWN:
+		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.Role.UNKNOWN:
 			return False
 		return True
 

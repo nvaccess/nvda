@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2020 NV Access Limited, James Teh, Ethan Holliger, Dinesh Kaushal, Leonard de Ruijter, Joseph Lee, Reef Turner, Julien Cochuyt  # noqa: E501 line too long
+# Copyright (C) 2017-2021 NV Access Limited, Ethan Holliger, Dinesh Kaushal, Leonard de Ruijter,
+# Joseph Lee, Julien Cochuyt, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -7,6 +8,8 @@
 """
 
 import sys
+from typing import Set
+
 
 # Existing messages that we know don't have translator comments yet.
 # Ideally, all of these should get translator comments,
@@ -15,7 +18,6 @@ import sys
 # Note that checkPot will fail with an unexpected success
 # if a translator comment is found for one of these messages.
 EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
-	'%s landmark',
 	'border',
 	'filler',
 	'line',
@@ -36,7 +38,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'gesture map File Error',
 	'text \\"%s\\" not found',
 	'Find Error',
-	'Selected %s',
 	'on',
 	'Type help(object) to get help about object.',
 	'Type exit() to exit the console',
@@ -56,19 +57,9 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'A free and open source screen reader for Microsoft Windows',
 	'Copyright (C) {years} NVDA Contributors',
 	'Display',
-	'Reports and moves the review cursor to a recent message',
 	'left',
 	'right',
-	'Show the Handy Tech driver configuration window.',
 	'Recognition failed',
-	'General settings',
-	'Change the synthesizer to be used',
-	'Choose the voice, rate, pitch and volume to use',
-	'Change reporting of mouse shape and object under mouse',
-	'Configure how and when the review cursor moves',
-	'Change reporting of objects',
-	'Change virtual buffers specific settings',
-	'Change settings of document properties',
 	'NVDA &web site',
 	'Reset all settings to saved state',
 	'Reset all settings to default state',
@@ -79,7 +70,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'This change requires administrator privileges.',
 	'Insufficient Privileges',
 	'Synthesizer Error',
-	'Dictionary Entry Error',
 	'word',
 	'Taskbar',
 	'%s items',
@@ -128,6 +118,7 @@ def checkPot(fileName):
 	errors = 0
 	expectedErrors = 0
 	unexpectedSuccesses = 0
+	foundMessagesWithOutComments: Set[str] = set()
 	with open(fileName, "rt") as pot:
 		passedHeader = False
 		for line in pot:
@@ -186,6 +177,8 @@ def checkPot(fileName):
 				else:
 					message = msgid
 				isExpectedError = message in EXPECTED_MESSAGES_WITHOUT_COMMENTS
+				if isExpectedError:
+					foundMessagesWithOutComments.add(message)
 				if not hasComment and isExpectedError:
 					expectedErrors += 1
 					continue
@@ -203,9 +196,19 @@ def checkPot(fileName):
 					"Message: {message}\n"
 					.format(error=error, lines=" ".join(sourceLines), message=message))
 				continue
-	print("{errors} errors, {unexpectedSuccesses} unexpected successes, {expectedErrors} expected errors"
-		.format(errors=errors, unexpectedSuccesses=unexpectedSuccesses, expectedErrors=expectedErrors))
-	return errors + unexpectedSuccesses
+	removedTranslatableMessages = EXPECTED_MESSAGES_WITHOUT_COMMENTS - foundMessagesWithOutComments
+	if removedTranslatableMessages:
+		print(
+			"The following messages are no longer present in the source code "
+			"and should be removed from `EXPECTED_MESSAGES_WITHOUT_COMMENTS`:"
+		)
+		print('\n'.join(removedTranslatableMessages))
+	print(
+		f"{errors} errors, {unexpectedSuccesses} unexpected successes, {expectedErrors} expected errors, "
+		f"{len(removedTranslatableMessages)} messages marked as expected errors not present in the source code"
+	)
+	return errors + unexpectedSuccesses + len(removedTranslatableMessages)
+
 
 def getStringFromLine(line):
 	if line.startswith('"'):

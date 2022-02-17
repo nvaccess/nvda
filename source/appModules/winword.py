@@ -11,13 +11,15 @@ Microsoft Word only.
 import appModuleHandler
 from scriptHandler import script
 import ui
-from NVDAObjects.IAccessible.winword import WordDocument
+from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
+from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
+from NVDAObjects.window.winword import WordDocument
 
 
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if WordDocument in clsList:
+		if UIAWordDocument in clsList or IAccessibleWordDocument in clsList:
 			clsList.insert(0, WinwordWordDocument)
 
 

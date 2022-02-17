@@ -1,14 +1,14 @@
-#NVDAObjects/IAccessible/ia2Web.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2021 NV Access Limited
 
 """Base classes with common support for browsers exposing IAccessible2.
 """
-
+import typing
 from ctypes import c_short
 from comtypes import COMError, BSTR
+
 import oleacc
 from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
@@ -34,6 +34,30 @@ class Ia2Web(IAccessible):
 				info['level']=level
 		return info
 
+	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
+		ia2attrDescriptionFrom: typing.Optional[str] = self.IA2Attributes.get("description-from")
+		try:
+			return controlTypes.DescriptionFrom(ia2attrDescriptionFrom)
+		except ValueError:
+			if ia2attrDescriptionFrom:
+				log.debugWarning(f"Unknown 'description-from' IA2Attribute value: {ia2attrDescriptionFrom}")
+			return controlTypes.DescriptionFrom.UNKNOWN
+
+	def _get_detailsSummary(self) -> typing.Optional[str]:
+		if not self.hasDetails:
+			return None
+		detailsRelations = self.detailsRelations
+		if not detailsRelations:
+			log.error("should be able to fetch detailsRelations")
+			return None
+		for target in detailsRelations:
+			# just take the first for now.
+			return target.summarizeInProcess()
+
+	@property
+	def hasDetails(self) -> bool:
+		return bool(self.IA2Attributes.get("details-roles"))
+
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
 		try:
@@ -47,7 +71,7 @@ class Ia2Web(IAccessible):
 		return placeholder
 
 	def _get_isPresentableFocusAncestor(self):
-		if self.role==controlTypes.ROLE_TABLEROW:
+		if self.role==controlTypes.Role.TABLEROW:
 			# It is not useful to present IAccessible2 table rows in the focus ancestry as  cells contain row and column information anyway.
 			# Also presenting the rows would cause duplication of information
 			return False
@@ -64,10 +88,10 @@ class Ia2Web(IAccessible):
 		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
 		# This is necessary for other code that calculates how selection of cells should be spoken.
 		if 'gridcell' in self.IA2Attributes.get('xml-roles','').split(' '):
-			states.add(controlTypes.STATE_FOCUSABLE)
+			states.add(controlTypes.State.FOCUSABLE)
 		# Google has a custom ARIA attribute to force a node's editable state off (such as in Google Slides).
 		if self.IA2Attributes.get('goog-editable')=="false":
-			states.discard(controlTypes.STATE_EDITABLE)
+			states.discard(controlTypes.State.EDITABLE)
 		return states
 
 	def _get_landmark(self):
@@ -109,29 +133,29 @@ class Document(Ia2Web):
 	value = None
 
 	def _get_shouldCreateTreeInterceptor(self):
-		return controlTypes.STATE_READONLY in self.states
+		return controlTypes.State.READONLY in self.states
 
 class Application(Document):
 	shouldCreateTreeInterceptor = False
 
 class BlockQuote(Ia2Web):
-	role = controlTypes.ROLE_BLOCKQUOTE
+	role = controlTypes.Role.BLOCKQUOTE
 
 
 class Treegrid(Ia2Web):
-	role = controlTypes.ROLE_TABLE
+	role = controlTypes.Role.TABLE
 
 
 class Article(Ia2Web):
-	role = controlTypes.ROLE_ARTICLE
+	role = controlTypes.Role.ARTICLE
 
 
 class Region(Ia2Web):
-	role = controlTypes.ROLE_REGION
+	role = controlTypes.Role.REGION
 
 
 class Figure(Ia2Web):
-	role = controlTypes.ROLE_FIGURE
+	role = controlTypes.Role.FIGURE
 
 
 class Editor(Ia2Web, DocumentWithTableNavigation):
@@ -211,11 +235,11 @@ class Switch(Ia2Web):
 	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
 	# checked state instead of pressed. The simplest way to deal with this
 	# identity crisis is to map it to a check box.
-	role = controlTypes.ROLE_CHECKBOX
+	role = controlTypes.Role.CHECKBOX
 
 	def _get_states(self):
 		states = super().states
-		states.discard(controlTypes.STATE_PRESSED)
+		states.discard(controlTypes.State.PRESSED)
 		return states
 
 

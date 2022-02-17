@@ -17,6 +17,12 @@ NVDA and its components are primarily written in the Python programming language
 It is not the goal of this guide to teach you Python, though examples are provided through out this guide which will help to familiarise you with the Python syntax.
 Documentation and other resources related to the Python language can be found at www.python.org/
 
+++ C++ ++
+Some of NVDA is written in C++, EG nvdaHelper.
+For an overview of nvdaHelper, including how to configure Visual Studio to enable intellisense see the
+[nvdaHelper readme nvdaHelper_readme.md]
+
+
 + Translation +
 In order to support multiple languages/locales, NVDA must be translated and data specific to the locale must be provided.
 This section only includes information on custom NVDA file formats required for translation.
@@ -350,9 +356,9 @@ For example, the Ok button just discussed could be a widget in a Java applicatio
 NVDA Objects have many properties.
 Some of the most useful are:
 - name: the label of the control.
-- role: one of the ROLE_* constants from NVDA's controlTypes module.
+- role: one of the Role.* constants from NVDA's controlTypes module.
 Button, dialog, editableText, window and checkbox are examples of roles.
-- states: a set of 0 or more of the STATE_* constants from NVDA's controlTypes module.
+- states: a set of 0 or more of the State.* constants from NVDA's controlTypes module.
 Focusable, focused, selected, selectable, expanded, collapsed and checked are some examples of states.
 - value: the value of the control; e.g. the percentage of a scroll bar or the current setting of a combo box.
 - description: a sentence or two describing what the control does (usually the same as its tooltip).
@@ -381,7 +387,7 @@ Plugins make use of NVDA Objects in three particular ways:
 - Most events that plugins receive take an argument which is the NVDA Object on which the event occurred.
 For example, event_gainFocus takes the NVDA Object that represents the control gaining focus.
 - Scripts, events or other code may fetch objects of interest such as the NVDA Object with focus, NVDA's current navigator object, or perhaps the Desktop NVDA Object.
-The code may then retreave information from that object or perhaps even retreave another object related to it (e.g. its parent, first child, etc.).
+The code may then retrieve information from that object or perhaps even retrieve another object related to it (e.g. its parent, first child, etc.).
 - the Plugin may define its own custom NVDA Object classes which will be used to wrap a specific control to give it extra functionality, mutate its properties, etc.
 -
 
@@ -418,7 +424,7 @@ Currently, the input sources in NVDA are:
 -
 
 When NVDA receives input, it looks for a matching gesture binding in a particular order.
-Once a gesture binding is found, the script is executed and no further bindings are used, nore is that particular gesture passed on automatically to the Operating System.
+Once a gesture binding is found, the script is executed and no further bindings are used, nor is that particular gesture passed on automatically to the Operating System.
 
 The order for gesture binding lookup is:
 - The user specific gesture map
@@ -481,7 +487,7 @@ The following keyword arguments can be used when applying the script decorator:
 - allowInSleepMode: A boolean indicating whether this script should run when sleep mode is active.
   This option defaults to False.
 - resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
-  The constants for say all mode are prefixed with CURSOR_ and specified in the sayAllHandler modules.
+  The constants for say all mode can be found in the CURSOR enum in speech.sayAll.
   If resumeSayAllMode is not specified, say all does not resume after this script.
 -
 
@@ -620,7 +626,7 @@ Similarly, if you match on MSAA's accRole property, you would probably need to i
 You should also consider what properties you are going to override on the custom NVDA Object.
 For instance, if you are going to override an IAccessible specific property, such as shouldAllowIAccessibleFocusEvent, then you need to inherit from NVDAObjects.IAccessible.IAccessible.
 
-the chooseNVDAObjectOverlayClasses method can be implemented on app modules or global plugin classes.
+The chooseNVDAObjectOverlayClasses method can be implemented on app modules or global plugin classes.
 It takes 3 arguments:
 + self: the app module or global plugin instance.
 + obj: the NVDAObject for which classes are being chosen.
@@ -649,7 +655,7 @@ import ui
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "Edit" and obj.role == controlTypes.ROLE_EDITABLETEXT:
+		if obj.windowClassName == "Edit" and obj.role == controlTypes.Role.EDITABLETEXT:
 			clsList.insert(0, EnhancedEditField)
 
 class EnhancedEditField(IAccessible):
@@ -690,6 +696,23 @@ class AppModule(appModuleHandler.AppModule):
 		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
 			obj.name = "Content"
 --- end ---
+```
+
+++ Parsing additional command line arguments in your plugin ++
+By default NVDA accepts limited set of command line arguments and shows an error for an unknown ones.
+However if you want to use any additional arguments, this is possible by adding a handler to the extension point ``addonHandler.isCLIParamKnown``.
+Note that since command line arguments are processed just after NVDA starts, your add-on needs to process them in the global plugin, since app modules or other drivers may not be loaded at this stage.
+A sample handler can be written as follows:
+```
+def processArgs(cliArgument: str) -> bool:
+	if cliArgument == "--enable-addon-feature":
+		...
+		return True  # Argument is known to the add-on and should not be flagged by NVDA
+	return False  # unknown argument - NVDA should warn user
+```
+Then the handler needs to be registered - preferably in the constructor of your global plugin:
+```
+addonHandler.isCLIParamKnown.register(processArgs)
 ```
 
 + Packaging Code as NVDA Add-ons +[Addons]
@@ -796,7 +819,7 @@ All other fields will be ignored.
 +++ Locale-specific Messages +++
 Each language directory can also contain gettext information, which is the system used to translate the rest of NVDA's user interface and reported messages.
 As with the rest of NVDA, an nvda.mo compiled gettext database file should be placed in the LC_MESSAGES directory within this directory.
-to allow plugins in your add-on to access gettext message information via calls to _(), you must initialize translations at the top of each Python module by calling addonHandler.initTranslation().
+To allow plugins in your add-on to access gettext message information via calls to _(), you must initialize translations at the top of each Python module by calling addonHandler.initTranslation().
 For more information about gettext and NVDA translation in general, please read
 https://github.com/nvaccess/nvda/wiki/Translating
 

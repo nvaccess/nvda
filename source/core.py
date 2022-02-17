@@ -4,28 +4,12 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Optional
-
 """NVDA core"""
 
-RPC_E_CALL_CANCELED = -2147418110
 
-class CallCancelled(Exception):
-	"""Raised when a call is cancelled.
-	"""
-
-# Apply several monkey patches to comtypes
-# noinspection PyUnresolvedReferences
-import comtypesMonkeyPatches
-
-# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
-# and Append our comInterfaces directory to the comtypes.gen search path.
+from dataclasses import dataclass
+from typing import List, Optional
 import comtypes
-import comtypes.client
-import comtypes.gen
-import comInterfaces
-comtypes.gen.__path__.append(comInterfaces.__path__[0])
-
 import sys
 import winVersion
 import threading
@@ -34,17 +18,16 @@ import os
 import time
 import ctypes
 import logHandler
+import languageHandler
 import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
-import garbageHandler  # noqa: E402
+import garbageHandler
 
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
-# inform those who want to know that NVDA has begun to exit.
-preNVDAExit = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
 
@@ -66,10 +49,40 @@ post_windowMessageReceipt = extensionPoints.Action()
 _pump = None
 _isPumpPending = False
 
+_hasShutdownBeenTriggered = False
+_shuttingDownFlagLock = threading.Lock()
+
+
 def doStartupDialogs():
 	import config
 	import gui
-	# Translators: The title of the dialog to tell users that there are erros in the configuration file.
+
+	def handleReplaceCLIArg(cliArgument: str) -> bool:
+		"""Since #9827 NVDA replaces a currently running instance
+		and therefore `--replace` command line argument is redundant and no longer supported.
+		However for backwards compatibility the desktop shortcut created by installer
+		still starts NVDA with the now redundant switch.
+		Its presence in command line arguments should not cause a warning on startup."""
+		return cliArgument in ("-r", "--replace")
+
+	addonHandler.isCLIParamKnown.register(handleReplaceCLIArg)
+	unknownCLIParams: List[str] = list()
+	for param in globalVars.unknownAppArgs:
+		isParamKnown = addonHandler.isCLIParamKnown.decide(cliArgument=param)
+		if not isParamKnown:
+			unknownCLIParams.append(param)
+	if unknownCLIParams:
+		import wx
+		gui.messageBox(
+			# Translators: Shown when NVDA has been started with unknown command line parameters.
+			_("The following command line parameters are unknown to NVDA: {params}").format(
+				params=", ".join(unknownCLIParams)
+			),
+			# Translators: Title of the dialog letting user know
+			# that command line parameters they provided are unknown.
+			_("Unknown command line parameters"),
+			wx.OK | wx.ICON_ERROR
+		)
 	if config.conf.baseConfigError:
 		import wx
 		gui.messageBox(
@@ -110,16 +123,59 @@ def doStartupDialogs():
 			# Ask the user if usage stats can be collected.
 			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
 
+
+@dataclass
+class NewNVDAInstance:
+	filePath: str
+	parameters: Optional[str] = None
+	directory: Optional[str] = None
+
+
+def restartUnsafely():
+	"""Start a new copy of NVDA immediately.
+	Used as a last resort, in the event of a serious error to immediately restart NVDA without running any
+	cleanup / exit code.
+	There is no dependency on NVDA currently functioning correctly, which is in contrast with L{restart} which
+	depends on the internal queue processing (queueHandler).
+	Because none of NVDA's shutdown code is run, NVDA is likely to be left in an unclean state.
+	Some examples of clean up that may be skipped.
+	- Free NVDA's mutex (mutex prevents multiple NVDA instances), leaving it abandoned when this process ends.
+	  - However, this situation is handled during mutex acquisition.
+	- Remove icons (systray)
+	- Saving settings
+	"""
+	log.info("Restarting unsafely")
+	import subprocess
+	# Unlike a normal restart, see L{restart}:
+	# - if addons are disabled, leave them disabled
+	# - if debug logging is set, leave it set.
+	# The new instance should operate in the same way (as much as possible) as the old instance.
+	for paramToRemove in ("--ease-of-access"):
+		try:
+			sys.argv.remove(paramToRemove)
+		except ValueError:
+			pass
+	options = []
+	if not hasattr(sys, "frozen"):
+		options.append(os.path.basename(sys.argv[0]))
+	_startNewInstance(NewNVDAInstance(
+		sys.executable,
+		subprocess.list2cmdline(options + sys.argv[1:]),
+		globalVars.appDir
+	))
+
+
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
 		globalVars.exitCode=3
-		triggerNVDAExit()
+		if not triggerNVDAExit():
+			log.error("NVDA already in process of exiting, this indicates a logic error.")
 		return
 	import subprocess
-	import winUser
-	import shellapi
-	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
+	for paramToRemove in (
+		"--disable-addons", "--debug-logging", "--ease-of-access"
+	) + languageHandler.getLanguageCliArgs():
 		try:
 			sys.argv.remove(paramToRemove)
 		except ValueError:
@@ -131,15 +187,13 @@ def restart(disableAddons=False, debugLogging=False):
 		options.append('--disable-addons')
 	if debugLogging:
 		options.append('--debug-logging')
-	shellapi.ShellExecute(
-		hwnd=None,
-		operation=None,
-		file=sys.executable,
-		parameters=subprocess.list2cmdline(options + sys.argv[1:]),
-		directory=globalVars.appDir,
-		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-		showCmd=winUser.SW_SHOWNORMAL
-	)
+
+	if not triggerNVDAExit(NewNVDAInstance(
+		sys.executable,
+		subprocess.list2cmdline(options + sys.argv[1:]),
+		globalVars.appDir
+	)):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
 def resetConfiguration(factoryDefaults=False):
@@ -151,7 +205,6 @@ def resetConfiguration(factoryDefaults=False):
 	import brailleTables
 	import speech
 	import vision
-	import languageHandler
 	import inputCore
 	import tones
 	log.debug("Terminating vision")
@@ -171,8 +224,11 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("Reloading config")
 	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
-	#Language
-	lang = config.conf["general"]["language"]
+	# Language
+	if languageHandler.isLanguageForced():
+		lang = globalVars.appArgs.language
+	else:
+		lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
@@ -217,32 +273,79 @@ def _setInitialFocus():
 
 
 def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
-	import languageHandler
 	import wx
 	lang = languageHandler.getLanguage()
-	locale = wx.Locale()
-	wxLang = locale.FindLanguageInfo(lang)
+	wxLocaleObj = wx.Locale()
+	wxLang = wxLocaleObj.FindLanguageInfo(lang)
 	if not wxLang and '_' in lang:
-		wxLang = locale.FindLanguageInfo(lang.split('_')[0])
+		wxLang = wxLocaleObj.FindLanguageInfo(lang.split('_')[0])
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
 	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
 	# In this case, wxLang is already set to None.
 	# Therefore treat these situations like wx not knowing the language at all.
-	if wxLang and not locale.IsAvailable(wxLang.Language):
+	if wxLang and not wxLocaleObj.IsAvailable(wxLang.Language):
 		wxLang = None
 	if not wxLang:
 		log.debugWarning("wx does not support language %s" % lang)
 	return wxLang
 
 
-def triggerNVDAExit():
-	preNVDAExit.notifyOnce()
+def _startNewInstance(newNVDA: NewNVDAInstance):
+	"""
+	If something (eg the installer or exit dialog) has requested a new NVDA instance to start, start it.
+	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit and
+	_closeAllWindows.
+	"""
+	import shellapi
+	from winUser import SW_SHOWNORMAL
+	log.debug(f"Starting new NVDA instance: {newNVDA}")
+	shellapi.ShellExecute(
+		hwnd=None,
+		operation=None,
+		file=newNVDA.filePath,
+		parameters=newNVDA.parameters,
+		directory=newNVDA.directory,
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
+		showCmd=SW_SHOWNORMAL
+	)
+
+
+def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
+	_handleNVDAModuleCleanupBeforeGUIExit()
+	_closeAllWindows()
+	if newNVDA is not None:
+		_startNewInstance(newNVDA)
+
+
+def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
+	"""
+	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
+	instance information with `newNVDA`.
+	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
+	"""
+	from gui.message import isInMessageBox
+	import queueHandler
+	global _hasShutdownBeenTriggered
+	with _shuttingDownFlagLock:
+		safeToExit = not isInMessageBox()
+		if not safeToExit:
+			log.error("NVDA cannot exit safely, ensure open dialogs are closed")
+			return False
+		elif _hasShutdownBeenTriggered:
+			log.debug("NVDA has already been triggered to exit safely.")
+			return False
+		else:
+			# queue this so that the calling process can exit safely (eg a Popup menu)
+			queueHandler.queueFunction(queueHandler.eventQueue, _doShutdown, newNVDA)
+			_hasShutdownBeenTriggered = True
+			log.debug("_doShutdown has been queued")
+			return True
 
 
 def _closeAllWindows():
 	"""
-	Should only be used by calling triggerNVDAExit and after handleNVDAModuleCleanupBeforeGUIExit.
+	Should only be used by calling triggerNVDAExit and after _handleNVDAModuleCleanupBeforeGUIExit.
 	Ensures the wx mainloop is exited by all the top windows being destroyed.
 	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
 	"""
@@ -294,6 +397,29 @@ def _closeAllWindows():
 	app.ScheduleForDestruction(gui.mainFrame)
 
 
+def _handleNVDAModuleCleanupBeforeGUIExit():
+	""" Terminates various modules that rely on the GUI. This should be used before closing all windows
+	and terminating the GUI.
+	"""
+	import brailleViewer
+	import globalPluginHandler
+	import watchdog
+
+	try:
+		import updateCheck
+		# before the GUI is terminated we must terminate the update checker
+		_terminate(updateCheck)
+	except RuntimeError:
+		pass
+
+	# The core is expected to terminate, so we should not treat this as a crash
+	_terminate(watchdog)
+	# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
+	_terminate(globalPluginHandler)
+	# the brailleViewer should be destroyed safely before closing the window
+	brailleViewer.destroyBrailleViewer()
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -322,13 +448,12 @@ def main():
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
-	try:
+	if languageHandler.isLanguageForced():
+		lang = globalVars.appArgs.language
+	else:
 		lang = config.conf["general"]["language"]
-		import languageHandler
-		log.debug("setting language to %s"%lang)
-		languageHandler.setLanguage(lang)
-	except:
-		log.warning("Could not set language to %s"%lang)
+	log.debug(f"setting language to {lang}")
+	languageHandler.setLanguage(lang)
 	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
@@ -369,11 +494,16 @@ def main():
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
 
 		def InitLocale(self):
-			# Backport of `InitLocale` from wx Python 4.1.2 as the current version tries to set a Python
-			# locale to an nonexistent one when creating an instance of `wx.App`.
-			# This causes a crash when running under a particular version of Universal CRT (#12160)
-			import locale
-			locale.setlocale(locale.LC_ALL, "C")
+			"""Custom implementation of `InitLocale` which ensures that wxPython does not change the locale.
+			The current wx implementation (as of wxPython 4.1.1) sets Python locale to an invalid one
+			which triggers Python issue 36792 (#12160).
+			The new implementation (wxPython 4.1.2) sets locale to "C" (basic Unicode locale).
+			While this is not wrong as such NVDA manages locale themselves using `languageHandler`
+			and it is better to remove wx from the equation so this method is a No-op.
+			This code may need to be revisited when we update Python / wxPython.
+			"""
+			pass
+
 
 	app = App(redirect=False)
 	# We support queryEndSession events, but in general don't do anything for them.
@@ -501,18 +631,18 @@ def main():
 	messageWindow = MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support
-	locale = wx.Locale()
+	wxLocaleObj = wx.Locale()
 	wxLang = getWxLangOrNone()
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
+		wxLocaleObj.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
 		try:
-			locale.Init(wxLang.Language)
+			wxLocaleObj.Init(wxLang.Language)
 		except:
 			log.error("Failed to initialize wx locale",exc_info=True)
 		finally:
 			# Revert wx's changes to the python locale
-			languageHandler.setLocale(languageHandler.curLang)
+			languageHandler.setLocale(languageHandler.getLanguage())
 
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
@@ -552,8 +682,9 @@ def main():
 	import inputCore
 	inputCore.initialize()
 	import keyboardHandler
+	import watchdog
 	log.debug("Initializing keyboard handler")
-	keyboardHandler.initialize()
+	keyboardHandler.initialize(watchdog.WatchdogObserver())
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
@@ -593,7 +724,6 @@ def main():
 	# Queue the handling of initial focus,
 	# as API handlers might need to be pumped to get the first focus event.
 	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
-	import watchdog
 	import baseObject
 
 	# Doing this here is a bit ugly, but we don't want these modules imported
@@ -647,32 +777,18 @@ def main():
 
 	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
 
-	def handleNVDAModuleCleanupBeforeGUIExit():
-		""" Terminates various modules that rely on the GUI. This should be used before closing all windows
-		and terminating the GUI
-		"""
-		import brailleViewer
-		# before the GUI is terminated we must terminate the update checker
-		if updateCheck:
-			_terminate(updateCheck)
-
-		# The core is expected to terminate, so we should not treat this as a crash
-		_terminate(watchdog)
-		# plugins must be allowed to close safely before we terminate the GUI as dialogs may be unsaved
-		_terminate(globalPluginHandler)
-		# the brailleViewer should be destroyed safely before closing the window
-		brailleViewer.destroyBrailleViewer()
-	
-	preNVDAExit.register(handleNVDAModuleCleanupBeforeGUIExit)
-	preNVDAExit.register(_closeAllWindows)
-
 	log.debug("entering wx application main loop")
 	app.MainLoop()
 
 	log.info("Exiting")
 	# If MainLoop is terminated through WM_QUIT, such as starting an NVDA instance older than 2021.1,
 	# triggerNVDAExit has not been called yet
-	triggerNVDAExit()
+	if triggerNVDAExit():
+		log.debug(
+			"NVDA not already exiting, hit catch-all exit trigger."
+			" This likely indicates NVDA is exiting due to WM_QUIT."
+		)
+		queueHandler.pumpAll()
 	_terminate(gui)
 	config.saveOnExit()
 
