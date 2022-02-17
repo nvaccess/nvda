@@ -76,7 +76,7 @@ def bindHelpEvent(helpId: str, window: wx.Window):
 def _onEvtHelp(helpId: str, evt: wx.HelpEvent):
 	if globalVars.appArgs.secure:
 		# Disable context help in secure screens to avoid opening a browser with system-wide privileges.
-		return	
+		return
 	# Don't call evt.skip. Events bubble upwards through parent controls.
 	# Context help for more specific controls should override the less specific parent controls.
 	showHelp(helpId)
