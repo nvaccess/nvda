@@ -495,8 +495,7 @@ def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
 	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, buffer, bufferLength, dwFlags)
 	if bufferLength == 0:
 		# This means that there was an error fetching the LCID.
-		# As we have already checked if the LCID is valid,
-		# by receiveing a non-zero buffer length,
+		# As we have already checked if the LCID is valid by receiveing a non-zero buffer length,
 		# something unexpected has failed.
 		raise ctypes.WinError()
 	return buffer.value
