@@ -139,7 +139,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 							log.debugWarning("connectBluetooth failed")
 
 	def connectUSB(self, devlist: List[bytes]):
-		"""try to connect to usb device,is triggered when bluetooth
+		"""Try to connect to usb device, this is triggered when bluetooth
 connection could not be established"""
 		try:
 			self._dev = ftdi2.open_ex(devlist[0])
