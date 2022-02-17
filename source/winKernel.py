@@ -482,11 +482,21 @@ def SetThreadExecutionState(esFlags):
 
 
 def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
+	# NVDA cannot run with this imported at module level
+	from logHandler import log
 	dwFlags = 0
 	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, None, 0, dwFlags)
-	buffer = ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.LCIDToLocaleName(windowsLCID, buffer, bufferLength, dwFlags)
-	# An empty string is returned for unknown LCIDs
-	if not buffer.value:
+	if bufferLength == 0:
+		# This means that there was an error fetching the LCID.
+		# As the buffer is empty, this indicates that the windowsLCID is invalid.
+		log.debugWarning(f"Invalid LCID {windowsLCID}")
 		return None
+	buffer = ctypes.create_unicode_buffer("", bufferLength)
+	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, buffer, bufferLength, dwFlags)
+	if bufferLength == 0:
+		# This means that there was an error fetching the LCID.
+		# As we have already checked if the LCID is valid,
+		# by receiveing a non-zero buffer length,
+		# something unexpected has failed.
+		raise ctypes.WinError()
 	return buffer.value
