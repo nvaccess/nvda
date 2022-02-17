@@ -26,9 +26,10 @@ from scriptHandler import script
 import api
 import ui
 import braille
+import core
 import nvwave
 import globalVars
-from typing import List
+from typing import List, Union
 import diffHandler
 
 
@@ -177,6 +178,58 @@ class EditableText(editableText.EditableText, NVDAObject):
 			return
 		super()._caretScriptPostMovedHelper(speakUnit, gesture, info)
 
+	def _reportErrorInPreviousWord(self):
+		try:
+			# self might be a descendant of the text control; e.g. Symphony.
+			# We want to deal with the entire text, so use the caret object.
+			info = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
+			# This gets called for characters which might end a word; e.g. space.
+			# The character before the caret is the word end.
+			# The one before that is the last of the word, which is what we want.
+			info.move(textInfos.UNIT_CHARACTER, -2)
+			info.expand(textInfos.UNIT_CHARACTER)
+		except Exception:
+			# Focus probably moved.
+			log.debugWarning("Error fetching last character of previous word", exc_info=True)
+			return
+
+		# Fetch the formatting for the last word to see if it is marked as a spelling error,
+		# However perform the fetch and check in a future core cycle
+		# To give the content control more time to detect and mark the error itself.
+		# #12161: MS Word's UIA implementation certainly requires this delay.
+		def _delayedDetection():
+			try:
+				fields = info.getTextWithFields()
+			except Exception:
+				log.debugWarning("Error fetching formatting for last character of previous word", exc_info=True)
+				return
+			for command in fields:
+				if (
+					isinstance(command, textInfos.FieldCommand)
+					and command.command == "formatChange"
+					and command.field.get("invalid-spelling")
+				):
+					break
+			else:
+				# No error.
+				return
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+		core.callLater(50, _delayedDetection)
+
+	def event_typedCharacter(self, ch: str):
+		if(
+			config.conf["documentFormatting"]["reportSpellingErrors"]
+			and config.conf["keyboard"]["alertForSpellingErrors"]
+			and (
+				# Not alpha, apostrophe or control.
+				ch.isspace() or (ch >= " " and ch not in "'\x7f" and not ch.isalpha())
+			)
+		):
+			# Reporting of spelling errors is enabled and this character ends a word.
+			self._reportErrorInPreviousWord()
+		super().event_typedCharacter(ch)
+
+
 class EditableTextWithAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
 	To have selection changes reported, the object must notify of selection changes via the caret event.
@@ -266,17 +319,20 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _get_diffAlgo(self):
+	def _get_diffAlgo(self) -> Union[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
 		"""
 			This property controls which diffing algorithm should be used by
-			this object. Most subclasses should simply use the base
-			implementation, which returns DMP (character-based diffing).
+			this object. If the object contains a strictly contiguous
+			span of text (i.e. textInfos.POSITION_ALL refers to the entire
+			contents of the object and not just one visible screen of text),
+			then diffHandler.prefer_dmp (character-based diffing) is suitable.
+			Otherwise, use diffHandler.prefer_difflib.
 			
-			@Note: DMP is experimental, and can be disallowed via user
-			preference. In this case, the prior stable implementation, Difflib
-			(line-based diffing), will be used.
+			@Note: Return either diffHandler.prefer_dmp() or
+			diffHandler.prefer_difflib() so that the diffAlgo user
+			preference can override this choice.
 		"""
-		return diffHandler.get_dmp_algo()
+		return diffHandler.prefer_dmp()
 
 	def _get_devInfo(self):
 		info = super().devInfo

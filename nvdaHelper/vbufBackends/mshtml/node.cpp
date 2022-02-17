@@ -292,18 +292,27 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 
 };
 
-MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, bool isRootNode, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
+MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(
+	int docHandle,
+	int ID,
+	bool isBlock,
+	MshtmlVBufBackend_t* backend,
+	bool isRootNode,
+	IHTMLDOMNode*
+	pHTMLDOMNode,
+	const wstring& lang
+)
+	: VBufStorage_controlFieldNode_t(docHandle, ID, isBlock)
+	, backend(backend)
+	, language(lang)
+	, isRootNode(isRootNode)
+{
 	nhAssert(backend);
 	nhAssert(pHTMLDOMNode);
-	this->formatState=0;
-	this->backend=backend;
-	this->isRootNode=isRootNode;
+
 	pHTMLDOMNode->AddRef();
 	this->pHTMLDOMNode=pHTMLDOMNode;
-	this->propChangeSink=NULL;
-	this->loadSink=NULL;
-	this->pHTMLChangeSink=NULL;
-	this->HTMLChangeSinkCookey=0;
+
 	BSTR nodeName=NULL;
 	pHTMLDOMNode->get_nodeName(&nodeName);
 	CDispatchChangeSink* propChangeSink=new CDispatchChangeSink(this);

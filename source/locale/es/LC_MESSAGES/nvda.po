@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-15 00:01+0000\n"
-"PO-Revision-Date: 2021-10-19 16:42+0200\n"
+"POT-Creation-Date: 2021-11-19 00:02+0000\n"
+"PO-Revision-Date: 2021-11-22 21:48+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -2786,8 +2786,8 @@ msgid "report emphasis on"
 msgstr "anunciar énfasis activado"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "Activa y desactiva el anunciado de texto marcado"
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "Activa y desactiva el anunciado de texto resaltado"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 msgid "report highlighted on"
@@ -7985,19 +7985,6 @@ msgid "The settings panel you tried to open is unavailable on this system."
 msgstr ""
 "El panel de opciones que intentas abrir no está disponible en este sistema."
 
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Diccionario predeterminado"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Diccionario por Voces (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Diccionario temporal"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "Acerca de NVDA"
@@ -9518,6 +9505,17 @@ msgstr "Anunciar cambios en la cadena de &lectura"
 msgid "Report changes to the &composition string"
 msgstr "Anunciar cambios en la cadena de &composición"
 
+#. Translators: This is a label appearing on the Object Presentation settings panel.
+msgid ""
+"Configure how much information NVDA will present about controls. These "
+"options apply to focus reporting and NVDA object navigation, but not when "
+"reading text content e.g. web content with browse mode."
+msgstr ""
+"Configura cuánta información presentará NVDA acerca de los controles. Estas "
+"opciones se aplican al anunciado del foco y al navegador de objetos de NVDA, "
+"pero no cuando se lea contenido de texto, por ejemplo contenido web con el "
+"modo exploración."
+
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "Presentación de Objetos"
@@ -9924,11 +9922,10 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Always use UI Automation to access Microsoft &Word document controls when "
-"available"
+"Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Utilizar siempre UI Automation para acceder a controles de documento de "
-"Microsoft &Word cuando esté disponible"
+"Utilizar UI Automation para acceder a controles de documento de Microsoft "
+"&Word  cuando esté disponible"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10201,6 +10198,20 @@ msgstr "&Editar"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Añadir Entrada de Diccionario"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Diccionario predeterminado"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Diccionario por Voces (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Diccionario temporal"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -11150,7 +11161,7 @@ msgstr "No estás en una tabla"
 msgid "{val:.2f} in"
 msgstr "{val:.2f} pg"
 
-#. Translators: a measurement in centermetres
+#. Translators: a measurement in centimetres
 #, python-brace-format
 msgid "{val:.2f} cm"
 msgstr "{val:.2f} cm"

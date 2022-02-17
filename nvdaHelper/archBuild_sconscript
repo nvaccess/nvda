@@ -73,9 +73,9 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 	return proxyDll
 env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
 
-# We only support compiling with MSVC 14.2 (2019)
-if not env.get('MSVC_VERSION')=='14.2':
-	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) not found")
+# We only support compiling with MSVC 14.2 (2019) or newer
+if not env.get('MSVC_VERSION') or tuple(map(int, env.get('MSVC_VERSION').split("."))) < (14, 2):
+	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) or newer not found")
 
 
 TARGET_ARCH=env['TARGET_ARCH']
@@ -94,6 +94,10 @@ env.Append(
 )
 env.Append(CCFLAGS=[
 	'/std:c++17',
+	# '/showIncludes': Useful to understand which file causes some other file to be included.
+	# It will output a list of the include files.
+	# The option also displays nested include files, that is, the files
+	# included by the files that you include.
 ])
 
 env.Append(CXXFLAGS=['/EHsc'])
@@ -136,8 +140,12 @@ if 'RTC' in debug:
 env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
-win10env=env.Clone()
-win10env.Append(CXXFLAGS='/ZW')
+# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
+win10env = env.Clone()  # noqa: F821
+# Swap C++17 for C++20 for co-routine support, used by C++/WinRT.
+win10env.Replace(CCFLAGS=[
+	'/std:c++20',
+])
 Export('win10env')
 
 if 'debugCRT' in debug:
@@ -147,9 +155,9 @@ else:
 
 # Don't enable warnings and warnings as errors or analysis to 3rd party code.
 thirdPartyEnv = env.Clone()
+
 env.Append(CCFLAGS=[
-	'/W3',
-	'/WX',
+	'/W3',  # warning level 3
 ])
 if 'analyze' in debug:
 	env.Append(CCFLAGS=['/analyze'])
@@ -159,6 +167,10 @@ if 'analyze' in debug:
 	# Disable: 'x': unreferenced formal parameter
 	# We use a great deal of hook functions where we have no need for various parameters
 	env.Append(CCFLAGS='/wd4100')
+else:
+	env.Append(CCFLAGS=[
+		'/WX',  # warnings as error, don't do this with analyze, the build stops too early
+	])
 
 Export('thirdPartyEnv')
 Export('env')
@@ -204,12 +216,8 @@ if signExec:
 	env.AddPostAction(clientLib[0],[signExec])
 env.Install(clientInstallDir,clientLib)
 
-if TARGET_ARCH != 'arm64':
-	minHookLib=env.SConscript('minHook/sconscript')
-	Export('minHookLib')
-	if signExec:
-		env.AddPostAction(minHookLib[0],[signExec])
-	env.Install(libInstallDir,minHookLib)
+detoursLib = env.SConscript('detours/sconscript')
+Export('detoursLib')
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019-2021 NV Access Limited, Joseph Lee
+# Copyright (C) 2019-2022 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -19,10 +19,10 @@ class AppModule(appModuleHandler.AppModule):
 				# the progress bar's sibling might not be a UIA object at all.
 				try:
 					if (
-						obj.next.UIAElement.cachedAutomationID.startswith(
+						obj.next.UIAAutomationId.startswith(
 							"SystemSettings_Audio_Output_VolumeValue_"
 						)
-						or obj.simplePrevious.UIAElement.cachedAutomationID.startswith(
+						or obj.simplePrevious.UIAAutomationId.startswith(
 							"SystemSettings_Audio_Input_VolumeValue_"
 						)
 					):

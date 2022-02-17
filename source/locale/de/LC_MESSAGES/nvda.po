@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-15 00:01+0000\n"
+"POT-Creation-Date: 2021-12-03 00:02+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
+"Last-Translator: Bernd Dorer <mail@bdorer.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -413,7 +413,7 @@ msgstr "ill"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
 msgid "hlght"
-msgstr "hervorgehoben"
+msgstr "hvg"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -2780,8 +2780,8 @@ msgid "report emphasis on"
 msgstr "Texthervorhebungen ansagen eingeschaltet"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "Schaltet die Ansage für markierten Text ein oder aus"
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "Schaltet die Ansage für hervorgehobenen Text ein oder aus"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 msgid "report highlighted on"
@@ -3553,7 +3553,7 @@ msgstr "Keine Informationen in der Statusleiste"
 
 #. Translators: Input help mode message for command which spells content of the status bar.
 msgid "Spells the current application status bar."
-msgstr "buchstabiert die aktuelle Anwendungsstatusleiste."
+msgstr "Buchstabiert die Statusleiste der aktuellen Anwendung."
 
 #. Translators: Input help mode message for command which copies status bar content to the clipboard.
 msgid ""
@@ -6248,26 +6248,26 @@ msgid ""
 "Thank you for your support."
 msgstr ""
 "Die gemeinnützige Organisation NV Access in Australien benötigt Ihre "
-"Unterstützung, um NVDA weiter zu entwickeln.\n"
+"finanzielle Unterstützung, um NVDA weiter zu entwickeln.\n"
 "Dieses Projekt ist in erster Linie auf Spenden angewiesen. Sie helfen damit, "
 "die Vollzeit-Entwicklung zu finanzieren.\n"
-"Wenn auch nur zehn Euro für jeden Download gespendet werden, kann NV Access "
-"alle laufenden Kosten decken, die mit dem Projekt verbunden sind.\n"
-"Vielen Dank für Ihre Mithilfe."
+"Wenn auch nur mit zehn Euro für jeden Download unterstützt wird, kann NV "
+"Access alle laufenden Kosten decken, die mit dem Projekt verbunden sind.\n"
+"Vielen Dank im Voraus für Ihre Unterstützung."
 
 #. Translators: The title of the dialog requesting donations from users.
 msgid "Please Donate"
-msgstr "Spenden"
+msgstr "Finanziell unterstützen"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 msgid "&Donate"
-msgstr "&Spenden"
+msgstr "&Finanziell unterstützen"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
 msgid "&Not now"
-msgstr "Jetzt &nicht"
+msgstr "&Nicht jetzt"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
@@ -6330,7 +6330,7 @@ msgstr ""
 "{name} wird von NV Access entwickelt, einer gemeinnützigen Organisation, die "
 "freie und quelloffene Software für blinde und sehbehinderte entwickelt.\n"
 "Falls Sie NVDA nützlich finden und dessen Entwicklung fördern wollen, können "
-"Sie dies mit einer Spende (auch über das NVDA-Menü) tun."
+"Sie sie finanziell unterstützen (auch über das NVDA-Menü)."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -8005,19 +8005,6 @@ msgstr ""
 "Das Einstellungsfenster, das Sie öffnen wollen, ist auf diesem System nicht "
 "verfügbar."
 
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Standard-Wörterbuch"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Stimmen-Wörterbuch (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Temporäres Wörterbuch"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "NVDA-Informationen"
@@ -8232,7 +8219,7 @@ msgstr "Aktuelle Konfiguration in der Datei \"nvda.ini\" speichern"
 
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
-msgstr "Spen&den"
+msgstr "&Finanziell unterstützen"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
@@ -9554,6 +9541,17 @@ msgstr "Änderungen zu &Leseketten ansagen"
 msgid "Report changes to the &composition string"
 msgstr "Änderungen zu &Zusammenfassungsketten ansagen"
 
+#. Translators: This is a label appearing on the Object Presentation settings panel.
+msgid ""
+"Configure how much information NVDA will present about controls. These "
+"options apply to focus reporting and NVDA object navigation, but not when "
+"reading text content e.g. web content with browse mode."
+msgstr ""
+"Konfiguriert, wie viele Informationen NVDA zu Steuerelementen darstellt. "
+"Diese Optionen gelten für die Ansage des Fokus und die Objekt-Navigation in "
+"NVDA, jedoch nicht beim Lesen von Textinhalten, z. B. Webinhalte im "
+"Lesemodus."
+
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "Objekt-Darstellung"
@@ -9959,11 +9957,10 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Always use UI Automation to access Microsoft &Word document controls when "
-"available"
+"Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Immer die Benutzeroberflächenautomatisierung verwenden, um auf "
-"Steuerelemente in Microsoft &Word-Dokumente zuzugreifen, sofern verfügbar"
+"UIA verwenden, um auf Steuerelemente in Microsoft &Word-Dokumente "
+"zuzugreifen, sofern verfügbar"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10040,8 +10037,8 @@ msgstr "Terminal-Programme"
 #. Advanced settings panel.
 msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Unterstützung bei neu eingegebenen Zeichen in der Windows-Konsole (falls "
-"verfügbar)"
+"Unterstützung bei neu eingegebenen Zeichen in der Windows-Konsole, sofern "
+"verfügbar"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -10236,6 +10233,20 @@ msgstr "&Bearbeiten"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Wörterbuch-Eintrag hinzufügen"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Standard-Wörterbuch"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Stimmen-Wörterbuch (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Temporäres Wörterbuch"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -11193,7 +11204,7 @@ msgstr "Nicht in einer Tabelle"
 msgid "{val:.2f} in"
 msgstr "{val:.2f} zl"
 
-#. Translators: a measurement in centermetres
+#. Translators: a measurement in centimetres
 #, python-brace-format
 msgid "{val:.2f} cm"
 msgstr "{val:.2f} cm"

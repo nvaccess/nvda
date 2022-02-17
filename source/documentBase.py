@@ -17,8 +17,8 @@ class TextContainerObject(AutoPropertyObject):
 
 	def _get_TextInfo(self):
 		raise NotImplementedError
- 
-	def makeTextInfo(self,position):
+
+	def makeTextInfo(self, position) -> textInfos.TextInfo:
 		return self.TextInfo(self,position)
 
 	def _get_selection(self):

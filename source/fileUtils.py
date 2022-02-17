@@ -55,11 +55,11 @@ def _suspendWow64RedirectionForFileInfoRetrieval(func):
 	"""
 	@wraps(func)
 	def funcWrapper(filePath, *attributes):
-		nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FOLDERID.System.value)
+		nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.SYSTEM)
 		if (
 			systemUtils.hasSyswow64Dir()
-			# `os.path.commonpath` is necessary to perform case-insensitive comparisons
-			and os.path.commonpath([nativeSys32]) == os.path.commonpath([nativeSys32, filePath])
+			# Path's returned from `appModule.appPath` and `shlobj.SHGetKnownFolderPath` often differ in case
+			and filePath.casefold().startswith(nativeSys32.casefold())
 		):
 			with winKernel.suspendWow64Redirection():
 				return func(filePath, *attributes)

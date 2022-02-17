@@ -22,7 +22,7 @@ import braille
 import appModuleHandler
 import eventHandler
 import UIAHandler
-from UIAUtils import createUIAMultiPropertyCondition
+from UIAHandler.utils import createUIAMultiPropertyCondition
 import api
 import controlTypes
 import config

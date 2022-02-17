@@ -22,7 +22,13 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
-from typing import Union, List, Tuple
+from typing import (
+	Union,
+	List,
+	Tuple,
+	Optional,
+	Dict
+)
 
 #: A text info unit constant for a single chunk in a display model
 UNIT_DISPLAYCHUNK = "displayChunk"
@@ -420,7 +426,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getTextRange(self, start, end):
 		return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,str))
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
