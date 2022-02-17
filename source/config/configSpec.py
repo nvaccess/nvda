@@ -31,6 +31,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [speech]
 	# The synthesizer to use
 	synth = string(default=auto)
+	# symbolLevel values:
+	#  NONE = 0
+	#  SOME = 100
+	#  MOST = 200
+	#  ALL = 300
+	#  CHAR = 1000
+	#  UNCHANGED = -1
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
 	includeCLDR = boolean(default=True)
@@ -69,6 +76,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
+	enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
 
 	# Braille display driver settings
 	[[__many__]]

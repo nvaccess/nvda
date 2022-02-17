@@ -51,15 +51,15 @@ $	달러	some	norep
 ₹	루피	some	norep
 ƒ	florin	all	norep
 ¤	일반 화폐 기호	most
-%	percent	some
+%	퍼센트	some
 ‰	천분율	most
 &	앤퍼센드	all
 '	어퍼스트로피	most
-(	괄호 열고	some	never
-)	괄호 닫고	some	never
-*	star	some
-+	plus	some
-−	minus	some
+(	여는 괄호	some	never
+)	닫는 괄호	some	never
+*	스타	some
++	플러스	some
+−	마이너스	some
 ,	콤마	most	always
 -	대시	some
 .	쩜	most
@@ -71,14 +71,14 @@ $	달러	some	norep
 =	이퀄	some
 ?	물음표	most
 @	골뱅이	some
-[	대괄호 열고	all
-]	대괄호 닫고	all
+[	여는 대괄호	all
+]	닫는 대괄호	all
 \\	백슬래시	most
 ^	캐럿	some
 _	언더바	all
 `	그레이브	all
-{	중괄호 열고	all
-}	중괄호 닫고	all
+{	여는 중괄호	all
+}	닫는 중괄호	all
 |	버티컬 바	all
 ¦	broken bar	most
 ~	물결	all
@@ -96,16 +96,16 @@ _	언더바	all
 …	말줄임표	all	always
 ...	점 점 점	all	always
 	bullet	some
-“	큰따옴표 열기	most
-”	큰따옴표 닫기	most
-‘	작은따옴표 열기	most
-’	작은따옴표 닫기	most
-–	en dash	most	always
-—	em dash	most
+“	여는 큰따옴표	most
+”	닫는 큰따옴표	most
+‘	여는 작은따옴표	most
+’	닫는 작은따옴표	most
+–	엔 대시	most	always
+—	엠 대시	most
 ­	하이픈	most
 ⁃	hyphen bullet	none
 ●	검정 동그라미 	most
-○	white circle	most
+○	흰 동그라미	most
 ¨	diaeresis	most
 ¯	macron	most
 ´	윗빗점	most
@@ -114,8 +114,8 @@ _	언더바	all
 ‏	우에서 좌로 기호	char
 ¶	단락 기호	most
 ■	검정 사각형 	some
-▪	black square	some
-◾	black square	some
+▪	검은 사각형	some
+◾	검은 사각형	some
 □	흰 사각형	some
 ◦	흰 작은 동그라미	some
 ⇒	right double arrow	some
@@ -125,7 +125,7 @@ _	언더바	all
 ⮚	right arrowhead	some
 ❖	black diamond minus white X	some
 ♣	검정 클로버	most
-♦	black diamond	some
+♦	검정 마름모	some
 ◆	검정 마름모	most
 §	절표 기호	all
 °	도 기호	some
@@ -133,38 +133,38 @@ _	언더바	all
 »	double right pointing angle bracket
 µ	마이크로	some
 º	ordinal	some
-ª	superscript a	some
-⁰	superscript 0	some
+ª	위첨자 a	some
+⁰	위첨자 0	some
 ¹	위첨자 1	some
 ²	위첨자 2	some
 ³	위첨자 3	some
-⁴	superscript 4	some
-⁵	superscript 5	some
-⁶	superscript 6	some
-⁷	superscript 7	some
-⁸	superscript 8	some
-⁹	superscript 9	some
-⁺	superscript plus	some
-⁻	superscript minus	some
-⁼	superscript equals	some
-⁽	superscript left paren	some
-⁾	superscript right paren	some
-ⁿ	superscript n	some
-₀	subscript 0	some
-₁	subscript 1	some
-₂	subscript 2	some
-₃	subscript 3	some
-₄	subscript 4	some
-₅	subscript 5	some
-₆	subscript 6	some
-₇	subscript 7	some
-₈	subscript 8	some
-₉	subscript 9	some
-₊	subscript plus	some
-₋	subscript minus	some
-₌	subscript equals	some
-₍	subscript left paren	some
-₎	subscript right paren	some
+⁴	위첨자 4	some
+⁵	위첨자 5	some
+⁶	위첨자 6	some
+⁷	위첨자 7	some
+⁸	위첨자 8	some
+⁹	위첨자 9	some
+⁺	위첨자 plus	some
+⁻	위첨자 minus	some
+⁼	위첨자 equals	some
+⁽	위첨자 left paren	some
+⁾	위첨자 right paren	some
+ⁿ	위첨자 n	some
+₀	아래첨자 0	some
+₁	아래첨자 1	some
+₂	아래첨자 2	some
+₃	아래첨자 3	some
+₄	아래첨자 4	some
+₅	아래첨자 5	some
+₆	아래첨자 6	some
+₇	아래첨자 7	some
+₈	아래첨자 8	some
+₉	아래첨자 9	some
+₊	아래첨자 plus	some
+₋	아래첨자 minus	some
+₌	아래첨자 equals	some
+₍	아래첨자 left paren	some
+₎	아래첨자 right paren	some
 ®	등록기호	some
 ™	트레이드마크	some
 ©	저작권 기호	some
@@ -176,8 +176,8 @@ _	언더바	all
 ↑	위쪽 화살표	some
 →	오른쪽 화살표	some
 ↓	아래쪽 화살표	some
-✓	check	some
-✔	check	some
+✓	체크 기호	some
+✔	체크 기호	some
 🡺	right arrow	some
 †	칼 표	most
 ‡	겹 칼 표	most
@@ -187,7 +187,7 @@ _	언더바	all
 #Mathematical Operators U+2200 to U+220F
 ∀	모든 기호 	none
 ∁	여집합 기호	none
-∂	Partial Derivative	none
+∂	편미분 기호	none
 ∃	존재하다	none
 ∄	존재하지 않는다	none
 ∅	공집합 기호	none
@@ -253,7 +253,7 @@ _	언더바	all
 ⅞	8분의 7	none
 
 # Miscellaneous Technical
-⌘	Mac Command key	none
+⌘	Mac 커맨드 키	none
 
 #Char names:
 ㄱ	기역	none
@@ -28073,18 +28073,18 @@ _	언더바	all
 ―	수평선 기호	most
 ＼	왼쪽빗금표	most
 ∼	물결표	most
-〔	벌린 대괄호 열기	most
-〕	벌린 대괄호 닫기	most
-〈	산괄호 열기	most
-〉	산괄호닫기	most
-《	이중산괄호열기	most
-》	이중산괄호닫기	most
-「	낫표열기	most
-」	낫표닫기	most
-『	겹낫표열기	most
-』	겹낫표닫기	most
-【	검정 대괄호 열기	most
-】	검정 대괄호 닫기	most
+〔	여는 벌린 대괄호	most
+〕	닫는 벌린 대괄호	most
+〈	여는 산괄호	most
+〉	닫는 산괄호	most
+《	여는 이중산괄호	most
+》	닫는 이중산괄호	most
+「	여는 낫표	most
+」	닫는 낫표	most
+『	여는 겹낫표	most
+』	닫는 겹낫표	most
+【	여는 검정 대괄호	most
+】	닫는 검정 대괄호	most
 ℃	섭씨	most
 Å	옹스트롬	most
 ￥	엔	most
@@ -28159,8 +28159,8 @@ _	언더바	all
 ％	전각 퍼센트	most
 ＆	전각 앤퍼센드	most
 ＇	전각 작은따옴표	most
-（	전각 괄호 열기	most
-）	전각 괄호 닫기	most
+（	여는 전각 괄호	most
+）	닫는 전각 괄호	most
 ＊	전각 별표	most
 ＋	전각 플러스	most
 ，	전각 쉼표	most
@@ -28210,9 +28210,9 @@ _	언더바	all
 Ｘ	전각 대문자 X	most
 Ｙ	전각 대문자 Y	most
 Ｚ	전각 대문자 Z	most
-［	전각 대괄호 열기	most
-￦	전각 백슬레시	most
-］	전각 대괄호 닫기	most
+［	여는 전각 대괄호	most
+￦	원	most
+］	닫는 전각 대괄호	most
 ＾	전각 캐럿	most
 ＿	전각 언더바	most
 ｀	전각 그레이브 액센트	most
@@ -28242,9 +28242,9 @@ _	언더바	all
 ｘ	전각 소문자 x	most
 ｙ	전각 소문자 y	most
 ｚ	전각 소문자 z	most
-｛	전각 중괄호 열기	most
+｛	여는 전각 중괄호	most
 ｜	전각 버티클 바	most
-｝	전각 중괄호 닫기	most
+｝	닫는 전각 중괄호	most
 ￣	전각 물결표	most
 ⅰ	로마 숫자 소문자 1	most
 ⅱ	로마 숫자 소문자 2	most

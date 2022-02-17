@@ -13,7 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <map>
-#include "vbufRemote.h"
+#include <remote/vbufRemote.h>
 #include <vbufBase/backend.h>
 #include "dllmain.h"
 #include <common/log.h>

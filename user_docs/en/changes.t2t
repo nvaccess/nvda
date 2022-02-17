@@ -8,15 +8,39 @@ What's New in NVDA
 == New Features ==
 - Support for reporting notes in MS Excel with UI Automation enabled on Windows 11. (#12861)
 - In recent builds of Microsoft Word via UI Automation on Windows 11, the existence of bookmarks, draft comments and resolved comments are now reported in both speech and braille. (#12861)
+- The new --lang command line parameter allows overriding the configured NVDA language. (#10044)
+- NVDA now warns about command line parameters which are unknown and not used by any add-ons. (#12795)
+- In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
+  - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
+  - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
+  -
+- Reporting of "has details" and the associated command to summarize the details relation have been updated to work in focus mode. (#13106)
+- Seika Notetaker can now be auto-detected when connected via USB and Bluetooth. (#13191, #13142)
+  - This affects the following devices: MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)
+  - Manually selecting the bluetooth COM port is also now supported.
+  -
+- Added a command to toggle the braille viewer; there is no default associated gesture. (#13258)
+- Added commands for toggling multiple modifiers simultaneously with a Braille display (#13152)
+- The Speech Dictionary dialog now features a "Remove all" button to help clear a whole dictionary. (#11802)
+- Added support for Windows 11 Calculator. (#13212)
 -
+
 
 == Changes ==
 - Espeak-ng has been updated to 1.51-dev commit ``7e5457f91e10``. (#12950)
+- Updated liblouis braille translator to [3.20.0 https://github.com/liblouis/liblouis/releases/tag/v3.20.0]. (#13141)
+  - New braille table: Japanese (Kantenji) literary braille
+  -
 - NVDA will report selection and merged cells in LibreOffice Calc 7.3 and above. (#9310, #6897)
 - Updated Unicode Common Locale Data Repository (CLDR) to 40.0. (#12999)
+- ``NVDA+Numpad Delete`` reports the location of the caret or focused object by default. (#13060)
+- ``NVDA+Shift+Numpad Delete`` reports the location of the review cursor. (#13060)
+- Added default bindings for toggling modifier keys to Freedom Scientific displays (#13152)
+- 'Baseline' is no longer reported via the report text formatting command (NVDA+F). (#11815)
 -
 
 == Bug Fixes ==
+- Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
 - Clipboard manager pane should no longer incorrectly steal focus when opening some Office programs. (#12736)
 - On a system where the user has chosen to swap the primary mouse button from the left to the right, NVDA will no longer accidentally bring up a context menu instead of activating an item, in applications such as web browsers. (#12642)
 - When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)
@@ -25,10 +49,26 @@ What's New in NVDA
   - Note that in some situations, when inserting or deleting characters in the middle of a line, the characters after the caret may again be read out.
   -
 - MS word with UIA: heading quick nav in browse mode no longer gets stuck on the final heading of a document, nor is this heading shown twice in the NVDA elements list. (#9540)
+- In Windows 8 and later, the File Explorer status bar can now be retrieved using the standard gesture NVDA+end (desktop) / NVDA+shift+end (laptop). (#12845)
+- Incoming messages in the chat of Skype for Business are reported again. (#9295)
+- NVDA can again duck audio when using the SAPI5 synthesizer on Windows 11. (#12913)
+- In Windows 10 Calculator, NVDA will announce labels for history and memory list items. (#11858)
+- Gestures such as scrolling and routing again work with HID Braille devices. (#13228)
+- Windows 11 Mail: After switching focus between apps, while reading a long email, NVDA would get stuck on a line of the email. (#13050)
+- HID braille: chorded gestures (E.g. space+dot4) can be successfully performed from the Braille display. (#13326)
+- Fixed an issue where multiple settings dialogs could be opened at the same time. (#12818)
+- Fixed a problem where some Focus Blue Braille displays would stop working after waking the computer from sleep. (#9830)
+- 'Baseline' is no longer spuriously reported when the 'report superscript and subscript' option is active. (#11078)
+- In Windows 11, NVDA will no longer prevent navigation in emoji panel when selecting emojis. (#13104)
+- Prevents a bug causing double-reporting when using Windows Console and Terminal. (#13261)
+- Fixed several cases where list items could not be reported in 64 bit applications, such as REAPER. (#8175)
 -
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
+- Updated SCons to version 4.3.0. (#13033)
+- Updated py2exe to version 0.11.0.1. (#12357, #13066)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
 - ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
 - ``MessageItem`` has been removed from the Outlook appModule. (#12935)
@@ -48,12 +88,61 @@ What's New in NVDA
 - ``core.CallCancelled`` is now ``exceptions.CallCancelled``. (#12940)
 - All constants starting with RPC from ``core`` and ``logHandler`` are moved into ``RPCConstants.RPC`` enum. (#12940)
 - It is recommended that ``mouseHandler.doPrimaryClick`` and ``mouseHandler.doSecondaryClick`` functions should be used to click the mouse to perform a logical action such as activating (primary) or secondary (show context menu),
-rather than using executeMouseEvent and specifying the left or right mouse button specifically.
+rather than using ``executeMouseEvent`` and specifying the left or right mouse button specifically.
 This ensures code will honor the Windows user setting for swapping the primary mouse button. (#12642)
 - ``config.getSystemConfigPath`` has been removed - there is no replacement. (#12943)
 - ``shlobj.SHGetFolderPath`` has been removed - please use ``shlobj.SHGetKnownFolderPath`` instead. (#12943)
 - ``shlobj`` constants have been removed. A new enum has been created, ``shlobj.FolderId`` for usage with ``SHGetKnownFolderPath``. (#12943)
 - ``diffHandler.get_dmp_algo`` and ``diffHandler.get_difflib_algo`` have been replaced with ``diffHandler.prefer_dmp`` and ``diffHandler.prefer_difflib`` respectively. (#12974)
+- ``languageHandler.curLang`` has been removed - to get the current NVDA language use ``languageHandler.getLanguage()``. (#13082)
+- A ``getStatusBarText`` method can be implemented on an appModule to customize the way NVDA fetches the text from the status bar. (#12845)
+- ``globalVars.appArgsExtra`` has been removed. (#13087)
+  - If your add-on need to process additional command line arguments see the documentation of ``addonHandler.isCLIParamKnown`` and the developer guide for details.
+  -
+- The UIA handler module and other UIA support modules are now part of a UIAHandler package. (#10916)
+  - ``UIAUtils`` is now ``UIAHandler.utils``
+  - ``UIABrowseMode`` is now ``UIAHandler.browseMode``
+  - ``_UIAConstants`` is now ``UIAHandler.constants``
+  - ``_UIACustomProps`` is now ``UIAHandler.customProps``
+  - ``_UIACustomAnnotations`` is now ``UIAHandler.customAnnotations``
+- The ``IAccessibleHandler`` ``IA2_RELATION_*`` constants have been replaced with the ``IAccessibleHandler.RelationType`` enum. (#13096)
+  - Removed ``IA2_RELATION_FLOWS_FROM``
+  - Removed ``IA2_RELATION_FLOWS_TO``
+  - Removed ``IA2_RELATION_CONTAINING_DOCUMENT``
+  -
+- ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` and ``LOCALE_SLANGDISPLAYNAME`` are removed from ``languageHandler`` - use members of ``languageHandler.LOCALE`` instead. (#12753)
+- Switched from Minhook to Microsoft Detours as a hooking library for NVDA. Hooking with this library is mainly used to aid the display model. (#12964)
+- ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` is removed. (#13211)
+- SCons now builds with multiple concurrent jobs, equal to the number of logical processors in the system.
+This can dramatically decrease build times on multi core systems. (#13226)
+- ``characterProcessing.SYMLVL_*`` constants are removed - please use ``characterProcessing.SymbolLevel.*`` instead. (#13248)
+- Functions ``loadState`` and ``saveState`` are removed from addonHandler - please use ``addonHandler.state.load`` and ``addonHandler.state.save`` instead. (#13245)
+- Moved the UWP/OneCore interaction layer of NVDAHelper [from C++/CX to C++/Winrt https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/move-to-winrt-from-cx]. (#10662)
+- It is now mandatory to subclass ``DictionaryDialog`` to use it. (#13268)
+- ``config.RUN_REGKEY``, ``config.NVDA_REGKEY`` are deprecated, please use ``config.RegistryKey.RUN``, ``config.RegistryKey.NVDA`` instead. These will be removed in 2023. (#13242)
+- ``easeOfAccess.ROOT_KEY``, ``easeOfAccess.APP_KEY_PATH`` are deprecated, please use``easeOfAccess.RegistryKey.ROOT``, ``easeOfAccess.RegistryKey.APP`` instead. These will be removed in 2023. (#13242)
+- ``easeOfAccess.APP_KEY_NAME`` has been deprecated, to be removed in 2023. (#13242)
+- ``DictionaryDialog`` and ``DictionaryEntryDialog`` are moved from ``gui.settingsDialogs`` to ``gui.speechDict``. (#13294)
+- IAccessible2 relations are now shown in developer info for IAccessible2 objects. (#13315)
+- ``UIAAutomationId`` property for UIA objects should be preferred over ``cachedAutomationId``. (#13125, #11447)
+  - ``cachedAutomationId`` can be used if obtained directly from the element.
+  -
+-
+
+
+= 2021.3.1 =
+This is a minor release to fix several issues in 2021.3.
+
+
+== Changes ==
+- The new HID Braille protocol is no longer preferred when another braille display driver can be used. (#13153)
+- The new HID Braille protocol can be disabled via a setting in the advanced settings panel. (#13180)
+-
+
+
+== Bug Fixes ==
+- Landmark is once again abbreviated in braille. #13158
+- Fixed unstable braille display auto detection for Humanware Brailliant and APH Mantis Q40 braille displays when using Bluetooth. (#13153)
 -
 
 
@@ -83,10 +172,6 @@ Affected users will need to download this update manually.
 - Error notifications can be enabled (advanced settings) when using any version of NVDA. (#12672)
 - In Windows 10 and later, NVDA will announce the suggestion count when entering search terms in apps such as Settings and Microsoft Store. (#7330, #12758, #12790)
 - Table navigation is now supported in grid controls created using the Out-GridView cmdlet in PowerShell. (#12928)
-- In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
-    - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
-    - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
-    -
 -
 
 

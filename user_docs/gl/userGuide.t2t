@@ -1836,12 +1836,12 @@ Esto ten un maior impacto negativo no rendemento, especialmente en aplicacións 
 Polo tanto, cando se activa esta opción, o NVDA limitará o rexistro de eventos ao foco do sistema para a maioría dos eventos.
 Se sofres problemas de rendemento nunha ou máis aplicacións, recomendámosche que probes esta funcionalidade para ver se o rendemento mellora.
 
-==== Usar sempre UI automation para acesar a controis de documento de Microsoft Word cando estea dispoñible ====[AdvancedSettingsUseUiaForWord]
-Cando esta opción estea activada, o NVDA sempre tentará usar a API de accesibilidade de Microsoft UI Automation para obter información dos controis de documentos de Microsoft Word, incluso nas versións menos recentes de Microsoft Office 2016/365.
+==== Usar UI automation para acesar a controis de documento de Microsoft Word cando estea dispoñible ====[AdvancedSettingsUseUiaForWord]
+Cando esta opción estea activada, o NVDA tentará usar a API de accesibilidade de Microsoft UI Automation para obter información dos controis de documentos de Microsoft Word.
 Esto inclúe ao mesmo Microsoft Word, e tamén o visor de mensajes e o compositor de Microsoft Outlook.
-Para Microsoft Office cunha versión de compilación 16.0.13901 ou posterior, o NVDA sempre usará UI Automation para acsar aos documentos de Microsoft Word, independentemente de cómo se configure esta opción. 
-Para as versións máis recentes de Microsoft Office 2016/365 que se executan en Windows 10 e posteriores, a compatibilidade con UI Automation é o suficentemente compreta como para proporcionar aceso aos documentos de Microsoft Word case que igual á compatibilidade existente con Microsoft Word de NVDA, con a ventalla engadida de que a capacidade de resposta aumenta considerablemente.
-Sen embargo, pode haber algunha información que non se amose, ou que estea amosada de xeito incorrecto nalgunhas versións vellas de Microsoft Office, o que significa que non sempre se pode confiar neste soporte de UI Automation.
+Para as versións máis recentes de Microsoft Office 2016/365 que se executen en Windows 10 e posteriores, a compatibilidade con UI Automation  é o suficentemente compreta como para proporcionar acceso aos documentos de Microsoft Word case que igual á compatibilidade con Microsoft Word existente do NVDA, coa ventaxa engadida de que a capacidade de resposta aumenta considerablemente.
+Sen embargo, pode haber algunha información que non estea exposta, ou que estea exposta de xeito incorrecto nalgunhas versións de Microsoft Office, o que significa que non sempre se pode confiar neste soporte de UI Automation.
+Aínda non recomendamos que a maioría dos usuarios activen esta función por defecto, aíndaque convidamos aos usuarios de Office 2016/365 a probar esta función e a dar a súa opinión.
 
 ==== Usar UI Automation para acesar á Consola de Windows cando estea dispoñible ====[AdvancedSettingsConsoleUIA]
 Cando esta opción estea activada, o NVDA usará unha versión nova en progreso do seu soporte para a Consola de Windows que ten a ventalla da [mellora de accesibilidade feita por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica é moi experimental e aínda está incompreta, así que o seu uso aínda non está recomendado. Sen embargo, unha vez compretada, cóidase que este novo soporte se converterá no predeterminado, mellorando o rendemento e a estabilidade do NVDA Nas consolas de ordes de Windows.
@@ -3189,8 +3189,8 @@ A detección automática de pantallas braille do NVDA tamén recoñecerá calque
 Seguidamente van as asignacións de teclas actuales para estas pantallas.
 %kc:beginInclude
 || Nome | Tecla |
-| Desprazar a pantalla braille cara atrás | pan á esquerda |
-| Desprazar a pantalla braille cara adiante | pan á dereita |
+| Desprazar a pantalla braille cara atrás | pan á esquerda ou balancín arriba |
+| Desprazar a pantalla braille cara adiante | pan á dereita ou balancín abaixo |
 | Mover a pantalla braille á liña anterior | espazo+punto1 |
 | Mover a pantalla braille á liña seguinte | espazo+punto4
 | Levar á celda braille | conxunto de sensores de enrutamento 1|

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 00:02+0000\n"
-"PO-Revision-Date: 2021-10-23 15:40+0200\n"
+"POT-Creation-Date: 2021-11-05 00:03+0000\n"
+"PO-Revision-Date: 2021-11-05 17:06+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -2769,7 +2769,7 @@ msgid "report emphasis on"
 msgstr "odczytuj podkreślenie tak"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
+msgid "Toggles on and off the reporting of highlighted text"
 msgstr "włącza lub wyłącza oznajmianie podświetlonego tekstu"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
@@ -7929,19 +7929,6 @@ msgstr ""
 "Panel ustawień, który państwo próbują otworzyć jest niedostępny w tym "
 "systemie operacyjnym."
 
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Słownik domyślny"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Słownik głosu (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Słownik tymczasowy"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "O programie"
@@ -9848,11 +9835,10 @@ msgstr "Włącz selektywną &rejestrację dla zmian właściwości obiektów UIA
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Always use UI Automation to access Microsoft &Word document controls when "
-"available"
+"Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Zawsze używaj UI Automation do interakcji kontrolek dokumentów Microsoft i "
-"Word jeśli jest to możliwe"
+"używaj UI Automation do interakcji z kontrolkami dokumentów Microsoft i Word "
+"jeśli jest to możliwe"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10127,6 +10113,20 @@ msgstr "&Edytuj"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Dodaj wpis słownika"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Słownik domyślny"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Słownik głosu (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Słownik tymczasowy"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"

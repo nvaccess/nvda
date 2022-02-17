@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 00:02+0000\n"
-"PO-Revision-Date: 2021-10-22 17:59+0200\n"
-"Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
+"POT-Creation-Date: 2021-11-19 00:02+0000\n"
+"PO-Revision-Date: 2021-11-21 17:28+0200\n"
+"Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
 "MIME-Version: 1.0\n"
@@ -574,7 +574,7 @@ msgstr "o%s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
-msgstr "klnk"
+msgstr "vlnk"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -1635,7 +1635,7 @@ msgstr "Ei edellisiä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "Siirtää seuraavan käydyn linkin kohdalle."
+msgstr "Siirtää seuraavan vieraillun linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
@@ -1651,19 +1651,19 @@ msgstr "Ei edellisiä vierailtuja linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "Siirtää seuraavan vieraillun linkin kohdalle."
+msgstr "Siirtää seuraavan vierailemattoman linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
-msgstr "Ei enempää vierailtuja linkkejä"
+msgstr "Ei enempää vierailemattomia linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "Siirtää edellisen vieraillun linkin kohdalle."
+msgstr "Siirtää edellisen vierailemattoman linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "Ei edellisiä vierailtuja linkkejä"
+msgstr "Ei edellisiä vierailemattomia linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
@@ -2782,8 +2782,9 @@ msgid "report emphasis on"
 msgstr "Korostuksen ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "Ottaa käyttöön merkityn tekstin ilmaisemisen tai poistaa sen käytöstä."
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr ""
+"Ottaa käyttöön korostetun tekstin ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 msgid "report highlighted on"
@@ -7774,7 +7775,7 @@ msgstr "vain luku"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "avoinna"
+msgstr "avattu"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
@@ -7954,19 +7955,6 @@ msgstr ""
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr ""
 "Asetuspaneeli, jota yritit avata, ei ole käytettävissä tässä järjestelmässä."
-
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Oletussanasto"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Äänikohtainen sanasto (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Tilapäissanasto"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -8343,7 +8331,7 @@ msgstr "&Ohje"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
-msgstr "&Poista käytöstä"
+msgstr "Poi&sta käytöstä"
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
@@ -8481,8 +8469,7 @@ msgstr "Lisäosan asennus epäonnistui tiedostosta %s"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
-msgstr ""
-"Lisäosia ei voi asentaa Microsoft Storesta asennettuun NVDA:n versioon."
+msgstr "Lisäosia ei voi asentaa Microsoft Storesta asennettuun NVDA-versioon."
 
 #. Translators: The message displayed when installing an add-on package is prohibited,
 #. because it requires a later version of NVDA than is currently installed.
@@ -9877,11 +9864,10 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Always use UI Automation to access Microsoft &Word document controls when "
-"available"
+"Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Käytä aina UI Automation -rajapintaa Microsoft &Wordin asiakirjasäätimissä, "
-"kun käytettävissä"
+"Käytä UI Automation -rajapintaa Microsoft &Wordin asiakirjasäätimissä, kun "
+"käytettävissä"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10151,6 +10137,20 @@ msgstr "&Muokkaa"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Lisää sanastomääritys"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Oletussanasto"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Äänikohtainen sanasto (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Tilapäissanasto"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
