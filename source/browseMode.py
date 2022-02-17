@@ -359,7 +359,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			# even though the list item and list are read-only, but focusable.
 			if (
 				role == controlTypes.Role.LISTITEM and controlTypes.State.FOCUSED in states
-				and obj.parent.role == controlTypes.Role.LIST and controlTypes.State.FOCUSED in obj.parent.states
+				and obj.parent.role == controlTypes.Role.LIST and controlTypes.State.FOCUSABLE in obj.parent.states
 			):
 				return True
 			# Certain controls such as combo boxes and readonly edits are read-only but still interactive.
