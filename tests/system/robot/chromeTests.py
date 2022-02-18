@@ -1705,7 +1705,10 @@ def test_focus_mode_on_focusable_read_only_lists():
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_CALL_SEP.join([
-			"message",  # role description for document container
+			SPEECH_SEP.join([
+				"",  # empty name, document is unnamed
+				"message",  # role description for document container
+			]),
 			SPEECH_SEP.join([
 				"Todd Kloots",  # name for link
 				"link",  # role for link
