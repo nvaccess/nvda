@@ -1687,7 +1687,7 @@ def test_focus_mode_on_focusable_read_only_lists():
 		actualSpeech,
 		SPEECH_CALL_SEP.join([
 			SPEECH_SEP.join([
-				"messages",  # name for list container
+				"Messages",  # name for list container
 				"list",  # role for list container
 			]),
 			SPEECH_SEP.join([
