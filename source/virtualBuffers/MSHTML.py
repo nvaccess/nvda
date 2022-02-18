@@ -8,6 +8,7 @@ from comtypes import COMError
 import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
+from controlTypes import TextPosition
 import NVDAObjects.IAccessible.MSHTML
 import winUser
 import NVDAHelper
@@ -20,7 +21,7 @@ import textInfos
 import api
 import aria
 import config
-import watchdog
+import exceptions
 
 FORMATSTATE_INSERTED=1
 FORMATSTATE_DELETED=2
@@ -29,6 +30,14 @@ FORMATSTATE_STRONG=8
 FORMATSTATE_EMPH=16
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
+
+	def _getTextPositionAttribute(self, attrs: dict) -> TextPosition:
+		textPositionValue = attrs.get('text-position')
+		try:
+			return TextPosition(textPositionValue)
+		except ValueError:
+			log.debug(f'textPositionValue={textPositionValue}')
+			return TextPosition.BASELINE
 
 	def _normalizeFormatField(self, attrs):
 		formatState=attrs.get('formatState',"0")
@@ -44,6 +53,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		language=attrs.get('language')
 		if language:
 			attrs['language']=languageHandler.normalizeLanguage(language)
+		textPosition = attrs.get('textPosition')
+		textPosition = self._getTextPositionAttribute(attrs)
+		attrs['text-position'] = textPosition
 		return attrs
 
 	def _getIsCurrentAttribute(self, attrs: dict) -> controlTypes.IsCurrent:
@@ -229,7 +241,7 @@ class MSHTML(VirtualBuffer):
 			if not root.IAccessibleRole:
 				# The root object is dead.
 				return False
-		except watchdog.CallCancelled:
+		except exceptions.CallCancelled:
 			# #1831: If the root object isn't responding, treat the buffer as dead.
 			# Otherwise, we'll keep querying it on every focus change and freezing.
 			return False

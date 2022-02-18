@@ -70,7 +70,7 @@ class State(DisplayStringIntEnum):
 	CROPPED = 0x8000000000
 	OVERFLOWING = 0x10000000000
 	UNLOCKED = 0x20000000000
-	HAS_ARIA_DETAILS = 0x40000000000
+	HASNOTE = 0x80000000000
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -142,8 +142,6 @@ _stateLabels: Dict[State, str] = {
 	State.SORTED_DESCENDING: _("sorted descending"),
 	# Translators: a state that denotes that an object (usually a graphic) has a long description.
 	State.HASLONGDESC: _("has long description"),
-	# Translators: a state that denotes that an object has additional details (such as a comment section).
-	State.HAS_ARIA_DETAILS: _("has details"),
 	# Translators: a state that denotes that an object is pinned in its current location
 	State.PINNED: _("pinned"),
 	# Translators: a state that denotes the existance of a formula on a spreadsheet cell
@@ -160,6 +158,8 @@ _stateLabels: Dict[State, str] = {
 	# Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
 	# Excel spreadsheet).
 	State.UNLOCKED: _("unlocked"),
+	# Translators: a state that denotes the existance of a note.
+	State.HASNOTE: _("has note"),
 }
 
 

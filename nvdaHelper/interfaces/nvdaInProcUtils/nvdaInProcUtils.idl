@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2020 NV Access Limited, Leonard de Ruijter.
+Copyright 2006-2021 NV Access Limited, Leonard de Ruijter.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 cpp_quote("/*")
 cpp_quote("This file is a part of the NVDA project.")
 cpp_quote("URL: http://www.nvda-project.org/")
-cpp_quote("Copyright 2006-2020 NV Access Limited, Leonard de Ruijter.")
+cpp_quote("Copyright 2006-2021 NV Access Limited, Leonard de Ruijter.")
 cpp_quote("This program is free software: you can redistribute it and/or modify")
 cpp_quote("it under the terms of the GNU General Public License version 2.0, as published by")
 cpp_quote("the Free Software Foundation.")
@@ -68,11 +68,38 @@ interface NvdaInProcUtils {
 
 	error_status_t sysListView32_getColumnContent([in] const unsigned long windowHandle, [in] int item,  [in] int subItem, [out,string] BSTR* text);
 
+	cpp_quote("/* Actually maps to nvdaInProcUtils_sysListView32_getColumnLocation")
+	cpp_quote("*/")
+	error_status_t sysListView32_getColumnLocation([in] const unsigned long windowHandle, [in] int item,  [in] int subItem, [out] RECT* location);
+
+	cpp_quote("/* Actually maps to nvdaInProcUtils_sysListView32_getColumnHeader")
+	cpp_quote("*/")
+	error_status_t sysListView32_getColumnHeader([in] const unsigned long windowHandle, [in] int subItem, [out,string] BSTR* text);
+
+	cpp_quote("/* Actually maps to nvdaInProcUtils_sysListView32_getColumnOrderArray")
+	cpp_quote("*/")
+	error_status_t sysListView32_getColumnOrderArray([in] const unsigned long windowHandle, [in] const int columnCount, [out,size_is(columnCount)] int* columnOrderArray);
+
 	error_status_t getActiveObject([in] handle_t bindingHandle, [in,string] const wchar_t* progid, [out] IUnknown** ppUnknown);
 
 	error_status_t dumpOnCrash([in] handle_t bindingHandle, [in,string] const wchar_t* minidumpPath);
 
 	error_status_t IA2Text_findContentDescendant([in] handle_t bindingHandle, [in] const unsigned long hwnd, [in] long parentID, [in] long what, [out] long* descendantID, [out] long* descendantOffset);
+
+
+	cpp_quote("/* Actually maps to nvdaInProcUtils_getTextFromIAccessible")
+	cpp_quote("*/")
+	error_status_t getTextFromIAccessible(
+		[in] handle_t bindingHandle,
+		[in] const unsigned long hwnd,
+		[in] long parentID,
+		// Params for getTextFromIAccessible
+		[out, string] BSTR* textBuf,
+		[in, defaultvalue(TRUE)] const boolean recurse,
+		[in, defaultvalue(TRUE)] const boolean includeTopLevelText
+	);
+
+
 
 /*
  * Fetches the  requested property from the given MAPIProp object.

@@ -6,15 +6,17 @@
 # This file represents the braille display driver for
 # Seika Notetaker, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
-
+import re
 from io import BytesIO
 import typing
 from typing import Dict, List, Set
 
+import serial
+
 import braille
+from bdDetect import DeviceMatch
 import brailleInput
 import inputCore
-import hwPortUtils
 import bdDetect
 import hwIo
 from serial.win32 import INVALID_HANDLE_VALUE
@@ -57,12 +59,41 @@ SEIKA_ROUTING = b"\xff\xff\xa4"
 SEIKA_KEYS = b"\xff\xff\xa6"
 SEIKA_KEYS_ROU = b"\xff\xff\xa8"
 
-SEIKA_CONFIG = b"\x50\x00\x00\x25\x80\x00\x00\x03\x00"
+BAUD = 9600
+SEIKA_HID_FEATURES = b"".join([
+	b"\x50\x00\x00",
+	int.to_bytes(BAUD, length=2, byteorder="big", signed=False),  # b"\x25\x80"
+	b"\x00\x00\x03\x00",
+])
 SEIKA_CMD_ON = b"\x41\x01"
+""" Unknown why this is required. Used for HID (via setFeature), but not for serial.
+"""
 
 vidpid = "VID_10C4&PID_EA80"
 hidvidpid = "HID\\VID_10C4&PID_EA80"
 SEIKA_NAME = "seikantk"
+
+# Bluetooth name of the Seika devices is "TSM abcd", where the "abcd" is a four-digit
+# number, e.g. "TSM 3366", "TSM 0001", etc. There is a space between "TSM" and "abcd".
+seikaBluetoothNameRegex = re.compile(r"TSM \d\d\d\d")
+
+
+def isSeikaBluetoothName(bluetoothName: str) -> bool:
+	return bool(seikaBluetoothNameRegex.match(bluetoothName))
+
+
+def isSeikaBluetoothDeviceInfo(deviceInfo: typing.Dict[str, str]) -> bool:
+	# bluetoothName is listed in information from L{hwPortUtils.listComPorts} when 'hwIo' debug logging
+	# category is enabled.
+	btNameKey = "bluetoothName"
+	return (
+		btNameKey in deviceInfo
+		and isSeikaBluetoothName(deviceInfo["bluetoothName"])
+	)
+
+
+def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
+	return isSeikaBluetoothDeviceInfo(match.deviceInfo)
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
@@ -70,53 +101,88 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = SEIKA_NAME
 	# Translators: Name of a braille display.
 	description = _("Seika Notetaker")
-	path = ""
 	isThreadSafe = True
-	for d in hwPortUtils.listHidDevices():
-		if d["hardwareID"].startswith(hidvidpid):
-			path = d["devicePath"]
 
 	@classmethod
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""@return: An iterator containing the name and description for each port.
 		"""
-		return braille.getSerialPorts()
+		return braille.getSerialPorts(isSeikaBluetoothDeviceInfo)
 
-	def __init__(self, port="hid"):
+	def __init__(self, port: typing.Union[None, str, DeviceMatch]):
 		super().__init__()
 		self.numCells = 0
 		self.numBtns = 0
 		self.numRoutingKeys = 0
 		self.handle = None
-
 		self._hidBuffer = b""
 		self._command: typing.Optional[bytes] = None
 		self._argsLen: typing.Optional[int] = None
-		log.info(f"Seika Notetaker braille driver path: {self.path}")
 
-		if self.path == "":
-			raise RuntimeError("No MINI-SEIKA display found, no path found")
-		self._dev = dev = hwIo.Hid(path=self.path, onReceive=self._onReceive)
-		if dev._file == INVALID_HANDLE_VALUE:
-			raise RuntimeError("No MINI-SEIKA display found, open error")
-		dev.setFeature(SEIKA_CONFIG)  # baud rate, stop bit usw
-		dev.setFeature(SEIKA_CMD_ON)  # device on
+		log.debug(f"Seika Notetaker braille driver: ({port!r})")
+		dev: typing.Optional[typing.Union[hwIo.Hid, hwIo.Serial]] = None
+		for match in self._getTryPorts(port):
+			self.isHid = match.type == bdDetect.KEY_HID
+			self.isSerial = match.type == bdDetect.KEY_SERIAL
+			try:
+				if self.isHid:
+					log.info(f"Trying Seika notetaker on USB-HID")
+					self._dev = dev = hwIo.Hid(
+						path=match.port,  # for a Hid match type 'port' is actually 'path'.
+						onReceive=self._onReceiveHID
+					)
+					dev.setFeature(SEIKA_HID_FEATURES)  # baud rate, stop bit usw
+					dev.setFeature(SEIKA_CMD_ON)  # device on
+				elif self.isSerial:
+					log.info(f"Trying Seika notetaker on Bluetooth (serial) port:{match.port}")
+					self._dev = dev = hwIo.Serial(
+						port=match.port,
+						onReceive=self._onReceiveSerial,
+						baudrate=BAUD,
+						parity=serial.PARITY_NONE,
+						bytesize=serial.EIGHTBITS,
+						stopbits=serial.STOPBITS_ONE,
+					)
+					# Note: SEIKA_CMD_ON not sent as per USB-HID, testing from users hasn't indicated any problems.
+					# The exact purpose of SEIKA_CMD_ON isn't known/documented here.
+				else:
+					log.debug(f"Port type not handled: {match.type}")
+					continue
+			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
+				continue
+			if self._getDeviceInfo(dev):
+				break
+			elif dev:
+				dev.close()
+				dev = None
+
+		if not dev:
+			RuntimeError("No MINI-SEIKA display found")
+		elif self.numCells == 0:
+			dev.close()
+			dev = None
+			raise RuntimeError("No MINI-SEIKA display found, no response")
+		else:
+			log.info(
+				f"Seika notetaker,"
+				f" Cells {self.numCells}"
+				f" Buttons {self.numBtns}"
+			)
+
+	def _getDeviceInfo(self, dev: hwIo.IoBase) -> bool:
+		if not dev or dev._file == INVALID_HANDLE_VALUE:
+			log.debug("No MINI-SEIKA display found, open error")
+			return False
+
 		dev.write(SEIKA_REQUEST_INFO)  # Request the Info from the device
 
 		# wait and try to get info from the Braille display
 		for i in range(MAX_READ_ATTEMPTS):  # the info-block is about
 			dev.waitForRead(READ_TIMEOUT_SECS)
 			if self.numCells:
-				log.info(
-					f"Seika notetaker on USB-HID,"
-					f" Cells {self.numCells}"
-					f" Buttons {self.numBtns}"
-				)
-				break
-
-		if self.numCells == 0:
-			dev.close()
-			raise RuntimeError("No MINI-SEIKA display found, no response")
+				return True
+		return False
 
 	def terminate(self):
 		try:
@@ -126,17 +192,29 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		cellBytes = SEIKA_SEND_TEXT + self.numCells.to_bytes(1, 'little') + bytes(cells)
+		cellBytes = SEIKA_SEND_TEXT + bytes([self.numCells]) + bytes(cells)
 		self._dev.write(cellBytes)
 
-	def _onReceive(self, data: bytes):
+	def _onReceiveHID(self, data: bytes):
+		"""Three bytes at a time expected, only the middle byte is used to construct the command, the first
+		and third byte are discarded.
+		"""
+		stream = BytesIO(data)
+		cmd = stream.read(3)  # Note, first and third bytes are discarded
+		newByte: bytes = cmd[1:2]  # use range to return bytes type, containing only index 1
+		self._onReceive(newByte)
+
+	def _onReceiveSerial(self, data: bytes):
+		"""One byte at a time is expected"""
+		self._onReceive(data)
+
+	def _onReceive(self, newByte: bytes):
 		"""
 		Note: Further insight into this function would be greatly appreciated.
 		This function is a very simple state machine, each stage represents the collection of a field, when all
 		fields are collected the command they represent can be processed.
 
-		On each call to _onReceive three bytes are read from the device.
-		The first and third bytes are discarded, the second byte is appended to a buffer.
+		On each call to _onReceive the new byte is appended to a buffer.
 		The buffer is accumulated until the buffer has the required number of bytes for the field being collected.
 		There are 3 fields to be collected before a command can be processed:
 		1: first 3 bytes: command
@@ -146,9 +224,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		After accumulating enough bytes for each phase, the buffer is cleared and the next stage is entered.
 		"""
 		COMMAND_LEN = 3
-		stream = BytesIO(data)
-		cmd = stream.read(3)  # Note, first and third bytes are discarded
-		newByte: bytes = cmd[1:2]  # use range to return bytes
 		self._hidBuffer += newByte
 		hasCommandBeenCollected = self._command is not None
 		hasArgLenBeenCollected = self._argsLen is not None

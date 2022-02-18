@@ -1,8 +1,7 @@
-#winUser.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Functions that wrap Windows API functions from user32.dll"""
 
@@ -11,6 +10,7 @@ from ctypes import *
 from ctypes import byref, WinError, Structure, c_int, c_char
 from ctypes.wintypes import *
 from ctypes.wintypes import HWND, RECT, DWORD
+from typing import Tuple
 import winKernel
 from textUtils import WCHAR_ENCODING
 import enum
@@ -364,6 +364,8 @@ MWMO_ALERTABLE = 0x0002
 SM_CXSCREEN = 0
 # The height of the screen of the primary display monitor, in pixels.
 SM_CYSCREEN = 1
+# Whether the left and right mouse buttons are swapped
+SM_SWAPBUTTON = 23
 # The coordinates for the left side of the virtual screen.
 SM_XVIRTUALSCREEN = 76
 # The coordinates for the top of the virtual screen.
@@ -455,7 +457,8 @@ def isDescendantWindow(parentHwnd,childHwnd):
 	else:
 		return False
 
-def getForegroundWindow():
+
+def getForegroundWindow() -> HWND:
 	return user32.GetForegroundWindow()
 
 def setForegroundWindow(hwnd):
@@ -490,10 +493,12 @@ def unhookWinEvent(*args):
 def sendMessage(hwnd,msg,param1,param2):
 	return user32.SendMessageW(hwnd,msg,param1,param2)
 
-def getWindowThreadProcessID(hwnd):
+
+def getWindowThreadProcessID(hwnd: HWND) -> Tuple[int, int]:
+	"""Returns a tuple of (processID, threadID)"""
 	processID=c_int()
 	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))
-	return (processID.value,threadID)
+	return (processID.value, threadID)
 
 def getClassName(window):
 	buf=create_unicode_buffer(256)

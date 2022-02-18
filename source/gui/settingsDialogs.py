@@ -33,7 +33,6 @@ import globalVars
 from logHandler import log
 import nvwave
 import audioDucking
-import speechDictHandler
 import queueHandler
 import braille
 import brailleTables
@@ -275,9 +274,17 @@ class SettingsDialog(
 		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
 
-	def _onWindowDestroy(self, evt):
-		evt.Skip()
-		self._setInstanceDestroyedState()
+	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent):
+		# Destroy events are sent to parent windows for handling.
+		# If a child window is being destroyed, we don't want to
+		# set this object as destroyed.
+		# The ExpandoTextCtrl creates a destroy event as part of
+		# initialization, this caused the NVDASettings dialog
+		# to be incorrectly set to destroyed, causing #12818.
+		isSelfAlive = bool(self)
+		if not isSelfAlive:
+			evt.Skip()
+			self._setInstanceDestroyedState()
 
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
@@ -713,6 +720,16 @@ class GeneralSettingsPanel(SettingsPanel):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.languageNames = languageHandler.getAvailableLanguages(presentational=True)
 		languageChoices = [x[1] for x in self.languageNames]
+		if languageHandler.isLanguageForced():
+			cmdLangDescription = [
+				ld[1] for ld in self.languageNames if ld[0] == globalVars.appArgs.language
+			][0]
+			languageChoices.append(
+				# Translators: Shown for a language which has been provided from the command line
+				# 'langDesc' would be replaced with description of the given locale.
+				_("Command line option: {langDesc}").format(langDesc=cmdLangDescription)
+			)
+			self.languageNames.append("FORCED")
 		# Translators: The label for a setting in general settings to select NVDA's interface language
 		# (once selected, NVDA must be restarted; the option user default means the user's Windows language
 		# will be used).
@@ -720,12 +737,12 @@ class GeneralSettingsPanel(SettingsPanel):
 		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
 		self.bindHelpEvent("GeneralSettingsLanguage", self.languageList)
 		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
-		try:
-			self.oldLanguage=config.conf["general"]["language"]
-			index=[x[0] for x in self.languageNames].index(self.oldLanguage)
-			self.languageList.SetSelection(index)
-		except:
-			pass
+		self.oldLanguage = config.conf["general"]["language"]
+		if languageHandler.isLanguageForced():
+			index = len(self.languageNames) - 1
+		else:
+			index = [x[0] for x in self.languageNames].index(self.oldLanguage)
+		self.languageList.SetSelection(index)
 		if globalVars.appArgs.secure:
 			self.languageList.Disable()
 
@@ -884,8 +901,12 @@ class GeneralSettingsPanel(SettingsPanel):
 			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
 
 	def onSave(self):
-		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
-		config.conf["general"]["language"]=newLanguage
+		if(
+			not languageHandler.isLanguageForced()
+			or self.languageList.GetSelection() != len(self.languageNames) - 1
+		):
+			newLanguage = [x[0] for x in self.languageNames][self.languageList.GetSelection()]
+			config.conf["general"]["language"] = newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()
@@ -1063,7 +1084,11 @@ class SynthesizerSelectionDialog(SettingsDialog):
 
 		# Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 		duckingListLabelText = _("Audio d&ucking mode:")
-		self.duckingList=settingsSizerHelper.addLabeledControl(duckingListLabelText, wx.Choice, choices=audioDucking.audioDuckingModes)
+		self.duckingList = settingsSizerHelper.addLabeledControl(
+			duckingListLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in audioDucking.AudioDuckingMode]
+		)
 		self.bindHelpEvent("SelectSynthesizerDuckingMode", self.duckingList)
 		index=config.conf['audio']['audioDuckingMode']
 		self.duckingList.SetSelection(index)
@@ -2264,6 +2289,12 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		bookmarksText = _("&Bookmarks")
+		self.bookmarksCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=bookmarksText))
+		self.bookmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportBookmarks"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		revisionsText = _("&Editor revisions")
 		self.revisionsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=revisionsText))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
@@ -2469,6 +2500,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		)
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportBookmarks"] = self.bookmarksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
@@ -2645,14 +2677,6 @@ class AdvancedPanelControls(
 		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
 		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
 
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Speak &passwords in UIA consoles (may improve performance)")
-		self.winConsoleSpeakPasswordsCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
-		self.bindHelpEvent("AdvancedSettingsWinConsoleSpeakPasswords", self.winConsoleSpeakPasswordsCheckBox)
-		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
-		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
-
 		label = pgettext(
 			"advanced.uiaWithChromium",
 			# Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
@@ -2686,7 +2710,7 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Report details in browse mode")
+		label = _("Report 'has details' for structured annotations")
 		self.annotationsDetailsCheckBox = AnnotationsGroup.addItem(wx.CheckBox(AnnotationsBox, label=label))
 		self.annotationsDetailsCheckBox.SetValue(config.conf["annotations"]["reportDetails"])
 		self.annotationsDetailsCheckBox.defaultValue = self._getDefaultValue(["annotations", "reportDetails"])
@@ -2745,7 +2769,14 @@ class AdvancedPanelControls(
 		sHelper.addItem(terminalsGroup)
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Use the new t&yped character support in Windows Console when available")
+		label = _("Speak &passwords in all enhanced terminals (may improve performance)")
+		self.winConsoleSpeakPasswordsCheckBox = terminalsGroup.addItem(wx.CheckBox(terminalsBox, label=label))
+		self.bindHelpEvent("AdvancedSettingsWinConsoleSpeakPasswords", self.winConsoleSpeakPasswordsCheckBox)
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
+		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use enhanced t&yped character support in legacy Windows Console when available")
 		self.keyboardSupportInLegacyCheckBox = terminalsGroup.addItem(wx.CheckBox(terminalsBox, label=label))
 		self.bindHelpEvent("AdvancedSettingsKeyboardSupportInLegacy", self.keyboardSupportInLegacyCheckBox)
 		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
@@ -2755,21 +2786,21 @@ class AdvancedPanelControls(
 		# Translators: This is the label for a combo box for selecting a
 		# method of detecting changed content in terminals in the advanced
 		# settings panel.
-		# Choices are automatic, allow Diff Match Patch, and force Difflib.
+		# Choices are automatic, Diff Match Patch, and Difflib.
 		diffAlgoComboText = _("&Diff algorithm:")
 		diffAlgoChoices = [
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA determine the method of detecting changed
 			# content in terminals automatically.
-			_("Automatic (Diff Match Patch)"),
+			_("Automatic (prefer Diff Match Patch)"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
-			# by character when supported, using the diff match patch algorithm.
-			_("allow Diff Match Patch"),
+			# by character, using the diff match patch algorithm.
+			_("Diff Match Patch"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
 			# by line, using the difflib algorithm.
-			_("force Difflib")
+			_("Difflib")
 		]
 		#: The possible diffAlgo config values, in the order they appear
 		#: in the combo box.
@@ -2936,9 +2967,9 @@ class AdvancedPanelControls(
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
-			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
+			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
@@ -2957,8 +2988,8 @@ class AdvancedPanelControls(
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
-		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
@@ -2979,9 +3010,9 @@ class AdvancedPanelControls(
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
-		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
+		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
 		config.conf['terminals']['diffAlgo'] = (
@@ -3080,244 +3111,6 @@ class AdvancedPanel(SettingsPanel):
 		from api import processPendingEvents
 		processPendingEvents()
 		self.advancedControls.Enable(evt.IsChecked())
-
-
-class DictionaryEntryDialog(
-		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
-):
-	helpId = "SpeechDictionaries"
-	
-	TYPE_LABELS = {
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("&Anywhere"),
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression")
-	}
-	TYPE_LABELS_ORDERING = (speechDictHandler.ENTRY_TYPE_ANYWHERE, speechDictHandler.ENTRY_TYPE_WORD, speechDictHandler.ENTRY_TYPE_REGEXP)
-
-	# Translators: This is the label for the edit dictionary entry dialog.
-	def __init__(self, parent, title=_("Edit Dictionary Entry")):
-		super(DictionaryEntryDialog,self).__init__(parent,title=title)
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-
-		# Translators: This is a label for an edit field in add dictionary entry dialog.
-		patternLabelText = _("&Pattern")
-		self.patternTextCtrl=sHelper.addLabeledControl(patternLabelText, wx.TextCtrl)
-
-		# Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
-		replacementLabelText = _("&Replacement")
-		self.replacementTextCtrl=sHelper.addLabeledControl(replacementLabelText, wx.TextCtrl)
-
-		# Translators: This is a label for an edit field in add dictionary entry dialog.
-		commentLabelText = _("&Comment")
-		self.commentTextCtrl=sHelper.addLabeledControl(commentLabelText, wx.TextCtrl)
-
-		# Translators: This is a label for a checkbox in add dictionary entry dialog.
-		caseSensitiveText = _("Case &sensitive")
-		self.caseSensitiveCheckBox=sHelper.addItem(wx.CheckBox(self,label=caseSensitiveText))
-
-		# Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
-		typeText = _("&Type")
-		typeChoices = [DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING]
-		self.typeRadioBox=sHelper.addItem(wx.RadioBox(self,label=typeText, choices=typeChoices))
-
-		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
-
-		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
-		self.patternTextCtrl.SetFocus()
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-
-	def getType(self):
-		typeRadioValue = self.typeRadioBox.GetSelection()
-		if typeRadioValue == wx.NOT_FOUND:
-			return speechDictHandler.ENTRY_TYPE_ANYWHERE
-		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
-
-	def onOk(self,evt):
-		if not self.patternTextCtrl.GetValue():
-			# Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
-			gui.messageBox(_("A pattern is required."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
-			self.patternTextCtrl.SetFocus()
-			return
-		try:
-			dictEntry = self.dictEntry = speechDictHandler.SpeechDictEntry(
-				self.patternTextCtrl.GetValue(),
-				self.replacementTextCtrl.GetValue(),
-				self.commentTextCtrl.GetValue(),
-				bool(self.caseSensitiveCheckBox.GetValue()),
-				self.getType()
-			)
-			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
-		except Exception as e:
-			log.debugWarning("Could not add dictionary entry due to (regex error) : %s" % e)
-			# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-			gui.messageBox(_("Regular Expression error: \"%s\".")%e, _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
-			return
-		evt.Skip()
-
-	def setType(self, type):
-		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
-
-
-class DictionaryDialog(SettingsDialog):
-	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
-	helpId = "SpeechDictionaries"
-
-	def __init__(self,parent,title,speechDict):
-		self.title = title
-		self.speechDict = speechDict
-		self.tempSpeechDict=speechDictHandler.SpeechDict()
-		self.tempSpeechDict.extend(self.speechDict)
-		globalVars.speechDictionaryProcessing=False
-		super().__init__(parent, resizeable=True)
-		# Historical initial size, result of L{self.dictList} being (550,350) as of #6287.
-		# Setting an initial size on L{self.dictList} by passing a L{size} argument when
-		# creating the control would also set its minimum size and thus block the dialog from being shrunk.
-		self.SetSize(576, 502)
-		self.CentreOnScreen()
-
-	def makeSettings(self, settingsSizer):
-		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: The label for the list box of dictionary entries in speech dictionary dialog.
-		entriesLabelText=_("&Dictionary entries")
-		self.dictList = sHelper.addLabeledControl(
-			entriesLabelText,
-			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
-		)
-		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-		self.dictList.InsertColumn(0,_("Comment"),width=150)
-		# Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
-		self.dictList.InsertColumn(1,_("Pattern"),width=150)
-		# Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-		self.dictList.InsertColumn(2,_("Replacement"),width=150)
-		# Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
-		self.dictList.InsertColumn(3,_("case"),width=50)
-		# Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
-		self.dictList.InsertColumn(4,_("Type"),width=50)
-		self.offOn = (_("off"),_("on"))
-		for entry in self.tempSpeechDict:
-			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
-		self.editingIndex=-1
-
-		bHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
-		bHelper.addButton(
-			parent=self,
-			# Translators: The label for a button in speech dictionaries dialog to add new entries.
-			label=_("&Add")
-		).Bind(wx.EVT_BUTTON, self.OnAddClick)
-
-		bHelper.addButton(
-			parent=self,
-			# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-			label=_("&Edit")
-		).Bind(wx.EVT_BUTTON, self.OnEditClick)
-
-		bHelper.addButton(
-			parent=self,
-			# Translators: The label for a button in speech dictionaries dialog to remove existing entries.
-			label=_("&Remove")
-		).Bind(wx.EVT_BUTTON, self.OnRemoveClick)
-
-		sHelper.addItem(bHelper)
-
-	def postInit(self):
-		self.dictList.SetFocus()
-
-	def onCancel(self,evt):
-		globalVars.speechDictionaryProcessing=True
-		super(DictionaryDialog, self).onCancel(evt)
-
-	def onOk(self,evt):
-		globalVars.speechDictionaryProcessing=True
-		if self.tempSpeechDict!=self.speechDict:
-			del self.speechDict[:]
-			self.speechDict.extend(self.tempSpeechDict)
-			self.speechDict.save()
-		super(DictionaryDialog, self).onOk(evt)
-
-	def OnAddClick(self,evt):
-		# Translators: This is the label for the add dictionary entry dialog.
-		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
-		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict.append(entryDialog.dictEntry)
-			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],DictionaryDialog.TYPE_LABELS[entryDialog.getType()]))
-			index=self.dictList.GetFirstSelected()
-			while index>=0:
-				self.dictList.Select(index,on=0)
-				index=self.dictList.GetNextSelected(index)
-			addedIndex=self.dictList.GetItemCount()-1
-			self.dictList.Select(addedIndex)
-			self.dictList.Focus(addedIndex)
-			self.dictList.SetFocus()
-		entryDialog.Destroy()
-
-	def OnEditClick(self,evt):
-		if self.dictList.GetSelectedItemCount()!=1:
-			return
-		editIndex=self.dictList.GetFirstSelected()
-		if editIndex<0:
-			return
-		entryDialog=DictionaryEntryDialog(self)
-		entryDialog.patternTextCtrl.SetValue(self.tempSpeechDict[editIndex].pattern)
-		entryDialog.replacementTextCtrl.SetValue(self.tempSpeechDict[editIndex].replacement)
-		entryDialog.commentTextCtrl.SetValue(self.tempSpeechDict[editIndex].comment)
-		entryDialog.caseSensitiveCheckBox.SetValue(self.tempSpeechDict[editIndex].caseSensitive)
-		entryDialog.setType(self.tempSpeechDict[editIndex].type)
-		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict[editIndex]=entryDialog.dictEntry
-			self.dictList.SetItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
-			self.dictList.SetItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
-			self.dictList.SetItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
-			self.dictList.SetItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
-			self.dictList.SetItem(editIndex,4,DictionaryDialog.TYPE_LABELS[entryDialog.getType()])
-			self.dictList.SetFocus()
-		entryDialog.Destroy()
-
-	def OnRemoveClick(self,evt):
-		index=self.dictList.GetFirstSelected()
-		while index>=0:
-			self.dictList.DeleteItem(index)
-			del self.tempSpeechDict[index]
-			index=self.dictList.GetNextSelected(index)
-		self.dictList.SetFocus()
-
-
-class DefaultDictionaryDialog(DictionaryDialog):
-	def __init__(self, parent):
-		super().__init__(
-			parent,
-			# Translators: Title for default speech dictionary dialog.
-			title=_("Default dictionary"),
-			speechDict=speechDictHandler.dictionaries["default"],
-		)
-
-
-class VoiceDictionaryDialog(DictionaryDialog):
-	def __init__(self, parent):
-		super().__init__(
-			parent,
-			# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-			title=_("Voice dictionary (%s)") % speechDictHandler.dictionaries["voice"].fileName,
-			speechDict=speechDictHandler.dictionaries["voice"],
-		)
-
-
-class TemporaryDictionaryDialog(DictionaryDialog):
-	def __init__(self, parent):
-		super().__init__(
-			parent,
-			# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
-			# as NvDA is running).
-			title=_("Temporary dictionary"),
-			speechDict=speechDictHandler.dictionaries["temp"],
-		)
 
 
 class BrailleSettingsPanel(SettingsPanel):

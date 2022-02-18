@@ -208,6 +208,44 @@ NVDA has its own graphical user interface to allow for easy configuration and ot
 This code is primarily contained in the `gui` package.
 [wxPython](http://www.wxpython.org/) is used as the GUI toolkit.
 
+#### Common GUI bugs
+
+##### Controls are invisible or clipping
+
+Adding controls to the wrong parent will cause them to visually clip or become invisible.
+Adding controls to a ``wx.StaticBoxSizer`` by adding them to its parent causes undefined behaviour.
+This has caused problems with users with right-to-left language locales.
+wxWidgets requires that these items be added directly to the `StaticBox` associated with the `wx.StaticBoxSizer` via `GetStaticBox()`.
+
+**Before (buggy behaviour):** 
+
+```python
+sizer = new wx.StaticBoxSizer(wx.VERTICAL, parent, "Test")
+sizer.Add(wx.StaticText(parent, wx.ID_ANY, "Where am I?"))
+sizer.Add(wx.Button(parent, wx.ID_ADD))
+```
+
+**After:** 
+
+```python
+sizer = new wx.StaticBoxSizer(wx.VERTICAL, parent, "Test")
+sizer.Add(wx.StaticText(sizer.GetStaticBox(), wx.ID_ANY, "Where am I?"))
+sizer.Add(wx.Button(sizer.GetStaticBox(), wx.ID_ADD))
+```
+
+PR [#12181](https://github.com/nvaccess/nvda/pull/12181) is an example of fixing this.
+
+##### Event handlers are firing unexpectedly or failing to fire
+
+When event handlers are firing unexpectedly or failing to fire, refer to the [wxWidgets documentation for event propagation](https://wiki.wxpython.org/EventPropagation).
+
+Notably:
+* Event handlers stop propagation.
+   - If `event.Skip()` is called in an event handler, propagation will continue.
+* `wx.CommandEvents`, a subset of wxEvents, will propagate up to the parent dialog by default.
+   - If a child control performs an event, a parent event handler may fire.
+   PR [#13117](https://github.com/nvaccess/nvda/pull/13117) is an example of a bug caused by this being fixed.
+
 ### Configuration management
 NVDA includes an extensive configuration management facility including various preferences dialogs, ability to apply a given configuration in apps and so forth.
 The base configuration options, as well as routines that manage configuration profiles and other management routines are housed in the `config` package, and NVDA uses [ConfigObj](http://www.voidspace.org.uk/python/configobj.html) to store configuration options.

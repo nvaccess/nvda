@@ -13,6 +13,7 @@ import NVDAObjects.behaviors
 import winUser
 import mouseHandler
 import IAccessibleHandler
+
 import oleacc
 from logHandler import log
 import textInfos
@@ -22,9 +23,6 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
-
-IA2_RELATION_CONTAINING_DOCUMENT = "containingDocument"
-
 
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
 	valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
@@ -108,8 +106,6 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
 			role = controlTypes.Role.STATICTEXT
-		if attrs.get("detailsSummary") is not None:
-			states.add(controlTypes.State.HAS_ARIA_DETAILS)
 		if attrs.get("IAccessibleAction_showlongdesc") is not None:
 			states.add(controlTypes.State.HASLONGDESC)
 		if "IAccessibleAction_click" in attrs:
@@ -193,7 +189,10 @@ class Gecko_ia2(VirtualBuffer):
 				# IAccessible NVDAObjects currently fetch IA2, but we need IA2_2 for relationTargetsOfType.
 				# (Out-of-process, for a single relation, this is cheaper than IA2::relations.)
 				acc = acc.QueryInterface(IA2.IAccessible2_2)
-			targets, count = acc.relationTargetsOfType(IA2_RELATION_CONTAINING_DOCUMENT, 1)
+			targets, count = acc.relationTargetsOfType(
+				IAccessibleHandler.RelationType.CONTAINING_DOCUMENT,
+				1  # max relations to fetch
+			)
 			if count == 0:
 				return None
 			doc = targets[0].QueryInterface(IA2.IAccessible2_2)
@@ -345,8 +344,7 @@ class Gecko_ia2(VirtualBuffer):
 			log.debugWarning("Clicking with mouse")
 			oldX, oldY = winUser.getCursorPos()
 			winUser.setCursorPos(*location.center)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+			mouseHandler.doPrimaryClick()
 			winUser.setCursorPos(oldX, oldY)
 			break
 

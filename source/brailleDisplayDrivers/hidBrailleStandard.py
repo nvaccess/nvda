@@ -213,36 +213,36 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
 			"braille_scrollBack": (
-				"br(HID):panLeft",
-				"br(HID):rockerUp",
+				"br(hidBrailleStandard):panLeft",
+				"br(hidBrailleStandard):rockerUp",
 			),
 			"braille_scrollForward": (
-				"br(HID):panRight",
-				"br(HID):rockerDown",
+				"br(hidBrailleStandard):panRight",
+				"br(hidBrailleStandard):rockerDown",
 			),
-			"braille_previousLine": ("br(HID):space+dot1",),
-			"braille_nextLine": ("br(HID):space+dot4",),
-			"braille_routeTo": ("br(HID):routerSet1_routerKey",),
-			"braille_toggleTether": ("br(HID):up+down",),
-			"kb:upArrow": ("br(HID):joystickUp",),
-			"kb:downArrow": ("br(HID):joystickDown",),
-			"kb:leftArrow": ("br(HID):space+dot3", "br(HID):joystickLeft"),
-			"kb:rightArrow": ("br(HID):space+dot6", "br(HID):joystickRight"),
+			"braille_previousLine": ("br(hidBrailleStandard):space+dot1",),
+			"braille_nextLine": ("br(hidBrailleStandard):space+dot4",),
+			"braille_routeTo": ("br(hidBrailleStandard):routerSet1_routerKey",),
+			"braille_toggleTether": ("br(hidBrailleStandard):up+down",),
+			"kb:upArrow": ("br(hidBrailleStandard):joystickUp",),
+			"kb:downArrow": ("br(hidBrailleStandard):joystickDown",),
+			"kb:leftArrow": ("br(hidBrailleStandard):space+dot3", "br(hidBrailleStandard):joystickLeft"),
+			"kb:rightArrow": ("br(hidBrailleStandard):space+dot6", "br(hidBrailleStandard):joystickRight"),
 			"showGui": (
-				"br(HID):space+dot1+dot3+dot4+dot5",
+				"br(hidBrailleStandard):space+dot1+dot3+dot4+dot5",
 			),
-			"kb:shift+tab": ("br(HID):space+dot1+dot3",),
-			"kb:tab": ("br(HID):space+dot4+dot6",),
-			"kb:alt": ("br(HID):space+dot1+dot3+dot4",),
-			"kb:escape": ("br(HID):space+dot1+dot5",),
-			"kb:enter": ("br(HID):joystickCenter"),
+			"kb:shift+tab": ("br(hidBrailleStandard):space+dot1+dot3",),
+			"kb:tab": ("br(hidBrailleStandard):space+dot4+dot6",),
+			"kb:alt": ("br(hidBrailleStandard):space+dot1+dot3+dot4",),
+			"kb:escape": ("br(hidBrailleStandard):space+dot1+dot5",),
+			"kb:enter": ("br(hidBrailleStandard):joystickCenter"),
 			"kb:windows+d": (
-				"br(HID):Space+dot1+dot4+dot5",
+				"br(hidBrailleStandard):Space+dot1+dot4+dot5",
 			),
-			"kb:windows": ("br(HID):space+dot3+dot4",),
-			"kb:alt+tab": ("br(HID):space+dot2+dot3+dot4+dot5",),
+			"kb:windows": ("br(hidBrailleStandard):space+dot3+dot4",),
+			"kb:alt+tab": ("br(hidBrailleStandard):space+dot2+dot3+dot4+dot5",),
 			"sayAll": (
-				"br(HID):Space+dot1+dot2+dot3+dot4+dot5+dot6",
+				"br(hidBrailleStandard):Space+dot1+dot2+dot3+dot4+dot5+dot6",
 			),
 		},
 	})
@@ -292,10 +292,10 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.routingIndex = buttonCapsInfo.relativeIndexInCollection
 				# Prefix the gesture name with the specific routing collection name (E.g. routerSet1)
 				namePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
-		name = self._usageIDToGestureName(usagePage, usageID)
-		if namePrefix:
-			name = "_".join([namePrefix, name])
-		names.append(name)
+			name = self._usageIDToGestureName(usagePage, usageID)
+			if namePrefix:
+				name = "_".join([namePrefix, name])
+			names.append(name)
 		self.id = "+".join(names)
 
 	def _usageIDToGestureName(self, usagePage: int, usageID: int):

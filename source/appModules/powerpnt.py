@@ -3,6 +3,10 @@
 #Copyright (C) 2012-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+from typing import (
+	Optional,
+	Dict,
+)
 
 import comtypes
 from comtypes.automation import IDispatch
@@ -31,6 +35,7 @@ from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection, Editab
 import braille
 from cursorManager import ReviewCursorManager
 import controlTypes
+from controlTypes import TextPosition
 from logHandler import log
 import scriptHandler
 from locationHelper import RectLTRB
@@ -931,9 +936,11 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField['underline']=bool(font.underline)
 		if formatConfig['reportSuperscriptsAndSubscripts']:
 			if font.subscript:
-				formatField['text-position']='sub'
+				formatField['text-position'] = TextPosition.SUBSCRIPT
 			elif font.superscript:
-				formatField['text-position']='super'
+				formatField['text-position'] = TextPosition.SUPERSCRIPT
+			else:
+				formatField['text-position'] = TextPosition.BASELINE
 		if formatConfig['reportColor']:
 			formatField['color']=colors.RGB.fromCOLORREF(font.color.rgb)
 		if formatConfig["reportLinks"] and curRun.actionSettings(ppMouseClick).action==ppActionHyperlink:
@@ -1024,7 +1031,7 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 			return (0,self._getStoryLength())
 		raise LookupError
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = self.obj.rootNVDAObject.basicTextFields
 		text = self.obj.rootNVDAObject.basicText
 		out = []
