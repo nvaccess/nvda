@@ -18,14 +18,14 @@ import glob
 from SCons.Tool.MSCommon.vc import find_vc_pdir
 
 Import(
-	'win10env',
+	'env',
 	'sourceDir',
 	'localLib',
 )
 
 
 # Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
-env = win10env.Clone()  # noqa: F821
+env = env.Clone()  # noqa: F821
 
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
