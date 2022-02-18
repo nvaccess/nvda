@@ -878,7 +878,11 @@ the NVDAObject for IAccessible
 	# as it relies on other properties which might change when overlay classes are applied.
 	_cache_role = False
 
-	def _get_IAccessibleStates(self):
+	IAccessibleStates: int
+	"""Type info for auto property: _get_IAccessibleStates
+	"""
+
+	def _get_IAccessibleStates(self) -> int:
 		try:
 			res=self.IAccessibleObject.accState(self.IAccessibleChildID)
 		except COMError:
@@ -894,12 +898,12 @@ the NVDAObject for IAccessible
 		except COMError:
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
-			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+			states.update(IAccessibleHandler.getStatesSetFromIAccessibleStates(IAccessibleStates))
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			# Not an IA2 object.
 			return states
-		IAccessible2States=self.IA2States
-		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		IAccessible2States = self.IA2States
+		states |= IAccessibleHandler.getStatesSetFromIAccessible2States(IAccessible2States)
 		# Readonly should override editable
 		if controlTypes.State.READONLY in states:
 			states.discard(controlTypes.State.EDITABLE)
@@ -1753,7 +1757,11 @@ the NVDAObject for IAccessible
 	# Temporary caching breaks because the cache isn't initialised when this is first called.
 	_cache_IA2WindowHandle = False
 
-	def _get_IA2States(self):
+	IA2States: int
+	"""Type info for auto property: _get_IA2States
+	"""
+
+	def _get_IA2States(self) -> int:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return 0
 		try:

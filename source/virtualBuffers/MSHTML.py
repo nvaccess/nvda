@@ -72,7 +72,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	# C901 'MSHTMLTextInfo._normalizeControlField' is too complex (42)
 	# Look for opportunities to simplify this function.
-	def _normalizeControlField(self, attrs: dict):  # noqa: C901
+	def _normalizeControlField(self, attrs: textInfos.ControlField):  # noqa: C901
 		level = None
 
 		isCurrent = self._getIsCurrentAttribute(attrs)
@@ -100,7 +100,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		roleText=attrs.get('HTMLAttrib::aria-roledescription')
 		if roleText:
 			attrs['roleText']=roleText
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+
 		if attrs.get('HTMLAttrib::longdesc'):
 			states.add(controlTypes.State.HASLONGDESC)
 		#IE exposes destination anchors as links, this is wrong

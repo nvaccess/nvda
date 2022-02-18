@@ -5,6 +5,8 @@
 
 # F401 imported but unused. RelationType should be exposed from IAccessibleHandler, in future __all__
 # should be used to export it.
+import typing
+
 from .types import RelationType  # noqa: F401
 
 import re
@@ -61,6 +63,8 @@ NAVRELATION_LABELLED_BY = 0x1003
 NAVRELATION_NODE_CHILD_OF = 0x1005
 NAVRELATION_EMBEDS = 0x1009
 
+if typing.TYPE_CHECKING:
+	import textInfos
 
 # A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,
 # childID event params.
@@ -238,6 +242,55 @@ IAccessible2StatesToNVDAStates = {
 	IA2.IA2_STATE_PINNED: controlTypes.State.PINNED,
 	IA2.IA2_STATE_CHECKABLE: controlTypes.State.CHECKABLE,
 }
+
+
+def getStatesSetFromIAccessibleStates(IAccessibleStates: int) -> typing.Set[controlTypes.State]:
+	return set(
+		IAccessibleStatesToNVDAStates[x]
+		for x in (
+			y for y in (1 << z for z in range(32))
+			if y & IAccessibleStates
+		)
+		if x in IAccessibleStatesToNVDAStates
+	)
+
+
+def getStatesSetFromIAccessible2States(IAccessible2States: int) -> typing.Set[controlTypes.State]:
+	return set(
+		IAccessible2StatesToNVDAStates[x]
+		for x in (
+			y for y in (1 << z for z in range(32))
+			if y & IAccessible2States
+		)
+		if x in IAccessible2StatesToNVDAStates
+	)
+
+
+def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> typing.Set[controlTypes.State]:
+	# States are serialized (in XML) with an attribute per state.
+	# The value for the state is used in the attribute name.
+	# The attribute value is always 1.
+	# EG IAccessible::state_40="1"
+	IAccessibleStateAttrName = 'IAccessible::state_{}'
+	return set(
+		IAccessibleStatesToNVDAStates[x]
+		for x in [1 << y for y in range(32)]
+		if int(attrs.get(IAccessibleStateAttrName.format(x), 0))
+		and x in IAccessibleStatesToNVDAStates
+	)
+
+
+def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> typing.Set[controlTypes.State]:
+	# States are serialized (in XML) with an attribute per state.
+	# The value for the state is used in the attribute name.
+	# The attribute value is always 1.
+	# EG IAccessible2::state_40="1"
+	IAccessible2StateAttrName = 'IAccessible2::state_{}'
+	return set(
+		IAccessible2StatesToNVDAStates[x] for x in [1 << y for y in range(32)]
+		if int(attrs.get(IAccessible2StateAttrName.format(x), 0))
+		and x in IAccessible2StatesToNVDAStates
+	)
 
 
 def normalizeIAccessible(pacc, childID=0):
