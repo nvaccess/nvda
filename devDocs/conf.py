@@ -20,16 +20,12 @@ languageHandler.setLanguage("en")
 import globalVars  # noqa: E402
 
 
-class AppArgs:
-	# Set an empty comnfig path
-	# This is never used as we don't initialize config, but some modules expect this to be set.
-	configPath = ""
-	secure = False
-	disableAddons = True
-	launcher = False
+# Set an empty config path
+# This is never used as we don't initialize config, but some modules expect this to be set.
+globalVars.appArgs.configPath = ""
+globalVars.appArgs.disableAddons = True
 
 
-globalVars.appArgs = AppArgs()
 # #11971: NVDA is not running, therefore app dir is undefined.
 # Therefore tell NVDA that apt source directory is app dir.
 appDir = os.path.join("..", "source")

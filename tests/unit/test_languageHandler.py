@@ -1,14 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2021 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2017-2022 NV Access Limited, Łukasz Golonka
 
 """Unit tests for the languageHandler module.
 """
 
 import unittest
 import languageHandler
-from languageHandler import LCID_NONE, windowsPrimaryLCIDsToLocaleNames
+from languageHandler import LCID_NONE, LCIDS_TO_TRANSLATED_LOCALES
 from localesData import LANG_NAMES_TO_LOCALIZED_DESCS
 import locale
 import ctypes
@@ -29,7 +29,7 @@ def generateUnsupportedWindowsLocales():
 LCID_ENGLISH_US = 0x0409
 UNSUPPORTED_WIN_LANGUAGES = generateUnsupportedWindowsLocales()
 TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}
-WINDOWS_LANGS = set(locale.windows_locale.values()).union(windowsPrimaryLCIDsToLocaleNames.values())
+WINDOWS_LANGS = set(locale.windows_locale.values()).union(LCIDS_TO_TRANSLATED_LOCALES.values())
 
 
 class TestLocaleNameToWindowsLCID(unittest.TestCase):
@@ -159,18 +159,18 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 
 	def setUp(self):
 		"""
-		`setLocale` doesn't change `languageHandler.curLang`, so reset the locale using `setLanguage` to
+		`setLocale` doesn't change current NVDA language, so reset the locale using `setLanguage` to
 		the current language for each test.
 		"""
-		languageHandler.setLanguage(languageHandler.curLang)
+		languageHandler.setLanguage(languageHandler.getLanguage())
 
 	@classmethod
 	def tearDownClass(cls):
 		"""
-		`setLocale` doesn't change `languageHandler.curLang`, so reset the locale using `setLanguage` to
+		`setLocale` doesn't change current NVDA language, so reset the locale using `setLanguage` to
 		the current language so the tests can continue normally.
 		"""
-		languageHandler.setLanguage(languageHandler.curLang)
+		languageHandler.setLanguage(languageHandler.getLanguage())
 
 	def test_SupportedLocale_LocaleIsSet(self):
 		"""
@@ -262,7 +262,7 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 	def test_NVDASupportedLanguages_LanguageIsSetCorrectly(self):
 		"""
 		Tests languageHandler.setLanguage, using all NVDA supported languages, which should do the following:
-		- set the translation service and languageHandler.curLang
+		- set the translation service and current NVDA language
 		- set the windows locale for the thread (fallback to system default)
 		- set the python locale for the thread (match the translation service, fallback to system default)
 		"""
@@ -270,8 +270,8 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 			with self.subTest(localeName=localeName):
 				langOnly = localeName.split("_")[0]
 				languageHandler.setLanguage(localeName)
-				# check curLang/translation service is set
-				self.assertEqual(languageHandler.curLang, localeName)
+				# check current NVDA language/translation service is set
+				self.assertEqual(languageHandler.getLanguage(), localeName)
 
 				# check Windows thread is set
 				threadLocale = ctypes.windll.kernel32.GetThreadLocale()

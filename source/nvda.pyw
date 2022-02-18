@@ -149,7 +149,7 @@ parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str
 parser.add_argument(
 	'--lang',
 	dest='language',
-	default=None,
+	default="en",
 	type=stringToLang,
 	help=(
 		"Override the configured NVDA language."
@@ -188,7 +188,7 @@ parser.add_argument(
 # but that's far better than a major security hazzard.
 # If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
-(globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
+(globalVars.appArgs, globalVars.unknownAppArgs) = parser.parse_known_args()
 # Make any app args path values absolute
 # So as to not be affected by the current directory changing during process lifetime.
 pathAppArgs = [

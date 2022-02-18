@@ -5,6 +5,7 @@
 
 from buildVersion import version_year
 
+from .formatFields import TextPosition
 from .isCurrent import IsCurrent
 from .outputReason import OutputReason
 from .processAndLabelStates import processAndLabelStates
@@ -27,6 +28,7 @@ if version_year >= 2022:
 		"State",
 		"STATES_SORTED",
 		"DescriptionFrom",
+		"TextPosition",
 	]
 
 
@@ -247,4 +249,3 @@ if version_year < 2022:
 	STATE_CROPPED = State.CROPPED
 	STATE_OVERFLOWING = State.OVERFLOWING
 	STATE_UNLOCKED = State.UNLOCKED
-	STATE_HAS_ARIA_DETAILS = State.HAS_ARIA_DETAILS

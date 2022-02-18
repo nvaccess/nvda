@@ -13,7 +13,7 @@ from comtypes import (
 	GUID,
 	byref,
 )
-from _UIAConstants import (
+from .constants import (
 	UIAutomationType,
 )
 

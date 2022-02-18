@@ -10,8 +10,12 @@ EXPORTS
 	nvdaInProcUtils_unregisterNVDAProcess
 	nvdaInProcUtils_sysListView32_getGroupInfo
 	nvdaInProcUtils_sysListView32_getColumnContent
+	nvdaInProcUtils_sysListView32_getColumnLocation
+	nvdaInProcUtils_sysListView32_getColumnHeader
+	nvdaInProcUtils_sysListView32_getColumnOrderArray
 	nvdaInProcUtils_dumpOnCrash
 	nvdaInProcUtils_IA2Text_findContentDescendant
+	nvdaInProcUtils_getTextFromIAccessible
 	nvdaInProcUtils_getActiveObject
 	nvdaInProcUtils_winword_expandToLine
 	nvdaInProcUtils_winword_getTextInRange
@@ -62,3 +66,4 @@ EXPORTS
 	logMessage
 	getOleClipboardText
 	_nvdaControllerInternal_reportLiveRegion
+	_nvdaControllerInternal_openConfigDirectory

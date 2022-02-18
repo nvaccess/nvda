@@ -3,9 +3,25 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3.1 =
+Đây là bản phát hành phụ, nhằm sửa vài lỗi trong phiên bản 2021.3.
+
++
+== Các thay đổi ==
+- Giao thức chữ nổi (HID) mới không còn được ưu tiên khi có thể sử dụng một trình điều khiển màn hình nổi khác. (#13153)
+- Có thể vô hiệu giao thức chữ nổi (HID) mới thông qua một cài đặt trong bảng cài đặt nâng cao. (#13180)
+-
+
+
+== Sửa lỗi ==
+- Lại một lần nữa, các cột mốc đã được viết tắt trong chữ nổi. #13158
+- Sửa lỗi hoạt động không ổn định trong việc  tự dò tìm các màn hình nổi của Humanware Brailliant và APH Mantis Q40 khi dùng Bluetooth. (#13153)
+ -
+
+
 = 2021.3 =
-Bản phắt hành này bất đầu hỗ trợ cho giao thức mới trong màn hình nổi.
-Giao thức này hướng đến tiêu chuẩn hóa việc hỗ trợ các màn hình nổi mà không cần trình điều khiển riêng biệt.
+Bản phát hành này bắt đầu hỗ trợ cho chuẩn kết nối (HID)  mới của màn hình nổi.
+Chuẩn kết nối này hướng đến tiêu chuẩn hóa việc hỗ trợ các màn hình nổi mà không cần trình điều khiển riêng biệt.
 Cập nhật cho eSpeak-NG và LibLouis, bao gồm các bảng chữ nổi mới cho tiếng Nga và tiếng Tshivenda.
 Có thể bật các âm thanh báo lỗi trong các bản dựng chính thức của NVDA thông qua một tùy chọn nâng cao mới.
 Tính năng đọc tất cả trong  Word giờ đây sẽ cuộn màn hình để hiển thị vị trí hiện tại.
@@ -21,8 +37,8 @@ Người dùng gặp lỗi như trên sẽ phải tải bản cập nhật bằn
 
 == Tính năng mới ==
 - Thêm một thao tác để chuyển đổi giữa các cài đặt cho việc thông báo kiểu đường viền ô. (#10408)
-- Hỗ trợ giao thức mới của chữ nổi, hướng đến tiêu chuẩn hóa việc hỗ trợ các màn hình nổi. (#12523)
-  - Các thiết bị có hỗ trợ giao thức này sẽ được NVDA tự nhận diện.
+- Hỗ trợ chuẩn kết nối mới của chữ nổi, hướng đến tiêu chuẩn hóa việc hỗ trợ các màn hình nổi. (#12523)
+  - Các thiết bị có hỗ trợ chuẩn kết nối này sẽ được NVDA tự nhận diện.
   - Để biết các chi tiết kĩ thuật về việc bổ sung công nghệ này của NVDA, xem tại https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
   -
 - Thêm hỗ trợ cho thiết bị VisioBraille Vario 4. (#12607)
@@ -35,15 +51,15 @@ Người dùng gặp lỗi như trên sẽ phải tải bản cập nhật bằn
 == Các thay đổi ==
 - Espeak-ng đã được cập nhật lên 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
 - NVDA sẽ mặc định dùng bộ đọc eSpeak nếu không cài đặt các giọng đọc OneCore cho ngôn ngữ mà  NVDA đang dùng. (#10451)
-- Nếu các giọng đọc OneCore voices gặp lỗi và không đọc được, sẽ quay về dùng bộ đọc eSpeak. (#11544)
+- Nếu các giọng đọc OneCore gặp lỗi và không đọc được, sẽ quay về dùng bộ đọc eSpeak. (#11544)
 - Khi đọc thanh trạng thái với ``NVDA+end``, con trỏ duyệt sẽ không còn di chuyển đến vị trí này nữa.
 Nếu cần dùng tính năng này, vui lòng gán thao tác cho kịch bản tương ứng trong phân loại đối tượng điều hướng trong hộp thoại quản lý các thao tác. (#8600)
 - Khi mở một hộp thoại cài đặt vốn đã được mở trước đó, NVDA sẽ đưa con trỏ đến hộp thoại thay vì báo lỗi. (#5383)
-- Với các  bản dựng của Microsoft Office 2016/365 lớn hơn 13900, NVDA giờ đây sẽ luôn sử dụng UI Automation để truy cập các điều khiển của tài liệu  Microsoft Word, bất kể người dùng đã bật hay tắt tùy chọn Sử dụng UI Automation để truy cập các điều khiển của tài liệu  Microsoft Word trong cài đặt nâng cao. (#12770)
 - Cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
   - Các bảng chữ nổi mới: tiếng Nga cấp 1, Tshivenda cấp 1, Tshivenda cấp 2
   -
 - Thay vì thông báo "marked content" hay "mrkd",giờ đây NVDA sẽ thông báo là "highlight" hoặc "hlght" bằng tiếng nói và chữ nổi. (#12892)
+- NVDA sẽ không còn cố gắng tắt chương trình khi có các hộp thoại đang chờ một hành động (Xác nhận / Hủy bỏ chẳng hạn). (#12984)
 -
 
 
@@ -74,6 +90,7 @@ Nếu cần dùng tính năng này, vui lòng gán thao tác cho kịch bản t�
 - Sửa lỗi lặp lại hai lần trong tiếng nói và chữ nổi khi 'description' giống với 'content' hay 'name'. (#12888)
 - Trong MS Word với UIA được bật, âm báo lỗi chính tả trong khi nhập liệu được phát một cách chính xác hơn. (#12161)
 - Trong Windows 11, NVDA sẽ không còn đọc "pane" khi bấm Alt+Tab để chuyển giữa các chương trình. (#12648)
+- Bảng theo dõi chú thích kiểu mới giờ đã được hỗ trợ trong MS Word khi không truy cập tài liệu thông qua UIA. Bấm alt+f12 để di chuyển giữa bảng theo dõi và tài liệu. (#12982)
 -
 
 

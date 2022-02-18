@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2021 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
+# Copyright (C) 2012-2022 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
 # Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -29,7 +29,7 @@ import winKernel
 import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
-import buildVersion
+import extensionPoints
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -42,6 +42,13 @@ DELETEDIR_SUFFIX=".delete"
 
 # Add-ons that are blocked from running because they are incompatible
 _blockedAddons=set()
+
+
+# Allows add-ons to process additional command line arguments when NVDA starts.
+# Each handler is called with one keyword argument `cliArgument`
+# and should return `False` if it is not interested in it, `True` otherwise.
+# For more details see appropriate section of the developer guide.
+isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
 
 
 class AddonsState(collections.UserDict):
@@ -113,15 +120,6 @@ class AddonsState(collections.UserDict):
 state = AddonsState()
 
 
-# Deprecated - use `state.save` and `state.load` instead.
-if buildVersion.version_year < 2022:
-	def saveState():
-		state.save()
-
-	def loadState():
-		state.load()
-
-
 def getRunningAddons():
 	""" Returns currently loaded add-ons.
 	"""
@@ -177,7 +175,7 @@ def terminate():
 	pass
 
 def _getDefaultAddonPaths():
-	""" Returns paths where addons can be found.
+	r""" Returns paths where addons can be found.
 	For now, only <userConfig>\addons is supported.
 	@rtype: list(string)
 	"""
@@ -519,7 +517,7 @@ class Addon(AddonBase):
 				func(*args,**kwargs)
 
 	def getDocFilePath(self, fileName=None):
-		"""Get the path to a documentation file for this add-on.
+		r"""Get the path to a documentation file for this add-on.
 		The file should be located in C{doc\lang\file} inside the add-on,
 		where C{lang} is the language code and C{file} is the requested file name.
 		Failing that, the language without country is tried.

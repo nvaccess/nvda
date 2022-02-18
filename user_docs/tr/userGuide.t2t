@@ -11,7 +11,7 @@ NVDA NVDA_VERSION Kullanıcı Rehberi
 NVDA'ya hoş geldiniz!
 
 İngilizce dilinde Görsel olmayan Masaüstü Erişimi anlamına gelen ifadenin kısaltması olan (NVDA) Microsoft Windows işletim sistemi için ücretsiz ve açık kaynak bir ekran okuma programıdır.
-NVDA bir konuşma sentezleyici ya da braille ile geri bildirim sağlayarak, kör ya da az görenlerin extra bir ücret ödemeden Windows işletim sistemi kurulu bilgisayarları kullanabilmesini mümkün kılar.
+NVDA bir konuşma sentezleyici ya da braille ile geri bildirim sağlayarak, kör ya da az görenlerin ek bir ücret ödemeden Windows işletim sistemi kurulu bilgisayarları kullanabilmesini mümkün kılar.
 NVDA [NV Access tarafından https://www.nvaccess.org/], camiadan ilgili birçok insanın katkısıyla geliştirilmektedir.
 
 ++ Genel Özellikler ++[GeneralFeatures]
@@ -275,7 +275,7 @@ Menü açıldığında, menü ögeleri arasında yön tuşlarınızla dolaşabil
 ++ Temel NVDA Komutları ++[BasicNVDACommands]
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü kısayol tuşu | Dokunma hareketi | Tarif |
-| NVDA'yı başlatır veya yeniden başlatır | Control+alt+n | Control+alt+n | yok | Bu Windows kısayolu NVDA'nın yükleme işlemi sırasında etkinleştirilirse, NVDA'yı Masaüstünden başlatır veya yeniden başlatır. Bu, Windows'a özgü bir kısayoldur ve bu nedenle girdi hareketleri iletişim kutusunda yeniden atanamaz. |
+| NVDA'yı başlatır veya yeniden başlatır | Kontrol+alt+n | Kontrol+alt+n | yok | Bu Windows kısayolu NVDA'nın yükleme işlemi sırasında etkinleştirilirse, NVDA'yı Masaüstünden başlatır veya yeniden başlatır. Bu, Windows'a özgü bir kısayoldur ve bu nedenle girdi hareketleri iletişim kutusunda yeniden atanamaz. |
 | Konuşmayı Durdur | Kontrol | Kontrol | iki parmakla bir kez dokunma | Ekran okuyucunun konuşmasını o an için durdurur |
 | Konuşmayı Duraklat | Şift | Şift | yok | Konuşmayı O an için Duraklatır. Duraklama işlevi, geçerli sentezleyici tarafından destekleniyorsa, Şifte tekrar bastığınızda konuşma kaldığı yerden devam eder |
 | NVDA Menüsü | NVDA+n | NVDA+n | iki parmakla çift dokunma | Tercihler, Araçlar ve yardım gibi bölümlere ulaşabileceğiniz NVDA menüsünü açar |
@@ -728,7 +728,7 @@ Aşağıdaki durum belirtenleri de tanımlanmıştır:
 | + | Bir nesne örneğin, bir ağaç görünüm öğesi genişletilebilir olduğunda gösterilir |
 | *** | korunmuş bir kontrol ya da belge açıldığında gösterilir |
 | tkl | bir nesne tıklanabilirse gösterilir |
-| açk | bir çalışma sayfası ya da bir belge içinde yorumla karşılaşıldığında gösterilir |
+| açk | bir çalışma sayfası ya da bir belge içinde açıklamayla karşılaşıldığında gösterilir |
 | frml | çalışma sayfasındaki hücrede formül varsa gösterilir |
 | geçersiz | geçersiz bir giriş olduğunda gösterilir |
 | uzntrf | bir nesneyle, genellikle bir grafikle ilgili uzun tarif varsa gösterilir |
@@ -946,8 +946,8 @@ Tarama kipi ve tek tuş dolaşımı  hakkında daha fazla bilgi için, [tarama k
 %kc:beginInclude
 || Ad | Kısayol Tuşu | Tarif |
 | Kalan süreyi oku | kontrol+shift+r | Mevcutsa, çalmakta olan parçanın bitmesi için kalan süreyi okur. |
-| Geçen süreyi oku | control+shift+e | Varsa, çalan parçanın geçen süre bilgisini seslendirir. |
-| Parça süresini oku | control+shift+t | varsa, çalan parça süresini okur. |
+| Geçen süreyi oku | Kontrol+shift+e | Varsa, çalan parçanın geçen süre bilgisini seslendirir. |
+| Parça süresini oku | Kontrol+shift+t | varsa, çalan parça süresini okur. |
 %kc:endInclude
 
 Not: yukarıdaki kısayol tuşları, yalnızca Foobar2000 durum çubuğu varsayılan görünümünde geçerlidir.
@@ -1103,7 +1103,7 @@ Tüm ayarlarınızın transfer edildiğinden emin olmak için, önce kontrol+NVD
 Bu seçenek, yalnızca bilgisayara kurulu  NVDA kopyalarında mevcuttur.
 
 ==== NVDA Güncellemelerini Otomatik Olarak Kontrol Et ====[GeneralSettingsCheckForUpdates]
-Bu etkinleştirildiyse, NVDA güncel versiyon olup olmadığını otomatik olarak kontrol edecek ve güncelleme bulunduğunda sizi bilgilendirecektir.
+Bu etkinleştirildiyse, NVDA güncel sürüm olup olmadığını otomatik olarak kontrol edecek ve güncelleme bulunduğunda sizi bilgilendirecektir.
 Ek olarak, NVDA Yardım menüsü altında bulunan, güncelleme olup olmadığına bak seçeneğini kullanarak istediğiniz zaman güncelleme kontrolü yapabilirsiniz.
 Manuel veya otomatik olarak güncellemeleri kontrol ederken, sisteminiz için doğru güncellemeyi indirmeniz için NVDA'nın güncelleme sunucusuna bazı bilgileri göndermesi gerekir.
 Aşağıdaki bilgiler, her zaman gönderilir: 
@@ -1836,12 +1836,12 @@ Bunun, özellikle Microsoft Visual Studio gibi uygulamalarda performans üzerind
 Bu nedenle, bu seçenek etkinleştirildiğinde, NVDA çoğu olay için olay kaydını sistem odağıyla sınırlayacaktır.
 Bir veya daha fazla uygulamada performans sorunları yaşıyorsanız, performansın iyileşip iyileşmediğini görmek için bu işlevi denemenizi öneririz.
 
-==== Kullanılabilir olduğunda Microsoft Word belge denetimlerine erişmek için her zaman UI otomasyonunu kullan ====[AdvancedSettingsUseUiaForWord]
-Bu seçenek etkinleştirildiğinde, NVDA, Microsoft Office 2016/365'in daha yeni sürümleri için bile Microsoft Word belge denetimlerinden bilgi almak için her zaman Microsoft UI Otomasyonu erişilebilirlik API'sini kullanmaya çalışacaktır.
+==== Uygunsa Microsoft Word belge kontrollerine erişmek için UI otomasyonunu kullan ====[AdvancedSettingsUseUiaForWord]
+Bu seçenek etkinleştirildiğinde, NVDA, Microsoft Word belge kontrollerinden bilgi almak için Microsoft UI Otomasyonu erişilebilirlik API'sini kullanmayı deneyecektir.
 Buna, Microsoft Word’ün yanı sıra,  Microsoft Outlook mesaj görüntüleyicisi ve oluşturucusu dahildir.
-16.0.13901 veya üzeri bir sürümüne sahip Microsoft Office için, NVDA, bu ayar nasıl yapılandırılırsa yapılandırılsın Microsoft Word belgelerine erişmek için her zaman UI Otomasyonunu kullanacaktır.
-Windows 10 ve sonraki sürümlerde çalışan Microsoft Office 2016/365'in en yeni sürümleri için, UI Otomasyonu desteği, Microsoft Word belgelerine neredeyse NVDA'nın mevcut Microsoft Word desteğine eşit erişim sağlayacak kadar eksiksizdir ve yanıt hızının büyük ölçüde artması avantajını da beraberinde getirir.
-Ancak, Microsoft Office'in bazı eski sürümlerinde gösterilmeyen veya yanlış gösterilen bazı bilgiler olabilir; bu,  UI otomasyon desteğine her zaman güvenilemeyeceği anlamına gelir.
+ Windows 10 ve sonraki sürümlerde çalışan Microsoft Office 2016/365'in en son sürümleri için, UI Otomasyonu desteği, Microsoft Word belgelerine neredeyse NVDA'nın mevcut Microsoft Word desteğine eşit erişim sağlayacak kadar eksiksizdir ve yanıt hızının büyük ölçüde artması avantajını da beraberinde getirir.
+Ancak, Microsoft Office'in bazı sürümlerinde gösterilmeyen veya yanlış gösterilen bazı bilgiler olabilir; bu, UI otomasyon desteğine her zaman güvenilemeyeceği anlamına gelir.
+Office 2016/365 kullanıcılarının bu özelliği test etmesini ve geri bildirimde bulunmasını memnuniyetle karşılarız, bununla birlikte kullanıcıların çoğunluğunun bunu varsayılan olarak açmasını önermiyoruz.
 
 ==== Windows Konsoluna erişmek için mevcut olduğunda UI Otomasyonunu kullan ====[AdvancedSettingsConsoleUIA]
 Bu seçenek etkinleştirildiğinde, NVDA, [Microsoft tarafından yapılan erişilebilirlik geliştirmelerinin https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Windows Konsolu desteğinden yararlanan yeni ve devam eden bir çalışmadan faydalanacaktır. Bu özellik oldukça deneyseldir ve hala eksiktir, bu nedenle kullanımı henüz tavsiye edilmez. Ancak tamamlandığında, bu yeni desteğin varsayılan olacağı ve NVDA'nın Windows komut konsollarındaki performansını ve kararlılığını artıracağı tahmin edilmektedir.
@@ -2199,7 +2199,7 @@ NVDA Araçlar menüsü altında, Eklentileri Yönet ögesini seçerek ulaşacağ
 BU paketler camia tarafından sağlanırlar ve NVDA'nın özelliklerini geliştiren ya da değiştiren kodlar barındırırlar. Hatta extra kabartma ekran ya da sentezleyici için destek sağlayabilirler.
 
 Eklenti yöneticisi, mevcut kullanıcı konfigürasyon dizininde kurulu olan tüm eklentileri listeler. 
-Her bir eklenti için, Paket adı, versiyon ve yazar bilgisi gösterilir, Eklenti Hakkında düğmesine basılarak seçili eklentiye dair daha fazla bilgi alınabilir.
+Her bir eklenti için, Paket adı, sürüm ve yazar bilgisi gösterilir, Eklenti Hakkında düğmesine basılarak seçili eklentiye dair daha fazla bilgi alınabilir.
 Seçili eklenti için yardım mevcutsa, buna yardım düğmesine basarak ulaşabilirsiniz.
 
 Mevcut eklentileri online olarak inceleyip indirmek için, Eklenti edin düğmesine basın.
@@ -2245,7 +2245,7 @@ Eklentiler, NVDA'da önemli değişikliklerle çalışmak üzere güncellenmedik
 Uyumsuz eklenti yöneticisi, amacını ve NVDA sürümünü açıklayan  kısa bir mesaj sunar.
 Uyumsuz eklentiler aşağıdaki sütunları içeren bir listede sunulur:
 + paket, eklentinin adı
-+ versiyon, eklentinin sürümü
++ sürüm, eklentinin sürümü
 + Uyumsuzluk sebebi, eklentinin neden uyumsuz olarak kabul edildiğinin bir açıklaması
 +
 
@@ -2399,7 +2399,7 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | tab key | brailleSpaceBar+dot4+dot5 |
 | upArrow key | brailleSpaceBar+dot1 |
 | downArrow key | brailleSpaceBar+dot4 |
-| control+leftArrow key | brailleSpaceBar+dot2 |
+| Control+leftArrow key | brailleSpaceBar+dot2 |
 | control+rightArrow key | brailleSpaceBar+dot5 |
 | leftArrow | brailleSpaceBar+dot3 |
 | rightArrow key | brailleSpaceBar+dot6 |
@@ -2440,7 +2440,7 @@ Bu program üzerinden eşleştirme yaptığınızda ve NVDA cihazınızı algıl
 
 Not: Bu ekranların bazılarında braille klavye olmasının yanında, braille metin çevirisi de varsayılan olarak bu ekranlar tarafından yapılır.
 Dolayısıyla, varsayılan durumda NVDA'nın braille giriş sistemi, mesela girdi tablosu ayarı bu ekranları etkilemez.
-Son versiyon üretici yazılımıyla gelen ALVA ekranlar için, bir girdi hareketiyle bu HID klavye simülasyonunu devre dışı bırakmak mümkündür.
+Son sürüm üretici yazılımıyla gelen ALVA ekranlar için, bir girdi hareketiyle bu HID klavye simülasyonunu devre dışı bırakmak mümkündür.
 
 Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
@@ -2741,7 +2741,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 %kc:endInclude
 
 ++ Seika Braille Displays ++[Seika]
-[Nippon Telesoft https://www.nippontelesoft.com/] tarafından üretilen Seika Versiyon 3, 4 ve 5 (40 hücreli) ve Seika80 (80 hücreli) braille ekranlar desteklenmektedir.
+[Nippon Telesoft https://www.nippontelesoft.com/] tarafından üretilen Seika sürüm 3, 4 ve 5 (40 hücreli) ve Seika80 (80 hücreli) braille ekranlar desteklenmektedir.
  https://en.seika-braille.com/down/index.html adresinde bu ekranlar hakkında daha fazla bilgi bulabilirsiniz.
 Önce üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 
@@ -3199,8 +3199,8 @@ NVDA's automatic braille display detection will also recognize any display that 
 Following are the current key assignments for these displays.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | pan left |
-| Scroll braille display forward | pan right |
+| Scroll braille display back | pan left or rocker up |
+| Scroll braille display forward | pan right or rocker down |
 | Move braille display to previous line | space + dot1 |
 | Move braille display to next line | space + dot4 |
 | Route to braille cell | routing set 1|

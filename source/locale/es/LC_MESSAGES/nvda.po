@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 00:02+0000\n"
-"PO-Revision-Date: 2021-10-22 12:05+0200\n"
+"POT-Creation-Date: 2022-01-21 00:02+0000\n"
+"PO-Revision-Date: 2022-01-20 18:39-0800\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -12,9 +12,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -2786,8 +2786,8 @@ msgid "report emphasis on"
 msgstr "anunciar énfasis activado"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "Activa y desactiva el anunciado de texto marcado"
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "Activa y desactiva el anunciado de texto resaltado"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 msgid "report highlighted on"
@@ -7985,19 +7985,6 @@ msgid "The settings panel you tried to open is unavailable on this system."
 msgstr ""
 "El panel de opciones que intentas abrir no está disponible en este sistema."
 
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Diccionario predeterminado"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Diccionario por Voces (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Diccionario temporal"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "Acerca de NVDA"
@@ -9935,11 +9922,10 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Always use UI Automation to access Microsoft &Word document controls when "
-"available"
+"Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Utilizar siempre UI Automation para acceder a controles de documento de "
-"Microsoft &Word cuando esté disponible"
+"Utilizar UI Automation para acceder a controles de documento de Microsoft "
+"&Word  cuando esté disponible"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10010,6 +9996,37 @@ msgstr "Anunciar siempre aria-description"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
+msgid "HID Braille Standard"
+msgstr "HID Braille Estándar"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "Por defecto (Sí)"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "Sí"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "No"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Enable support for HID braille"
+msgstr "Habilita el soporte para HID braille"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Terminal programs"
 msgstr "Programas de la Terminal"
 
@@ -10044,21 +10061,6 @@ msgstr "permitir Diff Match Patch"
 #. by line, using the difflib algorithm.
 msgid "force Difflib"
 msgstr "forzar Difflib"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "Por defecto (Sí)"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "Sí"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "No"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -10212,6 +10214,20 @@ msgstr "&Editar"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Añadir Entrada de Diccionario"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Diccionario predeterminado"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Diccionario por Voces (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Diccionario temporal"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -12697,23 +12713,3 @@ msgstr "Espaciado de línea doble"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "espaciado de línea a 1.5"
-
-#~ msgid "mrkd"
-#~ msgstr "mrcd"
-
-#~ msgid "report marked on"
-#~ msgstr "anunciar marcado activado"
-
-#~ msgid "report marked off"
-#~ msgstr "anunciar marcado desactivado"
-
-#~ msgid "marked content"
-#~ msgstr "contenido marcado"
-
-#~ msgid "An NVDA settings dialog is already open. Please close it first."
-#~ msgstr ""
-#~ "Todavía está abierto un diálogo de opciones de NVDA. Por favor ciérralo "
-#~ "antes."
-
-#~ msgid "Mar&ked (highlighted text)"
-#~ msgstr "Mar&cado (texto resaltado)"
