@@ -1,8 +1,7 @@
-#winUser.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Functions that wrap Windows API functions from user32.dll"""
 
@@ -11,6 +10,7 @@ from ctypes import *
 from ctypes import byref, WinError, Structure, c_int, c_char
 from ctypes.wintypes import *
 from ctypes.wintypes import HWND, RECT, DWORD
+from typing import Tuple
 import winKernel
 from textUtils import WCHAR_ENCODING
 import enum
@@ -457,7 +457,8 @@ def isDescendantWindow(parentHwnd,childHwnd):
 	else:
 		return False
 
-def getForegroundWindow():
+
+def getForegroundWindow() -> HWND:
 	return user32.GetForegroundWindow()
 
 def setForegroundWindow(hwnd):
@@ -492,10 +493,12 @@ def unhookWinEvent(*args):
 def sendMessage(hwnd,msg,param1,param2):
 	return user32.SendMessageW(hwnd,msg,param1,param2)
 
-def getWindowThreadProcessID(hwnd):
+
+def getWindowThreadProcessID(hwnd: HWND) -> Tuple[int, int]:
+	"""Returns a tuple of (processID, threadID)"""
 	processID=c_int()
 	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))
-	return (processID.value,threadID)
+	return (processID.value, threadID)
 
 def getClassName(window):
 	buf=create_unicode_buffer(256)

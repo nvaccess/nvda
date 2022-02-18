@@ -23,6 +23,7 @@ from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
 import config
 from locationHelper import RectLTRB
 from logHandler import log
+from typing import Optional
 
 #Window messages
 LVM_FIRST=0x1000
@@ -228,13 +229,31 @@ class List(List):
 			return 1
 		return count
 
-	def _get__columnOrderArray(self):
-		coa=(c_int *self.columnCount)()
+	def _getColumnOrderArrayRaw(self, columnCount: int) -> Optional[ctypes.Array]:
+		columnOrderArray = (ctypes.c_int * columnCount)()
+		res = watchdog.cancellableExecute(
+			NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getColumnOrderArray,
+			self.appModule.helperLocalBindingHandle,
+			self.windowHandle,
+			columnCount,
+			columnOrderArray
+		)
+		if res:
+			return None
+		return columnOrderArray
+
+	def _getColumnOrderArrayRawOutProc(self, columnCount: int) -> Optional[ctypes.Array]:
+		coa = (ctypes.c_int * columnCount)()
 		processHandle=self.processHandle
 		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			winKernel.writeProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
-			res = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETCOLUMNORDERARRAY, self.columnCount, internalCoa)
+			res = watchdog.cancellableSendMessage(
+				self.windowHandle,
+				LVM_GETCOLUMNORDERARRAY,
+				columnCount,
+				internalCoa
+			)
 			if res:
 				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
 			else:
@@ -242,6 +261,12 @@ class List(List):
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
 		return coa
+
+	def _get__columnOrderArray(self) -> Optional[ctypes.Array]:
+		if not self.appModule.helperLocalBindingHandle:
+			return self._getColumnOrderArrayRawOutProc(self.columnCount)
+		return self._getColumnOrderArrayRaw(self.columnCount)
+
 
 class GroupingItem(Window):
 
@@ -321,7 +346,22 @@ class ListItemWithoutColumnSupport(IAccessible):
 
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
 
-	def _getColumnLocationRaw(self,index):
+	def _getColumnLocationRaw(self, index: int) -> ctypes.wintypes.RECT:
+		item = self.IAccessibleChildID - 1
+		subItem = index
+		rect = ctypes.wintypes.RECT()
+		if watchdog.cancellableExecute(
+			NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getColumnLocation,
+			self.appModule.helperLocalBindingHandle,
+			self.windowHandle,
+			item,
+			subItem,
+			ctypes.byref(rect)
+		) != 0:
+			return None
+		return rect
+
+	def _getColumnLocationRawOutProc(self, index: int) -> ctypes.wintypes.RECT:
 		processHandle=self.processHandle
 		# LVM_GETSUBITEMRECT requires a pointer to a RECT structure that will receive the subitem bounding rectangle information.
 		localRect=RECT(
@@ -353,24 +393,31 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		if res == 0:
 			log.debugWarning(f"LVM_GETSUBITEMRECT failed for index {index} in list")
 			return None
+		return localRect
+
+	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
+		index = self.parent._columnOrderArray[column - 1]
+		if not self.appModule.helperLocalBindingHandle:
+			rect = self._getColumnLocationRawOutProc(index)
+		else:
+			rect = self._getColumnLocationRaw(index)
+		if rect is None:
+			return None
 		# #8268: this might be a malformed rectangle
 		# (i.e. with a left coordinate that is greater than the right coordinate).
 		# This happens in Becky! Internet Mail,
 		# as well in applications that expose zero width columns.
-		left = localRect.left
-		top = localRect.top
-		right = localRect.right
-		bottom = localRect.bottom
+		left = rect.left
+		top = rect.top
+		right = rect.right
+		bottom = rect.bottom
 		if left > right:
 			left = right
 		if top > bottom:
 			top = bottom
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
-	def _getColumnLocation(self,column):
-		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
-
-	def _getColumnContentRaw(self, index):
+	def _getColumnContentRaw(self, index: int) -> Optional[str]:
 		item = self.IAccessibleChildID - 1
 		subItem = index
 		text = AutoFreeBSTR()
@@ -385,7 +432,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return text.value
 
-	def _getColumnContentRawOutProc(self, index):
+	def _getColumnContentRawOutProc(self, index: int) -> Optional[str]:
 		buffer=None
 		processHandle=self.processHandle
 		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -405,7 +452,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
 		return buffer.value if buffer else None
 
-	def _getColumnContent(self, column):
+	def _getColumnContent(self, column: int) -> Optional[str]:
 		index = self.parent._columnOrderArray[column - 1]
 		if not self.appModule.helperLocalBindingHandle:
 			return self._getColumnContentRawOutProc(index)
@@ -428,7 +475,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 	def _getColumnImageID(self, column):
 		return self._getColumnImageIDRaw(self.parent._columnOrderArray[column - 1])
 
-	def _getColumnHeaderRaw(self,index):
+	def _getColumnHeaderRawOutProc(self, index: int) -> Optional[str]:
 		buffer=None
 		processHandle=self.processHandle
 		internalColumn=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVCOLUMN),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -448,8 +495,24 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.virtualFreeEx(processHandle,internalColumn,0,winKernel.MEM_RELEASE)
 		return buffer.value if buffer else None
 
-	def _getColumnHeader(self, column):
-		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
+	def _getColumnHeaderRaw(self, index: int) -> Optional[str]:
+		subItem = index
+		text = AutoFreeBSTR()
+		if watchdog.cancellableExecute(
+			NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getColumnHeader,
+			self.appModule.helperLocalBindingHandle,
+			self.windowHandle,
+			subItem,
+			ctypes.byref(text)
+		) != 0:
+			return None
+		return text.value
+
+	def _getColumnHeader(self, column: int) -> Optional[str]:
+		index = self.parent._columnOrderArray[column - 1]
+		if not self.appModule.helperLocalBindingHandle:
+			return self._getColumnHeaderRawOutProc(index)
+		return self._getColumnHeaderRaw(index)
 
 	def _get_name(self):
 		parent = self.parent

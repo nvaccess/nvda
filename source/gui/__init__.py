@@ -31,11 +31,13 @@ from .message import (
 	# be cautious when removing
 	messageBox,
 )
-from .settingsDialogs import (
-	SettingsDialog,
+from .speechDict import (
 	DefaultDictionaryDialog,
 	VoiceDictionaryDialog,
 	TemporaryDictionaryDialog,
+)
+from .settingsDialogs import (
+	SettingsDialog,
 )
 from .settingsDialogs import *
 from .startupDialogs import WelcomeDialog
@@ -171,13 +173,13 @@ class MainFrame(wx.Frame):
 
 		self.postPopup()
 
-	def onDefaultDictionaryCommand(self,evt):
+	def onDefaultDictionaryCommand(self, evt):
 		self._popupSettingsDialog(DefaultDictionaryDialog)
 
-	def onVoiceDictionaryCommand(self,evt):
+	def onVoiceDictionaryCommand(self, evt):
 		self._popupSettingsDialog(VoiceDictionaryDialog)
 
-	def onTemporaryDictionaryCommand(self,evt):
+	def onTemporaryDictionaryCommand(self, evt):
 		self._popupSettingsDialog(TemporaryDictionaryDialog)
 
 	def onExecuteUpdateCommand(self, evt):
@@ -309,7 +311,7 @@ class MainFrame(wx.Frame):
 		pythonConsole.activate()
 
 	def onAddonsManagerCommand(self,evt):
-		if _isInMessageBox():
+		if _isInMessageBox() or globalVars.appArgs.secure:
 			return
 		self.prePopup()
 		from .addonGui import AddonsDialog

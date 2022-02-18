@@ -15,7 +15,7 @@ import time
 import colors
 import api
 import controlTypes
-from controlTypes import OutputReason
+from controlTypes import OutputReason, TextPosition
 import tones
 from synthDriverHandler import getSynth
 import re
@@ -388,7 +388,7 @@ def getCharDescListFromText(text,locale):
 	return charDescList
 
 
-def speakObjectProperties(  # noqa: C901
+def speakObjectProperties(
 		obj,
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
@@ -2356,21 +2356,20 @@ def getFormatFieldSpeech(  # noqa: C901
 			)
 			textList.append(text)
 	if formatConfig["reportSuperscriptsAndSubscripts"]:
-		textPosition=attrs.get("text-position")
-		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
-		if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
-			textPosition=textPosition.lower() if textPosition else textPosition
-			if textPosition=="super":
-				# Translators: Reported for superscript text.
-				text=_("superscript")
-			elif textPosition=="sub":
-				# Translators: Reported for subscript text.
-				text=_("subscript")
-			else:
-				# Translators: Reported for text which is at the baseline position;
-				# i.e. not superscript or subscript.
-				text=_("baseline")
-			textList.append(text)
+		textPosition = attrs.get("text-position", TextPosition.UNDEFINED)
+		attrs["text-position"] = textPosition
+		oldTextPosition = attrsCache.get("text-position") if attrsCache is not None else None
+		if (
+			textPosition != oldTextPosition
+			and (
+				textPosition in [TextPosition.SUPERSCRIPT, TextPosition.SUBSCRIPT]
+				or (
+					textPosition == TextPosition.BASELINE
+					and (oldTextPosition is not None and oldTextPosition != TextPosition.UNDEFINED)
+				)
+			)
+		):
+			textList.append(textPosition.displayString)
 	if formatConfig["reportAlignment"]:
 		textAlign=attrs.get("text-align")
 		oldTextAlign=attrsCache.get("text-align") if attrsCache is not None else None

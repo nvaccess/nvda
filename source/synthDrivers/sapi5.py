@@ -8,8 +8,6 @@ from typing import Optional
 from enum import IntEnum
 import locale
 from collections import OrderedDict
-import os
-from ctypes import c_long, WINFUNCTYPE, windll
 import comtypes.client
 from comtypes import COMError
 import winreg
