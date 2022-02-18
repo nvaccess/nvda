@@ -236,7 +236,10 @@ def initialize():
 	"""
 	global NVDAProcessID, NVDAProcessLogonSessionID, _importers
 	NVDAProcessID=os.getpid()
-	NVDAProcessLogonSessionID = getProcessTokenOrigin(winKernel.GetCurrentProcess())
+	try:
+		NVDAProcessLogonSessionID = getProcessTokenOrigin(winKernel.GetCurrentProcess())
+	except WindowsError:
+		log.error("Couldn't get NVDAProcessLogonSessionID", exc_info=True)
 	config.addConfigDirsToPythonPackagePath(appModules)
 	_importers=list(pkgutil.iter_importers("appModules.__init__"))
 
@@ -530,9 +533,13 @@ class AppModule(baseObject.ScriptableObject):
 		This applies to applications started with the Windows runas command
 		or when choosing "run as a different user" from an application's (shortcut) context menu.
 		"""
-		self.isRunningUnderDifferentLogonSession = (
-			NVDAProcessLogonSessionID != getProcessTokenOrigin(self.processHandle)
-		)
+		try:
+			self.isRunningUnderDifferentLogonSession = (
+				NVDAProcessLogonSessionID != getProcessTokenOrigin(self.processHandle)
+			)
+		except WindowsError:
+			log.error(f"Couldn't get logon session ID for {self}", exc_info=True)
+			self.isRunningUnderDifferentLogonSession = False
 		return self.isRunningUnderDifferentLogonSession
 
 	def _get_appArchitecture(self):

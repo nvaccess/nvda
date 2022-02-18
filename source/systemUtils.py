@@ -72,20 +72,22 @@ class TOKEN_ORIGIN(ctypes.Structure):
 
 def getProcessTokenOrigin(processHandle):
 	token = ctypes.wintypes.HANDLE()
-	ctypes.windll.advapi32.OpenProcessToken(
+	if not ctypes.windll.advapi32.OpenProcessToken(
 		processHandle,
 		winKernel.MAXIMUM_ALLOWED,
 		ctypes.byref(token)
-	)
+	):
+		raise ctypes.WinError()
 	try:
 		val = TOKEN_ORIGIN()
-		ctypes.windll.advapi32.GetTokenInformation(
+		if not ctypes.windll.advapi32.GetTokenInformation(
 			token,
 			TokenOrigin,
 			ctypes.byref(val),
 			ctypes.sizeof(val),
 			ctypes.byref(ctypes.wintypes.DWORD())
-		)
+		):
+			raise ctypes.WinError()
 		return val.OriginatingLogonSession
 	finally:
 		ctypes.windll.kernel32.CloseHandle(token)
