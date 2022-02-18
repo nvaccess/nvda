@@ -5,13 +5,14 @@ What's New in NVDA
 
 
 = 2021.3.2 =
-This is a minor release to fix several security issues raised since the 2021.3 release cycle.
+This is a minor release to fix several security issues raised.
 Please responsibly disclose security issues to info@nvaccess.org.
 
 
 == Bug Fixes ==
 - Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
 - Security fix: The addons manager dialog is now disabled on secure screens. (#13059)
+- Security fix: NVDA context help is no longer available on secure screens. (#13353)
 -
 
 

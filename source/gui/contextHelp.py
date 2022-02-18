@@ -10,6 +10,7 @@ import typing
 import wx
 from logHandler import log
 import documentationUtils
+import globalVars
 
 
 def writeRedirect(helpId: str, helpFilePath: str, contextHelpPath: str):
@@ -73,6 +74,9 @@ def bindHelpEvent(helpId: str, window: wx.Window):
 
 
 def _onEvtHelp(helpId: str, evt: wx.HelpEvent):
+	if globalVars.appArgs.secure:
+		# Disable context help in secure screens to avoid opening a browser with system-wide privileges.
+		return
 	# Don't call evt.skip. Events bubble upwards through parent controls.
 	# Context help for more specific controls should override the less specific parent controls.
 	showHelp(helpId)
