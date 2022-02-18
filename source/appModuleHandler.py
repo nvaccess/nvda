@@ -37,7 +37,6 @@ import appModules
 import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
-from typing import Optional
 from systemUtils import getProcessTokenOrigin
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
