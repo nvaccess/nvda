@@ -1692,7 +1692,7 @@ def test_focus_mode_on_focusable_read_only_lists():
 			]),
 			SPEECH_SEP.join([
 				"level 1",  # Inserted by Chromium even though not explicitly set
-				"Todd Kloots Hello all.At 1:30 PM",  # list element name, should read first
+				"Todd Kloots Hello all. At 1:30 PM",  # list element name, should read first
 				"1 of 1",  # item count, no role expected here
 			]),
 			"Focus mode",  # Focus mode should be enabled automatically and be indicated
