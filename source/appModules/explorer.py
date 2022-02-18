@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -185,13 +185,9 @@ class GridGroup(UIA):
 	# Normally the name is the first tile which is rather redundant
 	# However some groups have custom header text which should be read instead
 	def _get_name(self):
-		child=self.firstChild
-		if isinstance(child,UIA):
-			try:
-				automationID=child.UIAElement.currentAutomationID
-			except COMError:
-				automationID=None
-			if automationID=="GridListGroupHeader":
+		child = self.firstChild
+		if isinstance(child, UIA):
+			if child.UIAAutomationId == "GridListGroupHeader":
 				return child.name
 
 
@@ -339,7 +335,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridGroup)
 			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.Role.PANE:
 				clsList.insert(0, ImmersiveLauncher)
-			elif uiaClassName == "ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
+			elif uiaClassName == "ListViewItem" and obj.UIAAutomationId.startswith('Suggestion_'):
 				clsList.insert(0, SuggestionListItem)
 			# Multitasking view frame window
 			elif (
@@ -354,7 +350,7 @@ class AppModule(appModuleHandler.AppModule):
 				# RS4 and below we can match on a window class
 				windowClass == "MultitaskingViewFrame" or
 				# RS5 and above we must look for a particular UIA automationID on the list
-				isinstance(obj.parent,UIA) and obj.parent.UIAElement.cachedAutomationID=="SwitchItemListControl"
+				isinstance(obj.parent, UIA) and obj.parent.UIAAutomationId == "SwitchItemListControl"
 			):
 				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.Role.EDITABLETEXT:

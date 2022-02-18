@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2021 Bill Dengler
+# Copyright (C) 2019-2022 Bill Dengler
 
 import ctypes
 import NVDAHelper
@@ -413,9 +413,9 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 
 
 def findExtraOverlayClasses(obj, clsList):
-	if obj.UIAElement.cachedAutomationId == "Text Area":
+	if obj.UIAAutomationId == "Text Area":
 		clsList.append(WinConsoleUIA)
-	elif obj.UIAElement.cachedAutomationId == "Console Window":
+	elif obj.UIAAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)
 
 

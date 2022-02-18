@@ -3,6 +3,22 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3.1 =
+Esta es una versión menor para corregir varios problemas en 2021.3.
+
+
+== Cambios ==
+- El nuevo protocolo HID Braille ya no es el preferido cuando se pueda utilizar otro controlador de pantalla braille. (#13153)
+- El nuevo protocolo HID Braille puede deshabilitarse a través de una configuración en el panel de opciones avanzadas. (#13180)
+-
+
+
+== Corrección de Fallos ==
+- De nuevo se abrevian las regiones en braille. #13158
+- Corregida la autodetección inestable de las pantallas braille Humanware Brailliant y APH Mantis Q40 cuando se utiliza Bluetooth. (#13153)
+-
+
+
 = 2021.3 =
 Esta versión introduce el soporte para la nueva especificación Braille HID.
 Esta especificación pretende estandarizar el soporte de pantallas braille sin la necesidad de controladores individuales.

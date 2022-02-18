@@ -3,6 +3,19 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3.1 =
+
+== Muutokset ==
+- Uutta HID Braille -protokollaa ei enää aseteta etusijalle, kun muutakin pistenäyttöajuria voidaan käyttää. (#13153)
+-
+
+
+== Bugikorjaukset ==
+- Kiintopiste näytetään taas pistekirjoituksella lyhennettynä. #13158
+- Korjattu Humanware Brailliant- ja APH Mantis Q40 -pistenäyttöjen epävakaa automaattinen tunnistus Bluetoothia käytettäessä. (#13153)
+-
+
+
 = 2021.3 =
 Tämä versio esittelee tuen uudelle HID Braille -määritykselle.
 Sen tarkoituksena on standardoida pistenäyttöjen tuki, jossa ei tarvita valmistajakohtaisia ajureita.

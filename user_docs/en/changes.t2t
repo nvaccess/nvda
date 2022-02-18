@@ -41,6 +41,8 @@ What's New in NVDA
 
 == Bug Fixes ==
 - Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
+- Security fix: The addons manager dialog is now disabled on secure screens. (#13059)
+- Security fix: NVDA Context help is no longer available on secure screens. (#13353) 
 - Clipboard manager pane should no longer incorrectly steal focus when opening some Office programs. (#12736)
 - On a system where the user has chosen to swap the primary mouse button from the left to the right, NVDA will no longer accidentally bring up a context menu instead of activating an item, in applications such as web browsers. (#12642)
 - When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)
@@ -61,6 +63,7 @@ What's New in NVDA
 - 'Baseline' is no longer spuriously reported when the 'report superscript and subscript' option is active. (#11078)
 - In Windows 11, NVDA will no longer prevent navigation in emoji panel when selecting emojis. (#13104)
 - Prevents a bug causing double-reporting when using Windows Console and Terminal. (#13261)
+- Fixed several cases where list items could not be reported in 64 bit applications, such as REAPER. (#8175)
 -
 
 == Changes for Developers ==
@@ -123,6 +126,10 @@ This can dramatically decrease build times on multi core systems. (#13226)
 - ``easeOfAccess.APP_KEY_NAME`` has been deprecated, to be removed in 2023. (#13242)
 - ``DictionaryDialog`` and ``DictionaryEntryDialog`` are moved from ``gui.settingsDialogs`` to ``gui.speechDict``. (#13294)
 - IAccessible2 relations are now shown in developer info for IAccessible2 objects. (#13315)
+- ``languageHandler.windowsPrimaryLCIDsToLocaleNames`` has been removed, instead use ``languageHandler.windowsLCIDToLocaleName`` or ``winKernel.LCIDToLocaleName``. (#13342)
+- ``UIAAutomationId`` property for UIA objects should be preferred over ``cachedAutomationId``. (#13125, #11447)
+  - ``cachedAutomationId`` can be used if obtained directly from the element.
+  -
 -
 
 
