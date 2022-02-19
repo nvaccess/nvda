@@ -60,8 +60,8 @@ _executableNamesToAppMods: Dict[str, str] = {
 	# The Insider version of Visual Studio Code should use the module for the stable version.
 
 	"code - insiders": "code",
-	# commsapps is an aliast for the Windows 10 mail and calendar.
-	"commsapps": "hxoutlook",
+	# commsapps is an alias for the Windows 10 mail and calendar.
+	"commsapps": "hxmail",
 	# DBeaver is based on Eclipse and should use its appModule.
 	"dbeaver": "eclipse",
 	# Preview version of the Adobe Digital Editions should use the module for the stable version.
