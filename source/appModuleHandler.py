@@ -51,6 +51,62 @@ _getAppModuleLock=threading.RLock()
 post_appSwitch = extensionPoints.Action()
 
 
+_executableNamesToAppMods: Dict[str, str] = {
+	# Azure Data Studio (both stable and Insiders versions) should use module for Visual Studio Code
+	"azuredatastudio": "code",
+	"azuredatastudio-insiders": "code",
+	# Windows 11 calculator should use module for the Windows 10 one.
+	"calculatorapp": "calculator",
+	# The Insider version of Visual Studo Code should use the module for the stable version.
+	"code - insiders": "code",
+	# commsapps is an aliast for the Windows 10 mail and calendar.
+	"commsapps": "hxoutlook",
+	# DBeaver is based on Eclipse and should use its appModule.
+	"dbeaver": "eclipse",
+	# Preview version of the Adobe Digital Editions should use the module for the stable version.
+	"digitaleditionspreview": "digitaleditions",
+	# Esybraille should use module for esysuite.
+	"esybraille": "esysuite",
+	# hxoutlook is an alias for Windows 10 mail in Creators update.
+	"hxoutlook": "hxmail",
+	# 64-bit versions of Miranda IM should use module for the 32-bit executable.
+	"miranda64": "miranda32",
+	# Various incarnations of Media Player Classic.
+	"mpc-hc": "mplayerc",
+	"mpc-hc64": "mplayerc",
+	# searchapp is an alias for searchui in Windows 10 build 18965 and later.
+	"searchapp": "searchui",
+	# Windows search in Windows 11.
+	"searchhost": "searchui",
+	# Spring Tool Suite is based on Eclipse and should use its appModule.
+	"springtoolsuite4": "eclipse",
+	"sts": "eclipse",
+	# Various versions of Teamtalk.
+	"teamtalk3": "teamtalk4classic",
+	# App module for Windows 10/11 Modern Keyboard aka new touch keyboard panel
+	# should use Composable Shell modern keyboard app module
+	"textinputhost": "windowsinternal_composableshell_experiences_textinput_inputapp",
+	# Total Commander X64 should use the module for the 32-bit version.
+	"totalcmd64": "totalcmd",
+	# The calculator on Windows Server and LTSB versions of  Windows 10
+	# should use the module for the desktop calculator from the earlier Windows releases.
+	"win32calc": "calc",
+	# Windows Mail should use module for Outlook Express.
+	"winmail": "msimn",
+	# Zend Eclipse PHP Developer Tools is based on Eclipse and should use its appModule.
+	"zend-eclipse-php": "eclipse",
+	# Zend Studio is based on Eclipse and should use its appModule.
+	"zendstudio": "eclipse",
+}
+
+"""Maps names of the executables to the names of the appModule which  should be loaded for the given program.
+This mapping is needed since:
+- Names of some programs are incompatible with the Python's import system (they contain a dot or a plus)
+- Sometimes it is necessary to map one module to multiple executables - this map saves us from adding multiple
+ appModules in such cases.
+"""
+
+
 class processEntry32W(ctypes.Structure):
 	_fields_ = [
 		("dwSize",ctypes.wintypes.DWORD),
@@ -64,6 +120,29 @@ class processEntry32W(ctypes.Structure):
 		("dwFlags",ctypes.wintypes.DWORD),
 		("szExeFile", ctypes.c_wchar * 260)
 	]
+
+
+def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
+	"""Registers appModule to be used for a given executable.
+	"""
+	_executableNamesToAppMods[executableName] = appModName
+
+
+def unregisterExecutable(executableName: str) -> None:
+	"""Removes the executable of a given name from the mapping of applications to appModules.
+	"""
+	try:
+		del _executableNamesToAppMods[executableName]
+	except KeyError:
+		log.error(f"Executable {executableName} was not previously registered.")
+
+
+def _getAppModuleNameFromExecutable(executableName: str) -> str:
+	"""Returns name of the appModule which should be used for a given executable.
+	If there is no mapping for the given program just returns the executable name.
+	"""
+	return _executableNamesToAppMods.get(executableName, executableName)
+
 
 def getAppNameFromProcessID(processID,includeExt=False):
 	"""Finds out the application name of the given process.
@@ -95,7 +174,10 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	# This might be an executable which hosts multiple apps.
 	# Try querying the app module for the name of the app being hosted.
 	try:
-		mod = importlib.import_module("appModules.%s" % appName, package="appModules")
+		mod = importlib.import_module(
+			f"appModules.{_getAppModuleNameFromExecutable(appName)}",
+			package="appModules"
+		)
 		return mod.getAppNameFromHost(processID)
 	except (ImportError, AttributeError, LookupError):
 		pass
@@ -153,17 +235,20 @@ def cleanup():
 		except:
 			log.exception("Error terminating app module %r" % deadMod)
 
-def doesAppModuleExist(name):
-	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
 
-def fetchAppModule(processID,appName):
+def doesAppModuleExist(name: str) -> bool:
+	return any(
+		importer.find_module(
+			f"appModules.{_getAppModuleNameFromExecutable(name)}"
+		) for importer in _importers
+	)
+
+
+def fetchAppModule(processID: int, appName: str) -> AppModule:
 	"""Returns an appModule found in the appModules directory, for the given application name.
 	@param processID: process ID for it to be associated with
-	@type processID: integer
 	@param appName: the application name for which an appModule should be found.
-	@type appName: str
 	@returns: the appModule, or None if not found
-	@rtype: AppModule
 	"""  
 	# First, check whether the module exists.
 	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
@@ -171,7 +256,9 @@ def fetchAppModule(processID,appName):
 
 	if doesAppModuleExist(modName):
 		try:
-			return importlib.import_module("appModules.%s" % modName, package="appModules").AppModule(processID, appName)
+			return importlib.import_module(
+				f"appModules.{_getAppModuleNameFromExecutable(modName)}", package="appModules"
+			).AppModule(processID, appName)
 		except:
 			log.exception(f"error in appModule {modName!r}")
 			import ui
@@ -311,6 +398,10 @@ class AppModule(baseObject.ScriptableObject):
 	Each app module should be a Python module or a package in the appModules package
 	named according to the executable it supports;
 	e.g. explorer.py for the explorer.exe application or firefox/__init__.py for firefox.exe.
+	If the name of the executable is not compatible with the Python's import system
+	i.e. contains some special characters such as "." or "+" you can name the module however you like
+	and then map the executable name to the module name
+	by adding an entry to `_executableNamesToAppMods` dictionary.
 	It should containa  C{AppModule} class which inherits from this base class.
 	App modules can implement and bind gestures to scripts.
 	These bindings will only take effect while an object in the associated application has focus.
