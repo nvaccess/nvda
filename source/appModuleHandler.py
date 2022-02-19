@@ -57,7 +57,8 @@ _executableNamesToAppMods: Dict[str, str] = {
 	"azuredatastudio-insiders": "code",
 	# Windows 11 calculator should use module for the Windows 10 one.
 	"calculatorapp": "calculator",
-	# The Insider version of Visual Studo Code should use the module for the stable version.
+	# The Insider version of Visual Studio Code should use the module for the stable version.
+
 	"code - insiders": "code",
 	# commsapps is an aliast for the Windows 10 mail and calendar.
 	"commsapps": "hxoutlook",
