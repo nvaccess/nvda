@@ -19,7 +19,7 @@ import NVDAHelper
 
 class WebKit_TextInfo(VirtualBufferTextInfo):
 
-	def _normalizeControlField(self, attrs: typing.Dict[str, typing.Any]):
+	def _normalizeControlField(self, attrs: textInfos.ControlField):
 		accRole=attrs['IAccessible::role']
 		role = level = None
 		if accRole.isdigit():
@@ -34,7 +34,7 @@ class WebKit_TextInfo(VirtualBufferTextInfo):
 		if not role:
 			role = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole, controlTypes.Role.UNKNOWN)
 
-		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs, role)
 
 		attrs["role"] = role
 		attrs["states"] = states

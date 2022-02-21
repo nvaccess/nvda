@@ -16,6 +16,7 @@ from typing import (
 	Tuple,
 	Dict,
 	Union,
+	Set,
 )
 import weakref
 from ctypes import (
@@ -243,16 +244,37 @@ IAccessible2StatesToNVDAStates = {
 	IA2.IA2_STATE_CHECKABLE: controlTypes.State.CHECKABLE,
 }
 
+Role = controlTypes.Role
+State = controlTypes.State
+_OverriddenStateMapping: Dict[Role, Dict[State, State]] = {
+	controlTypes.Role.PROGRESSBAR: {
+		# Don't report progress bars as "half-checked"
+		# HALFCHECKED maps from oleacc.STATE_SYSTEM_MIXED
+		# which has the same value as oleacc.STATE_SYSTEM_INDETERMINATE
+		# ControlTypes.INDETERMINATE is not mapped directly from any IA or IA2 state
+		State.HALFCHECKED: State.INDETERMINATE,
+	},
+}
 
-def getStatesSetFromIAccessibleStates(IAccessibleStates: int) -> typing.Set[controlTypes.State]:
+
+def _supplyOverriddenState(standardState: State, role: Role) -> State:
+	if role in _OverriddenStateMapping:
+		return _OverriddenStateMapping[role].get(standardState, standardState)
+	return standardState
+
+
+def getStatesSetFromIAccessibleStates(
+		IAccessibleStates: int,
+		role: controlTypes.Role
+) -> Set[controlTypes.State]:
 	return set(
-		IAccessibleStatesToNVDAStates[IAState]
+		_supplyOverriddenState(IAccessibleStatesToNVDAStates[IAState], role)
 		for IAState in IAccessibleStatesToNVDAStates.keys()
 		if IAState & IAccessibleStates
 	)
 
 
-def getStatesSetFromIAccessible2States(IAccessible2States: int) -> typing.Set[controlTypes.State]:
+def getStatesSetFromIAccessible2States(IAccessible2States: int) -> Set[State]:
 	return set(
 		IAccessible2StatesToNVDAStates[IA2State]
 		for IA2State in IAccessible2StatesToNVDAStates.keys()
@@ -260,20 +282,20 @@ def getStatesSetFromIAccessible2States(IAccessible2States: int) -> typing.Set[co
 	)
 
 
-def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> typing.Set[controlTypes.State]:
+def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField", role: Role) -> Set[State]:
 	# States are serialized (in XML) with an attribute per state.
 	# The value for the state is used in the attribute name.
 	# The attribute value is always 1.
 	# EG IAccessible::state_40="1"
 	IAccessibleStateAttrName = 'IAccessible::state_{}'
 	return set(
-		IAccessibleStatesToNVDAStates[IAState]
+		_supplyOverriddenState(IAccessibleStatesToNVDAStates[IAState], role)
 		for IAState in IAccessibleStatesToNVDAStates.keys()
 		if int(attrs.get(IAccessibleStateAttrName.format(IAState), 0))
 	)
 
 
-def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> typing.Set[controlTypes.State]:
+def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> Set[State]:
 	# States are serialized (in XML) with an attribute per state.
 	# The value for the state is used in the attribute name.
 	# The attribute value is always 1.

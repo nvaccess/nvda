@@ -56,7 +56,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				accRole = accRole.lower()
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
 
-		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs, role)
 
 		if role == controlTypes.Role.EDITABLETEXT and {controlTypes.State.READONLY, controlTypes.State.FOCUSABLE, controlTypes.State.LINKED} <= states:
 			# HACK: Acrobat sets focus states on text nodes beneath links,

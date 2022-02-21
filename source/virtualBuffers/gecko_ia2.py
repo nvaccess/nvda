@@ -101,7 +101,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.Role.BLOCKQUOTE
 
-		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs, role)
 		states |= IAccessibleHandler.getStatesSetFromIAccessible2Attrs(attrs)
 
 		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.State.FOCUSABLE in states or controlTypes.State.UNAVAILABLE in states or controlTypes.State.EDITABLE in states):

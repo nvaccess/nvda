@@ -19,7 +19,7 @@ class LotusNotesRichText_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
 		role=controlTypes.Role.STATICTEXT
-		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs, role)
 		if controlTypes.State.LINKED in states:
 			role=controlTypes.Role.LINK
 		attrs['role']=role

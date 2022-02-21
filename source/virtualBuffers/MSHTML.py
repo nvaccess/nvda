@@ -101,7 +101,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		if roleText:
 			attrs['roleText']=roleText
 
-		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs, role)
 
 		if attrs.get('HTMLAttrib::longdesc'):
 			states.add(controlTypes.State.HASLONGDESC)

@@ -76,6 +76,7 @@ class State(DisplayStringIntEnum):
 	OVERFLOWING = auto()
 	UNLOCKED = auto()
 	HASNOTE = auto()
+	INDETERMINATE = auto()  # indeterminate progress bar
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -163,8 +164,10 @@ _stateLabels: Dict[State, str] = {
 	# Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
 	# Excel spreadsheet).
 	State.UNLOCKED: _("unlocked"),
-	# Translators: a state that denotes the existance of a note.
+	# Translators: a state that denotes the existence of a note.
 	State.HASNOTE: _("has note"),
+	# Translators: a state specific to progress bars that do not indicate progress, only business.
+	State.INDETERMINATE: _("indeterminate"),
 }
 
 

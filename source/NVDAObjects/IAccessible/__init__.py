@@ -898,7 +898,9 @@ the NVDAObject for IAccessible
 		except COMError:
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
-			states.update(IAccessibleHandler.getStatesSetFromIAccessibleStates(IAccessibleStates))
+			states.update(
+				IAccessibleHandler.getStatesSetFromIAccessibleStates(IAccessibleStates, self.role)
+			)
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			# Not an IA2 object.
 			return states
