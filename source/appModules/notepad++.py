@@ -3,49 +3,14 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import ctypes
+"""This is just an alias which maps the appModule for Notepad++ to the right binary file
+by exposing everything from the real module in its namespace.
+"""
 
-import appModuleHandler
-import NVDAObjects.window.scintilla as ScintillaBase
-
-
-class CharacterRangeStructLongLong(ctypes.Structure):
-	"""By default character ranges in Scintilla are represented by longs.
-	However long is not big enough for files over 2 GB,
-	therefore in 64-bit builds of Notepad++ 8.3 and later
-	these ranges are represented by longlong.
-	"""
-	_fields_ = [
-		('cpMin', ctypes.c_longlong),
-		('cpMax', ctypes.c_longlong),
-	]
+import nvdaBuiltin.appModules.notepadPlusPlus as baseAppMod
 
 
-class ScintillaTextInfoNpp83(ScintillaBase.ScintillaTextInfo):
-	"""Text info for 64-bit builds of Notepad++ 8.3 and later.
-	"""
-
-	class TextRangeStruct(ctypes.Structure):
-		_fields_ = [
-			('chrg', CharacterRangeStructLongLong),
-			('lpstrText', ctypes.c_char_p),
-		]
-
-
-class NppEdit(ScintillaBase.Scintilla):
-
-	name = None  # The name of the editor is not useful.
-
-	def _get_TextInfo(self):
-		if self.appModule.is64BitProcess:
-			appVerMajor, appVerMinor, *__ = self.appModule.productVersion.split(".")
-			if int(appVerMajor) >= 8 and int(appVerMinor) >= 3:
-				return ScintillaTextInfoNpp83
-		return super().TextInfo
-
-
-class AppModule(appModuleHandler.AppModule):
-
-	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "Scintilla" and obj.windowControlID == 0:
-			clsList.insert(0, NppEdit)
+for name, value in baseAppMod.__dict__.items():
+	if name.startswith("_"):
+		continue
+	globals()[name] = value
