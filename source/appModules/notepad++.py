@@ -7,10 +7,4 @@
 by exposing everything from the real module in its namespace.
 """
 
-import nvdaBuiltin.appModules.notepadPlusPlus as baseAppMod
-
-
-for name, value in baseAppMod.__dict__.items():
-	if name.startswith("_"):
-		continue
-	globals()[name] = value
+from .notepadPlusPlus import *  # noqa: F401, F403
