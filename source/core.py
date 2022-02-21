@@ -424,8 +424,6 @@ def main():
 	"""
 	log.debug("Core starting")
 
-	ctypes.windll.user32.SetProcessDPIAware()
-
 	import config
 	if not globalVars.appArgs.configPath:
 		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)

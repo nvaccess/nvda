@@ -71,7 +71,7 @@ manifest_template = """\
 				>true/pm</dpiAware>
 			<dpiAwareness
 				xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings"
-				>PerMonitorV2</dpiAwareness>
+				>PerMonitorV2, PerMonitor</dpiAwareness>
 		</asmv3:windowsSettings>
 	</asmv3:application>
 </assembly>
