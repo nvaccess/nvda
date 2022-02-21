@@ -54,7 +54,7 @@ except ModuleNotFoundError:
 			else:
 				IDEFriendlyContent.append(line)
 	with open(path, "w") as interfaceFile:
-		interfaceFile.write("".join(IDEFriendlyContent))
+		interfaceFile.writelines(IDEFriendlyContent)
 
 
 def interfaceAction(target:List[File], source, env):
