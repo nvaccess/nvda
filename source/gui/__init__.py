@@ -308,7 +308,7 @@ class MainFrame(wx.Frame):
 		pythonConsole.activate()
 
 	def onAddonsManagerCommand(self,evt):
-		if _isInMessageBox():
+		if _isInMessageBox() or globalVars.appArgs.secure:
 			return
 		self.prePopup()
 		from .addonGui import AddonsDialog
