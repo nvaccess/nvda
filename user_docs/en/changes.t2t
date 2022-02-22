@@ -64,6 +64,8 @@ What's New in NVDA
 - In Windows 11, NVDA will no longer prevent navigation in emoji panel when selecting emojis. (#13104)
 - Prevents a bug causing double-reporting when using Windows Console and Terminal. (#13261)
 - Fixed several cases where list items could not be reported in 64 bit applications, such as REAPER. (#8175)
+- In the Microsoft Edge downloads manager, NVDA will now automatically switch to focus mode once the list item with the most recent download gains focus. (#13221)
+- NVDA no longer causes 64-bit versions of Notepad++ 8.3 and above to crash. (#13311)
 -
 
 == Changes for Developers ==
@@ -130,6 +132,7 @@ This can dramatically decrease build times on multi core systems. (#13226)
 - ``UIAAutomationId`` property for UIA objects should be preferred over ``cachedAutomationId``. (#13125, #11447)
   - ``cachedAutomationId`` can be used if obtained directly from the element.
   -
+- ``NVDAObjects.window.scintilla.CharacterRangeStruct`` has moved to ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
 -
 
 
