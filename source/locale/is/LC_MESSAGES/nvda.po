@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 20:07+1000\n"
-"PO-Revision-Date: 2020-05-02 14:42-0700\n"
+"POT-Creation-Date: 2022-01-21 00:02+0000\n"
+"PO-Revision-Date: 2022-01-20 18:43-0800\n"
 "Last-Translator: Hinni Hreinsson <hm.hreinsson@gmail.com>\n"
 "Language-Team: \n"
 "Language: is\n"
@@ -98,6 +98,35 @@ msgstr "stafsetningarvilla"
 #, python-brace-format
 msgid "grammar: {text}"
 msgstr ""
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "ekkert"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "{color}"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "Slóvenska stig 1"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr ""
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+#, fuzzy
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "Mynstur"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -419,7 +448,7 @@ msgid "fig"
 msgstr ""
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
-msgid "mrkd"
+msgid "hlght"
 msgstr ""
 
 #. Translators: Displayed in braille when an object is selected.
@@ -478,6 +507,10 @@ msgstr "raðað upp"
 #, fuzzy
 msgid "sorted desc"
 msgstr "raðað niður"
+
+#. Translators: Displayed in braille when an object has additional details (such as a comment section).
+msgid "details"
+msgstr ""
 
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
@@ -769,8 +802,26 @@ msgstr "Ungverska (1. stig)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Belarusian computer braille"
+msgstr "Þýskt 8-punkta tölvu-punktaletur"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Belarusian literary braille"
+msgstr "Þýskt 8-punkta tölvu-punktaletur"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
 msgstr "Búlgarskt 8- punkta tölvu-punktaletur"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Bulgarian grade 1"
+msgstr "Ungverska (1. stig)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1020,11 +1071,6 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Hebrew 8 dot computer braille"
-msgstr "hebreska (8-punkta)"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 #, fuzzy
 msgid "Israeli grade 1"
 msgstr "Tyrkneska stig 1"
@@ -1032,8 +1078,8 @@ msgstr "Tyrkneska stig 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
-msgid "Israeli 8 dot computer braille"
-msgstr "Ítalska 8-punkta tölvu-punktaletur"
+msgid "Hebrew computer braille"
+msgstr "hebreska (8-punkta)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1087,6 +1133,24 @@ msgstr "Ítalska 8-punkta tölvu-punktaletur"
 #, fuzzy
 msgid "Kannada grade 1"
 msgstr "Kóreska stig 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Kazakh grade 1"
+msgstr "Kóreska stig 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Khmer grade 1"
+msgstr "Farsi stig 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Northern Kurdish grade 0"
+msgstr "Sænska (1. stig)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1172,6 +1236,18 @@ msgstr "Farsi stig 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
+msgid "Burmese grade 1"
+msgstr "Rússneska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Burmese grade 2"
+msgstr "Portúgalska stig 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
 msgid "Dutch (Belgium) 6 dot"
 msgstr "Hollenska stig 1"
 
@@ -1215,6 +1291,18 @@ msgstr "Norska (3. stig)"
 #. braille settings dialog.
 #, fuzzy
 msgid "Nepali grade 1"
+msgstr "Spænska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Sepedi grade 1"
+msgstr "Sænska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Sepedi grade 2"
 msgstr "Spænska (1. stig)"
 
 #. Translators: The name of a braille table displayed in the
@@ -1281,7 +1369,19 @@ msgstr "Þýskt 8-punkta tölvu-punktaletur"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
+msgid "Russian contracted braille"
+msgstr "Þýskt 8-punkta tölvu-punktaletur"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
 msgid "Sanskrit grade 1"
+msgstr "Spænska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Yakut grade 1"
 msgstr "Spænska (1. stig)"
 
 #. Translators: The name of a braille table displayed in the
@@ -1315,6 +1415,18 @@ msgstr "Slóvenska stig 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Sesotho grade 1"
+msgstr "Sænska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Sesotho grade 2"
+msgstr "Stytt velskt punktaletur"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "Serbneska stig 1"
 
@@ -1326,6 +1438,12 @@ msgstr "Tamil stig 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
+msgid "Tatar grade 1"
+msgstr "Lattneska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
 msgid "Telugu grade 1"
 msgstr "Óstytt velskt punktaletur"
 
@@ -1333,6 +1451,18 @@ msgstr "Óstytt velskt punktaletur"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "Tyrkneska stig 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Setswana grade 1"
+msgstr "Serbneska stig 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Setswana grade 2"
+msgstr "Þýska stig 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1349,6 +1479,18 @@ msgstr "Þýskt 8-punkta tölvu-punktaletur"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
+msgid "Urdu grade 1"
+msgstr "Tyrkneska stig 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Urdu grade 2"
+msgstr "Tyrkneska stig 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
 msgid "Uzbek grade 1"
 msgstr "Tékkneska stig 1"
 
@@ -1361,8 +1503,50 @@ msgstr "Ekkert punktaletur"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
+msgid "Vietnamese grade 0"
+msgstr "Rússneska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Tshivenda grade 1"
+msgstr "Hindy (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Tshivenda grade 2"
+msgstr "Rússneska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
 msgid "Vietnamese grade 1"
 msgstr "Rússneska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Vietnamese grade 2"
+msgstr "Rússneska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Southern Vietnamese grade 1"
+msgstr "Rússneska (1. stig)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Xhosa grade 1"
+msgstr "Kóreska stig 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Xhosa grade 2"
+msgstr "Kóreska stig 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1385,6 +1569,18 @@ msgstr "Kínverska (Hong Kong)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Kínverska (Mandaríska)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Zulu grade 1"
+msgstr "Óstytt velskt punktaletur"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Zulu grade 2"
+msgstr "Tyrkneska stig 1"
 
 #. Translators: The mode to interact with controls in documents
 #, fuzzy
@@ -1978,9 +2174,12 @@ msgstr "rita:"
 msgid "Filter b&y:"
 msgstr "&Sía eftir:"
 
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
+#. Translators: The label of a button to activate an element in the browse mode Elements List dialog.
+#. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
+#. element type radio label.
+#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+#, fuzzy
+msgid "Activate"
 msgstr "&Virkja"
 
 #. Translators: The label of a button to move to an element
@@ -1995,6 +2194,16 @@ msgstr "Engin löng lýsing"
 #. Translators: the description for the activateLongDescription script on browseMode documents.
 msgid "Shows the long description at this position if one is found."
 msgstr "Sýnir löngu lýsinguna á þessari staðsetningu ef hún er til."
+
+#. Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
+#, fuzzy
+msgid "Shows a summary of the details at this position if found."
+msgstr "Sýnir löngu lýsinguna á þessari staðsetningu ef hún er til."
+
+#. Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
+#. set of details to read.
+msgid "No additional details"
+msgstr ""
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
@@ -2011,6 +2220,8 @@ msgstr ""
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+#. Translators: Reported when attempting to move to the next result in the Python Console
+#. output pane while there is no next result.
 #, fuzzy
 msgid "Bottom"
 msgstr "lok"
@@ -2019,6 +2230,19 @@ msgstr "lok"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Hoppar til enda hlutasafns ss. lista eða töflu"
+
+#. Translators: the description for the toggleScreenLayout script.
+#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+msgstr ""
+"Virkjar/afvirkjar hvort útlit skjámyndar sé varðveitt þegar skjal er hlaðið "
+"inn í sýndarminni"
+
+#. Translators: The message reported for not supported toggling of screen layout
+msgid "Not supported in this document."
+msgstr ""
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2063,6 +2287,13 @@ msgstr ""
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
 msgstr "táknstig %s"
+
+#. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
+#. "transparent bright orange-yellow"
+#, fuzzy, python-brace-format
+msgctxt "color variation"
+msgid "transparent {colorDescription}"
+msgstr "hefur langa lýsingu"
 
 #. Translators: the color white (HSV saturation0%, value 100%)
 #, fuzzy
@@ -2280,828 +2511,6 @@ msgstr ""
 msgctxt "color hue"
 msgid "brown-yellow"
 msgstr ""
-
-#. Translators: The word for window of a program such as document window.
-msgid "window"
-msgstr "Gluggi"
-
-#. Translators: Used to identify title bar of a program.
-msgid "title bar"
-msgstr "Titilslá"
-
-#. Translators: The word used for pane such as desktop pane.
-msgid "pane"
-msgstr "rúða"
-
-#. Translators: The word used to denote a dialog box such as open dialog.
-msgid "dialog"
-msgstr "Skilaboð"
-
-#. Translators: The text used to identify check boxes such as select check box.
-msgid "check box"
-msgstr "gátreitur"
-
-#. Translators: The text used to identify radio buttons such as yes or no radio button.
-msgid "radio button"
-msgstr "útvarpshnappur"
-
-#. Translators: The word used to identify a static text such as dialog text.
-msgid "text"
-msgstr "texti"
-
-#. Translators: The word used to identify edit fields such as subject edit field.
-msgid "edit"
-msgstr "innsláttur"
-
-#. Translators: The word used to identify a button such as OK button.
-msgid "button"
-msgstr "hnappur"
-
-#. Translators: Text used to identify menu bar of a program.
-msgid "menu bar"
-msgstr "valslá"
-
-#. Translators: Used to identify a menu item such as an item in file menu.
-msgid "menu item"
-msgstr "valkostur"
-
-#. Translators: The word used for menus such as edit menu.
-#. Translators: Identifies a menu such as file menu.
-msgid "menu"
-msgstr "valmynd"
-
-#. Translators: Used to identify combo boxes such as file type combo box.
-msgid "combo box"
-msgstr "Fjölvalsreitur"
-
-#. Translators: The word used for lists such as folder list.
-msgid "list"
-msgstr "listi"
-
-#. Translators: Used to identify a list item such as email list items.
-msgid "list item"
-msgstr "listaatriði"
-
-#. Translators: The word used to identify graphics such as webpage graphics.
-msgid "graphic"
-msgstr "mynd"
-
-#. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
-msgid "help balloon"
-msgstr "Hjálparbelgur"
-
-#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
-msgid "tool tip"
-msgstr "ábending"
-
-#. Translators: Identifies a link in webpage documents.
-msgid "link"
-msgstr "tengill"
-
-#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
-msgid "tree view"
-msgstr "trésýn"
-
-#. Translators: Identifies a tree view item.
-msgid "tree view item"
-msgstr "trésýnisatriði"
-
-#. Translators: The word presented for tabs in a tab enabled window.
-msgctxt "controlType"
-msgid "tab"
-msgstr "Dálkur"
-
-#. Translators: Identifies a tab control such as webpage tabs in web browsers.
-msgid "tab control"
-msgstr "dálkhlutur"
-
-#. Translators: Identifies a slider such as volume slider.
-msgid "slider"
-msgstr "rein"
-
-#. Translators: Identifies a progress bar such as NvDA update progress.
-msgid "progress bar"
-msgstr "framvinduslá"
-
-#. Translators: Identifies a scroll bar.
-msgid "scroll bar"
-msgstr "skrunslá"
-
-#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
-msgid "status bar"
-msgstr "stöðuslá"
-
-#. Translators: Identifies a table such as ones used in various websites.
-msgid "table"
-msgstr "tafla"
-
-#. Translators: Identifies a cell in a table.
-msgid "cell"
-msgstr "reitur"
-
-#. Translators: Identifies a column (a group of vertical cells in a table).
-msgid "column"
-msgstr "dálkur"
-
-#. Translators: Identifies a row (a group of horizontal cells in a table).
-msgid "row"
-msgstr "röð"
-
-#. Translators: Identifies a frame (a smaller window in a webpage or a document).
-#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
-msgid "frame"
-msgstr "rammi"
-
-#. Translators: Identifies a tool bar.
-msgid "tool bar"
-msgstr "tækjaslá"
-
-#. Translators: Identifies a column header in tables and spreadsheets.
-msgid "column header"
-msgstr "titill dálks"
-
-#. Translators: Identifies a row header in tables and spreadsheets.
-msgid "row header"
-msgstr "titill raðar"
-
-#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
-msgid "drop down button"
-msgstr "fellihnappur"
-
-#. Translators: Identifies an element.
-msgid "clock"
-msgstr "klukka"
-
-#. Translators: Identifies a separator (a horizontal line drawn on the screen).
-msgid "separator"
-msgstr "Deilistrik"
-
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
-msgid "form"
-msgstr "eyðublað"
-
-#. Translators: Identifies a heading (a bold text used for identifying a section).
-msgid "heading"
-msgstr "fyrirsögn"
-
-#. Translators: Identifies a heading level.
-msgid "heading 1"
-msgstr "fyrirsögn 1"
-
-#. Translators: Identifies a heading level.
-msgid "heading 2"
-msgstr "fyrirsögn 2"
-
-#. Translators: Identifies a heading level.
-msgid "heading 3"
-msgstr "fyrirsögn 3"
-
-#. Translators: Identifies a heading level.
-msgid "heading 4"
-msgstr "fyrirsögn 4"
-
-#. Translators: Identifies a heading level.
-msgid "heading 5"
-msgstr "fyrirsögn 5"
-
-#. Translators: Identifies a heading level.
-msgid "heading 6"
-msgstr "fyrirsögn 6"
-
-#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
-msgid "paragraph"
-msgstr "málsgrein"
-
-#. Translators: Presented for a section in a document which is a block quotation;
-#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
-msgid "block quote"
-msgstr "tilvitnun"
-
-#. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
-msgid "table header"
-msgstr "titill töflu"
-
-#. Translators: Identifies a table body (the main body of the table).
-msgid "table body"
-msgstr "töflusvæði"
-
-#. Translators: Identifies a table footer (text placed at the end of the table).
-msgid "table footer"
-msgstr "töflufótur"
-
-#. Translators: Identifies a document (for example, a webpage document).
-msgid "document"
-msgstr "skjal"
-
-#. Translators: Identifies an animation in a document or a webpage.
-msgid "animation"
-msgstr "hreyfing"
-
-#. Translators: Identifies an application in webpages.
-msgid "application"
-msgstr "forrit"
-
-#. Translators: Identifies a box element.
-msgid "box"
-msgstr "kassi"
-
-#. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
-msgid "grouping"
-msgstr "hópað"
-
-#. Translators: Identifies a property page such as drive properties dialog.
-msgid "property page"
-msgstr "eigindasíða"
-
-#. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
-msgid "canvas"
-msgstr "strigi"
-
-#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
-msgid "caption"
-msgstr "myndartexti"
-
-#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
-msgid "check menu item"
-msgstr "haka við hlut í valmynd"
-
-#. Translators: Identifies a data edit field.
-msgid "date edit"
-msgstr "skrifa dagsetningu"
-
-#. Translators: Identifies an icon.
-msgid "icon"
-msgstr "táknmynd"
-
-#. Translators: Identifies a directory pane.
-msgid "directory pane"
-msgstr "skrárúða"
-
-#. Translators: Identifies an embedded object such as flash content on webpages.
-msgid "embedded object"
-msgstr "ívafinn hlutur"
-
-#. Translators: Identifies an end note.
-msgid "end note"
-msgstr "eftirmálsgrein"
-
-#. Translators: Identifies a footer (usually text).
-msgid "footer"
-msgstr "fótur"
-
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
-msgid "foot note"
-msgstr "neðanmálsgrein"
-
-#. Translators: Reported for an object which is a glass pane; i.e.
-#. a pane that is guaranteed to be on top of all panes beneath it.
-msgid "glass pane"
-msgstr "glerrúða"
-
-#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
-msgid "header"
-msgstr "haus"
-
-#. Translators: Identifies an image map (a type of graphical link).
-msgid "image map"
-msgstr "myndarkort"
-
-#. Translators: Identifies an input window.
-msgid "input window"
-msgstr "innsláttargluggi"
-
-#. Translators: Identifies a label.
-msgid "label"
-msgstr "merking"
-
-#. Translators: Identifies a note field.
-msgid "note"
-msgstr "athugasemd"
-
-#. Translators: Identifies a page.
-msgid "page"
-msgstr "blaðsíða"
-
-#. Translators: Identifies a radio menu item.
-msgid "radio menu item"
-msgstr "hlutur í útvarpsvalmynd"
-
-#. Translators: Identifies a layered pane.
-msgid "layered pane"
-msgstr "lagskipt rúða"
-
-#. Translators: Identifies a redundant object.
-msgid "redundant object"
-msgstr "óþarfur hlutur"
-
-#. Translators: Identifies a root pane.
-msgid "root pane"
-msgstr "grunnrúða"
-
-#. Translators: May be reported for an editable text object in a toolbar.
-#. This is deprecated and is not often (if ever) used.
-msgid "edit bar"
-msgstr "ritrein"
-
-#. Translators: Identifies a terminal window such as command prompt.
-msgid "terminal"
-msgstr "Textagluggi"
-
-#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
-msgid "rich edit"
-msgstr "ríkt ritsvæði"
-
-#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
-msgid "ruler"
-msgstr "stika"
-
-#. Translators: Identifies a scroll pane.
-msgid "scroll pane"
-msgstr "skrunrúða"
-
-#. Translators: Identifies a section of text.
-msgid "section"
-msgstr "hluti"
-
-#. Translators: Identifies a shape.
-msgid "shape"
-msgstr "form"
-
-#. Translators: Identifies a split pane.
-msgid "split pane"
-msgstr "skipt rúða"
-
-#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
-#. which represents the portion of the entire data that the user can see.
-#. As the user manipulates the scroll bars, the contents of the view port can change.
-msgid "view port"
-msgstr "skoðunarsvæði"
-
-#. Translators: Reported for an object that forms part of a menu system
-#. but which can be undocked from or torn off the menu system
-#. to exist as a separate window.
-msgid "tear off menu"
-msgstr "skurðarvalmynd"
-
-#. Translators: Identifies a text frame (a frame window which contains text).
-msgid "text frame"
-msgstr "textarammi"
-
-#. Translators: Identifies a toggle button (a button used to toggle something).
-msgid "toggle button"
-msgstr "víxlhnappur"
-
-msgid "border"
-msgstr "brún"
-
-#. Translators: Identifies a caret object.
-msgid "caret"
-msgstr "skrifbendill"
-
-#. Translators: Identifies a character field (should not be confused with edit fields).
-msgid "character"
-msgstr "bókstafur"
-
-#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
-msgid "chart"
-msgstr "myndrit"
-
-#. Translators: Identifies a cursor object.
-msgid "cursor"
-msgstr "bendill"
-
-#. Translators: Identifies a diagram (seen on some websites and on Office documents).
-msgid "diagram"
-msgstr "talnarit"
-
-#. Translators: Identifies a dial object.
-msgid "dial"
-msgstr "skífa"
-
-#. Translators: Identifies a drop list.
-msgid "drop list"
-msgstr "fellilisti"
-
-#. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
-msgid "split button"
-msgstr "skiptur hnappur"
-
-#. Translators: Identifies a menu button (a button which opens a menu of items).
-msgid "menu button"
-msgstr "valmyndarhnappur"
-
-#. Translators: Reported for a button which expands a grid when it is pressed.
-msgid "drop down button grid"
-msgstr "fellihnappagrind"
-
-#. Translators: Identifies mathematical content.
-msgid "math"
-msgstr ""
-
-#. Translators: Identifies a grip control.
-msgid "grip"
-msgstr "hald"
-
-#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
-msgid "hot key field"
-msgstr "flýtilyklareitur"
-
-#. Translators: Identifies an indicator control.
-msgid "indicator"
-msgstr "vísill"
-
-#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
-msgid "spin button"
-msgstr "snúningshnappur"
-
-#. Translators: Identifies a sound clip on websites.
-msgid "sound"
-msgstr "hljóð"
-
-#. Translators: Identifies a whitespace.
-msgid "white space"
-msgstr "bil"
-
-#. Translators: Identifies a tree view button.
-msgid "tree view button"
-msgstr "trjásýnishnappur"
-
-#. Translators: Identifies an IP address (an IP address field element).
-msgid "IP address"
-msgstr "IP tala"
-
-#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
-msgid "desktop icon"
-msgstr "skjáborðstáknmynd"
-
-#. Translators: Identifies desktop pane (the desktop window).
-msgid "desktop pane"
-msgstr "Skjáborðsrúða"
-
-#. Translators: Identifies an option pane.
-msgid "option pane"
-msgstr "valrúða"
-
-#. Translators: Identifies a color chooser.
-msgid "color chooser"
-msgstr "velja lit"
-
-#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
-msgid "file chooser"
-msgstr "Velja skrá"
-
-msgid "filler"
-msgstr "fyllir"
-
-#. Translators: Identifies a panel control for grouping related options.
-msgid "panel"
-msgstr "borð"
-
-#. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
-msgid "password edit"
-msgstr "Sláðu inn lykilorð"
-
-#. Translators: Identifies a font chooser.
-msgid "font chooser"
-msgstr "velja stafagerð"
-
-msgid "line"
-msgstr "lína"
-
-#. Translators: Identifies a font name.
-msgid "font name"
-msgstr "heiti stafagerðar"
-
-#. Translators: Identifies font size.
-msgid "font size"
-msgstr "leturstærð"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is bolded.
-msgid "bold"
-msgstr "feitletrað"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "skáletrað"
-
-#. Translators: Describes text formatting.
-msgid "underline"
-msgstr "undirstrikun"
-
-#. Translators: Describes text formatting.
-msgid "foreground color"
-msgstr "forgrunnslitur"
-
-#. Translators: Describes text formatting.
-msgid "background color"
-msgstr "bakgrunnslitur"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for superscript text.
-msgid "superscript"
-msgstr "hækkað"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for subscript text.
-msgid "subscript"
-msgstr "lækkað"
-
-#. Translators: Describes style of text.
-#. Translators: a Microsoft Word revision type (style change)
-msgid "style"
-msgstr "stíll"
-
-#. Translators: Describes text formatting.
-msgid "indent"
-msgstr "inndráttur"
-
-#. Translators: Describes text formatting.
-msgid "alignment"
-msgstr "lega"
-
-#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-msgid "alert"
-msgstr "viðvörun"
-
-#. Translators: Identifies a data grid control (a grid which displays data).
-msgid "data grid"
-msgstr "gagnagrind"
-
-msgid "data item"
-msgstr "upplýsingahluti"
-
-msgid "header item"
-msgstr "titill"
-
-#. Translators: Identifies a thumb control (a button-like control for changing options).
-msgid "thumb control"
-msgstr "þumalstýring"
-
-msgid "calendar"
-msgstr "dagatal"
-
-msgid "video"
-msgstr ""
-
-msgid "audio"
-msgstr ""
-
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr ""
-
-#. Translators: Identifies deleted content.
-#. Translators: Reported when text is marked as having been deleted
-#, fuzzy
-msgid "deleted"
-msgstr "eyða"
-
-#. Translators: Identifies inserted content.
-#. Translators: Reported when text is marked as having been inserted
-#, fuzzy
-msgid "inserted"
-msgstr "hluti"
-
-#. Translators: Identifies a landmark.
-#, fuzzy
-msgid "landmark"
-msgstr "%s kennileiti"
-
-#. Translators: Identifies an article.
-msgid "article"
-msgstr ""
-
-#. Translators: Identifies a region.
-msgid "region"
-msgstr ""
-
-#. Translators: Identifies a figure (commonly seen on some websites).
-msgid "figure"
-msgstr ""
-
-#. Translators: Identifies marked (highlighted) content
-#, fuzzy
-msgid "marked content"
-msgstr "Upphaf merkt"
-
-#. Translators: This is presented when a control or document is unavailable.
-msgid "unavailable"
-msgstr "ekki til reiðu"
-
-#. Translators: This is presented when a control has focus.
-msgid "focused"
-msgstr "í brennipunkti"
-
-#. Translators: This is presented when the control is selected.
-msgid "selected"
-msgstr "valið"
-
-#. Translators: This is presented when a document is busy.
-msgid "busy"
-msgstr "upptekinn"
-
-#. Translators: This is presented when a button is pressed.
-msgid "pressed"
-msgstr "þrýst á"
-
-#. Translators: This is presented when a check box is checked.
-msgid "checked"
-msgstr "hakað"
-
-#. Translators: This is presented when a three state check box is half checked.
-msgid "half checked"
-msgstr "hakað til hálfs"
-
-#. Translators: This is presented when the control is a read-only control such as read-only edit box.
-msgid "read only"
-msgstr "einungis til lestrar"
-
-#. Translators: This is presented when a tree view or submenu item is expanded.
-msgid "expanded"
-msgstr "opið"
-
-#. Translators: This is presented when a tree view or submenu is collapsed.
-msgid "collapsed"
-msgstr "lokað"
-
-#. Translators: This is presented when a control or a document becomes invisible.
-msgid "invisible"
-msgstr "falið"
-
-#. Translators: This is presented when a visited link is encountered.
-msgid "visited"
-msgstr "heimsótt"
-
-#. Translators: This is presented when a link is encountered.
-msgid "linked"
-msgstr "tengt"
-
-#. Translators: This is presented when the control menu item has a submenu.
-msgid "subMenu"
-msgstr "undirvalmynd"
-
-#. Translators: This is presented when a protected control or a document is encountered.
-msgid "protected"
-msgstr "varið"
-
-#. Translators: This is presented when a required form field is encountered.
-msgid "required"
-msgstr "nauðsynlegt"
-
-#. Translators: Reported when an object no longer exists in the user interface;
-#. i.e. it is dead and is no longer usable.
-msgid "defunct"
-msgstr "úrelt"
-
-#. Translators: This is presented when an invalid entry has been made.
-msgid "invalid entry"
-msgstr "ógildur innsláttur"
-
-msgid "modal"
-msgstr "módal"
-
-#. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
-msgid "has auto complete"
-msgstr "útfyllist sj'alfkrafa"
-
-#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
-msgid "multi line"
-msgstr "marglínu"
-
-msgid "iconified"
-msgstr "táknmyndartengt"
-
-#. Translators: Presented when the current control is located off screen.
-msgid "off screen"
-msgstr "af skjá"
-
-#. Translators: Presented when the control allows selection such as text fields.
-msgid "selectable"
-msgstr "veljanlegt"
-
-#. Translators: Presented when a control can be moved to using system focus.
-msgid "focusable"
-msgstr "bendilshæft"
-
-#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
-msgid "clickable"
-msgstr "smellanlegt"
-
-msgid "editable"
-msgstr "frjáls"
-
-msgid "checkable"
-msgstr "til að haka"
-
-msgid "draggable"
-msgstr "draganlegt"
-
-msgid "dragging"
-msgstr "dregur"
-
-#. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects that support accessible drag and drop.
-msgid "drop target"
-msgstr "sleppa hlut"
-
-msgid "sorted"
-msgstr "raðað"
-
-msgid "sorted ascending"
-msgstr "raðað upp"
-
-msgid "sorted descending"
-msgstr "raðað niður"
-
-#. Translators: a state that denotes that an object (usually a graphic) has a long description.
-msgid "has long description"
-msgstr "hefur langa lýsingu"
-
-#. Translators: a state that denotes that an object is pinned in its current location
-msgid "pinned"
-msgstr ""
-
-#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
-msgid "has formula"
-msgstr "inniheldur formúlu"
-
-#. Translators: a state that denotes the existance of a comment.
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "inniheldur athugasemd"
-
-#. Translators: a state that denotes that the object is covered partially or fully by another object
-msgid "obscured"
-msgstr ""
-
-#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
-msgid "cropped"
-msgstr ""
-
-#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
-#, fuzzy
-msgid "overflowing"
-msgstr "Lækka"
-
-#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
-#, fuzzy
-msgid "unlocked"
-msgstr "ekki hakað"
-
-#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-msgid "not selected"
-msgstr "ekki valið"
-
-#. Translators: This is presented when a button is not pressed.
-#, fuzzy
-msgid "not pressed"
-msgstr "þrýst á"
-
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "ekki hakað"
-
-#. Translators: This is presented when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "búin að draga"
-
-#. Translators: Presented when an item is marked as current in a collection of items
-msgid "current"
-msgstr ""
-
-#. Translators: Presented when a page item is marked as current in a collection of page items
-#, fuzzy
-msgid "current page"
-msgstr "eigindasíða"
-
-#. Translators: Presented when a step item is marked as current in a collection of step items
-msgid "current step"
-msgstr ""
-
-#. Translators: Presented when a location item is marked as current in a collection of location items
-#, fuzzy
-msgid "current location"
-msgstr "Forrit sem nú er virkt er %s"
-
-#. Translators: Presented when a date item is marked as current in a collection of date items
-msgid "current date"
-msgstr ""
-
-#. Translators: Presented when a time item is marked as current in a collection of time items
-msgid "current time"
-msgstr ""
-
-#. Translators: Indicates that a particular state of an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the full identifier of the negated state (e.g. selected).
-#, python-format
-msgid "not %s"
-msgstr "ekki %s"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 #, fuzzy
@@ -3321,23 +2730,15 @@ msgstr ""
 msgid "Document formatting"
 msgstr "Stílsnið skjals"
 
-#. Translators: a message when audio ducking is not supported on this machine
-msgid "Audio ducking not supported"
-msgstr ""
-
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 msgstr ""
 
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help on"
-msgstr "hjálp við innslátt kveikt"
-
-#. Translators: This will be presented when the input help is toggled.
-msgid "input help off"
-msgstr "hjálp við innslátt slökkt"
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr ""
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
@@ -3348,6 +2749,19 @@ msgstr ""
 "hnapp á lyklaborði, fær notandi upplýsingar um hvað hnappurinn gerir, ef "
 "hnappurinn er tengdur við skriftu."
 
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help on"
+msgstr "hjálp við innslátt kveikt"
+
+#. Translators: This will be presented when the input help is toggled.
+msgid "input help off"
+msgstr "hjálp við innslátt slökkt"
+
+#. Translators: Input help mode message for toggle sleep mode command.
+#, fuzzy
+msgid "Toggles sleep mode on and off for the active application."
+msgstr "af/virkjar svefnham fyrir virkan hugbúnað"
+
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
 msgstr "Slökkt á svefnham"
@@ -3355,11 +2769,6 @@ msgstr "Slökkt á svefnham"
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
 msgstr "Kveikt á svefnham"
-
-#. Translators: Input help mode message for toggle sleep mode command.
-#, fuzzy
-msgid "Toggles sleep mode on and off for the active application."
-msgstr "af/virkjar svefnham fyrir virkan hugbúnað"
 
 #. Translators: Input help mode message for report current line command.
 #, fuzzy
@@ -3369,23 +2778,27 @@ msgid ""
 "using character descriptions."
 msgstr "les línu undir bendli. Ýttu á þennan lykil tvisvar til að stafa línuna"
 
+#. Translators: Input help mode message for left mouse click command.
+msgid "Clicks the left mouse button once at the current mouse position"
+msgstr "Smellir vinstri músarhnappi á staðsetningu músarbendils"
+
 #. Translators: Reported when left mouse button is clicked.
 #, fuzzy
 msgid "Left click"
 msgstr "vinstri smella"
 
-#. Translators: Input help mode message for left mouse click command.
-msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Smellir vinstri músarhnappi á staðsetningu músarbendils"
+#. Translators: Input help mode message for right mouse click command.
+msgid "Clicks the right mouse button once at the current mouse position"
+msgstr "Smellir hægri músarhnappi á staðsetningu músarbendils"
 
 #. Translators: Reported when right mouse button is clicked.
 #, fuzzy
 msgid "Right click"
 msgstr "hægri smella"
 
-#. Translators: Input help mode message for right mouse click command.
-msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "Smellir hægri músarhnappi á staðsetningu músarbendils"
+#. Translators: Input help mode message for left mouse lock/unlock toggle command.
+msgid "Locks or unlocks the left mouse button"
+msgstr "læsir eða aflæsir vinstri músarhnappi"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 #, fuzzy
@@ -3397,9 +2810,9 @@ msgstr "aflæsa vinstri músarhnappi"
 msgid "Left mouse button lock"
 msgstr "læsa vinstri músarhnappi"
 
-#. Translators: Input help mode message for left mouse lock/unlock toggle command.
-msgid "Locks or unlocks the left mouse button"
-msgstr "læsir eða aflæsir vinstri músarhnappi"
+#. Translators: Input help mode message for right mouse lock/unlock command.
+msgid "Locks or unlocks the right mouse button"
+msgstr "læsir eða aflæsir hægri músarhnappi"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 #, fuzzy
@@ -3410,10 +2823,6 @@ msgstr "aflæsa hægri músarhnappi"
 #, fuzzy
 msgid "Right mouse button lock"
 msgstr "læsa hægri músarhnappi"
-
-#. Translators: Input help mode message for right mouse lock/unlock command.
-msgid "Locks or unlocks the right mouse button"
-msgstr "læsir eða aflæsir hægri músarhnappi"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3430,13 +2839,13 @@ msgid ""
 msgstr ""
 "ef ýtt er einu sinni er tíminn lesinn. Ef ýtt er tvisvar er dagsetning lesin"
 
-#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
-msgid "No settings"
-msgstr "engar stillingar"
-
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "hækkar virka stillingu í talgervilsstillingaskífu"
+
+#. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
+msgid "No settings"
+msgstr "engar stillingar"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
@@ -3450,6 +2859,10 @@ msgstr "fer í næstu stillingu til reiðu í talgervilsstillingaskífu"
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "fer í fyrri stillingu til reiðu í talgervilsstillingaskífu"
 
+#. Translators: Input help mode message for toggle speaked typed characters command.
+msgid "Toggles on and off the speaking of typed characters"
+msgstr "af/virkjar lestur ritaðra stafa"
+
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
 msgstr "les ritaða stafi óvirkt"
@@ -3458,9 +2871,9 @@ msgstr "les ritaða stafi óvirkt"
 msgid "speak typed characters on"
 msgstr "les ritaða stafi virkt"
 
-#. Translators: Input help mode message for toggle speaked typed characters command.
-msgid "Toggles on and off the speaking of typed characters"
-msgstr "af/virkjar lestur ritaðra stafa"
+#. Translators: Input help mode message for toggle speak typed words command.
+msgid "Toggles on and off the speaking of typed words"
+msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -3470,9 +2883,11 @@ msgstr "les ritað orð óvirkt"
 msgid "speak typed words on"
 msgstr "les ritað orð virkt"
 
-#. Translators: Input help mode message for toggle speak typed words command.
-msgid "Toggles on and off the speaking of typed words"
-msgstr "af/virkjar lestur ritaðra orða"
+#. Translators: Input help mode message for toggle speak command keys command.
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
+msgstr "af/virkjar lestur lykla sem eru ekki stafir"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -3482,11 +2897,10 @@ msgstr "les breytilykla óvirkt"
 msgid "speak command keys on"
 msgstr "les breytilykla virkt"
 
-#. Translators: Input help mode message for toggle speak command keys command.
-msgid ""
-"Toggles on and off the speaking of typed keys, that are not specifically "
-"characters"
-msgstr "af/virkjar lestur lykla sem eru ekki stafir"
+#. Translators: Input help mode message for toggle report font name command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font changes"
+msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 #, fuzzy
@@ -3498,9 +2912,9 @@ msgstr "Tilkynna gerð og heiti leturs"
 msgid "report font name on"
 msgstr "Tilkynna gerð og heiti leturs"
 
-#. Translators: Input help mode message for toggle report font name command.
+#. Translators: Input help mode message for toggle report font size command.
 #, fuzzy
-msgid "Toggles on and off the reporting of font changes"
+msgid "Toggles on and off the reporting of font size changes"
 msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
@@ -3513,9 +2927,9 @@ msgstr "Tilkynna letur&stærð"
 msgid "report font size on"
 msgstr "Tilkynna letur&stærð"
 
-#. Translators: Input help mode message for toggle report font size command.
+#. Translators: Input help mode message for toggle report font attributes command.
 #, fuzzy
-msgid "Toggles on and off the reporting of font size changes"
+msgid "Toggles on and off the reporting of font attributes"
 msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
@@ -3527,11 +2941,6 @@ msgstr "Tilkynna &eiginleika leturs"
 #, fuzzy
 msgid "report font attributes on"
 msgstr "Tilkynna &eiginleika leturs"
-
-#. Translators: Input help mode message for toggle report font attributes command.
-#, fuzzy
-msgid "Toggles on and off the reporting of font attributes"
-msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 #, fuzzy
@@ -3549,6 +2958,11 @@ msgstr ""
 msgid "report superscripts and subscripts off"
 msgstr "Tilkynna &kennileiti"
 
+#. Translators: Input help mode message for toggle report revisions command.
+#, fuzzy
+msgid "Toggles on and off the reporting of revisions"
+msgstr "af/virkjar lestur ritaðra orða"
+
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 #, fuzzy
 msgid "report revisions off"
@@ -3559,9 +2973,9 @@ msgstr "Tilkynna f&yrirsagnir"
 msgid "report revisions on"
 msgstr "Tilkynna f&yrirsagnir"
 
-#. Translators: Input help mode message for toggle report revisions command.
+#. Translators: Input help mode message for toggle report emphasis command.
 #, fuzzy
-msgid "Toggles on and off the reporting of revisions"
+msgid "Toggles on and off the reporting of emphasis"
 msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
@@ -3574,25 +2988,25 @@ msgstr "Tilkynna &blaðsíðuskil"
 msgid "report emphasis on"
 msgstr "Tilkynna &blaðsíðuskil"
 
-#. Translators: Input help mode message for toggle report emphasis command.
-#, fuzzy
-msgid "Toggles on and off the reporting of emphasis"
-msgstr "af/virkjar lestur ritaðra orða"
-
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
 #, fuzzy
-msgid "Toggles on and off the reporting of marked text"
+msgid "Toggles on and off the reporting of highlighted text"
 msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 #, fuzzy
-msgid "report marked on"
-msgstr "Tilkynna &blaðsíðuskil"
+msgid "report highlighted on"
+msgstr "Tilkynna l&ista"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 #, fuzzy
-msgid "report marked off"
-msgstr "Tilkynna &blaðsíðuskil"
+msgid "report highlighted off"
+msgstr "Tilkynna l&ista"
+
+#. Translators: Input help mode message for toggle report colors command.
+#, fuzzy
+msgid "Toggles on and off the reporting of colors"
+msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 #, fuzzy
@@ -3604,10 +3018,10 @@ msgstr "Tilkynna &liti"
 msgid "report colors on"
 msgstr "Tilkynna &liti"
 
-#. Translators: Input help mode message for toggle report colors command.
+#. Translators: Input help mode message for toggle report alignment command.
 #, fuzzy
-msgid "Toggles on and off the reporting of colors"
-msgstr "af/virkjar lestur ritaðra orða"
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 #, fuzzy
@@ -3619,9 +3033,9 @@ msgstr "Tilkynna &aðlögun"
 msgid "report alignment on"
 msgstr "Tilkynna &aðlögun"
 
-#. Translators: Input help mode message for toggle report alignment command.
+#. Translators: Input help mode message for toggle report style command.
 #, fuzzy
-msgid "Toggles on and off the reporting of text alignment"
+msgid "Toggles on and off the reporting of style changes"
 msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
@@ -3634,10 +3048,10 @@ msgstr "Tilkynna stí&l"
 msgid "report style on"
 msgstr "Tilkynna stí&l"
 
-#. Translators: Input help mode message for toggle report style command.
+#. Translators: Input help mode message for toggle report spelling errors command.
 #, fuzzy
-msgid "Toggles on and off the reporting of style changes"
-msgstr "af/virkjar lestur ritaðra stafa"
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 #, fuzzy
@@ -3649,9 +3063,9 @@ msgstr "Tilkynna stafsetningarvillur"
 msgid "report spelling errors on"
 msgstr "Tilkynna stafsetningarvillur"
 
-#. Translators: Input help mode message for toggle report spelling errors command.
+#. Translators: Input help mode message for toggle report pages command.
 #, fuzzy
-msgid "Toggles on and off the reporting of spelling errors"
+msgid "Toggles on and off the reporting of pages"
 msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
@@ -3664,9 +3078,9 @@ msgstr "Tilkynna &blaðsíðuskil"
 msgid "report pages on"
 msgstr "Tilkynna &blaðsíðuskil"
 
-#. Translators: Input help mode message for toggle report pages command.
+#. Translators: Input help mode message for toggle report line numbers command.
 #, fuzzy
-msgid "Toggles on and off the reporting of pages"
+msgid "Toggles on and off the reporting of line numbers"
 msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
@@ -3679,10 +3093,10 @@ msgstr "Tilkynna línu&númer"
 msgid "report line numbers on"
 msgstr "Tilkynna línu&númer"
 
-#. Translators: Input help mode message for toggle report line numbers command.
+#. Translators: Input help mode message for toggle report line indentation command.
 #, fuzzy
-msgid "Toggles on and off the reporting of line numbers"
-msgstr "af/virkjar lestur ritaðra orða"
+msgid "Cycles through line indentation settings"
+msgstr "Tilkynna l&ínu inndrátt"
 
 #. Translators: A message reported when cycling through line indentation settings.
 #, fuzzy
@@ -3704,10 +3118,10 @@ msgstr "Tilkynna l&ínu inndrátt"
 msgid "Report line indentation off"
 msgstr "Tilkynna l&ínu inndrátt"
 
-#. Translators: Input help mode message for toggle report line indentation command.
+#. Translators: Input help mode message for toggle report paragraph indentation command.
 #, fuzzy
-msgid "Cycles through line indentation settings"
-msgstr "Tilkynna l&ínu inndrátt"
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 #, fuzzy
@@ -3719,10 +3133,10 @@ msgstr "Tilkynna l&ínu inndrátt"
 msgid "report paragraph indentation on"
 msgstr "Tilkynna l&ínu inndrátt"
 
-#. Translators: Input help mode message for toggle report paragraph indentation command.
+#. Translators: Input help mode message for toggle report line spacing command.
 #, fuzzy
-msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "af/virkjar lestur ritaðra stafa"
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 #, fuzzy
@@ -3734,9 +3148,9 @@ msgstr "Tilkynna ten&gla"
 msgid "report line spacing on"
 msgstr "Tilkynna ten&gla"
 
-#. Translators: Input help mode message for toggle report line spacing command.
+#. Translators: Input help mode message for toggle report tables command.
 #, fuzzy
-msgid "Toggles on and off the reporting of line spacing"
+msgid "Toggles on and off the reporting of tables"
 msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
@@ -3749,10 +3163,10 @@ msgstr "Tilkynna tö&flur"
 msgid "report tables on"
 msgstr "Tilkynna tö&flur"
 
-#. Translators: Input help mode message for toggle report tables command.
+#. Translators: Input help mode message for toggle report table row/column headers command.
 #, fuzzy
-msgid "Toggles on and off the reporting of tables"
-msgstr "af/virkjar lestur ritaðra orða"
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 #, fuzzy
@@ -3764,9 +3178,9 @@ msgstr "Tilkynna dálk og raðar&heiti í töflu"
 msgid "report table row and column headers on"
 msgstr "Tilkynna dálk og raðar&heiti í töflu"
 
-#. Translators: Input help mode message for toggle report table row/column headers command.
+#. Translators: Input help mode message for toggle report table cell coordinates command.
 #, fuzzy
-msgid "Toggles on and off the reporting of table row and column headers"
+msgid "Toggles on and off the reporting of table cell coordinates"
 msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
@@ -3779,10 +3193,29 @@ msgstr "Tilkynna h&nit reits í töflu"
 msgid "report table cell coordinates on"
 msgstr "Tilkynna h&nit reits í töflu"
 
-#. Translators: Input help mode message for toggle report table cell coordinates command.
+#. Translators: Input help mode message for toggle report cell borders command.
 #, fuzzy
-msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "af/virkjar lestur ritaðra stafa"
+msgid "Cycles through the cell border reporting settings"
+msgstr "Tilkynna l&ínu inndrátt"
+
+#. Translators: A message reported when cycling through cell borders settings.
+#, fuzzy
+msgid "Report styles of cell borders"
+msgstr "Tilkynna h&nit reits í töflu"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report colors and styles of cell borders"
+msgstr ""
+
+#. Translators: A message reported when cycling through cell borders settings.
+#, fuzzy
+msgid "Report cell borders off."
+msgstr "Tilkynna &liti"
+
+#. Translators: Input help mode message for toggle report links command.
+#, fuzzy
+msgid "Toggles on and off the reporting of links"
+msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 #, fuzzy
@@ -3793,11 +3226,6 @@ msgstr "Tilkynna ten&gla"
 #, fuzzy
 msgid "report links on"
 msgstr "Tilkynna ten&gla"
-
-#. Translators: Input help mode message for toggle report links command.
-#, fuzzy
-msgid "Toggles on and off the reporting of links"
-msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: Input help mode message for toggle report graphics command.
 #, fuzzy
@@ -3814,6 +3242,11 @@ msgstr "Tilkynna &blaðsíðuskil"
 msgid "report graphics on"
 msgstr "Tilkynna &blaðsíðuskil"
 
+#. Translators: Input help mode message for toggle report comments command.
+#, fuzzy
+msgid "Toggles on and off the reporting of comments"
+msgstr "af/virkjar lestur ritaðra orða"
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 #, fuzzy
 msgid "report comments off"
@@ -3824,9 +3257,9 @@ msgstr "Engin athugasemd"
 msgid "report comments on"
 msgstr "Engin athugasemd"
 
-#. Translators: Input help mode message for toggle report comments command.
+#. Translators: Input help mode message for toggle report lists command.
 #, fuzzy
-msgid "Toggles on and off the reporting of comments"
+msgid "Toggles on and off the reporting of lists"
 msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
@@ -3839,9 +3272,9 @@ msgstr "Tilkynna l&ista"
 msgid "report lists on"
 msgstr "Tilkynna l&ista"
 
-#. Translators: Input help mode message for toggle report lists command.
+#. Translators: Input help mode message for toggle report headings command.
 #, fuzzy
-msgid "Toggles on and off the reporting of lists"
+msgid "Toggles on and off the reporting of headings"
 msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
@@ -3853,11 +3286,6 @@ msgstr "Tilkynna f&yrirsagnir"
 #, fuzzy
 msgid "report headings on"
 msgstr "Tilkynna f&yrirsagnir"
-
-#. Translators: Input help mode message for toggle report headings command.
-#, fuzzy
-msgid "Toggles on and off the reporting of headings"
-msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: Input help mode message for toggle report groupings command.
 #, fuzzy
@@ -3874,6 +3302,11 @@ msgstr "Tilkynna &blaðsíðuskil"
 msgid "report groupings on"
 msgstr "Tilkynna &blaðsíðuskil"
 
+#. Translators: Input help mode message for toggle report block quotes command.
+#, fuzzy
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "af/virkjar lestur ritaðra orða"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 #, fuzzy
 msgid "report block quotes off"
@@ -3884,9 +3317,9 @@ msgstr "Tilkynna til&vitnanir"
 msgid "report block quotes on"
 msgstr "Tilkynna til&vitnanir"
 
-#. Translators: Input help mode message for toggle report block quotes command.
+#. Translators: Input help mode message for toggle report landmarks command.
 #, fuzzy
-msgid "Toggles on and off the reporting of block quotes"
+msgid "Toggles on and off the reporting of landmarks"
 msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
@@ -3898,11 +3331,6 @@ msgstr "Tilkynna &kennileiti"
 #, fuzzy
 msgid "report landmarks and regions on"
 msgstr "Tilkynna &kennileiti"
-
-#. Translators: Input help mode message for toggle report landmarks command.
-#, fuzzy
-msgid "Toggles on and off the reporting of landmarks"
-msgstr "af/virkjar lestur ritaðra orða"
 
 #. Translators: Input help mode message for toggle report articles command.
 #, fuzzy
@@ -3919,6 +3347,11 @@ msgstr "Tilkynna tö&flur"
 msgid "report articles on"
 msgstr "Tilkynna tö&flur"
 
+#. Translators: Input help mode message for toggle report frames command.
+#, fuzzy
+msgid "Toggles on and off the reporting of frames"
+msgstr "af/virkjar lestur ritaðra stafa"
+
 #. Translators: The message announced when toggling the report frames document formatting setting.
 #, fuzzy
 msgid "report frames off"
@@ -3929,9 +3362,9 @@ msgstr "Tilkynna &blaðsíðuskil"
 msgid "report frames on"
 msgstr "Tilkynna &blaðsíðuskil"
 
-#. Translators: Input help mode message for toggle report frames command.
+#. Translators: Input help mode message for toggle report if clickable command.
 #, fuzzy
-msgid "Toggles on and off the reporting of frames"
+msgid "Toggles on and off reporting if clickable"
 msgstr "af/virkjar lestur ritaðra stafa"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
@@ -3944,10 +3377,10 @@ msgstr "Tilkynna tö&flur"
 msgid "report if clickable on"
 msgstr "Tilkynna tö&flur"
 
-#. Translators: Input help mode message for toggle report if clickable command.
-#, fuzzy
-msgid "Toggles on and off reporting if clickable"
-msgstr "af/virkjar lestur ritaðra stafa"
+#. Translators: Input help mode message for cycle speech symbol level command.
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr "Fer milli stillistiga sem ákvarða hversu mikið af táknum eru lesin"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3956,23 +3389,14 @@ msgstr "af/virkjar lestur ritaðra stafa"
 msgid "Symbol level %s"
 msgstr "táknstig %s"
 
-#. Translators: Input help mode message for cycle speech symbol level command.
-msgid ""
-"Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr "Fer milli stillistiga sem ákvarða hversu mikið af táknum eru lesin"
+#. Translators: Input help mode message for move mouse to navigator object command.
+msgid "Moves the mouse pointer to the current navigator object"
+msgstr "færir músarbendil að völdum fókus"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 #, fuzzy
 msgid "Object has no location"
 msgstr "hlutur hefur enga staðsetningu"
-
-#. Translators: Input help mode message for move mouse to navigator object command.
-msgid "Moves the mouse pointer to the current navigator object"
-msgstr "færir músarbendil að völdum fókus"
-
-#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
-msgid "Move navigator object to mouse"
-msgstr "færir fókus að músarbendli"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 msgid ""
@@ -3980,10 +3404,9 @@ msgid ""
 "speaks it"
 msgstr "færir fókus að hlut undir músarbendli og les hann"
 
-#. Translators: reported when there are no other available review modes for this object
-#, fuzzy
-msgid "No next review mode"
-msgstr "einföld yfirferð"
+#. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
+msgid "Move navigator object to mouse"
+msgstr "færir fókus að músarbendli"
 
 #. Translators: Script help message for next review mode command.
 #, fuzzy
@@ -3996,8 +3419,8 @@ msgstr ""
 
 #. Translators: reported when there are no other available review modes for this object
 #, fuzzy
-msgid "No previous review mode"
-msgstr "enginn fyrri rammi"
+msgid "No next review mode"
+msgstr "einföld yfirferð"
 
 #. Translators: Script help message for previous review mode command.
 #, fuzzy
@@ -4007,6 +3430,16 @@ msgid ""
 msgstr ""
 "Skiptir yfir í yfirferðarham fyrir allan skjáinn, (eða skjal ef það er opið) "
 "og setur yfirferðarbendilinn á hlut í fókus"
+
+#. Translators: reported when there are no other available review modes for this object
+#, fuzzy
+msgid "No previous review mode"
+msgstr "enginn fyrri rammi"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+#, fuzzy
+msgid "Toggles simple review mode on and off"
+msgstr "einföld yfirferð"
 
 #. Translators: The message announced when toggling simple review mode.
 #, fuzzy
@@ -4018,17 +3451,6 @@ msgstr "einföld yfirferð"
 msgid "Simple review mode on"
 msgstr "einföld yfirferð"
 
-#. Translators: Input help mode message for toggle simple review mode command.
-#, fuzzy
-msgid "Toggles simple review mode on and off"
-msgstr "einföld yfirferð"
-
-#. Translators: Reported when the user tries to perform a command related to the navigator object
-#. but there is no current navigator object.
-#, fuzzy
-msgid "No navigator object"
-msgstr "enginn fókus"
-
 #. Translators: Input help mode message for report current navigator object command.
 #, fuzzy
 msgid ""
@@ -4039,16 +3461,22 @@ msgstr ""
 "Tilkynnir leiðsögu-hlut. Ef stutt er tvisvar þá er textinn stafaður og ef "
 "stutt er þrisvar þá er textinn og gildi hans afritað á klemmuspjaldið"
 
-#. Translators: message when there is no location information for the review cursor
+#. Translators: Reported when the user tries to perform a command related to the navigator object
+#. but there is no current navigator object.
 #, fuzzy
-msgid "No location information"
-msgstr "engar upplýsingar um stílsnið"
+msgid "No navigator object"
+msgstr "enginn fókus"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
+
+#. Translators: message when there is no location information for the review cursor
+#, fuzzy
+msgid "No location information"
+msgstr "engar upplýsingar um stílsnið"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 #, fuzzy
@@ -4063,6 +3491,15 @@ msgstr ""
 #, fuzzy
 msgid "Move to focus"
 msgstr "færa að núverandi staðsetningu"
+
+#. Translators: Input help mode message for move focus to current navigator object command.
+#, fuzzy
+msgid ""
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"Ef stutt er einu sinni er bendill færður í hlut, ef stutt er tvisvar er "
+"skrifbendillinn færður á hlutinn"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -4082,57 +3519,39 @@ msgstr "færa fókus"
 msgid "No caret"
 msgstr "enginn skriðbendill"
 
-#. Translators: Input help mode message for move focus to current navigator object command.
-#, fuzzy
-msgid ""
-"Pressed once sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
-msgstr ""
-"Ef stutt er einu sinni er bendill færður í hlut, ef stutt er tvisvar er "
-"skrifbendillinn færður á hlutinn"
+#. Translators: Input help mode message for move to parent object command.
+msgid "Moves the navigator object to the object containing it"
+msgstr "Færir leiðsögu-hlut upp í þann hlut sem geymir núverandi hlut"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
 msgstr "Enginn fókus"
 
-#. Translators: Input help mode message for move to parent object command.
-msgid "Moves the navigator object to the object containing it"
-msgstr "Færir leiðsögu-hlut upp í þann hlut sem geymir núverandi hlut"
+#. Translators: Input help mode message for move to next object command.
+msgid "Moves the navigator object to the next object"
+msgstr "Færir leiðsögu-hlut í næsta hlut"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "ekkert næst"
 
-#. Translators: Input help mode message for move to next object command.
-msgid "Moves the navigator object to the next object"
-msgstr "Færir leiðsögu-hlut í næsta hlut"
+#. Translators: Input help mode message for move to previous object command.
+msgid "Moves the navigator object to the previous object"
+msgstr "Færir leiðsögu-hlut í fyrri hlut"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "ekkert fyrra"
 
-#. Translators: Input help mode message for move to previous object command.
-msgid "Moves the navigator object to the previous object"
-msgstr "Færir leiðsögu-hlut í fyrri hlut"
-
-#. Translators: Reported when there is no contained (first child) object such as inside a document.
-msgid "No objects inside"
-msgstr "Engir hlutur inni"
-
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
 msgstr "Færir leiðsögu-hlut í fyrsta undir-hlut innihalds"
 
-#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#, fuzzy
-msgid "Activate"
-msgstr "&Virkja"
-
-#. Translators: the message reported when there is no action to perform on the review position or navigator object.
-msgid "No action"
-msgstr "Engin sjálfgild aðgerð"
+#. Translators: Reported when there is no contained (first child) object such as inside a document.
+msgid "No objects inside"
+msgstr "Engir hlutur inni"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
@@ -4142,22 +3561,28 @@ msgstr ""
 "framkvæmir sjálfgilda aðgerð á valinn hlut. Dæmi: Smellir á ef hann er "
 "hnappur"
 
+#. Translators: the message reported when there is no action to perform on the review position or navigator object.
+msgid "No action"
+msgstr "Engin sjálfgild aðgerð"
+
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr "færir yfirferðarbendil efst í fókus og les hana"
 
-#. Translators: a message reported when review cursor is at the top line of the current navigator object.
-#, fuzzy
-msgid "Top"
-msgstr "efst"
-
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr "færir yfirferðarbendil í fyrri línu í fókus og les hana"
+
+#. Translators: a message reported when review cursor is at the top line of the current navigator object.
+#. Translators: Reported when attempting to move to the previous result in the Python Console
+#. output pane while there is no previous result.
+#, fuzzy
+msgid "Top"
+msgstr "efst"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
@@ -4208,15 +3633,15 @@ msgid ""
 "situated in the current navigator object and speaks it"
 msgstr "færir yfirferðarbendil á fyrsta staf í línu og les hann"
 
-#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-msgid "Left"
-msgstr ""
-
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
 msgstr "færir yfirferðarbendil á fyrri staf í línu og les hann"
+
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr ""
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
@@ -4229,16 +3654,16 @@ msgstr ""
 "stutt er þrisvar er tölvugildi stafs lesið,  bæði í tíundar og "
 "sextándarkerfinu"
 
-#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-#, fuzzy
-msgid "Right"
-msgstr "hægri"
-
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr "færir yfirferðarbendil á næsta staf í fókus og les hann"
+
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+#, fuzzy
+msgid "Right"
+msgstr "hægri"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
@@ -4269,6 +3694,17 @@ msgstr ""
 msgid "Expanded symbol ({})"
 msgstr ""
 
+#. Translators: Input help mode message for toggle speech mode command.
+#, fuzzy
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA will just speak normally."
+msgstr ""
+"Skiptir milli talstillinganna slökkt, píp og tal. Ef stillt er á slökkt "
+"segir NVDA ekki neitt, ef stillt er á píp, pípar NVDA alltaf þegar það gæti "
+"talað, ef stillt er á tal talar NVDA venjulega"
+
 #. Translators: A speech mode which disables speech output.
 #, fuzzy
 msgid "Speech mode off"
@@ -4284,21 +3720,13 @@ msgstr "talhamur hljóðmerki"
 msgid "Speech mode talk"
 msgstr "talhamur tala"
 
-#. Translators: Input help mode message for toggle speech mode command.
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it "
-"its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr ""
-"Skiptir milli talstillinganna slökkt, píp og tal. Ef stillt er á slökkt "
-"segir NVDA ekki neitt, ef stillt er á píp, pípar NVDA alltaf þegar það gæti "
-"talað, ef stillt er á tal talar NVDA venjulega"
-
-#. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
+#. Translators: Input help mode message for move to next document with focus command,
+#. mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "Færir fókus að næsta skjali sem hefur fókus"
 
-#. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
+#. Translators: Input help mode message for toggle focus and browse mode command
+#. in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -4395,22 +3823,45 @@ msgstr "les upp stöðuslá núverandi forrits og færir fókus á hana"
 msgid "No status line found"
 msgstr "Stöðuslá finnst ekki"
 
+#. Translators: Input help mode message for command which reads content of the status bar.
+#, fuzzy
+msgid "Reads the current application status bar."
+msgstr "Forrit sem nú er virkt er %s"
+
 #. Translators: Reported when status line exist, but is empty.
 #, fuzzy
 msgid "no status bar information"
 msgstr "engar upplýsingar um stílsnið"
 
+#. Translators: Input help mode message for command which spells content of the status bar.
+#, fuzzy
+msgid "Spells the current application status bar."
+msgstr "Tilkynna dálk og raðar&heiti í töflu"
+
+#. Translators: Input help mode message for command which copies status bar content to the clipboard.
+msgid ""
+"Copies content of the status bar  of current application to the clipboard."
+msgstr ""
+
 #. Translators: Reported when user attempts to copy content of the empty status line.
-msgid "unable to copy status bar content to clipboard"
+msgid "Unable to copy status bar content to clipboard"
+msgstr ""
+
+#. Translators: Input help mode message for Command which moves review cursor to the status bar.
+msgid ""
+"Reads the current application status bar and moves navigator object into it."
 msgstr ""
 
 #. Translators: Input help mode message for report status line text command.
 #, fuzzy
 msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
+"Reads the current application status bar. If pressed twice, spells the "
+"information. If pressed three times, copies the status bar to the clipboard"
 msgstr "les upp stöðuslá núverandi forrits og færir fókus á hana"
+
+#. Translators: Input help mode message for toggle mouse tracking command.
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr "af/virkjar lestur meðan músin er hreyfð"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4420,8 +3871,9 @@ msgstr "Músarfylgni óvirk"
 msgid "Mouse tracking on"
 msgstr "Músarfylgni virk"
 
-#. Translators: Input help mode message for toggle mouse tracking command.
-msgid "Toggles the reporting of information as the mouse moves"
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+#, fuzzy
+msgid "Toggles how much text will be spoken when the mouse moves"
 msgstr "af/virkjar lestur meðan músin er hreyfð"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
@@ -4431,16 +3883,6 @@ msgstr "af/virkjar lestur meðan músin er hreyfð"
 msgid "Mouse text unit resolution %s"
 msgstr "&upplausn texteininga"
 
-#. Translators: Input help mode message for toggle mouse text unit resolution command.
-#, fuzzy
-msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "af/virkjar lestur meðan músin er hreyfð"
-
-#. Translators: Reported when there is no title text for current program or window.
-#, fuzzy
-msgid "No title"
-msgstr "enginn titill"
-
 #. Translators: Input help mode message for report title bar command.
 msgid ""
 "Reports the title of the current application or foreground window. If "
@@ -4449,6 +3891,11 @@ msgid ""
 msgstr ""
 "Tilkynnir titil forrits eða forgrunnsglugga. Ef stutt er tvisvar er titill "
 "stafaður, ef stutt er þrisvar er titill afritaður á klemmuspjald"
+
+#. Translators: Reported when there is no title text for current program or window.
+#, fuzzy
+msgid "No title"
+msgstr "enginn titill"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 #, fuzzy
@@ -4461,7 +3908,9 @@ msgid ""
 "state of GUI components."
 msgstr ""
 
-#. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
+#. Translators: Input help mode message for developer info for current navigator object command,
+#. used by developers to examine technical info on navigator object.
+#. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -4511,6 +3960,14 @@ msgstr "Enginn texti til afritunar"
 msgid "Opens NVDA configuration directory for the current user."
 msgstr "Skoða notenda stillingaskrá NVDA"
 
+#. Translators: Input help mode message for toggle progress bar output command.
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Skiptir milli píps, tals, píps með tali og engra tilkynninga meðan á "
+"uppnýjun framvinduslá stendur."
+
 #. Translators: A mode where no progress bar updates are given.
 #, fuzzy
 msgid "No progress bar updates"
@@ -4531,13 +3988,12 @@ msgstr "pípir þegar framvinduslá uppnýast"
 msgid "Beep and speak progress bar updates"
 msgstr "pípa og lesa uppnýanir á framvinduslá"
 
-#. Translators: Input help mode message for toggle progress bar output command.
+#. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting "
-"progress bar updates"
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
 msgstr ""
-"Skiptir milli píps, tals, píps með tali og engra tilkynninga meðan á "
-"uppnýjun framvinduslá stendur."
+"af/virkjar lestur dínamískra efnisbreytinga, svosem nýs texta í Dos gluggum"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -4547,12 +4003,10 @@ msgstr "tilkynna dínamískar efnisbreytingar óvirkt"
 msgid "report dynamic content changes on"
 msgstr "tilkynna dínamískar efnisbreytingar virkt"
 
-#. Translators: Input help mode message for toggle dynamic content changes command.
+#. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new "
-"text in dos console windows"
-msgstr ""
-"af/virkjar lestur dínamískra efnisbreytinga, svosem nýs texta í Dos gluggum"
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr "af/virkjar hvort yfirferðarbendill fylgi skrifbendli"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -4562,10 +4016,10 @@ msgstr "skrifbendill færir yfirferðarbendil óvirkt"
 msgid "caret moves review cursor on"
 msgstr "skrifbendill færir yfirferðarbendil virkt"
 
-#. Translators: Input help mode message for toggle caret moves review cursor command.
+#. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
-"Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "af/virkjar hvort yfirferðarbendill fylgi skrifbendli"
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr "af/virkjar hreyfingar á bendli vegna fókushreyfingar"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -4575,9 +4029,11 @@ msgstr "fókus færir leiðsögu-hlut óvirkt"
 msgid "focus moves navigator object on"
 msgstr "fókus færir leiðsögu-hlut virkt"
 
-#. Translators: Input help mode message for toggle focus moves navigator object command.
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
+#, fuzzy
 msgid ""
-"Toggles on and off the movement of the navigator object due to focus changes"
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
 msgstr "af/virkjar hreyfingar á bendli vegna fókushreyfingar"
 
 #. Translators: presented when toggled.
@@ -4590,12 +4046,12 @@ msgstr "Sjálfvirkur fókus hamur fyrir skrifbendils hreyfingar"
 msgid "Automatically set system focus to focusable elements on"
 msgstr "Sjálfvirkur fókus hamur fyrir skrifbendils hreyfingar"
 
-#. Translators: Input help mode message for toggle auto focus focusable elements command.
+#. Translators: Input help mode message for report battery status command.
 #, fuzzy
-msgid ""
-"Toggles on and off automatic movement of the system focus due to browse mode "
-"commands"
-msgstr "af/virkjar hreyfingar á bendli vegna fókushreyfingar"
+msgid "Reports battery status and time remaining if AC is not plugged in"
+msgstr ""
+"Les upp hleðslu á rafhlöðu, og hversu langur tími er eftir ef vélin er  ekki "
+"í sambandi"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 #, fuzzy
@@ -4616,22 +4072,21 @@ msgstr "Straumur á"
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} klukkustundir og {minutes:d} mínútur eftir"
 
-#. Translators: Input help mode message for report battery status command.
-#, fuzzy
-msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr ""
-"Les upp hleðslu á rafhlöðu, og hversu langur tími er eftir ef vélin er  ekki "
-"í sambandi"
-
-#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
-msgid "Pass next key through"
-msgstr "hleypa næsta lykli í gegn"
-
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr "næsti innsláttur fer ekki í gegn um NVDA heldur fer beint í Windows"
+
+#. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
+msgid "Pass next key through"
+msgstr "hleypa næsta lykli í gegn"
+
+#. Translators: Input help mode message for report current program name and app module name command.
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr "Les nafn virks forrits ásamt nafni sniðmáts"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
@@ -4645,12 +4100,6 @@ msgstr ""
 #, python-format
 msgid " %s is currently running."
 msgstr ""
-
-#. Translators: Input help mode message for report current program name and app module name command.
-msgid ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
-msgstr "Les nafn virks forrits ásamt nafni sniðmáts"
 
 #. Translators: Input help mode message for go to general settings command.
 #, fuzzy
@@ -4777,6 +4226,12 @@ msgid ""
 "for NVDA"
 msgstr ""
 
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr ""
+
 #. Translators: The message announced when disabling speech viewer.
 #, fuzzy
 msgid "speech viewer disabled"
@@ -4787,11 +4242,11 @@ msgstr "Tal-Upplýsingar"
 msgid "speech viewer enabled"
 msgstr "Tal-Upplýsingar"
 
-#. Translators: Input help mode message for toggle speech viewer command.
-msgid ""
-"Toggles the NVDA Speech viewer, a floating window that allows you to view "
-"all the text that NVDA is currently speaking"
+#. Translators: Input help mode message for toggle braille tether to command
+#. (tethered means connected to or follows).
+msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
+"stillir hvort punktaletursskjár fylgi skrifbendli eða haldist í yfirferðarham"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
@@ -4799,10 +4254,9 @@ msgstr ""
 msgid "Braille tethered %s"
 msgstr "Punktaletur samofið við %s"
 
-#. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
-msgid "Toggle tethering of braille between the focus and the review position"
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
 msgstr ""
-"stillir hvort punktaletursskjár fylgi skrifbendli eða haldist í yfirferðarham"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4811,8 +4265,8 @@ msgstr ""
 msgid "Braille focus context presentation: %s"
 msgstr "Punktaletur samofið við %s"
 
-#. Translators: Input help mode message for toggle braille focus context presentation command.
-msgid "Toggle the way context information is presented in braille"
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
 msgstr ""
 
 #. Translators: The message announced when toggling the braille cursor.
@@ -4823,8 +4277,8 @@ msgstr ""
 msgid "Braille cursor on"
 msgstr ""
 
-#. Translators: Input help mode message for toggle braille cursor command.
-msgid "Toggle the braille cursor on and off"
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
 msgstr ""
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
@@ -4836,9 +4290,9 @@ msgstr ""
 msgid "Braille cursor %s"
 msgstr "Punktaletur samofið við %s"
 
-#. Translators: Input help mode message for cycle braille cursor shape command.
-msgid "Cycle through the braille cursor shapes"
-msgstr ""
+#. Translators: Input help mode message for report clipboard text command.
+msgid "Reports the text on the Windows clipboard"
+msgstr "Les texta af Windows klippispjaldi"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4851,20 +4305,17 @@ msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Mikill texti er á klippispjaldi. Hann er %s stafa langur"
 
-#. Translators: Input help mode message for report clipboard text command.
-msgid "Reports the text on the Windows clipboard"
-msgstr "Les texta af Windows klippispjaldi"
-
-#. Translators: Indicates start of review cursor text to be copied to clipboard.
-msgid "Start marked"
-msgstr "Upphaf merkt"
-
-#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command
+#. (that is, marks the current review cursor position as the starting point for text to be selected).
 #, fuzzy
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr "merkir staðsetningu yfirferðarbendils sem upphaf texta til afritunar"
+
+#. Translators: Indicates start of review cursor text to be copied to clipboard.
+msgid "Start marked"
+msgstr "Upphaf merkt"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
@@ -4879,6 +4330,17 @@ msgstr "merkir staðsetningu yfirferðarbendils sem upphaf texta til afritunar"
 msgid "No start marker set"
 msgstr "Engin upphafsmerking sett inn"
 
+#. Translators: Input help mode message for the select then copy command.
+#. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+#, fuzzy
+msgid ""
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
+msgstr ""
+"Klippir texta frá upphafsmerki og að yfirferðarbendli og seturhanná "
+"klippispjald"
+
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
 msgstr ""
@@ -4890,16 +4352,6 @@ msgstr "Enginn texti til afritunar"
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
 msgstr ""
-
-#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-#, fuzzy
-msgid ""
-"If pressed once, the text from the previously set start marker up to and "
-"including the current position of the review cursor is selected. If pressed "
-"twice, the text is copied to the clipboard"
-msgstr ""
-"Klippir texta frá upphafsmerki og að yfirferðarbendli og seturhanná "
-"klippispjald"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -4977,10 +4429,6 @@ msgid ""
 "input"
 msgstr ""
 
-#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
-msgid "Plugins reloaded"
-msgstr "Viðbótum endurhlaðið"
-
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
@@ -4988,6 +4436,10 @@ msgid ""
 msgstr ""
 "Hleður aftur inn forritum og íbótum án þess að endurræsa NVDA. Þetta getur "
 "nýst forriturum."
+
+#. Translators: Presented when plugins (app modules and global plugins) are reloaded.
+msgid "Plugins reloaded"
+msgstr "Viðbótum endurhlaðið"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #, fuzzy
@@ -5023,15 +4475,15 @@ msgstr "Engin sjálfgild aðgerð"
 msgid "Touch interaction disabled"
 msgstr "Engin sjálfgild aðgerð"
 
-#. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
-#, python-format
-msgid "%s mode"
-msgstr "%s hamur"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 #, fuzzy
 msgid "Cycles between available touch modes"
 msgstr "hringir milli mögulegra snerti-hama"
+
+#. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
+#, python-format
+msgid "%s mode"
+msgstr "%s hamur"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -5045,11 +4497,6 @@ msgstr ""
 "Tilkynnir nýja hlutinn eða efnið undir fingrinum ef annað en þar sem "
 "fingurinn var síðast"
 
-#. Translators: Reported when the object has no location for the mouse to move to it.
-#, fuzzy
-msgid "object has no location"
-msgstr "hlutur hefur enga staðsetningu"
-
 #. Translators: Input help mode message for touch right click command.
 #, fuzzy
 msgid ""
@@ -5057,10 +4504,22 @@ msgid ""
 "generally used to activate a context menu."
 msgstr "Smellir hægri músarhnappi á staðsetningu músarbendils"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+#, fuzzy
+msgid "object has no location"
+msgstr "hlutur hefur enga staðsetningu"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 #, fuzzy
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Kallar fram stilliglugga NVDA"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+#, fuzzy
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr "Gat ekki vistað stillingar, líklega vegna skrárkerfis með skrifvörn"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
 #, fuzzy
@@ -5072,12 +4531,9 @@ msgstr "Stillingar virkjaðar"
 msgid "Configuration profile triggers enabled"
 msgstr "Stillingar virkjaðar"
 
-#. Translators: Input help mode message for toggle configuration profile triggers command.
-#, fuzzy
-msgid ""
-"Toggles disabling of all configuration profile triggers. Disabling remains "
-"in effect until NVDA is restarted"
-msgstr "Gat ekki vistað stillingar, líklega vegna skrárkerfis með skrifvörn"
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr ""
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -5085,18 +4541,18 @@ msgid "Not math"
 msgstr ""
 
 #. Translators: Describes a command.
-msgid "Begins interaction with math content"
-msgstr ""
-
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr ""
-
-#. Translators: Describes a command.
 #, fuzzy
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
 msgstr "færir músarbendil að völdum fókus"
+
+#. Translators: Reported when Windows OCR is not available.
+#, fuzzy
+msgid "Windows OCR not available"
+msgstr "ekki til reiðu"
+
+#. Translators: Reported when screen curtain is enabled.
+msgid "Please disable screen curtain before using Windows OCR."
+msgstr ""
 
 #. Translators: Input help mode message for toggle report CLDR command.
 #, fuzzy
@@ -5576,6 +5032,17 @@ msgstr ""
 msgid "keyboard, all layouts"
 msgstr "gerð lyklaborðs"
 
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr ""
+
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "Sjálfgefin stilling"
+
 # Hef ekki hugmynd
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -5601,17 +5068,6 @@ msgstr ""
 msgctxt "languageName"
 msgid "Somali"
 msgstr ""
-
-#. Translators: The pattern defining how languages are displayed and sorted in in the general
-#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
-#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
-#, python-brace-format
-msgid "{desc}, {lc}"
-msgstr ""
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "Sjálfgefin stilling"
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
@@ -7404,6 +6860,38 @@ msgstr "Hulið Samrit:"
 msgid "unread"
 msgstr "Ólesið"
 
+#. Translators: The name of a category of NVDA commands.
+#, fuzzy
+msgid "Python Console"
+msgstr "Python stjórnborð"
+
+#. Translators: Description of a command to clear the Python Console output pane
+msgid "Clear the output pane"
+msgstr ""
+
+#. Translators: Description of a command to move to the next result in the Python Console output pane
+#, fuzzy
+msgid "Move to the next result"
+msgstr "fer á næsta lista"
+
+#. Translators: Description of a command to move to the previous result
+#. in the Python Console output pane
+#, fuzzy
+msgid "Move to the previous result"
+msgstr "fer í fyrri lista"
+
+#. Translators: Description of a command to select from the current caret position to the end
+#. of the current result in the Python Console output pane
+#, fuzzy
+msgid "Select until the end of the current result"
+msgstr "Tilkynna allar athugasemdir í athugasemda glugganum"
+
+#. Translators: Description of a command to select from the current caret position to the start
+#. of the current result in the Python Console output pane
+#, fuzzy
+msgid "Select until the start of the current result"
+msgstr "Tilkynna allar athugasemdir í athugasemda glugganum"
+
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
@@ -7466,7 +6954,13 @@ msgstr ""
 msgid "{startTime} to {endTime}"
 msgstr ""
 
-#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#. Translators: Part of a message reported when on a calendar appointment with one or more categories
+#. in Microsoft Outlook.
+#, python-brace-format
+msgid "categories {categories}"
+msgstr ""
+
+#. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr ""
@@ -7892,6 +7386,11 @@ msgstr "Ekkert punktaletur"
 
 #. Translators: The name of a series of braille displays.
 #, fuzzy
+msgid "Standard HID Braille Display"
+msgstr "Seika punktaletursskjáir"
+
+#. Translators: The name of a series of braille displays.
+#, fuzzy
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 msgstr "HIMS Braille Sense/Braille EDGE skjáir"
 
@@ -7917,8 +7416,13 @@ msgid "Papenmeier BRAILLEX older models"
 msgstr "Eldri útgæfrslu frá Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
-msgid "Seika braille displays"
+#, fuzzy
+msgid "Seika Braille Displays"
 msgstr "Seika punktaletursskjáir"
+
+#. Translators: Name of a braille display.
+msgid "Seika Notetaker"
+msgstr ""
 
 #. Translators: Names of braille displays.
 #, fuzzy
@@ -7970,6 +7474,850 @@ msgstr ""
 msgid "Recognition failed"
 msgstr "Stillingar virkjaðar"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr ""
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+#, fuzzy
+msgid "current page"
+msgstr "eigindasíða"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr ""
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+#, fuzzy
+msgid "current location"
+msgstr "Forrit sem nú er virkt er %s"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr ""
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr ""
+
+#. Translators: The word for window of a program such as document window.
+msgid "window"
+msgstr "Gluggi"
+
+#. Translators: Used to identify title bar of a program.
+msgid "title bar"
+msgstr "Titilslá"
+
+#. Translators: The word used for pane such as desktop pane.
+msgid "pane"
+msgstr "rúða"
+
+#. Translators: The word used to denote a dialog box such as open dialog.
+msgid "dialog"
+msgstr "Skilaboð"
+
+#. Translators: The text used to identify check boxes such as select check box.
+msgid "check box"
+msgstr "gátreitur"
+
+#. Translators: The text used to identify radio buttons such as yes or no radio button.
+msgid "radio button"
+msgstr "útvarpshnappur"
+
+#. Translators: The word used to identify a static text such as dialog text.
+msgid "text"
+msgstr "texti"
+
+#. Translators: The word used to identify edit fields such as subject edit field.
+msgid "edit"
+msgstr "innsláttur"
+
+#. Translators: The word used to identify a button such as OK button.
+msgid "button"
+msgstr "hnappur"
+
+#. Translators: Text used to identify menu bar of a program.
+msgid "menu bar"
+msgstr "valslá"
+
+#. Translators: Used to identify a menu item such as an item in file menu.
+msgid "menu item"
+msgstr "valkostur"
+
+#. Translators: The word used for menus such as edit menu.
+#. Translators: Identifies a menu such as file menu.
+msgid "menu"
+msgstr "valmynd"
+
+#. Translators: Used to identify combo boxes such as file type combo box.
+msgid "combo box"
+msgstr "Fjölvalsreitur"
+
+#. Translators: The word used for lists such as folder list.
+msgid "list"
+msgstr "listi"
+
+#. Translators: Used to identify a list item such as email list items.
+msgid "list item"
+msgstr "listaatriði"
+
+#. Translators: The word used to identify graphics such as webpage graphics.
+msgid "graphic"
+msgstr "mynd"
+
+#. Translators: Used to identify help balloon (a circular window with helpful text such as notification
+#. text).
+msgid "help balloon"
+msgstr "Hjálparbelgur"
+
+#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as
+#. file information).
+msgid "tool tip"
+msgstr "ábending"
+
+#. Translators: Identifies a link in webpage documents.
+msgid "link"
+msgstr "tengill"
+
+#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
+msgid "tree view"
+msgstr "trésýn"
+
+#. Translators: Identifies a tree view item.
+msgid "tree view item"
+msgstr "trésýnisatriði"
+
+#. Translators: The word presented for tabs in a tab enabled window.
+msgctxt "controlType"
+msgid "tab"
+msgstr "Dálkur"
+
+#. Translators: Identifies a tab control such as webpage tabs in web browsers.
+msgid "tab control"
+msgstr "dálkhlutur"
+
+#. Translators: Identifies a slider such as volume slider.
+msgid "slider"
+msgstr "rein"
+
+#. Translators: Identifies a progress bar such as NvDA update progress.
+msgid "progress bar"
+msgstr "framvinduslá"
+
+#. Translators: Identifies a scroll bar.
+msgid "scroll bar"
+msgstr "skrunslá"
+
+#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
+#. document).
+msgid "status bar"
+msgstr "stöðuslá"
+
+#. Translators: Identifies a table such as ones used in various websites.
+msgid "table"
+msgstr "tafla"
+
+#. Translators: Identifies a cell in a table.
+msgid "cell"
+msgstr "reitur"
+
+#. Translators: Identifies a column (a group of vertical cells in a table).
+msgid "column"
+msgstr "dálkur"
+
+#. Translators: Identifies a row (a group of horizontal cells in a table).
+msgid "row"
+msgstr "röð"
+
+#. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
+#. embedded within a web page.
+msgid "frame"
+msgstr "rammi"
+
+#. Translators: Identifies a tool bar.
+msgid "tool bar"
+msgstr "tækjaslá"
+
+#. Translators: Identifies a column header in tables and spreadsheets.
+msgid "column header"
+msgstr "titill dálks"
+
+#. Translators: Identifies a row header in tables and spreadsheets.
+msgid "row header"
+msgstr "titill raðar"
+
+#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
+msgid "drop down button"
+msgstr "fellihnappur"
+
+#. Translators: Identifies an element.
+msgid "clock"
+msgstr "klukka"
+
+#. Translators: Identifies a separator (a horizontal line drawn on the screen).
+msgid "separator"
+msgstr "Deilistrik"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "eyðublað"
+
+#. Translators: Identifies a heading (a bold text used for identifying a section).
+msgid "heading"
+msgstr "fyrirsögn"
+
+#. Translators: Identifies a heading level.
+msgid "heading 1"
+msgstr "fyrirsögn 1"
+
+#. Translators: Identifies a heading level.
+msgid "heading 2"
+msgstr "fyrirsögn 2"
+
+#. Translators: Identifies a heading level.
+msgid "heading 3"
+msgstr "fyrirsögn 3"
+
+#. Translators: Identifies a heading level.
+msgid "heading 4"
+msgstr "fyrirsögn 4"
+
+#. Translators: Identifies a heading level.
+msgid "heading 5"
+msgstr "fyrirsögn 5"
+
+#. Translators: Identifies a heading level.
+msgid "heading 6"
+msgstr "fyrirsögn 6"
+
+#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
+msgid "paragraph"
+msgstr "málsgrein"
+
+#. Translators: Presented for a section in a document which is a block quotation;
+#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+#. See http://en.wikipedia.org/wiki/Block_quotation
+msgid "block quote"
+msgstr "tilvitnun"
+
+#. Translators: Identifies a table header (a short text at the start of a table which describes what the
+#. table is about).
+msgid "table header"
+msgstr "titill töflu"
+
+#. Translators: Identifies a table body (the main body of the table).
+msgid "table body"
+msgstr "töflusvæði"
+
+#. Translators: Identifies a table footer (text placed at the end of the table).
+msgid "table footer"
+msgstr "töflufótur"
+
+#. Translators: Identifies a document (for example, a webpage document).
+msgid "document"
+msgstr "skjal"
+
+#. Translators: Identifies an animation in a document or a webpage.
+msgid "animation"
+msgstr "hreyfing"
+
+#. Translators: Identifies an application in webpages.
+msgid "application"
+msgstr "forrit"
+
+#. Translators: Identifies a box element.
+msgid "box"
+msgstr "kassi"
+
+#. Translators: Identifies a grouping (a number of related items grouped together, such as related options
+#. in dialogs).
+msgid "grouping"
+msgstr "hópað"
+
+#. Translators: Identifies a property page such as drive properties dialog.
+msgid "property page"
+msgstr "eigindasíða"
+
+#. Translators: Identifies a canvas element on webpages (a box with some background color with some text
+#. drawn on the box, like a canvas).
+msgid "canvas"
+msgstr "strigi"
+
+#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
+msgid "caption"
+msgstr "myndartexti"
+
+#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
+#. name).
+msgid "check menu item"
+msgstr "haka við hlut í valmynd"
+
+#. Translators: Identifies a data edit field.
+msgid "date edit"
+msgstr "skrifa dagsetningu"
+
+#. Translators: Identifies an icon.
+msgid "icon"
+msgstr "táknmynd"
+
+#. Translators: Identifies a directory pane.
+msgid "directory pane"
+msgstr "skrárúða"
+
+#. Translators: Identifies an object that is embedded in a document.
+msgid "embedded object"
+msgstr "ívafinn hlutur"
+
+#. Translators: Identifies an end note.
+msgid "end note"
+msgstr "eftirmálsgrein"
+
+#. Translators: Identifies a footer (usually text).
+msgid "footer"
+msgstr "fótur"
+
+#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+msgid "foot note"
+msgstr "neðanmálsgrein"
+
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+msgid "glass pane"
+msgstr "glerrúða"
+
+#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
+msgid "header"
+msgstr "haus"
+
+#. Translators: Identifies an image map (a type of graphical link).
+msgid "image map"
+msgstr "myndarkort"
+
+#. Translators: Identifies an input window.
+msgid "input window"
+msgstr "innsláttargluggi"
+
+#. Translators: Identifies a label.
+msgid "label"
+msgstr "merking"
+
+#. Translators: Identifies a note field.
+msgid "note"
+msgstr "athugasemd"
+
+#. Translators: Identifies a page.
+msgid "page"
+msgstr "blaðsíða"
+
+#. Translators: Identifies a radio menu item.
+msgid "radio menu item"
+msgstr "hlutur í útvarpsvalmynd"
+
+#. Translators: Identifies a layered pane.
+msgid "layered pane"
+msgstr "lagskipt rúða"
+
+#. Translators: Identifies a redundant object.
+msgid "redundant object"
+msgstr "óþarfur hlutur"
+
+#. Translators: Identifies a root pane.
+msgid "root pane"
+msgstr "grunnrúða"
+
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+msgid "edit bar"
+msgstr "ritrein"
+
+#. Translators: Identifies a terminal window such as command prompt.
+msgid "terminal"
+msgstr "Textagluggi"
+
+#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
+#. addition to text; encountered on webpages and NvDA log viewer).
+msgid "rich edit"
+msgstr "ríkt ritsvæði"
+
+#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
+msgid "ruler"
+msgstr "stika"
+
+#. Translators: Identifies a scroll pane.
+msgid "scroll pane"
+msgstr "skrunrúða"
+
+#. Translators: Identifies a section of text.
+msgid "section"
+msgstr "hluti"
+
+#. Translators: Identifies a shape.
+msgid "shape"
+msgstr "form"
+
+#. Translators: Identifies a split pane.
+msgid "split pane"
+msgstr "skipt rúða"
+
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+msgid "view port"
+msgstr "skoðunarsvæði"
+
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+msgid "tear off menu"
+msgstr "skurðarvalmynd"
+
+#. Translators: Identifies a text frame (a frame window which contains text).
+msgid "text frame"
+msgstr "textarammi"
+
+#. Translators: Identifies a toggle button (a button used to toggle something).
+msgid "toggle button"
+msgstr "víxlhnappur"
+
+msgid "border"
+msgstr "brún"
+
+#. Translators: Identifies a caret object.
+msgid "caret"
+msgstr "skrifbendill"
+
+#. Translators: Identifies a character field (should not be confused with edit fields).
+msgid "character"
+msgstr "bókstafur"
+
+#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
+msgid "chart"
+msgstr "myndrit"
+
+#. Translators: Identifies a cursor object.
+msgid "cursor"
+msgstr "bendill"
+
+#. Translators: Identifies a diagram (seen on some websites and on Office documents).
+msgid "diagram"
+msgstr "talnarit"
+
+#. Translators: Identifies a dial object.
+msgid "dial"
+msgstr "skífa"
+
+#. Translators: Identifies a drop list.
+msgid "drop list"
+msgstr "fellilisti"
+
+#. Translators: Identifies a split button (a control which performs different actions when different parts
+#. are clicked).
+msgid "split button"
+msgstr "skiptur hnappur"
+
+#. Translators: Identifies a menu button (a button which opens a menu of items).
+msgid "menu button"
+msgstr "valmyndarhnappur"
+
+#. Translators: Reported for a button which expands a grid when it is pressed.
+msgid "drop down button grid"
+msgstr "fellihnappagrind"
+
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr ""
+
+#. Translators: Identifies a grip control.
+msgid "grip"
+msgstr "hald"
+
+#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
+#. assigning shortcut for icons on the desktop).
+msgid "hot key field"
+msgstr "flýtilyklareitur"
+
+#. Translators: Identifies an indicator control.
+msgid "indicator"
+msgstr "vísill"
+
+#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
+msgid "spin button"
+msgstr "snúningshnappur"
+
+#. Translators: Identifies a sound clip on websites.
+msgid "sound"
+msgstr "hljóð"
+
+#. Translators: Identifies a whitespace.
+msgid "white space"
+msgstr "bil"
+
+#. Translators: Identifies a tree view button.
+msgid "tree view button"
+msgstr "trjásýnishnappur"
+
+#. Translators: Identifies an IP address (an IP address field element).
+msgid "IP address"
+msgstr "IP tala"
+
+#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts
+#. for programs).
+msgid "desktop icon"
+msgstr "skjáborðstáknmynd"
+
+#. Translators: Identifies desktop pane (the desktop window).
+msgid "desktop pane"
+msgstr "Skjáborðsrúða"
+
+#. Translators: Identifies an option pane.
+msgid "option pane"
+msgstr "valrúða"
+
+#. Translators: Identifies a color chooser.
+msgid "color chooser"
+msgstr "velja lit"
+
+#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
+msgid "file chooser"
+msgstr "Velja skrá"
+
+msgid "filler"
+msgstr "fyllir"
+
+#. Translators: Identifies a panel control for grouping related options.
+msgid "panel"
+msgstr "borð"
+
+#. Translators: Identifies a password field (a protected edit field for entering passwords such as when
+#. logging into web-based email sites).
+msgid "password edit"
+msgstr "Sláðu inn lykilorð"
+
+#. Translators: Identifies a font chooser.
+msgid "font chooser"
+msgstr "velja stafagerð"
+
+msgid "line"
+msgstr "lína"
+
+#. Translators: Identifies a font name.
+msgid "font name"
+msgstr "heiti stafagerðar"
+
+#. Translators: Identifies font size.
+msgid "font size"
+msgstr "leturstærð"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is bolded.
+msgid "bold"
+msgstr "feitletrað"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "skáletrað"
+
+#. Translators: Describes text formatting.
+msgid "underline"
+msgstr "undirstrikun"
+
+#. Translators: Describes text formatting.
+msgid "foreground color"
+msgstr "forgrunnslitur"
+
+#. Translators: Describes text formatting.
+msgid "background color"
+msgstr "bakgrunnslitur"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for superscript text.
+msgid "superscript"
+msgstr "hækkað"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported for subscript text.
+msgid "subscript"
+msgstr "lækkað"
+
+#. Translators: Describes style of text.
+#. Translators: a Microsoft Word revision type (style change)
+msgid "style"
+msgstr "stíll"
+
+#. Translators: Describes text formatting.
+msgid "indent"
+msgstr "inndráttur"
+
+#. Translators: Describes text formatting.
+msgid "alignment"
+msgstr "lega"
+
+#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such
+#. as file downloads or pop-up blocker).
+msgid "alert"
+msgstr "viðvörun"
+
+#. Translators: Identifies a data grid control (a grid which displays data).
+msgid "data grid"
+msgstr "gagnagrind"
+
+msgid "data item"
+msgstr "upplýsingahluti"
+
+msgid "header item"
+msgstr "titill"
+
+#. Translators: Identifies a thumb control (a button-like control for changing options).
+msgid "thumb control"
+msgstr "þumalstýring"
+
+msgid "calendar"
+msgstr "dagatal"
+
+msgid "video"
+msgstr ""
+
+msgid "audio"
+msgstr ""
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr ""
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+#, fuzzy
+msgid "deleted"
+msgstr "eyða"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+#, fuzzy
+msgid "inserted"
+msgstr "hluti"
+
+#. Translators: Identifies a landmark.
+#, fuzzy
+msgid "landmark"
+msgstr "%s kennileiti"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr ""
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr ""
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr ""
+
+#. Translators: Identifies marked (highlighted) content
+#, fuzzy
+msgid "highlighted"
+msgstr "aðlaga á hægri brún"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not
+#. checked), but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "ekki %s"
+
+#. Translators: This is presented when a control or document is unavailable.
+msgid "unavailable"
+msgstr "ekki til reiðu"
+
+#. Translators: This is presented when a control has focus.
+msgid "focused"
+msgstr "í brennipunkti"
+
+#. Translators: This is presented when the control is selected.
+msgid "selected"
+msgstr "valið"
+
+#. Translators: This is presented when a document is busy.
+msgid "busy"
+msgstr "upptekinn"
+
+#. Translators: This is presented when a button is pressed.
+msgid "pressed"
+msgstr "þrýst á"
+
+#. Translators: This is presented when a check box is checked.
+msgid "checked"
+msgstr "hakað"
+
+#. Translators: This is presented when a three state check box is half checked.
+msgid "half checked"
+msgstr "hakað til hálfs"
+
+#. Translators: This is presented when the control is a read-only control such as read-only edit box.
+msgid "read only"
+msgstr "einungis til lestrar"
+
+#. Translators: This is presented when a tree view or submenu item is expanded.
+msgid "expanded"
+msgstr "opið"
+
+#. Translators: This is presented when a tree view or submenu is collapsed.
+msgid "collapsed"
+msgstr "lokað"
+
+#. Translators: This is presented when a control or a document becomes invisible.
+msgid "invisible"
+msgstr "falið"
+
+#. Translators: This is presented when a visited link is encountered.
+msgid "visited"
+msgstr "heimsótt"
+
+#. Translators: This is presented when a link is encountered.
+msgid "linked"
+msgstr "tengt"
+
+#. Translators: This is presented when the control menu item has a submenu.
+msgid "subMenu"
+msgstr "undirvalmynd"
+
+#. Translators: This is presented when a protected control or a document is encountered.
+msgid "protected"
+msgstr "varið"
+
+#. Translators: This is presented when a required form field is encountered.
+msgid "required"
+msgstr "nauðsynlegt"
+
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+msgid "defunct"
+msgstr "úrelt"
+
+#. Translators: This is presented when an invalid entry has been made.
+msgid "invalid entry"
+msgstr "ógildur innsláttur"
+
+msgid "modal"
+msgstr "módal"
+
+#. Translators: This is presented when a field supports auto completion of entered text such as email
+#. address field in Microsoft Outlook.
+msgid "has auto complete"
+msgstr "útfyllist sj'alfkrafa"
+
+#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment
+#. fields on websites.
+msgid "multi line"
+msgstr "marglínu"
+
+msgid "iconified"
+msgstr "táknmyndartengt"
+
+#. Translators: Presented when the current control is located off screen.
+msgid "off screen"
+msgstr "af skjá"
+
+#. Translators: Presented when the control allows selection such as text fields.
+msgid "selectable"
+msgstr "veljanlegt"
+
+#. Translators: Presented when a control can be moved to using system focus.
+msgid "focusable"
+msgstr "bendilshæft"
+
+#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
+msgid "clickable"
+msgstr "smellanlegt"
+
+msgid "editable"
+msgstr "frjáls"
+
+msgid "checkable"
+msgstr "til að haka"
+
+msgid "draggable"
+msgstr "draganlegt"
+
+msgid "dragging"
+msgstr "dregur"
+
+#. Translators: Reported where an object which is being dragged can be dropped.
+#. This is only reported for objects that support accessible drag and drop.
+msgid "drop target"
+msgstr "sleppa hlut"
+
+msgid "sorted"
+msgstr "raðað"
+
+msgid "sorted ascending"
+msgstr "raðað upp"
+
+msgid "sorted descending"
+msgstr "raðað niður"
+
+#. Translators: a state that denotes that an object (usually a graphic) has a long description.
+msgid "has long description"
+msgstr "hefur langa lýsingu"
+
+#. Translators: a state that denotes that an object has additional details (such as a comment section).
+msgid "has details"
+msgstr ""
+
+#. Translators: a state that denotes that an object is pinned in its current location
+msgid "pinned"
+msgstr ""
+
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "inniheldur formúlu"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "inniheldur athugasemd"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr ""
+
+#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the
+#. allocated/available space
+msgid "cropped"
+msgstr ""
+
+#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
+#, fuzzy
+msgid "overflowing"
+msgstr "Lækka"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
+#. Excel spreadsheet).
+#, fuzzy
+msgid "unlocked"
+msgstr "ekki hakað"
+
+#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+msgid "not selected"
+msgstr "ekki valið"
+
+#. Translators: This is presented when a button is not pressed.
+#, fuzzy
+msgid "not pressed"
+msgstr "þrýst á"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "ekki hakað"
+
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "búin að draga"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "Stillingar virkjaðar"
@@ -7990,28 +8338,10 @@ msgstr "Stillingar vistaðar"
 msgid "Could not save configuration - probably read only file system"
 msgstr "Gat ekki vistað stillingar, líklega vegna skrárkerfis með skrifvörn"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-#. (example: when trying to open keyboard settings when general settings dialog is open).
-msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr ""
-
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr ""
-
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Sjálfgefin orðabók"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "raddorðabók (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "skammtímaorðabók"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -8044,7 +8374,9 @@ msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr "Vinsamlegast bíðið meðan stillingar eru afritaðar úr kerfisstillingum."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
-msgid "COM Registration Fixing tool complete"
+msgid ""
+"The COM Registration Fixing tool has finished. It is highly recommended that "
+"you restart your computer now, to make sure the changes take full effect."
 msgstr ""
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
@@ -8244,86 +8576,6 @@ msgstr "&Hætta"
 msgid "Exit NVDA"
 msgstr "Hætta í NVDA"
 
-#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
-#, fuzzy
-msgid ""
-"Most commands for controlling NVDA require you to hold down the NVDA key "
-"while pressing other keys.\n"
-"By default, the numpad Insert and main Insert keys may both be used as the "
-"NVDA key.\n"
-"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-"Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA "
-"functions."
-msgstr ""
-"Velkomin(n) í NVDA.\n"
-"Flestar NVDA skipanir eru gefnar með því að nota NVDA lykilinn ásamt öðrum "
-"lyklum \n"
-"Innsetningar (insert) lyklar á lyklaborði og talnaborði eru sjálfgenfir NVDA "
-"lyklar. \n"
-"Hægt er að breyta þessu og nota hástafaláslykillinn í staðinn.\n"
-"Notið NVDA llykilinn ásamt bókstafnur n til að opna NVDA valmyndina.\n"
-"Þaðan er hægt að breyta NVDA stillingum, fá hjálp, og framkvæma aðrar "
-"aðgerðir sem NVDA býður upp á.\n"
-
-#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
-msgid "Welcome to NVDA"
-msgstr "Velkomin í NVDA"
-
-#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
-#. bold lettering
-#, fuzzy
-msgid "Welcome to NVDA!"
-msgstr "Velkomin í NVDA"
-
-#. Translators: The label for a group box containing the NVDA welcome dialog options.
-#. Translators: The label for a group box containing the NVDA installation dialog options.
-msgid "Options"
-msgstr "Valkostir"
-
-#. Translators: The label of a combobox in the Welcome dialog.
-#. Translators: This is the label for a combobox in the
-#. keyboard settings panel.
-msgid "&Keyboard layout:"
-msgstr "&Útlitssnið lyklaborðs"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
-msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "Nota hástafalás sem NVDAlykil"
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
-#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
-#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-msgid "St&art NVDA after I sign in"
-msgstr ""
-
-#. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
-msgid "&Show this dialog when NVDA starts"
-msgstr "opna þennan glugga þegar NVDA er ræst "
-
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "Notkunarskilmálar"
-
-#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-msgid "I &agree"
-msgstr "Ég &samþykki"
-
-#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
-msgid "&Install NVDA on this computer"
-msgstr "&Setja upp NVDA á þessa tölvu"
-
-#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
-msgid "Create &portable copy"
-msgstr "Búa til &fisútgáfu"
-
-#. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
-msgid "&Continue running"
-msgstr "&Halda áfram að keyra forritið"
-
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -8363,41 +8615,6 @@ msgstr "Setja upp uppfærslu"
 msgid "Please wait"
 msgstr "Gerið svo vel að bíða"
 
-#. Translators: The title of the dialog asking if usage data can be collected
-msgid "NVDA  Usage Data Collection"
-msgstr ""
-
-#. Translators: A message asking the user if they want to allow usage stats gathering
-msgid ""
-"In order to improve NVDA in the future, NV Access wishes to collect usage "
-"data from running copies of NVDA.\n"
-"\n"
-"Data includes Operating System version, NVDA version, language, country of "
-"origin, plus certain NVDA configuration such as current synthesizer, braille "
-"display and braille table. No spoken or braille content will be ever sent to "
-"NV Access.  Please refer to the User Guide for a current list of all data "
-"collected.\n"
-"\n"
-"Do you wish to allow NV Access to periodically collect this data in order to "
-"improve NVDA?"
-msgstr ""
-
-#. Translators: The label of a Yes button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
-#. the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. agree to enabling the curtain.
-msgid "&Yes"
-msgstr ""
-
-#. Translators: The label of a No button in a dialog
-#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
-#. install the add-on
-#. Translators: A button in the screen curtain warning dialog which allows the user to
-#. disagree to enabling the curtain.
-msgid "&No"
-msgstr ""
-
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
 #, fuzzy
@@ -8417,6 +8634,22 @@ msgstr "Endurræsa NVDA"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&Um viðbót..."
+
+#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+#. the add-on
+#. Translators: The label of a Yes button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
+msgid "&Yes"
+msgstr ""
+
+#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
+#. install the add-on
+#. Translators: The label of a No button in a dialog
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
+msgid "&No"
+msgstr ""
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -9054,6 +9287,11 @@ msgstr ""
 "Uppsetningarslóðin fyrir NVDA hefur breyst, forritið verður núna sett upp í "
 "{path}"
 
+#. Translators: The label for a group box containing the NVDA installation dialog options.
+#. Translators: The label for a group box containing the NVDA welcome dialog options.
+msgid "Options"
+msgstr "Valkostir"
+
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA during sign-in"
 msgstr ""
@@ -9257,6 +9495,13 @@ msgstr ""
 #. themselves).
 msgid "L&ogging level:"
 msgstr "S&kráningarstig"
+
+#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
+#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
+#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "St&art NVDA after I sign in"
+msgstr ""
 
 #. Translators: The label for a setting in general settings to
 #. allow NVDA to come up in Windows login screen (useful if user
@@ -9462,6 +9707,12 @@ msgstr "nota innbyggða &stafsetningarhjálp ef hún er til staðar "
 msgid "Keyboard"
 msgstr "&Útlitssnið lyklaborðs"
 
+#. Translators: This is the label for a combobox in the
+#. keyboard settings panel.
+#. Translators: The label of a combobox in the Welcome dialog.
+msgid "&Keyboard layout:"
+msgstr "&Útlitssnið lyklaborðs"
+
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
 #, fuzzy
@@ -9614,6 +9865,13 @@ msgstr "Tilkynna breytingar á &lestrarstreng"
 msgid "Report changes to the &composition string"
 msgstr "Tilkynna breytingar á &samsetningarstreng"
 
+#. Translators: This is a label appearing on the Object Presentation settings panel.
+msgid ""
+"Configure how much information NVDA will present about controls. These "
+"options apply to focus reporting and NVDA object navigation, but not when "
+"reading text content e.g. web content with browse mode."
+msgstr ""
+
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "Framsetning hlutar"
@@ -9751,6 +10009,8 @@ msgid "Automatically set system &focus to focusable elements"
 msgstr "Sjálfvirkur fókus hamur fyrir skrifbendils hreyfingar"
 
 #. Translators: This is the label for the document formatting panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Document Formatting"
 msgstr "Stílsnið skjals"
 
@@ -9796,7 +10056,7 @@ msgstr "Tilkynna &blaðsíðuskil"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Mar&ked (highlighted text)"
+msgid "Highlighted (mar&ked) text"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
@@ -10008,11 +10268,12 @@ msgstr "Engin sjálfgild aðgerð"
 msgid "&Touch typing mode"
 msgstr ""
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr ""
+#. Translators: The title of the Windows OCR panel.
+#, fuzzy
+msgid "Windows OCR"
+msgstr "Windows"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 #, fuzzy
 msgid "Recognition &language:"
 msgstr "óþekkt tungumál"
@@ -10050,12 +10311,97 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid ""
+"Use UI Automation to access Microsoft &Excel spreadsheet controls when "
+"available"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+
+#. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
+#. Note the '\n' is used to split this long label approximately in half.
+msgctxt "advanced.uiaWithChromium"
+msgid ""
+"Use UIA with Microsoft Edge and other \n"
+"&Chromium based browsers when available:"
+msgstr ""
+
+#. Translators: Label for the default value of the Use UIA with Chromium combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Default (Only when necessary)"
+msgstr ""
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Only when necessary"
+msgstr ""
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "Yes"
+msgstr ""
+
+#. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithChromium"
+msgid "No"
+msgstr ""
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+#, fuzzy
+msgid "Annotations"
+msgstr "Upplýsingar um viðbót"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report details in browse mode"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+#, fuzzy
+msgid "Report aria-description always"
+msgstr "lesa &lýsingu hlutar"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "HID Braille Standard"
+msgstr ""
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+#, fuzzy
+msgid "Default (Yes)"
+msgstr "sjálfgefinn litur"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr ""
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Enable support for HID braille"
 msgstr ""
 
 #. Translators: This is the label for a group of advanced options in the
@@ -10068,20 +10414,30 @@ msgstr ""
 msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
 
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-#, fuzzy
-msgid "Default (No)"
-msgstr "sjálfgefinn litur"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
+#. Translators: This is the label for a combo box for selecting a
+#. method of detecting changed content in terminals in the advanced
+#. settings panel.
+#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+msgid "&Diff algorithm:"
 msgstr ""
 
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine the method of detecting changed
+#. content in terminals automatically.
+#, fuzzy
+msgid "Automatic (Diff Match Patch)"
+msgstr "Sjálfkrafa"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by character when supported, using the diff match patch algorithm.
+msgid "allow Diff Match Patch"
+msgstr ""
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA detect changes in terminals
+#. by line, using the difflib algorithm.
+msgid "force Difflib"
 msgstr ""
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
@@ -10099,6 +10455,11 @@ msgstr "frjáls"
 msgid "Caret movement timeout (in ms)"
 msgstr ""
 
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Report transparent color values"
+msgstr ""
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #, fuzzy
@@ -10108,6 +10469,21 @@ msgstr "villugreiningarviðvörun"
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
 msgid "Enabled logging categories"
+msgstr ""
+
+#. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+msgid "Play a sound for logged e&rrors:"
+msgstr ""
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+#, fuzzy
+msgctxt "advanced.playErrorSound"
+msgid "Only in NVDA test versions"
+msgstr "Setja upp NVDA"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Yes"
 msgstr ""
 
 #. Translators: This is the label for the Advanced settings panel.
@@ -10219,6 +10595,20 @@ msgstr "&Breyta"
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
 msgstr "Bæta við orðabókarfærslu"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Sjálfgefin orðabók"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "raddorðabók (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "skammtímaorðabók"
 
 #. Translators: A label for the braille display on the braille panel.
 #, fuzzy
@@ -10449,6 +10839,88 @@ msgstr "&Fjarlægja"
 #. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
 #, python-format
 msgid "Symbol \"%s\" is already present."
+msgstr ""
+
+#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+#, fuzzy
+msgid ""
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad Insert and main Insert keys may both be used as the "
+"NVDA key.\n"
+"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
+"Press NVDA+n at any time to activate the NVDA menu.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions."
+msgstr ""
+"Velkomin(n) í NVDA.\n"
+"Flestar NVDA skipanir eru gefnar með því að nota NVDA lykilinn ásamt öðrum "
+"lyklum \n"
+"Innsetningar (insert) lyklar á lyklaborði og talnaborði eru sjálfgenfir NVDA "
+"lyklar. \n"
+"Hægt er að breyta þessu og nota hástafaláslykillinn í staðinn.\n"
+"Notið NVDA llykilinn ásamt bókstafnur n til að opna NVDA valmyndina.\n"
+"Þaðan er hægt að breyta NVDA stillingum, fá hjálp, og framkvæma aðrar "
+"aðgerðir sem NVDA býður upp á.\n"
+
+#. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
+msgid "Welcome to NVDA"
+msgstr "Velkomin í NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time.
+#. This is in larger, bold lettering
+#, fuzzy
+msgid "Welcome to NVDA!"
+msgstr "Velkomin í NVDA"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+#, fuzzy
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "Nota hástafalás sem NVDAlykil"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+#, fuzzy
+msgid "&Show this dialog when NVDA starts"
+msgstr "opna þennan glugga þegar NVDA er ræst "
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "Notkunarskilmálar"
+
+#. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
+msgid "I &agree"
+msgstr "Ég &samþykki"
+
+#. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
+msgid "&Install NVDA on this computer"
+msgstr "&Setja upp NVDA á þessa tölvu"
+
+#. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
+msgid "Create &portable copy"
+msgstr "Búa til &fisútgáfu"
+
+#. Translators: The label of the button in NVDA installation program
+#. to continue using the installation program as a temporary copy of NVDA.
+msgid "&Continue running"
+msgstr "&Halda áfram að keyra forritið"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr ""
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access. Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
 msgstr ""
 
 #. Translators: Describes a command.
@@ -10936,14 +11408,6 @@ msgstr "Nota skjáútlit %s"
 msgid "Use screen layout off"
 msgstr "Nota skjáútlit %s"
 
-#. Translators: the description for the toggleScreenLayout script on virtualBuffers.
-msgid ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-msgstr ""
-"Virkjar/afvirkjar hvort útlit skjámyndar sé varðveitt þegar skjal er hlaðið "
-"inn í sýndarminni"
-
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 #, fuzzy
@@ -11084,6 +11548,7 @@ msgid "No comments"
 msgstr "Engin athugasemd"
 
 #. Translators: a description for a script
+#. Translators: a description for a script that reports the comment at the caret.
 msgid "Reports the text of the comment where the System caret is located."
 msgstr ""
 
@@ -11092,8 +11557,142 @@ msgstr ""
 msgid "Not in table"
 msgstr "Ekki í töflu"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} in"
+msgstr ""
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} cm"
+msgstr ""
+
 msgid "invoke"
 msgstr "kalla"
+
+#. Translators: part of the suggestions count message for one suggestion.
+#, fuzzy
+msgid "1 suggestion"
+msgstr "hluti"
+
+#. Translators: part of the suggestions count message (for example: 2 suggestions).
+msgid "{} suggestions"
+msgstr ""
+
+#. Translators: the description of a script
+msgctxt "excel-UIA"
+msgid ""
+"Shows a browseable message Listing information about a cell's appearance "
+"such as outline and fill colors, rotation and size"
+msgstr ""
+
+#. Translators: The width of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell width: {0.x:.1f} pt"
+msgstr ""
+
+#. Translators: The height of the cell in points
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Cell height: {0.y:.1f} pt"
+msgstr ""
+
+#. Translators: The rotation in degrees of an Excel cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Rotation: {0} degrees"
+msgstr ""
+
+#. Translators: The outline (border) colors of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid ""
+"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
+msgstr ""
+
+#. Translators: The outline (border) thickness values of an Excel cell.
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
+msgstr ""
+
+#. Translators: The fill color of an Excel cell
+#, fuzzy, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill color: {0.name}"
+msgstr "Seríal: {portName}"
+
+#. Translators: The fill type (pattern, gradient etc) of an Excel Cell
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "Fill type: {0}"
+msgstr ""
+
+#. Translators: the number format of an Excel cell
+#, python-brace-format
+msgid "Number format: {0}"
+msgstr ""
+
+#. Translators: If an excel cell has data validation set
+#, fuzzy
+msgid "Has data validation"
+msgstr "forrit"
+
+#. Translators: the data validation prompt (input message) for an Excel cell
+#, python-brace-format
+msgid "Data validation prompt: {0}"
+msgstr ""
+
+#. Translators: If an excel cell has conditional formatting
+#, fuzzy
+msgid "Has conditional formatting"
+msgstr "Stílsnið skjals"
+
+#. Translators: If an excel cell has visible gridlines
+#, fuzzy
+msgid "Gridlines are visible"
+msgstr "falið"
+
+#. Translators: Title for a browsable message that describes the appearance of a cell in Excel
+msgctxt "excel-UIA"
+msgid "Cell Appearance"
+msgstr ""
+
+#. Translators:  an error message on a cell in Microsoft Excel.
+#, python-brace-format
+msgid "Error: {errorText}"
+msgstr ""
+
+#. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
+#, python-brace-format
+msgid "{author} is editing"
+msgstr ""
+
+#. Translators: Excel, report range of cell coordinates
+#, fuzzy, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "{firstAddress} {firstContent} sem og {lastAddress} {lastContent}"
+
+#. Translators: the description  for a script for Excel
+#, fuzzy
+msgid "Reports the note or comment thread on the current cell"
+msgstr "Tilkynna allar athugasemdir í athugasemda glugganum"
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "{comment}  by {author}"
+msgstr ""
+
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "{comment}  by {author} with {numReplies} replies"
+msgstr ""
+
+#. Translators: A message in Excel when there is no note
+msgid "No note or comment thread on this cell"
+msgstr ""
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11124,12 +11723,16 @@ msgstr ""
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
-msgid "Comment: {comment} by {author} on {date}"
+msgid "Comment: {comment} by {author}"
 msgstr ""
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
-msgid "{comment} by {author} on {date}"
+msgid "Comment: {comment} by {author} on {date}"
+msgstr ""
+
+#. Translators: a message when navigating by sentence is unavailable in MS Word
+msgid "Navigating by sentence not supported in this document"
 msgstr ""
 
 msgid "Desktop"
@@ -12550,30 +13153,3 @@ msgstr ""
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr ""
-
-#~ msgid "Russian grade 1"
-#~ msgstr "Rússneska (1. stig)"
-
-#~ msgid "%s copied to clipboard"
-#~ msgstr "%s afritað á klemmuspjald"
-
-#~ msgid "Review selection copied to clipboard"
-#~ msgstr "Valinn texti afritaður á klippispjald"
-
-#, fuzzy
-#~ msgid "Co&mments"
-#~ msgstr "Athugasemdir"
-
-#, fuzzy
-#~ msgid "C&omments"
-#~ msgstr "Athugasemd"
-
-#, fuzzy
-#~ msgid "Speaks the current foreground object"
-#~ msgstr "les upp glugga í forgrunni"
-
-#~ msgid "&Automatically start NVDA after I log on to Windows"
-#~ msgstr "&Ræsa NVDA sjálfkrafa þegar innskráningu á Windows er lokið"
-
-#~ msgid "Use NVDA on the Windows &logon screen"
-#~ msgstr "Nota NVDA á &innskráningarskjá Windows"

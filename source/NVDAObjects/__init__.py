@@ -8,11 +8,9 @@
 """Module that contains the base NVDA object type with dynamic class creation support,
 as well as the associated TextInfo class."""
 
-import os
 import time
 import typing
 import weakref
-import core
 import textUtils
 from logHandler import log
 import review
@@ -34,7 +32,6 @@ import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
-import globalVars
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -1065,45 +1062,6 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	def _reportErrorInPreviousWord(self):
-		try:
-			# self might be a descendant of the text control; e.g. Symphony.
-			# We want to deal with the entire text, so use the caret object.
-			info = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
-			# This gets called for characters which might end a word; e.g. space.
-			# The character before the caret is the word end.
-			# The one before that is the last of the word, which is what we want.
-			info.move(textInfos.UNIT_CHARACTER, -2)
-			info.expand(textInfos.UNIT_CHARACTER)
-		except Exception:
-			# Focus probably moved.
-			log.debugWarning("Error fetching last character of previous word", exc_info=True)
-			return
-
-		# Fetch the formatting for the last word to see if it is marked as a spelling error,
-		# However perform the fetch and check in a future core cycle
-		# To give the content control more time to detect and mark the error itself.
-		# #12161: MS Word's UIA implementation certainly requires this delay.
-		def _delayedDetection():
-			try:
-				fields = info.getTextWithFields()
-			except Exception:
-				log.debugWarning("Error fetching formatting for last character of previous word", exc_info=True)
-				return
-			for command in fields:
-				if (
-					isinstance(command, textInfos.FieldCommand)
-					and command.command == "formatChange"
-					and command.field.get("invalid-spelling")
-				):
-					break
-			else:
-				# No error.
-				return
-			import nvwave
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
-		core.callLater(50, _delayedDetection)
-
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
 		""" Retrieves the priority with which  updates to live regions should be treated.
 		The base implementation returns C{aria.AriaLivePoliteness.OFF},
@@ -1131,12 +1089,6 @@ Tries to force this object to take the focus.
 			)
 
 	def event_typedCharacter(self,ch):
-		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
-			# Not alpha, apostrophe or control.
-			ch.isspace() or (ch >= u" " and ch not in u"'\x7f" and not ch.isalpha())
-		):
-			# Reporting of spelling errors is enabled and this character ends a word.
-			self._reportErrorInPreviousWord()
 		speech.speakTypedCharacters(ch)
 		import winUser
 		if config.conf["keyboard"]["beepForLowercaseWithCapslock"] and ch.islower() and winUser.getKeyState(winUser.VK_CAPITAL)&1:
