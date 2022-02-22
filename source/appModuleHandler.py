@@ -74,6 +74,10 @@ _executableNamesToAppMods: Dict[str, str] = {
 	# Various incarnations of Media Player Classic.
 	"mpc-hc": "mplayerc",
 	"mpc-hc64": "mplayerc",
+	# The binary file for Notepad++ is named `notepad++` which makes its appModule not importable
+	# (Python's import statement cannot deal with `+` in the file name).
+	# Therefore the module is named `notepadPlusPlus` and mapped to the right binary below.
+	"notepad++": "notepadPlusPlus",
 	# searchapp is an alias for searchui in Windows 10 build 18965 and later.
 	"searchapp": "searchui",
 	# Windows search in Windows 11.
