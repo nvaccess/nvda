@@ -14,7 +14,8 @@ _messageBoxCounter = 0
 
 
 def isInMessageBox() -> bool:
-	return _messageBoxCounter != 0
+	with _messageBoxCounterLock:
+		return _messageBoxCounter != 0
 
 
 def messageBox(
@@ -41,9 +42,9 @@ def messageBox(
 		if not parent:
 			mainFrame.prePopup()
 		res = wx.MessageBox(message, caption, style, parent or mainFrame)
+	finally:
 		if not parent:
 			mainFrame.postPopup()
-	finally:
 		with _messageBoxCounterLock:
 			_messageBoxCounter -= 1
 
