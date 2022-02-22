@@ -39,7 +39,7 @@ import extensionPoints
 from fileUtils import getFileVersionInfo
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
-runningTable: Dict[int, AppModule] = {}
+runningTable: Dict[int, "AppModule"] = {}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 _importers=None
@@ -107,7 +107,7 @@ def getAppModuleForNVDAObject(obj):
 	return getAppModuleFromProcessID(obj.processID)
 
 
-def getAppModuleFromProcessID(processID: int) -> AppModule:
+def getAppModuleFromProcessID(processID: int) -> "AppModule":
 	"""Finds the appModule that is for the given process ID. The module is also cached for later retreavals.
 	@param processID: The ID of the process for which you wish to find the appModule.
 	@returns: the appModule
