@@ -15,9 +15,11 @@ import ctypes
 import ctypes.wintypes
 import os
 import sys
+from types import ModuleType
 from typing import (
 	Dict,
 	Optional,
+	Tuple,
 )
 
 import winVersion
@@ -51,7 +53,7 @@ _getAppModuleLock=threading.RLock()
 post_appSwitch = extensionPoints.Action()
 
 
-_executableNamesToAppMods: Dict[str, str] = {
+_EXECUTABLE_NAMES_TO_APP_MODS_CORE: Dict[str, str] = {
 	# Azure Data Studio (both stable and Insiders versions) should use module for Visual Studio Code
 	"azuredatastudio": "code",
 	"azuredatastudio-insiders": "code",
@@ -104,10 +106,19 @@ _executableNamesToAppMods: Dict[str, str] = {
 }
 
 """Maps names of the executables to the names of the appModule which  should be loaded for the given program.
+Note that this map is used only for appModules included in NVDA
+and appModules registered by add-ons are placed in a different one.
 This mapping is needed since:
 - Names of some programs are incompatible with the Python's import system (they contain a dot or a plus)
 - Sometimes it is necessary to map one module to multiple executables - this map saves us from adding multiple
  appModules in such cases.
+"""
+
+
+_executableNamesToAppModsAddons: Dict[str, str] = dict()
+"""AppModules registered with a given binary by add-ons are placed here.
+We cannot use l{_EXECUTABLE_NAMES_TO_APP_MODS_CORE} for modules included in add-ons,
+since appModules in add-ons should take precedence over the one bundled in NVDA.
 """
 
 
@@ -129,23 +140,46 @@ class processEntry32W(ctypes.Structure):
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
 	"""Registers appModule to be used for a given executable.
 	"""
-	_executableNamesToAppMods[executableName] = appModName
+	_executableNamesToAppModsAddons[executableName] = appModName
 
 
 def unregisterExecutable(executableName: str) -> None:
 	"""Removes the executable of a given name from the mapping of applications to appModules.
 	"""
 	try:
-		del _executableNamesToAppMods[executableName]
+		del _executableNamesToAppModsAddons[executableName]
 	except KeyError:
 		log.error(f"Executable {executableName} was not previously registered.")
 
 
-def _getAppModuleNameFromExecutable(executableName: str) -> str:
-	"""Returns name of the appModule which should be used for a given executable.
-	If there is no mapping for the given program just returns the executable name.
+def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, ...]:
+	"""Returns list of the appModule names for a given executable.
+	The names in the tuple are placed in order in which import of these aliases should be attempted that is:
+	- The alias registered by add-ons if any add-on registered an appModule for the executable
+	- Just the name of the executable to cover a standard appModule named the same as the executable
+	- The alias from `_EXECUTABLE_NAMES_TO_APP_MODS_CORE` if it exists.
 	"""
-	return _executableNamesToAppMods.get(executableName, executableName)
+	return (
+		aliasName for aliasName in (
+			_executableNamesToAppModsAddons.get(executableName),
+			executableName,
+			_EXECUTABLE_NAMES_TO_APP_MODS_CORE.get(executableName)
+		) if aliasName is not None
+	)
+
+
+def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
+	"""Import and return appModule for a given executable or `None` if there is no module.
+	"""
+	for possibleModName in _getPossibleAppModuleNamesForExecutable(executableName):
+		try:
+			return importlib.import_module(
+				f"appModules.{possibleModName}",
+				package="appModules"
+			)
+		except ImportError:
+			continue
+	return None  # Module not found
 
 
 def getAppNameFromProcessID(processID,includeExt=False):
@@ -177,15 +211,14 @@ def getAppNameFromProcessID(processID,includeExt=False):
 
 	# This might be an executable which hosts multiple apps.
 	# Try querying the app module for the name of the app being hosted.
-	try:
-		mod = importlib.import_module(
-			f"appModules.{_getAppModuleNameFromExecutable(appName)}",
-			package="appModules"
-		)
-		return mod.getAppNameFromHost(processID)
-	except (ImportError, AttributeError, LookupError):
-		pass
+	processAppModule = _importAppModuleForExecutable(appName)
+	if processAppModule is not None:
+		try:
+			return processAppModule.getAppNameFromHost(processID)
+		except (AttributeError, LookupError):
+			pass
 	return appName
+
 
 def getAppModuleForNVDAObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
@@ -241,11 +274,15 @@ def cleanup():
 
 
 def doesAppModuleExist(name: str) -> bool:
-	return any(
-		importer.find_module(
-			f"appModules.{_getAppModuleNameFromExecutable(name)}"
-		) for importer in _importers
-	)
+	for possibleModName in _getPossibleAppModuleNamesForExecutable(name):
+		modExists = any(
+			importer.find_module(
+				f"appModules.{possibleModName}"
+			) for importer in _importers
+		)
+		if modExists:
+			return modExists
+	return False  # None of the aliases exists
 
 
 def fetchAppModule(processID: int, appName: str) -> AppModule:
@@ -260,9 +297,7 @@ def fetchAppModule(processID: int, appName: str) -> AppModule:
 
 	if doesAppModuleExist(modName):
 		try:
-			return importlib.import_module(
-				f"appModules.{_getAppModuleNameFromExecutable(modName)}", package="appModules"
-			).AppModule(processID, appName)
+			return _importAppModuleForExecutable(modName).AppModule(processID, appName)
 		except:
 			log.exception(f"error in appModule {modName!r}")
 			import ui
@@ -405,7 +440,7 @@ class AppModule(baseObject.ScriptableObject):
 	If the name of the executable is not compatible with the Python's import system
 	i.e. contains some special characters such as "." or "+" you can name the module however you like
 	and then map the executable name to the module name
-	by adding an entry to `_executableNamesToAppMods` dictionary.
+	by adding an entry to `_EXECUTABLE_NAMES_TO_APP_MODS_CORE` dictionary.
 	It should containa  C{AppModule} class which inherits from this base class.
 	App modules can implement and bind gestures to scripts.
 	These bindings will only take effect while an object in the associated application has focus.
