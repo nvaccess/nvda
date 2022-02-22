@@ -133,6 +133,12 @@ This can dramatically decrease build times on multi core systems. (#13226)
   - ``cachedAutomationId`` can be used if obtained directly from the element.
   -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` has moved to ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
+- ``controlTypes`` has been split up into various submodules. (#12510)
+  - ``ROLE_*`` and ``STATE_*`` have been replaced with ``Role.*`` and ``State.*``.
+  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` has been removed.
+  Usages like ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+  - ``processPositiveStates`` and ``processNegativeStates`` have been removed.
+  -
 -
 
 
