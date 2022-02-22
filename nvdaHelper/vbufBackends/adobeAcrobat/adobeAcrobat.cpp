@@ -16,6 +16,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #include <iomanip>
 #include <windows.h>
+#include <atlbase.h>
+#include <atlcomcli.h>
 #include <oleacc.h>
 #include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
@@ -31,65 +33,68 @@ const int TABLEHEADER_ROW = 0x2;
 using namespace std;
 
 IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
-	int res;
-	IAccessible* pacc=NULL;
-	VARIANT varChild;
-	LOG_DEBUG(L"Calling AccessibleObjectFromEvent");
-	if((res=AccessibleObjectFromEvent((HWND)UlongToHandle(docHandle),OBJID_CLIENT,ID,&pacc,&varChild))!=S_OK) {
-		LOG_DEBUG(L"AccessibleObjectFromEvent returned "<<res);
-		return NULL;
+	LRESULT res = SendMessage((HWND)UlongToHandle(docHandle), WM_GETOBJECT, 0, OBJID_CLIENT);
+	if(res == 0) {
+		LOG_ERROR(L"SendMessage with WM_GETOBJECT returned 0");
+		return nullptr;
 	}
-	LOG_DEBUG(L"Got IAccessible at "<<pacc);
-	VariantClear(&varChild);
-	return pacc;
+	LOG_DEBUG(L"SendMessage with WM_GETOBJECT returned "<<res);
+	CComPtr<IAccessible> paccClient;
+	res = ObjectFromLresult(res, IID_IAccessible, 0, (void**)&paccClient);
+	if(FAILED(res)) {
+		LOG_ERROR(L"ObjectFromLresult returned "<<res);
+		return nullptr;
+	}
+	LOG_DEBUG(L"ObjectFromLresult fetched paccClient at "<<paccClient);
+	if(ID != 0) {
+		CComVariant varChild(ID, VT_I4);
+		CComPtr<IDispatch> pdispChild;
+		res = paccClient->get_accChild(varChild, &pdispChild);
+		if(FAILED(res)) { 
+			LOG_ERROR(L"accChild returned "<<res);
+			return nullptr;
+		}
+		LOG_DEBUG(L"IAccessible::get_accChild fetched pdispChild at "<<pdispChild);
+		if(pdispChild) {
+			CComQIPtr<IAccessible> paccChild = pdispChild;
+			LOG_DEBUG(L"QueryInterfaced to pacc at "<<paccChild);
+			return paccChild.Detach();
+		}
+	}
+	LOG_DEBUG(L"Falling back to paccClient");
+	return paccClient.Detach();
 }
 
-long getAccID(IServiceProvider* servprov) {
-	int res;
-	IAccID* paccID = NULL;
-	long ID;
-
-	LOG_DEBUG(L"calling IServiceProvider::QueryService for IAccID");
-	if((res=servprov->QueryService(SID_AccID,IID_IAccID,(void**)(&paccID)))!=S_OK) {
-		LOG_DEBUG(L"IServiceProvider::QueryService returned "<<res);
+long getAccID(IAccessible* pacc) {
+	CComQIPtr<IAccID> paccID = pacc;
+	if(!paccID) {
+		LOG_ERROR(L"Unable to get IAccID interface");
 		return 0;
-	} 
-	LOG_DEBUG(L"IAccID at "<<paccID);
-
-	LOG_DEBUG(L"Calling get_accID");
-	if((res=paccID->get_accID((long*)(&ID)))!=S_OK) {
-		LOG_DEBUG(L"paccID->get_accID returned "<<res);
-		ID = 0;
 	}
-
-	LOG_DEBUG("Releasing IAccID");
-	paccID->Release();
-
+	LOG_DEBUG(L"QueryInterfaced to paccID at "<<paccID);
+	long ID = 0;
+	HRESULT res = paccID->get_accID(&ID);
+	if(FAILED(res)) {
+		LOG_ERROR(L"IAccID::accID returned "<<res);
+		return 0;
+	}
+	LOG_DEBUG(L"Got ID: "<<ID);
 	return ID;
 }
 
-IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
-	int res;
-	IGetPDDomNode* pget = NULL;
-	IPDDomNode* domNode = NULL;
+IPDDomNode* getPDDomNode(IAccessible* pacc, VARIANT& varChild) {
+	HRESULT res;
+	CComQIPtr<IGetPDDomNode> pget = pacc;
 
-	LOG_DEBUG(L"calling IServiceProvider::QueryService for IGetPDDomNode");
-	if((res=servprov->QueryService(SID_GetPDDomNode,IID_IGetPDDomNode,(void**)(&pget)))!=S_OK) {
-		LOG_DEBUG(L"IServiceProvider::QueryService returned "<<res);
-		return NULL;
-	} 
 	LOG_DEBUG(L"IGetPDDomNode at "<<pget);
 
+	CComPtr<IPDDomNode> domNode;
 	LOG_DEBUG(L"Calling get_PDDomNode");
 	if((res=pget->get_PDDomNode(varChild, &domNode))!=S_OK) {
-		LOG_DEBUG(L"pget->get_PDDomNode returned "<<res);
-		domNode = NULL;
+		LOG_ERROR(L"pget->get_PDDomNode returned "<<res);
 	}
 
-	LOG_DEBUG("Releasing IGetPDDomNode");
-	pget->Release();
-
-	return domNode;
+	return domNode.Detach();
 }
 
 inline void nullifyEmpty(BSTR* text) {
@@ -121,14 +126,14 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 
 	// Grab the font info for this node.
 	long fontStatus, fontFlags;
-	BSTR fontName = NULL;
+	CComBSTR fontName;
 	float fontSize, red, green, blue;
 	if ((res = domNode->GetFontInfo(&fontStatus, &fontName, &fontSize, &fontFlags, &red, &green, &blue)) != S_OK) {
 		LOG_DEBUG(L"IPDDomNode::GetFontInfo returned " << res);
 		fontStatus = FontInfo_NoInfo;
 	}
 
-	BSTR text = NULL;
+	CComBSTR text;
 	if (domElement) {
 		// #2174: Alt or actual text should override any other text content.
 		// Unfortunately, GetTextContent() still includes the text of descendants,
@@ -163,7 +168,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 		// We need to descend further to get font information.
 		// Iterate through the children.
 		for (long childIndex = 0; childIndex < childCount; ++childIndex) {
-			IPDDomNode* domChild;
+			CComPtr<IPDDomNode> domChild;
 			if ((res = domNode->GetChild(childIndex, &domChild)) != S_OK) {
 				LOG_DEBUG(L"IPDDomNode::GetChild returned " << res);
 				continue;
@@ -171,7 +176,6 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 			// Recursive call: render text for this child and its descendants.
 			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, NULL, nameIsContent, lang, flags, pageNum))
 				previousNode = tempNode;
-			domChild->Release();
 		}
 	} else {
 
@@ -202,7 +206,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 			previousNode = buffer->addTextFieldNode(parentNode, previousNode, procText);
 			if (previousNode) {
 				if (fontStatus == FontInfo_Valid) {
-					previousNode->addAttribute(L"font-name", fontName);
+					previousNode->addAttribute(L"font-name", fontName.m_str);
 					if (fontSize > 0) {
 						wostringstream s;
 						s.setf(ios::fixed);
@@ -226,9 +230,6 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 			previousNode = NULL;
 		}
 	}
-
-	if (fontName)
-		SysFreeString(fontName);
 
 	return previousNode;
 }
@@ -301,25 +302,23 @@ inline void fillExplicitTableHeadersForCell(AdobeAcrobatVBufStorage_controlField
 
 wstring* AdobeAcrobatVBufBackend_t::getPageNum(IPDDomNode* domNode) {
 	// Get the page number.
-	IPDDomNodeExt* domNodeExt;
-	if (domNode->QueryInterface(IID_IPDDomNodeExt, (void**)&domNodeExt) != S_OK) 
-		return NULL;
+	CComQIPtr<IPDDomNodeExt> domNodeExt = domNode;
+	if (!domNodeExt) {
+		return nullptr;
+	}
 	long firstPage, lastPage;
 	// The page number is only useful if the first and last pages are the same.
 	if (domNodeExt->GetPageNum(&firstPage, &lastPage) != S_OK || firstPage != lastPage) {
-		domNodeExt->Release();
-		return NULL;
+		return nullptr;
 	}
-	domNodeExt->Release();
 
 	// Use the page label if possible.
-	BSTR label;
+	CComBSTR label;
 	if (this->docPagination && this->docPagination->LabelForPageNum(firstPage, &label) == S_OK) {
 		wstring* ret = new wstring(label);
-		SysFreeString(label);
 		return ret;
 	}
-	
+
 	// If the label couldn't be retrieved, use the page number.
 	wostringstream s;
 	// GetPageNum returns 0-based numbers, but we want 1-based.
@@ -340,26 +339,15 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	VBufStorage_fieldNode_t* tempNode;
 
 	//all IAccessible methods take a variant for childID, get one ready
-	VARIANT varChild;
-	varChild.vt=VT_I4;
-	varChild.lVal=0;
-
-	IServiceProvider* servprov = NULL;
-	LOG_DEBUG(L"calling IAccessible::QueryInterface with IID_IServiceProvider");
-	if((res=pacc->QueryInterface(IID_IServiceProvider,(void**)(&servprov)))!=S_OK) {
-		LOG_DEBUG(L"IAccessible::QueryInterface returned "<<res);
-		return NULL;
-	}  
-	LOG_DEBUG(L"IServiceProvider at "<<servprov);
+	CComVariant varChild(0, VT_I4);
 
 	// GET ID
-	int ID = getAccID(servprov);
+	int ID = getAccID(pacc);
 	nhAssert(ID);
 
 	//Make sure that we don't already know about this object -- protect from loops
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
 		LOG_DEBUG(L"A node with this docHandle and ID already exists, returning NULL");
-		servprov->Release();
 		return NULL;
 	}
 
@@ -377,8 +365,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	LOG_DEBUG(L"Get role with accRole");
 	{
 		wostringstream s;
-		VARIANT varRole;
-		VariantInit(&varRole);
+		CComVariant varRole;
 		if((res=pacc->get_accRole(varChild,&varRole))!=S_OK) {
 			LOG_DEBUG(L"accRole returned code "<<res);
 			s<<0;
@@ -391,21 +378,15 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			role = varRole.lVal;
 		}
 		parentNode->addAttribute(L"IAccessible::role",s.str().c_str());
-		VariantClear(&varRole);
 	}
 
 	// Get states with accState
 	LOG_DEBUG(L"get states with IAccessible::get_accState");
-	varChild.lVal=0;
-	VARIANT varState;
-	VariantInit(&varState);
+	CComVariant varState;
 	if((res=pacc->get_accState(varChild,&varState))!=S_OK) {
 		LOG_DEBUG(L"pacc->get_accState returned "<<res);
-		varState.vt=VT_I4;
-		varState.lVal=0;
 	}
 	int states=varState.lVal;
-	VariantClear(&varState);
 	LOG_DEBUG(L"states is "<<states);
 	//Add each state that is on, as an attrib
 	for(int i=0;i<32;++i) {
@@ -417,31 +398,24 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 	}
 
-	IPDDomNode* domNode = getPDDomNode(varChild, servprov);
+	CComPtr<IPDDomNode> domNode = getPDDomNode(pacc, varChild);
 	if (!domNode) {
 		LOG_DEBUGWARNING(L"Couldn't get IPDDomNode for docHandle " << docHandle << L" id " << ID);
 	}
 
-	IPDDomElement* domElement = NULL;
-	LOG_DEBUG(L"Trying to get IPDDomElement");
-	if (domNode && (res = domNode->QueryInterface(IID_IPDDomElement, (void**)(&domElement))) != S_OK) {
-		LOG_DEBUG(L"QueryInterface to IPDDomElement returned " << res);
-		domElement = NULL;
-	}
+	CComQIPtr<IPDDomElement> domElement = domNode;
 
-	BSTR stdName = NULL;
+	CComBSTR stdName;
 	int textFlags = 0;
 	// Whether to render just a space in place of the content.
 	bool renderSpace = false;
-	BSTR tempBstr = NULL;
 	if (domElement) {
 		// Get stdName.
 		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
 			LOG_DEBUG(L"IPDDomElement::GetStdName returned " << res);
-			stdName = NULL;
 		}
 		if (stdName) {
-			parentNode->addAttribute(L"acrobat::stdname", stdName);
+			parentNode->addAttribute(L"acrobat::stdname", stdName.m_str);
 			if (wcscmp(stdName, L"Span") == 0 || wcscmp(stdName, L"Link") == 0 || wcscmp(stdName, L"Quote") == 0) {
 				// This is an inline element.
 				parentNode->isBlock=false;
@@ -454,18 +428,22 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 
 		// Get language.
-		if (domElement->GetAttribute(L"Lang", NULL, &tempBstr) == S_OK && tempBstr) {
-			parentNode->language = tempBstr;
-			SysFreeString(tempBstr);
+		{
+			CComBSTR lang;
+			if (domElement->GetAttribute(L"Lang", nullptr, &lang) == S_OK && lang) {
+				parentNode->language = lang;
+			}
 		}
 
 		// Determine whether the text has underline or strikethrough.
-		if (domElement->GetAttribute(L"TextDecorationType", L"Layout", &tempBstr) == S_OK && tempBstr) {
-			if (wcscmp(tempBstr, L"Underline") == 0)
-				textFlags |= TEXTFLAG_UNDERLINE;
-			else if (wcscmp(tempBstr, L"LineThrough") == 0)
-				textFlags |= TEXTFLAG_STRIKETHROUGH;
-			SysFreeString(tempBstr);
+		{
+			CComBSTR layout;
+			if (domElement->GetAttribute(L"TextDecorationType", L"Layout", &layout) == S_OK && layout) {
+				if (wcscmp(layout, L"Underline") == 0)
+					textFlags |= TEXTFLAG_UNDERLINE;
+				else if (wcscmp(layout, L"LineThrough") == 0)
+					textFlags |= TEXTFLAG_STRIKETHROUGH;
+			}
 		}
 	}
 
@@ -512,12 +490,14 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		wostringstream s;
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
-		if (domElement && domElement->GetAttribute(L"Summary", L"Table", &tempBstr) == S_OK && tempBstr) {
-			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, tempBstr)) {
-				addAttrsToTextNode(tempNode);
-				previousNode = tempNode;
+		{
+			CComBSTR summary;
+			if (domElement && domElement->GetAttribute(L"Summary", L"Table", &summary) == S_OK && summary) {
+				if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, summary.m_str)) {
+					addAttrsToTextNode(tempNode);
+					previousNode = tempNode;
+				}
 			}
-			SysFreeString(tempBstr);
 		}
 	} else if (role == ROLE_SYSTEM_ROW&&tableInfo) {
 		++tableInfo->curRowNumber;
@@ -535,55 +515,57 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		int startCol = tableInfo->curColumnNumber;
 		s << startCol;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
-		if (domElement && domElement->GetAttribute(L"Headers", L"Table", &tempBstr) == S_OK && tempBstr) {
-			// This node has explicitly defined headers.
-			// Some of the referenced nodes might not be rendered yet,
-			// so handle these later.
-			// Note that IPDDomNode::GetFromID() doesn't work, but even if it did,
-			// retrieving header info this way would probably be a bit slow.
-			tableInfo->nodesWithExplicitHeaders.push_back(make_pair(parentNode, tempBstr));
-			SysFreeString(tempBstr);
-		} else {
-			map<int, wstring>::const_iterator headersIt;
-			// Add implicit column headers for this cell.
-			if ((headersIt = tableInfo->columnHeaders.find(startCol)) != tableInfo->columnHeaders.end())
-				parentNode->addAttribute(L"table-columnheadercells", headersIt->second);
-			// Add implicit row headers for this cell.
-			if ((headersIt = tableInfo->rowHeaders.find(tableInfo->curRowNumber)) != tableInfo->rowHeaders.end())
-				parentNode->addAttribute(L"table-rowheadercells", headersIt->second);
+		{
+			CComBSTR headers;
+			if (domElement && domElement->GetAttribute(L"Headers", L"Table", &headers) == S_OK && headers) {
+				// This node has explicitly defined headers.
+				// Some of the referenced nodes might not be rendered yet,
+				// so handle these later.
+				// Note that IPDDomNode::GetFromID() doesn't work, but even if it did,
+				// retrieving header info this way would probably be a bit slow.
+				tableInfo->nodesWithExplicitHeaders.push_back(make_pair(parentNode, headers.m_str));
+			} else {
+				map<int, wstring>::const_iterator headersIt;
+				// Add implicit column headers for this cell.
+				if ((headersIt = tableInfo->columnHeaders.find(startCol)) != tableInfo->columnHeaders.end())
+					parentNode->addAttribute(L"table-columnheadercells", headersIt->second);
+				// Add implicit row headers for this cell.
+				if ((headersIt = tableInfo->rowHeaders.find(tableInfo->curRowNumber)) != tableInfo->rowHeaders.end())
+					parentNode->addAttribute(L"table-rowheadercells", headersIt->second);
+			}
 		}
 		// The last row spanned by this cell.
 		// This will be updated below if there is a row span.
 		int endRow = tableInfo->curRowNumber;
 		if (domElement) {
-			if (domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
-				parentNode->addAttribute(L"table-columnsspanned", tempBstr);
-				tableInfo->curColumnNumber += max(_wtoi(tempBstr) - 1, 0);
-				SysFreeString(tempBstr);
+			CComBSTR colSpan;
+			if (domElement->GetAttribute(L"ColSpan", L"Table", &colSpan) == S_OK && colSpan) {
+				parentNode->addAttribute(L"table-columnsspanned", colSpan.m_str);
+				tableInfo->curColumnNumber += max(_wtoi(colSpan.m_str) - 1, 0);
 			}
-			if (domElement->GetAttribute(L"RowSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
-				parentNode->addAttribute(L"table-rowsspanned", tempBstr);
+			CComBSTR rowSpan;
+			if (domElement->GetAttribute(L"RowSpan", L"Table", &rowSpan) == S_OK && rowSpan) {
+				parentNode->addAttribute(L"table-rowsspanned", rowSpan.m_str);
 				// Keep trakc of how many rows after this one are spanned by this cell.
-				int span = _wtoi(tempBstr) - 1;
+				int span = _wtoi(rowSpan) - 1;
 				if (span > 0) {
 					// The row span needs to be recorded for each spanned column.
 					for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
 						tableInfo->columnRowSpans[col] = span;
 					endRow += span;
 				}
-				SysFreeString(tempBstr);
 			}
 		}
 		if (role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
 			int headerType = 0;
-			if (domElement && domElement->GetAttribute(L"Scope", L"Table", &tempBstr) == S_OK && tempBstr) {
-				if (wcscmp(tempBstr, L"Column") == 0)
+			CComBSTR scope;
+			if (domElement && domElement->GetAttribute(L"Scope", L"Table", &scope) == S_OK && scope) {
+				if (wcscmp(scope, L"Column") == 0)
 					headerType = TABLEHEADER_COLUMN;
-				else if (wcscmp(tempBstr, L"Row") == 0)
+				else if (wcscmp(scope, L"Row") == 0)
 					headerType = TABLEHEADER_ROW;
-				else if (wcscmp(tempBstr, L"Both") == 0)
+				else if (wcscmp(scope, L"Both") == 0)
 					headerType = TABLEHEADER_COLUMN | TABLEHEADER_ROW;
-				SysFreeString(tempBstr);
 			}
 			if (!headerType)
 				headerType = (role == ROLE_SYSTEM_COLUMNHEADER) ? TABLEHEADER_COLUMN : TABLEHEADER_ROW;
@@ -601,12 +583,12 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 				for (int row = tableInfo->curRowNumber; row <= endRow; ++row)
 					tableInfo->rowHeaders[row] += s.str();
 			}
-			if (domElement && domElement->GetID(&tempBstr) == S_OK && tempBstr) {
+			CComBSTR elementID;
+			if (domElement && domElement->GetID(&elementID) == S_OK && elementID) {
 				// Record the id string and associated header info for use when handling explicitly defined headers.
-				TableHeaderInfo& headerInfo = tableInfo->headersInfo[tempBstr];
+				TableHeaderInfo& headerInfo = tableInfo->headersInfo[elementID.m_str];
 				headerInfo.uniqueId = ID;
 				headerInfo.type = headerType;
-				SysFreeString(tempBstr);
 			}
 		}
 	}
@@ -658,11 +640,11 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 
 		// Get the name.
-		BSTR name = NULL;
+		CComBSTR name;
 		// #3645: We need to test accName for graphics.
 		if ((states & STATE_SYSTEM_FOCUSABLE || role == ROLE_SYSTEM_GRAPHIC) && (res = pacc->get_accName(varChild, &name)) != S_OK) {
 			LOG_DEBUG(L"IAccessible::get_accName returned " << res);
-			name = NULL;
+			name = nullptr;
 		}
 		nullifyEmpty(&name);
 
@@ -673,12 +655,12 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			(role == ROLE_SYSTEM_GRAPHIC && name);
 
 		if (name && !useNameAsContent) {
-			parentNode->addAttribute(L"name", name);
+			parentNode->addAttribute(L"name", name.m_str);
 			// Render the name before this node,
 			// as the label is often not a separate node and thus won't be rendered into the buffer.
 			// We can't do this if this node is being updated,
 			// but in this case, the name has already been rendered before anyway.
-			if (oldParentNode && (tempNode = buffer->addTextFieldNode(oldParentNode, parentNode->getPrevious(), name)))
+			if (oldParentNode && (tempNode = buffer->addTextFieldNode(oldParentNode, parentNode->getPrevious(), name.m_str)))
 				addAttrsToTextNode(tempNode);
 		}
 
@@ -690,11 +672,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 				previousNode = tempNode;
 			}
 		} else {
-			tempNode = NULL;
+			tempNode = nullptr;
 		}
-
-		if (name)
-			SysFreeString(name);
 
 		if (!tempNode && states & STATE_SYSTEM_FOCUSABLE) {
 			// This node is focusable, but contains no text.
@@ -727,18 +706,6 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 
 	if (deletePageNum)
 		delete pageNum;
-	if (stdName)
-		SysFreeString(stdName);
-	if (domElement) {
-		LOG_DEBUG(L"Releasing IPDDomElement");
-		domElement->Release();
-	}
-	if (domNode) {
-		LOG_DEBUG(L"Releasing IPDDomNode");
-		domNode->Release();
-	}
-	LOG_DEBUG(L"Releasing IServiceProvider");
-	servprov->Release();
 
 	#undef addAttrsToTextNode
 
@@ -793,53 +760,40 @@ void AdobeAcrobatVBufBackend_t::renderThread_initialize() {
 void AdobeAcrobatVBufBackend_t::renderThread_terminate() {
 	unregisterWinEventHook(renderThread_winEventProcHook);
 	LOG_DEBUG(L"Unregistered winEvent hook");
-	if (this->docPagination)
-		this->docPagination->Release();
 	VBufBackend_t::renderThread_terminate();
 }
 
 bool checkIsXFA(IAccessible* rootPacc, VARIANT& varChild) {
-	VARIANT varState;
-	VariantInit(&varState);
+	CComVariant varState;
 	if (rootPacc->get_accState(varChild, &varState) != S_OK) {
 		return false;
 	}
 	int states = varState.lVal;
-	VariantClear(&varState);
 
 	// If the root accessible is read-only, this is not an XFA document.
 	return !(states & STATE_SYSTEM_READONLY);
 }
 
 IPDDomDocPagination* getDocPagination(IAccessible* pacc, VARIANT& varChild) {
-	IServiceProvider* servProv;
-	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&servProv) != S_OK)
-		return NULL;
-	IPDDomNode* domNode = getPDDomNode(varChild, servProv);
-	servProv->Release();
-	if (!domNode)
-		return NULL;
-	IPDDomDocPagination* ret;
-	if (domNode->QueryInterface(IID_IPDDomDocPagination, (void**)&ret) != S_OK)
-		ret = NULL;
-	domNode->Release();
-	return ret;
+	IPDDomNode* domNode = getPDDomNode(pacc, varChild);
+	if (!domNode) {
+		return nullptr;
+	}
+	CComQIPtr<IPDDomDocPagination> ret = domNode;
+	return ret.Detach();
 }
 
 void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
-	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,ID);
+	CComPtr<IAccessible> pacc=IAccessibleFromIdentifier(docHandle,ID);
 	nhAssert(pacc); //must get a valid IAccessible object
 	if (!oldNode) {
 		// This is the root node.
-		VARIANT varChild;
-		varChild.vt = VT_I4;
-		varChild.lVal = 0;
+		CComVariant varChild(0, VT_I4);
 		this->isXFA = checkIsXFA(pacc, varChild);
 		this->docPagination = getDocPagination(pacc, varChild);
 	}
 	this->fillVBuf(docHandle, pacc, buffer, NULL, NULL, static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(oldNode));
-	pacc->Release();
 	LOG_DEBUG(L"Rendering done");
 }
 

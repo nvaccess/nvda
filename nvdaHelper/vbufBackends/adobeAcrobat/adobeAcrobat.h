@@ -57,7 +57,7 @@ class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 
 	bool isXFA = true;
 
-	IPDDomDocPagination* docPagination = nullptr;
+	CComPtr<IPDDomDocPagination> docPagination = nullptr;
 
 	protected:
 
