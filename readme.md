@@ -49,6 +49,9 @@ git clone --recursive https://github.com/nvaccess/nvda.git
 
 The `--recursive` option is needed to retrieve various Git submodules we use.
 
+## Supported Operating Systems
+Although NVDA can run on any Windows version starting from Windows 7 Service pack 1, building NVDA from source is currently limited to only Windows 10 and above.
+
 ## Dependencies
 The NVDA source depends on several other packages to run correctly.
 
