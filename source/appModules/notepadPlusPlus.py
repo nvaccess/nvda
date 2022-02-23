@@ -48,7 +48,7 @@ class NppEdit(ScintillaBase.Scintilla):
 			appVerMajor, appVerMinor, *__ = self.appModule.productVersion.split(".")
 			# appVerMinor could be either one digit (e.g. in 8.3), two digits (e.g. in 8.21), or even three (8.1.9.2)
 			appVerMinor = appVerMinor.ljust(3, '0')
-			if int(appVerMajor) >= 8 and int(appVerMinor) >= 300:
+			if int(appVerMajor) >= 8 and int(appVerMinor[0]) >= 3:
 				return ScintillaTextInfoNpp83
 		return super().TextInfo
 
