@@ -387,14 +387,16 @@ def getStartOnLogonScreen() -> bool:
 		log.debugWarning(f"Could not find NVDA reg key {RegistryKey.NVDA}", exc_info=True)
 	except WindowsError:
 		log.error(f"Failed to open NVDA reg key {RegistryKey.NVDA}", exc_info=True)
-	try:
-		return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
-	except FileNotFoundError:
-		log.debug(f"Could not find startOnLogonScreen value for {RegistryKey.NVDA} - likely unset.")
-		return False
-	except WindowsError:
-		log.error(f"Failed to query startOnLogonScreen value for {RegistryKey.NVDA}", exc_info=True)
-		return False
+	else:
+		try:
+			return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
+		except FileNotFoundError:
+			log.debug(f"Could not find startOnLogonScreen value for {RegistryKey.NVDA} - likely unset.")
+			return False
+		except WindowsError:
+			log.error(f"Failed to query startOnLogonScreen value for {RegistryKey.NVDA}", exc_info=True)
+			return False
+	return False
 
 
 def _setStartOnLogonScreen(enable: bool) -> None:
