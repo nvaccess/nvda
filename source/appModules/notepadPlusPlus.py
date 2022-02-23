@@ -46,7 +46,9 @@ class NppEdit(ScintillaBase.Scintilla):
 	def _get_TextInfo(self):
 		if self.appModule.is64BitProcess:
 			appVerMajor, appVerMinor, *__ = self.appModule.productVersion.split(".")
-			if int(appVerMajor) >= 8 and int(appVerMinor) >= 3:
+			# appVerMinor could be either one digit (e.g. in 8.3), two digits (e.g. in 8.21), or even three (8.1.9.2)
+			appVerMinor = appVerMinor.ljust(3, '0')
+			if int(appVerMajor) >= 8 and int(appVerMinor) >= 300:
 				return ScintillaTextInfoNpp83
 		return super().TextInfo
 
