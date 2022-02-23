@@ -57,12 +57,12 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019 or 2022:
-	* To replicate the production build environment, use the [version of Visual Studio that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
-		* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/16/release/vs_BuildTools.exe)
-		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
-		* The Professional and Enterprise versions are also supported
-		* Preview versions are *not* supported
+* Microsoft Visual Studio 2019:
+	* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/16/release/vs_BuildTools.exe)
+	* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
+	* The Professional and Enterprise versions are also supported
+	* Preview versions are *not* supported
+	* Building with Visual Studio 2022 is not officially supported at this stage.
 	* When installing Visual Studio, you need to enable the following:
 		* In the list  on the Workloads tab
 			* in the Windows grouping:
