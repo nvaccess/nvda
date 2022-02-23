@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NVDA Contributors <http://www.nvda-project.org/>
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2006-2022 NV Access Limited, Łukasz Golonka, Leonard de Ruijter, Babbage B.V.,
+# Aleksey Sadovoy, Peter Vágner
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """global variables module
 @var foregroundObject: holds the current foreground object. The object for the last foreground event received.
@@ -22,7 +23,7 @@ if typing.TYPE_CHECKING:
 	import NVDAObjects  # noqa: F401 used for type checking only
 
 
-class DefautAppArgs(argparse.Namespace):
+class DefaultAppArgs(argparse.Namespace):
 	quit: bool = False
 	check_running: bool = False
 	logFileName: typing.Optional[os.PathLike] = ""
@@ -45,6 +46,16 @@ class DefautAppArgs(argparse.Namespace):
 	copyPortableConfig: bool = False
 	easeOfAccess: bool = False
 
+	def __bool__(self) -> bool:
+		"""Before PR #13082 `appArgs` was set to `None` until it was replaced with the real command line
+		parser. Various parts of NVDA (notably logHandler)
+		expect `appArgs` to be falsy in a logical context
+		until command line arguments are parsed.
+		To preserve the old behavior make the class falsy
+		unless `configPath` is set to something other than the default `None`.
+		"""
+		return self.configPath is not None
+
 
 startTime=0
 desktopObject: typing.Optional['NVDAObjects.NVDAObject'] = None
@@ -59,7 +70,7 @@ navigatorObject: typing.Optional['NVDAObjects.NVDAObject'] = None
 reviewPosition=None
 reviewPositionObj=None
 lastProgressValue=0
-appArgs = DefautAppArgs()
+appArgs = DefaultAppArgs()
 unknownAppArgs: typing.List[str] = []
 settingsRing = None
 speechDictionaryProcessing=True
