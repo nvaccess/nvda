@@ -63,7 +63,7 @@ ariaRolesToNVDARoles: Dict[str, int] = {
 	"treeitem":controlTypes.Role.TREEVIEWITEM,
 }
 
-ariaSortValuesToNVDAStates: Dict[str, int] = {
+ariaSortValuesToNVDAStates: Dict[str, controlTypes.State] = {
 	'descending':controlTypes.State.SORTED_DESCENDING,
 	'ascending':controlTypes.State.SORTED_ASCENDING,
 	'other':controlTypes.State.SORTED,

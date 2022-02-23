@@ -71,7 +71,7 @@ if typing.TYPE_CHECKING:
 # childID event params.
 liveNVDAObjectTable = weakref.WeakValueDictionary()
 
-IAccessibleRolesToNVDARoles = {
+IAccessibleRolesToNVDARoles: Dict[Union[int, str], controlTypes.Role] = {
 	oleacc.ROLE_SYSTEM_WINDOW: controlTypes.Role.WINDOW,
 	oleacc.ROLE_SYSTEM_CLIENT: controlTypes.Role.PANE,
 	oleacc.ROLE_SYSTEM_TITLEBAR: controlTypes.Role.TITLEBAR,

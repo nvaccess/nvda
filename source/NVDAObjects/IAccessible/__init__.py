@@ -847,7 +847,11 @@ the NVDAObject for IAccessible
 				self._IAccessibleIdentity=None
 		return self._IAccessibleIdentity
 
-	def _get_IAccessibleRole(self):
+	IAccessibleRole: int
+	"""Type definition for auto prop '_get_IAccessibleRole'
+	"""
+
+	def _get_IAccessibleRole(self) -> int:
 		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			try:
 				role=self.IAccessibleObject.role()
@@ -870,7 +874,7 @@ the NVDAObject for IAccessible
 			superRole=super(IAccessible,self).role
 			if superRole!=controlTypes.Role.WINDOW:
 					return superRole
-		if isinstance(IARole,str):
+		if isinstance(IARole, str):  # todo: when can this be a string?
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
 		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.Role.UNKNOWN)
@@ -889,7 +893,12 @@ the NVDAObject for IAccessible
 			return 0
 		return res if isinstance(res,int) else 0
 
-	def _get_states(self):
+	states: typing.Set[controlTypes.State]
+	"""Type info for auto property: _get_states
+	"""
+
+	# C901 '_get_states' is too complex. Look for opportunities to break this method down.
+	def _get_states(self) -> typing.Set[controlTypes.State]:  # noqa: C901
 		states=set()
 		if self.event_objectID in (winUser.OBJID_CLIENT, winUser.OBJID_WINDOW) and self.event_childID == 0:
 			states.update(super(IAccessible, self).states)
