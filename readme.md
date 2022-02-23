@@ -97,6 +97,9 @@ For reference, the following run time dependencies are included in Git submodule
 * lilli.dll, version 2.1.0.0
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
+* [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
+	* Commit 224b22f3bf9e
+	* The fork specifically adds support for  CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84.
 
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
