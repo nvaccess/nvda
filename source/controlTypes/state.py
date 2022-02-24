@@ -76,7 +76,9 @@ class State(DisplayStringIntEnum):
 	OVERFLOWING = auto()
 	UNLOCKED = auto()
 	HASNOTE = auto()
-	INDETERMINATE = auto()  # indeterminate progress bar
+	# indeterminate progress bar, aka busy indicator. No specific state label.
+	# when combined with role of 'progress bar', role is mutated to 'busy indicator'
+	INDETERMINATE = auto()
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -166,8 +168,6 @@ _stateLabels: Dict[State, str] = {
 	State.UNLOCKED: _("unlocked"),
 	# Translators: a state that denotes the existence of a note.
 	State.HASNOTE: _("has note"),
-	# Translators: a state specific to progress bars that do not indicate progress, only business.
-	State.INDETERMINATE: _("indeterminate"),
 }
 
 

@@ -169,6 +169,7 @@ class Role(DisplayStringIntEnum):
 	REGION = auto()
 	FIGURE = auto()
 	MARKED_CONTENT = auto()
+	BUSY_INDICATOR = auto()  # Used for progress bars with indeterminate state
 
 
 _roleLabels: Dict[Role, str] = {
@@ -488,6 +489,8 @@ _roleLabels: Dict[Role, str] = {
 	Role.FIGURE: _("figure"),
 	# Translators: Identifies marked (highlighted) content
 	Role.MARKED_CONTENT: _("highlighted"),
+	# Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+	Role.BUSY_INDICATOR: _("busy indicator"),
 }
 
 

@@ -867,7 +867,6 @@ the NVDAObject for IAccessible
 				role=0
 		return role
 
-
 	def _get_role(self):
 		IARole=self.IAccessibleRole
 		if IARole==oleacc.ROLE_SYSTEM_CLIENT:
@@ -877,7 +876,9 @@ the NVDAObject for IAccessible
 		if isinstance(IARole, str):  # todo: when can this be a string?
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
-		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.Role.UNKNOWN)
+		# must not create interdependence between role and states properties. Use IARole / IAStates.
+		NVDARole = IAccessibleHandler.calculateNvdaRole(IARole, self.IAccessibleStates)
+		return NVDARole
 	# #2569: Don't cache role,
 	# as it relies on other properties which might change when overlay classes are applied.
 	_cache_role = False
@@ -908,13 +909,15 @@ the NVDAObject for IAccessible
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
 			states.update(
-				IAccessibleHandler.getStatesSetFromIAccessibleStates(IAccessibleStates, self.role)
+				IAccessibleHandler.calculateNvdaStates(self.IAccessibleRole, IAccessibleStates)
 			)
+
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			# Not an IA2 object.
 			return states
 		IAccessible2States = self.IA2States
 		states |= IAccessibleHandler.getStatesSetFromIAccessible2States(IAccessible2States)
+
 		# Readonly should override editable
 		if controlTypes.State.READONLY in states:
 			states.discard(controlTypes.State.EDITABLE)

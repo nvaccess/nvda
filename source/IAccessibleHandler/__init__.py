@@ -246,29 +246,13 @@ IAccessible2StatesToNVDAStates = {
 
 Role = controlTypes.Role
 State = controlTypes.State
-_OverriddenStateMapping: Dict[Role, Dict[State, State]] = {
-	controlTypes.Role.PROGRESSBAR: {
-		# Don't report progress bars as "half-checked"
-		# HALFCHECKED maps from oleacc.STATE_SYSTEM_MIXED
-		# which has the same value as oleacc.STATE_SYSTEM_INDETERMINATE
-		# ControlTypes.INDETERMINATE is not mapped directly from any IA or IA2 state
-		State.HALFCHECKED: State.INDETERMINATE,
-	},
-}
 
 
-def _supplyOverriddenState(standardState: State, role: Role) -> State:
-	if role in _OverriddenStateMapping:
-		return _OverriddenStateMapping[role].get(standardState, standardState)
-	return standardState
-
-
-def getStatesSetFromIAccessibleStates(
-		IAccessibleStates: int,
-		role: controlTypes.Role
+def _getStatesSetFromIAccessibleStates(
+		IAccessibleStates: int
 ) -> Set[controlTypes.State]:
 	return set(
-		_supplyOverriddenState(IAccessibleStatesToNVDAStates[IAState], role)
+		IAccessibleStatesToNVDAStates[IAState]
 		for IAState in IAccessibleStatesToNVDAStates.keys()
 		if IAState & IAccessibleStates
 	)
@@ -282,14 +266,14 @@ def getStatesSetFromIAccessible2States(IAccessible2States: int) -> Set[State]:
 	)
 
 
-def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField", role: Role) -> Set[State]:
+def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> Set[State]:
 	# States are serialized (in XML) with an attribute per state.
 	# The value for the state is used in the attribute name.
 	# The attribute value is always 1.
 	# EG IAccessible::state_40="1"
 	IAccessibleStateAttrName = 'IAccessible::state_{}'
 	return set(
-		_supplyOverriddenState(IAccessibleStatesToNVDAStates[IAState], role)
+		IAccessibleStatesToNVDAStates[IAState]
 		for IAState in IAccessibleStatesToNVDAStates.keys()
 		if int(attrs.get(IAccessibleStateAttrName.format(IAState), 0))
 	)
@@ -308,12 +292,50 @@ def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> Set[St
 	)
 
 
+def calculateNvdaRole(IARole: int, IA2States: int) -> Role:
+	NVDARole = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
+	# Don't report indeterminate progress bars as "half-checked"
+	# L{State.HALFCHECKED} maps from oleacc.STATE_SYSTEM_MIXED
+	# which has the same value as oleacc.STATE_SYSTEM_INDETERMINATE
+	# L{State.INDETERMINATE} is not mapped directly from any IA or IA2 state
+	# A progress bar that can not convey progress, only activity, is a busy indicator.
+	if NVDARole == Role.PROGRESSBAR and oleacc.STATE_SYSTEM_INDETERMINATE & IA2States:
+		return Role.BUSY_INDICATOR
+	return NVDARole
+
+
+def calculateNvdaStates(IARole: int, IA2States: int) -> Set[State]:
+	roles = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
+	states = _getStatesSetFromIAccessibleStates(IA2States)
+	# Don't report indeterminate progress bars as "half-checked"
+	# L{State.HALFCHECKED} maps from oleacc.STATE_SYSTEM_MIXED
+	# which has the same value as oleacc.STATE_SYSTEM_INDETERMINATE
+	# L{State.INDETERMINATE} is not mapped directly from any IA or IA2 state
+	# A progress bar that can not convey progress, only activity, is a busy indicator.
+	if roles == Role.PROGRESSBAR and states.intersection({State.HALFCHECKED, State.INDETERMINATE}):
+		states.discard(State.HALFCHECKED)
+		states.add(State.INDETERMINATE)
+		return states
+	return states
+
+
 def NVDARoleFromAttr(accRole: Union[int, str, None]) -> Role:
 	if accRole.isdigit():
 		accRole = int(accRole)
 	else:
 		accRole = accRole.lower()
 	return IAccessibleRolesToNVDARoles.get(accRole, controlTypes.Role.UNKNOWN)
+
+
+def transformRoleStates(role: Role, states: Set[State]) -> Tuple[Role, Set[State]]:
+	if(
+		role in [Role.PROGRESSBAR, Role.BUSY_INDICATOR]
+		and states.intersection({State.INDETERMINATE, State.HALFCHECKED})
+	):
+		states.discard(State.HALFCHECKED)
+		states.add(State.INDETERMINATE)
+		return Role.BUSY_INDICATOR, states
+	return role, states
 
 
 def normalizeIAccessible(pacc, childID=0):
