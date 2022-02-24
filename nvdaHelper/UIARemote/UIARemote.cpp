@@ -1,3 +1,6 @@
+#undef LOGLEVEL
+#define LOGLEVEL LOGLEVEL_DEBUG
+
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvaccess.org/
@@ -25,6 +28,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <UiaOperationAbstraction/SafeArrayUtil.h>
 #include <common/log.h>
 #include <winrt/microsoft.ui.uiautomation.h>
+
+
 
 using namespace UiaOperationAbstraction;
 
