@@ -78,7 +78,7 @@ sys.path.append("source")
 import versionInfo
 del sys.path[-1]
 
-makensis = "miscDeps\\tools\\NSIS\\makensis"
+makensis = os.path.abspath(os.path.join("include", "nsis", "NSIS", "makensis.exe"))
 
 # Get the path to xgettext.
 XGETTEXT = os.path.abspath(os.path.join("miscDeps", "tools", "xgettext.exe"))

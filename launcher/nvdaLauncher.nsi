@@ -9,8 +9,8 @@ SilentInstall silent
 RequestExecutionLevel user
 CRCCheck on
 
-ReserveFile "${NSISDIR}\Plugins\system.dll"
-ReserveFile "${NSISDIR}\Plugins\banner.dll"
+ReserveFile "${NSISDIR}\Plugins\x86-unicode\system.dll"
+ReserveFile "${NSISDIR}\Plugins\x86-unicode\banner.dll"
 ReserveFile "..\miscDeps\launcher\nvda_logo.wav"
 
 Name "NVDA"
@@ -64,7 +64,7 @@ page instfiles
 !insertmacro MUI_LANGUAGE "Albanian"
 !insertmacro MUI_LANGUAGE "Bulgarian"
 !insertmacro MUI_LANGUAGE "Norwegian"
-  !insertmacro MUI_LANGUAGE "NorwegianNynorsk"
+!insertmacro MUI_LANGUAGE "NorwegianNynorsk"
 
 section "install"
 SetAutoClose true
