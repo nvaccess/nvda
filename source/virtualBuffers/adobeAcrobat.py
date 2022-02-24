@@ -49,12 +49,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			role, level = None, None
 
 		if not role:
-			accRole=attrs['IAccessible::role']
-			if accRole.isdigit():
-				accRole=int(accRole)
-			else:
-				accRole = accRole.lower()
-			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
+			role = IAccessibleHandler.NVDARoleFromAttr(attrs['IAccessible::role'])
 
 		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs, role)
 

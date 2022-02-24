@@ -95,9 +95,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
 			attrs['placeholder']= placeholder
-		accRole=attrs['IAccessible::role']
-		accRole=int(accRole) if accRole.isdigit() else accRole
-		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
+
+		role = IAccessibleHandler.NVDARoleFromAttr(attrs['IAccessible::role'])
 		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.Role.BLOCKQUOTE
 

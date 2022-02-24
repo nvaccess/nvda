@@ -308,6 +308,14 @@ def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> Set[St
 	)
 
 
+def NVDARoleFromAttr(accRole: Union[int, str, None]) -> Role:
+	if accRole.isdigit():
+		accRole = int(accRole)
+	else:
+		accRole = accRole.lower()
+	return IAccessibleRolesToNVDARoles.get(accRole, controlTypes.Role.UNKNOWN)
+
+
 def normalizeIAccessible(pacc, childID=0):
 	if not isinstance(pacc, IA.IAccessible):
 		try:

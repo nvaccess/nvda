@@ -82,8 +82,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		placeholder = self._getPlaceholderAttribute(attrs, 'HTMLAttrib::aria-placeholder')
 		if placeholder:
 			attrs['placeholder']=placeholder
-		accRole=attrs.get('IAccessible::role',0)
-		accRole=int(accRole) if isinstance(accRole,str) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
 		roleAttrib = attrs.get("HTMLAttrib::role", "")
 		ariaRoles = [ar for ar in roleAttrib.split(" ") if ar]
@@ -95,8 +93,10 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		)
 		if role == controlTypes.Role.UNKNOWN and nodeName:
 			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.Role.UNKNOWN)
+
 		if role == controlTypes.Role.UNKNOWN:
-			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
+			role = IAccessibleHandler.NVDARoleFromAttr(attrs.get('IAccessible::role', 0))
+
 		roleText=attrs.get('HTMLAttrib::aria-roledescription')
 		if roleText:
 			attrs['roleText']=roleText
