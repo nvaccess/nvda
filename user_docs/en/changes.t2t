@@ -40,9 +40,6 @@ What's New in NVDA
 -
 
 == Bug Fixes ==
-- Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
-- Security fix: The addons manager dialog is now disabled on secure screens. (#13059)
-- Security fix: NVDA Context help is no longer available on secure screens. (#13353) 
 - Clipboard manager pane should no longer incorrectly steal focus when opening some Office programs. (#12736)
 - On a system where the user has chosen to swap the primary mouse button from the left to the right, NVDA will no longer accidentally bring up a context menu instead of activating an item, in applications such as web browsers. (#12642)
 - When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)
@@ -133,6 +130,24 @@ This can dramatically decrease build times on multi core systems. (#13226)
   - ``cachedAutomationId`` can be used if obtained directly from the element.
   -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` has moved to ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
+-
+
+
+= 2021.3.3 =
+This release is identical to 2021.3.2.
+A bug existed in NVDA 2021.3.2 where it incorrectly identified itself as 2021.3.1.
+This release correctly identifies itself as 2021.3.3.
+
+
+= 2021.3.2 =
+This is a minor release to fix several security issues raised.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+
+== Bug Fixes ==
+- Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
+- Security fix: The addons manager dialog is now disabled on secure screens. (#13059)
+- Security fix: NVDA context help is no longer available on secure screens. (#13353)
 -
 
 
