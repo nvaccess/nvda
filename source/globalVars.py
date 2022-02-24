@@ -46,16 +46,6 @@ class DefaultAppArgs(argparse.Namespace):
 	copyPortableConfig: bool = False
 	easeOfAccess: bool = False
 
-	def __bool__(self) -> bool:
-		"""Before PR #13082 `appArgs` was set to `None` until it was replaced with the real command line
-		parser. Various parts of NVDA (notably logHandler)
-		expect `appArgs` to be falsy in a logical context
-		until command line arguments are parsed.
-		To preserve the old behavior make the class falsy
-		unless `configPath` is set to something other than the default `None`.
-		"""
-		return self.configPath is not None
-
 
 startTime=0
 desktopObject: typing.Optional['NVDAObjects.NVDAObject'] = None
