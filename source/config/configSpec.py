@@ -237,7 +237,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	allowInChromium = integer(0, 3, default=0)
 
 [annotations]
-	reportDetails = boolean(default=false)
+	reportDetails = boolean(default=true)
 	reportAriaDescription = boolean(default=true)
 
 [terminals]
