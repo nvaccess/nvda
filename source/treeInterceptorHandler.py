@@ -271,3 +271,11 @@ class RootProxyTextInfo(textInfos.TextInfo):
 
 	def _get_pointAtStart(self):
 		return self.innerTextInfo.pointAtStart
+
+	def __eq__(self, other):
+		if isinstance(other, RootProxyTextInfo):
+			other = other.innerTextInfo
+		return self.innerTextInfo.__eq__(other)
+
+	def __hash__(self):
+		return super().__hash__()
