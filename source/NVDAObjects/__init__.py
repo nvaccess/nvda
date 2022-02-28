@@ -482,7 +482,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	detailsSummary: typing.Optional[str]
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
-		log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
 		return None
 
 	@property
