@@ -722,6 +722,15 @@ void CALLBACK AdobeAcrobatVBufBackend_t::renderThread_winEventProcHook(HWINEVENT
 		return;
 	}
 
+	// #12920: Adobe Acrobat 64 bit MSAA child IDs are made from 64 bit memory addresses,
+	// But MSAA longs are 32 bit, thus bits are dropped.
+	// This then means Adobe Reader can crash if accChild is called with one of these IDs.
+	// If therefore we are on 64 bit
+	// Don't handle dynamic updates of descendants.
+	if constexpr(sizeof(void*) > sizeof(long)) {
+		return;
+	}
+
 	LOG_DEBUG(L"winEvent for window "<<hwnd);
 
 	int docHandle=HandleToUlong(hwnd);
@@ -785,6 +794,22 @@ IPDDomDocPagination* getDocPagination(IAccessible* pacc, VARIANT& varChild) {
 
 void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
+	// #12920: Adobe Acrobat 64 bit MSAA child IDs are made from 64 bit memory addresses,
+	// But MSAA longs are 32 bit, thus bits are dropped.
+	// This then means Adobe Reader can crash if accChild is called with one of these IDs.
+	// If therefore we are on 64 bit
+	// Only render from the root node down. 
+	if constexpr(sizeof(void*) > sizeof(long)) {
+		if(!oldNode || !(oldNode->getParent())) {
+			LOG_ERROR(L"Adobe Acrobat 64 bit: forcing ID to 0");
+			ID = 0;
+		} else {
+			LOG_ERROR(L"Cannot support dynamic updates in Adobe Acrobat 64 bit");
+			return;
+		}
+	} else {
+		LOG_ERROR(L"Not rendering on 64 bit");
+	}
 	CComPtr<IAccessible> pacc=IAccessibleFromIdentifier(docHandle,ID);
 	nhAssert(pacc); //must get a valid IAccessible object
 	if (!oldNode) {
