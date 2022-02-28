@@ -73,11 +73,6 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 	return proxyDll
 env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
 
-# We only support compiling with MSVC 14.2 (2019) or newer
-if not env.get('MSVC_VERSION') or tuple(map(int, env.get('MSVC_VERSION').split("."))) < (14, 2):
-	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) or newer not found")
-
-
 TARGET_ARCH=env['TARGET_ARCH']
 debug=env['nvdaHelperDebugFlags']
 release=env['release']
@@ -214,6 +209,13 @@ if TARGET_ARCH=='x86':
 	if signExec:
 		env.AddPostAction(win10localLib[0],[signExec])
 	env.Install(libInstallDir,win10localLib)
+	MSUIA_lib_outDir,MSUIA_include_outDir = thirdPartyEnv.SConscript('microsoft-ui-uiautomation/sconscript')
+	Export('MSUIA_lib_outDir')
+	Export('MSUIA_include_outDir')
+	UIARemoteLib=env.SConscript('UIARemote/sconscript')
+	if signExec:
+		env.AddPostAction(UIARemoteLib[0],[signExec])
+	env.Install(libInstallDir,UIARemoteLib)
 
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
