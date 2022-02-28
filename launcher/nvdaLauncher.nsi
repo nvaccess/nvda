@@ -34,6 +34,8 @@ FunctionEnd
 
 page instfiles
 
+!insertmacro MUI_PAGE_INSTFILES
+
 ;Include modern user interface language files
 !insertmacro MUI_LANGUAGE "English" ; default language
 !insertmacro MUI_LANGUAGE "French"

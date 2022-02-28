@@ -17,6 +17,7 @@ VIAddVersionKey "ProductName" "${appName}"
 VIAddVersionKey "LegalCopyright" "${COPYRIGHT}"
 VIAddVersionKey "FileDescription" "${appName} uninstaller"
 VIAddVersionKey "ProductVersion" "${VERSION}"
+VIAddVersionKey "fileVersion" "${VERSION}"
 
 ;Minimal installer to generate uninstaller
 OutFile "${INSTEXE}";
