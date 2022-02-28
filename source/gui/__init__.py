@@ -25,10 +25,7 @@ import queueHandler
 import core
 from . import guiHelper
 from .message import (
-	# isInMessageBox is accessed through `gui.isInMessageBox`
-	# as opposed to `gui.message.isInMessageBox` throughout NVDA,
-	# be cautious when removing
-	isInMessageBox,
+	isMessageBoxActive,
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
@@ -156,7 +153,7 @@ class MainFrame(wx.Frame):
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
-		if isInMessageBox():
+		if isMessageBoxActive():
 			return
 		self.prePopup()
 		try:
@@ -205,7 +202,7 @@ class MainFrame(wx.Frame):
 			self.sysTrayIcon.menu.Insert(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
 
 	def onExitCommand(self, evt):
-		if isInMessageBox():
+		if isMessageBoxActive():
 			return
 		if config.conf["general"]["askToExit"]:
 			self.prePopup()
@@ -308,7 +305,7 @@ class MainFrame(wx.Frame):
 		pythonConsole.activate()
 
 	def onAddonsManagerCommand(self,evt):
-		if isInMessageBox() or globalVars.appArgs.secure:
+		if isMessageBoxActive() or globalVars.appArgs.secure:
 			return
 		self.prePopup()
 		from .addonGui import AddonsDialog
@@ -324,7 +321,7 @@ class MainFrame(wx.Frame):
 		NVDAObject.clearDynamicClassCache()
 
 	def onCreatePortableCopyCommand(self,evt):
-		if isInMessageBox():
+		if isMessageBoxActive():
 			return
 		self.prePopup()
 		import gui.installerGui
@@ -333,13 +330,13 @@ class MainFrame(wx.Frame):
 		self.postPopup()
 
 	def onInstallCommand(self, evt):
-		if isInMessageBox():
+		if isMessageBoxActive():
 			return
 		from gui import installerGui
 		installerGui.showInstallGui()
 
 	def onRunCOMRegistrationFixesCommand(self, evt):
-		if isInMessageBox():
+		if isMessageBoxActive():
 			return
 		if messageBox(
 			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
@@ -373,7 +370,7 @@ class MainFrame(wx.Frame):
 		)
 
 	def onConfigProfilesCommand(self, evt):
-		if isInMessageBox():
+		if isMessageBoxActive():
 			return
 		self.prePopup()
 		from .configProfiles import ProfilesDialog

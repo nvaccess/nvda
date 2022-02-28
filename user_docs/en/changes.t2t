@@ -133,7 +133,7 @@ This can dramatically decrease build times on multi core systems. (#13226)
   - ``cachedAutomationId`` can be used if obtained directly from the element.
   -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` has moved to ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
-- ``gui.isInMessageBox`` is now a function which returns a boolean. (#12984, #13376)
+- ``gui.isInMessageBox`` is removed, please use ``gui.message.isMessageBoxActive`` instead. (#12984, #13376)
 -
 
 

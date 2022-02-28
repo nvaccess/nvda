@@ -13,7 +13,7 @@ _messageBoxCounterLock = threading.Lock()
 _messageBoxCounter = 0
 
 
-def isInMessageBox() -> bool:
+def isMessageBoxActive() -> bool:
 	with _messageBoxCounterLock:
 		return _messageBoxCounter != 0
 
