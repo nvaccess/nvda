@@ -27,6 +27,8 @@ Function .onInit
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
 ;Force zh-HK to zh-TW as zh-HK uses wrong encoding on Vista/7 #1596 
+; zh-HK is no longer used in Windows 10+
+; https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/available-language-packs-for-windows?view=windows-11#language-packs
 StrCmp $0 "3076" 0 +2
 StrCpy $0 "1028"
 StrCpy $LANGUAGE $0
