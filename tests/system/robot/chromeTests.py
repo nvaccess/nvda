@@ -1698,3 +1698,50 @@ def test_tableNavigationWithMergedColumns():
 	# This caused column position to be lost when navigating through merged cells
 	actualSpeech = _chrome.getSpeechAfterKey("control+alt+upArrow")
 	_asserts.strings_match(actualSpeech, "row 1  column 2  b 1")
+
+
+def test_focus_mode_on_focusable_read_only_lists():
+	"""
+	If a list is read-only, but is focusable, and a list element receives focus, switch to focus mode.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<a href="#">before Target</a>
+		<div role="list" aria-label="Messages" tabindex="-1">
+			<div role="listitem" tabindex="0" aria-label="Todd Kloots Hello all. At 1:30 PM">
+				<div role="document" aria-roledescription="message">
+					<a href="/kloots" class="sender">Todd Kloots</a> <a href="/time" class="time">1:30 PM</a>
+					<p>Hello all.</p>
+				</div>
+			</div>
+		</div>
+		"""
+	)
+	# Set focus
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# focus the list item
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			SPEECH_SEP.join([
+				"Messages",  # name for list container
+				"list",  # role for list container
+			]),
+			SPEECH_SEP.join([
+				"level 1",  # Inserted by Chromium even though not explicitly set
+				"Todd Kloots Hello all. At 1:30 PM",  # list element name, should read first
+				"1 of 1",  # item count, no role expected here
+			]),
+			"Focus mode",  # Focus mode should be enabled automatically and be indicated
+		]),
+		message="focus mode - focus list item and turn on focus mode"
+	)

@@ -8,30 +8,15 @@
 
 import unittest
 import controlTypes
-import versionInfo
 from . import PlaceholderNVDAObject
 from controlTypes.processAndLabelStates import _processNegativeStates, _processPositiveStates
 
 
 class TestLabels(unittest.TestCase):
-	@unittest.skipIf(versionInfo.version_year >= 2022, "Deprecated code")
-	def test_legacy_roleLabels(self):
-		"""Test to check whether every role has its own label in controlTypes.roleLabels"""
-		for name, const in vars(controlTypes).items():
-			if name.startswith("ROLE_"):
-				self.assertIsNotNone(controlTypes.roleLabels.get(const),msg="{name} has no label".format(name=name))
-
 	def test_role_displayString(self):
 		"""Test to check whether every role has its own display string"""
 		for role in controlTypes.Role:
 			role.displayString
-
-	@unittest.skipIf(versionInfo.version_year >= 2022, "Deprecated code")
-	def test_legacy_positiveStateLabels(self):
-		"""Test to check whether every state has its own label in controlTypes.stateLabels"""
-		for name, const in vars(controlTypes).items():
-			if name.startswith("STATE_"):
-				self.assertIsNotNone(controlTypes.stateLabels.get(const),msg="{name} has no label".format(name=name))
 
 	def test_state_displayString(self):
 		"""Test to check whether every state has its own display string and negative display string"""

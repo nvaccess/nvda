@@ -122,6 +122,11 @@ env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"recursiveInstall"
 ])
 
+# Specifically request to use Visual Studio 2019 (MSVC 14.2).
+# This will ensure that this specific version is selected if there are multiple versions installed,
+# And fail the build if this version is not installed at all.
+env.SetDefault(MSVC_VERSION='14.2')
+
 # speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
 
