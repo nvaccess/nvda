@@ -12,7 +12,7 @@ Builds will fail if any command has a non-zero exit code. PowerShell scripts con
 
 ## Setup process
 
-Before we be begin the install process, AppVeyor clones our repository and checks out the commit of the build. 
+Before we begin the install process, AppVeyor clones our repository and checks out the commit of the build. 
 
 ### `install`
 
