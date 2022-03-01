@@ -6,6 +6,7 @@
 from typing import (
 	Optional,
 	Iterator,
+	List,
 )
 import time
 import weakref
@@ -255,7 +256,7 @@ def script(
 ):
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
-	It can only decorate methods which name start swith "script_"
+	It can only decorate methods which have a name starting with "script_"
 	@param description: A short translatable description of the script to be used in the gesture editor, etc.
 	@param category: The category of the script displayed in the gesture editor.
 	@param gesture: A gesture associated with this script.
@@ -267,7 +268,13 @@ def script(
 	One of the C{sayAll.CURSOR_*} constants.
 	"""
 	if gestures is None:
-		gestures = []
+		gestures: List[str] = []
+	else:
+		# A tuple may have been used, however, the collection of gestures may need to be
+		# extended (via append) with the value of the 'gesture' string (in-case both are provided in the
+		# decorator).
+		gestures: List[str] = list(gestures)
+
 	def script_decorator(decoratedScript):
 		# Decoratable scripts are functions, not bound instance methods.
 		if not isinstance(decoratedScript, types.FunctionType):
