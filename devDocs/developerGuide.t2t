@@ -195,8 +195,9 @@ The following few sections will talk separately about App Modules and Global Plu
 After this point, discussion is again more general.
 
 ++ Basics of an App Module ++
-App Module files have a .py extension, and are named the same as either the main executable of the application for which you wish them to be used or the package inside a host executable.
+App Module files have a .py extension, and in most cases should be named the same as either the main executable of the application for which you wish them to be used or the package inside a host executable.
 For example, an App Module for notepad would be called notepad.py, as notepad's main executable is called notepad.exe.
+If you want to use a single ap Module for a multiple executables, or the name of the executable conflicts with the standard Python import rules see the section on mapping an app Module to the executable below.
 For apps hosted inside host executables, see the section on app modules for hosted apps.
 
 App Module files must be placed in the appModules subdirectory of an add-on, or of the scratchpad directory of the NVDA user configuration directory.
@@ -207,6 +208,30 @@ This will all be covered in depth later.
 
 NVDA loads an App Module for an application as soon as it notices the application is running.
 The App Module is unloaded once the application is closed or when NVDA is exiting.
+
+++ Associating app Module with an executable ++
+As explained above sometimes the default way of associating app Module with an application is not flexible enough. Examples include:
+- You want to use a single app Module for various binaries (perhaps both stable and preview version of the application should have the same accessibility enhancements)
+- The executable file is named in a way which conflicts with the Python naming rules i.e. application named "time" which conflicts with the built-in module from the standard library
+-
+
+In such cases you can distribute a small global plugin along with your app Module which maps it to the executable.
+For example to map the app Module named "time_app_mod" to the "time" executable the plugin may look as follows:
+```
+import appModuleHandler
+import globalPluginHandler
+
+
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		appModuleHandler.registerExecutableWithAppModule("time", "time_app_mod")
+
+	def terminate(self, *args, **kwargs):
+		super().terminate(*args, **kwargs)
+		appModuleHandler.unregisterExecutable("time")
+```
 
 ++ Example 1: An App Module that Beeps on Focus Change Events ++[Example1]
 The following example App Module makes NVDA beep each time the focus changes within the notepad application.

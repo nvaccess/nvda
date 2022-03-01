@@ -173,6 +173,8 @@ An app module provides support specific to an application for these cases.
 An app module is derived from the `appModuleHandler.AppModule` base class.
 App modules receive events for all [NVDA objects](#nvda-objects) in the application and can bind scripts which can be executed anywhere in that application.
 They can also implement their own NVDA objects for use within the application.
+Usually the app Module should be named the same as the executable for which it should be loaded.
+In cases where this is problematic (one app Module should support multiple applications, the binary is named in a way which conflicts with the Python import system) you can add an entry to the `appModules.EXECUTABLE_NAMES_TO_APP_MODS` where the binary name is the key and the name of the app Module is the value.
 
 #### Global Plugins
 Aside from application specific customisation using [app modules](#app-modules), it is also possible to extend NVDA on a global level.
