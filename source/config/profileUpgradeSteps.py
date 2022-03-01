@@ -79,4 +79,8 @@ def upgradeConfigFrom_4_to_5(profile):
 	The setting was used while the feature was in development.
 	Prevented reporting 'has details' with no way to report the details.
 	"""
-	del profile['annotations']['reportDetails']
+	try:
+		del profile['annotations']['reportDetails']
+	except KeyError:
+		# Setting does not exist, no need for upgrade of this setting
+		log.debug("reportDetails not present, no action taken.")
