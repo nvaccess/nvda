@@ -120,7 +120,7 @@ bool isSuspendableProcess() {
 		return false;
 	}
 	UINT32 bufSize=APPLICATION_USER_MODEL_ID_MAX_LENGTH+1;
-	std::vector<wchar_t> buf(bufSize, L'\0');
+	std::wstring buf(bufSize, L'\0');
 	LONG res=GetCurrentApplicationUserModelId_fp(&bufSize,buf.data());
 	if(res != ERROR_SUCCESS) {
 		return false;
