@@ -18,6 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <objbase.h>
 #include <wil/resource.h>
+#include <wil/win32_helpers.h>
 #include <ia2.h>
 #include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
@@ -33,8 +34,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 #define APPLICATION_USER_MODEL_ID_MAX_LENGTH 131
-typedef LONG(WINAPI *GetCurrentApplicationUserModelId_funcType)(UINT32*,PWSTR);
-typedef ULONG(*LPFNDLLCANUNLOADNOW)();
+// Forward declaire GetCurrentApplicationUserModelId for later lookup in kernel32.dll
+// Used in isSuspendableProcess.
+LONG WINAPI GetCurrentApplicationUserModelId(UINT32* pBufSize,PWSTR buf);
 
 bool isIA2Installed=FALSE;
 COMProxyRegistration_t* IA2ProxyRegistration;
@@ -111,7 +113,8 @@ bool isSuspendableProcess() {
 		LOG_ERROR(L"Can't load kernel32.dll");
 		return false; 
 	}
-	GetCurrentApplicationUserModelId_funcType GetCurrentApplicationUserModelId_fp=(GetCurrentApplicationUserModelId_funcType)GetProcAddress(kernel32Handle.get(),"GetCurrentApplicationUserModelId");
+	// Macro from wil/win32_helpers.h
+	auto GetCurrentApplicationUserModelId_fp = GetProcAddressByFunctionDeclaration(kernel32Handle.get(), GetCurrentApplicationUserModelId);
 	if(!GetCurrentApplicationUserModelId_fp) {
 		LOG_DEBUGWARNING(L"getCurrentApplicationUserModelID function not available");
 		return false;
