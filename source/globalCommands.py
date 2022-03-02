@@ -1962,6 +1962,7 @@ class GlobalCommands(ScriptableObject):
 			self.script_showFormattingAtCaret(gesture)
 
 	@script(
+		gesture="kb:NVDA+d",
 		description=_(
 			# Translators: the description for the reportDetailsSummary script.
 			"Report summary of any annotation details at the system caret."
