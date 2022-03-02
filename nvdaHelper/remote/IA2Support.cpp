@@ -134,13 +134,15 @@ bool isAppContainerProcess() {
 		LOG_DEBUGWARNING(L"Could not open process token");
 		return false;
 	}
+	// TokenIsAppContainer only requires a return buffer the size of a DWORD
+	// See https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_information_class
 	DWORD isAppContainer=0;
 	DWORD return_length = 0;
 	if(!GetTokenInformation(tokenHandle.get(), TokenIsAppContainer, &isAppContainer, sizeof(isAppContainer), &return_length)) {
 		LOG_DEBUGWARNING(L"GetTokenInformation for Token_isAppContainer failed");
 		return false;
 	}
-	return isAppContainer;
+	return isAppContainer != 0;
 }
 
 void IA2Support_inProcess_initialize() {
