@@ -13,6 +13,10 @@ from . import IAccessible, WindowRoot
 from logHandler import log
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from . import ia2Web
+from typing import (
+	Optional,
+)
+
 
 class Mozilla(ia2Web.Ia2Web):
 
@@ -57,6 +61,26 @@ class Mozilla(ia2Web.Ia2Web):
 			elif self.table and self.table.presentationType==self.presType_layout:
 				presType=self.presType_layout
 		return presType
+
+	def _get_detailsSummary(self) -> Optional[str]:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in FireFox.
+		# Although slower, we have to fetch the details relations instead.
+		detailsRelations = self.detailsRelations
+		if not detailsRelations:
+			log.error("should be able to fetch detailsRelations")
+			return None
+		for target in detailsRelations:
+			# just take the first for now.
+			return target.summarizeInProcess()
+
+	@property
+	def hasDetails(self) -> bool:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in FireFox.
+		# Although slower, we have to fetch the details relations instead.
+		return bool(self.detailsRelations)
+
 
 class Document(ia2Web.Document):
 
