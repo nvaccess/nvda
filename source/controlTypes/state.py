@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
-from enum import(
+from enum import (
 	auto,
 	unique,
 )
