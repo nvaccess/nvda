@@ -66,20 +66,21 @@ IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 }
 
 long getAccID(IAccessible* pacc) {
-	CComQIPtr<IAccID> paccID = pacc;
-	if(!paccID) {
-		LOG_ERROR(L"Unable to get IAccID interface");
+	CComPtr<IAccID> paccID;
+	HRESULT res = pacc->QueryInterface(IID_IAccID, (void**)&paccID);
+	if(FAILED(res) || !paccID) {
+		LOG_ERROR(L"Unable to get IAccID interface, res "<<res);
 		return 0;
 	}
 	LOG_DEBUG(L"QueryInterfaced to paccID at "<<paccID);
-	long ID = 0;
-	HRESULT res = paccID->get_accID(&ID);
+	LONG_PTR ID = 0;
+		res = paccID->get_accID((long*)&ID);
 	if(FAILED(res)) {
 		LOG_ERROR(L"IAccID::accID returned "<<res);
 		return 0;
 	}
-	LOG_DEBUG(L"Got ID: "<<ID);
-	return ID;
+	LOG_INFO(L"Got ID: "<<ID);
+	return (long)ID;
 }
 
 IPDDomNode* getPDDomNode(IAccessible* pacc, VARIANT& varChild) {
