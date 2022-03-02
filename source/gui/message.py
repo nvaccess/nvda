@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -13,7 +13,21 @@ _messageBoxCounterLock = threading.Lock()
 _messageBoxCounter = 0
 
 
-def isMessageBoxActive() -> bool:
+def isModalMessageBoxActive() -> bool:
+	"""
+	messageBox is a function which blocks the calling thread,
+	until a user responds to the modal dialog.
+	`IsInMessageBox` should be used when an answer is required before proceeding.
+	NVDA is in an uncertain state while waiting for an answer.
+
+	It's possible for multiple message boxes to be open at a time.
+	This function may prevent this from happening.
+
+	Because an answer is required to continue after a modal messageBox is opened,
+	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
+
+	@return: True if a thread blocking modal response is still pending.
+	"""
 	with _messageBoxCounterLock:
 		return _messageBoxCounter != 0
 
@@ -25,13 +39,24 @@ def messageBox(
 		parent: Optional[wx.Window] = None
 ) -> int:
 	"""Display a message dialog.
-	This should be used for all message dialogs
-	rather than using C{wx.MessageDialog} and C{wx.MessageBox} directly.
+	Avoid using C{wx.MessageDialog} and C{wx.MessageBox} directly.
 	@param message: The message text.
 	@param caption: The caption (title) of the dialog.
 	@param style: Same as for wx.MessageBox.
 	@param parent: The parent window.
 	@return: Same as for wx.MessageBox.
+
+	messageBox is a function which blocks the calling thread,
+	until a user responds to the modal dialog.
+	This function should be used when an answer is required before proceeding.
+	Consider using a custom subclass of a wxDialog if an answer is not required.
+
+	It's possible for multiple message boxes to be open at a time.
+	Before opening a new messageBox, use isModalMessageBoxResponsePending
+	to check if another messageBox modal response is still pending.
+
+	Because an answer is required to continue after a modal messageBox is opened,
+	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
 	"""
 	from gui import mainFrame
 	global _messageBoxCounter
