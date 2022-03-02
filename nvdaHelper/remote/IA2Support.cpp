@@ -34,7 +34,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 #define APPLICATION_USER_MODEL_ID_MAX_LENGTH 131
-// Forward declaire GetCurrentApplicationUserModelId for later lookup in kernel32.dll
+// Forward declare GetCurrentApplicationUserModelId for later lookup in kernel32.dll
 // Used in isSuspendableProcess.
 LONG WINAPI GetCurrentApplicationUserModelId(UINT32* pBufSize,PWSTR buf);
 
