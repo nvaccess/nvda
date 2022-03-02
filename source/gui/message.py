@@ -15,13 +15,14 @@ _messageBoxCounter = 0
 
 def isModalMessageBoxActive() -> bool:
 	"""
-	messageBox is a function which blocks the calling thread,
+	`gui.message.messageBox` is a function which blocks the calling thread,
 	until a user responds to the modal dialog.
-	`IsInMessageBox` should be used when an answer is required before proceeding.
+	`isModalMessageBoxActive` should be used when an answer from a `gui.message.messageBox`
+	is required before proceeding.
 	NVDA is in an uncertain state while waiting for an answer.
 
 	It's possible for multiple message boxes to be open at a time.
-	This function may prevent this from happening.
+	This function can be used to check before opening subsequent `gui.message.messageBox` instances.
 
 	Because an answer is required to continue after a modal messageBox is opened,
 	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
@@ -46,13 +47,14 @@ def messageBox(
 	@param parent: The parent window.
 	@return: Same as for wx.MessageBox.
 
-	messageBox is a function which blocks the calling thread,
+	`gui.message.messageBox` is a function which blocks the calling thread,
 	until a user responds to the modal dialog.
 	This function should be used when an answer is required before proceeding.
-	Consider using a custom subclass of a wxDialog if an answer is not required.
+	Consider using a custom subclass of a wxDialog if an answer is not required
+	or a default answer can be provided.
 
 	It's possible for multiple message boxes to be open at a time.
-	Before opening a new messageBox, use isModalMessageBoxResponsePending
+	Before opening a new messageBox, use `isModalMessageBoxActive`
 	to check if another messageBox modal response is still pending.
 
 	Because an answer is required to continue after a modal messageBox is opened,
