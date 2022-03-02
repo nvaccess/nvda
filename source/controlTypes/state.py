@@ -3,11 +3,16 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
+from enum import(
+	auto,
+	unique,
+)
 from typing import Dict
 
 from utils.displayString import DisplayStringIntEnum
 
 
+@unique
 class State(DisplayStringIntEnum):
 	@property
 	def _displayStringLabels(self):
@@ -28,49 +33,49 @@ class State(DisplayStringIntEnum):
 			# %s will be replaced with the full identifier of the negated state (e.g. selected).
 			return _("not %s") % self.displayString
 
-	UNAVAILABLE = 0x1
-	FOCUSED = 0x2
-	SELECTED = 0x4
-	BUSY = 0x8
-	PRESSED = 0x10
-	CHECKED = 0x20
-	HALFCHECKED = 0x40
-	READONLY = 0x80
-	EXPANDED = 0x100
-	COLLAPSED = 0x200
-	INVISIBLE = 0x400
-	VISITED = 0x800
-	LINKED = 0x1000
-	HASPOPUP = 0x2000
-	PROTECTED = 0x4000
-	REQUIRED = 0x8000
-	DEFUNCT = 0x10000
-	INVALID_ENTRY = 0x20000
-	MODAL = 0x40000
-	AUTOCOMPLETE = 0x80000
-	MULTILINE = 0x100000
-	ICONIFIED = 0x200000
-	OFFSCREEN = 0x400000
-	SELECTABLE = 0x800000
-	FOCUSABLE = 0x1000000
-	CLICKABLE = 0x2000000
-	EDITABLE = 0x4000000
-	CHECKABLE = 0x8000000
-	DRAGGABLE = 0x10000000
-	DRAGGING = 0x20000000
-	DROPTARGET = 0x40000000
-	SORTED = 0x80000000
-	SORTED_ASCENDING = 0x100000000
-	SORTED_DESCENDING = 0x200000000
-	HASLONGDESC = 0x400000000
-	PINNED = 0x800000000
-	HASFORMULA = 0x1000000000  # Mostly for spreadsheets
-	HASCOMMENT = 0x2000000000
-	OBSCURED = 0x4000000000
-	CROPPED = 0x8000000000
-	OVERFLOWING = 0x10000000000
-	UNLOCKED = 0x20000000000
-	HASNOTE = 0x80000000000
+	UNAVAILABLE = auto()
+	FOCUSED = auto()
+	SELECTED = auto()
+	BUSY = auto()
+	PRESSED = auto()
+	CHECKED = auto()
+	HALFCHECKED = auto()
+	READONLY = auto()
+	EXPANDED = auto()
+	COLLAPSED = auto()
+	INVISIBLE = auto()
+	VISITED = auto()
+	LINKED = auto()
+	HASPOPUP = auto()
+	PROTECTED = auto()
+	REQUIRED = auto()
+	DEFUNCT = auto()
+	INVALID_ENTRY = auto()
+	MODAL = auto()
+	AUTOCOMPLETE = auto()
+	MULTILINE = auto()
+	ICONIFIED = auto()
+	OFFSCREEN = auto()
+	SELECTABLE = auto()
+	FOCUSABLE = auto()
+	CLICKABLE = auto()
+	EDITABLE = auto()
+	CHECKABLE = auto()
+	DRAGGABLE = auto()
+	DRAGGING = auto()
+	DROPTARGET = auto()
+	SORTED = auto()
+	SORTED_ASCENDING = auto()
+	SORTED_DESCENDING = auto()
+	HASLONGDESC = auto()
+	PINNED = auto()
+	HASFORMULA = auto()  # Mostly for spreadsheets
+	HASCOMMENT = auto()
+	OBSCURED = auto()
+	CROPPED = auto()
+	OVERFLOWING = auto()
+	UNLOCKED = auto()
+	HASNOTE = auto()
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
