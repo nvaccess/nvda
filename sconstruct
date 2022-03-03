@@ -130,10 +130,17 @@ env.SetDefault(MSVC_VERSION='14.2')
 # speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
 
-# Make sure to run the build on multiple threads so it runs faster
-env.SetOption('num_jobs', multiprocessing.cpu_count())
-realNumJobs = env.GetOption('num_jobs')
-print(f"Building using {realNumJobs} job{'s' if realNumJobs != 1 else ''}")
+# Warn to run the build on multiple threads so it runs faster
+numJobs = env.GetOption('num_jobs')
+numCores = multiprocessing.cpu_count()
+if numJobs < numCores:
+	print(
+		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
+		f"while {numCores} CPU threads are available. "
+		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build."
+	)
+else:
+	print(f"Building with {numJobs} concurrent jobs")
 
 #Make our recursiveCopy function available to any script using this environment
 env.AddMethod(recursiveCopy)
