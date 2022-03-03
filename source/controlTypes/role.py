@@ -516,6 +516,7 @@ silentValuesForRoles: Set[Role] = {
 	Role.LINK,
 	Role.MENUITEM,
 	Role.APPLICATION,
+	Role.BUSY_INDICATOR,
 }
 
 
