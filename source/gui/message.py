@@ -17,9 +17,9 @@ def isModalMessageBoxActive() -> bool:
 	"""
 	`gui.message.messageBox` is a function which blocks the calling thread,
 	until a user responds to the modal dialog.
-	`isModalMessageBoxActive` should be used when an answer from a `gui.message.messageBox`
-	is required before proceeding.
-	NVDA is in an uncertain state while waiting for an answer.
+	When some action (e.g. quitting NVDA) should be prevented due to any active modal message box,
+	even if unrelated, use `isModalMessageBoxActive` to check before triggering the action.
+	NVDA is in an uncertain state while waiting for an answer from a `gui.message.messageBox`.
 
 	It's possible for multiple message boxes to be open at a time.
 	This function can be used to check before opening subsequent `gui.message.messageBox` instances.
