@@ -24,9 +24,8 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
-from buildVersion import version_year
 from .message import (
-	isInMessageBox as _isInMessageBox,
+	isModalMessageBoxActive,
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
@@ -61,11 +60,6 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 ### Globals
 mainFrame = None
 
-if version_year < 2022:
-	# Like other top level variables, this must be used as follows (#13011):
-	# import gui; doSomething(gui.isInMessageBox)
-	# NOT the following: from gui import isInMessageBox; doSomething(isInMessageBox)
-	isInMessageBox = False
 
 class MainFrame(wx.Frame):
 
@@ -159,7 +153,7 @@ class MainFrame(wx.Frame):
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
-		if _isInMessageBox():
+		if isModalMessageBoxActive():
 			return
 		self.prePopup()
 		try:
@@ -208,7 +202,7 @@ class MainFrame(wx.Frame):
 			self.sysTrayIcon.menu.Insert(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
 
 	def onExitCommand(self, evt):
-		if _isInMessageBox():
+		if isModalMessageBoxActive():
 			return
 		if config.conf["general"]["askToExit"]:
 			self.prePopup()
@@ -311,7 +305,7 @@ class MainFrame(wx.Frame):
 		pythonConsole.activate()
 
 	def onAddonsManagerCommand(self,evt):
-		if _isInMessageBox() or globalVars.appArgs.secure:
+		if isModalMessageBoxActive() or globalVars.appArgs.secure:
 			return
 		self.prePopup()
 		from .addonGui import AddonsDialog
@@ -327,7 +321,7 @@ class MainFrame(wx.Frame):
 		NVDAObject.clearDynamicClassCache()
 
 	def onCreatePortableCopyCommand(self,evt):
-		if _isInMessageBox():
+		if isModalMessageBoxActive():
 			return
 		self.prePopup()
 		import gui.installerGui
@@ -336,13 +330,13 @@ class MainFrame(wx.Frame):
 		self.postPopup()
 
 	def onInstallCommand(self, evt):
-		if _isInMessageBox():
+		if isModalMessageBoxActive():
 			return
 		from gui import installerGui
 		installerGui.showInstallGui()
 
 	def onRunCOMRegistrationFixesCommand(self, evt):
-		if _isInMessageBox():
+		if isModalMessageBoxActive():
 			return
 		if messageBox(
 			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
@@ -376,7 +370,7 @@ class MainFrame(wx.Frame):
 		)
 
 	def onConfigProfilesCommand(self, evt):
-		if _isInMessageBox():
+		if isModalMessageBoxActive():
 			return
 		self.prePopup()
 		from .configProfiles import ProfilesDialog
