@@ -17,6 +17,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <objbase.h>
+#include <wil/resource.h>
+#include <wil/win32_helpers.h>
 #include <ia2.h>
 #include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
@@ -32,8 +34,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 #define APPLICATION_USER_MODEL_ID_MAX_LENGTH 131
-typedef LONG(WINAPI *GetCurrentApplicationUserModelId_funcType)(UINT32*,PWSTR);
-typedef ULONG(*LPFNDLLCANUNLOADNOW)();
+// Forward declare GetCurrentApplicationUserModelId for later lookup in kernel32.dll
+// Used in isSuspendableProcess.
+LONG WINAPI GetCurrentApplicationUserModelId(UINT32* pBufSize,PWSTR buf);
 
 bool isIA2Installed=FALSE;
 COMProxyRegistration_t* IA2ProxyRegistration;
@@ -104,30 +107,60 @@ LRESULT CALLBACK IA2Support_uninstallerHook(int code, WPARAM wParam, LPARAM lPar
 	return 0;
 }
 
+bool isSuspendableProcess() {
+	wil::unique_hmodule kernel32Handle {LoadLibrary(L"kernel32.dll")};
+	if(!kernel32Handle) {
+		LOG_ERROR(L"Can't load kernel32.dll");
+		return false; 
+	}
+	// Macro from wil/win32_helpers.h
+	auto GetCurrentApplicationUserModelId_fp = GetProcAddressByFunctionDeclaration(kernel32Handle.get(), GetCurrentApplicationUserModelId);
+	if(!GetCurrentApplicationUserModelId_fp) {
+		LOG_DEBUGWARNING(L"getCurrentApplicationUserModelID function not available");
+		return false;
+	}
+	UINT32 bufSize=APPLICATION_USER_MODEL_ID_MAX_LENGTH+1;
+	std::wstring buf(bufSize, L'\0');
+	LONG res=GetCurrentApplicationUserModelId_fp(&bufSize,buf.data());
+	if(res != ERROR_SUCCESS) {
+		return false;
+	} 
+	return true;
+}
+
+bool isAppContainerProcess() {
+	wil::unique_handle tokenHandle{nullptr};
+	if(!OpenProcessToken(GetCurrentProcess(), TOKEN_READ, &tokenHandle) || !tokenHandle) {
+		LOG_DEBUGWARNING(L"Could not open process token");
+		return false;
+	}
+	// TokenIsAppContainer only requires a return buffer the size of a DWORD
+	// See https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_information_class
+	DWORD isAppContainer=0;
+	DWORD return_length = 0;
+	if(!GetTokenInformation(tokenHandle.get(), TokenIsAppContainer, &isAppContainer, sizeof(isAppContainer), &return_length)) {
+		LOG_DEBUGWARNING(L"GetTokenInformation for Token_isAppContainer failed");
+		return false;
+	}
+	return isAppContainer != 0;
+}
+
 void IA2Support_inProcess_initialize() {
 	if (isIA2Installed||isIA2SupportDisabled)
 		return;
 	// #5417: disable IAccessible2 support for suspendable processes to work around a deadlock in NVDAHelperRemote (specifically seen in Win10 searchUI)
-	HMODULE kernel32Handle=LoadLibrary(L"kernel32.dll");
-	if(!kernel32Handle) {
-		LOG_ERROR(L"Can't load kernel32.dll");
-		return; 
+	isIA2SupportDisabled = isSuspendableProcess();
+	if(isIA2SupportDisabled) {
+		LOG_DEBUGWARNING(L"Not installing IA2 support as  process is suspendable");
+		return;
 	}
-	GetCurrentApplicationUserModelId_funcType GetCurrentApplicationUserModelId_fp=(GetCurrentApplicationUserModelId_funcType)GetProcAddress(kernel32Handle,"GetCurrentApplicationUserModelId");
-	if(GetCurrentApplicationUserModelId_fp) {
-		UINT32 bufSize=APPLICATION_USER_MODEL_ID_MAX_LENGTH+1;
-		wchar_t* buf=(wchar_t*)malloc(bufSize*sizeof(wchar_t));
-		LONG res=GetCurrentApplicationUserModelId_fp(&bufSize,buf);
-		if(res==ERROR_SUCCESS) {
-			isIA2SupportDisabled=true;
-			LOG_DEBUGWARNING(L"disabling IA2 support");
-		} else if(res==ERROR_INSUFFICIENT_BUFFER) {
-			LOG_ERROR(L"string not long enough");
-		}
-		free(buf);
+	// #12920: Registering COM interfaces in an appContainer can cause memory corruption,
+	// such as in Adobe Reader.
+	isIA2SupportDisabled = isAppContainerProcess();
+	if(isIA2SupportDisabled) {
+		LOG_DEBUGWARNING(L"Not installing IA2 support as process is an app container");
+		return;
 	}
-	FreeLibrary(kernel32Handle);
-	if(isIA2SupportDisabled) return;
 	// Try to install IA2 support on focus/foreground changes.
 	// This hook will be unregistered by the callback once IA2 support is successfully installed.
 	registerWinEventHook(IA2Support_winEventProcHook);
