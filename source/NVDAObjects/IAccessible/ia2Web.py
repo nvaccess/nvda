@@ -20,6 +20,7 @@ from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
 import api
 import speech
+import config
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -45,6 +46,9 @@ class Ia2Web(IAccessible):
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
 		if not self.hasDetails:
+			# optimisation that avoids having to fetch details relations which may be a more costly procedure.
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("no details-roles")
 			return None
 		detailsRelations = self.detailsRelations
 		if not detailsRelations:

@@ -527,7 +527,6 @@ In addition, you can manually force focus mode, after which it will remain in ef
 | Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document. See [searching for text #SearchingForText] for more information. |
 | Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
 | Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
-| Open long description | NVDA+d | Opens a new window containing a long description for the element you are on if it has one. | 
 %kc:endInclude
 
 ++ Single Letter Navigation ++[SingleLetterNavigation]
@@ -1888,9 +1887,13 @@ The combo box has the following options:
 ==== Annotations ====[Annotations]
 This group of options is used to enable features which add experimental support for ARIA annotations.
 Some of these features may be incomplete.
+
+%kc:beginInclude
+To "Report summary of any annotation details at the system caret", press NVDA+d.
+%kc:endInclude
+
 The following options exist: 
 - "Report 'has details' for structured annotations": enables reporting if the text or control has further details.
-A summary of the extra details can be reported by assigning a gesture to "Report summary of any annotation details at the system caret" using the [Input Gestures dialog #InputGestures].
 - "Report aria-description always":
   When the source of ``accDescription`` is aria-description, the description is reported.
   This is useful for annotations on the web.
