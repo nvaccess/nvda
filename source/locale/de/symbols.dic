@@ -5,17 +5,14 @@
 
 complexSymbols:
 # identifier	regexp
-
-# Sentence endings.
+# Satzenden
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-
-# Phrase endings.
+# Phrasenenden
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
-
-# Others
+# Andere
 Dezimaltrennzeichen	(?<![^\d -])\,(?=\d)
 ' im Wort	(?<=[^\W_])['’]
 - im Wort	(?<=[^\W_])[-]
@@ -30,27 +27,27 @@ symbols:
 . sentence ending	Punkt	all	always
 ! sentence ending	Ausrufezeichen	all	always
 ? sentence ending	Fragezeichen	all	always
-... sentence ending	Auslassungspunkte	all	always	# ... fin de phrase
-… sentence ending	Auslassungspunkte	all	always	# … fin de phrase
 ; phrase ending	Semikolon	most	always
 : phrase ending	Doppelpunkt	most	always
 Dezimaltrennzeichen		none	always
 ' im Wort	Apostroph	all	norep
-- im Wort	Bindestrich	all	norep
 Negative Ziffer	Minus	none	norep
-Tausendertrennzeichen		
+- im Wort	Bindestrich	all	norep
+... sentence ending	Auslassungspunkte	all	always
+… sentence ending	Auslassungspunkte	all	always
+Tausendertrennzeichen	
 Datumstrennzeichen	Punkt	none	norep
 
-# Whitespace
+# Leerzeichen
 \0	Leer	char	# null
 \t	Tab
 \n	Zeilenumbruch	char
 \f	Seitenwechsel	none
 \r	Neue Zeile	char
  	Leerzeichen	char
- 	Geschütztes Leerzeichen	char	# no-break space
+ 	Geschütztes Leerzeichen	char
 
-# Standard Punctuation/Symbols
+# Standardzeichensetzung/-symbole
 !	Ausrufezeichen	all
 "	Anführungszeichen	most
 \#	Nummernzeichen	some
@@ -60,7 +57,7 @@ $	Dollar	all	norep
 ¢	Cents	all	norep
 ¥	Yen	all	norep
 ₹	Rupie	some	norep
-ƒ	Lateinischer Kleinbuchstabe F mit Häkchen	all	norep
+ƒ	Gulden	all	norep
 ¤	Währungszeichen	all	norep
 %	Prozent	some
 ‰	Promille	some
@@ -91,18 +88,18 @@ _	Unterstrich	most
 ¡	Umgekehrtes Ausrufezeichen	some
 ¿	Umgekehrtes Fragezeichen	some
 ·	Mittelpunkt	most
-‚	Einfaches Aführungszeichen unten	most
+‚	Einfaches Anführungszeichen unten	most
 „	Typografisches Anführungszeichen links	most
-′	Minuten	some
-″	Sekunden	some
-‴	Dreistrich	some
+′	prim	some
+″	doppelte Primzahl	some
+‴	dreifache Primzahl	some
 ⁗	Vierstrich	some
 
-# Other Characters
+# Andere Zeichen
 •	Aufzählungszeichen	some
 …	Punkt Punkt Punkt	all	always
 ...	Punkt Punkt Punkt	all	always
-“	Typografishes Anführungszeichen rechts	most
+“	Anführungszeichen links	most
 ”	Anführungszeichen rechts	most
 ‘	Apostroph links	most
 ’	Apostroph rechts	most
@@ -116,8 +113,8 @@ _	Unterstrich	most
 ¯	Makron	most
 ´	Akut	most
 ¸	Cedille	most
-‎	Pfeil von links nach rechts	char
-‏	Pfeil von rechts nach links	char
+‎	von links nach rechts Markierung	char
+‏	von rechts nach links Markierung	char
 ¶	Absatzmarke	most
 ■	Großes, gefülltes, schwarzes Quadrat	some
 ▪	Kleines, gefülltes, schwarzes Quadrat	some
@@ -168,8 +165,8 @@ _	Unterstrich	most
 ₎	tiefgestellte runde Klammer zu	some
 ®	Registriertes Warenzeichen	some
 ™	Eingetragenes Warenzeichen	some
-©	Copyright	some
-℠	Service-Mark-Zeichen	some
+©	Urheberrecht	some
+℠	Dienstleistungsmarke	some
 ←	Pfeil nach links	some
 ↑	Pfeil nach oben	some
 →	Pfeil nach rechts	some
@@ -191,7 +188,6 @@ _	Unterstrich	most
 ؛	Arabisches Semikolon
 ؟	Arabisches Fragezeichen
 。	Ideografischer Punkt
-“	Typografisches Anführungszeichen rechts
 〈	Spitze Klammer auf
 〉	Spitze Klammer zu
 《	Doppelte, spitze Klammer auf
@@ -206,7 +202,6 @@ _	Unterstrich	most
 〕	Stumpfe Klammer zu
 〖	Hohle, konkave Klammer auf
 〗	Hohle, konkave Klammer zu
-&	Und
 ‧	Silbentrennzeichen
 ‸	Dach
 ⁂	Asterismus
@@ -259,7 +254,7 @@ _	Unterstrich	most
 ⊉	Weder Obermenge von noch Gleichheit	none
 ⊌	Multimenge	none
 
-# Equality Signs
+# Gleichheitszeichen
 =	gleich	some
 ≃	Asymptotisch Gleichheit	none
 ≄	Keine asymptotische Gleichheit	none
@@ -281,7 +276,7 @@ _	Unterstrich	most
 ≙	entspricht	none
 ≟	fraglich gleich mit	none
 
-# Comparison Signs
+# Vergleichszeichen
 <	kleiner als	some
 >	größer als	some
 ≤	gleich oder kleiner als	none
@@ -295,13 +290,13 @@ _	Unterstrich	most
 ≮	nicht weniger als	none
 ≯	nicht größer als	none
 
-# Functions
+# Functionen
 ⁻	Hochgestelltes Minuszeichen	some
 ∘	Ring-Operator	none
 ∂	Partielles Differential	none
 ∇	Nabla	none
 
-# Geometry and Linear Algebra
+# Geometrie und Lineare Algebra
 ⃗	Vektor zwischen	none
 △	Dreieck	none
 ▭	Rechteck	none
@@ -317,14 +312,14 @@ _	Unterstrich	most
 ∡	gemessener Winkel	none
 ∢	Kugelwinkel	none
 
-# Logical Operators
+# Logische Operatoren
 ∀	für alle	none
 ∃	es gibt	none
 ∄	es gibt kein	none
-⇏	does not imply	none
+⇏	impliziert nicht	none
 ⇐	wird impliziert durch	none
 
-# Other Mathematical Operators
+# Andere mathematische Operatoren
 ∈	Element von	none
 ∉	kein Element von	none
 ∊	kleines Element von	none
@@ -332,8 +327,8 @@ _	Unterstrich	most
 ∌	enthält nicht als Mitglied	none
 ∍	klein enthält als Mitglied	none
 ∎	Ende des Beweises	none
-∏n-äres Produkt	none
-∐n-äres Kuppelprodukt	none
+∏	n-äres Produkt	none
+∐	n-äres Kuppelprodukt	none
 ∑	n-äre Summation	none
 √	Quadratwurzel	none
 ∛	Kubikwurzel	none
@@ -366,14 +361,14 @@ _	Unterstrich	most
 ∙	Kreis-Operator	none
 ∣	teilt	none
 ∤	teilt nicht	none
-≔	Doppelpunkt und Gleichheitszeichen	none
-≕	Gleichheitszeichen und Doppelpunkt	none
+≔	Doppelpunkt ist gleich	none
+≕	ist gleich Doppelpunkt	none
 ≺	geht voran	none
 ≻	gelingt	none
 ⊀	geht nicht voran	none
 ⊁	gelingt nicht	none
 
-# Vulgur Fractions U+2150 to U+215E
+# Brüche U+2150 to U+215E
 ¼	ein Viertel	none
 ½	einhalb	none
 ¾	dreiviertel	none
@@ -407,14 +402,11 @@ _	Unterstrich	most
 ℵ	Alef-Symbol	none
 ℶ	Bet-Symbol	none
 
-# Miscellaneous Technical
+# Sonstiges Technisch
 ⌘	Mac-Befehlstaste	none
 
-# Fixes for some synthesizers
-é	E accent aigu	char	norep
-
 # Unicode braille
-⠀	cellule braille vide	none
+⠀	Braille-Leerzeichen	none
 ⠁	Braillepunkt 1	none
 ⠂	Braillepunkt 2	none
 ⠃	Braillepunkte 1 2	none

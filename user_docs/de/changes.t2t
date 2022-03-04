@@ -3,6 +3,135 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.1 =
+
+== Neue Features ==
+- Unterstützung für Berichtsnotizen in Microsoft Excel mit aktivierter UIA unter Windows 11. (#12861)
+- In neueren Builds von Microsoft Word über UIA unter Windows 11 werden Lesezeichen, Entwurfskommentaren und Kommentaren nun sowohl mit der Sprachausgabe als auch in Braille mitgeteilt. (#12861)
+- Der neue Kommandozeilenparameter --lang erlaubt das Überschreiben der konfigurierten NVDA-Sprache. (#10044)
+- NVDA warnt nun vor unbekannten Kommandozeilenparametern, die von keiner Erweiterung verwendet werden. (#12795)
+- In Microsoft Word, auf das über UIA zugegriffen wird, verwendet NVDA nun den mathPlayer, um mathematische Gleichungen in Office zu lesen und zu navigieren. (#12946)
+  - Damit dies funktioniert, müssen Sie Microsoft Word 365 / 2016 Build 14326 oder neuer verwenden. 
+  - MathType-Gleichungen müssen auch manuell in Office-Mathematik umgewandelt werden, indem Sie sie markieren und im Kontextmenü Gleichungsoptionen -> In Office-Mathematik umwandeln auswählen.
+  -
+- Die Meldung "hat Details" und der zugehörige Befehl zum Zusammenfassen der Detailbeziehung wurden aktualisiert und funktionieren nun auch im Fokus-Modus. (#13106)
+- Seika Notetaker kann nun automatisch erkannt werden, wenn es über USB und Bluetooth verbunden ist. (#13191, #13142)
+  - Dies betrifft die folgenden Geräte: MiniSeika (mit 16 und 24 Modulen), V6 und V6Pro (mit 40 Modulen).
+  - Die manuelle Auswahl des Bluetooth-COM-Ports wird nun ebenfalls unterstützt.
+  -
+- Es wurde ein Befehl zum Umschalten des Braille-Betrachters hinzugefügt. Es gibt keinen standardmäßig zugehörigen Tastenbefehl. (#13258)
+- Befehle zum gleichzeitigen Umschalten mehrerer Modifikatoren mit einer Braillezeile hinzugefügt (#13152)
+- Das Dialogfeld "Sprachwörterbuch" verfügt nun über eine Schaltfläche "Alles entfernen", mit der ein ganzes Wörterbuch geleert werden kann. (#11802)
+- Unterstützung für den Taschenrechner unter Windows 11 hinzugefügt. (#13212)
+-
+
+
+== Änderungen ==
+- Espeak-ng wurde auf 1.51-dev commit ``7e5457f91e10`` aktualisiert. (#12950)
+- Der Liblouis Braille-Übersetzer wurde auf [3.20.0 https://github.com/liblouis/liblouis/releases/tag/v3.20.0] aktualisiert. (#13141)
+  - Neue Braille-Tabelle: Japanische Braille-Schrift (Kantenji)
+  -
+- NVDA teilt nun Auswahl und zusammengeführte Zellen in LibreOffice Calc 7.3 und neuer mit. (#9310, #6897)
+- Unicode Common Locale Data Repository (CLDR) wurde auf 40.0 aktualisiert. (#12999)
+- ``NVDA+Nummernblock Komma`` teilt standardmäßig die Position des Cursor oder des fokussierten Objekts mit. (#13060)
+- ``NVDA+Umschalt+Nummernblock Komma`` teilt die Position des NVDA-Cursors mit. (#13060)
+- Standard-Tastenbefehle für das Umschalten von NVDA-Tasten für Braillezeilen von Freedom Scientific hinzugefügt (#13152)
+- "Grundlinie" wird nicht mehr über den Befehl zur Textformatierung bei NVDA+F mitgeteilt. (#11815)
+-
+
+
+== Fehlerbehebungen ==
+- Sicherheitskorrektur: Verhinderung der Objektnavigation außerhalb des Sperrbildschirms unter Windows 10 und Windows 11. (#13328)
+- Sicherheitskorrektur: Das Dialogfeld für die Verwaltung der Erweiterungen ist in Sicherheitsmeldungen deaktiviert. (#13059)
+- Sicherheitskorrektur: Die NVDA-Kontexthilfe ist bei Sicherheitsmeldungen  nicht mehr verfügbar. (#13353) 
+- Der Zwischenablage-Verwaltungsbereich sollte nicht mehr fälschlicherweise der Fokus verloren gehen, sobald einige Office-Programme geöffnet werden. (#12736)
+- Auf einem System, auf dem der Benutzer die primäre Maustaste von der linken auf die rechte Maustaste umgestellt hat, ruft NVDA in Anwendungen wie Webbrowsern nicht mehr versehentlich ein Kontextmenü auf, anstatt ein Element zu aktivieren. (#12642)
+- Wenn der NVDA-Cursor über das Ende von Textsteuerelementen hinaus bewegt wird, z. B. in Microsoft Word mit UIA, wird "unten" in mehr Situationen korrekt mitgeteilt. (#12808)
+- NVDA kann den Anwendungsnamen und die Version für Binärdateien mitteilen, die in system32 abgelegt sind, wenn sie unter der 64-Bit-Version von Windows laufen. (#12943)
+- Verbesserte Konsistenz beim Lesen von Ausgaben in Terminal-Anwendungen. (#12974)
+  - Beachten Sie, dass in manchen Situationen beim Einfügen oder Löschen von Zeichen in der Mitte einer Zeile die Zeichen nach dem System-Cursor wieder ausgelesen werden können.
+  -
+- Microsoft Word mit UIA: Überschriften-Schnellnavigation im Blätternmodus bleibt nicht mehr an der letzten Überschrift eines Dokuments hängen, noch wird diese Überschrift in der NVDA-Elementliste doppelt angezeigt. (#9540)
+- In Windows 8 und höher kann die Statusleiste des Datei-Explorers nun mit dem Standard-Tastenbefehl NVDA+Ende (Desktop) bzw. NVDA+Umschalt+Ende (Laptop) abgefragt  werden. (#12845)
+- Eingehende Nachrichten im Chat von Skype for Business werden wieder mitgeteilt. (#9295)
+- NVDA kann bei Verwendung des SAPI5-Synthesizers unter Windows 11 wieder Audio ausblenden. (#12913)
+- Im Taschenrechner von Windows 10 zeigt NVDA Beschriftungen für Verlaufs- und Speicherlistenelemente an. (#11858)
+- Tastenbefehle und Gesten wie Scrollen und Weiterleiten funktionieren wieder mit HID-Braille-Geräten. (#13228)
+- Mail-App in Windows 11: Nach dem Umschalten des Fokus zwischen Apps, während des Lesens einer langen E-Mail, blieb NVDA in einer Zeile der E-Mail hängen. (#13050)
+- HID-Braille: Cordbefehle (z. B. Leertaste+Punkt4) können erfolgreich über die Braillezeile ausgeführt werden. (#13326)
+- Ein Problem wurde behoben, bei dem mehrere Einstellungsdialoge gleichzeitig geöffnet werden konnten. (#12818)
+- Es wurde ein Problem behoben, bei dem einige Braillezeilen wie Focus Blue nach dem Aufwachen des Computers aus dem Ruhezustand nicht mehr funktionierten. (#9830)
+- "Grundlinie" wird nicht mehr fälschlicherweise gemeldet, wenn die Option 'Hoch- und Tiefstellung melden' aktiviert ist. (#11078)
+- In Windows 11 verhindert NVDA nicht mehr die Navigation im Emoji-Panel, wenn Emojis ausgewählt werden. (#13104)
+- Verhindert einen Fehler, der bei der Verwendung von Windows-Konsole und Terminal zu Doppelmeldungen führt. (#13261)
+- Es wurden mehrere Fälle behoben, in denen Listenelemente in 64-Bit-Anwendungen, wie z. B. REAPER, nicht gemeldet werden konnten. (#8175)
+-
+
+
+== Änderungen für entwickler ==
+- Hinweis: Dies ist eine Version, die die Kompatibilität der API für Erweiterungen beeinträchtigt. Erweiterungen müssen erneut getestet werden und das Manifest muss aktualisiert werden.
+- Die Kompilierung von NVDA-Abhängigkeiten mit Visual Studio 2022 (17.0) wird nun unterstützt. Für Entwicklungs- und Release-Builds wird weiterhin Visual Studio 2019 verwendet. (#13033)
+- SCons wurde auf Version 4.3.0 aktualisiert. (#13033)
+- Py2Exe wurde auf Version 0.11.0.1 aktualisiert. (#12357, #13066)
+- ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` wurde entfernt. Verwenden Sie stattdessen ``apiLevel``. (#12955, #12660)
+- ``TVItemStruct`` wurde aus ``sysTreeView32`` entfernt. (#12935)
+- ``MessageItem`` wurde aus dem App-Modul für Microsoft Outlook entfernt. (#12935)
+- Die Konstanten ``audioDucking.AUDIODUCKINGMODE_*`` sind jetzt eine ``DisplayStringIntEnum``. (#12926)
+  - sollte durch ``AudioDuckingMode.*`` ersetzt werden.
+  - Verwendungen von ``audioDucking.audioDuckingModes`` sollten durch ``AudioDuckingMode.*.displayString`` ersetzt werden
+  -
+- Die Verwendung der Konstanten ``audioDucking.ANRUS_ducking_*`` sollte durch ``ANRUSDucking.*`` ersetzt werden. (#12926)
+- Änderungen in ``synthDrivers.sapi5`` (#12927):
+  - Die Verwendung von ``SPAS_*`` sollte durch ``SPAudioState.*`` ersetzt werden.
+  - Die Verwendung von ``constants.SVSF*`` sollte durch ``SpeechVoiceSpeakFlags.*`` ersetzt werden.
+    - Hinweis: ``SVSFlagsAsync`` sollte durch ``SpeechVoiceSpeakFlags.Async`` ersetzt werden, nicht durch ``SpeechVoiceSpeakFlags.lagsAsync``.
+    -
+  - Die Verwendung von ``constants.SVE*`` sollte durch ``SpeechVoiceEvents.*`` ersetzt werden.
+  -
+- Aus dem App-Modul ``soffice`` wurden die folgenden Klassen und Funktionen entfernt ``JAB_OOTableCell``, ``JAB_OOTable``, ``gridCoordStringToNumbers``. (#12849)
+- core.CallCancelled`` ist jetzt ``exceptions.CallCancelled``. (#12940)
+- Alle Konstanten, die mit RPC beginnen, aus ``core`` und ``logHandler`` wurden in ``RPCConstants.RPC`` enum verschoben. (#12940)
+- Es wird empfohlen, die Funktionen ``mouseHandler.doPrimaryClick`` und ``mouseHandler.doSecondaryClick`` zu verwenden, um die logische Maus-Aktion auszuführen, wie z. B. das Aktivieren (primär) oder sekundär (Kontextmenü anzeigen), anstatt ``executeMouseEvent`` zu verwenden und die linke oder rechte Maustaste festzulegen. Dies stellt sicher, daß der Code die Windows-Benutzereinstellung für das Vertauschen der primären Maustaste beachtet. (#12642)
+- ``config.getSystemConfigPath`` wurde entfernt - es gibt keinen Ersatz. (#12943)
+- ``shlobj.SHGetFolderPath`` wurde entfernt - bitte verwenden Sie stattdessen ``shlobj.SHGetKnownFolderPath``. (#12943)
+- Die ``shlobj``-Konstanten wurden entfernt. Ein neues Enum wurde erstellt, ``shlobj.FolderId`` für die Verwendung mit ``SHGetKnownFolderPath``. (#12943)
+- ``diffHandler.get_dmp_algo`` und ``diffHandler.get_difflib_algo`` wurden ersetzt durch ``diffHandler.prefer_dmp`` bzw. ``diffHandler.prefer_difflib``. (#12974)
+- ``languageHandler.curLang`` wurde entfernt - um die aktuelle NVDA Sprache zu erhalten, verwenden Sie ``languageHandler.getLanguage()``. (#13082)
+- Die Methode ``getStatusBarText`` kann in ein appModule implementiert werden, um die Art und Weise, wie NVDA den Text aus der Statusleiste holt, anzupassen. (#12845)
+- ``globalVars.appArgsExtra`` wurde entfernt. (#13087)
+  - Wenn Ihre Erweiterung zusätzliche Kommandozeilen-Argumente verarbeiten muss, lesen Sie die Dokumentation von ``addonHandler.isCLIParamKnown`` und das Entwicklerhandbuch für Details.
+  -
+- Das UIA-Handler-Modul und andere UIA-Unterstützungsmodule sind jetzt Teil eines UIAHandler-Pakets. (#10916)
+  - ``UIAUtils`` ist jetzt ``UIAHandler.utils``
+  - ``UIABrowseMode`` ist jetzt ``UIAHandler.browseMode``
+  - ``_UIAConstants`` ist jetzt ``UIAHandler.constants``
+  - ``_UIACustomProps`` ist jetzt ``UIAHandler.customProps``
+  - ``_UIACustomAnnotations`` ist jetzt ``UIAHandler.customAnnotations``
+- Die ``IAccessibleHandler``-Konstanten ``IA2_RELATION_*`` wurden durch Enum der ``IAccessibleHandler.RelationType`` ersetzt. (#13096)
+  - ``IA2_RELATION_FLOWS_FROM`` entfernt.
+  - ``IA2_RELATION_FLOWS_TO`` entfernt.
+  - ``IA2_RELATION_CONTAINING_DOCUMENT`` entfernt.
+  -
+- ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` und ``LOCALE_SLANGDISPLAYNAME`` wurden aus ``languageHandler`` entfernt. Verwenden Sie stattdessen Mitglieder von ``languageHandler.LOCALE``. (#12753)
+- Umstellung von Minhook auf Microsoft Detours als Hooking-Bibliothek für NVDA. Mit dieser Hooking-Bibliothek wird hauptsächlich zur Unterstützung des Anzeigemodells verwendet. (#12964)
+- ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` wurde entfernt. (#13211)
+- SCons baut auf mehreren gleichzeitigen Aufträgen, die der Anzahl der logischen Prozessoren im System entsprechen. Dies kann die Erstellungszeiten auf Multicore-Systemen drastisch verkürzen. (#13226)
+- Die Konstanten ``characterProcessing.SYMLVL_*`` wurden entfernt. Bitte verwenden Sie stattdessen ``characterProcessing.SymbolLevel.*``. (#13248)
+- Die Funktionen ``loadState`` und ``saveState`` wurden aus addonHandler entfernt. Bitte verwenden Sie stattdessen ``addonHandler.state.load`` und ``addonHandler.state.save``. (#13245)
+- Die Interaktionsbefehle aus NVDAHelper für UWP/OneCore wurden [von C++/CX nach C++/Winrt https://docs.microsoft.com/de-de/windows/uwp/cpp-and-winrt-apis/move-to-winrt-from-cx] verschoben. (#10662)
+- Es ist nun obligatorisch, die Unterklasse ``DictionaryDialog`` zu benutzen. (#13268)
+- ``config.RUN_REGKEY``, ``config.NVDA_REGKEY`` sind veraltet. Bitte verwenden Sie stattdessen ``config.RegistryKey.RUN``, ``config.RegistryKey.NVDA``. Diese werden 2023 entfernt. (#13242)
+- ``easeOfAccess.ROOT_KEY``, ``easeOfAccess.APP_KEY_PATH`` sind veraltet. Bitte verwenden Sie stattdessen ``easeOfAccess.RegistryKey.ROOT``, ``easeOfAccess.RegistryKey.APP``. Diese werden 2023 entfernt. (#13242)
+- ``easeOfAccess.APP_KEY_NAME`` ist veraltet und wird 2023 entfernt. (#13242)
+- ``DictionaryDialog`` und ``DictionaryEntryDialog`` wurden von ``gui.settingsDialogs`` nach ``gui.speechDict`` verschoben. (#13294)
+- IAccessible2-Beziehungen werden nun in der Entwickler-Info für IAccessible2-Objekte angezeigt. (#13315)
+- ``languageHandler.windowsPrimaryLCIDsToLocaleNames`` wurde entfernt, verwenden Sie stattdessen ``languageHandler.windowsLCIDToLocaleName`` oder ``winKernel.LCIDToLocaleName``. (#13342)
+- Die Eigenschaft ``UIAAutomationId`` für UIA-Objekte sollte gegenüber ``cachedAutomationId`` bevorzugt werden. (#13125, #11447)
+  - ``cachedAutomationId`` kann verwendet werden, wenn sie direkt vom Element bezogen wird.
+  -
+-
+
+
 = 2021.3.1 =
 Diese Version behebt mehrere Probleme in 2021.3.
 
