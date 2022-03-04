@@ -246,23 +246,17 @@ IAccessible2StatesToNVDAStates = {
 
 def getStatesSetFromIAccessibleStates(IAccessibleStates: int) -> typing.Set[controlTypes.State]:
 	return set(
-		IAccessibleStatesToNVDAStates[x]
-		for x in (
-			y for y in (1 << z for z in range(32))
-			if y & IAccessibleStates
-		)
-		if x in IAccessibleStatesToNVDAStates
+		IAccessibleStatesToNVDAStates[IAState]
+		for IAState in IAccessibleStatesToNVDAStates.keys()
+		if IAState & IAccessibleStates
 	)
 
 
 def getStatesSetFromIAccessible2States(IAccessible2States: int) -> typing.Set[controlTypes.State]:
 	return set(
-		IAccessible2StatesToNVDAStates[x]
-		for x in (
-			y for y in (1 << z for z in range(32))
-			if y & IAccessible2States
-		)
-		if x in IAccessible2StatesToNVDAStates
+		IAccessible2StatesToNVDAStates[IA2State]
+		for IA2State in IAccessible2StatesToNVDAStates.keys()
+		if IA2State & IAccessible2States
 	)
 
 
@@ -273,10 +267,9 @@ def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> typing.
 	# EG IAccessible::state_40="1"
 	IAccessibleStateAttrName = 'IAccessible::state_{}'
 	return set(
-		IAccessibleStatesToNVDAStates[x]
-		for x in [1 << y for y in range(32)]
-		if int(attrs.get(IAccessibleStateAttrName.format(x), 0))
-		and x in IAccessibleStatesToNVDAStates
+		IAccessibleStatesToNVDAStates[IAState]
+		for IAState in IAccessibleStatesToNVDAStates.keys()
+		if int(attrs.get(IAccessibleStateAttrName.format(IAState), 0))
 	)
 
 
@@ -287,9 +280,9 @@ def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> typing
 	# EG IAccessible2::state_40="1"
 	IAccessible2StateAttrName = 'IAccessible2::state_{}'
 	return set(
-		IAccessible2StatesToNVDAStates[x] for x in [1 << y for y in range(32)]
-		if int(attrs.get(IAccessible2StateAttrName.format(x), 0))
-		and x in IAccessible2StatesToNVDAStates
+		IAccessible2StatesToNVDAStates[IA2State]
+		for IA2State in IAccessible2StatesToNVDAStates.keys()
+		if int(attrs.get(IAccessible2StateAttrName.format(IA2State), 0))
 	)
 
 
