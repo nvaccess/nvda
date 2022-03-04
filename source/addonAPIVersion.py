@@ -19,7 +19,7 @@ As BACK_COMPAT_TO is incremented, the changed / removed parts / or reasoning sho
 These only serve to act as a reminder, the changelog should be consulted for a comprehensive listing.
 EG: (x, y, z): Large changes to speech.py
 ---
-(2022, 1, 0): TODO: update during the dev cycle:
+(2022, 1, 0): various constants moved to enums, notably a controlTypes refactor.
 (2021, 1, 0): wxPython 4.1.1, SayAll / Speech re-arranged, removal of previously deprecated code.
 (2019, 3, 0): speech refactor, Python 3
 (0, 0, 0): API version zero, used to signify addons released prior to API version checks.
