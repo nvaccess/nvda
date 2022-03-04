@@ -1,0 +1,1 @@
+from .mplayerc import AppModule
