@@ -1708,8 +1708,8 @@ This field sets the amount of lines you will move by when pressing page up or pa
 ==== Use screen layout ====[BrowseModeSettingsScreenLayout]
 Key: NVDA+v
 
-This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown.
-If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
+This option allows you to specify whether browse mode should place clickable content (links, buttons and fields) on its own line, or if it should keep it in the flow of text as it is visually shown. Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
+When screen layout is enabled, page elements will stay as they are visually shown. For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line. If it is disabled, then page elements will be placed on their own lines, which may be easier to understand during line by line page navigation, and may make items easier to interact with for some users.
 
 ==== Enable browse mode on page load ====[BrowseModeSettingsEnableOnPageLoad]
 This checkbox toggles whether browse mode should be automatically enabled when loading a page.
