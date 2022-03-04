@@ -332,6 +332,7 @@ NVDA fournit les commandes clavier suivantes relatives au curseur système :
 | Lire ligne courante | NVDA+flèche haut | NVDA+l | Lit la ligne où se trouve le curseur système. Un double appui épelle la ligne. Un triple appui l'épelle en code international. |
 | Lire texte sélectionné | NVDA+Maj+flèche haut | NVDA+Maj+s | Lit tout le texte actuellement sélectionné |
 | Annoncer la mise en forme du texte | NVDA+f | NVDA+f | annonce la mise en forme du texte à la position actuelle du curseur. Un double appui présente l'information en mode navigation |
+| Annoncer la position du curseur | NVDA+pavnumEffacement | NVDA+effacement | Aucun | Annonce des informations sur l'emplacement du texte ou de l'objet à la position du curseur système. Par exemple, cela peut inclure le pourcentage dans le document, la distance depuis le bord de la page ou la position exacte sur l'écran. Appuyer deux fois peut fournir plus de détails. |
 | Phrase suivante | alt+flècheBas | alt+flècheBas | Amène le curseur à la phrase suivante et la lit. (Supporté seulement sous Microsoft Word et Outlook) |
 | Phrase précédente | alt+flècheHaut | alt+flècheHaut | Amène le curseur à la phrase précédente et la lit. (Supporté seulement sous Microsoft Word et Outlook) |
 
@@ -614,13 +615,19 @@ MathPlayer est disponible en téléchargement gratuit sur : https://www.dessci.
 
 NVDA supporte les types de contenu mathématiques suivants :
 - MathML sous Mozilla Firefox, Microsoft Internet Explorer et Google Chrome.
-- Design Science MathType sous Microsoft Word et PowerPoint. 
+- Microsoft Word 365 Modern Math Equations via UI automation :
+NVDA est capable de lire et d'interagir avec des équations mathématiques dans Microsoft Word 365/2016 build 14326 et supérieur.
+Notez cependant que toutes les équations MathType créées précédemment doivent d'abord être converties en Office Math en les sélectionnant et en choisissant Options d'équation -> Convertir en Office Math dans le menu contextuel. Assurez-vous que votre version de MathType est la dernière version avant de faire cela.
+Microsoft Word fournit également désormais une navigation basée sur des symboles linéaires à travers les équations elles-mêmes et prend en charge la saisie de mathématiques à l'aide de plusieurs syntaxes, y compris LateX. Pour plus de détails, veuillez consulter [Équations au format linéaire utilisant UnicodeMath et LaTeX dans Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word- 2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+- Microsoft Powerpoint et les anciennes versions de Microsoft Word :
+NVDA peut lire et parcourir les équations MathType dans Microsoft Powerpoint et Microsoft Word.
 MathType doit être installé pour que cela fonctionne.
 La version de démonstration est suffisante.
 Elle peut être téléchargée à partir de https://www.dessci.com/en/products/mathtype/
-- MathML sous Adobe Reader. 
+- Adobe Reader. 
 Notez que ceci n'est pas un standard officiel, ce qui fait qu'actuellement, il n'existe pas de logiciels grand public pouvant produire ce contenu.
-- Math sous Kindle for PC pour les livres avec du contenu mathématique accessible.
+- Kindle Reader pour PC :
+NVDA peut lire et parcourir Math dans Kindle pour PC pour les livres avec des mathématiques accessibles.
 -
 
 Durant la lecture d'un document, NVDA annoncera tout contenu mathématique supporté quand il se présente.
@@ -766,6 +773,26 @@ L'appui sur le point 7 efface la dernière cellule ou le dernier caractère brai
 Le point 8 traduit toute saisie braille puis appuie sur la touche Entrée.
 L'appui simultané sur les points 7 et 8 traduit toute saisie braille sans ajouter d'espace ou actionner la touche entrer.
 %kc:endInclude
+
++++ Saisie de raccourcis clavier +++[BrailleKeyboardShortcuts]
+NVDA prend en charge la saisie de raccourcis clavier et l'émulation de touches à l'aide de l'afficheur braille.
+Cette émulation se présente sous deux formes : l'attribution d'une entrée braille directement à un appui sur une touche et l'utilisation des touches de modification virtuelles.
+
+Les touches couramment utilisées, telles que les touches fléchées ou l'appui sur Alt pour accéder aux menus, peuvent être mappées directement sur la saisie braille.
+Le pilote de chaque afficheur braille est pré-équipé avec certaines de ces affectations.
+Vous pouvez modifier ces affectations ou ajouter de nouvelles touches émulées à partir de la [boîte de dialogue Gestes de commandes #InputGestures].
+
+Bien que cette approche soit utile pour les touches fréquemment pressées ou uniques (telles que la tabulation), vous ne souhaiterez peut-être pas attribuer un ensemble unique de touches à chaque raccourci clavier.
+Pour permettre l'émulation de pression de touches lorsque les touches de modification sont maintenues enfoncées, NVDA fournit des commandes pour basculer entre les touches contrôle, alt, majuscule, windows et NVDA, ainsi que des commandes pour certaines combinaisons de ces touches.
+Pour utiliser ces bascules, appuyez d'abord sur la commande (ou la séquence de commandes) des touches de modification sur lesquelles vous souhaitez appuyer, puis saisissez le caractère faisant partie du raccourci clavier que vous souhaitez saisir.
+Par exemple, pour produire control+f, utilisez la commande "bascule de touche contrôle" puis tapez un f,
+et pour saisir control+alt+t, utilisez soit les commandes "bascule de touche contrôle" et "bascule de touche alt", dans n'importe quel ordre, soit la commande "bascule de touches Contrôle et alt", suivie de la saisie d'un t.
+
+Si vous basculez accidentellement les touches de modification, exécuter à nouveau la commande bascule supprimera le modificateur.
+
+Lors de la saisie en braille abrégé, l'utilisation des touches de modification entraînera la traduction de votre entrée comme si vous aviez appuyé sur les points 7 + 8.
+De plus, la touche émulée ne peut pas refléter le braille tapé avant que la touche de modification ne soit enfoncée.
+Cela signifie que, pour taper alt+2 avec un code braille qui utilise un signe dièse, vous devez d'abord basculer Alt puis taper un signe dièse.
 
 + Vision +[Vision]
 Bien que NVDA soit en premier lieu destiné à des personnes aveugles ou malvoyantes qui utilisent principalement la parole ou le braille pour accéder à un ordinateur, il offre aussi des facilités internes pour changer le contenu de l'écran.
@@ -1725,6 +1752,7 @@ Activée par défaut, cette option vous permet de choisir si des gestes (tels qu
 Par exemple, si l'option est activée, si la lettre j est pressée, elle sera interceptée pour ne pas atteindre le document, même si ce n'est ni une touche de navigation rapide ni une commande dans l'application elle-même.
 Dans ce cas NVDA demandera à Windows de jouer un son par défaut quand une touche interceptée est pressée.
 
+%kc:setting
 ==== Amener automatiquement le focus système aux éléments focalisables ====[BrowseModeSettingsAutoFocusFocusableElements]
 touche : NVDA+8
 
@@ -1751,6 +1779,7 @@ On peut configurer les annonces suivantes :
  - Couleurs
 - Informations sur le document
  - Commentaires
+ - Signets
  - Modifications de l'éditeur
  - Fautes d'orthographe
 - Pages et espacement
@@ -1846,9 +1875,6 @@ Nous ne recommandons toujours pas à la majorité des utilisateurs d'activer cet
 ==== Utilisez UI Automation pour accéder à la console Windows quand elle est disponible ====[AdvancedSettingsConsoleUIA]
 Si cette option est activée, NVDA utilisera une nouvelle version en cours de développement de son support de la console Windows qui tire parti des [améliorations de l'accessibilité apportées par Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Cette fonctionnalité est très expérimentale et est encore incomplète, son utilisation n'est donc pas encore recommandée. Cependant, une fois terminée, il est prévu que cette nouvelle prise en charge deviendra la valeur par défaut, améliorant les performances et la stabilité de NVDA dans les consoles de commande Windows.
 
-==== Énoncer les mots de passe dans les consoles UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Cette option définit si les caractères sont annoncés par [Écho clavier par caractère #KeyboardSettingsSpeakTypedCharacters] ou [Écho clavier par mot #KeyboardSettingsSpeakTypedWords] dans les situation où l'écran ne se met pas à jour (telles que les zones de saisie de mot de passe) dans certains programmes de terminaux, comme la Console Windows avec le support UI automation activé. Pour des raisons de sécurité, ce paramètre devrait rester désactivé. Cependant, vous pouvez souhaiter l'activer si vous ressentez des problèmes de performances ou d'instabilité avec l'écho par caractère ou par mot dans la console, ou si vous travaillez dans un environnement de confiance et préférez l'annonce des mots de passe.
- 
 ==== Utiliser UIA avec Microsoft Edge et autres navigateurs basés sur Chromium quand c'est possible ====[ChromiumUIA]
 Cette option permet de définir quand UIA sera utilisé si disponible dans les navigateurs basés sur Chromium tels que Microsoft Edge.
 Le support d'UIA pour les navigateurs basés sur Chromium est au début de son développement et peut ne pas apporter le même niveau d'accessibilité que IA2.
@@ -1863,8 +1889,8 @@ La liste déroulante contient les options suivantes :
 Ce groupe d'options est utilisé pour activer des fonctionnalités qui ajoutent une prise en charge expérimentale des annotations ARIA.
 Certaines de ces fonctionnalités peuvent être incomplètes.
 Les options suivantes existent :
-- "Annoncer les détails en mode navigation" : permet de signaler si un objet a des détails en mode navigation.
-L'annonce du résumé de ces détails peut être faite en attribuant un geste à l'aide du [dialogue Gestes de commandes #InputGestures].
+- "Annoncer 'contient des détails' pour les annotations structurées" : active l'annonce si le texte ou le contrôle contient plus de détails.
+Un résumé des détails supplémentaires peut être signalé en attribuant un geste à "Signaler le résumé de tous les détails d'annotation au niveau du curseur système" à l'aide de la [boîte de dialogue Gestes de commandes #InputGestures].
 - "Toujours annoncer aria-description" :
   Lorsque la source de ``accDescription`` est aria-description, la description est annoncée.
   Ceci est utile pour les annotations sur le web.
@@ -1884,8 +1910,13 @@ Cependant, pour la navigation/édition de feuilles de calcul basiques, cette opt
 Nous ne recommandons toujours pas que la majorité des utilisateurs active cette option par défaut, mais nous encourageons les utilisateurs de Microsoft Excel version 16.0.13522.10000 ou ultérieures à tester cette fonctionnalité et à nous faire part de leurs commentaires.
 L'implémentation d'UI Automation dans Microsoft Excel évolue fréquemment, et les versions de Microsoft Office antérieures à 16.0.13522.10000 n'exposent peut-être pas assez d'informations pour que cette option soit d'une quelconque utilité.
 
-==== Utiliser le nouveau support de l'écho par caractère dans les anciennes consoles Windows quand disponible ====[AdvancedSettingsKeyboardSupportInLegacy]
-Cette option active une méthode alternative pour détecter la frappe des caractères dans les consoles de commandes Windows.
+==== Énoncer les mots de passe dans tous les terminaux améliorés ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ce paramètre définit si les caractères sont prononcés en [écho clavier par caractère #KeyboardSettingsSpeakTypedCharacters] ou [écho clavier par mot #KeyboardSettingsSpeakTypedWords] dans les situations où l'écran ne se met pas à jour (comme la saisie du mot de passe) dans certains programmes de terminal, tels que la console Windows avec l'automatisation de l'interface utilisateur support activé et Mintty.
+Pour des raisons de sécurité, ce paramètre devrait être laissé désactivé.
+Cependant, vous souhaiterez peut-être l'activer si vous rencontrez des problèmes de performances ou une instabilité avec les annoncess de caractères et/ou de mots saisis dans les consoles, ou si vous travaillez dans des environnements de confiance et préférez l'annonce du mot de passe.
+
+==== Utiliser la prise en charge améliorée de la saisie de caractères dans l'ancienne console Windows lorsqu'elle est disponible ====[AdvancedSettingsKeyboardSupportInLegacy]
+Cette option active une méthode alternative pour détecter les caractères saisis dans les anciennes consoles Windows.
 Bien qu'elle améliore les performances et empêche certains affichages de console d'être épelés, elle peut être incompatible avec certains programmes de terminaux.
 Cette fonctionnalité est disponible et activée par défaut sous Windows 10 versions 1607 et ultérieures quand UI Automation n'est pas disponible ou désactivée.
 Avertissement : quand cette option est activée, les caractères tapés qui n'apparaissent pas à l'écran comme les mots de passe, ne seront pas supprimés.
@@ -1894,14 +1925,14 @@ Dans les environnement non sûrs, vous pouvez désactiver temporairement [Écho 
 ==== Algorithme de diff ====[DiffAlgo]
 Ce paramètre définit comment NVDA détermine le nouveau texte à annoncer dans les terminaux.
 La liste déroulante algorithme de diff a trois options :
-- Automatique : À partir de NVDA 2021.2, cette option est équivalente à "autoriser Diff Match Patch".
-- Autoriser Diff Match Patch : Cette option fait que NVDA calcule les changements de texte du terminal par caractère.
+- Automatique : Cette option fait que NVDA préfère Diff Match Patch dans la plupart des situations, mais se rabat sur Difflib dans les applications problématiques, telles que les anciennes versions de la console Windows et de Mintty.
+- Diff Match Patch : Cette option permet à NVDA de calculer les modifications apportées au texte du terminal par caractère, même dans les situations où cela n'est pas recommandé.
 Cela peut améliorer les performances quand de grandes quantités de texte sont écrites à la console et permet l'annonce plus précises des changements intervenant en milieu de ligne.
-Cependant, cela peut être incompatible avec certaines applications.
-Cette fonctionnalité est supportée dans la Console Windows de Windows 10 versions 1607 et ultérieures.
-Par ailleurs, elle peut être disponible dans d'autres terminaux dans des versions antérieures de Windows.
-- forcer Difflib : Cette option fait que NVDA calcule les changements de texte du terminal par ligne
+Cependant, dans certaines applications, la lecture d'un nouveau texte peut être saccadée ou incohérente.
+- Difflib : cette option permet à NVDA de calculer les modifications apportées au texte du terminal par ligne, même dans les situations où cela n'est pas recommandé.
 Ce comportement est identique à celui de NVDA en version 2020.4 et antérieures.
+Ce paramètre peut stabiliser la lecture du texte entrant dans certaines applications.
+Cependant, dans les terminaux, lors de l'insertion ou de la suppression d'un caractère au milieu d'une ligne, le texte après le curseur sera lu.
 -
 
 ==== Tenter d'interrompre la parole pour les événements de focus expirés ====[CancelExpiredFocusSpeech]
@@ -1944,9 +1975,9 @@ Ce sont :
 Vous devez assigner des gestes personnalisés en utilisant le [dialogue Gestes de Commandes #InputGestures] si vous voulez ouvrir l'un de ces dialogues de dictionnaire depuis n'importe où.
 
 Tous les dialogues des dictionnaires contiennent une liste de règles qui seront utilisées pour produire la parole. 
-Chaque dialogue contient aussi des boutons "Ajouter", "Éditer" et "Supprimer"
+Le dialogue contient aussi des boutons "Ajouter", "Éditer", "Supprimer" et "Tout supprimer".
 
-Pour ajouter une règle au dictionnaire, cliquez sur le bouton "Ajout", remplissez les champs dans le dialogue puis cliquez sur "OK".
+Pour ajouter une nouvelle règle au dictionnaire, cliquez sur le bouton "Ajout", remplissez les champs dans le dialogue puis cliquez sur "OK".
 Vous verrez ainsi votre nouvelle règle dans la liste des règles.
 Cependant, pour être sûr que votre règle est vraiment sauvegardée, n'oubliez pas de cliquer sur le bouton "OK" pour quitter le dialogue de dictionnaire une fois que vous aurez fait toutes vos modifications.
 
@@ -2190,6 +2221,8 @@ Pour empêcher des routages cellules non intentionnels, la commande s'exécute a
 La souris doit survoler jusqu'à ce que la cellule devienne verte.
 La cellule commencera avec une couleur jaune clair, virera à l'orange, puis deviendra brusquement verte.
 
+Pour activer/désactiver la visionneuse braille de n'importe où, Veuillez assigner un geste de commande personnalisé en utilisant le [dialogue Gestes de commandes #InputGestures].
+
 ++ Console Python ++[PythonConsole]
 La console Python de NVDA, disponible sous Outils dans le menu NVDA, est un outil de développement utile pour le débogage, l'inspection générale des internes de NVDA ou l'inspection de la hiérarchie d'accessibilité d'une application.
 Pour plus d'informations, veuillez consulter le [Guide de développement NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2334,7 +2367,6 @@ Recherchez la langue de base (telle que Anglais ou Français), puis trouvez la v
 Sélectionnez toutes les langues désirées et utilisez le bouton "Ajouter" pour les ajouter.
 Une fois les langues ajoutées, redémarrez NVDA.
 
-
 Veuillez consulter cet article de Microsoft pour une liste de voix disponibles : https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Terminaux Braille Pris en Charge +[SupportedbrailleDisplays]
@@ -2355,6 +2387,7 @@ Les terminaux suivants supportent cette fonctionnalité de détection automatiqu
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Terminaux Eurobraille Esys/Esytime/Iris
 - Afficheurs Nattiq nBraille
+- Seika Notetaker: MiniSeika (16, 24 cellules), V6, et V6Pro (40 cellules)
 - N'importe quel afficheur supportant le protocole standard HID Braille
 -
 
@@ -2404,6 +2437,17 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | touche échap | barreEspacebraille+point1+point5 |
 | touche Windows | barreEspacebraille+point2+point4+point5+point6 |
 | touche espace | barreEspacebraille |
+| Bascule touche contrôle | barreEspaceBraille+point3+point8 |
+| Bascule touche alt | barreEspaceBraille+point6+point8 |
+| Bascule touche Windows | barreEspaceBraille+point4+point8 |
+| Bascule touche NVDA | barreEspaceBraille+point5+point8 |
+| Bascule touche majuscule | barreEspaceBraille+point7+point8 |
+| Bascule touches contrôle et majuscule | barreEspaceBraille+point3+point7+point8 |
+| Bascule touche alt et majuscule | barreEspaceBraille+point6+point7+point8 |
+| Bascule touches Windows et majuscule | barreEspaceBraille+point4+point7+point8 |
+| Bascule touches NVDA et majuscule | barreEspaceBraille+point5+point7+point8 |
+| Bascule touches contrôle et alt | barreEspaceBraille+point3+point6+point8 |
+| bascule contrôle, alt et majuscule keys | barreEspaceBraille+point3+point6+point7+point8 |
 | touche Windows+d (minimiser toutes les applications) | barreEspacebraille+point1+point2+point3+point4+point5+point6 |
 | Rapporter la ligne courante | barreEspacebraille+point1+point4 |
 | menu NVDA | barreEspacebraille+point1+point3+point4+point5 |
@@ -2731,13 +2775,21 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ Seika Braille Displays ++[Seika]
-Les afficheurs braille Seika Version 3, 4 et 5 (40 caractères) et Seika80 (80 caractères) de [Nippon Telesoft https://www.nippontelesoft.com/] sont pris en charge.
-Vous pouvez trouver plus d'informations sur ces afficheurs et les pilotes requis sur le site https://en.seika-braille.com/down/index.html.
-Vous devez d'abord installer les pilotes USB fournis par le fabricant.
+Les afficheurs braille Seika suivants de Nippon Telesoft sont pris en charge en deux groupes avec des fonctionnalités différentes :
+- [Seika Version 3, 4, et 5 (40 cellules), Seika80 (80 cellules) #SeikaBrailleDisplays]
+- [MiniSeika (16, 24 cellules), V6, et V6Pro (40 cellules) #SeikaNotetaker]
+-
+Vous pouvez trouver plus d'informations concernant ces afficheurs sur https://en.seika-braille.com/down/index.html.
 
-Ce terminal ne supporte pas encore la détection automatique en arrière-plan.
 
-Voici les assignations de touches pour ce terminal sous NVDA.
++++ Seika Version 3, 4, et 5 (40 cellules), Seika80 (80 cellules) +++[SeikaBrailleDisplays]
+Ces terminaux ne supporte pas encore la détection automatique en arrière-plan.
+- Sélectionnez "Terminaux Braille Seika" pour configurer manuellement
+- Un pilote doit être installé avant d'utiliser les Seika v3/4/5/80.
+Les pilotes sont [fournis par le fabriquant https://en.seika-braille.com/down/index.html].
+-
+
+Voici les assignations de touches pour le terminal Seika Braille :
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
 %kc:beginInclude
 || Nom | Touche |
@@ -2753,6 +2805,48 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Menu NVDA | gauche+droite |
 | Aller à la cellule braille | route (amener le curseur au caractère) |
 %kc:endInclude
+
+
++++ MiniSeika (16, 24 cellules), V6, et V6Pro (40 cellules) +++[SeikaNotetaker]
+- La détection automatique de l'afficheur braille en arrière-plan de NVDA est prise en charge via USB et Bluetooth.
+- Sélectionnez "Seika Notetaker" ou "automatique" pour configurer.
+- Aucun pilote supplémentaire n'est requis lors de l'utilisation d'un afficheur braille Seika Notetaker.
+-
+
+Voici les assignation de touches pour le Seika Notetaker.
+Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement braille vers la gauche | gauche |
+| Défilement braille vers la droite | droite |
+| Dire tout | espace+RetourArrière |
+| Menu NVDA | Gauche+Droite |
+| Amener l'afficheur braille à la ligne précédente | LJ haut |
+| Amener l'afficheur braille à la ligne suivante | LJ bas |
+| Basculer le suivi braille | LJ centre |
+| tab | LJ droite |
+| Maj+tab | LJ gauche |
+| FlècheHaut | RJ haut |
+| FlècheBas | RJ bas |
+| FlècheGauche | RJ gauche |
+| FlècheDroite | RJ droit |
+| Aller à la cellule braille | routage |
+| maj+flècheHaut | Espace+RJ haut, RetourArrière+RJ haut |
+| Maj+flècheBas | Espace+RJ bas, RetourArrière+RJ bas |
+| maj+flèchegauche | Espace+RJ gauche, RetourArrière+RJ gauche |
+| maj+flècheDroite | Espace+RJ droit, RetourArrière+RJ droit |
+| touche entrer | RJ centre, pointt8
+| touche échap | Espace+RJ centre |
+| touche windows | RetourArrière+RJ centre |
+| touche espace | Espace, RetourArrière |
+| touche RetourArrière | point7 |
+| touche pagePrec | Espace+LJ droit |
+| touche pageSuiv | Espace+LJ gauche |
+| touche début | espace+LJ haut |
+| touche fin | espace+LJ bas |
+| touche contrôle+début | retourArrière+LJ haut |
+| touche contrôle+fin | retourArrière+LJ bas |
+
 
 ++ Nouveaux Modèles de Papenmeier brailleX ++[Papenmeier]
 Les afficheurs braille suivant sont supportés :
@@ -3244,6 +3338,7 @@ Voici les options de ligne de commande de NVDA :
 | -f NOMDUFICHIERJOURNAL | --log-file=NOMDUFICHIERJOURNAL | Le fichier où les messages du journal doivent être écrits |
 | -l NIVEAUDEJOURNALISATION | --log-level=NIVEAUDEJOURNALISATION | Le niveau minimal de messages journalisés (débogage 10, info 20, avertissement 30, erreur 40, critique 50, désactivé 100), le défaut est avertissement |
 | -c CHEMINDECONFIG | --config-path=CHEMINDECONFIG | Le chemin vers lequel tous les paramètres de NVDA sont stockés |
+| Aucun | --lang=LANGUAGE | Remplacer la langue NVDA configurée. Choisissez "Windows" pour la langue en cours par défaut, "en" pour Anglais, etc. |
 | -m | --minimal | Pas de sons, pas d'interface, pas de message de démarrage etc. |
 | -s | --secure | Mode sécurisé : (désactive la console Python et la journalisation, parfois utilisé dans les écrans sécurisés) |
 | Aucune | --disable-addons | Les extensions n'auront pas d'effet |

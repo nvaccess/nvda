@@ -332,6 +332,7 @@ Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Ve
 | Aktuelle Zeile lesen | NVDA+Pfeil nach oben | NVDA+L | Liest die Zeile, auf der sich der System-Cursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert, wird die Tastenkombination 3-mal gedrückt, wird die Zeile phonetisch buchstabiert. |
 | Markierten Text lesen | NVDA+Umschalt+Pfeil nach oben | NVDA+Umschalt+S | Liest den markierten Text, sofern vorhanden. |
 | Text-Formatierungen ausgeben | NVDA+F | NVDA+F | Gibt die Text-Formatierungen unter dem System-Cursor aus. Bei zweimal Drücken werden diese Informationen im Lesemodus angezeigt. |
+| System-Cursor-Position mitteilen | NVDA+Nummernblock Komma | NVDA+Entfernen | Keine | Teilt Informationen über die Position des Textes oder des Objekts an der Position des System-Cursors mit. Dies kann z. B. der Prozentsatz im Dokument, der Abstand zum Seitenrand oder die genaue Position auf dem Bildschirm sein. Durch zweimaliges Drücken können weitere Details angezeigt werden. |
 | Nächsten Satz lesen | Alt+Pfeiltaste nach unten | Alt+Pfeiltaste nach unten | Zieht die Schreibmarke zum nächsten Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt). |
 | Vorherigen Satz lesen | Alt+Pfeiltaste nach oben | Alt+Pfeiltaste nach oben | Zieht die Schreibmarke zum vorherigen Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt). |
 
@@ -380,7 +381,7 @@ Mit den folgenden Befehlen navigieren Sie zwischen den Objekten:
 | Zum Fokus-Objekt navigieren | NVDA+Num Minus | NVDA+Rücktaste | Keine | Navigiert zum aktuell hervorgehobenen Objekt und zieht den NVDA-Cursor zum System-Cursor, sofern dieser sichtbar ist. |
 | Aktuelles Navigator-Objekt aktivieren | NVDA+Num Eingabetaste | NVDA+Eingabetaste | Doppeltippen | Aktiviert das aktuelle Navigator-Objekt (ähnlich einem Mausklick oder dem Drücken der Leertaste). |
 | System-Cursor zum aktuellen Navigator-Objekt oder die Einfügemarke zum NVDA-Cursor ziehen | NVDA+Umschalt+Num Minus | NVDA+Umschalt+Rücktaste | Keine | Wird diese Tastenkombination einmal gedrückt, wird der System-Fokus zum aktuellen Navigator-Objekt gezogen. Wird sie zweimal gedrückt, so wird der System-Cursor zum NVDA-Cursor gezogen. |
-| Position des NVDA-Cursors ansagen | NVDA+Num Entfernen | NVDA+Entfernen | Keine | Meldet Informationen über die Position des Textes oder des Objektes, in welchem sich der NVDA-Cursor befindet, z. B. Dokumentposition in Prozent oder die exakte Objektposition. Zweimaliges Drücken der Tastenkombination meldet möglicherweise weitere Informationen. |
+| Position des NVDA-cursors mitteilen | NVDA+Umschalt+Nummernblock Komma | NVDA+Umschalt+Entfernen | Keine | Teilt Informationen über die Position des Textes oder Objekts am NVDA-Cursor mit. Dies kann z. B. der Prozentsatz im Dokument, der Abstand zum Seitenrand oder die genaue Position auf dem Bildschirm sein. Durch zweimaliges Drücken können weitere Details angezeigt werden. |
 | NVDA-Cursor in die Statusleiste verschieben | Keine | Keine | Keine | Liest die Statusleiste vor, falls vorhanden. Es verschiebt auch das Navigator-Objekt an diese Position. |
 %kc:endInclude
 
@@ -614,12 +615,19 @@ MathPlayer ist als kostenloser Download verfügbar unter: https://www.dessci.com
 
 NVDA unterstützt die folgenden mathematischen Inhalte:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer und Google Chrome.
-- Design Science MathType in Microsoft Word und Microsoft PowerPoint.
+- Moderne mathematische Gleichungen über UIA in Microsoft Word 365:
+NVDA ist in der Lage, mathematische Gleichungen in Microsoft Word 365 / 2016 Build 14326 und neuer zu auszulesen und mit ihnen zu interagieren.
+Beachten Sie jedoch, dass alle zuvor erstellten MathType-Gleichungen zunächst in Office Math konvertiert werden müssen, indem Sie sie markieren und im Kontextmenü Gleichungsoptionen -> In Office Math konvertieren auswählen. Vergewissern Sie sich, dass Ihre Version von MathType die Neueste ist, bevor Sie dies tun.
+Microsoft Word bietet jetzt auch eine auf Linear-Symbolen basierende Navigation durch die Gleichungen selbst und unterstützt die Eingabe von mathematischen Formeln mit verschiedener Syntax, einschließlich LaTeX. Weitere Einzelheiten finden Sie unter [Linear formatierte Gleichungen mit UnicodeMath und LaTeX in Microsoft Word https://support.microsoft.com/de-de/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8].
+- Microsoft PowerPoint und ältere Versionen von Microsoft Word: 
+NVDA kann MathType-Gleichungen sowohl in Microsoft Powerpoint als auch in Microsoft Word lesen und darin navigieren.
 Damit dies funktioniert, muss MathType installiert sein.
 Die Testversion ist ausreichend.
-- MathML in Adobe Reader.
+Es kann heruntergeladen werden von https://www.dessci.com/en/products/mathtype/
+- Adobe Reader:
 Beachten Sie, dass MathML noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
-- Mathematik in Amazon Kindle für PC für Bücher mit barrierefreier Mathematik.
+- Kindle für PC:
+NVDA kann Mathematik in Kindle für PC lesen und navigieren, um Bücher mit zugänglicher Mathematik zu lesen.
 -
 
 Wenn Sie ein Dokument lesen, das mathematischen Inhalt enthält, liest NVDA diesen vor, sofern dieser von NVDA unterstützt wird.
@@ -766,6 +774,25 @@ Drücken Sie den Punkt 7, um das letzte Zeichen zu löschen.
 Drücken Sie den Punkt 8, um einen Zeilenvorschub einzufügen.
 Drücken Sie Punkte 7 und 8, um die eingegebenen Braillezeichen zu übersetzen, ohne einen Zeilenvorschub oder ein Leerzeichen einzufügen.
 %kc:endInclude
+
++++ Eingabe von Tastaturkürzeln +++[BrailleKeyboardShortcuts]
+NVDA unterstützt die Eingabe von Tastenkombinationen und die Emulation von Tastendrücken über die Braillezeile.
+Diese Emulation gibt es in zwei Formen: Die direkte Zuweisung einer Braille-Eingabe zu einem Tastendruck und die Verwendung der virtuellen Modifikator-Tasten.
+
+Häufig verwendete Tasten, wie die Pfeiltasten oder das Drücken der Alt-Taste zum Aufrufen von Menüs, können direkt mit Braille-Eingaben verknüpft werden.
+Der Treiber für jede Braillezeile ist bereits mit einigen dieser Zuordnungen voreingestellt.
+Sie können diese Zuweisungen ändern oder neue emulierte Tasten über den [Dialogfeld für die Tastenbefehle #InputGestures] hinzufügen.
+
+Während dieser Ansatz für häufig gedrückte oder eindeutige Tasten (z. B. Tabulator) nützlich ist, möchten Sie vielleicht nicht jedem Tastaturkürzel einen eindeutigen Satz von Tasten zuweisen.
+Zur Emulation von Tastendrücken bei gedrückten Sondertasten bietet NVDA Befehle zum Umschalten der Strg-, Alt-, Umschalt-, Windows- und NVDA-Tasten sowie Befehle für einige Kombinationen dieser Tasten.
+Um diese Umschalttasten zu verwenden, drücken Sie zunächst den Befehl (oder die Befehlsfolge) für die NVDA-Taste, die Sie drücken möchten, und geben Sie dann das Zeichen ein, das Teil des gewünschten Tastaturkürzels ist.
+Um z. B. Strg+F zu erzeugen, verwenden Sie den Befehl "Strg-Taste umschalten" und geben dann ein F ein, und um Strg+Alt+T einzugeben, verwenden Sie entweder die Befehle "Strg-Taste umschalten" und "Alt-Taste umschalten" in beliebiger Reihenfolge oder den Befehl "Strg- und Alt-Tasten umschalten" und geben dann ein T ein.
+
+Wenn Sie versehentlich die Modifikatortasten umschalten, können Sie den Befehl "Umschalten" erneut ausführen, um die Modifikatoren wieder zu entfernen.
+
+Wenn Sie in Braille-Schrift tippen, werden Ihre Eingaben mit den Umschalttasten so übersetzt, als ob Sie die Punkte 7+8 gedrückt hätten.
+Außerdem kann der emulierte Tastendruck nicht die Braille-Schrift widerspiegeln, die vor dem Drücken der Änderungstaste eingegeben wurde.
+Das bedeutet, dass Sie zur Eingabe von Alt+2 mit einem Braille-Code, der ein Zahlenzeichen verwendet, zuerst "Alt umschalten" und dann ein Zahlenzeichen eingeben müssen.
 
 + Visuelle Darstellungen +[Vision]
 Während sich NVDA in erster Linie an blinde oder sehbehinderte Menschen richtet, die in erster Linie Sprache und/oder Blindenschrift zur Bedienung eines Computers verwenden, bietet es auch integrierte Möglichkeiten, den Inhalt des Bildschirms zu ändern.
@@ -1722,8 +1749,9 @@ Bei eingeschalteter Option ertönt in NVDA vor der Ansage über die Änderung ei
 ==== Nur Tasten im virtuellen Dokument verarbeiten ====[BrowseModeSettingsTrapNonCommandGestures]
 Wenn diese Option aktiviert ist, werden Tastenkombinationen, die nicht mit Schnellnavigationsbefehlen belegt sind, direkt an die aktuelle Anwendung weitergereicht, wenn Sie diese innerhalb des Lesemodus benutzen.
 Wenn beispielsweise der Buchstabe "J" gedrückt wurde und aktiviert ist, würde er vom Erreichen des Dokuments abgefangen, obwohl es sich weder um einen Schnellnavigationsbefehl handelt noch wahrscheinlich um einen Befehl in der Anwendung selbst.
-In diesem Fall weist NVDA Windows an, einen Standardsound abzuspielen, wenn eine Taste gedrückt wird, die festgestellt wird.
+In diesem Fall weist NVDA Windows an, einen Standard-Sound abzuspielen, wenn eine Taste gedrückt wird, die festgestellt wird.
 
++%kc:setting
 ==== Automatisches Bewegen des System-Fokus auf fokussierbare Elemente im Lesemodus ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tastenkombination: NVDA+8
 
@@ -1733,7 +1761,7 @@ Dies kann zu einem schnelleren Verhalten im Browser und einer verbesserten Reakt
 Der Fokus wird noch auf das jeweilige Element aktualisiert, wenn man mit ihm interagiert (z. B. einen Schalter drückt, ein Kontrollkästchen markiert).
 Die Aktivierung dieser Option kann die Unterstützung für einige Websites auf Kosten der Leistung und Stabilität verbessern.
 
-+++ Dokumentformatierungen (NVDA+Strg+D) +++[DocumentFormattingSettings]
++++ Dokument-Formatierungen (NVDA+Strg+D) +++[DocumentFormattingSettings]
 Mit den meisten Kontrollfeldern in diesem Dialogfenster steuern Sie die Ansage der Formatierungen, die Sie während des Navigierens in einem Dokument angesagt bekommen möchten.
 Wenn Sie z. B. das Kontrollkästchen ""Schriftartennamen ansagen"" aktivieren und anschließend in einem Text navigieren, wird NVDA jedes Mal den Namen der Schriftart ansagen, sobald sich die Schriftart ändert.
 
@@ -1750,6 +1778,7 @@ Konfigurieren können Sie die Meldungen von:
  - Farben
 - Informationen über das Dokument
  - Kommentare
+ - Lesezeichen
  - Dokumentänderungen
  - Rechtschreibfehler
  - Seiten und Abstände
@@ -1846,9 +1875,6 @@ Wir empfehlen den meisten Benutzern immer noch nicht, dies standardmäßig zu ak
 ==== Für den Zugriff auf die Windows-Konsole UIA verwenden, sofern verfügbar ====[AdvancedSettingsConsoleUIA]
 Wenn diese Option aktiviert ist, verwendet NVDA eine neue, experimentelle Version der Unterstützung für die Windows-Konsole, die die Vorteile von [Verbesserungen der Zugänglichkeit durch Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] nutzt. Diese Funktion ist sehr experimentell und noch unvollständig, daher wird ihre Verwendung noch nicht empfohlen. Es wird jedoch erwartet, dass diese neue Unterstützung nach ihrer Fertigstellung zur Standardeinstellung wird und die Leistung und Stabilität von NVDA in Windows-Kommandokonsolen verbessert.
 
-==== Passwörter vorlesen in der Windows-Konsole mit UIA-Unterstützung ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Diese Einstellung steuert, ob Zeichen während der Eingabe #KeyboardSettingsSpeakTypedCharacters] oder [Wörter während der Eingabe #KeyboardSettingsSpeakTypedWords] in Situationen vorgelesen werden sollen, in denen der Bildschirm in der Windows-Konsole bei aktivierter Unterstützung von UIA nicht aktualisiert wird (z. B. bei der Kennworteingabe). Aus Sicherheitsgründen sollte diese Einstellung deaktiviert bleiben. Sie sollten sie jedoch aktivieren, wenn Sie bei der Verwendung der neuen experimentellen Konsolenunterstützung von NVDA Leistungsprobleme oder Instabilität bei der Meldung von Zeichen und/oder Wörtern während der Eingabe feststellen.
-
 ==== UIA mit Microsoft Edge und anderen Chromium-basierten Browsern verwenden, sofern verfügbar ====[ChromiumUIA]
 Ermöglicht das Festlegen, wann UIA verwendet wird, wenn es in Chromium-basierten Browsern wie Microsoft Edge verfügbar ist.
 Die UIA-Unterstützung für Chromium-basierte Browser befindet sich noch in einem frühen Entwicklungsstadium und bietet möglicherweise nicht das gleiche Maß an Zugriff wie IA2.
@@ -1863,8 +1889,9 @@ Das Kombinationsfeld hat die folgenden Optionen:
 Diese Gruppe der Optionen wird verwendet, um Funktionen zu aktivieren, die experimentelle Unterstützung für ARIA-Anmerkungen ergänzen.
 Einige dieser Funktionen sind möglicherweise noch nicht vollständig.
 Es gibt folgende Möglichkeiten:
-- "Details im Lesemodus mitteilen": Ermöglicht die Berichterstellung, wenn ein Objekt Details im Browse-Modus hat.
 Die Zusammenfassung dieser Details kann durch Zuweisen eines Tastenbefehls mit dem Dialogfeld der [Tastenbefehle #InputGestures] gemeldet werden.
+- "Enthält Details"-Meldung für strukturierte Anmerkungen: Ermöglicht die Meldung, wenn der Text oder das Steuerelement weitere Details enthält.
+Eine Zusammenfassung der zusätzlichen Details kann durch Zuweisung eines Tastenbefehls zu "Zusammenfassung aller Anmerkungs-Details am System-Cursor mitteilen" über das [Dialogfeld für die Tastenbefehle #InputGestures] zugewiesen werden.
 - "Aria-Beschreibung immer ansagen":
   Wenn die Quelle von ``accDescription`` aria-description ist, wird die Beschreibung mitgeteilt.
   Dies ist nützlich für Anmerkungen im Web.
@@ -1884,8 +1911,13 @@ Für die grundlegende Navigation bzw. Bearbeitung von Tabellenkalkulationen kann
 Es wird nach wie vor empfohlen, dass die meisten Benutzer diese Funktion sie nicht standardmäßig aktivieren. Dafür wird mindestens Microsoft Excel Build 16.0.13522.10000 oder neuer benötigt. Jedoch können die Anwender diese Funktion trotzdem testen und Feedback auf Englisch bei NV Access einreichen.
 Die UIA-Implementierung von Microsoft Excel wird fortlaufend angepasst. die Versionen von Microsoft Office, die noch die Build 16.0.13522.10000 haben, stellen möglicherweise nicht genügend Informationen bereit, damit diese Option von Nutzen ist.
 
-==== Unterstützung bei neu eingegebenen Zeichen in der Windows-Konsole, sofern verfügbar ====[AdvancedSettingsKeyboardSupportInLegacy]
-Diese Option aktiviert eine alternative Methode zur Erkennung von Zeichen während der Eingabe in der Windows-Konsole.
+==== Passwörtern in allen erweiterten Terminals mitteilen ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Diese Einstellung steuert, ob Zeichen mit [Zeichen während der Eingabe ansagen #KeyboardSettingsSpeakTypedCharacters] oder [Wörter während der Eingabe ansagen #KeyboardSettingsSpeakTypedWords] in Situationen mitgeteilt werden, in denen der Bildschirm nicht aktualisiert wird (z. B. bei der Eingabe eines Kennworts) und zwar in einigen Terminal-Anwendungen wie der Windows-Konsole mit aktivierter Unterstützung für die UIA und Mintty.
+Aus Sicherheitsgründen sollte diese Einstellung deaktiviert bleiben.
+Sie sollten sie jedoch aktivieren, wenn Sie Leistungsprobleme oder Probleme bei der Stabilität bei der Meldung von eingegebenen Zeichen und/oder Wörtern in Konsolen feststellen oder in vertrauenswürdigen Umgebungen arbeiten und eine Kennwortanzeige dort bevorzugen.
+
+==== Verwendung der erweiterten Unterstützung für eingegebene Zeichen in der alten Windows-Konsole, sofern verfügbar ====[AdvancedSettingsKeyboardSupportInLegacy]
+Diese Option ermöglicht eine alternative Methode zur Erkennung eingegebener Zeichen in älteren Windows-Konsolen.
 Durch das Aktivieren dieser Option wird zwar die Leistung gesteigert und das Buchstabieren mancher Ausgaben in Windows-Konsolen verhindert; es könnten jedoch Probleme mit einigen Terminals auftreten.
 Diese Funktion ist verfügbar und seit Windows 10 Version 1607 standardmäßig aktiviert, wenn die UIA nicht verfügbar oder deaktiviert ist.
 Das eingeben von Zeichen, die nicht auf dem Bildschirm erscheinen (z. B. bei Passwörtern) wird nicht unterstützt, wenn diese Option aktiviert ist.
@@ -1894,14 +1926,14 @@ In Umgebungen, die nicht unterstützt werden, können Sie vorübergehend [Zeiche
 ==== Diff-Algorithmus ====[DiffAlgo]
 Diese Einstellung steuert, wie NVDA neuen Text in Terminals vorgelesen werden sollen.
 Das Kombinationsfeld "Diff-Algorithmus" hat drei Optionen:
-- Automatisch: Ab NVDA 2021.2 entspricht diese Option "Diff Match Patch zulassen".
-- Diff Match Patch zulassen: Diese Option veranlasst NVDA, Änderungen am Terminaltext zeichenweise zu berechnen.
+- Automatisch: Diese Option bewirkt, dass NVDA in den meisten Situationen Diff Match Patch bevorzugt, aber bei problematischen Anwendungen, wie z. B. älteren Versionen der Windows-Konsole und Mintty, auf Difflib zurückgreift.
+- Diff Match Patch: Diese Option bewirkt, dass NVDA Änderungen am Terminaltext zeichenweise berechnet, auch in Situationen, in denen dies nicht empfohlen wird.
 Dies kann die Leistung verbessern, wenn große Textmengen in die Konsole geschrieben werden, und ermöglicht eine genauere Meldung von Änderungen, die in der Mitte von Zeilen vorgenommen wurden.
-Es kann jedoch mit einigen Anwendungen inkompatibel sein, sodass Diff Match Patch nicht immer verwendet wird.
-Diese Funktion wird in der Windows-Konsole auf Windows 10 Versionen 1607 und neuer unterstützt.
-Zusätzlich kann es in anderen Terminals auf ältere Windows-Versionen verfügbar sein.
-- Difflib erzwingen: Diese Option veranlasst NVDA, Änderungen am Terminaltext zeilenweise zu berechnen.
+Bei einigen Anwendungen kann das Lesen von neuem Text jedoch abgehackt oder inkonsistent sein.
+- Difflib: Diese Option bewirkt, dass NVDA Änderungen am Terminaltext zeilenweise berechnet, auch in Situationen, in denen dies nicht empfehlenswert ist.
 Es ist identisch mit dem Verhalten von NVDA in den Versionen 2020.4 und älter.
+Diese Einstellung kann das Lesen von eingehendem Text in einigen Anwendungen stabilisieren.
+In Terminals wird jedoch beim Einfügen oder Löschen eines Zeichens in der Mitte einer Zeile der Text nach dem System-cursor vorgelesen.
 -
 
 ==== Sprachausgabe unterbrechen, wenn das Ereignis für den Fokus abgelaufen ist: ====[CancelExpiredFocusSpeech]
@@ -1944,7 +1976,7 @@ Diese sind:
 Sie müssen den Dialogfeldern eigene Tastenkombinationen zuweisen, falls Sie die Wörterbücher per Tastenkürzel aufrufen wollen. Verwenden Sie hierzu das Dialogfeld für die [Tastenbefehle #InputGestures].
 
 Alle Wörterbücher enthalten eine Liste von Sprachregeln, welche verwendet werden, um die Sprache zu verbessern.
-Die Dialogfelder enthalten die folgenden Schaltflächen: "Hinzufügen", "Bearbeiten" und "Entfernen".
+Die Dialogfelder enthalten die folgenden Schaltflächen: "Hinzufügen", "Bearbeiten", "Entfernen" und "Alles entfernen".
 
 Mit der Schaltfläche "Hinzufügen" erstellen Sie eine neue Regel im Wörterbuch. Anschließend füllen Sie die entsprechenden Felder aus und klicken danach auf "OK".
 Sie sehen nun die neu hinzugefügte Regel in der Regelliste.
@@ -2188,6 +2220,8 @@ Um ein unbeabsichtigtes Weiterleiten an Zellen zu verhindern, wird der Befehl ve
 Die Mauszeiger muss schweben, bis die Zelle grün wird.
 Die Zelle beginnt hellgelb, geht in orange über und wird plötzlich grün.
 
+Um den Braille-Betrachter von einer beliebigen Stelle aus umzuschalten, weisen Sie bitte einen benutzerdefinierten Tastenbefehl zu, indem Sie das [Dialogfeld für die Tastenbefehle #InputGestures] verwenden.
+
 ++ Die Python-Konsole ++[PythonConsole]
 Die Python-Konsole in NVDA, zu finden im Menü "Werkzeuge" im NVDA-Menü, ist ein Entwicklungswerkzeug, das für das Debugging, die allgemeine Inspektion von NVDA-Interna oder die Inspektion der Zugänglichkeitshierarchie einer Anwendung nützlich ist.
 Weitere Informationen finden Sie im [NVDA-Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2334,7 +2368,6 @@ Starten Sie NVDA nach dem Hinzufügen neu.
 
 In diesem [Microsoft-Artikel https://support.microsoft.com/de-de/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01] finden Sie eine Liste aller verfügbaren Stimmen.
 
-
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.
 
@@ -2353,6 +2386,7 @@ Die folgenden Braillezeilen unterstützen diese automatische Erkennung.
 - HIMS-Serien Braille Sense, Braille EDGE, Smart Beetle, Sync Braille
 - Braillezeilen von Eurobraille Esys, Esytime, Iris
 - Braillezeilen von Nattiq nBraille
+- Seika Notetaker: MiniSeika (mit 16 und 24 Module), V6 und V6Pro (mit 40 Modulen)
 - Jede Braillezeile, welches das Standard-HID-Braille-Protokoll unterstützt
 -
 
@@ -2402,6 +2436,17 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Informationen
 | Escape-Taste | Leertaste+Punkt1+Punkt5 |
 | Windows-Taste | Leertaste+Punkt2+Punkt4+Punkt5+Punkt6 |
 | Leertaste | Leertaste |
+| Strg+Taste umschalten | Leertaste+Punkt3+Punkt8 |
+| Alt-Taste umschalten | Leertaste+Punkt6+Punkt8 |
+| Windows-Taste umschalten | Leertaste+Punkt4+Punkt8 |
+| NVDA-Taste umschalten | Leertaste+Punkt5+Punkt8 |
+| Umschalt-Taste umschalten | Leertaste+Punkt7+Punkt8 |
+| Strg- und Umschalt-Tasten umschalten | Leertaste+Punkt3+Punkt7+Punkt8 |
+| Alt- und Umschalt-Tasten umschalten | Leertaste+Punkt6+Punkt7+Punkt8 |
+| Windows- und Umschalt-Tasten umschalten | Leertaste+Punkt4+Punkt7+Punkt8 |
+| NVDA- und Umschalt-Tasten umschalten | Leertaste+Punkt5+Punkt7+Punkt8 |
+| Strg- und Alt-Tasten umschalten | Leertaste+Punkt3+Punkt6+Punkt8 |
+| Strg-, Alt- und Umschalt-Tasten umschalten | Leertaste+Punkt3+Punkt6+Punkt7+Punkt8 |
 | Windows-Taste+M (Alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
 | Aktuelle Zeile ausgeben | Leertaste+Punkt1+Punkt4 |
 | NVDA-Menü anzeigen | Leertaste+Punkt1+Punkt3+Punkt4+Punkt5 |
@@ -2729,13 +2774,20 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 %kc:endInclude
 
 ++ Seika-Braillezeilen ++[Seika]
-Die Braillezeilen der Seika Versionen 3, 4 und 5 mit je 40 Modulen und die Seika 80 mit 80 Modulen der Firma [Nippon Telesoft #https://www.nippontelesoft.com/]werden unterstützt.
-Weitere Informationen zu den Braillezeilen und den benötigten Treibern finden Sie unter https://en.seika-braille.com/down/index.html.
-Zuerst müssen Sie die vom Hersteller gelieferten USB-Treiber installieren.
+Die folgenden Seika-Braillezeilen von Nippon Telesoft werden in zwei Gruppen mit unterschiedlicher Varianten unterstützt:
+- [Seika Version 3, 4 und 5 (mit 40 Modulen), Seika80 (mit 80 Modulen) #SeikaBrailleDisplays]
+- [MiniSeika (mit 16 und 24 Modulen), V6 und V6Pro (mit 40 Modulen) #SeikaNotetaker]
+-
+Weitere Informationen zu den Braillezeilen finden Sie unter https://de.seika-braille.com/down/index.html.
 
-Diese Braillezeilen unterstützen noch nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
++++ Seika Version 3, 4 und 5 (mit 40 Modulen), Seika80 (mit 80 Modulen) +++[SeikaBrailleDisplays]
+- Diese Braillezeilen unterstützen noch nicht die automatische Erkennung im Hintergrund durch NVDA.
+- Wählen Sie "Seika-Braillezeilen" zur manuellen Konfiguration aus
+- Vor der Verwendung von Seika v3/4/5/80 muss ein Gerätetreiber installiert werden.
+Die Treiber werden [vom Hersteller bereitgestellt https://de.seika-braille.com/down/index.html].
+-
 
-Die folgenden Tastenkombinationen für diese Braillezeile sind in NVDA verfügbar:
+Nachfolgend die Tastenbelegungen der Seika-Braillezeile.
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
 %kc:beginInclude
 || Name | Tastenkombination |
@@ -2751,6 +2803,48 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | NVDA-Menü | Links+Rechts |
 | Cursor zum Braille-Modul bewegen | Routing-Taste |
 %kc:endInclude
+
+
++++ MiniSeika (mit 16 und 24 Modulen), V6 und V6Pro (mit 40 Modulen) +++[SeikaNotetaker]
+- Die automatische Erkennung im Hintergrund der Braillezeile in NVDA wird über USB und Bluetooth unterstützt.
+- Wählen Sie zur Konfiguration "Seika Notetaker" oder "Automatisch" aus.
+- Bei Verwendung von Seika Notetaker sind keine zusätzlichen Treiber erforderlich.
+-
+
+Nachfolgend die Tastenbelegungen für Seika Notetaker.
+Wo sich diese Tasten befinden, entnehmen Sie bitte der Dokumentation der Braillezeile.
+%kc:beginInclude
+|| Name | Taste |
+| Braillezeile rückwärts scrollen | Links |
+| Braillezeile vorwärts scrollen | Rechts |
+| Alles Lesen | Leertaste+Rücktaste |
+| NVDA-Menü | Links+Rechts |
+| Braillezeile zur vorherigen Zeile ziehen | LJ oben |
+| Braillezeile zur nächsten Zeile ziehen | LJ unten |
+| Braillezeile koppeln umschalten | LJ mittig |
+| Tab | LJ rechts |
+| Umschalt+Tab | LJ links |
+| Pfeiltaste nach oben | RJ oben |
+| Pfeiltaste nach unten | RJ unten |
+| Pfeiltaste nach links | RJ links |
+| Pfeiltaste nach rechts | RJ rechts |
+| Zum braille-Modul navigieren | Routing-Taste |
+| Umschalt+Pfeiltaste nach oben | Leertaste+RJ oben, Rücktaste+RJ oben |
+| Umschalt+Pfeiltaste nach unten | Leertaste+RJ unten, Rücktaste+RJ unten |
+| Umschalt+Pfeiltaste nach links | Leertaste+RJ links, Rücktaste+RJ links |
+| Umschalt+Pfeiltaste nach rechts | Leertaste+RJ rechts, Rücktaste+RJ rechts |
+| Eingabetaste | RJ mittig, Punkt8 |
+| Escape-Taste | Leertaste+RJ mittig |
+| Windows-Taste | Rücktaste+RJ mittig |
+| Leertaste | Leertaste, Rücktaste |
+| Rücktaste | Punkt7 |
+| Taste Seite nach oben | Leertaste+LJ rechts |
+| Taste Seite nach unten | Leertaste+LJ links |
+| Taste Pos1 | Leertaste+LJ oben |
+| Taste Ende | Leertaste+LJ unten |
+| Strg+Pos1 | Rücktaste+LJ oben |
+| Strg+Ende | Rücktaste+LJ unten |
+
 
 ++ Papenmeier Braillex (Neuere Modelle) ++[Papenmeier]
 Folgende Braillezeilen werden unterstützt:
@@ -3242,6 +3336,7 @@ Folgende Kommandozeilenoptionen gibt es:
 | -f Protokolldateiname | --log-file=Protokolldateiname | Legt die Datei fest, in der die Protokollierung stattfinden soll. |
 | -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Die niedrigste Stufe der protokollierten Nachricht (Debug 10, Input/Output 12, Debug-Warnung 15, Info 20, Warnung 30, Fehler 40, kritisch 50, deaktiviert 100), Standard ist Warnung. |
 | -c Konfigurationspfad | --config-path=KonfigurationsPfad | Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
+| Keine | --lang=SPRACHE | Setzen Sie die konfigurierte NVDA-Sprache außer Kraft. Setzen Sie "Windows" als Standard für den aktuellen Benutzer, "de" für Deutsch, etc. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
 | -s | --secure | Sicherer Modus: Deaktiviert die Python-Konsole, Profil-Funktionen wie Erstellen, Löschen, Umbenennen von Profilen, etc., Update-Check, einige Kontrollkästchen im Willkommensdialog und in der Kategorie "Allgemein" (z. B. NVDA nach der Anmeldung starten, Konfiguration nach dem Beenden speichern, etc.) sowie im Protokoll-Betrachter- und Funktionen zur Protokollierung (werden oft in Sicherheitsmeldungen verwendet). Beachten Sie auch, dass dieser Befehl die Möglichkeit zum Speichern von Einstellungen in der Systemkonfiguration deaktiviert und die Tastenbefehle nicht gespeichert werden. |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
