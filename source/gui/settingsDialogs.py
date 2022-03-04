@@ -2914,6 +2914,7 @@ class AdvancedPanelControls(
 			"speechManager",
 			"synthDriver",
 			"nvwave",
+			"annotations",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel

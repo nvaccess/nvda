@@ -71,3 +71,16 @@ def upgradeConfigFrom_3_to_4(profile):
 	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("reportFontAttributes not present, no action taken.")
+
+
+def upgradeConfigFrom_4_to_5(profile):
+	""" reporting details has become enabled by default.
+	Discard aria-details setting, ensure users are aware of the setting.
+	The setting was used while the feature was in development.
+	Prevented reporting 'has details' with no way to report the details.
+	"""
+	try:
+		del profile['annotations']['reportDetails']
+	except KeyError:
+		# Setting does not exist, no need for upgrade of this setting
+		log.debug("reportDetails not present, no action taken.")
