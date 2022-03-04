@@ -23,6 +23,7 @@ What's New in NVDA
 - Added commands for toggling multiple modifiers simultaneously with a Braille display (#13152)
 - The Speech Dictionary dialog now features a "Remove all" button to help clear a whole dictionary. (#11802)
 - Added support for Windows 11 Calculator. (#13212)
+- In Microsoft Word with UI Automation enabled on Windows 11,  line numbers, section numbers and layout column numbers can now be reported. (#13283)
 -
 
 
@@ -37,12 +38,11 @@ What's New in NVDA
 - ``NVDA+Shift+Numpad Delete`` reports the location of the review cursor. (#13060)
 - Added default bindings for toggling modifier keys to Freedom Scientific displays (#13152)
 - 'Baseline' is no longer reported via the report text formatting command (NVDA+F). (#11815)
+- Activate long description no longer has a default gesture assigned. (#13380)
+- Report details summary now has a default gesture, ``NVDA+d``. (#13380)
 -
 
 == Bug Fixes ==
-- Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
-- Security fix: The addons manager dialog is now disabled on secure screens. (#13059)
-- Security fix: NVDA Context help is no longer available on secure screens. (#13353) 
 - Clipboard manager pane should no longer incorrectly steal focus when opening some Office programs. (#12736)
 - On a system where the user has chosen to swap the primary mouse button from the left to the right, NVDA will no longer accidentally bring up a context menu instead of activating an item, in applications such as web browsers. (#12642)
 - When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)
@@ -66,11 +66,12 @@ What's New in NVDA
 - Fixed several cases where list items could not be reported in 64 bit applications, such as REAPER. (#8175)
 - In the Microsoft Edge downloads manager, NVDA will now automatically switch to focus mode once the list item with the most recent download gains focus. (#13221)
 - NVDA no longer causes 64-bit versions of Notepad++ 8.3 and above to crash. (#13311)
+- Adobe Reader no longer crashes on startup if Adobe Reader's protected mode is enabled. (#11568)
 -
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
-- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
+- Although NVDA still requires Visual Studio 2019, Builds should no longer fail if a newer version of Visual Studio (E.g. 2022) is installed along side 2019. (#13033, #13387)
 - Updated SCons to version 4.3.0. (#13033)
 - Updated py2exe to version 0.11.0.1. (#12357, #13066)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
@@ -117,8 +118,8 @@ This ensures code will honor the Windows user setting for swapping the primary m
 - ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` and ``LOCALE_SLANGDISPLAYNAME`` are removed from ``languageHandler`` - use members of ``languageHandler.LOCALE`` instead. (#12753)
 - Switched from Minhook to Microsoft Detours as a hooking library for NVDA. Hooking with this library is mainly used to aid the display model. (#12964)
 - ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` is removed. (#13211)
-- SCons now builds with multiple concurrent jobs, equal to the number of logical processors in the system.
-This can dramatically decrease build times on multi core systems. (#13226)
+- SCons now warns to build with a number of jobs that is equal to the number of logical processors in the system.
+This can dramatically decrease build times on multi core systems. (#13226, #13371)
 - ``characterProcessing.SYMLVL_*`` constants are removed - please use ``characterProcessing.SymbolLevel.*`` instead. (#13248)
 - Functions ``loadState`` and ``saveState`` are removed from addonHandler - please use ``addonHandler.state.load`` and ``addonHandler.state.save`` instead. (#13245)
 - Moved the UWP/OneCore interaction layer of NVDAHelper [from C++/CX to C++/Winrt https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/move-to-winrt-from-cx]. (#10662)
@@ -133,6 +134,40 @@ This can dramatically decrease build times on multi core systems. (#13226)
   - ``cachedAutomationId`` can be used if obtained directly from the element.
   -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` has moved to ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
+- Boolean ``gui.isInMessageBox`` is removed, please use the function ``gui.message.isModalMessageBoxActive`` instead. (#12984, #13376)
+- ``controlTypes`` has been split up into various submodules. (#12510)
+  - ``ROLE_*`` and ``STATE_*`` have been replaced with ``Role.*`` and ``State.*``.
+  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` has been removed.
+  Usages like ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+  - ``processPositiveStates`` and ``processNegativeStates`` have been removed.
+  -
+- The ``controlTypes.Role`` and ``controlTypes.State`` enum values are no longer fixed/hardcoded and have changed. (#13414)
+  - The ``controlTypes.State`` members are no longer bit flags, states should not be determined using bitwise operations.
+  - There are mappings for ``IAccessible``, ``IAccessible2`` and ``UIA``:
+    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
+    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
+    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
+    - ``UIAHandler.UIAControlTypesToNVDARoles``
+    -
+  -
+-
+
+
+= 2021.3.3 =
+This release is identical to 2021.3.2.
+A bug existed in NVDA 2021.3.2 where it incorrectly identified itself as 2021.3.1.
+This release correctly identifies itself as 2021.3.3.
+
+
+= 2021.3.2 =
+This is a minor release to fix several security issues raised.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+
+== Bug Fixes ==
+- Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
+- Security fix: The addons manager dialog is now disabled on secure screens. (#13059)
+- Security fix: NVDA context help is no longer available on secure screens. (#13353)
 -
 
 

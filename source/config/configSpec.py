@@ -12,7 +12,7 @@ from configobj import ConfigObj
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 4
+latestSchemaVersion = 5
 
 #: The configuration specification string
 #: @type: String
@@ -237,7 +237,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	allowInChromium = integer(0, 3, default=0)
 
 [annotations]
-	reportDetails = boolean(default=false)
+	reportDetails = boolean(default=true)
 	reportAriaDescription = boolean(default=true)
 
 [terminals]
@@ -271,6 +271,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	speechManager = boolean(default=false)
 	synthDriver = boolean(default=false)
 	nvwave = boolean(default=false)
+	annotations = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
