@@ -84,3 +84,16 @@ def upgradeConfigFrom_4_to_5(profile):
 	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("reportDetails not present, no action taken.")
+
+def upgradeConfigFrom_5_to_6(profile):
+	"""
+	useInMSWordWhenAvailable in UIA section has been replaced with allowInMSWord multichoice.
+	"""
+	try:
+		useInMSWord = profile['UIA']['useInMSWordWhenAvailable']
+		del profile['UIA']['useInMSWordWhenAvailable']
+	except KeyError:
+		useInMSWord = False
+	if useInMSWord:
+		profile['UIA']['allowInMSWord'] = 3 # ALWAYS
+
