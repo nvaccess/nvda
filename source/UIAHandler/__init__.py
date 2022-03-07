@@ -274,10 +274,10 @@ def shouldUseUIAInMSWord(appModule: appModuleHandler.AppModule) -> bool:
 	except Exception:
 		log.debugWarning(f"Unable to parse office version: {appModule.productVersion}", exc_info=True)
 		return False
-		if officeVersion < (16, 0, 15000):
-			log.debug(f"MS word too old for suitable UIA, Office version: {officeVersion}")
-			return False
-	log.debug("Using UIA in MS Word")
+	if officeVersion < (16, 0, 15000):
+		log.debug(f"MS word too old for suitable UIA, Office version: {officeVersion}")
+		return False
+	log.debug(f"Using UIA due to suitable Office version: {officeVersion}")
 	return True
 
 
