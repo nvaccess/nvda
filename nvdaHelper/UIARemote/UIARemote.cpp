@@ -48,7 +48,7 @@ extern "C" __declspec(dllexport) bool __stdcall msWord_getCustomAttributeValue(I
 	try {
 		auto scope=UiaOperationScope::StartNew();
 		RemoteableLogger logger{scope};
-		// Here starts declaritive code which will be executed remotely
+		// Here starts declarative code which will be executed remotely
 		logger<<L"Remoting msWord_getCustomAttributeValue"<<endl;
 		UiaBool isExtensionSupported{false};
 		UiaElement docElement{docElementArg};
@@ -71,7 +71,7 @@ extern "C" __declspec(dllexport) bool __stdcall msWord_getCustomAttributeValue(I
 								isExtensionSupported = true;
 								logger<<L"guid_msWord_getCustomAttributeValue extension supported on pattern"<<endl;
 								patternElement.CallExtension(guid_msWord_getCustomAttributeValue, textRange, customAttribID, customAttribValue);
-								logger<<L"Called guid_msWord_getCustomAttributeValue extention"<<endl;
+								logger<<L"Called guid_msWord_getCustomAttributeValue extension"<<endl;
 							},
 							/* else */ [&]() {
 								logger<<L"No guid_msWord_getCustomAttributeValue extension supported"<<endl;

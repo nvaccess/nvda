@@ -32,7 +32,7 @@ NVDA는 이제 Windows에 보안 인증서 업데이트를 요청하여 향후 �
 -
 
 
-== Changes ==
+== 변경사항 ==
 - ESpeak-NG가 업데이트되었습니다(버전 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``). (#12665)
 - OneCore 음성이 설치되어 있지 않으면 NVDA 기본음성을 eSpeak로 설정합니다. (#10451)
 - NVDA 기본 언어를 지원하는 설치된 OneCore 음성이 없을 경우 NVDA는 기본적으로 eSpeak으로 설정됩니다. (#10451)
@@ -48,35 +48,35 @@ NVDA는 이제 Windows에 보안 인증서 업데이트를 요청하여 향후 �
 -
 
 
-== Bug Fixes ==
-- Tracking keyboard modifiers (such as Control, or Insert) is more robust when watchdog is recovering. (#12609)
-- It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#12729)
-- NVDA correctly announces blank table cells in Microsoft Word when using UI automation. (#11043)
-- In ARIA data grid cells on the web, the Escape key will now be passed through to the grid and no longer turn off focus mode unconditionally. (#12413)
-- When reading a header cell of a table in Chrome, fix the column name being announced twice. (#10840)
-- NVDA no longer reports a numerical value for UIA sliders that have a textual representation of their value defined. (UIA ValuePattern is now preferred over RangeValuePattern). (#12724)
-- NVDA no longer treats the value of UIA sliders as always percentage based.
-- Reporting the location of a cell in Microsoft Excel when accessed via UI Automation again works correctly on Windows 11. (#12782)
-- NVDA no longer sets invalid Python locales. (#12753)
-- If a disabled addon is uninstalled and then re-installed it is re-enabled. (#12792)
-- Fixed bugs around updating and removing addons where the addon folder has been renamed or has files opened. (#12792, #12629)
-- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA no longer redundantly announces when a single cell is selected. (#12530)
+== 버그 수정 ==
+- watchdog이 복구 중일 때, 조합키 추적(Control이나 Insert)이 보강됐습니다. (#12609)
+- Windows 클린 설치와 같은 특정 시스템에서 NVDA 업데이트를 다시 한 번 확인할 수 있습니다. (#12729)
+- Microsoft Word에서 NVDA가 표의 빈 셀을 UI automation 사용 중일 때 정상적으로 알립니다. (#11043)
+- 웹의 ARIA 데이터 그리드 셀에서, ESC키가 그리드로 전달되며, 더이상 어떤 상황에서든 포커스 모드가 꺼지지 않습니다. (#12413)
+- Chrome에서 표 제목 셀을 읽을 때, 열 이름을 두번 읽는 문제가 수정됩니다. (#10840)
+- NVDA는 값이 텍스트로 정의된 UIA 슬라이더에서 더이상 숫자 값을 알리지 않습니다. (UIA의 RangeValuePattern보다 ValuePattern이 우선적으로 선호됩니다). (#12724)
+- NVDA는 더 이상 슬라이더의 값을 백분율을 기준으로 다루지 않습니다.
+- Windows11에서 Microsoft Excel을 UI Automation로 접근했을 때, 테이블 셀 위치 알림이 다시 정상 작동합니다. (#12782)
+- NVDA가 더이상 무효한 Python 로케일을 설정하지 않습니다. (#12753)
+- 비활성 상태로 추가기능을 제거했다가 다시 해당 추가기능을 설치하면 활성화 상태로 설치됩니다. (#12792)
+- addon 폴더에서 파일이 열려있거나 폴더명이 변경됐을 때 발생하는 업데이트, 제거 관련 버그가 수정되었습니다. (#12792, #12629)
+- UI Automation으로 Microsoft Excel 스프레드시트 컨트롤에 접근하여 한 개의 셀을 선택했을 때 NVDA가 더이상 내요을 중복해서 알리지 않습니다. (#12530)
 - LibreOffice Writer에서 확인 대화상자와 같이 더 많은 대화상자 텍스트를 자동으로 읽습니다. (#11687)
-- Reading / navigating with browse mode in Microsoft Word via UI automation now ensures the document is always scrolled so that the current browse mode position is visible, and that the caret position in focus mode correctly reflects the browse mode position. (#9611)
-- When performing Say all in Microsoft Word via UI automation, the document is now automatically scrolled, and the caret position is correctly updated. (#9611)
-- When reading emails in Outlook and NVDA is accessing the message with UI Automation, certain tables are now marked as layout tables, which means they will no longer be reported by default. (#11430)
+- UI Automation와 함게 Microsoft Word를 브라우즈 모드로 읽고 탐색할 때, 현재 브라우즈 모드의 위치가 화면에서 보이는 한에서 항상 스크롤이 따라가며, 브라우즈 모드의 위치가 포커스 모드의 캐럿에 반영됩니다. (#9611)
+- UI Automation과 함께 Microsoft Word에서 모두 읽기를 실행했을 때, 이제 문서가 자동으로 스크롤되며, 캐럿 위치가 읽었던 위치와 알맞게 업데이트 됩니다. (#9611)
+- UI Automation으로 Outlook에서 이메일을 읽고 NVDA가 메시지에 접근할 때, 특정 테이블이 레이아웃 테이블로 표시됩니다. 즉 더이상 기본으로 보고되지 않습니다. (#11430)
 - 오디오 장치 변경 시 드물게 발생하던 오류가 수정되었습니다. (#12620)
-- Input with literary braille tables should behave more reliably when in edit fields. (#12667)
+- 편집 필드에서 점자 약자 테이블을 통한 입력이 안정적으로 동작합니다. (#12667)
 - Windows 시스템 트레이 달력을 탐색할 때 NVDA는 전체 요일을 알립니다. (#12757)
-- When using a Chinese input method such as Taiwan - Microsoft Quick in Microsoft Word, scrolling the braille display forward and backward no longer incorrectly keeps jumping back to the original caret position. (#12855)
+- Microsoft Word에서 Taiwan - Microsoft Quick과 같은 중국어 입력 방법을 사용할 때 점자 디스플레이를 앞뒤로 잘못 스크롤해도 더 이상 원래 캐럿 위치로 계속 이동하지 않습니다. (#12855)
 - UIA를 통해 Microsoft Word 문서를 탐색할 때, 문장으로 탐색(alt+downArrow / alt+upArrow)이 다시 동작합니다. (#9254)
-- When accessing Microsoft Word documents via UIA, navigating by sentence (alt+downArrow / alt
+- UIA로 Microsoft Word 문서에 접근하고 있을 때, 문장 단위로 탐색하기(Alt + 아래 화살표 키 / Alt + 위 화살표 키)가 다시 가능합니다. (#9254)
 - UIA가 활성화된 MS Word 문서를 탐색할 때 단락 들여쓰기를 알립니다. (#12899)
-- When accessing MS Word with UIA, change tracking command and some other localized commands are now reported in Word . (#12904)
-- Fixed duplicate braille and speech when 'description' matches 'content' or 'name'. (#12888)
-- In MS Word with UIA enabled, more accurate playing of spelling error sounds as you type. (#12161)
+- UIA로 Microsoft Word에 액세스할 때 변경 추적 명령과 일부 다른 지역화된 명령이 Word에 보고됩니다. (#12904)
+- name이나 content가 description과 일치 할 때의 중복된 점자 및 음성 출력을 수정됐습니다. (#12888)
+- UIA가 활성화된 MS Word에서는 입력할 때 철자 오류 소리가 더 정확하게 들립니다. (#12161)
 - Windows 11에서 NVDA는 Alt+Tab을 눌러 프로그램 간 전환할 때 더 이상 "창"을 알리지 않습니다. (#12648)
-- The new Modern Comments side track pane is now supported in MS Word when not accessing the document via UIA. Press alt+f12 to move between the side track pane and the document. (#12982)
+- UIA를 통해 문서에 액세스하지 않을 때 MS Word에서 새로운 Modern Comments 사이드 트랙 창이 지원됩니다. 사이드 트랙 창과 문서 사이를 이동하려면 Alt+f12를 누르십시오. (#12982)
 -
 
 

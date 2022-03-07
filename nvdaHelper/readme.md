@@ -31,7 +31,7 @@ This dll is loaded directly in to NVDA. It provides the following features:
 *  client stub methods for several RPC interfaces allowing NVDA to execute code in-process. These interfaces include nvdaInprocUtils, vbufBackends, and displayModel, which are implemented in nvdaHelperRemote.dll.
 * Server stub methods for several RPC interfaces allowing in-process code to execute code in NVDA. These interfaces include nvdaController and nvdaControllerInternal. 
 * Functions to aide NVDA in hooking platform dlls to make their calls easier to cancel 
-* Several small utility functions that asist in processing text (which are faster in c++).
+* Several small utility functions that assist in processing text (which are faster in c++).
 
 #### NVDAHelperRemote.dll
 This dll injects itself into other processes on the system, allowing for in-process code execution by NVDA.
@@ -41,7 +41,7 @@ It provides the following features:
 
 #### UIARemote.dll
 This dll is loaded by NVDA, providing utility functions that perform certain tasks or batch procedures on Microsoft UI Automation elements.
-It makes use of the UI Automation Remote Operations capabilities in Windows 11, allowing to declaritively define code  to  access and manipulate UI Automation elements, that will be Just-In-Time compiled by Windows and executed in the process providing the UI Automation elements.
+It makes use of the UI Automation Remote Operations capabilities in Windows 11, allowing to declaratively define code  to  access and manipulate UI Automation elements, that will be Just-In-Time compiled by Windows and executed in the process providing the UI Automation elements.
 
 ##### microsoft-ui-uiAutomation remote ops library
 As a dependency of UIARemote.dll, the open source [Microsoft-UI-UIAutomation Remote Operations library](https://github.com/microsoft/microsoft-ui-uiautomation)  is also built.

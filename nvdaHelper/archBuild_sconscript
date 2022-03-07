@@ -73,11 +73,6 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 	return proxyDll
 env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
 
-# We only support compiling with MSVC 14.2 (2019) or newer
-if not env.get('MSVC_VERSION') or tuple(map(int, env.get('MSVC_VERSION').split("."))) < (14, 2):
-	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) or newer not found")
-
-
 TARGET_ARCH=env['TARGET_ARCH']
 debug=env['nvdaHelperDebugFlags']
 release=env['release']
@@ -102,7 +97,12 @@ env.Append(CCFLAGS=[
 
 env.Append(CXXFLAGS=['/EHsc'])
 
-env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
+env.Append(CPPPATH=[
+	'#/include',
+	'#/include/wil/include',
+	'#/miscDeps/include',
+	Dir('.').abspath
+])
 if TARGET_ARCH == "arm64":
 	subsystem = "/subsystem:windows,6.02"
 else:

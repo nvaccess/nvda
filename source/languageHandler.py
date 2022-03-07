@@ -44,8 +44,22 @@ CP_ACP = "0"
 LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
 
 LANGS_WITHOUT_TRANSLATIONS: FrozenSet[str] = frozenset(("en",))
+
 installedTranslation: Optional[weakref.ReferenceType] = None
 """Saved copy of the installed translation for ease of wrapping.
+"""
+
+LCIDS_TO_TRANSLATED_LOCALES = {
+	# Windows maps this to "ku-Arab-IQ", however a translation is added for
+	# Central Kurdish in localesData.LANG_NAMES_TO_LOCALIZED_DESCS["ckb"]
+	# and NVDA may drop "Arab-IQ" from this locale to get the language.
+	1170: 'ckb'
+}
+"""
+Map Windows locale identifiers to language codes.
+These are Windows LCIDs that are used in NVDA but are not found in locale.windows_locale.
+These have been added when new locales have been introduced to the translation system and
+we cannot use the results from the Windows function LCIDToLocaleName.
 """
 
 
@@ -110,16 +124,22 @@ def localeNameToWindowsLCID(localeName: str) -> int:
 
 def windowsLCIDToLocaleName(lcid: int) -> Optional[str]:
 	"""
-	gets a normalized locale from a lcid
+	Gets a normalized locale from a Windows LCID.
+
+	NVDA should avoid relying on LCIDs in future, as they have been deprecated by MS:
+	https://docs.microsoft.com/en-us/globalization/locale/locale-names
 	"""
-	# Look up a full locale name (language + country)
-	try:
-		lang = locale.windows_locale[lcid]
-	except KeyError:
-		# Or at least just a language-only locale name
-		lang=windowsPrimaryLCIDsToLocaleNames[lcid]
-	if lang:
-		return normalizeLanguage(lang)
+	# From the locale.windows_locale in-line code documentation: (#4203)
+	# 	This list has been updated to include every locale up to Windows Vista.
+	# 	NOTE: this mapping is incomplete.
+	localeName = locale.windows_locale.get(lcid)
+	# Check a manual mapping before using Windows to look up the correct LCID locale name.
+	if not localeName:
+		localeName = LCIDS_TO_TRANSLATED_LOCALES.get(lcid)
+	if not localeName:
+		localeName = winKernel.LCIDToLocaleName(lcid)
+	if localeName:
+		return normalizeLanguage(localeName)
 
 
 def getLanguageDescription(language: str) -> Optional[str]:
@@ -315,22 +335,10 @@ def getWindowsLanguage():
 	"""
 	windowsLCID=ctypes.windll.kernel32.GetUserDefaultUILanguage()
 	localeName = windowsLCIDToLocaleName(windowsLCID)
-	if not localeName:
-		# #4203: some locale identifiers from Windows 8 do not exist in Python's list.
-		# Therefore use windows' own function to get the locale name.
-		# Eventually this should probably be used all the time.
-		bufSize=32
-		buf=ctypes.create_unicode_buffer(bufSize)
-		dwFlags=0
-		try:
-			ctypes.windll.kernel32.LCIDToLocaleName(windowsLCID,buf,bufSize,dwFlags)
-		except AttributeError:
-			pass
-		localeName=buf.value
-		if localeName:
-			localeName=normalizeLanguage(localeName)
-		else:
-			localeName="en"
+	if localeName:
+		localeName = normalizeLanguage(localeName)
+	else:
+		localeName = "en"
 	return localeName
 
 
@@ -493,126 +501,3 @@ def useImperialMeasurements() -> bool:
 	return buf.value == '1'
 
 
-# Map Windows primary locale identifiers to locale names
-# Note these are only primary language codes (I.e. no country information)
-# For full locale identifiers we use Python's own locale.windows_locale.
-# Generated from: {x&0x3ff:y.split('_')[0] for x,y in locale.windows_locale.iteritems()}
-windowsPrimaryLCIDsToLocaleNames={
-	1:'ar',
-	2:'bg',
-	3:'ca',
-	4:'zh',
-	5:'cs',
-	6:'da',
-	7:'de',
-	8:'el',
-	9:'en',
-	10:'es',
-	11:'fi',
-	12:'fr',
-	13:'he',
-	14:'hu',
-	15:'is',
-	16:'it',
-	17:'ja',
-	18:'ko',
-	19:'nl',
-	20:'nb',
-	21:'pl',
-	22:'pt',
-	23:'rm',
-	24:'ro',
-	25:'ru',
-	26:'sr',
-	27:'sk',
-	28:'sq',
-	29:'sv',
-	30:'th',
-	31:'tr',
-	32:'ur',
-	33:'id',
-	34:'uk',
-	35:'be',
-	36:'sl',
-	37:'et',
-	38:'lv',
-	39:'lt',
-	40:'tg',
-	41:'fa',
-	42:'vi',
-	43:'hy',
-	44:'az',
-	45:'eu',
-	46:'wen',
-	47:'mk',
-	50:'tn',
-	52:'xh',
-	53:'zu',
-	54:'af',
-	55:'ka',
-	56:'fo',
-	57:'hi',
-	58:'mt',
-	59:'sms',
-	60:'ga',
-	62:'ms',
-	63:'kk',
-	64:'ky',
-	65:'sw',
-	66:'tk',
-	67:'uz',
-	68:'tt',
-	69:'bn',
-	70:'pa',
-	71:'gu',
-	72:'or',
-	73:'ta',
-	74:'te',
-	75:'kn',
-	76:'ml',
-	77:'as',
-	78:'mr',
-	79:'sa',
-	80:'mn',
-	81:'bo',
-	82:'cy',
-	83:'kh',
-	84:'lo',
-	86:'gl',
-	87:'kok',
-	90:'syr',
-	91:'si',
-	93:'iu',
-	94:'am',
-	95:'tmz',
-	97:'ne',
-	98:'fy',
-	99:'ps',
-	100:'fil',
-	101:'div',
-	104:'ha',
-	106:'yo',
-	107:'quz',
-	108:'ns',
-	109:'ba',
-	110:'lb',
-	111:'kl',
-	120:'ii',
-	122:'arn',
-	124:'moh',
-	126:'br',
-	128:'ug',
-	129:'mi',
-	130:'oc',
-	131:'co',
-	132:'gsw',
-	133:'sah',
-	134:'qut',
-	135:'rw',
-	136:'wo',
-	140: 'gbz',
-	1170: 'ckb',
-	1109: 'my',
-	1143: 'so',
-	9242: 'sr',
-}

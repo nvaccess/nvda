@@ -1678,7 +1678,7 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Input help mode message for move to next document with focus command,
 			# mostly used in web browsing to move from embedded object to the webpage document.
-			"Moves the focus to the next closest document that contains the focus"
+			"Moves the focus out of the current embedded object and into the document that contains it"
 		),
 		category=SCRCAT_FOCUS,
 		gesture="kb:NVDA+control+space"
@@ -1962,6 +1962,7 @@ class GlobalCommands(ScriptableObject):
 			self.script_showFormattingAtCaret(gesture)
 
 	@script(
+		gesture="kb:NVDA+d",
 		description=_(
 			# Translators: the description for the reportDetailsSummary script.
 			"Report summary of any annotation details at the system caret."
@@ -1988,7 +1989,8 @@ class GlobalCommands(ScriptableObject):
 			return
 		caret.expand(textInfos.UNIT_CHARACTER)
 		nvdaObject: NVDAObject = caret.NVDAObjectAtStart
-		log.debug(f"Trying with nvdaObject : {nvdaObject}")
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"Trying with nvdaObject : {nvdaObject}")
 
 		annotation: Optional[str] = nvdaObject.detailsSummary
 		if annotation:
@@ -2000,13 +2002,16 @@ class GlobalCommands(ScriptableObject):
 			# There may still be an object with focus that has details.
 			# There isn't a known test case for this, however there isn't a known downside to attempt this.
 			focus = api.getFocusObject()
-			log.debug(f"Trying focus object: {focus}")
+			if config.conf["debugLog"]["annotations"]:
+				log.debug(f"Trying focus object: {focus}")
 			annotation = focus.detailsSummary
 			if annotation:
-				log.debug("focus object has details, able to proceed")
+				if config.conf["debugLog"]["annotations"]:
+					log.debug("focus object has details, able to proceed")
 
 		if not annotation:
-			log.debug("no details annotation found")
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("no details annotation found")
 			# Translators: message given when there is no annotation details for the reportDetailsSummary script.
 			ui.message(_("No additional details"))
 			return

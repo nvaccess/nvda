@@ -3,6 +3,20 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2021.3.1 =
+
+== Veranderingen ==
+- Het nieuwe HID Braille-protocol heeft niet langer de voorkeur wanneer een ander brailleleesregelstuurprogramma kan worden gebruikt. (#13153)
+- Het nieuwe HID Braille-protocol kan worden uitgeschakeld via een instelling in het paneel met geavanceerde instellingen. (#13180)
+-
+
+
+== Opgeloste problemen ==
+- Oriëntatiepunt wordt weer afgekort in braille. (#13158)
+- Instabiele automatische detectie van brailleleesregels voor Humanware Brailliant en APH Mantis Q40 brailleleesregels bij gebruik van Bluetooth opgelost. (#13153)
+-
+
+
 = 2021.3 =
 Deze release introduceert ondersteuning voor de nieuwe HID Braille-specificatie.
 Deze specificatie is bedoeld om de ondersteuning voor brailleleesregels te standaardiseren zonder dat er afzonderlijke stuurprogramma's nodig zijn.
