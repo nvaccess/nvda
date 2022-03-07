@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2021 NV Access Limited, Joseph Lee, Babbage B.V.
+# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V.
 
 """Manages information about available braille translation tables.
 """
@@ -128,6 +128,9 @@ addTable("bg.ctb", _("Bulgarian 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("bg.utb", _("Bulgarian grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("ca-g1.ctb", _("Catalan grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ckb-g1.ctb", _("Central Kurdish grade 1"))
