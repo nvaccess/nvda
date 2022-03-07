@@ -234,7 +234,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	selectiveEventRegistration = boolean(default=false)
 	# 0:default, 1:Only when necessary, 2:yes, 3:no
 	allowInChromium = integer(0, 3, default=0)
-	# 0:default (where suitable), 1:Only when necessary, 2: where suitable, 3: always 
+	# 0:default (where suitable), 1:Only when necessary, 2: where suitable, 3: always
 	allowInMSWord = integer(0, 3, default=0)
 
 [annotations]
