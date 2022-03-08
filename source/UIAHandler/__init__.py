@@ -260,7 +260,7 @@ def shouldUseUIAInMSWord(appModule: appModuleHandler.AppModule) -> bool:
 		log.debug("Using UIA in MS Word as no alternative object model available")
 		return True
 	if winVersion.getWinVer() < winVersion.WIN11:
-		log.debug("Not using UIA in MS Word on pre Windows 11 OS due to missing  custom extensions")
+		log.debug("Not using UIA in MS Word on pre Windows 11 OS due to missing custom extensions")
 		return False
 	if allow != AllowUiaInMSWord.WHERE_SUITABLE:
 		log.debug("User does not want UIA in MS Word unless necessary")

@@ -86,7 +86,7 @@ def upgradeConfigFrom_4_to_5(profile):
 		log.debug("reportDetails not present, no action taken.")
 
 
-def upgradeConfigFrom_5_to_6(profile):
+def upgradeConfigFrom_5_to_6(profile: Dict):
 	"""
 	useInMSWordWhenAvailable in UIA section has been replaced with allowInMSWord multichoice.
 	"""
