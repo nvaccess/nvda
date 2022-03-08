@@ -24,6 +24,9 @@ What's New in NVDA
 - The Speech Dictionary dialog now features a "Remove all" button to help clear a whole dictionary. (#11802)
 - Added support for Windows 11 Calculator. (#13212)
 - In Microsoft Word with UI Automation enabled on Windows 11,  line numbers, section numbers and layout column numbers can now be reported. (#13283)
+- For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default, providing a significant performance improvement over the old Object model access. (#13437)
+ - This includes documents in Microsoft Word itself, and also the message reader and composer in Microsoft Outlook. 
+ -
 -
 
 
