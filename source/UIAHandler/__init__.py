@@ -786,6 +786,7 @@ class UIAHandler(COMObject):
 		# Ask the window if it supports UIA natively
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
+			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 			if windowClass == MS_WORD_DOCUMENT_WINDOW_CLASS:
 				# The window does support UIA natively, but MS Word documents now
 				# have a fairly usable UI Automation implementation.
