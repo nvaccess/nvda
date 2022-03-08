@@ -16,6 +16,7 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 
 from logHandler import log
 
+
 def upgradeConfigFrom_0_to_1(profile):
 	# Schema has been modified to set a new minimum blink rate
 	# The blink rate could previously be set to zero to disable blinking (while still 
@@ -96,4 +97,5 @@ def upgradeConfigFrom_5_to_6(profile: Dict):
 	except KeyError:
 		useInMSWord = False
 	if useInMSWord:
-		profile['UIA']['allowInMSWord'] = 3  # ALWAYS
+		from . import AllowUiaInMSWord
+		profile['UIA']['allowInMSWord'] = AllowUiaInMSWord.ALWAYS.value
