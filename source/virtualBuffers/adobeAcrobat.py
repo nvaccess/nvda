@@ -51,7 +51,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 		if not role:
 			role = IAccessibleHandler.NVDARoleFromAttr(attrs['IAccessible::role'])
 		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
-		role, states = IAccessibleHandler.transformRoleStates(role, states)
+		role, states = controlTypes.transformRoleStates(role, states)
 
 		if (
 			role == controlTypes.Role.EDITABLETEXT

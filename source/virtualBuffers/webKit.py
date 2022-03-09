@@ -34,7 +34,7 @@ class WebKit_TextInfo(VirtualBufferTextInfo):
 		if not role:
 			role = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole, controlTypes.Role.UNKNOWN)
 		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
-		role, states = IAccessibleHandler.transformRoleStates(role, states)
+		role, states = controlTypes.transformRoleStates(role, states)
 
 		attrs["role"] = role
 		attrs["states"] = states

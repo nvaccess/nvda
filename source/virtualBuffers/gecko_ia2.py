@@ -102,7 +102,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
 		states |= IAccessibleHandler.getStatesSetFromIAccessible2Attrs(attrs)
-		role, states = IAccessibleHandler.transformRoleStates(role, states)
+		role, states = controlTypes.transformRoleStates(role, states)
 
 		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.State.FOCUSABLE in states or controlTypes.State.UNAVAILABLE in states or controlTypes.State.EDITABLE in states):
 			# This is a text leaf.
