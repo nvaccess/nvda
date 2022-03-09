@@ -33,7 +33,7 @@ class TestLabels(unittest.TestCase):
 
 		for role in self._noDisplayStringRoles:
 			with self.assertRaises(KeyError):
-				s = role.displayString
+				role.displayString
 
 	def test_state_displayString(self):
 		"""Test to check whether every state has its own display string
@@ -46,7 +46,7 @@ class TestLabels(unittest.TestCase):
 
 		for state in self._noDisplayStringStates:
 			with self.assertRaises(KeyError):
-				s = state.displayString
+				state.displayString
 
 	def negativeDisplayString(self):
 		"""Test to check whether every state has its own negative display string
@@ -59,7 +59,7 @@ class TestLabels(unittest.TestCase):
 
 		for state in self._noNegDisplayStringStates:
 			with self.assertRaises(KeyError):
-				s = state.negativeDisplayString
+				state.negativeDisplayString
 
 
 class TestProcessStates(unittest.TestCase):
