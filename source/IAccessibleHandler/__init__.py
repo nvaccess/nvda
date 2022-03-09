@@ -291,30 +291,21 @@ def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> Set[St
 	)
 
 
-def calculateNvdaRole(IARole: int, IA2States: int) -> Role:
-	NVDARole = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
-	# Don't report indeterminate progress bars as "half-checked"
-	# L{State.HALFCHECKED} maps from oleacc.STATE_SYSTEM_MIXED
-	# which has the same value as oleacc.STATE_SYSTEM_INDETERMINATE
-	# L{State.INDETERMINATE} is not mapped directly from any IA or IA2 state
-	# A progress bar that can not convey progress, only activity, is a busy indicator.
-	if NVDARole == Role.PROGRESSBAR and oleacc.STATE_SYSTEM_INDETERMINATE & IA2States:
-		return Role.BUSY_INDICATOR
-	return NVDARole
+def calculateNvdaRole(IARole: int, IAStates: int) -> Role:
+	"""Convert IARole value into an NVDA role, and apply any required transformations.
+	"""
+	role = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
+	states = _getStatesSetFromIAccessibleStates(IAStates)
+	role, states = transformRoleStates(role, states)
+	return role
 
 
-def calculateNvdaStates(IARole: int, IA2States: int) -> Set[State]:
-	roles = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
-	states = _getStatesSetFromIAccessibleStates(IA2States)
-	# Don't report indeterminate progress bars as "half-checked"
-	# L{State.HALFCHECKED} maps from oleacc.STATE_SYSTEM_MIXED
-	# which has the same value as oleacc.STATE_SYSTEM_INDETERMINATE
-	# L{State.INDETERMINATE} is not mapped directly from any IA or IA2 state
-	# A progress bar that can not convey progress, only activity, is a busy indicator.
-	if roles == Role.PROGRESSBAR and states.intersection({State.HALFCHECKED, State.INDETERMINATE}):
-		states.discard(State.HALFCHECKED)
-		states.add(State.INDETERMINATE)
-		return states
+def calculateNvdaStates(IARole: int, IAStates: int) -> Set[State]:
+	"""Convert IAStates bit set into a Set of NVDA States and apply any required transformations.
+	"""
+	role = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
+	states = _getStatesSetFromIAccessibleStates(IAStates)
+	role, states = transformRoleStates(role, states)
 	return states
 
 
