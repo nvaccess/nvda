@@ -24,20 +24,27 @@ What's New in NVDA
 - The Speech Dictionary dialog now features a "Remove all" button to help clear a whole dictionary. (#11802)
 - Added support for Windows 11 Calculator. (#13212)
 - In Microsoft Word with UI Automation enabled on Windows 11,  line numbers, section numbers and layout column numbers can now be reported. (#13283)
+- For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default, providing a significant performance improvement over the old Object model access. (#13437)
+ - This includes documents in Microsoft Word itself, and also the message reader and composer in Microsoft Outlook. 
+ -
 -
 
 
 == Changes ==
 - Espeak-ng has been updated to 1.51-dev commit ``7e5457f91e10``. (#12950)
-- Updated liblouis braille translator to [3.20.0 https://github.com/liblouis/liblouis/releases/tag/v3.20.0]. (#13141)
-  - New braille table: Japanese (Kantenji) literary braille
-  -
+- Updated liblouis braille translator to [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]. (#13141, #13438)
+  - Added new braille table: Japanese (Kantenji) literary braille.
+  - Added new German 6 dot computer braille table.
+  - Added Catalan grade 1 braille table. (#13408)
+  - 
 - NVDA will report selection and merged cells in LibreOffice Calc 7.3 and above. (#9310, #6897)
 - Updated Unicode Common Locale Data Repository (CLDR) to 40.0. (#12999)
 - ``NVDA+Numpad Delete`` reports the location of the caret or focused object by default. (#13060)
 - ``NVDA+Shift+Numpad Delete`` reports the location of the review cursor. (#13060)
 - Added default bindings for toggling modifier keys to Freedom Scientific displays (#13152)
 - 'Baseline' is no longer reported via the report text formatting command (NVDA+F). (#11815)
+- Activate long description no longer has a default gesture assigned. (#13380)
+- Report details summary now has a default gesture, ``NVDA+d``. (#13380)
 -
 
 == Bug Fixes ==
@@ -64,6 +71,8 @@ What's New in NVDA
 - Fixed several cases where list items could not be reported in 64 bit applications, such as REAPER. (#8175)
 - In the Microsoft Edge downloads manager, NVDA will now automatically switch to focus mode once the list item with the most recent download gains focus. (#13221)
 - NVDA no longer causes 64-bit versions of Notepad++ 8.3 and above to crash. (#13311)
+- Adobe Reader no longer crashes on startup if Adobe Reader's protected mode is enabled. (#11568)
+- Fixed a bug where selecting the Papenmeier Braille Display Driver caused NVDA to crash. (#13348)
 -
 
 == Changes for Developers ==
@@ -115,8 +124,8 @@ This ensures code will honor the Windows user setting for swapping the primary m
 - ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` and ``LOCALE_SLANGDISPLAYNAME`` are removed from ``languageHandler`` - use members of ``languageHandler.LOCALE`` instead. (#12753)
 - Switched from Minhook to Microsoft Detours as a hooking library for NVDA. Hooking with this library is mainly used to aid the display model. (#12964)
 - ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` is removed. (#13211)
-- SCons now builds with multiple concurrent jobs, equal to the number of logical processors in the system.
-This can dramatically decrease build times on multi core systems. (#13226)
+- SCons now warns to build with a number of jobs that is equal to the number of logical processors in the system.
+This can dramatically decrease build times on multi core systems. (#13226, #13371)
 - ``characterProcessing.SYMLVL_*`` constants are removed - please use ``characterProcessing.SymbolLevel.*`` instead. (#13248)
 - Functions ``loadState`` and ``saveState`` are removed from addonHandler - please use ``addonHandler.state.load`` and ``addonHandler.state.save`` instead. (#13245)
 - Moved the UWP/OneCore interaction layer of NVDAHelper [from C++/CX to C++/Winrt https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/move-to-winrt-from-cx]. (#10662)
@@ -131,11 +140,21 @@ This can dramatically decrease build times on multi core systems. (#13226)
   - ``cachedAutomationId`` can be used if obtained directly from the element.
   -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` has moved to ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
+- Boolean ``gui.isInMessageBox`` is removed, please use the function ``gui.message.isModalMessageBoxActive`` instead. (#12984, #13376)
 - ``controlTypes`` has been split up into various submodules. (#12510)
   - ``ROLE_*`` and ``STATE_*`` have been replaced with ``Role.*`` and ``State.*``.
   - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` has been removed.
   Usages like ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
   - ``processPositiveStates`` and ``processNegativeStates`` have been removed.
+  -
+- The ``controlTypes.Role`` and ``controlTypes.State`` enum values are no longer fixed/hardcoded and have changed. (#13414)
+  - The ``controlTypes.State`` members are no longer bit flags, states should not be determined using bitwise operations.
+  - There are mappings for ``IAccessible``, ``IAccessible2`` and ``UIA``:
+    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
+    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
+    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
+    - ``UIAHandler.UIAControlTypesToNVDARoles``
+    -
   -
 -
 

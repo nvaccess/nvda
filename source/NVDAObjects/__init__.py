@@ -482,10 +482,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	detailsSummary: typing.Optional[str]
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
 		return None
 
 	@property
 	def hasDetails(self) -> bool:
+		"""Default implementation is based on the result of _get_detailsSummary
+		In most instances this should be optimised.
+		"""
 		return bool(self.detailsSummary)
 
 	def _get_controllerFor(self):
