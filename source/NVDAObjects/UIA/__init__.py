@@ -1,11 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2021 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Copyright (C) 2009-2022 NV Access Limited, Joseph Lee, Mohammad Suliman,
 # Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
 import typing
+from typing import (
+	Optional,
+	Dict,
+)
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
@@ -16,17 +20,18 @@ import numbers
 import colors
 import languageHandler
 import UIAHandler
-import _UIACustomProps
-import _UIACustomAnnotations
+import UIAHandler.customProps
+import UIAHandler.customAnnotations
 import globalVars
 import eventHandler
 import controlTypes
+from controlTypes import TextPosition
 import config
 import speech
 import api
 import textInfos
 from logHandler import log
-from UIAUtils import (
+from UIAHandler.utils import (
 	BulkUIATextRangeAttributeValueFetcher,
 	UIATextRangeAttributeValueFetcher,
 	getChildrenWithCacheFromUIATextRange,
@@ -152,7 +157,9 @@ class UIATextInfo(textInfos.TextInfo):
 		@param formatConfig: the types of formatting requested.
 		@type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
-		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included. If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute value signifying that the caller may want to try again with a smaller range. 
+		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
+			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
+			a mixed attribute value signifying that the caller may want to try again with a smaller range.
 		@type: bool
 		@return: The formatting for the given text range.
 		@rtype: L{textInfos.FormatField}
@@ -233,15 +240,14 @@ class UIATextInfo(textInfos.TextInfo):
 			textPosition=None
 			val=fetcher.getValue(UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-				textPosition='super'
+				textPosition = TextPosition.SUPERSCRIPT
 			else:
 				val=fetcher.getValue(UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 				if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-					textPosition="sub"
+					textPosition = TextPosition.SUBSCRIPT
 				else:
-					textPosition="baseline"
-			if textPosition:
-				formatField['text-position']=textPosition
+					textPosition = TextPosition.BASELINE
+			formatField['text-position'] = textPosition
 		if formatConfig['reportStyle']:
 			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
@@ -332,8 +338,8 @@ class UIATextInfo(textInfos.TextInfo):
 		The indent formatting is reported according to MS Word's convention.
 		@param fetcher: the UIA fetcher used to get all formatting information.
 		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
-			If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute
-			value signifying that the caller may want to try again with a smaller range.
+			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
+			a mixed attribute value signifying that the caller may want to try again with a smaller range.
 		@return: The indent formatting informations corresponding to what has been retrieved via the fetcher.
 		"""
 		
@@ -835,7 +841,7 @@ class UIATextInfo(textInfos.TextInfo):
 		if debug:
 			log.debug("_getTextWithFieldsForUIARange end")
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		fields=list(self._getTextWithFieldsForUIARange(self.obj.UIAElement,self._rangeObj,formatConfig))
@@ -917,8 +923,8 @@ class UIATextInfo(textInfos.TextInfo):
 	updateCaret = updateSelection
 
 class UIA(Window):
-	_UIACustomProps = _UIACustomProps.CustomPropertiesCommon.get()
-	_UIACustomAnnotationTypes = _UIACustomAnnotations.CustomAnnotationTypesCommon.get()
+	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon.get()
+	_UIACustomAnnotationTypes = UIAHandler.customAnnotations.CustomAnnotationTypesCommon.get()
 
 	shouldAllowDuplicateUIAFocusEvent = False
 
@@ -1070,7 +1076,7 @@ class UIA(Window):
 				clsList.append(chromium.ChromiumUIA)
 		elif (
 			self.role == controlTypes.Role.DOCUMENT
-			and self.UIAElement.cachedAutomationId == "Microsoft.Windows.PDF.DocumentView"
+			and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView"
 		):
 			# PDFs
 			from . import spartanEdge
@@ -1116,17 +1122,11 @@ class UIA(Window):
 		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
-		try:
-			if UIAAutomationId in ("SearchTextBox", "TextBox"):
-				clsList.append(SearchField)
-		except COMError:
-			log.debug("Failed to locate UIA search field", exc_info=True)
+		if UIAAutomationId in ("SearchTextBox", "TextBox"):
+			clsList.append(SearchField)
 		# #12790: detect suggestions list views firing layout invalidated event.
-		try:
-			if UIAAutomationId == "SuggestionsList":
-				clsList.append(SuggestionsList)
-		except COMError:
-			log.debug("Could not detect suggestions list", exc_info=True)
+		if UIAAutomationId == "SuggestionsList":
+			clsList.append(SuggestionsList)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
@@ -1150,7 +1150,12 @@ class UIA(Window):
 		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-		elif UIAClassName == "TermControl":
+		elif UIAClassName in ("TermControl", "TermControl2"):
+			# microsoft/terminal#12358: Eventually, TermControl2 should have
+			# a separate overlay class that is not a descendant of LiveText.
+			# TermControl2 sends inserted text using UIA notification events,
+			# so it is no longer necessary to diff the object as with all
+			# previous terminal implementations.
 			from . import winConsoleUIA
 			clsList.append(winConsoleUIA.WinTerminalUIA)
 

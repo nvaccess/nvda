@@ -1836,12 +1836,12 @@ Tällä on suuri kielteinen vaikutus suorituskykyyn, etenkin sellaisissa sovellu
 Tämän takia NVDA rajoittaa tapahtumien rekisteröinnin useimmissa tapauksissa järjestelmän kohdistukseen tämän asetuksen ollessa käytössä.
 Mikäli sinulla on suorituskykyongelmia yhdessä tai useammassa sovelluksessa, suosittelemme, että kokeilet tätä toimintoa nähdäksesi, paraneeko suorituskyky.
 
-==== Käytä aina UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
-Kun tämä asetus on käytössä, NVDA yrittää aina käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseen Microsoft Wordin asiakirjasäätimistä, myös vanhemmissa Office 2016:n/365:n koontiversioissa.
+==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
+Kun tämä asetus on käytössä, NVDA yrittää käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseen Microsoft Wordin asiakirjasäätimistä.
 Tällaisia ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
-Officen koontiversiossa 16.0.13901 tai uudemmissa NVDA käyttää aina UI Automation -rajapintaa Word-asiakirjoissa riippumatta siitä, miten tämä asetus on määritetty.
 Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 10:ssä ja uudemmissa käytettäessä riittävän kattava tarjotakseen lähes nykyisen kaltaisen tuen Microsoft Word -asiakirjoille, jossa on lisäetuna huomattavasti lisääntynyt reagoivuus.
-Joissakin vanhemmissa Officen koontiversioissa ei ehkä kuitenkaan ole saatavilla kaikkea tietoa tai ne ilmaistaan väärin, minkä vuoksi UI automation -tukeen ei voi aina luottaa.
+Joissakin Officen versioissa ei välttämättä kuitenkaan ole saatavilla kaikkea tietoa tai ne ilmaistaan väärin, minkä vuoksi UI automation -tukeen ei voi aina luottaa.
+Suurimmalle osalle käyttäjistä tämän asetuksen oletusarvoinen käyttöön ottaminen ei silti ole suositeltavaa, vaikka Office 2016:n/365:n käyttäjät ovatkin tervetulleita testaamaan tätä ominaisuutta ja tarjoamaan palautetta.
 
 ==== Käytä UI Automation -rajapintaa Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsConsoleUIA]
 Kun tämä asetus on käytössä, NVDA käyttää uutta, työn alla olevaa versiota Windows-konsolin tuesta, joka hyödyntää [Microsoftin tekemiä saavutettavuusparannuksia. https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Ominaisuus on vielä kokeellinen ja keskeneräinen, joten sen käyttöä ei vielä suositella. Valmistuttuaan uuden tuen odotetaan kuitenkin tulevan oletukseksi, mikä parantaa NVDA:n suorituskykyä ja vakautta Windowsin komentokonsoleissa.
@@ -3189,8 +3189,8 @@ NVDA:n automaattinen pistenäytön tunnistus tunnistaa myös kaikki tätä proto
 Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:lle.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä taaksepäin | panoroi vasemmalle |
-| Vieritä eteenpäin | panoroi oikealle |
+| Vieritä taaksepäin | panoroi vasemmalle tai keinunäppäin ylös |
+| Vieritä eteenpäin | panoroi oikealle tai keinunäppäin alas |
 | Siirrä edelliselle riville | väli+piste 1 |
 | Siirrä seuraavalle riville | väli+piste 4 |
 | Siirrä pistesoluun | kohdistimensiirtonäppäinsarja 1 |

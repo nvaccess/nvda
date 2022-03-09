@@ -11,7 +11,7 @@ import UIAHandler
 import weakref
 from functools import lru_cache
 from logHandler import log
-from _UIAConstants import WinConsoleAPILevel
+from .constants import WinConsoleAPILevel
 
 
 def createUIAMultiPropertyCondition(*dicts):

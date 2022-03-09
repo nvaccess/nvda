@@ -46,6 +46,7 @@ ARIA treegrid
 	test_ariaTreeGrid_browseMode
 ARIA invalid spelling and grammar
 	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
+	[Tags]	excluded_from_build
 	ARIAInvalid_spellingAndGrammar
 ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
@@ -61,6 +62,18 @@ ARIA details
 	[Documentation]	Ensure a summary of aria-details is read on command from a mark element
 	[Tags]	annotations
 	test_mark_aria_details
+ARIA details with free review and nav
+	[Documentation]	Variation on the ARIA details test with the config changed so the review cursor does not follow the caret and the nav object doesn't follow focus.
+	[Tags]	annotations
+	test_mark_aria_details_FreeReviewCursor
+ARIA details noVbuf
+	[Documentation]	Test for retrieving ARIA details from a button inside a role=application
+	[Tags]	annotations
+	test_aria_details_noVBufNoTextInterface
+ARIA details noVbuf with free review and nav
+	[Documentation]	Test for retrieving ARIA details from a button inside a role=application with the config changed so the review cursor does not follow the caret and the nav object doesn't follow focus.
+	[Tags]	annotations
+	test_aria_details_noVBufNoTextInterface
 i12147
 	[Documentation]	New focus target should be announced if the triggering element is removed when activated
 	test_i12147
@@ -107,3 +120,6 @@ Quick Nav reports target first
 Focus reports target first
 	[Documentation]	Focus target should always be reported before ancestors. Ancestors should be reported from inner to outer.
 	test_focusTargetReporting
+focus mode is turned on on focused read-only list item
+	[Documentation]	Focused list items with a focusable list container should cause focus mode to be turned on automatically.
+	test_focus_mode_on_focusable_read_only_lists

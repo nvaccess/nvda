@@ -7,6 +7,7 @@
 import sys
 import os
 import platform
+import multiprocessing
 
 # Ensure we are inside the Python virtual environment.
 nvdaVenv = os.getenv("NVDA_VENV")
@@ -121,8 +122,25 @@ env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"recursiveInstall"
 ])
 
-# speed up subsiquent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
+# Specifically request to use Visual Studio 2019 (MSVC 14.2).
+# This will ensure that this specific version is selected if there are multiple versions installed,
+# And fail the build if this version is not installed at all.
+env.SetDefault(MSVC_VERSION='14.2')
+
+# speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
+
+# Warn to run the build on multiple threads so it runs faster
+numJobs = env.GetOption('num_jobs')
+numCores = multiprocessing.cpu_count()
+if numJobs < numCores:
+	print(
+		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
+		f"while {numCores} CPU threads are available. "
+		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build."
+	)
+else:
+	print(f"Building with {numJobs} concurrent jobs")
 
 #Make our recursiveCopy function available to any script using this environment
 env.AddMethod(recursiveCopy)

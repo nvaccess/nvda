@@ -6,6 +6,7 @@
 """Unit tests for the synthDriverHandler
 """
 import config
+import globalVars
 import languageHandler
 import synthDriverHandler
 from synthDrivers.oneCore import SynthDriver as OneCoreSynthDriver
@@ -38,14 +39,14 @@ class MockSynth:
 class test_synthDriverHandler(unittest.TestCase):
 
 	def setUp(self) -> None:
-		self._oldLang = languageHandler.curLang
+		self._oldLang = languageHandler.getLanguage()
 		self._oldSynthConfig = config.conf["speech"]["synth"]
 		self._originalSynth = synthDriverHandler._curSynth
 		self._originalGetSynthDriver = synthDriverHandler._getSynthDriver
 		config.conf["speech"]["synth"] = FAKE_DEFAULT_LANG
 		synthDriverHandler._curSynth = MockSynth(FAKE_DEFAULT_SYNTH_NAME)
 		synthDriverHandler._getSynthDriver = self._mock_getSynthDriver
-		languageHandler.curLang = FAKE_DEFAULT_LANG
+		globalVars.appArgs.language = FAKE_DEFAULT_LANG
 
 	@staticmethod
 	def _mock_getSynthDriver(synthName: str) -> Callable[[], MockSynth]:
@@ -55,7 +56,7 @@ class test_synthDriverHandler(unittest.TestCase):
 		config.conf["speech"]["synth"] = self._oldSynthConfig
 		synthDriverHandler._curSynth = self._originalSynth
 		synthDriverHandler._getSynthDriver = self._originalGetSynthDriver
-		languageHandler.curLang = self._oldLang
+		globalVars.appArgs.language = self._oldLang
 
 	def test_setSynth_auto(self):
 		"""
@@ -99,7 +100,7 @@ class test_synthDriverHandler(unittest.TestCase):
 		"""
 		Ensures that if oneCore supports the current language, setSynth("auto") uses "oneCore".
 		"""
-		# test setup ensures curLang is supported for oneCore
+		# test setup ensures current NVDA language is supported for oneCore
 		synthDriverHandler.setSynth(None)  # reset the synth so there is no fallback
 		synthDriverHandler.setSynth("auto")
 		self.assertEqual(synthDriverHandler.getSynth().name, "oneCore")
@@ -110,7 +111,7 @@ class test_synthDriverHandler(unittest.TestCase):
 		Ensures that if oneCore doesn't support the current language, setSynth("auto") falls back to the
 		current synth, or espeak if there is no current synth.
 		"""
-		languageHandler.curLang = "bar"  # set the lang so it is not supported
+		globalVars.appArgs.language = "bar"  # set the lang so it is not supported
 		synthDriverHandler.setSynth("auto")
 		self.assertEqual(synthDriverHandler.getSynth().name, FAKE_DEFAULT_SYNTH_NAME)
 		synthDriverHandler.setSynth(None)  # reset the synth so there is no fallback
