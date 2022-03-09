@@ -309,7 +309,10 @@ def calculateNvdaStates(IARole: int, IAStates: int) -> Set[State]:
 	return states
 
 
-def NVDARoleFromAttr(accRole: Union[int, str, None]) -> Role:
+def NVDARoleFromAttr(accRole: Optional[str]) -> Role:
+	if not accRole:  # empty string or None
+		return controlTypes.Role.UNKNOWN
+	assert isinstance(accRole, str)
 	if accRole.isdigit():
 		accRole = int(accRole)
 	else:

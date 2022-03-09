@@ -95,7 +95,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.Role.UNKNOWN)
 
 		if role == controlTypes.Role.UNKNOWN:
-			role = IAccessibleHandler.NVDARoleFromAttr(attrs.get('IAccessible::role', 0))
+			role = IAccessibleHandler.NVDARoleFromAttr(attrs.get('IAccessible::role'))
 
 		roleText=attrs.get('HTMLAttrib::aria-roledescription')
 		if roleText:
