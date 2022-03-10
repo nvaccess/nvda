@@ -3,6 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import typing
+from typing import (
+	Optional,
+	Union,
+)
 
 from comtypes.automation import IEnumVARIANT, VARIANT
 from comtypes import (
@@ -20,6 +24,7 @@ import sys
 import itertools
 import importlib
 from comInterfaces.tom import ITextDocument
+from comInterfaces import Accessibility as IA
 from comInterfaces import IAccessible2Lib as IA2
 import tones
 import languageHandler
@@ -608,17 +613,20 @@ the NVDAObject for IAccessible
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
 
-	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
+	# C901: 'IAccessible.__init__' is too complex
+	def __init__(  # noqa: C901
+			self,
+			windowHandle: Optional[int] = None,
+			IAccessibleObject: Optional[Union[IUnknown, IA.IAccessible, IA2.IAccessible2]] = None,
+			IAccessibleChildID: Optional[int] = None,
+			event_windowHandle: Optional = None,
+			event_objectID: Optional = None,
+			event_childID: Optional = None
+	):
 		"""
-@param pacc: a pointer to an IAccessible object
-@type pacc: ctypes.POINTER(IAccessible)
-@param child: A child ID that will be used on all methods of the IAccessible pointer
-@type child: int
-@param hwnd: the window handle, if known
-@type hwnd: int
-@param objectID: the objectID for the IAccessible Object, if known
-@type objectID: int
-"""
+		@param windowHandle: the window handle, if known
+		@param IAccessibleChildID: A child ID that will be used on all methods of the IAccessible pointer
+		"""
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
 
@@ -1483,7 +1491,7 @@ the NVDAObject for IAccessible
 			self,
 			relationType: "IAccessibleHandler.RelationType",
 			maxRelations: int = 1,
-	) -> typing.List[ctypes.POINTER(IUnknown)]:
+	) -> typing.List[IUnknown]:
 		"""Gets the target IAccessible (actually IUnknown; use QueryInterface or
 		normalizeIAccessible to resolve) for the relations with given type.
 		Allows escape of exception: COMError(-2147417836, 'Requested object does not exist.'),
@@ -1530,7 +1538,11 @@ the NVDAObject for IAccessible
 			# rather than fetch all the relations and querying the type, do that in process for performance reasons
 			targets = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=1)
 			if targets:
-				return targets[0]
+				ia2Object = IAccessibleHandler.normalizeIAccessible(targets[0])
+				return IAccessible(
+					IAccessibleObject=ia2Object,
+					IAccessibleChildID=0
+				)
 		except (NotImplementedError, COMError):
 			log.debugWarning("Unable to use _getIA2TargetsForRelationsOfType, fallback to _IA2Relations.")
 
