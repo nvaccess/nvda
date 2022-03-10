@@ -372,6 +372,23 @@ def _excepthook(*exc_info):
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
 
+
+def _shouldDisableLogging() -> bool:
+	"""Disables logging based on command line options and if secure mode is active.
+	See NoConsoleOptionParser in nvda.pyw, #TODO and #8516.
+
+	Secure mode disables logging.
+	Logging on secure screens could allow keylogging of passwords and retrieval from the SYSTEM user.
+
+	* `--secure` overrides any logging preferences by disabling logging.
+	* `--debug-logging` or `--log-level=X` overrides the user config log level setting.
+	* `--debug-logging` and `--log-level=X` override `--no-logging`.
+	"""
+	logLevelOverridden = globalVars.appArgs.debugLogging or not globalVars.appArgs.logLevel == 0
+	noLoggingRequested = globalVars.appArgs.noLogging and not logLevelOverridden
+	return globalVars.appArgs.secure or noLoggingRequested
+
+
 def initialize(shouldDoRemoteLogging=False):
 	"""Initialize logging.
 	This must be called before any logging can occur.
@@ -391,9 +408,7 @@ def initialize(shouldDoRemoteLogging=False):
 			fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
 			style="{"
 		)
-		if (globalVars.appArgs.secure or globalVars.appArgs.noLogging) and (not globalVars.appArgs.debugLogging and globalVars.appArgs.logLevel == 0):
-			# Don't log in secure mode.
-			# #8516: also if logging is completely turned off.
+		if _shouldDisableLogging():
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
 			log.root.setLevel(Logger.OFF)
