@@ -46,6 +46,16 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
+from buildVersion import version_year
+
+
+if version_year < 2023:
+	from .exit import quit  # noqa F401: imported for backward compatibility
+	"""
+	Deprecated, for removal in 2023.
+	Use L{gui.exit.quit} instead.
+	"""
+
 
 try:
 	import updateCheck

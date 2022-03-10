@@ -1,5 +1,29 @@
-def quit():
-	wx.CallAfter(mainFrame.onExitCommand, None)
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+
+import config
+import core
+from enum import auto, unique
+import globalVars
+import languageHandler
+from logHandler import log
+import queueHandler
+from utils.displayString import DisplayStringEnum
+import weakref
+import wx
+
+from . import guiHelper
+from .startupDialogs import WelcomeDialog
+
+
+try:
+	import updateCheck
+except RuntimeError:
+	updateCheck = None
 
 
 @unique
@@ -27,6 +51,11 @@ class _ExitAction(DisplayStringEnum):
 		}
 
 
+def quit():
+	from gui import mainFrame
+	wx.CallAfter(mainFrame.onExitCommand, None)
+
+
 class ExitDialog(wx.Dialog):
 	_instance = None
 
@@ -44,16 +73,18 @@ class ExitDialog(wx.Dialog):
 		# Use a weakref so the instance can die.
 		ExitDialog._instance = weakref.ref(self)
 		# Translators: The title of the dialog to exit NVDA
-		super(ExitDialog, self).__init__(parent, title=_("Exit NVDA"))
-		dialog = self
+		super().__init__(parent, title=_("Exit NVDA"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
 		warningMessages = []
 		contentSizerHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		if globalVars.appArgs.disableAddons:
-			# Translators: A message in the exit Dialog shown when all add-ons are disabled.
-			addonsDisabledText = _("All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again.")
+			addonsDisabledText = _(
+				# Translators: A message in the exit Dialog shown when all add-ons are disabled.
+				"All add-ons are now disabled. "
+				"They will be re-enabled on the next restart unless you choose to disable them again."
+			)
 			warningMessages.append(addonsDisabledText)
 		if languageHandler.isLanguageForced():
 			langForcedMsg = _(
@@ -67,7 +98,7 @@ class ExitDialog(wx.Dialog):
 			contentSizerHelper.addItem(wx.StaticText(self, wx.ID_ANY, label="\n".join(warningMessages)))
 
 		# Translators: The label for actions list in the Exit dialog.
-		labelText=_("What would you like to &do?")
+		labelText = _("What would you like to &do?")
 		allowedActions = list(_ExitAction)
 		# Windows Store version of NVDA does not support add-ons yet.
 		if config.isAppX:
@@ -105,18 +136,19 @@ class ExitDialog(wx.Dialog):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 				return
 		elif action == _ExitAction.RESTART:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
+			queueHandler.queueFunction(queueHandler.eventQueue, core.restart)
 		elif action == _ExitAction.RESTART_WITH_ADDONS_DISABLED:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,disableAddons=True)
+			queueHandler.queueFunction(queueHandler.eventQueue, core.restart, disableAddons=True)
 		elif action == _ExitAction.RESTART_WITH_DEBUG_LOGGING_ENABLED:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
+			queueHandler.queueFunction(queueHandler.eventQueue, core.restart, debugLogging=True)
 		elif action == _ExitAction.INSTALL_PENDING_UPDATE:
 			if updateCheck:
 				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
 				from addonHandler import getIncompatibleAddons
+				from gui import mainFrame
 				if any(getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo)):
 					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
-						parent=gui.mainFrame,
+						parent=mainFrame,
 						destPath=destPath,
 						version=version,
 						apiVersion=apiVersion,
