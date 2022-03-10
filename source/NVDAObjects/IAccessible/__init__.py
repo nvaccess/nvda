@@ -1485,7 +1485,11 @@ the NVDAObject for IAccessible
 			maxRelations: int = 1,
 	) -> typing.List[ctypes.POINTER(IUnknown)]:
 		"""Gets the target IAccessible (actually IUnknown; use QueryInterface or
-		normalizeIAccessible to resolve) for the relations with given type."""
+		normalizeIAccessible to resolve) for the relations with given type.
+		Allows escape of exception: COMError(-2147417836, 'Requested object does not exist.'),
+		callers should handle this, for this reason consider using _getIA2RelationFirstTarget
+		if only the first target is required, and you wish the target to be converted to an IAccessible
+		"""
 		acc = self.IAccessibleObject
 		if not isinstance(acc, IA2.IAccessible2):
 			raise NotImplementedError
@@ -1549,16 +1553,9 @@ the NVDAObject for IAccessible
 	detailsRelations: typing.Iterable["IAccessible"]
 
 	def _get_detailsRelations(self) -> typing.Iterable["IAccessible"]:
-		relations = self._getIA2TargetsForRelationsOfType(
-			IAccessibleHandler.RelationType.DETAILS,
-			maxRelations=1
-		)
-		if not relations:
+		relationTarget = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.DETAILS)
+		if not relationTarget:
 			return ()
-		relationTarget = IAccessible(
-			IAccessibleObject=IAccessibleHandler.normalizeIAccessible(relations[0]),
-			IAccessibleChildID=0
-		)
 		return (relationTarget, )
 
 	#: Type definition for auto prop '_get_flowsTo'
