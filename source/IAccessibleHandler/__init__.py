@@ -56,15 +56,14 @@ from . import internalWinEventHandler
 from .orderedWinEventLimiter import MENU_EVENTIDS
 from .utils import getWinEventLogInfo, getWinEventName, isMSAADebugLoggingEnabled
 
+if typing.TYPE_CHECKING:
+	import textInfos
 
 # Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABEL_FOR = 0x1002
 NAVRELATION_LABELLED_BY = 0x1003
 NAVRELATION_NODE_CHILD_OF = 0x1005
 NAVRELATION_EMBEDS = 0x1009
-
-if typing.TYPE_CHECKING:
-	import textInfos
 
 # A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,
 # childID event params.
