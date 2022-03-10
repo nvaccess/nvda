@@ -2250,9 +2250,8 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_TOOLS
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_startWxInspectionTool(self, gesture):
-		if globalVars.appArgs.secure:
-			return
 		import wx.lib.inspection
 		wx.lib.inspection.InspectionTool().Show()
 
@@ -2284,9 +2283,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+control+shift+f1"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_log_markStartThenCopy(self, gesture):
-		if globalVars.appArgs.secure:
-			return
 		if log.fragmentStart is None:
 			if log.markFragmentStart():
 				# Translators: Message when marking the start of a fragment of the log file for later copy
@@ -2315,9 +2313,8 @@ class GlobalCommands(ScriptableObject):
 		description=_("Opens NVDA configuration directory for the current user."),
 		category=SCRCAT_TOOLS
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_openUserConfigurationDirectory(self, gesture):
-		if globalVars.appArgs.secure:
-			return
 		import systemUtils
 		systemUtils.openUserConfigurationDirectory()
 
@@ -2681,9 +2678,11 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+control+z"
 	)
+	@gui.blockAction.when(
+		gui.blockAction.Context.WINDOWS_STORE_VERSION,
+		gui.blockAction.Context.SECURE_MODE
+	)
 	def script_activatePythonConsole(self,gesture):
-		if globalVars.appArgs.secure or config.isAppX:
-			return
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()
