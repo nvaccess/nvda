@@ -1078,7 +1078,7 @@ class NvCellState(enum.IntEnum):
 	UNLOCKED = 1 << 10,
 
 
-nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
+_nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
 	NvCellState.EXPANDED: controlTypes.State.EXPANDED,
 	NvCellState.COLLAPSED: controlTypes.State.COLLAPSED,
 	NvCellState.LINKED: controlTypes.State.LINKED,
@@ -1425,7 +1425,7 @@ class ExcelCell(ExcelBase):
 			if nvCellStates & possibleCellState.value:
 				states.add(
 					# intentionally use indexing operator so an error is raised for a missing key
-					nvCellStatesToStates[possibleCellState]
+					_nvCellStatesToStates[possibleCellState]
 				)
 		return states
 
