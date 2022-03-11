@@ -1708,8 +1708,8 @@ This field sets the amount of lines you will move by when pressing page up or pa
 ==== Use screen layout ====[BrowseModeSettingsScreenLayout]
 Key: NVDA+v
 
-This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown.
-If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
+This option allows you to specify whether browse mode should place clickable content (links, buttons and fields) on its own line, or if it should keep it in the flow of text as it is visually shown. Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
+When screen layout is enabled, page elements will stay as they are visually shown. For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line. If it is disabled, then page elements will be placed on their own lines, which may be easier to understand during line by line page navigation, and may make items easier to interact with for some users.
 
 ==== Enable browse mode on page load ====[BrowseModeSettingsEnableOnPageLoad]
 This checkbox toggles whether browse mode should be automatically enabled when loading a page.
@@ -1864,12 +1864,15 @@ This has a major negative impact on performance, especially in applications like
 Therefore, when this option is enabled, NVDA will limit event registration to the system focus for most events.
 If you suffer from performance issues in one or more applications, We recommend you to try this functionality to see whether performance improves.
 
-==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
-When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls.
-This includes Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
- For the most recent versions of Microsoft Office 2016/365 running on Windows 10 and later, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
-However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
-We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
+==== Use UI automation to access Microsoft Word document controls ====[MSWordUIA]
+Configures whether or not NVDA should use the UI Automation accessibility API to access Microsoft Word documents, rather than the older Microsoft Word object model.
+This applies to documents in Microsoft word itself, plus messages in Microsoft Outlook.
+This setting contains the following values:
+- Default (where suitable)
+- Only where necessary: where the Microsoft Word object model is not  available at all
+- Where suitable: Microsoft Word version 16.0.15000 or higher, or where the Microsoft Word object model is unavailable
+- Always: where ever UI automation is available in Microsoft word (no matter how complete).
+-
 
 ==== Use UI Automation to access the Windows Console when available ====[AdvancedSettingsConsoleUIA]
 When this option is enabled, NVDA will use a new, work in progress version of its support for Windows Console which takes advantage of [accessibility improvements made by Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. This feature is highly experimental and is still incomplete, so its use is not yet recommended. However, once completed, it is anticipated that this new support will become the default, improving NVDA's performance and stability in Windows command consoles.
@@ -2860,10 +2863,6 @@ The following Braille displays are supported:
 -
 
 These displays do not support NVDA's automatic background braille display detection functionality.
-
-If BrxCom is installed, NVDA will use BrxCom.
-BrxCom is a tool that allows keyboard input from the braille display to function independently from a screen reader.
-Keyboard input is possible with the Trio and BRAILLEX Live models.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
