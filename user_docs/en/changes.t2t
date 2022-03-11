@@ -3,6 +3,20 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2 =
+
+== New Features ==
+
+
+== Changes ==
+
+
+== Bug Fixes ==
+
+
+== Changes for Developers ==
+
+
 = 2022.1 =
 
 == New Features ==
@@ -157,6 +171,7 @@ This can dramatically decrease build times on multi core systems. (#13226, #1337
     - ``UIAHandler.UIAControlTypesToNVDARoles``
     -
   -
+- When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
 -
 
 
