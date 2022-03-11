@@ -102,13 +102,15 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
 			attrs['placeholder']= placeholder
-		accRole=attrs['IAccessible::role']
-		accRole=int(accRole) if accRole.isdigit() else accRole
-		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
+
+		role = IAccessibleHandler.NVDARoleFromAttr(attrs['IAccessible::role'])
 		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.Role.BLOCKQUOTE
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		states |= IAccessibleHandler.getStatesSetFromIAccessible2Attrs(attrs)
+		role, states = controlTypes.transformRoleStates(role, states)
+
 		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.State.FOCUSABLE in states or controlTypes.State.UNAVAILABLE in states or controlTypes.State.EDITABLE in states):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.

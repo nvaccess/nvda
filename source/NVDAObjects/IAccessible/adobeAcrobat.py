@@ -3,6 +3,7 @@
 #Copyright (C) 2008-2014 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+import typing
 
 import api
 import controlTypes
@@ -38,7 +39,13 @@ stdNamesToRoles = {
 	"Form": controlTypes.Role.FORM,
 }
 
-def normalizeStdName(stdName):
+
+def normalizeStdName(stdName: str) -> typing.Tuple[controlTypes.Role, typing.Optional[str]]:
+	"""
+	@param stdName:
+	@return: Tuple with the NVDA role and optionally the level number of the heading as a string, E.G.:
+	"H5" produces "5"
+	"""
 	if stdName and "H1" <= stdName <= "H6":
 		return controlTypes.Role.HEADING, stdName[1]
 

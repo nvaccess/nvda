@@ -848,7 +848,11 @@ the NVDAObject for IAccessible
 				self._IAccessibleIdentity=None
 		return self._IAccessibleIdentity
 
-	def _get_IAccessibleRole(self):
+	IAccessibleRole: int
+	"""Type definition for auto prop '_get_IAccessibleRole'
+	"""
+
+	def _get_IAccessibleRole(self) -> int:
 		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			try:
 				role=self.IAccessibleObject.role()
@@ -864,29 +868,39 @@ the NVDAObject for IAccessible
 				role=0
 		return role
 
-
 	def _get_role(self):
 		IARole=self.IAccessibleRole
 		if IARole==oleacc.ROLE_SYSTEM_CLIENT:
 			superRole=super(IAccessible,self).role
 			if superRole!=controlTypes.Role.WINDOW:
 					return superRole
-		if isinstance(IARole,str):
+		if isinstance(IARole, str):  # todo: when can this be a string?
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
-		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.Role.UNKNOWN)
+		# must not create interdependence between role and states properties. Use IARole / IAStates.
+		NVDARole = IAccessibleHandler.calculateNvdaRole(IARole, self.IAccessibleStates)
+		return NVDARole
 	# #2569: Don't cache role,
 	# as it relies on other properties which might change when overlay classes are applied.
 	_cache_role = False
 
-	def _get_IAccessibleStates(self):
+	IAccessibleStates: int
+	"""Type info for auto property: _get_IAccessibleStates
+	"""
+
+	def _get_IAccessibleStates(self) -> int:
 		try:
 			res=self.IAccessibleObject.accState(self.IAccessibleChildID)
 		except COMError:
 			return 0
 		return res if isinstance(res,int) else 0
 
-	def _get_states(self):
+	states: typing.Set[controlTypes.State]
+	"""Type info for auto property: _get_states
+	"""
+
+	# C901 '_get_states' is too complex. Look for opportunities to break this method down.
+	def _get_states(self) -> typing.Set[controlTypes.State]:  # noqa: C901
 		states=set()
 		if self.event_objectID in (winUser.OBJID_CLIENT, winUser.OBJID_WINDOW) and self.event_childID == 0:
 			states.update(super(IAccessible, self).states)
@@ -895,12 +909,16 @@ the NVDAObject for IAccessible
 		except COMError:
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
-			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+			states.update(
+				IAccessibleHandler.calculateNvdaStates(self.IAccessibleRole, IAccessibleStates)
+			)
+
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			# Not an IA2 object.
 			return states
-		IAccessible2States=self.IA2States
-		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		IAccessible2States = self.IA2States
+		states |= IAccessibleHandler.getStatesSetFromIAccessible2States(IAccessible2States)
+
 		# Readonly should override editable
 		if controlTypes.State.READONLY in states:
 			states.discard(controlTypes.State.EDITABLE)
@@ -1757,7 +1775,11 @@ the NVDAObject for IAccessible
 	# Temporary caching breaks because the cache isn't initialised when this is first called.
 	_cache_IA2WindowHandle = False
 
-	def _get_IA2States(self):
+	IA2States: int
+	"""Type info for auto property: _get_IA2States
+	"""
+
+	def _get_IA2States(self) -> int:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return 0
 		try:
