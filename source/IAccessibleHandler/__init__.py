@@ -242,7 +242,7 @@ IAccessible2StatesToNVDAStates = {
 
 def normalizeIAccessible(
 		pacc: Union[IUnknown, IA.IAccessible, IA2.IAccessible2],
-		childID=0
+		childID: int = 0
 ) -> Union[IA.IAccessible, IA2.IAccessible2]:
 	if not isinstance(pacc, IA.IAccessible):
 		try:
