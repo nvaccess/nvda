@@ -527,7 +527,6 @@ In addition, you can manually force focus mode, after which it will remain in ef
 | Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document. See [searching for text #SearchingForText] for more information. |
 | Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
 | Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
-| Open long description | NVDA+d | Opens a new window containing a long description for the element you are on if it has one. | 
 %kc:endInclude
 
 ++ Single Letter Navigation ++[SingleLetterNavigation]
@@ -773,6 +772,26 @@ Pressing dot 7 erases the last entered braille cell or character.
 Dot 8 translates any braille input and presses the enter key.
 Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
 %kc:endInclude
+
++++ Inputting keyboard shortcuts +++[BrailleKeyboardShortcuts]
+NVDA supports inputting keyboard shortcuts and emulating keypresses using the braille display.
+This emulation comes in two forms: assigning a Braille input directly to some key press and using the virtual modifier keys.
+
+Commonly-used keys, such as the arrow keys or pressing Alt to reach menus, can be mapped directly to Braille inputs.
+The driver for each Braille display comes pre-equipped with some of these assignments.
+You can change these assignments or add new emulated keys from the [Input Gestures dialog #InputGestures].
+
+While this approach is useful for commonly-pressed or unique keys (such as Tab), you may not want to assign a unique set of keys to each keyboard shortcut.
+To allow emulating keypresses where modifier keys are held down, NVDA provides commands to toggle the control, alt, shift, windows, and NVDA keys, along with commands for some combinations of those keys.
+To use these toggles, first press the command (or sequence of commands) for the modifier keys you want pressed, than input the character that's part of the keyboard shortcut you want to input.
+For example, to produce control+f, use the "Toggle control key" command and then type an f,
+and to input control+alt+t, use either the "Toggle control key" and "Toggle alt key" commands, in either order, or the "Toggle control and alt keys" command, followed by typing a t.
+
+If you accidentally toggle modifier keys, running the toggle command again will remove the modifier.
+
+When typing in contracted Braille, using the modifier toggle keys will cause your input to be translated just as if you had pressed dots 7+8.
+In addition, the emulated keypress cannot reflect Braille typed before the modifier key was pressed.
+This means that, to type alt+2 with a Braille code that uses a number sign, you must first toggle Alt and then type a number sign.
 
 + Vision +[Vision]
 While NVDA is primarily aimed at blind or vision impaired people who primarily use speech and/or braille to operate a computer, it also provides built-in facilities to change the contents of the screen.
@@ -1689,8 +1708,8 @@ This field sets the amount of lines you will move by when pressing page up or pa
 ==== Use screen layout ====[BrowseModeSettingsScreenLayout]
 Key: NVDA+v
 
-This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown.
-If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
+This option allows you to specify whether browse mode should place clickable content (links, buttons and fields) on its own line, or if it should keep it in the flow of text as it is visually shown. Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
+When screen layout is enabled, page elements will stay as they are visually shown. For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line. If it is disabled, then page elements will be placed on their own lines, which may be easier to understand during line by line page navigation, and may make items easier to interact with for some users.
 
 ==== Enable browse mode on page load ====[BrowseModeSettingsEnableOnPageLoad]
 This checkbox toggles whether browse mode should be automatically enabled when loading a page.
@@ -1732,6 +1751,7 @@ Enabled by default, this option allows you to choose if gestures (such as key pr
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
 
+%kc:setting
 ==== Automatically set system focus to focusable elements ====[BrowseModeSettingsAutoFocusFocusableElements]
 Key: NVDA+8
 
@@ -1844,12 +1864,15 @@ This has a major negative impact on performance, especially in applications like
 Therefore, when this option is enabled, NVDA will limit event registration to the system focus for most events.
 If you suffer from performance issues in one or more applications, We recommend you to try this functionality to see whether performance improves.
 
-==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
-When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls.
-This includes Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
- For the most recent versions of Microsoft Office 2016/365 running on Windows 10 and later, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
-However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
-We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
+==== Use UI automation to access Microsoft Word document controls ====[MSWordUIA]
+Configures whether or not NVDA should use the UI Automation accessibility API to access Microsoft Word documents, rather than the older Microsoft Word object model.
+This applies to documents in Microsoft word itself, plus messages in Microsoft Outlook.
+This setting contains the following values:
+- Default (where suitable)
+- Only where necessary: where the Microsoft Word object model is not  available at all
+- Where suitable: Microsoft Word version 16.0.15000 or higher, or where the Microsoft Word object model is unavailable
+- Always: where ever UI automation is available in Microsoft word (no matter how complete).
+-
 
 ==== Use UI Automation to access the Windows Console when available ====[AdvancedSettingsConsoleUIA]
 When this option is enabled, NVDA will use a new, work in progress version of its support for Windows Console which takes advantage of [accessibility improvements made by Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. This feature is highly experimental and is still incomplete, so its use is not yet recommended. However, once completed, it is anticipated that this new support will become the default, improving NVDA's performance and stability in Windows command consoles.
@@ -1867,9 +1890,13 @@ The combo box has the following options:
 ==== Annotations ====[Annotations]
 This group of options is used to enable features which add experimental support for ARIA annotations.
 Some of these features may be incomplete.
+
+%kc:beginInclude
+To "Report summary of any annotation details at the system caret", press NVDA+d.
+%kc:endInclude
+
 The following options exist: 
 - "Report 'has details' for structured annotations": enables reporting if the text or control has further details.
-A summary of the extra details can be reported by assigning a gesture to "Report summary of any annotation details at the system caret" using the [Input Gestures dialog #InputGestures].
 - "Report aria-description always":
   When the source of ``accDescription`` is aria-description, the description is reported.
   This is useful for annotations on the web.
@@ -1954,7 +1981,7 @@ They are:
 You need to assign custom gestures using the [Input Gestures dialog #InputGestures] if you wish to open any of these dictionary dialogs from anywhere.
 
 All dictionary dialogs contain a list of rules which will be used for processing the speech.
-The dialog also contains Add, Edit and Remove buttons.
+The dialog also contains Add, Edit, Remove and Remove all buttons.
 
 To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok.
 You will then see your new rule in the list of rules.
@@ -2200,6 +2227,8 @@ To prevent unintentionally routing to cells, the command is delayed.
 The mouse must hover until the cell turns green.
 The cell will start as a light yellow colour, transition to orange, then suddenly become green.
 
+To toggle the braille viewer from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ++ Python Console ++[PythonConsole]
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2344,7 +2373,6 @@ Search for the broader language (such as English or French), then locate the var
 Select any languages desired and use the "add" button to add them.
 Once added, restart NVDA.
 
-
 Please see this Microsoft article for a list of available voices: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
@@ -2415,6 +2443,17 @@ Please see the display's documentation for descriptions of where these keys can 
 | escape key | brailleSpaceBar+dot1+dot5 |
 | windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
 | space key | brailleSpaceBar |
+| Toggle control key | brailleSpaceBar+dot3+dot8 |
+| Toggle alt key | brailleSpaceBar+dot6+dot8 |
+| Toggle windows key | brailleSpaceBar+dot4+dot8 |
+| Toggle NVDA key | brailleSpaceBar+dot5+dot8 |
+| Toggle shift key | brailleSpaceBar+dot7+dot8 |
+| Toggle control and shift keys | brailleSpaceBar+dot3+dot7+dot8 |
+| Toggle alt and shift keys | brailleSpaceBar+dot6+dot7+dot8 |
+| Toggle windows and shift keys | brailleSpaceBar+dot4+dot7+dot8 |
+| Toggle NVDA and shift keys | brailleSpaceBar+dot5+dot7+dot8 |
+| Toggle control and alt keys | brailleSpaceBar+dot3+dot6+dot8 |
+| Toggle control, alt, and shift keys | brailleSpaceBar+dot3+dot6+dot7+dot8 |
 | windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
 | Report Current Line | brailleSpaceBar+dot1+dot4 |
 | NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
@@ -2824,10 +2863,6 @@ The following Braille displays are supported:
 -
 
 These displays do not support NVDA's automatic background braille display detection functionality.
-
-If BrxCom is installed, NVDA will use BrxCom.
-BrxCom is a tool that allows keyboard input from the braille display to function independently from a screen reader.
-Keyboard input is possible with the Trio and BRAILLEX Live models.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2021 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Copyright (C) 2009-2022 NV Access Limited, Joseph Lee, Mohammad Suliman,
 # Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
@@ -25,6 +25,7 @@ import UIAHandler.customAnnotations
 import globalVars
 import eventHandler
 import controlTypes
+from controlTypes import TextPosition
 import config
 import speech
 import api
@@ -239,15 +240,14 @@ class UIATextInfo(textInfos.TextInfo):
 			textPosition=None
 			val=fetcher.getValue(UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-				textPosition='super'
+				textPosition = TextPosition.SUPERSCRIPT
 			else:
 				val=fetcher.getValue(UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 				if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-					textPosition="sub"
+					textPosition = TextPosition.SUBSCRIPT
 				else:
-					textPosition="baseline"
-			if textPosition:
-				formatField['text-position']=textPosition
+					textPosition = TextPosition.BASELINE
+			formatField['text-position'] = textPosition
 		if formatConfig['reportStyle']:
 			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
@@ -1076,7 +1076,7 @@ class UIA(Window):
 				clsList.append(chromium.ChromiumUIA)
 		elif (
 			self.role == controlTypes.Role.DOCUMENT
-			and self.UIAElement.cachedAutomationId == "Microsoft.Windows.PDF.DocumentView"
+			and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView"
 		):
 			# PDFs
 			from . import spartanEdge
@@ -1122,17 +1122,11 @@ class UIA(Window):
 		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
-		try:
-			if UIAAutomationId in ("SearchTextBox", "TextBox"):
-				clsList.append(SearchField)
-		except COMError:
-			log.debug("Failed to locate UIA search field", exc_info=True)
+		if UIAAutomationId in ("SearchTextBox", "TextBox"):
+			clsList.append(SearchField)
 		# #12790: detect suggestions list views firing layout invalidated event.
-		try:
-			if UIAAutomationId == "SuggestionsList":
-				clsList.append(SuggestionsList)
-		except COMError:
-			log.debug("Could not detect suggestions list", exc_info=True)
+		if UIAAutomationId == "SuggestionsList":
+			clsList.append(SuggestionsList)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
@@ -1156,7 +1150,12 @@ class UIA(Window):
 		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-		elif UIAClassName == "TermControl":
+		elif UIAClassName in ("TermControl", "TermControl2"):
+			# microsoft/terminal#12358: Eventually, TermControl2 should have
+			# a separate overlay class that is not a descendant of LiveText.
+			# TermControl2 sends inserted text using UIA notification events,
+			# so it is no longer necessary to diff the object as with all
+			# previous terminal implementations.
 			from . import winConsoleUIA
 			clsList.append(winConsoleUIA.WinTerminalUIA)
 

@@ -46,6 +46,7 @@ ARIA treegrid
 	test_ariaTreeGrid_browseMode
 ARIA invalid spelling and grammar
 	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
+	[Tags]	excluded_from_build
 	ARIAInvalid_spellingAndGrammar
 ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
@@ -119,3 +120,6 @@ Quick Nav reports target first
 Focus reports target first
 	[Documentation]	Focus target should always be reported before ancestors. Ancestors should be reported from inner to outer.
 	test_focusTargetReporting
+focus mode is turned on on focused read-only list item
+	[Documentation]	Focused list items with a focusable list container should cause focus mode to be turned on automatically.
+	test_focus_mode_on_focusable_read_only_lists

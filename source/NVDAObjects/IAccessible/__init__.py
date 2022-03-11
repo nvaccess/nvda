@@ -40,6 +40,7 @@ import braille
 import api
 import config
 import controlTypes
+from controlTypes import TextPosition
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
@@ -130,6 +131,10 @@ def normalizeIA2TextFormatField(formatField):
 	language=formatField.get('language')
 	if language:
 		formatField['language']=languageHandler.normalizeLanguage(language)
+	try:
+		formatField["text-position"] = TextPosition(formatField.pop("text-position"))
+	except KeyError:
+		formatField["text-position"] = TextPosition.BASELINE
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -1716,6 +1721,11 @@ the NVDAObject for IAccessible
 			except Exception as e:
 				ret = "exception: %s" % e
 			info.append("IAccessible2 attributes: %s" % ret)
+			try:
+				ret = ", ".join(r.RelationType for r in self._IA2Relations)
+			except Exception as e:
+				ret = f"exception: {e}"
+			info.append(f"IAccessible2 relations: {ret}")
 		return info
 
 	def _get_language(self):

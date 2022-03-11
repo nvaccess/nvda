@@ -1678,7 +1678,7 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Input help mode message for move to next document with focus command,
 			# mostly used in web browsing to move from embedded object to the webpage document.
-			"Moves the focus to the next closest document that contains the focus"
+			"Moves the focus out of the current embedded object and into the document that contains it"
 		),
 		category=SCRCAT_FOCUS,
 		gesture="kb:NVDA+control+space"
@@ -1962,6 +1962,7 @@ class GlobalCommands(ScriptableObject):
 			self.script_showFormattingAtCaret(gesture)
 
 	@script(
+		gesture="kb:NVDA+d",
 		description=_(
 			# Translators: the description for the reportDetailsSummary script.
 			"Report summary of any annotation details at the system caret."
@@ -1988,7 +1989,8 @@ class GlobalCommands(ScriptableObject):
 			return
 		caret.expand(textInfos.UNIT_CHARACTER)
 		nvdaObject: NVDAObject = caret.NVDAObjectAtStart
-		log.debug(f"Trying with nvdaObject : {nvdaObject}")
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"Trying with nvdaObject : {nvdaObject}")
 
 		annotation: Optional[str] = nvdaObject.detailsSummary
 		if annotation:
@@ -2000,13 +2002,16 @@ class GlobalCommands(ScriptableObject):
 			# There may still be an object with focus that has details.
 			# There isn't a known test case for this, however there isn't a known downside to attempt this.
 			focus = api.getFocusObject()
-			log.debug(f"Trying focus object: {focus}")
+			if config.conf["debugLog"]["annotations"]:
+				log.debug(f"Trying focus object: {focus}")
 			annotation = focus.detailsSummary
 			if annotation:
-				log.debug("focus object has details, able to proceed")
+				if config.conf["debugLog"]["annotations"]:
+					log.debug("focus object has details, able to proceed")
 
 		if not annotation:
-			log.debug("no details annotation found")
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("no details annotation found")
 			# Translators: message given when there is no annotation details for the reportDetailsSummary script.
 			ui.message(_("No additional details"))
 			return
@@ -2715,6 +2720,28 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		description=_(
+			# Translators: Input help mode message for toggle Braille viewer command.
+			"Toggles the NVDA Braille viewer, a floating window that allows you to view braille output, "
+			"and the text equivalent for each braille character"
+		),
+		category=SCRCAT_TOOLS
+	)
+	def script_toggleBrailleViewer(self, gesture):
+		import brailleViewer
+		if brailleViewer.isBrailleViewerActive():
+			# Translators: The message announced when disabling braille viewer.
+			state = _("Braille viewer disabled")
+			brailleViewer.destroyBrailleViewer()
+			gui.mainFrame.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(False)
+		else:
+			# Translators: The message announced when enabling Braille viewer.
+			state = _("Braille viewer enabled")
+			brailleViewer.createBrailleViewerTool()
+			gui.mainFrame.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(True)
+		ui.message(state)
+
+	@script(
 		# Translators: Input help mode message for toggle braille tether to command
 		# (tethered means connected to or follows).
 		description=_("Toggle tethering of braille between the focus and the review position"),
@@ -3102,6 +3129,72 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_braille_toggleNVDAKey(self, gesture):
 		brailleInput.handler.toggleModifier("NVDA")
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a braille command.
+			"Virtually toggles the control and shift keys to emulate a "
+			"keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleControlShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["control", "shift"])
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a braille command.
+			"Virtually toggles the alt and shift keys to emulate a "
+			"keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleAltShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["alt", "shift"])
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a braille command.
+			"Virtually toggles the left windows and shift keys to emulate a "
+			"keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleWindowsShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["leftWindows", "shift"])
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a braille command.
+			"Virtually toggles the NVDA and shift keys to emulate a "
+			"keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleNVDAKeyShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["NVDA", "shift"])
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a braille command.
+			"Virtually toggles the control and alt keys to emulate a "
+			"keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleControlAlt(self, gesture):
+		brailleInput.handler.toggleModifiers(["control", "alt"])
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a braille command.
+			"Virtually toggles the control, alt, and shift keys to emulate a "
+			"keyboard shortcut with braille input"),
+		category=inputCore.SCRCAT_KBEMU,
+		bypassInputHelp=True
+	)
+	def script_braille_toggleControlAltShift(self, gesture):
+		brailleInput.handler.toggleModifiers(["control", "alt", "shift"])
 
 	@script(
 		description=_(

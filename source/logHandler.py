@@ -155,7 +155,7 @@ class Logger(logging.Logger):
 			codepath=getCodePath(f)
 		extra["codepath"] = codepath
 
-		if not globalVars.appArgs or globalVars.appArgs.secure:
+		if globalVars.appArgs.secure:
 			# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
 			activateLogViewer = False
 
@@ -246,8 +246,7 @@ class Logger(logging.Logger):
 		@rtype: bool
 		"""
 		if (
-			not globalVars.appArgs
-			or globalVars.appArgs.secure
+			globalVars.appArgs.secure
 			or not globalVars.appArgs.logFileName
 			or not isinstance(logHandler, FileHandler)
 		):
@@ -268,7 +267,6 @@ class Logger(logging.Logger):
 		"""
 		if (
 			self.fragmentStart is None
-			or not globalVars.appArgs
 			or globalVars.appArgs.secure
 			or not globalVars.appArgs.logFileName
 			or not isinstance(logHandler, FileHandler)

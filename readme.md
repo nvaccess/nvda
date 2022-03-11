@@ -49,6 +49,9 @@ git clone --recursive https://github.com/nvaccess/nvda.git
 
 The `--recursive` option is needed to retrieve various Git submodules we use.
 
+## Supported Operating Systems
+Although NVDA can run on any Windows version starting from Windows 7 Service pack 1, building NVDA from source is currently limited to only Windows 10 and above.
+
 ## Dependencies
 The NVDA source depends on several other packages to run correctly.
 
@@ -57,12 +60,12 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019 or 2022:
-	* To replicate the production build environment, use the [version of Visual Studio that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
-		* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/16/release/vs_BuildTools.exe)
-		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
-		* The Professional and Enterprise versions are also supported
-		* Preview versions are *not* supported
+* Microsoft Visual Studio 2019:
+	* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/16/release/vs_BuildTools.exe)
+	* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
+	* The Professional and Enterprise versions are also supported
+	* Preview versions are *not* supported
+	* Building with Visual Studio 2022 is not officially supported at this stage.
 	* When installing Visual Studio, you need to enable the following:
 		* In the list  on the Workloads tab
 			* in the Windows grouping:
@@ -88,7 +91,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 7e5457f91e10
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.org/), version 3.20.0
+* [liblouis](http://www.liblouis.org/), version 3.21.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 40.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
@@ -97,6 +100,9 @@ For reference, the following run time dependencies are included in Git submodule
 * lilli.dll, version 2.1.0.0
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
+* [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
+	* Commit 224b22f3bf9e
+	* The fork specifically adds support for  CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84.
 
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 

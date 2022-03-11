@@ -1,6 +1,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2020 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2020-2022 NV Access Limited, Leonard de Ruijter
 
 """
 Object overlay classes for Visual Studio components
@@ -17,7 +17,7 @@ import time
 class IntelliSenseItem(UIA):
 
 	def _get_name(self):
-		return self.UIAElement.cachedAutomationID
+		return self.UIAAutomationId
 
 	def event_UIA_elementSelected(self):
 		# Cancel speech to have speech announce the selection as soon as possible.
