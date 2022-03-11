@@ -328,7 +328,7 @@ Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfoc
 %kc:endInclude
 
 ++ Navigeren met de systeemcursor ++[SystemCaret]
-Wanneer er een [object #Objects] is [gefocusseerd #SystemFocus] dat de mogelijkheid heeft om tekst te lezen of te bewerken, kunt u de systeemcursor gebruiken om door de tekst te navigeren. De systeemcursor wordt ook wel de tekstcursor genoemd.
+Wanneer  er een [object #Objects]  [gefocusseerd is #SystemFocus] dat de mogelijkheid heeft om tekst te lezen of te bewerken, kunt u de systeemcursor gebruiken om door de tekst te navigeren. De systeemcursor wordt ook wel de tekstcursor genoemd.
 
 Als een object met de systeemcursor is gefocusseerd, kunt u de pijltoetsen, pageUp, pageDown, home, end, etc gebruiken om door de tekst te navigeren.
 U kunt de tekst ook wijzigen als het object het wijzigen van tekst ondersteunt.
@@ -341,6 +341,7 @@ U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navi
 | Deze regel lezen | NVDA+pijl omhoog | NVDA+l | Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen. Bij tweemaal drukken wordt regel gespeld. bij driemaal drukken wordt regel gespeld met gebruikmaking van spellingsalfabet. |
 | Geselecteerde tekst lezen | NVDA+Shift+pijl omhoog | NVDA+Shift+s | Hiermee wordt geselecteerde tekst voorgelezen. |
 | Tekstopmaak melden | NVDA+f | NVDA+f | Meldt  de opmaakkenmerken van de tekst op  de huidige cursorpositie. Bij tweemaal  drukken wordt de informatie weergegeven in bladermodus. |
+| Cursorlocatie melden| NVDA+numeriekDelete | NVDA+delete | geen | Meldt informatie over de locatie van de tekst of het object ten opzichte van de positie van de systeemcursor. Hieronder kan bij voorbeeld vallen waar procentsgewijs in  het document de cursor zich bevindt, de afstand vanaf  de rand van de pagina of de exacte schermpositie. Ttweemaal drukken geeft mogelijk meer details. |
 | Volgende zin | alt+Pijl omlaag | alt+Pijl omlaag | Verplaatst cursor naar volgende zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook). |
 | Vorige zin | alt+Pijl omhoog | Alt+Pijl omhoog | Verplaatst cursor naar vorige zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook ). |
 
@@ -389,7 +390,7 @@ Voor objectnavigatie zijn de volgende toetscombinaties beschikbaar:
 | Naar object met de focus gaan | NVDA+numeriek minteken | NVDA+backspace | geen | Hiermee navigeert u naar het object waar de systeemfocus zich momenteel bevindt, en verplaatst u de leescursor (review cursor) naar de positie van de tekstcursor als deze zichtbaar is |
 | Huidige navigator object activeren | NVDA+numeriek entertoets | NVDA+enter | dubbel tikken | Hiermee wordt het huidige navigator object geactiveerd(hetzelfde effect als klikken met de muis of het indrukken van de spatiebalk bij gefocusseerd object) |
 | Verplaats de systeem focus of cursor naar de huidige review positie | NVDA+shift+numeriek minteken | NVDA+shift+backspace | geen | Een maal drukken verplaatst de focus naar het huidige navigator object, twee maal drukken verplaatst de systeem cursor naar de review cursor |
-| Positie van de leescursor melden | NVDA+numeriek Delete | NVDA+delete | geen | Geeft informatie overde plaats van de tekst of het object bij de leescursor. Er kan, bij voorbeeld, in een percentage aangegeven worden waar in het document de cursor staat, wat de afstand is ten opzichte van de rand van de pagina of de exacte schermpositie. Door tweemaal te drukken krijgt u meer details. |
+| Positie van de leescursor melden | NVDA+shift+numeriek Delete | NVDA+shift+delete | geen | Geeft informatie overde plaats van de tekst of het object bij de leescursor. Er kan, bij voorbeeld, in een percentage aangegeven worden waar in het document de cursor staat, wat de afstand is ten opzichte van de rand van de pagina of de exacte schermpositie. Door tweemaal te drukken krijgt u meer details. |
 | Leescursor (review cursor) naar statusbalk verplaatsen | geen | geen | geen | Melden van  Statusbalk als NVDA deze vindt. Het navigatorobject wordt eveneens hierheen verplaatst. |
 %kc:endInclude |
 
@@ -624,14 +625,21 @@ MathPlayer is gratis te downloaden van: https://www.dessci.com/en/products/mathp
 
 NVDA ondersteunt de volgende types wiskundige inhoud:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
-- Design Science MathType in Microsoft Word and PowerPoint. 
+ - Microsoft Word 365 Modern Math Equations via UI automation:
+NVDA kan wiskundige vergelijkingen in Microsoft Word 365/2016 build 14326 en hoger lezen  en er interactief mee omgaan.
+Merk evenwel op dat eerder gemaakte MathType-vergelijkingen eerst omgezet moeten worden naar Office Math door elk van de vergelijkingen te selecteren om vervolgens in het contextmenu van de opties voor vergelijkingen te kiezen voor -> naar Office Math omzetten . Vergewis u ervan dat u over de nieuwste versie van MathType beschikt voordat u dit doet.
+Microsoft Word biedt nu ook de mogelijkheid lineaire symbool-gebaseerde navigatie door de  vergelijkingen zelf, en ondersteunt wiskundige invoer waarbij gebruik wordt gemaakt van syntaxis van uiteenlopende aard, waaronder LateX. Verdere details, vindt u onder [Linear format equations using UnicodeMath and LaTeX in Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+- Microsoft Powerpoint, en oudere versies van Microsoft Word: 
+In zowel Microsoft Powerpoint als in  Microsoft Word kunt u met NVDA MathType-vergelijkingen lezen en er in navigeren. 
 MathType moet worden geïnstalleerd anders werkt dit niet. 
 De proefversie ishiervoor voldoende.
 U kunt deze  downloaden van https://www.dessci.com/en/products/mathtype/
-- MathML in Adobe Reader. 
+- Adobe Reader. 
 NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
-- Wiskunde in Kindle voor pc voor boeken met toegankelijke wiskundige inhoud.
-
+- Kindle Reader voor PC.
+In boeken met toegankelijke wiskundige inhoud die u gebruikt via Kindle voor PC stelt NVDA u in staat de wiskundige inhoud te lezen en er in te navigeren.
+ -
+ 
 Bij het lezen van een document zal NVDA alle ondersteunde wiskundige inhoud voorlezen wanneer deze voorkomt.
 Als u een brailleleesregel gebruikt, wordt deze ook in braille weergegeven.
 
@@ -775,6 +783,26 @@ Door punt 7 in te toetsen, verwijdert u de laatst ingevoerde braillecel of het l
 Punt 8 zet alle braille-invoer om en activeert de Enter-toets.
 Door punt 7 + punt 8 in te drukken wordt alle braille-invoer omgezet, maar zonder de spatiebalk of Enter-toets te activeren.
 %kc:endInclude
+
++++ Sneltoetscombinaties instellen +++[BrailleKeyboardShortcuts]
+NVDA ondersteunt het instellen  van sneltoetsen en het emuleren van toetsenbordaanslagen met de brailleleesregel.
+Dat emuleren kan op twee manieren: brailleinvoer rechtsreeks toewijzen aan een toetsaanslag en door gebruik te maken van virtuele functiewisseltoetsen.
+
+Algemeen gebruikte toetsen, zoals de pijltjestoetsen of de Alt-toets  om bij menu's te komen, kunnen rechtstreeks toegekend worden aan een (willekeurige) brailleinvoer.
+De driver voor iedere brailleleesregel is standaard voorzien van een aantal van deze toewijzingen.
+U kunt deze toewijzingen aanpassen of er nieuwe geëmuleerde toetsen aan toevoegen vanuit het [dialoogvenster Invoerhandelingen #InputGestures].
+
+Hoewel deze aanpak goed bruikbaar isvoor algemeen gebruikte of unieke toetsen zoals Tab), wilt u misschien geen unieke set toetsen toewijzen aan elke sneltoets.
+Om het emuleren van het indrukken van een toets mogelijk te maken waarbij  een functiewisseltoets ingedrukt gehouden moet worden, beschikt u in NVDA over commando's om te schakelen met control, alt, shift, windows, en de NVDA-toetsen, alsmede over commando's voor enkele  combinaties van die toetsen.
+Om deze schakeltoetsen te gebruiken drukt u eerst op het commando (of de commandocombinatie) voor de functiewisseltoetsen die ingedrukt moeten worden, voer dan het karakter (teken) in dat deel uitmaakt van de sneltoets  die u wilt instellen.
+Als u bijvoorbeeld control+f wilt bewerkstelligen, gebruikt u  control " als funtiewisseltoetsd en dan typt u een f,
+en om control+alt+t, in te stellen gebruikt u of, de control-toets" en  de alt-toets" als de commandotoetsen, in willekeurige volgorde, of de control- en alt-toetsen" om vervolgens een t te typen.
+
+Als u per ongeluk functiewisseltoetsen omschakelt waarmee het funtiewisselcommando opnieuw wordt geactiveerd verliest u de toegewezen funtie.
+
+Als u werkt met verkort braille, met gebruikmaking van de functiewisseltoetsen zal uw invoer zodanig worden omgezet dat het lijkt alsof punten 7+8 werden ingedrukt.
+Daarenboven kan de geëmuleerde toetsaanslag geen braille weergeven die werd ingevoerd voordat de schakeltoets was ingedrukt.
+Dit houdt in dat, u om alt+2 te typen met een braillecode met een cijferteken erin u eerst moet schakelen met Alt om daarna een cijferteken in te geven.
 
 + Zicht +[Vision]
 Hoewel NVDA op de eerste plaats bedoeld is voor blinden of slechtzienden die primair gebruik maken van spraak en/of braille om met een computer te werken, beschikt deze toepassing ook over ingebouwde faciliteiten waarmee de schermweergave kan worden aangepast.
@@ -1742,6 +1770,7 @@ Met deze optie, die standaard is ingeschakeld, kunt u bepalen of invoerhandeling
 Ervan uitgaande dat de optie is ingeschakeld zal de letter "j", bij voorbeeld, wanneer u deze indrukt, onderschept worden voordat ze het document bereikt, ook al is het geen navigatiesneltoets en waarschijnlijk ook geen commandotoets binnen de toepassing zelf. 
 In een dergelijk geval geeft NVDA Windows opdracht een standaard-geluid af te spelen telkens wanneer er een onderschepte toets wordt ingedrukt. 
 
+%kc:setting
 ==== Systeemfocus automatisch op focus-gevoelige elementen plaatsen ====[BrowseModeSettingsAutoFocusFocusableElements]
 Toets: NVDA+8
 
@@ -1768,6 +1797,7 @@ U kunt de vermelding laten horen van:
  - Kleuren
 - Documentinformatie
  - Opmerkingen
+  - bladwijzers
  - Aangebrachte wijzigingen in de tekst
  - Spelfouten
 - Pagina's en Afstand
@@ -1864,12 +1894,9 @@ Het kan echter voorkomen dat informatie of niet of onjuist wordt weergegeven in 
 ==== UI Automation gebruiken om toegang te krijgen tot Windows-consool wanneer beschikbaar ====[AdvancedSettingsConsoleUIA]
 Wanneer deze optie ingeschakeld is, zal NVDA een nieuwe, nog in otwikkeling zijnde, versie van haar ondersteuning voor de Windows-consool gebruiken waarmee toegankelijkheidsverbeteringen worden benut die Microsoft heeft doorgevoerd https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Deze mogelijkheid is nog zeer experimenteel van aard en  nog incompleet, dus wordt het gebruik ervan nog niet aanbevolen. Wanneer deze echter volledig is uitontwikkeld, dan is de verwachting dat deze nieuwe vorm van ondersteuning de standaard gaat worden waarmee de prestaties en stabiliteit van NVDA in opdrachtmodules van Windows worden verbeterd. 
 
-==== Wachtwoorden uitspreken in  UIA consools ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Hiermee bepaalt u of [getypte karakters uitspreken #KeyboardSettingsSpeakTypedCharacters] nof [getypte woorden uitspreken #KeyboardSettingsSpeakTypedWords] actief is in situaties waar het  scherm niet wordt ververst zoals bij het invoeren van een wachtwoord in het Windows-consool als ondersteuning voor UI automation ingeschakeld is. Om veiligheidsredenen moet deze instelling uitgeschakeld blijven. Het kan echter voorkomen dat u de instelling  zou willen inschakelen als het mis gaat met het uitsprken van getypte tekens / worden    bij gebruik van de nieuwe, experimentele consool-ondersteuning van NVDA. 
-
 ==== UI automation gebruiken bij Edge en andere op Chromium gebaseerde browsers waar beschikbaar ====[ChromiumUIA]
 Biedt de mogelijkheid aan te geven wanneer UIA (User Interface Automation)  gebruikt wordt, voor zover deze beschikbaar is, in op Chromium gebaseerde browsers zoals Microsoft Edge.
-UIA Ondersteuning voor op Chromium gebaseerde browsers bevindt zich nog in een vroeg stadium van ontwikkeling en biedt wellicht nog niet hetzelfde toegangsniveau als IA2.
+UIA Ondersteuning voor op Chromium gebaseerde browsers bevindt zich nog in een vroeg stadium van ontwikkeling en biedt wellicht nog niet hetzelfde toegankelijkheidsniveau als IA2.
 Het keuzemenu heeft de volgende opties:
 - Standaard (Alleen indien nodig: De huidige NVDA-standaardinstelling is Alleen indien nodig". Deze standaardinstelling kan met het voortschrijden van de technologie in de toekomst aangepast worden.
 - Alleen indien nodig: Als NVDA niet in staat is in te breken inhet browserproces om IA2 te gebruiken en UIA beschikbaar is, dan zal NVDA terugvallen op UIA.
@@ -1879,10 +1906,10 @@ Het keuzemenu heeft de volgende opties:
 
 ==== annotaties ====[Annotations]
 Deze groep opties dient ter uitbreiding van de mogelijkheden voor experimentele   ondersteuning  van ARIA  annotaties  (ARIA = Accessible Rich Internet Applications).
-Enkele van deze opties zijn mogelijk incompleet.
+Sommige van deze opties zijn mogelijk incompleet.
 De opties zijn: 
-- "Details in bladermodus melden": activeert een melding als er bij een object sprake is van details in bladermodus.
-Melding van een samenvatting van die details kan worden gerealiseerd door er een gebaar aan toe te kennen in het dialoogvenster [Invoerhandelingen InputGestures].
+- "Melding bevat details over samengestelde annotaties": maakt melding van verdere details mogelijk als deze beschikbaar zijn voor de tekst of het besturingselement.
+U kunt een samenvatting van de extra details laten weergeven door een gebaar toe te kennen aan "Samenvatting van gelijk welke annotatie-details melden bij de systeemcursor" met behulp van het dialoogvenster [Invoerhandelingen #InputGestures].
 -  "Altijd aria-beschrijving melden":
   Wanneer  de bron van aria-beschrijving ``accDescription`` is, wordt de beschrijving gemeld.
   Dit is nuttig voor annotaties op het web.
@@ -1902,8 +1929,13 @@ Voor zover het gaat om navigeren in / werken met spreadsheets op een meer elemen
 Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Microsoft Excel  build 16.0.13522.10000  of hoger de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
 De implementatie van Microsoft Excel's UI automation is aan voortdurende verandering onderhevig, en  versies van Microsoft Office die ouder zijn dan 16.0.13522.10000 geven mogelijk niet genoeg informatie prijs, wat deze optie vokomen onbruikbaar maakt.
 
-==== Gebruik de nieuwe ondersteuning voor getypte karakters in het Windows-consool wanneer beschikbaar ====[AdvancedSettingsKeyboardSupportInLegacy]
-Met deze optie stelt u een alternatieve methode in voor het detecteren van getypte karakters in opdrachtmodules van Windows.
+==== Wachtwoorden uitspreken in alle terminal-toepassingen ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Met deze instelling kunt u bepalen of tekens in spraak worden weergegeven [via getypte tekens uitspreken #KeyboardSettingsSpeakTypedCharacters] of [met getypte woorden uitspreken #KeyboardSettingsSpeakTypedWords] in situaties waar het scherm niet wordt ververst, zoals bij het invoeren van wachwoorden in sommige terminal-programma's, zoals  het Windows Console wanneer ondersteuning voor UI automation ingeschakeld is alsmede Mintty.
+Om veiligheidsredenen dient u deze instelling uitgeschakeld te laten.
+Het kan echter voorkomen dat u hem toch wilt inschakelen, als e.e.a. niet goed werkt of er sprake is van instabiliteit m.b.t. het melden van getypte tekens  en/of woordden in consoles, of bij het werken in een vertrouwde omgeving en u de voorkeur geeft om wachtwoorden te laten uitspreken.
+
+==== Gebruik de verbeterde  ondersteuning voor getypte karakters in het Windows-consool wanneer beschikbaar ====[AdvancedSettingsKeyboardSupportInLegacy]
+Met deze optie stelt u een alternatieve methode in voor het detecteren van getypte karakters in legacy opdrachtmodules van Windows.
 Terwijl de prestatie hiermee verbetert en voorkomen wordt dat consool-uitvoer wordt uitgespeld, kan deze methode incompatibel zijn  met enkele terminal-programma's.
 Dit alternatief is beschikbaar en staat standaard aan in Windows 10 versie 1607 en   in later uitgekomen versies van Windows 10 wanneer UI Automation niet beschikbaar is of uitgezet is.
 Waarschuwing: Als deze optie is ingeschakeld, worden getypte karakters die niet op het scherm te zien zijn zoals wachtwoorden, niet onderdrukt.
@@ -1912,16 +1944,15 @@ In een omgeving die u niet vertrouwt kunt u [Getypte karakters uitspreken #Keybo
 ==== Diff algoritme ====[DiffAlgo]
 Deze instelling bepaalt hoe NVDA moet omgaan met de nieuwe in spraak om te zetten tekst in terminals.
 Het diff algorithm keuzemenu heeft drie opties:
-- Automatisch: met ingang van NVDA 2021.2, is deze optie gelijk aan "Diff Match Patch toestaan".
-- Diff Match Patch toestaan: Deze optie zorgt ervoor dat  NVDA wijzigingen aan de terminal-tekst per  teken berekent.
+- Automatisch: Deze optie zorgt er voor dat NVDA in de meeste gevallen de voorkeur geeft aan Diff Match Patch maar op  Difflib terugvalt bij problematische toepassingen  zoals oudere versies van het Windows Console en Mintty.
+- Diff Match Patch: Deze optie zorgt ervoor dat  NVDA wijzigingen aan de terminal-tekst per  teken berekent zelfs in situaties waar dat niet wordt aanbevolen.
 Dit kan de prestatie verbeteren wanneer er grote tekstvolumes  naar het console worden weggeschreven en maakt een nauwkeurigere melding van wijzigingen midden in regels mogelijk.
-De optie is mogelijk niet compatibel met sommige toepassingen, dus wordt Diff Match Patch niet altijd gebruikt.
-Deze feature wordt ondersteund in Windows Console van Windows 10 versies 1607 en later.
-Voorts kan er wellicht gebruik van worden gemaakt in andere terminals in eerder uitgebrachte versies van Windows.
-- force Difflib: Deze optie zorgt ervoor dat  NVDA wijzigingen aan terminaltekst per regel berekent.
+In sommige toepassingen kan het (voor)lezen van nieuwe tekst echter onzorgvuldig of inconsistent verlopen.
+- Difflib: Deze optie zorgt ervoor dat  NVDA wijzigingen aan terminaltekst per regel berekent, zelfs in situaties waar dit niet aanbevelenswaardig is.
 Hiermee zal NVDA zich hetzelfde gedragen als  in versie 2020.4 en in daaraan voorafgaande versies.
--
- 
+Deze instelling kan meer stabiliteit bieden bij het lezen van nieuw in te voeren tekst in sommige toepassingen.
+Wanneer er echter in terminal-toepassingen  een tekenmidden in een regel wordt ingevoerd of verwijderd wordt de tekst achter de cursor voorgelezen.
+
 ==== Probeer spraak te annuleren bij verlopen gebeurtenissen met focus ====[CancelExpiredFocusSpeech]
 Met deze optie kunt u ervoor zorgen dat geprobeerd wordt spraak bij verlopen gebeurtenissen met focus uitte zetten.
 Met name als u snel met Chrome door berichten in Gmail gaat, doet de gesproken informatie die NVDA geeft er mogelijk niet meer toe.
@@ -1962,7 +1993,7 @@ te weten,
 Als u deze woordenboeken altijd en overal wilt kunnen openen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen #InputGestures] onder Opties.
 
 In de dialoogvensters van de verschillende woordenboeken vindt u een lijst met regels die gebruikt worden om de uitspraak te sturen.
-Tevens zijn er de knoppen Toevoegen, Bewerken en Verwijderen.
+Tevens zijn er de knoppen Toevoegen, Bewerken, Verwijderen en Alles verwijderen.
 
 Om een regel aan een woordenboek toe te voegen gebruikt u de knop Toevoegen. U vult de velden van het dialoogvenster in dat verschijnt en klikt op OK.
 Nu zult u de nieuwe regel zien in het regeloverzicht.
@@ -2207,6 +2238,7 @@ Dit kan nuttig zijn om te testen of NVDA in staat is map a correct van braillece
 Om te voorkomen dat onbedoeld naar cellen wordt gerouteerd wordt het commando met een vertraging uitgevoerd.
 Er moet met de muis bewogen worden tot dat deze groen kleurt.
 De cell begint lichgeel gekleurd, gaat over in oranje en wordt dan plotseling groen.
+Als u het Brailleweergavevenster altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor een aangepaste invoerhandeling aanmaken met behulp van [het dialoogvenster Invoerhandelingen #InputGestures].
 
 ++ Python-console ++[PythonConsole]
 Het NVDA Python-console, dat u aantreft in het NVDA-menu onder Extra, is een ontwikkelinstrument dat goed van pas komt bij het oplossen van bugs, algemene inspectie van het inwendige van NVDA  of het inspecteren van  de toegankelijkheidsopbouw van een toepassing.
@@ -2351,7 +2383,6 @@ Zoek eerst de algemene benaming van de gewenste taal (zoals Engels of Frans), om
 Selecteer  een taal of talen naar keuze en gebruik de knop "Toevoegen" om deze toe tevoegen.
 Eenmaal toegvoegd moet u NVDA opnieuw starten.
 
-
 Een lijst met beschikbare talen en de installatieinstructie vindt u op de navolgende webpagina van Microsoft: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Ondersteunde Brailleleesregels +[SupportedBrailleDisplays]
@@ -2372,6 +2403,7 @@ De volgende leesregels ondersteunen automatische herkenning:
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris leesregels
 - Nattiq Brailleleesregels-
+- Seika Notetaker: MiniSeika (16, 24 cellen), V6, en V6Pro (40 cellen)
 - Elke leesregel met ondersteuning voor het Standaard HID Brailleprotocol
  -
 
@@ -2425,6 +2457,16 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | Escape | spatiebalk+punt1+punt5 |
 | windows-toets | spatiebalk+punt2+punt4+punt5+punt6 |
 | Spatiebalk | braillespatiebalk |
+| Functieschakeltoets control | braillespatiebalk+punt3+punt8 |
+| Functieschakeltoets alt | brailleSpatieBalk+punt6+punt8 |
+| Functieschakeltoets windows | brailleSpatieBalk+punt4+punt8 |
+| Functieschakeltoets NVDA | brailleSpatieBalk+punt5+punt8 |
+| Functieschakeltoets shifty | brailleSpatieBalk+punt7+punt8 |
++| Functieschakeltoetsen control en shift | brailleSpatieBalk+punt3+punt7+punt8 || Functieschakeltoetsen alt en shift | brailleSpatieBalk+punt6+punt7+punt8 |
+| Functieschakeltoetsen windows en shifts | brailleSpatieBalk+punt4+punt7+punt8 |
+| Functieschakeltoetsen NVDA en shift | brailleSpatieBalk+punt5+punt7+punt8 |
+| Functieschakeltoetsen control en alt | brailleSpatieBalk+punt3+punt6+punt8 |
+| Functieschakeltoetsen control, alt, en shift | brailleSpatieBalk+punt3+punt6+punt7+punt8 |
 | Windows+d (alle toepassingen minimaliseren) | spatiebalk+punt1+punt2+punt3+punt4+punt5+punt6 |
 | Huidige regel weergeven | spatiebalk+punt1+punt4 |
 | NVDA-menu | spatiebalk+punt1+punt3+punt4+punt5 |
@@ -2752,11 +2794,19 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 %kc:endInclude
 
 ++ Seika Brailleleesregels ++[Seika]
-De modellen Seika Version 3, 4 en 5 (40 cellen) en de Seika80 (80 cellen) van [Nippon Telesoft https://www.nippontelesoft.com/] worden ondersteund.
-Meer informatie over deze leesregels en over de benodigde drivers vindt u op https://en.seika-braille.com/down/index.html 
-U moet eerst de usb-driver van de fabrikant installeren voordat u de leesregel op de computer aansluit.
+De volgende Seika Brailleleesregels van Nippon Telesoft onderverdeeld in twee groepen met verschillende functionaliteit worden ondersteund:
+- [Seika Versie 3, 4, en 5 (40 cellen), Seika80 (80 cellen) #SeikaBrailleDisplays]
+- [MiniSeika (16, 24 cellen), V6, en V6Pro (40 cellen) #SeikaNotetaker]
+-
+U vindt meer informatie over de leesregels op https://en.seika-braille.com/down/index.html.
 
-Deze leesregel heeft nog geen ondersteuning voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
+
+++++ Seika Versie 3, 4, en 5 (40 cellen), Seika80 (80 cellen) +++[SeikaBrailleDisplays]
+- Deze leesregels hebben nog geen ondersteuning voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
+- Selecteer "Seika Braille Displays" om handmatig te configureren
+- Voordat u de Seika v3/4/5/80 kunt gebruiken , moeten er apparaatstuurprogramma's worden geïnstalleerd. 
+De stuurprogramma's zijn bij de fabrikant verkrijgbaar https://en.seika-braille.com/down/index.html].
+
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
 (Informatie over de plaats van de toetsen vindt u in de documentatie bij deze leesregel.)
@@ -2775,7 +2825,48 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | NVDA-menu | links+rechts ||
 %kc:endInclude
 
-++ Papenmeier Braillex Nieuwere Modellen ++[PapenmeierNew]
+
+++++ MiniSeika (16, 24 cellen), V6, en V6Pro (40 cellen) +++[SeikaNotetaker]
+- Deze leesregels hebben  ondersteuning voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA via bluetooth en usb.
+- Selecteer "Seika Notetaker" of "auto" om te configureren.
+- U hoeft geen extra stuurprogramma's te installeren bij gebruik van een Seika Notetaker brailleleesregel.
+]
+Hierna volgen toetstoewijzingen voor de Seika Notetaker.
+Informatie over de plaats van de toetsen vindt u in de documentatie bij deze leesregel.
+%kc:beginInclude
+|| Naam | Toets |
+| Leesregel terugscrollen | Links |
+| Leesregel vooruitscrollen | rechts |
+| Alles  lezen | spatie+Backspace |
+| NVDA-menu | Links+Rechts |
+| Leesregel verplaatsen naar vorige regel | LJ up |
+| Leesregel verplaatsen naar volgende regel | LJ down |
+| Braille koppelen omschakelen | LJ center |
+| tab | LJ rechts |
+| shift+tab | LJ links |
+| Pijl-omhoogtoets | RJ up |
+| Pijl-omlaagtoets | RJ down |
+| linkerPijltoets | RJ links |
+| rechterPijltoets | RJ rechts |
+| Naar braillecel routeren | routing |
+| shift+Pijl-omhoogtoets | Spatie+RJ up, Backspace+RJ up |
+| shift+Pijl-omlaagtoets | Spatie+RJ down, Backspace+RJ down |
+| shift+linkerPijltoets | Spatie+RJ links, Backspace+RJ links |
+| shift+rechterPijltoets | Spatie+RJ rechts, Backspace+RJ rechts |
+| entertoets | RJ center, punt8
+| escape-toets | Spatie+RJ center |
+| windows-toets | Backspace+RJ center |
+| spatie-toets | Spatie, Backspace |
+| backspace-toets | punt7 |
+| pageup-toets | spatie+LJ rechts |
+| pagedown-toets | spatie+LJ links |
+| home-toets | spatie+LJ up |
+| end-toets | spatie+LJ down |
+| control+home-toets | backspace+LJ up |
+| control+end-toets | backspace+LJ down |
+
+
+ ++ Papenmeier Braillex Nieuwere Modellen ++[PapenmeierNew]
 De volgende brailleleesregels worden ondersteund:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2D80s, EL 70s, EL 66s (USB)
@@ -3265,6 +3356,7 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | -f LOGFILENAME | --log-file=LOGFILENAME | Het bestand waar log-berichten naartoe moeten worden geschreven. |
 | -l LOGLEVEL | --log-level=LOGLEVEL | Het laagste niveau gelogd bericht (debug 10, invoer/uitvoer 12, debugmelding 15,info 20, waarschuwing 30, fout 40, kritiek 50, uitgeschakeld 100), standaardinstelling is waarschuwing |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Het pad waar alle instellingen voor NVDA worden opgeslagen. |
+| Geen | --lang=LANGUAGE | de ingestelde  NVDA-taal overschrijven. Instellen naar "Windows-standaardtaal voor huidige gebruiker, "en" voor het Engels, etc. |
 | -m | --minimal | Geen geluiden, geen interface, geen opstartbericht etc. |
 | -s | --secure | Veilige modus: schakelt Python consool-eigenschappen  uit zoals profielen voor aanmaken, verwijderen, hernoemen etc., op update controleren, een selectievakje in het Welkomsscherm en in Instellingen in de categorie Algemeen, (bijv. NVDA gebruiken bij aanmelden, Configuratie opslaan bij afsluiten) alsmede     logviewer en log-eigenschappen vaak gebruikt in beveiligde schermen. Merk ook op  dat dit commando het onmogelijk maakt  instellingen  in system config op te slaan en de map Handelingen wordt niet op schijf bewaard. |
 | Geen | --disable-addons | Add-ons buiten werking gesteld. |
