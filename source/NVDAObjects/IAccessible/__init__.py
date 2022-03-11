@@ -13,6 +13,7 @@ from comtypes import (
 	BSTR,
 )
 from comtypes.hresult import S_OK, S_FALSE
+import comtypes.client
 import ctypes
 import os
 import re
@@ -1317,8 +1318,11 @@ the NVDAObject for IAccessible
 		if not sel:
 			raise NotImplementedError
 		# accSelection can return a child ID of a simple element, for instance in QT tree tables. 
-		# Therefore treat this as a single selection.
-		if isinstance(sel,int) and sel>0:
+		# Therefore treat this as a single selection unless the child ID is CHILDID_SELF (0).
+		if isinstance(sel, int) and sel != 0:
+			return 1
+		# accSelection can return IDispatch for a single selected child object
+		if isinstance(sel, comtypes.client.dynamic._Dispatch):
 			return 1
 		enumObj=sel.QueryInterface(IEnumVARIANT)
 		if not enumObj:
