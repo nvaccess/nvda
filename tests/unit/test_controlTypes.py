@@ -48,7 +48,7 @@ class TestLabels(unittest.TestCase):
 			with self.assertRaises(KeyError):
 				state.displayString
 
-	def negativeDisplayString(self):
+	def test_state_negativeDisplayString(self):
 		"""Test to check whether every state has its own negative display string
 		States without negative display strings should be explicitly listed in _noNegDisplayStringStates, these
 		will be checked to ensure a KeyError is raised if negativeDisplayString is accessed.
