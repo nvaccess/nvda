@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2021 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2022 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
 import typing
 import weakref
@@ -84,10 +84,17 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	# Note: when working on _normalizeControlField, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	def _normalizeControlField(self, attrs):  # noqa: C901
-		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
-			attrVal=attrs.get(attr)
-			if attrVal is not None:
-				attrs[attr]=int(attrVal)
+		for attr in (
+			"table-rownumber-presentational",
+			"table-columnnumber-presentational",
+			"table-rowcount-presentational",
+			"table-columncount-presentational"
+		):
+			attrVal = attrs.get(attr)
+			if attrVal is not None and attrVal.lstrip('-').isdigit():
+				attrs[attr] = int(attrVal)
+			else:
+				attrs[attr] = None
 
 		attrs["_description-from"] = self._calculateDescriptionFrom(attrs)
 		attrs.update(_getNormalizedCurrentAttrs(attrs))
