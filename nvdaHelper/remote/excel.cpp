@@ -110,7 +110,7 @@ long getCellTextWidth(HWND hwnd, IDispatch* pDispatchRange) {
 }
 
 __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
-	__int64 states=0;
+	std::int64_t nvCellStates = 0;
 	// If the current row is a summary row, expose the collapsed or expanded states depending on wither the inner rows are showing or not.
 	CComPtr<IDispatch> pDispatchRow=nullptr;
 	HRESULT res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIREROW,VT_DISPATCH,&pDispatchRow);
@@ -129,11 +129,13 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 			if(FAILED(res)) {
 				LOG_DEBUGWARNING(L"row.showDetail failed with code "<<res);
 			}
-			states|=(showDetail?NVSTATE_EXPANDED:NVSTATE_COLLAPSED);
+			nvCellStates |= (showDetail ? NvCellState::EXPANDED : NvCellState::COLLAPSED);
 		}
 	}
-	// If this row was neither collapsed or expanded, then try the same for columns instead. 
-	if(!(states&NVSTATE_EXPANDED)&&!(states&NVSTATE_COLLAPSED)) {
+	if( // Row not collapsed or expanded, try the same for columns instead.
+		!(nvCellStates& NvCellState::EXPANDED)
+		&&!(nvCellStates & NvCellState::COLLAPSED)
+	) {
 		CComPtr<IDispatch> pDispatchColumn=nullptr;
 		res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIRECOLUMN,VT_DISPATCH,&pDispatchColumn);
 		if(FAILED(res)) {
@@ -151,7 +153,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 				if(FAILED(res)) {
 					LOG_DEBUGWARNING(L"column.showDetail failed with code "<<res);
 				}
-				states|=(showDetail?NVSTATE_EXPANDED:NVSTATE_COLLAPSED);
+				nvCellStates |= (showDetail ? NvCellState::EXPANDED : NvCellState::COLLAPSED);
 			}
 		}
 	}
@@ -162,7 +164,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 		LOG_DEBUGWARNING(L"range.hasFormula failed with code "<<res);
 	}
 	if(hasFormula) {
-		states|=NVSTATE_HASFORMULA;
+		nvCellStates |= NvCellState::HASFORMULA;
 	}
 	// Expose whether this cell has a dropdown menu for choosing valid values
 	CComPtr<IDispatch> pDispatchValidation=nullptr;
@@ -179,7 +181,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 				LOG_DEBUGWARNING(L"validation.type failed with code "<<res);
 		}
 		if(validationType==xlValidateList) {
-			states|=NVSTATE_HASPOPUP;
+			nvCellStates |= NvCellState::HASPOPUP;
 		}
 	}
 	// Expose whether this cell has comments
@@ -189,7 +191,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 		LOG_DEBUGWARNING(L"range.comment failed with code "<<res);
 	}
 	if(pDispatchComment) {
-		states|=NVSTATE_HASCOMMENT;
+		nvCellStates |= NvCellState::HASCOMMENT;
 	}
 	// Expose whether this cell is unlocked for editing
 	BOOL locked=false;
@@ -210,7 +212,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 				LOG_DEBUGWARNING(L"worksheet.protectcontents failed with code "<<res);
 			}
 			if(protectContents) {
-				states|=NVSTATE_UNLOCKED;
+				nvCellStates |= NvCellState::UNLOCKED;
 			}
 		}
 	}
@@ -227,7 +229,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 			LOG_DEBUGWARNING(L"hyperlinks.count failed with code "<<res);
 		}
 		if(count>0) {
-			states|=NVSTATE_LINKED;
+			nvCellStates |= NvCellState::LINKED;
 		}
 	}
 	// Expose whether this cell's content flows outside the cell, 
@@ -304,17 +306,17 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 							LOG_DEBUGWARNING(L"range.text failed with code "<<res);
 						}
 						if(text&&text.Length()>0) {
-							states|=NVSTATE_CROPPED;
+							nvCellStates |= NvCellState::CROPPED;
 						}
 					}
-					if(!(states&NVSTATE_CROPPED)) {
-						states|=NVSTATE_OVERFLOWING;
+					if(!(nvCellStates & NvCellState::CROPPED)) {
+						nvCellStates |= NvCellState::OVERFLOWING;
 					}
 				}
 			}
 		}
 	}
-	return states;
+	return nvCellStates;
 }
 
 HRESULT getCellInfo(HWND hwnd, IDispatch* pDispatchRange, long cellInfoFlags, EXCEL_CELLINFO* cellInfo) {
@@ -364,7 +366,7 @@ HRESULT getCellInfo(HWND hwnd, IDispatch* pDispatchRange, long cellInfoFlags, EX
 		}
 	}
 	if(cellInfoFlags&NVCELLINFOFLAG_STATES) {
-		cellInfo->states=getCellStates(hwnd,pDispatchRange);
+		cellInfo->nvCellStates = getCellStates(hwnd, pDispatchRange);
 	}
 	CComPtr<IDispatch> pDispatchMergeArea=nullptr;
 	if(cellInfoFlags&NVCELLINFOFLAG_COORDS||cellInfoFlags&NVCELLINFOFLAG_OUTLINELEVEL) {
