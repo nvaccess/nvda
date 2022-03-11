@@ -353,10 +353,22 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if not obj.isFocusable and controlTypes.State.FOCUSED not in states and role != controlTypes.Role.POPUPMENU:
 			return False
 		# many controls that are read-only should not switch to passThrough. 
-		# However, certain controls such as combo boxes and readonly edits are read-only but still interactive.
-		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
-		if controlTypes.State.READONLY in states and role not in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.COMBOBOX, controlTypes.Role.TABLEROW, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER):
-			return False
+		# However, there are exceptions.
+		if controlTypes.State.READONLY in states:
+			# #13221: For Slack message lists, and the MS Edge downloads window, switch to passthrough
+			# even though the list item and list are read-only, but focusable.
+			if (
+				role == controlTypes.Role.LISTITEM and controlTypes.State.FOCUSED in states
+				and obj.parent.role == controlTypes.Role.LIST and controlTypes.State.FOCUSABLE in obj.parent.states
+			):
+				return True
+			# Certain controls such as combo boxes and readonly edits are read-only but still interactive.
+			# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
+			if role not in (
+				controlTypes.Role.EDITABLETEXT, controlTypes.Role.COMBOBOX, controlTypes.Role.TABLEROW,
+				controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER
+			):
+				return False
 		# Any roles or states for which we always switch to passThrough
 		if role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or controlTypes.State.EDITABLE in states:
 			return True
@@ -1886,7 +1898,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			item1=item2
 
 	__gestures={
-		"kb:NVDA+d": "activateLongDesc",
 		"kb:alt+upArrow": "collapseOrExpandControl",
 		"kb:alt+downArrow": "collapseOrExpandControl",
 		"kb:tab": "tab",

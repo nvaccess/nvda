@@ -2652,13 +2652,26 @@ class AdvancedPanelControls(
 			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
 		)
 
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Use UI Automation to access Microsoft &Word document controls when available")
-		self.UIAInMSWordCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
-		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
-		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
-		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
+		label = pgettext(
+			"advanced.uiaWithMSWord",
+			# Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+			"Use UI Automation to access Microsoft Word document controls"
+		)
+		wordChoices = (
+			# Translators: Label for the default value of the Use UIA with MS Word combobox,
+			# in the Advanced settings panel.
+			pgettext("advanced.uiaWithMSWord", "Default (Where suitable)"),
+			# Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+			pgettext("advanced.uiaWithMSWord", "Only when necessary"),
+			# Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+			pgettext("advanced.uiaWithMSWord", "Where suitable"),
+			# Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+			pgettext("advanced.uiaWithMSWord", "Always"),
+		)
+		self.UIAInMSWordCombo = UIAGroup.addLabeledControl(label, wx.Choice, choices=wordChoices)
+		self.bindHelpEvent("MSWordUIA", self.UIAInMSWordCombo)
+		self.UIAInMSWordCombo.SetSelection(config.conf["UIA"]["allowInMSWord"])
+		self.UIAInMSWordCombo.defaultValue = self._getDefaultValue(["UIA", "allowInMSWord"])
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
@@ -2914,6 +2927,7 @@ class AdvancedPanelControls(
 			"speechManager",
 			"synthDriver",
 			"nvwave",
+			"annotations",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -2964,7 +2978,7 @@ class AdvancedPanelControls(
 				self.selectiveUIAEventRegistrationCheckBox.IsChecked()
 				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
 			)
-			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
+			and self.UIAInMSWordCombo.GetSelection() == self.UIAInMSWordCombo.defaultValue
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
@@ -2984,7 +2998,7 @@ class AdvancedPanelControls(
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
-		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
+		self.UIAInMSWordCombo.SetSelection(self.UIAInMSWordCombo.defaultValue)
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
@@ -3004,7 +3018,7 @@ class AdvancedPanelControls(
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
-		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
+		config.conf["UIA"]["allowInMSWord"] = self.UIAInMSWordCombo.GetSelection()
 		config.conf["UIA"]["useInMSExcelWhenAvailable"] = self.UIAInMSExcelCheckBox.IsChecked()
 		if self.ConsoleUIACheckBox.IsChecked():
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
