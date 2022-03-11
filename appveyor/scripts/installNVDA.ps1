@@ -12,7 +12,7 @@ $installerProcess=start-process -FilePath "$nvdaLauncherFile" -ArgumentList "--i
 try {
 	$installerProcess | wait-process -Timeout 180 -ErrorAction Stop
 	$errorCode=$installerProcess.ExitCode
-	$installlerLogFilePathToUpload = $installerLogFilePath
+	$installerLogFilePathToUpload = $installerLogFilePath
 } catch {
 	echo "NVDA installer process timed out"
 	$errorCode=1
@@ -22,9 +22,9 @@ try {
 	# as a work around create a copy of the log and upload that instead.
 	$installerLogFileCopiedPath = "nvda_install_copy.log"
 	Copy-Item $installerLogFilePath $installerLogFileCopiedPath
-	$installlerLogFilePathToUpload = $installerLogFileCopiedPath
+	$installerLogFilePathToUpload = $installerLogFileCopiedPath
 }
-Push-AppveyorArtifact $installlerLogFilePathToUpload -FileName "nvda_install.log"
+Push-AppveyorArtifact $installerLogFilePathToUpload -FileName "nvda_install.log"
 $crashDump = "$outputDir\nvda_crash.dmp"
 if (Test-Path -Path $crashDump){
 	Push-AppveyorArtifact $crashDump -FileName "nvda_install_crash.dmp"
