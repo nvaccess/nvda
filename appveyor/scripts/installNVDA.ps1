@@ -18,7 +18,7 @@ try {
 	$errorCode=1
 	Add-AppveyorMessage "Unable to install NVDA prior to tests."
 	# Since installer failed to exit in the specified timeout the log file is still in use.
-	# Unforturnately `Push-AppveyorArtifact` is unable to upload a file which is  locked
+	# Unfortunately `Push-AppveyorArtifact` is unable to upload a file which is  locked
 	# as a work around create a copy of the log and upload that instead.
 	$installerLogFileCopiedPath = "nvda_install_copy.log"
 	Copy-Item $installerLogFilePath $installerLogFileCopiedPath
