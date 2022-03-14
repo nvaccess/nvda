@@ -1470,12 +1470,14 @@ the NVDAObject for IAccessible
 
 	def _get__IA2Relations(self) -> typing.List[IA2.IAccessibleRelation]:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			log.debug("Not an IA2.IAccessible2")
 			raise NotImplementedError
 		import ctypes
 		import comtypes.hresult
 		try:
 			size = self.IAccessibleObject.nRelations
 		except COMError:
+			log.debug("Unable to get nRelations")
 			raise NotImplementedError
 		if size <= 0:
 			return list()
@@ -1484,6 +1486,7 @@ the NVDAObject for IAccessible
 		# The client allocated relations array is an [out] parameter instead of [in, out], so we need to use the raw COM method.
 		res = self.IAccessibleObject._IAccessible2__com__get_relations(size, relations, ctypes.byref(count))
 		if res != comtypes.hresult.S_OK:
+			log.debug("Unable to get relations")
 			raise NotImplementedError
 		return list(relations)
 
@@ -1547,8 +1550,8 @@ the NVDAObject for IAccessible
 			log.debugWarning("Unable to use _getIA2TargetsForRelationsOfType, fallback to _IA2Relations.")
 
 		# eg IA2_2 is not available, fall back to old approach
-		for relation in self._IA2Relations:
-			try:
+		try:
+			for relation in self._IA2Relations:
 				if relation.relationType == relationType:
 					# Take the first of 'relation.nTargets' see IAccessibleRelation._methods_
 					target = relation.target(0)
@@ -1557,8 +1560,9 @@ the NVDAObject for IAccessible
 						IAccessibleObject=ia2Object,
 						IAccessibleChildID=0
 					)
-			except COMError:
-				pass
+		except (NotImplementedError, COMError):
+			log.debug("Unable to fetch _IA2Relations")
+			pass
 		return None
 
 	#: Type definition for auto prop '_get_detailsRelations'
