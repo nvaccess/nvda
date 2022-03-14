@@ -99,6 +99,7 @@ For reference, the following run time dependencies are included in Git submodule
 * brlapi Python bindings, version 0.8 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
 * lilli.dll, version 2.1.0.0
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
+* [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
 * [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
 	* Commit 224b22f3bf9e
@@ -107,8 +108,6 @@ For reference, the following run time dependencies are included in Git submodule
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
 * [txt2tags](https://txt2tags.org/), version 2.5
-* [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
-* [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
