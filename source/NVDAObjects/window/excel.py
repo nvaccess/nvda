@@ -5,6 +5,11 @@
 
 import abc
 import ctypes
+import enum
+from typing import (
+	Optional, Dict,
+)
+
 from comtypes import COMError, BSTR
 import comtypes.automation
 import wx
@@ -1059,13 +1064,42 @@ NVCELLINFOFLAG_COMMENTS=0x40
 NVCELLINFOFLAG_FORMULA=0x80
 NVCELLINFOFLAG_ALL=0xffff
 
+
+class NvCellState(enum.IntEnum):
+	# These values must match NvCellState in `nvdaHelper/remote/excel/constants.h`
+	EXPANDED = 1 << 1,
+	COLLAPSED = 1 << 2,
+	LINKED = 1 << 3,
+	HASPOPUP = 1 << 4,
+	PROTECTED = 1 << 5,
+	HASFORMULA = 1 << 6,
+	HASCOMMENT = 1 << 7,
+	CROPPED = 1 << 8,
+	OVERFLOWING = 1 << 9,
+	UNLOCKED = 1 << 10,
+
+
+_nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
+	NvCellState.EXPANDED: controlTypes.State.EXPANDED,
+	NvCellState.COLLAPSED: controlTypes.State.COLLAPSED,
+	NvCellState.LINKED: controlTypes.State.LINKED,
+	NvCellState.HASPOPUP: controlTypes.State.HASPOPUP,
+	NvCellState.PROTECTED: controlTypes.State.PROTECTED,
+	NvCellState.HASFORMULA: controlTypes.State.HASFORMULA,
+	NvCellState.HASCOMMENT: controlTypes.State.HASCOMMENT,
+	NvCellState.CROPPED: controlTypes.State.CROPPED,
+	NvCellState.OVERFLOWING: controlTypes.State.OVERFLOWING,
+	NvCellState.UNLOCKED: controlTypes.State.UNLOCKED,
+}
+
+
 class ExcelCellInfo(ctypes.Structure):
 		_fields_=[
 			('text',comtypes.BSTR),
 			('address',comtypes.BSTR),
 			('inputTitle',comtypes.BSTR),
 			('inputMessage',comtypes.BSTR),
-			('states',ctypes.c_longlong),
+			('nvCellStates', ctypes.c_longlong),  # bitwise OR of the NvCellState enum values.
 			('rowNumber',ctypes.c_long),
 			('rowSpan',ctypes.c_long),
 			('columnNumber',ctypes.c_long),
@@ -1074,6 +1108,7 @@ class ExcelCellInfo(ctypes.Structure):
 			('comments',comtypes.BSTR),
 			('formula',comtypes.BSTR),
 		]
+
 
 class ExcelCellInfoQuickNavItem(browseMode.QuickNavItem):
 
@@ -1181,7 +1216,10 @@ class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 
 class ExcelCell(ExcelBase):
 
-	def _get_excelCellInfo(self):
+	excelCellInfo: Optional[ExcelCellInfo]
+	"""Type info for auto property: _get_excelCellInfo"""
+
+	def _get_excelCellInfo(self) -> Optional[ExcelCellInfo]:
 		if not self.appModule.helperLocalBindingHandle:
 			return None
 		ci=ExcelCellInfo()
@@ -1382,10 +1420,14 @@ class ExcelCell(ExcelBase):
 		cellInfo=self.excelCellInfo
 		if not cellInfo:
 			return states
-		stateBits=cellInfo.states
-		for state in controlTypes.State:
-			if stateBits & state.value:
-				states.add(state)
+		nvCellStates = cellInfo.nvCellStates
+
+		for possibleCellState in NvCellState:
+			if nvCellStates & possibleCellState.value:
+				states.add(
+					# intentionally use indexing operator so an error is raised for a missing key
+					_nvCellStatesToStates[possibleCellState]
+				)
 		return states
 
 	def event_typedCharacter(self,ch):
