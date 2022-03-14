@@ -1066,6 +1066,7 @@ NVCELLINFOFLAG_ALL=0xffff
 
 
 class NvCellState(enum.IntEnum):
+	# These values must match NvCellState in `nvdaHelper/remote/excel/constants.h`
 	EXPANDED = 1 << 1,
 	COLLAPSED = 1 << 2,
 	LINKED = 1 << 3,
