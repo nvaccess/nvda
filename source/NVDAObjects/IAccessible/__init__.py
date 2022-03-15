@@ -1561,7 +1561,7 @@ the NVDAObject for IAccessible
 						IAccessibleChildID=0
 					)
 		except (NotImplementedError, COMError):
-			log.debug("Unable to fetch _IA2Relations")
+			log.debug("Unable to fetch _IA2Relations", exc_info=True)
 			pass
 		return None
 
