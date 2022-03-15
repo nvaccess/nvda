@@ -73,6 +73,7 @@ What's New in NVDA
 - NVDA no longer causes 64-bit versions of Notepad++ 8.3 and above to crash. (#13311)
 - Adobe Reader no longer crashes on startup if Adobe Reader's protected mode is enabled. (#11568)
 - Fixed a bug where selecting the Papenmeier Braille Display Driver caused NVDA to crash. (#13348)
+- In Microsoft word with UIA: page number and other formatting is no longer inappropriately announced when moving from a blank table cell to a cell with content, or from the end of the document into existing content. (#13458, #13459)
 -
 
 == Changes for Developers ==
