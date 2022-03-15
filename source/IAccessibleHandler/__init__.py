@@ -240,7 +240,10 @@ IAccessible2StatesToNVDAStates = {
 }
 
 
-def normalizeIAccessible(pacc, childID=0):
+def normalizeIAccessible(
+		pacc: Union[IUnknown, IA.IAccessible, IA2.IAccessible2],
+		childID: int = 0
+) -> Union[IA.IAccessible, IA2.IAccessible2]:
 	if not isinstance(pacc, IA.IAccessible):
 		try:
 			pacc = pacc.QueryInterface(IA.IAccessible)
