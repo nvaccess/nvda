@@ -21,6 +21,8 @@ What's New in NVDA
 
 
 == Changes for Developers ==
+- When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
+-
 
 
 = 2022.1 =
@@ -176,7 +178,6 @@ This can dramatically decrease build times on multi core systems. (#13226, #1337
     - ``UIAHandler.UIAControlTypesToNVDARoles``
     -
   -
-- When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
 -
 
 
