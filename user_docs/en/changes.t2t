@@ -5,10 +5,10 @@ What's New in NVDA
 
 = 2022.1 =
 This release includes major improvements to UIA support with MS Office.
-For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default, providing a significant performance improvement over the old Object model access.
+For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default.
+This provides a significant performance improvement over the old Object model access.
 
-There are various bug fixes and improvements.
-There are improvements to braille displays including Seika Notetaker, Papenmeier and when using the new HID Braille standard. 
+There are improvements to braille display drivers including Seika Notetaker, Papenmeier and HID Braille. 
 There are also various Windows 11 bug fixes, such as Calculator, Console, Terminal, Mail and Emoji Panel.
 
 eSpeak-NG and LibLouis have been updated, adding new Japanese, German and Catalan tables.
@@ -55,9 +55,9 @@ Note:
 - ``NVDA+Numpad Delete`` reports the location of the caret or focused object by default. (#13060)
 - ``NVDA+Shift+Numpad Delete`` reports the location of the review cursor. (#13060)
 - Added default bindings for toggling modifier keys to Freedom Scientific displays (#13152)
-- "Baseline" is no longer reported via the report text formatting command (NVDA+F). (#11815)
+- "Baseline" is no longer reported via the report text formatting command (``NVDA+f``). (#11815)
 - Activate long description no longer has a default gesture assigned. (#13380)
-- Report details summary now has a default gesture, ``NVDA+d``. (#13380)
+- Report details summary now has a default gesture (``NVDA+d``). (#13380)
 -
 
 == Bug Fixes ==
