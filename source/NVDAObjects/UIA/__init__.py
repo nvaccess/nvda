@@ -592,7 +592,7 @@ class UIATextInfo(textInfos.TextInfo):
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
 			text=self._getTextFromUIARange(tempRange) or ""
-			if text:
+			if text is not None:
 				if debug:
 					log.debug("Chunk has text. Fetching formatting")
 				try:
@@ -607,7 +607,9 @@ class UIATextInfo(textInfos.TextInfo):
 					continue
 				if debug:
 					log.debug("Yielding formatting and text")
-				yield field
+					log.debug(f"field: {field}, text: {text}")
+				if field:
+					yield field
 				yield text
 		if debug:
 			log.debug("Done _getTextWithFields_text")
