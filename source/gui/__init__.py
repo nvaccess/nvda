@@ -171,13 +171,16 @@ class MainFrame(wx.Frame):
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
-		self._popupSettingsDialog(DefaultDictionaryDialog)
+		if not globalVars.appArgs.secure:
+			self._popupSettingsDialog(DefaultDictionaryDialog)
 
 	def onVoiceDictionaryCommand(self,evt):
-		self._popupSettingsDialog(VoiceDictionaryDialog)
+		if not globalVars.appArgs.secure:
+			self._popupSettingsDialog(VoiceDictionaryDialog)
 
 	def onTemporaryDictionaryCommand(self,evt):
-		self._popupSettingsDialog(TemporaryDictionaryDialog)
+		if not globalVars.appArgs.secure:
+			self._popupSettingsDialog(TemporaryDictionaryDialog)
 
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
@@ -266,7 +269,8 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(SpeechSymbolsDialog)
 
 	def onInputGesturesCommand(self, evt):
-		self._popupSettingsDialog(InputGesturesDialog)
+		if not globalVars.appArgs.secure:
+			self._popupSettingsDialog(InputGesturesDialog)
 
 	def onAboutCommand(self,evt):
 		# Translators: The title of the dialog to show about info for NVDA.
@@ -395,8 +399,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The description for the menu item to open NVDA Settings dialog.
 			_("NVDA settings"))
 		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
-		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
+			# TODO: This code should be moved out into a createSpeechDictsSubMenu function
+			subMenu_speechDicts = wx.Menu()
 			item = subMenu_speechDicts.Append(
 				wx.ID_ANY,
 				# Translators: The label for the menu item to open Default speech dictionary dialog.
@@ -417,16 +422,16 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 				)
 			)
 			self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
-		item = subMenu_speechDicts.Append(
-			wx.ID_ANY,
-			# Translators: The label for the menu item to open Temporary speech dictionary dialog.
-			_("&Temporary dictionary..."),
-			# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-			_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
-		)
-		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
-		# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
-		menu_preferences.AppendSubMenu(subMenu_speechDicts,_("Speech &dictionaries"))
+			item = subMenu_speechDicts.Append(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to open Temporary speech dictionary dialog.
+				_("&Temporary dictionary..."),
+				# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+				_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
+			)
+			self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
+			# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
+			menu_preferences.AppendSubMenu(subMenu_speechDicts, _("Speech &dictionaries"))
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
