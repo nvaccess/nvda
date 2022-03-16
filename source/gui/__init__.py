@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
-# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -44,6 +44,8 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
+from utils.displayString import DisplayStringEnum
+from enum import auto, unique
 
 try:
 	import updateCheck
@@ -608,6 +610,31 @@ def runScriptModalDialog(dialog, callback=None):
 	wx.CallAfter(run)
 
 
+@unique
+class _ExitAction(DisplayStringEnum):
+
+	EXIT = auto()
+	RESTART = auto()
+	RESTART_WITH_ADDONS_DISABLED = auto()
+	RESTART_WITH_DEBUG_LOGGING_ENABLED = auto()
+	INSTALL_PENDING_UPDATE = auto()
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: An option in the combo box to choose exit action.
+			self.EXIT: _("Exit"),
+			# Translators: An option in the combo box to choose exit action.
+			self.RESTART: _("Restart"),
+			# Translators: An option in the combo box to choose exit action.
+			self.RESTART_WITH_ADDONS_DISABLED: _("Restart with add-ons disabled"),
+			# Translators: An option in the combo box to choose exit action.
+			self.RESTART_WITH_DEBUG_LOGGING_ENABLED: _("Restart with debug logging enabled"),
+			# Translators: An option in the combo box to choose exit action.
+			self.INSTALL_PENDING_UPDATE: _("Install pending update"),
+		}
+
+
 class ExitDialog(wx.Dialog):
 	_instance = None
 
@@ -638,21 +665,18 @@ class ExitDialog(wx.Dialog):
 
 		# Translators: The label for actions list in the Exit dialog.
 		labelText=_("What would you like to &do?")
-		self.actions = [
-			# Translators: An option in the combo box to choose exit action.
-			_("Exit"),
-			# Translators: An option in the combo box to choose exit action.
-			_("Restart")
-		]
+		allowedActions = list(_ExitAction)
 		# Windows Store version of NVDA does not support add-ons yet.
-		if not config.isAppX:
-			# Translators: An option in the combo box to choose exit action.
-			self.actions.append(_("Restart with add-ons disabled"))
-		# Translators: An option in the combo box to choose exit action.
-		self.actions.append(_("Restart with debug logging enabled"))
-		if updateCheck and updateCheck.isPendingUpdate():
-			# Translators: An option in the combo box to choose exit action.
-			self.actions.append(_("Install pending update"))
+		if config.isAppX:
+			allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED)
+		# Changing debug level on secure screen is not allowed.
+		# Logging on secure screens could allow keylogging of passwords and retrieval from the SYSTEM user.
+		if globalVars.appArgs.secure:
+			allowedActions.remove(_ExitAction.RESTART_WITH_DEBUG_LOGGING_ENABLED)
+		# Installing updates should not happen in secure mode.
+		if globalVars.appArgs.secure or not (updateCheck and updateCheck.isPendingUpdate()):
+			allowedActions.remove(_ExitAction.INSTALL_PENDING_UPDATE)
+		self.actions = [i.displayString for i in allowedActions]
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
@@ -668,11 +692,8 @@ class ExitDialog(wx.Dialog):
 		self.CentreOnScreen()
 
 	def onOk(self, evt):
-		action=self.actionsList.GetSelection()
-		# Because Windows Store version of NVDA does not support add-ons yet, add 1 if action is 2 or above if this is such a case.
-		if action >= 2 and config.isAppX:
-			action += 1
-		if action == 0:
+		action = [a for a in _ExitAction if a.displayString == self.actionsList.GetStringSelection()][0]
+		if action == _ExitAction.EXIT:
 			WelcomeDialog.closeInstances()
 			if core.triggerNVDAExit():
 				# there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this
@@ -680,13 +701,13 @@ class ExitDialog(wx.Dialog):
 			else:
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 				return
-		elif action == 1:
+		elif action == _ExitAction.RESTART:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
-		elif action == 2:
+		elif action == _ExitAction.RESTART_WITH_ADDONS_DISABLED:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,disableAddons=True)
-		elif action == 3:
+		elif action == _ExitAction.RESTART_WITH_DEBUG_LOGGING_ENABLED:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
-		elif action == 4:
+		elif action == _ExitAction.INSTALL_PENDING_UPDATE:
 			if updateCheck:
 				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
 				from addonHandler import getIncompatibleAddons
