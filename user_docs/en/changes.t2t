@@ -45,6 +45,7 @@ What's New in NVDA
 - 'Baseline' is no longer reported via the report text formatting command (NVDA+F). (#11815)
 - Activate long description no longer has a default gesture assigned. (#13380)
 - Report details summary now has a default gesture, ``NVDA+d``. (#13380)
+- NVDA needs to be restarted after installing MathPlayer. (#TODO)
 -
 
 == Bug Fixes ==
@@ -158,6 +159,7 @@ This can dramatically decrease build times on multi core systems. (#13226, #1337
   -
 - Excel cell state constants (``NVSTATE_*``) are now values in the ``NvCellState`` enum, mirrored in the ``NvCellState`` enum in ``NVDAObjects/window/excel.py`` and mapped to ``controlTypes.State`` via _nvCellStatesToStates. (#13465)
 - ``EXCEL_CELLINFO`` struct member ``state`` is now ``nvCellStates``.
+- ``mathPres.ensureInit`` has been removed, MathPlayer is now initialized when NVDA starts. (#TODO)
 -
 
 
