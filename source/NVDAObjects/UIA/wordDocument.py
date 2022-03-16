@@ -10,12 +10,10 @@ from typing import (
 
 import enum
 from comtypes import COMError
-from collections import defaultdict
 import winVersion
 import mathPres
 from scriptHandler import isScriptWaiting
 import textInfos
-import eventHandler
 import UIAHandler
 import UIAHandler.remote as UIARemote
 from logHandler import log
@@ -24,7 +22,6 @@ import ui
 import speech
 import review
 import braille
-import api
 import browseMode
 from UIAHandler.browseMode import (
 	UIABrowseModeDocument,
