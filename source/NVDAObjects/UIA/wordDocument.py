@@ -10,12 +10,10 @@ from typing import (
 
 import enum
 from comtypes import COMError
-from collections import defaultdict
 import winVersion
 import mathPres
 from scriptHandler import isScriptWaiting
 import textInfos
-import eventHandler
 import UIAHandler
 import UIAHandler.remote as UIARemote
 from logHandler import log
@@ -24,7 +22,6 @@ import ui
 import speech
 import review
 import braille
-import api
 import browseMode
 from UIAHandler.browseMode import (
 	UIABrowseModeDocument,
@@ -325,7 +322,6 @@ class WordDocumentTextInfo(UIATextInfo):
 		# But, we therefore need to remove the inner math content if reading by line
 		if not formatConfig or not formatConfig.get('extraDetail'):
 			# We really only want to remove content if we can guarantee that mathPlayer is available.
-			mathPres.ensureInit()
 			if mathPres.speechProvider or mathPres.brailleProvider:
 				curLevel = 0
 				mathLevel = None
