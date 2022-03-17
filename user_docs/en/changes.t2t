@@ -4,15 +4,28 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2022.1 =
+This release includes major improvements to UIA support with MS Office.
+For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default.
+This provides a significant performance improvement over the old Object model access.
+
+There are improvements to braille display drivers including Seika Notetaker, Papenmeier and HID Braille. 
+There are also various Windows 11 bug fixes, for apps such as Calculator, Console, Terminal, Mail and Emoji Panel.
+
+eSpeak-NG and LibLouis have been updated, adding new Japanese, German and Catalan tables.
+
+Note:
+ - This release breaks compatibility with existing add-ons.
+ -
+
 
 == New Features ==
 - Support for reporting notes in MS Excel with UI Automation enabled on Windows 11. (#12861)
 - In recent builds of Microsoft Word via UI Automation on Windows 11, the existence of bookmarks, draft comments and resolved comments are now reported in both speech and braille. (#12861)
-- The new --lang command line parameter allows overriding the configured NVDA language. (#10044)
+- The new ``--lang`` command line parameter allows overriding the configured NVDA language. (#10044)
 - NVDA now warns about command line parameters which are unknown and not used by any add-ons. (#12795)
 - In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
   - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
-  - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
+  - MathType equations must also be manually converted to Office Math by selecting each, opening the context menu, choosing Equation options, Convert to Office Math.
   -
 - Reporting of "has details" and the associated command to summarize the details relation have been updated to work in focus mode. (#13106)
 - Seika Notetaker can now be auto-detected when connected via USB and Bluetooth. (#13191, #13142)
@@ -23,7 +36,7 @@ What's New in NVDA
 - Added commands for toggling multiple modifiers simultaneously with a Braille display (#13152)
 - The Speech Dictionary dialog now features a "Remove all" button to help clear a whole dictionary. (#11802)
 - Added support for Windows 11 Calculator. (#13212)
-- In Microsoft Word with UI Automation enabled on Windows 11,  line numbers, section numbers and layout column numbers can now be reported. (#13283)
+- In Microsoft Word with UI Automation enabled on Windows 11, line numbers, section numbers and layout column numbers can now be reported. (#13283)
 - For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default, providing a significant performance improvement over the old Object model access. (#13437)
  - This includes documents in Microsoft Word itself, and also the message reader and composer in Microsoft Outlook. 
  -
@@ -42,9 +55,9 @@ What's New in NVDA
 - ``NVDA+Numpad Delete`` reports the location of the caret or focused object by default. (#13060)
 - ``NVDA+Shift+Numpad Delete`` reports the location of the review cursor. (#13060)
 - Added default bindings for toggling modifier keys to Freedom Scientific displays (#13152)
-- 'Baseline' is no longer reported via the report text formatting command (NVDA+F). (#11815)
+- "Baseline" is no longer reported via the report text formatting command (``NVDA+f``). (#11815)
 - Activate long description no longer has a default gesture assigned. (#13380)
-- Report details summary now has a default gesture, ``NVDA+d``. (#13380)
+- Report details summary now has a default gesture (``NVDA+d``). (#13380)
 - NVDA needs to be restarted after installing MathPlayer. (#13486)
 -
 
@@ -62,11 +75,11 @@ What's New in NVDA
 - NVDA can again duck audio when using the SAPI5 synthesizer on Windows 11. (#12913)
 - In Windows 10 Calculator, NVDA will announce labels for history and memory list items. (#11858)
 - Gestures such as scrolling and routing again work with HID Braille devices. (#13228)
-- Windows 11 Mail: After switching focus between apps, while reading a long email, NVDA would get stuck on a line of the email. (#13050)
-- HID braille: chorded gestures (E.g. space+dot4) can be successfully performed from the Braille display. (#13326)
+- Windows 11 Mail: After switching focus between apps, while reading a long email, NVDA no longer gets stuck on a line of the email. (#13050)
+- HID braille: chorded gestures (e.g. ``space+dot4``) can be successfully performed from the Braille display. (#13326)
 - Fixed an issue where multiple settings dialogs could be opened at the same time. (#12818)
 - Fixed a problem where some Focus Blue Braille displays would stop working after waking the computer from sleep. (#9830)
-- 'Baseline' is no longer spuriously reported when the 'report superscript and subscript' option is active. (#11078)
+- "Baseline" is no longer spuriously reported when the "report superscript and subscript" option is active. (#11078)
 - In Windows 11, NVDA will no longer prevent navigation in emoji panel when selecting emojis. (#13104)
 - Prevents a bug causing double-reporting when using Windows Console and Terminal. (#13261)
 - Fixed several cases where list items could not be reported in 64 bit applications, such as REAPER. (#8175)
