@@ -71,9 +71,9 @@ Tasks that can be performed include moving/clicking the mouse and sending key pr
 
 #### Logging in secure mode
 `logHandler.initialize` prevents logging in secure mode.
-This is because it is a security concern to log during secure mode (e.g. passwords are logged).
-To change this for testing, patch the source build.
-`nvda.log` files are then generated in the System profile's `%TEMP%` directory.
+This is because it is a security concern to log during secure mode (e.g. passwords are logged on secure screens).
+To change this for testing, use the [serviceDebug](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SystemWideParameters) system wide parameter to prevent secure mode on secure screens.
+When logging from a secure screen, `nvda.log` files are generated in the System profile's `%TEMP%` directory.
 
 ## NVDA Components
 NVDA is built with an extensible, modular, object oriented, abstract design.
