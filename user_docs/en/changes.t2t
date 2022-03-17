@@ -9,7 +9,7 @@ For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Autom
 This provides a significant performance improvement over the old Object model access.
 
 There are improvements to braille display drivers including Seika Notetaker, Papenmeier and HID Braille. 
-There are also various Windows 11 bug fixes, such as Calculator, Console, Terminal, Mail and Emoji Panel.
+There are also various Windows 11 bug fixes, for apps such as Calculator, Console, Terminal, Mail and Emoji Panel.
 
 eSpeak-NG and LibLouis have been updated, adding new Japanese, German and Catalan tables.
 
@@ -74,8 +74,8 @@ Note:
 - NVDA can again duck audio when using the SAPI5 synthesizer on Windows 11. (#12913)
 - In Windows 10 Calculator, NVDA will announce labels for history and memory list items. (#11858)
 - Gestures such as scrolling and routing again work with HID Braille devices. (#13228)
-- Windows 11 Mail: After switching focus between apps, while reading a long email, NVDA would get stuck on a line of the email. (#13050)
-- HID braille: chorded gestures (e.g. space+dot4) can be successfully performed from the Braille display. (#13326)
+- Windows 11 Mail: After switching focus between apps, while reading a long email, NVDA no longer gets stuck on a line of the email. (#13050)
+- HID braille: chorded gestures (e.g. ``space+dot4``) can be successfully performed from the Braille display. (#13326)
 - Fixed an issue where multiple settings dialogs could be opened at the same time. (#12818)
 - Fixed a problem where some Focus Blue Braille displays would stop working after waking the computer from sleep. (#9830)
 - "Baseline" is no longer spuriously reported when the "report superscript and subscript" option is active. (#11078)
