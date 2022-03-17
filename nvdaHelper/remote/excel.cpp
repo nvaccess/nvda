@@ -109,8 +109,8 @@ long getCellTextWidth(HWND hwnd, IDispatch* pDispatchRange) {
 	return sizl.cx;
 }
 
-__int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
-	std::int64_t nvCellStates = 0;
+std::uint64_t getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
+	std::uint64_t nvCellStates = 0;
 	// If the current row is a summary row, expose the collapsed or expanded states depending on wither the inner rows are showing or not.
 	CComPtr<IDispatch> pDispatchRow=nullptr;
 	HRESULT res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIREROW,VT_DISPATCH,&pDispatchRow);

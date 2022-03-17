@@ -3,6 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import typing
+from typing import (
+	Optional,
+	Union,
+)
 
 from comtypes.automation import IEnumVARIANT, VARIANT
 from comtypes import (
@@ -20,6 +24,7 @@ import sys
 import itertools
 import importlib
 from comInterfaces.tom import ITextDocument
+from comInterfaces import Accessibility as IA
 from comInterfaces import IAccessible2Lib as IA2
 import tones
 import languageHandler
@@ -608,17 +613,20 @@ the NVDAObject for IAccessible
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
 
-	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
+	# C901: 'IAccessible.__init__' is too complex
+	def __init__(  # noqa: C901
+			self,
+			windowHandle: Optional[int] = None,
+			IAccessibleObject: Optional[Union[IUnknown, IA.IAccessible, IA2.IAccessible2]] = None,
+			IAccessibleChildID: Optional[int] = None,
+			event_windowHandle: Optional = None,
+			event_objectID: Optional = None,
+			event_childID: Optional = None
+	):
 		"""
-@param pacc: a pointer to an IAccessible object
-@type pacc: ctypes.POINTER(IAccessible)
-@param child: A child ID that will be used on all methods of the IAccessible pointer
-@type child: int
-@param hwnd: the window handle, if known
-@type hwnd: int
-@param objectID: the objectID for the IAccessible Object, if known
-@type objectID: int
-"""
+		@param windowHandle: the window handle, if known
+		@param IAccessibleChildID: A child ID that will be used on all methods of the IAccessible pointer
+		"""
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
 
@@ -1462,12 +1470,14 @@ the NVDAObject for IAccessible
 
 	def _get__IA2Relations(self) -> typing.List[IA2.IAccessibleRelation]:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			log.debug("Not an IA2.IAccessible2")
 			raise NotImplementedError
 		import ctypes
 		import comtypes.hresult
 		try:
 			size = self.IAccessibleObject.nRelations
 		except COMError:
+			log.debug("Unable to get nRelations")
 			raise NotImplementedError
 		if size <= 0:
 			return list()
@@ -1476,6 +1486,7 @@ the NVDAObject for IAccessible
 		# The client allocated relations array is an [out] parameter instead of [in, out], so we need to use the raw COM method.
 		res = self.IAccessibleObject._IAccessible2__com__get_relations(size, relations, ctypes.byref(count))
 		if res != comtypes.hresult.S_OK:
+			log.debug("Unable to get relations")
 			raise NotImplementedError
 		return list(relations)
 
@@ -1483,9 +1494,13 @@ the NVDAObject for IAccessible
 			self,
 			relationType: "IAccessibleHandler.RelationType",
 			maxRelations: int = 1,
-	) -> typing.List[ctypes.POINTER(IUnknown)]:
+	) -> typing.List[IUnknown]:
 		"""Gets the target IAccessible (actually IUnknown; use QueryInterface or
-		normalizeIAccessible to resolve) for the relations with given type."""
+		normalizeIAccessible to resolve) for the relations with given type.
+		Allows escape of exception: COMError(-2147417836, 'Requested object does not exist.'),
+		callers should handle this, for this reason consider using _getIA2RelationFirstTarget
+		if only the first target is required, and you wish the target to be converted to an IAccessible
+		"""
 		acc = self.IAccessibleObject
 		if not isinstance(acc, IA2.IAccessible2):
 			raise NotImplementedError
@@ -1526,13 +1541,17 @@ the NVDAObject for IAccessible
 			# rather than fetch all the relations and querying the type, do that in process for performance reasons
 			targets = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=1)
 			if targets:
-				return targets[0]
+				ia2Object = IAccessibleHandler.normalizeIAccessible(targets[0])
+				return IAccessible(
+					IAccessibleObject=ia2Object,
+					IAccessibleChildID=0
+				)
 		except (NotImplementedError, COMError):
 			log.debugWarning("Unable to use _getIA2TargetsForRelationsOfType, fallback to _IA2Relations.")
 
 		# eg IA2_2 is not available, fall back to old approach
-		for relation in self._IA2Relations:
-			try:
+		try:
+			for relation in self._IA2Relations:
 				if relation.relationType == relationType:
 					# Take the first of 'relation.nTargets' see IAccessibleRelation._methods_
 					target = relation.target(0)
@@ -1541,24 +1560,18 @@ the NVDAObject for IAccessible
 						IAccessibleObject=ia2Object,
 						IAccessibleChildID=0
 					)
-			except COMError:
-				pass
+		except (NotImplementedError, COMError):
+			log.debug("Unable to fetch _IA2Relations", exc_info=True)
+			pass
 		return None
 
 	#: Type definition for auto prop '_get_detailsRelations'
 	detailsRelations: typing.Iterable["IAccessible"]
 
 	def _get_detailsRelations(self) -> typing.Iterable["IAccessible"]:
-		relations = self._getIA2TargetsForRelationsOfType(
-			IAccessibleHandler.RelationType.DETAILS,
-			maxRelations=1
-		)
-		if not relations:
+		relationTarget = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.DETAILS)
+		if not relationTarget:
 			return ()
-		relationTarget = IAccessible(
-			IAccessibleObject=IAccessibleHandler.normalizeIAccessible(relations[0]),
-			IAccessibleChildID=0
-		)
 		return (relationTarget, )
 
 	#: Type definition for auto prop '_get_flowsTo'

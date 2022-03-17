@@ -58,6 +58,7 @@ Note:
 - "Baseline" is no longer reported via the report text formatting command (``NVDA+f``). (#11815)
 - Activate long description no longer has a default gesture assigned. (#13380)
 - Report details summary now has a default gesture (``NVDA+d``). (#13380)
+- NVDA needs to be restarted after installing MathPlayer. (#13486)
 -
 
 == Bug Fixes ==
@@ -86,6 +87,7 @@ Note:
 - NVDA no longer causes 64-bit versions of Notepad++ 8.3 and above to crash. (#13311)
 - Adobe Reader no longer crashes on startup if Adobe Reader's protected mode is enabled. (#11568)
 - Fixed a bug where selecting the Papenmeier Braille Display Driver caused NVDA to crash. (#13348)
+- In Microsoft word with UIA: page number and other formatting is no longer inappropriately announced when moving from a blank table cell to a cell with content, or from the end of the document into existing content. (#13458, #13459)
 -
 
 == Changes for Developers ==
@@ -171,6 +173,7 @@ This can dramatically decrease build times on multi core systems. (#13226, #1337
   -
 - Excel cell state constants (``NVSTATE_*``) are now values in the ``NvCellState`` enum, mirrored in the ``NvCellState`` enum in ``NVDAObjects/window/excel.py`` and mapped to ``controlTypes.State`` via _nvCellStatesToStates. (#13465)
 - ``EXCEL_CELLINFO`` struct member ``state`` is now ``nvCellStates``.
+- ``mathPres.ensureInit`` has been removed, MathPlayer is now initialized when NVDA starts. (#13486)
 -
 
 
