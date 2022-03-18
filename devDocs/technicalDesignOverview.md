@@ -70,8 +70,8 @@ Tasks that can be performed include moving/clicking the mouse and sending key pr
 ### Logging
 
 #### Logging in secure mode
-`logHandler.initialize` prevents logging in secure mode.
-This is because it is a security concern to log during secure mode (e.g. passwords are logged on secure screens).
+`logHandler.initialize` prevents logging in [secure mode](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureMode).
+This is because it is a security concern to log during secure mode (e.g. passwords are logged on [secure screens](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureScreens).
 To change this for testing, use the [serviceDebug](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SystemWideParameters) system wide parameter to prevent secure mode on secure screens.
 When logging from a secure screen, `nvda.log` files are generated in the System profile's `%TEMP%` directory.
 
