@@ -309,8 +309,8 @@ class MainFrame(wx.Frame):
 		pythonConsole.activate()
 
 	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
 		blockAction.Context.MODAL_DIALOG_OPEN,
-		blockAction.Context.SECURE_MODE
 	)
 	def onAddonsManagerCommand(self,evt):
 		self.prePopup()
