@@ -42,7 +42,7 @@ class Context(_Context, Enum):
 def when(*contexts: Context):
 	"""Returns a function wrapper.
 	A function decorated with `when` will exit early if any supplied context in `contexts` is active.
-	The first suppplied context to block will be reported as a message.
+	The first supplied context to block will be reported as a message.
 	Consider supplying permanent conditions first.
 
 	For example, to block a function when a modal dialog is open (a temporary condition)
