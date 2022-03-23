@@ -35,7 +35,8 @@ class Context(_Context, Enum):
 		isModalMessageBoxActive,
 		# Translators: Reported when an action cannot be performed because NVDA is waiting
 		# for a response from a modal dialog
-		_("Action unavailable as an open dialog requires a response"),
+		_("Action unavailable while a dialog requires a response"),
+
 	)
 
 
@@ -46,8 +47,8 @@ def when(*contexts: Context):
 	Consider supplying permanent conditions first.
 
 	For example, to block a function when a modal dialog is open (a temporary condition)
-	and in secure mode (permanent during run time), decorate it with
-	`@blockAction.when(blockAction.Context.SECURE_MODE, blockAction.Context.MODAL_DIALOG_OPEN)`.
+	and in the Windows Store version (per installation), decorate it with
+	`@blockAction.when(blockAction.Context.WINDOWS_STORE_VERSION, blockAction.Context.MODAL_DIALOG_OPEN)`.
 	"""
 	def _wrap(func):
 		@wraps(func)
