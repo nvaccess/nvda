@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
-# This file is covered by the GNU General Public License.
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 # See the file COPYING for more details.
 
 
@@ -49,11 +50,6 @@ class _ExitAction(DisplayStringEnum):
 			# Translators: An option in the combo box to choose exit action.
 			self.INSTALL_PENDING_UPDATE: _("Install pending update"),
 		}
-
-
-def quit():
-	from gui import mainFrame
-	wx.CallAfter(mainFrame.onExitCommand, None)
 
 
 class ExitDialog(wx.Dialog):

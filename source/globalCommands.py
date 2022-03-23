@@ -1757,7 +1757,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+q"
 	)
 	def script_quit(self,gesture):
-		gui.exit.quit()
+		wx.CallAfter(gui.mainFrame.onExitCommand, None)
 
 	@script(
 		# Translators: Input help mode message for restart NVDA command.

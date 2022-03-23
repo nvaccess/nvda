@@ -22,6 +22,9 @@ What's New in NVDA
 
 == Changes for Developers ==
 - When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
+- ``gui.quit`` has been deprecated for removal in 2023.1. (#13498)
+  - Use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
+  -
 -
 
 
