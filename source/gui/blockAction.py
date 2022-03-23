@@ -36,7 +36,6 @@ class Context(_Context, Enum):
 		# Translators: Reported when an action cannot be performed because NVDA is waiting
 		# for a response from a modal dialog
 		_("Action unavailable while a dialog requires a response"),
-
 	)
 
 
