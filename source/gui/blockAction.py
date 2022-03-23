@@ -11,6 +11,7 @@ import globalVars
 from typing import Callable
 import ui
 from gui.message import isModalMessageBoxActive
+import queueHandler
 
 
 @dataclass
@@ -54,7 +55,7 @@ def when(*contexts: Context):
 		def funcWrapper(*args, **kwargs):
 			for context in contexts:
 				if context.blockActionIf():
-					ui.message(context.translatedMessage)
+					queueHandler.queueFunction(queueHandler.eventQueue, ui.message, context.translatedMessage)
 					return
 			return func(*args, **kwargs)
 		return funcWrapper
