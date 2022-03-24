@@ -7,8 +7,9 @@ import os
 import tempfile
 import typing
 
-from gui import blockAction
 import wx
+
+from gui import blockAction
 from logHandler import log
 import documentationUtils
 
