@@ -97,6 +97,11 @@ JABStatesToNVDAStates={
 
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 
+def _processHtml(text):
+	""" Strips HTML tags from text if it is HTML """
+	return re_simpleXmlTag.sub(" ", text) if text.startswith("<html>") else text
+
+
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
@@ -275,7 +280,7 @@ class JAB(Window):
 
 	def _get_name(self):
 		name = self._JABAccContextInfo.name
-		return self._processHtml(name)
+		return _processHtml(name)
 
 	def _get_JABRole(self):
 		return self._JABAccContextInfo.role_en_US
@@ -317,11 +322,7 @@ class JAB(Window):
 
 	def _get_description(self):
 		description = self._JABAccContextInfo.description
-		return self._processHtml(description)
-
-	def _processHtml(self, text):
-		""" Strips HTML tags from text if it is HTML """
-		return re_simpleXmlTag.sub(" ", text) if text.startswith("<html>") else text
+		return _processHtml(description)
 
 	def _get_location(self):
 		return RectLTWH(self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
@@ -553,6 +554,7 @@ class JAB(Window):
 		activeDescendant=self.activeDescendant
 		if activeDescendant:
 			eventHandler.queueEvent("gainFocus",activeDescendant)
+
 
 class ComboBox(JAB):
 
