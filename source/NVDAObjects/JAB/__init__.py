@@ -274,7 +274,8 @@ class JAB(Window):
 		return ", ".join(shortcutsList)
 
 	def _get_name(self):
-		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.name)
+		name = self._JABAccContextInfo.name
+		return self._processHtml(name)
 
 	def _get_JABRole(self):
 		return self._JABAccContextInfo.role_en_US
@@ -315,7 +316,12 @@ class JAB(Window):
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
-		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.description)
+		description = self._JABAccContextInfo.description
+		return self._processHtml(description)
+
+	def _processHtml(self, text):
+		""" Strips HTML tags from text if it is HTML """
+		return re_simpleXmlTag.sub(" ", text) if text.startswith("<html>") else text
 
 	def _get_location(self):
 		return RectLTWH(self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
