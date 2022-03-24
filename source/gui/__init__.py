@@ -268,6 +268,8 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
 	def onSpeechSymbolsCommand(self, evt):
+		if globalVars.appArgs.secure:
+			return
 		self._popupSettingsDialog(SpeechSymbolsDialog)
 
 	def onInputGesturesCommand(self, evt):
