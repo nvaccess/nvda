@@ -97,6 +97,7 @@ JABStatesToNVDAStates={
 
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 
+
 def _processHtml(text):
 	""" Strips HTML tags from text if it is HTML """
 	return re_simpleXmlTag.sub(" ", text) if text.startswith("<html>") else text
