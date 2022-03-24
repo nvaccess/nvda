@@ -25,11 +25,11 @@ import queueHandler
 import core
 from . import guiHelper
 from .message import (
-	isModalMessageBoxActive,
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
 )
+from . import blockAction
 from .speechDict import (
 	DefaultDictionaryDialog,
 	VoiceDictionaryDialog,
@@ -143,8 +143,8 @@ class MainFrame(wx.Frame):
 
 	def onSaveConfigurationCommand(self,evt):
 		if globalVars.appArgs.secure:
-			# Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Cannot save configuration - NVDA in secure mode"))
+			# Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+			queueHandler.queueFunction(queueHandler.eventQueue, ui.message, _("Not available in secure context"))
 			return
 		try:
 			config.conf.save()
@@ -154,9 +154,8 @@ class MainFrame(wx.Frame):
 			# Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
-		if isModalMessageBoxActive():
-			return
 		self.prePopup()
 		try:
 			dialog(self, *args, **kwargs).Show()
@@ -169,17 +168,17 @@ class MainFrame(wx.Frame):
 
 		self.postPopup()
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onDefaultDictionaryCommand(self, evt):
-		if not globalVars.appArgs.secure:
-			self._popupSettingsDialog(DefaultDictionaryDialog)
+		self._popupSettingsDialog(DefaultDictionaryDialog)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onVoiceDictionaryCommand(self, evt):
-		if not globalVars.appArgs.secure:
-			self._popupSettingsDialog(VoiceDictionaryDialog)
+		self._popupSettingsDialog(VoiceDictionaryDialog)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onTemporaryDictionaryCommand(self, evt):
-		if not globalVars.appArgs.secure:
-			self._popupSettingsDialog(TemporaryDictionaryDialog)
+		self._popupSettingsDialog(TemporaryDictionaryDialog)
 
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
@@ -206,9 +205,8 @@ class MainFrame(wx.Frame):
 		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
 			self.sysTrayIcon.menu.Insert(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onExitCommand(self, evt):
-		if isModalMessageBoxActive():
-			return
 		if config.conf["general"]["askToExit"]:
 			self.prePopup()
 			d = ExitDialog(self)
@@ -267,9 +265,9 @@ class MainFrame(wx.Frame):
 	def onSpeechSymbolsCommand(self, evt):
 		self._popupSettingsDialog(SpeechSymbolsDialog)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onInputGesturesCommand(self, evt):
-		if not globalVars.appArgs.secure:
-			self._popupSettingsDialog(InputGesturesDialog)
+		self._popupSettingsDialog(InputGesturesDialog)
 
 	def onAboutCommand(self,evt):
 		# Translators: The title of the dialog to show about info for NVDA.
@@ -310,9 +308,11 @@ class MainFrame(wx.Frame):
 			pythonConsole.initialize()
 		pythonConsole.activate()
 
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+	)
 	def onAddonsManagerCommand(self,evt):
-		if isModalMessageBoxActive() or globalVars.appArgs.secure:
-			return
 		self.prePopup()
 		from .addonGui import AddonsDialog
 		d=AddonsDialog(gui.mainFrame)
@@ -326,24 +326,21 @@ class MainFrame(wx.Frame):
 		globalPluginHandler.reloadGlobalPlugins()
 		NVDAObject.clearDynamicClassCache()
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onCreatePortableCopyCommand(self,evt):
-		if isModalMessageBoxActive():
-			return
 		self.prePopup()
 		import gui.installerGui
 		d=gui.installerGui.PortableCreaterDialog(gui.mainFrame)
 		d.Show()
 		self.postPopup()
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onInstallCommand(self, evt):
-		if isModalMessageBoxActive():
-			return
 		from gui import installerGui
 		installerGui.showInstallGui()
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onRunCOMRegistrationFixesCommand(self, evt):
-		if isModalMessageBoxActive():
-			return
 		if messageBox(
 			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
 			_("You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?"),
@@ -375,13 +372,13 @@ class MainFrame(wx.Frame):
 			wx.OK
 		)
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onConfigProfilesCommand(self, evt):
-		if isModalMessageBoxActive():
-			return
 		self.prePopup()
 		from .configProfiles import ProfilesDialog
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
+
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
@@ -399,38 +396,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			_("NVDA settings"))
 		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
 		if not globalVars.appArgs.secure:
-			# TODO: This code should be moved out into a createSpeechDictsSubMenu function
-			subMenu_speechDicts = wx.Menu()
-			item = subMenu_speechDicts.Append(
-				wx.ID_ANY,
-				# Translators: The label for the menu item to open Default speech dictionary dialog.
-				_("&Default dictionary..."),
-				# Translators: The help text for the menu item to open Default speech dictionary dialog.
-				_("A dialog where you can set default dictionary by adding dictionary entries to the list")
-			)
-			self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
-			item = subMenu_speechDicts.Append(
-				wx.ID_ANY,
-				# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-				_("&Voice dictionary..."),
-				_(
-					# Translators: The help text for the menu item
-					# to open Voice specific speech dictionary dialog.
-					"A dialog where you can set voice-specific dictionary by adding"
-					" dictionary entries to the list"
-				)
-			)
-			self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
-			item = subMenu_speechDicts.Append(
-				wx.ID_ANY,
-				# Translators: The label for the menu item to open Temporary speech dictionary dialog.
-				_("&Temporary dictionary..."),
-				# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-				_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
-			)
-			self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 			# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
-			menu_preferences.AppendSubMenu(subMenu_speechDicts, _("Speech &dictionaries"))
+			menu_preferences.AppendSubMenu(self._createSpeechDictsSubMenu(frame), _("Speech &dictionaries"))
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
@@ -565,6 +532,38 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# The NVDA menu didn't actually appear for some reason.
 			appModules.nvda.nvdaMenuIaIdentity = None
 		mainFrame.postPopup()
+
+	def _createSpeechDictsSubMenu(self, frame: wx.Frame) -> wx.Menu:
+		subMenu_speechDicts = wx.Menu()
+		item = subMenu_speechDicts.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to open Default speech dictionary dialog.
+			_("&Default dictionary..."),
+			# Translators: The help text for the menu item to open Default speech dictionary dialog.
+			_("A dialog where you can set default dictionary by adding dictionary entries to the list")
+		)
+		self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
+		item = subMenu_speechDicts.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+			_("&Voice dictionary..."),
+			_(
+				# Translators: The help text for the menu item
+				# to open Voice specific speech dictionary dialog.
+				"A dialog where you can set voice-specific dictionary by adding"
+				" dictionary entries to the list"
+			)
+		)
+		self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
+		item = subMenu_speechDicts.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to open Temporary speech dictionary dialog.
+			_("&Temporary dictionary..."),
+			# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+			_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
+		)
+		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
+		return subMenu_speechDicts
 
 
 def initialize():
