@@ -319,11 +319,11 @@ def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
 	instance information with `newNVDA`.
 	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
 	"""
-	from gui.message import isInMessageBox
+	from gui.message import isModalMessageBoxActive
 	import queueHandler
 	global _hasShutdownBeenTriggered
 	with _shuttingDownFlagLock:
-		safeToExit = not isInMessageBox()
+		safeToExit = not isModalMessageBoxActive()
 		if not safeToExit:
 			log.error("NVDA cannot exit safely, ensure open dialogs are closed")
 			return False
@@ -476,6 +476,9 @@ def main():
 	import speech
 	log.debug("Initializing speech")
 	speech.initialize()
+	import mathPres
+	log.debug("Initializing MathPlayer")
+	mathPres.initialize()
 	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 		# Translators: This is spoken when NVDA is starting.

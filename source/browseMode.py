@@ -1898,7 +1898,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			item1=item2
 
 	__gestures={
-		"kb:NVDA+d": "activateLongDesc",
 		"kb:alt+upArrow": "collapseOrExpandControl",
 		"kb:alt+downArrow": "collapseOrExpandControl",
 		"kb:tab": "tab",

@@ -1327,3 +1327,31 @@ class ProfileTrigger(object):
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
+
+
+class AllowUiaInChromium(Enum):
+	_DEFAULT = 0  # maps to 'when necessary'
+	WHEN_NECESSARY = 1  # the current default
+	YES = 2
+	NO = 3
+
+	@staticmethod
+	def getConfig() -> 'AllowUiaInChromium':
+		allow = AllowUiaInChromium(conf['UIA']['allowInChromium'])
+		if allow == AllowUiaInChromium._DEFAULT:
+			return AllowUiaInChromium.WHEN_NECESSARY
+		return allow
+
+
+class AllowUiaInMSWord(Enum):
+	_DEFAULT = 0  # maps to 'where suitable'
+	WHEN_NECESSARY = 1
+	WHERE_SUITABLE = 2
+	ALWAYS = 3
+
+	@staticmethod
+	def getConfig() -> 'AllowUiaInMSWord':
+		allow = AllowUiaInMSWord(conf['UIA']['allowInMSWord'])
+		if allow == AllowUiaInMSWord._DEFAULT:
+			return AllowUiaInMSWord.WHERE_SUITABLE
+		return allow

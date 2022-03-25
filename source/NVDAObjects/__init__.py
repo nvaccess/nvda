@@ -482,10 +482,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	detailsSummary: typing.Optional[str]
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
 		return None
 
 	@property
 	def hasDetails(self) -> bool:
+		"""Default implementation is based on the result of _get_detailsSummary
+		In most instances this should be optimised.
+		"""
 		return bool(self.detailsSummary)
 
 	def _get_controllerFor(self):
@@ -1055,10 +1060,13 @@ Tries to force this object to take the focus.
 		log.debug("Potential unimplemented child class: %r" %self)
 		return None
 
-	def _get_landmark(self):
+	landmark: typing.Optional[str]
+	"""Typing information for auto property _get_landmark
+	"""
+
+	def _get_landmark(self) -> typing.Optional[str]:
 		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
 		@return: ARIA landmark role else None
-		@rtype: String or None
 		"""
 		return None
 

@@ -46,7 +46,12 @@ class NppEdit(ScintillaBase.Scintilla):
 	def _get_TextInfo(self):
 		if self.appModule.is64BitProcess:
 			appVerMajor, appVerMinor, *__ = self.appModule.productVersion.split(".")
-			if int(appVerMajor) >= 8 and int(appVerMinor) >= 3:
+			# When retrieving the version, Notepad++ concatenates
+			# minor, patch, build in major.minor.patch.build to the form of major.minor
+			# https://github.com/notepad-plus-plus/npp-usermanual/blob/master/content/docs/plugin-communication.md#nppm_getnppversion
+			# e.g. '8.3' for '8.3', '8.21' for '8.2.1' and '8.192' for '8.1.9.2'.
+			# Therefore, only use the first digit of the minor version to match against version 8.3 or later.
+			if int(appVerMajor) >= 8 and int(appVerMinor[0]) >= 3:
 				return ScintillaTextInfoNpp83
 		return super().TextInfo
 
