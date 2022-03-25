@@ -16,7 +16,7 @@ from logHandler import log
 BAUD_RATE = 19200
 TIMEOUT = 0.2
 WRITE_TIMEOUT = 0
-# Indexes are key codes sent by display.
+# Keys are key codes sent by display.
 KEY_NAMES = {
 	1: "attribute1",
 	42: "attribute2",
@@ -65,17 +65,40 @@ KEY_NAMES = {
 }
 # These are ctrl-keys which may start key combination.
 CONTROL_KEY_CODES: List[int] = [
-	1, 42, 83, 84, 89, 90, 91, 92, 93, 94, 151, 192, 193, 194, 199, 200, 201, 202, 203, 204, ]
+	1,  # attribute1
+	42,  # attribute2
+	83,  # f1
+	84,  # f2
+	89,  # f7
+	90,  # f8
+	91,  # home1
+	92,  # end1
+	93,  # eCursor1
+	94,  # cursor1
+	151,  # attribute3
+	192,  # attribute4
+	193,  # f9
+	194,  # f10
+	199,  # f15
+	200,  # f16
+	201,  # home2
+	202,  # end2
+	203,  # eCursor2
+	204,  # cursor2
+]
 # Send this to Albatross to confirm that connection is established.
 ESTABLISHED = b"\xfe\xfd\xfe\xfd"
-# Guess for number of bytes to read to clear input buffer after connection established..
+# Guess for number of bytes to read to clear input buffer after connection established.
 INPUT_BUF_SIZE = 1024
+# If no connection, Albatross sends continuously byte \xff followed by byte
+# containing various settings like number of cells.
+INIT_START_BYTE = b"\xff"
 # Send information to Albatross enclosed by these bytes.
 START_BYTE = b"\xfb"
 END_BYTE = b"\xfc"
 # To keep connected these both above bytes must be sent periodically.
 BOTH_BYTES = b"\xfb\xfc"
-# How often BOTH_BYTES should be sent/to try to reconnect.
+# How often BOTH_BYTES should be sent or to try to reconnect if connection lost.
 TIMER_INTERVAL = 1
 
 
@@ -143,7 +166,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._oldCells.append(0)
 				# We may need current connection port to reconnect.
 				self._currentPort = port
-				# Start timer to keep connection.
+				# Start timer to keep connection. Display requires at least START_BYTE and
+				# END_BYTE combination within approximately 2 seconds from previous
+				# appropriate data packet. Otherwise it falls back to "wait for connection"
+				# state. This behavior is built-in feature of the firmware of device.
 				self._rt = RepeatedTimer(TIMER_INTERVAL, self._keepConnected)
 				self._timerRunning = True
 				log.info(
@@ -225,28 +251,31 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# If no connection, Albatross sends continuously byte \xff
 			# followed by byte containing various settings like number of cells.
 			# But there may be garbage before \xff.
-			if data != b"\xff":
-				while data != b"\xff" and len(data):
+			if data != INIT_START_BYTE:
+				while data != INIT_START_BYTE and len(data):
 					data = self._dev.read(1)
 				if not len(data):
 					log.debugWarning("No init byte")
 					return
-			log.debugWarning("Init byte: %r" % data)
+			log.debug("Init byte: %r" % data)
 			data = self._dev.read(1)
 			if not len(data):
 				log.debugWarning("No value byte")
 				return
-			log.debugWarning("Value byte: %r" % data)
+			log.debug("Value byte: %r" % data)
 			if not self._sendToDisplay(ESTABLISHED):
 				return
+			# If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
+			# Other display settings are currently ignored so skipping separate function
+			# definition this time.
 			self.numCells = 80 if ord(data) >> 7 == 1 else 46
 		# Connected.
 		else:
 			# It is possible that there is no connection from perspective of display.
-			if data == b"\xff":
+			if data == INIT_START_BYTE:
 				if self._sendToDisplay(ESTABLISHED):
 					self._clearOldCells()
-				log.debugWarning("Byte %r, numCells %d, _tryReconnect %r" % (data, self.numCells, self._tryReconnect))
+				log.debug("Byte %r, numCells %d, _tryReconnect %r" % (data, self.numCells, self._tryReconnect))
 				return
 			# If Ctrl-key is pressed, then there is at least one byte to read;
 			# in single ctrl-key presses and key combinations the first key is resent as last one.
@@ -329,25 +358,32 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 	def __init__(self, keys):
 		super().__init__()
 		self.keyCodes = set(keys)
-
 		names = []
 		for key in self.keyCodes:
 			if 2 <= key <= 41 or 111 <= key <= 150:
 				names.append("routing")
-				if 2 <= key <= 41:
-					self.routingIndex = key - 2
-				if 111 <= key <= 150:
-					self.routingIndex = key - 71
+				self.routingIndex = self._getRoutingIndex(key)
 			elif 43 <= key <= 82 or 152 <= key <= 191:
 				names.append("secondRouting")
-				if 43 <= key <= 82:
-					self.routingIndex = key - 43
-				if 152 <= key <= 191:
-					self.routingIndex = key - 112
+				self.routingIndex = self._getRoutingIndex(key)
 			else:
 				try:
 					names.append(KEY_NAMES[key])
 				except KeyError:
 					log.debugWarning("Unknown key with id %d" % key)
-
 		self.id = "+".join(names)
+
+	def _getRoutingIndex(self, key) -> int:
+		# Indexes start from 0.
+		# First 40 routing keys.
+		if key <= 41:
+			return key - 2
+		# First 40 secondRouting keys.
+		if key <= 82:
+			return key - 43
+		# Rest routing keys.
+		if key <= 150:
+			return key - 71
+		# Rest secondRouting keys.
+		if key <= 191:
+			return key - 112
