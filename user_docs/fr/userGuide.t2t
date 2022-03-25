@@ -527,7 +527,6 @@ De plus, vous pouvez aussi passer manuellement NVDA en mode formulaire, après q
 | Rechercher | NVDA+contrôle+f | Affiche un dialogue qui vous permet de rechercher du texte dans le document courant. Voir [chercher du texte #SearchingForText] pour plus d'information |
 | Rechercher suivant | NVDA+f3 | Recherche l'occurrence suivante du texte que vous avez préalablement recherché dans le document |
 | Rechercher précédent | NVDA+maj+f3 | Recherche l'occurrence précédente du texte que vous avez préalablement recherché dans le document |
-| Ouvrir description longue | NVDA+d | Ouvre une nouvelle fenêtre contenant une longue description de l'élément sur lequel vous êtes s'il en a une. | 
 %kc:endInclude
 
 ++ Les Touches de Navigation Rapide ++[SingleLetterNavigation]
@@ -611,7 +610,8 @@ Une touche de commande permet de retourner à la page contenant l'objet embarqu�
 + Lecture de Contenu Mathématique +[ReadingMath]
 En utilisant MathPlayer 4 de Design Science, NVDA peut lire et naviguer interactivement dans le contenu mathématique supporté.
 Cela nécessite que MathPlayer 4 soit installé sur l'ordinateur.
-MathPlayer est disponible en téléchargement gratuit sur : https://www.dessci.com/en/products/mathplayer/
+MathPlayer est disponible en téléchargement gratuit sur : https://www.dessci.com/en/products/mathplayer/.
+Après avoir installé MathPlayer, redémarrez NVDA.
 
 NVDA supporte les types de contenu mathématiques suivants :
 - MathML sous Mozilla Firefox, Microsoft Internet Explorer et Google Chrome.
@@ -1709,8 +1709,8 @@ Ce champ définit le nombre de lignes dont on se déplace par appui sur "Page Pr
 ==== Utiliser la disposition telle qu'à l'écran ====[BrowseModeSettingsScreenLayout]
 Raccourci clavier : NVDA+v
 
-Cette option vous permet d'indiquer si vous voulez que les objets tels que les liens ou autres champs soient placés sur leur propre ligne, ou s'ils doivent apparaître tels qu'à l'écran.
-Si l'option est activée, la représentation correspondra à l'aspect visuel. Sinon, chaque champ sera placé sur sa propre ligne.
+Cette option vous permet de spécifier si le mode navigation doit placer le contenu cliquable (liens, boutons et champs) sur sa propre ligne, ou s'il doit le conserver dans le flux du texte tel qu'il est affiché visuellement. Notez que cette option ne concerne pas les applications Microsoft Office telles qu'Outlook et Word, qui utilisent toujours la disposition telle qu'à l'écran.
+Lorsque la disposition telle qu'à l'écran est activée, les éléments de la page restent tels qu'ils sont affichés visuellement. Par exemple, une ligne visuelle de plusieurs liens sera présentée vocalement et en braille comme plusieurs liens sur la même ligne. S'il est désactivé, les éléments de la page seront placés sur leurs propres lignes, ce qui peut être plus facile à comprendre lors de la navigation ligne par ligne dans la page et peut faciliter l'interaction avec les éléments pour certains utilisateurs.
 
 ==== Activer le mode navigation au chargement de la page ====[BrowseModeSettingsEnableOnPageLoad]
 Cette case à cocher permet de choisir si le mode navigation doit être activé automatiquement au chargement d'une page.
@@ -1865,12 +1865,15 @@ Ceci a un impact négatif majeur sur les performances, en particulier dans les a
 En revanche, quand cette option est activée, NVDA limitera l'enregistrement des événements au focus système pour la plupart des événements.
 Si vous rencontrez des problèmes de performances dans une ou plusieurs applications, nous vous recommandons d'essayer cette fonctionnalité pour voir si les performances s'améliorent.
 
-==== Utiliser UI automation pour accéder aux contrôles des documents Microsoft Word quand disponible ====[AdvancedSettingsUseUiaForWord]
-Quand cette option est activée, NVDA essaiera d'utiliser l'API d'accessibilité Microsoft UI Automation afin de récupérer les informations des contrôles de document Microsoft Word.
-Ceci inclut Microsoft Word lui-même, et aussi l'afficheur et le composeur de message de Microsoft Outlook.
-Pour les versions les plus récentes de Microsoft Office 2016/365 fonctionnant sur Windows 10 et versions ultérieures, la prise en charge de UI Automation est suffisamment complète pour fournir un accès aux documents Microsoft Word presque égal à la prise en charge Microsoft Word existante de NVDA, avec l'avantage supplémentaire que la réactivité est considérablement augmentée.
-Cependant, certaines informations peuvent ne pas être exposées ou être exposées de manière incorrecte dans certaines versions de Microsoft Office, ce qui signifie que cette prise en charge de UI Automation n'est pas toujours fiable.
-Nous ne recommandons toujours pas à la majorité des utilisateurs d'activer cette option par défaut, bien que nous encourageons les utilisateurs d'Office 2016/365 à tester cette fonctionnalité et fournir des commentaires.
+==== Utiliser UI automation pour accéder aux contrôles des documents Microsoft Word ====[MSWordUIA]
+Configure si NVDA doit ou non utiliser l'API d'accessibilité UI Automation pour accéder aux documents Microsoft Word, plutôt que l'ancien modèle d'objet Microsoft Word.
+Cela s'applique aux documents dans Microsoft Word lui-même, ainsi qu'aux messages dans Microsoft Outlook.
+Ce paramètre contient les valeurs suivantes :
+- Défaut (le cas échéant)
+- Seulement si nécessaire : quand le modèle d'objet Microsoft Word n'est pas disponible du tout
+- Le cas échéant : Microsoft Word version 16.0.15000 ou supérieure, ou lorsque le modèle d'objet Microsoft Word n'est pas disponible
+- Toujours : partout où UI automation est disponible dans Microsoft Word (aussi complète soit-elle)
+-
 
 ==== Utilisez UI Automation pour accéder à la console Windows quand elle est disponible ====[AdvancedSettingsConsoleUIA]
 Si cette option est activée, NVDA utilisera une nouvelle version en cours de développement de son support de la console Windows qui tire parti des [améliorations de l'accessibilité apportées par Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Cette fonctionnalité est très expérimentale et est encore incomplète, son utilisation n'est donc pas encore recommandée. Cependant, une fois terminée, il est prévu que cette nouvelle prise en charge deviendra la valeur par défaut, améliorant les performances et la stabilité de NVDA dans les consoles de commande Windows.
@@ -1888,9 +1891,13 @@ La liste déroulante contient les options suivantes :
 ==== Annotations ====[Annotations]
 Ce groupe d'options est utilisé pour activer des fonctionnalités qui ajoutent une prise en charge expérimentale des annotations ARIA.
 Certaines de ces fonctionnalités peuvent être incomplètes.
+
+%kc:beginInclude
+Pour "Signaler le résumé de tous les détails d'annotation au niveau du curseur système", appuyez sur NVDA+d.
+%kc:endInclude
+
 Les options suivantes existent :
 - "Annoncer 'contient des détails' pour les annotations structurées" : active l'annonce si le texte ou le contrôle contient plus de détails.
-Un résumé des détails supplémentaires peut être signalé en attribuant un geste à "Signaler le résumé de tous les détails d'annotation au niveau du curseur système" à l'aide de la [boîte de dialogue Gestes de commandes #InputGestures].
 - "Toujours annoncer aria-description" :
   Lorsque la source de ``accDescription`` est aria-description, la description est annoncée.
   Ceci est utile pour les annotations sur le web.
@@ -2857,10 +2864,6 @@ Les afficheurs braille suivant sont supportés :
 -
 
 Ces terminaux ne supporte pas la détection automatique en arrière-plan.
-
-Si BrxCom est installé, NVDA utilisera BrxCom.
-BrxCom est un outil qui permet d'utiliser le clavier braille indépendamment d'un lecteur d'écran.
-La saisie au clavier est possible avec les modèles Trio et BRAILLEX Live.
 
 La plupart des afficheurs ont une barre d'accès facile (EAB) qui permet des opérations intuitives et rapides.
 L'EAB peut être bougé dans quatre directions et chaque direction a deux crans.
