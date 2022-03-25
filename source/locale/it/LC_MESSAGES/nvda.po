@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-11 00:02+0000\n"
-"PO-Revision-Date: 2022-03-11 15:15+0100\n"
+"POT-Creation-Date: 2022-03-18 00:02+0000\n"
+"PO-Revision-Date: 2022-03-18 11:35+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -725,6 +725,11 @@ msgstr "Bulgaro grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Catalan grade 1"
+msgstr "Catalano Grado 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Curdo centrale grado 1"
 
@@ -777,6 +782,11 @@ msgstr "Danese 6 punti grado 2"
 #. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "Danese 8 punti grado 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German 6 dot computer braille"
+msgstr "Tedesco braille computer 6 punti"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -8352,6 +8362,26 @@ msgstr "&Esci"
 msgid "Exit NVDA"
 msgstr "Esci da NVDA"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Esci"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Riavvia"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Riavvia con i componenti aggiuntivi disattivati"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Riavvia con il debug del log attivato"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Installa aggiornamenti in sospeso"
+
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -8373,26 +8403,6 @@ msgstr ""
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
 msgstr "Cosa &desideri fare?"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "Esci"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "Riavvia"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "Riavvia con i componenti aggiuntivi disattivati"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "Riavvia con il debug del log attivato"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "Installa aggiornamenti in sospeso"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -10091,13 +10101,32 @@ msgstr ""
 "Abilita la registrazione selettiva per eventi UI Automation e cambiamenti di "
 "proprietà"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
+#. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Use UI Automation to access Microsoft Word document controls"
 msgstr ""
-"Utilizza UI Automation per accedere ai controlli dei documenti Microsoft "
-"&Word quando disponibili"
+"Utilizza UI Automation per accedere ai controlli dei documenti Microsoft Word"
+
+#. Translators: Label for the default value of the Use UIA with MS Word combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Default (Where suitable)"
+msgstr "Predefinito (se appropriato)"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Only when necessary"
+msgstr "Solo quando necessario"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Where suitable"
+msgstr "Ove opportuno"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Always"
+msgstr "Sempre"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10206,13 +10235,12 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid ""
 "Use enhanced t&yped character support in legacy Windows Console when "
 "available"
 msgstr ""
-"Utilizza il nuovo supporto per la digitazione caratteri nella Console di "
-"Windows quando disponibile (&y)"
+"Utilizza il nuovo supporto ai caratteri digitati nelle Console meno recenti "
+"di Windows quando disponibile"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -10863,6 +10891,11 @@ msgstr "colonna {0} di {1}"
 #, python-format
 msgid "%s columns"
 msgstr "%s colonne"
+
+#. Translators: Indicates the text column number in a document.
+#, python-brace-format
+msgid "column {columnNumber}"
+msgstr "colonna {columnNumber}"
 
 msgid "continuous section break"
 msgstr "Interruzione sezione continua"
