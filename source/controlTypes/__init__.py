@@ -10,6 +10,7 @@ from .processAndLabelStates import processAndLabelStates
 from .role import Role, silentRolesOnFocus, silentValuesForRoles
 from .state import State, STATES_SORTED
 from .descriptionFrom import DescriptionFrom
+from .roleAndStateSpecialCases import transformRoleStates
 
 
 # Override (and limit) the symbols exported by the controlTypes package
@@ -25,4 +26,5 @@ __all__ = [
 	"STATES_SORTED",
 	"DescriptionFrom",
 	"TextPosition",
+	"transformRoleStates",
 ]

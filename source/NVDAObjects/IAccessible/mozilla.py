@@ -68,7 +68,6 @@ class Mozilla(ia2Web.Ia2Web):
 		# Although slower, we have to fetch the details relations instead.
 		detailsRelations = self.detailsRelations
 		if not detailsRelations:
-			log.error("should be able to fetch detailsRelations")
 			return None
 		for target in detailsRelations:
 			# just take the first for now.
