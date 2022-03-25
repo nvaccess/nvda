@@ -5,7 +5,7 @@
 # Julien Cochuyt
 
 """High-level functions to speak information.
-""" 
+"""
 
 import itertools
 import typing
@@ -30,6 +30,7 @@ from .commands import (
 	PitchCommand,
 	LangChangeCommand,
 	BeepCommand,
+	BreakCommand,
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
@@ -273,7 +274,7 @@ def _getSpellingCharAddCapNotification(
 	else:
 		capMsgBefore = ''
 		capMsgAfter = ''
-	
+
 	if capPitchChange:
 		yield PitchCommand(offset=capPitchChange)
 	if beepForCapitals:
@@ -295,7 +296,7 @@ def _getSpellingSpeechWithoutCharMode(
 		capPitchChange: int,
 		beepForCapitals: bool,
 ) -> Generator[SequenceItemT, None, None]:
-	
+
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
 		locale=defaultLanguage
@@ -338,15 +339,44 @@ def _getSpellingSpeechWithoutCharMode(
 		yield EndUtteranceCommand()
 
 
+def getSingleCharDescription(text: str,
+	extraDescriptionTime: int,
+	locale: Optional[str] = None,
+) -> Generator[SequenceItemT, None, None]:
+	# This should only be used for single chars.
+	if not len(text) == 1:
+		return
+	synth = getSynth()
+	synthConfig = config.conf["speech"][synth.name]
+	if synth.isSupported("pitch"):
+		capPitchChange = synthConfig["capPitchChange"]
+	else:
+		capPitchChange = 0
+	defaultLanguage=getCurrentLanguage()
+	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
+		locale=defaultLanguage
+	#ask getCharacterDescriptions. If the second item of the tuple is None, we yield nothing.
+	char, description= getCharDescListFromText(text, locale=locale)[0]
+	uppercase = char.isupper()
+	if description == None:
+		return
+	yield BreakCommand(extraDescriptionTime)
+	yield from _getSpellingCharAddCapNotification(description[0],
+		sayCapForCapitals= uppercase and synthConfig["sayCapForCapitals"],
+		capPitchChange=(capPitchChange if uppercase else 0),
+		beepForCapitals= uppercase and synthConfig["beepForCapitals"],
+	)
+
+
 def getSpellingSpeech(
 		text: str,
 		locale: Optional[str] = None,
-		useCharacterDescriptions: bool = False
+		useCharacterDescriptions: bool = False,
 ) -> Generator[SequenceItemT, None, None]:
-	
+
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	
+
 	if synth.isSupported("pitch"):
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
@@ -504,14 +534,14 @@ def getObjectPropertiesSpeech(  # noqa: C901
 		newPropertyValues['placeholder']=obj.placeholder
 	# When speaking an object due to a focus change, the 'selected' state should not be reported if only one item is selected.
 	# This is because that one item will be the focused object, and saying selected is redundant.
-	# Rather, 'unselected' will be spoken for an unselected object if 1 or more items are selected. 
+	# Rather, 'unselected' will be spoken for an unselected object if 1 or more items are selected.
 	states=newPropertyValues.get('states')
 	if states is not None and reason == OutputReason.FOCUS:
 		if (
-			controlTypes.State.SELECTABLE in states 
+			controlTypes.State.SELECTABLE in states
 			and controlTypes.State.FOCUSABLE in states
 			and controlTypes.State.SELECTED in states
-			and obj.selectionContainer 
+			and obj.selectionContainer
 			and obj.selectionContainer.getSelectedItemsCount(2)==1
 		):
 			# We must copy the states set and  put it back in newPropertyValues otherwise mutating the original states set in-place will wrongly change the cached states.
@@ -780,11 +810,11 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 		quarterTones += (count*4 if raw[0]== "\t" else count)
 
 	speak = speechIndentConfig
-	if toneIndentConfig: 
+	if toneIndentConfig:
 		if quarterTones <= IDT_MAX_SPACES:
 			pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
 			indentSequence.append(BeepCommand(pitch, IDT_TONE_DURATION))
-		else: 
+		else:
 			#we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
 			speak = True
 	if speak:
@@ -822,7 +852,7 @@ def speak(  # noqa: C901
 	if _speechState.isPaused:
 		cancelSpeech()
 	_speechState.beenCanceled = False
-	#Filter out redundant LangChangeCommand objects 
+	#Filter out redundant LangChangeCommand objects
 	#And also fill in default values
 	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']
 	autoDialectSwitching=config.conf['speech']['autoDialectSwitching']
@@ -1186,6 +1216,7 @@ def getTextInfoSpeech(  # noqa: C901
 	# For performance reasons, when navigating by paragraph or table cell, spelling errors will not be announced.
 	if unit in (textInfos.UNIT_PARAGRAPH, textInfos.UNIT_CELL) and reason == OutputReason.CARET:
 		formatConfig['reportSpellingErrors']=False
+	extraDescriptions = config.conf["speech"][getSynth().name]["extraDescriptions"]
 
 	#Fetch the last controlFieldStack, or make a blank one
 	controlFieldStackCache=speakTextInfoState.controlFieldStackCache if speakTextInfoState else []
@@ -1360,6 +1391,15 @@ def getTextInfoSpeech(  # noqa: C901
 				))
 				logBadSequenceTypes(spellingSequence)
 				yield spellingSequence
+				if (reason == OutputReason.CARET and
+					unit == textInfos.UNIT_CHARACTER and
+					extraDescriptions):
+					descriptionSequence = list(getSingleCharDescription(
+						textWithFields[0],
+						extraDescriptionTime=extraDescriptions,
+						locale=language,
+					))
+					yield descriptionSequence
 		if useCache:
 			speakTextInfoState.controlFieldStackCache=newControlFieldStack
 			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
@@ -1403,8 +1443,8 @@ def getTextInfoSpeech(  # noqa: C901
 				if not inClickable and formatConfig['reportClickable']:
 					states=command.field.get('states')
 					if states and controlTypes.State.CLICKABLE in states:
-						# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
-						# Announce it if there is nothing else interesting about the field, but not if the user turned it off. 
+						# We have entered an outer most clickable or entered a new clickable after exiting a previous one
+						# Announce it if there is nothing else interesting about the field, but not if the user turned it off.
 						presCat=command.field.getPresentationCategory(newControlFieldStack[0:],formatConfig,reason)
 						if not presCat or presCat is command.field.PRESCAT_LAYOUT:
 							fieldSequence.append(controlTypes.State.CLICKABLE.displayString)
@@ -1521,6 +1561,7 @@ def getTextInfoSpeech(  # noqa: C901
 		return False
 
 	yield speechSequence
+
 	return True
 
 
@@ -1625,7 +1666,7 @@ def getPropertiesSpeech(  # noqa: C901
 			rowHeaderText: Optional[str] = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
 				textList.append(rowHeaderText)
-			if includeTableCellCoords and not cellCoordsText: 
+			if includeTableCellCoords and not cellCoordsText:
 				# Translators: Speaks current row number (example output: row 3).
 				rowNumberTranslation: str = _("row %s") % rowNumber
 				textList.append(rowNumberTranslation)
@@ -1916,8 +1957,8 @@ def getControlFieldSpeech(  # noqa: C901
 		tableSeq.extend(stateTextSequence)
 		tableSeq.extend(
 			getPropertiesSpeech(
-				_tableID=tableID, 
-				rowCount=rowCount, 
+				_tableID=tableID,
+				rowCount=rowCount,
 				columnCount=columnCount
 		))
 		tableSeq.extend(levelSequence)
@@ -2114,7 +2155,7 @@ def getFormatFieldSpeech(  # noqa: C901
 		textColumnNumber=attrs.get("text-column-number")
 		oldTextColumnNumber=attrsCache.get("text-column-number") if attrsCache is not None else None
 
-		# Because we do not want to report the number of columns when a document is just opened and there is only 
+		# Because we do not want to report the number of columns when a document is just opened and there is only
 		# one column. This would be verbose, in the standard case.
 		# column number has changed, or the columnCount has changed
 		# but not if the columnCount is 1 or less and there is no old columnCount.
@@ -2284,7 +2325,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				text = _("no revised %s") % oldRevision
 			textList.append(text)
 	if formatConfig["reportHighlight"]:
-		# marked text 
+		# marked text
 		marked=attrs.get("marked")
 		oldMarked=attrsCache.get("marked") if attrsCache is not None else None
 		if (marked or oldMarked is not None) and marked!=oldMarked:
@@ -2300,16 +2341,16 @@ def getFormatFieldSpeech(  # noqa: C901
 		if (strong or oldStrong is not None) and strong!=oldStrong:
 			# Translators: Reported when text is marked as strong (e.g. bold)
 			text=(_("strong") if strong
-				# Translators: Reported when text is no longer marked as strong (e.g. bold) 
+				# Translators: Reported when text is no longer marked as strong (e.g. bold)
 				else _("not strong"))
 			textList.append(text)
-		# emphasised text 
+		# emphasised text
 		emphasised=attrs.get("emphasised")
 		oldEmphasised=attrsCache.get("emphasised") if attrsCache is not None else None
 		if (emphasised or oldEmphasised is not None) and emphasised!=oldEmphasised:
 			# Translators: Reported when text is marked as emphasised
 			text=(_("emphasised") if emphasised
-				# Translators: Reported when text is no longer marked as emphasised 
+				# Translators: Reported when text is no longer marked as emphasised
 				else _("not emphasised"))
 			textList.append(text)
 	if  formatConfig["reportFontAttributes"]:
@@ -2396,7 +2437,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 				text=_("align justify")
 			elif textAlign=="distribute":
-				# Translators: Reported when text is justified with character spacing (Japanese etc) 
+				# Translators: Reported when text is justified with character spacing (Japanese etc)
 				# See http://kohei.us/2010/01/21/distributed-text-justification/
 				text=_("align distributed")
 			else:
@@ -2417,14 +2458,14 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text is vertically bottom-aligned.
 				text=_("vertical align bottom")
 			elif verticalAlign=="baseline":
-				# Translators: Reported when text is vertically aligned on the baseline. 
+				# Translators: Reported when text is vertically aligned on the baseline.
 				text=_("vertical align baseline")
 			elif verticalAlign=="justify":
 				# Translators: Reported when text is vertically justified.
 				text=_("vertical align justified")
 			elif verticalAlign=="distributed":
-				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
-				text=_("vertical align distributed") 
+				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+				text=_("vertical align distributed")
 			else:
 				# Translators: Reported when text has reverted to default vertical alignment.
 				text=_("vertical align default")
@@ -2450,7 +2491,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				_("no hanging indent"),
 			),
 			'first-line-indent':(
-				# Translators: the label for paragraph format first line indent 
+				# Translators: the label for paragraph format first line indent
 				_("first line indent"),
 				# Translators: the message when there is no paragraph format first line indent
 				_("no first line indent"),
@@ -2592,8 +2633,8 @@ _manager = manager.SpeechManager()
 
 def clearTypedWordBuffer() -> None:
 	"""
-	Forgets any word currently being built up with typed characters for speaking. 
-	This should be called when the user's context changes such that they could no longer 
+	Forgets any word currently being built up with typed characters for speaking.
+	This should be called when the user's context changes such that they could no longer
 	complete the word (such as a focus change or choosing to move the caret).
 	"""
 	_curWordChars.clear()

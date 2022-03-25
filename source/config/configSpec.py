@@ -8,9 +8,9 @@
 from io import StringIO
 from configobj import ConfigObj
 
-#: The version of the schema outlined in this file. Increment this when modifying the schema and 
+#: The version of the schema outlined in this file. Increment this when modifying the schema and
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
-#: just adding a new element to (or removing from) the schema, only when old versions of the config 
+#: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
 latestSchemaVersion = 6
 
@@ -47,6 +47,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoDialectSwitching = boolean(default=false)
 
 	[[__many__]]
+		extraDescriptions = integer(default=0, min=0, max=5000)
 		capPitchChange = integer(default=30,min=-100,max=100)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
