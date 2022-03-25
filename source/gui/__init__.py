@@ -272,9 +272,8 @@ class MainFrame(wx.Frame):
 	def onUwpOcrCommand(self, evt):
 		self._popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSpeechSymbolsCommand(self, evt):
-		if globalVars.appArgs.secure:
-			return
 		self._popupSettingsDialog(SpeechSymbolsDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
