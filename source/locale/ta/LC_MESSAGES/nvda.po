@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-25 00:03+0000\n"
-"PO-Revision-Date: 2022-02-27 13:06+0530\n"
+"POT-Creation-Date: 2022-03-18 00:02+0000\n"
+"PO-Revision-Date: 2022-03-19 13:28+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -716,6 +716,11 @@ msgstr "பல்கேரிய படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Catalan grade 1"
+msgstr "காட்டலான் படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "மைய குர்திஷ் படிநிலை 1"
 
@@ -768,6 +773,11 @@ msgstr "டேனிஷ் 6 புள்ளி படிநிலை 2"
 #. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "டேனிஷ் 8 புள்ளி படிநிலை 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German 6 dot computer braille"
+msgstr "ஜெர்மானிய 6 புள்ளி கணினி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4468,7 +4478,7 @@ msgstr "ஒலியளவை ஏற்றிடுக"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "next track"
-msgstr "அடுத்தத் தடம்"
+msgstr "அடுத்த தடம்"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "previous track"
@@ -4480,7 +4490,7 @@ msgstr "நிறுத்துக"
 
 #. Translators: This is the name of the play/pause key found on multimedia keyboards to play/pause the current playing track in the mediaplayer.
 msgid "play pause"
-msgstr "இயக்குக/தற்காலிகமாக நிறுத்துக"
+msgstr "இயக்குக/இடைநிறுத்துக"
 
 #. Translators: This is the name of the launch email key found on multimedia keyboards to open an email client.
 msgid "email"
@@ -8239,6 +8249,26 @@ msgstr "வெளியேறுக (&X)"
 msgid "Exit NVDA"
 msgstr "என்விடிஏவை விட்டு வெளியேறுக"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "வெளியேறுக"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "மறுதுவக்குக"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "கூட்டுக்கூறுகள் முடக்கப்பட்ட நிலையில் மறுதுவக்குக. "
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "வழுநீக்கப் பதிவு முடுக்கப்பட்ட நிலையில் மறுதுவக்குக"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "காத்திருப்பிலிருக்கும் இற்றாக்கத்தை நிறுவிடுக"
+
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -8260,26 +8290,6 @@ msgstr ""
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
 msgstr "தாங்கள் என்ன செய்ய விரும்புகிறீர்கள்? (&D)"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "வெளியேறுக"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "மறுதுவக்குக"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "கூட்டுக்கூறுகள் முடக்கப்பட்ட நிலையில் மறுதுவக்குக. "
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "வழுநீக்கப் பதிவு முடுக்கப்பட்ட நிலையில் மறுதுவக்குக"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "காத்திருப்பிலிருக்கும் இற்றாக்கத்தை நிறுவிடுக"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8406,7 +8416,7 @@ msgstr "கூட்டுக்கூறினை முடக்குக (&D)
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 #. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 msgid "&Remove"
-msgstr "நீக்கிடுக (&R)"
+msgstr "நீக்குக (&R)"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
@@ -8439,7 +8449,7 @@ msgstr ""
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
-msgstr "கூட்டுக்கூறினை நீக்கிடுக"
+msgstr "கூட்டுக்கூறினை நீக்குக"
 
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
@@ -8835,7 +8845,7 @@ msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 msgid "&Add"
-msgstr "ஏற்றிடுக (&A)"
+msgstr "கூட்டுக (&A)"
 
 #. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
 msgid "Reset to factory &defaults"
@@ -9941,13 +9951,32 @@ msgstr ""
 "பயனர் இடைமுகப்பு தன்னியக்கமாக்கல் நிகழ்வுகளுக்கும், பண்பு மாற்றங்களுக்கும் தெரிவுப் பதிவினை "
 "முடுக்குக (&S)"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
+#. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Use UI Automation to access Microsoft Word document controls"
 msgstr ""
-"மைக்ரோசாஃப்ட் வேர்ட் ஆவணக் கட்டுப்பாடுகளை அணுக, இடைமுகப்பு தன்னியக்கமாக்கலை "
-"கிடைப்பிலிருந்தால் பயன்படுத்துக"
+"மைக்ரோசாஃப்ட் வேர்ட் ஆவணக் கட்டுப்பாடுகளை அணுக, இடைமுகப்பு தன்னியக்கமாக்கலைப் பயன்படுத்துக"
+
+#. Translators: Label for the default value of the Use UIA with MS Word combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Default (Where suitable)"
+msgstr "இயல்பிருப்பு (பொருத்தமான இடங்களில்)"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Only when necessary"
+msgstr "தேவைப்படும்பொழுது மட்டும்"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Where suitable"
+msgstr "பொருத்தமான இடங்களில்"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Always"
+msgstr "எப்பொழுதும்"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10318,7 +10347,7 @@ msgstr "(இயல் அமைவடிவம்)"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
-msgstr "குறியெழுத்தினைக் ஏற்றிடுக"
+msgstr "குறியெழுத்தினைக் கூட்டுக"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
 msgid "&Symbol:"
@@ -10457,16 +10486,15 @@ msgstr "தொகுத்திடுக (&E)"
 #. Translators: The label for a button on the Speech Dictionary dialog.
 #. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
 msgid "Remove all"
-msgstr "எல்ாவற்றையும் நீக்கிடுக"
+msgstr "எல்ாவற்றையும் நீக்குக"
 
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
-msgstr "அகரமுதலி உள்ளீட்டினைக் ஏற்றிடுக"
+msgstr "அகரமுதலி உள்ளீட்டினைக் கூட்டுக"
 
 #. Translators: A prompt for confirmation on the Speech Dictionary dialog.
 msgid "Are you sure you want to remove all the entries in this dictionary?"
-msgstr ""
-"இந்த அகரமுதலியில் இருக்கும் எல்லா உள்ளீடுகளையும் தாங்கள் கட்டாயம் நீக்க விரும்புகிறீர்களா?"
+msgstr "இந்த அகரமுதலியில் இருக்கும் எல்லா உள்ளீடுகளையும் நீக்க கட்டாயமாக விரும்புகிறீர்களா?"
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -10700,6 +10728,10 @@ msgstr "நெடுவரிசை {1}ல் {0}"
 #, python-format
 msgid "%s columns"
 msgstr "%s நெடுவரிசைகள்"
+
+#. Translators: Indicates the text column number in a document.
+msgid "column {columnNumber}"
+msgstr "நெடுவரிசை {columnNumber}"
 
 msgid "continuous section break"
 msgstr "தொடர் உட்பிரிவு முறிவு"

@@ -527,7 +527,7 @@ Anche la pressione del tasto Esc farà in modo che NVDA attivi la modalità navi
 | Trova | NVDA+Control+f | Apre una finestra di dialogo che consente di cercare del testo all'interno del documento. Fare riferimento alla sezione [Cercare del testo #SearchingForText] per ulteriori informazioni. |
 | Trova successivo | NVDA+f3 | Trova la stringa successiva di testo precedentemente cercata nel documento |
 | Trova precedente | NVDA+Shift+f3 | Trova la stringa precedente di testo nel documento cercata con control+NVDA+f  |
-| Apre descrizione | NVDA+d | Apre una nuova finestra contenente la descrizione dell'elemento, basata sull'attributo longdesc, se presente. | 
+
 %kc:endInclude
 
 ++ Navigare con le lettere ++[SingleLetterNavigation]
@@ -611,7 +611,8 @@ Se risulterà accessibile, premere il tasto tab o comunque muoversi all'interno 
 + Lettura della matematica +[ReadingMath]
 NVDA è in grado di leggere ed interagire con la matematica nei contenuti che fanno uso del software MathPlayer4, prodotto da Design Science.
 Ciò richiede che MathPlayer4 sia installato sul computer.
-MathPlayer può essere scaricato gratuitamente dal seguente sito web: https://www.dessci.com/en/products/mathplayer/
+MathPlayer può essere scaricato gratuitamente dal seguente sito web: https://www.dessci.com/en/products/mathplayer/.
+Dopo aver installato MathPlayer, riavviare NVDA.
 
 NVDA supporta la matematica nei seguenti formati:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
@@ -1709,8 +1710,8 @@ Sebbene il buffer virtuale non sia costituito da pagine, questo campo modifica i
 ==== Usa il layout dello schermo, quando supportato ====[BrowseModeSettingsScreenLayout]
 Tasto: NVDA+v
 
-Questa casella di controllo modifica la modalità di visualizzazione di alcuni elementi, come ad esempio link o campi editazione. 
-In sostanza, se la casella di controllo viene attivata, tali elementi vengono presentati all'utente esattamente come essi sono visualizzati sullo schermo, quindi, ad esempio, possono esservi più link in una stessa riga. Se invece la casella di controllo è disattivata, il buffer virtuale si occuperà di presentare ciascun elemento in una riga differente, permettendo una navigazione più comoda ma meno simile alla disposizione reale degli oggetti.
+Questa opzione consente di specificare se, in modalità navigazione, elementi quali pulsanti, link e campi debbano occupare un'unica riga o se debbano mantenere per quanto possibile il flusso di testo più simile alla visualizzazione reale. Tenere presente che questa opzione non si applica alle app di Microsoft Office come Outlook e Word, che utilizzano sempre il layout dello schermo.
+In sostanza, se la casella di controllo viene attivata, tali elementi vengono presentati all'utente esattamente come essi sono visualizzati sullo schermo, quindi, ad esempio, possono esservi più link in una stessa riga. Se invece la casella di controllo è disattivata, ciascun elemento sarà posto in una riga differente, permettendo una navigazione più comoda ma meno simile alla disposizione reale degli oggetti. 
   
 ==== Attiva modalità navigazione al caricamento della pagina ====
 Questa casella abilita o disabilita la modalità navigazione automatica al caricamento di una pagina.
@@ -1865,12 +1866,15 @@ Questo può risultare molto dispendioso in termini di risorse soprattutto in app
 Invece, se l'opzione risulta attivata, NVDA si limiterà a tener conto degli eventi UIA che riguardano unicamente il focus.
 Nel caso in cui si riscontrino problemi di stabilità o di prestazioni, si consiglia di attivare la funzione per vedere se il problema può risolversi.
 
-==== Utilizza UI Automation per accedere ai controlli dei documenti Microsoft Word quando disponibili ====[AdvancedSettingsUseUiaForWord]
-Quando quest'opzione viene attivata, NVDA tenterà sempre di utilizzare le API di accessibilità dell'interfaccia Microsoft UI Automation per recuperare informazioni dai controlli dei documenti di Microsoft Word.
-Ciò comprende sia Word stesso, ma anche la finestra di visualizzazione e di composizione dei messaggi di Microsoft Outlook.
- Per le versioni più recenti di Microsoft Office 2016/365 eseguite su Windows10 e versioni successive, il supporto Ui Automation risulta sufficientemente completo da fornire un accesso ai documenti Word paragonabile a quello presente finora in NVDA, con il grande vantaggio costituito da una reattività e una risposta ai comandi molto più efficente.
-Tuttavia, in alcune versioni di Microsoft Office, certe informazioni potrebbero non essere fornite, o essere esposte in modo errato, il che significa che non è sempre possibile fare affidamento sul supporto UI Automation.
-In linea generale, la maggior parte degli utenti non dovrebbe attivare questa funzione, a meno che non si stia utilizzando Office2016/365, nel qual caso sono graditi feedback e osservazioni  durante i test.
+==== Utilizza UI Automation per accedere ai controlli dei documenti Microsoft Word ====[MSWordUIA]
+Stabilisce se NVDA debba utilizzare o meno l'API di accessibilità UI Automation per accedere ai documenti di Microsoft Word, anziché il vecchio modello a oggetti  precedente.
+Questo vale per i documenti in Microsoft Word stesso, oltre ai messaggi in Microsoft Outlook.
+Questa impostazione contiene i seguenti valori:
+- Predefinito (se appropriato)
+- Solo quando necessario: nel caso in cui il modello ad oggetti di Word non sia disponibile in nessuna circostanza
+- Ove opportuno: Microsoft Word version 16.0.15000 o superiore, o nel caso in cui il modello ad oggetti di Word non è disponibile
+- Sempre: ovunque sia disponibile la tecnologia UI automation in Microsoft word (non importa quanto completa).
+-
 
 ==== Utilizza UI Automation per accedere alla console di Windows quando disponibile ====[AdvancedSettingsConsoleUIA]
 Quando questa opzione è abilitata, NVDA utilizzerà una nuova versione ancora in sviluppo del suo supporto per il prompt dei comandi e la console di Windows che sfrutta i [miglioramenti dell'accessibilità apportati da Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Questa funzione è altamente sperimentale ed è ancora incompleta, quindi il suo uso non è ancora raccomandato. Tuttavia, una volta completato, si prevede che questo nuovo supporto diventerà quello predefinito, migliorando le prestazioni e la stabilità di NVDA nel prompt dei comandi e nelle console di Windows.
@@ -1888,9 +1892,13 @@ Nella casella combinata sono presenti le opzioni seguenti:
 ==== Annotazioni ====[Annotations]
 Questo gruppo di opzioni viene utilizzato per abilitare le funzionalità che aggiungono il supporto sperimentale per le annotazioni ARIA.
 Alcune di queste funzionalità potrebbero essere incomplete.
+
+%kc:beginInclude
+Per "Leggere il riassunto di tutti i dettagli di un'annnotazione alla posizione del cursore di sistema", premere NVDA+d.
+%kc:endInclude
+
 Sono disponibili le seguenti opzioni:
 - "Annuncia 'con dettagli' per le annotazioni strutturate": ne abilita la segnalazione qualora il testo o il controllo contenga ulteriori dettagli.
-è possibile ottenere un sommario dei dettagli aggiuntivi assegnando una combinazione di tasti alla funzione "Legge il riassunto di tutti i dettagli di un'annnotazione alla posizione del cursore di sistema" tramite la [Finestra tasti e gesti di immissione #InputGestures].
 - "Annuncia sempre descrizioni-aria":
   Quando la fonte di ``accDescription`` è aria-description, viene sempre annunciata la descrizione.
   Questo è utile per le annotazioni sul web.
@@ -2782,95 +2790,69 @@ Sono supportati i seguenti display Braille Seika prodotti da Nippon Telesoft in 
 Si possono reperire maggiori informazioni su https://en.seika-braille.com/down/index.html.
 
 
-+++ Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) +++[SeikaBrailleDisplays]
-- These displays do not yet support NVDA's automatic background braille display detection functionality.
-- Select "Seika Braille Displays" to manually configure
-- A device drivers must be installed before using Seika v3/4/5/80.
-The drivers are [provided by the manufacturer https://en.seika-braille.com/down/index.html].
++++ Seika Versione 3, 4, e 5 (40 celle), Seika80 (80 celle) +++[SeikaBrailleDisplays]
+- Questi display non supportano ancora la funzionalità di rilevamento automatico del display braille in background di NVDA.
+- Selezionare "Seika Braille Displays" per configurare manualmente
+- È necessario installare un driver per il dispositivo prima di utilizzare Seika v3/4/5/80.
+I driver sono [forniti dal produttore https://en.seika-braille.com/down/index.html].
 -
 
-The Seika Braille Display key assignments follow.
-Please see the display's documentation for descriptions of where these keys can be found.
-%kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Move braille display to previous line | b3 |
-| Move braille display to next line | b4 |
-| Toggle braille tethered to | b5 |
-| Say all | b6 |
-| tab | b1 |
-| shift+tab | b2 |
-| alt+tab | b1+b2 |
-| NVDA Menu | left+right |
-| Route to braille cell | routing |
-%kc:endInclude
-
-
-+++ MiniSeika (16, 24 cells), V6, and V6Pro (40 cells) +++[SeikaNotetaker]
-- NVDA's automatic background braille display detection functionality is supported via USB and Bluetooth.
-- Select "Seika Notetaker" or "auto" to configure.
-- No extra drivers are required when using a Seika Notetaker braille display.
--
-
-The Seika Notetaker key assignments follow.
-Please see the display's documentation for descriptions of where these keys can be found.
-%kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Say all | space+Backspace |
-| NVDA Menu | Left+Right |
-| Move braille display to previous line | LJ up |
-| Move braille display to next line | LJ down |
-| Toggle braille tethered to | LJ center |
-| tab | LJ right |
-| shift+tab | LJ left |
-| upArrow key | RJ up |
-| downArrow key | RJ down |
-| leftArrow key | RJ left |
-| rightArrow key | RJ right |
-| Route to braille cell | routing |
-| shift+upArrow key | Space+RJ up, Backspace+RJ up |
-| shift+downArrow key | Space+RJ down, Backspace+RJ down |
-| shift+leftArrow key | Space+RJ left, Backspace+RJ left |
-| shift+rightArrow key | Space+RJ right, Backspace+RJ right |
-| enter key | RJ center, dot8
-| escape key | Space+RJ center |
-| windows key | Backspace+RJ center |
-| space key | Space, Backspace |
-| backspace key | dot7 |
-| pageup key | space+LJ right |
-| pagedown key | space+LJ left |
-| home key | space+LJ up |
-| end key | space+LJ down |
-| control+home key | backspace+LJ up |
-| control+end key | backspace+LJ down |
-
-
-
-
-
-
-
-
-
-Di seguito, ecco l'elenco dell'assegnazione dei tasti per queste righe braille con NVDA.
-Consultare la documentazione della barra braille per informazioni sulla posizione dei tasti.
+Seguono le assegnazioni dei tasti del display Braille Seika.
+Si prega di consultare la documentazione del display per le descrizioni di dove si trovano fisicamente i tasti.
 %kc:beginInclude
 || Nome | Tasto |
-| Scorri display braille indietro | sinistro |
-| Scorri display braille avanti | destro |
-| Sposta display braille alla riga precedente | b3 |
-| Sposta display braille alla riga successiva | b4 |
+| Scorri indietro il display braille | left |
+| Scorri display braille in avanti | right |
+| Sposta il display braille alla riga precedente | b3 |
+| Sposta il display braille alla riga successiva | b4 |
 | Commuta inseguimento braille | b5 |
 | Dire tutto | b6 |
 | tab | b1 |
 | shift+tab | b2 |
 | alt+tab | b1+b2 |
-| Menu NVDA | sinistro+destro |
+| Menu NVDA | left+right |
 | Route to braille cell | routing |
 %kc:endInclude
+
++++ MiniSeika (16, 24 celle), V6, e V6Pro (40 celle) +++[SeikaNotetaker]
+- La funzionalità di rilevamento automatico del display braille in background di NVDA è supportata tramite USB e Bluetooth.
+- Selezionare "Seika Notetaker" o "automatico" per configurare.
+- Non sono richiesti driver aggiuntivi quando si utilizza un display braille Seika Notetaker.
+-
+
+Seguono le assegnazioni dei tasti per i display Braille Seika Notetaker.
+Si prega di consultare la documentazione del display per le descrizioni di dove si trovano fisicamente i tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri indietro il display braille | left |
+| Scorri display braille in avanti | right |
+| Dire tutto | spazio+Backspace |
+| Menu NVDA | Left+Right |
+| Sposta il display braille alla riga precedente | LJ up |
+| Sposta il display braille alla riga successiva | LJ down |
+| Commuta inseguimento braille  | LJ center |
+| tab | LJ right |
+| shift+tab | LJ left |
+| Freccia su | RJ up |
+| Freccia giù | RJ down |
+| Freccia sinistra | RJ left |
+| Freccia destra | RJ right |
+| Route to braille cell | routing |
+| shift+freccia su | Spazio+RJ up, Backspace+RJ up |
+| shift+freccia giù | Spazio+RJ down, Backspace+RJ down |
+| shift+freccia sinistra | Spazio+RJ left, Backspace+RJ left |
+| shift+freccia destra | Spazio+RJ right, Backspace+RJ right |
+| Tasto invio | RJ center, punto8
+| Tasto esc | Spazio+RJ center |
+| Tasto windows | Backspace+RJ center |
+| Spazio | Spazio, Backspace |
+| backspace | punto7 |
+| pagina su | spazio+LJ right |
+| pagina giù | spazio+LJ left |
+| inizio | spazio+LJ up |
+| fine | spazio+LJ down |
+| control+home | backspace+LJ up |
+| control+end | backspace+LJ down |
 
 ++ Nuovi modelli Papenmeier BRAILLEX ++[Papenmeier]
 Sono supportati i seguenti display braille: 
@@ -2881,10 +2863,6 @@ Sono supportati i seguenti display braille:
 -
 
 Questi modelli non supportano ancora la funzione di rilevazione automatica in background.
-
-Se BrxCom è installato, NVDA lo utilizzerà.
-BrxCom è un utility che permette di gestire la scrittura tramite i tasti braille indipendentemente dallo screen reader in uso.
-La scrittura tramite i tasti braille è disponibile per i modelli Trio e Braillex live.
 
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
 Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.

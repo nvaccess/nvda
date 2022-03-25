@@ -4,6 +4,19 @@ NVDA'daki Yenilikler
 %!includeconf: ../changes.t2tconf
 
 = 2022.1 =
+Bu sürüm, MS Office için önemli UIA geliştirmeleri içerir.
+Artık NVDA Windows 11'de Microsoft Office 16.0.15000 ve sonrası sürümleri için Word belgelerinde varsayılan olarak UI Otomasyonunu kullanıyor.
+UI Otomasyonunun kullanılması, önceden kullanılan Nesne tabanlı erişim modeli'ne (Object model access) göre farkedilebilir seviyede performans iyileştirmesi sağlar.
+
+Seika Notetaker, Papenmeier ve HID Braille gibi braille ekran sürücülerinde iyileştirmeler yapıldı. 
+Ayrıca Hesap Makinesi, Konsol, Terminal, Posta ve Emoji Paneli gibi Windows 11 uygulamalarında bulunan hatalar düzeltildi.
+
+eSpeak-NG ve LibLouis'in güncellenmesi ile Japonca, Almanca ve Katalanca Braille tablo desteği eklendi.
+
+Önemli:
+ - Bu sürüm, mevcut eklentilerle uyumluluğu bozar.
+ -
+
 
 == Yeni özellikler ==
 - Windows 11'de UI Otomasyonu  aktifse, artık NVDA MS Excel'deki notları bildiriyor. (#12861)
@@ -14,6 +27,7 @@ NVDA'daki Yenilikler
   - Bunun çalışması için Microsoft Word 365/2016 build 14326 veya sonraki bir sürümü kullanıyor olmanız gerekir. 
   - Ayrıca MathType denklemlerinin bağlam menüsünden office math'a dönüştür seçeneği kullanılarak manual olarak dönüştürülmeleri gerekir. 
   -
+- "ayrıntılar var" ve ayrıntıların özetlenmesi komutları, odak kipinde çalışacak şekilde güncellendi. (#13106)
 - Seika Notetaker artık USB ve Bluetooth ile bağlandığında otomatik olarak algılanıyor. (#13191. #13142)
   - Bu, aşağıdaki cihazlar için geçerlidir: MiniSeika (16, 24 hücreli), V6, ve V6Pro (40 hücreli)
   - Ayrıca bluetooth COM bağlantı noktasının manuel olarak seçilmesi de desteklenmektedir. 
@@ -22,25 +36,32 @@ NVDA'daki Yenilikler
 - Braille ekranlarda aynı anda birden fazla değişken tuşu açıp kapatmak için komutlar eklendi (#13152)
 - Konuşma Sözlüğü iletişim kutusunda seçili sözlüğü kolayca temizlemek için "Tümünü kaldır" düğmesi eklendi. (#11802)
 - Windows 11 Hesap Makinesi desteği eklendi. (#13212)
+- Eğer Windows 11'de UI Otomasyonu etkinleştirilmişse, artık Microsoft word'de satır numaraları, sütun numaraları ve bölüm numaraları bildirilebilir. (#13283)
+- NVDA artık  Windows 11'de Microsoft Office 16.0.15000 ve sonrası için Word belgelerinde varsayılan olarak UI Otomasyonunu kullanıyor. UI Otomasyonunun kullanılması, önceden kullanılan Nesne tabanlı erişim modeli'ne (Object model access) göre farkedilebilir seviyede performans iyileştirmesi sağlıyor. (#13437)
+ - Bu değişiklik, Microsoft Word belgelerinin yanı sıra Microsoft Outlook'un mesaj okuyucusu ve oluşturucusu için de geçerlidir. 
+ -
 -
+
 
 == Değişiklikler ==
 - Espeak-ng 1.51-dev commit ``7e5457f91e10`` sürümüne güncellendi. (#12950)
 - liblouis braille translator  [3.20.0 https://github.com/liblouis/liblouis/releases/tag/v3.20.0] sürümüne güncellendi. (#13141)
   - Yeni braille tablosu: Japonca (Kantenji) edebi braille. 
-  -
+  - Yeni Almanca 6 noktalı bilgisayar braille tablosu eklendi.
+  - Katalanca 1. derece braille tablosu eklendi. (#13408)
+  - 
 - Artık NVDA, LibreOffice Calc 7.3 ve üzeri sürümlerde seçimi ve birleştirilmiş hücreleri bildiriyor. (#9310, (#6897)
 - Unicode Common Locale Data Repository (CLDR)  40.0 sürümüne güncellendi. (#12999)
 - ``NVDA+Numpad Delete`` varsayılan olarak düzenleme imlecinin veya odaklanan nesnenin konumunu bildirir. (#13060)
 - ``NVDA+Shift+Numpad Sil`` inceleme imlecinin konumunu bildirir. (#13060)
 - Freedom Scientific Braille ekranlarda değişken tuşlarını açıp kapatmak için varsayılan komutlar eklendi (#13152)
 - “Temel hiza” artık metin biçimlendirmelerini bildirme komutu olan NVDA+f tuşuyla bildirilmiyor. (#11815)
+- Artık Uzun açıklamaları etkinleştir ayarısı için varsayılan bir girdi hareketi yoktur. (#13380)
+- Ayrıntı özetini bildir için varsayılan bir girdi hareketi eklendi(``NVDA+d``). (#13380)
+- MathPlayer yüklendikten sonra NVDA'nın yeniden başlatılması gerekir. (#13486)
 -
 
 == Hata Düzeltmeleri ==
-- Güvenlik düzeltmesi: Windows 10 ve Windows 11'de kilit ekranının dışında nesne incelemesinin kullanılması engellendi. (#13328)
-- Güvenlik düzeltmesi: Eklenti yöneticisi iletişim kutusu artık güvenli ekranlarda kullanılamaz. (#13059)
-- Güvenlik düzeltmesi: NVDA yardımı artık güvenli ekranlarda kullanılamaz. (#13353) 
 - Pano yöneticisi bölmesi, bazı Office programlarını açarken artık yanlış bir şekilde odağı kaydırmaz. (#12736)
 - Kullanıcının birincil fare düğmesini soldan sağa kaydırmayı denediği bir durumda NVDA artık web tarayıcıları gibi uygulamalarda bir öğeyi etkinleştirmek yerine yanlışlıkla bir bağlam menüsü açmayacaktır. (#12642)
 - Microsoft word gibi uygulamaları  UI Otomasyonu ile kullanırken,  bazı durumlarda inceleme imlecinin "alt" dememe durumu düzeltildi. (#12808)
@@ -62,7 +83,13 @@ NVDA'daki Yenilikler
 - Artık NVDA Windows 11 emoji panelinde emoji seçerken gezinmeyi engellemeyecek. (#13104)
 - Windows Konsolu ve Terminal kullanılırken çift bildirmeye neden olan bir hata düzeltildi. (#13261)
 - REAPER gibi 64 bit uygulamalarda liste öğelerinin raporlanamadığı birkaç durum düzeltildi. (#8175)
+- Microsoft Edge indirme yöneticisinde en son indirilen liste öğesi odaklandığında, artık NVDA otomatik olarak odak kipine geçecektir. (#13221)
+- Artık NVDA Notepad++ 8.3 ve üzeri 64-bit sürümlerinin çökmesine neden olmuyor. (#13311)
+- Adobe Reader'ın koruma modu etkinken başlangıçta çökme sorunu düzeltildi. (#11568)
+- Papenmeier Braille Ekran Sürücüsünün seçilmesinin NVDA'nın çökmesine neden olduğu bir hata düzeltildi. (#13348)
+- UIA ile Microsoft word'de: boş bir tablo hücresinden içerikli bir hücreye veya belgenin sonundan mevcut içeriğe geçerken sayfa numarası ve diğer biçimlendirme öğeleri beklenmedik zamanlarda bildirilmiyor. (#13458, #13459)
 -
+
 == Geliştiriciler için Değişiklikler ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
@@ -129,6 +156,41 @@ This can dramatically decrease build times on multi core systems. (#13226)
   -
 -
 
+
+
+= 2021.3.4 =
+Bu sürüm bazı güvenlik sorunlarını giderir.
+Lütfen güvenlik sorunlarını info@nvaccess.org adresine bildirin.
+
+== Güvenlik güncellemeleri ==
+- Addressed security advisory ``GHSA-354r-wr4v-cx28``. (#13488)
+  - Artık NVDA Güvenli modda çalışırken hata ayıklama günlükleriyle yeniden başlatılamaz.
+  - Artık NVDA güvenli modda çalışırken güncelenemez.
+  -
+- Addressed security advisory ``GHSA-wg65-7r23-h6p9``. (#13489)
+  - Artık Girdi Hareketleri iletişim kutusu güvenli modda açılamaz.
+  - Artık Varsayılan, Geçici ve Ses sözlük iletişim kutuları güvenli modda açılamaz.
+  -
+- Addressed security advisory ``GHSA-mvc8-5rv9-w3hx``. (#13487)
+  - Artık wx GUI inspection aracı güvenli modda devredışıdır.
+  -
+-
+
+
+= 2021.3.3 =
+Bu sürüm 2021.3.2 ile aynıdır. 
+NVDA 2021.3.2 sürümünde NVDA'nın kendisini 2021.3.1 olarak tanımlamasına neden oan bir hata vardı. Bu sürüm o hatayı düzeltiyor. 
+
+= 2021.3.2 =
+Bu sürüm bazı güvenlik sorunlarını giderir.
+Lütfen güvenlik sorunlarını info@nvaccess.org adresine bildirin.
+
+
+== Hata düzeltmeleri ==
+- Güvenlik düzeltmesi: Windows 10 ve Windows 11'de kilit ekranının dışında nesne incelemesinin kullanılması engellendi. (#13328)
+- Güvenlik düzeltmesi: Eklenti yöneticisi iletişim kutusu artık güvenli ekranlarda kullanılamaz. (#13059)
+- Güvenlik düzeltmesi: NVDA yardımı artık güvenli ekranlarda kullanılamaz. (#13353) 
+-
 
 
 = 2021.3.1 =
