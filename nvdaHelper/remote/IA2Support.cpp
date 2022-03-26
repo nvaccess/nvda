@@ -76,11 +76,14 @@ bool uninstallIA2Support(DWORD threadID) {
 	auto& data = it->second;
 	if (data.ISimpleDOMProxyRegistration && !unregisterCOMProxy(data.ISimpleDOMProxyRegistration)) {
 		LOG_ERROR(L"Error unregistering ISimpleDOM proxy for thread " << threadID);
+	} else {
+		data.ISimpleDOMProxyRegistration = nullptr;
 	}
 	if (data.IA2ProxyRegistration && !unregisterCOMProxy(data.IA2ProxyRegistration)) {
 		LOG_ERROR(L"Error unregistering IAccessible2 proxy for thread " << threadID);
+	} else {
+		data.IA2ProxyRegistration = nullptr;
 	}
-	//IA2InstallMap.erase(it);
 	return TRUE;
 }
 
