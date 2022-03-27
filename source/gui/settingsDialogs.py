@@ -1609,8 +1609,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
-		speakCharacterDescriptionsText=_("&Speak character descriptions on movement")
-		self.speakCharacterDescriptionsCheckbox= settingsSizerHelper.addItem(
+		speakCharacterDescriptionsText = _("&Speak character descriptions on movement")
+		self.speakCharacterDescriptionsCheckbox = settingsSizerHelper.addItem(
 			wx.CheckBox(self, label=speakCharacterDescriptionsText)
 		)
 		self.bindHelpEvent(
@@ -1622,8 +1622,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.speakCharacterDescriptionsCheckbox.Bind(wx.EVT_CHECKBOX, self.onSpeakCharacterDescriptionsChange)
 
-		# Translators: The label for a setting in Voice Settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-		extraDescriptionsTimeText= _("Extra description pause time (ms)")
+		# Translators: The label for a setting in Voice Settings to change extra
+		# descriptions pause duration in milliseconds (1 second is 1000 milliseconds).
+		extraDescriptionsTimeText = _("Extra description pause time (ms)")
 		minPauseTime = int(config.conf.getConfigValidation(
 			("speech", self.driver.name, "extraDescriptions")
 		).kwargs["min"])
@@ -1638,7 +1639,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			initial=config.conf["speech"][self.driver.name]["extraDescriptions"]
 		)
 		self.bindHelpEvent("SpeechSettingsExtraDescriptionsTime", self.extraDescriptionsTimeSpin)
-		if not self.speakCharacterDescriptionsCheckbox.GetValue() :
+		if not self.speakCharacterDescriptionsCheckbox.GetValue():
 			self.extraDescriptionsTimeSpin.Disable()
 
 
@@ -1673,11 +1674,13 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"][self.driver.name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
-		config.conf["speech"][self.driver.name]["extraDescriptions"]= (
+		config.conf["speech"][self.driver.name]["extraDescriptions"] = (
 			self.extraDescriptionsTimeSpin.Value
 			if self.speakCharacterDescriptionsCheckbox.IsChecked()
 			else 0)
-		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
+		config.conf["speech"][self.driver.name]["useSpellingFunctionality"] = (
+			self.useSpellingFunctionalityCheckBox.IsChecked())
+
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.

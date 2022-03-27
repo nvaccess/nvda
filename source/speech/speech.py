@@ -339,9 +339,10 @@ def _getSpellingSpeechWithoutCharMode(
 		yield EndUtteranceCommand()
 
 
-def getSingleCharDescription(text: str,
-	extraDescriptionTime: int,
-	locale: Optional[str] = None,
+def getSingleCharDescription(
+		text: str,
+		extraDescriptionTime: int,
+		locale: Optional[str] = None,
 ) -> Generator[SequenceItemT, None, None]:
 	# This should only be used for single chars.
 	if not len(text) == 1:
@@ -352,19 +353,23 @@ def getSingleCharDescription(text: str,
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
-	defaultLanguage=getCurrentLanguage()
-	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
-		locale=defaultLanguage
-	#ask getCharacterDescriptions. If the second item of the tuple is None, we yield nothing.
-	char, description= getCharDescListFromText(text, locale=locale)[0]
+	defaultLanguage = getCurrentLanguage()
+	if not locale or (
+		not config.conf['speech']['autoDialectSwitching']
+		and locale.split('_')[0] == defaultLanguage.split('_')[0]
+	):
+		locale = defaultLanguage
+	# ask getCharacterDescriptions. If the second item of the tuple is None, we yield nothing.
+	char, description = getCharDescListFromText(text, locale=locale)[0]
 	uppercase = char.isupper()
-	if description == None:
+	if description is None:
 		return
 	yield BreakCommand(extraDescriptionTime)
-	yield from _getSpellingCharAddCapNotification(description[0],
-		sayCapForCapitals= uppercase and synthConfig["sayCapForCapitals"],
+	yield from _getSpellingCharAddCapNotification(
+		description[0],
+		sayCapForCapitals=uppercase and synthConfig["sayCapForCapitals"],
 		capPitchChange=(capPitchChange if uppercase else 0),
-		beepForCapitals= uppercase and synthConfig["beepForCapitals"],
+		beepForCapitals=uppercase and synthConfig["beepForCapitals"],
 	)
 
 
@@ -444,8 +449,8 @@ def getObjectPropertiesSpeech(  # noqa: C901
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		**allowedProperties
 ) -> SpeechSequence:
-	#Fetch the values for all wanted properties
-	newPropertyValues={}
+	# Fetch the values for all wanted properties
+	newPropertyValues = {}
 	positionInfo=None
 	for name,value in allowedProperties.items():
 		if name=="includeTableCellCoords":
@@ -852,7 +857,7 @@ def speak(  # noqa: C901
 	if _speechState.isPaused:
 		cancelSpeech()
 	_speechState.beenCanceled = False
-	#Filter out redundant LangChangeCommand objects
+	# Filter out redundant LangChangeCommand objects
 	#And also fill in default values
 	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']
 	autoDialectSwitching=config.conf['speech']['autoDialectSwitching']
@@ -1391,9 +1396,11 @@ def getTextInfoSpeech(  # noqa: C901
 				))
 				logBadSequenceTypes(spellingSequence)
 				yield spellingSequence
-				if (reason == OutputReason.CARET and
-					unit == textInfos.UNIT_CHARACTER and
-					extraDescriptions):
+				if (
+					reason == OutputReason.CARET
+					and unit == textInfos.UNIT_CHARACTER
+					and extraDescriptions
+				):
 					descriptionSequence = list(getSingleCharDescription(
 						textWithFields[0],
 						extraDescriptionTime=extraDescriptions,
@@ -1561,7 +1568,6 @@ def getTextInfoSpeech(  # noqa: C901
 		return False
 
 	yield speechSequence
-
 	return True
 
 
