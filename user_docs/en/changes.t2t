@@ -29,8 +29,6 @@ What's New in NVDA
 
 
 == Changes for Developers ==
-
-=== Warnings ===
 - Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
 - When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
 -
