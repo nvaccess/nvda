@@ -890,7 +890,7 @@ NVDA 可在您浏览 Excel 工作表时自动读出恰当的行列标题。
 可在元素列表下访问的信息种类有：
 - 图表： 这里列举了工作表的所有图表。
 使用光标键选择一个图表后按下“回车键”或点击“移动到”按钮可聚焦到所选的图表。
--注释：这里列举了所有包含注释的单元格。
+- 注释：这里列举了所有包含注释的单元格。
 单元格地址和其所属的注释都会被显示在这里。
 按下“回车键”或点击“移动到”按钮可以直接移动到所选注释的单元格内。
 - 公式：这里列举了工作表中所有包含公式的单元格。
@@ -1833,7 +1833,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 此按钮可打开开发者实验目录。
 仅当用户允许从开发者实验目录加载代码时，才会启用此按钮。
 
-==== 选择性接收UI Automation事件和属性更改==== [AdvancedSettingsSelectiveUIAEventRegistration]
+==== 为 UI Automation 接口属性更改启用选择性注册 ====[AdvancedSettingsSelectiveUIAEventRegistration]
 此选项更改NVDA接收的Microsoft UI Automation无障碍API触发的事件。
 禁用此选项后，NVDA将注册更多的UIA事件，这些事件将在NVDA本身内处理并丢弃。
 这会对性能产生重大负面影响，尤其是在像Microsoft Visual Studio这样的应用程序中。
@@ -1878,6 +1878,7 @@ UIA 对基于 Chromium 的浏览器的支持目前处于早期开发阶段，可
   - 此选项正处于初期开发阶段，依赖于尚未广泛使用的浏览器功能。
   - 预计适用于 Chromium 92.0.4479.0 以上。
   -
+-
 
 ==== 在 Excel 调用 UI Automation 接口（如果可用） ====[UseUiaForExcel]
 启用该选项后，NVDA 将尝试使用 Microsoft UI Automation 接口从 Excel 表格中获取信息。
@@ -1886,6 +1887,8 @@ UIA 对基于 Chromium 的浏览器的支持目前处于早期开发阶段，可
 但对于基础的导航和编辑功能，启用该选项可能会带来明显的性能改进。
 尽管如此，我们仍然不推荐大多数用户启用该功能，但我们也欢迎使用 Microsoft Excel 内部版本 16.0.13522.10000 或更高版本的用户测试此功能并提供反馈。
 Microsoft Excel 的 UI Automation 接口实现不断变化，早于 16.0.13522.10000 的 Microsoft Office 版本可能无法提供足够多的信息来支持此功能。
+  -
+-
 
 ==== 在UI Automation不可用或被禁用时 读出输入的字符 ====[AdvancedSettingsKeyboardSupportInLegacy]
 启用此选项，可以使用另一种方法在Windows命令控制台中检测键入的字符。
@@ -1893,6 +1896,8 @@ Microsoft Excel 的 UI Automation 接口实现不断变化，早于 16.0.13522.1
 默认情况下，Windows 10版本1607之后，当UI Automation不可用或被禁用时，NVDA就会启用此功能。
 注意：启用此选项后，在屏幕上不显示的字符（例如密码）也会被读出。
 在不受信任的环境中，您可以在输入密码时暂时禁用[朗读输入字符 #KeyboardSettingsSpeakTypedCharacters]和[朗读输入单词 #KeyboardSettingsSpeakTypedWords]的功能。
+  -
+-
 
 ==== Diff 算法 ====[DiffAlgo]
 该设置将决定 NVDA 用何种算法确定在终端内要朗读的新文本。
@@ -1905,6 +1910,7 @@ Windows 10 版本 1607 及更高版本上的 Windows 控制台支持此功能。
 当然，在早期的 Windows 版本中其他控制台终端也可能支持该特性。
 - 强制 Difflib：此选项设置 NVDA 逐行计算控制台终端文本的变化。
 这与 NVDA 在 2020.4 及以前版本中的行为相同。
+  -
 -
 
 ==== 取消过期焦点事件的朗读====[CancelExpiredFocusSpeech]

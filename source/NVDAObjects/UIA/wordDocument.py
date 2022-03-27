@@ -10,12 +10,10 @@ from typing import (
 
 import enum
 from comtypes import COMError
-from collections import defaultdict
 import winVersion
 import mathPres
 from scriptHandler import isScriptWaiting
 import textInfos
-import eventHandler
 import UIAHandler
 import UIAHandler.remote as UIARemote
 from logHandler import log
@@ -24,7 +22,6 @@ import ui
 import speech
 import review
 import braille
-import api
 import browseMode
 from UIAHandler.browseMode import (
 	UIABrowseModeDocument,
@@ -325,7 +322,6 @@ class WordDocumentTextInfo(UIATextInfo):
 		# But, we therefore need to remove the inner math content if reading by line
 		if not formatConfig or not formatConfig.get('extraDetail'):
 			# We really only want to remove content if we can guarantee that mathPlayer is available.
-			mathPres.ensureInit()
 			if mathPres.speechProvider or mathPres.brailleProvider:
 				curLevel = 0
 				mathLevel = None
@@ -442,11 +438,15 @@ class WordDocumentTextInfo(UIATextInfo):
 				)
 				if isinstance(sectionNumber, int):
 					formatField.field['section-number'] = sectionNumber
-				textColumnNumber = UIARemote.msWord_getCustomAttributeValue(
-					docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER
-				)
-				if isinstance(textColumnNumber, int):
-					formatField.field['text-column-number'] = textColumnNumber
+				if False:
+					# #13511: Fetching of text-column-number is disabled
+					# as it causes Microsoft Word 16.0.1493 and newer to crash!!
+					# This should only be reenabled for versions identified not to crash.
+					textColumnNumber = UIARemote.msWord_getCustomAttributeValue(
+						docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER
+					)
+					if isinstance(textColumnNumber, int):
+						formatField.field['text-column-number'] = textColumnNumber
 		return formatField
 
 

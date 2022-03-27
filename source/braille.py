@@ -657,7 +657,6 @@ class NVDAObjectRegion(Region):
 		)
 		if role == controlTypes.Role.MATH:
 			import mathPres
-			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
 					text += TEXT_SEPARATOR + mathPres.brailleProvider.getBrailleForMathMl(
@@ -789,7 +788,6 @@ def getControlFieldBraille(  # noqa: C901
 			text += content
 		elif role == controlTypes.Role.MATH:
 			import mathPres
-			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
 					if text:

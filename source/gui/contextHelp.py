@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2020 NV Access Limited, Thomas Stivers
+# Copyright (C) 2017-2022 NV Access Limited, Thomas Stivers
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import os
@@ -8,9 +8,10 @@ import tempfile
 import typing
 
 import wx
+
+from gui import blockAction
 from logHandler import log
 import documentationUtils
-import globalVars
 
 
 def writeRedirect(helpId: str, helpFilePath: str, contextHelpPath: str):
@@ -73,10 +74,8 @@ def bindHelpEvent(helpId: str, window: wx.Window):
 	log.debug(f"Did context help binding for {window.__class__.__qualname__}")
 
 
+@blockAction.when(blockAction.Context.SECURE_MODE)
 def _onEvtHelp(helpId: str, evt: wx.HelpEvent):
-	if globalVars.appArgs.secure:
-		# Disable context help in secure screens to avoid opening a browser with system-wide privileges.
-		return
 	# Don't call evt.skip. Events bubble upwards through parent controls.
 	# Context help for more specific controls should override the less specific parent controls.
 	showHelp(helpId)
