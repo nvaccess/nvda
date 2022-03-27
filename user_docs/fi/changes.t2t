@@ -4,11 +4,24 @@
 %!includeconf: ../changes.t2tconf
 
 = 2022.1 =
+Tämä julkaisu sisältää merkittäviä parannuksia MS Officen UIA-tukeen.
+NVDA käyttää Windows 11:ssä oletusarvoisesti UI Automation -rajapintaa Microsoft Word -asiakirjoille Microsoft Office 16.0.15000:ssä ja uudemmissa.
+Tämä parantaa merkittävästi suorituskykyä vanhaan objektimalliin verrattuna.
+
+Parannuksia tehty pistenäyttöajureihin, Seika Notetaker, Papenmeier ja HID Braille mukaan lukien.
+Lisäksi on erilaisia Windows 11:n bugikorjauksia sellaisille sovelluksille kuten  Laskin, konsoli, Terminal, Sähköposti ja emojipaneeli.
+
+ESpeak-NG ja LibLouis on päivitetty lisäten uuden japanilaisen, saksalaisen ja katalonialaisen pistetaulukon.
+
+Huomaa:
+ - Tämä julkaisu rikkoo yhteensopivuuden olemassa olevien lisäosien kanssa.
+ -
+
 
 == Uudet ominaisuudet ==
 - Tuki muistiinpanojen ilmoittamiselle MS Excelissä UI Automation -rajapinnan ollessa käytössä Windows 11:ssä. (#12861)
 - Kirjanmerkit, luonnoskommentit ja ratkaistut kommentit ilmoitetaan nyt sekä puheella että pistekirjoituksella Windows 11:ssä Microsoft Wordin uusimmissa koontikäännösversioissa UI Automation -rajapinnan välityksellä. (#12861)
-- Uusi --lang-komentoriviparametri mahdollistaa NVDA:n asetuksissa määritetyn kielen ohittamisen. (#10044)
+- Uusi ``--lang``-komentoriviparametri mahdollistaa NVDA:n asetuksissa määritetyn kielen ohittamisen. (#10044)
 - NVDA varoittaa nyt komentoriviparametreista, jotka ovat tuntemattomia ja joita mitkään lisäosat eivät käytä. (#12795)
 - NVDA käyttää nyt UI Automation -rajapinnan kautta käytettävässä Wordissa mathPlayeria Officen matemaattisten yhtälöiden lukemiseen ja niissä liikkumiseen. (#12946)
   - Jotta tämä toimisi, käytössä on oltava Microsoft Word 365:n/2016:n koontikäännösversio 14326 tai uudempi.
@@ -23,26 +36,32 @@
 - Lisätty komennot pistenäytön useiden toimintonäppäimien samanaikaiseen käyttöönottoon ja käytöstä poistamiseen. (#13152)
 - Puhesanastovalintaikkunassa on nyt Poista kaikki -painike, jonka avulla koko sanaston tyhjentäminen on mahdollista. (#11802)
 - Lisätty tuki Windows 11:n Laskin-sovellukselle. (#13212)
+- Rivi-, osa- ja asettelusarakenumeroiden lukeminen on nyt mahdollista Microsoft Wordissa UI Automation -rajapinnan ollessa käytössä Windows 11:ssä. (#13283)
+- Microsoft Office 16.0.15000:ssa ja uudemmissa NVDA käyttää Windows 11:ssä oletusarvoisesti UI Automation -rajapintaa Word-asiakirjoissa, mikä parantaa merkittävästi suorituskykyä vanhaan objektimalliin verrattuna. (#13437)
+ - Näitä ovat itsensä Wordin asiakirjat sekä myös Outlookin viestinluku- ja kirjoitusikkunat.
+ -
 -
 
 
 == Muutokset ==
 - ESpeak-NG on päivitetty versioksi 1.51-dev muutos ``7e5457f91e10``. (#12950)
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi [3.20.0. https://github.com/liblouis/liblouis/releases/tag/v3.20.0] (#13141)
-  - Uusi pistetaulukko: japanilainen kaunokirjallinen pistekirjoitus (kantenji)
+- Liblouis-pistekirjoituskääntäjä päivitetty versioksi [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]. (#13141, #13438)
+  - Lisätty uusi pistetaulukko: japanilainen kaunokirjallinen pistekirjoitus (kantenji).
+  - Lisätty uusi pistetaulukko: saksalainen 6 pisteen tietokonemerkistö.
+  - Lisätty katalonialainen tason 1 pistetaulukko. (#13408)
   -
 - NVDA ilmoittaa valinnan ja yhdistetyt solut LibreOffice Calc 7.3:ssa ja uudemmissa. (#9310, #6897)
 - Unicode Common Locale Data Repository -tietokanta (CLDR) päivitetty versioksi 40.0. (#12999)
 - ``NVDA+Laskimen Del`` -näppäinkomento ilmoittaa oletusarvoisesti järjestelmäkohdistimen tai aktiivisen objektin sijainnin. (#13060)
 - ``NVDA+Vaihto+Laskimen Del`` ilmoittaa tarkastelukohdistimen sijainnin. (#13060)
 - Lisätty  Freedom Scientificin pistenäytöille oletusnäppäinkomennot muokkausnäppäimien käyttöönottoon ja käytöstä poistamiseen. (#13152)
-- Lue tekstin muotoilutiedot -komentoa (NVDA+F) käytettäessä ei enää ilmoiteta "perusviiva". (#11815)
+- Lue tekstin muotoilutiedot -komentoa (``NVDA+F``) käytettäessä ei enää ilmoiteta "perusviiva". (#11815)
+- Pitkän kuvauksen näyttävällä komennolla ei enää ole määritettyä oletusarvoista syötekomentoa. (#13380)
+- Lue lisätietojen yhteenveto -komennolla on nyt oletusarvoinen syötekomento (``NVDA+D``). (#13380)
+- NVDA on käynnistettävä uudelleen MathPlayerin asennuksen jälkeen. (#13486)
 -
 
 == Bugikorjaukset ==
-- Tietosuojakorjaus: Objektinavigointi estetään lukitusnäytön ulkopuolella Windows 10:ssä ja 11:ssä. (#13328)
-- Tietosuojakorjaus: Lisäosien hallinnan valintaikkuna on nyt poistettu käytöstä suojatuissa ruuduissa. (#13059)
-- Tietosuojakorjaus: NVDA:n tilannekohtainen ohje ei enää ole käytettävissä suojatuissa ruuduissa. (#13353) 
 - Kohdistuksen ei pitäisi enää siirtyä virheellisesti leikepöydän hallinnan ruutuun joitakin Office-ohjelmia avattaessa. (#12736)
 - NVDA ei enää tietyissä sovelluksissa, kuten verkkoselaimissa, kohteen aktivoimisen asemesta avaa vahingossa pikavalikkoa Järjestelmässä, jossa käyttäjä on vaihtanut ensisijaisen hiiripainikkeen vasemmasta oikeaksi. (#12642)
 - "Alareuna" ilmoitetaan asianmukaisesti useammissa tilanteissa, kun tarkastelukohdistin siirretään tekstisäätimien lopun ohi esim. Microsoft Wordissa UI Automation -rajapinnan ollessa käytössä. (#12808)
@@ -56,20 +75,63 @@
 - NVDA voi jälleen vaimentaa ääntä Windows 11:ssä SAPI 5 -syntetisaattoria käytettäessä. (#12913)
 - NVDA lukee historia- ja muisti-luettelokohteiden selitteet Windows 10:n Laskin-sovelluksessa. (#11858)
 - Sellaiset syötekomennot kuten vierittäminen ja kohdistimen siirto kosketuskohdistinnäppäimillä toimivat jälleen HID Braille -protokollaa käyttävillä laitteilla. (#13228)
-- Windows 11:n Sähköposti-sovellus: Kun sovellusten välillä vaihdetaan pitkää viestiä luettaessa, NVDA jäi jumiin kyseisen viestin jollekin riville. (#13050)
-- Moniosaiset syötekomennot (esim. väli+piste 4) voidaan suorittaa onnistuneesti HID Braille -protokollaa käyttävissä laitteissa. (#13326)
+- Windows 11:n Sähköposti-sovellus: Kun sovellusten välillä vaihdetaan pitkää viestiä luettaessa, NVDA ei jää enää jumiin kyseisen viestin jollekin riville. (#13050)
+- Moniosaiset syötekomennot (esim. ``väli+piste 4``) voidaan suorittaa onnistuneesti HID Braille -protokollaa käyttävissä pistenäytöissä. (#13326)
 - Korjattu ongelma, joka aiheutti sen, että  useiden asetusvalintaikkunoiden avaaminen samanaikaisesti oli mahdollista. (#12818)
 - Korjattu ongelma, joka aiheutti sen, että jotkin Focus Blue -pistenäytöt lakkasivat toimimasta sen jälkeen kun tietokone herätettiin lepotilasta. (#9830)
 - "Perusviiva"-ilmoitusta ei tapahdu enää asiaankuulumattomasti, kun "Ilmaise ylä- ja alaindeksit" -asetus on käytössä. (#11078)
 - NVDA ei enää estä Windows 11:ssä emojipaneelissa liikkumista emojeita valittaessa. (#13104)
-- Estetty bugi, joka aiheutti tekstin lukemista kahteen kertaan komentokehotetta ja Windows Terminalia käytettäessä. (#13261)
+- Estetty bugi, joka aiheutti tekstin lukemista kahteen kertaan Windows-konsolia ja Windows Terminalia käytettäessä. (#13261)
 - Korjattu useita tapauksia, joissa luettelokohteita ei voitu lukea 64-bittisissä sovelluksissa, kuten REAPERissa. (#8175)
+- NVDA vaihtaa nyt automaattisesti vuorovaikutustilaan Microsoft Edgen lataustenhallinnassa, kun kohdistus siirtyy uusimman latauksen sisältävään luettelokohteeseen. (#13221)
+- NVDA ei enää aiheuta 64-bittisen Notepad++ 8.3:n ja uudempien kaatumista. (#13311)
+- Adobe Reader ei enää kaadu käynnistettäessä, mikäli sen suojattu tila on käytössä. (#11568)
+- Korjattu bugi, joka aiheutti NVDA:n kaatumisen Papenmeier-pistenäyttöajuria valittaessa. (#13348)
+- Sivunumeroa ja muuta muotoilua ei enää asiaankuulumattomasti puhuta Microsoft wordissa UIA:n ollessa käytössä siirryttäessä tyhjästä taulukon solusta sellaiseen soluun, jossa on sisältöä, tai asiakirjan lopusta olemassa olevaan sisältöön. (#13458, #13459)
 -
+
 
 == Muutokset kehittäjille ==
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
+= 2021.3.4 =
+Tämä on pieni julkaisu useiden esiin tulleiden tietoturvaongelmien korjaamiseksi.
+Ilmoita tietoturvaongelmat vastuullisesti osoitteeseen info@nvaccess.org.
+
+== Tietoturvakorjaukset ==
+- Ratkaistu tietoturvavaroitus ``GHSA-354r-wr4v-cx28``. (#13488)
+  - Poistettu mahdollisuus NVDA:n käynnistämiseen ja virheenkorjauslokin käyttöönottamiseen, kun NVDA on käynnissä suojatussa tilassa.
+  - Poistettu mahdollisuus NVDA:n päivittämiseen, kun se on käynnissä suojatussa tilassa.
+  -
+- Ratkaistu tietoturvavaroitus ``GHSA-wg65-7r23-h6p9``. (#13489)
+  - Poistettu mahdollisuus Syötekomennot-valintaikkunan avaamiseen suojatussa tilassa.
+  - Poistettu mahdollisuus oletus-, tilapäis- ja äänikohtaisten puhesanastovalintaikkunoiden avaamiseen suojatussa tilassa.
+  -
+- Ratkaistu tietoturvavaroitus ``GHSA-mvc8-5rv9-w3hx``. (#13487)
+  - WX-käyttöliittymän tarkastelutyökalu on nyt poissa käytöstä suojatussa tilassa.
+  -
+-
+
+
+= 2021.3.3 =
+Tämä julkaisu on identtinen 2021.3.2:n kanssa.
+NVDA 2021.3.2:ssa oli bugi, joka sai sen tunnistamaan itsensä virheellisesti 2021.3.1:ksi.
+Tämä julkaisu ilmoittaa oikein olevansa 2021.3.3.
+
+
+= 2021.3.2 =
+Tämä on pieni julkaisu useiden esiin tulleiden tietoturvaongelmien korjaamiseksi.
+Ilmoita tietoturvaongelmat vastuullisesti osoitteeseen info@nvaccess.org.
+
+
+== Bugikorjaukset ==
+- - Tietosuojakorjaus: Objektinavigointi estetään lukitusnäytön ulkopuolella Windows 10:ssä ja 11:ssä. (#13328)
+- Tietosuojakorjaus: Lisäosien hallinnan valintaikkuna on nyt poissa käytöstä suojatuissa ruuduissa. (#13059)
+- Tietosuojakorjaus: NVDA:n tilannekohtainen ohje ei enää ole käytettävissä suojatuissa ruuduissa. (#13353)
+ -
+ 
+ 
 = 2021.3.1 =
 Tämä on pieni päivitys, joka korjaa useita  version 2021.3 ongelmia.
 

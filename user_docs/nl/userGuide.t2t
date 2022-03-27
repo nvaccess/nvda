@@ -536,7 +536,6 @@ Het is ook mogelijk om handmatig de focusmodus in te schakelen, deze zal dan act
 | Zoeken | NVDA+control+f | Er wordt een venster geopend waarin u tekst kunt typen die in het huidige document moet worden opgezocht. Zie voor meer informatie, [zoeken naar tekst #SearchingForText]. |
 | Volgende zoeken | NVDA+f3 | Hiermee kunt u nagaan of tekst van een zoekopdracht verderop in het document nog vaker voorkomt. |
 | Vorige zoeken | NVDA+shift+f3 | Hiermee kunt u nagaan of de gezochte tekst eerder in het document voorkomt |
-| Uitgebreide beschrijving openen | NVDA+d | Er wordt een nieuw venster geopend met een uitgebreide beschrijving, voor zover aanwezig, van het element waarop u zich bevindt. |
 %kc:endInclude
 
 ++ Lettertoetsnavigatie ++[SingleLetterNavigation]
@@ -621,7 +620,8 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 + Inhoud van wiskundige aard lezen +[ReadingMath]
 Met MathPlayer 4 van Design Science, kan NVDA ondersteunde wiskundige inhoud lezen en u er interactief in laten navigeren.
 Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
-MathPlayer is gratis te downloaden van: https://www.dessci.com/en/products/mathplayer/
+MathPlayer is gratis te downloaden van: https://www.dessci.com/en/products/mathplayer/.
+Na installatie van MathPlayer, NVDA opnieuw starten.
 
 NVDA ondersteunt de volgende types wiskundige inhoud:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
@@ -1726,8 +1726,8 @@ Hoewel er in bladermodus eigenlijk geen echte pagina-indeling bestaat, kunt u hi
 ==== Schermlay-out gebruiken ====[BrowseModeSettingsScreenLayout]
 Toets: NVDA+v
 
-Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. 
-Als het selectievakje is ingeschakeld blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
+Hiermee kunt u bepalen hoe de klikbare inhoud (links, knoppen en velden)van een document in bladermodus moet worden weergegeven. Wilt u dat de klikbare items op een aparte regel komen te staan of moet alles blijven staan zoals het wordt getoond. Merk op dat deze optie niet geldt voor  Microsoft Office apps zoals Outlook en Word die altijd gebruik maken  van scherm-layout.  
+Wanneer  scherm-layout is ingeschakeld staan de elementen op de pagina zoals deze visueel worden weergegeven. Een regel waarop meerdere  links te zien zijn wordt in gesproken vorm en in braille gepresenteerd als inhoud van een en dezelfde regel. Als de optie uitgeschakeld is, dan komen elementen op de pagima elk op een eigen regel te staan wat het begrijpen ervan vergemakkelijkt bij het navigeren per regel op de pagina, en kan voor sommige gebruikers de interactie met deze items gemakkelijker worden.
 
 ==== Bladermodus inschakelen bij laden van pagina ====[BrowseModeSettingsEnableOnPageLoad]
 Met dit selectievakje kunt u bepalen of bladermodus automatisch wordt ingeschakeld bij het laden van een pagina.
@@ -1884,12 +1884,15 @@ Het gevolg is dat de prestatie flink nadelig wordt beïnvloed, vooral bij  toepa
 Daarom zal NVDA,wanneer deze optie is ingeschakeld, registratie van gebeurtenissen  grotendeels beperken tot de systeemfocus.
 Als u te kampen hebt met prestatieproblemen bij één of meer toepassingen, raden we u aan deze functionaliteit uit te proberen om te zien of de prestaties verbeteren.
 
-==== UI automation gebruiken voor toegang tot besturingselementen van Microsoft Word-documenten voor zover beschikbaar ====[AdvancedSettingsUseUiaForWord]
-Wanneer  deze optie is ingeschakeld probeert  NVDA   de Microsoft UI (= User Interface) Automation accessibility API te gebruiken om informatie op te halen van besturingselementen van Microsoft Word-documenten.
-Dit betreft Microsoft Word zelf, en ook de Microsoft Outlook message viewer alsmede  de composer.
-Voor Microsoft Office met   versiekenmerk 16.0.13901 of hoger zal NVDA altijd UI Automation gebruiken voor toegang tot Microsoft Word-documenten ongeacht hoe deze optie is ingesteld.
-Voor de meest recente versies van Microsoft Office 2016/365 die onder windows 10 en later, draaien, is de ondersteuning  van UI Automation voldoende om toegang te kunnen bieden tot Microsoft Word-documenten. De ondersteuning is nagenoeg gelijk aan die welke NVDA reeds biedt voor Microsoft Word maar met het bijkomende voordeel dat de reactiegevoeligheid substantieel wordt verhoogd.
-Het kan echter voorkomen dat informatie of niet of onjuist wordt weergegeven in sommige oudere versies van Microsoft Office, waardoor  men niet in alle gevallen kan vertrouwen op deze UI automation ondersteuning.
+==== UI automation gebruiken voor toegang tot besturingselementen van Microsoft Word-documenten ====[MSWordUIA]
+Hiermee stelt u in of NVDA al dan niet de UI (= User Interface) Automation accessibility API moet gebruiken voor  toegang tot Microsoft Word-documenten, in plaats van het oudere Microsoft Word object-model.
+Dit is van toepassing op documenten in Microsoft word zelf, alsmede op berichten in Microsoft Outlook.
+Deze instelling kent de volgende keuzemogelijkheden:
+- Standaard (waar toepasselijk)
+- Alleen voor zover nodig: daar waar  het Microsoft Word object-model in het geheel niet beschikbaar is
+- Waar toepasselijk: Microsoft Word versie 16.0.15000 of hoger, of waar het Microsoft Word object-model niet beschikbaar is
+- Altijd: steeds waar over  UI automation beschikt kan worden  in Microsoft word (ongeacht de mate waarin).
+-
 
 ==== UI Automation gebruiken om toegang te krijgen tot Windows-consool wanneer beschikbaar ====[AdvancedSettingsConsoleUIA]
 Wanneer deze optie ingeschakeld is, zal NVDA een nieuwe, nog in otwikkeling zijnde, versie van haar ondersteuning voor de Windows-consool gebruiken waarmee toegankelijkheidsverbeteringen worden benut die Microsoft heeft doorgevoerd https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Deze mogelijkheid is nog zeer experimenteel van aard en  nog incompleet, dus wordt het gebruik ervan nog niet aanbevolen. Wanneer deze echter volledig is uitontwikkeld, dan is de verwachting dat deze nieuwe vorm van ondersteuning de standaard gaat worden waarmee de prestaties en stabiliteit van NVDA in opdrachtmodules van Windows worden verbeterd. 
@@ -1907,9 +1910,13 @@ Het keuzemenu heeft de volgende opties:
 ==== annotaties ====[Annotations]
 Deze groep opties dient ter uitbreiding van de mogelijkheden voor experimentele   ondersteuning  van ARIA  annotaties  (ARIA = Accessible Rich Internet Applications).
 Sommige van deze opties zijn mogelijk incompleet.
+
++%kc:beginInclude
+Om een samenvatting van gelijk welke annotatie-details bij de systeemcursor te melden drukt u NVDA+d in.
+%kc:endInclude
+
 De opties zijn: 
 - "Melding bevat details over samengestelde annotaties": maakt melding van verdere details mogelijk als deze beschikbaar zijn voor de tekst of het besturingselement.
-U kunt een samenvatting van de extra details laten weergeven door een gebaar toe te kennen aan "Samenvatting van gelijk welke annotatie-details melden bij de systeemcursor" met behulp van het dialoogvenster [Invoerhandelingen #InputGestures].
 -  "Altijd aria-beschrijving melden":
   Wanneer  de bron van aria-beschrijving ``accDescription`` is, wordt de beschrijving gemeld.
   Dit is nuttig voor annotaties op het web.
@@ -2875,11 +2882,6 @@ De volgende brailleleesregels worden ondersteund:
 -
 
 Deze leesregel heeft geen ondersteuning voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
-
-Als BrxCom is geïnstalleerd, zal NVDA BrxCom gebruiken.
-BrxCom is een hulpprogramma waarmee invoer met de toetsen van de leesregel mogelijk is zonder tussenkomst van een schermlezer.
-Er zal binnenkort een nieuwe versie van BrxCom door Papenmeier worden uitgebracht die werkt met NVDA.
-Toetsinvoer is mogelijk met de modellen Trio en BRAILLEX Live.
 
 De meeste leesregels hebben een gebruiksvriendelijke navigatiebalk (EAB = Easy Access Bar, waarmee intuïtief en snel gewerkt kan worden.
 De navigatiebalk kan in vier richtingen bewogen worden waarbij er als regel twee schakelpunten per richting zijn.

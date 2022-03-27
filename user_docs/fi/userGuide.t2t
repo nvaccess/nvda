@@ -527,7 +527,6 @@ Vuorovaikutustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin s
 | Etsi | NVDA+Ctrl+F | Avaa valintaikkunan, jossa voidaan etsiä tekstiä nykyisestä asiakirjasta. Katso lisätietoja [Tekstin etsiminen #SearchingForText] -kappaleesta. |
 | Etsi seuraava | NVDA+F3 | Etsii asiakirjasta aiemmin haetun tekstin seuraavan esiintymän. |
 | Etsi edellinen | NVDA+Vaihto+F3 | Etsii asiakirjasta aiemmin haetun tekstin edellisen esiintymän. |
-| Avaa pitkä kuvaus | NVDA+D | Avaa kohdalla olevan elementin mahdollisen pitkän kuvauksen uuteen ikkunaan. | 
 %kc:endInclude
 
 ++ Pikaselausnäppäimet ++[SingleLetterNavigation]
@@ -611,7 +610,8 @@ Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin
 + Matemaattisen sisällön lukeminen +[ReadingMath]
 NVDA:lla on mahdollista lukea ja liikkua vuorovaikutteisesti tuetussa matemaattisessa sisällössä Design Sciencen MathPlayer 4:ää käyttäen.
 Tämä edellyttää, että MathPlayer 4 on asennettu tietokoneelle.
-Se on ladattavissa ilmaiseksi osoitteesta https://www.dessci.com/en/products/mathplayer/
+Se on ladattavissa ilmaiseksi osoitteesta https://www.dessci.com/en/products/mathplayer/.
+Käynnistä NVDA uudelleen MathPlayerin asennuksen jälkeen.
 
 NVDA tukee seuraavia matemaattisia sisältöjä:
 - MathML Mozilla Firefoxissa, Internet Explorerissa ja Google Chromessa.
@@ -1709,8 +1709,8 @@ Tämä asettaa rivimäärän, joka selaustilassa siirrytään painettaessa Page 
 ==== Käytä ruutuasettelua ====[BrowseModeSettingsScreenLayout]
 Pikanäppäin: NVDA+V
 
-Tällä asetuksella määritetään, sijoitetaanko esim. linkit ja muut elementit selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ovat ruudulla.
-Jos asetus on käytössä, elementit näytetään sellaisinaan, mutta jos asetus poistetaan käytöstä, elementit sijoitetaan omille riveilleen.
+Tällä asetuksella voidaan määrittää, sijoitetaanko napsautettava sisältö (linkit, painikkeet ja kentät) selaustilassa omille riveilleen vai säilytetäänkö ne sellaisina kuin ne ruudulla näytetään. Huomaa, että tämä asetus ei koske Microsoft Office -sovelluksia kuten Outlookia tai Wordia, joissa käytetään aina ruutuasettelua.
+Kun ruutuasettelu on käytössä, sivun elementit pysyvät sellaisina kuin ne visuaalisesti näytetään. Esimerkiksi useita linkkejä sisältävä visuaalinen rivi puhutaan ja näytetään pistenäytöllä samalla rivillä olevina useina linkkeinä. Jos asetus ei ole käytössä, sivun elementit sijoitetaan omille riveilleen, mitä voi olla helpompi ymmärtää sivua riveittäin selattaessa, ja vuorovaikutus kohteiden kanssa saattaa olla joillekin käyttäjille helpompaa.
 
 ==== Ota selaustila käyttöön sivua ladattaessa ====[BrowseModeSettingsEnableOnPageLoad]
 Tällä valintaruudulla voidaan määrittää, otetaanko selaustila käyttöön automaattisesti sivua ladattaessa.
@@ -1865,12 +1865,15 @@ Tällä on suuri kielteinen vaikutus suorituskykyyn, etenkin sellaisissa sovellu
 Tämän takia NVDA rajoittaa tapahtumien rekisteröinnin useimmissa tapauksissa järjestelmän kohdistukseen tämän asetuksen ollessa käytössä.
 Mikäli sinulla on suorituskykyongelmia yhdessä tai useammassa sovelluksessa, suosittelemme, että kokeilet tätä toimintoa nähdäksesi, paraneeko suorituskyky.
 
-==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
-Kun tämä asetus on käytössä, NVDA yrittää käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseen Microsoft Wordin asiakirjasäätimistä.
-Tällaisia ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
-Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 10:ssä ja uudemmissa käytettäessä riittävän kattava tarjotakseen lähes nykyisen kaltaisen tuen Microsoft Word -asiakirjoille, jossa on lisäetuna huomattavasti lisääntynyt reagoivuus.
-Joissakin Officen versioissa ei välttämättä kuitenkaan ole saatavilla kaikkea tietoa tai ne ilmaistaan väärin, minkä vuoksi UI automation -tukeen ei voi aina luottaa.
-Suurimmalle osalle käyttäjistä tämän asetuksen oletusarvoinen käyttöön ottaminen ei silti ole suositeltavaa, vaikka Office 2016:n/365:n käyttäjät ovatkin tervetulleita testaamaan tätä ominaisuutta ja tarjoamaan palautetta.
+==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä ====[MSWordUIA]
+Määrittää, käyttääkö NVDA UI Automation -esteettömyysrajapintaa Microsoft Word -asiakirjoille vanhemman objektimallin asemesta.
+Tämä koskee itsensä Microsoft wordin asiakirjojen lisäksi Microsoft Outlookin viestejä.
+Asetus sisältää seuraavat arvot:
+- Oletus (kun käytettävissä)
+- Vain tarvittaessa: Kun Microsoft Wordin objektimalli ei ole käytettävissä.
+- Kun käytettävissä: Microsoft Wordin versio 16.0.15000 tai uudempi, tai kun Wordin objektimalli ei ole käytettävissä.
+- Aina: Aina kun UI automation -rajapinta on käytettävissä Microsoft wordissa (riippumatta siitä, miten valmis se on).
+-
 
 ==== Käytä UI Automation -rajapintaa Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsConsoleUIA]
 Kun tämä asetus on käytössä, NVDA käyttää uutta, työn alla olevaa versiota Windows-konsolin tuesta, joka hyödyntää [Microsoftin tekemiä saavutettavuusparannuksia. https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Ominaisuus on vielä kokeellinen ja keskeneräinen, joten sen käyttöä ei vielä suositella. Valmistuttuaan uuden tuen odotetaan kuitenkin tulevan oletukseksi, mikä parantaa NVDA:n suorituskykyä ja vakautta Windowsin komentokonsoleissa.
@@ -1888,9 +1891,13 @@ Yhdistelmäruudussa on seuraavat vaihtoehdot:
 ==== Merkinnät ====[Annotations]
 Näillä asetuksilla otetaan käyttöön ominaisuudet, jotka lisäävät kokeellisen tuen ARIA-merkinnöille.
 Jotkin näistä ominaisuuksista voivat olla keskeneräisiä.
+
+%kc:beginInclude
+Ilmoita järjestelmäkohdistimen kohdalla olevan merkinnän kaikkien tietojen yhteenveto painamalla NVDA+D.
+%kc:endInclude
+
 Seuraavat vaihtoehdot ovat käytettävissä:
 - Ilmoita rakenteellisten merkintöjen lisätiedoista: ilmoittaa, mikäli tekstillä tai säätimellä on lisätietoja.
-Lisätietojen yhteenvedon ilmoittaminen on mahdollista liittämällä Ilmoita järjestelmäkohdistimen kohdalla olevan merkinnän kaikkien tietojen yhteenveto -toimintoon syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
 - Puhu aina ARIA-kuvaukset:
   Kuvaus puhutaan, kun ``accDescription``-attribuutin lähteenä on aria-description.
   Tästä on hyötyä verkkosivuilla olevissa merkinnöissä.
@@ -2857,10 +2864,6 @@ Seuraavia pistenäyttöjä tuetaan:
 -
 
 Nämä näytöt eivät tue NVDA:n automaattista pistenäytön tunnistusta.
-
-NVDA käyttää BrxComia, mikäli se on asennettu.
-BrxCom on työkalu, joka mahdollistaa pistenäytön näppäimistösyötteen toimimisen itsenäisesti ruudunlukuohjelmasta riippumatta.
-Pistekirjoituksen syöttäminen on mahdollista Trio- ja BRAILLEX Live -malleissa.
 
 Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
 Sitä voidaan siirtää neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.

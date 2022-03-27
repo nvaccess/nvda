@@ -11,17 +11,29 @@ What's New in NVDA
 == Changes ==
 - NSIS has been updated to version 3.08. (#9134)
 - Added new role for "busy indicator" controls. (#10644)
+- NVDA now announces when an NVDA action cannot be performed. (#13500)
+  - This includes when:
+    - Using the NVDA Windows Store version.
+    - In a secure context.
+    - Waiting for a response to a modal dialog.
+    -
+  -
 -
 
 
 == Bug Fixes ==
 - The NVDA installer can now run from directories with special characters. (#13270)
 - In Firefox, NVDA no longer fails to report items in web pages when aria-rowindex, aria-colindex, aria-rowcount or aria-colcount attributes are invalid. (#13405)
+- The cursor does not switch row or column anymore when using table navigation to navigate through merged cells. (#7278)
 -
 
 
 == Changes for Developers ==
+- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
 - When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
+- ``gui.quit`` has been deprecated for removal in 2023.1. (#13498)
+  - Use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
+  -
 -
 
 
@@ -196,6 +208,17 @@ This can dramatically decrease build times on multi core systems. (#13226, #1337
 - Excel cell state constants (``NVSTATE_*``) are now values in the ``NvCellState`` enum, mirrored in the ``NvCellState`` enum in ``NVDAObjects/window/excel.py`` and mapped to ``controlTypes.State`` via _nvCellStatesToStates. (#13465)
 - ``EXCEL_CELLINFO`` struct member ``state`` is now ``nvCellStates``.
 - ``mathPres.ensureInit`` has been removed, MathPlayer is now initialized when NVDA starts. (#13486)
+-
+
+
+= 2021.3.5 =
+This is a minor release to fix a security issue.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Addressed security advisory ``GHSA-xc5m-v23f-pgr7``.
+  - The symbol pronunciation dialog is now disabled in secure mode.
+  -
 -
 
 
