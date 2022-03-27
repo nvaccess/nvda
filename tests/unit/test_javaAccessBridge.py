@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited, American Printing House for the Blind
+# Copyright (C) 2022 NV Access Limited, American Printing House for the Blind
 
 """Unit tests for Java Access Bridge"""
 
