@@ -190,6 +190,7 @@ class MainFrame(wx.Frame):
 	def onTemporaryDictionaryCommand(self, evt):
 		self._popupSettingsDialog(TemporaryDictionaryDialog)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
 			destPath, version, apiVersion, backCompatToAPIVersion = updateCheck.getPendingUpdate()
@@ -313,6 +314,7 @@ class MainFrame(wx.Frame):
 		else:
 			brailleViewer.createBrailleViewerTool()
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
@@ -337,7 +339,10 @@ class MainFrame(wx.Frame):
 		globalPluginHandler.reloadGlobalPlugins()
 		NVDAObject.clearDynamicClassCache()
 
-	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
+	@blockAction.when(
+		blockAction.Context.MODAL_DIALOG_OPEN,
+		blockAction.Context.SECURE_MODE,
+	)
 	def onCreatePortableCopyCommand(self,evt):
 		self.prePopup()
 		import gui.installerGui
@@ -345,12 +350,18 @@ class MainFrame(wx.Frame):
 		d.Show()
 		self.postPopup()
 
-	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
+	@blockAction.when(
+		blockAction.Context.MODAL_DIALOG_OPEN,
+		blockAction.Context.SECURE_MODE
+	)
 	def onInstallCommand(self, evt):
 		from gui import installerGui
 		installerGui.showInstallGui()
 
-	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
+	@blockAction.when(
+		blockAction.Context.MODAL_DIALOG_OPEN,
+		blockAction.Context.SECURE_MODE
+	)
 	def onRunCOMRegistrationFixesCommand(self, evt):
 		if messageBox(
 			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
@@ -409,7 +420,6 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 			menu_preferences.AppendSubMenu(self._createSpeechDictsSubMenu(frame), _("Speech &dictionaries"))
-		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
 			self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
