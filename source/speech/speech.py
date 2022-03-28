@@ -59,12 +59,13 @@ from .priorities import Spri
 from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
-
+from core import callLater
 if typing.TYPE_CHECKING:
 	import NVDAObjects
 
 _speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
+phoneticDescriptionTimer = None
 
 
 class SpeechMode(IntEnum):
@@ -146,6 +147,7 @@ def cancelSpeech():
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:
 		return
+	cancelPhoneticDescriptionTimer()
 	_manager.cancel()
 	_speechState.beenCanceled = True
 	_speechState.isPaused = False
@@ -810,6 +812,8 @@ def speak(  # noqa: C901
 
 	if not speechSequence:  # Pointless - nothing to speak
 		return
+	# cancel any delaied phonetic description if exists.
+	cancelPhoneticDescriptionTimer()
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
@@ -1136,6 +1140,7 @@ def speakTextInfo(
 		suppressBlanks: bool = False,
 		priority: Optional[Spri] = None
 ) -> bool:
+	global phoneticDescriptionTimer
 	speechGen = getTextInfoSpeech(
 		info,
 		useCache,
@@ -1150,6 +1155,16 @@ def speakTextInfo(
 	speechGen = GeneratorWithReturn(speechGen)
 	for seq in speechGen:
 		speak(seq, priority=priority)
+	if (
+		config.conf["speech"][getSynth().name]["delayedPhoneticDescriptions"]
+		and reason == OutputReason.CARET
+		and unit == textInfos.UNIT_CHARACTER
+	):
+		phoneticDescriptionTimer = callLater(
+			config.conf["speech"][getSynth().name]["delayedPhoneticDescriptionsTimeoutMs"],
+			speakDelayedDescription,
+			_FakeTextInfo(info)
+		)
 	return speechGen.returnValue
 
 
@@ -2595,3 +2610,37 @@ def clearTypedWordBuffer() -> None:
 	complete the word (such as a focus change or choosing to move the caret).
 	"""
 	_curWordChars.clear()
+
+def cancelPhoneticDescriptionTimer() -> None:
+	"""
+	this stops the timer used for delaied phonetic descriptions. This should be called when a new sentence is send or the user stops the synth. E.G. by pressing control key.
+	"""
+	global phoneticDescriptionTimer
+	if phoneticDescriptionTimer and phoneticDescriptionTimer.IsRunning():
+		phoneticDescriptionTimer.Stop()
+		phoneticDescriptionTimer = None
+
+class _FakeTextInfo():
+	"""
+	this class is used to preserve the information of the old object that contain the text. Its useful to use with delayed descriptions.
+	"""
+
+	def __init__(self, origTextInfo: textInfos.TextInfo):
+		self.text = origTextInfo.text
+		self.fields = origTextInfo.getTextWithFields({})
+
+	def getTextWithFields(self, _ = None):
+		return self.fields
+
+def speakDelayedDescription(info: _FakeTextInfo):
+	"""
+	this function is used to announce the delayed descriptions, we can't call spellTextInfo directly because we need to check if the description is available first.
+	"""
+	curLang = getCurrentLanguage()
+	if config.conf['speech']['autoLanguageSwitching']:
+		for k in info.fields:
+			if isinstance(k, textInfos.FieldCommand) and k.command == "formatChange":
+				curLang = k.field.get('language', curLang)
+	_, description = getCharDescListFromText(info.text, locale=curLang)[0]
+	if description:
+		spellTextInfo(info, useCharacterDescriptions=True)
