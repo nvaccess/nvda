@@ -36,7 +36,7 @@ stdNamesToRoles = {
 	# H1 to H6 handled separately
 	# Span, Quote, Note, Reference, BibEntry, Code, Figure
 	"Formula": controlTypes.Role.MATH,
-	"Form": controlTypes.Role.FORM,
+	# form: a form field - MSAA roles are already much more specific here.
 }
 
 
