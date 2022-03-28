@@ -3317,19 +3317,19 @@ NVDA runs in secure mode when executed on [secure screens #SecureScreens], unles
 
 Secure mode disables:
 
-- [Python console #PythonConsole]
-- Profile features such as creation, deletion, renaming profiles e.t.c.
-- Updating NVDA
-- Options in the Welcome dialog and in General settings category, including:
-  - Use NVDA during sign-in
-  - Save configuration after exit
-  -
-- [Log Viewer #LogViewer] and logging
-- Saving settings in system config
+- Saving configuration and other settings to disk
 - Saving the gesture map to disk
+- [Configuration Profile #ConfigurationProfiles] features such as creation, deletion, renaming profiles e.t.c.
+- Updating NVDA and creating portable copies
+- The [Python console #PythonConsole]
+- The [Log Viewer #LogViewer] and logging
 -
 
 ++ Secure Screens ++[SecureScreens]
+NVDA runs in [secure mode #SecureMode] when executed on secure screens unless the ``serviceDebug`` [system wide parameter #SystemWideParameters] is enabled.
+
+When running from a secure screen, NVDA uses a system profile for preferences.
+NVDA user preferences can be copied [for use in secure screens #GeneralSettingsCopySettings].
 
 Secure screens include:
 
