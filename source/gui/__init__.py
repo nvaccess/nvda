@@ -498,7 +498,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		# Translators: The label for the Help submenu in NVDA menu.
 		self.menu.AppendSubMenu(menu_help,_("&Help"))
 
-		self._appendConfigProfilesSection(frame)
+		self._appendConfigManagementSection(frame)
 
 		if not globalVars.appArgs.secure:
 			self.menu.AppendSeparator()
@@ -564,7 +564,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		return subMenu_speechDicts
 
-	def _appendConfigProfilesSection(self, frame: wx.Frame) -> None:
+	def _appendConfigManagementSection(self, frame: wx.Frame) -> None:
 		self.menu.AppendSeparator()
 		# Translators: The label for the menu item to open the Configuration Profiles dialog.
 		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
