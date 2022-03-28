@@ -2636,6 +2636,7 @@ def speakDelayedDescription(info: _FakeTextInfo):
 	"""
 	this function is used to announce the delayed descriptions, we can't call spellTextInfo directly because we need to check if the description is available first.
 	"""
+	if info.text.strip() == "": return
 	curLang = getCurrentLanguage()
 	if config.conf['speech']['autoLanguageSwitching']:
 		for k in info.fields:
