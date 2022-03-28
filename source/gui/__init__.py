@@ -569,16 +569,32 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		# Translators: The label for the menu item to open the Configuration Profiles dialog.
 		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
 		self.Bind(wx.EVT_MENU, frame.onConfigProfilesCommand, item)
-		# Translators: The label for the menu item to revert to saved configuration.
-		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
+		item = self.menu.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to revert to saved configuration.
+			_("&Revert to saved configuration"),
+			# Translators: The help text for the menu item to revert to saved configuration.
+			_("Reset all settings to saved state")
+		)
 		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
-		if not globalVars.appArgs.secure:
+		item = self.menu.Append(
+			wx.ID_ANY,
 			# Translators: The label for the menu item to reset settings to default settings.
 			# Here, default settings means settings that were there when the user first used NVDA.
-			item = self.menu.Append(wx.ID_ANY, _("&Reset configuration to factory defaults"),_("Reset all settings to default state"))
-			self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
-			# Translators: The label for the menu item to save current settings.
-			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
+			_("&Reset configuration to factory defaults"),
+			# Translators: The help text for the menu item to reset settings to default settings.
+			# Here, default settings means settings that were there when the user first used NVDA.
+			_("Reset all settings to default state")
+		)
+		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
+		if not globalVars.appArgs.secure:
+			item = self.menu.Append(
+				wx.ID_SAVE,
+				# Translators: The label for the menu item to save current settings.
+				_("&Save configuration"),
+				# Translators: The help text for the menu item to save current settings.
+				_("Write the current configuration to nvda.ini")
+			)
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
 
 def initialize():
