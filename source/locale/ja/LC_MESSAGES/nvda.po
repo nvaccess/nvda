@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-04 00:02+0000\n"
-"PO-Revision-Date: 2022-03-08 19:08+0900\n"
+"POT-Creation-Date: 2022-03-18 00:02+0000\n"
+"PO-Revision-Date: 2022-03-23 21:11+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -714,7 +714,7 @@ msgstr "ベラルーシ語コンピューター点字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Belarusian literary braille"
-msgstr "ベラルーシ語文学点字"
+msgstr "ベラルーシ語非縮約点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -725,6 +725,11 @@ msgstr "ブルガリア語8点コンピューター点字"
 #. braille settings dialog.
 msgid "Bulgarian grade 1"
 msgstr "ブルガリア語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Catalan grade 1"
+msgstr "カタロニア語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -780,6 +785,11 @@ msgstr "デンマーク語6点2級点字"
 #. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "デンマーク語8点2級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German 6 dot computer braille"
+msgstr "ドイツ語6点コンピューター点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1174,7 +1184,7 @@ msgstr "ポーランド語8点コンピューター点字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Polish literary braille"
-msgstr "ポーランド語文字点字"
+msgstr "ポーランド語非縮約点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1209,12 +1219,12 @@ msgstr "ロシア語コンピューター点字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Russian literary braille"
-msgstr "ロシア文学点字"
+msgstr "ロシア語非縮約点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Russian literary braille (detailed)"
-msgstr "ロシア文学点字(詳細)"
+msgstr "ロシア語非縮約点字(詳細)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4055,67 +4065,85 @@ msgstr "点字入力の変換"
 msgid ""
 "Virtually toggles the shift key to emulate a keyboard shortcut with braille "
 "input"
-msgstr "点字入力でシフトキーを押したり離したりする操作をエミュレート"
+msgstr ""
+"シフトキーのトグル。キーボードのキー入力を点字ディスプレイからエミュレート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the control key to emulate a keyboard shortcut with "
 "braille input"
-msgstr "点字入力でコントロールキーを押したり離したりする操作をエミュレート"
+msgstr ""
+"コントロールキーのトグル。キーボードのキー入力を点字ディスプレイからエミュ"
+"レート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the alt key to emulate a keyboard shortcut with braille "
 "input"
-msgstr "点字入力でオルトキーを押す操作をエミュレート"
+msgstr ""
+"Altキーのトグル。キーボードのキー入力を点字ディスプレイからエミュレート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the left windows key to emulate a keyboard shortcut with "
 "braille input"
-msgstr "点字入力でWindowsキーを押す操作をエミュレート"
+msgstr ""
+"Windowsキーのトグル。キーボードのキー入力を点字ディスプレイからエミュレート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
 "input"
-msgstr "点字入力でNVDAキーを押したり離したりする操作をエミュレート"
+msgstr ""
+"NVDA制御キーのトグル。キーボードのキー入力を点字ディスプレイからエミュレート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the control and shift keys to emulate a keyboard shortcut "
 "with braille input"
-msgstr "点字入力での仮想的なコントロールキーとShiftキーの切り替え"
+msgstr ""
+"コントロールキーとShiftキーのトグル。キーボードのキー入力を点字ディスプレイか"
+"らエミュレート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the alt and shift keys to emulate a keyboard shortcut with "
 "braille input"
-msgstr "点字入力での仮想的なAltキーとShiftキーの切り替え"
+msgstr ""
+"AltキーとShiftキーのトグル。キーボードのキー入力を点字ディスプレイからエミュ"
+"レート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the left windows and shift keys to emulate a keyboard "
 "shortcut with braille input"
-msgstr "点字入力での仮想的な左WindowsキーとShiftキーの切り替え"
+msgstr ""
+"左WindowsキーとShiftキーのトグル。キーボードのキー入力を点字ディスプレイから"
+"エミュレート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
 "with braille input"
-msgstr "点字入力での仮想的なNVDA制御キーとShiftキーの切り替え"
+msgstr ""
+"NVDA制御キーとShiftキーのトグル。キーボードのキー入力を点字ディスプレイからエ"
+"ミュレート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the control and alt keys to emulate a keyboard shortcut "
 "with braille input"
-msgstr "点字入力での仮想的なコントロールキーとAltキーの切り替え"
+msgstr ""
+"コントロールキーとAltキーのトグル。キーボードのキー入力を点字ディスプレイから"
+"エミュレート"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the control, alt, and shift keys to emulate a keyboard "
 "shortcut with braille input"
-msgstr "点字入力での仮想的なコントロールキーとAltキーとShiftキーの切り替え"
+msgstr ""
+"コントロールキーとAltキーとShiftキーのトグル。キーボードのキー入力を点字ディ"
+"スプレイからエミュレート"
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
@@ -4303,7 +4331,7 @@ msgstr "設定プロファイル {profile} の有効と無効の切り替え"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
-msgstr "システムキーボードのキー入力エミュレート"
+msgstr "キーボード入力のエミュレート"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
@@ -5819,7 +5847,7 @@ msgstr "画面レビュー"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
-msgstr "システムキーボードの%sを押す機能をエミュレート"
+msgstr "キーボードの%sの入力をエミュレート"
 
 msgid "NVDA Speech Viewer"
 msgstr "NVDAスピーチビューアー"
@@ -8191,6 +8219,26 @@ msgstr "終了(&X)"
 msgid "Exit NVDA"
 msgstr "NVDAの終了"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "終了"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "再起動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "アドオンを無効化して再起動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "デバッグログを有効化して再起動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "保留中の更新を実行"
+
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -8211,26 +8259,6 @@ msgstr ""
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
 msgstr "終了オプション(&D)"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "終了"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "再起動"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "アドオンを無効化して再起動"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "デバッグログを有効化して再起動"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "保留中の更新を実行"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8776,7 +8804,7 @@ msgstr "エミュレートされたキー入力 {emulateGesture}"
 
 #. Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
 msgid "Enter gesture to emulate:"
-msgstr "エミュレートする入力ジェスチャーを入力"
+msgstr "エミュレートする入力ジェスチャー"
 
 #. Translators: The label for a filtered category in the Input Gestures dialog.
 #, python-brace-format
@@ -9883,12 +9911,31 @@ msgid ""
 "Enable &selective registration for UI Automation events and property changes"
 msgstr "UIオートメーションのイベントとプロパティ変更を選択的に取得(&S)"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
-msgstr ""
-"Microsoft Word ドキュメントに可能な場合に UI オートメーションを使用(&W)"
+#. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Use UI Automation to access Microsoft Word document controls"
+msgstr "Microsoft Word ドキュメントに UI オートメーションを使用"
+
+#. Translators: Label for the default value of the Use UIA with MS Word combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Default (Where suitable)"
+msgstr "既定の設定(適切であれば使用)"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Only when necessary"
+msgstr "必要な場合のみ使用"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Where suitable"
+msgstr "適切であれば使用"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Always"
+msgstr "常に使用"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10638,6 +10685,11 @@ msgstr "列 {0}の{1}"
 #, python-format
 msgid "%s columns"
 msgstr "%s列"
+
+#. Translators: Indicates the text column number in a document.
+#, python-brace-format
+msgid "column {columnNumber}"
+msgstr "列 {columnNumber}"
 
 msgid "continuous section break"
 msgstr "継続のセクション区切り"

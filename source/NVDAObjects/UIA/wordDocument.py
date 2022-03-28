@@ -438,11 +438,15 @@ class WordDocumentTextInfo(UIATextInfo):
 				)
 				if isinstance(sectionNumber, int):
 					formatField.field['section-number'] = sectionNumber
-				textColumnNumber = UIARemote.msWord_getCustomAttributeValue(
-					docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER
-				)
-				if isinstance(textColumnNumber, int):
-					formatField.field['text-column-number'] = textColumnNumber
+				if False:
+					# #13511: Fetching of text-column-number is disabled
+					# as it causes Microsoft Word 16.0.1493 and newer to crash!!
+					# This should only be reenabled for versions identified not to crash.
+					textColumnNumber = UIARemote.msWord_getCustomAttributeValue(
+						docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER
+					)
+					if isinstance(textColumnNumber, int):
+						formatField.field['text-column-number'] = textColumnNumber
 		return formatField
 
 

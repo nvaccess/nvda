@@ -527,7 +527,6 @@ Vuorovaikutustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin s
 | Etsi | NVDA+Ctrl+F | Avaa valintaikkunan, jossa voidaan etsiä tekstiä nykyisestä asiakirjasta. Katso lisätietoja [Tekstin etsiminen #SearchingForText] -kappaleesta. |
 | Etsi seuraava | NVDA+F3 | Etsii asiakirjasta aiemmin haetun tekstin seuraavan esiintymän. |
 | Etsi edellinen | NVDA+Vaihto+F3 | Etsii asiakirjasta aiemmin haetun tekstin edellisen esiintymän. |
-| Avaa pitkä kuvaus | NVDA+D | Avaa kohdalla olevan elementin mahdollisen pitkän kuvauksen uuteen ikkunaan. | 
 %kc:endInclude
 
 ++ Pikaselausnäppäimet ++[SingleLetterNavigation]
@@ -611,7 +610,8 @@ Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin
 + Matemaattisen sisällön lukeminen +[ReadingMath]
 NVDA:lla on mahdollista lukea ja liikkua vuorovaikutteisesti tuetussa matemaattisessa sisällössä Design Sciencen MathPlayer 4:ää käyttäen.
 Tämä edellyttää, että MathPlayer 4 on asennettu tietokoneelle.
-Se on ladattavissa ilmaiseksi osoitteesta https://www.dessci.com/en/products/mathplayer/
+Se on ladattavissa ilmaiseksi osoitteesta https://www.dessci.com/en/products/mathplayer/.
+Käynnistä NVDA uudelleen MathPlayerin asennuksen jälkeen.
 
 NVDA tukee seuraavia matemaattisia sisältöjä:
 - MathML Mozilla Firefoxissa, Internet Explorerissa ja Google Chromessa.
@@ -1709,8 +1709,8 @@ Tämä asettaa rivimäärän, joka selaustilassa siirrytään painettaessa Page 
 ==== Käytä ruutuasettelua ====[BrowseModeSettingsScreenLayout]
 Pikanäppäin: NVDA+V
 
-Tällä asetuksella määritetään, sijoitetaanko esim. linkit ja muut elementit selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ovat ruudulla.
-Jos asetus on käytössä, elementit näytetään sellaisinaan, mutta jos asetus poistetaan käytöstä, elementit sijoitetaan omille riveilleen.
+Tällä asetuksella voidaan määrittää, sijoitetaanko napsautettava sisältö (linkit, painikkeet ja kentät) selaustilassa omille riveilleen vai säilytetäänkö ne sellaisina kuin ne ruudulla näytetään. Huomaa, että tämä asetus ei koske Microsoft Office -sovelluksia kuten Outlookia tai Wordia, joissa käytetään aina ruutuasettelua.
+Kun ruutuasettelu on käytössä, sivun elementit pysyvät sellaisina kuin ne visuaalisesti näytetään. Esimerkiksi useita linkkejä sisältävä visuaalinen rivi puhutaan ja näytetään pistenäytöllä samalla rivillä olevina useina linkkeinä. Jos asetus ei ole käytössä, sivun elementit sijoitetaan omille riveilleen, mitä voi olla helpompi ymmärtää sivua riveittäin selattaessa, ja vuorovaikutus kohteiden kanssa saattaa olla joillekin käyttäjille helpompaa.
 
 ==== Ota selaustila käyttöön sivua ladattaessa ====[BrowseModeSettingsEnableOnPageLoad]
 Tällä valintaruudulla voidaan määrittää, otetaanko selaustila käyttöön automaattisesti sivua ladattaessa.
@@ -1865,15 +1865,18 @@ Tällä on suuri kielteinen vaikutus suorituskykyyn, etenkin sellaisissa sovellu
 Tämän takia NVDA rajoittaa tapahtumien rekisteröinnin useimmissa tapauksissa järjestelmän kohdistukseen tämän asetuksen ollessa käytössä.
 Mikäli sinulla on suorituskykyongelmia yhdessä tai useammassa sovelluksessa, suosittelemme, että kokeilet tätä toimintoa nähdäksesi, paraneeko suorituskyky.
 
-==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
-Kun tämä asetus on käytössä, NVDA yrittää käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseen Microsoft Wordin asiakirjasäätimistä.
-Tällaisia ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
-Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 10:ssä ja uudemmissa käytettäessä riittävän kattava tarjotakseen lähes nykyisen kaltaisen tuen Microsoft Word -asiakirjoille, jossa on lisäetuna huomattavasti lisääntynyt reagoivuus.
-Joissakin Officen versioissa ei välttämättä kuitenkaan ole saatavilla kaikkea tietoa tai ne ilmaistaan väärin, minkä vuoksi UI automation -tukeen ei voi aina luottaa.
-Suurimmalle osalle käyttäjistä tämän asetuksen oletusarvoinen käyttöön ottaminen ei silti ole suositeltavaa, vaikka Office 2016:n/365:n käyttäjät ovatkin tervetulleita testaamaan tätä ominaisuutta ja tarjoamaan palautetta.
+==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä ====[MSWordUIA]
+Määrittää, käyttääkö NVDA UI Automation -esteettömyysrajapintaa Microsoft Word -asiakirjoille vanhemman objektimallin asemesta.
+Tämä koskee itsensä Microsoft wordin asiakirjojen lisäksi Microsoft Outlookin viestejä.
+Asetus sisältää seuraavat arvot:
+- Oletus (kun käytettävissä)
+- Vain tarvittaessa: Kun Microsoft Wordin objektimalli ei ole käytettävissä.
+- Kun käytettävissä: Microsoft Wordin versio 16.0.15000 tai uudempi, tai kun Wordin objektimalli ei ole käytettävissä.
+- Aina: Aina kun UI automation -rajapinta on käytettävissä Microsoft wordissa (riippumatta siitä, miten valmis se on).
+-
 
-==== Käytä UI Automation -rajapintaa Windowsin komentokehotteessa, kun käytettävissä ====[AdvancedSettingsConsoleUIA]
-Kun tämä asetus on käytössä, NVDA käyttää uutta, työn alla olevaa versiota Windows-komentokehotteen tuesta, joka hyödyntää [Microsoftin tekemiä saavutettavuusparannuksia. https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Ominaisuus on vielä kokeellinen ja keskeneräinen, joten sen käyttöä ei vielä suositella. Valmistuttuaan uuden tuen odotetaan kuitenkin tulevan oletukseksi, mikä parantaa NVDA:n suorituskykyä ja vakautta Windowsin komentokehotteissa.
+==== Käytä UI Automation -rajapintaa Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsConsoleUIA]
+Kun tämä asetus on käytössä, NVDA käyttää uutta, työn alla olevaa versiota Windows-konsolin tuesta, joka hyödyntää [Microsoftin tekemiä saavutettavuusparannuksia. https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Ominaisuus on vielä kokeellinen ja keskeneräinen, joten sen käyttöä ei vielä suositella. Valmistuttuaan uuden tuen odotetaan kuitenkin tulevan oletukseksi, mikä parantaa NVDA:n suorituskykyä ja vakautta Windowsin komentokonsoleissa.
 
 ==== Käytä UIA:ta Microsoft Edgessä ja muissa Chromium-pohjaisissa selaimissa, kun käytettävissä ====[ChromiumUIA]
 Tämän asetuksen avulla voit määrittää, milloin UIA:ta käytetään (mikäli se on käytettävissä) Chromium-pohjaisissa selaimissa, kuten Microsoft Edgessä.
@@ -1888,9 +1891,13 @@ Yhdistelmäruudussa on seuraavat vaihtoehdot:
 ==== Merkinnät ====[Annotations]
 Näillä asetuksilla otetaan käyttöön ominaisuudet, jotka lisäävät kokeellisen tuen ARIA-merkinnöille.
 Jotkin näistä ominaisuuksista voivat olla keskeneräisiä.
+
+%kc:beginInclude
+Ilmoita järjestelmäkohdistimen kohdalla olevan merkinnän kaikkien tietojen yhteenveto painamalla NVDA+D.
+%kc:endInclude
+
 Seuraavat vaihtoehdot ovat käytettävissä:
 - Ilmoita rakenteellisten merkintöjen lisätiedoista: ilmoittaa, mikäli tekstillä tai säätimellä on lisätietoja.
-Lisätietojen yhteenvedon ilmoittaminen on mahdollista liittämällä Ilmoita järjestelmäkohdistimen kohdalla olevan merkinnän kaikkien tietojen yhteenveto -toimintoon syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
 - Puhu aina ARIA-kuvaukset:
   Kuvaus puhutaan, kun ``accDescription``-attribuutin lähteenä on aria-description.
   Tästä on hyötyä verkkosivuilla olevissa merkinnöissä.
@@ -1911,12 +1918,12 @@ Emme vielä suosittele tämän asetuksen oletusarvoista käyttöön ottoa suurim
 Excelin UI automation -rajapinnan toteutus muuttuu jatkuvasti, eikä Microsoft Officen vanhemmat versiot kuin 16.0.13522.10000 anna välttämättä tarpeeksi tietoja, jotta tästä asetuksesta olisi mitään hyötyä.
 
 ==== Puhu salasanat kaikissa laajennetuissa päätteissä ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Tämä asetus säätää, puhutaanko merkit [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] tai [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetusta käytettäessä tilanteissa, joissa ruutu ei päivity (kuten salasanaa syötettäessä) Windowsin komentokehotteessa UI automation -tuen ollessa käytössä ja Mintty:ssä.
+Tämä asetus säätää, puhutaanko merkit [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] tai [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetusta käytettäessä tilanteissa, joissa ruutu ei päivity (kuten salasanaa syötettäessä) Windows-konsolissa UI automation -tuen ollessa käytössä ja Mintty:ssä.
 Turvallisuussyistä tämä asetus tulisi pitää poissa käytöstä.
-Voit kuitenkin halutessasi ottaa sen käyttöön, mikäli sinulla on komentokehotteessa suorituskykyongelmia tai epävakautta kirjoitettujen merkkien ja/tai sanojen puhumisessa, tai työskentelet luotetuissa ympäristöissä ja haluat, että salasanat puhutaan.
+Voit kuitenkin halutessasi ottaa sen käyttöön, mikäli sinulla on konsoleissa suorituskykyongelmia tai epävakautta kirjoitettujen merkkien ja/tai sanojen puhumisessa, tai työskentelet luotetuissa ympäristöissä ja haluat, että salasanat puhutaan.
 
-==== Käytä laajennettua kirjoitettujen merkkien tukea Windowsin vanhassa komentokehotteessa, kun käytettävissä ====[AdvancedSettingsKeyboardSupportInLegacy]
-Tämä asetus ottaa käyttöön vaihtoehtoisen menetelmän kirjoitettujen merkkien tunnistamiseen Windowsin komentokehotteissa.
+==== Käytä laajennettua kirjoitettujen merkkien tukea vanhassa Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsKeyboardSupportInLegacy]
+Tämä asetus ottaa käyttöön vaihtoehtoisen menetelmän kirjoitettujen merkkien tunnistamiseen vanhoissa Windows-konsoleissa.
 Vaikka se parantaa suorituskykyä ja estää konsolitulosteen tavaamista, se ei ehkä ole yhteensopiva joidenkin pääteohjelmien kanssa.
 Tämä ominaisuus on käytettävissä ja käytössä oletusarvoisesti Windows 10:n versiossa 1607 ja sitä uudemmissa, kun UI Automation -rajapinta ei ole käytettävissä tai se on poistettu käytöstä.
 Varoitus: Kun tämä asetus on käytössä, ruudulla näkymättömät kirjoitetut merkit, kuten salasanat, puhutaan.
@@ -1925,14 +1932,14 @@ Epäluotettavissa ympäristöissä voit salasanoja kirjoittaessasi poistaa väli
 ==== Muutosten havaitsemismenetelmä ====[DiffAlgo]
 Tämä asetus määrittää, miten NVDA havaitsee uuden puhuttavan tekstin päätteissä.
 Tässä yhdistelmäruudussa on kolme vaihtoehtoa:
-- Automaattinen: Tämä saa NVDA:n suosimaan Diff Match Patchia useimmissa tilanteissa, mutta palaa takaisin Difflibiin ongelmallisissa sovelluksissa, kuten Windowsin komentokehotteen ja Mintty:n vanhemmissa versioissa.
+- Automaattinen: Tämä saa NVDA:n suosimaan Diff Match Patchia useimmissa tilanteissa, mutta palaa takaisin Difflibiin ongelmallisissa sovelluksissa, kuten Windows-konsolin ja Mintty:n vanhemmissa versioissa.
 - Diff Match Patch: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset merkeittäin, jopa sellaisissa tilanteissa, joissa sitä ei suositella.
-Tämä saattaa parantaa suorituskykyä, kun konsolille kirjoitetaan suuria tekstimääriä, ja mahdollistaa rivien keskellä tehtyjen muutosten tarkemman ilmoittamisen.
+Tämä saattaa parantaa suorituskykyä, kun konsoliin kirjoitetaan suuria tekstimääriä, sekä mahdollistaa rivien keskellä tehtyjen muutosten tarkemman ilmoittamisen.
 Joissakin sovelluksissa uuden tekstin lukeminen voi kuitenkin olla nykivää tai epäjohdonmukaista.
 - Difflib: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset riveittäin, jopa sellaisissa tilanteissa, joissa sitä ei suositella.
 Tämä vastaa NVDA:n toiminnallisuutta versiossa 2020.4 ja sitä vanhemmissa.
 Tämä asetus saattaa vakauttaa saapuvan tekstin lukemista joissakin sovelluksissa.
-Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskelle lisätään merkki tai poistetaan sellainen siitä.
+Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskelle lisätään tai siitä poistetaan merkki.
 -
 
 ==== Yritä perua vanhentuneiden kohdistustapahtumien puhe ====[CancelExpiredFocusSpeech]
@@ -2858,10 +2865,6 @@ Seuraavia pistenäyttöjä tuetaan:
 
 Nämä näytöt eivät tue NVDA:n automaattista pistenäytön tunnistusta.
 
-NVDA käyttää BrxComia, mikäli se on asennettu.
-BrxCom on työkalu, joka mahdollistaa pistenäytön näppäimistösyötteen toimimisen itsenäisesti ruudunlukuohjelmasta riippumatta.
-Pistekirjoituksen syöttäminen on mahdollista Trio- ja BRAILLEX Live -malleissa.
-
 Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
 Sitä voidaan siirtää neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
 C- ja Live-sarjan näytöt ovat ainoa poikkeus.
@@ -3343,14 +3346,14 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | -s | --secure | Suojattu tila: poistaa käytöstä Python-konsolin, profiilitoiminnot, kuten luonnin, poiston, uudelleennimeämisen jne., päivitystarkistuksen, jotkin Tervetuloa-valintaikkunan ja yleisten asetusten kategorian valintaruudut (esim. Käytä sisäänkirjautumisen aikana, Tallenna asetukset suljettaessa jne.) sekä lokin tarkastelun ja lokin tallennuksen (käytetään usein suojatuissa ruuduissa). Huomaa myös, että tämä komento poistaa käytöstä järjestelmäasetuksiin tallentamisen sekä syötekomentokartan tallentamisen levylle. |
 | Ei mitään | --disable-addons | Poistaa lisäosat käytöstä. |
 | Ei mitään | --debug-logging | Ottaa käyttöön virheenkorjaus-lokitason vain nykyisessä istunnossa. Tämä asetus korvaa minkä tahansa muun annetun lokitason (""--loglevel"", -l) argumentin, lokin käytöstä poistava valitsin mukaan lukien. |
-| Ei mitään | --no-logging | Poistaa lokin kokonaan käytöstä NVDA:ta käytettäessä. Tämä asetus voidaan korvata, mikäli lokitaso (""--loglevel"", -l) määritetään komentoriviparametrilla tai jos virheenkorjauslokin tallennus otetaan käyttöön. |
+| Ei mitään | --no-logging | Poistaa lokin kokonaan käytöstä NVDA:ta käytettäessä. Tämä asetus voidaan ohittaa, mikäli lokitaso (""--loglevel"", -l) määritetään komentoriviparametrilla tai jos virheenkorjauslokin tallennus otetaan käyttöön. |
 | Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukijalippua. |
 | Ei mitään | --install | Asentaa NVDA:n ja käynnistää asennetun kopion. |
 | Ei mitään | --install-silent | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
 | Ei mitään | --enable-start-on-logon=True|False | Ottaa asennettaessa käyttöön NVDA:n [Käytä sisäänkirjautumisen aikana -asetuksen. #StartAtWindowsLogon] |
 | Ei mitään | --copy-portable-config | Kopioi asennettaessa massamuistiversion asetukset annetusta hakemistopolusta (--config-path, -c) nykyiseen käyttäjätiliin. |
 | Ei mitään | --create-portable | Luo ja käynnistää NVDA:n massamuistiversion. Parametri --portable-path on myös määritettävä. |
-| Ei mitään | --create-portable-silent | Luo NVDA:n massamuistiversion, eikä käynnistä sitä luonnin jälkeen. Parametri --portable-path on myös määritettävä. |
+| Ei mitään | --create-portable-silent | Luo NVDA:n massamuistiversion eikä käynnistä sitä luonnin jälkeen. Parametri --portable-path on myös määritettävä. |
 | Ei mitään | --portable-path=POLKU | Hakemistopolku, jonne massamuistiversio luodaan. |
 
 ++ Järjestelmänlaajuiset parametrit ++[SystemWideParameters]

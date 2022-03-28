@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-04 00:02+0000\n"
-"PO-Revision-Date: 2022-03-04 10:47+0100\n"
+"POT-Creation-Date: 2022-03-18 00:02+0000\n"
+"PO-Revision-Date: 2022-03-18 11:35+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -725,6 +725,11 @@ msgstr "Bulgaro grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Catalan grade 1"
+msgstr "Catalano Grado 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Curdo centrale grado 1"
 
@@ -777,6 +782,11 @@ msgstr "Danese 6 punti grado 2"
 #. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "Danese 8 punti grado 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German 6 dot computer braille"
+msgstr "Tedesco braille computer 6 punti"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3183,14 +3193,13 @@ msgstr ""
 #. Translators: Description for a keyboard command
 #. which reports location of the text at the caret position
 #. or object with focus if there is no caret.
-#, fuzzy
 msgid ""
 "Reports information about the location of the text or object at the position "
 "of system caret. Pressing twice may provide further detail."
 msgstr ""
-"Legge le informazioni sulla posizione del testo o dell'oggetto su cui si "
-"trova il cursore di controllo. Una doppia pressione fornisce se possibile "
-"ulteriori dettagli."
+"Fornisce le informazioni sulla posizione del testo o dell'oggetto su cui si "
+"trova il cursore di sistema. Una doppia pressione può fornire ulteriori "
+"dettagli."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3445,11 +3454,12 @@ msgstr "Modalità  voce parlare"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
-#, fuzzy
 msgid ""
 "Moves the focus out of the current embedded object and into the document "
 "that contains it"
-msgstr "Sposta il focus al documento più vicino che contiene il focus"
+msgstr ""
+"Sposta il focus fuori dall'oggetto attuale posizionandolo al documento che "
+"lo contiene"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
@@ -3547,6 +3557,8 @@ msgstr ""
 #. Translators: the description for the reportDetailsSummary script.
 msgid "Report summary of any annotation details at the system caret."
 msgstr ""
+"Legge il riassunto di tutti i dettagli di un'annnotazione alla posizione del "
+"cursore di sistema"
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
 msgid "No additional details"
@@ -3976,24 +3988,21 @@ msgid "speech viewer enabled"
 msgstr "Visualizzatore sintesi vocale Attivato"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
-#, fuzzy
 msgid ""
 "Toggles the NVDA Braille viewer, a floating window that allows you to view "
 "braille output, and the text equivalent for each braille character"
 msgstr ""
-"Attiva o disattiva il visualizzatore sintesi vocale, una finestra fluttuante "
-"che permette di vedere a schermo tutto il testo pronunciato dalla sintesi "
-"vocale"
+"Attiva o disattiva il visualizzatore Braille di NVDA, una finestra "
+"riposizionabile che consente di visualizzare l'output braille e il testo "
+"equivalente per ciascun carattere"
 
 #. Translators: The message announced when disabling braille viewer.
-#, fuzzy
 msgid "Braille viewer disabled"
-msgstr "Immissione Braille disattivata"
+msgstr "Visualizzatore braille disattivato"
 
 #. Translators: The message announced when enabling Braille viewer.
-#, fuzzy
 msgid "Braille viewer enabled"
-msgstr "Immissione braille attivata"
+msgstr "Visualizzatore braille attivato"
 
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
@@ -4204,64 +4213,52 @@ msgstr ""
 "il tasto)"
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the control and shift keys to emulate a keyboard shortcut "
 "with braille input"
 msgstr ""
-"simula la pressione del tasto control per ottenere combinazioni di tasti "
-"dalla tastiera braille (Premere una volta per attivare e un'altra per "
-"disattivare il tasto)"
+"simula la pressione di control e shift per effettuare combinazioni di tasti "
+"tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the alt and shift keys to emulate a keyboard shortcut with "
 "braille input"
 msgstr ""
-"simula la pressione del tasto shift per ottenere combinazioni di tasti dalla "
-"tastiera braille (Premere una volta per attivare e un'altra per disattivare "
-"il tasto)"
+"simula la pressione di alt e shift per effettuare combinazioni di tasti "
+"tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the left windows and shift keys to emulate a keyboard "
 "shortcut with braille input"
 msgstr ""
-"simula la pressione del tasto Windows di sinistra per ottenere combinazioni "
-"di tasti dalla tastiera braille (Premere una volta per attivare e un'altra "
-"per disattivare il tasto)"
+"simula la pressione di Windows di siniistra e shift per effettuare "
+"combinazioni di tasti tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
 "with braille input"
 msgstr ""
-"simula la pressione del tasto shift per ottenere combinazioni di tasti dalla "
-"tastiera braille (Premere una volta per attivare e un'altra per disattivare "
-"il tasto)"
+"simula la pressione di NVDA e shift per effettuare combinazioni di tasti "
+"tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the control and alt keys to emulate a keyboard shortcut "
 "with braille input"
 msgstr ""
-"simula la pressione del tasto control per ottenere combinazioni di tasti "
-"dalla tastiera braille (Premere una volta per attivare e un'altra per "
-"disattivare il tasto)"
+"simula la pressione di control e alt per effettuare combinazioni di tasti "
+"tramite l'immissione braille"
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the control, alt, and shift keys to emulate a keyboard "
 "shortcut with braille input"
 msgstr ""
-"simula la pressione del tasto control per ottenere combinazioni di tasti "
-"dalla tastiera braille (Premere una volta per attivare e un'altra per "
-"disattivare il tasto)"
+"simula la pressione di control, alt e shift per effettuare combinazioni di "
+"tasti tramite l'immissione braille"
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
@@ -8086,7 +8083,7 @@ msgstr "non protetta"
 
 #. Translators: a state that denotes the existance of a note.
 msgid "has note"
-msgstr ""
+msgstr "Con nota"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -8365,6 +8362,26 @@ msgstr "&Esci"
 msgid "Exit NVDA"
 msgstr "Esci da NVDA"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Esci"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Riavvia"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Riavvia con i componenti aggiuntivi disattivati"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Riavvia con il debug del log attivato"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Installa aggiornamenti in sospeso"
+
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -8386,26 +8403,6 @@ msgstr ""
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
 msgstr "Cosa &desideri fare?"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "Esci"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "Riavvia"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "Riavvia con i componenti aggiuntivi disattivati"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "Riavvia con il debug del log attivato"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "Installa aggiornamenti in sospeso"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -10104,13 +10101,32 @@ msgstr ""
 "Abilita la registrazione selettiva per eventi UI Automation e cambiamenti di "
 "proprietà"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
+#. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Use UI Automation to access Microsoft Word document controls"
 msgstr ""
-"Utilizza UI Automation per accedere ai controlli dei documenti Microsoft "
-"&Word quando disponibili"
+"Utilizza UI Automation per accedere ai controlli dei documenti Microsoft Word"
+
+#. Translators: Label for the default value of the Use UIA with MS Word combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Default (Where suitable)"
+msgstr "Predefinito (se appropriato)"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Only when necessary"
+msgstr "Solo quando necessario"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Where suitable"
+msgstr "Ove opportuno"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Always"
+msgstr "Sempre"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10166,9 +10182,8 @@ msgstr "Annotazioni"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Report 'has details' for structured annotations"
-msgstr "Leggi le note per i traduttori"
+msgstr "Annuncia \"con dettagli\" in presenza di annotazioni strutturate"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10220,13 +10235,12 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid ""
 "Use enhanced t&yped character support in legacy Windows Console when "
 "available"
 msgstr ""
-"Utilizza il nuovo supporto per la digitazione caratteri nella Console di "
-"Windows quando disponibile (&y)"
+"Utilizza il nuovo supporto ai caratteri digitati nelle Console meno recenti "
+"di Windows quando disponibile"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -10238,9 +10252,8 @@ msgstr "Algoritmo &diff:"
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#, fuzzy
 msgid "Automatic (prefer Diff Match Patch)"
-msgstr "Automatico (Diff Match Patch)"
+msgstr "Automatico (priorità a Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
@@ -10879,6 +10892,11 @@ msgstr "colonna {0} di {1}"
 msgid "%s columns"
 msgstr "%s colonne"
 
+#. Translators: Indicates the text column number in a document.
+#, python-brace-format
+msgid "column {columnNumber}"
+msgstr "colonna {columnNumber}"
+
 msgid "continuous section break"
 msgstr "Interruzione sezione continua"
 
@@ -11128,18 +11146,16 @@ msgid "line spacing %s"
 msgstr "Spaziatura righe %s"
 
 #. Translators: Reported when text contains a draft comment.
-#, fuzzy
 msgid "has draft comment"
-msgstr "Contiene commenti"
+msgstr "con commento bozza"
 
 #. Translators: Reported when text contains a resolved comment.
-#, fuzzy
 msgid "has resolved comment"
-msgstr "Contiene commenti"
+msgstr "Con commento risolto"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "Non contiene commenti"
+msgstr "Fuori commento"
 
 #. Translators: Reported when text contains a bookmark
 msgid "bookmark"
@@ -11147,7 +11163,7 @@ msgstr "Segnalibro"
 
 #. Translators: Reported when text no longer contains a bookmark
 msgid "out of bookmark"
-msgstr ""
+msgstr "Fuori dal segnalibro"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
