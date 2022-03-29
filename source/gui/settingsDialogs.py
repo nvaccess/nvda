@@ -1609,7 +1609,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
-		speakCharacterDescriptionsText = _("&Speak character descriptions on movement")
+		speakCharacterDescriptionsText = _("Sp&eak character descriptions on movement")
+
 		self.speakCharacterDescriptionsCheckbox = settingsSizerHelper.addItem(
 			wx.CheckBox(self, label=speakCharacterDescriptionsText)
 		)
