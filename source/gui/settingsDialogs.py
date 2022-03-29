@@ -1618,7 +1618,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			self.speakCharacterDescriptionsCheckbox
 		)
 		self.speakCharacterDescriptionsCheckbox.SetValue(
-			config.conf["speech"][self.driver.name]["extraDescriptions"]
+			config.conf["speech"][self.driver.name]["autoCharacterDescriptions"]
+
 		)
 		self.speakCharacterDescriptionsCheckbox.Bind(wx.EVT_CHECKBOX, self.onSpeakCharacterDescriptionsChange)
 
