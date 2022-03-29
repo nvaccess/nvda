@@ -47,7 +47,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoDialectSwitching = boolean(default=false)
 
 	[[__many__]]
-		extraDescriptions = integer(default=0, min=0, max=5000)
+		autoCharacterDescriptions = integer(default=0, min=0, max=5000)
+
 		capPitchChange = integer(default=30,min=-100,max=100)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
