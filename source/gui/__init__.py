@@ -151,11 +151,8 @@ class MainFrame(wx.Frame):
 		# Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration restored to factory defaults"))
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSaveConfigurationCommand(self,evt):
-		if globalVars.appArgs.secure:
-			# Translators: Reported when an action cannot be performed because NVDA is in a secure screen
-			queueHandler.queueFunction(queueHandler.eventQueue, ui.message, _("Not available in secure context"))
-			return
 		try:
 			config.conf.save()
 			# Translators: Reported when current configuration has been saved.
@@ -285,6 +282,7 @@ class MainFrame(wx.Frame):
 		# Translators: The title of the dialog to show about info for NVDA.
 		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onCheckForUpdateCommand(self, evt):
 		updateCheck.UpdateChecker().check()
 
@@ -340,8 +338,8 @@ class MainFrame(wx.Frame):
 		NVDAObject.clearDynamicClassCache()
 
 	@blockAction.when(
-		blockAction.Context.MODAL_DIALOG_OPEN,
 		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
 	)
 	def onCreatePortableCopyCommand(self,evt):
 		self.prePopup()
@@ -351,16 +349,16 @@ class MainFrame(wx.Frame):
 		self.postPopup()
 
 	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
 		blockAction.Context.MODAL_DIALOG_OPEN,
-		blockAction.Context.SECURE_MODE
 	)
 	def onInstallCommand(self, evt):
 		from gui import installerGui
 		installerGui.showInstallGui()
 
 	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
 		blockAction.Context.MODAL_DIALOG_OPEN,
-		blockAction.Context.SECURE_MODE
 	)
 	def onRunCOMRegistrationFixesCommand(self, evt):
 		if messageBox(
