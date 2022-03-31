@@ -12,6 +12,7 @@ import builtins
 import os
 import sys
 import ctypes
+import ctypes.wintypes
 
 import weakref
 
@@ -74,6 +75,37 @@ class LOCALE(enum.IntEnum):
 	SENGLISHLANGUAGENAME = 0x00001001
 	SENGLISHCOUNTRYNAME = 0x00001002
 	IDEFAULTANSICODEPAGE = 0x00001004
+	IREADINGLAYOUT = 0x00000070
+	""" Windows 7 and later: The reading layout for text. See enum class L{ReadingDirection}.
+	"""
+	RETURN_NUMBER = 0x20000000
+	"""Retrieve a number.
+	This constant causes GetLocaleInfo or GetLocaleInfoEx to retrieve a value as a number
+	instead of as a string.
+	The buffer that receives the value must be at least the length of a DWORD value.
+	This constant can be combined with any other constant having a name that begins with "LOCALE_I".
+	"""
+
+
+class ReadingDirection(enum.IntEnum):
+	"""Values from LOCALE_IREADINGLAYOUT, usage with kernal32.GetLocaleInfoEx
+	Windows 7 and later: The reading layout for text.
+	"""
+	LEFT_TO_RIGHT = 0
+	"""Read from left to right, as for the English (United States) locale."""
+	RIGHT_TO_LEFT = 1
+	"""Read from right to left, as for Arabic locales."""
+	TOP_TO_BOTTOM_RIGHT_TO_LEFT = 2
+	"""Either read vertically from top to bottom with columns going from right to left,
+	or read in horizontal rows from left to right, as for the Japanese (Japan) locale.
+	"""
+	TOP_TO_BOTTOM_LEFT_TO_RIGHT = 3
+	"""Read vertically from top to bottom with columns going from left to right,
+	as for the Mongolian (Mongolian) locale.
+	"""
+	# Shorter aliases:
+	LTR = LEFT_TO_RIGHT
+	RTL = RIGHT_TO_LEFT
 
 
 def isNormalizedWin32Locale(localeName: str) -> bool:
@@ -405,6 +437,23 @@ def localeStringFromLocaleCode(localeCode: str) -> str:
 	countryName = englishCountryNameFromNVDALocale(normalizedLocaleCode)
 	codePage = ansiCodePageFromNVDALocale(normalizedLocaleCode)
 	return f"{langName}_{countryName}.{codePage}"
+
+
+def getReadingDirection() -> Optional[ReadingDirection]:
+	languageCode = getLanguage()
+
+	buf = ctypes.wintypes.DWORD(0)
+	bufLength = ctypes.sizeof(ctypes.wintypes.DWORD)
+	res = winKernel.kernel32.GetLocaleInfoEx(
+		languageCode,
+		LOCALE.RETURN_NUMBER | LOCALE.IREADINGLAYOUT,
+		ctypes.byref(buf),
+		bufLength
+	)
+	if not res:
+		raise ctypes.WinError()
+
+	return ReadingDirection(int(buf.value))
 
 
 def _setPythonLocale(localeString: str) -> bool:
