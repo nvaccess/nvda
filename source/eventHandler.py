@@ -438,4 +438,11 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# This window or its root is a topmost window.
 		# This includes menus, combo box pop-ups and the task switching list.
 		return True
+	# This may be an event for a windowless embedded Chrome document
+	# (E.g. Microsoft Loop component).
+	if wClass == "Chrome_RenderWidgetHostHWND":
+		pid, tid = winUser.getWindowThreadProcessID(windowHandle)
+		gi = winUser.getGUIThreadInfo(tid)
+		if winUser.getClassName(gi.hwndFocus) == "Chrome_WidgetWin_0":
+			return True
 	return False
