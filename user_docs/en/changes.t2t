@@ -35,8 +35,19 @@ What's New in NVDA
 == Changes for Developers ==
 - Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
 - When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
+-
+
+=== Deprecations ===
+These are proposed API breaking changes.
+The deprecated part of the API will continue to be available until the specified release.
+If no release is specified, the plan for removal has not been determined.
+Note, the roadmap for removals is 'best effort' and may be subject to change.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+
 - ``gui.quit`` has been deprecated for removal in 2023.1. (#13498)
-  - Use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
+  - Use ``wx.CallAfter(mainFrame.onExitCommand, None)`` directly instead.
   -
 -
 
