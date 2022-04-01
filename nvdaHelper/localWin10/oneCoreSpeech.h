@@ -16,12 +16,17 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #pragma once
 #define export __declspec(dllexport)
 
-typedef void (*ocSpeech_Callback)(byte* data, int length, const wchar_t* markers);
+typedef void (*ocSpeech_Callback)(BYTE* data, int length, const wchar_t* markers);
 
 class OcSpeech {
 private:
 	winrt::Windows::Media::SpeechSynthesis::SpeechSynthesizer synth{ nullptr };
 	ocSpeech_Callback callback;
+	void protectedCallback(
+		BYTE* data,
+		int length,
+		const wchar_t* markers
+	);
 
 public:
 	OcSpeech();

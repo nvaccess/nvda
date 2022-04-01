@@ -80,6 +80,15 @@ void OcSpeech::setCallback(ocSpeech_Callback fn) {
 	callback = fn;
 }
 
+void OcSpeech::protectedCallback(
+	BYTE * data,
+	int length,
+	const wchar_t* markers
+) {
+	assertOcSpeechInstanceAlive(this);
+	callback(data, length, markers);
+}
+
 fire_and_forget OcSpeech::speak(hstring text) {
 	// Ensure we catch all exceptions in this method,
 
@@ -95,7 +104,7 @@ fire_and_forget OcSpeech::speak(hstring text) {
 			speechStream = co_await synth.SynthesizeSsmlToStreamAsync(text);
 		} catch (hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-			callback(nullptr, 0, nullptr);
+			protectedCallback(nullptr, 0, nullptr);
 			co_return;
 		}
 		// speechStream.Size() is 64 bit, but Buffer can only take 32 bit.
@@ -117,10 +126,10 @@ fire_and_forget OcSpeech::speak(hstring text) {
 			// Data has been read from the speech stream.
 			// Pass it to the callback.
 			BYTE* bytes = buffer.data();
-			callback(bytes, buffer.Length(), markersStr.c_str());
+			protectedCallback(bytes, buffer.Length(), markersStr.c_str());
 		} catch (hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-			callback(nullptr, 0, nullptr);
+			protectedCallback(nullptr, 0, nullptr);
 		}
 	} catch (...) {
 		LOG_ERROR(L"Unexpected error in OcSpeech::speak");
