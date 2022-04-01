@@ -332,6 +332,7 @@ Dưới đây là các phím tắt mà NVDA cung cấp cho việc thao tác vớ
 | Đọc dòng hiện tại | NVDA+mũi tên lên | NVDA+l | Đọc dòng hiện tại, bấm nhanh hai lần để đánh vần và bấm nhanh ba lần để đánh vần dòng đó với phần mô tả ký tự |
 | Đọc vùng văn bản đang chọn | NVDA+Shift+mũi tên lên | NVDA+shift+s | Đọc vùng văn bản đang được chọn |
 | Thông báo định dạng văn bản | NVDA+f | NVDA+f | Thông báo định dạng của văn bản tại vị trí con trỏ nháy. Bấm hai lần để hiển thị thông tin trong chế độ duyệt |
+| Thông báo vị trí con trỏ nháy | NVDA+Delete bàn phím số | NVDA+delete | không có | Báo các thông tin về vị trí của văn bản hay đối tượng tại vị trí con trỏ nháy. Ví dụ, có thể bao gồm tỉ lệ phần trăm so với  tài liệu, khoảng cách từ rìa của trang hoặc vị trí chính xác trên màn hình. Bấm hai lần có thể cung cấp nhiều thông tin hơn. |
 | Đọc câu tiếp theo | alt+mũi tên xuống | alt+mũi tên xuống | Di chuyển con trỏ nháy đến câu kế tiếp và đọc nó (Chỉ hỗ trợ trong Microsoft Word và Outlook). |
 | Đọc câu trước | alt+mũi tên lên | alt+mũi tên lên | Di chuyển con trỏ nháy đến câu trước đó và đọc nó (Chỉ hỗ trợ trong Microsoft Word và Outlook). |
 
@@ -380,7 +381,7 @@ Sử dụng các phím tắt sau để duyệt qua các đối tượng:
 | Chuyển đến đối tượng đang có focus | NVDA+dấu trừ bàn phím số | NVDA+xóa lùi | không có | Chuyển đến đối tượng đang có focus và đặt con trỏ duyệt vào vị trí con trỏ nháy (nếu đối tượng có dấu nháy)|
 | Kích hoạt đối tượng hiện tại | NVDA+enter bàn phím số | NVDA+enter | Hai-chạm | Kích hoạt đối tượng đang duyệt (giống như kích hoạt một đối tượng đang có focus) |
 | Chuyển focus hoặc dấu nháy hệ thống đến vị trí duyệt hiện tại | NVDA+shift+dấu trừ bàn phím số | NVDA+shift+xóa lùi | không có | Bấm một lần để chuyển focus đến đến đối tượng điều hướng; bấm nhanh hai lần để chuyển dấu nháy đến vị trí của con trỏ duyệt |
-| Thông báo vị trí con trỏ duyệt | NVDA+delete bàn phím số | NVDA+delete | không có | Thông báo vị trí của nội dung hoặc đối tượng tại con trỏ duyệt. Ví dụ theo thông tin được cung cấp như tỷ lệ phần trăm của màn hình, khoảng cách đến các mép của trang hoặc tỉ lệ theo độ phân giải màn hình. Bấm nhanh hai lần để được cung cấp  thêm thông tin nếu có. |
+| Thông báo vị trí con trỏ duyệt | NVDA+Shift+Delete bàn phím số | NVDA+Shift+Delete | không có | Báo thông tin vị trí của văn bản hoặc đối tượng tại con trỏ duyệt. Ví dụ, có thể bao gồm tỉ lệ phần trăm theo tài liệu, khoảng cách đến rìa của trang, hoặc vị trí chính xác trên màn hình. Bấm hai lần có thể cung cấp thêm thông tin. |
 | Chuyển con trỏ duyệt đến thanh trạng thái | không có | không có | không có | Thông báo thanh trạng thái của cửa sổ hiện tại nếu tìm thấy, và nó cũng sẽ đưa đối tượng điều hướng đến vị trí đó. |
 %kc:endInclude
 
@@ -526,7 +527,6 @@ Thêm vào đó, bạn cũng có thể thiết lập để chế độ focus ti�
 | Tìm kiếm | NVDA+control+f | hiển thị một hộp thoại để bạn có thể nhập nội dung tìm kiếm trong tài liệu hiện hành. Xem phần [tìm kiếm văn bản #SearchingForText] để biết thêm thông tin. |
 | Tìm kết quả tiếp theo | NVDA+f3 | Tìm kết quả tiếp theo |
 | Tìm kết quả trước đó | NVDA+shift+f3 | Tìm kết quả trước đó |
-| Mở phần mô tả chi tiết | NVDA+d | Mở phần mô tả chi tiết cho thành phần hiện tại | 
 %kc:endInclude
 
 ++ Ký tự di chuyển đơn ++[SingleLetterNavigation]
@@ -610,17 +610,24 @@ Một lệnh được cung cấp để trở về trang gốc chứa đối tư�
 + Đọc nội dung toán học +[ReadingMath]
 Sử dụng MathPlayer 4 từ Design Science, NVDA có thể đọc và tương tác với những nội dung liên quan đến toán học.
 Yêu cầu chương trình MathPlayer 4 phải được cài đặt trên máy tính.
-MathPlayer được tải về miễn phí tại trang web: https://www.dessci.com/en/products/mathplayer/
+MathPlayer được tải về miễn phí tại trang web: https://www.dessci.com/en/products/mathplayer/.
+Sau khi cài đặt MathPlayer, khởi động lại NVDA.
 
 NVDA hỗ trợ một số nội dung toán học sau đây: 
 - Chương trình MathML chạy trên Mozilla Firefox, Microsoft Internet Explorer và Google Chrome.
-- Design Science MathType với Microsoft Word và PowerPoint.
+- Công thức toán mới của Microsoft Word 365 thông qua UI automation:
+NVDA đã có khả năng đọc và tương tác với các công thức toán trong Microsoft Word 365/2016 build 14326 trở lên.
+Dù vậy, lưu ý rằng các công thức toán được tạo trước đây bằng MathType, trước tiên phải được chuyển thành công thức toán của  (Office Math) bằng cách chọn mỗi công thức và chọn Equation Options -> Convert to Office Math trong trình đơn ngữ cảnh. Ensure your version of MathType is the latest version before doing this.
+Microsoft Word giờ đây cũng cung cấp phương pháp điều hướng theo dòng kí hiệu thông qua chính các công thức, và hỗ trợ nhập nội dugn toán sử dụng vài cú pháp, bao gồm LateX. Để có thêm thông tin, vui lòng xem [Các công thức định dạng tuyến tính sử dụng UnicodeMath và LaTeX trong Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+- Microsoft Powerpoint và các phiên bản cũ của Microsoft Word: 
+NVDA có thể đọc và duyệt các công thức của MathType trong cả Microsoft Powerpoint và Microsoft word.
 Cần phải cài MathType để chức năng này hoạt động.
 Chỉ cần cài phiên bản chạy thử là đủ.
 Có thể tải tại https://www.dessci.com/en/products/mathtype/
-- MathML trong chương trình Adobe Reader.
+- Adobe Reader:
 Lưu ý là đây vẫn chưa phải chuẩn chính thức. Vì vậy, hiện vẫn chưa có phần mềm chung có thể sản xuất nội dung này.
-- Tài liệu toán tiếp cận trên Kindle cho PC.-
+- Máy đọc Kindle (Kindle Reader) cho PC:
+NVDA có thể đọc và duyệt nội dugn toán trong Kindle cho PC với các sách có nội dung toán tiếp cận.
 -
 
 Khi đọc tài liệu, NVDA sẽ đọc bất kỳ nội dung toán học  được hỗ trợ.
@@ -764,8 +771,28 @@ Ví dụ, nếu bạn sử dụng mã chữ nổi có dấu báo số đứng tr
 %kc:beginInclude
 Bấm chấm 7 để xóa ô hoặc ký tự vừa nhập.
 Chấm 8 dùng để chuyển dịch phần chữ nổi nhập liệu và bấm phím enter.
-Bấm chấm 7 + 8 để chuyển dịch phần chữ nổi nhập liệu nhưng không thêm vào khoảng trắng hay bấm phím enter.
+Bấm chấm 7 + chấm 8 để chuyển dịch phần chữ nổi nhập liệu nhưng không thêm vào khoảng trắng hay bấm phím enter.
 %kc:endInclude
+
++++ Các phím tắt để nhập liệu +++[BrailleKeyboardShortcuts]
+NVDA hỗ trợ các phím tắt cho việc nhập liệu và giả lập các phím bấm bằng màn hình chữ nổi.
+Kiểu giả lập này có hai dạng: gán trực tiếp kiểu nhập chữ nổi vào một số phím bấm và dùng các phím bổ trợ ảo.
+
+Những phím được dùng phổ biến, như các phím mũi tên hay bấm Alt để mở các trình đơn, có thể gán trực tiếp cho các kiểu nhập liệu chữ nổi.
+Trình điều khiển cho mỗi màn hình chữ nổi đã được trang bị trước với một vài kiểu gán như thế này.
+Bạn có thể gán lại chúng hoặc thêm các phím giả lập mới từ [Hộp thoại quản lý thao tác #InputGestures].
+
+Trong khi phương pháp này hữu ích cho thao tác bấm phím phổ biến hoặc các phím riêng biệt (Tab chẳng hạn), bạn có thể sẽ không muốn gán một nhóm phím tắt riêng biệt cho mỗi phím lệnh.
+Để cho phép bấm các phím giả lập trong khi giữ phím bổ trợ, NVDA cung cấp các lệnh để bật / tắt các phím control, alt, shift, windows và NVDA, kèm theo các phím lệnh cho vài kết hợp với những phím này.
+Để bật / tắt các phím này, trước tiên, bấm lệnh (hoặc trình tự các lệnh) cho các phím lệnh bạn muốn bấm, rồi nhập kí tự là phần phím tắt bạn muốn nhập.
+Ví dụ, để bấm control+f, dùng lệnh "bật / tắt phím control" rồi gõ f,
+và để nhập control+alt+t, dùng lệnh  "Bật / tắt phím control" và "Bật / tắt phím alt" theo trình tự, hoặc "Bật / tắt các phím control và alt", tiếp sau đó gõ t.
+
+Nếu bạn sơ ý bật / tắt các phím bổ trợ, bấm lại các phím đó sẽ tắt nó đi.
+
+Khi gõ trong chữ nổi viết tắt, việc bật tắt các phím bổ trợ sẽ làm cho nội dung được nhập của bạn chỉ được  dịch nếu đã bấm các chấm 7+8.
+Thêm nữa, các phím giả lập không thể phản ánh phần chữ nổi đã được nhập trước khi bấm các phím bổ trợ.
+Nghĩa là, để nhập alt+2 với mã chữ nổi có sử dụng số, trước tiên bạn phải bật phím Alt rồi gõ kí hiệu số.
 
 + Hỗ trợ nhìn +[Vision]
 Trong khi NVDA chủ yếu hướng đến người mù hoặc nhìn kém sử dụng bộ đọc hay chữ nổi để vận hành một máy vi tính, nó cũng cung cấp chức năng dựng sẵn để thay đổi nội dung trên màn hình.
@@ -1682,8 +1709,8 @@ Phân loại này có các mục sau:
 ==== Sử dụng kiểu trình bày theo màn hình ====[BrowseModeSettingsScreenLayout]
 Phím bật/tắt: NVDA+v
 
-Tùy chọn này cho phép bạn thiết lập nội dung ở chế độ duyệt sẽ được trình bày nội dung như các liên kết hay những trường khác trên mỗi dòng; hoặc trình bày như nó hiển thị trên màn hình.
-Nếu bật, những đối tượng đó sẽ được trình bày như nó hiển thị trên màn hình; nếu tắt, mỗi trường/đối tượng sẽ được trình bày trên từng dòng riêng.
+Tùy chọn này cho phép bạn thiết lập nội dung dạng có thể kích hoạt (liên kết, nút bấm và biểu mẫu) ở chế độ duyệt trên một dòng riêng biệt, hoặc trình bày như nó hiển thị trên màn hình. Lưu ý là tùy chọn này không áp dụng cho các ứng dụng trong bộ Microsoft Office như Outlook và Word, vốn dĩ luôn dùng kiểu trình bày theo màn hình.
+Khi bật tùy chọn này, các thành phần của trang sẽ thể hiện như nó đang hiển thị một cách trực quan. Ví dụ, một dòng có nhiều liên kết đang hiển thị trực quan cũng sẽ được thể hiện trong tiếng nói và chữ nổi là dòng có nhiều liên kết. Khi tắt tùy chọn này, các thành phần của trang sẽ được thể hiện trên từng dòng riêng biệt, có thể dễ hiểu hơn khi điều hướng qua từng dòng, và cũng làm cho dễ tương tác với các thành phần hơn với một số người dùng.
 
 ==== Bật chế độ duyệt khi tải trang ====[BrowseModeSettingsEnableOnPageLoad]
 Hộp kiểm này bật tắt tính năng cho phép chế độ duyệt tự động bật khi tải một trang.
@@ -1725,6 +1752,7 @@ Mặc định được bật, tùy chọn này cho phép bạn chặn các thao 
 Ví dụ khi tùy chọn này được bật và ta bấm chữ j, nó sẽ bị chặn lại, không được gửi đến tài liệu. Mặc dù nó không phải là phím lệnh di chuyển nhanh và cũng không phải là phím lệnh của ứng dụng đang có focus.
 Trường hợp này, NVDA sẽ yêu cầu Windows phát một âm thanh mặc định bất cứ khi nào bấm một phím bị chặn.
 
+%kc:setting
 ==== Tự đưa focus hệ thống đến thành phần có thể có focus ====[BrowseModeSettingsAutoFocusFocusableElements]
 Phím tắt: NVDA+8
 
@@ -1751,7 +1779,8 @@ Bạn có thể chọn các mục sau:
  - Màu chữ
 - Thông tin tài liệu
  - Các chú thích
- - Các thay đổi
+ - Các dấu trang
+ - Các thay đổi bản thảo
  - Lỗi chính tả
 - Trang và Phân cách
  - Số trang
@@ -1836,18 +1865,18 @@ Khi tắt tùy chọn này, NVDA đăng kí cho nhiều sự kiện UIA được
 Vậy nên, khi bật tùy chọn này, NVDA sẽ giới hạn các sự kiện đăng kí cho focus hệ thống cho hầu hết các sự kiện.
 Nếu bạn thấy mệt mỏi với việc vận hành của một hay vài ứng dụng, chúng tôi khuyên bạn thử dùng tính năng này để cải thiện khả năng vận hành.
 
-==== Sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word khi có thể ====[AdvancedSettingsUseUiaForWord]
-Khi bật tùy chọn này, NVDA sẽ nỗ lực dùng  Microsoft UI Automation accessibility API để lấy thông tin từ các điều khiển của tài liệu Microsoft Word.
-Nó được tích hợp trong chính Microsoft Word cũng như trình xem và soạn thư của Microsoft Outlook.
- Với hầu hết các phiên bản gần đây của Microsoft Office 2016/365 chạy trên Windows 10 trở lên, hỗ trợ của UI Automation là hoàn toàn đủ để truy cập các tài liệu Microsoft Word, gần như bằng với hỗ trợ sẵn có của NVDA cho Microsoft Word, với thuận lợi là khả năng phản hồi có thể tăng lên.
- Tuy nhiên, có thể một vài thông tin không được thể hiện hoặc thể hiện không chính xác trong vài phiên bản của Microsoft Office, có nghĩa là hỗ trợ UI automation không thể luôn được dựa vào.
-Chúng tôi vẫn không khuyến khích đa số người dùng bật tính năng này làm mặc định, dù rằng vẫn hoan nghênh những người dùng Office 2016/365 thử nghiệm tính năng này và cung cấp phản hồi.
+==== Sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word ====[MSWordUIA]
+Cấu hình cho NVDA dùng hay không dùng UI Automation accessibility API để truy cập các tài liệu Microsoft Word, thay vì mẫu đối tượng cũ của Microsoft Word .
+Điều này áp dụng cho các tài liệu trong chính Microsoft word, cộng với thư trong Microsoft Outlook.
+Thiết lập này có các giá trị sau:
+- Mặc định (khi phù hợp)
+- Chỉ khi cần: vì các mẫu đối tượng của Microsoft Word không phải lúc nào cũng hoạt động
+- Khi phù hợp: Microsoft Word phiên bản 16.0.15000 trở lên, hoặc khi mẫu đối tượng Microsoft Word không hoạt động
+- Luôn luôn: bất cứ đâu mà  UI automation hoạt động trong Microsoft word (không quan tâm đến tình hoàn hảo).
+-
  
 ==== Sử dụng UI Automation để truy cập Windows Console khi có thể ====[AdvancedSettingsConsoleUIA]
 Khi bật tùy chọn này, NVDA sẽ sử dụng một phiên bản mới, đang được hoàn thiện hỗ trợ cho Windows Console, có lợi thế trong việc  [cải tiến tính tiếp cận bởi Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Tính năng này đang được thử nghiệm và vẫn chưa hoàn chỉnh nên việc sử dụng nó chưa được khuyến khích. Tuy nhiên, khi hoàn chỉnh, nó được dự đoán  sẽ là hỗ trợ mặc định, cải thiện hiệu năng và tính ổn định của NVDA trong Windows command consoles.
-
-==== Nói mật khẩu trong UIA console ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Thiết lập này điều khiển việc các kí tự sẽ được đọc bởi [đọc ký tự khi gõ #KeyboardSettingsSpeakTypedCharacters] hay [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] trong các tình huống mà màn hình không được cập nhật (ô nhập mật khẩu chẳng hạn) trong Windows Console khi đã bật hỗ trợ UI automation. Vì mục đích bảo mật, thiết lập này nên được để nguyên, tức là tắt. Tuy nhiên, có thể bạn muốn bật nó khi gặp các vấn đề  về hiệu suất vận hành hoặc  việc đọc từ / kí tự   đã nhập không ổn định khi dùng tính năng console mới, đang được thử nghiệm của NVDA.
 
 ==== Sử dụng UIA với Microsoft Edge và các trình duyệt trên nền Chromium khi có thể ====[ChromiumUIA]
 Cho phép thiết lập khi nào UIA sẽ được dùng nếu có thể trong các trình duyệt trên nền Chromium như Microsoft Edge.
@@ -1862,9 +1891,14 @@ Hộp xổ có các tùy chọn sau:
 ==== các ghi chú ====[Annotations]
 Nhóm tùy chọn này được dùng để bật tính năng hỗ trợ thử nghiệm cho các ghi chú ARIA.
 Vài tính năng thuộc nhóm này có thể chưa được hoàn thiện.
+
+%kc:beginInclude
+Để "Thông báo tổng quan cho mọi chi tiết chú thích tại dấu nháy", bấm NVDA+d.
+%kc:endInclude
+
 Hiện có các tùy chọn sau: 
-- "Thông báo các chi tiết trong chế độ duyệt": bật thông báo nếu một đối tượng có các thông tin chi tiết trong chế độ duyệt.
-Việc thông báo tổng quan các chi tiết này có thể thực hiện bằng cách gán một thao tác thông qua hộp thoại [Quản lý thao tác #InputGestures].
+- "Thông báo 'có chi tiết' cho các chú thích có cấu trúc": bật thông báo nếu văn bản hoặc điều khiển có thêm các chi tiết.
+Việc thông báo tổng quan các chi tiết thêm có thể thực hiện bằng cách gán thao tác cho lệnh "Thông báo tổng quan cho mọi chi tiết chú thích tại dấu nháy" thông qua hộp thoại [Quản lý thao tác #InputGestures].
 - "Luôn thông báo mô tả aria":
   Khi nguồn ``accDescription`` là aria-description, mô tả sẽ được thông báo.
   Điều này hữu ích cho các chú thích trên web.
@@ -1884,8 +1918,13 @@ Tuy nhiên, với việc di chuyển / chỉnh sửa căn bản trong bảng tí
 Chúng tôi vẫn không khuyến khích đại đa số người dùng bật tùy chọn này làm mặc định, dù rằng vẫn hoan nghênh người dùng Microsoft Excel  bản dựng 16.0.13522.10000 trở lên dùng thử và cung cấp phản hồi cho tính năng này.
 Việc triển khai UI automation của Microsoft Excel đang thay đổi, và các phiên bản của Microsoft Office cũ hơn 16.0.13522.10000 có thể không đủ thông tin để dùng cho tùy chọn này.
 
-==== Dùng hỗ trợ nhập văn bản mới trong  Windows console khi có thể ====[AdvancedSettingsKeyboardSupportInLegacy]
-Tùy chọn này  gọi một phương thức thay thế để nhận các kí tự đã nhập trong Windows command console.
+==== Nói mật khẩu trong tất cả terminal nâng cao ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Thiết lập này điều khiển việc đọc hay không đọc bởi tính năng [đọc ký tự khi gõ #KeyboardSettingsSpeakTypedCharacters] hoặc [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] trong các tình huống mà màn hình không cập nhật (như mục nhập mật khẩu) trong vài chương trình dạng terminal, như Windows Console với hỗ trợ UI automation được bật và Mintty.
+Vì mục đích bảo mật, thiết lập này nên được để nguyên, tức là tắt.
+Tuy nhiên, có thể bạn muốn bật nó khi gặp các vấn đề về hiệu suất vận hành hoặc việc đọc từ / kí tự   đã nhập không ổn định khi dùng trong console, hoặc làm việc ở một môi trường tin cậy và muốn nghe đọc mật khẩu.
+
+==== Dùng hỗ trợ nhập văn bản nâng cao trong Windows console khi có thể ====[AdvancedSettingsKeyboardSupportInLegacy]
+Tùy chọn này là một phương pháp thay thế để nhận diện các kí tự được gõ trong Windows console kiểu cũ.
 Trong khi nó cải thiện hiệu suất và ngăn chặn việc đánh vần thông tin đầu ra của console, nó cũng có thể không tương thích với vài ứng dụng terminal .
 Tính năng này tồn tại và mặc định được bật trên Windows 10 phiên bản 1607 trở lên khi  UI Automation không có hoặc bị vô hiệu.
 Cảnh báo: khi bật tùy chọn này, các kí tự được nhập mà không hiển thị trên màn hình như mật khẩu chẳng hạn sẽ không bị bỏ qua.
@@ -1894,14 +1933,14 @@ Trong những môi trường không an toàn, bạn có thể tạm thời vô h
 ==== Thuật toán Diff ====[DiffAlgo]
 Thiết lập này điều khiển cách NVDA xác định công cụ chuyển văn bản sang giọng nói mới trong terminal.
 Hộp xổ thuật toán diff có ba tùy chọn:
-- Tự động: với NVDA 2021.2, tùy chọn này tương đương với "cho phép Diff Match Patch".
-- cho phép Diff Match Patch: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng kí tự.
+- Tự động: tùy chọn này khiến cho NVDA ưu tiên Diff Match Patch trong đa số tình huống, nhưng sẽ quay về Difflib trong các ứng dụng có vấn đề, như các phiên bản cũ của Windows Console và Mintty.
+- Diff Match Patch: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng kí tự, ngay cả trong tình huống mà nó không được khuyến khích.
 Nó có thể cải thiện khả năng vận hành khi số lượng lớn nội dung văn bản được viết vào console và cho phép nhiều thông báo  chính xác hơn cho các thay đổi tạo ra ở giữa các dòng.
-Tuy nhiên, nó có thể không tương thích với vài ứng dụng nên Diff Match Patch không phải lúc nào cũng được dùng.
-Tính năng này đã hỗ trợ trong Windows Console trên Windows 10 phiên bản 1607 trở lên.
-Ngoài ra, nó có thể khả dụng trong các ứng dụng terminal khác trên các bản phát hành cũ hơn của Windows.
-- buộc dùng Difflib: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng dòng.
+Tuy nhiên, trong vài ứng dụng, việc đọc các văn bản mới có thể không ổn định hoặc không nhất quán.
+- Difflib: tùy chọn này khiến cho NVDA tính toán các thay đổi đến văn bản trong terminal theo từng dòng, ngay cả trong tình huống mà nó không được khuyến khích.
 Nó giống như cách hoạt động của NVDA phiên bản 2020.4 trở về trước.
+Thiết lập này có thể ổn định việc đọc các văn bản đến từ vài ứng dụng.
+Tuy nhiên, trong terminal, khi chèn hay xóa một kí tự ở giữa một dòng, văn bản sau con trỏ nháy sẽ bị đọc lên.
 -
 +
 ==== Cố gắng không đọc các sự kiện lỗi thời của focus ====[CancelExpiredFocusSpeech]
@@ -1944,7 +1983,7 @@ Bao gồm:
 Bạn cần gán thao tác / phím tắt qua [hộp thoại Quản lý thao tác #InputGestures] nếu muốn mở chúng ở bất cứ đâu.
 
 Các cửa sổ định nghĩa từ điển đều chứa các nguyên tắc cho việc định nghĩa các phát âm cho từ hoặc cụm từ
-Ngoài ra, còn có các nút Thêm, Sửa và Xóa từ trong từ điển.
+Ngoài ra, còn có các nút Thêm, Sửa, xóa và Xóa tất cả từ trong từ điển.
 
 Để thêm từ vào trong từ điển, chọn nút Thêm từ và điền thông tin vào các ô nhập liệu rồi bấm Đồng ý.
 Sau đó, bạn sẽ thấy từ mới thêm vào ở trong danh sách.
@@ -2190,6 +2229,8 @@ Cái này thường được dùng để di chuyển dấu nháy hoặc gọi ho
 Phải giữ chuột đến khi ô chữ nổi chuyển sang màu xanh lá.
 Ô chữ nổi sẽ bắt đầu bằng một màu vàng nhạt, chuyển sang màu cam rồi trở thành màu xanh lá.
 
+Để bật / tắt trình xem chữ nổi ở bật cứ đâu, vui lòng gán thao tác thông qua [hộp thoại Quản lí các thao tác #InputGestures].
+
 ++ Python Console ++[PythonConsole]
 Python console được tìm thấy trong trình đơn công cụ của trình đơn NVDA, là một công cụ phát triển, hữu dụng trong việc sửa lỗi, kiểm tra tổng quan cấu trúc lõi của NVDA hay kiểm tra cấp bậc của tính tiếp cận cho một ứng dụng.
 Để biết thêm thông tin chi tiết, xin xem tại phần  [Phát triển NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2334,7 +2375,6 @@ Hãy tìm kiếm ngôn ngữ bao quát (như tiếng Anh hay tiếng Pháp) rồ
 Chọn những ngôn ngữ mong muốn rồi bấm nút "add" để thêm chúng vào.
 Khi hoàn tất, khởi động lại NVDA.
 
-
 Vui lòng xem bài viết sau của Microsoft để biết danh sách các giọng đọc hiện có: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Các màn hình nổi (Braille Displays) được hỗ trợ +[SupportedBrailleDisplays]
@@ -2355,6 +2395,7 @@ Các màn hình nổi sau đây có hỗ trợ chức năng tự nhận biết.
 - HIMS Braille các dòng Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Các màn hình nổi Eurobraille Esys/Esytime/Iris
 - Các màn hình nổi của Nattiq nBraille
+- Seika Notetaker: MiniSeika (16, 24 ô), V6 và V6Pro (40 ô)
 - Mọi màn hình nổi có hỗ trợ giao thức HID Braille tiêu chuẩn
 -
 
@@ -2404,7 +2445,18 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Phím escape | brailleSpaceBar+dot1+dot5 |
 | Phím windows | brailleSpaceBar+dot2+dot4+dot5+dot6 |
 | Phím khoảng trắng | brailleSpaceBar |
-| Phím windows+d (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| bật / tắt phím control | brailleSpaceBar+dot3+dot8 |
+| Bật / tắt phím alt | brailleSpaceBar+dot6+dot8 |
+| Bật / tắt phím windows | brailleSpaceBar+dot4+dot8 |
+| Bật / tắt phím  NVDA | brailleSpaceBar+dot5+dot8 |
+| Bật / tắt phím  shift | brailleSpaceBar+dot7+dot8 |
+| Bật / tắt các phím  control và shift | brailleSpaceBar+dot3+dot7+dot8 |
+| Bật / tắt các phím  alt và shift | brailleSpaceBar+dot6+dot7+dot8 |
+| Bật / tắt các phím  windows và shift | brailleSpaceBar+dot4+dot7+dot8 |
+| Bật / tắt các phím  NVDA và shift | brailleSpaceBar+dot5+dot7+dot8 |
+| Bật / tắt các phím  control và alt | brailleSpaceBar+dot3+dot6+dot8 |
+| Bật / tắt các phím control, alt và shift | brailleSpaceBar+dot3+dot6+dot7+dot8 |
+| Phím windows+d (thu nhỏ toàn bộ ứng dụng) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
 | Đọc dòng hiện tại | brailleSpaceBar+dot1+dot4 |
 | Trình đơn NVDA | brailleSpaceBar+dot1+dot3+dot4+dot5 |
 
@@ -2731,13 +2783,21 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 %kc:endInclude
 
 ++ Màn hình nổi Seika ++[Seika]
-NVDA đã hỗ trợ màn hình nổi Seika phiên bản 3, 4 và 5 (40 ô) và Seika80 (80 ô) tại [Nippon Telesoft https://www.nippontelesoft.com/].
-Bạn có thể đọc thêm thông tin về các mẫu màn hình này và các trình điều khiển được yêu cầu tại https://en.seika-braille.com/down/index.html
-Bạn cần phải cài trình điều khiển được cung cấp bởi nhà sản xuất.
+Các màn hình chữ nổi Seika sau đây từ Nippon Telesoft đã được hỗ trợ theo hai nhóm với các chức năng khác nhau:
+- [Seika Phiên Bản 3, 4 và 5 (40 ô), Seika80 (80 ô) #SeikaBrailleDisplays]
+- [MiniSeika (16, 24 ô), V6 và V6Pro (40 ô) #SeikaNotetaker]
+-
+Bạn có thể tìm thêm thông tin về các màn hình này tại https://en.seika-braille.com/down/index.html.
 
-Các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
++++ Seika Phiên Bản 3, 4 và 5 (40 ô), Seika80 (80 ô) +++[SeikaBrailleDisplays]
+Các màn hình này chưa hỗ trợ tính năng ngầm tự nhận biết của NVDA.
+- Chọn "Các màn hình chữ nổi Seika" để cấu hình thủ công
+- Trình điều khiển cho thiết bị phải được cài đặt trước khi dùng Seika v3/4/5/80.
+Trình điều khiển [được cung cấp bởi nhà sản xuất https://en.seika-braille.com/down/index.html].
+-
+
+Sau đây là danh sách các phím tắt được gán cho màn hình chữ nổi  Seika .
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
 %kc:beginInclude
 || Tên | Phím |
@@ -2754,6 +2814,48 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Rút về ô chữ nổi | routing |
 %kc:endInclude
 
+
++++ MiniSeika (16, 24 ô), V6 và V6Pro (40 ô) +++[SeikaNotetaker]
+- Tính năng tự nhận dạng màn hình nổi của NVDA đã hỗ trợ thông qua USB và Bluetooth.
+- Chọn "Seika Notetaker" hoặc "tự động" để cấu hình.
+- Không cần cài thêm trình điều khiển khi dùng màn hình chữ nổi Seika Notetaker.
+-
+
+Sau đây là danh sáchh các phím tắt được gán cho  Seika Notetaker.
+Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+%kc:beginInclude
+|| Tên | Phím |
+| Cuộn màn hình lùi | left |
+| Cuộn màn hình tới | right |
+| Đọc tất cả | space+Backspace |
+| Trình đơn NVDA | Left+Right |
+| Chuyển màn hình đến dòng trước | LJ up |
+| Chuyển màn hình đến dòng kế | LJ down |
+| Bật / tắt con trỏ nổi đi theo | LJ center |
+| tab | LJ right |
+| shift+tab | LJ left |
+| Phím mũi tên lên | RJ up |
+| Phím mũi tên xuống | RJ down |
+| Phím mũi tên trái | RJ left |
+| Phím mũi tên phải | RJ right |
+| Đưa đến ô chữ nổi | routing |
+| shift+phím mũi tên lên | Space+RJ up, Backspace+RJ up |
+| shift+phím mũi tên xuống | Space+RJ down, Backspace+RJ down |
+| shift+phím mũi tên trái | Space+RJ left, Backspace+RJ left |
+| shift+phím mũi tên phải | Space+RJ right, Backspace+RJ right |
+| Phím enter | RJ center, dot8
+| Phím escape | Space+RJ center |
+| Phím windows | Backspace+RJ center |
+| Phím khoảng trắng | Space, Backspace |
+| Phím xóa lùi | dot7 |
+| Phím page up | space+LJ right |
+| Phím page down | space+LJ left |
+| Phím home | space+LJ up |
+| Phím end | space+LJ down |
+| Phím control+home | backspace+LJ up |
+| Phím control+end | backspace+LJ down |
+
+
 ++ Các Mẫu Papenmeier BRAILLEX Mới ++[Papenmeier]
 Hiện đã hỗ trợ các màn hình nổi sau: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
@@ -2763,10 +2865,6 @@ Hiện đã hỗ trợ các màn hình nổi sau:
 -
 
 Các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
-
-Nếu BrxCom được cài, NVDA sẽ sử dụng BrxCom.
-BrxCom là một công cụ, cho phép nhập liệu từ màn hình nổi, hoạt động độc lập với trình đọc màn hình.
-Nhập liệu bàn phím có thể thực hiện với mẫu Trio và BRAILLEX Live.
 
 Hầu hết các sản phẩm đều có thanh tiện ích giúp truy xuất nhanh (Easy Access Bar, EAB).
 EAB có thể di chuyển qua bốn chiều và mỗi chiều có hai switch.
@@ -3244,6 +3342,7 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | -f LOGFILENAME | --log-file=LOGFILENAME | Tập tin để ghi các thông điệp log vào |
 | -l LOGLEVEL | --log-level=LOGLEVEL | Cấp độ thấp nhất của thông điệp log (dò lỗi 10, đầu vào / đầu ra 12, cảnh báo gỡ lỗi 15, thông tin 20, cảnh báo 30, lỗi 40, nghiêm trọng 50, tắt 100), mặc định là cảnh báo |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Đường dẫn để lưu tất cả cấu hình của NVDA |
+| Không có | --lang=LANGUAGE | Bỏ qua ngôn ngữ đã cấu hình của NVDA. Thiết lập là "Windows" cho ngôn ngữ mặc định của người dùng hiện tại, "en" là tiếng Anh, v...v.... |
 | -m | --minimal | Không âm thanh, không giao diện, không thông báo bắt đầu, v...v... |
 | -s | --secure | Chế độ an toàn: tắt Python console, các tính năng của hồ sơ như tạo, xóa, đổi tên hồ sơ, v...v..., kiểm tra cập nhật, vài hộp kiểm trong hộp thoại chào mừng và phân loại thiết lập chung (ví dụ: dùng NVDA trong khi đăng nhập, lưu cấu hình sau khi thoát, v...v...),  cũng như trình xem log và tính năng ghi log (thường dùng ở màn hình bảo vệ). Lưu ý rằng lệnh này cũng sẽ vô hiệu hóa việc lưu thiết lập trong cấu hình hệ thống và hệ thống thao tác sẽ không được lưu xuống đĩa. |
 | Không có | --disable-addons | Các add-on không có hiệu lực |

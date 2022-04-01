@@ -37,7 +37,7 @@ Nota:
 - Aggiunti comandi per attivare/disattivare più tasti modificatori contemporaneamente con un display braille (#13152)
 - La finestra di dialogo Dizionari ora presenta un pulsante "Rimuovi tutto" per cancellare un intero dizionario. (#11802)
 - Aggiunto il supporto per la Calcolatrice di Windows 11. (#13212)
-- In Microsoft Word con Ui automation abilitata in Windows 11, possono essere annunciati i numeri di riga, numero di sezioni e i numeri di colonna layout . (#13283)
+- In Microsoft Word con Ui automation abilitata in Windows 11, è supportato l'annuncio dei numeri di riga e di sezioni. (#13283)
 - Per Microsoft Office 16.0.15000 e versioni successive su Windows 11, NVDA utilizzerà la tecnologia UI Automation per accedere ai documenti di Microsoft Word per impostazione predefinita, Ciò fornisce un notevole miglioramento delle prestazioni rispetto al vecchio modello ad oggetti..
  - Ciò include i documenti in Microsoft Word stesso e le finestre di lettura messaggi e composizione in Microsoft Outlook.
  -
@@ -95,7 +95,7 @@ Nota:
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - Although NVDA still requires Visual Studio 2019, Builds should no longer fail if a newer version of Visual Studio (E.g. 2022) is installed along side 2019. (#13033, #13387)
 - Updated SCons to version 4.3.0. (#13033)
-- Updated py2exe to version 0.11.0.1. (#12357, #13066)
+- Updated py2exe to version 0.11.1.0. (#12357, #13066)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
 - ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
 - ``MessageItem`` has been removed from the Outlook appModule. (#12935)
@@ -175,6 +175,17 @@ This can dramatically decrease build times on multi core systems. (#13226, #1337
 - Excel cell state constants (``NVSTATE_*``) are now values in the ``NvCellState`` enum, mirrored in the ``NvCellState`` enum in ``NVDAObjects/window/excel.py`` and mapped to ``controlTypes.State`` via _nvCellStatesToStates. (#13465)
 - ``EXCEL_CELLINFO`` struct member ``state`` is now ``nvCellStates``.
 - ``mathPres.ensureInit`` has been removed, MathPlayer is now initialized when NVDA starts. (#13486)
+-
+
+
+= 2021.3.5 =
+Questa è una versione minore che risolve un problema di sicurezza.
+Si prega di segnalare con precisione i problemi di sicurezza a info@nvaccess.org.
+
+== Correzioni di sicurezza ==
+- Risolta segnalazione di sicurezza  ``GHSA-xc5m-v23f-pgr7``.
+  - La finestra di dialogo pronuncia punteggiatura/simboli è ora disabilitata in modalità sicura.
+  -
 -
 
 

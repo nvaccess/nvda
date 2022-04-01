@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-18 00:02+0000\n"
+"POT-Creation-Date: 2022-03-28 23:30+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: 完美很难 <1872265132@qq.com>\n"
 "Language-Team: \n"
@@ -3464,7 +3464,7 @@ msgstr "读出当前插入符下的文本信息。连案两次，则在浏览模
 
 #. Translators: the description for the reportDetailsSummary script.
 msgid "Report summary of any annotation details at the system caret."
-msgstr "在系统输入焦点处报告详细信息摘要。"
+msgstr "读出系统输入焦点处的详细信息摘要。"
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
 msgid "No additional details"
@@ -3761,7 +3761,7 @@ msgstr "打开 NVDA “鼠标设置”对话框"
 
 #. Translators: Input help mode message for go to review cursor settings command.
 msgid "Shows NVDA's review cursor settings"
-msgstr "打开 NVDA “对象查看设置”对话框"
+msgstr "打开 NVDA “浏览光标设置”对话框"
 
 #. Translators: Input help mode message for go to input composition settings command.
 msgid "Shows NVDA's input composition settings"
@@ -6990,11 +6990,11 @@ msgstr "Papenmeier BRAILLEX older models"
 
 #. Translators: Names of braille displays.
 msgid "Seika Braille Displays"
-msgstr "Seika 点显器"
+msgstr "Seika（清华点显器） V3/ V4/ V5（40方）/ Seika80（80方）"
 
 #. Translators: Name of a braille display.
 msgid "Seika Notetaker"
-msgstr "Seika Notetaker"
+msgstr "Seika Notetaker（清华点显器） Mini （16 / 24方） V6/V6Pro（40方）"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -9769,18 +9769,18 @@ msgstr "打开开发者实验目录"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
-msgstr "Microsoft UI Automation 无障碍接口"
+msgstr "Microsoft UIA 接口"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
 "Enable &selective registration for UI Automation events and property changes"
-msgstr "为 UI Automation 接口属性更改启用选择性注册(&S)"
+msgstr "启用选择性注册 UIA 事件和属性改变(&S)"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft Word document controls"
-msgstr "使用 UIA 接口访问 Word 文档控件(&W)"
+msgstr "在Word 中启用 UIA 接口(&W)"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
@@ -9808,12 +9808,12 @@ msgstr "总是"
 msgid ""
 "Use UI Automation to access Microsoft &Excel spreadsheet controls when "
 "available"
-msgstr "在 Excel 调用 UI Automation 接口（如果可用）(&E)"
+msgstr "在 Excel 中启用 UIA 接口（如果可用）(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
-msgstr "在 Windows 控制台调用 UI Automation 接口（如果可用）(&O)"
+msgstr "在 Windows 控制台中启用 UIA 接口（如果可用）(&O)"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -9822,8 +9822,8 @@ msgid ""
 "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
 msgstr ""
-"在 Microsoft Edge 及其他基于 Chromium 内核浏览器\n"
-"调用 UI Automation 接口（如果可用）(&C)"
+"在 Microsoft Edge 及其他基于 Chromium 内核的浏览器中\n"
+"启用 UIA 接口（如果可用）(&C)"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
@@ -9936,7 +9936,7 @@ msgstr "Difflib"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
-msgstr "尝试为过期的焦点事件取消语音："
+msgstr "尝试取消无效焦点事件的朗读："
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
