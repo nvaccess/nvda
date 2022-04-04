@@ -13,7 +13,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <mutex>
 #pragma once
 #define export __declspec(dllexport)
 

@@ -14,6 +14,13 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <string>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <atomic>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 #include <winrt/Windows.Media.SpeechSynthesis.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Foundation.h>
@@ -21,14 +28,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <common/log.h>
 #include "oneCoreSpeech.h"
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <chrono>
-#include <atomic>
-#include <thread>
-#include <mutex>
-#include <condition_variable>
 
 using namespace std;
 using namespace winrt;
