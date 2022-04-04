@@ -157,7 +157,7 @@ class SynthDriver(SynthDriver):
 		return settings
 
 	def __init__(self):
-		super(SynthDriver, self).__init__()
+		super().__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
 		# Set initial values for parameters that can't be queried when prosody is not supported.
@@ -208,10 +208,11 @@ class SynthDriver(SynthDriver):
 		)
 
 	def terminate(self):
-		super(SynthDriver, self).terminate()
+		super().terminate()
 		self._dll.ocSpeech_terminate(self._handle)
-		# Drop the ctypes function instance for the callback,
+		# Drop the ctypes function instance for the callback and handle,
 		# as it is holding a reference to an instance method, which causes a reference cycle.
+		self._handle = None
 		self._callbackInst = None
 
 	def cancel(self):

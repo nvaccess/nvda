@@ -2,7 +2,7 @@
 Header for C dll bridge to Windows OneCore voices.
 This file is a part of the NVDA project.
 URL: http://www.nvaccess.org/
-Copyright 2016-2017 Tyler Spivey, NV Access Limited.
+Copyright 2016-2022 Tyler Spivey, NV Access Limited.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -13,21 +13,31 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#include <mutex>
 #pragma once
 #define export __declspec(dllexport)
 
 typedef void (*ocSpeech_Callback)(BYTE* data, int length, const wchar_t* markers);
 
+class SpeechCounter {
+private:
+	std::mutex speechThreadsMutex_;
+	std::condition_variable cond_var_;
+	std::atomic_int speechThreads;
+public:
+	std::mutex preventSpeechMutex_;
+	SpeechCounter();
+	void waitUntilSpeechFinished();
+	void markCallbackFinished();
+	void markSpeechStarted();
+	void reset();
+	bool hasSpeechFinished();
+};
+
 class OcSpeech {
 private:
 	winrt::Windows::Media::SpeechSynthesis::SpeechSynthesizer synth{ nullptr };
 	ocSpeech_Callback callback;
-	void protectedCallback(
-		BYTE* data,
-		int length,
-		const wchar_t* markers
-	);
-
 public:
 	OcSpeech();
 	winrt::fire_and_forget speak(winrt::hstring text);
@@ -42,6 +52,12 @@ public:
 	void setVolume(double volume);
 	double getRate();
 	void setRate(double rate);
+	void performCallback(
+		BYTE* data,
+		int length,
+		const wchar_t* markers
+	);
+	SpeechCounter _speechCounter;
 };
 
 extern "C" {
