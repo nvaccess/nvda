@@ -51,6 +51,11 @@ For add-on authors, please open a GitHub issue if these changes stop the API fro
   -
 -
 
+==== Deprecated in 2022.1 ====
+- ``config.RUN_REGKEY``, ``config.NVDA_REGKEY`` are deprecated, please use ``config.RegistryKey.RUN``, ``config.RegistryKey.NVDA`` instead. These will be removed in 2023.1. (#13242)
+- ``easeOfAccess.ROOT_KEY``, ``easeOfAccess.APP_KEY_PATH`` are deprecated, please use``easeOfAccess.RegistryKey.ROOT``, ``easeOfAccess.RegistryKey.APP`` instead. These will be removed in 2023.1. (#13242)
+- ``easeOfAccess.APP_KEY_NAME`` has been deprecated, to be removed in 2023.1. (#13242)
+-
 
 = 2022.1 =
 This release includes major improvements to UIA support with MS Office.
