@@ -53,7 +53,8 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		except KeyError:
 			pass
 		try:
-			formatField["font-size"] = "%spt" % formatField["CharHeight"]
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = _("%s pt") % formatField["CharHeight"]
 		except KeyError:
 			pass
 		try:

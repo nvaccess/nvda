@@ -5,7 +5,6 @@
 
 import ctypes
 from ctypes import *
-from ctypes.wintypes import RECT
 from comtypes import BSTR
 import unicodedata
 import math
@@ -446,6 +445,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		bkColor=field.get('background-color')
 		if bkColor is not None:
 			field['background-color'] = colors.RGB.fromDisplayModelFormatColor_t(int(bkColor))
+		fontSize = field.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			field["font-size"] = _("%s pt") % fontSize
 
 	def _getOffsetFromPoint(self, x, y):
 		# Accepts physical coordinates.

@@ -206,7 +206,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 					if (fontSize > 0) {
 						wostringstream s;
 						s.setf(ios::fixed);
-						s << setprecision(1) << fontSize << "pt";
+						s << setprecision(1) << fontSize;
 						previousNode->addAttribute(L"font-size", s.str());
 					}
 					if ((fontFlags&PDDOM_FONTATTR_ITALIC)==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");

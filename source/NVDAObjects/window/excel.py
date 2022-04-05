@@ -994,7 +994,7 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name
 		if formatConfig['reportFontSize']:
-			formatField['font-size']=str(fontObj.size)
+			formatField['font-size']= _("%d pt") % int(fontObj.size)
 		if formatConfig['reportFontAttributes']:
 			formatField['bold']=fontObj.bold
 			formatField['italic']=fontObj.italic

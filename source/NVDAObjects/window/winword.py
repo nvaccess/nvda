@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,10 +14,6 @@ from typing import (
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
-import uuid
-import operator
-import locale
-import collections
 import colorsys
 import eventHandler
 import braille
@@ -29,7 +25,6 @@ import XMLFormatting
 from logHandler import log
 import winUser
 import oleacc
-import globalVars
 import speech
 import config
 import textInfos
@@ -900,6 +895,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		bullet=field.get('line-prefix')
 		if bullet and len(bullet)==1:
 			field['line-prefix']=mapPUAToUnicode.get(bullet,bullet)
+		fontSize = field.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			field["font-size"] = _("%s pt") % fontSize
 		return field
 
 	def expand(self,unit):

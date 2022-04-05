@@ -169,7 +169,8 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
 		field = textInfos.FormatField()
 		field["font-family"] = attribs.fontFamily
-		field["font-size"] = "%dpt" % attribs.fontSize
+		# Translators: Abbreviation for points, a measurement of font size.
+		field["font-size"] = _("%d pt") % attribs.fontSize
 		field["bold"] = bool(attribs.bold)
 		field["italic"] = bool(attribs.italic)
 		field["strikethrough"] = bool(attribs.strikethrough)

@@ -262,7 +262,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if formatConfig["reportFontSize"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			# Font size is supposed to be an integral value
-			formatField["font-size"]="%spt"%(charFormat.yHeight//20)
+			fontSize = charFormat.yHeight // 20
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = _("%s pt") % fontSize
 		if formatConfig["reportFontAttributes"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["bold"]=bool(charFormat.dwEffects&CFE_BOLD)
@@ -507,7 +509,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if formatConfig["reportFontSize"]:
 			if not fontObj:
 				fontObj = textRange.font
-			formatField["font-size"]="%spt"%fontObj.size
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = _("%s pt") % fontObj.size
 		if formatConfig["reportFontAttributes"]:
 			if not fontObj:
 				fontObj = textRange.font
