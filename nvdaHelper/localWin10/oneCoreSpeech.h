@@ -18,21 +18,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 typedef void (*ocSpeech_Callback)(BYTE* data, int length, const wchar_t* markers);
 
-class SpeechCounter {
-private:
-	std::mutex speechThreadsMutex_;
-	std::condition_variable cond_var_;
-	std::atomic_int speechThreads;
-public:
-	std::mutex preventSpeechMutex_;
-	SpeechCounter();
-	void waitUntilSpeechFinished();
-	void markCallbackFinished();
-	void markSpeechStarted();
-	void reset();
-	bool hasSpeechFinished();
-};
-
 class OcSpeech {
 private:
 	winrt::Windows::Media::SpeechSynthesis::SpeechSynthesizer synth{ nullptr };
@@ -56,7 +41,6 @@ public:
 		int length,
 		const wchar_t* markers
 	);
-	SpeechCounter _speechCounter;
 };
 
 extern "C" {

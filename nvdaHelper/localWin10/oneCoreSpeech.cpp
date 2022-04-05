@@ -37,42 +37,44 @@ using namespace winrt::Windows::Media;
 using namespace winrt::Windows::Foundation::Collections;
 using winrt::Windows::Foundation::Metadata::ApiInformation;
 
-std::vector<OcSpeech *> _terminatedInstances;
+std::vector<OcSpeech *> g_terminatedInstances;
+std::unique_ptr<OcSpeech> g_pendingDeletionInstance;
+std::unique_ptr<OcSpeech> g_aliveInstance;
+std::condition_variable g_instanceReadyForDeletion;
+std::mutex g_pendingDeletionInstanceMutex;
+std::atomic_int speechThreads = 0;
 
-SpeechCounter::SpeechCounter() : speechThreads{0} {}
-
-void SpeechCounter::reset() {
-	std::lock_guard g(speechThreadsMutex_);
-	speechThreads = 0;
-	cond_var_.notify_all();
+void _markSpeechStarted() {
+	++speechThreads;
 }
 
-void SpeechCounter::markSpeechStarted() {
-	std::lock_guard g1(preventSpeechMutex_);
-	std::lock_guard g2(speechThreadsMutex_);
-	speechThreads++;
-}
-
-void SpeechCounter::markCallbackFinished() {
-	std::lock_guard g(speechThreadsMutex_);
-	speechThreads--;
-	if (speechThreads == 0) {
-		cond_var_.notify_all();
-	}
-}
-
-bool SpeechCounter::hasSpeechFinished() {
+bool _hasSpeechFinished() {
 	return speechThreads == 0;
 }
 
-void SpeechCounter::waitUntilSpeechFinished() {
-	std::unique_lock lock(speechThreadsMutex_);
+void _markCallbackFinished() {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
+	--speechThreads;
+	if (g_pendingDeletionInstance && _hasSpeechFinished()) {
+		g_pendingDeletionInstance.reset();
+		g_instanceReadyForDeletion.notify_all();
+	}
+}
+
+void waitForAnyPendingDeletion() {
+	std::unique_lock lock(g_pendingDeletionInstanceMutex);
 	// Wait for a signal for speech to finish
-	cond_var_.wait(lock, [this]{return this->hasSpeechFinished();});
+	g_instanceReadyForDeletion.wait(lock, []{return !g_pendingDeletionInstance;});
 }
 
 void _assertOcSpeechInstanceAlive(OcSpeech* instance) {
-	for (auto p: _terminatedInstances) {
+	if (g_aliveInstance.get() != instance) {
+		LOG_ERROR("Supplied OneCore instance is not alive");
+	}
+	if (g_pendingDeletionInstance.get() == instance) {
+		LOG_ERROR("Supplied OneCore instance is being terminated");
+	}
+	for (auto p: g_terminatedInstances) {
 		if (p == instance) {
 			LOG_ERROR("Supplied OneCore instance has terminated");
 		}
@@ -94,28 +96,45 @@ OcSpeech::OcSpeech() : synth(SpeechSynthesizer{}) {
 }
 
 OcSpeech* __stdcall ocSpeech_initialize() {
-	auto instance = new OcSpeech;
-	_terminatedInstances.erase(
+	if (g_aliveInstance) {
+		throw runtime_error(
+			"OneCore instance still alive."
+			"Terminate instance before calling initialize"
+		);
+	}
+	waitForAnyPendingDeletion();
+	g_aliveInstance = std::make_unique<OcSpeech>();
+	// Remove instances from terminated instances if we get the same pointer again
+	g_terminatedInstances.erase(
 		std::remove(
-			_terminatedInstances.begin(),
-			_terminatedInstances.end(),
-			instance
+			g_terminatedInstances.begin(),
+			g_terminatedInstances.end(),
+			g_aliveInstance.get()
 		),
-		_terminatedInstances.end()
+		g_terminatedInstances.end()
 	);
-	return instance;
+	return g_aliveInstance.get();
 }
 
 void __stdcall ocSpeech_terminate(OcSpeech* instance) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
+	if (g_pendingDeletionInstance != nullptr) {
+		throw runtime_error(
+			"OneCore instance is already pending termination."
+			"Initialize a new instance before terminating."
+		);
+	}
 	_assertOcSpeechInstanceAlive(instance);
-	std::lock_guard g(instance->_speechCounter.preventSpeechMutex_);
-	instance->_speechCounter.waitUntilSpeechFinished();
-	_terminatedInstances.emplace_back(instance);
-	delete instance;
+	g_pendingDeletionInstance.swap(g_aliveInstance);
+	g_terminatedInstances.emplace_back(instance);
+	if (_hasSpeechFinished()){
+		g_pendingDeletionInstance.reset();
+	}
 }
 
 
 void __stdcall ocSpeech_setCallback(OcSpeech* instance, ocSpeech_Callback fn) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	instance->setCallback(fn);
 }
@@ -130,6 +149,11 @@ void _protectedCallback(
 	int length,
 	const wchar_t* markers
 ) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
+	if (instance == g_pendingDeletionInstance.get()) {
+		LOG_DEBUGWARNING("OneCore instance is pending deletion");
+		return;
+	}
 	_assertOcSpeechInstanceAlive(instance);
 	instance->performCallback(data, length, markers);
 }
@@ -150,7 +174,7 @@ fire_and_forget OcSpeech::speak(hstring text) {
 	try {
 		// Ensure that work is performed on a background thread.
 		co_await resume_background();
-		_speechCounter.markSpeechStarted();
+		_markSpeechStarted();
 
 		wstring markersStr;
 		SpeechSynthesisStream speechStream{ nullptr };
@@ -159,7 +183,7 @@ fire_and_forget OcSpeech::speak(hstring text) {
 		} catch (hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
 			_protectedCallback(this, nullptr, 0, nullptr);
-			_speechCounter.markCallbackFinished();
+			_markCallbackFinished();
 			co_return;
 		}
 		// speechStream.Size() is 64 bit, but Buffer can only take 32 bit.
@@ -189,10 +213,11 @@ fire_and_forget OcSpeech::speak(hstring text) {
 	} catch (...) {
 		LOG_ERROR(L"Unexpected error in OcSpeech::speak");
 	}
-	_speechCounter.markCallbackFinished();
+	_markCallbackFinished();
 }
 
 void __stdcall ocSpeech_speak(OcSpeech* instance, wchar_t* text) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	instance->speak(text);
 }
@@ -219,6 +244,7 @@ wstring OcSpeech::getVoices() {
 // We can't just use malloc because the caller might be using a different CRT
 // and calling malloc and free from different CRTs isn't safe.
 BSTR __stdcall ocSpeech_getVoices(OcSpeech* instance) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	return SysAllocString(instance->getVoices().c_str());
 }
@@ -228,6 +254,7 @@ hstring OcSpeech::getCurrentVoiceId() {
 }
 
 const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(OcSpeech* instance) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	return instance->getCurrentVoiceId().c_str();
 }
@@ -237,6 +264,7 @@ void OcSpeech::setVoice(int index) {
 }
 
 void __stdcall ocSpeech_setVoice(OcSpeech* instance, int index) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	instance->setVoice(index);
 }
@@ -246,6 +274,7 @@ hstring OcSpeech::getCurrentVoiceLanguage() {
 }
 
 const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(OcSpeech* instance) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	return instance->getCurrentVoiceLanguage().c_str();
 }
@@ -255,6 +284,7 @@ double OcSpeech::getPitch() {
 }
 
 double __stdcall ocSpeech_getPitch(OcSpeech* instance) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	return instance->getPitch();
 }
@@ -264,6 +294,7 @@ void OcSpeech::setPitch(double pitch) {
 }
 
 void __stdcall ocSpeech_setPitch(OcSpeech* instance, double pitch) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	instance->setPitch(pitch);
 }
@@ -273,6 +304,7 @@ double OcSpeech::getVolume() {
 }
 
 double __stdcall ocSpeech_getVolume(OcSpeech* instance) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	return instance->getVolume();
 }
@@ -282,6 +314,7 @@ void OcSpeech::setVolume(double volume) {
 }
 
 void __stdcall ocSpeech_setVolume(OcSpeech* instance, double volume) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	instance->setVolume(volume);
 }
@@ -291,6 +324,7 @@ double OcSpeech::getRate() {
 }
 
 double __stdcall ocSpeech_getRate(OcSpeech* instance) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	return instance->getRate();
 }
@@ -300,6 +334,7 @@ void OcSpeech::setRate(double rate) {
 }
 
 void __stdcall ocSpeech_setRate(OcSpeech* instance, double rate) {
+	std::lock_guard g(g_pendingDeletionInstanceMutex);
 	_assertOcSpeechInstanceAlive(instance);
 	instance->setRate(rate);
 }
