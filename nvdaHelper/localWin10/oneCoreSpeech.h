@@ -18,6 +18,15 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 typedef void (*ocSpeech_Callback)(BYTE* data, int length, const wchar_t* markers);
 
+class SpeakCallbackCounter {
+private:
+	static std::atomic_int _speechThreads;
+public:
+	static void increasePendingCount();
+	static void decreasePendingCount();
+	static bool areCallbacksPending();
+};
+
 class OcSpeech {
 private:
 	winrt::Windows::Media::SpeechSynthesis::SpeechSynthesizer synth{ nullptr };
@@ -37,6 +46,26 @@ public:
 	double getRate();
 	void setRate(double rate);
 	void performCallback(
+		BYTE* data,
+		int length,
+		const wchar_t* markers
+	);
+};
+
+class InstanceManager {
+private:
+	static std::vector<OcSpeech *> _terminatedInstances;
+	static std::unique_ptr<OcSpeech> _aliveInstance;
+	static std::unique_ptr<OcSpeech> _pendingDeletionInstance;
+	static std::condition_variable_any _instanceReadyForDeletion;
+public:
+	static void waitForAnyPendingDeletion();
+	static void assertInstanceAlive(OcSpeech* instance);
+	static OcSpeech* initializeNewInstance();
+	static void terminateInstance(OcSpeech* instance);
+	static void deleteInstanceIfReady();
+	static void protectedCallback(
+		OcSpeech* instance,
 		BYTE* data,
 		int length,
 		const wchar_t* markers
