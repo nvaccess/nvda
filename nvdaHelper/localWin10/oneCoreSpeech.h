@@ -54,38 +54,40 @@ public:
 
 class InstanceManager {
 private:
-	static std::vector<OcSpeech *> _terminatedInstances;
+	static std::recursive_mutex _pendingDeletionInstanceMutex;
+	static std::vector<OcSpeech*> _terminatedInstances;
 	static std::unique_ptr<OcSpeech> _aliveInstance;
 	static std::unique_ptr<OcSpeech> _pendingDeletionInstance;
 	static std::condition_variable_any _instanceReadyForDeletion;
+	static void _assertInstanceAlive(OcSpeech* token);
 public:
 	static void waitForAnyPendingDeletion();
-	static void assertInstanceAlive(OcSpeech* instance);
 	static OcSpeech* initializeNewInstance();
-	static void terminateInstance(OcSpeech* instance);
+	static void terminateInstance(OcSpeech* token);
 	static void deleteInstanceIfReady();
 	static void protectedCallback(
-		OcSpeech* instance,
+		OcSpeech* token,
 		BYTE* data,
 		int length,
 		const wchar_t* markers
 	);
+	static OcSpeech* getAliveInstance(OcSpeech* token);
 };
 
 extern "C" {
 	export bool __stdcall ocSpeech_supportsProsodyOptions();
 	export OcSpeech* __stdcall ocSpeech_initialize();
-	export void __stdcall ocSpeech_terminate(OcSpeech* instance);
-	export void __stdcall ocSpeech_setCallback(OcSpeech* instance, ocSpeech_Callback fn);
-	export void __stdcall ocSpeech_speak(OcSpeech* instance, wchar_t* text);
-	export BSTR __stdcall ocSpeech_getVoices(OcSpeech* instance);
-	export const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(OcSpeech* instance);
-	export void __stdcall ocSpeech_setVoice(OcSpeech* instance, int index);
-	export const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(OcSpeech* instance);
-	export double __stdcall ocSpeech_getPitch(OcSpeech* instance);
-	export void __stdcall ocSpeech_setPitch(OcSpeech* instance, double pitch);
-	export double __stdcall ocSpeech_getVolume(OcSpeech* instance);
-	export void __stdcall ocSpeech_setVolume(OcSpeech* instance, double volume);
-	export double __stdcall ocSpeech_getRate(OcSpeech* instance);
-	export void __stdcall ocSpeech_setRate(OcSpeech* instance, double rate);
+	export void __stdcall ocSpeech_terminate(OcSpeech* token);
+	export void __stdcall ocSpeech_setCallback(OcSpeech* token, ocSpeech_Callback fn);
+	export void __stdcall ocSpeech_speak(OcSpeech* token, wchar_t* text);
+	export BSTR __stdcall ocSpeech_getVoices(OcSpeech* token);
+	export const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(OcSpeech* token);
+	export void __stdcall ocSpeech_setVoice(OcSpeech* token, int index);
+	export const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(OcSpeech* token);
+	export double __stdcall ocSpeech_getPitch(OcSpeech* token);
+	export void __stdcall ocSpeech_setPitch(OcSpeech* token, double pitch);
+	export double __stdcall ocSpeech_getVolume(OcSpeech* token);
+	export void __stdcall ocSpeech_setVolume(OcSpeech* token, double volume);
+	export double __stdcall ocSpeech_getRate(OcSpeech* token);
+	export void __stdcall ocSpeech_setRate(OcSpeech* token, double rate);
 }
