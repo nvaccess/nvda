@@ -664,7 +664,7 @@ def test_ariaTreeGrid_browseMode():
 			# Focus enters the ARIA treegrid (table)
 			"Inbox  table",
 			# Focus lands on row 2
-			"level 1  Treegrids are awesome Want to learn how to use them? aaron at thegoogle dot rocks  expanded",
+			"level 1  Treegrids are awesome Want to learn how to use them? aaron at thegoogle dot rocks  expanded  1 of 1",
 		])
 	)
 
