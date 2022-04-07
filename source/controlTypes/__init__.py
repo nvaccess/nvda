@@ -11,9 +11,13 @@ from .role import Role, silentRolesOnFocus, silentValuesForRoles
 from .state import State, STATES_SORTED
 from .descriptionFrom import DescriptionFrom
 
+# deprecatedAliases included for backwards compatibility. Supress F403 - unable to detect undefined names.
+from .deprecatedAliases import *  # noqa: F403
 
 # Override (and limit) the symbols exported by the controlTypes package
 # These are the symbols available when `from controlTypes import *` is used.
+# Note, deprecated aliases are exposed for backwards compatibility, using these aliases is not recommended,
+# consult the deprecatedAliases module for alternatives.
 __all__ = [
 	"IsCurrent",
 	"OutputReason",
@@ -25,4 +29,5 @@ __all__ = [
 	"STATES_SORTED",
 	"DescriptionFrom",
 	"TextPosition",
+	*deprecatedAliases.__all__
 ]
