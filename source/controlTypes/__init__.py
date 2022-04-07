@@ -10,9 +10,11 @@ from .processAndLabelStates import processAndLabelStates
 from .role import Role, silentRolesOnFocus, silentValuesForRoles
 from .state import State, STATES_SORTED
 from .descriptionFrom import DescriptionFrom
-
-# deprecatedAliases included for backwards compatibility. Supress F403 - unable to detect undefined names.
-from .deprecatedAliases import *  # noqa: F403
+import deprecatedAliases
+# deprecatedAliases included for backwards compatibility.
+# Supress F403 - unable to detect undefined names.
+# Supress F401 - imported but unused
+from .deprecatedAliases import *  # noqa: F403, F401
 
 # Override (and limit) the symbols exported by the controlTypes package
 # These are the symbols available when `from controlTypes import *` is used.
