@@ -22,8 +22,8 @@ class SpeakCallbackCounter {
 private:
 	static std::atomic_int _speechThreads;
 public:
-	static void increasePendingCount();
-	static void decreasePendingCount();
+	SpeakCallbackCounter();
+	~SpeakCallbackCounter();
 	static bool areCallbacksPending();
 };
 
@@ -52,27 +52,31 @@ public:
 	);
 };
 
+enum InstanceState {notInitialized, active, terminated};
+
 class InstanceManager {
 private:
-	static std::recursive_mutex _pendingDeletionInstanceMutex;
+	static std::recursive_mutex _instanceStateMutex;
 	static std::vector<OcSpeech*> _terminatedInstances;
-	static std::unique_ptr<OcSpeech> _aliveInstance;
-	static std::unique_ptr<OcSpeech> _pendingDeletionInstance;
+	static std::unique_ptr<OcSpeech> _instance;
+	static std::atomic<InstanceState> _instanceState;
 	static std::condition_variable_any _instanceReadyForDeletion;
-	static void _assertInstanceAlive(OcSpeech* token);
+	static void _assertInstanceActive(OcSpeech* token);
 public:
+	static bool isInstanceActive();
 	static void waitForAnyPendingDeletion();
 	static OcSpeech* initializeNewInstance();
 	static void terminateInstance(OcSpeech* token);
 	static void deleteInstanceIfReady();
-	static void protectedCallback(
-		OcSpeech* token,
-		BYTE* data,
-		int length,
-		const wchar_t* markers
-	);
 	static OcSpeech* getAliveInstance(OcSpeech* token);
 };
+
+static void protectedCallback(
+	OcSpeech* token,
+	BYTE* data,
+	int length,
+	const wchar_t* markers
+);
 
 extern "C" {
 	export bool __stdcall ocSpeech_supportsProsodyOptions();

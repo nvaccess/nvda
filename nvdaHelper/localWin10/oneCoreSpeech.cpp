@@ -37,14 +37,14 @@ using namespace winrt::Windows::Media;
 using namespace winrt::Windows::Foundation::Collections;
 using winrt::Windows::Foundation::Metadata::ApiInformation;
 
-std::recursive_mutex InstanceManager::_pendingDeletionInstanceMutex;
+std::recursive_mutex InstanceManager::_instanceStateMutex;
 std::vector<OcSpeech*> InstanceManager::_terminatedInstances;
-std::unique_ptr<OcSpeech> InstanceManager::_aliveInstance;
-std::unique_ptr<OcSpeech> InstanceManager::_pendingDeletionInstance;
+std::unique_ptr<OcSpeech> InstanceManager::_instance;
+std::atomic<InstanceState> InstanceManager::_instanceState = InstanceState::notInitialized;
 std::condition_variable_any InstanceManager::_instanceReadyForDeletion;
 std::atomic_int SpeakCallbackCounter::_speechThreads = 0;
 
-void SpeakCallbackCounter::increasePendingCount() {
+SpeakCallbackCounter::SpeakCallbackCounter() {
 	++_speechThreads;
 }
 
@@ -52,79 +52,85 @@ bool SpeakCallbackCounter::areCallbacksPending() {
 	return _speechThreads != 0;
 }
 
-void SpeakCallbackCounter::decreasePendingCount() {
+SpeakCallbackCounter::~SpeakCallbackCounter() {
 	--_speechThreads;
+	if (_speechThreads < 0) {
+		throw runtime_error(
+			"Negative callback count."
+			"decreasePendingCount has been called too many times."
+		);
+	}
 	InstanceManager::deleteInstanceIfReady();
 }
 
 void InstanceManager::deleteInstanceIfReady() {
-	std::lock_guard g(_pendingDeletionInstanceMutex);
-	if (_pendingDeletionInstance && !SpeakCallbackCounter::areCallbacksPending()) {
-		_pendingDeletionInstance.reset();
+	std::lock_guard g(_instanceStateMutex);
+	if (
+		!isInstanceActive()
+		&& !SpeakCallbackCounter::areCallbacksPending()
+	) {
+		_instance.reset();
+		_instanceState = InstanceState::notInitialized;
 		_instanceReadyForDeletion.notify_all();
 	}
 }
 
 void InstanceManager::waitForAnyPendingDeletion() {
-	std::unique_lock lock(_pendingDeletionInstanceMutex);
+	std::unique_lock lock(_instanceStateMutex);
 	// Wait for a signal for speech to finish
-	_instanceReadyForDeletion.wait(lock, []{return !_pendingDeletionInstance;});
+	_instanceReadyForDeletion.wait(lock, []{return !isInstanceActive();});
 }
 
 OcSpeech* InstanceManager::getAliveInstance(OcSpeech* token) {
-	_assertInstanceAlive(token);
-	return _aliveInstance.get();
+	_assertInstanceActive(token);
+	return _instance.get();
 }
 
-void InstanceManager::_assertInstanceAlive(OcSpeech* token) {
-	std::lock_guard g(_pendingDeletionInstanceMutex);
-	if (_aliveInstance.get() != token) {
-		LOG_ERROR("Supplied OneCore token is not alive");
+void InstanceManager::_assertInstanceActive(OcSpeech* token) {
+	if (_instanceState != InstanceState::active) {
+		throw runtime_error("Supplied OneCore token is not active");
 	}
-	if (_pendingDeletionInstance.get() == token) {
-		LOG_ERROR("Supplied OneCore token is being terminated");
+	if (_instance.get() != token) {
+		throw runtime_error("Supplied OneCore token does not match instance");
 	}
 	for (auto p: _terminatedInstances) {
 		if (p == token) {
-			LOG_ERROR("Supplied OneCore token has terminated");
+			throw runtime_error("Supplied OneCore token has terminated");
 		}
 	}
 }
 
 OcSpeech* InstanceManager::initializeNewInstance() {
-	if (_aliveInstance) {
+	std::lock_guard g(_instanceStateMutex);
+	if (_instance) {
 		throw runtime_error(
 			"OneCore token still alive."
 			"Terminate token before calling initialize"
 		);
 	}
 	waitForAnyPendingDeletion();
-	_aliveInstance = std::make_unique<OcSpeech>();
-	// Remove instances from terminated instances if we get the same pointer again
+	_instance = std::make_unique<OcSpeech>();
+	_instanceState = InstanceState::active;
+	// Remove instance from terminated instances if we get the same pointer again
 	_terminatedInstances.erase(
 		std::remove(
 			_terminatedInstances.begin(),
 			_terminatedInstances.end(),
-			_aliveInstance.get()
+			_instance.get()
 		),
 		_terminatedInstances.end()
 	);
-	return _aliveInstance.get();
+	return _instance.get();
 }
 
 void InstanceManager::terminateInstance(OcSpeech* token) {
-	_assertInstanceAlive(token);
-	std::lock_guard g(_pendingDeletionInstanceMutex);
-	if (_pendingDeletionInstance != nullptr) {
-		throw runtime_error(
-			"OneCore token is already pending termination."
-			"Initialize a new token before terminating."
-		);
-	}
-	_pendingDeletionInstance.swap(_aliveInstance);
-	_terminatedInstances.emplace_back(_pendingDeletionInstance.get());
+	_assertInstanceActive(token);
+	std::lock_guard g(_instanceStateMutex);
+	_instanceState = InstanceState::terminated;
+	_terminatedInstances.emplace_back(_instance.get());
 	if (!SpeakCallbackCounter::areCallbacksPending()){
-		_pendingDeletionInstance.reset();
+		_instance.reset();
+		_instanceState = InstanceState::notInitialized;
 	}
 }
 
@@ -158,15 +164,18 @@ void OcSpeech::setCallback(ocSpeech_Callback fn) {
 	callback = fn;
 }
 
-void InstanceManager::protectedCallback(
+bool InstanceManager::isInstanceActive() {
+	return _instanceState == InstanceState::active;
+}
+
+void protectedCallback(
 	OcSpeech* token,
 	BYTE* data,
 	int length,
 	const wchar_t* markers
 ) {
-	std::lock_guard g(_pendingDeletionInstanceMutex);
-	if (token == _pendingDeletionInstance.get()) {
-		LOG_DEBUGWARNING("OneCore token is pending deletion");
+	if (!InstanceManager::isInstanceActive()) {
+		LOG_ERROR("Expected OneCore instance is not active");
 		return;
 	}
 	InstanceManager::getAliveInstance(token)->performCallback(data, length, markers);
@@ -181,6 +190,7 @@ void OcSpeech::performCallback(
 }
 
 fire_and_forget OcSpeech::speak(hstring text) {
+	SpeakCallbackCounter();
 	// Ensure we catch all exceptions in this method,
 
 	// as an unhandled exception causes std::terminate to get called, resulting in a crash.
@@ -188,7 +198,6 @@ fire_and_forget OcSpeech::speak(hstring text) {
 	try {
 		// Ensure that work is performed on a background thread.
 		co_await resume_background();
-		SpeakCallbackCounter::increasePendingCount();
 
 		wstring markersStr;
 		SpeechSynthesisStream speechStream{ nullptr };
@@ -196,8 +205,7 @@ fire_and_forget OcSpeech::speak(hstring text) {
 			speechStream = co_await synth.SynthesizeSsmlToStreamAsync(text);
 		} catch (hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-			InstanceManager::protectedCallback(this, nullptr, 0, nullptr);
-			SpeakCallbackCounter::decreasePendingCount();
+			protectedCallback(this, nullptr, 0, nullptr);
 			co_return;
 		}
 		// speechStream.Size() is 64 bit, but Buffer can only take 32 bit.
@@ -219,15 +227,14 @@ fire_and_forget OcSpeech::speak(hstring text) {
 			// Data has been read from the speech stream.
 			// Pass it to the callback.
 			BYTE* bytes = buffer.data();
-			InstanceManager::protectedCallback(this, bytes, buffer.Length(), markersStr.c_str());
+			protectedCallback(this, bytes, buffer.Length(), markersStr.c_str());
 		} catch (hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-			InstanceManager::protectedCallback(this, nullptr, 0, nullptr);
+			protectedCallback(this, nullptr, 0, nullptr);
 		}
 	} catch (...) {
 		LOG_ERROR(L"Unexpected error in OcSpeech::speak");
 	}
-	SpeakCallbackCounter::decreasePendingCount();
 }
 
 void __stdcall ocSpeech_speak(OcSpeech* token, wchar_t* text) {
