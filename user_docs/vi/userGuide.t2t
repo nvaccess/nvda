@@ -196,7 +196,7 @@ Hiện tại, NVDA có 2 kiểu phím tắt(hay còn gọi là kiểu bàn phím
 Mặc định, NVDA được thiết lập theo kiểu bàn phím Desktop, nhưng bạn có thể chuyển sang kiểu Laptop bằng cách chọn mục đó ở phân loại bàn phím trong hộp thoại [Cấu hình NVDA #NVDASettings], được tìm thấy trong  trình đơn tùy chọn  của NVDA.
 
 Kiểu bàn phím Desktop sẽ sử dụng các phím bên bàn phím số và yêu cầu tắt phím Khóa số (Num Lock).
-Mặc dù kiểu bàn phím Laptop không có bàn phím số riêng nhưng bạn có thể sử dụng giống như bàn phím số trên Desktop bằng cách bấm kết hợp phím fn (phím function) với các phím bên phải như (7, 8, 9, u, i, o, j, k, l, v...v...).
+Mặc dù hầu hết Laptop không có bàn phím số riêng, nhưng một số máy có thể mô phỏng các phím này bằng cách bấm kết hợp phím fn (phím function) với các phím bên phải như (7, 8, 9, u, i, o, j, k, l, v...v...).
 Nếu kiểu bàn phím của bạn không cho phép làm điều đó thì bạn nên chọn kiểu bàn phím là Laptop.
 
 ++ Thao tác cảm ứng trong NVDA ++[NVDATouchGestures]
@@ -332,7 +332,7 @@ Dưới đây là các phím tắt mà NVDA cung cấp cho việc thao tác vớ
 | Đọc dòng hiện tại | NVDA+mũi tên lên | NVDA+l | Đọc dòng hiện tại, bấm nhanh hai lần để đánh vần và bấm nhanh ba lần để đánh vần dòng đó với phần mô tả ký tự |
 | Đọc vùng văn bản đang chọn | NVDA+Shift+mũi tên lên | NVDA+shift+s | Đọc vùng văn bản đang được chọn |
 | Thông báo định dạng văn bản | NVDA+f | NVDA+f | Thông báo định dạng của văn bản tại vị trí con trỏ nháy. Bấm hai lần để hiển thị thông tin trong chế độ duyệt |
-| Thông báo vị trí con trỏ nháy | NVDA+Delete bàn phím số | NVDA+delete | không có | Báo các thông tin về vị trí của văn bản hay đối tượng tại vị trí con trỏ nháy. Ví dụ, có thể bao gồm tỉ lệ phần trăm so với  tài liệu, khoảng cách từ rìa của trang hoặc vị trí chính xác trên màn hình. Bấm hai lần có thể cung cấp nhiều thông tin hơn. |
+| Thông báo vị trí con trỏ nháy | NVDA+Delete bàn phím số | NVDA+delete | không có | Báo các thông tin về vị trí của văn bản hay đối tượng tại vị trí con trỏ nháy. Ví dụ, có thể bao gồm tỉ lệ phần trăm so với  tài liệu, khoảng cách từ mép của trang hoặc vị trí chính xác trên màn hình. Bấm hai lần có thể cung cấp nhiều thông tin hơn. |
 | Đọc câu tiếp theo | alt+mũi tên xuống | alt+mũi tên xuống | Di chuyển con trỏ nháy đến câu kế tiếp và đọc nó (Chỉ hỗ trợ trong Microsoft Word và Outlook). |
 | Đọc câu trước | alt+mũi tên lên | alt+mũi tên lên | Di chuyển con trỏ nháy đến câu trước đó và đọc nó (Chỉ hỗ trợ trong Microsoft Word và Outlook). |
 
@@ -381,7 +381,7 @@ Sử dụng các phím tắt sau để duyệt qua các đối tượng:
 | Chuyển đến đối tượng đang có focus | NVDA+dấu trừ bàn phím số | NVDA+xóa lùi | không có | Chuyển đến đối tượng đang có focus và đặt con trỏ duyệt vào vị trí con trỏ nháy (nếu đối tượng có dấu nháy)|
 | Kích hoạt đối tượng hiện tại | NVDA+enter bàn phím số | NVDA+enter | Hai-chạm | Kích hoạt đối tượng đang duyệt (giống như kích hoạt một đối tượng đang có focus) |
 | Chuyển focus hoặc dấu nháy hệ thống đến vị trí duyệt hiện tại | NVDA+shift+dấu trừ bàn phím số | NVDA+shift+xóa lùi | không có | Bấm một lần để chuyển focus đến đến đối tượng điều hướng; bấm nhanh hai lần để chuyển dấu nháy đến vị trí của con trỏ duyệt |
-| Thông báo vị trí con trỏ duyệt | NVDA+Shift+Delete bàn phím số | NVDA+Shift+Delete | không có | Báo thông tin vị trí của văn bản hoặc đối tượng tại con trỏ duyệt. Ví dụ, có thể bao gồm tỉ lệ phần trăm theo tài liệu, khoảng cách đến rìa của trang, hoặc vị trí chính xác trên màn hình. Bấm hai lần có thể cung cấp thêm thông tin. |
+| Thông báo vị trí con trỏ duyệt | NVDA+Shift+Delete bàn phím số | NVDA+Shift+Delete | không có | Báo thông tin vị trí của văn bản hoặc đối tượng tại con trỏ duyệt. Ví dụ, có thể bao gồm tỉ lệ phần trăm theo tài liệu, khoảng cách đến mép của trang, hoặc vị trí chính xác trên màn hình. Bấm hai lần có thể cung cấp thêm thông tin. |
 | Chuyển con trỏ duyệt đến thanh trạng thái | không có | không có | không có | Thông báo thanh trạng thái của cửa sổ hiện tại nếu tìm thấy, và nó cũng sẽ đưa đối tượng điều hướng đến vị trí đó. |
 %kc:endInclude
 
@@ -530,7 +530,7 @@ Thêm vào đó, bạn cũng có thể thiết lập để chế độ focus ti�
 %kc:endInclude
 
 ++ Ký tự di chuyển đơn ++[SingleLetterNavigation]
-Trong chế độ duyệt tài liệu, để duyệt nhanh hơn, NVDA cung cấp các phím di chuyển đơn để di chuyển nhanh đến một thành phần nhất định trong tài liệu.
+Trong chế độ duyệt, để điều hướng nhanh hơn, NVDA cung cấp các phím di chuyển đơn để di chuyển nhanh đến một thành phần nhất định trong tài liệu.
 Chú ý rằng không phải tất cả các phím tắt này đều hỗ trợ cho mọi loại tài liệu.
 
 %kc:beginInclude
@@ -616,9 +616,9 @@ Sau khi cài đặt MathPlayer, khởi động lại NVDA.
 NVDA hỗ trợ một số nội dung toán học sau đây: 
 - Chương trình MathML chạy trên Mozilla Firefox, Microsoft Internet Explorer và Google Chrome.
 - Công thức toán mới của Microsoft Word 365 thông qua UI automation:
-NVDA đã có khả năng đọc và tương tác với các công thức toán trong Microsoft Word 365/2016 build 14326 trở lên.
-Dù vậy, lưu ý rằng các công thức toán được tạo trước đây bằng MathType, trước tiên phải được chuyển thành công thức toán của  (Office Math) bằng cách chọn mỗi công thức và chọn Equation Options -> Convert to Office Math trong trình đơn ngữ cảnh. Ensure your version of MathType is the latest version before doing this.
-Microsoft Word giờ đây cũng cung cấp phương pháp điều hướng theo dòng kí hiệu thông qua chính các công thức, và hỗ trợ nhập nội dugn toán sử dụng vài cú pháp, bao gồm LateX. Để có thêm thông tin, vui lòng xem [Các công thức định dạng tuyến tính sử dụng UnicodeMath và LaTeX trong Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+NVDA đã có khả năng đọc và tương tác với các công thức toán trong Microsoft Word 365/2016 bản dựng 14326 trở lên.
+Dù vậy, lưu ý rằng các công thức toán được tạo trước đây bằng MathType, trước tiên phải được chuyển thành công thức toán của  (Office Math) bằng cách chọn mỗi công thức và chọn Equation Options -> Convert to Office Math trong trình đơn ngữ cảnh. Hãy chắc rằng bạn đang dùng phiên bản mới nhất của MathType trước khi làm điều này.
+Microsoft Word giờ đây cũng cung cấp phương pháp điều hướng theo dòng kí hiệu thông qua chính các công thức, và hỗ trợ nhập nội dung toán sử dụng vài cú pháp, bao gồm LateX. Để có thêm thông tin, vui lòng xem [Các công thức định dạng tuyến tính sử dụng UnicodeMath và LaTeX trong Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint và các phiên bản cũ của Microsoft Word: 
 NVDA có thể đọc và duyệt các công thức của MathType trong cả Microsoft Powerpoint và Microsoft word.
 Cần phải cài MathType để chức năng này hoạt động.
@@ -627,10 +627,10 @@ Có thể tải tại https://www.dessci.com/en/products/mathtype/
 - Adobe Reader:
 Lưu ý là đây vẫn chưa phải chuẩn chính thức. Vì vậy, hiện vẫn chưa có phần mềm chung có thể sản xuất nội dung này.
 - Máy đọc Kindle (Kindle Reader) cho PC:
-NVDA có thể đọc và duyệt nội dugn toán trong Kindle cho PC với các sách có nội dung toán tiếp cận.
+NVDA có thể đọc và duyệt nội dung toán trong Kindle cho PC với các sách có nội dung toán tiếp cận.
 -
 
-Khi đọc tài liệu, NVDA sẽ đọc bất kỳ nội dung toán học  được hỗ trợ.
+Khi đọc tài liệu, NVDA sẽ đọc bất kỳ nội dung toán học  nào được hỗ trợ khi nó xuất hiện.
 Nếu bạn dùng màn hình nổi, nó sẽ hiển thị dưới dạng chữ  nổi.
 
 ++ Duyệt và Tương Tác ++[InteractiveNavigation]
@@ -775,23 +775,23 @@ Bấm chấm 7 + chấm 8 để chuyển dịch phần chữ nổi nhập liệu
 %kc:endInclude
 
 +++ Các phím tắt để nhập liệu +++[BrailleKeyboardShortcuts]
-NVDA hỗ trợ các phím tắt cho việc nhập liệu và giả lập các phím bấm bằng màn hình chữ nổi.
-Kiểu giả lập này có hai dạng: gán trực tiếp kiểu nhập chữ nổi vào một số phím bấm và dùng các phím bổ trợ ảo.
+NVDA hỗ trợ các phím tắt cho việc nhập liệu và mô phỏng các phím bấm bằng màn hình chữ nổi.
+Kiểu mô phỏng này có hai dạng: gán trực tiếp kiểu nhập chữ nổi vào một số phím bấm và dùng các phím bổ trợ ảo.
 
-Những phím được dùng phổ biến, như các phím mũi tên hay bấm Alt để mở các trình đơn, có thể gán trực tiếp cho các kiểu nhập liệu chữ nổi.
+Những phím được dùng phổ biến như các phím mũi tên hay bấm Alt để mở các trình đơn, có thể gán trực tiếp cho các kiểu nhập liệu chữ nổi.
 Trình điều khiển cho mỗi màn hình chữ nổi đã được trang bị trước với một vài kiểu gán như thế này.
-Bạn có thể gán lại chúng hoặc thêm các phím giả lập mới từ [Hộp thoại quản lý thao tác #InputGestures].
+Bạn có thể gán lại chúng hoặc thêm các phím mô phỏng mới từ [Hộp thoại quản lý thao tác #InputGestures].
 
 Trong khi phương pháp này hữu ích cho thao tác bấm phím phổ biến hoặc các phím riêng biệt (Tab chẳng hạn), bạn có thể sẽ không muốn gán một nhóm phím tắt riêng biệt cho mỗi phím lệnh.
-Để cho phép bấm các phím giả lập trong khi giữ phím bổ trợ, NVDA cung cấp các lệnh để bật / tắt các phím control, alt, shift, windows và NVDA, kèm theo các phím lệnh cho vài kết hợp với những phím này.
+Để cho phép bấm các phím mô phỏng trong khi giữ phím bổ trợ, NVDA cung cấp các lệnh để bật / tắt các phím control, alt, shift, windows và NVDA, kèm theo các phím lệnh cho vài kết hợp với những phím này.
 Để bật / tắt các phím này, trước tiên, bấm lệnh (hoặc trình tự các lệnh) cho các phím lệnh bạn muốn bấm, rồi nhập kí tự là phần phím tắt bạn muốn nhập.
 Ví dụ, để bấm control+f, dùng lệnh "bật / tắt phím control" rồi gõ f,
 và để nhập control+alt+t, dùng lệnh  "Bật / tắt phím control" và "Bật / tắt phím alt" theo trình tự, hoặc "Bật / tắt các phím control và alt", tiếp sau đó gõ t.
 
-Nếu bạn sơ ý bật / tắt các phím bổ trợ, bấm lại các phím đó sẽ tắt nó đi.
+Nếu bạn sơ ý bật / tắt các phím bổ trợ, hãy bấm lại các phím đó để tắt nó đi.
 
 Khi gõ trong chữ nổi viết tắt, việc bật tắt các phím bổ trợ sẽ làm cho nội dung được nhập của bạn chỉ được  dịch nếu đã bấm các chấm 7+8.
-Thêm nữa, các phím giả lập không thể phản ánh phần chữ nổi đã được nhập trước khi bấm các phím bổ trợ.
+Thêm nữa, các phím mô phỏng không thể dùng lại chữ nổi đã được nhập trước khi bấm các phím bổ trợ.
 Nghĩa là, để nhập alt+2 với mã chữ nổi có sử dụng số, trước tiên bạn phải bật phím Alt rồi gõ kí hiệu số.
 
 + Hỗ trợ nhìn +[Vision]
@@ -1709,8 +1709,8 @@ Phân loại này có các mục sau:
 ==== Sử dụng kiểu trình bày theo màn hình ====[BrowseModeSettingsScreenLayout]
 Phím bật/tắt: NVDA+v
 
-Tùy chọn này cho phép bạn thiết lập nội dung dạng có thể kích hoạt (liên kết, nút bấm và biểu mẫu) ở chế độ duyệt trên một dòng riêng biệt, hoặc trình bày như nó hiển thị trên màn hình. Lưu ý là tùy chọn này không áp dụng cho các ứng dụng trong bộ Microsoft Office như Outlook và Word, vốn dĩ luôn dùng kiểu trình bày theo màn hình.
-Khi bật tùy chọn này, các thành phần của trang sẽ thể hiện như nó đang hiển thị một cách trực quan. Ví dụ, một dòng có nhiều liên kết đang hiển thị trực quan cũng sẽ được thể hiện trong tiếng nói và chữ nổi là dòng có nhiều liên kết. Khi tắt tùy chọn này, các thành phần của trang sẽ được thể hiện trên từng dòng riêng biệt, có thể dễ hiểu hơn khi điều hướng qua từng dòng, và cũng làm cho dễ tương tác với các thành phần hơn với một số người dùng.
+Tùy chọn này cho phép bạn thiết lập nội dung dạng có thể kích hoạt (liên kết, nút bấm và biểu mẫu) ở chế độ duyệt trên một dòng riêng biệt, hoặc trình bày như nó hiển thị trên màn hình. Lưu ý là tùy chọn này không dùng cho các ứng dụng trong bộ Microsoft Office như Outlook và Word, vốn dĩ luôn dùng kiểu trình bày theo màn hình.
+Khi bật tùy chọn này, các thành phần của trang sẽ thể hiện như nó đang hiển thị một cách trực quan. Ví dụ, một dòng có nhiều liên kết đang hiển thị trực quan cũng sẽ được thể hiện trong tiếng nói và chữ nổi là dòng có nhiều liên kết. Khi tắt tùy chọn này, các thành phần của trang sẽ được thể hiện trên từng dòng riêng biệt, có thể dễ hiểu hơn khi điều hướng qua từng dòng, và cũng khiến việc tương tác với các thành phần trở nên dễ hơn với một số người dùng.
 
 ==== Bật chế độ duyệt khi tải trang ====[BrowseModeSettingsEnableOnPageLoad]
 Hộp kiểm này bật tắt tính năng cho phép chế độ duyệt tự động bật khi tải một trang.
@@ -1872,7 +1872,7 @@ Thiết lập này có các giá trị sau:
 - Mặc định (khi phù hợp)
 - Chỉ khi cần: vì các mẫu đối tượng của Microsoft Word không phải lúc nào cũng hoạt động
 - Khi phù hợp: Microsoft Word phiên bản 16.0.15000 trở lên, hoặc khi mẫu đối tượng Microsoft Word không hoạt động
-- Luôn luôn: bất cứ đâu mà  UI automation hoạt động trong Microsoft word (không quan tâm đến tình hoàn hảo).
+- Luôn luôn: bất cứ đâu mà  UI automation hoạt động trong Microsoft word (không quan tâm đến tính hoàn hảo).
 -
  
 ==== Sử dụng UI Automation để truy cập Windows Console khi có thể ====[AdvancedSettingsConsoleUIA]
@@ -1898,7 +1898,6 @@ Vài tính năng thuộc nhóm này có thể chưa được hoàn thiện.
 
 Hiện có các tùy chọn sau: 
 - "Thông báo 'có chi tiết' cho các chú thích có cấu trúc": bật thông báo nếu văn bản hoặc điều khiển có thêm các chi tiết.
-Việc thông báo tổng quan các chi tiết thêm có thể thực hiện bằng cách gán thao tác cho lệnh "Thông báo tổng quan cho mọi chi tiết chú thích tại dấu nháy" thông qua hộp thoại [Quản lý thao tác #InputGestures].
 - "Luôn thông báo mô tả aria":
   Khi nguồn ``accDescription`` là aria-description, mô tả sẽ được thông báo.
   Điều này hữu ích cho các chú thích trên web.
@@ -2058,16 +2057,17 @@ Một trình đơn sẽ xuất hiện cho phép bạn chọn các kiểu bàn ph
 
 Để xóa thao tác cho một lệnh, chọn thao tác đó rồi bấm nút Xóa.
 
-Phân loại Phím giả lập bàn phím hệ thống có các lệnh của NVDA  mô phỏng các phím trên bàn phím hệ thống.
-Các phím mô phỏng bàn phím hệ thống này có thể dùng để điều khiển bàn phím hệ thống từ màn hình chữ nổi của bạn.
-Để thêm một thao tác /phím tắt giả lập, chọn phân loại phím giả lập bàn phím hệ thống và bấm nút thêm.
-Tiếp theo, bấm một phím trên bàn phím mà bạn muốn giả lập.
-Sau đó, phím này sẽ có trong  phân loại các phím giả lập bàn phím hệ thống và bạn sẽ gán được thao tác / phím tắt cho nó như đã nói ở trên.
+Phân loại Phím mô phỏng bàn phím hệ thống có các lệnh của NVDA  mô phỏng các phím trên bàn phím hệ thống.
+Các phím mô phỏng bàn phím hệ thống này có thể dùng để điều khiển bàn phím hệ thống từ màn hình chữ nổi cMột thao tác với các phím bổ trợ có thể không gán được vào thao tác mô phỏng mà không có phím bổ trợ
+ủa bạn.
+Để thêm một thao tác /phím tắt mô phỏng, chọn phân loại phím mô phỏng bàn phím hệ thống và bấm nút thêm.
+Tiếp theo, bấm một phím trên bàn phím mà bạn muốn mô phỏng.
+Sau đó, phím này sẽ có trong  phân loại các phím mô phỏng bàn phím hệ thống và bạn sẽ gán được thao tác / phím tắt cho nó như đã nói ở trên.
 
 Lưu ý:
- - Các phím giả lập phải được gán  thao tác để duy trì khi lưu / đóng hộp thoại.
- - Một thao tác với các phím bổ trợ có thể không gán được vào thao tác giả lập mà không có phím bổ trợ
- ví dụ: thiết lập đầu vào giả lập 'a' và chọn thao tác là 'ctrl+m', có thể cho kết quả
+ - Các phím mô phỏng phải được gán  thao tác để duy trì khi lưu / đóng hộp thoại.
+ - Một thao tác với các phím bổ trợ có thể không gán được vào thao tác mô phỏng mà không có phím bổ trợ
+ ví dụ: thiết lập đầu vào mô phỏng 'a' và chọn thao tác là 'ctrl+m', có thể cho kết quả
  trong ứng dụng nhận lệnh 'ctrl+a'.
  -
 
@@ -2166,7 +2166,7 @@ Bạn có thể làm điều đó bằng cách chọn hộp kiểm "tạm thời
 +++ Kích hoạt một hồ sơ bằng thao tác +++[ConfigProfileGestures]
 Với mọi hồ sơ được thêm vào, bạn có thể gán một hay nhiều thao tác để kích hoạt nó.
 Mặc định, hồ sơ cấu hình không được gán sẵn thao tác.
-Bạn có thể gán thao tác để kích hoạt một hồ sơ bằng [Hộp thoại quản lý thao tác #InputGestures].
+Bạn có thể gán thao tác / phím tắt để kích hoạt một hồ sơ bằng [Hộp thoại quản lý thao tác #InputGestures].
 Mỗi hồ sơ sẽ tồn tại trong phân loại hồ sơ cấu hình.
 Khi bạn đổi tên một hồ sơ, các thao tác được gán trước đó vẫn hoạt động.
 Việc xóa một hồ sơ sẽ tự xóa luôn thao tác đã gán cho nó.
@@ -2229,7 +2229,7 @@ Cái này thường được dùng để di chuyển dấu nháy hoặc gọi ho
 Phải giữ chuột đến khi ô chữ nổi chuyển sang màu xanh lá.
 Ô chữ nổi sẽ bắt đầu bằng một màu vàng nhạt, chuyển sang màu cam rồi trở thành màu xanh lá.
 
-Để bật / tắt trình xem chữ nổi ở bật cứ đâu, vui lòng gán thao tác thông qua [hộp thoại Quản lí các thao tác #InputGestures].
+Để bật / tắt trình xem chữ nổi ở bật cứ đâu, vui lòng gán thao tác / phim tắt thông qua [hộp thoại Quản lí các thao tác #InputGestures].
 
 ++ Python Console ++[PythonConsole]
 Python console được tìm thấy trong trình đơn công cụ của trình đơn NVDA, là một công cụ phát triển, hữu dụng trong việc sửa lỗi, kiểm tra tổng quan cấu trúc lõi của NVDA hay kiểm tra cấp bậc của tính tiếp cận cho một ứng dụng.
@@ -2791,7 +2791,7 @@ Bạn có thể tìm thêm thông tin về các màn hình này tại https://en
 
 
 +++ Seika Phiên Bản 3, 4 và 5 (40 ô), Seika80 (80 ô) +++[SeikaBrailleDisplays]
-Các màn hình này chưa hỗ trợ tính năng ngầm tự nhận biết của NVDA.
+Các màn hình này chưa hỗ trợ tính năng ngầm tự dò tìm của NVDA.
 - Chọn "Các màn hình chữ nổi Seika" để cấu hình thủ công
 - Trình điều khiển cho thiết bị phải được cài đặt trước khi dùng Seika v3/4/5/80.
 Trình điều khiển [được cung cấp bởi nhà sản xuất https://en.seika-braille.com/down/index.html].
@@ -2821,7 +2821,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 - Không cần cài thêm trình điều khiển khi dùng màn hình chữ nổi Seika Notetaker.
 -
 
-Sau đây là danh sáchh các phím tắt được gán cho  Seika Notetaker.
+Sau đây là danh sách các phím tắt được gán cho  Seika Notetaker.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
 %kc:beginInclude
 || Tên | Phím |
