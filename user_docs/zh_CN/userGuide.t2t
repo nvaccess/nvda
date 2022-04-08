@@ -608,16 +608,16 @@ NVDA支持以下应用中的文档
 %kc:endInclude
 
 + 阅读数学内容 +[ReadingMath]
-使用Design Science发行的 MathPlayer 4， NVDA 可以阅读并有交互性的浏览数学内容。
-这要求 MathPlayer 4 已经安装在了电脑上。
-MathPlayer可免费从 https://www.dessci.com/en/products/mathplayer/ 处下载。
+使用Design Science发行的 MathPlayer 4， NVDA 可以阅读数学内容并与之交互。
+这要求您首先安装 MathPlayer 4。
+MathPlayer可免费从 https://www.dessci.com/en/products/mathplayer/ 下载。
 
 NVDA 支持下列类型的数学内容：
 - Mozilla Firefox, Microsoft Internet Explorer 和 Google Chrome内的MathML内容.
 - Microsoft Word 和 PowerPoint 中的 MathType 内容.
 您必须安装由Design Science 开发的 MathType软件 才可使本功能得以正常运作。
 该软件的试用版本就有阅读数学内容的功能。
-这个软件可以在 [这里下载 https://www.dessci.com/en/products/mathtype/ ]。
+可以访问以下地址下载该软件 https://www.dessci.com/en/products/mathtype/。
 - Adobe Reader 的 MathML。
 请注意，这仍不是一个官方标准，所以目前制作这些内容的软件没有可用的公开版本。
 - Kindle For PC 内有无障碍支持的数学内容
@@ -2330,21 +2330,21 @@ Microsoft Speech Platform (微软语音平台)包含许多语言的声音，它�
 -
 
 ++ Windows OneCore 语音 ++[OneCore]
-Windows 10 或更新的操作系统包括称为“OneCore”或“移动”语音的新语音。
-为多种语言提供了语音，它们比使用Microsoft Speech API第5版提供的Microsoft语音响应更快。
-在Windows 10 或更新的操作系统上，NVDA默认使用Windows OneCore 语音(其他版本的Windows上NVDA默认使用[eSpeak NG #eSpeakNG])。
+Windows 10 及更高版本操作系统内置了新的语音，被称作“OneCore”或“Mobile”。
+该语音支持多语言，跟 Microsoft Speech API version 5 系列的语音相比响应更快。
+在Windows 10 或更高版本的操作系统上，NVDA默认使用Windows OneCore 语音(其他版本的Windows上NVDA默认使用[eSpeak NG #eSpeakNG])。
 
 若想添加新的 Windows OneCore 语音角色，请转到Windows系统设置中的“语音设置”。
 按下“添加语音”按钮并搜索您所需语言的语音。
 许多语言包含了多种变体。
 “英语(英国)”和“英语(澳大利亚)”就是英语的两种变体。
-而“法语(法国)”，“法语(加拿大)”和“法语(瑞士)”是法语中的变体。
+而“法语(法国)”，“法语(加拿大)”和“法语(瑞士)”是法语的不同变体。
 直接搜索一种语言（例如英语或法语），然后可以在列表中找到该语言的所有语音变体。
 选择您所需的任何语言，然后使用“添加”按钮进行添加。
-添加后，请重新启动 NVDA。
+添加后，请重新启动 NVDA 以使新添加的语音生效。
 
 
-请参考微软发布的[这篇文章 https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices]，获取可用语音列表和安装说明：
+可参考微软发布的[这篇文章 https://support.microsoft.com/zh-cn/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01]，获取可用语音列表和安装说明。
 
 + 支持的点显器 +[SupportedBrailleDisplays]
 本节包含有关NVDA支持的点显器的信息。
