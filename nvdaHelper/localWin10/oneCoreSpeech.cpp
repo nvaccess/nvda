@@ -50,14 +50,14 @@ SpeakThreadGuard::SpeakThreadGuard() {
 	waiting on a callback.
 	When exiting the scope of initialization, decreases the count
 	of active speech threads and deletes the OneCore instance if it has
-	been terminated.
+	been terminated and no speech callbacks are waiting.
 	*/
 	++_speechThreads;
 }
 
 bool SpeakThreadGuard::areCallbacksPending() {
 	/*
-	Checks if any speak threads are active, with callbacks pending.
+	Checks if any speak threads are active, i.e. with callbacks pending.
 	*/
 	return _speechThreads != 0;
 }
@@ -66,7 +66,7 @@ SpeakThreadGuard::~SpeakThreadGuard() {
 	/* 
 	When exiting the scope of initialization, decreases the count
 	of active speech threads and deletes the OneCore instance if it has
-	been terminated.
+	been terminated and no speech callbacks are waiting.
 	*/
 	--_speechThreads;
 	if (_speechThreads < 0) {
