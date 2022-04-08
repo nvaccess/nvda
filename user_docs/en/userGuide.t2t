@@ -1280,6 +1280,7 @@ On Windows 8 and above, this option allows you to choose if NVDA should lower th
 
 This option is only available if NVDA has been installed.
 It is not possible to support audio ducking for portable and temporary copies of NVDA.
+Audio ducking is also not supported on [secure screens #SecureScreens].
 
 +++ Synth settings ring +++[SynthSettingsRing]
 If you wish to quickly change speech settings without going to the Speech category of the NVDA settings dialog, there are some NVDA key commands that allow you to move through the most common speech settings from anywhere while running NVDA:
@@ -1576,6 +1577,8 @@ This checkbox enables NVDA's touch interaction support.
 If enabled, you can use your fingers to navigate and interact with items on screen using a touchscreen device.
 If disabled, touchscreen support will be disabled as though NVDA is not running.
 This setting can also be toggled using NVDA+control+alt+t. 
+
+Touch interaction is not supported on [secure screens #SecureScreens].
 
 ==== Touch typing mode ====[TouchTypingMode]
 This checkbox allows you to specify the method you wish to use when entering text using the touch keyboard.
@@ -3338,6 +3341,8 @@ Secure screens include:
   - This includes installing programs
   -
 -
+
+Audio ducking and touch interaction are not supported on secure screens.
 
 ++ Command Line Options ++[CommandLineOptions]
 NVDA can accept one or more additional options when it starts which alter its behaviour.
