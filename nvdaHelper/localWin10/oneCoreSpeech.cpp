@@ -41,18 +41,33 @@ std::recursive_mutex InstanceManager::_instanceStateMutex;
 std::vector<OcSpeech*> InstanceManager::_terminatedInstances;
 std::unique_ptr<OcSpeech> InstanceManager::_instance;
 std::atomic<InstanceState> InstanceManager::_instanceState = InstanceState::notInitialized;
-std::condition_variable_any InstanceManager::_instanceReadyForDeletion;
-std::atomic_int SpeakCallbackCounter::_speechThreads = 0;
+std::condition_variable_any InstanceManager::_readyForInitialization;
+std::atomic_int SpeakThreadGuard::_speechThreads = 0;
 
-SpeakCallbackCounter::SpeakCallbackCounter() {
+SpeakThreadGuard::SpeakThreadGuard() {
+	/*
+	When initialized, increases the count of active speech threads
+	waiting on a callback.
+	When exiting the scope of initialization, decreases the count
+	of active speech threads and deletes the OneCore instance if it has
+	been terminated.
+	*/
 	++_speechThreads;
 }
 
-bool SpeakCallbackCounter::areCallbacksPending() {
+bool SpeakThreadGuard::areCallbacksPending() {
+	/*
+	Checks if any speak threads are active, with callbacks pending.
+	*/
 	return _speechThreads != 0;
 }
 
-SpeakCallbackCounter::~SpeakCallbackCounter() {
+SpeakThreadGuard::~SpeakThreadGuard() {
+	/* 
+	When exiting the scope of initialization, decreases the count
+	of active speech threads and deletes the OneCore instance if it has
+	been terminated.
+	*/
 	--_speechThreads;
 	if (_speechThreads < 0) {
 		throw runtime_error(
@@ -60,28 +75,36 @@ SpeakCallbackCounter::~SpeakCallbackCounter() {
 			"decreasePendingCount has been called too many times."
 		);
 	}
-	InstanceManager::deleteInstanceIfReady();
+	InstanceManager::deleteInstanceIfTerminatedAndReady();
 }
 
-void InstanceManager::deleteInstanceIfReady() {
+void InstanceManager::deleteInstanceIfTerminatedAndReady() {
+	/*
+	If the instance is terminated and no speak callbacks are pending,
+	delete the instance and notify any waiting threads,
+	such as the instance initializer.
+	*/
 	std::lock_guard g(_instanceStateMutex);
 	if (
-		!isInstanceActive()
-		&& !SpeakCallbackCounter::areCallbacksPending()
+		_instanceState == InstanceState::terminated
+		&& !SpeakThreadGuard::areCallbacksPending()
 	) {
 		_instance.reset();
 		_instanceState = InstanceState::notInitialized;
-		_instanceReadyForDeletion.notify_all();
+		_readyForInitialization.notify_all();
 	}
 }
 
-void InstanceManager::waitForAnyPendingDeletion() {
+void InstanceManager::waitUntilReadyForInitialization() {
+	/* Wait for a signal that there is no active or terminated instance. */
 	std::unique_lock lock(_instanceStateMutex);
-	// Wait for a signal for speech to finish
-	_instanceReadyForDeletion.wait(lock, []{return !isInstanceActive();});
+	_readyForInitialization.wait(lock, []{
+		return !_instance && _instanceState == InstanceState::notInitialized;
+	});
 }
 
-OcSpeech* InstanceManager::getAliveInstance(OcSpeech* token) {
+OcSpeech* InstanceManager::getActiveInstance(OcSpeech* token) {
+	/* Throw a runtime error if no instance is active */
 	_assertInstanceActive(token);
 	return _instance.get();
 }
@@ -91,24 +114,24 @@ void InstanceManager::_assertInstanceActive(OcSpeech* token) {
 		throw runtime_error("Supplied OneCore token is not active");
 	}
 	if (_instance.get() != token) {
-		throw runtime_error("Supplied OneCore token does not match instance");
-	}
-	for (auto p: _terminatedInstances) {
-		if (p == token) {
-			throw runtime_error("Supplied OneCore token has terminated");
-		}
+		throw runtime_error("Supplied OneCore instance token does not match initialized instance");
 	}
 }
 
 OcSpeech* InstanceManager::initializeNewInstance() {
+	/*
+	Initializes a new OneCore instance.
+	Waits until an instance has been fully terminated,
+	and then (once speech callbacks have finished) deleted.
+	*/
 	std::lock_guard g(_instanceStateMutex);
-	if (_instance) {
+	if (_instanceState == InstanceState::active) {
 		throw runtime_error(
-			"OneCore token still alive."
+			"OneCore token still active."
 			"Terminate token before calling initialize"
 		);
 	}
-	waitForAnyPendingDeletion();
+	waitUntilReadyForInitialization();
 	_instance = std::make_unique<OcSpeech>();
 	_instanceState = InstanceState::active;
 	// Remove instance from terminated instances if we get the same pointer again
@@ -124,11 +147,15 @@ OcSpeech* InstanceManager::initializeNewInstance() {
 }
 
 void InstanceManager::terminateInstance(OcSpeech* token) {
+	/*
+	Marks an instance as terminated.
+	If no callbacks are pending, proceed with deletion of the instance.
+	*/
 	_assertInstanceActive(token);
 	std::lock_guard g(_instanceStateMutex);
 	_instanceState = InstanceState::terminated;
 	_terminatedInstances.emplace_back(_instance.get());
-	if (!SpeakCallbackCounter::areCallbacksPending()){
+	if (!SpeakThreadGuard::areCallbacksPending()){
 		_instance.reset();
 		_instanceState = InstanceState::notInitialized;
 	}
@@ -157,15 +184,11 @@ void __stdcall ocSpeech_terminate(OcSpeech* token) {
 }
 
 void __stdcall ocSpeech_setCallback(OcSpeech* token, ocSpeech_Callback fn) {
-	InstanceManager::getAliveInstance(token)->setCallback(fn);
+	InstanceManager::getActiveInstance(token)->setCallback(fn);
 }
 
 void OcSpeech::setCallback(ocSpeech_Callback fn) {
 	callback = fn;
-}
-
-bool InstanceManager::isInstanceActive() {
-	return _instanceState == InstanceState::active;
 }
 
 void protectedCallback(
@@ -174,11 +197,7 @@ void protectedCallback(
 	int length,
 	const wchar_t* markers
 ) {
-	if (!InstanceManager::isInstanceActive()) {
-		LOG_ERROR("Expected OneCore instance is not active");
-		return;
-	}
-	InstanceManager::getAliveInstance(token)->performCallback(data, length, markers);
+	InstanceManager::getActiveInstance(token)->performCallback(data, length, markers);
 }
 
 void OcSpeech::performCallback(
@@ -190,7 +209,11 @@ void OcSpeech::performCallback(
 }
 
 fire_and_forget OcSpeech::speak(hstring text) {
-	SpeakCallbackCounter();
+	/*
+	Send speech to OneCore.
+	Will block OneCore from being re-initialized until speech callbacks have completed.
+	*/
+	SpeakThreadGuard();
 	// Ensure we catch all exceptions in this method,
 
 	// as an unhandled exception causes std::terminate to get called, resulting in a crash.
@@ -238,7 +261,11 @@ fire_and_forget OcSpeech::speak(hstring text) {
 }
 
 void __stdcall ocSpeech_speak(OcSpeech* token, wchar_t* text) {
-	InstanceManager::getAliveInstance(token)->speak(text);
+	/*
+	Send speech to OneCore.
+	Will block OneCore from being re-initialized until speech callbacks have completed.
+	*/
+	InstanceManager::getActiveInstance(token)->speak(text);
 }
 
 wstring OcSpeech::getVoices() {
@@ -264,7 +291,7 @@ wstring OcSpeech::getVoices() {
 // and calling malloc and free from different CRTs isn't safe.
 BSTR __stdcall ocSpeech_getVoices(OcSpeech* token) {
 	return SysAllocString(
-		InstanceManager::getAliveInstance(token)->getVoices().c_str()
+		InstanceManager::getActiveInstance(token)->getVoices().c_str()
 	);
 }
 
@@ -273,7 +300,7 @@ hstring OcSpeech::getCurrentVoiceId() {
 }
 
 const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(OcSpeech* token) {
-	return InstanceManager::getAliveInstance(token)->getCurrentVoiceId().c_str();
+	return InstanceManager::getActiveInstance(token)->getCurrentVoiceId().c_str();
 }
 
 void OcSpeech::setVoice(int index) {
@@ -281,7 +308,7 @@ void OcSpeech::setVoice(int index) {
 }
 
 void __stdcall ocSpeech_setVoice(OcSpeech* token, int index) {
-	InstanceManager::getAliveInstance(token)->setVoice(index);
+	InstanceManager::getActiveInstance(token)->setVoice(index);
 }
 
 hstring OcSpeech::getCurrentVoiceLanguage() {
@@ -289,7 +316,7 @@ hstring OcSpeech::getCurrentVoiceLanguage() {
 }
 
 const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(OcSpeech* token) {
-	return InstanceManager::getAliveInstance(token)->getCurrentVoiceLanguage().c_str();
+	return InstanceManager::getActiveInstance(token)->getCurrentVoiceLanguage().c_str();
 }
 
 double OcSpeech::getPitch() {
@@ -297,7 +324,7 @@ double OcSpeech::getPitch() {
 }
 
 double __stdcall ocSpeech_getPitch(OcSpeech* token) {
-	return InstanceManager::getAliveInstance(token)->getPitch();
+	return InstanceManager::getActiveInstance(token)->getPitch();
 }
 
 void OcSpeech::setPitch(double pitch) {
@@ -305,7 +332,7 @@ void OcSpeech::setPitch(double pitch) {
 }
 
 void __stdcall ocSpeech_setPitch(OcSpeech* token, double pitch) {
-	InstanceManager::getAliveInstance(token)->setPitch(pitch);
+	InstanceManager::getActiveInstance(token)->setPitch(pitch);
 }
 
 double OcSpeech::getVolume() {
@@ -313,7 +340,7 @@ double OcSpeech::getVolume() {
 }
 
 double __stdcall ocSpeech_getVolume(OcSpeech* token) {
-	return InstanceManager::getAliveInstance(token)->getVolume();
+	return InstanceManager::getActiveInstance(token)->getVolume();
 }
 
 void OcSpeech::setVolume(double volume) {
@@ -321,7 +348,7 @@ void OcSpeech::setVolume(double volume) {
 }
 
 void __stdcall ocSpeech_setVolume(OcSpeech* token, double volume) {
-	InstanceManager::getAliveInstance(token)->setVolume(volume);
+	InstanceManager::getActiveInstance(token)->setVolume(volume);
 }
 
 double OcSpeech::getRate() {
@@ -329,7 +356,7 @@ double OcSpeech::getRate() {
 }
 
 double __stdcall ocSpeech_getRate(OcSpeech* token) {
-	return InstanceManager::getAliveInstance(token)->getRate();
+	return InstanceManager::getActiveInstance(token)->getRate();
 }
 
 void OcSpeech::setRate(double rate) {
@@ -337,5 +364,5 @@ void OcSpeech::setRate(double rate) {
 }
 
 void __stdcall ocSpeech_setRate(OcSpeech* token, double rate) {
-	InstanceManager::getAliveInstance(token)->setRate(rate);
+	InstanceManager::getActiveInstance(token)->setRate(rate);
 }

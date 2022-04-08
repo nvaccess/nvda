@@ -18,12 +18,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 typedef void (*ocSpeech_Callback)(BYTE* data, int length, const wchar_t* markers);
 
-class SpeakCallbackCounter {
+class SpeakThreadGuard {
 private:
 	static std::atomic_int _speechThreads;
 public:
-	SpeakCallbackCounter();
-	~SpeakCallbackCounter();
+	SpeakThreadGuard();
+	~SpeakThreadGuard();
 	static bool areCallbacksPending();
 };
 
@@ -60,15 +60,14 @@ private:
 	static std::vector<OcSpeech*> _terminatedInstances;
 	static std::unique_ptr<OcSpeech> _instance;
 	static std::atomic<InstanceState> _instanceState;
-	static std::condition_variable_any _instanceReadyForDeletion;
+	static std::condition_variable_any _readyForInitialization;
 	static void _assertInstanceActive(OcSpeech* token);
 public:
-	static bool isInstanceActive();
-	static void waitForAnyPendingDeletion();
+	static void waitUntilReadyForInitialization();
 	static OcSpeech* initializeNewInstance();
 	static void terminateInstance(OcSpeech* token);
-	static void deleteInstanceIfReady();
-	static OcSpeech* getAliveInstance(OcSpeech* token);
+	static void deleteInstanceIfTerminatedAndReady();
+	static OcSpeech* getActiveInstance(OcSpeech* token);
 };
 
 static void protectedCallback(
