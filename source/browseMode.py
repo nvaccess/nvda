@@ -1257,7 +1257,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def __init__(self,obj):
 		super(BrowseModeDocumentTreeInterceptor,self).__init__(obj)
 		self._lastProgrammaticScrollTime = None
-		self.documentConstantIdentifier = self.documentConstantIdentifier
+		# Cache the document constant identifier so it can be saved with the last caret position on termination.
+		# As the original property may not be available as the document will be already dead.
+		self._lastCachedDocumentConstantIdentifier: Optional[str] = self.documentConstantIdentifier
 		self._lastFocusObj = None
 		self._objPendingFocusBeforeActivate = None
 		self._hadFirstGainFocus = False
@@ -1271,8 +1273,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	def terminate(self):
 		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
+			docID = self._lastCachedDocumentConstantIdentifier
+			lastCaretPos = self._lastCaretPosition
+			log.debug(f"Saving caret position {lastCaretPos} for document at {docID}")
 			try:
-				self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[self.documentConstantIdentifier] = self._lastCaretPosition
+				self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[docID] = lastCaretPos
 			except AttributeError:
 				# The app module died.
 				pass
@@ -1292,6 +1297,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We only set the caret position if in browse mode.
 				# If in focus mode, the document must have forced the focus somewhere,
 				# so we don't want to override it.
+				# Update the cached document constant identifier so it can be saved with the last caret position on termination.
+				# As the original property may not be available as the document will be already dead.
+				# Updating here is necessary as the identifier could have dynamically changed since initial load,
+				# such as with  a SPA (single page app)
+				self._lastCachedDocumentConstantIdentifier = self.documentConstantIdentifier
 				initialPos = self._getInitialCaretPos()
 				if initialPos:
 					self.selection = self.makeTextInfo(initialPos)
@@ -1358,6 +1368,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		caret = info.copy()
 		caret.collapse()
 		self._lastCaretPosition = caret.bookmark
+		docID = self.documentConstantIdentifier
+		if docID:
+			# Update the cached document constant identifier so it can be saved with the last caret position on termination.
+			# As the original property may not be available as the document will be already dead.
+			# Updating here is necessary as the identifier could have dynamically changed since initial load,
+			# such as with  a SPA (single page app)
+			self._lastCachedDocumentConstantIdentifier = self.documentConstantIdentifier
 		review.handleCaretMove(caret)
 		if reason == OutputReason.FOCUS:
 			self._lastCaretMoveWasFocus = True
@@ -1778,7 +1795,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			obj = container
 		return doResult(False)
 
-	def _get_documentConstantIdentifier(self):
+	documentConstantIdentifier: Optional[str]
+	# Mark documentConstantIdentifier property   for caching during the current core cycle
+	_cache_documentConstantIdentifer = True
+	def _get_documentConstantIdentifier(self) -> Optional[str]:
 		"""Get the constant identifier for this document.
 		This identifier should uniquely identify all instances (not just one instance) of a document for at least the current session of the hosting application.
 		Generally, the document URL should be used.
@@ -1794,7 +1814,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		@return: C{True} if the caret position should be remembered, C{False} if not.
 		@rtype: bool
 		"""
-		docConstId = self.documentConstantIdentifier
+		docConstId = self._lastCachedDocumentConstantIdentifier
 		# Return True if the URL indicates that this is probably a web browser document.
 		# We do this check because we don't want to remember caret positions for email messages, etc.
 		if isinstance(docConstId, str):
@@ -1812,11 +1832,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		@rtype: TextInfo position
 		"""
 		if self.shouldRememberCaretPositionAcrossLoads:
+			docID = self._lastCachedDocumentConstantIdentifier
 			try:
-				return self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[self.documentConstantIdentifier]
+				caretPos = self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[docID]
 			except KeyError:
-				pass
-		return None
+				log.debug(f"No saved caret position for {docID}")
+				return None
+			log.debug(f"Found saved caret pos {caretPos} for document {docID}")
+		return caretPos
 
 	def getEnclosingContainerRange(self, textRange):
 		textRange = textRange.copy()
