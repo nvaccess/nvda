@@ -1171,6 +1171,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch(eventID) {
 		case EVENT_OBJECT_FOCUS:
+		case IA2_EVENT_DOCUMENT_LOAD_COMPLETE:
 		case EVENT_SYSTEM_ALERT:
 		case IA2_EVENT_TEXT_UPDATED:
 		case IA2_EVENT_TEXT_INSERTED:
@@ -1208,8 +1209,12 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 			continue;
 		LOG_DEBUG(L"found active backend for this window at "<<backend);
 
-		//For focus and alert events, force any invalid nodes to be updated right now
-		if(eventID==EVENT_OBJECT_FOCUS||eventID==EVENT_SYSTEM_ALERT) {
+		//For focus, documentLoadComplete and alert events, force any nodes already marked as invalid  to be updated right now,
+		if(
+			eventID == EVENT_OBJECT_FOCUS
+			|| eventID == IA2_EVENT_DOCUMENT_LOAD_COMPLETE
+			|| eventID==EVENT_SYSTEM_ALERT
+		) {
 			backend->forceUpdate();
 			continue;
 		}
