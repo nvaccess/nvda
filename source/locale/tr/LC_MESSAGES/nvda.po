@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-25 00:03+0000\n"
+"POT-Creation-Date: 2022-04-01 00:02+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
+"Last-Translator: Ömer Yılmaz <yilmaz.omer2002@gmail.com>\n"
 "Language-Team: \n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -724,6 +724,11 @@ msgstr "Bulgarca derece1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Catalan grade 1"
+msgstr "katalonca derece 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Merkezi Kürtçe derece 1"
 
@@ -776,6 +781,11 @@ msgstr "Danca 6 nokta derece 2"
 #. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "Danca 8 dot derece 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German 6 dot computer braille"
+msgstr "Almanca 6 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1820,7 +1830,7 @@ msgstr "Bir grup bağlantı sonrasındaki metin üzerine gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text after a block of links"
-msgstr "Bğlantı grubundan sonra metin bulunamadı"
+msgstr "Bir grup bağlantı sonrasında metin bulunamadı"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips backward past a block of links"
@@ -1828,7 +1838,7 @@ msgstr "Bir grup bağlantı öncesindeki metin üzerine gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text before a block of links"
-msgstr "balantı grubu öncesinde metin bulunamadı"
+msgstr "Bir grup bağlantı öncesinde metin bulunamadı"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
@@ -8259,6 +8269,26 @@ msgstr "&Çıkış"
 msgid "Exit NVDA"
 msgstr "NVDA'dan çık"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Kapat"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Yeniden başlat"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Eklentileri devre dışı bırakarak yeniden başlat"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Hata ayıklamayı etkinleştirerek yeniden başlat"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Bekleyen güncellemeyi kur"
+
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
@@ -8281,26 +8311,6 @@ msgstr ""
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
 msgstr "Ne &yapmak istersiniz?"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "Kapat"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "Yeniden başlat"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "Eklentileri devre dışı bırakarak yeniden başlat"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "Hata ayıklamayı etkinleştirerek yeniden başlat"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "Bekleyen güncellemeyi kur"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -9969,13 +9979,33 @@ msgstr ""
 "UI Otomasyon etkinlikleri ve özellik değişiklikleri için &seçimli kaydı "
 "etkinleştirin"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
+#. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Use UI Automation to access Microsoft Word document controls"
 msgstr ""
 "Uygunsa Microsoft &Word belge kontrollerine erişmek için UI Otomasyonu'nu "
 "kullan"
+
+#. Translators: Label for the default value of the Use UIA with MS Word combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Default (Where suitable)"
+msgstr "Varsayılan (Evet)"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Only when necessary"
+msgstr "Yalnızca gerektiğinde"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Where suitable"
+msgstr "Uygun olduğunda"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Always"
+msgstr "Her zaman"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10735,6 +10765,11 @@ msgstr "SÜTUN {0} / {1}"
 #, python-format
 msgid "%s columns"
 msgstr "%s sütunlu"
+
+#. Translators: Indicates the text column number in a document.
+#, python-brace-format
+msgid "column {columnNumber}"
+msgstr "sütun{columnNumber}"
 
 msgid "continuous section break"
 msgstr "sürekli bölüm sonu"
