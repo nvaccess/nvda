@@ -1800,13 +1800,16 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	documentConstantIdentifier: Optional[str]
 	""" Typing information for auto-property: _get_documentConstantIdentifier"""
 
-	# Mark documentConstantIdentifier property   for caching during the current core cycle
+	# Mark documentConstantIdentifier property for caching during the current core cycle
 	_cache_documentConstantIdentifer = True
 
 	def _get_documentConstantIdentifier(self) -> Optional[str]:
 		"""Get the constant identifier for this document.
 		This identifier should uniquely identify all instances (not just one instance) of a document for at least the current session of the hosting application.
 		Generally, the document URL should be used.
+		Although the name of this property suggests that the identifier will be constant,
+		With the introduction of SPAs (single page apps) the URL of a page may dynamically change over time.
+		this property should reflect the most up to date URL.
 		@return: The constant identifier for this document, C{None} if there is none.
 		"""
 		return None
