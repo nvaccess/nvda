@@ -1798,6 +1798,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		return doResult(False)
 
 	documentConstantIdentifier: Optional[str]
+	""" Typing information for auto-property: _get_documentConstantIdentifier"""
 
 	# Mark documentConstantIdentifier property   for caching during the current core cycle
 	_cache_documentConstantIdentifer = True

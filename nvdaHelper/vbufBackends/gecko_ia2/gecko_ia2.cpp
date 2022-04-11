@@ -1213,7 +1213,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		if(
 			eventID == EVENT_OBJECT_FOCUS
 			|| eventID == IA2_EVENT_DOCUMENT_LOAD_COMPLETE
-			||eventID==EVENT_SYSTEM_ALERT
+			|| eventID==EVENT_SYSTEM_ALERT
 		) {
 			backend->forceUpdate();
 			continue;
