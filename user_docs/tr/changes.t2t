@@ -36,7 +36,7 @@ eSpeak-NG ve LibLouis'in güncellenmesi ile Japonca, Almanca ve Katalanca Braill
 - Braille ekranlarda aynı anda birden fazla değişken tuşu açıp kapatmak için komutlar eklendi (#13152)
 - Konuşma Sözlüğü iletişim kutusunda seçili sözlüğü kolayca temizlemek için "Tümünü kaldır" düğmesi eklendi. (#11802)
 - Windows 11 Hesap Makinesi desteği eklendi. (#13212)
-- Eğer Windows 11'de UI Otomasyonu etkinleştirilmişse, artık Microsoft word'de satır numaraları, sütun numaraları ve bölüm numaraları bildirilebilir. (#13283)
+- Eğer Windows 11'de UI Otomasyonu etkinleştirilmişse, artık Microsoft word'de satır ve sütun numaraları bildirilebilir. (#13283)
 - NVDA artık  Windows 11'de Microsoft Office 16.0.15000 ve sonrası için Word belgelerinde varsayılan olarak UI Otomasyonunu kullanıyor. UI Otomasyonunun kullanılması, önceden kullanılan Nesne tabanlı erişim modeli'ne (Object model access) göre farkedilebilir seviyede performans iyileştirmesi sağlıyor. (#13437)
  - Bu değişiklik, Microsoft Word belgelerinin yanı sıra Microsoft Outlook'un mesaj okuyucusu ve oluşturucusu için de geçerlidir. 
  -
@@ -92,9 +92,10 @@ eSpeak-NG ve LibLouis'in güncellenmesi ile Japonca, Almanca ve Katalanca Braill
 
 == Geliştiriciler için Değişiklikler ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+ - Although NVDA still requires Visual Studio 2019, Builds should no longer fail if a newer version of Visual Studio (E.g. 2022) is installed along side 2019. (#13033, #13387)
 - Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
 - Updated SCons to version 4.3.0. (#13033)
-- Updated py2exe to version 0.11.0.1. (#12357, #13066)
+- Updated py2exe to version 0.11.1.0. (#13510)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
 - ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
 - ``MessageItem`` has been removed from the Outlook appModule. (#12935)
@@ -153,6 +154,18 @@ This can dramatically decrease build times on multi core systems. (#13226)
 - ``languageHandler.windowsPrimaryLCIDsToLocaleNames`` has been removed, instead use ``languageHandler.windowsLCIDToLocaleName`` or ``winKernel.LCIDToLocaleName``. (#13342)
 - ``UIAAutomationId`` property for UIA objects should be preferred over ``cachedAutomationId``. (#13125, #11447)
   - ``cachedAutomationId`` can be used if obtained directly from the element.
+  -
+-
+
+
+
+= 2021.3.5 =
+Bu sürüm bazı güvenlik sorunlarını giderir.
+Lütfen güvenlik sorunlarını info@nvaccess.org adresine bildirin.
+
+== Güvenlik güncellemeleri ==
+- Addressed security advisory ``GHSA-xc5m-v23f-pgr7``.
+  - Artık Noktalama imla sözlüğü güvenli modda kullanılamaz.
   -
 -
 
