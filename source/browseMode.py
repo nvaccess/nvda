@@ -1297,7 +1297,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We only set the caret position if in browse mode.
 				# If in focus mode, the document must have forced the focus somewhere,
 				# so we don't want to override it.
-				# Update the cached document constant identifier so it can be saved with the last caret position on termination.
+				# Update the cached document constant identifier
+				# so it can be saved with the last caret position on termination.
 				# As the original property may not be available as the document will be already dead.
 				# Updating here is necessary as the identifier could have dynamically changed since initial load,
 				# such as with  a SPA (single page app)
@@ -1370,7 +1371,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		self._lastCaretPosition = caret.bookmark
 		docID = self.documentConstantIdentifier
 		if docID:
-			# Update the cached document constant identifier so it can be saved with the last caret position on termination.
+			# Update the cached document constant identifier
+			# so it can be saved with the last caret position on termination.
 			# As the original property may not be available as the document will be already dead.
 			# Updating here is necessary as the identifier could have dynamically changed since initial load,
 			# such as with  a SPA (single page app)
@@ -1796,8 +1798,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		return doResult(False)
 
 	documentConstantIdentifier: Optional[str]
+
 	# Mark documentConstantIdentifier property   for caching during the current core cycle
 	_cache_documentConstantIdentifer = True
+
 	def _get_documentConstantIdentifier(self) -> Optional[str]:
 		"""Get the constant identifier for this document.
 		This identifier should uniquely identify all instances (not just one instance) of a document for at least the current session of the hosting application.
