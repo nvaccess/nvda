@@ -1847,7 +1847,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				log.debug(f"No saved caret position for {docID}")
 				return None
 			log.debug(f"Found saved caret pos {caretPos} for document {docID}")
-		return caretPos
+			return caretPos
+		return None
 
 	def getEnclosingContainerRange(self, textRange):
 		textRange = textRange.copy()
