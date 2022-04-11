@@ -25,14 +25,29 @@ What's New in NVDA
 - The NVDA installer can now run from directories with special characters. (#13270)
 - In Firefox, NVDA no longer fails to report items in web pages when aria-rowindex, aria-colindex, aria-rowcount or aria-colcount attributes are invalid. (#13405)
 - The cursor does not switch row or column anymore when using table navigation to navigate through merged cells. (#7278)
+-  NVDA will no longer incorrectly remove text from Java widgets when presenting to the user. (#13102)
+- When reading non-interactive PDFs in Adobe Reader, the type and state of form fields (such as checkboxes and radio buttons) are now reported. (#13285)
+- "Reset configuration to factory defaults" is now accessible in the NVDA menu during secure mode. (#13547)
+- Any locked mouse keys will be unlocked when NVDA exits, previously the mouse button would remain locked. (#13410)
 -
 
 
 == Changes for Developers ==
 - Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
 - When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
+-
+
+=== Deprecations ===
+These are proposed API breaking changes.
+The deprecated part of the API will continue to be available until the specified release.
+If no release is specified, the plan for removal has not been determined.
+Note, the roadmap for removals is 'best effort' and may be subject to change.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+
 - ``gui.quit`` has been deprecated for removal in 2023.1. (#13498)
-  - Use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
+  - Use ``wx.CallAfter(mainFrame.onExitCommand, None)`` directly instead.
   -
 -
 
@@ -122,6 +137,7 @@ Note:
 - Adobe Reader no longer crashes on startup if Adobe Reader's protected mode is enabled. (#11568)
 - Fixed a bug where selecting the Papenmeier Braille Display Driver caused NVDA to crash. (#13348)
 - In Microsoft word with UIA: page number and other formatting is no longer inappropriately announced when moving from a blank table cell to a cell with content, or from the end of the document into existing content. (#13458, #13459)
+- NVDA will no longer fail to report the page title and start automatically reading, when a page loads in Google chrome 100. (#13571)
 -
 
 == Changes for Developers ==

@@ -36,7 +36,7 @@ Nota:
 - Engadidas ordes para conmutar varios modificadores simultáneamente cunha pantalla braille (#13152)
 - O diálogo diccionarios da fala agora implementa un botón "Borrar todo" para axudar a borrar  un diccionario enteiro. (#11802)
 - Engadido o soporte para a Calculadora de Windows 11. (#13212)
-- En Microsoft Word con UI Automation habilitado en Windows 11,  os números de liña, de seción e de deseño de columna agora poden anunciarse.  (#13283)
+- En Microsoft Word con UI Automation habilitado en Windows 11,  os números de liña e de seción agora poden anunciarse.  (#13283, #13515)
 - Para Microsoft Office 16.0.15000 e superiores en Windows 11, o NVDA utilizará UI Automation para aceder a documentos de Microsoft Word por defecto, proporcionando unha significativa mellora de rendemento sobre o aceso ao vello modelo de obxectos. (#13437)
  - Esto inclúe documentos no proprio Microsoft Word e tamén no lector e redactor de mensaxes en Microsoft Outlook. 
  -
@@ -94,7 +94,7 @@ Nota:
 - Nota: esta é unha versión que rompe a compatibilidade coa API dos comprementos. os comprementos terán que voltar a probarse e actualizar o seu manifesto.
 - Aíndaque o NVDA segue a requerir o Visual Studio 2019, as compilacións xa non deberían fallar se se instala unha versión máis recente de Visual Studio (por exemplo, 2022) xunto con 2019. (#13033, #13387)
 - Actualizado SCons á versión 4.3.0. (#13033)
-- Actualizado py2exe á versión 0.11.0.1. (#12357, #13066)
+- Actualizado py2exe á versión 0.11.0.1.0 (#13510)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` borrouse. Usa ``apiLevel`` a cambio. (#12955, #12660)
 - ``TVItemStruct`` borrouse de ``sysTreeView32``. (#12935)
 - ``MessageItem`` borrouse dol appModule Outlook. (#12935)
@@ -175,6 +175,17 @@ Esto pode reducir dramáticamente os tempos de compilación en sistemas multinú
 +- As constantes de celda de Excel (``NVSTATE_*``) agora son valores no enum ``NvCellState``, refrectidas na enum ``NvCellState`` en ``NVDAObjects/window/excel.py`` e mapeadas en ``controlTypes.State`` a través de _nvCellStatesToStates. (#13465)
 - O menbro da estructura ``EXCEL_CELLINFO`` ``state`` agora é ``nvCellStates``.
 - ``mathPres.ensureInit`` borrouse, MathPlayer agora reinicialízase cando o NVDA arranca. (#13486)
+-
+
+
+= 2021.3.5 =
+Esta é unha versión menor para arranxar un problema de seguridade.
+Por favor, comunica responsablemente os fallos de seguridade a info@nvaccess.org.
+
+== Arranxos de Seguridade ==
+- Arranxouse o aviso de seguridade ``GHSA-xc5m-v23f-pgr7``.
+  - O diálogo pronunciación de símbolos agora deshabilítase en modo seguro.
+  -
 -
 
 
