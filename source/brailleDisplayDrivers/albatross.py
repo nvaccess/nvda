@@ -9,7 +9,6 @@ import serial
 import braille
 import hwIo
 from hwIo import intToByte
-import time
 import inputCore
 from logHandler import log
 
@@ -99,21 +98,19 @@ END_BYTE = b"\xfc"
 # To keep connected these both above bytes must be sent periodically.
 BOTH_BYTES = b"\xfb\xfc"
 # How often BOTH_BYTES should be sent or to try to reconnect if connection lost.
-TIMER_INTERVAL = 1
+TIMER_INTERVAL = 1.5
 
 
-# Timer is used for that purpose and to reconnect with display (copied from
+# Timer is used for that purpose and to reconnect with display (modified from
 # https://stackoverflow.com/questions/474528/what-is-the-best-way-to-repeatedly-execute-a-function-every-x-seconds)
 class RepeatedTimer(object):
 	def __init__(self, interval, function, *args, **kwargs):
-		self._timer = None
 		self.interval = interval
+		self._timer = Timer(self.interval, self._run)
 		self.function = function
 		self.args = args
 		self.kwargs = kwargs
 		self.is_running = False
-		self.next_call = time.time()
-		self.start()
 
 	def _run(self):
 		self.is_running = False
@@ -122,8 +119,7 @@ class RepeatedTimer(object):
 
 	def start(self):
 		if not self.is_running:
-			self.next_call += self.interval
-			self._timer = Timer(self.next_call - time.time(), self._run)
+			self._timer = Timer(self.interval, self._run)
 			self._timer.start()
 			self.is_running = True
 
@@ -148,15 +144,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numCells = 0
 		# Keep old display data.
 		self._oldCells: List[int] = []
+		# After reconnection and when user exits from device menu, display may not
+		# update automatically. Keep current cell content for this.
+		self._currentCells: List[int] = []
 		# Try to reconnect if needed.
 		self._tryReconnect = False
-		# Current portto reconnect.
-		self._currentPort = ""
-		self._timerRunning = False
+		# Initialize timer to keep connection. Display requires at least START_BYTE and
+		# END_BYTE combination within approximately 2 seconds from previous
+		# appropriate data packet. Otherwise it falls back to "wait for connection"
+		# state. This behavior is built-in feature of the firmware of device.
+		self._rt = RepeatedTimer(TIMER_INTERVAL, self._keepConnected)
 		# Search ports where display can be connected.
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			if not self._chkPort(port):
 				continue
+			# We may need current connection port to reconnect.
+			self._currentPort = port
 			# Albatross seems to need some more time.
 			while not self._dev.waitForRead(TIMEOUT):
 				pass
@@ -164,19 +167,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if self.numCells:
 				while len(self._oldCells) < self.numCells:
 					self._oldCells.append(0)
-				# We may need current connection port to reconnect.
-				self._currentPort = port
-				# Start timer to keep connection. Display requires at least START_BYTE and
-				# END_BYTE combination within approximately 2 seconds from previous
-				# appropriate data packet. Otherwise it falls back to "wait for connection"
-				# state. This behavior is built-in feature of the firmware of device.
-				self._rt = RepeatedTimer(TIMER_INTERVAL, self._keepConnected)
-				self._timerRunning = True
 				log.info(
 					"Connected to Caiku Albatross %s on %s port %s at %s bps.",
 					self.numCells, portType, port, BAUD_RATE)
 				break
 			# This device initialization failed.
+			self._currentPort = None
 			self._dev.close()
 		else:
 			raise RuntimeError("No Albatross found")
@@ -184,10 +180,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def terminate(self):
 		try:
 			super().terminate()
-			if self._timerRunning:
+			if self._rt:
 				self._rt.stop()
 				self._rt = None
-				self._timerRunning = False
 			# Possibly already closed.
 			if self._dev:
 				self._dev.close()
@@ -220,14 +215,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if self.numCells:
 				self.numCells = 0
 				self._clearOldCells()
-			self._dev.close()
 			self._dev = None
+			# Maybe display was unplugged/powered off which causes USB serial port disappearing.
 			if not self._chkPort(self._currentPort):
-				# Maybe display was unplugged/powered off which causes USB serial port disappearing.
 				self._tryReconnect = True
-				if self._dev:
-					self._dev.close()
 			return False
+		else:
+			# Reset timer to avoid sending reduntant BOTH_BYTES packets.
+			self._rt.stop()
+			self._rt.start()
+		# Confirmation packet sent so that device stopped sending initial packet.
 		if data == ESTABLISHED:
 			# Actually input buffer should be reseted, but poor man's solution now.
 			while len(self._dev.read(INPUT_BUF_SIZE)):
@@ -243,10 +240,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# Port found.
 				self._tryReconnect = False
 				return
-		if self._timerRunning and self.numCells:
-			self._sendToDisplay(BOTH_BYTES)
+		# Display needs this to keep connection.
+		self._sendToDisplay(BOTH_BYTES)
 
 	def _onReceive(self, data: bytes):
+		# If numCells is 0, there is no connection yet or previous connection is lost.
 		if not self.numCells:
 			# If no connection, Albatross sends continuously byte \xff
 			# followed by byte containing various settings like number of cells.
@@ -269,13 +267,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Other display settings are currently ignored so skipping separate function
 			# definition this time.
 			self.numCells = 80 if ord(data) >> 7 == 1 else 46
+			# Reconnected if length of _oldCells is numCells. Show last known content.
+			if len(self._oldCells) == self.numCells:
+				self.display(self._currentCells)
 		# Connected.
 		else:
 			# It is possible that there is no connection from perspective of display.
+			# If user has entered to the local menu of device, display starts to send
+			# initial packet containing \xff and settings byte when user exits the menu.
 			if data == INIT_START_BYTE:
+				# Other display settings are currently ignored, and number of cells is already known.
+				# Only log value byte for debugging.
+				data = self._dev.read(1)
+				if not len(data):
+					log.debugWarning("No value byte")
+				else:
+					log.debug("Value byte: %r" % data)
 				if self._sendToDisplay(ESTABLISHED):
 					self._clearOldCells()
-				log.debug("Byte %r, numCells %d, _tryReconnect %r" % (data, self.numCells, self._tryReconnect))
+				# Using _currentCells to show last known content.
+				self.display(self._currentCells)
 				return
 			# If Ctrl-key is pressed, then there is at least one byte to read;
 			# in single ctrl-key presses and key combinations the first key is resent as last one.
@@ -289,6 +300,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				pass
 
 	def display(self, cells: List[int]):
+		# Keep _currentCells up to date.
+		self._currentCells = cells.copy()
+		# Connection is lost.
 		if not self.numCells:
 			return
 		writeBytes: List[bytes] = [START_BYTE, ]
