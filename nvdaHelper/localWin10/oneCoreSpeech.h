@@ -20,7 +20,7 @@ typedef void (*ocSpeech_Callback)(BYTE* data, int length, const wchar_t* markers
 
 class SpeakThreadGuard {
 private:
-	static std::atomic_int _speechThreads;
+	inline static std::atomic_int _speechThreads = 0;
 public:
 	SpeakThreadGuard();
 	~SpeakThreadGuard();
@@ -56,11 +56,11 @@ enum InstanceState {notInitialized, active, terminated};
 
 class InstanceManager {
 private:
-	static std::recursive_mutex _instanceStateMutex;
-	static std::vector<OcSpeech*> _terminatedInstances;
-	static std::unique_ptr<OcSpeech> _instance;
-	static std::atomic<InstanceState> _instanceState;
-	static std::condition_variable_any _readyForInitialization;
+	inline static std::recursive_mutex _instanceStateMutex;
+	inline static std::vector<OcSpeech*> _terminatedInstances;
+	inline static std::unique_ptr<OcSpeech> _instance;
+	inline static std::atomic<InstanceState> _instanceState{ InstanceState::notInitialized };
+	inline static std::condition_variable_any _readyForInitialization;
 	static void _assertInstanceActive(OcSpeech* token);
 public:
 	static void waitUntilReadyForInitialization();

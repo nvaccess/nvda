@@ -37,13 +37,6 @@ using namespace winrt::Windows::Media;
 using namespace winrt::Windows::Foundation::Collections;
 using winrt::Windows::Foundation::Metadata::ApiInformation;
 
-std::recursive_mutex InstanceManager::_instanceStateMutex;
-std::vector<OcSpeech*> InstanceManager::_terminatedInstances;
-std::unique_ptr<OcSpeech> InstanceManager::_instance;
-std::atomic<InstanceState> InstanceManager::_instanceState = InstanceState::notInitialized;
-std::condition_variable_any InstanceManager::_readyForInitialization;
-std::atomic_int SpeakThreadGuard::_speechThreads = 0;
-
 SpeakThreadGuard::SpeakThreadGuard() {
 	/*
 	When initialized, increases the count of active speech threads
