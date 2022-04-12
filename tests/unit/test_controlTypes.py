@@ -5,7 +5,7 @@
 
 """Unit tests for the controlTypes module.
 """
-
+import enum
 import unittest
 import controlTypes
 from . import PlaceholderNVDAObject
@@ -101,3 +101,62 @@ class TestStateOrder(unittest.TestCase):
 			),
 			[controlTypes.State.CHECKED.negativeDisplayString]
 		)
+
+
+class TestBackCompat(unittest.TestCase):
+
+	def test_statesValues(self):
+		class oldStates(enum.IntEnum):
+			# Copied from commit d4586a5d907dd4dec761d3234147fa5fd6186b37
+			UNAVAILABLE = 0x1
+			FOCUSED = 0x2
+			SELECTED = 0x4
+			BUSY = 0x8
+			PRESSED = 0x10
+			CHECKED = 0x20
+			HALFCHECKED = 0x40
+			READONLY = 0x80
+			EXPANDED = 0x100
+			COLLAPSED = 0x200
+			INVISIBLE = 0x400
+			VISITED = 0x800
+			LINKED = 0x1000
+			HASPOPUP = 0x2000
+			PROTECTED = 0x4000
+			REQUIRED = 0x8000
+			DEFUNCT = 0x10000
+			INVALID_ENTRY = 0x20000
+			MODAL = 0x40000
+			AUTOCOMPLETE = 0x80000
+			MULTILINE = 0x100000
+			ICONIFIED = 0x200000
+			OFFSCREEN = 0x400000
+			SELECTABLE = 0x800000
+			FOCUSABLE = 0x1000000
+			CLICKABLE = 0x2000000
+			EDITABLE = 0x4000000
+			CHECKABLE = 0x8000000
+			DRAGGABLE = 0x10000000
+			DRAGGING = 0x20000000
+			DROPTARGET = 0x40000000
+			SORTED = 0x80000000
+			SORTED_ASCENDING = 0x100000000
+			SORTED_DESCENDING = 0x200000000
+			HASLONGDESC = 0x400000000
+			PINNED = 0x800000000
+			HASFORMULA = 0x1000000000  # Mostly for spreadsheets
+			HASCOMMENT = 0x2000000000
+			OBSCURED = 0x4000000000
+			CROPPED = 0x8000000000
+			OVERFLOWING = 0x10000000000
+			UNLOCKED = 0x20000000000
+			HASNOTE = 0x80000000000
+		for old in oldStates:
+			new = controlTypes.State[old.name]
+			self.assertEqual(new.value, old.value, msg=f"Value not equal: {new.name}")
+			self.assertEqual(new, old.value, msg=f"Can't treat as integer: {new.name}")
+			self.assertEqual(
+				controlTypes.State(old.value),
+				old.value,
+				msg=f"Can't construct from integer value: {new.name}"
+			)
