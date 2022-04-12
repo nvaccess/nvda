@@ -1801,7 +1801,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	""" Typing information for auto-property: _get_documentConstantIdentifier"""
 
 	# Mark documentConstantIdentifier property for caching during the current core cycle
-	_cache_documentConstantIdentifer = True
+	_cache_documentConstantIdentifier = True
 
 	def _get_documentConstantIdentifier(self) -> Optional[str]:
 		"""Get the constant identifier for this document.
