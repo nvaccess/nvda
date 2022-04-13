@@ -19,7 +19,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <algorithm>
 #include <atomic>
 #include <thread>
-#include <mutex>
+#include <functional>
+#include <shared_mutex>
+#include <ranges>
 #include <condition_variable>
 #include <winrt/Windows.Media.SpeechSynthesis.h>
 #include <winrt/Windows.Storage.Streams.h>
@@ -29,241 +31,372 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/log.h>
 #include "oneCoreSpeech.h"
 
-using namespace std;
-using namespace winrt;
 using namespace winrt::Windows::Media::SpeechSynthesis;
 using namespace winrt::Windows::Storage::Streams;
 using namespace winrt::Windows::Media;
 using namespace winrt::Windows::Foundation::Collections;
 using winrt::Windows::Foundation::Metadata::ApiInformation;
+using winrtSynth = winrt::Windows::Media::SpeechSynthesis::SpeechSynthesizer;
+using SharedLock = std::shared_lock<std::shared_timed_mutex>;
+using UniqueLock = std::unique_lock<std::shared_timed_mutex>;
 
-SpeakThreadGuard::SpeakThreadGuard() {
-	/*
-	When initialized, increases the count of active speech threads
-	waiting on a callback.
-	When exiting the scope of initialization, decreases the count
-	of active speech threads and deletes the OneCore instance if it has
-	been terminated and no speech callbacks are waiting.
-	*/
-	++_speechThreads;
+
+enum class ApiState {
+	reset, // init not yet called, no pending callbacks
+	active, // synth created, callback set, ready to call speak
+	terminated // token no longer valid, pending callbacks
+};
+
+std::ostream& operator<< (std::ostream& os, ApiState state)
+{
+	switch (state)
+	{
+	case ApiState::reset: return os << "reset";
+	case ApiState::active: return os << "active";
+	case ApiState::terminated: return os << "terminated";
+		// omit default case to trigger compiler warning for missing cases
+	};
+	return os << static_cast<std::uint16_t>(state);
 }
 
-bool SpeakThreadGuard::areCallbacksPending() {
-	/*
-	Checks if any speak threads are active, i.e. with callbacks pending.
-	*/
-	return _speechThreads != 0;
+std::wostream& operator<< (std::wostream& os, ApiState state)
+{
+	switch (state)
+	{
+	case ApiState::reset: return os << L"reset";
+	case ApiState::active: return os << L"active";
+	case ApiState::terminated: return os << L"terminated";
+		// omit default case to trigger compiler warning for missing cases
+	};
+	return os << static_cast<std::uint16_t>(state);
 }
 
-SpeakThreadGuard::~SpeakThreadGuard() {
-	/* 
-	When exiting the scope of initialization, decreases the count
-	of active speech threads and deletes the OneCore instance if it has
-	been terminated and no speech callbacks are waiting.
-	*/
-	--_speechThreads;
-	if (_speechThreads < 0) {
-		throw runtime_error(
-			"Negative callback count."
-			"decreasePendingCount has been called too many times."
-		);
+class OcSpeechState {
+public:
+	bool isInState(ApiState checkState) {
+		if (m_state != checkState) {
+			std::wstringstream ss;
+			ss << L"OcSpeechState not (" << checkState << L") is instead: " << m_state;
+			LOG_INFO(ss.str());
+			return false;
+		}
+		switch (m_state) {
+		case ApiState::reset:
+				return areResetRequirementsMet();
+			case ApiState::active:
+				return areActiveRequirementsMet();
+			case ApiState::terminated:
+				return areTerminatedRequirementsMet();
+		}
+		return false;
 	}
-	InstanceManager::deleteInstanceIfTerminatedAndReady();
+
+	void assertInState(ApiState expected) {
+		if (!isInState(expected)) {
+			std::wstringstream ss;
+			ss << L"Not in expected state: " << expected;
+			LOG_ERROR(ss.str());
+			//throw std::runtime_error(ss.str());
+		}
+	}
+
+	std::shared_ptr<winrtSynth> getSynth(void* token) {
+		if (isTokenValid(token)){
+			return m_synth;
+		}
+		return std::shared_ptr<winrtSynth>();
+	}
+
+	std::function<ocSpeech_CallbackT> getCB() {
+		return m_callback;
+	}
+
+	bool isTokenValid(void* token) {
+		if (
+			!isInState(ApiState::active)
+			|| token == nullptr
+			|| token != m_synth.get()
+			|| isTokenTerminated_(token)
+		) {
+			LOG_INFO(L"Token not active: " << token);
+			logTermTokens();
+			return false;
+		}
+		return true;
+	}
+
+	bool isTokenTerminated_(void* token) {
+		return token != nullptr
+			&& m_terminatedTokens.end() != std::ranges::find(m_terminatedTokens, token);
+	}
+
+	void logTermTokens() {
+		std::wstringstream ss;
+		ss << L"terminated tokens: ";
+		for (const auto t : m_terminatedTokens) {
+			ss << t << L", ";
+		}
+		LOG_INFO(ss.str());
+	}
+
+	void reset() {
+		assertInState(ApiState::terminated);
+		m_synth.reset();
+		m_lastSynth.reset();
+		m_state = ApiState::reset;
+		assertInState(ApiState::reset);
+	}
+
+	void* activate(std::function<ocSpeech_CallbackT> cb) {
+		LOG_INFO(L"activate");
+		assertInState(ApiState::reset);
+		auto synth = std::make_shared<winrtSynth>();
+		LOG_INFO(L"synth valid:" << std::boolalpha << bool(synth));
+		void* token = synth.get();
+		LOG_INFO(L"token val: " << token);
+		removeTokenFromTerminated(token);
+		LOG_INFO(L"setting cb");
+		m_callback = cb;
+		LOG_INFO(L"setting synth");
+		m_synth = synth;
+		LOG_INFO(L"setting active state");
+		m_state = ApiState::active;
+		LOG_INFO(L"setting active state");
+		assertInState(ApiState::active);
+		LOG_INFO(L"return");
+		return token;
+	}
+
+	void terminate() {
+		assertInState(ApiState::active);
+		auto token = m_synth.get();
+		m_terminatedTokens.push_back(token);
+		logTermTokens();
+		m_lastSynth = m_synth;
+		m_synth.reset();
+		m_callback = std::function<ocSpeech_CallbackT>();
+		m_state = ApiState::terminated;
+		assertInState(ApiState::terminated);
+	}
+
+	std::shared_ptr<winrtSynth> m_synth;
+	std::weak_ptr<winrtSynth> m_lastSynth;
+
+private:
+	bool areResetRequirementsMet() {
+		if (!m_synth && !m_callback && m_lastSynth.expired()) {
+			return true;
+		}
+		LOG_ERROR("oneCoreSpeech in unexpected state.");
+		return false;
+	}
+	bool areActiveRequirementsMet() {
+		if (m_synth && m_callback && m_lastSynth.expired()) {
+			return true;
+		}
+		LOG_ERROR("oneCoreSpeech in unexpected state.");
+		return false;
+	}
+	bool areTerminatedRequirementsMet() {
+		if (!m_synth && !m_callback) {
+			return true;
+		}
+		LOG_ERROR("oneCoreSpeech in unexpected state.");
+		return false;
+	}
+	void removeTokenFromTerminated(void* token) {
+		LOG_INFO(L"removing from terminated");
+		auto num = std::erase(m_terminatedTokens, token);
+		LOG_INFO(L"erased count: " << num);
+	}
+
+	std::atomic<ApiState> m_state{ ApiState::reset };
+	std::function < ocSpeech_CallbackT> m_callback;
+	std::vector<void*> m_terminatedTokens;
+};
+
+
+OcSpeechState g_state;
+std::shared_timed_mutex g_OcSpeechStateMutex{};
+std::chrono::duration g_maxWaitForLock(std::chrono::seconds(3));
+
+bool isUniversalApiContractVersion_(const int major, const int minor);
+void preventEndUtteranceSilence_(std::shared_ptr<winrtSynth> synth);
+
+
+void* __stdcall ocSpeech_initialize(ocSpeech_Callback fn) {
+	LOG_INFO(L"ocSpeech_initialize");
+	// Ensure there are no pending shared locks, all async speak calls must be finished
+	UniqueLock lock(g_OcSpeechStateMutex, std::defer_lock);
+	bool owned = lock.try_lock();
+	if (!owned) {
+		LOG_INFO(L"ocSpeech_initialize locking will block, try for timeout:");
+		owned = lock.try_lock_for(g_maxWaitForLock);
+	}
+	if (!owned) {
+		LOG_ERROR(L"Unable to lock for init. ptr count: " << g_state.m_lastSynth.use_count());
+		return nullptr;
+	}
+	LOG_INFO(L"ocSpeech_initialize lock owned");
+	if (g_state.isInState(ApiState::terminated)) {
+		LOG_INFO(L"do reset");
+		g_state.reset();
+	}
+	
+	auto token = g_state.activate(fn);
+	LOG_INFO(L"get synth");
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		LOG_ERROR(L"Unable to initialize.");
+		//throw std::runtime_error("Unable to initialize.");
+		return nullptr;
+	}
+	preventEndUtteranceSilence_(synth);
+	return token;
 }
 
-void InstanceManager::deleteInstanceIfTerminatedAndReady() {
-	/*
-	If the instance is terminated and no speak callbacks are pending,
-	delete the instance and notify any waiting threads,
-	such as the instance initializer.
-	*/
-	std::lock_guard g(_instanceStateMutex);
-	if (
-		_instanceState == InstanceState::terminated
-		&& !SpeakThreadGuard::areCallbacksPending()
+void __stdcall ocSpeech_terminate(void* token) {
+	LOG_INFO(L"ocSpeech_terminate, token: " << token);
+	SharedLock lock(g_OcSpeechStateMutex, std::defer_lock);
+	const bool owned = lock.try_lock();
+	if (!owned) {
+		LOG_ERROR(L"ocSpeech_terminate - Unable to lock. token: " << token);
+		return;
+	}
+	if (!g_state.isTokenValid(token) ){
+		LOG_ERROR(L"Terminate error");
+		//throw std::runtime_error("Logic error on terminate, token not active.");
+		return;
+	}
+	LOG_INFO(L"setting terminate state");
+	g_state.terminate();
+}
+
+
+struct SpeakResult {
+	Buffer buffer;
+	std::wstring markersStr;
+};
+
+
+void protectedCallback_(
+	void* token,
+	std::optional<SpeakResult> result
+) {
+	LOG_INFO(L"protectedCallback, token: " << token);
+	if (!g_state.isInState(ApiState::active)
+		|| !g_state.isTokenValid(token)
 	) {
-		_instance.reset();
-		_instanceState = InstanceState::notInitialized;
-		_readyForInitialization.notify_all();
+		LOG_INFO(L"not calling CB, token: " << token);
+		return;
 	}
+	LOG_INFO(L"calling CB, token: " << token);
+	auto cb = g_state.getCB();
+	if (result.has_value()) {
+		cb(result->buffer.data(), result->buffer.Length(), result->markersStr.c_str());
+	}
+	else {
+		cb(nullptr, 0, nullptr);
+	}
+	LOG_INFO(L"Finished CB, token: " << token);
 }
 
-void InstanceManager::waitUntilReadyForInitialization() {
-	/* Wait for a signal that there is no active or terminated instance. */
-	std::unique_lock lock(_instanceStateMutex);
-	_readyForInitialization.wait(lock, []{
-		return !_instance && _instanceState == InstanceState::notInitialized;
-	});
-}
-
-OcSpeech* InstanceManager::getActiveInstance(OcSpeech* token) {
-	/* Throw a runtime error if no instance is active */
-	_assertInstanceActive(token);
-	return _instance.get();
-}
-
-void InstanceManager::_assertInstanceActive(OcSpeech* token) {
-	if (_instanceState != InstanceState::active) {
-		throw runtime_error("Supplied OneCore token is not active");
-	}
-	if (_instance.get() != token) {
-		throw runtime_error("Supplied OneCore instance token does not match initialized instance");
-	}
-}
-
-OcSpeech* InstanceManager::initializeNewInstance() {
-	/*
-	Initializes a new OneCore instance.
-	Waits until an instance has been fully terminated,
-	and then (once speech callbacks have finished) deleted.
-	*/
-	std::lock_guard g(_instanceStateMutex);
-	if (_instanceState == InstanceState::active) {
-		throw runtime_error(
-			"OneCore token still active."
-			"Terminate token before calling initialize"
-		);
-	}
-	waitUntilReadyForInitialization();
-	_instance = std::make_unique<OcSpeech>();
-	_instanceState = InstanceState::active;
-	// Remove instance from terminated instances if we get the same pointer again
-	_terminatedInstances.erase(
-		std::remove(
-			_terminatedInstances.begin(),
-			_terminatedInstances.end(),
-			_instance.get()
-		),
-		_terminatedInstances.end()
-	);
-	return _instance.get();
-}
-
-void InstanceManager::terminateInstance(OcSpeech* token) {
-	/*
-	Marks an instance as terminated.
-	If no callbacks are pending, proceed with deletion of the instance.
-	*/
-	_assertInstanceActive(token);
-	std::lock_guard g(_instanceStateMutex);
-	_instanceState = InstanceState::terminated;
-	_terminatedInstances.emplace_back(_instance.get());
-	if (!SpeakThreadGuard::areCallbacksPending()){
-		_instance.reset();
-		_instanceState = InstanceState::notInitialized;
-	}
-}
 
 bool __stdcall ocSpeech_supportsProsodyOptions() {
-	return ApiInformation::IsApiContractPresent(hstring{L"Windows.Foundation.UniversalApiContract"}, 5, 0);
+	return isUniversalApiContractVersion_(5, 0);
 }
 
-OcSpeech::OcSpeech() : synth(SpeechSynthesizer{}) {
-	// By default, OneCore speech appends a  large annoying chunk of silence at the end of every utterance.
-	// Newer versions of OneCore speech allow disabling this feature, so turn it off where possible.
-	if (ApiInformation::IsApiContractPresent(hstring{L"Windows.Foundation.UniversalApiContract"}, 6, 0)) {
-		synth.Options().AppendedSilence(SpeechAppendedSilence::Min);
-	} else {
-		LOG_DEBUGWARNING(L"AppendedSilence not supported");
+/*
+Send speech to OneCore.
+Will block OneCore from being re-initialized until speech callbacks have completed.
+*/
+winrt::fire_and_forget
+speak(
+	winrt::hstring text,
+	std::shared_ptr<winrtSynth> synth,
+	void* originToken,
+	// Prevent any unique locks being acquired.
+	SharedLock lock
+) {
+	if (!lock.owns_lock()) {
+		LOG_ERROR(L"speak lock not owned, exiting. Token: " << originToken);
+		co_return;
 	}
-}
-
-OcSpeech* __stdcall ocSpeech_initialize() {
-	return InstanceManager::initializeNewInstance();
-}
-
-void __stdcall ocSpeech_terminate(OcSpeech* token) {
-	InstanceManager::terminateInstance(token);
-}
-
-void __stdcall ocSpeech_setCallback(OcSpeech* token, ocSpeech_Callback fn) {
-	InstanceManager::getActiveInstance(token)->setCallback(fn);
-}
-
-void OcSpeech::setCallback(ocSpeech_Callback fn) {
-	callback = fn;
-}
-
-void protectedCallback(
-	OcSpeech* token,
-	BYTE* data,
-	int length,
-	const wchar_t* markers
-) {
-	InstanceManager::getActiveInstance(token)->performCallback(data, length, markers);
-}
-
-void OcSpeech::performCallback(
-	BYTE* data,
-	int length,
-	const wchar_t* markers
-) {
-	callback(data, length, markers);
-}
-
-fire_and_forget OcSpeech::speak(hstring text) {
-	/*
-	Send speech to OneCore.
-	Will block OneCore from being re-initialized until speech callbacks have completed.
-	*/
-	SpeakThreadGuard();
 	// Ensure we catch all exceptions in this method,
-
 	// as an unhandled exception causes std::terminate to get called, resulting in a crash.
 	// See https://devblogs.microsoft.com/oldnewthing/20190320-00/?p=102345
 	try {
 		// Ensure that work is performed on a background thread.
-		co_await resume_background();
+		co_await winrt::resume_background();
 
-		wstring markersStr;
 		SpeechSynthesisStream speechStream{ nullptr };
 		try {
-			speechStream = co_await synth.SynthesizeSsmlToStreamAsync(text);
-		} catch (hresult_error const& e) {
+			speechStream = co_await synth->SynthesizeSsmlToStreamAsync(text);
+		} catch (winrt::hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-			protectedCallback(this, nullptr, 0, nullptr);
+			protectedCallback_(originToken, std::optional<SpeakResult>());
 			co_return;
 		}
 		// speechStream.Size() is 64 bit, but Buffer can only take 32 bit.
 		// We shouldn't get values above 32 bit in reality.
-		const unsigned int size = static_cast<unsigned int>(speechStream.Size());
-		Buffer buffer { size };
+		const std::uint32_t size = static_cast<std::uint32_t>(speechStream.Size());
+		std::optional<SpeakResult> result{ Buffer(size) };
 
 		IVectorView<IMediaMarker> markers = speechStream.Markers();
 		for (auto const& marker : markers) {
-			if (markersStr.length() > 0) {
-				markersStr += L"|";
+			if (result->markersStr.length() > 0) {
+				result->markersStr += L"|";
 			}
-			markersStr += marker.Text();
-			markersStr += L":";
-			markersStr += to_wstring(marker.Time().count());
+			result->markersStr += marker.Text();
+			result->markersStr += L":";
+			result->markersStr += std::to_wstring(marker.Time().count());
 		}
 		try {
-			co_await speechStream.ReadAsync(buffer, size, InputStreamOptions::None);
+			co_await speechStream.ReadAsync(result->buffer, size, InputStreamOptions::None);
 			// Data has been read from the speech stream.
 			// Pass it to the callback.
-			BYTE* bytes = buffer.data();
-			protectedCallback(this, bytes, buffer.Length(), markersStr.c_str());
-		} catch (hresult_error const& e) {
+			protectedCallback_(originToken, result);
+			co_return;
+		} catch (winrt::hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-			protectedCallback(this, nullptr, 0, nullptr);
+			protectedCallback_(originToken, std::optional<SpeakResult>());
+			co_return;
 		}
 	} catch (...) {
-		LOG_ERROR(L"Unexpected error in OcSpeech::speak");
+		LOG_ERROR(L"Unexpected error in speak");
 	}
 }
 
-void __stdcall ocSpeech_speak(OcSpeech* token, wchar_t* text) {
-	/*
-	Send speech to OneCore.
-	Will block OneCore from being re-initialized until speech callbacks have completed.
-	*/
-	InstanceManager::getActiveInstance(token)->speak(text);
+void __stdcall ocSpeech_speak(void* token, wchar_t* text) {
+	// Prevent any unique locks being acquired.
+	SharedLock lock(g_OcSpeechStateMutex, std::defer_lock);
+	const bool owned = lock.try_lock();
+	if (!owned) {
+		LOG_ERROR(L"ocSpeech_speak - Unable to lock. Token: " << token);
+		return;
+	}
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		LOG_ERROR(L"speak error");
+		//throw std::runtime_error("Token not valid");
+		return;
+	}
+	speak(text, synth, token, std::move(lock));
 }
 
-wstring OcSpeech::getVoices() {
-	wstring voices;
-	auto const& allVoices = synth.AllVoices();
+// We use BSTR because we need the string to stay around until the caller is done with it
+// but the caller then needs to free it.
+// We can't just use malloc because the caller might be using a different CRT
+// and calling malloc and free from different CRTs isn't safe.
+BSTR __stdcall ocSpeech_getVoices(void* token) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		LOG_ERROR(L"voices error");
+		//throw std::runtime_error("Token not valid");
+		return SysAllocString(L"");
+	}
+	std::wstring voices;
+	auto const& allVoices = synth->AllVoices();
 	for (unsigned int i = 0; i < allVoices.Size(); ++i) {
 		VoiceInformation const& voiceInfo = allVoices.GetAt(i);
 		voices += voiceInfo.Id();
@@ -275,87 +408,119 @@ wstring OcSpeech::getVoices() {
 			voices += L"|";
 		}
 	}
-	return voices;
+	return SysAllocString(voices.c_str());
 }
 
-// We use BSTR because we need the string to stay around until the caller is done with it
-// but the caller then needs to free it.
-// We can't just use malloc because the caller might be using a different CRT
-// and calling malloc and free from different CRTs isn't safe.
-BSTR __stdcall ocSpeech_getVoices(OcSpeech* token) {
-	return SysAllocString(
-		InstanceManager::getActiveInstance(token)->getVoices().c_str()
+
+bool isUniversalApiContractVersion_(const int major, const int minor) {
+	constexpr auto contract_name{ L"Windows.Foundation.UniversalApiContract" };
+	return ApiInformation::IsApiContractPresent(
+		winrt::hstring{ contract_name },
+		major,
+		minor
 	);
 }
 
-hstring OcSpeech::getCurrentVoiceId() {
-	return synth.Voice().Id();
+
+void preventEndUtteranceSilence_(std::shared_ptr<winrtSynth> synth) {
+	// By default, OneCore speech appends a  large annoying chunk of silence at the end of every utterance.
+	// Newer versions of OneCore speech allow disabling this feature, so turn it off where possible.
+	const bool isAppendSilenceAvailable = isUniversalApiContractVersion_(6, 0);
+	if (isAppendSilenceAvailable) {
+		synth->Options().AppendedSilence(SpeechAppendedSilence::Min);
+	}
+	else {
+		LOG_INFO(L"AppendedSilence not supported");
+	}
 }
 
-const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(OcSpeech* token) {
-	return InstanceManager::getActiveInstance(token)->getCurrentVoiceId().c_str();
+const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(void* token) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"ocSpeech_getCurrentVoiceId error");
+		return L"";
+	}
+	winrt::hstring voiceId = synth->Voice().Id();
+	return voiceId.c_str();
 }
 
-void OcSpeech::setVoice(int index) {
-	synth.Voice(synth.AllVoices().GetAt(index));
+void __stdcall ocSpeech_setVoice(void* token, int index) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"ocSpeech_setVoice error");
+		return;
+	}
+	synth->Voice(synth->AllVoices().GetAt(index));
 }
 
-void __stdcall ocSpeech_setVoice(OcSpeech* token, int index) {
-	InstanceManager::getActiveInstance(token)->setVoice(index);
+const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(void* token) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"ocSpeech_getCurrentVoiceLanguage error");
+		return L"";
+	}
+	return synth->Voice().Language().c_str();
 }
 
-hstring OcSpeech::getCurrentVoiceLanguage() {
-	return synth.Voice().Language();
+double __stdcall ocSpeech_getPitch(void* token) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"ocSpeech_getPitch error");
+		return 0.0;
+	}
+	return synth->Options().AudioPitch();
 }
 
-const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(OcSpeech* token) {
-	return InstanceManager::getActiveInstance(token)->getCurrentVoiceLanguage().c_str();
+void __stdcall ocSpeech_setPitch(void* token, double pitch) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"ocSpeech_setPitch error");
+		return;
+	}
+	synth->Options().AudioPitch(pitch);
 }
 
-double OcSpeech::getPitch() {
-	return synth.Options().AudioPitch();
+double __stdcall ocSpeech_getVolume(void* token) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"ocSpeech_getVolume error");
+		return 0.0;
+	}
+	return synth->Options().AudioVolume();
 }
 
-double __stdcall ocSpeech_getPitch(OcSpeech* token) {
-	return InstanceManager::getActiveInstance(token)->getPitch();
+void __stdcall ocSpeech_setVolume(void* token, double volume) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"ocSpeech_setVolume error");
+		return;
+	}
+	synth->Options().AudioVolume(volume);
 }
 
-void OcSpeech::setPitch(double pitch) {
-	synth.Options().AudioPitch(pitch);
+double __stdcall ocSpeech_getRate(void* token) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"ocSpeech_getRate error");
+		return 0.0;
+	}
+	return synth->Options().SpeakingRate();
 }
 
-void __stdcall ocSpeech_setPitch(OcSpeech* token, double pitch) {
-	InstanceManager::getActiveInstance(token)->setPitch(pitch);
-}
-
-double OcSpeech::getVolume() {
-	return synth.Options().AudioVolume();
-}
-
-double __stdcall ocSpeech_getVolume(OcSpeech* token) {
-	return InstanceManager::getActiveInstance(token)->getVolume();
-}
-
-void OcSpeech::setVolume(double volume) {
-	synth.Options().AudioVolume(volume);
-}
-
-void __stdcall ocSpeech_setVolume(OcSpeech* token, double volume) {
-	InstanceManager::getActiveInstance(token)->setVolume(volume);
-}
-
-double OcSpeech::getRate() {
-	return synth.Options().SpeakingRate();
-}
-
-double __stdcall ocSpeech_getRate(OcSpeech* token) {
-	return InstanceManager::getActiveInstance(token)->getRate();
-}
-
-void OcSpeech::setRate(double rate) {
-	synth.Options().SpeakingRate(rate);
-}
-
-void __stdcall ocSpeech_setRate(OcSpeech* token, double rate) {
-	InstanceManager::getActiveInstance(token)->setRate(rate);
+void __stdcall ocSpeech_setRate(void* token, double rate) {
+	auto synth = g_state.getSynth(token);
+	if (!synth) {
+		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"ocSpeech_setRate error");
+		return;
+	}
+	synth->Options().SpeakingRate(rate);
 }
