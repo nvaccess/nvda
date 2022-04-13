@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2019 NV Access Limited, Soronel Haetir, Babbage B.V., Francisco Del Roio
+# Copyright (C) 2010-2022 NV Access Limited, Soronel Haetir, Babbage B.V., Francisco Del Roio,
+# Leonard de Ruijter
 
 import objbase
 import comtypes
@@ -14,11 +15,12 @@ from NVDAObjects.window import Window
 from comtypes.automation import IDispatch
 from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.IAccessible import IAccessible
-from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA import UIA, WpfTextView, UIATextInfo
 from enum import IntEnum
 import appModuleHandler
 import controlTypes
 import threading
+import UIAHandler
 
 
 # A few helpful constants
@@ -43,9 +45,12 @@ class AppModule(appModuleHandler.AppModule):
 		self.vsMajor, self.vsMinor = int(vsMajor), int(vsMinor)
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if WpfTextView in clsList:
+			clsList.remove(WpfTextView)
+			clsList.insert(0, VsWpfTextView)
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.
-		if obj.windowClassName == "VsTextEditPane" and self.DTE:
+		elif obj.windowClassName == "VsTextEditPane" and self.DTE:
 			try:
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:
@@ -80,6 +85,50 @@ class AppModule(appModuleHandler.AppModule):
 
 		DTE = self._DTECache[thread] = self._getDTE()
 		return DTE
+
+
+class VsWpfTextViewTextInfo(UIATextInfo):
+
+	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
+		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
+		if not formatField:
+			return formatField
+		# Visual Studio exposes line numbers as part of the actual text.
+		# We want to store the line number in a format field instead.
+		# Therefore, always try to isolate the line number, even when we don't care about reporting it.
+		lineNumberRange = textRange.Clone()
+		lineNumberRange.MoveEndpointByRange(
+			UIAHandler.TextPatternRangeEndpoint_End,
+			lineNumberRange,
+			UIAHandler.TextPatternRangeEndpoint_Start
+		)
+		lineNumberStr = lineNumberRange.GetText(-1)
+		if lineNumberStr:
+			formatField.field['line-number'] = int(lineNumberStr)
+		return formatField
+
+	def getTextWithFields(self, formatConfig=None):
+		fields = super().getTextWithFields(formatConfig=formatConfig)
+		if len(fields) == 0:
+			# Nothing to do... was probably a collapsed range.
+			return fields
+		# Visual Studio exposes line numbers as part of the actual text.
+		lineNumber = None
+		for index in range(len(fields)):
+			field = fields[index]
+			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+				lineNumber = field.field.get("line-number")
+			elif lineNumber is not None and isinstance(field, str):
+				# This is the first text string within the list.
+				# Strip the line number from the string.
+				lineNumberStr = f"{lineNumber} "
+				fields[index] = field.lstrip(lineNumberStr)
+				break
+		return fields
+
+
+class VsWpfTextView(WpfTextView):
+	TextInfo = VsWpfTextViewTextInfo
 
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
