@@ -104,7 +104,10 @@ class VsWpfTextViewTextInfo(UIATextInfo):
 		)
 		lineNumberStr = lineNumberRange.GetText(-1)
 		if lineNumberStr:
-			formatField.field['line-number'] = int(lineNumberStr)
+			try:
+				formatField.field['line-number'] = int(lineNumberStr)
+			except ValueError:
+				pass
 		return formatField
 
 	def getTextWithFields(self, formatConfig=None):
