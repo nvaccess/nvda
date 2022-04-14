@@ -172,7 +172,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self.numCells, portType, port, BAUD_RATE)
 				break
 			# This device initialization failed.
-			self._currentPort = None
+			log.debug("Initialization failed: port %r, numCells %d" % (self._currentPort, self.numCells))
 			self._dev.close()
 		else:
 			raise RuntimeError("No Albatross found")
@@ -210,6 +210,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		try:
 			self._dev.write(data)
 		except serial.serialutil.SerialException:
+			log.debug("Data write failed %r" % data)
 			# Suitable initial values for reconnection.
 			# Connection worked before failure.
 			if self.numCells:
@@ -219,16 +220,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Maybe display was unplugged/powered off which causes USB serial port disappearing.
 			if not self._chkPort(self._currentPort):
 				self._tryReconnect = True
+				log.debug("Port %r disappeared, trying reconnect" % self._currentPort)
 			return False
-		else:
-			# Reset timer to avoid sending reduntant BOTH_BYTES packets.
-			self._rt.stop()
-			self._rt.start()
+		# Reset timer to avoid sending reduntant BOTH_BYTES packets.
+		self._rt.stop()
+		self._rt.start()
 		# Confirmation packet sent so that device stopped sending initial packet.
 		if data == ESTABLISHED:
 			# Actually input buffer should be reseted, but poor man's solution now.
-			while len(self._dev.read(INPUT_BUF_SIZE)):
-				pass
+			try:
+				while len(self._dev.read(INPUT_BUF_SIZE)):
+					pass
+			except serial.serialutil.SerialException:
+				log.debug("Port %r input buffer read failed" % self._currentPort)
+				return False
 		return True
 
 	def _keepConnected(self):
@@ -244,60 +249,89 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._sendToDisplay(BOTH_BYTES)
 
 	def _onReceive(self, data: bytes):
-		# If numCells is 0, there is no connection yet or previous connection is lost.
-		if not self.numCells:
-			# If no connection, Albatross sends continuously byte \xff
-			# followed by byte containing various settings like number of cells.
-			# But there may be garbage before \xff.
-			if data != INIT_START_BYTE:
+		if not self._checkConnection(data):
+			return
+		else:
+			# Connected, but user exited internal menu of display.
+			if not self._exitInternalMenu(data):
+				return
+		# If Ctrl-key is pressed, then there is at least one byte to read;
+		# in single ctrl-key presses and key combinations the first key is resent as last one.
+		if ord(data) in CONTROL_KEY_CODES:
+			# at most 4 keys.
+			try:
+				data += self._dev.read(4)
+			except serial.serialutil.SerialException:
+				log.debug("Ctrl key read failed")
+				return
+		pressedKeys = set(data)
+		try:
+			inputCore.manager.executeGesture(InputGestureKeys(pressedKeys))
+		except (inputCore.NoInputGestureAction, AttributeError):
+			pass
+
+	def _checkConnection(self, data: bytes) -> bool:
+		# If numCells > 0, there is working connection.
+		if self.numCells:
+			return True
+		# If no connection, Albatross sends continuously byte \xff
+		# followed by byte containing various settings like number of cells.
+		# But there may be garbage before \xff.
+		if data != INIT_START_BYTE:
+			try:
 				while data != INIT_START_BYTE and len(data):
 					data = self._dev.read(1)
-				if not len(data):
-					log.debugWarning("No init byte")
-					return
-			log.debug("Init byte: %r" % data)
+			except serial.serialutil.SerialException:
+				log.debug("Init byte read failed")
+				return False
+		if not len(data):
+			log.debug("No init byte")
+			return False
+		try:
 			data = self._dev.read(1)
-			if not len(data):
-				log.debugWarning("No value byte")
-				return
-			log.debug("Value byte: %r" % data)
-			if not self._sendToDisplay(ESTABLISHED):
-				return
-			# If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
-			# Other display settings are currently ignored so skipping separate function
-			# definition this time.
-			self.numCells = 80 if ord(data) >> 7 == 1 else 46
-			# Reconnected if length of _oldCells is numCells. Show last known content.
-			if len(self._oldCells) == self.numCells:
-				self.display(self._currentCells)
-		# Connected.
+		except serial.serialutil.SerialException:
+			log.debug("Value byte read failed")
+			return False
+		if not len(data):
+			log.debug("No value byte")
+			return False
+		log.debug("Value byte: %r" % data)
+		if not self._sendToDisplay(ESTABLISHED):
+			log.debug("Connection establishment failed")
+			return False
+		# If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
+		# Other display settings are currently ignored so skipping separate function
+		# definition this time.
+		self.numCells = 80 if ord(data) >> 7 == 1 else 46
+		# Reconnected if length of _oldCells is numCells. Show last known content.
+		if len(self._oldCells) == self.numCells:
+			self.display(self._currentCells)
+		return True
+
+	def _exitInternalMenu(self, data: bytes) -> bool:
+		# It is possible that there is no connection from perspective of display.
+		# If user has entered to the internal menu of device, display starts to send
+		# initial packet containing \xff and settings byte when user exits the menu.
+		if data != INIT_START_BYTE:
+			return True
+		# Other display settings are currently ignored, and number of cells is already known.
+		# Only log value byte for debugging.
+		try:
+			data = self._dev.read(1)
+		except serial.serialutil.SerialException:
+			log.debug("Value byte read after internal menu exit failed")
+			return False
+		if not len(data):
+			log.debug("No value byte after internal menu exit")
 		else:
-			# It is possible that there is no connection from perspective of display.
-			# If user has entered to the local menu of device, display starts to send
-			# initial packet containing \xff and settings byte when user exits the menu.
-			if data == INIT_START_BYTE:
-				# Other display settings are currently ignored, and number of cells is already known.
-				# Only log value byte for debugging.
-				data = self._dev.read(1)
-				if not len(data):
-					log.debugWarning("No value byte")
-				else:
-					log.debug("Value byte: %r" % data)
-				if self._sendToDisplay(ESTABLISHED):
-					self._clearOldCells()
-				# Using _currentCells to show last known content.
-				self.display(self._currentCells)
-				return
-			# If Ctrl-key is pressed, then there is at least one byte to read;
-			# in single ctrl-key presses and key combinations the first key is resent as last one.
-			if ord(data) in CONTROL_KEY_CODES:
-				# at most 4 keys.
-				data += self._dev.read(4)
-			pressedKeys = set(data)
-			try:
-				inputCore.manager.executeGesture(InputGestureKeys(pressedKeys))
-			except inputCore.NoInputGestureAction:
-				pass
+			log.debug("Value byte after internal menu exit: %r" % data)
+		if not self._sendToDisplay(ESTABLISHED):
+			log.debug("Connection establishment failed")
+			return False
+		self._clearOldCells()
+		# Using _currentCells to show last known content.
+		self.display(self._currentCells)
+		return True
 
 	def display(self, cells: List[int]):
 		# Keep _currentCells up to date.
