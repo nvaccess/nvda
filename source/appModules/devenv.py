@@ -125,7 +125,7 @@ class VsWpfTextViewTextInfo(UIATextInfo):
 				# This is the first text string within the list.
 				# Strip the line number from the string.
 				lineNumberStr = f"{lineNumber} "
-				fields[index] = field.lstrip(lineNumberStr)
+				fields[index] = field[len(lineNumberStr):]
 				break
 		return fields
 
