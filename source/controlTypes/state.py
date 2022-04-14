@@ -11,8 +11,10 @@ from typing import Dict
 
 from utils.displayString import DisplayStringIntEnum
 
+
 def setBit(bitPos: int) -> int:
 	return 0x1 << bitPos
+
 
 @unique
 class State(DisplayStringIntEnum):
