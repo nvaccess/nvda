@@ -27,7 +27,7 @@ Major highlights include:
 - Easy to use talking installer
 - Translated into 54 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
-- Ability to run during Windows sign-in and at secure screens
+- Ability to run during Windows sign-in and [other secure screens #SecureScreens].
 - Announcing controls and text while using touch gestures
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
 - Support for Windows Command Prompt and console applications
@@ -81,7 +81,7 @@ Running the file you have just downloaded will start a temporary copy of NVDA.
 You will then be asked if you want to install NVDA, create a portable copy or just continue using the temporary copy.
 
 If you plan to  always use NVDA on this computer, you will want to choose to install NVDA.
-Installing NVDA will allow for additional functionality such as automatic starting after sign-in, the ability to read the Windows sign-in and security screens (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
+Installing NVDA will allow for additional functionality such as automatic starting after sign-in, the ability to read the Windows sign-in and [secure screens #SecureScreens] (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
 The installed copy is also able to create a portable copy itself at any time.
 
 If you want to take NVDA with you on a USB thumb drive or other writable  media, then you  should choose to create a portable copy.
@@ -118,7 +118,7 @@ Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] fo
 
 +++ Use NVDA during sign-in +++[StartAtWindowsLogon]
 This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
-This also includes User Account Control and other secure screens.
+This also includes User Account Control and [other secure screens #SecureScreens].
 This option is enabled by default for fresh installations.
 
 +++ Create Desktop Shortcut (ctrl+alt+n) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ If created, this shortcut will also be assigned a  shortcut key of control+alt+n
 
 +++ Copy Portable Configuration to Current User Account +++[CopyPortableConfigurationToCurrentUserAccount]
 This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA. 
-This will not copy the configuration for any other users of this system nor to the system configuration for use during Windows sign-in and other secure screens.
+This will not copy the configuration for any other users of this system nor to the system configuration for use during Windows sign-in and [other secure screens #SecureScreens].
 This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
 
 ++ Creating a Portable Copy ++[CreatingAPortableCopy]
@@ -1126,7 +1126,7 @@ If you sign in to Windows by providing a user name and password, then enabling t
 This option is only available for installed copies of NVDA.
 
 ==== Use currently saved settings during sign-in and on secure screens (requires administrator privileges) ====[GeneralSettingsCopySettings]
-Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other secure Windows screens.
+Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens #SecureScreens].
 To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
 This option is only available for installed copies of NVDA.
 
@@ -3311,6 +3311,34 @@ Following are the current key assignments for these displays.
  
 + Advanced Topics +[AdvancedTopics]
 
+++ Secure Mode ++[SecureMode]
+NVDA can be started in secure mode with the ``-s`` [command line option #CommandLineOptions].
+NVDA runs in secure mode when executed on [secure screens #SecureScreens], unless the ``serviceDebug`` [system wide parameter #SystemWideParameters] is enabled.
+
+Secure mode disables:
+
+- Saving configuration and other settings to disk
+- Saving the gesture map to disk
+- [Configuration Profile #ConfigurationProfiles] features such as creation, deletion, renaming profiles e.t.c.
+- Updating NVDA and creating portable copies
+- The [Python console #PythonConsole]
+- The [Log Viewer #LogViewer] and logging
+-
+
+++ Secure Screens ++[SecureScreens]
+NVDA runs in [secure mode #SecureMode] when executed on secure screens unless the ``serviceDebug`` [system wide parameter #SystemWideParameters] is enabled.
+
+When running from a secure screen, NVDA uses a system profile for preferences.
+NVDA user preferences can be copied [for use in secure screens #GeneralSettingsCopySettings].
+
+Secure screens include:
+
+- The Windows sign-in screen
+- The User Access Control dialog, active when performing an action as an administrator
+  - This includes installing programs
+  -
+-
+
 ++ Command Line Options ++[CommandLineOptions]
 NVDA can accept one or more additional options when it starts which alter its behaviour.
 You can pass as many options as you need.
@@ -3344,7 +3372,7 @@ Following are the command line options for NVDA:
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
 | None | --lang=LANGUAGE | Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc. |
 | -m | --minimal | No sounds, no interface, no start message, etc. |
-| -s | --secure | Secure mode: disables Python console, profile features such as creation, deletion, renaming profiles etc., update check, some checkboxes in the welcome dialog and in general settings category (e.g. Use NVDA during sign-in, save configuration after exit etc.), as well as logviewer and logging features (used often in secure screens). Note also that this command will disable the possibility to save settings in system config and the gesture map will not be saved on the disk. |
+| -s | --secure | Starts NVDA in [Secure Mode #SecureMode] |
 | None | --disable-addons | Add-ons will have no effect |
 | None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given, including no logging option. |
 | None | --no-logging | Disable logging altogether while using NVDA. This setting can be overridden if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on. |
@@ -3367,7 +3395,7 @@ These values are stored in the registry under one of the following keys:
 The following values can be set under this registry key:
 || Name | Type | Possible values | Description |
 | configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
-| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables secure mode on windows secure desktops, allowing the use of the Python console and Log viewer. Due to several major security implications, the use of this option is strongly discouraged |
+| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables [Secure Mode #SecureMode] on [secure screens #SecureScreens]. Due to several major security implications, the use of this option is strongly discouraged |
 
 + Further Information +[FurtherInformation]
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.

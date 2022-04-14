@@ -151,11 +151,8 @@ class MainFrame(wx.Frame):
 		# Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration restored to factory defaults"))
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSaveConfigurationCommand(self,evt):
-		if globalVars.appArgs.secure:
-			# Translators: Reported when an action cannot be performed because NVDA is in a secure screen
-			queueHandler.queueFunction(queueHandler.eventQueue, ui.message, _("Not available in secure context"))
-			return
 		try:
 			config.conf.save()
 			# Translators: Reported when current configuration has been saved.
@@ -190,6 +187,7 @@ class MainFrame(wx.Frame):
 	def onTemporaryDictionaryCommand(self, evt):
 		self._popupSettingsDialog(TemporaryDictionaryDialog)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
 			destPath, version, apiVersion, backCompatToAPIVersion = updateCheck.getPendingUpdate()
@@ -272,9 +270,8 @@ class MainFrame(wx.Frame):
 	def onUwpOcrCommand(self, evt):
 		self._popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSpeechSymbolsCommand(self, evt):
-		if globalVars.appArgs.secure:
-			return
 		self._popupSettingsDialog(SpeechSymbolsDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
@@ -285,6 +282,7 @@ class MainFrame(wx.Frame):
 		# Translators: The title of the dialog to show about info for NVDA.
 		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onCheckForUpdateCommand(self, evt):
 		updateCheck.UpdateChecker().check()
 
@@ -314,6 +312,7 @@ class MainFrame(wx.Frame):
 		else:
 			brailleViewer.createBrailleViewerTool()
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
@@ -338,7 +337,10 @@ class MainFrame(wx.Frame):
 		globalPluginHandler.reloadGlobalPlugins()
 		NVDAObject.clearDynamicClassCache()
 
-	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+	)
 	def onCreatePortableCopyCommand(self,evt):
 		self.prePopup()
 		import gui.installerGui
@@ -346,12 +348,18 @@ class MainFrame(wx.Frame):
 		d.Show()
 		self.postPopup()
 
-	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+	)
 	def onInstallCommand(self, evt):
 		from gui import installerGui
 		installerGui.showInstallGui()
 
-	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+	)
 	def onRunCOMRegistrationFixesCommand(self, evt):
 		if messageBox(
 			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
@@ -410,7 +418,6 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 			menu_preferences.AppendSubMenu(self._createSpeechDictsSubMenu(frame), _("Speech &dictionaries"))
-		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
 			self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
@@ -498,21 +505,10 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
 		# Translators: The label for the Help submenu in NVDA menu.
 		self.menu.AppendSubMenu(menu_help,_("&Help"))
-		self.menu.AppendSeparator()
-		# Translators: The label for the menu item to open the Configuration Profiles dialog.
-		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
-		self.Bind(wx.EVT_MENU, frame.onConfigProfilesCommand, item)
-		# Translators: The label for the menu item to revert to saved configuration.
-		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
-		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
+
+		self._appendConfigManagementSection(frame)
+
 		if not globalVars.appArgs.secure:
-			# Translators: The label for the menu item to reset settings to default settings.
-			# Here, default settings means settings that were there when the user first used NVDA.
-			item = self.menu.Append(wx.ID_ANY, _("&Reset configuration to factory defaults"),_("Reset all settings to default state"))
-			self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
-			# Translators: The label for the menu item to save current settings.
-			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
-			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
 			self.menu.AppendSeparator()
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
@@ -576,6 +572,38 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		return subMenu_speechDicts
 
+	def _appendConfigManagementSection(self, frame: wx.Frame) -> None:
+		self.menu.AppendSeparator()
+		# Translators: The label for the menu item to open the Configuration Profiles dialog.
+		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
+		self.Bind(wx.EVT_MENU, frame.onConfigProfilesCommand, item)
+		item = self.menu.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to revert to saved configuration.
+			_("&Revert to saved configuration"),
+			# Translators: The help text for the menu item to revert to saved configuration.
+			_("Reset all settings to saved state")
+		)
+		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
+		item = self.menu.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to reset settings to default settings.
+			# Here, default settings means settings that were there when the user first used NVDA.
+			_("&Reset configuration to factory defaults"),
+			# Translators: The help text for the menu item to reset settings to default settings.
+			# Here, default settings means settings that were there when the user first used NVDA.
+			_("Reset all settings to default state")
+		)
+		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
+		if not globalVars.appArgs.secure:
+			item = self.menu.Append(
+				wx.ID_SAVE,
+				# Translators: The label for the menu item to save current settings.
+				_("&Save configuration"),
+				# Translators: The help text for the menu item to save current settings.
+				_("Write the current configuration to nvda.ini")
+			)
+			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
 
 def initialize():
 	global mainFrame
