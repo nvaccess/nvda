@@ -19,11 +19,13 @@ class TestLabels(unittest.TestCase):
 		# HAS_ARIA_DETAILS is not used internally to NVDA, only exists for backwards
 		# compatibility of the add-on API
 		controlTypes.State.HAS_ARIA_DETAILS,
+		controlTypes.State.INDETERMINATE,
 	}
 	_noNegDisplayStringStates = {
 		# HAS_ARIA_DETAILS is not used internally to NVDA, only exists for backwards
 		# compatibility of the add-on API
 		controlTypes.State.HAS_ARIA_DETAILS,
+		controlTypes.State.INDETERMINATE,
 	}
 
 	def test_role_displayString(self):

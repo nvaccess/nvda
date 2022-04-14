@@ -36,6 +36,11 @@ Import(
 	'sourceLibDir',
 )
 
+env = env.Clone()
+# Building with msbuild requires windir to be set as environment variable,
+# otherwise the build fails with Visual Studio 2022
+env['ENV']['windir'] = os.environ['windir']
+
 MSUIA_sourceDir = Dir('#include/microsoft-ui-uiautomation/src/uiAutomation')
 MSUIA_lib_outDir = Dir('lib')
 MSUIA_include_outDir = Dir('include')
