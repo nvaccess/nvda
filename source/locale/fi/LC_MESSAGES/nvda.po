@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-18 00:02+0000\n"
-"PO-Revision-Date: 2022-03-18 18:43+0200\n"
+"POT-Creation-Date: 2022-04-08 00:02+0000\n"
+"PO-Revision-Date: 2022-04-10 18:22+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -6195,9 +6195,10 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Asetuksesi sisältävät lisäosia, jotka eivät ole yhteensopivia tämän NVDA-"
-"version kanssa. Ne poistetaan käytöstä asennuksen jälkeen. Jos luotat näihin "
-"lisäosiin, tarkastele luetteloa päättääksesi, haluatko jatkaa asennusta."
+"Asetuksesi sisältävät kuitenkin lisäosia, jotka eivät ole yhteensopivia "
+"tämän NVDA-version kanssa. Ne poistetaan käytöstä asennuksen jälkeen. Jos "
+"luotat näihin lisäosiin, tarkastele luetteloa päättääksesi, haluatko jatkaa "
+"asennusta."
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
@@ -6256,9 +6257,10 @@ msgid ""
 "continue with the installation"
 msgstr ""
 "\n"
-"Asetuksesi sisältävät lisäosia, jotka eivät ole yhteensopivia tämän NVDA-"
-"version kanssa. Ne poistetaan käytöstä asennuksen jälkeen. Jos luotat näihin "
-"lisäosiin, tarkastele luetteloa päättääksesi, haluatko jatkaa asennusta."
+"Asetuksesi sisältävät kuitenkin lisäosia, jotka eivät ole yhteensopivia "
+"tämän NVDA-version kanssa. Ne poistetaan käytöstä asennuksen jälkeen. Jos "
+"luotat näihin lisäosiin, tarkastele luetteloa päättääksesi, haluatko jatkaa "
+"asennusta."
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6389,7 +6391,7 @@ msgid ""
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
 "Lisäosaa ei voi asentaa tiedostosta {path}.\n"
-"NVDA:n on oltava käynnissä lisäosien asentamiseksi."
+"NVDA:n on oltava käynnissä, jotta lisäosia voidaan asentaa."
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -8483,7 +8485,7 @@ msgstr "Tekijä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "&Ohje"
+msgstr "Lisäosan &Ohje"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
@@ -8525,7 +8527,8 @@ msgid ""
 "Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
 "undone."
 msgstr ""
-"Haluatko varmasti poistaa lisäosan {addon} NVDA:sta? Poistoa ei voi perua."
+"Haluatko varmasti poistaa lisäosan {addon} NVDA:sta? Poistoa ei voi "
+"peruuttaa."
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
@@ -8547,7 +8550,7 @@ msgstr "Asenna"
 #. Translators: One of the show states of braille messages
 #. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
-msgstr "Poistettu käytöstä"
+msgstr "Ei käytössä"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
@@ -8555,11 +8558,11 @@ msgstr "Poistetaan uudelleenkäynnistyksen jälkeen"
 
 #. Translators: The status shown for an addon when it requires a restart to become disabled
 msgid "Disabled after restart"
-msgstr "ei käytössä uudelleenkäynnistyksen jälkeen"
+msgstr "Poistetaan käytöstä uudelleenkäynnistyksen jälkeen"
 
 #. Translators: The status shown for an addon when it requires a restart to become enabled
 msgid "Enabled after restart"
-msgstr "käytössä uudelleenkäynnistyksen jälkeen"
+msgstr "Otetaan käyttöön uudelleenkäynnistyksen jälkeen"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8607,8 +8610,8 @@ msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
 msgstr ""
-"Tämä lisäosa on jo asennettu. Haluatko päivittää {summary}-version "
-"{curVersion} versioksi {newVersion}?"
+"Tämä lisäosa on jo asennettu. Haluatko päivittää {summary} {curVersion}:n "
+"versioksi {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
