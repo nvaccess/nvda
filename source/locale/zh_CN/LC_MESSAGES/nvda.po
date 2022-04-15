@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-01 00:02+0000\n"
+"POT-Creation-Date: 2022-04-08 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: 完美很难 <1872265132@qq.com>\n"
 "Language-Team: \n"
@@ -2374,7 +2374,7 @@ msgstr "查找失败"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
-msgstr "从光标处查找文本"
+msgstr "从当前光标处开始查找文本"
 
 #. Translators: Input help message for find next command.
 msgid ""
@@ -2588,7 +2588,7 @@ msgstr "按下鼠标右键"
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
-msgstr "读出编辑控件或文档中当前选择的文本，若未选择任何文本，则作出相应提示。"
+msgstr "读出编辑控件或文档中已选择的文本，若未选择任何文本，则作出相应提示。"
 
 #. Translators: Input help mode message for report date and time command.
 msgid ""
@@ -3130,29 +3130,31 @@ msgid ""
 "Reports information about the location of the text at the review cursor, or "
 "location of the navigator object if there is no text under review cursor."
 msgstr ""
-"读出浏览光标下文本的位置信息，若浏览光标下不包含文本则读出浏览对象的位置。"
+"读出浏览光标处文本或对象的位置信息，若浏览光标处不包含文本则读出浏览对象的位"
+"置信息。"
 
 #. Translators: Description for a keyboard command which reports location of the navigator object.
 msgid "Reports information about the location of the current navigator object."
-msgstr "读出当前浏览对象的相关位置信息。"
+msgstr "读出浏览对象的位置信息。"
 
 #. Translators: Description for a keyboard command which reports location of the
 #. current caret position falling back to the location of focused object if needed.
 msgid ""
 "Reports information about the location of the text at the caret, or location "
 "of the currently focused object if there is no caret."
-msgstr "读出当前光标处的文本位置信息，若没有光标，则读出当前所聚焦对象的位置。"
+msgstr ""
+"读出光标处文本或对象的位置信息，若没有光标，则读出当前所聚焦对象的位置信息。"
 
 #. Translators: Description for a keyboard command which reports location of the
 #. currently focused object.
 msgid "Reports information about the location of the currently focused object."
-msgstr "读出当前焦点对象的相关位置信息。"
+msgstr "读出当前所聚焦对象的位置信息。"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
-msgstr "读出浏览光标下文本或对象的位置信息，连按两次获取更详细的信息。"
+msgstr "读出浏览光标处文本或对象的位置信息，连按两次获取更详细的信息。"
 
 #. Translators: Description for a keyboard command
 #. which reports location of the text at the caret position
@@ -3160,7 +3162,7 @@ msgstr "读出浏览光标下文本或对象的位置信息，连按两次获取
 msgid ""
 "Reports information about the location of the text or object at the position "
 "of system caret. Pressing twice may provide further detail."
-msgstr "读出系统光标处文本或对象的位置信息。连按两次获取详细信息。"
+msgstr "读出光标处文本或对象的位置信息，连按两次获取更详细的信息。"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3398,7 +3400,7 @@ msgid ""
 "cursor, quick navigation keys, etc."
 msgstr ""
 "切换浏览模式或焦点模式，焦点模式打开时，允许您直接操作控件；浏览模式打开时，"
-"允许您用光标或导航键等在文档中浏览。"
+"允许您用光标或单键导航快捷键在文档中浏览。"
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3434,33 +3436,33 @@ msgstr "格式信息"
 
 #. Translators: Input help mode message for report formatting command.
 msgid "Reports formatting info for the current review cursor position."
-msgstr "读出当前浏览光标的格式信息。"
+msgstr "读出当前浏览光标处的文本格式信息。"
 
 #. Translators: Input help mode message for show formatting at review cursor command.
 msgid ""
 "Presents, in browse mode, formatting info for the current review cursor "
 "position."
-msgstr "在浏览模式下，显示当前浏览光标的格式信息。"
+msgstr "在浏览模式下，显示当前浏览光标处的文本格式信息。"
 
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position. If pressed "
 "twice, presents the information in browse mode"
-msgstr "读出当前浏览光标的格式信息。连按两次，则在浏览模式下显示信息"
+msgstr "读出当前浏览光标处的文本格式信息。连按两次，在浏览模式下显示该信息"
 
 #. Translators: Input help mode message for report formatting at caret command.
 msgid "Reports formatting info for the text under the caret."
-msgstr "读出当前插入符下的文本信息。"
+msgstr "读出当前光标处的文本格式信息。"
 
 #. Translators: Input help mode message for show formatting at caret position command.
 msgid "Presents, in browse mode, formatting info for the text under the caret."
-msgstr "在浏览模式下，显示插入符下的文本信息。"
+msgstr "在浏览模式下，显示当前光标处的文本格式信息。"
 
 #. Translators: Input help mode message for report formatting at caret command.
 msgid ""
 "Reports formatting info for the text under the caret. If pressed twice, "
 "presents the information in browse mode"
-msgstr "读出当前插入符下的文本信息。连案两次，则在浏览模式下显示该信息"
+msgstr "读出当前光标处的文本格式信息。连案两次，在浏览模式下显示该信息"
 
 #. Translators: the description for the reportDetailsSummary script.
 msgid "Report summary of any annotation details at the system caret."
@@ -3540,7 +3542,7 @@ msgid ""
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
 msgstr ""
-"读出前景窗口或应用程序的标题。连按两次拼读标题，连按三次则复制标题到剪贴板"
+"读出前台窗口或应用程序的标题。连按两次拼读标题，连按三次则复制标题到剪贴板"
 
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
@@ -4179,7 +4181,7 @@ msgstr "无数学内容"
 
 #. Translators: Describes a command.
 msgid "Recognizes the content of the current navigator object with Windows OCR"
-msgstr "使用 Windows OCR 读取浏览光标所在控件的内容"
+msgstr "使用 Windows OCR 识别浏览光标所在的控件内容"
 
 #. Translators: Reported when Windows OCR is not available.
 msgid "Windows OCR not available"
@@ -9854,7 +9856,7 @@ msgstr "注释"
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Report 'has details' for structured annotations"
-msgstr "读出“包含的详细信息”以获取结构化注释"
+msgstr "读出“有详细信息”以获取结构化注释"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9907,7 +9909,7 @@ msgstr "在所有的增强终端读出密码 （可提高性能） (&P)"
 msgid ""
 "Use enhanced t&yped character support in legacy Windows Console when "
 "available"
-msgstr "在旧版 Windows 控制台使用增强型字符支持 （如果可用 ）(&Y)"
+msgstr "在旧版 Windows 控制台使用增强型字符支持 （如果可用）(&Y)"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -10796,11 +10798,11 @@ msgstr "行间距为 %s"
 
 #. Translators: Reported when text contains a draft comment.
 msgid "has draft comment"
-msgstr "存在草稿批注"
+msgstr "有草稿批注"
 
 #. Translators: Reported when text contains a resolved comment.
 msgid "has resolved comment"
-msgstr "存在已解决的批注"
+msgstr "有已解决的批注"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
