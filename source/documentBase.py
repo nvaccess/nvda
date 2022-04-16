@@ -212,7 +212,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		# For more info see issue #11919 and #7278.
 		if (
 			self._lastTableSelection
-			and origRow== self._lastTableSelection.lastRow
+			and origRow == self._lastTableSelection.lastRow
 			and origCol == self._lastTableSelection.lastCol
 			and self._lastTableSelection.axis == axis
 		):
