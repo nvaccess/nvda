@@ -349,7 +349,8 @@ speak(
 		SpeechSynthesisStream speechStream{ nullptr };
 		try {
 			speechStream = co_await synth->SynthesizeSsmlToStreamAsync(text);
-		} catch (winrt::hresult_error const& e) {
+		}
+		catch (winrt::hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
 			protectedCallback_(originToken, std::optional<SpeakResult>());
 			co_return;
@@ -368,12 +369,20 @@ speak(
 			// Pass it to the callback.
 			protectedCallback_(originToken, result);
 			co_return;
-		} catch (winrt::hresult_error const& e) {
+		}
+		catch (winrt::hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
 			protectedCallback_(originToken, std::optional<SpeakResult>());
 			co_return;
 		}
-	} catch (...) {
+	}
+	catch (winrt::hresult_error const& e) {
+		LOG_ERROR(L"hresult error in OcSpeech::speak: " << e.code() << L": " << e.message().c_str());
+	}
+	catch (std::exception const& e) {
+		LOG_ERROR(L"Exception in OcSpeech::speak: " << e.what());
+	}
+	catch (...) {
 		LOG_ERROR(L"Unexpected error in speak");
 	}
 }
