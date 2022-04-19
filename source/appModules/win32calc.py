@@ -8,3 +8,4 @@
 """
 
 from .calc import *
+_isAliasAppMod = True

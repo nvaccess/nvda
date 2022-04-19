@@ -3,3 +3,4 @@ This simply uses the miranda32 app module.
 """
 
 from .miranda32 import *
+_isAliasAppMod = True

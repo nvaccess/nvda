@@ -9,3 +9,4 @@ This app module simply inherrits from the app module for the stable version of C
 
 # Ignoring Flake8 imported but unused error since appModuleHandler yet uses the import.
 from .code import AppModule  # noqa: F401
+_isAliasAppMod = True

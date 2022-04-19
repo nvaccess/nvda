@@ -9,3 +9,4 @@ This app module inherrits from the app module for the stable version of Data Stu
 
 # Ignoring Flake8 imported but unused error since appModuleHandler yet uses the import.
 from .azuredatastudio import AppModule  # noqa: F401
+_isAliasAppMod = True

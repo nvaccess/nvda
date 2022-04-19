@@ -5,3 +5,4 @@
 #Copyright (C) 2012 NV Access Limited
 
 from .digitaleditions import *
+_isAliasAppMod = True

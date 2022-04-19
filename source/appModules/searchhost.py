@@ -8,3 +8,4 @@
 
 from .searchui import AppModule, StartMenuSearchField
 __all__ = ["AppModule", "StartMenuSearchField"]
+_isAliasAppMod = True

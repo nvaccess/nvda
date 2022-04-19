@@ -8,3 +8,4 @@
 # Renamed from Windows 10 Calculator in 2021 with the release of Windows 11.
 from .calculator import AppModule, noCalculatorEntryAnnouncements
 __all__ = ["AppModule", "noCalculatorEntryAnnouncements"]
+_isAliasAppMod = True

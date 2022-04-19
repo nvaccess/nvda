@@ -8,3 +8,4 @@ This is for 20H1 text input host window."""
 
 # Flake8/F403: alias of Composable Shell modern keyboard app module.
 from .windowsinternal_composableshell_experiences_textinput_inputapp import * # NOQA
+_isAliasAppMod = True

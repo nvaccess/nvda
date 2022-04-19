@@ -111,12 +111,24 @@ def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
 	"""
 	for possibleModName in _getPossibleAppModuleNamesForExecutable(executableName):
 		try:
-			return importlib.import_module(
+			possibleMod = importlib.import_module(
 				f"appModules.{possibleModName}",
 				package="appModules"
 			)
 		except ImportError:
 			continue
+		else:
+			# Before PR #13366 the only possibility to map a single app module to multiple executables
+			# was to create a alias app module and import everything from the main module into it.
+			# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
+			# but old alias modules have to stay to preserve backwards compatibility.
+			# To differentiate the old alias modules from the real modules they have a module level
+			# variable `_isAliasAppMod` set to `True`.
+			# These modules should not be imported to use the values from the map.
+			if getattr(possibleMod, "_isAliasAppMod", False):
+				continue
+			else:
+				return possibleMod
 	return None  # Module not found
 
 

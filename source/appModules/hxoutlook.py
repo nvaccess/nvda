@@ -5,3 +5,4 @@
 
 # An alias for hxmail appModule
 from .hxmail import *
+_isAliasAppMod = True

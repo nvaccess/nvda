@@ -8,3 +8,4 @@ by exposing everything from the real module in its namespace.
 """
 
 from .notepadPlusPlus import *  # noqa: F401, F403
+_isAliasAppMod = True
