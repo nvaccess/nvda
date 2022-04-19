@@ -89,20 +89,22 @@ class AppModule(appModuleHandler.AppModule):
 
 class VsWpfTextViewTextInfo(UIATextInfo):
 
-	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
-		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
-		if not formatField:
-			return formatField
+	def _getLineNumberString(self, textRange):
 		# Visual Studio exposes line numbers as part of the actual text.
 		# We want to store the line number in a format field instead.
-		# Therefore, always try to isolate the line number, even when we don't care about reporting it.
 		lineNumberRange = textRange.Clone()
 		lineNumberRange.MoveEndpointByRange(
 			UIAHandler.TextPatternRangeEndpoint_End,
 			lineNumberRange,
 			UIAHandler.TextPatternRangeEndpoint_Start
 		)
-		lineNumberStr = lineNumberRange.GetText(-1)
+		return lineNumberRange.GetText(-1)
+
+	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
+		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
+		if not formatField or not formatConfig['reportLineNumber']:
+			return formatField
+		lineNumberStr = self._getLineNumberString(textRange)
 		if lineNumberStr:
 			try:
 				formatField.field['line-number'] = int(lineNumberStr)
@@ -110,24 +112,10 @@ class VsWpfTextViewTextInfo(UIATextInfo):
 				pass
 		return formatField
 
-	def getTextWithFields(self, formatConfig=None):
-		fields = super().getTextWithFields(formatConfig=formatConfig)
-		if len(fields) == 0:
-			# Nothing to do... was probably a collapsed range.
-			return fields
-		# Visual Studio exposes line numbers as part of the actual text.
-		lineNumber = None
-		for index in range(len(fields)):
-			field = fields[index]
-			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-				lineNumber = field.field.get("line-number")
-			elif lineNumber is not None and isinstance(field, str):
-				# This is the first text string within the list.
-				# Strip the line number from the string.
-				lineNumberStr = f"{lineNumber} "
-				fields[index] = field[len(lineNumberStr):]
-				break
-		return fields
+	def _getTextFromUIARange(self, textRange):
+		text = super()._getTextFromUIARange(textRange)
+		lineNumberStr = self._getLineNumberString(textRange)
+		return text[(0 if not lineNumberStr else len(lineNumberStr)):]
 
 
 class VsWpfTextView(WpfTextView):
