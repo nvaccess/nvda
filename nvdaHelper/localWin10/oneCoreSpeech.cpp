@@ -306,6 +306,23 @@ bool __stdcall ocSpeech_supportsProsodyOptions() {
 	return isUniversalApiContractVersion_(5, 0);
 }
 
+std::wstring createMarkersString_(IVectorView<IMediaMarker> markers) {
+	std::wstring markersStr;  // for large strings, reserving would speed this up.
+	bool firstComplete = false;
+	for (auto const& marker : markers) {
+		if (firstComplete) {
+			markersStr += L"|";
+		}
+		else {
+			firstComplete = false;
+		}
+		markersStr += marker.Text();
+		markersStr += L":";
+		markersStr += std::to_wstring(marker.Time().count());
+	}
+	return markersStr;
+}
+
 /*
 Send speech to OneCore.
 Will block OneCore from being re-initialized until speech callbacks have completed.
@@ -340,17 +357,11 @@ speak(
 		// speechStream.Size() is 64 bit, but Buffer can only take 32 bit.
 		// We shouldn't get values above 32 bit in reality.
 		const std::uint32_t size = static_cast<std::uint32_t>(speechStream.Size());
-		std::optional<SpeakResult> result{ Buffer(size) };
-
-		IVectorView<IMediaMarker> markers = speechStream.Markers();
-		for (auto const& marker : markers) {
-			if (result->markersStr.length() > 0) {
-				result->markersStr += L"|";
+		std::optional<SpeakResult> result(SpeakResult{
+			Buffer(size),
+			createMarkersString_(speechStream.Markers())
 			}
-			result->markersStr += marker.Text();
-			result->markersStr += L":";
-			result->markersStr += std::to_wstring(marker.Time().count());
-		}
+		);
 		try {
 			co_await speechStream.ReadAsync(result->buffer, size, InputStreamOptions::None);
 			// Data has been read from the speech stream.
