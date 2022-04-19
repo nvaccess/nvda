@@ -487,8 +487,11 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				newStates=newPropertyValues[name]
 				newPropertyValues['states']=newStates-oldStates
 				newPropertyValues['negativeStates']=oldStates-newStates
-	#properties such as states need to know the role to speak properly, give it as a _ name
-	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
+
+	# properties such as states or value need to know the role to speak properly,
+	# give it as a _ name
+	newPropertyValues['_role'] = newPropertyValues.get('role', obj.role)
+
 	# The real states are needed also, as the states entry might be filtered.
 	newPropertyValues['_states']=obj.states
 	if "rowNumber" in newPropertyValues or "columnNumber" in newPropertyValues:
@@ -624,7 +627,6 @@ def getObjectSpeech(  # noqa: C901
 			sequence.extend(_flattenNestedSequences(speechGen))
 	elif role == controlTypes.Role.MATH:
 		import mathPres
-		mathPres.ensureInit()
 		if mathPres.speechProvider:
 			try:
 				sequence.extend(
@@ -1115,7 +1117,6 @@ def _extendSpeechSequence_addMathForTextInfo(
 		speechSequence: SpeechSequence, info: textInfos.TextInfo, field: textInfos.Field
 ) -> None:
 	import mathPres
-	mathPres.ensureInit()
 	if not mathPres.speechProvider:
 		return
 	try:
@@ -1533,11 +1534,11 @@ def getPropertiesSpeech(  # noqa: C901
 	if name:
 		textList.append(name)
 	if 'role' in propertyValues:
-		role=propertyValues['role']
+		role: controlTypes.Role = propertyValues['role']
 		speakRole=True
 	elif '_role' in propertyValues:
 		speakRole=False
-		role: int = propertyValues['_role']
+		role: controlTypes.Role = propertyValues['_role']
 	else:
 		speakRole=False
 		role=controlTypes.Role.UNKNOWN
@@ -1854,7 +1855,7 @@ def getControlFieldSpeech(  # noqa: C901
 	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
-	valueSequence = getPropertiesSpeech(reason=reason, value=value)
+	valueSequence = getPropertiesSpeech(reason=reason, value=value, _role=role)
 	descriptionSequence = []
 	if description is not None:
 		descriptionSequence = getPropertiesSpeech(

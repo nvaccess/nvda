@@ -1060,10 +1060,13 @@ Tries to force this object to take the focus.
 		log.debug("Potential unimplemented child class: %r" %self)
 		return None
 
-	def _get_landmark(self):
+	landmark: typing.Optional[str]
+	"""Typing information for auto property _get_landmark
+	"""
+
+	def _get_landmark(self) -> typing.Optional[str]:
 		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
 		@return: ARIA landmark role else None
-		@rtype: String or None
 		"""
 		return None
 

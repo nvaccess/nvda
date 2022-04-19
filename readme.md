@@ -60,12 +60,13 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019:
-	* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/16/release/vs_BuildTools.exe)
-	* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
-	* The Professional and Enterprise versions are also supported
-	* Preview versions are *not* supported
-	* Building with Visual Studio 2022 is not officially supported at this stage.
+* Microsoft Visual Studio 2019 or 2022:
+	* To replicate the production build environment, use the [version of Visual Studio 2019 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
+		* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/16/release/vs_BuildTools.exe)
+		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
+		* The Professional and Enterprise versions are also supported
+		* Preview versions are *not* supported
+		* Building with Visual Studio 2022 explicitly requires the MSVC v142 - VS 2019 C++ build tools to be installed (see below)
 	* When installing Visual Studio, you need to enable the following:
 		* In the list  on the Workloads tab
 			* in the Windows grouping:
@@ -91,7 +92,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 7e5457f91e10
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.org/), version 3.20.0
+* [liblouis](http://www.liblouis.org/), version 3.21.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 40.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
@@ -99,6 +100,7 @@ For reference, the following run time dependencies are included in Git submodule
 * brlapi Python bindings, version 0.8 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
 * lilli.dll, version 2.1.0.0
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
+* [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
 * [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
 	* Commit 224b22f3bf9e
@@ -107,8 +109,6 @@ For reference, the following run time dependencies are included in Git submodule
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
 * [txt2tags](https://txt2tags.org/), version 2.5
-* [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
-* [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:

@@ -67,6 +67,14 @@ Aside from accessibility and native APIs, Windows provides many functions which 
 Information that can be obtained includes the class name of a window, the current foreground window and system battery status.
 Tasks that can be performed include moving/clicking the mouse and sending key presses.
 
+### Logging
+
+#### Logging in secure mode
+`logHandler.initialize` prevents logging in [secure mode](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureMode).
+This is because it is a security concern to log during secure mode (e.g. passwords are logged on [secure screens](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureScreens).
+To change this for testing, use the [serviceDebug](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SystemWideParameters) system wide parameter to prevent secure mode on secure screens.
+When logging from a secure screen, `nvda.log` files are generated in the System profile's `%TEMP%` directory.
+
 ## NVDA Components
 NVDA is built with an extensible, modular, object oriented, abstract design.
 It is divided into several distinct components.

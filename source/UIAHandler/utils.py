@@ -121,7 +121,9 @@ def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 	tempRange=rangeObj.clone()
 	tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeStart)
 	endRange=tempRange.Clone()
+	loopCount = 0
 	while relativeGTOperator(endRange.Move(unit,minRelativeDistance),0):
+		loopCount += 1
 		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,endRange,Endpoint_relativeStart)
 		pastEnd=relativeGTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0)
 		if pastEnd:
@@ -139,6 +141,11 @@ def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 	if relativeLTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0):
 		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
 		yield tempRange.clone()
+	elif loopCount == 0:
+		# We Could not walk at all.
+		# So just yield the original range
+		yield rangeObj
+
 
 def getEnclosingElementWithCacheFromUIATextRange(textRange,cacheRequest):
 	"""A thin wrapper around IUIAutomationTextRange3::getEnclosingElementBuildCache if it exists, otherwise IUIAutomationTextRange::getEnclosingElement and then IUIAutomationElement::buildUpdatedCache."""

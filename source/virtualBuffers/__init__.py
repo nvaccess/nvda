@@ -477,12 +477,28 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if not success:
 			self.passThrough=True
 			return
+		textLength = NVDAHelper.localLib.VBuf_getTextLength(self.VBufHandle)
+		if textLength == 0:
+			log.debugWarning("Empty buffer. Waiting for documentLoadComplete event instead")
+			# Empty buffer.
+			# May be due to focus event too early in Chromium 100 documents
+			# We may get a later chance to see content with a documentLoadComplete event
+			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
 			# Translators: Reported when a page reloads (example: after refreshing a webpage).
 			ui.message(_("Refreshed"))
 		if api.getFocusObject().treeInterceptor == self:
 			self.event_treeInterceptor_gainFocus()
+
+	def event_documentLoadComplete(self, obj, nextHandler):
+		if not self._hadFirstGainFocus:
+			# Any initial gainFocus events were too early to start reporting content in this buffer.
+			# Therefore as we are now alerted the document load is complete,
+			# We should handle the initial automatic say all etc.
+			if api.getFocusObject().treeInterceptor == self:
+				log.debug("Handling initial reporting of virtualBuffer via documentLoadComplete event")
+				self.event_treeInterceptor_gainFocus()
 
 	def _loadProgress(self):
 		# Translators: Reported while loading a document.

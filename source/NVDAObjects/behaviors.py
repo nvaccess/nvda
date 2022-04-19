@@ -658,6 +658,59 @@ class RowWithFakeNavigation(NVDAObject):
 	# Translators: The description of an NVDA command.
 	script_moveToPreviousRow.__doc__ = _("Moves the navigator object and focus to the previous row")
 
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object to the first column"
+		),
+		gesture="kb:Control+Alt+Home",
+		canPropagate=True,
+	)
+	def script_moveToFirstColumn(self, gesture):
+		new = self.firstChild
+		while new and new.location and new.location.width == 0:
+			new = new.next
+		self._moveToColumn(new)
+
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object to the last column"
+		),
+		gesture="kb:Control+Alt+End",
+		canPropagate=True,
+	)
+	def script_moveToLastColumn(self, gesture):
+		new = self.lastChild
+		# In some cases, e.g. in NVDA symbol pronounciation llist view lastChild returns none.
+		if not new and len(self.children) > 0:
+			new = self.children[-1]
+		while new and new.location and new.location.width == 0:
+			new = new.previous
+		self._moveToColumn(new)
+
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object to the first row"
+		),
+		gesture="kb:Control+Alt+PageUp",
+		canPropagate=True,
+	)
+	def script_moveToFirstRow(self, gesture):
+		self._moveToRow(self.parent.firstChild)
+
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object to the last row"
+		),
+		gesture="kb:Control+Alt+PageDown",
+		canPropagate=True,
+	)
+	def script_moveToLastRow(self, gesture):
+		self._moveToRow(self.parent.lastChild)
+
 	__gestures = {
 		"kb:control+alt+rightArrow": "moveToNextColumn",
 		"kb:control+alt+leftArrow": "moveToPreviousColumn",
