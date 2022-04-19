@@ -379,7 +379,7 @@ class AppModule(baseObject.ScriptableObject):
 	i.e. contains some special characters such as "." or "+" you can name the module however you like
 	and then map the executable name to the module name
 	by adding an entry to `appModules.EXECUTABLE_NAMES_TO_APP_MODS` dictionary.
-	It should containa C{AppModule} class which inherits from this base class.
+	It should contain a C{AppModule} class which inherits from this base class.
 	App modules can implement and bind gestures to scripts.
 	These bindings will only take effect while an object in the associated application has focus.
 	See L{ScriptableObject} for details.
