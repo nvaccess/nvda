@@ -4,6 +4,8 @@
 # See the file COPYING for more details.
 
 """App module for Start menu/Windows Search/Cortana user interface in Windows 10 Version 1909 and earlier.
+This app module also serves as the basis for Start menu in Windows 10 Version 2004 and later
+as well as Windows 11, represented by alias app modules.
 """
 
 import appModuleHandler
