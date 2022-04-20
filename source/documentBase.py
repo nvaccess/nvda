@@ -31,11 +31,19 @@ class _Movement(str, Enum):
 
 @dataclass
 class _TableSelection:
-	selection: textInfos.TextInfo
+	"""
+		Caches information about user navigating around the table.
+		This class is used to store true row/column number when navigating through merged cells.
+		lastRow/lastCol store coordinates of the last cell user explicitly navigated to.
+		If they don't match current selection we invalidate this cache.
+		If they match, we use trueRow/trueCol to maintain row/column through merged cells.
+	"""
 	axis: _Axis
-	row: int
+	lastRow: int
+	lastCol: int
+	trueRow: int
 	rowSpan: int
-	col: int
+	trueCol: int
 	colSpan: int
 
 
@@ -204,34 +212,38 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		# For more info see issue #11919 and #7278.
 		if (
 			self._lastTableSelection
-			and self.selection == self._lastTableSelection.selection
+			and origRow == self._lastTableSelection.lastRow
+			and origCol == self._lastTableSelection.lastCol
 			and self._lastTableSelection.axis == axis
 		):
 			if axis == _Axis.ROW:
-				origCol = self._lastTableSelection.col
+				origCol = self._lastTableSelection.trueCol
 				origColSpan = self._lastTableSelection.colSpan
 			else:
-				origRow = self._lastTableSelection.row
+				origRow = self._lastTableSelection.trueRow
 				origRowSpan = self._lastTableSelection.rowSpan
 
 		try:
 			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+			newTableID, newRow, newCol, newRowSpan, newColSpan = self._getTableCellCoords(info)
 		except LookupError:
 			# Translators: The message reported when a user attempts to use a table movement command
 			# but the cursor can't be moved in that direction because it is at the edge of the table.
 			ui.message(_("Edge of table"))
 			# Retrieve the cell on which we started.
 			info = self._getTableCellAt(tableID, self.selection,origRow, origCol)
+			newTableID, newRow, newCol, newRowSpan, newColSpan = self._getTableCellCoords(info)
 
 		speakTextInfo(info, formatConfig=formatConfig, reason=controlTypes.OutputReason.CARET)
 		info.collapse()
 		self.selection = info
 		self._lastTableSelection = _TableSelection(
-			selection=self.selection,
+			lastRow=newRow,
+			lastCol=newCol,
 			axis=axis,
-			row=origRow,
+			trueRow=origRow,
 			rowSpan=origRow,
-			col=origCol,
+			trueCol=origCol,
 			colSpan=origColSpan,
 		)
 
