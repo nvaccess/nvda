@@ -14,10 +14,12 @@ import winVersion
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.UIA import UIA, SearchField, SuggestionListItem
 
+
 class StartMenuSearchField(SearchField):
 
 	# #7370: do not announce text when start menu (searchui) closes.
 	announceNewLineText = False
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -34,7 +36,7 @@ class AppModule(appModuleHandler.AppModule):
 			):
 				obj.name = obj.firstChild.name
 
-	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, IAccessible):
 			try:
 				# #5288: Never use ContentGenericClient, as this uses displayModel
