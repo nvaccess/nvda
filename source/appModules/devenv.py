@@ -109,6 +109,10 @@ class VsWpfTextViewTextInfo(UIATextInfo):
 			try:
 				formatField.field['line-number'] = int(lineNumberStr)
 			except ValueError:
+				log.debugWarning(
+					f"Couldn't parse {lineNumberStr} as integer to report a line number",
+					exc_info=True
+				)
 				pass
 		return formatField
 
