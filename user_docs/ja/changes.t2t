@@ -3,6 +3,228 @@ NVDA最新情報
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.1 =
+このリリースでは Microsoft Office での UI オートメーション対応を大幅に改善しました。
+Microsoft Office 16.0.15000 およびそれ以降と Windows 11 の組み合わせで NVDA は Microsoft Word ドキュメントに UI オートメーションを使います。
+旧式のオブジェクトモデルと比べて性能が改善します。
+
+清華 Notetaker、Papenmeier、HID 点字仕様などの点字ディスプレイドライバを改善しました。
+また、電卓、コンソール、ターミナル、メール、絵文字パネルなどのさまざまな Windows 11 のアプリに対応するバグ修正を行いました。
+
+eSpeak-NG と LibLouis を更新し、新しい日本語（6点漢点字）、ドイツ語、カタロニア語の点字テーブルを追加しました。
+
+注意:
+ - このリリースでは、既存のアドオンとの互換性が失われています。
+ -
+
+
+== 新機能 ==
+- Windows 11 と UI オートメーションが有効になった Microsoft Excel において、メモの報告に対応しました。 (#12861)
+- Windows 11 と UI オートメーションが有効になった Microsoft Word の最近のビルドにおいて、ブックマーク、下書きコメント、および解決されたコメントが存在するときに、音声と点字の両方で報告されるようになりました。 (#12861)
+- 新しい ``--lang`` コマンドライン引数により、NVDA の言語の設定を上書きできます。 (#10044)
+- 不明なコマンドライン引数があり、アドオンからも使用されていない場合に NVDA は警告するようになりました。 (#12795)
+- UI オートメーションが有効になった Microsoft Word において、NVDA は MathPlayer を使用して Office の数式を読み取ったり移動したりするようになりました。 (#12946)
+  - Microsoft Word 365/2016 ビルド 14326 以降が必要です。
+  - MathType の数式は Office 数式に手動で変換する必要があります。数式を選択し、コンテクストメニューを開き、[数式オプション]、[Office 数式に変換] の順に操作します。
+  -
+- 「詳細あり」の報告と、関連づけられた注釈の報告が、フォーカスモードで利用できるようになりました。 (#13106)
+- 清華 Notetaker が USB および Bluetooth 経由で接続された場合に自動検出されるようになりました。 (#13191, #13142)
+  - 対応デバイス: MiniSeika (16, 24 セル), V6, および V6Pro (40 セル)
+  - Bluetooth COM ポートの手動選択にも対応しています。
+  -
+- 点字ビューアーを有効または無効にするコマンドを追加しました。既定のジェスチャーはありません。 (#13258)
+- 点字ディスプレイで複数の修飾キーを同時に切り替えるためのコマンドを追加しました。 (#13152)
+- [読み上げ辞書]ダイアログボックスに、辞書全体をクリアするのに役立つ[すべて削除]ボタンを追加しました。 (#11802)
+- Windows 11 電卓に対応しました。 (#13212)
+- UI オートメーションが有効になった Microsoft Word において、行番号とセクション番号を報告できるようになりました。 (#13283, #13515)
+- Microsoft Office 16.0.15000 およびそれ以降と Windows 11 の組み合わせで NVDA は Microsoft Word ドキュメントに UI オートメーションを使います。旧式のオブジェクトモデルと比べて性能が改善します。 (#13437)
+ - Microsoft Word ドキュメント、Microsoft Outlook のメッセージの表示と編集が含まれます。
+ -
+-
+
+
+== 変更点 ==
+- Espeak-ng をバージョン 1.51-dev commit ``7e5457f91e10`` に更新しました。 (#12950)
+- liblouis 点訳エンジンを [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0] に更新しました。 (#13141, #13438)
+  - 新しいテーブル: 日本語6点漢点字
+  - 新しいテーブル: ドイツ語6点コンピューター点字
+  - 新しいテーブル: カタロニア語1級点字 (#13408)
+  - 
+- NVDA LibreOffice Calc 7.3 およびそれ以降でセルの選択や結合を報告するようになりました。 (#9310, #6897)
+- Unicode 共通ロケールデータリポジトリ (CLDR) をバージョン 40.0 に更新しました。 (#12999)
+- 既定の設定で ``NVDA+テンキーDelete`` はテキストカーソルまたはフォーカスのあるオブジェクトの位置を報告します。 (#13060)
+- ``NVDA+Shift+テンキーDelete`` はレビューカーソルの位置を報告します。 (#13060)
+- 点字ディスプレイで修飾キーをトグルする既定のジェスチャーの割り当てを追加しました。 (#13152)
+- テキストの書式を報告するコマンド (``NVDA+f``) において「ベースライン」を報告しなくなりました。 (#11815)
+- 詳細な説明 (longdesc) をアクティブ化するコマンドに既定のジェスチャーが割り当てられなくなりました。 (#13380)
+- 注釈の報告コマンドに既定のジェスチャー (``NVDA+d``) が割り当てられました。 (#13380)
+- MathPlayer のインストール後にNVDAを再起動する必要があります。 (#13486)
+-
+
+== バグ修正 ==
+- 一部の Office アプリを開くときに、クリップボードマネージャのペインに誤ってフォーカスが移動していた問題を修正しました。 (#12736)
+- マウスの主ボタンを右クリックに変更した環境において、Webブラウザなどのアプリで、NVDAが項目をアクティブ化する代わりに誤ってコンテキストメニューを表示することがなくなりました。 (#12642)
+- UIオートメーションが有効になった Microsoft Word などにおいて、レビューカーソルをテキストコントロールの末尾を超えて移動しようとすると「下の端」を報告できなかった問題を改善しました。 (#12808)
+- NVDA を64ビット版Windowsで実行している場合に system32 フォルダに配置された実行ファイルのアプリ名やバージョンを報告できるようになりました。 (#12943)
+- ターミナルの出力をより一貫性のある方法で読み込むようになりました。 (#12974)
+  - 行の途中で文字を挿入または削除すると、テキストカーソル以降の文字を再度読み上げることがあります。
+  -
+- UIオートメーションが有効になった Microsoft Word: ブラウズモードでの見出しの1文字ナビゲーションを使うとドキュメントの最後の見出しで止まって動かなくなる問題や、このような見出しがNVDA要素リストに重複して表示される問題などを修正しました。 (#9540)
+- Windows 8 以降において、ステータスバーの標準のジェスチャー NVDA+End (デスクトップ配列) / NVDA+Shift+End (ラップトップ配列)を使用して、ファイルエクスプローラのステータスバーを取得できるようになりました。 (#12845)
+- Skype for Businessのチャットで受信したメッセージが報告されなかった問題を修正しました。 (#9295)
+- Windows 11 で SAPI5 音声エンジンを使用しているときに音のダッキングができなかった問題を修正しました。 (#12913)
+- Windows 10 の電卓で、履歴のラベルとメモリのリスト項目を報告するようになりました。 (#11858)
+- HID点字仕様のディスプレイでスクロールやタッチカーソルなどのジェスチャーが動作しなかった問題を修正しました。 (#13228)
+- Windows 11 メール: 長いメールを読んでいる途中でアプリ間でフォーカスを切り替えると、NVDA がメールの読んでいる行から他の場所に移動できなくなる問題を修正しました。 (#13050)
+- HID点字ディスプレイ: ジェスチャーの組み合わせ (例えば ``スペース+4の点``) を点字ディスプレイから実行できるようになりました。 (#13326)
+- 複数の設定ダイアログを同時に開くことができる問題を修正しました。 (#12818)
+- PC をスリープ解除した後、一部の Focus Blue 点字ディスプレイが動作しなくなる問題を修正しました。 (#9830)
+- 「上付き文字と下付き文字の報告」オプションが有効な場合に、誤って「ベースライン」と報告していた問題を修正しました。 (#11078)
+- Windows 11 で絵文字を選択するときに絵文字パネルで NVDA のナビゲーションができなかった問題を修正しました。 (#13104)
+- Windowsコンソールとターミナルを使用しているときに報告が2重に行われていた問題を修正しました。 (#13261)
+- REAPER などの64ビットアプリでリスト項目を報告できなかった問題を修正しました。 (#8175)
+- Microsoft Edge ダウンロードマネージャで、最新のダウンロードのリスト項目にフォーカスが移動すると、NVDA が自動的にフォーカスモードに切り替わるようになりました。 (#13221)
+- 64ビット版の Notepad++ バージョン 8.3 以上がクラッシュする問題を修正しました。 (#13311)
+- Adobe Readerの保護モードが有効になっている場合、Adobe Readerが起動時にクラッシュする問題を修正しました。 (#11568)
+- Papenmeier 点字ディスプレイドライバを選択すると NVDA がクラッシュする問題を修正しました。 (#13348)
+- UIオートメーションが有効になった Microsoft Word: 表の空白セルから内容を含むセルに移動したり、ドキュメントの最後から既存の内容のある場所に移動したりするときに、ページ番号やその他の書式が不適切に報告される問題を修正しました。 (#13458, #13459)
+-
+
+== 開発者向けの変更 ==
+- 注意: これはアドオン API 非互換のリリースです。アドオンは再テストとマニフェストの更新が必要です。
+- NVDA の開発にはひきつづき Visual Studio 2019 が必要ですが、同時により新しいバージョン(2022など) の Visual Studio がインストールされている場合に、ビルドが失敗しないようになりました。 (#13033, #13387)
+- SCons をバージョン 4.3.0 に更新しました。 (#13033)
+- py2exe をバージョン 0.11.1.0 に更新しました。 (#13510)
+- ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` を削除しました。かわりに ``apiLevel`` を使います。 (#12955, #12660)
+- ``TVItemStruct`` を ``sysTreeView32`` から削除しました。 (#12935)
+- ``MessageItem`` を Outlook appModule から削除しました。 (#12935)
+- ``audioDucking.AUDIODUCKINGMODE_*`` 定数を ``DisplayStringIntEnum`` に移行しました。 (#12926)
+  - これらの定数のかわりに ``AudioDuckingMode.*`` を使います。
+  - ``audioDucking.audioDuckingModes`` のかわりに ``AudioDuckingMode.*.displayString`` を使います。
+  -
+- ``audioDucking.ANRUS_ducking_*`` 定数は ``ANRUSDucking.*`` に移行しました。 (#12926)
+- ``synthDrivers.sapi5`` の変更 (#12927):
+  - ``SPAS_*`` のかわりに ``SPAudioState.*`` を使います。
+  - ``constants.SVSF*`` のかわりに ``SpeechVoiceSpeakFlags.*`` を使います。
+    - 注意: ``SVSFlagsAsync`` のかわりに ``SpeechVoiceSpeakFlags.Async`` を使います。 ``SpeechVoiceSpeakFlags.lagsAsync`` ではありません。
+    -
+  - ``constants.SVE*`` のかわりに ``SpeechVoiceEvents.*`` を使います。
+  -
+- ``soffice`` appModule におけるクラスと関数の廃止: ``JAB_OOTableCell``, ``JAB_OOTable``, ``gridCoordStringToNumbers``. (#12849)
+- ``core.CallCancelled`` のかわりに ``exceptions.CallCancelled`` を使います。 (#12940)
+- ``core`` および ``logHandler`` において RPC で始まる定数はすべて ``RPCConstants.RPC`` enum に移行しました。 (#12940)
+- マウスでアクティブ化(主ボタン)やコンテクストメニュー表示など(副ボタン)のクリックを実行するために、論理アクション関数 ``mouseHandler.doPrimaryClick`` および ``mouseHandler.doSecondaryClick`` を推奨します。
+``executeMouseEvent`` の使用や、マウスのボタンの左右を特定することは避けるべきです。
+Windows の設定「マウスの主ボタン」の変更に適切に対応するためです。 (#12642)
+- ``config.getSystemConfigPath`` を削除しました。代替の手段はありません。 (#12943)
+- ``shlobj.SHGetFolderPath`` を削除しました。かわりに ``shlobj.SHGetKnownFolderPath`` を使います。 (#12943)
+- ``shlobj`` 定数を削除しました。かわりに列挙型 ``shlobj.FolderId`` を導入しました。使い方は ``SHGetKnownFolderPath`` を参照してください。 (#12943)
+- ``diffHandler.get_dmp_algo`` および ``diffHandler.get_difflib_algo`` はそれぞれ ``diffHandler.prefer_dmp`` および ``diffHandler.prefer_difflib`` に移行しました。 (#12974)
+- ``languageHandler.curLang`` を削除しました。現在の NVDA の言語は ``languageHandler.getLanguage()`` で取得します。 (#13082)
+- アプリモジュールに ``getStatusBarText`` メソッドを実装して、NVDA がステータスバーのテキストを読み取る方法をカスタマイズできるようになりました。 (#12845)
+- ``globalVars.appArgsExtra`` を削除しました。 (#13087)
+  - アドオンから追加のコマンドライン引数を扱いたい場合は  ``addonHandler.isCLIParamKnown`` のドキュメントと開発者ドキュメントで詳細をご確認ください。
+  -
+- UIA ハンドラーモジュールとその他の UIA サポートモジュールは UIAHandler パッケージにまとめられました。 (#10916)
+  - ``UIAUtils`` の移行先は ``UIAHandler.utils``
+  - ``UIABrowseMode`` の移行先は ``UIAHandler.browseMode``
+  - ``_UIAConstants`` の移行先は ``UIAHandler.constants``
+  - ``_UIACustomProps`` の移行先は ``UIAHandler.customProps``
+  - ``_UIACustomAnnotations`` の移行先は ``UIAHandler.customAnnotations``
+- ``IAccessibleHandler`` ``IA2_RELATION_*`` の各定数は ``IAccessibleHandler.RelationType`` 列挙型に移行しました。 (#13096)
+  - ``IA2_RELATION_FLOWS_FROM`` を削除しました。
+  - ``IA2_RELATION_FLOWS_TO`` を削除しました。
+  - ``IA2_RELATION_CONTAINING_DOCUMENT`` を削除しました。
+  -
+- ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` および ``LOCALE_SLANGDISPLAYNAME`` を ``languageHandler`` から削除しました。かわりに ``languageHandler.LOCALE`` のメンバーを使います。 (#12753)
+- NVDA が使用するフックライブラリーは Minhook から Microsoft Detours に変わりました。これは主にディスプレイモデルのために使われています。 (#12964)
+- ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` を削除しました。 (#13211)
+- SCons はシステムの論理プロセッサ数と同じ数のジョブでビルドをすると警告を行います。
+このときマルチコアシステムでのビルド時間は非常に遅くなります。 (#13226, #13371)
+- ``characterProcessing.SYMLVL_*`` 定数を削除しました。かわりに ``characterProcessing.SymbolLevel.*`` を使います。 (#13248)
+- addonHandler から ``loadState`` および ``saveState`` を削除しました。かわりに ``addonHandler.state.load`` および ``addonHandler.state.save`` を使います。 (#13245)
+- NVDAHelper の UWP/OneCore 関連の実装を [C++/CX から C++/Winrt https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/move-to-winrt-from-cx] に移行しました。 (#10662)
+- ``DictionaryDialog`` を使うときにはサブクラスが必須となりました。 (#13268)
+- ``config.RUN_REGKEY``, ``config.NVDA_REGKEY`` は 2023 年に廃止される予定です。かわりに ``config.RegistryKey.RUN``, ``config.RegistryKey.NVDA`` を使います。 (#13242)
+- ``easeOfAccess.ROOT_KEY``, ``easeOfAccess.APP_KEY_PATH`` は 2023 年に廃止される予定です。かわりに ``easeOfAccess.RegistryKey.ROOT``, ``easeOfAccess.RegistryKey.APP`` を使います。 (#13242)
+- ``easeOfAccess.APP_KEY_NAME`` は 2023 年に廃止・削除される予定です。 (#13242)
+- ``DictionaryDialog`` および ``DictionaryEntryDialog`` は ``gui.settingsDialogs`` から ``gui.speechDict`` に移動しました。 (#13294)
+- IAccessible2 relations は IAccessible2 objects の developer info に表示されるようになりました。 (#13315)
+- ``languageHandler.windowsPrimaryLCIDsToLocaleNames`` を削除しました。かわりに ``languageHandler.windowsLCIDToLocaleName`` または ``winKernel.LCIDToLocaleName`` を使います。 (#13342)
+- UIA オブジェクトの ``UIAAutomationId`` プロパティの使用を推奨します。 ``cachedAutomationId`` は非推奨です。 (#13125, #11447)
+  - ``cachedAutomationId`` は要素から直接取得した場合は利用できます。
+  -
+- ``NVDAObjects.window.scintilla.CharacterRangeStruct`` は ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct`` に移動しました。 (#13364)
+- ブール型の値 ``gui.isInMessageBox`` を削除しました。かわりに関数 ``gui.message.isModalMessageBoxActive`` を使います。 (#12984, #13376)
+- ``controlTypes`` は複数のサブモジュールに分割されました。 (#12510)
+  - ``ROLE_*`` および ``STATE_*`` はそれぞれ ``Role.*`` および ``State.*`` になりました。
+  - ``roleLabels``, ``stateLabels`` および ``negativeStateLabels`` を削除しました。
+  例えば ``roleLabels[ROLE_*]`` のような使い方は ``Role.*.displayString`` や ``State.*.negativeDisplayString`` となります。
+  - ``processPositiveStates`` および ``processNegativeStates`` を削除しました。
+  -
+- ``controlTypes.Role`` および ``controlTypes.State`` の各列挙型の値はハードコーディングではなくなり、値は変更されました。 (#13414)
+  - ``controlTypes.State`` メンバーはビットのフラグではなくなりました。ビットの論理演算で状態を判定することはできません。
+  - ``IAccessible``, ``IAccessible2`` および ``UIA`` とのマッピングがあります:
+    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
+    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
+    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
+    - ``UIAHandler.UIAControlTypesToNVDARoles``
+    -
+  -
+- Excel セルの状態の定数 (``NVSTATE_*``) は ``NvCellState`` 列挙型の値になりました。``NVDAObjects/window/excel.py`` の列挙型 ``NvCellState`` は _nvCellStatesToStates 経由で ``controlTypes.State`` にマッピングされます。 (#13465)
+- ``EXCEL_CELLINFO`` 構造体メンバー ``state`` は ``nvCellStates`` になりました。
+- ``mathPres.ensureInit`` を削除しました。 MathPlayer は NVDA の起動時に初期化されます。 (#13486)
+-
+
+
+= 2021.3.5 =
+これは、いくつかのセキュリティ上の問題を修正するためのマイナーリリースです。
+セキュリティ問題を info@nvaccess.org に責任を持って開示してください。
+
+== セキュリティ修正 ==
+- セキュリティアドバイザリ ``GHSA-xc5m-v23f-pgr7`` への対処
+  - NVDA のセキュアモードで句読点/記号読み辞書設定ダイアログが無効になりました。
+  -
+-
+
+
+= 2021.3.4 =
+これは、いくつかのセキュリティ上の問題を修正するためのマイナーリリースです。
+セキュリティ問題を info@nvaccess.org に責任を持って開示してください。
+
+== セキュリティ修正 ==
+- セキュリティアドバイザリ ``GHSA-354r-wr4v-cx28`` への対処 (#13488)
+  - NVDA のセキュアモードでデバッグログを有効にして NVDA を再起動できなくなりました。
+  - NVDA のセキュアモードで NVDA を更新できなくなりました。
+  -
+- セキュリティアドバイザリ ``GHSA-wg65-7r23-h6p9`` への対処 (#13489)
+  - NVDA のセキュアモードで入力ジェスチャーのダイアログが無効になりました。
+  - NVDA のセキュアモードで既定、一時、音声の読み上げ辞書ダイアログが無効になりました。
+  -
+- セキュリティアドバイザリ ``GHSA-mvc8-5rv9-w3hx`` への対処 (#13487)
+  - NVDA のセキュアモードで wx GUI 検査ツールが無効になりました。
+  -
+-
+
+
+= 2021.3.3 =
+このリリースは 2021.3.2 と同じです。
+NVDA 2021.3.2 にはバグがあり、NVDA 自身を 2021.3.1 と誤って識別していました。
+このリリースは、NVDA 自身を 2021.3.3 として正しく識別します。
+
+
+= 2021.3.2 =
+これは、いくつかのセキュリティ上の問題を修正するためのマイナーリリースです。
+セキュリティ問題を info@nvaccess.org に責任を持って開示してください。
+
+
+== バグ修正 ==
+- セキュリティ修正: オブジェクトナビゲーションで Windows 10 および 11 のロック画面の外に移動できなくなりました。 (#13328)
+- セキュリティ修正: NVDA のセキュアモードで、アドオンマネージャーのダイアログが無効になりました。 (#13059)
+- セキュリティ修正: NVDA のセキュアモードで、NVDA のコンテキストヘルプが無効になりました。 (#13353)
+-
+
+
 = 2021.3.1 =
 
 == 変更点 ==
@@ -643,7 +865,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 - EdgeHTML ベースの Microsoft Edge において、ウィンドウを最大化したときに自動入力候補の音が再生されていた問題を修正しました。 (#9110, #10002)
 - Mozilla Firefox および Google Chrome において ARIA 1.1 コンボボックスに対応しました。 (#9616)
 - SysListView32 コントロールのリスト項目で非表示の列の内容を NVDA が報告しないようになりました。 (#8268)
-- セキュアモードでNVDA設定ダイアログのログ出力レベルが誤って「情報」と表示されていた問題を修正しました。 (#10209)
+- セキュアデスクトップでNVDA設定ダイアログのログ出力レベルが誤って「情報」と表示されていた問題を修正しました。 (#10209)
 - Windows 10 Anniversary Update およびそれ以降のスタートメニューにおいて、NVDA は検索結果の詳細を報告するようになりました。 (#10232)
 - ブラウズモードにおいて、テキストカーソルの移動や1文字ナビゲーションでドキュメントの内容が変化した場合に、NVDA が不適切な内容を読み上げることがあった問題を修正しました。 (#8831, #10343)
 - Microsoft Word においてビュレットの名前に誤りがあった問題を修正しました。 (#10399)
@@ -817,7 +1039,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 このリリースでは以下の不具合を修正しました:
 - Excel 2007 でセルに数式がある場合に、NVDA がクラッシュする、またはセルの内容を報告しないことがある問題を修正しました。(#9431)
 - Google Chrome がリストボックスの操作でクラッシュすることがある問題を修正しました。(#9364)
-- ユーザーの設定プロファイルを「ログオンまたはその他のセキュアスクリーン」の設定にコピーできないことがある問題を修正しました。 (#9448)
+- ユーザーの設定プロファイルを「ログオンまたはその他のセキュアデスクトップ」の設定にコピーできないことがある問題を修正しました。 (#9448)
 - Microsoft Excel において結合されたセルの座標を報告するときに NVDA がローカライズされたメッセージを使用していなかった問題を修正しました。 (#9471)
 
 
@@ -864,7 +1086,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 - プレーンテキストコントロール(メモ帳など)およびブラウズモードで文字単位の移動をするときに、2つのUTF-16コードポイントで構成される32ビットの絵文字(🤦など)が正しく扱えるようになりました。(#8782)
 - NVDAのインターフェイス言語を変更した後の再起動確認ダイアログを改善しました。テキストとボタンのラベルがより簡潔でわかりやすいものになりました。(#6416)
 - Windows 10においてサードパーティの音声合成エンジンが読み込みに失敗した場合、NVDAは eSpeak NG ではなくWindows OneCore音声を使用するようになりました。(#9025)
-- セキュアスクリーンにおいてNVDAメニューに「ようこそ画面」の項目を表示しないようになりました。(#8520)
+- セキュアデスクトップにおいてNVDAメニューに「ようこそ画面」の項目を表示しないようになりました。(#8520)
 - ブラウズモードでタブキーまたは1文字ナビゲーションで移動するとき、タブパネルの凡例の報告がより一貫性のあるものになりました。(#709)
 - Windows 10の「アラーム＆クロック」アプリで使われているようなタイムピッカーにおいて、NVDAは選択状態の変化を報告するようになりました。(#5231)
 - Windows 10の「アクションセンター」において、ディスプレイの明るさや集中モードなどのクイックアクションを切り替えたときに NVDA は状態を報告するようになりました。(#8954)
@@ -2276,7 +2498,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 - Java Access Bridge を使うアプリケーションにおいて、編集可能なテキストフィールドでキャレットが移動したときに点字ディスプレイが正しく更新されるようにしました(#3107)
 - ランドマークをサポートするブラウズモードのドキュメントにおいて、フォームのランドマークに対応しました。(#2997)
 - sSpeakドライバは文字ごとの読み上げをより適切に行います。具体的には、外国語の文字について文字の名前や値を通知します。(#3106)
-- ユーザー設定の保存場所に非ASCII文字が含まれていても、ログオン画面やセキュアスクリーンで利用するためのユーザー設定のコピーが失敗しないようになりました(#3092)
+- ユーザー設定の保存場所に非ASCII文字が含まれていても、ログオン画面やセキュアデスクトップで利用するためのユーザー設定のコピーが失敗しないようになりました(#3092)
 - NVDAが .NET アプリケーションでアジア言語文字入力を使ったときにフリーズしないようになりました(#3005)
 - Internet Explorer 10 の標準モードのページ(例えば www.gmail.com のログインページ)において、ブラウズモードが使えるようになりました。(#3151)
 
@@ -2350,7 +2572,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 - Adobe Readerにおいて、テーブルの複数の行および(または)列を結合したセルが正しく扱えるようになりました。 (#2437, #2438, #2450)
 - NVDAの配布パッケージは実行前に完全性の確認を行うようになりました。 (#2475)
 - NVDAの更新をダウンロードできなかった場合に一時ファイルを削除するようになりました。 (#2477)
-- ユーザー環境設定を管理者権限でシステム設定にコピーする機能(Windowsログオンなどセキュアスクリーンで使用します)で、NVDA がフリーズしないようになりました。(#2485)
+- ユーザー環境設定を管理者権限でシステム設定にコピーする機能(Windowsログオンなどセキュアデスクトップで使用します)で、NVDA がフリーズしないようになりました。(#2485)
 - Windows 8 スタートスクリーンのタイルの音声および点字による説明を改善しました。 タイルの名前を繰り返さないようになり、「選択なし」の通知をやめました。また、ライブステータスの情報をタイルの説明として通知します。(例えば「天気」のタイルでは現在の気温を通知します)
 - Microsoft Outlook のパスワード入力と、その他の保護されたエディットコントロールにおいて、パスワードの通知を抑止するようになりました。 (#2021)
 - Adobe Readerにおいて、フォームのフィールドにおける変更が正しくブラウズモードに反映されるようになりました。 (#2529)
