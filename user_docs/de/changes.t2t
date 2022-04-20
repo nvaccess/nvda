@@ -18,7 +18,7 @@ Hinweis:
  -
 
 == Neue Features ==
-- Unterstützung für Berichtsnotizen in Microsoft Excel mit aktivierter UIA unter Windows 11. (#12861)
+- Unterstützung für die Mitteilung von Notizen in Microsoft Excel mit aktivierter UIA unter Windows 11. (#12861)
 - In neueren Builds von Microsoft Word über UIA unter Windows 11 werden Lesezeichen, Entwurfskommentaren und Kommentaren nun sowohl mit der Sprachausgabe als auch in Braille mitgeteilt. (#12861)
 - Der neue Kommandozeilenparameter ``--lang`` erlaubt das Überschreiben der konfigurierten NVDA-Sprache. (#10044)
 - NVDA warnt nun vor unbekannten Kommandozeilenparametern, die von keiner Erweiterung verwendet werden. (#12795)
@@ -35,8 +35,8 @@ Hinweis:
 - Befehle zum gleichzeitigen Umschalten mehrerer Modifikatoren mit einer Braillezeile hinzugefügt (#13152)
 - Das Dialogfeld "Sprachwörterbuch" verfügt nun über eine Schaltfläche "Alles entfernen", mit der ein ganzes Wörterbuch geleert werden kann. (#11802)
 - Unterstützung für den Rechner unter Windows 11 hinzugefügt. (#13212)
-- In Microsoft Word bei aktivierter UIA unter Windows 11 können nun Zeilennummern, Abschnittsnummern und Layout-spaltennummern mitgeteilt werden. (#13283)
-- Für Microsoft Office 16.0.15000 und neuer unter Windows 11 verwendet NVDA standardmäßig UIA für den Zugriff in dokumenten in Microsoft Word, was eine erhebliche Leistungssteigerung gegenüber dem älteren Objektmodell-Zugriff bedeutet. (#13437)
+- In Microsoft Word bei aktivierter UIA unter Windows 11 können nun Zeilennummern und Abschnittsnummern mitgeteilt werden. (#13283, #13515)
+- Für Microsoft Office 16.0.15000 und neuer unter Windows 11 verwendet NVDA standardmäßig UIA für den Zugriff in dokumenten in Microsoft Word, was eine erhebliche Leistungsverbesserung gegenüber dem älteren Objektmodell-Zugriff bedeutet. (#13437)
  - Dies gilt sowohl für Dokumente in Microsoft Word selbst als auch für Lesen der Nachrichten und die Erstellung von Nachrichten in Microsoft Outlook. 
  -
 -
@@ -95,7 +95,7 @@ Hinweis:
 - Hinweis: Dies ist eine Version, die die Kompatibilität der API für Erweiterungen beeinträchtigt. Erweiterungen müssen erneut getestet werden und das Manifest muss aktualisiert werden.
 - Obwohl NVDA immer noch Visual Studio 2019 benötigt, sollten Builds nicht mehr fehlschlagen, sobald eine neuere Version von Visual Studio (z. B. 2022) parallel zu 2019 installiert ist. (#13033, #13387)
 - SCons wurde auf Version 4.3.0 aktualisiert. (#13033)
-- Py2Exe wurde auf Version 0.11.0.1 aktualisiert. (#12357, #13066)
+- Py2exe wurde auf Version 0.11.1.0 aktualisiert. (#13510)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` wurde entfernt. Verwenden Sie stattdessen ``apiLevel``. (#12955, #12660)
 - ``TVItemStruct`` wurde aus ``sysTreeView32`` entfernt. (#12935)
 - ``MessageItem`` wurde aus dem App-Modul für Microsoft Outlook entfernt. (#12935)
@@ -172,6 +172,17 @@ Hinweis:
 - Die Konstanten für den Status einer Excel-Zelle (``NVSTATE_*``) sind nun Werte im ``NvCellState``-Enum, gespiegelt im ``NvCellState``-Enum in ``NVDAObjects/window/excel.py`` und abgebildet auf ``controlTypes.State`` über _nvCellStatesToStates. (#13465)
 - Die Information für die Struktur ``state`` in ``EXCEL_CELLINFO`` befindet sich nun in ``nvCellStates``.
 - ``mathPres.ensureInit`` wurde entfernt, der MathPlayer wird nun beim Start von NVDA initialisiert. (#13486)
+-
+
+
++= 2021.3.5 =
++This is a minor release to fix a security issue.
++Please responsibly disclose security issues to info@nvaccess.org.
++
+== Sicherheitsbehebungen ==
+- Behoben wurde der Sicherheitshinweis ``GHSA-xc5m-v23f-pgr7``.
+  - Das Dialogfeld für die Ansage von Symbolen wurde im geschützten Modus deaktiviert.
+  -
 -
 
 
@@ -857,7 +868,7 @@ Obwohl diese Änderungen die Kompatibilität mit älteren NVDA-Erweiterungen nic
 - Im EdgeHTML basierten Microsoft Edge gibt NVDA keinen Sound für Suchvorschläge mehr aus, wenn das Fenster maximiert ist. (#9110, #10002)
 - Kombinationsfelder mit ARIA 1.1 werden nun in Mozilla Firefox und Google Chrome unterstützt. (#9616)
 - NVDA meldet nicht mehr den Inhalt von visuell ausgeblendeten Spalten für Listenelemente in SysListView32-Steuerelementen. (#8268)
-- Der Einstellungsdialog zeigt im geschützten Modus nicht mehr "Information" als aktuelle Protokollierungsstufe an. (#10209)
+- Das Dialogfeld für die Einstellungen zeigt im geschützten Modus nicht mehr "Information" als aktuelle Protokollierungsstufe an. (#10209)
 - Im Startmenü für Windows 10 Anniversary Update und neuer gibt nun NVDA Details der Suchergebnisse bekannt. (#10340)
 - Im Lesemodus, wenn sich das Dokument durch Bewegen des Cursors oder durch Schnellnavigation ändert, spricht NVDA in einigen Fällen nicht mehr den falschen Inhalt. (#8831, #10343)
 - Die Aussprache einiger Aufzählungszeichen in Microsoft Word wurde korrigiert. (#10399)
@@ -953,7 +964,7 @@ Dies ist eine kleinere Version, um mehrere Abstürze in 2019.2 zu beheben, darun
 
 
 = 2019.2 =
-Zu den Highlights dieser Version gehören die automatische Erkennung von braillezeilen von Freedom Scientific, eine experimentelle Einstellung in DEN erweiterten Einstellungen, um die automatische Bewegung des systemfokus beim Verwenden des Lesemodus zu deaktivieren (was unter Umständen zu Leistungssteigerungen führen kann), eine Option zur Erhöhung der Geschwindigkeit für die Windows OneCore-Sprachausgabe, um sehr schnelle Geschwindigkeiten zu erzielen und viele andere Fehlerbehebungen.
+Zu den Highlights dieser Version gehören die automatische Erkennung von braillezeilen von Freedom Scientific, eine experimentelle Einstellung in DEN erweiterten Einstellungen, um die automatische Bewegung des systemfokus beim Verwenden des Lesemodus zu deaktivieren (was unter Umständen zu Leistungsverbesserungen führen kann), eine Option zur Erhöhung der Geschwindigkeit für die Windows OneCore-Sprachausgabe, um sehr schnelle Geschwindigkeiten zu erzielen und viele andere Fehlerbehebungen.
 
 == Neue Funktionen ==
 - NVDA unterstützt nun auch neuere Client-Versionen des Miranda NG. (#9053)
@@ -1036,7 +1047,7 @@ Diese Version behebt die folgenden Probleme:
 
 
 = 2019.1 =
-Zu den Highlights dieser Version gehören Leistungssteigerungen beim Zugriff auf Microsoft Word und Excel, Stabilitäts- und Sicherheitsverbesserungen wie die Unterstützung von Erweiterungen mit Versionskompatibilitätsinformationen und viele andere Fehlerbehebungen.
+Zu den Highlights dieser Version gehören Leistungsverbesserungen beim Zugriff auf Microsoft Word und Excel, Stabilitäts- und Sicherheitsverbesserungen wie die Unterstützung von Erweiterungen mit Versionskompatibilitätsinformationen und viele andere Fehlerbehebungen.
 
 Bitte beachten Sie, dass ab dieser NVDA-Version benutzerdefinierte Anwendungsmodule, GlobalPlugins, Treiber für Braillezeilen und Sprachausgaben nicht mehr automatisch aus Ihrem NVDA-Benutzerkonfigurationsverzeichnis geladen werden.
 Vielmehr sollten diese als Teil einer NVDA-Erweiterung installiert werden. Für diejenigen, die Code für eine Erweiterung entwickeln, kann Code zum Testen in ein neues Developer Scratchpad-Verzeichnis im NVDA-Benutzerkonfigurationsverzeichnis verschoben werden. Dies funktioniert nur, wenn die Option Developer-Scratchpad in der neuen NVDA-Einstellungskathegorie "erweitert" aktiviert ist.
@@ -1097,7 +1108,7 @@ Bitte beachten Sie die unten folgende Liste der Änderungen für weitere Details
 - NVDA friert im Hauptfenster von Oracle VirtualBox 5.2 und neuer nicht mehr ein. (#9202)
 - Die Reaktionsfähigkeit in Microsoft Word bei der Navigation durch Zeilen, Absätze oder Tabellenzellen konnte deutlich verbessert werden. Zur Erinnerung: Um die beste Leistung zu erzielen, stellen Sie Microsoft Word nach dem Öffnen eines Dokuments mit Alt+W auf Entwurfsansicht ein. (#9217)
 - In Mozilla Firefox und Google Chrome werden leere Warnungen nicht mehr gemeldet. (#5657)
-- Deutliche Leistungssteigerungen bei der Navigation durch Zellen in Microsoft Excel, insbesondere wenn die Kalkulationstabelle Kommentare und / oder Ausklapplisten zur Validierung enthält. (#7348)
+- Deutliche Leistungsverbesserungen bei der Navigation durch Zellen in Microsoft Excel, insbesondere wenn die Kalkulationstabelle Kommentare und / oder Ausklapplisten zur Validierung enthält. (#7348)
 - Die Bearbeitung in Zellen in MS Excel 2016/365 funktioniert nun wieder. Das "Editieren in Zelle" in den Optionen von Microsoft Excel kann wieder aktiviert werden, um in Excel 2016 / 365 auf die Steuerung der Zellenbearbeitung mit NVDA zuzugreifen. (#8146).
 - Ein Absturz in Mozilla Firefox wurde behoben, der manchmal beim schnellen Navigieren nach Artikeln auftrat, wenn die Erweiterung erweitertes Aria verwendet wurde. (#8980)
 
@@ -1119,7 +1130,7 @@ Diese Version behebt einen Absturz beim Start, wenn die Sprache der Benutzerober
 
 
 = 2018.4 =
-Zu den Highlights dieser Version gehören Leistungssteigerungen in den neuesten Versionen von Mozilla Firefox, die Ankündigung von Emojis mit allen Sprachausgaben, die Meldung des Status Beantwortet/Weitergeleitet in Microsoft Outlook, die Meldung der Entfernung des Cursors zum Rand einer Seite im Microsoft Word-Dokument und viele Fehlerbehebungen.
+Zu den Highlights dieser Version gehören Leistungsverbesserungen in den neuesten Versionen von Mozilla Firefox, die Ankündigung von Emojis mit allen Sprachausgaben, die Meldung des Status Beantwortet/Weitergeleitet in Microsoft Outlook, die Meldung der Entfernung des Cursors zum Rand einer Seite im Microsoft Word-Dokument und viele Fehlerbehebungen.
 
 == Neue Funktionen ==
 - Neue Braille-Tabellen: Chinesische Voll- und Kurzschrift (Mandarin). (#5553)
@@ -1348,7 +1359,7 @@ Zu den Highlights dieser Version gehören die Unterstützung für Diagramme in M
 - Der Fokus wird nun korrekt gesetzt, wenn Sie von einer anderen Anwendung zu Spotify zurückkehren. (#7689)
 - Wenn unter Windows 10 Fall Creators Update der ordnerschutz im Windows Defender Security Center aktiviert ist, schlägt die Aktualisierung von NVDA nicht mehr fehl. (#7696)
 - Die Scroll-Tasten von HIMS Smart Beetle funktionieren nun korrekt. (#6086)
-- Eine leichte Leistungssteigerung bei der Darstellung umfangreichere Inhalte in Mozilla Firefox 58 und neuer. (#7719)
+- Eine leichte Leistungsverbesserung bei der Darstellung umfangreichere Inhalte in Mozilla Firefox 58 und neuer. (#7719)
 - Beim Lesen von Mails in Microsoft Outlook, die Tabellen enthalten, kommt es nicht mehr zu fehlern. (#6827)
 - Braillezeilen-Befehle, die ModifikationsTasten der Computertastatur emulieren, können auch dann kombiniert werden, wenn sie auf ein bestimmtes Braillezeilenmodell beschränkt sind. (#7783)
 - Dialoge, die von Erweiterungen wie LastPass oder bitwarden in Firefox erzeugt werden, werden nun korrekt im Lesemodus angezeigt. (#7809)
@@ -2279,7 +2290,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
  - Alternative Texte (z. B. Alt-Attribute) werden verwendet, sofern keine anderweitige Beschriftung vorhanden ist. (#3329)
  - Aktualisierungen in Live-Regionen werden ausgegeben, wenn Sie den Fokus bewegen. (#3777)
 - In Firefox und anderen Gecko-Anwendungen werden Elemente, die als ARIA-Presentation gekennzeichnet sind, korrekt im Lesemodus angezeigt. (#3781)
-- Leistungssteigerungen in Microsoft Word, wenn die Ansage von Rechtschreibfehlern aktiviert ist. (#3785)
+- Leistungsverbesserungen in Microsoft Word, wenn die Ansage von Rechtschreibfehlern aktiviert ist. (#3785)
 - Verbesserung der Unterstützung von zugänglichen Java-Anwendungen:
  - Wenn ein Rahmen oder ein Dialogfeld in den Vordergrund gebracht wird, wird das Steuerelement korrekt erkannt, das innerhalb den Fokus erhalten hat. (#3753)
  - Nutzlose Positionsangaben (wie 1 von 1) für Auswahlschalter werden nicht mehr angezeigt. (#3754)
@@ -2719,7 +2730,7 @@ Die wichtigsten Neuerungen für diese Version beinhalten Funktionen, um Braille 
 
 == Fehlerbehebungen ==
 - Im Windows-Explorer in Windows 8 wird der Fokus nun nicht mehr unerwartet aus dem Suchfeld springen. Dieser Fehler machte es unmöglich, mit NVDA mit dem Windows-Suchfeld zu arbeiten.
-- Optimierungen beim Lesen von und Navigieren in Microsoft Word-Dokumenten, wenn die ausgabe von Formatierungen eingeschaltet ist, sodass man konfortabel die Formatierung o. Ä. prüfen kann. Einige Benutzer werden möglicherweise eine Geschwindigkeitssteigerung bemerken.
+- Optimierungen beim Lesen von und Navigieren in Microsoft Word-Dokumenten, wenn die ausgabe von Formatierungen eingeschaltet ist, sodass man konfortabel die Formatierung o. Ä. prüfen kann. Einige Benutzer werden möglicherweise eine Geschwindigkeitsverbesserung bemerken.
 - Für Flash-Inhalte, die im Vollbildmodus dargestellt werden, wird nun der Lesemodus benutzt.
 - Probleme mit der Klangqualität in einigen Fällen behoben, in denen als Ausgabegerät etwas anderes eingestellt ist als "Microsoft Sound Mapper". Dies betrifft vor allem Microsoft SAPI Version 5. (#749)
 - Die Auswahl von "keine Sprache" im Sprachausgabendialog ist jetzt wieder möglich. Das ist nützlich, falls NVDA nur mit einer Braillezeile oder dem Sprachbetrachter als Ausgabemedium betrieben wird. (#1963)
@@ -3435,7 +3446,7 @@ Die wichtigsten Neuerungen dieser Version sind u. a. die Unterstützung von 64-B
 - Leistung von NVDA in Eingabefeldern verbessert: NVDA sagt nun keinen zusätzlichen Text mehr an, wenn der cursor beim Navigieren in eingabefeldern am Ende angekommen ist.
 - Probleme mit Abstürzen einiger Synthesizer behoben. (#117)
 - Unterstützung für den Audiologic TTS3-Sprachsynthesizer hinzugefügt, der von Gianluca Casalino vertrieben wird. (#105)
-- Leistungssteigerung beim Navigieren in Microsoft Word-Dokumenten
+- Leistungsverbesserung beim Navigieren in Microsoft Word-Dokumenten
 - Verbesserung der Genauigkeit beim Lesen von Meldungsfenstern in Gecko-Anwendungen.
 - Abstürze beim Speichern der Konfiguration auf nicht-englischen Windows-Versionen beseitigt. (#114)
 - Willkommensbildschirm hinzugefügt. Der Willkommensbildschirm stellt grundlegende Informationen für neue NVDA-Nutzer zur Verfügung und erlaubt es außerdem, die Dauergroßschreibtaste als NVDA-Taste zu verwenden. Er wir beim ersten Start angezeigt und blebt so lange aktiv, bis er abgeschaltet wird.
