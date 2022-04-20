@@ -44,6 +44,12 @@ class AppModule(appModuleHandler.AppModule):
 			if obj.UIAAutomationId == "SearchTextBox":
 				clsList.insert(0, StartMenuSearchField)
 			# #10329: Since 2019, some suggestion items are grouped inside another suggestions list item.
+			# #13544: grandparent must be checked due to redesign in 2019.
 			# Because of this, result details will not be announced like in the past.
-			elif obj.role == controlTypes.Role.LISTITEM and isinstance(obj.parent, SuggestionListItem):
+			elif (
+				obj.role == controlTypes.Role.LISTITEM and (
+					isinstance(obj.parent, SuggestionListItem)
+					or isinstance(obj.parent.parent, SuggestionListItem)
+				)
+			):
 				clsList.insert(0, SuggestionListItem)
