@@ -684,10 +684,6 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			formatConfig=config.conf["documentFormatting"]
 		textRange=self._rangeObj.duplicate
 		textRange.collapse(True)
-		if not formatConfig["detectFormatAfterCursor"]:
-			textRange.expand(comInterfaces.tom.tomCharacter)
-			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)),
-				self._getTextAtRange(self._rangeObj)]
 		commandList=[]
 		endLimit=self._rangeObj.end
 		while textRange.end<endLimit:
