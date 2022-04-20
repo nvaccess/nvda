@@ -691,7 +691,9 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			# Only add formatting and text if it is not marked as hidden.
 			# e.g. hyperLinks have hidden text at their beginning.
 			if not textRange.font.hidden:
-				commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)))
+				commandList.append(
+					textInfos.FieldCommand("formatChange", self._getFormatFieldAtRange(textRange, formatConfig))
+				)
 				commandList.append(self._getTextAtRange(textRange))
 			end = textRange.end
 			textRange.start = end
@@ -773,8 +775,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if not endPoint:
 			# For a normal move, I.e. not moving just one end,
 			# skip over any hidden text.
-		# E.g. hyperlinks have some hidden text at their beginning.
-		# So that the review cursor does not navigate through this text.
+			# E.g. hyperlinks have some hidden text at their beginning.
+			# So that the review cursor does not navigate through this text.
 			while res and self._rangeObj.font.hidden:
 				res = moveFunc(unit, 1 if direction > 0 else -1)
 		return res
