@@ -12,7 +12,7 @@ import controlTypes
 import textUtils
 from controlTypes import TextPosition
 from ..window import Window
-from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
+from ..behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
 from .. import InvalidNVDAObject
@@ -210,6 +210,9 @@ class JAB(Window):
 			clsList.append(Table)
 		elif self.parent and isinstance(self.parent,Table) and self.parent._jabTableInfo:
 			clsList.append(TableCell)
+		elif role == "progress bar":
+			clsList.append(ProgressBar)
+
 		clsList.append(JAB)
 
 	@classmethod
