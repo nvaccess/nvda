@@ -3,7 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""App module for Windows 10 Calculator"""
+"""App module for Windows 10 Calculator.
+This is also the base app module for Windows 11 Calculator."""
 
 import appModuleHandler
 import api
