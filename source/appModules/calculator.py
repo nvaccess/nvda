@@ -40,6 +40,8 @@ class AppModule(appModuleHandler.AppModule):
 	_shouldAnnounceResult = False
 	# Name change says the same thing multiple times for some items.
 	_resultsCache = ""
+	# #13383: for some commands (such as number row keys), NVDA should not announce calculator results.
+	_noCalculatorResultsGesturePressed = False
 
 	def event_NVDAObject_init(self, obj):
 		if not isinstance(obj, UIA):
