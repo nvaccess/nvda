@@ -113,7 +113,6 @@ class VsWpfTextViewTextInfo(UIATextInfo):
 					f"Couldn't parse {lineNumberStr} as integer to report a line number",
 					exc_info=True
 				)
-				pass
 		return formatField
 
 	def _getTextFromUIARange(self, textRange):
