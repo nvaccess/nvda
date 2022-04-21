@@ -107,6 +107,8 @@ public:
 		return std::shared_ptr<winrtSynth>();
 	}
 
+	/* Note, contention with terminate.
+	*/
 	std::function<ocSpeech_CallbackT> getCB() {
 		return m_callback;
 	}
@@ -309,6 +311,13 @@ void protectedCallback_(
 	void* token,
 	std::optional<SpeakResult> result
 ) {
+	// Prevent any unique locks being acquired.
+	SharedLock lock(g_OcSpeechStateMutex, std::defer_lock);
+	const bool owned = lock.try_lock();
+	if (!owned) {
+		LOG_INFO(L"protectedCallback_ - Unable to lock. Token: " << token);
+		return;
+	}
 	LOG_INFO(L"protectedCallback, token: " << token);
 	if (!g_state.isInState(ApiState::active)
 		|| !g_state.isTokenValid(token)
@@ -357,14 +366,8 @@ winrt::fire_and_forget
 speak(
 	winrt::hstring text,
 	std::shared_ptr<winrtSynth> synth,
-	void* originToken,
-	// Prevent any unique locks being acquired.
-	SharedLock lock
+	void* originToken
 ) {
-	if (!lock.owns_lock()) {
-		LOG_ERROR(L"speak lock not owned, exiting. Token: " << originToken);
-		co_return;
-	}
 	// Ensure we catch all exceptions in this method,
 	// as an unhandled exception causes std::terminate to get called, resulting in a crash.
 	// See https://devblogs.microsoft.com/oldnewthing/20190320-00/?p=102345
@@ -427,7 +430,7 @@ void __stdcall ocSpeech_speak(void* token, wchar_t* text) {
 		//throw std::runtime_error("Token not valid");
 		return;
 	}
-	speak(text, synth, token, std::move(lock));
+	speak(text, synth, token);
 }
 
 // We use BSTR because we need the string to stay around until the caller is done with it
