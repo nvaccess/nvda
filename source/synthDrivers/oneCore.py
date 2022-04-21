@@ -174,6 +174,7 @@ class SynthDriver(SynthDriver):
 		else:
 			log.debugWarning("Prosody options not supported")
 
+		self._earlyExitCB = False
 		self._callbackInst = ocSpeech_Callback(self._callback)
 		self._ocSpeechToken = self._dll.ocSpeech_initialize(self._callbackInst)
 		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
@@ -208,7 +209,10 @@ class SynthDriver(SynthDriver):
 		)
 
 	def terminate(self):
+		# prevent any pending callbacks from interacting further with the synth.
+		self._earlyExitCB = True
 		super().terminate()
+		# Terminate the synth, the callback function should no longer be called after this returns.
 		self._dll.ocSpeech_terminate(self._ocSpeechToken)
 		# Drop the ctypes function instance for the callback and handle,
 		# as it is holding a reference to an instance method, which causes a reference cycle.
@@ -371,6 +375,10 @@ class SynthDriver(SynthDriver):
 				self._consecutiveSpeechFailures = 0
 
 	def _callback(self, bytes, len, markers):
+		if self._earlyExitCB:
+			# prevent any pending callbacks from interacting further with the synth.
+			# used during termination.
+			return
 		if len == 0:
 			# Speech failed
 			self._handleSpeechFailure()

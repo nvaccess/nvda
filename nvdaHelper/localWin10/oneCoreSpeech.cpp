@@ -253,18 +253,25 @@ std::chrono::duration g_maxWaitForLock(std::chrono::seconds(3));
 bool isUniversalApiContractVersion_(const int major, const int minor);
 void preventEndUtteranceSilence_(std::shared_ptr<winrtSynth> synth);
 
+UniqueLock getUniqueLock_(std::wstring forPurpose) {
+	UniqueLock lock(g_OcSpeechStateMutex, std::defer_lock);
+	bool owned = lock.try_lock();
+	if (!owned) {
+		LOG_INFO(L"Locking will block, try for timeout: " << forPurpose);
+		owned = lock.try_lock_for(g_maxWaitForLock);
+	}
+	if (!owned) {
+		LOG_ERROR(L"Unable to lock after timeout: " << forPurpose);
+	}
+	return lock;
+}
+
 
 void* __stdcall ocSpeech_initialize(ocSpeech_Callback fn) {
 	LOG_INFO(L"ocSpeech_initialize");
 	// Ensure there are no pending shared locks, all async speak calls must be finished
-	UniqueLock lock(g_OcSpeechStateMutex, std::defer_lock);
-	bool owned = lock.try_lock();
-	if (!owned) {
-		LOG_INFO(L"ocSpeech_initialize locking will block, try for timeout:");
-		owned = lock.try_lock_for(g_maxWaitForLock);
-	}
-	if (!owned) {
-		LOG_ERROR(L"Unable to lock for init. ptr count: " << g_state.getLastSynthUsageCount());
+	auto lock = getUniqueLock_(L"ocSpeech_initialize");
+	if (!lock) {
 		return nullptr;
 	}
 	LOG_INFO(L"ocSpeech_initialize lock acquired");
@@ -284,19 +291,19 @@ void* __stdcall ocSpeech_initialize(ocSpeech_Callback fn) {
 }
 
 void __stdcall ocSpeech_terminate(void* token) {
-	LOG_INFO(L"ocSpeech_terminate, token: " << token);
-	SharedLock lock(g_OcSpeechStateMutex, std::defer_lock);
-	const bool owned = lock.try_lock();
-	if (!owned) {
-		LOG_ERROR(L"ocSpeech_terminate - Unable to lock. token: " << token);
+	std::wstringstream ss;
+	ss << L"ocSpeech_terminate, token: " << token;
+	LOG_INFO(ss.str());
+	// Acquire a unique lock to ensure that no callbacks can happen while changing state.
+	// Changing state must be atomic.
+	auto lock = getUniqueLock_(ss.str());
+	if (!lock) {
 		return;
 	}
-	if (!g_state.isTokenValid(token) ){
-		LOG_ERROR(L"Terminate error");
-		//throw std::runtime_error("Logic error on terminate, token not active.");
+	if (!g_state.isTokenValid(token)) {
+		LOG_ERROR(L"ocSpeech_terminate error");
 		return;
 	}
-	LOG_INFO(L"setting terminate state");
 	g_state.terminate();
 }
 
@@ -309,7 +316,8 @@ struct SpeakResult {
 
 void protectedCallback_(
 	void* token,
-	std::optional<SpeakResult> result
+	std::optional<SpeakResult> result,
+	std::function<ocSpeech_CallbackT> cb
 ) {
 	// Prevent any unique locks being acquired.
 	SharedLock lock(g_OcSpeechStateMutex, std::defer_lock);
@@ -326,7 +334,6 @@ void protectedCallback_(
 		return;
 	}
 	LOG_INFO(L"calling CB, token: " << token);
-	auto cb = g_state.getCB();
 	if (result.has_value()) {
 		cb(result->buffer.data(), result->buffer.Length(), result->markersStr.c_str());
 	}
@@ -364,9 +371,10 @@ Will block OneCore from being re-initialized until speech callbacks have complet
 */
 winrt::fire_and_forget
 speak(
+	void* originToken,
 	winrt::hstring text,
 	std::shared_ptr<winrtSynth> synth,
-	void* originToken
+	std::function<ocSpeech_CallbackT> cb
 ) {
 	// Ensure we catch all exceptions in this method,
 	// as an unhandled exception causes std::terminate to get called, resulting in a crash.
@@ -381,7 +389,7 @@ speak(
 		}
 		catch (winrt::hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-			protectedCallback_(originToken, std::optional<SpeakResult>());
+			protectedCallback_(originToken, std::optional<SpeakResult>(), cb);
 			co_return;
 		}
 		// speechStream.Size() is 64 bit, but Buffer can only take 32 bit.
@@ -396,12 +404,12 @@ speak(
 			co_await speechStream.ReadAsync(result->buffer, size, InputStreamOptions::None);
 			// Data has been read from the speech stream.
 			// Pass it to the callback.
-			protectedCallback_(originToken, result);
+			protectedCallback_(originToken, result, cb);
 			co_return;
 		}
 		catch (winrt::hresult_error const& e) {
 			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
-			protectedCallback_(originToken, std::optional<SpeakResult>());
+			protectedCallback_(originToken, std::optional<SpeakResult>(), cb);
 			co_return;
 		}
 	}
@@ -417,20 +425,21 @@ speak(
 }
 
 void __stdcall ocSpeech_speak(void* token, wchar_t* text) {
-	// Prevent any unique locks being acquired.
-	SharedLock lock(g_OcSpeechStateMutex, std::defer_lock);
-	const bool owned = lock.try_lock();
-	if (!owned) {
-		LOG_ERROR(L"ocSpeech_speak - Unable to lock. Token: " << token);
+	if (!g_state.isTokenValid(token)) {
+		LOG_ERROR(L"speak error: invalid token" << token);
 		return;
 	}
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"speak error");
-		//throw std::runtime_error("Token not valid");
+		LOG_ERROR(L"speak error: synth not valid.");
 		return;
 	}
-	speak(text, synth, token);
+	auto cb = g_state.getCB();
+	if (!cb) {
+		LOG_ERROR(L"speak error: call back not valid");
+		return;
+	}
+	speak(token, text, synth, cb);
 }
 
 // We use BSTR because we need the string to stay around until the caller is done with it
