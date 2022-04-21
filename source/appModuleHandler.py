@@ -81,10 +81,15 @@ class processEntry32W(ctypes.Structure):
 
 
 def _warnDeprecatedAliasAppModule() -> None:
+	"""This function should be executed at the top level of an alias App Module,
+	to log a deprecation warning when the module is imported.
+	"""
 	import inspect
-	currModName = inspect.getframeinfo(inspect.currentframe()).filename
-	log.info(currModName)
-	return
+	# Determine the name of the module inside which this function is executed by using introspection.
+	# Since the current frame belongs to the calling function inside `appModuleHandler`
+	# we need to retrieve the file name from the preceding frame which belongs to the module in which this
+	# function is executed.
+	currModName = os.path.splitext(os.path.basename(inspect.stack()[1].filename))[0]
 	try:
 		replacementModName = appModules.EXECUTABLE_NAMES_TO_APP_MODS[currModName]
 	except KeyError:
@@ -93,7 +98,7 @@ def _warnDeprecatedAliasAppModule() -> None:
 		log.warning(
 			(
 				f"Importing from appModules.{currModName} is deprecated,"
-				f" you should import from appModules.{replacementModName}"
+				f" you should import from appModules.{replacementModName}."
 			)
 		)
 
@@ -130,46 +135,40 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 	- Just the name of the executable to cover a standard appModule named the same as the executable
 	- The alias from `appModules.EXECUTABLE_NAMES_TO_APP_MODS` if it exists.
 	"""
-	res = (
+	return tuple(
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
 			executableName,
 			appModules.EXECUTABLE_NAMES_TO_APP_MODS.get(executableName)
 		) if aliasName is not None
 	)
-	log.info(f"Called for {executableName}, and intents to return {list(res)}")
-	return res
 
 
 def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool:
 	"""Returns c{True} if app Module with a given name exists, c{False} otherwise.
-	:param ignoreDeprecatedAliases: used for backwards compatibility, so that by default alias modules
+	:param ignoreDeprecatedAliases: used for backward compatibility, so that by default alias modules
 	are not excluded.
 	"""
-# 	log.info(f"checking for name {name}")
-	for possibleModName in _getPossibleAppModuleNamesForExecutable(name):
-		# log.info(f"checking in map for name: {possibleModName}")
-		for importer in _importers:
-			modExists = importer.find_module(f"appModules.{possibleModName}")
-			if modExists:
-				# log.info(f"Module exists in importer {importer}")
-				# While the module has been found it is possible tis is just a deprecated alias.
-				# Before PR #13366 the only possibility to map a single app module to multiple executables
-				# was to create a alias app module and import everything from the main module into it.
-				# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
-				# but old alias modules have to stay to preserve backwards compatibility.
-				# We cannot import the alias module since they show a deprecation warning on import.
-				# To determine if the module should be imported or not we check if:
-				# - it is placed in the core appModules package, and
-				# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
-				# If both of these are true the module should not be imported in core.
-				if (
-					not ignoreDeprecatedAliases
-					and possibleModName in appModules.EXECUTABLE_NAMES_TO_APP_MODS
-					and _getPathFromImporter(importer) == _CORE_App_MODULES_PATH
-				):
-					continue
-				return modExists
+	for importer in _importers:
+		modExists = importer.find_module(f"appModules.{name}")
+		if modExists:
+			# While the module has been found it is possible tis is just a deprecated alias.
+			# Before PR #13366 the only possibility to map a single app module to multiple executables
+			# was to create a alias app module and import everything from the main module into it.
+			# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
+			# but old alias modules have to stay to preserve backwards compatibility.
+			# We cannot import the alias module since they show a deprecation warning on import.
+			# To determine if the module should be imported or not we check if:
+			# - it is placed in the core appModules package, and
+			# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
+			# If both of these are true the module should not be imported in core.
+			if (
+				ignoreDeprecatedAliases
+				and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
+				and _getPathFromImporter(importer) == _CORE_App_MODULES_PATH
+			):
+				continue
+			return True
 	return False  # None of the aliases exists
 
 
@@ -288,7 +287,7 @@ def fetchAppModule(processID: int, appName: str) -> AppModule:
 		importedMod = _importAppModuleForExecutable(modName)
 		if importedMod is not None:
 			return importedMod.AppModule(processID, appName)
-		# Broad except since we do not  know
+		# Broad except since we do not know
 		# what exceptions may be thrown during import / construction of the app Module.
 	except Exception:
 		log.exception(f"error in appModule {modName!r}")
