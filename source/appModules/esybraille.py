@@ -9,4 +9,5 @@ This imports the esysuite appModule,
 """
 
 from .esysuite import *
-_isAliasAppMod = True
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()

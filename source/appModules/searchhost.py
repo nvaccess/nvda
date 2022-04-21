@@ -8,4 +8,5 @@
 
 from .searchui import AppModule, StartMenuSearchField
 __all__ = ["AppModule", "StartMenuSearchField"]
-_isAliasAppMod = True
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()

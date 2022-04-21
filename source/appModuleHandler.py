@@ -18,9 +18,12 @@ import sys
 from types import ModuleType
 from typing import (
 	Dict,
+	List,
 	Optional,
 	Tuple,
+	Union,
 )
+import zipimport
 
 import winVersion
 import pkgutil
@@ -40,11 +43,13 @@ import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
 
+_KNOWN_IMPORTERS_T = Union[importlib.machinery.FileFinder, zipimport.zipimporter]
 # Dictionary of processID:appModule pairs used to hold the currently running modules
 runningTable: Dict[int, AppModule] = {}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
-_importers=None
+_CORE_App_MODULES_PATH: os.PathLike = appModules.__path__[0]
+_importers: Optional[List[_KNOWN_IMPORTERS_T]] = None
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
@@ -75,6 +80,24 @@ class processEntry32W(ctypes.Structure):
 	]
 
 
+def _warnDeprecatedAliasAppModule() -> None:
+	import inspect
+	currModName = inspect.getframeinfo(inspect.currentframe()).filename
+	log.info(currModName)
+	return
+	try:
+		replacementModName = appModules.EXECUTABLE_NAMES_TO_APP_MODS[currModName]
+	except KeyError:
+		raise RuntimeError("This function can be executed only inside an alias App Module.") from None
+	else:
+		log.warning(
+			(
+				f"Importing from appModules.{currModName} is deprecated,"
+				f" you should import from appModules.{replacementModName}"
+			)
+		)
+
+
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
 	"""Registers appModule to be used for a given executable.
 	"""
@@ -90,6 +113,16 @@ def unregisterExecutable(executableName: str) -> None:
 		log.error(f"Executable {executableName} was not previously registered.")
 
 
+def _getPathFromImporter(importer: _KNOWN_IMPORTERS_T) -> os.PathLike:
+	try:  # Standard `FileFinder` instance
+		return importer.path
+	except AttributeError:
+		try:  # Special case for `zipimporter`
+			return os.path.join(importer.archive, importer.prefix)
+		except AttributeError:
+			raise TypeError(f"Cannot retrieve path from {repr(importer)}") from None
+
+
 def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, ...]:
 	"""Returns list of the appModule names for a given executable.
 	The names in the tuple are placed in order in which import of these aliases should be attempted that is:
@@ -97,49 +130,71 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 	- Just the name of the executable to cover a standard appModule named the same as the executable
 	- The alias from `appModules.EXECUTABLE_NAMES_TO_APP_MODS` if it exists.
 	"""
-	return (
+	res = (
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
 			executableName,
 			appModules.EXECUTABLE_NAMES_TO_APP_MODS.get(executableName)
 		) if aliasName is not None
 	)
+	log.info(f"Called for {executableName}, and intents to return {list(res)}")
+	return res
+
+
+def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool:
+	"""Returns c{True} if app Module with a given name exists, c{False} otherwise.
+	:param ignoreDeprecatedAliases: used for backwards compatibility, so that by default alias modules
+	are not excluded.
+	"""
+# 	log.info(f"checking for name {name}")
+	for possibleModName in _getPossibleAppModuleNamesForExecutable(name):
+		# log.info(f"checking in map for name: {possibleModName}")
+		for importer in _importers:
+			modExists = importer.find_module(f"appModules.{possibleModName}")
+			if modExists:
+				# log.info(f"Module exists in importer {importer}")
+				# While the module has been found it is possible tis is just a deprecated alias.
+				# Before PR #13366 the only possibility to map a single app module to multiple executables
+				# was to create a alias app module and import everything from the main module into it.
+				# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
+				# but old alias modules have to stay to preserve backwards compatibility.
+				# We cannot import the alias module since they show a deprecation warning on import.
+				# To determine if the module should be imported or not we check if:
+				# - it is placed in the core appModules package, and
+				# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
+				# If both of these are true the module should not be imported in core.
+				if (
+					not ignoreDeprecatedAliases
+					and possibleModName in appModules.EXECUTABLE_NAMES_TO_APP_MODS
+					and _getPathFromImporter(importer) == _CORE_App_MODULES_PATH
+				):
+					continue
+				return modExists
+	return False  # None of the aliases exists
 
 
 def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
 	"""Import and return appModule for a given executable or `None` if there is no module.
 	"""
 	for possibleModName in _getPossibleAppModuleNamesForExecutable(executableName):
-		try:
-			possibleMod = importlib.import_module(
+		# First, check whether the module exists.
+		# We need to do this separately to exclude alias modules,
+		# and because even though an ImportError is raised when a module can't be found,
+		# it might also be raised for other reasons.
+		if doesAppModuleExist(possibleModName, ignoreDeprecatedAliases=True):
+			return importlib.import_module(
 				f"appModules.{possibleModName}",
 				package="appModules"
 			)
-		except ImportError:
-			continue
-		else:
-			# Before PR #13366 the only possibility to map a single app module to multiple executables
-			# was to create a alias app module and import everything from the main module into it.
-			# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
-			# but old alias modules have to stay to preserve backwards compatibility.
-			# To differentiate the old alias modules from the real modules they have a module level
-			# variable `_isAliasAppMod` set to `True`.
-			# These modules should not be imported to use the values from the map.
-			if getattr(possibleMod, "_isAliasAppMod", False):
-				continue
-			else:
-				return possibleMod
 	return None  # Module not found
 
 
-def getAppNameFromProcessID(processID,includeExt=False):
+def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	"""Finds out the application name of the given process.
 	@param processID: the ID of the process handle of the application you wish to get the name of.
-	@type processID: int
-	@param includeExt: C{True} to include the extension of the application's executable filename, C{False} to exclude it.
-	@type window: bool
+	@param includeExt: C{True} to include the extension of the application's executable filename,
+	C{False} to exclude it.
 	@returns: application name
-	@rtype: str
 	"""
 	if processID==NVDAProcessID:
 		return "nvda.exe" if includeExt else "nvda"
@@ -161,12 +216,10 @@ def getAppNameFromProcessID(processID,includeExt=False):
 
 	# This might be an executable which hosts multiple apps.
 	# Try querying the app module for the name of the app being hosted.
-	processAppModule = _importAppModuleForExecutable(appName)
-	if processAppModule is not None:
-		try:
-			return processAppModule.getAppNameFromHost(processID)
-		except (AttributeError, LookupError):
-			pass
+	try:
+		return _importAppModuleForExecutable(appName).getAppNameFromHost(processID)
+	except (AttributeError, LookupError):
+		pass
 	return appName
 
 
@@ -177,7 +230,7 @@ def getAppModuleForNVDAObject(obj):
 
 
 def getAppModuleFromProcessID(processID: int) -> AppModule:
-	"""Finds the appModule that is for the given process ID. The module is also cached for later retreavals.
+	"""Finds the appModule that is for the given process ID. The module is also cached for later retrievals.
 	@param processID: The ID of the process for which you wish to find the appModule.
 	@returns: the appModule
 	"""
@@ -223,44 +276,34 @@ def cleanup():
 			log.exception("Error terminating app module %r" % deadMod)
 
 
-def doesAppModuleExist(name: str) -> bool:
-	for possibleModName in _getPossibleAppModuleNamesForExecutable(name):
-		modExists = any(
-			importer.find_module(
-				f"appModules.{possibleModName}"
-			) for importer in _importers
-		)
-		if modExists:
-			return modExists
-	return False  # None of the aliases exists
-
-
 def fetchAppModule(processID: int, appName: str) -> AppModule:
 	"""Returns an appModule found in the appModules directory, for the given application name.
 	@param processID: process ID for it to be associated with
 	@param appName: the application name for which an appModule should be found.
-	@returns: the appModule, or None if not found
+	@returns: the appModule.
 	"""
-	# First, check whether the module exists.
-	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
 	modName = appName
 
-	if doesAppModuleExist(modName):
-		try:
-			return _importAppModuleForExecutable(modName).AppModule(processID, appName)
-		except:
-			log.exception(f"error in appModule {modName!r}")
-			import ui
-			import speech.priorities
-			ui.message(
-				# Translators: This is presented when errors are found in an appModule
-				# (example output: error in appModule explorer).
-				_("Error in appModule %s") % modName,
-				speechPriority=speech.priorities.Spri.NOW
-			)
+	try:
+		importedMod = _importAppModuleForExecutable(modName)
+		if importedMod is not None:
+			return importedMod.AppModule(processID, appName)
+		# Broad except since we do not  know
+		# what exceptions may be thrown during import / construction of the app Module.
+	except Exception:
+		log.exception(f"error in appModule {modName!r}")
+		import ui
+		import speech.priorities
+		ui.message(
+			# Translators: This is presented when errors are found in an appModule
+			# (example output: error in appModule explorer).
+			_("Error in appModule %s") % modName,
+			speechPriority=speech.priorities.Spri.NOW
+		)
 
 	# Use the base AppModule.
 	return AppModule(processID, appName)
+
 
 def reloadAppModules():
 	"""Reloads running appModules.

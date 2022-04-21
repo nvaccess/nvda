@@ -1,3 +1,4 @@
 #Uses the Outlook Express app module
 from .msimn import *
-_isAliasAppMod = True
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()

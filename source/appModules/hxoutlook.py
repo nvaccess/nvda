@@ -5,4 +5,5 @@
 
 # An alias for hxmail appModule
 from .hxmail import *
-_isAliasAppMod = True
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()

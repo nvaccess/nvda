@@ -1,2 +1,3 @@
 from .teamtalk4classic import AppModule
-_isAliasAppMod = True
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()

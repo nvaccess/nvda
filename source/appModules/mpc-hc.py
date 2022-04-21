@@ -1,2 +1,3 @@
 from .mplayerc import AppModule
-_isAliasAppMod = True
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()
