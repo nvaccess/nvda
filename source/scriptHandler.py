@@ -72,7 +72,7 @@ def findScript(gesture):
 
 	globalMapScripts = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
-	globalMap = braille.handler.display.gestureMap
+	globalMap = braille.handler.display.gestureMap if braille.handler else None
 	if globalMap:
 		globalMaps.append(globalMap)
 	for globalMap in globalMaps:
