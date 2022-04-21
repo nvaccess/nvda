@@ -78,6 +78,12 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def event_UIA_notification(self, obj, nextHandler, displayString=None, activityId=None, **kwargs):
+		# When no results shortcuts such as number row keys are pressed, display content will be announced.
+		# #13383: it might be possible that the next command is a calculation shortcut such as S for sine.
+		# Therefore, clear no result gestures flag from the app module while storing a copy of the flag here.
+		# The event handler copy is used to handle the overall notification announcement later.
+		doNotAnnounceCalculatorResults = self._noCalculatorResultsGesturePressed
+		self._noCalculatorResultsGesturePressed = False
 		calculatorVersion = int(self.productVersion.split(".")[0])
 		# #12268: for "DisplayUpdated", announce display strings in braille  no matter what they are.
 		# There are other activity Id's such as "MemorySlotAdded" and "MemoryCleared"
@@ -97,6 +103,7 @@ class AppModule(appModuleHandler.AppModule):
 				resultElement
 				and resultElement.firstChild
 				and resultElement.firstChild.UIAAutomationId in noCalculatorEntryAnnouncements
+				and doNotAnnounceCalculatorResults
 			):
 				return
 		nextHandler()
