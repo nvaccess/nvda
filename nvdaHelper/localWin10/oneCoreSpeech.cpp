@@ -82,11 +82,11 @@ public:
 		}
 		switch (m_state) {
 		case ApiState::reset:
-				return areResetRequirementsMet();
-			case ApiState::active:
-				return areActiveRequirementsMet();
-			case ApiState::terminated:
-				return areTerminatedRequirementsMet();
+			return areResetRequirementsMet();
+		case ApiState::active:
+			return areActiveRequirementsMet();
+		case ApiState::terminated:
+			return areTerminatedRequirementsMet();
 		}
 		return false;
 	}
@@ -96,12 +96,11 @@ public:
 			std::wstringstream ss;
 			ss << L"Not in expected state: " << expected;
 			LOG_ERROR(ss.str());
-			//throw std::runtime_error(ss.str());
 		}
 	}
 
 	std::shared_ptr<winrtSynth> getSynth(void* token) {
-		if (isTokenValid(token)){
+		if (isTokenValid(token)) {
 			return m_synth;
 		}
 		return std::shared_ptr<winrtSynth>();
@@ -143,7 +142,7 @@ public:
 	}
 
 	void reset() {
-		LOG_INFO(L"reseting");
+		LOG_INFO(L"resetting");
 		assertInState(ApiState::terminated);
 		m_synth.reset();
 		m_lastSynth.reset();
@@ -278,12 +277,11 @@ void* __stdcall ocSpeech_initialize(ocSpeech_Callback fn) {
 	if (g_state.isInState(ApiState::terminated)) {
 		g_state.reset();
 	}
-	
+
 	auto token = g_state.activate(fn);
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
 		LOG_ERROR(L"Unable to initialize.");
-		//throw std::runtime_error("Unable to initialize.");
 		return nullptr;
 	}
 	preventEndUtteranceSilence_(synth);
@@ -327,7 +325,8 @@ void protectedCallback_(
 		return;
 	}
 	LOG_INFO(L"protectedCallback, token: " << token);
-	if (!g_state.isInState(ApiState::active)
+	if (
+		!g_state.isInState(ApiState::active)
 		|| !g_state.isTokenValid(token)
 	) {
 		LOG_INFO(L"not calling CB, token: " << token);
@@ -450,7 +449,6 @@ BSTR __stdcall ocSpeech_getVoices(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
 		LOG_ERROR(L"voices error");
-		//throw std::runtime_error("Token not valid");
 		return SysAllocString(L"");
 	}
 	std::wstring voices;
@@ -495,7 +493,6 @@ void preventEndUtteranceSilence_(std::shared_ptr<winrtSynth> synth) {
 const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		//throw std::runtime_error("Token not valid");
 		LOG_ERROR(L"ocSpeech_getCurrentVoiceId error");
 		return L"";
 	}
@@ -506,7 +503,6 @@ const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(void* token) {
 void __stdcall ocSpeech_setVoice(void* token, int index) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		//throw std::runtime_error("Token not valid");
 		LOG_ERROR(L"ocSpeech_setVoice error");
 		return;
 	}
@@ -516,7 +512,6 @@ void __stdcall ocSpeech_setVoice(void* token, int index) {
 const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		//throw std::runtime_error("Token not valid");
 		LOG_ERROR(L"ocSpeech_getCurrentVoiceLanguage error");
 		return L"";
 	}
@@ -526,7 +521,6 @@ const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(void* token) {
 double __stdcall ocSpeech_getPitch(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		//throw std::runtime_error("Token not valid");
 		LOG_ERROR(L"ocSpeech_getPitch error");
 		return 0.0;
 	}
@@ -536,7 +530,6 @@ double __stdcall ocSpeech_getPitch(void* token) {
 void __stdcall ocSpeech_setPitch(void* token, double pitch) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		//throw std::runtime_error("Token not valid");
 		LOG_ERROR(L"ocSpeech_setPitch error");
 		return;
 	}
@@ -546,7 +539,6 @@ void __stdcall ocSpeech_setPitch(void* token, double pitch) {
 double __stdcall ocSpeech_getVolume(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		//throw std::runtime_error("Token not valid");
 		LOG_ERROR(L"ocSpeech_getVolume error");
 		return 0.0;
 	}
@@ -556,7 +548,6 @@ double __stdcall ocSpeech_getVolume(void* token) {
 void __stdcall ocSpeech_setVolume(void* token, double volume) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		//throw std::runtime_error("Token not valid");
 		LOG_ERROR(L"ocSpeech_setVolume error");
 		return;
 	}
@@ -566,7 +557,6 @@ void __stdcall ocSpeech_setVolume(void* token, double volume) {
 double __stdcall ocSpeech_getRate(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		//throw std::runtime_error("Token not valid");
 		LOG_ERROR(L"ocSpeech_getRate error");
 		return 0.0;
 	}
@@ -576,7 +566,6 @@ double __stdcall ocSpeech_getRate(void* token) {
 void __stdcall ocSpeech_setRate(void* token, double rate) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		//throw std::runtime_error("Token not valid");
 		LOG_ERROR(L"ocSpeech_setRate error");
 		return;
 	}

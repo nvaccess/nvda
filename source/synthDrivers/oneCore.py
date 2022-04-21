@@ -110,7 +110,8 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 	def convertVolumeCommand(self, command):
 		return self._convertProsody(command, "volume", 100, self._volume)
 
-class SynthDriver(SynthDriver):
+
+class OneCoreSynthDriver(SynthDriver):
 
 	MIN_PITCH = 0.0
 	MAX_PITCH = 2.0
@@ -535,6 +536,10 @@ class SynthDriver(SynthDriver):
 	def pause(self, switch):
 		if self._player:
 			self._player.pause(switch)
+
+
+# Alias to allow look up by name "SynthDriver"
+SynthDriver = OneCoreSynthDriver
 
 
 class VoiceUnsupportedError(RuntimeError):
