@@ -135,3 +135,12 @@ class AppModule(appModuleHandler.AppModule):
 				if isinstance(resultsScreen, UIA) and resultsScreen.UIAElement.cachedClassName == "LandmarkTarget":
 					# And no, do not allow focus to move.
 					queueHandler.queueFunction(queueHandler.eventQueue, ui.message, resultsScreen.firstChild.name)
+
+	# Handle both number row and numpad with num lock on.
+	@scriptHandler.script(
+		gestures=[f"kb:{i}" for i in range(10)]
+		+ [f"kb:numLockNumpad{i}" for i in range(10)]
+	)
+	def script_doNotAnnounceCalculatorResults(self, gesture):
+		gesture.send()
+		self._noCalculatorResultsGesturePressed = True
