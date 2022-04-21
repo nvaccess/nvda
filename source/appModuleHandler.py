@@ -123,7 +123,7 @@ def _getPathFromImporter(importer: _KNOWN_IMPORTERS_T) -> os.PathLike:
 		return importer.path
 	except AttributeError:
 		try:  # Special case for `zipimporter`
-			return os.path.join(importer.archive, importer.prefix)
+			return os.path.normpath(os.path.join(importer.archive, importer.prefix))
 		except AttributeError:
 			raise TypeError(f"Cannot retrieve path from {repr(importer)}") from None
 
