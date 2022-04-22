@@ -48,7 +48,7 @@ _KNOWN_IMPORTERS_T = Union[importlib.machinery.FileFinder, zipimport.zipimporter
 runningTable: Dict[int, AppModule] = {}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
-_CORE_App_MODULES_PATH: os.PathLike = appModules.__path__[0]
+_CORE_APP_MODULES_PATH: os.PathLike = appModules.__path__[0]
 _importers: Optional[List[_KNOWN_IMPORTERS_T]] = None
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
@@ -165,7 +165,7 @@ def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool
 			if (
 				ignoreDeprecatedAliases
 				and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
-				and _getPathFromImporter(importer) == _CORE_App_MODULES_PATH
+				and _getPathFromImporter(importer) == _CORE_APP_MODULES_PATH
 			):
 				continue
 			return True
