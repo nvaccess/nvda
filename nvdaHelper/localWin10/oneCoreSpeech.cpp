@@ -21,7 +21,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <thread>
 #include <functional>
 #include <shared_mutex>
-#include <ranges>
 #include <condition_variable>
 #include <winrt/Windows.Media.SpeechSynthesis.h>
 #include <winrt/Windows.Storage.Streams.h>
