@@ -313,15 +313,15 @@ Có một số phím tắt quan trọng khi di chuyển với focus hệ thống
 %kc:beginInclude
 || Chức năng | Phím máy bàn | Phím xách tay | Mô tả |
 | Thông báo focus hiện tại | NVDA+tab | NVDA+tab | Thông báo về đối tượng đang có focus hiện tại. Bấm nhanh hai lần để đánh vần thông tin |
-| Thông báo tiêu đề | NVDA+t | NVDA+t | Thông báo tiêu đề của cửa sổ hiện tại. Bấm hai lần để đánh vần tiêu đề, bấm ba lần để sao chép |
+| Thông báo tiêu đề | NVDA+t | NVDA+t | Thông báo tiêu đề của cửa sổ hiện tại. Bấm hai lần để đánh vần tiêu đề, bấm ba lần để sao chép nó vào bộ nhớ tạm |
 | Thông báo cửa sổ hiện tại | NVDA+b | NVDA+b | Đọc tất cả đối tượng trên cửa sổ hiện tại (rất hữu ích khi đứng trong một hộp thoại) |
 | Thông báo thanh trạng thái | NVDA+end | NVDA+shift+end | Thông báo thanh trạng thái của cửa sổ hiện tại nếu tìm thấy. Bấm hai lần để đánh vần thông tin. Bấm ba lần để chép nó vào bộ nhớ tạm. |
 %kc:endInclude
 
 ++ Di chuyển với dấu nháy hệ thống ++[SystemCaret]
-Khi một [đối tượng #Objects] cho phép di chuyển hoặc chỉnh sửa văn bản có [focus #SystemFocus], bạn có thể dùng dấu nháy hệ thống để duyệt nội dung trong đối tượng đó. Dấu nháy hệ thống còn được gọi là con trỏ nháy.
+Khi một [đối tượng #Objects] cho phép di chuyển hoặc chỉnh sửa văn bản có [focus #SystemFocus], bạn có thể dùng dấu nháy hệ thống, còn được gọi là con trỏ nháy  để duyệt nội dung trong đối tượng đó.
 
-Khi một đối tượng có focus và có con trỏ nháy trên đó thì bạn có thể dùng các phím mũi tên, các phím trang trước (Page Up), trang sau (Page Down), các phím đầu dòng (Home), cuối dòng (End) để di chuyển con trỏ nháy.
+Khi một đối tượng có focus và có con trỏ nháy trên đó thì bạn có thể dùng các phím mũi tên, các phím trang trước (Page Up), trang sau (Page Down), các phím đầu dòng (Home), cuối dòng (End) để di chuyển qua văn bản.
 Bạn cũng có thể  thay đổi nội dung văn bản nếu đối tượng đó cho phép.
 NVDA sẽ thông báo khi bạn di chuyển qua từng ký tự, từng dòng hay từng trang, đồng thời nó cũng thông báo khi bạn chọn hay bỏ chọn văn bản.
 
@@ -348,7 +348,7 @@ Khi ở trong bảng thì dùng các phím tắt sau để thao tác:
 Trong quá trình thao tác trên Windows, hầu hết, bạn sẽ thao tác với [focus hệ thống #SystemFocus] và [dấu nháy hệ thống #SystemCaret].
 Tuy nhiên, trong một số trường hợp, có thể bạn muốn khám phá các đối tượng trên cửa sổ ứng dụng hay trong hệ điều hành mà không di chuyển con trỏ hệ thống hay con trỏ nháy.
 Bạn có thể sẽ muốn duyệt qua các [đối tượng #Objects] mà thông thường không thể thao tác được bằng bàn phím.
-Trong những trường hợp này, bạn có thể dùng phương pháp duyệt các đối tượng.
+Trong những trường hợp này, bạn có thể dùng phương pháp duyệt đối tượng.
 
 Phương pháp này cho phép bạn duyệt qua và lấy thông tin của các [đối tượng #Objects] đó.
 Khi bạn duyệt qua đối tượng thì NVDA sẽ thông báo thông tin về các đối tượng đó giống như khi bạn thao tác với con trỏ hệ thống.
@@ -356,11 +356,11 @@ Khi bạn duyệt qua đối tượng thì NVDA sẽ thông báo thông tin về
 
 Bên cạnh việc duyệt qua lại giữa các đối tượng riêng lẻ, các đối tượng còn có quan hệ với nhau, đó được gọi là quan hệ cha con.
 Nghĩa là một số đối tượng chứa các đối tượng khác và bạn có thể duyệt đến các đối tượng con của một đối tượng cha bằng cách đi vào bên trong đối tượng cha.
-Ví dụ một danh sách  chứa nhiều thành phần, và bạn phải di chuyển bên trong nó để truy cập mỗi thành phần đó.
-Khi bạn đã vào trong một đối tượng cha và tìm đến một mục con, nếu bạn duyệt các đối tượng liền kề với mục con thì đó chính là các đối tượng con cùng cấp của đối tượng danh sách cha.
-Chuyển đến đối tượng chứa chính là đối tượng cha.
+Ví dụ một danh sách  chứa nhiều thành phần, và bạn phải di chuyển vào bên trong nó để truy cập mỗi thành phần đó.
+Khi đã vào một  danh sách các thành phần, việc chuyển đến mục kế tiếp hay mục trước sẽ đưa bạn đến đến một thành phần khác trong cùng danh sách.
+Chuyển đến đối tượng chứa sẽ đưa bạn trở về danh sách.
 Bạn có thể bỏ qua danh sách để chuyển qua các đối tượng khác.
-Tương tự như vậy, một thanh công cụ chứa các mục con và bạn phải duyệt vào trong thanh công cụ thì mới tìm được các mục con đó.
+Tương tự như vậy, một thanh công cụ chứa các mục con và bạn phải di chuyển vào trong thanh công cụ thì mới tìm được các mục con đó.
 
 Đối tượng đang duyệt được gọi là đối tượng điều hướng.
 Khi duyệt đến một đối tượng, bạn có thể xem nội dung của nó bằng  [các lệnh duyệt nội dung #ReviewingText] trong [chế độ duyệt đối tượng #ObjectReview].
@@ -380,12 +380,12 @@ Sử dụng các phím tắt sau để duyệt qua các đối tượng:
 | Chuyển đến đối tượng con đầu tiên | NVDA+2 bàn phím số | NVDA+shift+mũi tên xuống | Vuốt xuống (chế độ đối tượng) | Chuyển đến đối tượng con đầu tiên của đối tượng hiện tại |
 | Chuyển đến đối tượng đang có focus | NVDA+dấu trừ bàn phím số | NVDA+xóa lùi | không có | Chuyển đến đối tượng đang có focus và đặt con trỏ duyệt vào vị trí con trỏ nháy (nếu đối tượng có dấu nháy)|
 | Kích hoạt đối tượng hiện tại | NVDA+enter bàn phím số | NVDA+enter | Hai-chạm | Kích hoạt đối tượng đang duyệt (giống như kích hoạt một đối tượng đang có focus) |
-| Chuyển focus hoặc dấu nháy hệ thống đến vị trí duyệt hiện tại | NVDA+shift+dấu trừ bàn phím số | NVDA+shift+xóa lùi | không có | Bấm một lần để chuyển focus đến đến đối tượng điều hướng; bấm nhanh hai lần để chuyển dấu nháy đến vị trí của con trỏ duyệt |
+| Chuyển focus hoặc dấu nháy hệ thống đến vị trí duyệt hiện tại | NVDA+shift+dấu trừ bàn phím số | NVDA+shift+xóa lùi | không có | Bấm một lần để chuyển focus đến đối tượng điều hướng; bấm nhanh hai lần để chuyển dấu nháy đến vị trí của con trỏ duyệt |
 | Thông báo vị trí con trỏ duyệt | NVDA+Shift+Delete bàn phím số | NVDA+Shift+Delete | không có | Báo thông tin vị trí của văn bản hoặc đối tượng tại con trỏ duyệt. Ví dụ, có thể bao gồm tỉ lệ phần trăm theo tài liệu, khoảng cách đến mép của trang, hoặc vị trí chính xác trên màn hình. Bấm hai lần có thể cung cấp thêm thông tin. |
 | Chuyển con trỏ duyệt đến thanh trạng thái | không có | không có | không có | Thông báo thanh trạng thái của cửa sổ hiện tại nếu tìm thấy, và nó cũng sẽ đưa đối tượng điều hướng đến vị trí đó. |
 %kc:endInclude
 
-Chú ý: Bạn cần tắt phím Num Lock để sử dụng các phím bên bàn phím số.
+Lưu ý: Bạn cần tắt phím Num Lock để sử dụng các phím bên bàn phím số.
 
 ++ Duyệt nội dung ++[ReviewingText]
 NVDA cho phép bạn duyệt nội dung của   [màn hình #ScreenReview], [tài liệu #DocumentReview] hoặc [đối tượng hiện tại #ObjectReview] theo từng ký tự, từng từ hoặc từng dòng.
@@ -408,7 +408,7 @@ Dưới đây là một số phím tắt dùng để duyệt nội dung:
 | Chuyển đến dòng dưới cùng | shift+9 bàn phím số | NVDA+control+end | không có | Chuyển con trỏ duyệt xuống dòng dưới cùng |
 | Chuyển qua từ trước | 4 bàn phím số | NVDA+control+mũi tên trái | Vuốt trái 2-ngón (chế độ văn bản) | chuyển con trỏ duyệt sang từ bên trái |
 | thông báo từ hiện tại | 5 bàn phím số | NVDA+control+. | không có | Thông báo từ tại vị trí con trỏ duyệt. Bấm hai lần để đánh vần. Bấm ba lần để đánh vần với phần mô tả của ký tự |
-| Chuyển qua từ kế | 6 bàn phím số | NVDA+control+mũi tên phải | Vuối phải 2-ngón (chế độ văn bản) | chuyển con trỏ duyệt sang từ kế tiếp bên phải |
+| Chuyển qua từ kế | 6 bàn phím số | NVDA+control+mũi tên phải | Vuốt phải 2-ngón (chế độ văn bản) | chuyển con trỏ duyệt sang từ kế tiếp bên phải |
 | Chuyển về đầu dòng | shift+1 bàn phím số | NVDA+home | không có | chuyển con trỏ duyệt về đầu dòng |
 | Chuyển qua ký tự trước | 1 bàn phím số | NVDA+mũi tên trái | Vuốt trái (chế độ văn bản) | chuyển con trỏ duyệt sang ký tự bên trái |
 | Đọc ký tự hiện tại | 2 bàn phím số | NVDA+. | không có | Đọc ký tự nơi có con trỏ duyệt. Bấm hai lần để nghe đánh vần mô tả hay ví dụ về ký tự đó. Bấm ba lần để nghe mã cơ số 10 và 16 của ký tự đó |
@@ -422,19 +422,19 @@ Dưới đây là một số phím tắt dùng để duyệt nội dung:
 | Thông báo kí tự thay thế hiện tại | Không có | Không có | Không có | Nói kí tự tại vị trí con trỏ duyệt. Bấm hai lần để hiển thị kí hiệu và văn bản dùng để thay thế ở chế độ duyệt. |
 %kc:endInclude
 
-Chú ý: Bạn cần tắt phím Num Lock để sử dụng các phím bên bàn phím số.
+Lưu ý: Bạn cần tắt phím Num Lock để sử dụng các phím bên bàn phím số.
 
-Một cách nhớ đơn giản các phím tắt trên với kiểu bàn phím Desktop là hình dung có ba hàng, mỗi hàng có ba phím, hàng trên cùng là cho duyệt từng dòng, hàng thứ hai là cho duyệt từng từ, hàng thứ ba là duyệt từng ký tự. Mỗi phím trên một hàng sẽ dùng cho duyệt phần tử trước, phần tử hiện tại và phần tử kế tiếp.
+Một cách nhớ đơn giản các phím tắt trên với kiểu bàn phím Desktop là hình dung có ba hàng, mỗi hàng có ba phím, hàng trên cùng là để duyệt từng dòng, hàng thứ hai là để duyệt từng từ, hàng thứ ba là để duyệt từng ký tự. Mỗi phím trên một hàng sẽ dùng cho duyệt phần tử trước, phần tử hiện tại và phần tử kế tiếp.
 Bố cục đó được minh họa như dưới đây:
 | dòng trước | dòng hiện tại | dòng kế |
 | từ trước | từ hiện tại | từ kế |
 | ký tự trước | ký tự hiện tại | ký tự kế |
 
 ++ Các chế độ duyệt ++[ReviewModes]
-[Các phím duyệt nội dung #ReviewingText] có thể dùng để duyệt nội dung trong đối tượng điều hướng, trong tài liệu hay trên màn hình, phụ thuộc vào chế độ duyệt được chọn.
+[Các phím duyệt văn bản #ReviewingText] có thể dùng để duyệt nội dung trong đối tượng điều hướng, trong tài liệu hay trên màn hình, phụ thuộc vào chế độ duyệt được chọn.
 Khái niệm duyệt Flat trước đây của NVDA được thay thế bằng các chế độ duyệt (review mode)
 
-Các phím để chuyển qua lại giữa các chế độ duyệt:
+Các phím lệnh sau đây dùng để chuyển qua lại giữa các chế độ duyệt:
 %kc:beginInclude
 || chức năng | Phím máy bàn | Phím xách tay | Cảm ứng | Mô tả |
 | Chuyển qua chế độ duyệt kế | NVDA+7 bàn phím số | NVDA+trang trước | Vuốt lên 2-ngón | chuyển sang chế độ duyệt tiếp theo (nếu có) |
@@ -462,7 +462,7 @@ Chức năng này tương tự như chức năng duyệt nội dung trên màn h
 Khi chuyển qua chế độ duyệt màn hình, con trỏ duyệt sẽ nằm tại vị trí màn hình của [đối tượng điều hướng #ObjectNavigation] hiện tại.sẽ tự động đi theo 
 Khi di chuyển trên màn hình với các lệnh duyệt, đối tượng điều hướng sẽ tự động chuyển đến đối tượng tại vị trí màn hình của con trỏ duyệt.
 
-Chú ý là với một số ứng dụng mới thì NVDA có thể chưa nhận biết được hết nội dung trên màn hình do có thể là ứng dụng đã dùng công nghệ vẽ màn hình mới hiện chưa được hỗ trợ.
+Lưu ý là với một số ứng dụng mới thì NVDA có thể chưa nhận biết được hết nội dung trên màn hình do có thể là ứng dụng đã dùng công nghệ vẽ màn hình mới hiện chưa được hỗ trợ.
 
 ++ Di chuyển với chuột ++[NavigatingWithTheMouse]
 Khi bạn di chuyển chuột thì theo mặc định, NVDA sẽ tự động thông báo văn bản và đối tượng ở dưới vị trí con trỏ chuột hay nơi chuột đi qua.
@@ -472,8 +472,8 @@ Bạn cũng có thể cài đặt để NVDA thông báo kiểu đối tượng 
 Chức năng này rất hữu ích với người mù hoàn toàn trong nhiều trường hợp khi thông tin hiển thị chưa đủ để bạn hiểu rõ về đối tượng đó.
 
 NVDA giúp bạn dễ hình dung được vị trí của chuột trên màn hình dựa vào sự thay đổi âm thanh theo tọa độ của chuột.
-Nếu chuột ở vị trí trên cao thì độ cao của tiếng bip cũng tăng theo.
-Còn khi chuột thay đổi vị trí theo chiều ngang (trái hoặc phải) thì âm lượng của tiếng bíp ở 2 bên loa cũng sẽ thay đổi theo (điều kiện là người dùng phải có loa hoặc tai nghe âm thanh hai chiều).
+Nếu chuột ở vị trí trên cao thì độ cao của tiếng beep cũng tăng theo.
+Còn khi chuột thay đổi vị trí theo chiều ngang (trái hoặc phải) thì âm lượng của tiếng beep ở 2 bên loa cũng sẽ thay đổi theo (điều kiện là người dùng phải có loa hoặc tai nghe âm thanh hai chiều).
 
 Tính năng này mặc định không được bật.
 Để bật tính năng này, bạn có thể cấu hình trong phân loại [Chuột #MouseSettings] của hộp thoại [cấu hình NVDA #NVDASettings], được tìm thấy trong trình đơn tùy chọn của NVDA.
@@ -483,7 +483,7 @@ Bên cạnh sử dụng trực tiếp chuột thì NVDA cũng cung cấp cho b�
 || Chức năng | Phím máy bàn | Phím xách tay | Cảm ứng | Mô tả |
 | Kích hoạt nút chuột trái | dấu chia bàn phím số | NVDA+[ | không có | Kích hoạt nút chuột trái, bấm nhanh hai lần sẽ tương tự như kích đúp nút chuột trái |
 | Khóa nút chuột trái | shift+dấu chia bàn phím số | NVDA+control+[ |  không có | Khóa nút chuột trái, bấm lần nữa để mở lại. Để kéo chuột, bấm lệnh này để khóa nút chuột trái rồi di chuyển bằng chuột  trên máy tính hoặc dùng các phím lệnh di chuyển chuột |
-| Kích hoạt nút chuột phải | dấu nhân bàn phím số | NVDA+] | Nhấn và giữ | Kích hoạt nút chuột phải, thường dùng để mở thực đơn ngữ cảnh tại vị trí chuột. |
+| Kích hoạt nút chuột phải | dấu nhân bàn phím số | NVDA+] | Bấm và giữ | Kích hoạt nút chuột phải, thường dùng để mở thực đơn ngữ cảnh tại vị trí chuột. |
 | Khóa nút chuột phải | shift+dấu nhân bàn phím số | NVDA+control+] | không có | Khóa nút chuột phải, bấm một lần nữa để mở lại. Để kéo chuột, bấm lệnh này để khóa nút chuột phải rồi di chuyển bằng chuột  trên máy tính hoặc dùng các phím lệnh di chuyển chuột |
 | Di chuyển chuột đến vị trí đối tượng điều hướng | NVDA+dấu chia bàn phím số | NVDA+shift+m | không có | Di chuyển chuột đến vị trí đối tượng điều hướng hiện tại và con trỏ duyệt |
 | Chuyển đến đối tượng dưới con trỏ chuột | NVDA+dấu nhân bàn phím số | NVDA+shift+n | không có | Đưa đối tượng điều hướng đến đối tượng tại vị trí chuột |
@@ -495,7 +495,7 @@ Chế độ này bao gồm tài liệu trong các ứng dụng sau:
 - Mozilla Firefox
 - Microsoft Internet Explorer
 - Mozilla Thunderbird
-- Các tin nhắn HTML trong Microsoft Outlook
+- Các thư có dạng  HTML trong Microsoft Outlook
 - Google Chrome
 - Microsoft Edge
 - Adobe Reader
@@ -514,7 +514,7 @@ Các thông tin khác như liên kết, tiêu đề, v...v... của văn bản c
 Ví dụ bạn cần thao tác trực tiếp với ô nhập liệu để nhập nội dung.
 Bạn chuyển qua chế độ focus (focus mode) để cho phép đối tượng nhận trực tiếp sự kiện từ bàn phím.
 Mặc định, khi bạn dùng phím tab chuyển đến một đối tượng cho phép nhập, NVDA sẽ tự động chuyển qua chế độ focus.
-Ngược lại, nếu bạn chuyển đến một đối tượng bằng tab hay dùng chuột bấm vào đối tượn không hoạt động ở chế độ focus thì NVDA sẽ tự động chuyển trở lại chế độ duyệt.
+Ngược lại, nếu bạn chuyển đến một đối tượng bằng tab hay dùng chuột bấm vào đối tượng không hoạt động ở chế độ focus thì NVDA sẽ tự động chuyển trở lại chế độ duyệt.
 Bạn cũng có thể tự chuyển sang chế độ focus ở một đối tượng nào đó bằng cách bấm enter hoặc khoảng trắng.
 Bấm phím ESC để quay lại chế độ duyệt.
 Thêm vào đó, bạn cũng có thể thiết lập để chế độ focus tiếp tục hoạt động cho đến khi bạn thoát khỏi nó
@@ -531,7 +531,7 @@ Thêm vào đó, bạn cũng có thể thiết lập để chế độ focus ti�
 
 ++ Ký tự di chuyển đơn ++[SingleLetterNavigation]
 Trong chế độ duyệt, để điều hướng nhanh hơn, NVDA cung cấp các phím di chuyển đơn để di chuyển nhanh đến một thành phần nhất định trong tài liệu.
-Chú ý rằng không phải tất cả các phím tắt này đều hỗ trợ cho mọi loại tài liệu.
+Lưu ý rằng không phải tất cả các phím tắt này đều hỗ trợ cho mọi loại tài liệu.
 
 %kc:beginInclude
 Dưới đây là các phím cho phép chuyển nhanh đến các đối tượng tiếp theo, nếu kết hợp với phím shift thì sẽ quay về đối tượng trước đó:
@@ -579,7 +579,7 @@ Có ô nhập liệu cũng cho phép bạn nhập các ký tự để lọc các
 Khi tìm thấy đối tượng mong muốn, bạn có thể đi đến đối tượng đó hoặc kích hoạt luôn nó.
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
-| Mở hộp thoại danh sách các thành phần | NVDA+f7 | Mở hộp thoại danh sách các thành phần để lọc theo link, heading hay cột mốc |
+| Mở hộp thoại danh sách các thành phần | NVDA+f7 | Mở hộp thoại danh sách các thành phần để lọc theo liên kết, tiêu đề hay cột mốc |
 %kc:endInclude
 
 ++ Tìm kiếm văn bản ++[SearchingForText]

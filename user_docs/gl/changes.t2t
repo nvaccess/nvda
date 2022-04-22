@@ -42,7 +42,6 @@ Nota:
  -
 -
 
-
 == Cambios ==
 - Espeak-ng actualizouse a 1.51-dev commit ``7e5457f91e10``. (#12950)
 - Actualizado o transcriptor braille liblouis a [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]. (#13141, #13438)
@@ -88,6 +87,7 @@ Nota:
 - Adobe Reader xa non se colga ao arrancar se o modo protexido de Adobe Reader está habilitado. (#11568)
 - Arranxado un fallo onde ao selecionar o controlador da pantalla braille Papenmeier provocaba que o NVDA se colgase. (#13348)
 - En Microsoft word con UIA: o número de páxina e outros formatos xa non se anuncian inapropriadamente ao se mover dende unha celda de táboa en branco a unha celda con contido, ou dende o final do documento a un contido existente. (#13458, #13459)
+- O NVDA xa non falla ao anunciar o título de páxina e ao comezar a lectura automática cando se cargue unha páxina en Google chrome 100. (#13571)
 -
 
 == Cambios para Desenvolvedores ==
@@ -157,22 +157,15 @@ Esto pode reducir dramáticamente os tempos de compilación en sistemas multinú
 -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` moveuse a ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
 - O boolean ``gui.isInMessageBox`` borrouse, por favor usa a función ``gui.message.isModalMessageBoxActive`` a cambio. (#12984, #13376)
-- ``controlTypes`` separouse en varios submodules. (#12510)
+- ``controlTypes`` separouse en varios submodules. (#12510, #13588)
   - ``ROLE_*`` e ``STATE_*`` remprrazáronse por ``Role.*`` e ``State.*``.
-  - ``roleLabels``, ``stateLabels`` e ``negativeStateLabels`` borráronse.
-  Usos como ``roleLabels[ROLE_*]`` deberían remprazarse polos seus equivalentes ``Role.*.displayString`` ou ``State.*.negativeDisplayString``.
-  - ``processPositiveStates`` e ``processNegativeStates`` borráronse.
-  -
-- Os valores enum ``controlTypes.Role`` e ``controlTypes.State`` xa non se arranxaron/codificaron e cambiaron. (#13414)
-  OLos membros ``controlTypes.State`` xa non son bandeiras de bit, os estados non deberían determinarse usando operacións bit a bit.
-  - Hai mapeos para ``IAccessible``, ``IAccessible2`` e ``UIA``:
-    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
-    - ``UIAHandler.UIAControlTypesToNVDARoles``
+  - Aíndaque todavía están dispoñibles, as seguintes deben considerarse obsoletas:
+    - ``ROLE_*`` e ``STATE_*``, usa ``Role.*`` e ``State.*`` a cambio.
+    - ``roleLabels``, ``stateLabels`` e ``negativeStateLabels``, usos coma ``roleLabels[ROLE_*]`` deberíanse de remprazar polas súas equivalencias ``Role.*.displayString`` ou ``State.*.negativeDisplayString``.
+    - ``processPositiveStates`` e ``processNegativeStates`` deberían usar ``processAndLabelStates`` a cambio.
     -
   -
-+- As constantes de celda de Excel (``NVSTATE_*``) agora son valores no enum ``NvCellState``, refrectidas na enum ``NvCellState`` en ``NVDAObjects/window/excel.py`` e mapeadas en ``controlTypes.State`` a través de _nvCellStatesToStates. (#13465)
+- As constantes de celda de Excel (``NVSTATE_*``) agora son valores no enum ``NvCellState``, refrectidas na enum ``NvCellState`` en ``NVDAObjects/window/excel.py`` e mapeadas en ``controlTypes.State`` a través de _nvCellStatesToStates. (#13465)
 - O menbro da estructura ``EXCEL_CELLINFO`` ``state`` agora é ``nvCellStates``.
 - ``mathPres.ensureInit`` borrouse, MathPlayer agora reinicialízase cando o NVDA arranca. (#13486)
 -
