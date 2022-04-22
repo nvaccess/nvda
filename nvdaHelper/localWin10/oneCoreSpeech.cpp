@@ -41,64 +41,8 @@ using SharedLock = std::shared_lock<std::shared_timed_mutex>;
 using UniqueLock = std::unique_lock<std::shared_timed_mutex>;
 
 
-enum class ApiState {
-	reset, // init not yet called, no pending callbacks
-	active, // synth created, callback set, ready to call speak
-	terminated // token no longer valid, pending callbacks
-};
-
-std::ostream& operator<< (std::ostream& os, ApiState state)
-{
-	switch (state)
-	{
-	case ApiState::reset: return os << "reset";
-	case ApiState::active: return os << "active";
-	case ApiState::terminated: return os << "terminated";
-		// omit default case to trigger compiler warning for missing cases
-	};
-	return os << static_cast<std::uint16_t>(state);
-}
-
-std::wostream& operator<< (std::wostream& os, ApiState state)
-{
-	switch (state)
-	{
-	case ApiState::reset: return os << L"reset";
-	case ApiState::active: return os << L"active";
-	case ApiState::terminated: return os << L"terminated";
-		// omit default case to trigger compiler warning for missing cases
-	};
-	return os << static_cast<std::uint16_t>(state);
-}
-
 class OcSpeechState {
 public:
-	bool isInState(ApiState checkState) {
-		if (m_state != checkState) {
-			std::wstringstream ss;
-			ss << L"OcSpeechState not (" << checkState << L") is instead: " << m_state;
-			LOG_INFO(ss.str());
-			return false;
-		}
-		switch (m_state) {
-		case ApiState::reset:
-			return areResetRequirementsMet();
-		case ApiState::active:
-			return areActiveRequirementsMet();
-		case ApiState::terminated:
-			return areTerminatedRequirementsMet();
-		}
-		return false;
-	}
-
-	void assertInState(ApiState expected) {
-		if (!isInState(expected)) {
-			std::wstringstream ss;
-			ss << L"Not in expected state: " << expected;
-			LOG_ERROR(ss.str());
-		}
-	}
-
 	std::shared_ptr<winrtSynth> getSynth(void* token) {
 		if (isTokenValid(token)) {
 			return m_synth;
@@ -106,20 +50,18 @@ public:
 		return std::shared_ptr<winrtSynth>();
 	}
 
-	/* Note, contention with terminate.
-	*/
 	std::function<ocSpeech_CallbackT> getCB() {
 		return m_callback;
 	}
 
 	bool isTokenValid(void* token) {
 		if (
-			!isInState(ApiState::active)
-			|| token == nullptr
-			|| token != m_synth.get()
+			!isActive()  // token can't be valid if one core is not active
+			|| token == nullptr  // indicates this was never a valid token
+			|| token != m_synth.get()  // only a token matching the synth pointer are active
 			|| isTokenTerminated_(token)
 		) {
-			LOG_INFO(
+			LOG_DEBUG(
 				L"Token not active: " << token
 				<< L" Terminated tokens: " << getTerminatedTokensString()
 			);
@@ -129,119 +71,121 @@ public:
 	}
 
 	bool isTokenTerminated_(void* token) {
-		return token != nullptr
-			&& m_terminatedTokens.end() != std::ranges::find(m_terminatedTokens, token);
+		if (token == nullptr) {
+			LOG_ERROR(L"token is nullptr, it was never valid.");
+		}
+		for (const auto& t : m_terminatedTokens) {
+			if (t.first == token) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	std::wstring getTerminatedTokensString() {
 		std::wstringstream ss;
 		for (const auto t : m_terminatedTokens) {
-			ss << t << L", ";
+			ss << t.first << L"(use: " << t.second.use_count() << L"), ";
 		}
 		return ss.str();
-	}
-
-	void reset() {
-		LOG_INFO(L"resetting");
-		assertInState(ApiState::terminated);
-		m_synth.reset();
-		m_lastSynth.reset();
-		m_state = ApiState::reset;
-		assertInState(ApiState::reset);
 	}
 
 	void* activate(std::function<ocSpeech_CallbackT> cb) {
-		LOG_INFO(L"activating");
-		assertInState(ApiState::reset);
+		LOG_INFO(L"Activating");
+		if(!isTerminated()){
+			LOG_ERROR(L"Unable to activate if not terminated.");
+			return nullptr;
+		}
 		auto synth = std::make_shared<winrtSynth>();
-		void* token = synth.get();
-		LOG_INFO(L"new token val: " << token);
-		removeTokenFromTerminated(token);
+		LOG_DEBUG(L"new token val: " << synth.get());
+		removeTokenFromTerminated(synth.get());
 		m_callback = cb;
 		m_synth = synth;
-		m_state = ApiState::active;
-		assertInState(ApiState::active);
-		return token;
+		if (!isActive()){
+			LOG_ERROR(L"Activating failed");
+		}
+		return synth.get();
 	}
 
 	void terminate() {
-		LOG_INFO(L"terminating");
-		assertInState(ApiState::active);
-		auto token = m_synth.get();
-		m_terminatedTokens.push_back(token);
-		LOG_INFO(L" Terminated tokens: " << getTerminatedTokensString());
-		m_lastSynth = m_synth;
+		LOG_INFO(L"Terminating");
+		if (!isActive()) {
+			LOG_ERROR(L"Unable to terminate if not active");
+			return;
+		}
+		m_terminatedTokens.push_back({ m_synth.get(), m_synth });  // record weak_ptr for debugging.
+		LOG_DEBUG(L" Terminated tokens: " << getTerminatedTokensString());
+
 		m_synth.reset();
 		m_callback = std::function<ocSpeech_CallbackT>();
-		m_state = ApiState::terminated;
-		assertInState(ApiState::terminated);
+
+		if (!isTerminated()) {
+			LOG_ERROR(L"Terminating failed");
+		}
 	}
 
+	/* Get the useage count of the last synth to be terminated.
+	* Useful for debugging.
+	*/
 	int getLastSynthUsageCount() {
-		return m_lastSynth.use_count();
+		if (m_terminatedTokens.size() > 0) {
+			return m_terminatedTokens.rbegin()->second.use_count();
+		}
+		return 0;
 	}
 
 private:
-	bool areResetRequirementsMet() {
+	bool isActive() {
 		const bool isSynthActive = bool(m_synth);
-		const bool isLastSynthActive = !m_lastSynth.expired();
 		const bool isCallbackActive = bool(m_callback);
-		if (!isSynthActive && !isCallbackActive && !isLastSynthActive) {
+		if (isSynthActive && isCallbackActive) {  // don't care about last synth. Status only useful for debugging.
 			return true;
 		}
-		LOG_ERROR("oneCoreSpeech in unexpected state for Reset. "
-			<< createStateString(isSynthActive, isLastSynthActive, isCallbackActive)
+		LOG_DEBUG(
+			"oneCoreSpeech not Active. "
+			<< createStateString(isSynthActive, isCallbackActive)
 		);
 		return false;
 	}
-	bool areActiveRequirementsMet() {
+
+	bool isTerminated() {
 		const bool isSynthActive = bool(m_synth);
-		const bool isLastSynthActive = !m_lastSynth.expired();
 		const bool isCallbackActive = bool(m_callback);
-		if (isSynthActive && isCallbackActive && !isLastSynthActive) {
+		if (!isSynthActive && !isCallbackActive) {  // don't care about last synth. Status only useful for debugging.
 			return true;
 		}
-		LOG_ERROR(
-			"oneCoreSpeech in unexpected state for Active. "
-			<< createStateString(isSynthActive, isLastSynthActive, isCallbackActive)
+		LOG_DEBUG(
+			L"oneCoreSpeech not Terminated. "
+			<< createStateString(isSynthActive, isCallbackActive)
 		);
 		return false;
 	}
-	bool areTerminatedRequirementsMet() {
-		const bool isSynthActive = bool(m_synth);
-		const bool isLastSynthActive = !m_lastSynth.expired();
-		const bool isCallbackActive = bool(m_callback);
-		if (!isSynthActive && !isCallbackActive) {
-			return true;
-		}
-		LOG_ERROR(
-			L"oneCoreSpeech in unexpected state for Terminated. "
-			<< createStateString(isSynthActive, isLastSynthActive, isCallbackActive)
-		);
-		return false;
-	}
+
 	void removeTokenFromTerminated(void* token) {
-		auto num = std::erase(m_terminatedTokens, token);
-		if (num != 0) {
-			LOG_INFO("Remove from terminated erased count: " << num << " while removing: " << token);
+		auto numErased = std::erase_if(m_terminatedTokens, [token](auto& tokenPair) {
+			return tokenPair.first == token;
+		});
+		if (numErased != 0) {
+			LOG_DEBUG("Remove from terminated erased count: " << numErased << " while removing: " << token);
 		}
 	}
 
-	std::wstring createStateString(const bool isSynthActive, const bool isLastSynthActive, const bool isCallbackActive) {
+	std::wstring createStateString(const bool isSynthActive, const bool isCallbackActive) {
 		std::wstringstream ss;
 		ss << std::boolalpha
-			<< "m_synth: " << isSynthActive
-			<< "m_lastSynth.expired(): " << isLastSynthActive
-			<< "m_callback: " << isCallbackActive;
+			<< L"m_synth: " << isSynthActive
+			<< L" m_callback: " << isCallbackActive
+			<< L" terminated tokens: " << getTerminatedTokensString();
 		return ss.str();
 	}
 
-	std::shared_ptr<winrtSynth> m_synth;
-	std::weak_ptr<winrtSynth> m_lastSynth;
-
-	std::atomic<ApiState> m_state{ ApiState::reset };
+	std::shared_ptr<winrtSynth> m_synth;  // Held until terminate is called
+	// Async code holds a shared_ptr keeping m_lastSynth active, this weak_ptr lets us check
+	// when / if it expires and confirm the usage count.
 	std::function < ocSpeech_CallbackT> m_callback;
-	std::vector<void*> m_terminatedTokens;
+	// m_terminatedTokens allows explicitly confirming that a token has been terminated.
+	// order of termination is maintained.
+	std::vector<std::pair<void*, std::weak_ptr<winrtSynth>>> m_terminatedTokens; // Only for debugging.
 };
 
 
@@ -256,7 +200,7 @@ UniqueLock getUniqueLock_(std::wstring forPurpose) {
 	UniqueLock lock(g_OcSpeechStateMutex, std::defer_lock);
 	bool owned = lock.try_lock();
 	if (!owned) {
-		LOG_INFO(L"Locking will block, try for timeout: " << forPurpose);
+		LOG_DEBUG(L"Locking will block, try for timeout: " << forPurpose);
 		owned = lock.try_lock_for(g_maxWaitForLock);
 	}
 	if (!owned) {
@@ -273,10 +217,7 @@ void* __stdcall ocSpeech_initialize(ocSpeech_Callback fn) {
 	if (!lock) {
 		return nullptr;
 	}
-	LOG_INFO(L"ocSpeech_initialize lock acquired");
-	if (g_state.isInState(ApiState::terminated)) {
-		g_state.reset();
-	}
+	LOG_DEBUG(L"ocSpeech_initialize lock acquired");
 
 	auto token = g_state.activate(fn);
 	auto synth = g_state.getSynth(token);
@@ -321,25 +262,22 @@ void protectedCallback_(
 	SharedLock lock(g_OcSpeechStateMutex, std::defer_lock);
 	const bool owned = lock.try_lock();
 	if (!owned) {
-		LOG_INFO(L"protectedCallback_ - Unable to lock. Token: " << token);
+		LOG_DEBUG(L"protectedCallback_ - Unable to lock. Token: " << token);
 		return;
 	}
-	LOG_INFO(L"protectedCallback, token: " << token);
-	if (
-		!g_state.isInState(ApiState::active)
-		|| !g_state.isTokenValid(token)
-	) {
+	LOG_DEBUG(L"protectedCallback, token: " << token);
+	if (!g_state.isTokenValid(token)) {
 		LOG_INFO(L"not calling CB, token: " << token);
 		return;
 	}
-	LOG_INFO(L"calling CB, token: " << token);
+	LOG_DEBUG(L"calling CB, token: " << token);
 	if (result.has_value()) {
 		cb(result->buffer.data(), result->buffer.Length(), result->markersStr.c_str());
 	}
 	else {
 		cb(nullptr, 0, nullptr);
 	}
-	LOG_INFO(L"Finished CB, token: " << token);
+	LOG_DEBUG(L"Finished CB, token: " << token);
 }
 
 
@@ -484,6 +422,7 @@ void preventEndUtteranceSilence_(std::shared_ptr<winrtSynth> synth) {
 	const bool isAppendSilenceAvailable = isUniversalApiContractVersion_(6, 0);
 	if (isAppendSilenceAvailable) {
 		synth->Options().AppendedSilence(SpeechAppendedSilence::Min);
+		LOG_INFO(L"AppendedSilence supported");
 	}
 	else {
 		LOG_INFO(L"AppendedSilence not supported");
