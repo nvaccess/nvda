@@ -145,7 +145,7 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 
 
 def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool:
-	"""Returns c{True} if app Module with a given name exists, c{False} otherwise.
+	"""Returns c{True} if App Module with a given name exists, c{False} otherwise.
 	:param ignoreDeprecatedAliases: used for backward compatibility, so that by default alias modules
 	are not excluded.
 	"""
@@ -288,7 +288,7 @@ def fetchAppModule(processID: int, appName: str) -> AppModule:
 		if importedMod is not None:
 			return importedMod.AppModule(processID, appName)
 		# Broad except since we do not know
-		# what exceptions may be thrown during import / construction of the app Module.
+		# what exceptions may be thrown during import / construction of the App Module.
 	except Exception:
 		log.exception(f"error in appModule {modName!r}")
 		import ui
