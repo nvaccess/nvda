@@ -110,7 +110,8 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 	def convertVolumeCommand(self, command):
 		return self._convertProsody(command, "volume", 100, self._volume)
 
-class SynthDriver(SynthDriver):
+
+class OneCoreSynthDriver(SynthDriver):
 
 	MIN_PITCH = 0.0
 	MAX_PITCH = 2.0
@@ -157,7 +158,7 @@ class SynthDriver(SynthDriver):
 		return settings
 
 	def __init__(self):
-		super(SynthDriver, self).__init__()
+		super().__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
 		# Set initial values for parameters that can't be queried when prosody is not supported.
@@ -173,9 +174,10 @@ class SynthDriver(SynthDriver):
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		else:
 			log.debugWarning("Prosody options not supported")
-		self._handle = self._dll.ocSpeech_initialize()
+
+		self._earlyExitCB = False
 		self._callbackInst = ocSpeech_Callback(self._callback)
-		self._dll.ocSpeech_setCallback(self._handle, self._callbackInst)
+		self._ocSpeechToken = self._dll.ocSpeech_initialize(self._callbackInst)
 		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player= None
@@ -208,10 +210,14 @@ class SynthDriver(SynthDriver):
 		)
 
 	def terminate(self):
-		super(SynthDriver, self).terminate()
-		self._dll.ocSpeech_terminate(self._handle)
-		# Drop the ctypes function instance for the callback,
+		# prevent any pending callbacks from interacting further with the synth.
+		self._earlyExitCB = True
+		super().terminate()
+		# Terminate the synth, the callback function should no longer be called after this returns.
+		self._dll.ocSpeech_terminate(self._ocSpeechToken)
+		# Drop the ctypes function instance for the callback and handle,
 		# as it is holding a reference to an instance method, which causes a reference cycle.
+		self._ocSpeechToken = None
 		self._callbackInst = None
 
 	def cancel(self):
@@ -258,7 +264,7 @@ class SynthDriver(SynthDriver):
 	def _get_pitch(self):
 		if not self.supportsProsodyOptions:
 			return self._pitch
-		rawPitch = self._dll.ocSpeech_getPitch(self._handle)
+		rawPitch = self._dll.ocSpeech_getPitch(self._ocSpeechToken)
 		return self._paramToPercent(rawPitch, self.MIN_PITCH, self.MAX_PITCH)
 
 	def _set_pitch(self, pitch):
@@ -271,7 +277,7 @@ class SynthDriver(SynthDriver):
 	def _get_volume(self):
 		if not self.supportsProsodyOptions:
 			return self._volume
-		rawVolume = self._dll.ocSpeech_getVolume(self._handle)
+		rawVolume = self._dll.ocSpeech_getVolume(self._ocSpeechToken)
 		return int(rawVolume * 100)
 
 	def _set_volume(self, volume):
@@ -284,7 +290,7 @@ class SynthDriver(SynthDriver):
 	def _get_rate(self):
 		if not self.supportsProsodyOptions:
 			return self._rate
-		rawRate = self._dll.ocSpeech_getRate(self._handle)
+		rawRate = self._dll.ocSpeech_getRate(self._ocSpeechToken)
 		maxRate = self.BOOSTED_MAX_RATE if self._rateBoost else self.DEFAULT_MAX_RATE
 		return self._paramToPercent(rawRate, self.MIN_RATE, maxRate)
 
@@ -342,7 +348,7 @@ class SynthDriver(SynthDriver):
 				# Note that, if prosody otions aren't supported, this code will never be executed.
 				func, value = item
 				value = ctypes.c_double(value)
-				func(self._handle, value)
+				func(self._ocSpeechToken, value)
 				continue
 			self._wasCancelled = False
 			if isDebugForSynthDriver():
@@ -351,7 +357,7 @@ class SynthDriver(SynthDriver):
 			# ocSpeech_speak is async.
 			# It will call _callback in a background thread once done,
 			# which will eventually process the queue again.
-			self._dll.ocSpeech_speak(self._handle, item)
+			self._dll.ocSpeech_speak(self._ocSpeechToken, item)
 			return
 		if isDebugForSynthDriver():
 			log.debug("Queue empty, done processing")
@@ -370,6 +376,10 @@ class SynthDriver(SynthDriver):
 				self._consecutiveSpeechFailures = 0
 
 	def _callback(self, bytes, len, markers):
+		if self._earlyExitCB:
+			# prevent any pending callbacks from interacting further with the synth.
+			# used during termination.
+			return
 		if len == 0:
 			# Speech failed
 			self._handleSpeechFailure()
@@ -424,7 +434,7 @@ class SynthDriver(SynthDriver):
 		voices = OrderedDict()
 		# Fetch the full list of voices that Onecore speech knows about.
 		# Note that it may give back voices that are uninstalled or broken. 
-		voicesStr = self._dll.ocSpeech_getVoices(self._handle).split('|')
+		voicesStr = self._dll.ocSpeech_getVoices(self._ocSpeechToken).split('|')
 		for index,voiceStr in enumerate(voicesStr):
 			voiceInfo=self._getVoiceInfoFromOnecoreVoiceString(voiceStr)
 			# Filter out any invalid voices.
@@ -476,14 +486,14 @@ class SynthDriver(SynthDriver):
 		return True
 
 	def _get_voice(self):
-		return self._dll.ocSpeech_getCurrentVoiceId(self._handle)
+		return self._dll.ocSpeech_getCurrentVoiceId(self._ocSpeechToken)
 
 	def _set_voice(self, id):
 		voices = self.availableVoices
 		# Try setting the requested voice
 		for voice in voices.values():
 			if voice.id == id:
-				self._dll.ocSpeech_setVoice(self._handle, voice.onecoreIndex)
+				self._dll.ocSpeech_setVoice(self._ocSpeechToken, voice.onecoreIndex)
 				return
 		raise LookupError("No such voice: %s"%id)
 
@@ -526,6 +536,10 @@ class SynthDriver(SynthDriver):
 	def pause(self, switch):
 		if self._player:
 			self._player.pause(switch)
+
+
+# Alias to allow look up by name "SynthDriver"
+SynthDriver = OneCoreSynthDriver
 
 
 class VoiceUnsupportedError(RuntimeError):
