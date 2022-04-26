@@ -11,7 +11,6 @@ import config
 import textInfos
 import controlTypes
 
-
 _TableID = Union[int, Tuple, Any]
 """
 A variety of types can be used for a tableID.
@@ -27,6 +26,8 @@ class _Axis(str, Enum):
 class _Movement(str, Enum):
 	NEXT = "next"
 	PREVIOUS = "previous"
+	FIRST = "first"
+	LAST = "last"
 
 
 @dataclass
@@ -75,6 +76,30 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 	_lastTableSelection: Optional[_TableSelection] = None
 
+	def _maybeGetLayoutTableIds(self, info: textInfos.TextInfo):
+		"""
+		If "Include layout tables" option is on, this will
+		compute the set of layout tables that this textInfo is enclosed in,
+		otherwise it will return empty set.
+		@param info:  the position where the layout tables should be looked for.
+		@returns: A set of table IDs or empty set.
+		"""
+		fields = list(info.getTextWithFields())
+		# If layout tables should not be reported, we should First record the ID of all layout tables,
+		# so that we can skip them when searching for the deepest table
+		layoutIDs = set()
+		if not config.conf["documentFormatting"]["includeLayoutTables"]:
+			for field in fields:
+				if (
+					isinstance(field, textInfos.FieldCommand)
+					and field.command == "controlStart"
+					and field.field.get('table-layout')
+				):
+					tableID = field.field.get('table-id')
+					if tableID is not None:
+						layoutIDs.add(tableID)
+		return layoutIDs
+
 	def _getTableCellCoords(self, info):
 		"""
 		Fetches information about the deepest table cell at the given position.
@@ -88,14 +113,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			info = info.copy()
 			info.expand(textInfos.UNIT_CHARACTER)
 		fields=list(info.getTextWithFields())
-		# If layout tables should not be reported, we should First record the ID of all layout tables so that we can skip them when searching for the deepest table
-		layoutIDs=set()
-		if not config.conf["documentFormatting"]["includeLayoutTables"]:
-			for field in fields:
-				if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart" and field.field.get('table-layout'):
-					tableID=field.field.get('table-id')
-					if tableID is not None:
-						layoutIDs.add(tableID)
+		layoutIDs = self._maybeGetLayoutTableIds(info)
 		for field in reversed(fields):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
@@ -111,6 +129,40 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		return (attrs["table-id"],
 			attrs["table-rownumber"], attrs["table-columnnumber"],
 			attrs.get("table-rowsspanned", 1), attrs.get("table-columnsspanned", 1))
+
+	def _getTableDimensions(self, info: textInfos.TextInfo) -> Tuple[int, int]:
+		"""
+		Fetches information about the deepest table dimension.
+		@param info:  the position where the table cell should be looked for.
+		@returns: a tuple of table height and width.
+		@raises: LookupError if there is no table cell at this position.
+		"""
+		if info.isCollapsed:
+			info = info.copy()
+			info.expand(textInfos.UNIT_CHARACTER)
+		fields = list(info.getTextWithFields())
+		layoutIDs = self._maybeGetLayoutTableIds(info)
+		for field in reversed(fields):
+			if not (
+				isinstance(field, textInfos.FieldCommand)
+				and field.command == "controlStart"
+				and field.field.get("role") == controlTypes.Role.TABLE
+			):
+				# Not a table control field.
+				continue
+			attrs = field.field
+			tableID = attrs.get('table-id')
+			if tableID is None or tableID in layoutIDs:
+				continue
+			break
+		else:
+			raise LookupError("Not in a table cell")
+		try:
+			nRows = int(attrs.get("table-rowcount"))
+			nCols = int(attrs.get("table-columncount"))
+		except (TypeError, ValueError):
+			raise LookupError("Not in a table cell")
+		return (nRows, nCols)
 
 	def _getTableCellAt(self,tableID,startPos,row,column):
 		"""
@@ -161,10 +213,10 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		# Determine destination row and column.
 		destRow = origRow
 		destCol = origCol
-		if axis == "row":
-			destRow += origRowSpan if movement == "next" else -1
-		elif axis == "column":
-			destCol += origColSpan if movement == "next" else -1
+		if axis == _Axis.ROW:
+			destRow += origRowSpan if movement == _Movement.NEXT else -1
+		elif axis == _Axis.COLUMN:
+			destCol += origColSpan if movement == _Movement.NEXT else -1
 
 		# Try and fetch the cell at these coordinates, though  if a  cell is missing, try  several more times moving the coordinates on by one cell each time
 		limit=self._missingTableCellSearchLimit
@@ -177,11 +229,67 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				return self._getTableCellAt(tableID,startPos,destRow,destCol)
 			except LookupError:
 				pass
-			if axis=="row":
-				destRow+=1 if movement=="next" else -1
+			if axis == _Axis.ROW:
+				destRow += 1 if movement == _Movement.NEXT else -1
 			else:
-				destCol+=1 if movement=="next" else -1
+				destCol += 1 if movement == _Movement.NEXT else -1
 		raise LookupError
+
+	def _getFirstOrLastTableCell(
+			self,
+			tableID: _TableID,
+			startPos: textInfos.TextInfo,
+			origRow: int,
+			origCol: int,
+			origRowSpan: int,
+			origColSpan: int,
+			movement: _Movement,
+			axis: _Axis
+	) -> textInfos.TextInfo:
+		"""
+		Locates the first or last cell in current row or column given coordinates of current cell.
+		When jumping to the first row/column, It will try to set current row/column index to 1.
+		When jumping to the last row/column, it will query table dimensions and set row/column index
+		to corresponding dimension.
+		After figuring out exact coordinates of the cell it will try to jump directly to that cell,
+		or if that fails (due to missing table cell), it will walk in the opposite direction skipping missing cells
+		up to the number of times set by _missingTableCellSearchLimit set on this instance.
+		@param tableID: the ID of the table
+		@param startPos: the position in the document to start searching from.
+		@param origRow: the row number of the starting cell
+		@param origCol: the column number  of the starting cell
+		@param origRowSpan: the row span of the row of the starting cell
+		@param origColSpan: the column span of the column of the starting cell
+		@param movement: the direction ("first" or "last")
+		@param axis: the axis of movement ("row" or "column")
+		@returns: the position of the destination table cell
+		"""
+		destRow, destCol = origRow, origCol
+		if movement == _Movement.FIRST:
+			if axis == _Axis.COLUMN:
+				destCol = 1
+			else:
+				destRow = 1
+		else:
+			nRows, nCols = self._getTableDimensions(startPos)
+			if axis == _Axis.COLUMN:
+				destCol = nCols
+			else:
+				destRow = nRows
+		try:
+			return self._getTableCellAt(tableID, startPos, destRow, destCol)
+		except LookupError:
+			oppositeMovement = _Movement.PREVIOUS if movement == _Movement.LAST else _Movement.NEXT
+			return self._getNearestTableCell(
+				tableID,
+				startPos,
+				destRow,
+				destCol,
+				origRowSpan=1,
+				origColSpan=1,
+				movement=oppositeMovement,
+				axis=axis
+			)
 
 	def _tableMovementScriptHelper(
 			self,
@@ -224,7 +332,30 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				origRowSpan = self._lastTableSelection.rowSpan
 
 		try:
-			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+			if movement in {_Movement.PREVIOUS, _Movement.NEXT}:
+				info = self._getNearestTableCell(
+					tableID,
+					self.selection,
+					origRow,
+					origCol,
+					origRowSpan,
+					origColSpan,
+					movement,
+					axis
+				)
+			elif movement in {_Movement.FIRST, _Movement.LAST}:
+				info = self._getFirstOrLastTableCell(
+					tableID,
+					self.selection,
+					origRow,
+					origCol,
+					origRowSpan,
+					origColSpan,
+					movement,
+					axis
+				)
+			else:
+				raise ValueError(f"Unknown movement {movement}")
 			newTableID, newRow, newCol, newRowSpan, newColSpan = self._getTableCellCoords(info)
 		except LookupError:
 			# Translators: The message reported when a user attempts to use a table movement command
@@ -248,24 +379,44 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		)
 
 	def script_nextRow(self, gesture):
-		self._tableMovementScriptHelper(axis="row", movement="next")
+		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.NEXT)
 	# Translators: the description for the next table row script on browseMode documents.
 	script_nextRow.__doc__ = _("moves to the next table row")
 
 	def script_previousRow(self, gesture):
-		self._tableMovementScriptHelper(axis="row", movement="previous")
+		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.PREVIOUS)
 	# Translators: the description for the previous table row script on browseMode documents.
 	script_previousRow.__doc__ = _("moves to the previous table row")
 
 	def script_nextColumn(self, gesture):
-		self._tableMovementScriptHelper(axis="column", movement="next")
+		self._tableMovementScriptHelper(axis=_Axis.COLUMN, movement=_Movement.NEXT)
 	# Translators: the description for the next table column script on browseMode documents.
 	script_nextColumn.__doc__ = _("moves to the next table column")
 
 	def script_previousColumn(self, gesture):
-		self._tableMovementScriptHelper(axis="column", movement="previous")
+		self._tableMovementScriptHelper(axis=_Axis.COLUMN, movement=_Movement.PREVIOUS)
 	# Translators: the description for the previous table column script on browseMode documents.
 	script_previousColumn.__doc__ = _("moves to the previous table column")
+
+	def script_firstRow(self, gesture):
+		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.FIRST)
+	# Translators: the description for the first table row script on browseMode documents.
+	script_firstRow.__doc__ = _("moves to the first table row")
+
+	def script_lastRow(self, gesture):
+		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.LAST)
+	# Translators: the description for the last table row script on browseMode documents.
+	script_lastRow.__doc__ = _("moves to the last table row")
+
+	def script_firstColumn(self, gesture):
+		self._tableMovementScriptHelper(axis=_Axis.COLUMN, movement=_Movement.FIRST)
+	# Translators: the description for the first table column script on browseMode documents.
+	script_firstColumn.__doc__ = _("moves to the first table column")
+
+	def script_lastColumn(self, gesture):
+		self._tableMovementScriptHelper(axis=_Axis.COLUMN, movement=_Movement.LAST)
+	# Translators: the description for the last table column script on browseMode documents.
+	script_lastColumn.__doc__ = _("moves to the last table column")
 
 	def script_toggleIncludeLayoutTables(self,gesture):
 		# documentBase is a core module and should not depend on UI, so it is imported at run-time. (#12404)
@@ -287,4 +438,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
+		"kb:control+alt+pageUp": "firstRow",
+		"kb:control+alt+pageDown": "lastRow",
+		"kb:control+alt+Home": "firstColumn",
+		"kb:control+alt+End": "lastColumn",
 	}
