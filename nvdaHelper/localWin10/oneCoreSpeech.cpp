@@ -295,7 +295,7 @@ bool __stdcall ocSpeech_supportsProsodyOptions() {
 }
 
 std::wstring createMarkersString_(IVectorView<IMediaMarker> markers) {
-	std::wstring markersStr;  // for large strings, reserving would speed this up.
+	std::wstring markersStr;  // for large strings, preallocating / reserving may speed this up.
 	bool firstComplete = false;
 	for (auto const& marker : markers) {
 		if (firstComplete) {
@@ -433,8 +433,9 @@ bool isUniversalApiContractVersion_(const int major, const int minor) {
 }
 
 
+
 void preventEndUtteranceSilence_(std::shared_ptr<winrtSynth> synth) {
-	// By default, OneCore speech appends a  large annoying chunk of silence at the end of every utterance.
+	// By default, OneCore speech appends a large annoying chunk of silence at the end of every utterance.
 	// Newer versions of OneCore speech allow disabling this feature, so turn it off where possible.
 	const bool isAppendSilenceAvailable = isUniversalApiContractVersion_(6, 0);
 	if (isAppendSilenceAvailable) {

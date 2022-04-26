@@ -13,7 +13,7 @@
  - Internal function 'speak' is run asynchronously using Windows thread pool.
    Results are passed back to NVDA via a callback, which must still be valid when the results are ready.
    However, terminate will invalidate the callback.
-   To protect against this, locking strategy is used.
+   To protect against this, a locking strategy is used.
    Before the callback is executed a shared_lock is acquired on the mutex, this allows other shared locks
    to be acquired, but prevents unique locks from acquiring the mutex.
 
