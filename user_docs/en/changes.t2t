@@ -43,6 +43,8 @@ What's New in NVDA
 == Changes for Developers ==
 - Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
 - When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
+- New convenience functions ``registerExecutableWithAppModule`` and ``unregisterExecutable`` were added to the ``appModuleHandler`` module.
+They can be used to use a single App Module with multiple executables. (#13366)
 -
 
 === Deprecations ===
@@ -57,8 +59,36 @@ For add-on authors, please open a GitHub issue if these changes stop the API fro
 - ``gui.quit`` has been deprecated for removal in 2023.1. (#13498)
   - Use ``wx.CallAfter(mainFrame.onExitCommand, None)`` directly instead.
   -
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- Some alias appModules are marked as deprecated and will be removed in 2023.1.
+Code which imports from one of them, should instead import from the replacement module.  (#13366)
 -
 
+|| Removed module name | Replacement module |
+| azuredatastudio | code |
+| azuredatastudio-insiders | code |
+| calculatorapp | calculator |
+| code - insiders | code |
+| commsapps | hxmail |
+| dbeaver | eclipse |
+| digitaleditionspreview | digitaleditions |
+| esybraille | esysuite |
+| hxoutlook | hxmail |
+| miranda64 | miranda32 |
+| mpc-hc | mplayerc |
+| mpc-hc64 | mplayerc |
+| notepad++ | notepadPlusPlus |
+| searchapp | searchui |
+| searchhost | searchui |
+| springtoolsuite4 | eclipse |
+| sts | eclipse |
+| teamtalk3 | teamtalk4classic |
+| textinputhost | windowsinternal_composableshell_experiences_textinput_inputapp |
+| totalcmd64 | totalcmd |
+| win32calc | calc |
+| winmail | msimn |
+| zend-eclipse-php | eclipse |
+| zendstudio | eclipse |
 
 = 2022.1 =
 This release includes major improvements to UIA support with MS Office.
