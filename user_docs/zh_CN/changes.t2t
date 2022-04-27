@@ -88,8 +88,8 @@ eSpeak-NG 语音合成器以及 LibLouis 盲文翻译模块都得到了升级，
 - NVDA将不再导致64位版本的 Notepad++ 8.3及以上版本的程序崩溃。 (#13311)
 - 即使启用了文档保护模式，Adobe Reader 也不会在启动时出现程序崩溃。 (#11568)
 - 修复了选中 Papenmeier 点显器驱动导致 NVDA崩溃的错误。 (#13348)
-- 
-开启 UIA 后，在 MS Word 中：当从空白表格单元格移动到有内容的单元格，或从文档末尾移动到正文区域时，不会错误的读出页码和其他格式信息。 (#13458, #13459)
+- 开启 UIA 后，在 MS Word 中：当从空白表格单元格移动到有内容的单元格，或从文档末尾移动到正文区域时，不会错误的读出页码和其他格式信息。 (#13458, #13459)
+- 修复了在 Google chrome 100 中页面加载后，无法读出标题且无法自动朗读的错误。 (#13571)
 -
 
 == 简体中文翻译条目更改 ==
@@ -100,6 +100,7 @@ eSpeak-NG 语音合成器以及 LibLouis 盲文翻译模块都得到了升级，
 - 改进“单倍行距”、“1.5倍行距”、“2倍行距”的翻译与 Microsoft Word 保持一致；
 - 修复将“粗体”误读作“黑体”；
 - 对部分功能的键盘帮助进行了改进 / 修正；
+- 补充 Unicode 盲文，7-8点的组合；
 - 对颜色提示进行了改进 / 修正，具体如下：
   - red-orange=橘红色
   - orange-yellow=橙黄色
@@ -110,6 +111,8 @@ eSpeak-NG 语音合成器以及 LibLouis 盲文翻译模块都得到了升级，
   - blue-purple=蓝紫色
   - purple-pink=粉紫色
   - pink-red=粉红色
+-
+
 
 == 插件以及 NVDA 核心开发者需要了解的变动 ==
 - 注：本版将破坏原有插件的兼容性，因此开发者必须重新测试并更新插件清单。
@@ -176,20 +179,12 @@ eSpeak-NG 语音合成器以及 LibLouis 盲文翻译模块都得到了升级，
   - 如果直接从元素中获取，可以使用``cachedAutomationId``。
   -
 - 移动 ``NVDAObjects.window.scintilla.CharacterRangeStruct`` 至 ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``。 (#13364)
-- 移除 bool 型函数 ``gui.isInMessageBox``，请使用 ``gui.message.isModalMessageBoxActive`` 函数替代。 (#12984, #13376)
-- ``controlTypes`` 被拆分为不同的子模块。 (#12510)
-  - 替换 ``ROLE_*`` 和 ``STATE_*`` 为 ``Role.*`` 和 ``State.*``。
-  - 移除 ``roleLabels``、 ``stateLabels`` 和 ``negativeStateLabels``。
-  诸如 ``roleLabels[ROLE_*]`` 的使用需被替换为与其等价的 ``Role.*.displayString`` 或 ``State.*.negativeDisplayString``。
-  - 移除 ``processPositiveStates`` 和 ``processNegativeStates``。
-  -
-- ``controlTypes.Role`` 和 ``controlTypes.State`` 的值以可改变，不再是固定的/硬编码的枚举值。。 (#13414)
-  - ``controlTypes.State`` 的成员不再使用位标记,其状态无需通过位运算来确定。
-  - ``IAccessible``、 ``IAccessible2`` 和 ``UIA`` 存在映射：
-    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
-    - ``UIAHandler.UIAControlTypesToNVDARoles``
+- 移除 bool 型的 ``gui.isInMessageBox``，请使用 ``gui.message.isModalMessageBoxActive`` 函数替代。 (#12984, #13376)
+- ``controlTypes`` 被拆分为不同的子模块。 (#12510, #13588)
+  - 虽仍然有效，但应该弃用以下内容：
+  - ``ROLE_*`` 和 ``STATE_*`` 应使用 ``Role.*`` 和 ``State.*`` 代替。
+  - ``roleLabels``、``stateLabels`` 和 ``negativeStateLabels``，如 ``roleLabels[ROLE_*]`` 应替换为其等价的用法 ``Role.*.displayString`` 或 ``State.*.negativeDisplayString``。
+  - ``processPositiveStates`` 和 ``processNegativeStates`` 应使用 ``processAndLabelStates`` 代替。
     -
   -
 - Excel 单元格状态常量 (``NVSTATE_*``) 现为 ``NvCellState`` 枚举中的值，在 ``NVDAObjects/window/excel.py`` 中的 ``NvCellState`` 枚举内作为镜像，并通过 _nvCellStatesToStates 映射于 ``controlTypes.State``。 (#13465)

@@ -88,6 +88,7 @@ Hinweis:
 - Adobe Reader stürzt nicht mehr beim Start ab, sobald der geschützte Modus von Adobe Reader aktiviert ist. (#11568)
 - Ein Fehler wurde behoben, bei dem die Auswahl des Braillezeilen-Treibers von Papenmeier zu einem Absturz in NVDA führte. (#13348)
 - In Microsoft Word mit UIA: Seitenzahlen und andere Formatierungen werden nicht mehr fälschlicherweise angezeigt, wenn man von einer leeren Tabellenzelle in eine Zelle mit Inhalt oder vom Ende des Dokuments in einen bestehenden Inhalt wechselt. (#13458, #13459)
+- NVDA liest den Seitentitel vor und beginnt automatisch mit dem Lesen, wenn eine Seite in Google Chrome 100 geladen wurde. (#13571)
 -
 
 
@@ -154,19 +155,12 @@ Hinweis:
   -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` wurde verschoben nach ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
 - ``gui.isInMessageBox`` (Boolean) wurde entfernt, bitte verwenden Sie stattdessen die Function ``gui.message.isModalMessageBoxActive``. (#12984, #13376)
-- ``controlTypes`` wurde in mehreren Submodulen aufgeteilt. (#12510)
+- ``controlTypes`` wurde in mehreren Submodulen aufgeteilt. (#12510, #13588)
   - ``ROLE_*`` und ``STATE_*`` wurden ersetzt durch ``Role.*`` und ``State.*``.
-  - ``roleLabels``, ``stateLabels`` und ``negativeStateLabels`` wurden entfernt.
-  Die Syntax wie ``roleLabels[ROLE_*]`` sollte durch das Equivalent ``Role.*.displayString`` oder ``State.*.negativeDisplayString`` ersetzt werden.
-  - ``processPositiveStates`` und ``processNegativeStates`` wurden entfernt.
-  -
-- Die Enum-Werte ``controlTypes.Role`` und ``controlTypes.State`` sind nicht mehr fest/hardcodiert und haben sich geändert. (#13414)
-  - Die ``controlTypes.State``-Mitglieder sind keine Bit-Flags mehr, Zustände sollten nicht mit bitweisen Operationen ermittelt werden.
-  - Es gibt Mappings für ``IAccessible``, ``IAccessible2`` und ``UIA``:
-    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
-    - ``UIAHandler.UIAControlTypesToNVDARoles``
+  - Obwohl sie noch verfügbar sind, sollten die Folgenden als veraltet betrachtet werden:
+    - ``ROLE_*`` und ``STATE_*``, verwenden Sie stattdessen ``Role.*`` und ``State.*``.
+    - ``roleLabels``, ``stateLabels`` und ``negativeStateLabels``, verwenden Sie stattdessen ``roleLabels[ROLE_*]`` und deren Entsprechung ``Role.*.displayString`` oder ``State.*.negativeDisplayString``.
+    - ``processPositiveStates`` und ``processNegativeStates``, verwenden Sie stattdessen ``processAndLabelStates``.
     -
   -
 - Die Konstanten für den Status einer Excel-Zelle (``NVSTATE_*``) sind nun Werte im ``NvCellState``-Enum, gespiegelt im ``NvCellState``-Enum in ``NVDAObjects/window/excel.py`` und abgebildet auf ``controlTypes.State`` über _nvCellStatesToStates. (#13465)

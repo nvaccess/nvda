@@ -1616,7 +1616,7 @@ Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen
 
 ==== Lue ilmoitukset ====[ObjectPresentationReportNotifications]
 Kun tämä valintaruutu on valittuna, NVDA lukee ohjeselitteet ja ilmoitusruudut niiden tullessa näkyviin.
-- Ohjeselitteet ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
+- Ohjeselitteet ovat työkaluvihjeiden kaltaisia, mutta yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
 - Ilmoitusruudut on esitelty Windows 10:ssä, ja ne ilmestyvät toimintokeskukseen ilmaisinalueella ilmoittaen useista eri tapahtumista (esim. ladatusta päivityksestä, Saapuneet-kansioosi tulleesta uudesta sähköpostiviestistä jne.).
 -
 
@@ -2240,7 +2240,7 @@ Lisäosat, jotka ovat NVDA-yhteisön toimittamia, saattavat lisätä tai muuttaa
 
 Lisäosien hallinnassa on luettelo, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
 Jokaisesta lisäosasta näytetään nimi, tila, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
-Jos valitulle lisäosalle on saatavana ohje, se voidaan avata painamalla Ohje-painiketta.
+Jos valitulle lisäosalle on saatavana ohje, se voidaan avata painamalla Lisäosan ohje -painiketta.
 
 Verkossa saatavilla olevia lisäosia on mahdollista selata ja ladata painamalla Hae lisäosia -painiketta.
 Tämä painike avaa [NVDA:n lisäosasivun. https://addons.nvda-project.org/]
@@ -2265,8 +2265,8 @@ Lisäosa poistetaan käytöstä painamalla Poista käytöstä -painiketta.
 Aiemmin käytöstä poistettu lisäosa otetaan käyttöön painamalla Ota käyttöön -painiketta.
 Lisäosa voidaan poistaa käytöstä, mikäli sen tilana on "Käytössä" tai ottaa käyttöön, mikäli tilana on "Ei käytössä".
 Jokainen Ota käyttöön/Poista käytöstä -painikkeen painallus muuttaa lisäosan tilaa, joka ilmaisee, mitä NVDA:n uudelleenkäynnistyessä tapahtuu.
-Jos lisäosa ei ollut aiemmin käytössä, tilana näkyy "käytössä uudelleenkäynnistyksen jälkeen".
-Jos se oli käytössä, tilana näkyy "ei käytössä uudelleenkäynnistyksen jälkeen"
+Jos lisäosa ei ollut aiemmin käytössä, tilana näkyy "Otetaan käyttöön uudelleenkäynnistyksen jälkeen".
+Jos se oli käytössä, tilana näkyy "Poistetaan käytöstä uudelleenkäynnistyksen jälkeen"
 NVDA on käynnistettävä uudelleen, jotta muutokset tulevat voimaan, aivan kuten lisäosia asennettaessa ja poistettaessa.
 
 Valintaikkunassa on myös Sulje-painike, josta lisäosien hallinta voidaan sulkea.
@@ -2304,7 +2304,7 @@ Tässä valintaikkunassa voit ottaa käyttöön tai poistaa käytöstä seuraava
 -
 
 ++ Suorita COM-rekisteröintien korjaustyökalu... ++[RunCOMRegistrationFixingTool]
-Ohjelmien asentaminen ja poistaminen voi tietyissä tapauksissa aiheuttaa COM DLL -tiedostojen rekisteröintien poistamista.
+Ohjelmien asentaminen ja poistaminen voi tietyissä tapauksissa aiheuttaa COM DLL -tiedostojen rekisteröintien poistamisen.
 Koska COM-liitännät, kuten IAccessible, ovat riippuvaisia oikeista COM DLL -rekisteröinneistä, ongelmia saattaa ilmetä, mikäli oikea rekisteröinti puuttuu.
 
 Näin voi käydä esim. Adobe Readerin, Math Playerin ja muiden ohjelmien asennuksen ja poiston jälkeen.
