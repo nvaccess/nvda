@@ -1869,10 +1869,10 @@ Si vous rencontrez des problèmes de performances dans une ou plusieurs applicat
 Configure si NVDA doit ou non utiliser l'API d'accessibilité UI Automation pour accéder aux documents Microsoft Word, plutôt que l'ancien modèle d'objet Microsoft Word.
 Cela s'applique aux documents dans Microsoft Word lui-même, ainsi qu'aux messages dans Microsoft Outlook.
 Ce paramètre contient les valeurs suivantes :
-- Défaut (le cas échéant)
+- Défaut (Lorsque c'est adapté)
 - Seulement si nécessaire : quand le modèle d'objet Microsoft Word n'est pas disponible du tout
-- Le cas échéant : Microsoft Word version 16.0.15000 ou supérieure, ou lorsque le modèle d'objet Microsoft Word n'est pas disponible
-- Toujours : partout où UI automation est disponible dans Microsoft Word (aussi complète soit-elle)
+- Lorsque c'est adapté : Microsoft Word version 16.0.15000 ou supérieure, ou lorsque le modèle d'objet Microsoft Word n'est pas disponible
+- Toujours : partout où UI automation est disponible dans Microsoft Word (quel que soit l'avancement de son développement)
 -
 
 ==== Utilisez UI Automation pour accéder à la console Windows quand elle est disponible ====[AdvancedSettingsConsoleUIA]
