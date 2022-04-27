@@ -584,7 +584,7 @@ Khi tìm thấy đối tượng mong muốn, bạn có thể đi đến đối t
 
 ++ Tìm kiếm văn bản ++[SearchingForText]
 Hộp thoại này cho phép bạn tìm kiếm nội dung trong tài liệu hiện hành.
-Ở phần "Nhập nội dung muốn tìm", có thể nhập nội dung để tìm kiếm.
+Ở phần "Nhập nội dung muốn tìm", có thể nhập văn bản để tìm kiếm.
 Hộp kiểm "Phân biệt chữ hoa và chữ thường" giúp cho việc tìm kiếm cân nhắc đến nội dung chữ hoa / chữ thường.
 Ví dụ, chọn vào "Phân biệt chữ hoa và chữ thường", bạn có thể tìm "NV Access" mà không phải là "nv access".
 Dùng các phím lệnh sau để thực hiện tìm kiếm:
@@ -596,11 +596,11 @@ Dùng các phím lệnh sau để thực hiện tìm kiếm:
 %kc:endInclude
 
 ++ Thao tác trên đối tượng nhúng ++[ImbeddedObjects]
-Các trang có thể chứa các loại đối tượng sử dụng công nghệ như Oracle Java và HTML5, cũng như các hộp thoại hay các ứng dụng.
-Trong chế độ duyệt, nếu gặp các đối tượng trên thì NVDA sẽ thông báo kiểu đối tượng cho bạn, ví dụ đối tượng nhúng, hộp thoại, v...v...
-Có thể bấm phím di chuyển đơn o và shift+o để đi nhanh đến các đối tượng đó.
+Các trang có thể chứa  nội dung phong phú, sử dụng những công nghệ Oracle Java và HTML5 chẳng hạn, cũng như các hộp thoại hay các ứng dụng.
+Trong chế độ duyệt, NVDA sẽ thông báo kiểu đối tượng cho bạn, ví dụ đối tượng nhúng, hộp thoại, v...v...
+Có thể bấm phím di chuyển đơn o và shift+o để đi nhanh đến các đối tượng.
 Bạn có thể bấm phím enter để tương tác trực tiếp trên các đối tượng này.
-Nếu đối tượng tiếp cận được thì bạn có thể dùng phím tab để chuyển qua lại giữa các thành phần con trong đối tượng đó.
+Nếu đối tượng tiếp cận được thì bạn có thể dùng phím tab để tương tác với chúng như các ứng dụng khác.
 Một lệnh được cung cấp để trở về trang gốc chứa đối tượng đã nhúng
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
@@ -634,7 +634,7 @@ Khi đọc tài liệu, NVDA sẽ đọc bất kỳ nội dung toán học  nào
 Nếu bạn dùng màn hình nổi, nó sẽ hiển thị dưới dạng chữ  nổi.
 
 ++ Duyệt và Tương Tác ++[InteractiveNavigation]
-Khi bạn chủ yếu đọc tài liệu này với bộ đọc, bạn sẽ muốn đọc một biểu thức dưới dạng chia nhỏ của nó, thay vì nghe toàn bộ một biểu thức tại một thời điểm.
+Khi bạn chủ yếu làm việc với bộ đọc, bạn sẽ muốn đọc một biểu thức dưới dạng chia nhỏ của nó, thay vì nghe toàn bộ biểu thức tại một thời điểm.
 
 Trong chế độ duyệt, bạn có thể làm điều này bằng cách chuyển con trỏ đến phần nội dung toán học và bấm enter.
 
@@ -668,7 +668,7 @@ Phần này cũng có các thông tin về các màn hình được hỗ trợ t
 Bạn có thể cấu hình màn hình nổi với phân loại [Chữ nổi #BrailleSettings] trong [hộp thoại cấu hình NVDA #NVDASettings.
 
 ++ Quy ước viết tắt cho loại điều khiển, trạng thái và cột mốc ++[BrailleAbbreviations]
-Để giúp hiển thị thông tin đầy đủ trên màn hình nổi, sau đây là một số quy ước viết tắt cho các loại điều khiển, trạng thái và cột mốc.
+Để giúp hiển thị thông tin một cách đầy đủ nhất có thể trên màn hình nổi, các quy ước sau đây đã được đặt ra để xác định các loại điều khiển, trạng thái và cột mốc.
 
 || Viết tắt | Loại điều khiển |
 | app | application (ứng dụng) |
@@ -709,7 +709,7 @@ Bạn có thể cấu hình màn hình nổi với phân loại [Chữ nổi #Br
 | sect | section (phần) |
 | stbar | status bar (thanh trạng thái) |
 | tabctl | tab control (điều khiển tab) |
-| tbl | table (bảng biẻu) |
+| tbl | table (bảng biểu) |
 | cN | số cột n của bảng, ví dụ: c1, c2. |
 | rN | số dòng n của bảng, ví dụ: r1, r2. |
 | term | terminal |
@@ -729,12 +729,12 @@ Sau đây là quy ước cho trạng thái của điều khiển:
 | ⢎⣿⡱ | hiển thị khi một đối tượng có trạng thái được kích hoạt |
 | ⢎⣀⡱ | hiển thị khi trạng thái đối tượng như nút chưa được kích hoạt |
 | ⣏⣿⣹ | hiển thị khi đối tượng như hộp kiểm đang được chọn |
-| ⣏⣸⣹ | hiển thị khi đối tượng như hộp kiểm được chọn nửa |
+| ⣏⣸⣹ | hiển thị khi đối tượng như hộp kiểm được chọn một nửa |
 | ⣏⣀⣹ | hiển thị khi đối tượng như hộp kiểm không được chọn |
 | - | Hiển thị khi đối tượng như cây thư mục có thể đóng |
 | + | Hiển thị khi đối tượng như cây thư mục có thể mở rộng |
 | *** | hiển thị khi gặp đối tượng hoặc tài liệu được bảo vệ |
-| clk | Hiển thị khi đối tượng có thể kích |
+| clk | Hiển thị khi đối tượng có thể kích hoạt |
 | cmnt | hiển thị khi có nhận xét trong tài liệu hoặc tại một ô trong bảng tính |
 | frml | hiển thị khi có công thức tại một ô trong bảng tính |
 | invalid | hiển thị khi nội dung nhập vào không hợp lệ |
