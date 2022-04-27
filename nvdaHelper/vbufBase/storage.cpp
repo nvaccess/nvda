@@ -321,6 +321,17 @@ bool VBufStorage_fieldNode_t::addAttribute(const std::wstring& name, const std::
 	return true;
 }
 
+bool VBufStorage_fieldNode_t::getAttribute(const std::wstring& name, std::wstring* value) {
+	LOG_DEBUG(L"Getting attribute " << name);
+	VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(name);
+	if (foundAttrib != attributes.end()) {
+		value->assign(foundAttrib->second);
+		return true;
+	}
+	LOG_ERROR(L"Couldn't find attribute " << name);
+	return false;
+}
+
 std::wstring VBufStorage_fieldNode_t::getAttributesString() const {
 	std::wstring attributesString;
 	for(std::map<std::wstring,std::wstring>::const_iterator i=attributes.begin();i!=attributes.end();++i) {
@@ -899,7 +910,7 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::getControlFieldNodeWithIde
 	std::map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator i=this->controlFieldNodesByIdentifier.find(identifier);
 	if(i==this->controlFieldNodesByIdentifier.end()) {
 		LOG_DEBUG(L"No controlFieldNode with identifier, returning NULL");
-		return NULL;
+		return nullptr;
 	}
 	VBufStorage_controlFieldNode_t* node=i->second;
 	nhAssert(node); //Node can not be NULL

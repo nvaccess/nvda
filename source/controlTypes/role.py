@@ -177,6 +177,8 @@ class Role(DisplayStringIntEnum):
 	MARKED_CONTENT = 153
 	BUSY_INDICATOR = 154  # Used for progress bars with indeterminate state
 	# To maintain backwards compatibility, above Roles must maintain their values.
+	COMMENT = auto()
+	SUGGESTION = auto()
 
 
 _roleLabels: Dict[Role, str] = {
@@ -498,6 +500,10 @@ _roleLabels: Dict[Role, str] = {
 	Role.MARKED_CONTENT: _("highlighted"),
 	# Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 	Role.BUSY_INDICATOR: _("busy indicator"),
+	# Translators: Identifies a comment.
+	Role.COMMENT: _("comment"),
+	# Translators: Identifies a suggestion.
+	Role.SUGGESTION: _("suggestion"),
 }
 
 

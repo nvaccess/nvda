@@ -361,6 +361,28 @@ CComPtr<IAccessible2> getTextBoxInComboBox(
 	return child;
 }
 
+
+void fillRole(IAccessible2* pacc, VARIANT* varChild, long* role, BSTR* roleString) {
+	if (pacc->role(role) != S_OK) {
+		*role = IA2_ROLE_UNKNOWN;
+	}
+	VARIANT varRole;
+	VariantInit(&varRole);
+	if (*role == 0) {
+		if (pacc->get_accRole(*varChild, &varRole) != S_OK) {
+			LOG_DEBUG(L"accRole failed");
+		}
+		if (varRole.vt == VT_I4) {
+			*role = varRole.lVal;
+		}
+		else if (varRole.vt == VT_BSTR) {
+			*roleString = varRole.bstrVal;
+		}
+	}
+	VariantClear(&varRole);
+}
+
+
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
 
@@ -436,21 +458,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	//Get role -- IAccessible2 role
-	long role=0;
-	BSTR roleString=NULL;
-	if(pacc->role(&role)!=S_OK)
-		role=IA2_ROLE_UNKNOWN;
-	VARIANT varRole;
-	VariantInit(&varRole);
-	if(role==0) {
-		if(pacc->get_accRole(varChild,&varRole)!=S_OK) {
-			LOG_DEBUG(L"accRole failed");
-		}
-		if(varRole.vt==VT_I4)
-			role=varRole.lVal;
-		else if(varRole.vt==VT_BSTR)
-			roleString=varRole.bstrVal;
-	}
+	long role = 0;
+	BSTR roleString = NULL;
+	fillRole(pacc, &varChild, &role, &roleString);
 
 	// Specifically force the role of ARIA treegrids from outline to table.
 	// We do this very early on in the rendering so that all our table logic applies.
@@ -467,7 +477,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		s<<role;
 	parentNode->addAttribute(L"IAccessible::role",s.str());
 	s.str(L"");
-	VariantClear(&varRole);
 
 	//get states -- IAccessible accState
 	VARIANT varState;
@@ -1153,12 +1162,30 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		parentNode->addAttribute(L"descriptionIsContent", L"true");
 	}
 
-
-	/* Set the details summary by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
+	/* Set the details role by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
 	of the nodes in the relationship will not be in the buffer yet */
 	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
-	if (detailsId) {
+	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
+	VBufStorage_controlFieldNode_t* detailsParentNode;
+	std::wstring detailsRole;
+	if (detailsId.has_value()) {
 		parentNode->addAttribute(L"hasDetails", L"true");
+		detailsParentNode = parentNode;
+		auto detailsChildNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
+		if (detailsChildNode != nullptr) {
+			detailsChildNode->getAttribute(L"role", &detailsRole);
+		}
+	}
+	if (detailsForId.has_value()) {
+		detailsParentNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
+		if (roleString){
+			detailsRole.assign(roleString);
+		} else {
+			detailsRole.assign(std::to_wstring(role));
+		}
+	}
+	if (detailsParentNode != nullptr && !detailsRole.empty()) {
+		detailsParentNode->addAttribute(L"detailsRole", detailsRole);
 	}
 
 	// Clean up.

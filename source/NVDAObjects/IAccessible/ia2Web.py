@@ -62,6 +62,14 @@ class Ia2Web(IAccessible):
 	def hasDetails(self) -> bool:
 		return bool(self.IA2Attributes.get("details-roles"))
 
+	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		detailsRoles = self.IA2Attributes.get("details-roles")
+		if not detailsRoles:
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("no details-roles")
+			return None
+		return aria.ariaRolesToNVDARoles.get(detailsRoles, controlTypes.Role.UNKNOWN)
+
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
 		try:

@@ -431,6 +431,8 @@ def getObjectPropertiesSpeech(  # noqa: C901
 
 		elif value and name == "hasDetails":
 			newPropertyValues['hasDetails'] = obj.hasDetails
+		elif value and name == "detailsRole":
+			newPropertyValues["detailsRole"] = obj.detailsRole
 		elif value and name == "descriptionFrom" and (
 			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		):
@@ -646,6 +648,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'value': True,
 		'description': True,
 		'hasDetails': config.conf["annotations"]["reportDetails"],
+		"detailsRole": config.conf["annotations"]["reportDetails"],
 		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
@@ -1688,10 +1691,18 @@ def getPropertiesSpeech(  # noqa: C901
 	# are there further details
 	hasDetails = propertyValues.get('hasDetails', False)
 	if hasDetails:
-		textList.append(
-			# Translators: Speaks when there a further details/annotations that can be fetched manually.
-			_("has details")
-		)
+		detailsRole = propertyValues.get("detailsRole", controlTypes.Role.UNKNOWN)
+		if detailsRole != controlTypes.Role.UNKNOWN:
+			textList.append(
+				# Translators: Speaks when there are further details/annotations that can be fetched manually.
+				# %s specifies the type of details (e.g. comment, suggestion)
+				_("has %s" % detailsRole.displayString)
+			)
+		else:
+			textList.append(
+				# Translators: Speaks when there are further details/annotations that can be fetched manually.
+				_("has details")
+			)
 
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
@@ -1793,6 +1804,7 @@ def getControlFieldSpeech(  # noqa: C901
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	hasDetails = attrs.get('hasDetails', False)
+	detailsRole = aria.normalizeDetailsRole(attrs.get("detailsRole"))
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 
@@ -1852,7 +1864,7 @@ def getControlFieldSpeech(  # noqa: C901
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
 	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
-	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails)
+	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails, detailsRole=detailsRole)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
 	valueSequence = getPropertiesSpeech(reason=reason, value=value, _role=role)

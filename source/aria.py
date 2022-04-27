@@ -1,13 +1,38 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2019 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2009-2022 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Dict
+from typing import Dict, Union
 from enum import Enum
 import controlTypes
+from logHandler import log
 
-ariaRolesToNVDARoles: Dict[str, int] = {
+
+def normalizeDetailsRole(detailsRole: Union[str, controlTypes.Role, None]) -> controlTypes.Role:
+	"""
+	The attribute detailsRole is determined in a number of cases.
+	With browse mode, detailsRole is normalized on the NVDAObject level to controlType.Role.
+	With focus mode, the attribute is added directly to the buffer as a string,
+	either as a role string or a role integer.
+	Braille and speech needs consistent normalization for translation and reporting.
+	"""
+	if isinstance(detailsRole, controlTypes.Role):
+		return detailsRole
+	elif isinstance(detailsRole, str):
+		if detailsRole.isdigit():
+			from IAccessibleHandler import IAccessibleRolesToNVDARoles
+			return IAccessibleRolesToNVDARoles.get(int(detailsRole), controlTypes.Role.UNKNOWN)
+		else:
+			return ariaRolesToNVDARoles.get(detailsRole, controlTypes.Role.UNKNOWN)
+	elif detailsRole is None:
+		return controlTypes.Role.UNKNOWN
+	else:
+		log.exception(f"Unexpected detailsRole type: {type(detailsRole)}, value {detailsRole}")
+		return controlTypes.Role.UNKNOWN
+
+
+ariaRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 	"description": controlTypes.Role.STATICTEXT,  # Not in ARIA 1.1 spec
 	"alert":controlTypes.Role.ALERT,
 	"alertdialog":controlTypes.Role.DIALOG,
@@ -61,6 +86,10 @@ ariaRolesToNVDARoles: Dict[str, int] = {
 	"tree":controlTypes.Role.TREEVIEW,
 	"treegrid":controlTypes.Role.TREEVIEW,
 	"treeitem":controlTypes.Role.TREEVIEWITEM,
+	"suggestion": controlTypes.Role.SUGGESTION,
+	"comment": controlTypes.Role.COMMENT,
+	"deletion": controlTypes.Role.DELETED_CONTENT,
+	"insertion": controlTypes.Role.INSERTED_CONTENT,
 }
 
 ariaSortValuesToNVDAStates: Dict[str, controlTypes.State] = {

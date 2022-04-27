@@ -40,9 +40,10 @@ import bdDetect
 import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+import aria
 
 
-roleLabels = {
+roleLabels: typing.Dict[controlTypes.Role, str] = {
 	# Translators: Displayed in braille for an object which is a
 	# window.
 	controlTypes.Role.WINDOW: _("wnd"),
@@ -189,6 +190,10 @@ roleLabels = {
 	controlTypes.Role.FIGURE: _("fig"),
 	# Translators: Displayed in braille for an object which represents marked (highlighted) content
 	controlTypes.Role.MARKED_CONTENT: _("hlght"),
+	# Translators: Displayed in braille when an object is a comment.
+	controlTypes.Role.COMMENT: _("cmnt"),
+	# Translators: Displayed in braille when an object is a suggestion.
+	controlTypes.Role.SUGGESTION: _("sggstn"),
 }
 
 positiveStateLabels = {
@@ -546,7 +551,14 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(description)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
-		textList.append("details")
+		detailsRole = propertyValues.get("detailsRole", controlTypes.Role.UNKNOWN)
+		if detailsRole != controlTypes.Role.UNKNOWN:
+			textList.append(roleLabels.get(detailsRole, detailsRole.displayString))
+		else:
+			textList.append(
+				# Translators: Braille when there are further details/annotations that can be fetched manually.
+				_("details")
+			)
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
@@ -648,6 +660,7 @@ class NVDAObjectRegion(Region):
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
 			hasDetails=obj.hasDetails,
+			detailsRole=obj.detailsRole,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,
@@ -721,6 +734,7 @@ def getControlFieldBraille(  # noqa: C901
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
+	detailsRole = aria.normalizeDetailsRole(field.get('detailsRole'))
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
@@ -768,6 +782,7 @@ def getControlFieldBraille(  # noqa: C901
 			"roleText": roleText,
 			"description": description,
 			"hasDetails": hasDetails,
+			"detailsRole": detailsRole,
 		}
 		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.

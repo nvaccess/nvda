@@ -267,6 +267,14 @@ class VBufStorage_fieldNode_t {
 	bool addAttribute(const std::wstring& name, const std::wstring& value);
 
 /**
+ * Gets an attribute value for this field.
+ * @param name the name of the attribute
+ * @param value where to store the value for the attribute.
+ * @return true if the attribute exists, false if it doesn't exist.
+ */
+	bool getAttribute(const std::wstring& name, std::wstring* value);
+
+/**
  * @return a string of all the attributes in this field, format of name:value pares separated by a semi colon.
  */
 	std::wstring getAttributesString() const;

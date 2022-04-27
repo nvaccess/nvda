@@ -184,6 +184,8 @@ IAccessibleRolesToNVDARoles: Dict[Union[int, str], controlTypes.Role] = {
 	IA2.IA2_ROLE_BLOCK_QUOTE: controlTypes.Role.BLOCKQUOTE,
 	IA2.IA2_ROLE_LANDMARK: controlTypes.Role.LANDMARK,
 	IA2.IA2_ROLE_MARK: controlTypes.Role.MARKED_CONTENT,
+	IA2.IA2_ROLE_COMMENT: controlTypes.Role.COMMENT,
+	IA2.IA2_ROLE_SUGGESTION: controlTypes.Role.SUGGESTION,
 	# some common string roles
 	"frame": controlTypes.Role.FRAME,
 	"iframe": controlTypes.Role.INTERNALFRAME,

@@ -73,6 +73,20 @@ class Mozilla(ia2Web.Ia2Web):
 			# just take the first for now.
 			return target.summarizeInProcess()
 
+	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in FireFox.
+		# Although slower, we have to fetch the details relations instead.
+		detailsRelations = self.detailsRelations
+		if not detailsRelations:
+			return None
+		for target in detailsRelations:
+			# just take the first for now.
+			return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(
+				target.IAccessibleRole,
+				controlTypes.Role.UNKNOWN
+			)
+
 	@property
 	def hasDetails(self) -> bool:
 		# Unlike base Ia2Web implementation, the details-roles

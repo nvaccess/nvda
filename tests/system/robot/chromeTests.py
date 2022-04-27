@@ -172,7 +172,7 @@ def exercise_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -181,7 +181,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Read line with details.",
 	)
 	# this word has no details attached
@@ -193,7 +193,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word without details",
 	)
 
@@ -209,16 +209,16 @@ def exercise_mark_aria_details():
 		"No additional details",
 		message="Browse mode: Report details on word without details",
 	)
-	# this word has details attached to it
+	# this word has a comment attached to it
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
 	_asserts.speech_matches(
 		actualSpeech,
-		"highlighted  has details  cat  out of highlighted",
+		"highlighted  has comment  cat  out of highlighted",
 		message="Browse mode: Move by word to word with details",
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word with details",
 	)
 	# read the details summary
@@ -238,12 +238,12 @@ def exercise_mark_aria_details():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("downArrow")
 	_asserts.speech_matches(
 		actualSpeech,
-		"out of edit  Hello  highlighted  has details  this is a  link  test",
+		"out of edit  Hello  highlighted  has note  this is a  link  test",
 		message="Browse mode: Move by line to paragraph with link nested in a container with details",
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"Hello  hlght details this is a  lnk test hlght end",
+		"Hello  hlght note this is a  lnk test hlght end",
 		message="Browse mode: Move by line to paragraph with link nested in a container with details",
 	)
 	# Jump to the link from same line
@@ -255,7 +255,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"Hello  hlght details this is a  lnk test hlght end",
+		"Hello  hlght note this is a  lnk test hlght end",
 		message="Browse mode: From same line jump to link nested in a container with details",
 	)
 
@@ -269,7 +269,7 @@ def exercise_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -279,12 +279,12 @@ def exercise_mark_aria_details():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("k")
 	_asserts.speech_matches(
 		actualSpeech,
-		"highlighted  has details  test  link",
+		"highlighted  has note  test  link",
 		message="Browse mode: From prior line jump to link nested in a container with details",
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"Hello  hlght details this is a  lnk test hlght end",
+		"Hello  hlght note this is a  lnk test hlght end",
 		message="Browse mode: From prior line jump to link nested in a container with details",
 	)
 	# read the details summary
@@ -329,7 +329,7 @@ def exercise_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -338,7 +338,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"The word  hlght details cat hlght end  has a comment tied to it.",
+		"The word  hlght cmnt cat hlght end  has a comment tied to it.",
 		message="Focus mode: report content editable with details",
 	)
 
@@ -364,7 +364,7 @@ def exercise_mark_aria_details():
 		actualSpeech,
 		SPEECH_SEP.join([
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 		]),
@@ -372,7 +372,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		expected="The word  hlght details cat hlght end  has a comment tied to it.",
+		expected="The word  hlght cmnt cat hlght end  has a comment tied to it.",
 		message="Focus mode: Move by word to word with details",
 	)
 
