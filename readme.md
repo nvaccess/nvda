@@ -9,6 +9,7 @@ Please note: the NVDA project has a [Citizen and Contributor Code of Conduct](CO
 ## Get support
 <details>
 <summary>Click to expand!</summary>
+
 Whether you are a beginner, an advanced user, a new or a long time developer; or if you represent an organization wishing to know more or to contribute to NVDA: you can get support through the included documentation as well as several communication channels dedicated to the NVDA screen reader. Here is an overview of the most important support sources.
 
 
@@ -58,6 +59,10 @@ The `--recursive` option is needed to retrieve various Git submodules we use.
 Although NVDA can run on any Windows version starting from Windows 7 Service pack 1, building NVDA from source is currently limited to only Windows 10 and above.
 
 ## Dependencies
+
+<details>
+<summary>Click to expand!</summary>
+
 The NVDA source depends on several other packages to run correctly.
 
 ### Installed Dependencies
@@ -125,6 +130,8 @@ The following dependencies aren't needed by most people, and are not included in
 
 ### Python dependencies
 NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in the requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. These packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
+
+</details>
  
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
@@ -267,6 +274,7 @@ For more see the `sconstruct` file.
 ## Running Automated Tests
 <details>
 <summary>Click to expand!</summary>
+
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
 
