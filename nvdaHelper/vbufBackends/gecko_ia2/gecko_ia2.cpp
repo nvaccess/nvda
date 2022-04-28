@@ -386,6 +386,36 @@ void fillRole(IAccessible2* pacc, VARIANT* varChild, long* role, BSTR* roleStrin
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
 
+void GeckoVBufBackend_t::fillVBufAriaDetails(
+	int docHandle,
+	IAccessible2* pacc,
+	VBufStorage_buffer_t* buffer,
+	VBufStorage_controlFieldNode_t* parentNode,
+	std::wstring roleAttr
+){
+	/* Set the details role by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
+	of the nodes in the relationship will not be in the buffer yet */
+	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
+	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
+	VBufStorage_controlFieldNode_t* detailsParentNode;
+	std::wstring detailsRole;
+	if (detailsId.has_value()) {
+		parentNode->addAttribute(L"hasDetails", L"true");
+		detailsParentNode = parentNode;
+		auto detailsChildNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
+		if (detailsChildNode != nullptr) {
+			detailsChildNode->getAttribute(L"role", &detailsRole);
+		}
+	}
+	if (detailsForId.has_value()) {
+		detailsParentNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
+		detailsRole.assign(roleAttr);
+	}
+	if (detailsParentNode != nullptr && !detailsRole.empty()) {
+		detailsParentNode->addAttribute(L"detailsRole", detailsRole);
+	}
+}
+
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	IAccessible2* pacc,
 	VBufStorage_buffer_t* buffer,
@@ -405,6 +435,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	varChild.vt=VT_I4;
 	varChild.lVal=0;
 	wostringstream s;
+	std::wstring roleAttr;
 
 	//get docHandle -- IAccessible2 windowHandle
 	HWND docHwnd;
@@ -470,13 +501,13 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
-	//Add role as an attrib
-	if(roleString)
-		s<<roleString;
-	else
-		s<<role;
-	parentNode->addAttribute(L"IAccessible::role",s.str());
-	s.str(L"");
+	if (roleString) {
+		roleAttr.assign(roleString);
+	} else {
+		roleAttr.assign(std::to_wstring(role));
+	}
+
+	parentNode->addAttribute(L"IAccessible::role", roleAttr);
 
 	//get states -- IAccessible accState
 	VARIANT varState;
@@ -1161,32 +1192,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	if (descriptionIsContent){
 		parentNode->addAttribute(L"descriptionIsContent", L"true");
 	}
-
-	/* Set the details role by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
-	of the nodes in the relationship will not be in the buffer yet */
-	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
-	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
-	VBufStorage_controlFieldNode_t* detailsParentNode;
-	std::wstring detailsRole;
-	if (detailsId.has_value()) {
-		parentNode->addAttribute(L"hasDetails", L"true");
-		detailsParentNode = parentNode;
-		auto detailsChildNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
-		if (detailsChildNode != nullptr) {
-			detailsChildNode->getAttribute(L"role", &detailsRole);
-		}
-	}
-	if (detailsForId.has_value()) {
-		detailsParentNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
-		if (roleString){
-			detailsRole.assign(roleString);
-		} else {
-			detailsRole.assign(std::to_wstring(role));
-		}
-	}
-	if (detailsParentNode != nullptr && !detailsRole.empty()) {
-		detailsParentNode->addAttribute(L"detailsRole", detailsRole);
-	}
+	fillVBufAriaDetails(docHandle, pacc, buffer, parentNode, roleAttr);
 
 	// Clean up.
 	if(name)

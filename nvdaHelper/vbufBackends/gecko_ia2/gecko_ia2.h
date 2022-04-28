@@ -33,6 +33,14 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 		bool ignoreInteractiveUnlabelledGraphics=false
 	);
 
+	void fillVBufAriaDetails(
+		int docHandle,
+		IAccessible2* pacc,
+		VBufStorage_buffer_t* buffer,
+		VBufStorage_controlFieldNode_t* parentNode,
+		std::wstring roleAttr
+	);
+
 	void versionSpecificInit(IAccessible2* pacc);
 
 	void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell);
