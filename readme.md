@@ -6,11 +6,11 @@ To learn more about NVDA or download a copy, visit the main [NV Access](http://w
 
 Please note: the NVDA project has a [Citizen and Contributor Code of Conduct](CODE_OF_CONDUCT.md). NV Access expects that all contributors and other community members will read and abide by the rules set out in this document while participating or contributing to this project.
 
+## Get support
 <details>
 <summary>Click to expand!</summary>
-## Get support
 Whether you are a beginner, an advanced user, a new or a long time developer; or if you represent an organization wishing to know more or to contribute to NVDA: you can get support through the included documentation as well as several communication channels dedicated to the NVDA screen reader. Here is an overview of the most important support sources.
-</details>
+
 
 ### Documentation
 * [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
@@ -40,6 +40,8 @@ You can also get  direct support from NV Access. See the [NV Access](http://www.
 * [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
 * [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
 * [Old email archives](http://nabble.nvda-project.org/Development-f1.html): contain discussions about NVDA development
+
+</details>
 
 ## Getting the Source Code
 The NVDA project uses the [Git](https://www.git-scm.com/) version control system for its source code and documentation.
