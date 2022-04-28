@@ -265,6 +265,8 @@ scons launcher version=test1
 For more see the `sconstruct` file.
 
 ## Running Automated Tests
+<details>
+<summary>Click to expand!</summary>
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
 
@@ -315,6 +317,8 @@ System tests can be run with the `runsystemtests.bat` script.
 Internally this script uses the Robot  test framework to execute the tests.
 Any arguments given to runsystemtests.bat are forwarded onto Robot.
 For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
+
+</details>
 
 ## Contributing to NVDA
 
