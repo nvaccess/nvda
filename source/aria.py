@@ -12,8 +12,8 @@ from logHandler import log
 def normalizeDetailsRole(detailsRole: Union[str, controlTypes.Role, None]) -> controlTypes.Role:
 	"""
 	The attribute detailsRole is determined in a number of cases.
-	With browse mode, detailsRole is normalized on the NVDAObject level to controlType.Role.
-	With focus mode, the attribute is added directly to the buffer as a string,
+	With focus mode, detailsRole is normalized on the NVDAObject level to controlType.Role.
+	With browse mode, the attribute is added directly to the buffer as a string,
 	either as a role string or a role integer.
 	Braille and speech needs consistent normalization for translation and reporting.
 	"""

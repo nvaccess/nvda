@@ -325,7 +325,7 @@ _roleLabels: Dict[Role, str] = {
 	Role.ENDNOTE: _("end note"),
 	# Translators: Identifies a footer (usually text).
 	Role.FOOTER: _("footer"),
-	# Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+	# Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 	Role.FOOTNOTE: _("foot note"),
 	# Translators: Reported for an object which is a glass pane; i.e.
 	# a pane that is guaranteed to be on top of all panes beneath it.
