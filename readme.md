@@ -45,6 +45,9 @@ You can also get  direct support from NV Access. See the [NV Access](http://www.
 </details>
 
 ## Getting the Source Code
+<details>
+<summary>Click to expand!</summary>
+
 The NVDA project uses the [Git](https://www.git-scm.com/) version control system for its source code and documentation.
 
 The NVDA Git repository is located at https://github.com/nvaccess/nvda.git. You can clone it with the following command, which will place files in a directory named `nvda`:
@@ -54,6 +57,8 @@ git clone --recursive https://github.com/nvaccess/nvda.git
 ```
 
 The `--recursive` option is needed to retrieve various Git submodules we use.
+
+</details>
 
 ## Supported Operating Systems
 Although NVDA can run on any Windows version starting from Windows 7 Service pack 1, building NVDA from source is currently limited to only Windows 10 and above.
@@ -134,6 +139,9 @@ NVDA and its build system also depend on an extensive list of Python packages. T
 </details>
  
 ## Preparing the Source Tree
+<details>
+<summary>Click to expand!</summary>
+
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
 
@@ -176,6 +184,8 @@ Instead, `scons symbolsArchive` will package them as a separate archive.
 
 By default, builds also do not use any compiler optimizations.
 Please see the `release` keyword argument for what compiler optimizations it will enable.
+
+</details>
 
 ## Running the Source Code
 It is possible to run NVDA directly from source without having to build the full binary package and launcher.
