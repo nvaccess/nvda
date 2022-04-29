@@ -763,7 +763,7 @@ Và sau đây là những quy ước viết tắt cho cột mốc:
 NVDA hỗ trợ nhập liệu chữ nổi dưới dạng đầy đủ và viết tắt thông qua một bàn phím chữ nổi.
 Bạn có thể chọn bảng chuyển đổi chữ nổi để chuyển từ chữ nổi sang dạng văn bản thông thường trong phần cài đặt [bảng nhập liệu #BrailleSettingsInputTable] ở phân loại chữ nổi trong [hộp thoại cấu hình NVDA #NVDASettings].
 
-Khi nhập liệu chữ đầy đủ, văn bản sẽ được chuyển dịch ngay sau khi gõ vào..
+Khi nhập liệu chữ đầy đủ, văn bản sẽ được chuyển dịch ngay sau khi được gõ vào..
 Khi dùng chữ tắt, văn bản sẽ được chuyển dịch sau khi bấm phím khoảng trắng hoặc enter ở cuối mỗi từ.
 Lưu ý, phần chuyển dịch chỉ có tác dụng với phần chữ nổi nhập liệu, không có tác dụng cho phần chữ nổi có sẵn.
 Ví dụ, nếu bạn sử dụng mã chữ nổi có dấu báo số đứng trước các chữ số và bấm xóa lùi để đi về cuối một chữ số, bạn sẽ phải gõ dấu báo số lại để gõ chữ số mới.
@@ -771,14 +771,14 @@ Ví dụ, nếu bạn sử dụng mã chữ nổi có dấu báo số đứng tr
 %kc:beginInclude
 Bấm chấm 7 để xóa ô hoặc ký tự vừa nhập.
 Chấm 8 dùng để chuyển dịch phần chữ nổi nhập liệu và bấm phím enter.
-Bấm chấm 7 + chấm 8 để chuyển dịch phần chữ nổi nhập liệu nhưng không thêm vào khoảng trắng hay bấm phím enter.
+Bấm chấm 7 + chấm 8 để chuyển dịch phần chữ nổi nhập liệu nhưng không thêm vào khoảng trắng hay bấm enter.
 %kc:endInclude
 
 +++ Các phím tắt để nhập liệu +++[BrailleKeyboardShortcuts]
 NVDA hỗ trợ các phím tắt cho việc nhập liệu và mô phỏng các phím bấm bằng màn hình chữ nổi.
 Kiểu mô phỏng này có hai dạng: gán trực tiếp kiểu nhập chữ nổi vào một số phím bấm và dùng các phím bổ trợ ảo.
 
-Những phím được dùng phổ biến như các phím mũi tên hay bấm Alt để mở các trình đơn, có thể gán trực tiếp cho các kiểu nhập liệu chữ nổi.
+Những phím được dùng phổ biến như các phím mũi tên hay bấm Alt để mở trình đơn, có thể gán trực tiếp cho các kiểu nhập liệu chữ nổi.
 Trình điều khiển cho mỗi màn hình chữ nổi đã được trang bị trước với một vài kiểu gán như thế này.
 Bạn có thể gán lại chúng hoặc thêm các phím mô phỏng mới từ [Hộp thoại quản lý thao tác #InputGestures].
 
@@ -806,9 +806,9 @@ Có thể thay đổi các thiết lập hỗ trợ nhìn của NVDA trong [phâ
 ++ Làm Nổi Trực Quan ++[VisionFocusHighlight]
 Làm Nổi Trực Quan có thể giúp xác định [focus hệ thống #SystemFocus], [đối tượng điều hướng hiện tại #ObjectNavigation] và vị trí con trỏ [chế độ duyệt #BrowseMode].
 Những vị trí này được làm nổi bật với một đường viền màu hình chữ nhật.
-- Dấu gạch màu xanh dương là làm nổi vị trí kết hợp của đối tượng điều hướng hiện tại và focus hệ thống (ví dụ, [đối tượng điều hướng hiện tại đi theo focus hệ thống #ReviewCursorFollowFocus]).
-- Đường gạch xanh dương là chỉ làm nổi focus hệ thống.
-- Toàn bộ màu hồng là chỉ làm nổi đối tượng điều hướng.
+- Dấu gạch màu xanh dương làm nổi vị trí kết hợp của đối tượng điều hướng hiện tại và focus hệ thống (ví dụ, [đối tượng điều hướng hiện tại đi theo focus hệ thống #ReviewCursorFollowFocus]).
+- Đường gạch xanh dương chỉ làm nổi focus hệ thống.
+- Toàn bộ màu hồng chỉ làm nổi đối tượng điều hướng.
 - Toàn bộ màu vàng làm nổi dấu nháy ảo được dùng trong chế độ duyệt (những nơi không có dấu nháy thật như trong các trình duyệt web).
 -
 
@@ -816,7 +816,7 @@ Khi bật chức năng Làm Nổi  trực quan trong [phân loại hỗ trợ nh
 
 ++ Che màn hình ++[VisionScreenCurtain]
 Là người mù hay nhìn kém, thường sẽ không thể hoặc không cần nhìn những gì trên màn hình.
-Hơn nữa, cũng có thể khó để biết có ai đó nhìn màn hình của bạn từ đằng sau hay không.
+Hơn nữa, cũng có thể khó để biết có ai đó đang nhìn màn hình của bạn từ đằng sau hay không.
 Tình huống này, NVDA có một tính năng tên gọi "Che Màn Hình", có thể bật lên để làm đen màn hình.
 
 Bạn có thể bật tính năng này trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings].
@@ -838,7 +838,7 @@ Ví dụ, nếu bạn di chuyển con trỏ ở chế độ duyệt đến một
 Tuy nhiên, bạn cũng có thể dùng lệnh duyệt đối tượng để nhận dạng nội dung trên toàn bộ cửa sổ ứng dụng.
 
 Khi hoàn tất nhận dạng, kết quả sẽ hiển thị trong một tài liệu như khi ở chế độ duyệt, cho phép đọc thông tin với con trỏ v...v...
-Bấm enter hoặc phím khoảng trắng để kích hoạt văn bản tại vị trí con trỏ nếu có thể.
+Bấm enter hoặc khoảng trắng để kích hoạt văn bản tại vị trí con trỏ nếu có thể.
 Bấm escape để bỏ qua kết quả nhận dạng.
 
 ++ Windows OCR ++[Win10Ocr]
@@ -855,7 +855,7 @@ Bấm NVDA+r để nhận dạng văn bản ở đối tượng điều hướng
 %kc:endInclude
 
 + Tính năng cụ thể cho một số ứng dụng +[ApplicationSpecificFeatures]
-NVDA cung cấp vài tính năng bổ sung cho một số ứng dụng, giúp một số thao tác nhất định trở nên dễ dàng hơn, hoặc cho phép truy cập một số tính năng vốn không tiếp cận được với người dùng trình đọc màn hình.
+NVDA cung cấp vài tính năng bổ sung cho một số ứng dụng, giúp một số thao tác nhất định trở nên dễ dàng hơn, hoặc cho phép truy cập những chức năng vốn không tiếp cận được với người dùng trình đọc màn hình.
 
 ++ Microsoft Word ++[MicrosoftWord]
 
@@ -867,13 +867,13 @@ Sau khi chuyển đến ô đầu tiên của dòng hoặc cột chứa tiêu đ
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
 | Chọn tiêu đề cho cột | NVDA+shift+c | Bấm một  lần để lựa chọn ô này là ô tiêu đề đầu tiên của các cột, tiêu đề này sẽ tự động được thông báo khi bạn di chuyển giữa các cột trong bảng. Bấm nhanh hai lần để bỏ lựa chọn này | 
-| Chọn tiêu đề cho dòng | NVDA+shift+r | Bấm một lần để lựa chọn ô này là ô tiêu đề đầu tiên của các dòng, tiêu đề này sẽ tự động được thông báo khi bạn di chuyển giữa các hàng trong bảng. Bấm nhanh hai lần để bỏ lựa chọn này | | 
+| Chọn tiêu đề cho dòng | NVDA+shift+r | Bấm một lần để lựa chọn ô này là ô tiêu đề đầu tiên của các dòng, tiêu đề này sẽ tự động được thông báo khi bạn di chuyển giữa các dòng trong bảng. Bấm nhanh hai lần để bỏ lựa chọn này | | 
 %kc:endInclude
 Những thiết lập này sẽ được lưu lại trong tài liệu dưới dạng điểm đánh dấu, tương thích với những trình đọc màn hình khác như Jaws chẳng hạn.
 Nghĩa là khi người dùng sử dụng trình đọc màn hình khác và mở tài liệu này thì thiết lập này sẽ tự động có sẵn
 
 +++ Chế độ duyệt tài liệu trong Microsoft Word +++[BrowseModeInMicrosoftWord]
-Tương tự đối với web, chế độ duyệt có thể được dùng trong Word, bạn có thể sử dụng những chức năng như duyệt nhanh, duyệt danh sách các thành phần.
+Tương tự như với web, chế độ duyệt có thể được dùng trong Word, cho phép bạn sử dụng những chức năng như duyệt nhanh, duyệt danh sách các thành phần.
 %kc:beginInclude
 Để bật tắt chế độ duyệt trong Word, bấm NVDA+khoảng trắng.
 %kc:endInclude
@@ -881,7 +881,7 @@ Xem thêm thông tin về chế độ duyệt và duyệt nhanh trong phần [Ch
 
 ++++ Duyệt Danh sách các thành phần ++++[WordElementsList]
 %kc:beginInclude
-Trong khi dùng chế độ duyệt trong Word, bạn có thể duyệt các thành phần bằng cách bấm NVDA+f7.
+Khi ở chế độ duyệt trong Word, bạn có thể duyệt các thành phần bằng cách bấm NVDA+f7.
 %kc:endInclude
 Danh sách các thành phần có thể liệt kê các tiêu đề, liên kết, chú thích ( bao gồm phần bình luận, thay đổi) và các lỗi (hiện chỉ giới hạn ở các lỗi chính tả).
 
@@ -907,12 +907,12 @@ Những thiết lập này sẽ được lưu lại trong tài liệu dưới d�
 Nghĩa là, sau này, khi tài liệu được mở và dùng một trình đọc màn hình khác để đọc thì các thiết lập tiêu đề của cột và dòng vẫn còn giữ nguyên.
 
 +++ Danh Sách Thành Phần +++[ExcelElementsList]
-Giống như trên web, NVDA cung cấp tính năng danh sách thành phần, sẽ liệt kê một số loại thông tin giúp bạn truy xuất nhanh.
+Tương tự như với web, NVDA cung cấp tính năng danh sách thành phần,  giúp bạn liệt kê và truy cập vài loại thông tin khác nhau.
 %kc:beginInclude
 Bấm NVDA+f7 để mở danh sách các thành phần trong Excel.
 %kc:endInclude
-Các loại thông tin trong hộp thoại danh sách thành phần bao gồm:
-- Biểu đồ (Charts): liệt kê tát cả biểu đồ có trong bảng tính hiện tại.
+Các loại thông tin trong hộp thoại danh sách các thành phần bao gồm:
+- Biểu đồ (Charts): liệt kê tất cả biểu đồ có trong bảng tính hiện tại.
 Chọn biểu đồ, bấm enter hoặc kích hoạt nút Chuyển đến để đưa focus đến biểu đồ; dùng phím mũi tên để duyệt.
 - Chú thích (Comments): liệt kê các ô có phần chú thích trong bảng tính hiện tại.
 Vị trí của ô cũng được hiển thị cùng với ô đó.
@@ -952,7 +952,7 @@ Có thể mở nó từ trình đơn ngữ cảnh của một ô cụ thể.
 Các chú thích được thêm vào ô thông qua hộp thoại chú thích mới không liên quan gì đến chú thích dạng "notes".
 
 +++ Đọc Ô Được Bảo Vệ +++[ExcelReadingProtectedCells]
-Bạn có thể không chuyển focus đến các ô trong một tập bảng tính được bảo vệ vì nó bị khóa, không cho phép chỉnh sửa.
+Bạn có thể không chuyển được focus đến các ô trong một tập bảng tính được bảo vệ vì nó bị khóa, không cho phép chỉnh sửa.
 %kc:beginInclude
 Chuyển qua chế độ duyệt bằng cách bấm NVDA+khoảng trắng. Lúc này, bạn có thể dùng các phím di chuyển để đọc các ô trong bảng tính hiện tại.
 %kc:endInclude
