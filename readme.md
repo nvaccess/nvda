@@ -353,4 +353,4 @@ For more details (including filtering and exclusion of tests) see `tests/system/
 <details>
 <summary>Click to Expand/Shrink!</summary>
 If you would like to contribute code or documentation to NVDA, you can read more information in our [contributing guide](https://github.com/nvaccess/nvda/wiki/Contributing).
-<details>
+</details>
