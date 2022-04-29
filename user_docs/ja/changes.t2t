@@ -88,6 +88,7 @@ eSpeak-NG と LibLouis を更新し、新しい日本語（6点漢点字）、�
 - Adobe Readerの保護モードが有効になっている場合、Adobe Readerが起動時にクラッシュする問題を修正しました。 (#11568)
 - Papenmeier 点字ディスプレイドライバを選択すると NVDA がクラッシュする問題を修正しました。 (#13348)
 - UIオートメーションが有効になった Microsoft Word: 表の空白セルから内容を含むセルに移動したり、ドキュメントの最後から既存の内容のある場所に移動したりするときに、ページ番号やその他の書式が不適切に報告される問題を修正しました。 (#13458, #13459)
+- Google Chrome バージョン 100 でページ読み込み時に NVDA によるページタイトルの読み上げや自動でのページの読み上げが失敗していた問題を修正しました。 (#13571)
 -
 
 == 開発者向けの変更 ==
@@ -156,19 +157,12 @@ Windows の設定「マウスの主ボタン」の変更に適切に対応する
   -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` は ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct`` に移動しました。 (#13364)
 - ブール型の値 ``gui.isInMessageBox`` を削除しました。かわりに関数 ``gui.message.isModalMessageBoxActive`` を使います。 (#12984, #13376)
-- ``controlTypes`` は複数のサブモジュールに分割されました。 (#12510)
+- ``controlTypes`` は複数のサブモジュールに分割されました。 (#12510, #13588)
   - ``ROLE_*`` および ``STATE_*`` はそれぞれ ``Role.*`` および ``State.*`` になりました。
-  - ``roleLabels``, ``stateLabels`` および ``negativeStateLabels`` を削除しました。
-  例えば ``roleLabels[ROLE_*]`` のような使い方は ``Role.*.displayString`` や ``State.*.negativeDisplayString`` となります。
-  - ``processPositiveStates`` および ``processNegativeStates`` を削除しました。
-  -
-- ``controlTypes.Role`` および ``controlTypes.State`` の各列挙型の値はハードコーディングではなくなり、値は変更されました。 (#13414)
-  - ``controlTypes.State`` メンバーはビットのフラグではなくなりました。ビットの論理演算で状態を判定することはできません。
-  - ``IAccessible``, ``IAccessible2`` および ``UIA`` とのマッピングがあります:
-    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
-    - ``UIAHandler.UIAControlTypesToNVDARoles``
+  - 以下は廃止されていませんが非推奨となりました:
+    - ``ROLE_*`` および ``STATE_*`` は非推奨です。それぞれ ``Role.*`` および ``State.*`` を使います。
+    - ``roleLabels``, ``stateLabels`` および ``negativeStateLabels`` は非推奨です。例えば ``roleLabels[ROLE_*]`` のような場合は ``Role.*.displayString`` や ``State.*.negativeDisplayString`` を使います。
+    - ``processPositiveStates`` および ``processNegativeStates`` は非推奨です。``processAndLabelStates`` を使います。
     -
   -
 - Excel セルの状態の定数 (``NVSTATE_*``) は ``NvCellState`` 列挙型の値になりました。``NVDAObjects/window/excel.py`` の列挙型 ``NvCellState`` は _nvCellStatesToStates 経由で ``controlTypes.State`` にマッピングされます。 (#13465)

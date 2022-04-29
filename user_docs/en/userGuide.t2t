@@ -342,6 +342,10 @@ When within a table, the following key commands are also available:
 | Move to next column | control+alt+rightArrow | Moves the system caret to the next column (staying in the same row) |
 | Move to previous row | control+alt+upArrow | Moves the system caret to the previous row (staying in the same column) |
 | Move to next row | control+alt+downArrow | Moves the system caret to the next row (staying in the same column) |
+| Move to first column | control+alt+home | Moves the system caret to the first column (staying in the same row) |
+| Move to last column | control+alt+end | Moves the system caret to the last column (staying in the same row) |
+| Move to first row | control+alt+pageUp | Moves the system caret to the first row (staying in the same column) |
+| Move to last row | control+alt+pageDown | Moves the system caret to the last row (staying in the same column) |
 %kc:endInclude
 
 ++ Object Navigation ++[ObjectNavigation]
@@ -617,8 +621,11 @@ NVDA supports the following types of mathematical content:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 - Microsoft Word 365 Modern Math Equations via UI automation:
 NVDA is able to read and interact with math equations in Microsoft Word 365/2016 build 14326 and higher.
-Note however that any previously created MathType equations must be  first converted to Office Math by selecting each and choosing Equation Options -> Convert to Office Math in the context menu. Ensure your version of MathType is the latest version before doing this.
-Microsoft Word also now provides linea symbol-based navigation through the equations itself, and supports inputting math using several syntaxes, including LateX. For further details, please see [Linear format equations using UnicodeMath and LaTeX in Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+Note however that any previously created MathType equations must be first converted to Office Math.
+This can be done by selecting each and choosing "Equation Options", then "Convert to Office Math" in the context menu.
+Ensure your version of MathType is the latest version before doing this.
+Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting math using several syntaxes, including LateX.
+For further details, please see [Linear format equations using UnicodeMath and LaTeX in Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint, and older versions of Microsoft Word: 
 NVDA can read and navigate MathType equations in both Microsoft Powerpoint and Microsoft word.
 MathType needs to be installed in order for this to work.
@@ -785,7 +792,8 @@ You can change these assignments or add new emulated keys from the [Input Gestur
 
 While this approach is useful for commonly-pressed or unique keys (such as Tab), you may not want to assign a unique set of keys to each keyboard shortcut.
 To allow emulating keypresses where modifier keys are held down, NVDA provides commands to toggle the control, alt, shift, windows, and NVDA keys, along with commands for some combinations of those keys.
-To use these toggles, first press the command (or sequence of commands) for the modifier keys you want pressed, than input the character that's part of the keyboard shortcut you want to input.
+To use these toggles, first press the command (or sequence of commands) for the modifier keys you want pressed.
+Then input the character that's part of the keyboard shortcut you want to input.
 For example, to produce control+f, use the "Toggle control key" command and then type an f,
 and to input control+alt+t, use either the "Toggle control key" and "Toggle alt key" commands, in either order, or the "Toggle control and alt keys" command, followed by typing a t.
 
@@ -1710,8 +1718,12 @@ This field sets the amount of lines you will move by when pressing page up or pa
 ==== Use screen layout ====[BrowseModeSettingsScreenLayout]
 Key: NVDA+v
 
-This option allows you to specify whether browse mode should place clickable content (links, buttons and fields) on its own line, or if it should keep it in the flow of text as it is visually shown. Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
-When screen layout is enabled, page elements will stay as they are visually shown. For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line. If it is disabled, then page elements will be placed on their own lines, which may be easier to understand during line by line page navigation, and may make items easier to interact with for some users.
+This option allows you to specify whether browse mode should place clickable content (links, buttons and fields) on its own line, or if it should keep it in the flow of text as it is visually shown.
+Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
+When screen layout is enabled, page elements will stay as they are visually shown.
+For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line.
+If it is disabled, then page elements will be placed on their own lines.
+This may be easier to understand during line by line page navigation and make items easier to interact with for some users.
 
 ==== Enable browse mode on page load ====[BrowseModeSettingsEnableOnPageLoad]
 This checkbox toggles whether browse mode should be automatically enabled when loading a page.
