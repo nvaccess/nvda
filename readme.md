@@ -195,6 +195,8 @@ To view help on the arguments that NVDA will accept, use the `-h` or `--help` op
 These arguments are also documented in the user guide.
 
 ## Building NVDA
+<details>
+<summary>Click to expand!</summary>
 A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
 
 Binary archives and bundles can be created using scons from the root of the NVDA source distribution. To build any of the following, open a command prompt and change to that directory.
@@ -280,6 +282,8 @@ scons launcher version=test1
 ```
 
 For more see the `sconstruct` file.
+
+</details>
 
 ## Running Automated Tests
 <details>
