@@ -88,6 +88,7 @@ Nota:
 - Corregido un fallo donde al seleccionar el controlador de la pantalla braille Papenmeier provocaba que NVDA se colgase. (#13348)
 - En Microsoft word con UIA: el número de página y otros formatos ya no se anuncian inapropiadamente al moverse desde una celda de tabla en blanco a una celda con contenido, o desde el final del documento a un contenido existente. (#13458, #13459)
 - NVDA ya no falla al anunciar el título de página y al comenzar la lectura automática cuando se cargue una página en Google chrome 100. (#13571)
+- NVDA ya no se bloquea al reiniciar la configuración de NVDA a los valores predeterminados de fábrica mientras verbalizar teclas de órdenes esté activado. (#13634)
 -
 
 == Cambios para Desarrolladores ==

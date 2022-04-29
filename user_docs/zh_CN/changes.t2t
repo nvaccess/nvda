@@ -90,6 +90,7 @@ eSpeak-NG 语音合成器以及 LibLouis 盲文翻译模块都得到了升级，
 - 修复了选中 Papenmeier 点显器驱动导致 NVDA崩溃的错误。 (#13348)
 - 开启 UIA 后，在 MS Word 中：当从空白表格单元格移动到有内容的单元格，或从文档末尾移动到正文区域时，不会错误的读出页码和其他格式信息。 (#13458, #13459)
 - 修复了在 Google chrome 100 中页面加载后，无法读出标题且无法自动朗读的错误。 (#13571)
+- 修复了启用“读出 NVDA 快捷键”的情况下，重置设置为默认值会导致 NVDA 崩溃的错误。 (#13634)
 -
 
 == 简体中文翻译条目更改 ==
@@ -111,6 +112,17 @@ eSpeak-NG 语音合成器以及 LibLouis 盲文翻译模块都得到了升级，
   - blue-purple=蓝紫色
   - purple-pink=粉紫色
   - pink-red=粉红色
+  - very light grey=淡灰色
+  - very dark grey=暗灰色
+  - bright {color}=亮 {color}
+  - dark {color}=深 {color}
+  - very dark {color}=暗 {color}
+  - light pale {color}=浅灰{color}
+  - pale {color}=灰{color}
+  - very dark pale {color}=深灰 {color}
+  - very dark pale {color}=暗灰 {color}
+  - dark {color} grey=深 {color} 灰色
+  - very dark {color} grey=暗 {color} 灰色
 -
 
 
