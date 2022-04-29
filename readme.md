@@ -8,7 +8,7 @@ Please note: the NVDA project has a [Citizen and Contributor Code of Conduct](CO
 
 ## Get support
 <details>
-<summary>Click to expand!</summary>
+<summary>Click to Expand/Shrink!</summary>
 
 Whether you are a beginner, an advanced user, a new or a long time developer; or if you represent an organization wishing to know more or to contribute to NVDA: you can get support through the included documentation as well as several communication channels dedicated to the NVDA screen reader. Here is an overview of the most important support sources.
 
@@ -46,7 +46,7 @@ You can also get  direct support from NV Access. See the [NV Access](http://www.
 
 ## Getting the Source Code
 <details>
-<summary>Click to expand!</summary>
+<summary>Click to Expand/Shrink!</summary>
 
 The NVDA project uses the [Git](https://www.git-scm.com/) version control system for its source code and documentation.
 
@@ -61,12 +61,15 @@ The `--recursive` option is needed to retrieve various Git submodules we use.
 </details>
 
 ## Supported Operating Systems
+<details>
+<summary>Click to Expand/Shrink!</summary>
 Although NVDA can run on any Windows version starting from Windows 7 Service pack 1, building NVDA from source is currently limited to only Windows 10 and above.
+</details>
 
 ## Dependencies
 
 <details>
-<summary>Click to expand!</summary>
+<summary>Click to Expand/Shrink!</summary>
 
 The NVDA source depends on several other packages to run correctly.
 
@@ -140,7 +143,7 @@ NVDA and its build system also depend on an extensive list of Python packages. T
  
 ## Preparing the Source Tree
 <details>
-<summary>Click to expand!</summary>
+<summary>Click to Expand/Shrink!</summary>
 
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
@@ -188,15 +191,18 @@ Please see the `release` keyword argument for what compiler optimizations it wil
 </details>
 
 ## Running the Source Code
+<details>
+<summary>Click to Expand/Shrink!</summary>
 It is possible to run NVDA directly from source without having to build the full binary package and launcher.
 To launch NVDA from source, using `cmd.exe`, execute `runnvda.bat` in the root of the repository.
 
 To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
 These arguments are also documented in the user guide.
+</details>
 
 ## Building NVDA
 <details>
-<summary>Click to expand!</summary>
+<summary>Click to Expand/Shrink!</summary>
 A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
 
 Binary archives and bundles can be created using scons from the root of the NVDA source distribution. To build any of the following, open a command prompt and change to that directory.
@@ -287,7 +293,7 @@ For more see the `sconstruct` file.
 
 ## Running Automated Tests
 <details>
-<summary>Click to expand!</summary>
+<summary>Click to Expand/Shrink!</summary>
 
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
@@ -344,4 +350,7 @@ For more details (including filtering and exclusion of tests) see `tests/system/
 
 ## Contributing to NVDA
 
+<details>
+<summary>Click to Expand/Shrink!</summary>
 If you would like to contribute code or documentation to NVDA, you can read more information in our [contributing guide](https://github.com/nvaccess/nvda/wiki/Contributing).
+<details>
