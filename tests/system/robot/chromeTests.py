@@ -862,7 +862,7 @@ def test_pr11606():
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(
 		actualSpeech,
-		"section  multi line  editable  list  bullet  link  A    link  B"
+		"section  multi line  editable  list  bullet  link  A  link  B"
 	)
 	# move past the end of the first link.
 	# This should not be affected due to pr #11606.
@@ -886,7 +886,7 @@ def test_pr11606():
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"bullet  link  A    link  B"
+		"bullet  link  A  link  B"
 	)
 
 
@@ -1214,14 +1214,14 @@ def test_ariaRoleDescription_inline_contentEditable():
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"Start  drawing  Our logo    End"
+		"Start  drawing  Our logo  End"
 	)
 	# When reading the line by word,
 	# Both entering and exiting the custom role should be reported.
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"drawing  Our logo    out of drawing"
+		"drawing  Our logo  out of drawing"
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
 	_asserts.strings_match(
