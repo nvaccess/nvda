@@ -23,6 +23,7 @@ from .types import (
 	SpeechSequence,
 	_flattenNestedSequences,
 )
+from abc import abstractmethod
 
 if TYPE_CHECKING:
 	import NVDAObjects
@@ -98,7 +99,12 @@ class _SayAllHandler:
 	def readText(self, cursor: CURSOR):
 		self.lastSayAllMode = cursor
 		try:
-			reader = _TextReader(self, cursor)
+			if cursor == CURSOR.CARET:
+				reader = _CaretTextReader(self)
+			elif cursor == CURSOR.REVIEW:
+				reader = _ReviewTextReader(self)
+			else:
+				raise RuntimeError(f"Unknown cursor {cursor}")
 		except NotImplementedError:
 			log.debugWarning("Unable to make reader", exc_info=True)
 			return
@@ -167,35 +173,24 @@ class _TextReader(garbageHandler.TrackedObject):
 	"""
 	MAX_BUFFERED_LINES = 10
 
-	def __init__(self, handler: _SayAllHandler, cursor: CURSOR):
+	def __init__(self, handler: _SayAllHandler):
 		self.handler = handler
-		self.cursor = cursor
 		self.trigger = SayAllProfileTrigger()
-		self.reader = None
-		# Start at the cursor.
-		if cursor == CURSOR.CARET:
-			try:
-				self.reader = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
-			except (NotImplementedError, RuntimeError) as e:
-				raise NotImplementedError("Unable to make TextInfo: " + str(e))
-		else:
-			self.reader = api.getReviewPosition()
+		self.reader = self.getInitialTextInfo()
 		# #10899: SayAll profile can't be activated earlier because they may not be anything to read
 		self.trigger.enter()
 		self.speakTextInfoState = SayAllHandler._makeSpeakTextInfoState(self.reader.obj)
 		self.numBufferedLines = 0
 
-	def nextLine(self):
-		if not self.reader:
-			log.debug("no self.reader")
-			# We were stopped.
-			return
-		if not self.reader.obj:
-			log.debug("no self.reader.obj")
-			# The object died, so we should too.
-			self.finish()
-			return
-		bookmark = self.reader.bookmark
+	@abstractmethod
+	def getInitialTextInfo(self) -> textInfos.TextInfo:
+		...
+
+	@abstractmethod
+	def updateCaret(self, updater: textInfos.TextInfo) -> None:
+		...
+
+	def nextLineImpl(self) -> bool:
 		# Expand to the current line.
 		# We use move end rather than expand
 		# because the user might start in the middle of a line
@@ -211,8 +206,22 @@ class _TextReader(garbageHandler.TrackedObject):
 				self.handler.speechWithoutPausesInstance.speakWithoutPauses([cb, EndUtteranceCommand()])
 			else:
 				self.finish()
-			return
+			return False
+		return True
 
+	def nextLine(self):
+		if not self.reader:
+			log.debug("no self.reader")
+			# We were stopped.
+			return
+		if not self.reader.obj:
+			log.debug("no self.reader.obj")
+			# The object died, so we should too.
+			self.finish()
+			return
+		bookmark = self.reader.bookmark
+		if not self.nextLineImpl():
+			return
 		# Copy the speakTextInfoState so that speak callbackCommand
 		# and its associated callback are using a copy isolated to this specific line.
 		state = self.speakTextInfoState.copy()
@@ -270,10 +279,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		# We've just started speaking this line, so move the cursor there.
 		state.updateObj()
 		updater = obj.makeTextInfo(bookmark)
-		if self.cursor == CURSOR.CARET:
-			updater.updateCaret()
-		if self.cursor != CURSOR.CARET or config.conf["reviewCursor"]["followCaret"]:
-			api.setReviewPosition(updater, isCaret=self.cursor == CURSOR.CARET)
+		self.updateCaret(updater)
 		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
@@ -314,6 +320,28 @@ class _TextReader(garbageHandler.TrackedObject):
 
 	def __del__(self):
 		self.stop()
+
+
+class _CaretTextReader(_TextReader):
+	def getInitialTextInfo(self) -> textInfos.TextInfo:
+		try:
+			return api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError) as e:
+			raise NotImplementedError("Unable to make TextInfo: ", e)
+
+	def updateCaret(self, updater: textInfos.TextInfo) -> None:
+		updater.updateCaret()
+		if config.conf["reviewCursor"]["followCaret"]:
+			api.setReviewPosition(updater, isCaret=True)
+
+
+class _ReviewTextReader(_TextReader):
+	def getInitialTextInfo(self) -> textInfos.TextInfo:
+		return api.getReviewPosition()
+
+	def updateCaret(self, updater: textInfos.TextInfo) -> None:
+		api.setReviewPosition(updater, isCaret=False)
+
 
 class SayAllProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when say all is in progress.
