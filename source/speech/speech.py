@@ -945,9 +945,9 @@ def speak(  # noqa: C901
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
 		if isinstance(item,str):
-			text =processText(curLanguage, item, symbolLevel)
+			text = processText(curLanguage, item, symbolLevel)
 			if not inCharacterMode and text:
-				text +=CHUNK_SEPARATOR
+				text += CHUNK_SEPARATOR
 			speechSequence[index] = text
 	# speech sequence should be considered blank if:
 	# 1. it contains strings
