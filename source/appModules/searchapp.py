@@ -8,3 +8,5 @@
 
 # Flake8/F403: this is an alias for SearchUI app module.
 from .searchui import * # NOQA
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()
