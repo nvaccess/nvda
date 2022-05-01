@@ -10,6 +10,7 @@ from baseObject import AutoPropertyObject, ScriptableObject
 import config
 import textInfos
 import controlTypes
+from speech import sayAll
 
 _TableID = Union[int, Tuple, Any]
 """
@@ -149,7 +150,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			info: textInfos.TextInfo,
 			axis: Optional[_Axis] = None,
 	) -> _TableCell:
-		cell = self._getTableCellCoords(self.selection)
+		cell = self._getTableCellCoords(info)
 
 		# The following lines check whether user has been issuing table navigation commands repeatedly.
 		# In this case, instead of using current column/row index, we used cached value
@@ -339,7 +340,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			movement: Optional[_Movement] = None,
 			axis: Optional[_Axis] = None,
 			selection: Optional[textInfos.TextInfo] = None,
-	) -> Tuple[_TableCell, textInfos.TextInfo, _TableSelection]:
+			raiseOnEdge: bool = False,
+	) -> Tuple[_TableCell, textInfos.TextInfo, Optional[_TableSelection]]:
 		# documentBase is a core module and should not depend on these UI modules and so they are imported
 		import ui
 		if not selection:
@@ -367,10 +369,14 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 					movement,
 					axis
 				)
+			elif movement is None:
+				info = self._getTableCellAt(cell.tableID, self.selection, cell.row, cell.col)
 			else:
 				raise ValueError(f"Unknown movement {movement}")
 			newCell = self._getTableCellCoords(info)
-		except LookupError:
+		except LookupError as e:
+			if raiseOnEdge:
+				raise e
 			# Translators: The message reported when a user attempts to use a table movement command
 			# but the cursor can't be moved in that direction because it is at the edge of the table.
 			ui.message(_("Edge of table"))
@@ -388,7 +394,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			rowSpan=cell.rowSpan if axis == _Axis.COLUMN else newCell.rowSpan,
 			trueCol=cell.col if axis == _Axis.ROW else newCell.col,
 			colSpan=cell.colSpan if axis == _Axis.ROW else newCell.colSpan,
-		)
+		) if movement is not None else None
 		return newCell, info, tableSelection
 
 	def _tableMovementScriptHelper(
@@ -418,6 +424,34 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		info.collapse()
 		self.selection = info
 		self._lastTableSelection = tableSelection
+
+	def _tableSayAll(
+			self,
+			movement: _Movement,
+			axis: _Axis,
+			updateCaret: bool = True,
+	) -> None:
+		try:
+			cell, info, tableSelection = self._tableFindNewCell(
+				movement if movement == _Movement.FIRST else None,
+				axis,
+			)
+		except LookupError:
+			# _tableFindNewCell already spoke proper error message
+			return
+
+		def nextLineFunc(info: textInfos.TextInfo) -> textInfos.TextInfo:
+			try:
+				cell, newInfo, tableSelection = self._tableFindNewCell(
+					_Movement.NEXT,
+					axis,
+					selection=info,
+					raiseOnEdge=True,
+				)
+				return newInfo
+			except LookupError as e:
+				raise StopIteration(e)
+		sayAll.SayAllHandler.readText(sayAll.CURSOR.TABLE, info, nextLineFunc, updateCaret)
 
 	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.NEXT)
@@ -459,6 +493,30 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	# Translators: the description for the last table column script on browseMode documents.
 	script_lastColumn.__doc__ = _("moves to the last table column")
 
+	def script_sayAllRow(self, gesture):
+		self._tableSayAll(_Movement.NEXT, _Axis.COLUMN)
+	# Translators: the description for the sayAll row command
+	script_sayAllRow.__doc__ = _(
+		"Reads row horizontally from current table cell up untill the last cell in the row."
+	)
+
+	def script_sayAllColumn(self, gesture):
+		self._tableSayAll(_Movement.NEXT, _Axis.ROW)
+	# Translators: the description for the sayAll row command
+	script_sayAllColumn.__doc__ = _(
+		"Reads column vertically from current table cell down to the last cell in the column."
+	)
+
+	def script_speakRow(self, gesture):
+		self._tableSayAll(_Movement.FIRST, _Axis.COLUMN, updateCaret=False)
+	# Translators: the description for the speak row command
+	script_speakRow.__doc__ = _("Reads row horizontally from left to right without moving system caret.")
+
+	def script_speakColumn(self, gesture):
+		self._tableSayAll(_Movement.FIRST, _Axis.ROW, updateCaret=False)
+	# Translators: the description for the speak column command
+	script_speakColumn.__doc__ = _("Reads column vertically from top to bottom without moving system caret.")
+
 	def script_toggleIncludeLayoutTables(self,gesture):
 		# documentBase is a core module and should not depend on UI, so it is imported at run-time. (#12404)
 		import ui
@@ -483,4 +541,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		"kb:control+alt+pageDown": "lastRow",
 		"kb:control+alt+Home": "firstColumn",
 		"kb:control+alt+End": "lastColumn",
+		"kb:NVDA+control+alt+RightArrow": "sayAllRow",
+		"kb:NVDA+control+alt+DownArrow": "sayAllColumn",
+		"kb:NVDA+control+alt+LeftArrow": "speakRow",
+		"kb:NVDA+control+alt+UpArrow": "speakColumn",
 	}
