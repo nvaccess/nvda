@@ -48,6 +48,15 @@ class _TableSelection:
 	colSpan: int
 
 
+@dataclass
+class _TableCell:
+	tableID: _TableID
+	row: int
+	col: int
+	rowSpan: int
+	colSpan: int
+
+
 class TextContainerObject(AutoPropertyObject):
 	"""
 	An object that contains text which can be accessed via a call to a makeTextInfo method.
@@ -100,13 +109,14 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 						layoutIDs.add(tableID)
 		return layoutIDs
 
-	def _getTableCellCoords(self, info):
+	def _getTableCellCoords(
+			self,
+			info: textInfos.TextInfo,
+	) -> _TableCell:
 		"""
 		Fetches information about the deepest table cell at the given position.
 		@param info:  the position where the table cell should be looked for.
-		@type info: L{textInfos.TextInfo}
-		@returns: a tuple of table ID, row number, column number, row span, and column span.
-		@rtype: tuple
+		@returns: Information about requested cell.
 		@raises: LookupError if there is no table cell at this position.
 		"""
 		if info.isCollapsed:
@@ -126,9 +136,56 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				break
 		else:
 			raise LookupError("Not in a table cell")
-		return (attrs["table-id"],
-			attrs["table-rownumber"], attrs["table-columnnumber"],
-			attrs.get("table-rowsspanned", 1), attrs.get("table-columnsspanned", 1))
+		return _TableCell(
+			attrs["table-id"],
+			attrs["table-rownumber"],
+			attrs["table-columnnumber"],
+			attrs.get("table-rowsspanned", 1),
+			attrs.get("table-columnsspanned", 1),
+		)
+
+	def _getTableCellCoordsCached(
+			self,
+			info: textInfos.TextInfo,
+			axis: Optional[_Axis] = None,
+	) -> _TableCell:
+		cell = self._getTableCellCoords(self.selection)
+
+		# The following lines check whether user has been issuing table navigation commands repeatedly.
+		# In this case, instead of using current column/row index, we used cached value
+		# to allow users being able to skip merged cells without affecting the initial column/row index.
+		# For more info see issue #11919 and #7278.
+		if (
+			self._lastTableSelection
+			and cell.row == self._lastTableSelection.lastRow
+			and cell.col == self._lastTableSelection.lastCol
+			and self._lastTableSelection.axis == axis
+		):
+			if axis == _Axis.ROW:
+				newCol = self._lastTableSelection.trueCol
+				newColSpan = self._lastTableSelection.colSpan
+				return _TableCell(
+					cell.tableID,
+					cell.row,
+					newCol,
+					cell.rowSpan,
+					newColSpan,
+				)
+			else:
+				newRow = self._lastTableSelection.trueRow
+				newRowSpan = self._lastTableSelection.rowSpan
+				return _TableCell(
+					cell.tableID,
+					newRow,
+					cell.col,
+					newRowSpan,
+					cell.colSpan,
+				)
+		return cell
+
+
+
+
 
 	def _getTableDimensions(self, info: textInfos.TextInfo) -> Tuple[int, int]:
 		"""
@@ -184,12 +241,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 	def _getNearestTableCell(
 			self,
-			tableID: _TableID,
 			startPos: textInfos.TextInfo,
-			origRow: int,
-			origCol: int,
-			origRowSpan: int,
-			origColSpan: int,
+			cell: _TableCell,
 			movement: _Movement,
 			axis: _Axis,
 	) -> textInfos.TextInfo:
@@ -197,26 +250,22 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		Locates the nearest table cell relative to another table cell in a given direction, given its coordinates.
 		For example, this is used to move to the cell in the next column, previous row, etc.
 		This method will skip over missing table cells (where L{_getTableCellAt} raises LookupError), up to the number of times set by _missingTableCellSearchLimit set on this instance.
-		@param tableID: the ID of the table
 		@param startPos: the position in the document to start searching from.
-		@param origRow: the row number of the starting cell
-		@param origCol: the column number  of the starting cell
-		@param origRowSpan: the row span of the row of the starting cell
-		@param origColSpan: the column span of the column of the starting cell
+		@param cell: the cell information of start position.
 		@param movement: the direction ("next" or "previous")
 		@param axis: the axis of movement ("row" or "column")
 		@returns: the position of the nearest table cell
 		"""
+		tableID = cell.tableID
 		if not axis:
 			raise ValueError("Axis must be row or column")
 
 		# Determine destination row and column.
-		destRow = origRow
-		destCol = origCol
+		destRow, destCol = cell.row, cell.col
 		if axis == _Axis.ROW:
-			destRow += origRowSpan if movement == _Movement.NEXT else -1
+			destRow += cell.rowSpan if movement == _Movement.NEXT else -1
 		elif axis == _Axis.COLUMN:
-			destCol += origColSpan if movement == _Movement.NEXT else -1
+			destCol += cell.colSpan if movement == _Movement.NEXT else -1
 
 		# Try and fetch the cell at these coordinates, though  if a  cell is missing, try  several more times moving the coordinates on by one cell each time
 		limit=self._missingTableCellSearchLimit
@@ -237,12 +286,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 	def _getFirstOrLastTableCell(
 			self,
-			tableID: _TableID,
 			startPos: textInfos.TextInfo,
-			origRow: int,
-			origCol: int,
-			origRowSpan: int,
-			origColSpan: int,
+			cell: _TableCell,
 			movement: _Movement,
 			axis: _Axis
 	) -> textInfos.TextInfo:
@@ -254,17 +299,13 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		After figuring out exact coordinates of the cell it will try to jump directly to that cell,
 		or if that fails (due to missing table cell), it will walk in the opposite direction skipping missing cells
 		up to the number of times set by _missingTableCellSearchLimit set on this instance.
-		@param tableID: the ID of the table
 		@param startPos: the position in the document to start searching from.
-		@param origRow: the row number of the starting cell
-		@param origCol: the column number  of the starting cell
-		@param origRowSpan: the row span of the row of the starting cell
-		@param origColSpan: the column span of the column of the starting cell
+		@param cell: the cell information of start position.
 		@param movement: the direction ("first" or "last")
 		@param axis: the axis of movement ("row" or "column")
 		@returns: the position of the destination table cell
 		"""
-		destRow, destCol = origRow, origCol
+		destRow, destCol = cell.row, cell.col
 		if movement == _Movement.FIRST:
 			if axis == _Axis.COLUMN:
 				destCol = 1
@@ -277,19 +318,78 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			else:
 				destRow = nRows
 		try:
-			return self._getTableCellAt(tableID, startPos, destRow, destCol)
+			return self._getTableCellAt(cell.tableID, startPos, destRow, destCol)
 		except LookupError:
 			oppositeMovement = _Movement.PREVIOUS if movement == _Movement.LAST else _Movement.NEXT
 			return self._getNearestTableCell(
-				tableID,
 				startPos,
-				destRow,
-				destCol,
-				origRowSpan=1,
-				origColSpan=1,
+				_TableCell(
+					cell.TableID,
+					destRow,
+					destCol,
+					rowSpan=1,
+					colSpan=1,
+				),
 				movement=oppositeMovement,
-				axis=axis
+				axis=axis,
 			)
+
+	def _tableFindNewCell(
+			self,
+			movement: Optional[_Movement] = None,
+			axis: Optional[_Axis] = None,
+			selection: Optional[textInfos.TextInfo] = None,
+	) -> Tuple[_TableCell, textInfos.TextInfo, _TableSelection]:
+		# documentBase is a core module and should not depend on these UI modules and so they are imported
+		import ui
+		if not selection:
+			selection = self.selection
+		try:
+			cell = self._getTableCellCoordsCached(selection, axis)
+		except LookupError as e:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# when the cursor is not within a table.
+			ui.message(_("Not in a table cell"))
+			raise e
+
+		try:
+			if movement in {_Movement.PREVIOUS, _Movement.NEXT}:
+				info = self._getNearestTableCell(
+					self.selection,
+					cell,
+					movement,
+					axis,
+				)
+			elif movement in {_Movement.FIRST, _Movement.LAST}:
+				info = self._getFirstOrLastTableCell(
+					self.selection,
+					cell,
+					movement,
+					axis
+				)
+			else:
+				raise ValueError(f"Unknown movement {movement}")
+			newCell = self._getTableCellCoords(info)
+		except LookupError:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# but the cursor can't be moved in that direction because it is at the edge of the table.
+			ui.message(_("Edge of table"))
+			# Retrieve the cell on which we started.
+			try:
+				info = self._getTableCellAt(cell.tableID, self.selection, cell.row, cell.col)
+			except LookupError as e:
+				raise RuntimeError("Unable to find current cell.", e)
+			newCell = self._getTableCellCoords(info)
+		tableSelection = _TableSelection(
+			lastRow=newCell.row,
+			lastCol=newCell.col,
+			axis=axis,
+			trueRow=cell.row if axis == _Axis.COLUMN else newCell.row,
+			rowSpan=cell.rowSpan if axis == _Axis.COLUMN else newCell.rowSpan,
+			trueCol=cell.col if axis == _Axis.ROW else newCell.col,
+			colSpan=cell.colSpan if axis == _Axis.ROW else newCell.colSpan,
+		)
+		return newCell, info, tableSelection
 
 	def _tableMovementScriptHelper(
 			self,
@@ -300,83 +400,24 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		# at run-time. (#12404)
 		from scriptHandler import isScriptWaiting
 		from speech import speakTextInfo
-		import ui
 
 		if isScriptWaiting():
 			return
-		formatConfig=config.conf["documentFormatting"].copy()
-		formatConfig["reportTables"]=True
+		formatConfig = config.conf["documentFormatting"].copy()
+		formatConfig["reportTables"] = True
 		try:
-			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
+			cell, info, tableSelection = self._tableFindNewCell(
+				movement,
+				axis,
+			)
 		except LookupError:
-			# Translators: The message reported when a user attempts to use a table movement command
-			# when the cursor is not within a table.
-			ui.message(_("Not in a table cell"))
+			# _tableFindNewCell already spoke proper error message
 			return
-
-		# The following lines check whether user has been issuing table navigation commands repeatedly.
-		# In this case, instead of using current column/row index, we used cached value
-		# to allow users being able to skip merged cells without affecting the initial column/row index.
-		# For more info see issue #11919 and #7278.
-		if (
-			self._lastTableSelection
-			and origRow == self._lastTableSelection.lastRow
-			and origCol == self._lastTableSelection.lastCol
-			and self._lastTableSelection.axis == axis
-		):
-			if axis == _Axis.ROW:
-				origCol = self._lastTableSelection.trueCol
-				origColSpan = self._lastTableSelection.colSpan
-			else:
-				origRow = self._lastTableSelection.trueRow
-				origRowSpan = self._lastTableSelection.rowSpan
-
-		try:
-			if movement in {_Movement.PREVIOUS, _Movement.NEXT}:
-				info = self._getNearestTableCell(
-					tableID,
-					self.selection,
-					origRow,
-					origCol,
-					origRowSpan,
-					origColSpan,
-					movement,
-					axis
-				)
-			elif movement in {_Movement.FIRST, _Movement.LAST}:
-				info = self._getFirstOrLastTableCell(
-					tableID,
-					self.selection,
-					origRow,
-					origCol,
-					origRowSpan,
-					origColSpan,
-					movement,
-					axis
-				)
-			else:
-				raise ValueError(f"Unknown movement {movement}")
-			newTableID, newRow, newCol, newRowSpan, newColSpan = self._getTableCellCoords(info)
-		except LookupError:
-			# Translators: The message reported when a user attempts to use a table movement command
-			# but the cursor can't be moved in that direction because it is at the edge of the table.
-			ui.message(_("Edge of table"))
-			# Retrieve the cell on which we started.
-			info = self._getTableCellAt(tableID, self.selection,origRow, origCol)
-			newTableID, newRow, newCol, newRowSpan, newColSpan = self._getTableCellCoords(info)
 
 		speakTextInfo(info, formatConfig=formatConfig, reason=controlTypes.OutputReason.CARET)
 		info.collapse()
 		self.selection = info
-		self._lastTableSelection = _TableSelection(
-			lastRow=newRow,
-			lastCol=newCol,
-			axis=axis,
-			trueRow=origRow,
-			rowSpan=origRow,
-			trueCol=origCol,
-			colSpan=origColSpan,
-		)
+		self._lastTableSelection = tableSelection
 
 	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.NEXT)
