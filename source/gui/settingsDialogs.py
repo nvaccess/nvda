@@ -1668,8 +1668,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
-		config.conf["speech"][self.driver.name]["delayedPhoneticDescriptions"] = self.delayedPhoneticDescriptionsCheckBox.IsChecked()
-		config.conf["speech"][self.driver.name]["delayedPhoneticDescriptionsTimeoutMs"] = self.delayedPhoneticDescriptionsTimeoutMsEdit.Value
+		delayedDescriptions = self.delayedPhoneticDescriptionsCheckBox.IsChecked()
+		config.conf["speech"][self.driver.name]["delayedPhoneticDescriptions"] = delayedDescriptions
+		delayedDescriptionsMs = self.delayedPhoneticDescriptionsTimeoutMsEdit.Value
+		config.conf["speech"][self.driver.name]["delayedPhoneticDescriptionsTimeoutMs"] = delayedDescriptionsMs
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.

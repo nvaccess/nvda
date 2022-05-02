@@ -2611,32 +2611,40 @@ def clearTypedWordBuffer() -> None:
 	"""
 	_curWordChars.clear()
 
+
 def cancelPhoneticDescriptionTimer() -> None:
 	"""
-	this stops the timer used for delaied phonetic descriptions. This should be called when a new sentence is send or the user stops the synth. E.G. by pressing control key.
+	this stops the timer used for delaied phonetic descriptions.
+	This should be called when a new sentence is send or the user stops the synth.
+	E.G, by pressing control key.
 	"""
 	global phoneticDescriptionTimer
 	if phoneticDescriptionTimer and phoneticDescriptionTimer.IsRunning():
 		phoneticDescriptionTimer.Stop()
 		phoneticDescriptionTimer = None
 
+
 class _FakeTextInfo():
 	"""
-	this class is used to preserve the information of the old object that contain the text. Its useful to use with delayed descriptions.
+	this class is used to preserve the information of the old object that contain the text.
+	It's useful to use with delayed descriptions.
 	"""
 
 	def __init__(self, origTextInfo: textInfos.TextInfo):
 		self.text = origTextInfo.text
 		self.fields = origTextInfo.getTextWithFields({})
 
-	def getTextWithFields(self, _ = None):
+	def getTextWithFields(self, _=None):
 		return self.fields
+
 
 def speakDelayedDescription(info: _FakeTextInfo):
 	"""
-	this function is used to announce the delayed descriptions, we can't call spellTextInfo directly because we need to check if the description is available first.
+	this function is used to announce the delayed descriptions.
+	We can't call spellTextInfo directly because we need to check if the description is available first.
 	"""
-	if info.text.strip() == "": return
+	if info.text.strip() == "":
+		return
 	curLang = getCurrentLanguage()
 	if config.conf['speech']['autoLanguageSwitching']:
 		for k in info.fields:
