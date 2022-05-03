@@ -1628,6 +1628,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.delayedPhoneticDescriptionsCheckBox.SetValue(
 			config.conf["speech"][self.driver.name]["delayedPhoneticDescriptions"]
 		)
+		self.delayedPhoneticDescriptionsCheckBox .Bind(
+			wx.EVT_CHECKBOX,
+			self.onToggleDelayDescriptions
+		)
 
 		minDelay = int(config.conf.getConfigValidation(
 			("speech", self.driver.name, "delayedPhoneticDescriptionsTimeoutMs")
@@ -1649,6 +1653,14 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			"delayedPhoneticDescriptionsTimeoutMs",
 			self.delayedPhoneticDescriptionsTimeoutMsEdit
 		)
+		if not config.conf["speech"][self.driver.name]["delayedPhoneticDescriptions"]:
+			self.delayedPhoneticDescriptionsTimeoutMsEdit.Hide()
+
+	def onToggleDelayDescriptions(self, evt):
+		if evt.IsChecked():
+			self.delayedPhoneticDescriptionsTimeoutMsEdit.Show()
+		else:
+			self.delayedPhoneticDescriptionsTimeoutMsEdit.Hide()
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
