@@ -7,10 +7,13 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+。 sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+؟ sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
+؛ phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
@@ -22,9 +25,12 @@ symbols:
 
 # Complex symbols
 . sentence ending	dot	all	always
+。 sentence ending	dot	all	always
 ! sentence ending	bang	all	always
 ? sentence ending	question	all	always
+؟ sentence ending	question	all	always
 ; phrase ending	semi	most	always
+؛ phrase ending	semi	most	always
 : phrase ending	colon	most	always
 decimal point		none	always
 in-word '	tick	all	norep
