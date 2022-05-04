@@ -759,23 +759,23 @@ class AppModule(baseObject.ScriptableObject):
 		try:
 			ret = repr(self)
 		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule: %s" % ret)
+			ret = f"exception: {e}"
+		info.append(f"appModule: {ret}")
 		try:
 			ret = repr(self.productName)
 		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule.productName: %s" % ret)
+			ret = f"exception: {e}"
+		info.append(f"appModule.productName: {ret}")
 		try:
 			ret = repr(self.productVersion)
 		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule.productVersion: %s" % ret)
+			ret = f"exception: {e}"
+		info.append(f"appModule.productVersion: {ret}")
 		try:
 			ret = repr(self.helperLocalBindingHandle)
 		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule.helperLocalBindingHandle: %s" % ret)
+			ret = f"exception: {e}"
+		info.append(f"appModule.helperLocalBindingHandle: {ret}")
 		return info
 
 class AppProfileTrigger(config.ProfileTrigger):
