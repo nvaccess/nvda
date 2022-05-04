@@ -266,6 +266,7 @@ class List(List):
 			if res:
 				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
 			else:
+				coa = None
 				log.debugWarning("LVM_GETCOLUMNORDERARRAY failed for list")
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
@@ -448,7 +449,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
 	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
-		if not self.parent._columnOrderArray:
+		if self.parent._columnOrderArray is None:
 			return None
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
 
@@ -503,7 +504,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnContentRawInProc(index)
 
 	def _getColumnContent(self, column: int) -> Optional[str]:
-		if not self.parent._columnOrderArray:
+		if self.parent._columnOrderArray is None:
 			return None
 		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
 
@@ -522,7 +523,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return item.iImage
 
 	def _getColumnImageID(self, column):
-		if not self.parent._columnOrderArray:
+		if self.parent._columnOrderArray is None:
 			return None
 		return self._getColumnImageIDRaw(self.parent._columnOrderArray[column - 1])
 
@@ -575,7 +576,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnHeaderRawInProc(index)
 
 	def _getColumnHeader(self, column: int) -> Optional[str]:
-		if not self.parent._columnOrderArray:
+		if self.parent._columnOrderArray is None:
 			return None
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
 
