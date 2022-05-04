@@ -28,9 +28,9 @@ symbols:
 。 sentence ending	dot	all	always
 ! sentence ending	bang	all	always
 ? sentence ending	question	all	always
-؟ sentence ending	question	all	always
+؟ sentence ending	arabic question mark	all	always
 ; phrase ending	semi	most	always
-؛ phrase ending	semi	most	always
+؛ phrase ending	arabic semicolon	most	always
 : phrase ending	colon	most	always
 decimal point		none	always
 in-word '	tick	all	norep
@@ -65,6 +65,8 @@ $	dollar	all	norep
 )	right paren	most	always
 *	star	some
 ,	comma	all	always
+、	ideographic comma	all	always
+،	arabic comma	all	always
 -	dash	most
 .	dot	some
 /	slash	some
@@ -362,10 +364,3 @@ _	line	most
 
 # Miscellaneous Technical
 ⌘	mac Command key	none
-
-#Locale specific punctuations
-。	ideographic period	all
-،	arabic comma	all	always
-؟	arabic question mark	all
-؛	arabic semicolon	most
-、	ideographic comma	all	always
