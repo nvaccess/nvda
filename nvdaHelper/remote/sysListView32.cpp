@@ -169,7 +169,7 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnOrderArray(handle_t bindin
 		reinterpret_cast<LPARAM>(columnOrderArray)
 	);
 	if (TRUE != sendMsgRes) {
-		LOG_DEBUGWARNING(L"LVM_GETCOLUMNORDERARRAY failed");
+		LOG_DEBUGWARNING(L"LVM_GETCOLUMNORDERARRAY failed. Windows Error: " << GetLastError());
 		return ERROR_INVALID_FUNCTION;
 	}
 	return ERROR_SUCCESS;
