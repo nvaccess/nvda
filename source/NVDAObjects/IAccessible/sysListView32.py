@@ -263,7 +263,7 @@ class List(List):
 				columnCount,
 				internalCoa
 			)
-			if res:
+			if not res:
 				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
 			else:
 				coa = None
