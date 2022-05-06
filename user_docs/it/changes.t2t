@@ -89,13 +89,15 @@ Nota:
 - Adobe Reader non si arresta più in modo anomalo all'avvio se la modalità protetta di Adobe Reader è abilitata. (#11568)
 - Risolto un bug per cui la selezione del driver del Display Braille Papenmeier causava l'arresto anomalo di NVDA. (#13348)
 - In Microsoft Word con UIA: il numero di pagina e altre informazioni di formattazione non vengono più annunciate in modo inappropriato quando si passa da una cella vuota di una tabella a una cella con contenuto o dalla fine del documento al contenuto esistente. (#13458, #13459)
+- NVDA non avrà più difficoltà nel riportare il titolo della pagina e ne inizierà automaticamente la lettura dopo il caricamento  n Google chrome 100. (#13571)
+- NVDA non andrà più in crash quando si ripristina la configurazione ai valori di fabbrica con l'opzione leggi i tasti di comando attiva. (#13634)
 -
 
 == Cambiamenti per sviluppatori, in inglese ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - Although NVDA still requires Visual Studio 2019, Builds should no longer fail if a newer version of Visual Studio (E.g. 2022) is installed along side 2019. (#13033, #13387)
 - Updated SCons to version 4.3.0. (#13033)
-- Updated py2exe to version 0.11.1.0. (#12357, #13066)
+- Updated py2exe to version 0.11.1.0. (#13510)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
 - ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
 - ``MessageItem`` has been removed from the Outlook appModule. (#12935)
@@ -157,19 +159,12 @@ This can dramatically decrease build times on multi core systems. (#13226, #1337
   -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` has moved to ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
 - Boolean ``gui.isInMessageBox`` is removed, please use the function ``gui.message.isModalMessageBoxActive`` instead. (#12984, #13376)
-- ``controlTypes`` has been split up into various submodules. (#12510)
+- ``controlTypes`` has been split up into various submodules. (#12510, #13588)
   - ``ROLE_*`` and ``STATE_*`` have been replaced with ``Role.*`` and ``State.*``.
-  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` has been removed.
-  Usages like ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
-  - ``processPositiveStates`` and ``processNegativeStates`` have been removed.
-  -
-- The ``controlTypes.Role`` and ``controlTypes.State`` enum values are no longer fixed/hardcoded and have changed. (#13414)
-  - The ``controlTypes.State`` members are no longer bit flags, states should not be determined using bitwise operations.
-  - There are mappings for ``IAccessible``, ``IAccessible2`` and ``UIA``:
-    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
-    - ``UIAHandler.UIAControlTypesToNVDARoles``
+  - Although still available, the following should be considered deprecated:
+    - ``ROLE_*`` and ``STATE_*``, use ``Role.*`` and ``State.*`` instead.
+    - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels``, usages like ``roleLabels[ROLE_*]`` should be replaced with their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+    - ``processPositiveStates`` and ``processNegativeStates`` should use ``processAndLabelStates`` instead.
     -
   -
 - Excel cell state constants (``NVSTATE_*``) are now values in the ``NvCellState`` enum, mirrored in the ``NvCellState`` enum in ``NVDAObjects/window/excel.py`` and mapped to ``controlTypes.State`` via _nvCellStatesToStates. (#13465)
