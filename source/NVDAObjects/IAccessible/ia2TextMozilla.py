@@ -270,6 +270,8 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				yield item
 			elif isinstance(item, int): # Embedded object.
 				embedded: typing.Optional[IAccessible] = _getEmbedded(ti.obj, item)
+				if embedded is None:
+					continue
 				notText = _getRawTextInfo(embedded) is NVDAObjectTextInfo
 				if controlStack is not None:
 					controlField = self._getControlFieldForObject(embedded)

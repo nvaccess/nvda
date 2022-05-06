@@ -84,6 +84,9 @@ class State(DisplayStringIntEnum):
 	# This enum value was initially added to controlTypes.py in commit d6787b8f47861f5e76aba68da7a13a217404196f
 	HAS_ARIA_DETAILS = setBit(42)  # Restored for backwards compat only.
 	HASNOTE = setBit(43)
+	# indeterminate progress bar, aka busy indicator. No specific state label.
+	# when combined with role of 'progress bar', role is mutated to 'busy indicator'
+	INDETERMINATE = setBit(44)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -171,7 +174,7 @@ _stateLabels: Dict[State, str] = {
 	# Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
 	# Excel spreadsheet).
 	State.UNLOCKED: _("unlocked"),
-	# Translators: a state that denotes the existance of a note.
+	# Translators: a state that denotes the existence of a note.
 	State.HASNOTE: _("has note"),
 }
 

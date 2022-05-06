@@ -10,6 +10,7 @@ from .processAndLabelStates import processAndLabelStates
 from .role import Role, silentRolesOnFocus, silentValuesForRoles
 from .state import State, STATES_SORTED
 from .descriptionFrom import DescriptionFrom
+from .roleAndStateSpecialCases import transformRoleStates
 from . import deprecatedAliases
 # deprecatedAliases included for backwards compatibility.
 # Supress F403 - unable to detect undefined names.
@@ -31,5 +32,6 @@ __all__ = [
 	"STATES_SORTED",
 	"DescriptionFrom",
 	"TextPosition",
+	"transformRoleStates",
 	*deprecatedAliases.__all__
 ]

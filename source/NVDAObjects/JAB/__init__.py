@@ -12,7 +12,7 @@ import controlTypes
 import textUtils
 from controlTypes import TextPosition
 from ..window import Window
-from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
+from ..behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
 from .. import InvalidNVDAObject
@@ -96,6 +96,12 @@ JABStatesToNVDAStates={
 }
 
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
+
+
+def _processHtml(text):
+	""" Strips HTML tags from text if it is HTML """
+	return re_simpleXmlTag.sub(" ", text) if text.startswith("<html>") else text
+
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -204,6 +210,9 @@ class JAB(Window):
 			clsList.append(Table)
 		elif self.parent and isinstance(self.parent,Table) and self.parent._jabTableInfo:
 			clsList.append(TableCell)
+		elif role == "progress bar":
+			clsList.append(ProgressBar)
+
 		clsList.append(JAB)
 
 	@classmethod
@@ -274,7 +283,8 @@ class JAB(Window):
 		return ", ".join(shortcutsList)
 
 	def _get_name(self):
-		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.name)
+		name = self._JABAccContextInfo.name
+		return _processHtml(name)
 
 	def _get_JABRole(self):
 		return self._JABAccContextInfo.role_en_US
@@ -315,7 +325,8 @@ class JAB(Window):
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
-		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.description)
+		description = self._JABAccContextInfo.description
+		return _processHtml(description)
 
 	def _get_location(self):
 		return RectLTWH(self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
@@ -547,6 +558,7 @@ class JAB(Window):
 		activeDescendant=self.activeDescendant
 		if activeDescendant:
 			eventHandler.queueEvent("gainFocus",activeDescendant)
+
 
 class ComboBox(JAB):
 
