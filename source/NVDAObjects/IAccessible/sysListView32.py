@@ -257,17 +257,23 @@ class List(List):
 		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			winKernel.writeProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+			# The meaning of the return value depends on the message sent, for LVM_GETCOLUMNORDERARRAY,
+			# it returns nonzero if successful, or 0 otherwise.
+			# https://docs.microsoft.com/en-us/windows/win32/controls/lvm-getcolumnorderarray#return-value
 			res = watchdog.cancellableSendMessage(
 				self.windowHandle,
 				LVM_GETCOLUMNORDERARRAY,
 				columnCount,
 				internalCoa
 			)
-			if not res:
+			if res:
 				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
 			else:
 				coa = None
-				log.debugWarning("LVM_GETCOLUMNORDERARRAY failed for list")
+				log.debugWarning(
+					f"LVM_GETCOLUMNORDERARRAY failed for list. "
+					f"Windows Error: {ctypes.GetLastError()}, Handle: {self.windowHandle}"
+				)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
 		return coa
@@ -367,6 +373,7 @@ class ListItemWithoutColumnSupport(IAccessible):
 
 
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
+	parent: List
 
 	def _getColumnLocationRawInProc(self, index: int) -> ctypes.wintypes.RECT:
 		"""Retrieves rectangle containing coordinates for a given column.
@@ -450,6 +457,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
 		if self.parent._columnOrderArray is None:
+			log.debugWarning("Cannot fetch column location as column order array is unknown")
 			return None
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
 
@@ -505,6 +513,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnContent(self, column: int) -> Optional[str]:
 		if self.parent._columnOrderArray is None:
+			log.debugWarning("Cannot fetch column content as column order array is unknown")
 			return None
 		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
 
@@ -524,6 +533,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnImageID(self, column):
 		if self.parent._columnOrderArray is None:
+			log.debugWarning("Cannot fetch column image ID as column order array is unknown")
 			return None
 		return self._getColumnImageIDRaw(self.parent._columnOrderArray[column - 1])
 
@@ -577,6 +587,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnHeader(self, column: int) -> Optional[str]:
 		if self.parent._columnOrderArray is None:
+			log.debugWarning("Cannot fetch column header as column order array is unknown")
 			return None
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
 
