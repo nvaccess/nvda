@@ -283,11 +283,9 @@ class List(List):
 		The indexes are placed in order in which columns are displayed on screen from left to right.
 		Note that when columns are reordered the indexes remain the same - only their order differs.
 		"""
-		if self.appModule.helperLocalBindingHandle is not None:
-			inProcessArray = self._getColumnOrderArrayRawInProc(columnCount)
-			if inProcessArray is not None:
-				return inProcessArray
-		return self._getColumnOrderArrayRawOutProc(columnCount)
+		if self.appModule.helperLocalBindingHandle is None:
+			return self._getColumnOrderArrayRawOutProc(columnCount)
+		return self._getColumnOrderArrayRawInProc(columnCount)
 
 	_columnOrderArray: Optional[ctypes.Array]
 
