@@ -448,9 +448,22 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 					selection=info,
 					raiseOnEdge=True,
 				)
+				self._lastTableSelection = tableSelection
 				return newInfo
 			except LookupError as e:
 				raise StopIteration(e)
+		oldSelection = self._lastTableSelection
+		bothAxesColumn = oldSelection is not None and axis == _Axis.COLUMN and axis == oldSelection.axis
+		bothAxesRow = oldSelection is not None and axis == _Axis.ROW and axis == oldSelection.axis
+		self._lastTableSelection = _TableSelection(
+			lastRow=cell.row,
+			lastCol=cell.col,
+			axis=axis,
+			trueRow=oldSelection .trueRow if bothAxesColumn else cell.row,
+			rowSpan=oldSelection .rowSpan if bothAxesColumn else cell.rowSpan,
+			trueCol=oldSelection.trueCol if bothAxesRow else cell.col,
+			colSpan=oldSelection .colSpan if bothAxesRow else cell.colSpan,
+		)
 		sayAll.SayAllHandler.readText(sayAll.CURSOR.TABLE, info, nextLineFunc, updateCaret)
 
 	def script_nextRow(self, gesture):
