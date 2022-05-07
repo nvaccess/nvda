@@ -350,7 +350,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			cell = self._getTableCellCoordsCached(selection, axis)
 		except LookupError as e:
 			# Translators: The message reported when a user attempts to use a table movement command
-			# when the cursor is not within a table.
+			# Translators: when the cursor is not within a table.
 			ui.message(_("Not in a table cell"))
 			raise e
 
@@ -508,15 +508,15 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 	def script_sayAllRow(self, gesture):
 		self._tableSayAll(_Movement.NEXT, _Axis.COLUMN)
-	# Translators: the description for the sayAll row command
 	script_sayAllRow.__doc__ = _(
+		# Translators: the description for the sayAll row command
 		"Reads row horizontally from current table cell up untill the last cell in the row."
 	)
 
 	def script_sayAllColumn(self, gesture):
 		self._tableSayAll(_Movement.NEXT, _Axis.ROW)
-	# Translators: the description for the sayAll row command
 	script_sayAllColumn.__doc__ = _(
+		# Translators: the description for the sayAll row command
 		"Reads column vertically from current table cell down to the last cell in the column."
 	)
 
