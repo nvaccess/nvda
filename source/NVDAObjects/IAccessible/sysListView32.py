@@ -257,6 +257,9 @@ class List(List):
 		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			winKernel.writeProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+			# The meaning of the return value depends on the message sent, for LVM_GETCOLUMNORDERARRAY,
+			# it returns nonzero if successful, or 0 otherwise.
+			# https://docs.microsoft.com/en-us/windows/win32/controls/lvm-getcolumnorderarray#return-value
 			res = watchdog.cancellableSendMessage(
 				self.windowHandle,
 				LVM_GETCOLUMNORDERARRAY,
@@ -266,7 +269,11 @@ class List(List):
 			if res:
 				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
 			else:
-				log.debugWarning("LVM_GETCOLUMNORDERARRAY failed for list")
+				coa = None
+				log.debugWarning(
+					f"LVM_GETCOLUMNORDERARRAY failed for list. "
+					f"Windows Error: {ctypes.GetLastError()}, Handle: {self.windowHandle}"
+				)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
 		return coa
@@ -274,11 +281,13 @@ class List(List):
 	def _getColumnOrderArrayRaw(self, columnCount: int) -> Optional[ctypes.Array]:
 		"""Retrieves an array of column indexes for a given list.
 		The indexes are placed in order in which columns are displayed on screen from left to right.
-		Note that when columns are reordered the indexes remain  the same - only their ordder differs.
+		Note that when columns are reordered the indexes remain the same - only their order differs.
 		"""
-		if not self.appModule.helperLocalBindingHandle:
+		if self.appModule.helperLocalBindingHandle is None:
 			return self._getColumnOrderArrayRawOutProc(columnCount)
 		return self._getColumnOrderArrayRawInProc(columnCount)
+
+	_columnOrderArray: Optional[ctypes.Array]
 
 	def _get__columnOrderArray(self) -> Optional[ctypes.Array]:
 		return self._getColumnOrderArrayRaw(self.columnCount)
@@ -362,6 +371,7 @@ class ListItemWithoutColumnSupport(IAccessible):
 
 
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
+	parent: List
 
 	def _getColumnLocationRawInProc(self, index: int) -> ctypes.wintypes.RECT:
 		"""Retrieves rectangle containing coordinates for a given column.
@@ -444,6 +454,9 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
 	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
+		if self.parent._columnOrderArray is None:
+			log.debugWarning("Cannot fetch column location as column order array is unknown")
+			return None
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
 
 	def _getColumnContentRawInProc(self, index: int) -> Optional[str]:
@@ -497,6 +510,9 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnContentRawInProc(index)
 
 	def _getColumnContent(self, column: int) -> Optional[str]:
+		if self.parent._columnOrderArray is None:
+			log.debugWarning("Cannot fetch column content as column order array is unknown")
+			return None
 		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
 
 	def _getColumnImageIDRaw(self, index):
@@ -514,6 +530,9 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return item.iImage
 
 	def _getColumnImageID(self, column):
+		if self.parent._columnOrderArray is None:
+			log.debugWarning("Cannot fetch column image ID as column order array is unknown")
+			return None
 		return self._getColumnImageIDRaw(self.parent._columnOrderArray[column - 1])
 
 	def _getColumnHeaderRawOutProc(self, index: int) -> Optional[str]:
@@ -565,6 +584,9 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnHeaderRawInProc(index)
 
 	def _getColumnHeader(self, column: int) -> Optional[str]:
+		if self.parent._columnOrderArray is None:
+			log.debugWarning("Cannot fetch column header as column order array is unknown")
+			return None
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
 
 	def _get_name(self):
