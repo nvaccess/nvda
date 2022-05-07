@@ -608,11 +608,12 @@ def handleRemoteAddonInstall(addonPath):
 
 
 def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
-	incompatibleMessage = _(
+	incompatibleReasonMessage = _(
 		# Translators: The message displayed when installing an add-on package is prohibited,
-		# because it requires a later version of NVDA than is currently installed.
-		"Installation of {summary} {version} has been blocked. The minimum NVDA version required for "
-		"this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
+		# because it requires a newer version of NVDA than is currently in use.
+		"Installation of this add-on has been blocked. Your version of NVDA ({NVDAVersion}) "
+		"is too old to support {summary} version {version}.\n"
+		"Please update NVDA to at least version {minimumNVDAVersion}, to use this version of {summary}."
 	).format(
 		summary=bundle.manifest['summary'],
 		version=bundle.manifest['version'],
@@ -623,27 +624,25 @@ def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=_("Add-on not compatible"),
-		message=incompatibleMessage,
+		message=incompatibleReasonMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 	).ShowModal()
 
 
 def _showAddonTooOldDialog(parent, bundle):
-	confirmInstallMessage = _(
-		# Translators: A message informing the user that this addon can not be installed
-		# because it is not compatible.
-		"Installation of {summary} {version} has been blocked."
-		" An updated version of this add-on is required,"
-		" the minimum add-on API supported by this version of NVDA is {backCompatToAPIVersion}"
-	).format(
-		backCompatToAPIVersion=addonAPIVersion.formatForGUI(addonAPIVersion.BACK_COMPAT_TO),
-		**bundle.manifest
-	)
+	incompatibleReasonMessage = _(
+		# Translators: The message displayed when installing an add-on package is prohibited,
+		# because it requires an older version of NVDA than is currently in use.
+		"Installation of this add-on has been blocked. {summary} version {version} "
+		"is too old to work with your version of NVDA.\n"
+		"The add-on is only compatible through the {lastTestedNVDAVersion[0]} NVDA series. "
+		"Please download a newer version, or contact the add-on's author: {author}, to ask for an update."
+	).format(**bundle.manifest)
 	return ErrorAddonInstallDialog(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=_("Add-on not compatible"),
-		message=confirmInstallMessage,
+		message=incompatibleReasonMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 	).ShowModal()
 
