@@ -20,16 +20,21 @@ from ..window import Window
 
 
 class ConsoleUIATextInfo(UIATextInfo):
-	"A TextInfo implementation for consoles with an IMPROVED, but not FORMATTED, API level."
+	"A TextInfo implementation for consoles with a FORMATTED API level."
+
+	# #13157: In FORMATTED consoles, the review cursor is not bounded to the
+	# visible text, allowing text to be freely explored.
+	# However, it is often useful to jump to the top or bottom of a screen of
+	# text when viewing paginated output. To enable this use case, make
+	# POSITION_FIRST and POSITION_LAST relative to the visible text.
+	_RESTRICT_TO_VISIBLE_POSITIONS = (
+		textInfos.POSITION_FIRST,
+		textInfos.POSITION_LAST
+	)
+
 	def __init__(self, obj, position, _rangeObj=None):
 		collapseToEnd = None
-		# We want to limit  textInfos to just the visible part of the console.
-		# Therefore we specifically handle POSITION_FIRST, POSITION_LAST and POSITION_ALL.
-		if not _rangeObj and position in (
-			textInfos.POSITION_FIRST,
-			textInfos.POSITION_LAST,
-			textInfos.POSITION_ALL
-		):
+		if not _rangeObj and position in self._RESTRICT_TO_VISIBLE_POSITIONS:
 			try:
 				_rangeObj, collapseToEnd = self._getBoundingRange(obj, position)
 			except (COMError, RuntimeError):
@@ -60,6 +65,20 @@ class ConsoleUIATextInfo(UIATextInfo):
 			)
 			collapseToEnd = True
 		return (_rangeObj, collapseToEnd)
+
+
+class ConsoleUIATextInfoBounded(ConsoleUIATextInfo):
+	"A TextInfo implementation for consoles with an IMPROVED, but not FORMATTED, API level."
+
+	# Since pre-FORMATTED consoles have thousands of empty lines at the end of
+	# output, we want to limit  textInfos to just the visible part of the
+	# console. Therefore we specifically handle POSITION_FIRST, POSITION_LAST
+	# and POSITION_ALL.
+	_RESTRICT_TO_VISIBLE_POSITIONS = (
+		textInfos.POSITION_FIRST,
+		textInfos.POSITION_LAST,
+		textInfos.POSITION_ALL
+	)
 
 	def move(self, unit, direction, endPoint=None):
 		oldInfo = None
@@ -369,9 +388,9 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		ConsoleUIATextInfoWorkaroundEndInclusive fixes expand/collapse and implements
 		word movement."""
 		if self.apiLevel >= WinConsoleAPILevel.FORMATTED:
-			return UIATextInfo  # No TextInfo workarounds needed
-		elif self.apiLevel >= WinConsoleAPILevel.IMPROVED:
 			return ConsoleUIATextInfo
+		elif self.apiLevel >= WinConsoleAPILevel.IMPROVED:
+			return ConsoleUIATextInfoBounded
 		else:
 			return ConsoleUIATextInfoWorkaroundEndInclusive
 
@@ -420,6 +439,9 @@ def findExtraOverlayClasses(obj, clsList):
 
 
 class WinTerminalUIA(EnhancedTermTypedCharSupport):
+	def _get_TextInfo(self):
+		return ConsoleUIATextInfo
+
 	def event_UIA_notification(self, **kwargs):
 		"""
 		In an upcoming terminal release, UIA notification events will be sent
