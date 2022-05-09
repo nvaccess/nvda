@@ -18,6 +18,7 @@ from logHandler import log
 from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
 
+
 JABRolesToNVDARoles={
 	"alert":controlTypes.Role.DIALOG,
 	"column header":controlTypes.Role.TABLECOLUMNHEADER,
@@ -94,6 +95,8 @@ JABStatesToNVDAStates={
 	"focusable":controlTypes.State.FOCUSABLE,
 	"editable":controlTypes.State.EDITABLE,
 }
+
+
 
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
 
@@ -270,16 +273,13 @@ class JAB(Window):
 			# We don't support these modifiers
 			if binding.modifiers&(JABHandler.ACCESSIBLE_META_KEYSTROKE|JABHandler.ACCESSIBLE_ALT_GRAPH_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON1_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON2_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON3_KEYSTROKE):
 				continue
-			keyList=[]
+			modifiers = binding.modifiers
 			# We assume alt  if there are no modifiers at all and its not a menu item as this is clearly a nmonic
-			if (binding.modifiers&JABHandler.ACCESSIBLE_ALT_KEYSTROKE) or (not binding.modifiers and self.role!=controlTypes.Role.MENUITEM):
-				keyList.append(keyLabels.localizedKeyLabels['alt'])
-			if binding.modifiers&JABHandler.ACCESSIBLE_CONTROL_KEYSTROKE:
-				keyList.append(keyLabels.localizedKeyLabels['control'])
-			if binding.modifiers&JABHandler.ACCESSIBLE_SHIFT_KEYSTROKE:
-				keyList.append(keyLabels.localizedKeyLabels['shift'])
-			keyList.append(binding.character)
-		shortcutsList.append("+".join(keyList))
+			if not modifiers and self.role != controlTypes.Role.MENUITEM:
+				modifiers |= JABHandler.ACCESSIBLE_ALT_KEYSTROKE
+			keyList = [keyLabels.localizedKeyLabels.get(l, l)
+				for l in JABHandler._getKeyLabels(modifiers, binding.character)]
+			shortcutsList.append("+".join(keyList))
 		return ", ".join(shortcutsList)
 
 	def _get_name(self):
