@@ -34,14 +34,14 @@ MODIFIER_COMBINATIONS = [
 	{JABHandler.AccessibleKeystroke.ALT: "alt"},
 	{JABHandler.AccessibleKeystroke.SHIFT: "shift"},
 	{JABHandler.AccessibleKeystroke.CONTROL: "control"},
-	{JABHandler.AccessibleKeystroke.CONTROL_KEYSTROKE: "control", JABHandler.Accessible.SHIFT: "shift"},
+	{JABHandler.AccessibleKeystroke.CONTROL: "control", JABHandler.AccessibleKeystroke.SHIFT: "shift"},
 	{
 		JABHandler.AccessibleKeystroke.ALT: "alt",
 		JABHandler.AccessibleKeystroke.CONTROL: "control",
 		JABHandler.AccessibleKeystroke.SHIFT: "shift"
 	},
-	{JABHandler.AccessibleKeystroke.ALT_KEYSTROKE: "alt", JABHandler.Accessible.SHIFT: "shift"},
-	{JABHandler.AccessibleKeystroke.ALT_KEYSTROKE: "alt", JABHandler.Accessible.CONTROL: "control"},
+	{JABHandler.AccessibleKeystroke.ALT: "alt", JABHandler.AccessibleKeystroke.SHIFT: "shift"},
+	{JABHandler.AccessibleKeystroke.ALT: "alt", JABHandler.AccessibleKeystroke.CONTROL: "control"},
 	{JABHandler.AccessibleKeystroke.ALT_GRAPH: "altgraph"},
 	{JABHandler.AccessibleKeystroke.META: "meta"},
 	{JABHandler.AccessibleKeystroke.BUTTON1: "button1"},
