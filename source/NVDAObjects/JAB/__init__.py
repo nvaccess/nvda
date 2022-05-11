@@ -277,8 +277,10 @@ class JAB(Window):
 			# We assume alt  if there are no modifiers at all and its not a menu item as this is clearly a nmonic
 			if not modifiers and self.role != controlTypes.Role.MENUITEM:
 				modifiers |= JABHandler.ACCESSIBLE_ALT_KEYSTROKE
-			keyList = [keyLabels.localizedKeyLabels.get(l, l)
-				for l in JABHandler._getKeyLabels(modifiers, binding.character)]
+			keyList = [
+				keyLabels.localizedKeyLabels.get(l, l)
+				for l in JABHandler._getKeyLabels(modifiers, binding.character)
+			]
 			shortcutsList.append("+".join(keyList))
 		return ", ".join(shortcutsList)
 
