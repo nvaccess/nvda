@@ -8,6 +8,7 @@
 import unittest
 from NVDAObjects import JAB
 import JABHandler
+from JABHandler import AccessibleKeystroke
 
 
 class TestJavaAccessBridge(unittest.TestCase):
@@ -31,31 +32,31 @@ class TestJavaAccessBridge(unittest.TestCase):
 
 MODIFIER_COMBINATIONS = [
 	{},
-	{JABHandler.AccessibleKeystroke.ALT: "alt"},
-	{JABHandler.AccessibleKeystroke.SHIFT: "shift"},
-	{JABHandler.AccessibleKeystroke.CONTROL: "control"},
-	{JABHandler.AccessibleKeystroke.CONTROL: "control", JABHandler.AccessibleKeystroke.SHIFT: "shift"},
+	{AccessibleKeystroke.ALT: "alt"},
+	{AccessibleKeystroke.SHIFT: "shift"},
+	{AccessibleKeystroke.CONTROL: "control"},
+	{AccessibleKeystroke.CONTROL: "control", AccessibleKeystroke.SHIFT: "shift"},
 	{
-		JABHandler.AccessibleKeystroke.ALT: "alt",
-		JABHandler.AccessibleKeystroke.CONTROL: "control",
-		JABHandler.AccessibleKeystroke.SHIFT: "shift"
+		AccessibleKeystroke.ALT: "alt",
+		AccessibleKeystroke.CONTROL: "control",
+		AccessibleKeystroke.SHIFT: "shift"
 	},
-	{JABHandler.AccessibleKeystroke.ALT: "alt", JABHandler.AccessibleKeystroke.SHIFT: "shift"},
-	{JABHandler.AccessibleKeystroke.ALT: "alt", JABHandler.AccessibleKeystroke.CONTROL: "control"},
-	{JABHandler.AccessibleKeystroke.ALT_GRAPH: "altgraph"},
-	{JABHandler.AccessibleKeystroke.META: "meta"},
-	{JABHandler.AccessibleKeystroke.BUTTON1: "button1"},
-	{JABHandler.AccessibleKeystroke.BUTTON2: "button2"},
-	{JABHandler.AccessibleKeystroke.BUTTON3: "button3"},
+	{AccessibleKeystroke.ALT: "alt", AccessibleKeystroke.SHIFT: "shift"},
+	{AccessibleKeystroke.ALT: "alt", AccessibleKeystroke.CONTROL: "control"},
+	{AccessibleKeystroke.ALT_GRAPH: "altgraph"},
+	{AccessibleKeystroke.META: "meta"},
+	{AccessibleKeystroke.BUTTON1: "button1"},
+	{AccessibleKeystroke.BUTTON2: "button2"},
+	{AccessibleKeystroke.BUTTON3: "button3"},
 	{
-		JABHandler.AccessibleKeystroke.BUTTON3: "button3",
-		JABHandler.AccessibleKeystroke.BUTTON2: "button2",
-		JABHandler.AccessibleKeystroke.BUTTON1: "button1",
-		JABHandler.AccessibleKeystroke.ALT_GRAPH: "altgraph",
-		JABHandler.AccessibleKeystroke.ALT: "alt",
-		JABHandler.AccessibleKeystroke.META: "meta",
-		JABHandler.AccessibleKeystroke.CONTROL: "control",
-		JABHandler.AccessibleKeystroke.SHIFT: "shift"
+		AccessibleKeystroke.BUTTON3: "button3",
+		AccessibleKeystroke.BUTTON2: "button2",
+		AccessibleKeystroke.BUTTON1: "button1",
+		AccessibleKeystroke.ALT_GRAPH: "altgraph",
+		AccessibleKeystroke.ALT: "alt",
+		AccessibleKeystroke.META: "meta",
+		AccessibleKeystroke.CONTROL: "control",
+		AccessibleKeystroke.SHIFT: "shift"
 	}
 ]
 BASIC_SHORTCUT_KEYS = [chr(x) for x in range(ord('A'), ord('Z') + 1)]
@@ -78,7 +79,7 @@ class TestJavaAccessBridgeShortcutKeys(unittest.TestCase):
 	def testFKeyShortcut(self):
 		for c in FKEY_SHORTCUTS:
 			for modifierCombination in MODIFIER_COMBINATIONS:
-				modifiers = JABHandler.AccessibleKeystroke.FKEY
+				modifiers = AccessibleKeystroke.FKEY
 				modLabels = []
 				for m, l in modifierCombination.items():
 					modifiers |= m
@@ -90,7 +91,7 @@ class TestJavaAccessBridgeShortcutKeys(unittest.TestCase):
 	def testControlCodeShortcut(self):
 		for c, v in JABHandler.JABKeyControlCodesToLabels.items():
 			for modifierCombination in MODIFIER_COMBINATIONS:
-				modifiers = JABHandler.AccessibleKeystroke.CONTROLCODE
+				modifiers = AccessibleKeystroke.CONTROLCODE
 				modLabels = []
 				for m, l in modifierCombination.items():
 					modifiers |= m
