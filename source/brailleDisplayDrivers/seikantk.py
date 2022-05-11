@@ -9,7 +9,7 @@
 import re
 from io import BytesIO
 import typing
-from typing import Dict, List, Set
+from typing import Dict, List, Optional, Set
 
 import serial
 
@@ -97,7 +97,7 @@ def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
-	_dev: hwIo.IoBase
+	_dev: Optional[hwIo.IoBase] = None
 	name = SEIKA_NAME
 	# Translators: Name of a braille display.
 	description = _("Seika Notetaker")
@@ -185,14 +185,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return False
 
 	def terminate(self):
+		if self._dev is None:
+			log.error("Seika Notetaker driver not initialized")
+			return
 		try:
 			super().terminate()
 		finally:
-			if self._dev:
-				# Check if initialized
-				self._dev.close()
+			self._dev.close()
 
 	def display(self, cells: List[int]):
+		if self._dev is None:
+			log.error("Seika Notetaker driver not initialized")
+			return
 		# cells will already be padded up to numCells.
 		cellBytes = SEIKA_SEND_TEXT + bytes([self.numCells]) + bytes(cells)
 		self._dev.write(cellBytes)
