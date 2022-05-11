@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from enum import IntEnum, IntFlag
 import os
 import queue
 from ctypes import (
@@ -226,33 +227,60 @@ class AccessibleTableCellInfo(Structure):
 	]
 
 MAX_KEY_BINDINGS=50
-ACCESSIBLE_SHIFT_KEYSTROKE = 1
-ACCESSIBLE_CONTROL_KEYSTROKE = 2
-ACCESSIBLE_META_KEYSTROKE = 4
-ACCESSIBLE_ALT_KEYSTROKE = 8
-ACCESSIBLE_ALT_GRAPH_KEYSTROKE = 16
-ACCESSIBLE_BUTTON1_KEYSTROKE = 32
-ACCESSIBLE_BUTTON2_KEYSTROKE = 64
-ACCESSIBLE_BUTTON3_KEYSTROKE = 128
-ACCESSIBLE_FKEY_KEYSTROKE = 256  # F key pressed, character contains 1-24
-ACCESSIBLE_CONTROLCODE_KEYSTROKE = 512  # Control code key pressed, character contains control code.
 
-# The supported control code keys are:
-ACCESSIBLE_VK_BACK_SPACE = 8
-ACCESSIBLE_VK_DELETE = 127
-ACCESSIBLE_VK_DOWN = 40
-ACCESSIBLE_VK_END = 35
-ACCESSIBLE_VK_HOME = 36
-ACCESSIBLE_VK_INSERT = 155
-ACCESSIBLE_VK_KP_DOWN = 225
-ACCESSIBLE_VK_KP_LEFT = 226
-ACCESSIBLE_VK_KP_RIGHT = 227
-ACCESSIBLE_VK_KP_UP = 224
-ACCESSIBLE_VK_LEFT = 37
-ACCESSIBLE_VK_PAGE_DOWN = 34
-ACCESSIBLE_VK_PAGE_UP = 33
-ACCESSIBLE_VK_RIGHT = 39
-ACCESSIBLE_VK_UP = 38
+
+class Accessible(IntFlag):
+	"""
+	TODO: The documentation for this mapping is here:
+	"""
+	SHIFT_KEYSTROKE = 1
+	CONTROL_KEYSTROKE = 2
+	META_KEYSTROKE = 4
+	ALT_KEYSTROKE = 8
+	ALT_GRAPH_KEYSTROKE = 16
+	BUTTON1_KEYSTROKE = 32
+	BUTTON2_KEYSTROKE = 64
+	BUTTON3_KEYSTROKE = 128
+	FKEY_KEYSTROKE = 256  # F key pressed, character contains 1-24
+	CONTROLCODE_KEYSTROKE = 512
+	"""
+	Control code key pressed, character contains control code.
+	Refer to AccessibleVK.
+	"""
+
+
+# Keep for backwards compatibility
+ACCESSIBLE_SHIFT_KEYSTROKE = Accessible.SHIFT_KEYSTROKE
+ACCESSIBLE_CONTROL_KEYSTROKE = Accessible.CONTROL_KEYSTROKE
+ACCESSIBLE_META_KEYSTROKE = Accessible.META_KEYSTROKE
+ACCESSIBLE_ALT_KEYSTROKE = Accessible.ALT_KEYSTROKE
+ACCESSIBLE_ALT_GRAPH_KEYSTROKE = Accessible.ALT_GRAPH_KEYSTROKE
+ACCESSIBLE_BUTTON1_KEYSTROKE = Accessible.BUTTON1_KEYSTROKE
+ACCESSIBLE_BUTTON2_KEYSTROKE = Accessible.BUTTON2_KEYSTROKE
+ACCESSIBLE_BUTTON3_KEYSTROKE = Accessible.BUTTON3_KEYSTROKE
+
+
+class AccessibleVK(IntEnum):
+	"""
+	The supported control code keys related to Accessible.CONTROLCODE_KEYSTROKE.
+	TODO: The documentation for this mapping is here:
+	"""
+	BACK_SPACE = 8
+	DELETE = 127
+	DOWN = 40
+	END = 35
+	HOME = 36
+	INSERT = 155
+	KP_DOWN = 225
+	KP_LEFT = 226
+	KP_RIGHT = 227
+	KP_UP = 224
+	LEFT = 37
+	PAGE_DOWN = 34
+	PAGE_UP = 33
+	RIGHT = 39
+	UP = 38
+
 
 class AccessibleKeyBindingInfo(Structure):
 	_fields_=[
@@ -849,42 +877,42 @@ def terminate():
 
 
 JABKeyControlCodesToLabels = {
-	ACCESSIBLE_VK_UP: "uparrow",
-	ACCESSIBLE_VK_DOWN: "downarrow",
-	ACCESSIBLE_VK_LEFT: "leftarrow",
-	ACCESSIBLE_VK_RIGHT: "rightarrow",
-	ACCESSIBLE_VK_KP_UP: "numpad8",
-	ACCESSIBLE_VK_KP_DOWN: "numpad2",
-	ACCESSIBLE_VK_KP_LEFT: "numpad4",
-	ACCESSIBLE_VK_KP_RIGHT: "numpad6",
-	ACCESSIBLE_VK_BACK_SPACE: "backspace",
-	ACCESSIBLE_VK_INSERT: "insert",
-	ACCESSIBLE_VK_DELETE: "delete",
-	ACCESSIBLE_VK_HOME: "home",
-	ACCESSIBLE_VK_END: "end",
-	ACCESSIBLE_VK_PAGE_UP: "pageup",
-	ACCESSIBLE_VK_PAGE_DOWN: "pagedown"
+	AccessibleVK.UP: "uparrow",
+	AccessibleVK.DOWN: "downarrow",
+	AccessibleVK.LEFT: "leftarrow",
+	AccessibleVK.RIGHT: "rightarrow",
+	AccessibleVK.KP_UP: "numpad8",
+	AccessibleVK.KP_DOWN: "numpad2",
+	AccessibleVK.KP_LEFT: "numpad4",
+	AccessibleVK.KP_RIGHT: "numpad6",
+	AccessibleVK.BACK_SPACE: "backspace",
+	AccessibleVK.INSERT: "insert",
+	AccessibleVK.DELETE: "delete",
+	AccessibleVK.HOME: "home",
+	AccessibleVK.END: "end",
+	AccessibleVK.PAGE_UP: "pageup",
+	AccessibleVK.PAGE_DOWN: "pagedown"
 }
 
-# Do not include ACCESSIBLE_FKEY_KEYSTROKE and ACCESSIBLE_CONTROLCODE_KEYSTROKE
+# Do not include Accessible.FKEY_KEYSTROKE and Accessible.CONTROLCODE_KEYSTROKE
 # as these are not really modifiers
 JABKeyModifiersToLabels = {
-	ACCESSIBLE_BUTTON3_KEYSTROKE: "button3",
-	ACCESSIBLE_BUTTON2_KEYSTROKE: "button2",
-	ACCESSIBLE_BUTTON1_KEYSTROKE: "button1",
-	ACCESSIBLE_ALT_GRAPH_KEYSTROKE: "altgraph",
-	ACCESSIBLE_ALT_KEYSTROKE: "alt",
-	ACCESSIBLE_META_KEYSTROKE: "meta",
-	ACCESSIBLE_CONTROL_KEYSTROKE: "control",
-	ACCESSIBLE_SHIFT_KEYSTROKE: "shift"
+	Accessible.BUTTON3_KEYSTROKE: "button3",
+	Accessible.BUTTON2_KEYSTROKE: "button2",
+	Accessible.BUTTON1_KEYSTROKE: "button1",
+	Accessible.ALT_GRAPH_KEYSTROKE: "altgraph",
+	Accessible.ALT_KEYSTROKE: "alt",
+	Accessible.META_KEYSTROKE: "meta",
+	Accessible.CONTROL_KEYSTROKE: "control",
+	Accessible.SHIFT_KEYSTROKE: "shift"
 }
 
 
 def _getKeyLabels(modifiers, character):
 	keys = [v for m, v in JABKeyModifiersToLabels.items() if modifiers & m]
-	if modifiers & ACCESSIBLE_FKEY_KEYSTROKE:
+	if modifiers & Accessible.FKEY_KEYSTROKE:
 		keys.append("F{}".format(ord(character)))
-	elif modifiers & ACCESSIBLE_CONTROLCODE_KEYSTROKE:
+	elif modifiers & Accessible.CONTROLCODE_KEYSTROKE:
 		keys.append(JABKeyControlCodesToLabels.get(ord(character), character))
 	else:
 		keys.append(character)

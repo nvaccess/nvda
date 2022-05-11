@@ -271,12 +271,18 @@ class JAB(Window):
 		for index in range(bindings.keyBindingsCount):
 			binding=bindings.keyBindingInfo[index]
 			# We don't support these modifiers
-			if binding.modifiers&(JABHandler.ACCESSIBLE_META_KEYSTROKE|JABHandler.ACCESSIBLE_ALT_GRAPH_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON1_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON2_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON3_KEYSTROKE):
+			if binding.modifiers & (
+				JABHandler.Accessible.META_KEYSTROKE
+				| JABHandler.Accessible.ALT_GRAPH_KEYSTROKE
+				| JABHandler.Accessible.BUTTON1_KEYSTROKE
+				| JABHandler.Accessible.BUTTON2_KEYSTROKE
+				| JABHandler.Accessible.BUTTON3_KEYSTROKE
+			):
 				continue
 			modifiers = binding.modifiers
 			# We assume alt  if there are no modifiers at all and its not a menu item as this is clearly a nmonic
 			if not modifiers and self.role != controlTypes.Role.MENUITEM:
-				modifiers |= JABHandler.ACCESSIBLE_ALT_KEYSTROKE
+				modifiers |= JABHandler.Accessible.ALT_KEYSTROKE
 			keyList = [
 				keyLabels.localizedKeyLabels.get(l, l)
 				for l in JABHandler._getKeyLabels(modifiers, binding.character)
