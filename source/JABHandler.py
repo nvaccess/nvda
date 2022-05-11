@@ -229,20 +229,20 @@ class AccessibleTableCellInfo(Structure):
 MAX_KEY_BINDINGS=50
 
 
-class Accessible(IntFlag):
+class AccessibleKeystroke(IntFlag):
 	"""
 	TODO: The documentation for this mapping is here:
 	"""
-	SHIFT_KEYSTROKE = 1
-	CONTROL_KEYSTROKE = 2
-	META_KEYSTROKE = 4
-	ALT_KEYSTROKE = 8
-	ALT_GRAPH_KEYSTROKE = 16
-	BUTTON1_KEYSTROKE = 32
-	BUTTON2_KEYSTROKE = 64
-	BUTTON3_KEYSTROKE = 128
-	FKEY_KEYSTROKE = 256  # F key pressed, character contains 1-24
-	CONTROLCODE_KEYSTROKE = 512
+	SHIFT = 1
+	CONTROL = 2
+	META = 4
+	ALT = 8
+	ALT_GRAPH = 16
+	BUTTON1 = 32
+	BUTTON2 = 64
+	BUTTON3 = 128
+	FKEY = 256  # F key pressed, character contains 1-24
+	CONTROLCODE = 512
 	"""
 	Control code key pressed, character contains control code.
 	Refer to AccessibleVK.
@@ -250,19 +250,19 @@ class Accessible(IntFlag):
 
 
 # Keep for backwards compatibility
-ACCESSIBLE_SHIFT_KEYSTROKE = Accessible.SHIFT_KEYSTROKE
-ACCESSIBLE_CONTROL_KEYSTROKE = Accessible.CONTROL_KEYSTROKE
-ACCESSIBLE_META_KEYSTROKE = Accessible.META_KEYSTROKE
-ACCESSIBLE_ALT_KEYSTROKE = Accessible.ALT_KEYSTROKE
-ACCESSIBLE_ALT_GRAPH_KEYSTROKE = Accessible.ALT_GRAPH_KEYSTROKE
-ACCESSIBLE_BUTTON1_KEYSTROKE = Accessible.BUTTON1_KEYSTROKE
-ACCESSIBLE_BUTTON2_KEYSTROKE = Accessible.BUTTON2_KEYSTROKE
-ACCESSIBLE_BUTTON3_KEYSTROKE = Accessible.BUTTON3_KEYSTROKE
+ACCESSIBLE_SHIFT_KEYSTROKE = AccessibleKeystroke.SHIFT
+ACCESSIBLE_CONTROL_KEYSTROKE = AccessibleKeystroke.CONTROL
+ACCESSIBLE_META_KEYSTROKE = AccessibleKeystroke.META
+ACCESSIBLE_ALT_KEYSTROKE = AccessibleKeystroke.ALT
+ACCESSIBLE_ALT_GRAPH_KEYSTROKE = AccessibleKeystroke.ALT_GRAPH
+ACCESSIBLE_BUTTON1_KEYSTROKE = AccessibleKeystroke.BUTTON1
+ACCESSIBLE_BUTTON2_KEYSTROKE = AccessibleKeystroke.BUTTON2
+ACCESSIBLE_BUTTON3_KEYSTROKE = AccessibleKeystroke.BUTTON3
 
 
 class AccessibleVK(IntEnum):
 	"""
-	The supported control code keys related to Accessible.CONTROLCODE_KEYSTROKE.
+	The supported control code keys related to AccessibleKeystroke.CONTROLCODE.
 	TODO: The documentation for this mapping is here:
 	"""
 	BACK_SPACE = 8
@@ -894,25 +894,25 @@ JABKeyControlCodesToLabels = {
 	AccessibleVK.PAGE_DOWN: "pagedown"
 }
 
-# Do not include Accessible.FKEY_KEYSTROKE and Accessible.CONTROLCODE_KEYSTROKE
+# Do not include AccessibleKeystroke.FKEY_KEYSTROKE and AccessibleKeystroke.CONTROLCODE
 # as these are not really modifiers
 JABKeyModifiersToLabels = {
-	Accessible.BUTTON3_KEYSTROKE: "button3",
-	Accessible.BUTTON2_KEYSTROKE: "button2",
-	Accessible.BUTTON1_KEYSTROKE: "button1",
-	Accessible.ALT_GRAPH_KEYSTROKE: "altgraph",
-	Accessible.ALT_KEYSTROKE: "alt",
-	Accessible.META_KEYSTROKE: "meta",
-	Accessible.CONTROL_KEYSTROKE: "control",
-	Accessible.SHIFT_KEYSTROKE: "shift"
+	AccessibleKeystroke.BUTTON3: "button3",
+	AccessibleKeystroke.BUTTON2: "button2",
+	AccessibleKeystroke.BUTTON1: "button1",
+	AccessibleKeystroke.ALT_GRAPH: "altgraph",
+	AccessibleKeystroke.ALT: "alt",
+	AccessibleKeystroke.META: "meta",
+	AccessibleKeystroke.CONTROL: "control",
+	AccessibleKeystroke.SHIFT: "shift"
 }
 
 
 def _getKeyLabels(modifiers, character):
 	keys = [v for m, v in JABKeyModifiersToLabels.items() if modifiers & m]
-	if modifiers & Accessible.FKEY_KEYSTROKE:
+	if modifiers & AccessibleKeystroke.FKEY:
 		keys.append("F{}".format(ord(character)))
-	elif modifiers & Accessible.CONTROLCODE_KEYSTROKE:
+	elif modifiers & AccessibleKeystroke.CONTROLCODE:
 		keys.append(JABKeyControlCodesToLabels.get(ord(character), character))
 	else:
 		keys.append(character)
