@@ -179,6 +179,7 @@ class Role(DisplayStringIntEnum):
 	# To maintain backwards compatibility, above Roles must maintain their values.
 	COMMENT = auto()
 	SUGGESTION = auto()
+	DEFINITION = auto()
 
 
 _roleLabels: Dict[Role, str] = {
@@ -504,6 +505,8 @@ _roleLabels: Dict[Role, str] = {
 	Role.COMMENT: _("comment"),
 	# Translators: Identifies a suggestion.
 	Role.SUGGESTION: _("suggestion"),
+	# Translators: Identifies a definition.
+	Role.DEFINITION: _("definition"),
 }
 
 

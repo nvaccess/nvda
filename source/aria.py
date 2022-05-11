@@ -18,18 +18,31 @@ def normalizeDetailsRole(detailsRole: Union[str, controlTypes.Role, None]) -> co
 	Braille and speech needs consistent normalization for translation and reporting.
 	"""
 	if isinstance(detailsRole, controlTypes.Role):
+		if detailsRole not in supportedAriaDetailsRoles.values():
+			return controlTypes.Role.UNKNOWN
 		return detailsRole
 	elif isinstance(detailsRole, str):
 		if detailsRole.isdigit():
 			from IAccessibleHandler import IAccessibleRolesToNVDARoles
 			return IAccessibleRolesToNVDARoles.get(int(detailsRole), controlTypes.Role.UNKNOWN)
 		else:
-			return ariaRolesToNVDARoles.get(detailsRole, controlTypes.Role.UNKNOWN)
+			return supportedAriaDetailsRoles.get(detailsRole, controlTypes.Role.UNKNOWN)
 	elif detailsRole is None:
 		return controlTypes.Role.UNKNOWN
 	else:
 		log.exception(f"Unexpected detailsRole type: {type(detailsRole)}, value {detailsRole}")
 		return controlTypes.Role.UNKNOWN
+
+
+# Currently only defined in Chrome as of May 2022
+# Refer to ComputeDetailsRoles
+# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
+supportedAriaDetailsRoles = {
+	"comment": controlTypes.Role.COMMENT,
+	"doc-endnote": controlTypes.Role.ENDNOTE,
+	"doc-footnote": controlTypes.Role.FOOTNOTE,
+	"definition": controlTypes.Role.DEFINITION,
+}
 
 
 ariaRolesToNVDARoles: Dict[str, controlTypes.Role] = {
@@ -42,7 +55,7 @@ ariaRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 	"checkbox":controlTypes.Role.CHECKBOX,
 	"columnheader":controlTypes.Role.TABLECOLUMNHEADER,
 	"combobox":controlTypes.Role.COMBOBOX,
-	"definition":controlTypes.Role.LISTITEM,
+	"definition": controlTypes.Role.DEFINITION,
 	"dialog":controlTypes.Role.DIALOG,
 	"directory":controlTypes.Role.LIST,
 	"document":controlTypes.Role.DOCUMENT,

@@ -238,12 +238,12 @@ def exercise_mark_aria_details():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("downArrow")
 	_asserts.speech_matches(
 		actualSpeech,
-		"out of edit  Hello  highlighted  has note  this is a  link  test",
+		"out of edit  Hello  highlighted  has details  this is a  link  test",
 		message="Browse mode: Move by line to paragraph with link nested in a container with details",
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"Hello  hlght note this is a  lnk test hlght end",
+		"Hello  hlght details this is a  lnk test hlght end",
 		message="Browse mode: Move by line to paragraph with link nested in a container with details",
 	)
 	# Jump to the link from same line
@@ -255,7 +255,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"Hello  hlght note this is a  lnk test hlght end",
+		"Hello  hlght details this is a  lnk test hlght end",
 		message="Browse mode: From same line jump to link nested in a container with details",
 	)
 
@@ -279,12 +279,12 @@ def exercise_mark_aria_details():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("k")
 	_asserts.speech_matches(
 		actualSpeech,
-		"highlighted  has note  test  link",
+		"highlighted  has details  test  link",
 		message="Browse mode: From prior line jump to link nested in a container with details",
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"Hello  hlght note this is a  lnk test hlght end",
+		"Hello  hlght details this is a  lnk test hlght end",
 		message="Browse mode: From prior line jump to link nested in a container with details",
 	)
 	# read the details summary

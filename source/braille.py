@@ -194,6 +194,8 @@ roleLabels: typing.Dict[controlTypes.Role, str] = {
 	controlTypes.Role.COMMENT: _("cmnt"),
 	# Translators: Displayed in braille when an object is a suggestion.
 	controlTypes.Role.SUGGESTION: _("sggstn"),
+	# Translators: Displayed in braille when an object is a definition.
+	controlTypes.Role.DEFINITION: _("definition"),
 }
 
 positiveStateLabels = {
@@ -551,7 +553,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(description)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
-		detailsRole = propertyValues.get("detailsRole", controlTypes.Role.UNKNOWN)
+		detailsRole = aria.normalizeDetailsRole(propertyValues.get("detailsRole"))
 		if detailsRole != controlTypes.Role.UNKNOWN:
 			textList.append(roleLabels.get(detailsRole, detailsRole.displayString))
 		else:

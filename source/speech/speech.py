@@ -1691,7 +1691,7 @@ def getPropertiesSpeech(  # noqa: C901
 	# are there further details
 	hasDetails = propertyValues.get('hasDetails', False)
 	if hasDetails:
-		detailsRole = propertyValues.get("detailsRole", controlTypes.Role.UNKNOWN)
+		detailsRole = aria.normalizeDetailsRole(propertyValues.get("detailsRole"))
 		if detailsRole != controlTypes.Role.UNKNOWN:
 			textList.append(
 				# Translators: Speaks when there are further details/annotations that can be fetched manually.
