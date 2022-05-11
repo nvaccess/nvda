@@ -258,6 +258,7 @@ ACCESSIBLE_ALT_GRAPH_KEYSTROKE = AccessibleKeystroke.ALT_GRAPH
 ACCESSIBLE_BUTTON1_KEYSTROKE = AccessibleKeystroke.BUTTON1
 ACCESSIBLE_BUTTON2_KEYSTROKE = AccessibleKeystroke.BUTTON2
 ACCESSIBLE_BUTTON3_KEYSTROKE = AccessibleKeystroke.BUTTON3
+# Do not extend this list
 
 
 class AccessibleVK(IntEnum):
