@@ -901,7 +901,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for cycle through automatic language switching mode command.
-			"Cycles through speech automatic language switching modes off, language only and language and dialect."
+			"Cycles through speech modes for automatic language switching: "
+			"off, language only and language and dialect."
 		),
 		category=SCRCAT_SPEECH,
 	)
