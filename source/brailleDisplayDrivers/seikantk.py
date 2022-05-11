@@ -188,7 +188,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		try:
 			super().terminate()
 		finally:
-			self._dev.close()
+			if self._dev:
+				# Check if initialized
+				self._dev.close()
 
 	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
