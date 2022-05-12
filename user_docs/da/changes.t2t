@@ -4,80 +4,94 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2021.3 =
-Denne version af NVDA introducerer HID Braille.
-Denne specifikation har til hensigt at standardisere understøttelse for punktdisplay uden behovet for særskilte drivere.
-Der er opdateringer til eSpeak-NG, samt LibLouis med nye russiske og Tshivenda punkttabeller.
-Der er nu en indstilling i de avancerede indstillinger, der lader dig aktivere en lyd, når fejl i NVDA opstår.
-Kommandoen "Sig alt" ruller nu dokumentet i Word, eftersom dokumentet læses op, således den nuværende position i dokumentet er synlig på skærmen.
-Der er mange forbedringer til Office, når man bruger UIA.
-En UIA-rettelse er, at NVDA nu ignorere layouttabeller i Outlook, når man læser meddelelser.
+= 2022.1 =
+Denne version af NVDA indeholder markante forbedringer til UIA-understøttelse i Microsoft Office.
+I Microsoft Office 16.0.15000 og i nyere versioner vil NVDA benytte UIA som standard, når du benytter Windows 11.
+Dette øger ydeevnen markant i forhold til den tidligere objektmodel.
 
-Vigtige bemærkninger:
+Der er forbedringer til forskellige drivere til punktdisplays, herunder Seika Notetaker, Papenmeier og HID Braille.
+Der er også diverse fejlrettelser i Windows 11 og de forskellige apps, herunder lommeregneren, konsollen, terminal og emoji-panelet.
 
-På grund af en opdatering til vores sikkerhedscertifikat, vil et lille antal af NVDA-brugere modtage en fejlmeddelelse, når de forsøger at opdatere fra NVDA 2021.2.
-NVDA vil fremover bede Windows om at opdatere sikkerhedscertifikater, hvilket vil forhindre denne fejl i at opstå i fremtiden.
-Brugere, der er påvirkede af denne fejl, skal hente opdateringen manuelt.
+eSpeak-NG og LibLouis er blevet opdateret og tilføjer nye japanske, tyske og catalanske tabeller.
+
+Bemærk:
+ - Denne version af NVDA er ikke kompatibel med eksisterende tilføjelsespakker. Sørg for, at du opdatere dem først.
+ -
 
 
 == Nye funktioner ==
-- Tilføjet en kommando, der lader dig bestemme, hvordan typografier for cellekanter skal oplyses. (#10408)
-- Tilføjet understøttelse for den nye HID Braille specifikation, der har til hensigt at standardisere understøttelsen for punktdisplays. (#12523)
-  - Enheder, der understøtter denne standard, vil automatisk blive tilkoblet NVDA.
-  - For tekniske detaljer om NVDAs implementering af denne standard, læs https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+- Understøttelse for rapportering af noter i Microsoft Excel i Windows 11 med UI Automation aktiveret. (#12861)
+- I nyligere builds af Microsoft Word med UI Automation i Windows 11, vil du nu få oplyst bogmærker, udkast til kommentarer og løste kommentarer. (#12861)
+- Den nye ``--lang`` kommandolinjeparameter lader dig tvinge NVDA til at benytte et andet sprog. (#10044)
+- NVDA vil nu advare dig, hvis der bruges ukendte kommandolinjeparametre, der ikke benyttes af tilføjelser. (#12795)
+- Når Microsoft Word benyttes og du har UI Automation aktiveret, vil NVDA benytte MathPlayer til at læse og navigere gennem ligninger. (#12946)
+  - Hvis denne funktionalitet skal virke, skal du køre Microsoft Word 365/2016 build 14326 eller nyere. 
+  - MathType-ligninger skal også manuelt konverteres til Office-matematikligninger vil at vælge hver ligning, åbne kontekstmenuen, vælg Equation options, Convert to Office Math.
   -
-- Tilføjet understøttelse for VisioBraille Vario 4 Braille Device. (#12607)
-- En lyd, når fejl opstår i NVDA, kan aktiveres under NVDAs avancerede indstillinger. (#12672)
-- NVDA vil nu oplyse antallet af forslag under en søgning i Windows 10 og nyere, når du bruger apps som Indstillinger eller Microsoft Store. (#7330, #12758, #12790)
-- Tabelnavigation understøttes nu i gitterkontroller oprettet af Out-GridView cmdlet i PowerShell. (#12928)
+- Rapportering af "har detaljer" og den tilsvarende kommando er blevet opdateret til at virke i fokustilstand. (#13106)
+- Seika Notetaker kan nu blive tilkoblet automatisk, når du bruger USB eller Bluetooth. (#13191, #13142)
+  - Dette påvirker følgende enheder: MiniSeika (16, 24 celler), V6, og V6Pro (40 celler)
+  - Du kan også manuelt vælge Bluetooth COM port.
+  -
+- Tilføjet en kommando til at aktivere punktskriftsviseren. Der er intet  tastetryk tilknyttet som standard. (#13258)
+- Tilføjet kommandoer til at trykke på flere funktionstaster på én gang. (#13152)
+- Dialogen til at håndtere udtaleordbøger har nu en knap der hedder "Fjern alle". Dette lader dig ryde en hel ordbog. (#11802)
+- Tilføjet understøttelse for Windows 11 Lommeregner. (#13212)
+- I Microsoft Word i Windows 11 og med UI Automation aktiveret, kan du nu få oplyst antal linjer og afsnit. (#13283, #13515)
+- For Microsoft Office 16.0.15000 og nyere i Windows 11, vil NVDA bruge UI Automation til at få adgang til Microsoft Word-dokumenter som standard, hvilket giver en væsentlig forbedring af ydeevnen i forhold til den gamle Objektmodel. (#13437)
+ - Dette inkludere selve Microsoft Word, samt meddelelsesvinduet i Microsoft Outlook og når du skriver en ny meddelelse i Microsoft Outlook. 
+ -
 -
 
 
 == Ændringer ==
-- Espeak-ng er opdateret til 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
-- NVDA vil automatisk benytte eSpeak-NG, hvis Windows OneCore ikke understøtter det foretrukne sprog. (#10451)
-- Hvis Windows OneCore konsekvent fejler, vil NVDA bruge eSpeak-NG. (#11544)
-- Når du læser statuslinjen med NVDA+end, vil læsemarkøren ikke længere flytte dertil automatisk.
-Hvis du har brug for denne funktion, skal du tildele en kommando under "Håndter kommandoer" under kategorien "Objektnavigation". (#8600)
-- Når du åbner en indstillingsdialog i NVDA, der allerede er åbnet, vil NVDA ikke længere melde fejl. (#5383)
-- Opdaterede LibLouis punktoversættelse til [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
-  - Nye punkttabeller: Russisk niveau 1, Tshivenda niveau 1, Tshivenda niveau 2
-  -
-- I stedet for "markeret indhold" eller "mrkt", vil "fremhævet" eller "frhv" henholdsvist blive benyttet for tale og punktskrift. (#12892)
-- NVDA vil ikke længere forsøge at afslutte, hvis en dialog afventer en påkrævet handling (f.eks. bekræft/annuller). (#12984)
+- Espeak-ng er blevet opdateret til 1.51-dev commit ``7e5457f91e10``. (#12950)
+- Opdateret liblouis punktoversættelse til [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]. (#13141, #13438)
+  - Tilføjet ny punkttabel: Japansk (Kantenji) literær punktskrift.
+  - Tilføjet ny punkttabel for tysk sekspunkt computer braille.
+  - Tilføjet Catalansk punkttabel niveau 1. (#13408)
+  - 
+- NVDA vil oplyse valgte og flettede celler i LibreOffice Calc 7.3 og nyere. (#9310, #6897)
+- Opdateret Unicode Common Locale Data Repository (CLDR) til 40.0. (#12999)
+- NVDA+NumpadDelete vil oplyse systemmarkørens eller objektets position som standard. (#13060)
+- NVDA+Skift+NumpadDelete oplyser læsemarkørens position. (#13060)
+- Tilføjet kommandoer, der lader dig benytte funktionstaster, hvis du bruger et punktdisplay fra Freedom Scientific. (#13152)
+- "Grundstreg" vil ikke længere blive oplyst, hvis du bruger NVDA+F til at få oplyst tekstformatering. (#11815)
+- "Aktivér lang beskrivelse" har ikke længere et tastetryk tildelt som standard. (#13380)
+- Kommandoen til at få et sammendraag af annoteringsdetaljer har nu fået et tastetryk tildelt (NVDA+d). (#13380)
+- NVDA skal genstartes efter MathPlayer er blevet installeret. (#13486)
 -
-
 
 == Fejlrettelser ==
-- Sporing af funktionstaster (såsom ctrl og insert) er mere robust, når watchdog gendannes. (#12609)
-- Det er nu igen muligt at søge efter opdateringer på bestemte systemer (f.eks. rene Windows-installationer). (#12729)
-- NVDA annoncerer nu korrekt blanke tabelceller i Microsoft Word, når UI Automation benyttes. (#11043)
-- Escape-tasten vil nu blive sendt direkte igennem til Aria-gitterkontrolelementer, når du befinder dig i en datacelle i et ARIA-gitter på internettet. (#12413)
-- Når du læser en kolonneoverskrift i en tabel i Chrome, vil denne ikke længere blive oplyst to gange. (#10840)
-- NVDA rapporterer ikke længere en numerisk værdi for UIA-skydere, der har en tekstværdi defineret. (UIA ValuePattern foretrækkes nu i stedet for RangeValuePattern). (#12724)
-- NVDA behandler ikke længere UIA-skydere, som om de altid er angivet i procenter.
-- Rapportering af placeringen af en celle i Microsoft Excel, når UI Automation benyttes fungerer nu igen korrekt i Windows 11. (#12782)
-- NVDA vil ikke længere forsøge at indstille Python til en ugyldig lokalisering. (#12753)
-- Hvis en deaktiveret tilføjelse fjernes og bagefter geninstalleres, vil den blive genaktiveret. (#12792)
-- Rettede fejl med opdatering og fjernelse af tilføjelser, når mappen for den pågældende tilføjelse er blevet omdøbt eller har åbne filer. (#12792, #12629)
-- NVDA vil ikke længere overflødigt oplyse, når blot én celle vælges, hvis regneark benyttes med UI Automation. (#12530)
-- Mere tekst i dialoger læses nu i LibreOffice Writer, såsom den tekst, der vises i dialoger, der beder dig om at bekræfte din handling. (#11687)
-- Læsning/navigering med gennemsynstilstand i Microsoft Word via UI Automation sikrer nu, at dokumentet altid rulles, så den aktuelle position i gennemsynstilstand er synlig, og at systemmarkørens position i fokustilstand korrekt afspejler placeringen i gennemsynstilstand. (#9611)
-- Når kommandoen "Sig alt" udføres i Microsoft Word med UI Automation aktiveret, vil dokumentet automatisk rulle i takt med, at systemmarkøren bevæger sig. (#9611)
-- Når du læser meddelelser i Outlook og du har UI Automation slået til, vil bestemte tabeller nu opfattes som layouttabeller af NVDA, hvilket betyder, at disse ikke længere vil blive vist som standard under læsning. (#11430)
-- En sjælden fejl, der kunne opstå, når man skifter lydkort er rettet. (#12620)
-- Indtastning med litterære punkttabeller burde fungere mere pålideligt i redigeringsfelter. (#12667)
-- Når du navigerer Windows-kalenderen fra systembakken, vil NVDA nu korrekt oplyse hele ugen. (#12757)
-- Når du bruger en kinesisk indtastningsmetode såsom Taiwan - Microsoft Quick i Microsoft Word, vil punktdisplays ikke længere hoppe tilbage til den oprindelige position for systemmarkøren, når du panorerer frem og tilbage. (#12855)
-- Når du navigerer dokumenter i Microsoft Word med UI Automation aktiveret, vil du nu igen være i stand til at navigere mellem sætninger med Alt+pil op og Alt+pil ned. (#9254)
-- Når du bruger Microsoft Word med UI Automation aktiveret, vil indrykning af afsnit nu igen blive oplyst korrekt. (#12899)
-- Når du bruger Microsoft Word med UIA, vil kommandoer såsom den til at ændre indstillingen for sporing af ændringer, samt andre lokaliserede kommandoer blive oplyst. (#12904)
-- Rettede fejl med duplikerede meldinger på punkt og via tale, når "beskrivelse" matcher med "indhold" eller "navn". (#12888)
-- Lyden for stavefejl under skrivning afspilles nu mere konsekvent, når du har UI Automation aktiveret i Microsoft Word. (#12161)
-- NVDA vil ikke længere konstant annoncere "rude", når du trykker Alt+Tab for at skifte mellem programmer i Windows 11. (#12648)
-- Den nye moderne kommentarrude i siden i Microsoft Word, vil nu være tilgængelig, når UI Automation ikke er slået til. Tryk Alt+F12 for at flytte mellem ruden og dokumentet. (#12982)
+- Ruden med udklipsholder skulle ikke længere tage fokus, når du åbner nogle Office-programmer. (#12736)
+- På systemer hvor brugeren har valgt at ændre den primære museknap fra venstre museknap til den højre, vil NVDA ikke længere vise en kontekstmenu, når du eksempelvis bruger webbrowsere. (#12642)
+- Når du flytter læsemarkøren forbi en tekstkontrol, vil NVDA nu korrekt oplyse "bund" i flere tilfælde, når du er i Microsoft Word med UIA aktiveret. (#12808)
+- NVDA kan nu oplyse navne og versionsnumre på programmer placeret i system32, når NVDA afvikles på en 64-bit version af Windows. (#12943)
+- Forbedrede læseevnen i terminalprogrammer. (#12974)
+  - Bemærk, at i nogle situationer, når du indsætter eller sletter tegn midt på en linje, vil tegnene efter systemmarkøren muligvis blive læst op.
+  -
+- Microsoft word med UIA: Når du benytter bogstavnavigering til at flytte mellem overskrifter i gennemsynstilstand, vil NVDA ikke længere sidde fast ved den sidste overskrift i et dokument. Denne overskrift vil heller ikke fejlagtigt blive vist to gange, når du benytter elementlisten. (#9540)
+- NVDA kan nu oplyse statuslinjen for Stifinder i Windows 8 og nyere ved brug af kommandoen NVDA+end (desktop) / NVDA+skift+end (laptop). (#12845)
+- Indgående meddelelser i Skype for Business bliver nu oplyst igen som forventet. (#9295)
+- NVDA kan nu igen korrekt dæmpe lyden, når du bruger talesyntesen SAPI5 i Windows 11. (#12913)
+- NVDA vil nu oplyse navne for emner i historik og hukommelse, når du bruger lommeregneren i Windows 10. (#11858)
+- Kommandoer til at rulle og hurtigt flytte markøren virker nu igen med enheder, der bruger HID Braille. (#13228)
+- Windows 11 Mail: Når du læser en mail og flytter fokus til eksempelvis en anden app, vil NVDA ikke længere sidde fast ved den aktuelle linje af meddelelsen, når du vender tilbage. (#13050)
+- HID braille: Chord-kommandoer (f.eks. mellemrum+punkt4) kan nu udføres fra punktdisplays. (#13326)
+- Rettede et problem, hvor flere indstillingsdialoger kunne forblive åbne samtidigt. (#12818)
+- Rettede et problem, hvor nogle Focus Blue punktdisplays ikke længere fungerede, når man bragte computeren ud af slumringstilstand. (#9830)
+- "Grundstreg" rapporteres ikke længere konstant, når indstillingen "Oplys hævet og sænket skrift" er aktiv. (#11078)
+- NVDA vil ikke længere forhindre valg af emoji i Windows 11, når du bruger emoji-panelet. (#13104)
+- Forhindre en fejl, der gjorde at NVDA oplyste tekst to gange med Windows-konsol og terminalen. (#13261)
+- Rettet et problem, der forhindrede at listeemner kunne oplæses i 64 bit-applikationer, såsom REAPER. (#8175)
+- NVDA vil nu automatisk skifte til fokustilstand i filhentning i Microsoft Edge, når listeemnet tilhørende den seneste overførsel har fokus. (#13221)
+- NVDA får nu ikke længere 64-bit versioner af Notepad++ 8.3 og nyere til at gå ned. (#13311)
+- Adobe Reader går ikke længere ned under opstart, hvis "Beskyttet tilstand" er aktiveret. (#11568)
+- Rettet en fejl der forårsagede at NVDA gik ned, hvis man valgte Papenmeier punktdisplay. (#13348)
+- I Microsoft word med UIA: Sidetal og anden formatering annonceres ikke længere uhensigtsmæssigt, når du flytter fra en tom tabelcelle til en celle med indhold eller fra slutningen af dokumentet til eksisterende indhold. (#13458, #13459)
+- NVDA vil ikke længere undgå at oplæse sidens titel og påbegynde automatisk oplæsning af siden, når en side indlæses i Google chrome 100. (#13571)
+- NVDA går ikke længere ned, hvis du nulstiller til fabriksindstillinger og funktionen "Sig funktionstaster" er aktiveret. (#13634)
 -
-
 
 == Ændringer for udviklere ==
 For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument.
