@@ -512,6 +512,21 @@ class AppModule(appModuleHandler.AppModule):
 			and winUser.getClassName(hwnd) == "ApplicationFrameWindow"
 		):
 			return True
+		# #13506: Windows 11 UI elements such as Taskbar should be reclassified as UIA windows,
+		# letting NVDA announce shell elements when navigating with mouse and/or touch,
+		# notably when interacting with windows labeled "DesktopWindowXamlSource".
+		# WORKAROUND UNTIL A PERMANENT FIX IS FOUND ACROSS APPS
+		if (
+			winVersion.getWinVer() >= winVersion.WIN11
+			and winUser.getClassName(hwnd) in (
+				# Windows 11 shell UI root, housing various shell elements shown on screen if enabled.
+				"Shell_TrayWnd",  # Start, Search, Widgets, other shell elements
+				# Top-level window class names from Windows 11 shell features
+				"Shell_InputSwitchTopLevelWindow",  # Language switcher
+				"XamlExplorerHostIslandWindow",  # Task View and Snap Layouts
+			)
+		):
+			return True
 		return False
 
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
