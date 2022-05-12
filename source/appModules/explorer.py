@@ -518,7 +518,11 @@ class AppModule(appModuleHandler.AppModule):
 		# WORKAROUND UNTIL A PERMANENT FIX IS FOUND ACROSS APPS
 		if (
 			winVersion.getWinVer() >= winVersion.WIN11
-			and winUser.getClassName(hwnd) in (
+			# Traverse parents until arriving at the top-level window with the below class names.
+			# This is more so for the shell root (first class name), and for others, class name check would work
+			# since they are top-level windows for windows shown on screen such as Task View.
+			# However, look for the ancestor for consistency.
+			and winUser.getClassName(winUser.getAncestor(hwnd, winUser.GA_ROOT)) in (
 				# Windows 11 shell UI root, housing various shell elements shown on screen if enabled.
 				"Shell_TrayWnd",  # Start, Search, Widgets, other shell elements
 				# Top-level window class names from Windows 11 shell features
