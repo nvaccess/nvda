@@ -506,9 +506,10 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def isGoodUIAWindow(self, hwnd):
+		currentWinVer = winVersion.getWinVer()
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
 		if (
-			winVersion.getWinVer() >= winVersion.WIN10_1903
+			currentWinVer >= winVersion.WIN10_1903
 			and winUser.getClassName(hwnd) == "ApplicationFrameWindow"
 		):
 			return True
@@ -517,7 +518,7 @@ class AppModule(appModuleHandler.AppModule):
 		# notably when interacting with windows labeled "DesktopWindowXamlSource".
 		# WORKAROUND UNTIL A PERMANENT FIX IS FOUND ACROSS APPS
 		if (
-			winVersion.getWinVer() >= winVersion.WIN11
+			currentWinVer >= winVersion.WIN11
 			# Traverse parents until arriving at the top-level window with the below class names.
 			# This is more so for the shell root (first class name), and for others, class name check would work
 			# since they are top-level windows for windows shown on screen such as Task View.
