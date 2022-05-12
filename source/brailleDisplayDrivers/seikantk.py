@@ -185,17 +185,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return False
 
 	def terminate(self):
-		if self._dev is None:
-			log.error("Seika Notetaker driver not initialized")
-			return
 		try:
 			super().terminate()
 		finally:
+			if self._dev is None:
+				log.debugWarning("Seika Notetaker driver not initialized when attempting to terminate")
+				return
 			self._dev.close()
 
 	def display(self, cells: List[int]):
 		if self._dev is None:
-			log.error("Seika Notetaker driver not initialized")
+			log.debugWarning("Seika Notetaker driver not initialized when attempting to display")
 			return
 		# cells will already be padded up to numCells.
 		cellBytes = SEIKA_SEND_TEXT + bytes([self.numCells]) + bytes(cells)
