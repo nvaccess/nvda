@@ -63,12 +63,16 @@ class Ia2Web(IAccessible):
 		return bool(self.IA2Attributes.get("details-roles"))
 
 	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		# Currently only defined in Chrome as of May 2022
+		# Refer to ComputeDetailsRoles
+		# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
 		detailsRoles = self.IA2Attributes.get("details-roles")
 		if not detailsRoles:
 			if config.conf["debugLog"]["annotations"]:
 				log.debug("no details-roles")
 			return None
-		return aria.ariaRolesToNVDARoles.get(detailsRoles, controlTypes.Role.UNKNOWN)
+		firstDetailsRole = detailsRoles.split(" ")[0]
+		return aria.normalizeDetailsRole(firstDetailsRole)
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")

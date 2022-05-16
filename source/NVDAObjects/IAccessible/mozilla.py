@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2021 NV Access Limited, Peter Vágner
 
+import aria
 import IAccessibleHandler
 from comInterfaces import IAccessible2Lib as IA2
 import oleacc
@@ -82,10 +83,7 @@ class Mozilla(ia2Web.Ia2Web):
 			return None
 		for target in detailsRelations:
 			# just take the first for now.
-			return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(
-				target.IAccessibleRole,
-				controlTypes.Role.UNKNOWN
-			)
+			return aria.normalizeDetailsRole(target.IAccessibleRole)
 
 	@property
 	def hasDetails(self) -> bool:

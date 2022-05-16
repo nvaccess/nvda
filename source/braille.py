@@ -555,7 +555,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	if hasDetails:
 		detailsRole = aria.normalizeDetailsRole(propertyValues.get("detailsRole"))
 		if detailsRole != controlTypes.Role.UNKNOWN:
-			textList.append(roleLabels.get(detailsRole, detailsRole.displayString))
+			detailsRoleLabel = roleLabels.get(detailsRole, detailsRole.displayString)
+			# TODO: should this be `_("has %s") % detailsRoleLabel`?
+			textList.append(detailsRoleLabel)
 		else:
 			textList.append(
 				# Translators: Braille when there are further details/annotations that can be fetched manually.

@@ -140,6 +140,121 @@ def test_mark_aria_details_FreeReviewCursor():
 	exercise_mark_aria_details()
 
 
+def test_mark_aria_details_role():
+	_chrome.prepareChrome(
+		"""
+		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
+			<p>
+				<span aria-details="endnote-details">doc-endnote,</span>
+				<span aria-details="footnote-details">doc-footnote,</span>
+				<span aria-details="comment-details">comment,</span>
+				<span aria-details="definition-details">definition,</span>
+				<span aria-details="unknown-details">form</span>
+			</p>
+		</div>
+		<div>
+			<p>
+				<div id="endnote-details" role="doc-endnote">details with role doc-endnote</div>
+				<div id="footnote-details" role="doc-footnote">details with role doc-footnote</div>
+				<div id="comment-details" role="comment">details with role comment</div>
+				<div id="definition-details">details with role definition</div>
+				<div id="unknown-details" role="form">details with role form</div>
+			</p>
+		</div>
+		"""
+	)
+	expectedSpeech = SPEECH_SEP.join([
+		"edit",
+		"multi line",
+		# the role doc-endnote is unsupported as an IA2 role
+		# The role "list item" is used instead
+		"has details",
+		"doc endnote,",
+		"",
+		"has foot note",
+		"doc footnote,",
+		"",
+		"has comment",
+		"comment,",
+		"",
+		# the role doc-endnote is unsupported as an IA2 role
+		# The role "generic" is used instead
+		"has details",
+		"definition,",
+		"",
+		# The role "form" is deliberately unsupported
+		"has details",
+		"form",
+	])
+
+	expectedBraille = " ".join([
+		"mln",
+		"edit",
+		"multi line",
+		# the role doc-endnote is unsupported as an IA2 role
+		# The role "list item" is used instead
+		"details",
+		"doc endnote,",
+		"fnote",
+		"doc footnote,",
+		"cmmnt",
+		"comment,",
+		# the role doc-endnote is unsupported as an IA2 role
+		# The role "generic" is used instead
+		"details",
+		"definition,",
+		# The role "form" is deliberately unsupported
+		"details",
+		"form",
+		"edt end",
+	])
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+
+	_asserts.speech_matches(
+		actualSpeech,
+		expectedSpeech,
+		message="Browse mode speech: Read line with different aria details roles."
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		expectedBraille,
+		message="Browse mode braille: Read line with different aria details roles.",
+	)
+	
+	# Reset caret
+	actualSpeech = _NvdaLib.getSpeechAfterKey("upArrow")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"out of edit",
+			"Test page load complete",
+		]),
+		message="reset caret",
+	)
+
+	# Force focus mode
+	actualSpeech = _NvdaLib.getSpeechAfterKey("NVDA+space")
+	_asserts.speech_matches(
+		actualSpeech,
+		"Focus mode",
+		message="force focus mode",
+	)
+
+	# Tab into the contenteditable
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		expectedSpeech,
+		message="Focus mode speech: Read line with different aria details roles"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		expectedBraille,
+		message="Focus mode braille: Read line with different aria details roles",
+	)
+
+
 def exercise_mark_aria_details():
 	_chrome.prepareChrome(
 		"""

@@ -17,21 +17,24 @@ def normalizeDetailsRole(detailsRole: Union[str, controlTypes.Role, None]) -> co
 	either as a role string or a role integer.
 	Braille and speech needs consistent normalization for translation and reporting.
 	"""
-	if isinstance(detailsRole, controlTypes.Role):
-		if detailsRole not in supportedAriaDetailsRoles.values():
-			return controlTypes.Role.UNKNOWN
-		return detailsRole
-	elif isinstance(detailsRole, str):
+	if detailsRole is None or detailsRole == controlTypes.Role.UNKNOWN:
+		return controlTypes.Role.UNKNOWN
+
+	if isinstance(detailsRole, str):
 		if detailsRole.isdigit():
 			from IAccessibleHandler import IAccessibleRolesToNVDARoles
-			return IAccessibleRolesToNVDARoles.get(int(detailsRole), controlTypes.Role.UNKNOWN)
+			# get a role, but it may be unsupported
+			detailsRole = IAccessibleRolesToNVDARoles.get(int(detailsRole), controlTypes.Role.UNKNOWN)
 		else:
+			# return a supported details role
 			return supportedAriaDetailsRoles.get(detailsRole, controlTypes.Role.UNKNOWN)
-	elif detailsRole is None:
-		return controlTypes.Role.UNKNOWN
-	else:
-		log.exception(f"Unexpected detailsRole type: {type(detailsRole)}, value {detailsRole}")
-		return controlTypes.Role.UNKNOWN
+
+	if isinstance(detailsRole, controlTypes.Role):
+		if detailsRole in supportedAriaDetailsRoles.values():
+			return detailsRole
+
+	log.debug(f"Unexpected detailsRole: {type(detailsRole)}, value {repr(detailsRole)}")
+	return controlTypes.Role.UNKNOWN
 
 
 # Currently only defined in Chrome as of May 2022
@@ -39,9 +42,15 @@ def normalizeDetailsRole(detailsRole: Union[str, controlTypes.Role, None]) -> co
 # https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
 supportedAriaDetailsRoles = {
 	"comment": controlTypes.Role.COMMENT,
-	"doc-endnote": controlTypes.Role.ENDNOTE,
 	"doc-footnote": controlTypes.Role.FOOTNOTE,
-	"definition": controlTypes.Role.DEFINITION,
+	# These roles are current unsupported by IAccessible2,
+	# and as such, have not been fully implemented in NVDA.
+	# They can only be fetched via the IA2Attribute "details-roles",
+	# which is only supported in Chrome.
+	# Currently maps to the IA2 role ROLE_LIST_ITEM
+	# "doc-endnote": controlTypes.Role.ENDNOTE,
+	# Currently maps to the IA2 role ROLE_GENERIC
+	# "definition": controlTypes.Role.DEFINITION,
 }
 
 
