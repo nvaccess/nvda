@@ -24,7 +24,9 @@ class AppModule(appModuleHandler.AppModule):
 		if api.getFocusObject().windowClassName != "RichEditD2DPT":
 			raise NotImplementedError()
 		# Look for a specific child as some children report the same UIA properties such as class name.
-		statusBar = api.getForegroundObject().children[7].firstChild
+		# Make sure to look for a foreground UIA element which hosts status bar content if visible.
+		notepadStatusBarIndex = 7
+		statusBar = api.getForegroundObject().children[notepadStatusBarIndex].firstChild
 		# No location for a disabled status bar i.e. location is 0 (x, y, width, height).
 		if not any(statusBar.location):
 			raise NotImplementedError()
