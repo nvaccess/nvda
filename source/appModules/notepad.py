@@ -14,6 +14,14 @@ import api
 class AppModule(appModuleHandler.AppModule):
 
 	def _get_statusBar(self):
+		"""Retrieves Windows 11 Notepad status bar.
+		In Windows 10 and earlier, status bar can be obtained by looking at the bottom of the screen.
+		Windows 11 Notepad uses Windows 11 UI design (top-level window is labeled "DesktopWindowXamlSource",
+		therefore status bar cannot be obtained by position alone.
+		If visible, a child of the foreground window hosts the status bar elements.
+		Status bar child position must be checked whenever Notepad is updated on stable Windows 11 releases
+		as Notepad is updated through Microsoft Store as opposed to tied to specific Windows releases.
+		"""
 		# #13688: Notepad 11 uses Windows 11 user interface, therefore status bar is harder to obtain.
 		# This does not affect earlier versions.
 		notepadVersion = int(self.productVersion.split(".")[0])
