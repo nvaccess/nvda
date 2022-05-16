@@ -6,7 +6,6 @@
 
 import itertools
 import os
-from sys import exc_info
 import typing
 from typing import Iterable, Union, Tuple, List, Optional
 from locale import strxfrm
