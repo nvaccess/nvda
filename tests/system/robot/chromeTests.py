@@ -190,7 +190,6 @@ def test_mark_aria_details_role():
 	expectedBraille = " ".join([
 		"mln",
 		"edit",
-		"multi line",
 		# the role doc-endnote is unsupported as an IA2 role
 		# The role "list item" is used instead
 		"details",
