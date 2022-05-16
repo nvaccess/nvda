@@ -21,6 +21,7 @@ class AppModule(appModuleHandler.AppModule):
 		If visible, a child of the foreground window hosts the status bar elements.
 		Status bar child position must be checked whenever Notepad is updated on stable Windows 11 releases
 		as Notepad is updated through Microsoft Store as opposed to tied to specific Windows releases.
+		L{api.getStatusBar} will resort to position lookup if C{NotImplementedError} is raised.
 		"""
 		# #13688: Notepad 11 uses Windows 11 user interface, therefore status bar is harder to obtain.
 		# This does not affect earlier versions.
