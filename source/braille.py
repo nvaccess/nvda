@@ -6,6 +6,7 @@
 
 import itertools
 import os
+from sys import exc_info
 import typing
 from typing import Iterable, Union, Tuple, List, Optional
 from locale import strxfrm
@@ -2428,9 +2429,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		# Clear the display.
 		try:
 			self.display([0] * self.numCells)
-		except Exception as e:
+		except Exception:
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
-			log.debugWarning(f"Display driver {self} is failing while terminating. {e}")
+			log.error(f"Display driver {self} failed to display while terminating.", exc_info=True)
 
 	#: typing information for autoproperty _get_numCells
 	numCells: int
