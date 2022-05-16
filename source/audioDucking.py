@@ -178,7 +178,7 @@ def isAudioDuckingSupported():
 		) and hasattr(oledll.oleacc, 'AccSetRunningUtilityState')
 		_isAudioDuckingSupported &= systemUtils.hasUiAccess()
 		# If the wx.App has not been initialized, audio ducking callbacks
-		# will fail as they use the wx event loop
+		# will fail as they rely on wx.CallLater/wx.CallAfter
 		_isAudioDuckingSupported &= wx.GetApp() is not None
 	return _isAudioDuckingSupported
 
