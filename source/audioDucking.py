@@ -171,11 +171,15 @@ _isAudioDuckingSupported=None
 def isAudioDuckingSupported():
 	global _isAudioDuckingSupported
 	if _isAudioDuckingSupported is None:
+		import wx
 		_isAudioDuckingSupported = (
 			config.isInstalledCopy()
 			or config.isAppX
 		) and hasattr(oledll.oleacc, 'AccSetRunningUtilityState')
 		_isAudioDuckingSupported &= systemUtils.hasUiAccess()
+		# If the wx.App has not been initialized, audio ducking callbacks
+		# will fail as they use the wx event loop
+		_isAudioDuckingSupported &= wx.GetApp() is not None
 	return _isAudioDuckingSupported
 
 
