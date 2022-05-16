@@ -479,10 +479,12 @@ def main():
 	import mathPres
 	log.debug("Initializing MathPlayer")
 	mathPres.initialize()
+	time.sleep(5)
 	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
+	time.sleep(2)
 	import wx
 	import six
 	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
