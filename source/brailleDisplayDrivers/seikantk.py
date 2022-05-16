@@ -97,7 +97,6 @@ def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
-	_dev: Optional[hwIo.IoBase] = None
 	name = SEIKA_NAME
 	# Translators: Name of a braille display.
 	description = _("Seika Notetaker")
@@ -118,6 +117,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._hidBuffer = b""
 		self._command: typing.Optional[bytes] = None
 		self._argsLen: typing.Optional[int] = None
+		self._dev: Optional[hwIo.IoBase] = None
 
 		log.debug(f"Seika Notetaker braille driver: ({port!r})")
 		dev: typing.Optional[typing.Union[hwIo.Hid, hwIo.Serial]] = None
