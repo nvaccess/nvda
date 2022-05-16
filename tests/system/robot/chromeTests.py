@@ -197,7 +197,7 @@ def test_mark_aria_details_role():
 		"doc endnote,",
 		"fnote",
 		"doc footnote,",
-		"cmmnt",
+		"cmnt",
 		"comment,",
 		# the role doc-endnote is unsupported as an IA2 role
 		# The role "generic" is used instead
