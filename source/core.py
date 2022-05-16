@@ -8,7 +8,7 @@
 
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import Callable, Dict, List, Optional, Union
 import comtypes
 import sys
 import winVersion
@@ -24,6 +24,7 @@ from logHandler import log
 import addonHandler
 import extensionPoints
 import garbageHandler
+import wx
 
 
 # inform those who want to know that NVDA has finished starting up.
@@ -72,7 +73,6 @@ def doStartupDialogs():
 		if not isParamKnown:
 			unknownCLIParams.append(param)
 	if unknownCLIParams:
-		import wx
 		gui.messageBox(
 			# Translators: Shown when NVDA has been started with unknown command line parameters.
 			_("The following command line parameters are unknown to NVDA: {params}").format(
@@ -84,7 +84,6 @@ def doStartupDialogs():
 			wx.OK | wx.ICON_ERROR
 		)
 	if config.conf.baseConfigError:
-		import wx
 		gui.messageBox(
 			# Translators: A message informing the user that there are errors in the configuration file.
 			_("Your configuration file contains errors. "
@@ -102,7 +101,6 @@ def doStartupDialogs():
 		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
-		import wx
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
@@ -114,7 +112,6 @@ def doStartupDialogs():
 		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
 			# a callback to save config after the usage stats question dialog has been answered.
 			def onResult(ID):
-				import wx
 				if ID in (wx.ID_YES,wx.ID_NO):
 					try:
 						config.conf.save()
@@ -267,8 +264,7 @@ def _setInitialFocus():
 		log.exception("Error retrieving initial focus")
 
 
-def getWxLangOrNone() -> Optional['wx.LanguageInfo']:
-	import wx
+def getWxLangOrNone() -> Optional[wx.LanguageInfo]:
 	lang = languageHandler.getLanguage()
 	wxLocaleObj = wx.Locale()
 	wxLang = wxLocaleObj.FindLanguageInfo(lang)
@@ -346,8 +342,6 @@ def _closeAllWindows():
 	"""
 	import gui
 	from gui.settingsDialogs import SettingsDialog
-	from typing import Dict
-	import wx
 
 	app = wx.GetApp()
 
@@ -483,7 +477,6 @@ def main():
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
-	import wx
 	import six
 	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
@@ -863,21 +856,34 @@ def requestPump():
 		return
 	# This isn't the main thread. wx timers cannot be run outside the main thread.
 	# Therefore, Have wx start it in the main thread with a CallAfter.
-	import wx
 	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
 
-def callLater(delay, callable, *args, **kwargs):
+
+def callLater(
+		delay: float,
+		callable: Callable,
+		*args,
+		**kwargs
+) -> Union[wx.CallLater, bool, None]:
 	"""Call a callable once after the specified number of milliseconds.
 	As the call is executed within NVDA's core queue, it is possible that execution will take place slightly after the requested time.
 	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
-	This function can be safely called from any thread.
+	This function can be safely called from any thread once NVDA has been initialized.
 	"""
-	import wx
+	if wx.GetApp() is None:
+		# If NVDA has not fully initialized yet, the wxApp may not be initialized.
+		# wx.CallLater and wx.CallAfter requires the wxApp to be initialized.
+		log.error("callLater has been called before NVDA has fully initialized", stack_info=True)
+		return None
 	if threading.get_ident() == mainThreadId:
+		# Returns wx.CallLater object
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
-		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)
+		# Returns None
+		wx.CallAfter(wx.CallLater, delay, _callLaterExec, callable, args, kwargs)
+		return True
 
-def _callLaterExec(callable, args, kwargs):
+
+def _callLaterExec(callable: Callable, args, kwargs):
 	import queueHandler
-	queueHandler.queueFunction(queueHandler.eventQueue,callable,*args, **kwargs)
+	queueHandler.queueFunction(queueHandler.eventQueue, callable, *args, **kwargs)
