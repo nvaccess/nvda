@@ -769,6 +769,8 @@ def getControlFieldBraille(  # noqa: C901
 			"includeTableCellCoords": reportTableCellCoords,
 			"current": current,
 			"description": description,
+			"hasDetails": hasDetails,
+			"detailsRole": detailsRole,
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
