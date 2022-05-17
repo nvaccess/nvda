@@ -187,7 +187,8 @@ def test_mark_aria_details_role():
 		"form",
 	])
 
-	expectedBraille = " ".join([
+	# TODO: fix known bug with braille not announcing details
+	expectedBraille = " ".join([  # noqa: F841
 		"mln",
 		"edit",
 		# the role doc-endnote is unsupported as an IA2 role
