@@ -881,7 +881,7 @@ def callLater(delay, callable, *args, **kwargs):
 	if wx.GetApp() is None:
 		# If NVDA has not fully initialized yet, the wxApp may not be initialized.
 		# wx.CallLater and wx.CallAfter requires the wxApp to be initialized.
-		raise NVDANotInitializedError("NVDA has not initialized, cannot schedule callable")
+		raise NVDANotInitializedError("Cannot schedule callable, wx.App is not initialized")
 	if threading.get_ident() == mainThreadId:
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
