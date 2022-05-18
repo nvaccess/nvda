@@ -231,7 +231,7 @@ MAX_KEY_BINDINGS=50
 
 class AccessibleKeystroke(IntFlag):
 	"""
-	TODO: The documentation for this mapping is here:
+	Defined in the JDK in header include/win32/bridge/AccessBridgePackages.h
 	"""
 	SHIFT = 1
 	CONTROL = 2
@@ -264,7 +264,7 @@ ACCESSIBLE_BUTTON3_KEYSTROKE = AccessibleKeystroke.BUTTON3
 class AccessibleVK(IntEnum):
 	"""
 	The supported control code keys related to AccessibleKeystroke.CONTROLCODE.
-	TODO: The documentation for this mapping is here:
+	Defined in the JDK in header include/win32/bridge/AccessBridgePackages.h
 	"""
 	BACK_SPACE = 8
 	DELETE = 127
