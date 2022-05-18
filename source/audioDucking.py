@@ -124,8 +124,13 @@ def _unensureDucked(delay=True):
 		import core
 		if _isDebug():
 			log.debug("Queuing _unensureDucked")
-		core.callLater(1000,_unensureDucked,False)
-		return
+		try:
+			core.callLater(1000, _unensureDucked, False)
+			return
+		except core.NVDANotInitializedError:
+			# If the wx.App has not been initialized, audio ducking callbacks
+			# will fail as they rely on wx.CallLater/wx.CallAfter
+			log.debugWarning("wx App not initialized, cannot delay audio un-duck")
 	with _duckingRefCountLock:
 		_duckingRefCount-=1
 		if _isDebug():
@@ -171,15 +176,11 @@ _isAudioDuckingSupported=None
 def isAudioDuckingSupported():
 	global _isAudioDuckingSupported
 	if _isAudioDuckingSupported is None:
-		import wx
 		_isAudioDuckingSupported = (
 			config.isInstalledCopy()
 			or config.isAppX
 		) and hasattr(oledll.oleacc, 'AccSetRunningUtilityState')
 		_isAudioDuckingSupported &= systemUtils.hasUiAccess()
-		# If the wx.App has not been initialized, audio ducking callbacks
-		# will fail as they rely on wx.CallLater/wx.CallAfter
-		_isAudioDuckingSupported &= wx.GetApp() is not None
 	return _isAudioDuckingSupported
 
 
