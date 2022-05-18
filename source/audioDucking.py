@@ -130,7 +130,7 @@ def _unensureDucked(delay=True):
 		except core.NVDANotInitializedError:
 			# If the wx.App has not been initialized, audio ducking callbacks
 			# will fail as they rely on wx.CallLater/wx.CallAfter
-			log.debugWarning("wx App not initialized, cannot delay audio un-duck")
+			log.debugWarning("wx App not initialized, unducking immediately")
 	with _duckingRefCountLock:
 		_duckingRefCount-=1
 		if _isDebug():
