@@ -859,12 +859,16 @@ def requestPump():
 	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
 
 
+class NVDANotInitializedError(Exception):
+	pass
+
+
 def callLater(
 		delay: float,
 		callable: Callable,
 		*args,
 		**kwargs
-) -> Union[wx.CallLater, bool, None]:
+) -> Union[wx.CallLater, None]:
 	"""Call a callable once after the specified number of milliseconds.
 	As the call is executed within NVDA's core queue, it is possible that execution will take place slightly after the requested time.
 	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
@@ -873,15 +877,11 @@ def callLater(
 	if wx.GetApp() is None:
 		# If NVDA has not fully initialized yet, the wxApp may not be initialized.
 		# wx.CallLater and wx.CallAfter requires the wxApp to be initialized.
-		log.error("callLater has been called before NVDA has fully initialized", stack_info=True)
-		return None
+		raise NVDANotInitializedError("Cannot schedule callable, wx.App is not initialized")
 	if threading.get_ident() == mainThreadId:
-		# Returns wx.CallLater object
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
-		# Returns None
-		wx.CallAfter(wx.CallLater, delay, _callLaterExec, callable, args, kwargs)
-		return True
+		return wx.CallAfter(wx.CallLater, delay, _callLaterExec, callable, args, kwargs)
 
 
 def _callLaterExec(callable: Callable, args, kwargs):
