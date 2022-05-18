@@ -479,6 +479,7 @@ def main():
 	import mathPres
 	log.debug("Initializing MathPlayer")
 	mathPres.initialize()
+	time.sleep(5)
 	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 		# Translators: This is spoken when NVDA is starting.
