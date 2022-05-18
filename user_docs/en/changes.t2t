@@ -11,6 +11,7 @@ What's New in NVDA
  - ``control+alt+home/end`` to jump to first/last column.
  - ``control+alt+pageUp/pageDown`` to jump to first/last row.
  -
+- An unassigned script to cycle through language and dialect switching modes has been added. (#10253)
 -
 
 == Changes ==
@@ -41,6 +42,10 @@ What's New in NVDA
 - Visual Studio now correctly reports line indentation. (#13574)
 - NVDA can now beep or speak on Java application progress bars (#13594)
 - NVDA will once again announce Start menu search result details in recent Windows 10 and 11 releases. (#13544)
+- In Windows 10 and 11 Calculator version 10.1908 and later, NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13386)
+- Fix braille output when navigating certain text in Mozilla rich edit controls, such as drafting a message in Thunderbird. (#12542)
+- Hidden text is no longer announced in Wordpad and other ``richEdit`` controls. (#13618)
+- NVDA will announce status bar content in Windows 11 Notepad. (#13386)
 -
 
 
@@ -180,6 +185,7 @@ Note:
 - Fixed a bug where selecting the Papenmeier Braille Display Driver caused NVDA to crash. (#13348)
 - In Microsoft word with UIA: page number and other formatting is no longer inappropriately announced when moving from a blank table cell to a cell with content, or from the end of the document into existing content. (#13458, #13459)
 - NVDA will no longer fail to report the page title and start automatically reading, when a page loads in Google chrome 100. (#13571)
+- NVDA no longer crashes when resetting the NVDA configuration to factory defaults while speak command keys is on. (#13634)
 -
 
 == Changes for Developers ==
