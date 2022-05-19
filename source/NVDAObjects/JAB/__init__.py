@@ -312,6 +312,8 @@ class JAB(Window):
 		for state in stateStrings:
 			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
+		if "editable" not in stateStrings and self._JABAccContextInfo.accessibleText:
+			stateSet.add(controlTypes.State.READONLY)
 		if "visible" not in stateStrings:
 			stateSet.add(controlTypes.State.INVISIBLE)
 		if "showing" not in stateStrings:
