@@ -49,4 +49,4 @@ The functions are documented with comments.
 The NVDA Controller Client API is licensed under the GNU Lesser General Public License (LGPL), version 2.1.
 In simple terms, this means you can use this library in any application, but if you modify the library in any way, you must contribute the changes back to the community under the same license.
 
-Please see `license.txt` in this directory for more details.
+Please refer to [`license.txt`](./license.txt) for more details.
