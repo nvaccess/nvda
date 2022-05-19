@@ -328,6 +328,8 @@ class JAB(Window):
 			stateSet.add(controlTypes.State.OFFSCREEN)
 		if "expandable" not in stateStrings:
 			stateSet.discard(controlTypes.State.COLLAPSED)
+		if "enabled" not in stateStrings:
+			stateSet.add(controlTypes.State.UNAVAILABLE)
 		return stateSet
 
 	def _get_value(self):
