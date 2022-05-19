@@ -2427,13 +2427,13 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		Subclasses should call the superclass method first.
 		@postcondition: This instance can no longer be used unless it is constructed again.
 		"""
-		super(BrailleDisplayDriver,self).terminate()
+		super().terminate()
 		# Clear the display.
 		try:
 			self.display([0] * self.numCells)
-		except:
+		except Exception:
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
-			pass
+			log.error(f"Display driver {self} failed to display while terminating.", exc_info=True)
 
 	#: typing information for autoproperty _get_numCells
 	numCells: int
