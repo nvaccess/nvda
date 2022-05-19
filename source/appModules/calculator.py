@@ -125,7 +125,7 @@ class AppModule(appModuleHandler.AppModule):
 		# #13383: later Calculator releases use UIA notification event to announce results.
 		# While the exact version that introduced UIA notification event cannot be found easily,
 		# it is definitely used in version 10.1908 and later.
-		calculatorVersion = [int(version) for version in focus.appModule.productVersion.split(".")[:2]]
+		calculatorVersion = [int(version) for version in self.productVersion.split(".")[:2]]
 		if calculatorVersion >= [10, 1908]:
 			return
 		# In redstone, calculator result keeps firing name change,
