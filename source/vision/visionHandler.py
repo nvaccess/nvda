@@ -352,13 +352,17 @@ class VisionHandler(AutoPropertyObject):
 				)
 
 	def initialFocus(self) -> None:
+		"""Handles the current focus when the provider is initialized.
+		"""
 		if not api.getDesktopObject():
 			# focus/review hasn't yet been initialized.
 			return
 		self.handleGainFocus(api.getFocusObject())
 	
 	def initialNavigatorObject(self) -> None:
+		"""Handles the current navigator object when the provider is initialized.
+		"""
 		if not api.getDesktopObject():
 			# focus/review hasn't yet been initialized.
 			return
-		self.handleReviewMove(api.getNavigatorObject())
+		self.handleReviewMove(context=Context.REVIEW)
