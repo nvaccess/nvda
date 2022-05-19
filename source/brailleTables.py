@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -526,10 +527,12 @@ addTable("xh-za-g1.utb", _("Xhosa grade 1"))
 addTable("xh-za-g2.ctb", _("Xhosa grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("zhcn-g1.ctb", _("Chinese (China, Mandarin) grade 1"))
+# This should be translated to '中文中国汉语现行盲文' in Mandarin.
+addTable("zhcn-g1.ctb", _("Chinese (China, Mandarin) Current Braille System"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("zhcn-g2.ctb", _("Chinese (China, Mandarin) grade 2"), contracted=True)
+# This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+addTable("zhcn-g2.ctb", _("Chinese (China, Mandarin) Double-phonic Braille System"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"))
