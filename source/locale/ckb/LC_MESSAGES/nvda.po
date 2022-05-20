@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA source-master-4ccb2ab\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-13 00:02+0000\n"
-"PO-Revision-Date: 2022-05-19 02:04+0300\n"
+"PO-Revision-Date: 2022-05-20 02:18+0300\n"
 "Last-Translator: silva.matti <silva.hm88@gmail.com>\n"
 "Language-Team: \n"
 "Language: ckb\n"
@@ -143,6 +143,7 @@ msgstr "هەمیشە دەنگە لاوەکیەکەن نزمبکە"
 
 #. Translators: Displayed in braille for an object which is a
 #. window.
+#, fuzzy
 msgid "wnd"
 msgstr "wnd"
 
@@ -372,7 +373,7 @@ msgstr "نموونەی وێنەیی"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
 msgid "hlght"
-msgstr ""
+msgstr "بەرزی"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -493,19 +494,19 @@ msgstr "هەموو خاڵەکان"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr ""
+msgstr "پیشاندانی تەواو بۆ گۆڕینی ناوەڕۆك"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 #. This was the pre NVDA 2017.3 default.
 msgid "Always fill display"
-msgstr ""
+msgstr "هەموو کات تەواو پیشانبدە"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. always shows the object with focus at the very left of the braille display
 #. (i.e. you will have to scroll back for focus context information).
 msgid "Only when scrolling back"
-msgstr ""
+msgstr "تەنها لەکاتی سکرۆڵ بۆ دواوە"
 
 #. Translators: String representing automatic port selection for braille displays.
 msgid "Automatic"
@@ -517,7 +518,7 @@ msgstr "USB فلاش مێمۆری"
 
 #. Translators: String representing the Bluetooth port selection for braille displays.
 msgid "Bluetooth"
-msgstr "Bluetooth"
+msgstr "بلوتوث"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -527,7 +528,7 @@ msgstr "س %s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
-msgstr ""
+msgstr "بەستەری مەجازی"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -576,17 +577,17 @@ msgid "%s end"
 msgstr "%s کۆتایی"
 
 #. Translators: Brailled when text contains a draft comment.
-#, fuzzy
 msgid "drft cmnt"
-msgstr "توانج"
+msgstr "سەرنجی ڕەشنووس"
 
 #. Translators: Brailled when text contains a resolved comment.
 msgid "rslvd cmnt"
-msgstr ""
+msgstr "سەرنجی چارەسەرکراو"
 
 #. Translators: brailled when text contains a bookmark
+#, fuzzy
 msgid "bkmk"
-msgstr ""
+msgstr "ئاماژە پێ کراوەکان"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
@@ -603,7 +604,7 @@ msgstr "بۆ پێداچوونەوە"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
-msgstr ""
+msgstr "&تووندی خاڵ"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Braille inp&ut"
@@ -672,14 +673,13 @@ msgstr "ئەفریقی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Afrikaans grade 2"
-msgstr "ئەفریقی پلە ١"
+msgstr "ئەفریقی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
-msgstr "عەرەبی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی عەرەبی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -698,9 +698,8 @@ msgstr "ئەسەمیسی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Bashkir grade 1"
-msgstr "كەشميرى پلە ١"
+msgstr "بەشکیرى پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -709,32 +708,28 @@ msgstr "بنگالی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian computer braille"
-msgstr "فارسی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری بێلاڕوسی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Belarusian literary braille"
-msgstr "فارسی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی ئەدەبی بێلاڕوسی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
-msgstr "بلگاری ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی بولگاری"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Bulgarian grade 1"
-msgstr "هەنگاری پلە ١"
+msgstr "بولغاری پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Catalan grade 1"
-msgstr "کڕواتی پلە ١"
+msgstr "کاتەلۆنی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -743,24 +738,23 @@ msgstr "کوردیی ناوەڕاست پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Coptic 8 dot computer braille"
-msgstr "کڕواتی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری کۆپتیکی پلە ٨"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Welsh grade 1"
-msgstr "ویلزی پلە ١"
+msgstr "وێڵزی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Welsh grade 2"
-msgstr "ویلزی پلە ٢"
+msgstr "وێڵزی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Czech 8 dot computer braille"
-msgstr "چیکی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی چیکی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -770,7 +764,7 @@ msgstr "چیکی پلە ١"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot computer braille"
-msgstr "دانمارکی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی دانیمارکی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -794,14 +788,13 @@ msgstr "دانمارکی ٨ خاڵ پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "German 6 dot computer braille"
-msgstr "ئەڵمانی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٦ خاڵی ئەڵمانی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German 8 dot computer braille"
-msgstr "ئەڵمانی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی ئەڵمانی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -810,9 +803,8 @@ msgstr "ئەڵمانی پلە ٠"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "German grade 0 (detailed)"
-msgstr "ئەڵمانی پلە ٠"
+msgstr "ئەڵمانی پلە ٠ (بە وردی)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -821,9 +813,8 @@ msgstr "ئەڵمانی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "German grade 1 (detailed)"
-msgstr "ئەڵمانی پلە ١"
+msgstr "ئەڵمانی پلە ١ (بە وردی)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -838,7 +829,7 @@ msgstr "یۆنانی"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "ئینگلیزی (بەڕیتانی) ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ئینگلیزی (بەریتانی) ٨ خاڵ"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -933,17 +924,17 @@ msgstr "فێلەندی ٦ خال"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
-msgstr "فێلەندی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی فێنلەندی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
-msgstr "فەڕەنسی (یەکگرتوو) ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٦ خاڵی فەڕەنسی (یەکگرتوو)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) 8 dot computer braille"
-msgstr "فەڕەنسی (یەکگرتوو) ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی فەڕەنسی (یەکگرتوو)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -972,15 +963,13 @@ msgstr "برایەڵی یۆنانی نێودەوڵەتی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Israeli grade 1"
-msgstr "ئێرلەندی پلە ١"
+msgstr "ئیسرائیلی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Hebrew computer braille"
-msgstr "عبری ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری عیبری"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -990,7 +979,7 @@ msgstr "هیندی پلە ١"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
-msgstr "کڕواتی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی عیبری"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1000,7 +989,7 @@ msgstr "کڕواتی پلە ١"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
-msgstr "هەنگاری ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی هەنگاری"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1015,46 +1004,42 @@ msgstr "هەنگاری پلە ٢"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Icelandic 8 dot computer braille"
-msgstr "ایسلەندی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی ئایسلەندی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 6 dot computer braille"
-msgstr "ئیتالی ٦ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٦ خاڵی ئیتاڵی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 8 dot computer braille"
-msgstr "ئیتالی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی ئیتاڵی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Japanese (Kantenji) literary braille"
-msgstr "فارسی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی ئەدەبی ژاپۆنی (برێڵ)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kannada grade 1"
-msgstr "کەننادا پلە ١"
+msgstr "کەنەدای پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Kazakh grade 1"
-msgstr "کەننادا پلە ١"
+msgstr "کازاخستانی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Khmer grade 1"
-msgstr "كەشميرى پلە ١"
+msgstr "خمێری پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Northern Kurdish grade 0"
-msgstr "کوردیی ناوەڕاست پلە ١"
+msgstr "کوردیی باکوری پلە ٠"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1108,19 +1093,18 @@ msgstr "مەنیپوری پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Malay grade 2"
-msgstr "مەلایالام پلە ١"
+msgstr "مالیزی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Mongolian grade 1"
-msgstr "مەنگۆلیا پلە ١"
+msgstr "مەنگۆلی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Mongolian grade 2"
-msgstr "مەنگۆلیا پلە ٢"
+msgstr "مەنگۆلی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1129,21 +1113,18 @@ msgstr "مەراثی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Burmese grade 1"
-msgstr "ئەسەمیسی پلە ١"
+msgstr "بۆرمی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Burmese grade 2"
-msgstr "پرتوگالی پلە ٢"
+msgstr "بۆرمی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Dutch 6 dot"
-msgstr "هۆڵەندی ٨ خاڵ"
+msgstr "هۆڵەندی ٦ خاڵ"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1153,7 +1134,7 @@ msgstr "هۆڵەندی ٨ خاڵ"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian 8 dot computer braille"
-msgstr "نەرویجی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی نەرویجی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1182,15 +1163,13 @@ msgstr "نیپالی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Sepedi grade 1"
-msgstr "سویدی پلە ١"
+msgstr "سپێدی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Sepedi grade 2"
-msgstr "ئیسپانی پلە ٢"
+msgstr "سپێدی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1200,13 +1179,12 @@ msgstr "ئۆریا پلە ١"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Polish 8 dot computer braille"
-msgstr "پۆڵۆنی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی کۆمپیوتەری ٨ خاڵی پۆڵەندی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Polish literary braille"
-msgstr "فارسی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برەیڵی ئەدەبی پۆڵەندی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1235,27 +1213,23 @@ msgstr "ڕۆمانی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian computer braille"
-msgstr "فارسی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برێڵی کۆمپیوتەری ڕووسی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian literary braille"
-msgstr "فارسی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برێڵی ئەدەبی ڕووسی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian literary braille (detailed)"
-msgstr "فارسی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برێڵی ئەدەبی ڕووسی (بە وردی)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian contracted braille"
-msgstr "فارسی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برێڵی ڕووسی گرێبەست کراو"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1264,14 +1238,13 @@ msgstr "سانسکریت پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Yakut grade 1"
-msgstr "سانسکریت پلە ١"
+msgstr "یاقوتی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
-msgstr "سویدی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برێڵی کۆمپیوتەری ٨ خاڵی سویدی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1295,15 +1268,13 @@ msgstr "سلۆڤینی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Sesotho grade 1"
-msgstr "سویدی پلە ١"
+msgstr "سێسۆثۆی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Sesotho grade 2"
-msgstr "ویلزی پلە ٢"
+msgstr "سێسۆثۆی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1317,9 +1288,8 @@ msgstr "تامیلی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Tatar grade 1"
-msgstr "لاتڤی پلە ١"
+msgstr "تەتەری پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1333,45 +1303,38 @@ msgstr "تورکی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Setswana grade 1"
-msgstr "فارسی پلە ١"
+msgstr "سیستوانەی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Setswana grade 2"
-msgstr "ئەڵمانی پلە ٢"
+msgstr "سیستوانەی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Ukrainian grade 1"
-msgstr "کڕواتی پلە ١"
+msgstr "ئۆکرانی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Ukrainian computer braille"
-msgstr "فارسی ٨ خاڵ کۆمپیوتەر برایەڵ"
+msgstr "برێڵی کۆمپیوتەری ئۆکرانی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 1"
-msgstr "ئێرلەندی پلە ١"
+msgstr "ئوردوی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Urdu grade 2"
-msgstr "ئێرلەندی پلە ٢"
+msgstr "ئوردوی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Uzbek grade 1"
-msgstr "چیکی پلە ١"
+msgstr "ئوزباکی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1380,21 +1343,18 @@ msgstr "یونیکۆد برایەڵ"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Vietnamese grade 0"
-msgstr "ڤیاتنامی پلە ١"
+msgstr "ڤیاتنامی پلە ٠"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Tshivenda grade 1"
-msgstr "هیندی پلە ١"
+msgstr "تشیڤێندای پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Tshivenda grade 2"
-msgstr "ڤیاتنامی پلە ١"
+msgstr "تشیڤێندای پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1403,27 +1363,23 @@ msgstr "ڤیاتنامی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Vietnamese grade 2"
-msgstr "ڤیاتنامی پلە ١"
+msgstr "ڤیاتنامی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Southern Vietnamese grade 1"
-msgstr "ڤیاتنامی پلە ١"
+msgstr "ڤیاتنامی باشوری پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Xhosa grade 1"
-msgstr "کۆری پلە ١"
+msgstr "کۆسەی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Xhosa grade 2"
-msgstr "کۆری پلە ٢"
+msgstr "کۆسەی پلە ٢"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1447,15 +1403,13 @@ msgstr "چینی (تایوان، ماندەرین)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Zulu grade 1"
-msgstr "تێلوگو پلو ١"
+msgstr "زولوی پلە ١"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Zulu grade 2"
-msgstr "ئێرلەندی پلە ٢"
+msgstr "زولوی پلە ٢"
 
 #. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
@@ -1496,15 +1450,15 @@ msgstr "پشتگیری نەکراوە لە ئەم بەڵگەنامە"
 
 #. Translators: the description for the Elements List command in browse mode.
 msgid "Lists various types of elements in this document"
-msgstr ""
+msgstr "جۆرە جیاوازەکانی توخم لەم بەڵگەنامەیەدا دەخاتە ڕوو"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
-msgstr ""
+msgstr "ئۆبجێکتی ئێستا لە بەڵگەنامەکەدا چالاک دەکات"
 
 #. Translators: the description for the passThrough script on browseMode documents.
 msgid "Passes gesture through to the application"
-msgstr ""
+msgstr "ئاماژە دەگوازێتەوە بۆ ئەپلیکەیشنەکە"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1876,19 +1830,19 @@ msgstr "یاداشتی پێشوو بوونی نییە"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
-msgstr ""
+msgstr "بە بلۆکێکی بەستەرەکاندا تێدەپەڕێت بۆ پێشەوە"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text after a block of links"
-msgstr ""
+msgstr "دوای بلۆکێک لە بەستەرەکان دەقێکی زیاتر نەبێت"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips backward past a block of links"
-msgstr ""
+msgstr "بە بلۆکێکی بەستەرەکاندا تێدەپەڕێت بۆ دواوە"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text before a block of links"
-msgstr ""
+msgstr "پێش بلۆکێک لە بەستەرەکان دەقێکی زیاتر نەبێت"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
@@ -2056,7 +2010,7 @@ msgstr "لە لەخۆگرێکدا نییە"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
-msgstr ""
+msgstr "دەچێتە سەرەتای توخمە کۆنتێنەرەکە، وەک لیستێک یان خشتەیەک"
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
@@ -2069,7 +2023,7 @@ msgstr "خوارەوە"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr ""
+msgstr "بە کۆتایی توخمە کۆنتێنەرەکەدا تێدەپەڕێت، وەک لیستێک یان خشتەیەک"
 
 #. Translators: the description for the toggleScreenLayout script.
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
@@ -2077,11 +2031,12 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr ""
+"ئەگەر شێوازی شاشەکە پارێزراو بێت لەکاتی ڕەندەری ناوەڕۆکی بەڵگەنامەکەدا "
+"دەگۆڕێت و دەکوژێتەوە"
 
 #. Translators: The message reported for not supported toggling of screen layout
-#, fuzzy
 msgid "Not supported in this document."
-msgstr "پشتگیری نەکراوە لە ئەم بەڵگەنامە"
+msgstr "پشتگیری نەکراوە لە ئەم بەڵگەنامەیەدا."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2338,12 +2293,12 @@ msgstr "قاوەییەکی زەرد"
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
-msgstr ""
+msgstr "ئەم ڕاگەیێنانەی خوارەوەی هێڵی فەرمان لەلای NVDA نەناسراون: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
 msgid "Unknown command line parameters"
-msgstr ""
+msgstr "ڕاگەیێنە نەناسراوەکانی هێڵی فەرمان"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2351,18 +2306,23 @@ msgid ""
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
+"پەڕگەی ڕێکخستنەت هەڵەی تێدایە. ڕێکخستنەکانت ڕێك خراونەتەوە بۆ ڕێکخستنەکانی "
+"سەرەتا. \n"
+"وردەکاری زیاتر لەسەر هەڵەکان لە پەڕگەی تۆمارگەکەدا دەدۆزیتەوە."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
-msgstr ""
+msgstr "هەڵەی پەڕگەی ڕێکخستن"
 
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
+"پەڕگەی نەخشەی ئاماژەکانت هەڵەی تێدایە.\n"
+"وردەکاری زیاتر لەسەر هەڵەکان لە پەڕگەی تۆمارگەکەدا دەدۆزیتەوە."
 
 msgid "gesture map File Error"
-msgstr ""
+msgstr "هەڵەی پەڕگەی نەخشەی ئاماژەکان"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -2412,19 +2372,23 @@ msgstr "هەڵە بدۆزەوە"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
-msgstr ""
+msgstr "ڕیزێکی دەق لە شوێنی ئێستای ئاماژەدەرەوە بدۆزەرەوە"
 
 #. Translators: Input help message for find next command.
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
+"ڕوودانی داهاتووی ڕستەی دەقی پێشتر داخڵکراو لە شوێنی ئاماژەدەری ئێستا "
+"بدۆزەرەوە"
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
+"ڕوودانی پێشووی ڕیزبەندی دەقی پێشتر داخڵکراو لە شوێنی ئاماژەدەری ئێستا "
+"بدۆزەرەوە"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
@@ -2495,11 +2459,11 @@ msgstr "قسەکردن"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Configuration"
-msgstr ""
+msgstr "ڕێکخستن"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Configuration profiles"
-msgstr ""
+msgstr "پرۆفایلی ڕێکخستن"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
@@ -2535,43 +2499,48 @@ msgstr "دەرخواردە"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
-msgstr ""
+msgstr "فۆرماتکردنی بەڵگەنامە"
 
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 msgstr ""
+"لە ڕێگەی شێوازەکانی دەک کردنی دەنگەوە دەسوڕێتەوە کە دیاری دەکات کەی NVDA "
+"دەنگی دەنگەکانی تر دادەبەزێنێت"
 
 #. Translators: a message when audio ducking is not supported on this machine
 msgid "Audio ducking not supported"
-msgstr ""
+msgstr "پپشتگیری لە دەک کردنی دەنگ ناکرێت"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
+"یارمەتی دەرخواردەکان دەدات هەڵبکرێن و بکوژێنەوە. کاتێک چالاک دەکرێت، هەر "
+"دەرخواردەیەك وەک داگرتنی کلیلێکی کیبۆردەکە پێت دەڵێت چ سکریپتێک پەیوەندی بەو "
+"دەرخواردەوە هەیە، ئەگەر هەبێت."
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
-msgstr ""
+msgstr "چالاك کردنی دەرخواردەی یارمەتی"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help off"
-msgstr ""
+msgstr "ناچالاکردنی  دەرخواردەی یارمەتی"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles sleep mode on and off for the active application."
-msgstr ""
+msgstr "دۆخی خەو دەگۆڕێت و دەکوژێنێتەوە بۆ بەرنامە چالاکەکە."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
-msgstr "دۆخی نوستن کوژاندەنەوە"
+msgstr "دۆخی نوستن ناچالاك کرا"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
-msgstr "دۆخی نوستن هەڵکردن"
+msgstr "دۆخی نوستن چالاك کرا"
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -2579,10 +2548,13 @@ msgid ""
 "twice will spell the current line. Pressing three times will spell the line "
 "using character descriptions."
 msgstr ""
+"ڕیپۆرتکردنی هێڵی ئێستای ژێر جێنیشاندەری بەرنامەکە. داگرتنی ئەم کلیلە دووجار "
+"هێڵی دیاریکراو حونجە دەکات. داگرتنی ئەم کلیلە سێ جار هێڵەکە حونجە دەکات بە "
+"بەکارهێنانی باسکردنی پیتەکان."
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr ""
+msgstr "جارێک کلیک لەسەر دوگمەی چەپی ماوس دەکات لە شوێنی ئێستای ماوسەکە"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -2590,7 +2562,7 @@ msgstr "کلیکی چەپ"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr ""
+msgstr "جارێک کلیک لەسەر دوگمەی ڕاستی ماوس دەکات لە شوێنی ئێستای ماوسەکە"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
@@ -2598,43 +2570,47 @@ msgstr "کلیکی ڕاست"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
-msgstr ""
+msgstr "دوگمەی چەپی ماوسەکە قفڵ دەکات یان دەیکاتەوە"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
-msgstr ""
+msgstr "دوگمەی چەپی ماوسەکە دەکرێتەوە"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 msgid "Left mouse button lock"
-msgstr ""
+msgstr "قفڵی دوگمەی چەپی ماوسەکە"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
-msgstr ""
+msgstr "دوگمەی ڕاستی ماوسەکە قفڵ دەکات یان دەیکاتەوە"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
-msgstr ""
+msgstr "قفڵی دوگمەی ڕاستی ماوسەکە بکەرەوە"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 msgid "Right mouse button lock"
-msgstr ""
+msgstr "قوفڵی دوگمەی ڕاستی ماوسەکە"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
 msgstr ""
+"هەڵبژاردنی ئێستا لە کۆنتڕۆڵەکانی دەستکاریکردن و بەڵگەنامەکان ڕادەگەیەنێت. "
+"ئەگەر هەڵبژاردن نەبێت وا دەڵێت."
 
 #. Translators: Input help mode message for report date and time command.
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
+"ئەگەر جارێک دابگیرێت، کاتی ئێستا ڕادەگەیەنێت. ئەگەر دوو جار دابگیرێت، "
+"بەرواری ئێستا ڕادەگەیەنێت"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr ""
+msgstr "زیادکردنی ڕێکخستنە چالاککراوەکەی ئێستا لە ئەڵقەی ڕێکخستنەکانی سینث"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -2850,238 +2826,238 @@ msgstr "ڕاگەیاندنی ژمارەی ڕیزەکان چاڵاک دەکات"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Cycles through line indentation settings"
-msgstr ""
+msgstr "لە ڕێگەی ڕێکخستنەکانی هێڵەوە دەسوڕێتەوە"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
-msgstr ""
+msgstr "ڕاپۆرتکردنی بۆشایی بەجێهێڵدراوی دێڕ لە قسەکردن"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with tones"
-msgstr ""
+msgstr "ڕاپۆرتکردنی بۆشایی بەجێهێڵدراوی دێڕ لە تۆنەکاندا"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech and tones"
-msgstr ""
+msgstr "ڕاپۆرتکردنی بۆشایی بەجێهێڵدراوی دێڕ لە قسەکردن و تۆنەکاندا"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation off"
-msgstr ""
+msgstr "کوژاندنەوەی ڕاپۆرتکردنی بۆشایی بەجێهێڵدراوی دێڕ"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr ""
+msgstr "چالاك کردن و ناچالاك کردنی ڕاپۆرتکردنی بۆشایی بەجێهێڵدراوی دێڕی بڕگە"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr ""
+msgstr "ناچالاک کردنی ڕاپۆرتکردنی بۆشایی بەجێهێڵدراوی دێڕی بڕگە"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی بۆشایی بەجێهێڵدراوی دێڕ لە قسەکردن"
 
 #. Translators: Input help mode message for toggle report line spacing command.
 msgid "Toggles on and off the reporting of line spacing"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی دووری هێڵەکان"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی دووری هێڵەکان"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing on"
-msgstr ""
+msgstr "چالاكردنی ڕاپۆرتکردنی دووری هێڵەکان"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی خشتەکان"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی خشتەکان"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr ""
+msgstr "چالاكردنی ڕاپۆر کردنی خشتەکان"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
-msgstr ""
+msgstr "چالاك کردن ونا چالاك کردنی ڕاپۆرتکردنی سەردێڕی ستوون و ڕیزی خشتەکان"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr ""
+msgstr "ناچالاک کردنی  ڕاپۆرتکردنی سەردێڕی ستوون و ڕیزی خشتەکان"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr ""
+msgstr "چالاك کردنی  ڕاپۆرتکردنی سەردێڕی ستوون و ڕیزی خشتەکان"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr ""
+msgstr "چالاک کردن و ناچالاك کردنی ڕاپۆرتکردنی پۆوتانی خانەی خشتەکان"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr ""
+msgstr "ناچالاك کردنی ڕاپۆرتکردنی پۆوتانی خانەی خشتەکان"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی پۆوتانی خانەی خشتەکان"
 
 #. Translators: Input help mode message for toggle report cell borders command.
 msgid "Cycles through the cell border reporting settings"
-msgstr ""
+msgstr "لە ڕێگەی ڕێکخستنەکانی ڕاپۆرتکردنی سنووری خانەکانەوە دەسوڕێتەوە"
 
 #. Translators: A message reported when cycling through cell borders settings.
 msgid "Report styles of cell borders"
-msgstr ""
+msgstr "ڕاپۆرتکردنی شێوازەکانی سنووری خانەکان"
 
 #. Translators: A message reported when cycling through cell borders settings.
 msgid "Report colors and styles of cell borders"
-msgstr ""
+msgstr "ڕەنگ و ستایلەکانی سنووری خانەکان ڕاپۆرت بکە"
 
 #. Translators: A message reported when cycling through cell borders settings.
 msgid "Report cell borders off."
-msgstr ""
+msgstr "سنووری خانەکان ڕاپۆرت بکە."
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی بەستەرەکان"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی بەستەرەکان"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی بەستەرەکان"
 
 #. Translators: Input help mode message for toggle report graphics command.
-#, fuzzy
 msgid "Toggles on and off the reporting of graphics"
-msgstr "دەڕوات بۆ گرافیکی پێشوو"
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی گرافیكەکان"
 
 #. Translators: The message announced when toggling the report graphics document formatting setting.
 msgid "report graphics off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی گرافیكەکان"
 
 #. Translators: The message announced when toggling the report graphics document formatting setting.
-#, fuzzy
 msgid "report graphics on"
-msgstr "گرافیکی داهاتوو بوونی نییە"
+msgstr "چالاك کردنی ڕاپۆرتکردنی گرافیكەکان"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی سەرنجەکان"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی سەرنجەکان"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی سەرنجەکان"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی لیستەکان"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی لیستەکان"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی لیستەکان"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی سەردێڕەکان"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی سەردێڕەکان"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی سەردێڕەکان"
 
 #. Translators: Input help mode message for toggle report groupings command.
 msgid "Toggles on and off the reporting of groupings"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی پۆلێنکردنەکان"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report groupings off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی پۆلێنکردنەکان"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report groupings on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی پۆلێنکردنەکان"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی پارچە نووسینە وەرگیراوەکان"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی پارچە نووسینە وەرگیراوەکان"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی پارچە نووسینە وەرگیراوەکان"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی شوێنە گرینگەکان"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی شوێنە گرینگەکان و ناوچەکان"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی شوێنە گرینگەکان و ناوچەکان"
 
 #. Translators: Input help mode message for toggle report articles command.
 msgid "Toggles on and off the reporting of articles"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی بابەتەکان"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
 msgid "report articles off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی بابەتەکان"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
 msgid "report articles on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی بابەتەکان"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی چوارچێوە"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی چوارچێوە"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی چوارچێوە"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی ڕاپۆرتکردنی توانای کلیک کردن"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr ""
+msgstr "نا چالاك کردنی ڕاپۆرتکردنی توانای کلیک کردن"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr ""
+msgstr "چالاك کردنی ڕاپۆرتکردنی توانای کلیک کردن"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
+"دەسوڕێتەوە لە ڕێگەی ئاستەکانی هێماکانی قسەکردنەوە کە دیاری دەکات کە چ "
+"هێمایەک قسە دەکرێت"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3092,53 +3068,59 @@ msgstr "ئاستی هێما %s"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr ""
+msgstr "جێنیشاندەری ماوسەکە دەگوازێتەوە بۆ ئۆبجێکتی ئێستای ڕێبەر"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "Object has no location"
-msgstr ""
+msgstr "ئۆبجێکتی هیچ شوێنێکی نییە"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
+"ئامرازی ڕێبەری لەسەر ئامرازی ئێستا دادەنێت لەژێر جێنیشاندەری ماوسەکەدا و "
+"قسەی پێدەکات"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
-msgstr ""
+msgstr "ئامرازی ڕێبەری دەجوڵێنێت بۆ ماوس"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
+"بیگۆڕە بۆ دۆخی پێداچوونەوەی دواتر (بۆ نموونە ئامراز، بەڵگەنامە یان ڕوونما) و "
+"شوێنی پێداچوونەوە لە خاڵی ئامرازی ڕێبەرەکەدا دادەنێت"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
-msgstr ""
+msgstr "دۆخی پێداچوونەوەی داهاتوو نییە"
 
 #. Translators: Script help message for previous review mode command.
 msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
+"بیگۆڕە بۆ دۆخی پێداچوونەوەی پێشتر (بۆ نموونە ئامراز، بەڵگەنامە یان ڕوونما) و "
+"شوێنی پێداچوونەوە لە خاڵی ئامرازی ڕێبەرەکەدا دادەنێت"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
-msgstr ""
+msgstr "دۆخی پێداچوونەوەی پێشووتر نییە"
 
 #. Translators: Input help mode message for toggle simple review mode command.
 msgid "Toggles simple review mode on and off"
-msgstr ""
+msgstr "چالاك کردن و نا چالاك کردنی نموونەی پێداچوونەوە"
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
-msgstr ""
+msgstr "نا چالاك کردنی نموونەی پێداچوونەوە"
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
-msgstr ""
+msgstr "چالاك کردنی نموونەی پێداچوونەوە"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -3146,15 +3128,17 @@ msgid ""
 "information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
+"ڕاگەیاندنی ئامرازی ڕێبەری ئێستا. بە دووجار داگرتن ئەم زانیاریە حونجە بکە، بە "
+"سێجار داگرتن نرخ و ناوی ئەم ئامرازە لەبەر بگرەوە بۆ لەبەرگیراوەکان"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
 msgid "No navigator object"
-msgstr ""
+msgstr "هیچ ئامرازێکی ڕێبەری نییە"
 
 #. Translators: message when there is no location information
 msgid "No location information"
-msgstr ""
+msgstr "هیچ زانیارییەکی شوێن نییە"
 
 #. Translators: Description for a keyboard command which reports location of the
 #. review cursor, falling back to the location of navigator object if needed.
@@ -3162,10 +3146,12 @@ msgid ""
 "Reports information about the location of the text at the review cursor, or "
 "location of the navigator object if there is no text under review cursor."
 msgstr ""
+"ڕاگەیاندنی زانیاری دەربارەی شوێنی نووسینەکە لە جێنیشاندەری پێداچوونەوە، یان "
+"شوێنی ئامرازی ڕێبەریەکە ئەگەر هیچ دەقێك لەژێر جێنیشاندەرەکە نەبوو."
 
 #. Translators: Description for a keyboard command which reports location of the navigator object.
 msgid "Reports information about the location of the current navigator object."
-msgstr ""
+msgstr "ڕاگەیاندنی زانیاری دەربارەی شوێنی ئامرازی ڕێبەری ئێستا."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. current caret position falling back to the location of focused object if needed.
@@ -3173,17 +3159,21 @@ msgid ""
 "Reports information about the location of the text at the caret, or location "
 "of the currently focused object if there is no caret."
 msgstr ""
+"ڕاگەیاندنی زانیاری دەربارەی شوێنی دەقەکە لە کارێتەکەدا، یان شوێنی ئێستای "
+"ئامرازی چڕبووەوە ئەگەر هیچ کارێتێك نەبوو."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. currently focused object.
 msgid "Reports information about the location of the currently focused object."
-msgstr ""
+msgstr "ڕاگەیاندنی زانیاری دەربارەی شوێنی ئامرازی چڕبووەوەی ئێستا."
 
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
+"ڕاگەیاندنی زانیاری دەربارەی شوێنی دەق یان ئامراز لە جێنیشاندەری پێداچوونەوە. "
+"بۆ وردەکاری زیاتر دووجار دابگرە."
 
 #. Translators: Description for a keyboard command
 #. which reports location of the text at the caret position
@@ -3192,12 +3182,16 @@ msgid ""
 "Reports information about the location of the text or object at the position "
 "of system caret. Pressing twice may provide further detail."
 msgstr ""
+"ڕاگەیاندنی زانیاری دەربارەی شوێنی دەقەکە یان ئامرازەکە لە شوێنی کارێتی "
+"سیستەمەکە. بۆ وردەکاری زیاتر دووجار دابگرە."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
+"تیشکۆی ئێستا دەگۆڕێت بۆ ئامرازی ڕێبەری، و جێنیشاندەری پێداچوونەوەش دەبات بۆ "
+"شوێنی کارێتەکەی ناوی، ئەگەر شیا."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -3208,6 +3202,8 @@ msgid ""
 "Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
+"بە یەکجار داگرتن تیشکۆی کیبۆردەکە بۆ ئامرازی ڕێبەری دادەنێت. بە دووجار "
+"داگرتن کارێتی سیستەمەکە بۆ جێنیشاندەری پێداچوونەوە دادەنێت"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3226,15 +3222,15 @@ msgstr "کارێتی نییە"
 
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
-msgstr ""
+msgstr "ئامرازی ڕێبەری دەگوازێتەوە بۆ ئەو ئامرازەی لەخۆی گرتووە"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
-msgstr ""
+msgstr "هیچ ئامرازێکی لەخۆ نەگرتووە"
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
-msgstr ""
+msgstr "ئامرازی ڕێبەری دەگوازێتەوە بۆ ئامرازی دواتر"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
@@ -3243,7 +3239,7 @@ msgstr "داهاتووی نییە"
 
 #. Translators: Input help mode message for move to previous object command.
 msgid "Moves the navigator object to the previous object"
-msgstr ""
+msgstr "ئامرازی ڕێبەری دەگوازێتەوە بۆ ئامرازی پێشتر"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
@@ -3252,17 +3248,19 @@ msgstr "پێشووی نییە"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr ""
+msgstr "ئامرازی ڕێبەری دەگوازێتەوە بۆ یەکەم ئامرازی کە لە ناوی دایە"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
-msgstr "هیچ تەنێک بوونی نییە لەناوەوە"
+msgstr "هیچ ئامرازێك بوونی نییە لەناوەوە"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
+"کرداری پێشوەختە لەسەر ئامرازی ڕێبەری ئێستا ئەنجام دەدات (بۆ نمونە: ئەگەر "
+"دوگمەیە دایبگرە)"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3273,12 +3271,16 @@ msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr ""
+"جێنیشاندەری پێداچوونەوە دەگوازێتەوە بۆ هێڵی سەرەوەی ئامرازی ڕێبەری ئێستا و "
+"قسەی پێ دەکات"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr ""
+"جێنیشاندەری پێداچوونەوە دەگوازێتەوە بۆ هێڵی پێشتری ئامرازی ڕێبەری ئێستا و "
+"قسەی پێدەکات"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 #. Translators: Reported when attempting to move to the previous result in the Python Console
@@ -3292,6 +3294,9 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
+"ڕاگەیاندنی هێڵی ئێستا ئامرازی ڕێبەری کە جێنیشاندەری پێداچوونەوەی لێیە. ئەگەر "
+"ئەم کلیکە دووجار داگیرا، هێڵی ئێستا حونجە دەکرێت. سێجار دابگرە بۆ حونجە "
+"کردنی هێڵەکە بە بەکارهێنانی باسکردنی پیتەکان."
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -3826,120 +3831,127 @@ msgstr "شێوەپێدانی ئاسایی پڕۆفایل چالاك کرا"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{profileName} configuration profile active"
-msgstr "{profile} پڕۆفایل چالاک کرا"
+msgstr "{profileName} شێوەپێدانی پڕۆفایل چالاك کرا"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
-msgstr ""
+msgstr "پاشەکەوت کردنی شێوەپێدانی ئێستای NVDA"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times resets to factory defaults."
 msgstr ""
+"بە یەکجار داگرتن شێوەپێدانی ئێستای دەگەڕێنێتەوە بۆ تازەترین دۆخی "
+"پاشەکەوتکراو. بە سێ جار داگرتن ڕێکیدەخاتەوە بۆ شێوەپێدانی بنەڕەتی کارگەکە."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr ""
+msgstr "چالاك کردنی کۆنسوڵی پایثنی NVDA، بەتایبەتی بەسوودە بۆ گەشەپێدان"
 
 #. Translators: Input help mode message for activate manage add-ons command.
 msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 msgstr ""
+"زیادکراوەکانی NVDA چالاك دەکات بۆ جێگیر کردن و سڕینەوەی پاکێجی زیادکراوەکان "
+"بۆ NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
+"گۆڕینی ڕەوشی پیشاندەری وتاری NVDA، پەنجەرەیەکی دەرپەڕیوە کە ڕێگەت پێدەدات "
+"هەموو ئەو دەقانە ببینیت کە NVDA ئێستا قسەی پێدەکات"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr ""
+msgstr "پیشاندەری وتار لەکارخرا"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr ""
+msgstr "پیشاندەری وتار چالاککرا"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
 msgid ""
 "Toggles the NVDA Braille viewer, a floating window that allows you to view "
 "braille output, and the text equivalent for each braille character"
 msgstr ""
+"گۆڕینی ڕەوشی پیشاندەری برەیڵی NVDA، پەنجەرەیەکی دەرپەڕیوە کە ڕێگەت پێدەدات "
+"بەرەچەی برەیڵ و هەر دەقێك هاوتا بە هەر کارەکتەرێکی برەیڵ ببینیت"
 
 #. Translators: The message announced when disabling braille viewer.
-#, fuzzy
 msgid "Braille viewer disabled"
-msgstr "&پیشاندەری برایەڵ"
+msgstr "لەکارخستنی پیشاندەری برەیڵ"
 
 #. Translators: The message announced when enabling Braille viewer.
 msgid "Braille viewer enabled"
-msgstr ""
+msgstr "چالاککردنی پیشاندەری برەیڵ"
 
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr ""
+msgstr "گۆڕینی ڕەوشی بەسترانەوەی برەیڵ لەنێوان تیشکۆ و شوێنی پێداچوونەوەکە"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
-msgstr ""
+msgstr "برەیڵ بەستراوە بە %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
-msgstr ""
+msgstr "گۆڕینی ڕەوشی پیشاندانی زانیاری دەق لە برەیڵ"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
 #, python-format
 msgid "Braille focus context presentation: %s"
-msgstr ""
+msgstr "برەیڵ تیشکۆی لەسەر دەقی پێشکەشکردنی: %s ە"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 msgid "Toggle the braille cursor on and off"
-msgstr ""
+msgstr "گۆڕینی ڕەوشی برەیڵ بۆ هەڵکردن و کوژاندنەوە"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
-msgstr ""
+msgstr "کوژاندنەوەی جێنیشاندەری برەیڵ"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor on"
-msgstr ""
+msgstr "هەڵکردنی جێنیشاندەری برەیڵ"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 msgid "Cycle through the braille cursor shapes"
-msgstr ""
+msgstr "سوڕخواردن بەنێو شێوەکانی جێنیشاندەری برەیڵ"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
-msgstr ""
+msgstr "جێنیشاندەری برەیڵ کوژاوەتەوە"
 
 #. Translators: Reports which braille cursor shape is activated.
 #, python-format
 msgid "Braille cursor %s"
-msgstr ""
+msgstr "جێنیشاندەری برەیڵ %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
-msgstr ""
+msgstr "ڕیپۆرت کردنی دەقەکەی ناو لەبەرگیراوی ویندۆوز"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
-msgstr ""
+msgstr "هیچ دەقێك نییە لەناو لەبەرگیراوەکان"
 
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 #, python-format
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
-msgstr ""
+msgstr "لەبەرگیراوەکان بەشێکی گەورە لە دەق لەخۆدەگرێت. کە %s کارەکتەر درێژە"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
@@ -3947,6 +3959,8 @@ msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr ""
+"دیارکردنی شوێنی ئێستای جێنیشاندەری پێداچوونەوە وەك دەستپێکی دەقەکە بۆ "
+"دەستنیشانکردن یان لەبەرگرتنەوە"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 msgid "Start marked"
@@ -3958,6 +3972,8 @@ msgid ""
 "Move the review cursor to the position marked as the start of text to be "
 "selected or copied"
 msgstr ""
+"جوڵاندنی جێنیشاندەری پێداچوونەوە بۆ شوێنی دەستنیشانکراو وەك سەرەتای دەقەکە "
+"بۆ ئەوەی دەستنیشان بکرێت یان لەبەر بگیرێتەوە"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
@@ -3971,54 +3987,60 @@ msgid ""
 "including the current position of the review cursor is selected. If pressed "
 "twice, the text is copied to the clipboard"
 msgstr ""
+"ئەگەر جارێك داگیرا، دەقەکەی پێشتر نیشانەی دەستپێکردن دابنێت وبە "
+"دەستنیشانکردن و  لەخۆگرتنی شوێنی ئێستای جێنیشاندەری پێداچوونەوە. ئەگەر دوو "
+"جار داگیرا، دەقەکە لەبەردەگیرێتەوە بۆ لەبەرگیراوەکان"
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
 msgstr ""
+"دووجار دابگرە بۆ لەبەرگرتنەوە یان دووبارە دامەزراندنەوەی نیشانەی دەستپێکردن"
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
-msgstr "هیچ دەقێک نییە بۆ کۆپیکردن"
+msgstr "هیچ دەقێک نییە بۆ لەبەرگرتنەوە"
 
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
-msgstr ""
+msgstr "ناتواندرێت دەقەکە دەستنیشان بکرێت، دوو جار دابگرە بۆ لەبەرگرتنەوە"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
-msgstr ""
+msgstr "داکێشانی برەیڵەکە بۆ دووورخستنی پیشاندەر"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display forward"
-msgstr ""
+msgstr "هەڵکێشانی برەیڵەکە بۆ بەرەوپێشهێنانی پیشاندەر"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
+"ڕێبەری کردنی جێنیشاندەر بۆ یان چالاك کردنی ئەو شتەی لەژێر ئەم خانەی "
+"برەیڵەدایە"
 
 #. Translators: Input help mode message for Braille report formatting command.
 msgid "Reports formatting info for the text under this braille cell"
-msgstr ""
+msgstr "ڕیپۆرت کردنی زانیاریەکانی شیوازی پیشاندان بۆ دەقی ژێر ئەم خانەی برەیڵە"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
-msgstr ""
+msgstr "جوڵاندنی پیشاندانی برەیڵ بۆ هێڵی پێشتر"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the next line"
-msgstr ""
+msgstr "جوڵاندنی پیشاندانی برەیڵ بۆ هێڵی دواتر"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
-msgstr ""
+msgstr "تێکردنی خاڵەکانی برەیڵ لەڕێگەی تەختەکلیلی برەیڵ"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the current focus"
-msgstr ""
+msgstr "جوڵاندنی پیشاندەری برەیڵ بۆ تیشکۆی ئێستا"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Erases the last entered braille cell or character"
-msgstr ""
+msgstr "سڕینەوەی کۆتا کارەکتەر یان خانەی تێچووی برەیڵ"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input and presses the enter key"
@@ -9677,42 +9699,42 @@ msgstr "تۆنەکان"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 msgid "Both Speech and Tones"
-msgstr ""
+msgstr "ووتار و تۆنەکان"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
-msgstr ""
+msgstr "بۆشایی بڕگە"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
-msgstr ""
+msgstr "بۆشایی ڕیز"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Alignment"
-msgstr ""
+msgstr "لاگرتن"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
 msgid "Table information"
-msgstr ""
+msgstr "زانیاری خشتە"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Tables"
-msgstr ""
+msgstr "خشتەکان"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Row/column h&eaders"
-msgstr ""
+msgstr "سەردێڕەکانی ڕیز/ستوون"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
-msgstr ""
+msgstr "شوێنی خانەکان"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -9722,24 +9744,22 @@ msgstr "شێوازەکان"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Both Colors and Styles"
-msgstr ""
+msgstr "ڕەنگەکان و شێوازەکان"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Cell &borders:"
 msgstr "چوارچێوەی خانە:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
 msgid "Elements"
-msgstr ""
+msgstr "بەشەکان"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "&Graphics"
-msgstr "گرافیک"
+msgstr "&گرافیک"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9749,111 +9769,113 @@ msgstr "&لیستەکان"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Block &quotes"
-msgstr ""
+msgstr "ووتە وەرگیراوەکان"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Groupings"
-msgstr ""
+msgstr "بە گروپکردنەکان"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Lan&dmarks and regions"
-msgstr ""
+msgstr "نیشانە و هەرێمەکان"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Arti&cles"
-msgstr ""
+msgstr "بابەتەکان"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Fra&mes"
-msgstr ""
+msgstr "چوارچێوەکان"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Clickable"
-msgstr ""
+msgstr "توانای کلیک لەسەرکردنی هەیە"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
+"گۆڕانکاری فۆڕماتکردن ڕابگەیەنە دوای جێ نیشاندەرەکە (دەکرێت ببێتە هۆی "
+"دوواکەوتن)"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
-msgstr ""
+msgstr "کارلێککردنی دەستلێدان"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
 msgid "Enable touch interaction support"
-msgstr ""
+msgstr "پشتگیریکردنی کارلێککردنی دەستلێدان چاڵاک بکە"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
 msgid "&Touch typing mode"
-msgstr ""
+msgstr "دۆخی نووسینی دەستلێدان"
 
 #. Translators: The title of the Windows OCR panel.
-#, fuzzy
 msgid "Windows OCR"
-msgstr "ویندۆز"
+msgstr "Windows OCR"
 
 #. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
-msgstr ""
+msgstr "زمانی ناسینەوە:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "NVDA Development"
-msgstr ""
+msgstr "پەرەپێدانی NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Enable loading custom code from Developer Scratchpad directory"
-msgstr ""
+msgstr "بارکردنی کۆودی تەرخانکراو چاڵاک بکە لە پێڕستی تێنووسی پەرەپێدەر"
 
 #. Translators: the label for a button in the Advanced settings category
 msgid "Open developer scratchpad directory"
-msgstr ""
+msgstr "پێڕستی تێنووسی پەرەپێدەر بکەرەوە"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
-msgstr ""
+msgstr "خۆکردەکردنی ڕووکاری مایکرۆسۆفت"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
 "Enable &selective registration for UI Automation events and property changes"
 msgstr ""
+"تۆمارکردنی هەڵبژاردەیی چاڵاک بکە بۆ پێشهاتی خۆکردەکردنی ڕووکار و گۆڕانکاری "
+"لە تایبەتمەندی"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr ""
+"خۆکردەکردنی ڕووکار بەکاربهێنە بۆ دەستگەیشتن بە کۆنتڕۆڵەکانی بەڵگەنامەی "
+"مایکرۆسۆفت وۆرد"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
-msgstr "ڕەنگی گریمانە"
+msgstr "بنەڕەت (کە گونجاوە)"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
 msgid "Only when necessary"
-msgstr ""
+msgstr "تەنها کاتێک کە پێویستە"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
-msgstr "دەتوانی دەستکاری بکەی"
+msgstr "کە گونجاوە"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
 msgstr "هەمیشە"
@@ -9864,11 +9886,15 @@ msgid ""
 "Use UI Automation to access Microsoft &Excel spreadsheet controls when "
 "available"
 msgstr ""
+"خۆکردەکردنی ڕووکار بەکاربهێنە بۆ دەستگەیشتن بە کۆنتڕۆڵەکانی بەرنامەی "
+"خشتاندنی مایکرۆسۆفت ئێکسڵ"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
+"خۆکردەکردنی ڕووکار بەکاربهێنە بۆ دەستگەیشتن بە ڕووکاری ویندۆوز کاتێک کە "
+"بەردەستە"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -9877,85 +9903,87 @@ msgid ""
 "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
 msgstr ""
+"خۆکردەکردنی ڕووکار بەکاربهێنە لەگەڵ مایکرۆسۆفت ئێدج و\n"
+"وێبگەڕی پشتبەستوو بە کڕۆمیەم کاتێک کە بەردەستە:"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
-msgstr ""
+msgstr "بنەڕەت (تەنها کاتێک کە پێویستە)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
-msgstr ""
+msgstr "تەنها کاتێک کە پێویستە"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
-msgstr ""
+msgstr "بەڵێ"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
-msgstr ""
+msgstr "نەخێر"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Annotations"
-msgstr "زانیاری"
+msgstr "یاداشت"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Report 'has details' for structured annotations"
-msgstr ""
+msgstr "'ووردەکاری هەیە' ڕابگەیەنە بۆ یاداشتە پێکهاتەکان"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Report aria-description always"
-msgstr ""
+msgstr "هەمووکات ووردەکاری تاکی ڕابگەیەنە"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "HID Braille Standard"
-msgstr ""
+msgstr "ستانداردی بڕەیلی HID"
 
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#, fuzzy
 msgid "Default (Yes)"
-msgstr "ڕەنگی گریمانە"
+msgstr "بنەڕەت (بەڵێ)"
 
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
 msgid "Yes"
-msgstr ""
+msgstr "بەڵێ"
 
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
 msgid "No"
-msgstr ""
+msgstr "نەخێر"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
-msgstr ""
+msgstr "پشتگیری بۆ بڕەیلی HID چاڵاک بکە"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Terminal programs"
-msgstr ""
+msgstr "بەرنامەکانی تێرمیناڵ"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr ""
+"ووشە تێپەڕەکان بڵێ لە هەموو تێرمیناڵە پێشخراوەکان (لەوانەیە کارامەیی "
+"باشتربکات)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9963,42 +9991,42 @@ msgid ""
 "Use enhanced t&yped character support in legacy Windows Console when "
 "available"
 msgstr ""
+"پشتگیری پیتی نووسراوی پێشخراو بەکاربهێنە لە ڕووکاری ویندۆوز میراتی کاتێک کە "
+"بەردەستە"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
 msgid "&Diff algorithm:"
-msgstr ""
+msgstr "ئەلگۆریتمی جیاوازی:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#, fuzzy
 msgid "Automatic (prefer Diff Match Patch)"
-msgstr "ئۆتۆماتيكى"
+msgstr "خۆکردەیی (پینەی گونجاوی جیاوازی پەسەند بکە)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#, fuzzy
 msgid "Diff Match Patch"
-msgstr "ئۆتۆماتيكى"
+msgstr "پینەی گونجاوی جیاوازی"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 msgid "Difflib"
-msgstr ""
+msgstr "دیفلیب"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
-msgstr ""
+msgstr "هەوڵی پووچەڵکردنەوەی ووتاری پێشهاتی تیشکخراوەسەری بەسەرچوو بدە:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Editable Text"
-msgstr ""
+msgstr "دەقێک کە دەتوانرێت دەستکاری بکرێت"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
