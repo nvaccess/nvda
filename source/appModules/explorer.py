@@ -531,7 +531,10 @@ class AppModule(appModuleHandler.AppModule):
 				"XamlExplorerHostIslandWindow",  # Task View and Snap Layouts
 			)
 		):
-			return True
+			# #13717: on some systems, Windows 11 shell elements are reported as IAccessible,
+			# notably Start button, causing IAccessible handler to report attribute error when handling events.
+			if winUser.getClassName(hwnd) != "Start":
+				return True
 		return False
 
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
