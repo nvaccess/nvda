@@ -530,6 +530,9 @@ class AppModule(appModuleHandler.AppModule):
 				"Shell_InputSwitchTopLevelWindow",  # Language switcher
 				"XamlExplorerHostIslandWindow",  # Task View and Snap Layouts
 			)
+			# #13717: on some systems, Windows 11 shell elements are reported as IAccessible,
+			# notably Start button, causing IAccessible handler to report attribute error when handling events.
+			and winUser.getClassName(hwnd) != "Start"
 		):
 			return True
 		return False
