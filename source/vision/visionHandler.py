@@ -353,6 +353,7 @@ class VisionHandler(AutoPropertyObject):
 
 	def initialFocus(self) -> None:
 		"""Handles the current focus when the provider is initialized.
+		This function notifies one or more extension points; thus it can raise any type of exception.
 		"""
 		if not api.getDesktopObject():
 			# focus/review hasn't yet been initialized.
@@ -361,6 +362,7 @@ class VisionHandler(AutoPropertyObject):
 	
 	def initialNavigatorObject(self) -> None:
 		"""Handles the current navigator object when the provider is initialized.
+		This function notifies an extension point; thus it can raise any type of exception.
 		"""
 		if not api.getDesktopObject():
 			# focus/review hasn't yet been initialized.
