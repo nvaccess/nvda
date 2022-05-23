@@ -12,11 +12,12 @@ import controlTypes
 import textUtils
 from controlTypes import TextPosition
 from ..window import Window
-from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
+from ..behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
 from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
+
 
 JABRolesToNVDARoles={
 	"alert":controlTypes.Role.DIALOG,
@@ -95,7 +96,15 @@ JABStatesToNVDAStates={
 	"editable":controlTypes.State.EDITABLE,
 }
 
+
+
 re_simpleXmlTag=re.compile(r"\<[^>]+\>")
+
+
+def _processHtml(text):
+	""" Strips HTML tags from text if it is HTML """
+	return re_simpleXmlTag.sub(" ", text) if text.startswith("<html>") else text
+
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -204,6 +213,9 @@ class JAB(Window):
 			clsList.append(Table)
 		elif self.parent and isinstance(self.parent,Table) and self.parent._jabTableInfo:
 			clsList.append(TableCell)
+		elif role == "progress bar":
+			clsList.append(ProgressBar)
+
 		clsList.append(JAB)
 
 	@classmethod
@@ -259,22 +271,28 @@ class JAB(Window):
 		for index in range(bindings.keyBindingsCount):
 			binding=bindings.keyBindingInfo[index]
 			# We don't support these modifiers
-			if binding.modifiers&(JABHandler.ACCESSIBLE_META_KEYSTROKE|JABHandler.ACCESSIBLE_ALT_GRAPH_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON1_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON2_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON3_KEYSTROKE):
+			if binding.modifiers & (
+				JABHandler.AccessibleKeystroke.META
+				| JABHandler.AccessibleKeystroke.ALT_GRAPH
+				| JABHandler.AccessibleKeystroke.BUTTON1
+				| JABHandler.AccessibleKeystroke.BUTTON2
+				| JABHandler.AccessibleKeystroke.BUTTON3
+			):
 				continue
-			keyList=[]
+			modifiers = binding.modifiers
 			# We assume alt  if there are no modifiers at all and its not a menu item as this is clearly a nmonic
-			if (binding.modifiers&JABHandler.ACCESSIBLE_ALT_KEYSTROKE) or (not binding.modifiers and self.role!=controlTypes.Role.MENUITEM):
-				keyList.append(keyLabels.localizedKeyLabels['alt'])
-			if binding.modifiers&JABHandler.ACCESSIBLE_CONTROL_KEYSTROKE:
-				keyList.append(keyLabels.localizedKeyLabels['control'])
-			if binding.modifiers&JABHandler.ACCESSIBLE_SHIFT_KEYSTROKE:
-				keyList.append(keyLabels.localizedKeyLabels['shift'])
-			keyList.append(binding.character)
-		shortcutsList.append("+".join(keyList))
+			if not modifiers and self.role != controlTypes.Role.MENUITEM:
+				modifiers |= JABHandler.AccessibleKeystroke.ALT
+			keyList = [
+				keyLabels.localizedKeyLabels.get(l, l)
+				for l in JABHandler._getKeyLabels(modifiers, binding.character)
+			]
+			shortcutsList.append("+".join(keyList))
 		return ", ".join(shortcutsList)
 
 	def _get_name(self):
-		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.name)
+		name = self._JABAccContextInfo.name
+		return _processHtml(name)
 
 	def _get_JABRole(self):
 		return self._JABAccContextInfo.role_en_US
@@ -302,12 +320,16 @@ class JAB(Window):
 		for state in stateStrings:
 			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
+		if "editable" not in stateStrings and self._JABAccContextInfo.accessibleText:
+			stateSet.add(controlTypes.State.READONLY)
 		if "visible" not in stateStrings:
 			stateSet.add(controlTypes.State.INVISIBLE)
 		if "showing" not in stateStrings:
 			stateSet.add(controlTypes.State.OFFSCREEN)
 		if "expandable" not in stateStrings:
 			stateSet.discard(controlTypes.State.COLLAPSED)
+		if "enabled" not in stateStrings:
+			stateSet.add(controlTypes.State.UNAVAILABLE)
 		return stateSet
 
 	def _get_value(self):
@@ -315,7 +337,8 @@ class JAB(Window):
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
-		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.description)
+		description = self._JABAccContextInfo.description
+		return _processHtml(description)
 
 	def _get_location(self):
 		return RectLTWH(self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
@@ -547,6 +570,7 @@ class JAB(Window):
 		activeDescendant=self.activeDescendant
 		if activeDescendant:
 			eventHandler.queueEvent("gainFocus",activeDescendant)
+
 
 class ComboBox(JAB):
 

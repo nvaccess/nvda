@@ -664,7 +664,12 @@ def test_ariaTreeGrid_browseMode():
 			# Focus enters the ARIA treegrid (table)
 			"Inbox  table",
 			# Focus lands on row 2
-			"level 1  Treegrids are awesome Want to learn how to use them? aaron at thegoogle dot rocks  expanded",
+			SPEECH_SEP.join([
+				"level 1",
+				"Treegrids are awesome Want to learn how to use them? aaron at thegoogle dot rocks",
+				"expanded",
+				"1 of 1"
+			]),
 		])
 	)
 
@@ -1651,4 +1656,97 @@ def test_focusTargetReporting():
 			]),
 		]),
 		message="focus mode - focus with Report Articles enabled"
+	)
+
+
+def test_tableNavigationWithMergedColumns():
+	"""When navigating through a merged cell,
+	NVDA should preserve the column/row position from the previous cell.
+	Refer to #7278, #11919.
+	"""
+	_chrome.prepareChrome("""
+	<p>This is text</p>
+	<table
+	 border=0 cellpadding=0 cellspacing=0 width=192
+	 style='border-collapse: collapse;table-layout:fixed;width:144pt'
+	>
+	<col width=64 span=3 style='width:48pt'>
+	<tr height=20 style='height:15.0pt'>
+		<td height=20 width=64 style='height:15.0pt;width:48pt'>a1</td>
+		<td width=64 style='width:48pt'>b1</td>
+		<td width=64 style='width:48pt'>c1</td>
+	</tr>
+	<tr height=20 style='height:15.0pt'>
+		<td colspan=2 height=20 style='height:15.0pt'>a2 and b2</td>
+		<td>c2</td>
+	</tr>
+	</table>
+	""")
+	# Navigate to end of text, this aligns the cursor with column 2
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(actualSpeech, "This is text")
+
+	# Navigate to the table
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(actualSpeech, "table  with 2 rows and 3 columns  row 1  column 1  a 1")
+
+	# Navigate to a cell in row 1, column 2
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(actualSpeech, "column 2  b 1")
+
+	# Navigate to a merged cell below
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(actualSpeech, "row 2  column 1  through 2  a 2 and b 2")
+
+	# Return to row 1, column 2
+	# In #7278, #11919, NVDA would return to row 1, column 1
+	# This caused column position to be lost when navigating through merged cells
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+upArrow")
+	_asserts.strings_match(actualSpeech, "row 1  column 2  b 1")
+
+
+def test_focus_mode_on_focusable_read_only_lists():
+	"""
+	If a list is read-only, but is focusable, and a list element receives focus, switch to focus mode.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<a href="#">before Target</a>
+		<div role="list" aria-label="Messages" tabindex="-1">
+			<div role="listitem" tabindex="0" aria-label="Todd Kloots Hello all. At 1:30 PM">
+				<div role="document" aria-roledescription="message">
+					<a href="/kloots" class="sender">Todd Kloots</a> <a href="/time" class="time">1:30 PM</a>
+					<p>Hello all.</p>
+				</div>
+			</div>
+		</div>
+		"""
+	)
+	# Set focus
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"before Target",
+			"link",
+		])
+	)
+
+	# focus the list item
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_CALL_SEP.join([
+			SPEECH_SEP.join([
+				"Messages",  # name for list container
+				"list",  # role for list container
+			]),
+			SPEECH_SEP.join([
+				"level 1",  # Inserted by Chromium even though not explicitly set
+				"Todd Kloots Hello all. At 1:30 PM",  # list element name, should read first
+				"1 of 1",  # item count, no role expected here
+			]),
+			"Focus mode",  # Focus mode should be enabled automatically and be indicated
+		]),
+		message="focus mode - focus list item and turn on focus mode"
 	)

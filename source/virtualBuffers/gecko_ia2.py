@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2021 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2022 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
 import typing
 import weakref
@@ -84,10 +84,17 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	# Note: when working on _normalizeControlField, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	def _normalizeControlField(self, attrs):  # noqa: C901
-		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
-			attrVal=attrs.get(attr)
-			if attrVal is not None:
-				attrs[attr]=int(attrVal)
+		for attr in (
+			"table-rownumber-presentational",
+			"table-columnnumber-presentational",
+			"table-rowcount-presentational",
+			"table-columncount-presentational"
+		):
+			attrVal = attrs.get(attr)
+			if attrVal is not None and attrVal.lstrip('-').isdigit():
+				attrs[attr] = int(attrVal)
+			else:
+				attrs[attr] = None
 
 		attrs["_description-from"] = self._calculateDescriptionFrom(attrs)
 		attrs.update(_getNormalizedCurrentAttrs(attrs))
@@ -95,13 +102,15 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
 			attrs['placeholder']= placeholder
-		accRole=attrs['IAccessible::role']
-		accRole=int(accRole) if accRole.isdigit() else accRole
-		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
+
+		role = IAccessibleHandler.NVDARoleFromAttr(attrs['IAccessible::role'])
 		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.Role.BLOCKQUOTE
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		states |= IAccessibleHandler.getStatesSetFromIAccessible2Attrs(attrs)
+		role, states = controlTypes.transformRoleStates(role, states)
+
 		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.State.FOCUSABLE in states or controlTypes.State.UNAVAILABLE in states or controlTypes.State.EDITABLE in states):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.

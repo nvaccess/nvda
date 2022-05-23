@@ -1,12 +1,12 @@
 /*
 This file is a part of the NVDA project.
-Copyright 2019-2020 NV Access Limited, Accessolutions, Julien Cochuyt
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 2.0, as published by
-    the Free Software Foundation.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Copyright 2019-2022 NV Access Limited, Accessolutions, Julien Cochuyt
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 2.0, as published by
+the Free Software Foundation.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
@@ -78,17 +78,25 @@ const long NVCELLINFOFLAG_COMMENTS=0x40;
 const long NVCELLINFOFLAG_FORMULA=0x80;
 const long NVCELLINFOFLAG_ALL=0xffff;
 
-// NVDA states
-const __int64 NVSTATE_EXPANDED=0x100;
-const __int64 NVSTATE_COLLAPSED=0x200;
-const __int64 NVSTATE_LINKED=0x1000;
-const __int64 NVSTATE_HASPOPUP=0x2000;
-const __int64 NVSTATE_PROTECTED=0x4000;
-const __int64 NVSTATE_HASFORMULA=0x1000000000;
-const __int64 NVSTATE_HASCOMMENT=0x2000000000;
-const __int64 NVSTATE_CROPPED=0x8000000000;
-const __int64 NVSTATE_OVERFLOWING=0x10000000000;
-const __int64 NVSTATE_UNLOCKED=0x20000000000;
+constexpr std::uint64_t setBit(const unsigned int bitPos) {
+	return std::uint64_t(1) << bitPos;
+}
+
+/*NVDA sell specific states.
+These values must match NvCellState enum in source/nvdaObjects/excel.py
+*/
+enum NvCellState : std::uint64_t {
+	EXPANDED = setBit(1),
+	COLLAPSED = setBit(2),
+	LINKED = setBit(3),
+	HASPOPUP = setBit(4),
+	PROTECTED = setBit(5),
+	HASFORMULA = setBit(6),
+	HASCOMMENT = setBit(7),
+	CROPPED = setBit(8),
+	OVERFLOWING = setBit(9),
+	UNLOCKED = setBit(10)
+};
 
 // an HRESULT error code randomly given by Excel such as for validation.type when there is no validation on the cell
 const HRESULT XLGeneralError=0x800a03ec;

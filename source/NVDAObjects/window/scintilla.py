@@ -1,19 +1,16 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2019 NV Access Limited, Arnold Loubriat, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2007-2022 NV Access Limited, Arnold Loubriat, Babbage B.V., Łukasz Golonka, Joseph Lee,
+# Peter Vágner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import ctypes
-import speech
 import textInfos.offsets
 import winKernel
 import winUser
-import globalVars
 import controlTypes
-import config
 from . import Window
-from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
 import watchdog
 import eventHandler
@@ -67,13 +64,14 @@ class CharacterRangeStruct(ctypes.Structure):
 		('cpMax',ctypes.c_long),
 	]
 
-class TextRangeStruct(ctypes.Structure):
-	_fields_=[
-		('chrg',CharacterRangeStruct),
-		('lpstrText',ctypes.c_char_p),
-	]
 
 class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+	class TextRangeStruct(ctypes.Structure):
+		_fields_ = [
+			('chrg', CharacterRangeStruct),
+			('lpstrText', ctypes.c_char_p),
+		]
 
 	def _get_encoding(self):
 		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
@@ -171,7 +169,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getTextRange(self,start,end):
 		bufLen = (end - start) + 1
-		textRange = TextRangeStruct()
+		textRange = self.TextRangeStruct()
 		textRange.chrg.cpMin = start
 		textRange.chrg.cpMax = end
 		processHandle = self.obj.processHandle
