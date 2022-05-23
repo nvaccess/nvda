@@ -32,7 +32,6 @@ What's New in NVDA
 - The NVDA installer can now run from directories with special characters. (#13270)
 - In Firefox, NVDA no longer fails to report items in web pages when aria-rowindex, aria-colindex, aria-rowcount or aria-colcount attributes are invalid. (#13405)
 - The cursor does not switch row or column anymore when using table navigation to navigate through merged cells. (#7278)
--  NVDA will no longer incorrectly remove text from Java widgets when presenting to the user. (#13102)
 - When reading non-interactive PDFs in Adobe Reader, the type and state of form fields (such as checkboxes and radio buttons) are now reported. (#13285)
 - "Reset configuration to factory defaults" is now accessible in the NVDA menu during secure mode. (#13547)
 - Any locked mouse keys will be unlocked when NVDA exits, previously the mouse button would remain locked. (#13410)
@@ -40,10 +39,17 @@ What's New in NVDA
   - Note that for line number reporting to work, showing line numbers must be enabled in Visual Studio and NVDA.
   -
 - Visual Studio now correctly reports line indentation. (#13574)
-- NVDA can now beep or speak on Java application progress bars (#13594)
+- Fixes for Java based applications:
+  - NVDA will now announce readonly state. (#13692)
+  - NVDA will now announce disabled/enabled state correctly. (#10993)
+  - NVDA will now announce function key shortcuts. (#13643)
+  - NVDA can now beep or speak on progress bars. (#13594)
+  - NVDA will no longer incorrectly remove text from widgets when presenting to the user. (#13102)
+  -
 - NVDA will once again announce Start menu search result details in recent Windows 10 and 11 releases. (#13544)
 - In Windows 10 and 11 Calculator version 10.1908 and later, NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13386)
 - Fix braille output when navigating certain text in Mozilla rich edit controls, such as drafting a message in Thunderbird. (#12542)
+- In Windows 11, it is again possible to navigate and interact with user interface elements such as Taskbar and Task View using mouse and touch interaction. (#13508)
 - Hidden text is no longer announced in Wordpad and other ``richEdit`` controls. (#13618)
 - NVDA will announce status bar content in Windows 11 Notepad. (#13386)
 -
