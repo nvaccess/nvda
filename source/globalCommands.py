@@ -216,14 +216,10 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:shift+numpadDivide", "kb(laptop):NVDA+control+[")
 	)
 	def script_toggleLeftMouseButton(self,gesture):
-		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
-			# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-			ui.message(_("Left mouse button unlock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		if mouseHandler.isLeftMouseButtonLocked():
+			mouseHandler.unlockLeftMouseButton()
 		else:
-			# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-			ui.message(_("Left mouse button lock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+			mouseHandler.lockLeftMouseButton()
 
 	@script(
 		# Translators: Input help mode message for right mouse lock/unlock command.
@@ -232,14 +228,10 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:shift+numpadMultiply", "kb(laptop):NVDA+control+]")
 	)
 	def script_toggleRightMouseButton(self,gesture):
-		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
-			# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-			ui.message(_("Right mouse button unlock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
+		if mouseHandler.isRightMouseButtonLocked():
+			mouseHandler.unlockRightMouseButton()
 		else:
-			# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-			ui.message(_("Right mouse button lock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
+			mouseHandler.lockRightMouseButton()
 
 	@script(
 		description=_(
@@ -904,6 +896,32 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling the report if clickable document formatting setting.
 			state = _("report if clickable on")
 			config.conf["documentFormatting"]["reportClickable"]=True
+		ui.message(state)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for cycle through automatic language switching mode command.
+			"Cycles through speech modes for automatic language switching: "
+			"off, language only and language and dialect."
+		),
+		category=SCRCAT_SPEECH,
+	)
+	def script_cycleSpeechAutomaticLanguageSwitching(self, gesture):
+		if config.conf["speech"]["autoLanguageSwitching"]:
+			if config.conf["speech"]["autoDialectSwitching"]:
+				# Translators: A message reported when executing the cycle automatic language switching mode command.
+				state = _("Automatic language switching off")
+				config.conf["speech"]["autoLanguageSwitching"] = False
+				config.conf["speech"]["autoDialectSwitching"] = False
+			else:
+				# Translators: A message reported when executing the cycle automatic language switching mode command.
+				state = _("Automatic language and dialect switching on")
+				config.conf["speech"]["autoDialectSwitching"] = True
+		else:
+			# Translators: A message reported when executing the cycle automatic language switching mode command.
+			state = _("Automatic language switching on")
+			config.conf["speech"]["autoLanguageSwitching"] = True
+			config.conf["speech"]["autoDialectSwitching"] = False
 		ui.message(state)
 
 	@script(
@@ -1757,7 +1775,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+q"
 	)
 	def script_quit(self,gesture):
-		gui.quit()
+		wx.CallAfter(gui.mainFrame.onExitCommand, None)
 
 	@script(
 		# Translators: Input help mode message for restart NVDA command.
@@ -2250,9 +2268,8 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_TOOLS
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_startWxInspectionTool(self, gesture):
-		if globalVars.appArgs.secure:
-			return
 		import wx.lib.inspection
 		wx.lib.inspection.InspectionTool().Show()
 
@@ -2267,6 +2284,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+f1"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_navigatorObject_devInfo(self,gesture):
 		obj=api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
@@ -2284,9 +2302,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+control+shift+f1"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_log_markStartThenCopy(self, gesture):
-		if globalVars.appArgs.secure:
-			return
 		if log.fragmentStart is None:
 			if log.markFragmentStart():
 				# Translators: Message when marking the start of a fragment of the log file for later copy
@@ -2315,9 +2332,8 @@ class GlobalCommands(ScriptableObject):
 		description=_("Opens NVDA configuration directory for the current user."),
 		category=SCRCAT_TOOLS
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_openUserConfigurationDirectory(self, gesture):
-		if globalVars.appArgs.secure:
-			return
 		import systemUtils
 		systemUtils.openUserConfigurationDirectory()
 
@@ -2681,9 +2697,11 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+control+z"
 	)
+	@gui.blockAction.when(
+		gui.blockAction.Context.WINDOWS_STORE_VERSION,
+		gui.blockAction.Context.SECURE_MODE
+	)
 	def script_activatePythonConsole(self,gesture):
-		if globalVars.appArgs.secure or config.isAppX:
-			return
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()

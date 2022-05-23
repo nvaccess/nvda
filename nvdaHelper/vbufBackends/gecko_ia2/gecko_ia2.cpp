@@ -87,6 +87,9 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getRelationElement(
 }
 
 const wchar_t EMBEDDED_OBJ_CHAR = 0xFFFC;
+// Always render a space for "empty" / metadata only
+// text leaf nodes so the user can access them.
+constexpr wchar_t* EMPTY_TEXT_NODE {L" "};
 
 static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
@@ -1060,31 +1063,37 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					previousNode->addAttribute(L"language", locale);
 				}
 			}
-
-		} else {
-			// There were no children to render.
-			if(role==ROLE_SYSTEM_GRAPHIC) {
-				if (name && name[0]) {
-					// The graphic has a label, so use it.
-					previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
-					if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-				} else if ((name && !name[0]) || ignoreInteractiveUnlabelledGraphics) {
-					// alt="" or we've determined that all unlabelled graphics should be ignored,
-					// so don't render the graphic at all.
-					isInteractive = false;
-				} else if (isInteractive) {
-					// The graphic is unlabelled, but we should try to derive a name for it.
-					if (inLink && value) {
-						// derive the label from the link URL.
-						previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
-					} else if ((IA2AttribsMapIt = IA2AttribsMap.find(L"src")) != IA2AttribsMap.end()) {
-						// Derive the label from the graphic URL.
-						previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(IA2AttribsMap[L"src"]));
-					}
-				}
-			} else if (!nameIsContent && value) {
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,value);
+		} else if(role == ROLE_SYSTEM_GRAPHIC) {
+			if (name && name[0]) {
+				// The graphic has a label, so use it.
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 				if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
+			} else if ((name && !name[0]) || ignoreInteractiveUnlabelledGraphics) {
+				// alt="" or we've determined that all unlabelled graphics should be ignored,
+				// so don't render the graphic at all.
+				isInteractive = false;
+			} else if (isInteractive) {
+				// The graphic is unlabelled, but we should try to derive a name for it.
+				if (inLink && value) {
+					// derive the label from the link URL.
+					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
+				} else if ((IA2AttribsMapIt = IA2AttribsMap.find(L"src")) != IA2AttribsMap.end()) {
+					// Derive the label from the graphic URL.
+					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(IA2AttribsMap[L"src"]));
+				}
+			}
+		} else if (role == ROLE_SYSTEM_PROGRESSBAR && states & STATE_SYSTEM_INDETERMINATE){
+			// ROLE_SYSTEM_PROGRESSBAR with STATE_SYSTEM_INDETERMINATE is an
+			// indeterminate progress bar (maps to NVDA Role BUSY_INDICATOR).
+			// Value is meaningless (always zero), don't use it as the text node, use space instead.
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode, EMPTY_TEXT_NODE);
+			if (previousNode && !locale.empty()) {
+				previousNode->addAttribute(L"language", locale);
+			}
+		} else if (!nameIsContent && value) {
+			previousNode = buffer->addTextFieldNode(parentNode, previousNode, value);
+			if (previousNode && !locale.empty()) {
+				previousNode->addAttribute(L"language", locale);
 			}
 		}
 
@@ -1102,7 +1111,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 
 		if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_ROWHEADER || role == ROLE_SYSTEM_COLUMNHEADER||role==IA2_ROLE_UNKNOWN) && parentNode->getLength() == 0) {
 			// Always render a space for empty table cells and unknowns.
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+			previousNode = buffer->addTextFieldNode( parentNode, previousNode, EMPTY_TEXT_NODE);
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 			parentNode->isBlock=false;
 		}
@@ -1110,7 +1119,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR) && parentNode->getLength() == 0) {
 			// If the node is interactive or otherwise relevant even when empty
 			// and it still has no content, render a space so the user can access the node.
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+			previousNode = buffer->addTextFieldNode(parentNode, previousNode, EMPTY_TEXT_NODE);
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 		}
 	}

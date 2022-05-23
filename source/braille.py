@@ -100,6 +100,9 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a
 	# progress bar.
 	controlTypes.Role.PROGRESSBAR: _("prgbar"),
+	# Translators: Displayed in braille for an object which is an
+	# indeterminate progress bar, aka busy indicator.
+	controlTypes.Role.BUSY_INDICATOR: _("bsyind"),
 	# Translators: Displayed in braille for an object which is a
 	# scroll bar.
 	controlTypes.Role.SCROLLBAR: _("scrlbar"),

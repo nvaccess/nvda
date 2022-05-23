@@ -8,3 +8,5 @@
 """
 
 from .calc import *
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()
