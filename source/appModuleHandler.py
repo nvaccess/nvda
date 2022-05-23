@@ -746,6 +746,37 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError()
 
+	devInfo: List[str]
+	"""Information about this appModule useful to developers."""
+
+	def _get_devInfo(self) -> List[str]:
+		"""Information about this appModule useful to developers.
+		For an NVDAObject, its appModule devInfo is appended to NVDAObject.devInfo.
+		Subclasses may extend this, calling the superclass property first.
+		@return: A list of text strings providing information about this appModule useful to developers.
+		"""
+		info = []
+		try:
+			ret = repr(self)
+		except Exception as e:
+			ret = f"exception: {e}"
+		info.append(f"appModule: {ret}")
+		try:
+			ret = repr(self.productName)
+		except Exception as e:
+			ret = f"exception: {e}"
+		info.append(f"appModule.productName: {ret}")
+		try:
+			ret = repr(self.productVersion)
+		except Exception as e:
+			ret = f"exception: {e}"
+		info.append(f"appModule.productVersion: {ret}")
+		try:
+			ret = repr(self.helperLocalBindingHandle)
+		except Exception as e:
+			ret = f"exception: {e}"
+		info.append(f"appModule.helperLocalBindingHandle: {ret}")
+		return info
 
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.
