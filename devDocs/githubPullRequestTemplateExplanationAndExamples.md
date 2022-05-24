@@ -31,6 +31,11 @@ Please also include any links or external information you may have used in order
 issue.
 This helps others to have the same background as you and learn from this work.
 
+### Description of development approach
+Provide a description of the development approach followed.
+Include reasoning as to why the approach followed is the best approach compared to other ways of fixing the issue.
+It may be worth including a summary of the history of the development approach, and how the final approach was determined.
+
 ### Testing strategy:
 Outline the steps you took to test the change.
 This should allow someone else to reproduce your testing.
