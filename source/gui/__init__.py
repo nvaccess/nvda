@@ -22,6 +22,9 @@ import versionInfo
 import speech
 import queueHandler
 import core
+from typing import (
+	Optional,
+)
 from .message import (
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
@@ -68,11 +71,14 @@ ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 
 ### Globals
-mainFrame = None
+mainFrame: Optional["MainFrame"] = None
+"""Set by initialize. Should be used as the parent for "top level" dialogs.
+"""
 
 
 class MainFrame(wx.Frame):
-
+	"""A hidden window, intended to act as the parent to all dialogs.
+	"""
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
 		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
@@ -328,6 +334,19 @@ class MainFrame(wx.Frame):
 		d.Show()
 		self.postPopup()
 
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+	)
+	def onAddonStoreCommand(self, evt: wx.MenuEvent):
+		self.prePopup()
+		from addonStore import dataManager
+		addonDataManager = dataManager.DataManager()
+		from .addonStoreGui import AddonStoreDialog
+		d = AddonStoreDialog(mainFrame, addonDataManager)
+		d.Show()
+		self.postPopup()
+
 	def onReloadPluginsCommand(self, evt):
 		import appModuleHandler, globalPluginHandler
 		from NVDAObjects import NVDAObject
@@ -453,6 +472,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label of a menu item to open the Add-ons Manager.
 			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
+			# Translators: The label of a menu item to open the Add-on store
+			item = menu_tools.Append(wx.ID_ANY, _("Add-on &store..."))
+			self.Bind(wx.EVT_MENU, frame.onAddonStoreCommand, item)
 		if not globalVars.appArgs.secure and not config.isAppX and getattr(sys,'frozen',None):
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
