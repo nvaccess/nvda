@@ -341,7 +341,7 @@ class MainFrame(wx.Frame):
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
 		self.prePopup()
 		from addonStore import dataManager
-		addonDataManager = dataManager.DataManager()
+		addonDataManager = dataManager.DataManager(globalVars.appArgs.configPath)
 		from .addonStoreGui import AddonStoreDialog
 		d = AddonStoreDialog(mainFrame, addonDataManager)
 		d.Show()

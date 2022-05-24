@@ -422,11 +422,31 @@ class AddonStoreDialog(SettingsDialog):
 	title = pgettext("addonStore", "Add-on Store")
 	helpId = "addonStore"
 
+	def _getAddonsInBG(self):
+		log.debug("getting addons in the background")
+		storeVM = AddonStoreVM(
+			self._addonDataManager.getLatestAvailableAddons()
+		)
+		log.debug("completed getting addons in the background")
+		wx.CallAfter(self._refresh, storeVM)
+
+	def _refresh(self, storeVM: AddonStoreVM):
+		log.debug("called refresh")
+		self._storeVM = storeVM
+		self.addonListVM.refreshAddonsModel(self._storeVM.availableAddonsModel)
+		self.addonListView.doRefresh()
+		self.addonDetailsView.setAddonDetail(
+			AddonDetailsVM(display=self.addonListVM.getSelection())
+		)
+		log.debug("completed refresh")
+
 	def __init__(self, parent: wx.Window, addonDataManager: DataManager):
 		self._addonDataManager = addonDataManager
 		self._storeVM = AddonStoreVM(
-			availableAddonsModel=addonDataManager.getLatestAvailableAddons()
+			availableAddonsModel={}
 		)
+		import threading
+		threading.Thread(target=self._getAddonsInBG, name="getAddonData").start()
 		super().__init__(parent, resizeable=True)
 
 	def makeSettings(self, settingsSizer):
@@ -475,9 +495,10 @@ class AddonStoreDialog(SettingsDialog):
 		)
 		self.contentsSizer.Add(self.addonListView, flag=wx.EXPAND)
 		self.contentsSizer.AddSpacer(5)
+		self.addonDetailsVM = AddonDetailsVM(display=self.addonListVM.getSelection())
 		self.addonDetailsView = AddonDetails(
 			parent=self,
-			detailsVM=AddonDetailsVM(display=None)
+			detailsVM=self.addonDetailsVM
 		)
 		self.contentsSizer.Add(self.addonDetailsView, flag=wx.EXPAND, proportion=1)
 

@@ -30,12 +30,11 @@ class AddonListVM:
 	def __init__(
 			self,
 			addonsModel: AvailableAddonsModel,
-			selectedAddonId: Optional[str] = None,
 	):
 		self._addonsModel = addonsModel
 		self._onSelectionChanged: callable(AddonDetailsModel)
-		self.selectedAddonId = selectedAddonId
-		self.lastSelectedAddonId = selectedAddonId
+		self.selectedAddonId: Optional[AddonDetailsModel] = None
+		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelFieldName: str = "displayName"
 		self._filterString: typing.Optional[str] = None
 
@@ -47,6 +46,10 @@ class AddonListVM:
 			selectionId=self.selectedAddonId
 		)
 		self.selectedAddonId = self._tryPersistSelection(self._addonsFilteredOrdered)
+		self._updateAddonListing()
+
+	def refreshAddonsModel(self, addonsModel: AvailableAddonsModel):
+		self._addonsModel = addonsModel
 		self._updateAddonListing()
 
 	def getAddonAttrText(self, index: int, attrName: str) -> str:
@@ -126,7 +129,7 @@ class AddonListVM:
 			# nothing else to do, selection doesn't have to change.
 			log.debug(f"Selected Id in new order {selectedId}")
 			return selectedId
-		elif 1 > len(newOrder):
+		elif not newOrder:
 			log.debug(f"No entries in new order")
 			# no entries after filter, select None
 			return None
@@ -148,6 +151,9 @@ class AddonListVM:
 		elif self.lastSelectedAddonId in newOrder:
 			log.debug(f"lastSelected in new order: {self.lastSelectedAddonId}")
 			return self.lastSelectedAddonId
+		elif newOrder:
+			# if there is any addon select it.
+			return newOrder[0]
 		else:
 			log.debug(f"No selection")
 			# no selection.
