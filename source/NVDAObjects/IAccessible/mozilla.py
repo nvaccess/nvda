@@ -83,7 +83,9 @@ class Mozilla(ia2Web.Ia2Web):
 			return None
 		for target in detailsRelations:
 			# just take the first for now.
-			return aria.normalizeDetailsRole(target.IAccessibleRole)
+			log.debugWarning(f"FireFox aria details info {target.devInfo}")
+			# TODO: check for alternatives to keep the input a string to match ia2Web
+			return aria.normalizeDetailsRoleFocusMode(target.IAccessibleRole)
 
 	@property
 	def hasDetails(self) -> bool:

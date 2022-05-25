@@ -72,7 +72,7 @@ class Ia2Web(IAccessible):
 				log.debug("no details-roles")
 			return None
 		firstDetailsRole = detailsRoles.split(" ")[0]
-		return aria.normalizeDetailsRole(firstDetailsRole)
+		return aria.normalizeDetailsRoleFocusMode(firstDetailsRole)
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
