@@ -28,7 +28,7 @@ from speech.commands import (
 # These are used when eSpeak doesn't support a given language code
 # but a default alias is appropriate
 _defaultLangToLocaleMappings = {
-	"en": "en-us",
+	"en": "en-gb",
 }
 
 
