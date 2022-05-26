@@ -25,6 +25,15 @@ from speech.commands import (
 	PhonemeCommand,
 )
 
+
+# A mapping of commonly used language codes to e-speak languages.
+# These are used when e-speak doesn't support a given language code
+# but a default alias is appropriate
+_defaultLangToLocaleMappings = {
+	"en": "en-us",
+}
+
+
 class SynthDriver(SynthDriver):
 	name = "espeak"
 	description = "eSpeak NG"
@@ -106,10 +115,36 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, CharacterModeCommand):
 				textList.append("<say-as interpret-as=\"characters\">" if item.state else "</say-as>")
 			elif isinstance(item, LangChangeCommand):
+				_lang = None
+				if item.lang:
+					_langWithLocale = item.lang.lower().replace('_', '-')
+				else:
+					_langWithLocale = defaultLanguage.lower().replace('_', '-')
+				if _langWithLocale in self.availableLanguages:
+					_lang = _langWithLocale
+				else:
+					# Check for other languages of a different dialect.
+					_lang = _langWithLocale.split('-')[0]
+					log.debugWarning(f"Unknown language to espeak: {item.lang} not in {self.availableLanguages}")
+					# Check from a list of known default mapping locales: e.g. en to en-us
+					_knownDefaultLang = _defaultLangToLocaleMappings.get(_lang, None)
+					# Check for any language where the language code matches, regardless of dialect: e.g. en-au to en-us
+					_anyLocaleMatchingLang = next(filter(lambda l: l.split('-')[0] == _lang, self.availableLanguages), None)
+					if _knownDefaultLang is not None and _knownDefaultLang not in self.availableLanguages:
+						# This means espeak has changed and we need to update the mapping
+						log.error(f"Default mapping unknown to espeak {_knownDefaultLang} not in {self.availableLanguages}")
+						_knownDefaultLang = None
+					if _knownDefaultLang is not None:
+						_lang = _knownDefaultLang
+					elif _anyLocaleMatchingLang is not None:
+						_lang = _anyLocaleMatchingLang
 				if langChanged:
 					textList.append("</voice>")
-				textList.append("<voice xml:lang=\"%s\">"%(item.lang if item.lang else defaultLanguage).replace('_','-'))
-				langChanged=True
+				if _lang is not None:
+					textList.append(f'<voice xml:lang="{_lang}">')
+				else:
+					textList.append(f'<voice>')
+				langChanged = True
 			elif isinstance(item, BreakCommand):
 				textList.append('<break time="%dms" />' % item.time)
 			elif type(item) in self.PROSODY_ATTRS:
