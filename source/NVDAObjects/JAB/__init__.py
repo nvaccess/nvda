@@ -320,6 +320,9 @@ class JAB(Window):
 		for state in stateStrings:
 			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
+		if self.role is controlTypes.Role.TOGGLEBUTTON and controlTypes.State.CHECKED in stateSet:
+			stateSet.discard(controlTypes.State.CHECKED)
+			stateSet.add(controlTypes.State.PRESSED)
 		if "editable" not in stateStrings and self._JABAccContextInfo.accessibleText:
 			stateSet.add(controlTypes.State.READONLY)
 		if "visible" not in stateStrings:
@@ -333,7 +336,12 @@ class JAB(Window):
 		return stateSet
 
 	def _get_value(self):
-		if self.role not in [controlTypes.Role.CHECKBOX,controlTypes.Role.MENU,controlTypes.Role.MENUITEM,controlTypes.Role.RADIOBUTTON,controlTypes.Role.BUTTON] and self._JABAccContextInfo.accessibleValue and not self._JABAccContextInfo.accessibleText:
+		if self.role not in [
+			controlTypes.Role.TOGGLEBUTTON, controlTypes.Role.CHECKBOX,
+			controlTypes.Role.MENU, controlTypes.Role.MENUITEM,
+			controlTypes.Role.RADIOBUTTON, controlTypes.Role.BUTTON] \
+		and self._JABAccContextInfo.accessibleValue \
+		and not self._JABAccContextInfo.accessibleText:
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
