@@ -67,7 +67,7 @@ public:
 
 	bool isTokenTerminated_(void* token) {
 		if (token == nullptr) {
-			LOG_ERROR(L"token is nullptr, it was never valid.");
+			LOG_DEBUG(L"token is nullptr, it was never valid.");
 		}
 		for (const auto& t : m_terminatedTokens) {
 			if (t.first == token) {
@@ -88,7 +88,7 @@ public:
 	void* activate(std::function<ocSpeech_CallbackT> cb) {
 		LOG_INFO(L"Activating");
 		if(!isTerminated()){
-			LOG_ERROR(L"Unable to activate if not terminated.");
+			LOG_DEBUG(L"Unable to activate if not terminated.");
 			return nullptr;
 		}
 		auto synth = std::make_shared<winrtSynth>();
@@ -97,7 +97,7 @@ public:
 		m_callback = cb;
 		m_synth = synth;
 		if (!isActive()){
-			LOG_ERROR(L"Activating failed");
+			LOG_DEBUG(L"Activating failed");
 		}
 		return m_synth.get();
 	}
@@ -105,7 +105,7 @@ public:
 	void terminate() {
 		LOG_INFO(L"Terminating");
 		if (!isActive()) {
-			LOG_ERROR(L"Unable to terminate if not active");
+			LOG_DEBUG(L"Unable to terminate if not active");
 			return;
 		}
 		m_terminatedTokens.push_back({ m_synth.get(), m_synth });  // record weak_ptr for debugging.
@@ -115,7 +115,7 @@ public:
 		m_callback = std::function<ocSpeech_CallbackT>();
 
 		if (!isTerminated()) {
-			LOG_ERROR(L"Terminating failed");
+			LOG_DEBUG(L"Terminating failed");
 		}
 	}
 
@@ -204,7 +204,7 @@ UniqueLock getUniqueLock_(std::wstring forPurpose) {
 		owned = lock.try_lock_for(g_maxWaitForLock);
 	}
 	if (!owned) {
-		LOG_ERROR(L"Unable to lock after timeout: " << forPurpose);
+		LOG_DEBUG(L"Unable to lock after timeout: " << forPurpose);
 	}
 	return lock;
 }
@@ -223,7 +223,7 @@ void* __stdcall ocSpeech_initialize(ocSpeech_Callback fn) {
 	auto token = g_state.activate(fn);
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"Unable to initialize.");
+		LOG_DEBUG(L"Unable to initialize.");
 		return nullptr;
 	}
 	preventEndUtteranceSilence_(synth);
@@ -241,7 +241,7 @@ void __stdcall ocSpeech_terminate(void* token) {
 		return;
 	}
 	if (!g_state.isTokenValid(token)) {
-		LOG_ERROR(L"ocSpeech_terminate error");
+		LOG_DEBUG(L"ocSpeech_terminate error");
 		return;
 	}
 	g_state.terminate();
@@ -342,7 +342,7 @@ speak(
 			speechStream = co_await synth->SynthesizeSsmlToStreamAsync(text);
 		}
 		catch (winrt::hresult_error const& e) {
-			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
+			LOG_DEBUG(L"Error " << e.code() << L": " << e.message().c_str());
 			protectedCallback_(originToken, std::optional<SpeakResult>(), cb);
 			co_return;
 		}
@@ -362,35 +362,35 @@ speak(
 			co_return;
 		}
 		catch (winrt::hresult_error const& e) {
-			LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
+			LOG_DEBUG(L"Error " << e.code() << L": " << e.message().c_str());
 			protectedCallback_(originToken, std::optional<SpeakResult>(), cb);
 			co_return;
 		}
 	}
 	catch (winrt::hresult_error const& e) {
-		LOG_ERROR(L"hresult error in OcSpeech::speak: " << e.code() << L": " << e.message().c_str());
+		LOG_DEBUG(L"hresult error in OcSpeech::speak: " << e.code() << L": " << e.message().c_str());
 	}
 	catch (std::exception const& e) {
-		LOG_ERROR(L"Exception in OcSpeech::speak: " << e.what());
+		LOG_DEBUG(L"Exception in OcSpeech::speak: " << e.what());
 	}
 	catch (...) {
-		LOG_ERROR(L"Unexpected error in speak");
+		LOG_DEBUG(L"Unexpected error in speak");
 	}
 }
 
 void __stdcall ocSpeech_speak(void* token, wchar_t* text) {
 	if (!g_state.isTokenValid(token)) {
-		LOG_ERROR(L"speak error: invalid token" << token);
+		LOG_DEBUG(L"speak error: invalid token" << token);
 		return;
 	}
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"speak error: synth not valid.");
+		LOG_DEBUG(L"speak error: synth not valid.");
 		return;
 	}
 	auto cb = g_state.getCB();
 	if (!cb) {
-		LOG_ERROR(L"speak error: call back not valid");
+		LOG_DEBUG(L"speak error: call back not valid");
 		return;
 	}
 	speak(token, text, synth, cb);
@@ -403,7 +403,7 @@ void __stdcall ocSpeech_speak(void* token, wchar_t* text) {
 BSTR __stdcall ocSpeech_getVoices(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"voices error");
+		LOG_DEBUG(L"voices error");
 		return SysAllocString(L"");
 	}
 	std::wstring voices;
@@ -450,7 +450,7 @@ void preventEndUtteranceSilence_(std::shared_ptr<winrtSynth> synth) {
 const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_getCurrentVoiceId error");
+		LOG_DEBUG(L"ocSpeech_getCurrentVoiceId error");
 		return L"";
 	}
 	winrt::hstring voiceId = synth->Voice().Id();
@@ -460,7 +460,7 @@ const wchar_t* __stdcall ocSpeech_getCurrentVoiceId(void* token) {
 void __stdcall ocSpeech_setVoice(void* token, int index) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_setVoice error");
+		LOG_DEBUG(L"ocSpeech_setVoice error");
 		return;
 	}
 	synth->Voice(synth->AllVoices().GetAt(index));
@@ -469,7 +469,7 @@ void __stdcall ocSpeech_setVoice(void* token, int index) {
 const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_getCurrentVoiceLanguage error");
+		LOG_DEBUG(L"ocSpeech_getCurrentVoiceLanguage error");
 		return L"";
 	}
 	return synth->Voice().Language().c_str();
@@ -478,7 +478,7 @@ const wchar_t* __stdcall ocSpeech_getCurrentVoiceLanguage(void* token) {
 double __stdcall ocSpeech_getPitch(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_getPitch error");
+		LOG_DEBUG(L"ocSpeech_getPitch error");
 		return 0.0;
 	}
 	return synth->Options().AudioPitch();
@@ -487,7 +487,7 @@ double __stdcall ocSpeech_getPitch(void* token) {
 void __stdcall ocSpeech_setPitch(void* token, double pitch) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_setPitch error");
+		LOG_DEBUG(L"ocSpeech_setPitch error");
 		return;
 	}
 	synth->Options().AudioPitch(pitch);
@@ -496,7 +496,7 @@ void __stdcall ocSpeech_setPitch(void* token, double pitch) {
 double __stdcall ocSpeech_getVolume(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_getVolume error");
+		LOG_DEBUG(L"ocSpeech_getVolume error");
 		return 0.0;
 	}
 	return synth->Options().AudioVolume();
@@ -505,7 +505,7 @@ double __stdcall ocSpeech_getVolume(void* token) {
 void __stdcall ocSpeech_setVolume(void* token, double volume) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_setVolume error");
+		LOG_DEBUG(L"ocSpeech_setVolume error");
 		return;
 	}
 	synth->Options().AudioVolume(volume);
@@ -514,7 +514,7 @@ void __stdcall ocSpeech_setVolume(void* token, double volume) {
 double __stdcall ocSpeech_getRate(void* token) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_getRate error");
+		LOG_DEBUG(L"ocSpeech_getRate error");
 		return 0.0;
 	}
 	return synth->Options().SpeakingRate();
@@ -523,7 +523,7 @@ double __stdcall ocSpeech_getRate(void* token) {
 void __stdcall ocSpeech_setRate(void* token, double rate) {
 	auto synth = g_state.getSynth(token);
 	if (!synth) {
-		LOG_ERROR(L"ocSpeech_setRate error");
+		LOG_DEBUG(L"ocSpeech_setRate error");
 		return;
 	}
 	synth->Options().SpeakingRate(rate);
