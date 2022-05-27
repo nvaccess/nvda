@@ -98,12 +98,16 @@ JABStatesToNVDAStates={
 
 
 
-re_simpleXmlTag=re.compile(r"\<[^>]+\>")
+re_simpleXmlTag=re.compile(r"(\<[^>]+\>)+")
 
+
+def _subHtmlTag(match):
+	startIndex, endIndex = match.span()
+	return "" if startIndex == 0 or match.string[startIndex - 1].isspace() or endIndex == len(match.string) or match.string[endIndex].isspace() else " "
 
 def _processHtml(text):
 	""" Strips HTML tags from text if it is HTML """
-	return re_simpleXmlTag.sub(" ", text) if text.startswith("<html>") else text
+	return re_simpleXmlTag.sub(_subHtmlTag, text) if text.startswith("<html>") else text
 
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
