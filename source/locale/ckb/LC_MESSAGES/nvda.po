@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-4ccb2ab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-13 00:02+0000\n"
-"PO-Revision-Date: 2022-05-20 02:18+0300\n"
+"POT-Creation-Date: 2022-05-20 00:02+0000\n"
+"PO-Revision-Date: 2022-05-27 02:14+0300\n"
 "Last-Translator: silva.matti <silva.hm88@gmail.com>\n"
 "Language-Team: \n"
 "Language: ckb\n"
@@ -8024,7 +8024,7 @@ msgstr "&هەڵبژاردەی پەسەندکراو"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
-msgstr "تۆمارگەی ڕووکار"
+msgstr "بینینی تۆمارگە"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
@@ -8821,8 +8821,8 @@ msgid ""
 "The installation of NVDA failed. Please check the Log Viewer for more "
 "information."
 msgstr ""
-"جێگیرکردنی NVDA شکستی هێنا. تکایە پیشاندەری ئاگادارکەرەوەکان بپشکنە بۆ "
-"زانیاری زیاتر."
+"جێگیرکردنی NVDA شکستی هێنا. تکایە پیشاندەری تۆمارەکان بپشکنە بۆ زانیاری "
+"زیاتر."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
@@ -8991,7 +8991,7 @@ msgstr "بە سەرکەوتوویی لەبەرگیراوەی هەڵگرتەیی 
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
-msgstr "پیشاندەری ئاگادارکەرەوەی NVDA"
+msgstr "پیشاندەری تۆماری NVDA"
 
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
@@ -9003,7 +9003,7 @@ msgstr "هەڵبگرە وەکو…\tCtrl+S"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
-msgstr "پیشانبدە"
+msgstr "تۆمارگە"
 
 #. Translators: Label of a menu item in NVDA Log Viewer.
 msgid "Save As"
@@ -9012,11 +9012,11 @@ msgstr "هەڵبگرە وەک"
 #. Translators: Dialog text presented when NVDA cannot save a log file.
 #, python-format
 msgid "Error saving log: %s"
-msgstr "هەڵە لە هەڵگرتنی پیشاندەر: %s"
+msgstr "هەڵە لە هەڵگرتنی تۆمار: %s"
 
 #. Translators: A message indicating that log cannot be loaded to LogViewer.
 msgid "Log is unavailable"
-msgstr "پیشاندەر بەردەست نییە"
+msgstr "تۆمار بەردەست نییە"
 
 #. Translators: A cancel button on a message dialog.
 msgid "Cancel"
@@ -10031,46 +10031,45 @@ msgstr "دەقێک کە دەتوانرێت دەستکاری بکرێت"
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
 msgid "Caret movement timeout (in ms)"
-msgstr ""
+msgstr "کاتی بەسەرچوونی جووڵەی هێمای نووسین (بە میلی چرکە)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
 msgid "Report transparent color values"
-msgstr ""
+msgstr "ڕاگەیاندنی نرخی ڕەنگی ڕوون"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Debug logging"
-msgstr ""
+msgstr "تۆمارکردنی دۆزینەوەی هەڵە"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
 msgid "Enabled logging categories"
-msgstr ""
+msgstr "جۆرەکانی تۆمارکردن چاڵاک بکە"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
 msgid "Play a sound for logged e&rrors:"
-msgstr ""
+msgstr "دەنگێک دەربکە بۆ هەڵە تۆمارکراوەکان:"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#, fuzzy
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
-msgstr "دامەزراندنی NVDA {version}"
+msgstr "تەنها لە وەشانە تاقیکاریەکانی NVDA"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
-msgstr ""
+msgstr "بەڵێ"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
-msgstr ""
+msgstr "پێشکەوتوو"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
 msgid "Warning!"
-msgstr "هۆشداری!"
+msgstr "ئاگاداری!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
 msgid ""
@@ -10078,116 +10077,122 @@ msgid ""
 "to function incorrectly. Please only change these if you know what you are "
 "doing or have been specifically instructed by NVDA developers."
 msgstr ""
+"ڕێکخستنەکانی دواتر بۆ بەکارهێنەری پێشکەوتووە. گۆڕانکاریکردن تێیاندا لەوانەیە "
+"ببێتە هۆی ئەوەی NVDA بە هەڵە کار بکات. تکایە ئەمانە تەنها کاتێک بگۆڕە کەوا "
+"دەزانیت چی دەکەیت یاخود بە تایبەتی لەلایەن پەرەپێدەرانی NVDA وە ڕێنمای "
+"کرابیت."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
 msgid ""
 "I understand that changing these settings may cause NVDA to function "
 "incorrectly."
 msgstr ""
+"من لەوە تێدەگەم کەوا گۆڕانکاریکردن لەم رێکخستنانە دەکرێت ببێتە هۆی ئەوەی کە "
+"NVDA بە هەڵە کار بکات."
 
 #. Translators: This is the label for a button in the Advanced settings panel
 msgid "Restore defaults"
-msgstr ""
+msgstr "بگەڕێوە سەر بنەڕەتەکان"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
-msgstr "&پیشاندەری برایەڵ"
+msgstr "پیشاندەری بڕەیڵ"
 
 #. Translators: This is the label for the braille display selection dialog.
 msgid "Select Braille Display"
-msgstr ""
+msgstr "پیشاندەری بڕەیڵ هەڵببژێرە"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
-msgstr "&پیشاندەری برایەڵ:"
+msgstr "پیشاندەری بڕەیڵ:"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
-msgstr "&پۆرت:"
+msgstr "دەرچە:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
 #, python-brace-format
 msgid "Could not load the {display} display."
-msgstr ""
+msgstr "نەتوانرا پیشاندەری {display} بار بکرێت."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
 msgid "Braille Display Error"
-msgstr "هەڵە لە یشاندەری برایەڵ"
+msgstr "هەڵە لە پیشاندەری بڕەیڵ"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
-msgstr ""
+msgstr "خشتەی دەرکردە:"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 msgid "&Input table:"
-msgstr ""
+msgstr "خشتەی دەرخواردە:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr ""
+msgstr "فراوانکردن بۆ کۆمپیوتەری بڕەیڵ بۆ ئەو ووشەیەی لەلای جێ نیشاندەرەکە"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
-msgstr ""
+msgstr "جێ نیشاندەرەکە پیشان بدە"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
 msgid "Blink cursor"
-msgstr ""
+msgstr "جێ نیشاندەرەکە بترپێنە"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr ""
+msgstr "ڕێژەی ترپاندنی جێ نیشاندەرەکە (بە میلی چرکە)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 msgid "Cursor shape for &focus:"
-msgstr ""
+msgstr "شێوەی جێ نیشاندەرەکە بۆ تیشکخستنەسەر:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
-msgstr ""
+msgstr "شێوەی جێ نیشاندەرەکە بۆ پێداچوونەوە:"
 
 #. Translators: One of the show states of braille messages
 #. (the timeout mode shows messages for the specific time).
 msgid "Use timeout"
-msgstr ""
+msgstr "کات بەسەرچوون بەکاربهێنە"
 
 #. Translators: One of the show states of braille messages
 #. (the indefinitely mode prevents braille messages from disappearing automatically).
 msgid "Show indefinitely"
-msgstr ""
+msgstr "تا کاتێکی نادیار پیشانی بدە"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
 msgid "Show messages"
-msgstr ""
+msgstr "نامەکان پیشان بدە"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
-msgstr ""
+msgstr "کاتی بەسەرچوونی نامە (بە چرکە)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
-msgstr ""
+msgstr "بەستنەوەی بڕەیڵ:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr ""
+msgstr "بە بڕگە بیخوێنەوە"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr ""
+msgstr "دووربکەوە لە جیاکردنەوەی ووشەکان ئەگەر کرا"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr ""
+msgstr "تیشکخستنەسەر پێشکەشکردنی باری ئێستا:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
-msgstr ""
+msgstr "نەتوانرا دابینکەری باشترکردنی بینایی {providerName} بار بکرێت"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
@@ -10196,10 +10201,12 @@ msgid ""
 "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
 msgstr ""
+"نەتوانرا ئەم دابینکەرانەی باشترکردنی بینایی بار بکرێن:\n"
+"{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
 msgid "Vision Enhancement Provider Error"
-msgstr ""
+msgstr "هەڵە لە دابینکەری باشترکردنی بینایی"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
@@ -10207,6 +10214,8 @@ msgstr ""
 msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr ""
+"نەتوانرا بە شێوەیەکی شیاو کۆتایی بە دابینکەری باشترکردنی بینایی "
+"{providerName} بهێنرێت"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
@@ -10215,67 +10224,71 @@ msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
 msgstr ""
+"نەتوانرا بە شێوەیەکی شیاو کۆتایی بەم دابینکەرانەیی باشترکردنی بینایی "
+"بهێنرێن:\n"
+"{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
 msgid "Configure visual aids."
-msgstr ""
+msgstr "هاوکاریە بینراوەکان ڕێکبخە."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
 msgid "Enable"
-msgstr "چالاککردن"
+msgstr "چاڵاککردن"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
 msgid "Options:"
-msgstr "هەڵبژاردنەکان:"
+msgstr "بژاردەکان:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
 msgid ""
 "Unable to configure user interface for Vision Enhancement Provider, it can "
 "not be enabled."
 msgstr ""
+"نەتوانرا ڕووکاری بەکارهێنەر ڕێکبخرێت بۆ دابینکەری باشترکردنی بینایی، "
+"ناتوانرێت چاڵاک بکرێت."
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
-msgstr "ڕێکبەندەکانی NVDA"
+msgstr "ڕێکخستنەکانی NVDA"
 
 #. Translators: The profile name for normal configuration
 msgid "normal configuration"
-msgstr ""
+msgstr "ڕێکخستنە ئاساییەکان"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
-msgstr "هیما زیادبکە"
+msgstr "هێما زیادبکە"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#, fuzzy
 msgid "&Symbol:"
-msgstr "هیما:"
+msgstr "هێما:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
 #, python-format
 msgid "Symbol Pronunciation (%s)"
-msgstr ""
+msgstr "خوێندنەوەی هێما (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
 msgctxt "speechSymbols"
 msgid "&Filter by:"
-msgstr ""
+msgstr "پاڵاوتن بەپێی:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
-msgstr "&هیما"
+msgstr "هێمایەکان"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
 msgid "Symbol"
-msgstr "هیما"
+msgstr "هێما"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
-msgstr "لەجێ دانانن"
+msgstr "جێگرەوە"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 msgid "Level"
@@ -10284,17 +10297,17 @@ msgstr "ئاست"
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
 msgid "Preserve"
-msgstr "بیهێڵەرەوە"
+msgstr "پاراستن"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change selected symbol"
-msgstr "هیمای هەڵبژێردراو بگۆرە"
+msgstr "هێمای هەڵبژێردراو بگۆڕە"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
-msgstr "&لەجێ دانانن"
+msgstr "&جێگرەوە"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -10302,40 +10315,40 @@ msgstr "&ئاست"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 msgid "&Send actual symbol to synthesizer"
-msgstr ""
+msgstr "هێما ڕاستیەکە بنێرە بۆ دەنگ دووبارەکەرەوە"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
-msgstr ""
+msgstr "لاببە"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
 #, python-format
 msgid "Symbol \"%s\" is already present."
-msgstr ""
+msgstr "هێمای \"%s\" لە بنەڕەتدا ئامادەیە."
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
-msgstr ""
+msgstr "&هەر شوێنێک"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "Whole &word"
-msgstr ""
+msgstr "تەواوی ووشەکە"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "Regular &expression"
-msgstr ""
+msgstr "دەربڕینی ئاسایی"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
-msgstr ""
+msgstr "دەستکاری نووسراوی فەرهەنگ بکە"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr ""
+msgstr "&شێواز"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
-msgstr ""
+msgstr "&لێدوان"
 
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
@@ -10344,34 +10357,34 @@ msgstr "&جۆر"
 #. Translators: This is an error message to let the user know that the pattern field
 #. in the dictionary entry is not valid.
 msgid "A pattern is required."
-msgstr ""
+msgstr "شێوازێک پێویستە."
 
 #. Translators: The title of an error message raised by the Dictionary Entry dialog
 msgid "Dictionary Entry Error"
-msgstr ""
+msgstr "هەڵە لە نووسراوی فەرهەنگ"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
-msgstr ""
+msgstr "هەڵە لە دەربڕینی ئاسایی: \"%s\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
-msgstr ""
+msgstr "نووسراوەکانی فەرهەنگ"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 msgid "Comment"
-msgstr "سەرنج"
+msgstr "لێدوان"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern
 #. (original word or a pattern).
 msgid "Pattern"
-msgstr ""
+msgstr "شێواز"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is case sensitive or not.
 msgid "case"
-msgstr ""
+msgstr "دۆسیە"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is a regular expression, matches whole words, or matches anywhere.
@@ -10380,25 +10393,25 @@ msgstr "جۆر"
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 msgid "&Edit"
-msgstr ""
+msgstr "&دەستکاری بکە"
 
 #. Translators: The label for a button on the Speech Dictionary dialog.
 #. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
-#, fuzzy
 msgid "Remove all"
-msgstr "&لابردن"
+msgstr "هەمووی لاببە"
 
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
-msgstr ""
+msgstr "نووسراوی فەرهەنگ زیاد بکە"
 
 #. Translators: A prompt for confirmation on the Speech Dictionary dialog.
 msgid "Are you sure you want to remove all the entries in this dictionary?"
 msgstr ""
+"تۆ دڵنییاییت لەوەی کە دەتەوێت هەموو نووسراوەکانی ناو ئەم فەرهەنگە لاببەیت?"
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
-msgstr "فەرهەنگی بنەرەتی"
+msgstr "فەرهەنگی بنەڕەت"
 
 #. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 #, python-format
@@ -10421,48 +10434,57 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions."
 msgstr ""
+"زۆربەی فەرمانەکان بۆ کۆنتڕۆڵکردنی NVDA پێویستی بەوەیە کەوا پەنجەت لەسەر "
+"کلیلی NVDA بهێڵیتەوە لە کاتێکدا کەوا کلیلی تر دادەگریت.\n"
+"لە بنەڕەتدا، کلیلی تێکردنی ناو ژمارەکان و کلیلی تێکردنە سەرەکییەکان "
+"دەتوانرێت وەک کلیلی NVDA بەکاربێت.\n"
+"هەروەها دەتوانیت NVDA وا ڕێکبخەیت کەوا کلیلی گەورەکردنی پیتەکان وەک کلیلی "
+"NVDA بەکاربهێنێت.\n"
+"پەنجەبنێ بە NVDA+n ەوە لە هەرکاتێک بۆ ئەوەی پێڕستی NVDA چاڵاک بکەیت.\n"
+"لەم پێڕستەوە، دەتوانیت NVDA ڕێکبخەیت، هاریکاری بەدەستبهێنی و دەستت بگات بە "
+"کرداری تری NVDA."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
-msgstr ""
+msgstr "بەخێربێیت بۆ NVDA"
 
 #. Translators: The header for the Welcome dialog when user starts NVDA for the first time.
 #. This is in larger, bold lettering
 msgid "Welcome to NVDA!"
-msgstr ""
+msgstr "بەخێربێیت بۆ NVDA!"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Use CapsLock as an NVDA modifier key"
-msgstr ""
+msgstr "&کلیلی گەورەکردنی پیتەکان وەک کلیلی دەستکاریکەر بەکاربهێنە"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
-msgstr ""
+msgstr "ئەم گفتوگۆیە پیشانبدە کاتێک کە NVDA دەستپێدەکات"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
-msgstr ""
+msgstr "ڕێککەوتنی مۆڵەت"
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
-msgstr ""
+msgstr "من ڕازیم"
 
 #. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 msgid "&Install NVDA on this computer"
-msgstr ""
+msgstr "NVDA لەسەر ئەم کۆمپیوتەوە جێگیربکە"
 
 #. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
 msgid "Create &portable copy"
-msgstr ""
+msgstr "لەبەرگیراوەی هەڵگرتەیی دروست بکە"
 
 #. Translators: The label of the button in NVDA installation program
 #. to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
-msgstr ""
+msgstr "بەردەوامبە لە کارکردن"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
-msgstr ""
+msgstr "کۆکراوەی زانیاری بەکارهێنانی NVDA"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
 msgid ""
@@ -10478,183 +10500,194 @@ msgid ""
 "Do you wish to allow NV Access to periodically collect this data in order to "
 "improve NVDA?"
 msgstr ""
+"بۆ ئەوەی NVDA باشتر بکەین لە داهاتوودا، NV Access وا دەخوازێت کە زانیاری "
+"بەکارهێنان کۆبکاتەوە لە لەبەرگیراوە چاڵاکەکانی NVDA.\n"
+"\n"
+"زانیاریەکان پێکدێن لە وەشانی سیستەمی هەڵسووڕاندن، وەشانی NVDA، زمان، ووڵاتی "
+"ڕەسەن، لەگەڵ چەند ڕێکخستنێکی NVDA وەک دەنگ دووبارەکەرەوەی ئێستا، ڕووکاری "
+"بڕەیڵ و خشتەی بڕەیڵ. هیچ ناوەڕۆکێکی ووتراو و بڕەیڵ نانێردرێت بۆ NV Access. "
+"تکایە سەیری ڕێبەری بەکارهێنەر بکەن بۆ لیستی ئێستای هەموو زانیاریە "
+"کۆکراوەکان.\n"
+"\n"
+"ئارەزوو دەکەیت NV Access هەندێک جار ئەم زانیاریانە کۆبکاتەوە بۆ ئەوەی NVDA "
+"بەرەوپێش ببات?"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
-msgstr ""
+msgstr "لە کارلێکی بیرکاری دەربچۆ"
 
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
-msgstr ""
+msgstr "کارلێکردنی بیرکاری پشتگیری نەکراوە."
 
 #. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr ""
+msgstr "بەتاڵ"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
 msgid "cap %s"
-msgstr ""
+msgstr "گەورە %s"
 
 #. Translators: This is spoken when the given line has no indentation.
 msgid "no indent"
-msgstr ""
+msgstr "بێ بۆشایی"
 
 #. Translators: This is spoken to indicate that some text is already selected.
 #. 'selected' preceding text is intentional.
 #. For example 'selected hello world'
 #, python-format
 msgid "selected %s"
-msgstr ""
+msgstr "%s هەڵبژێردرا"
 
 #. Translators: This is spoken to indicate what has just been selected.
 #. The text preceding 'selected' is intentional.
 #. For example 'hello world selected'
 #, python-format
 msgid "%s selected"
-msgstr ""
+msgstr "%s هەڵبژێردرا"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
 msgid "%s unselected"
-msgstr ""
+msgstr "%s لابردرا"
 
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 #, python-format
 msgid "%s selected instead"
-msgstr ""
+msgstr "%s لەبری هەڵبژێردرا"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
-msgstr ""
+msgstr "هەڵبژاردن لابرا"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
-msgstr ""
+msgstr "ڕیزی %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
 #, python-format
 msgid "through %s"
-msgstr ""
+msgstr "بەناو %s"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
-msgstr ""
+msgstr "ستوونی %s"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
 #, python-brace-format
 msgid "through row {row} column {column}"
-msgstr ""
+msgstr "بەناو ڕیزی {row} ستوونی {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
-msgstr ""
+msgstr "بە {rowCount} ڕیز و {columnCount} ستوون"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #, python-format
 msgid "with %s columns"
-msgstr ""
+msgstr "بە %s ستوون"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #, python-format
 msgid "with %s rows"
-msgstr ""
+msgstr "بە %s ڕیز"
 
 #. Translators: Speaks when there a further details/annotations that can be fetched manually.
 msgid "has details"
-msgstr ""
+msgstr "ووردەکاری هەیە"
 
 #. Translators: Speaks the item level in treeviews (example output: level 2).
 #, python-format
 msgid "level %s"
-msgstr ""
+msgstr "ئاستی %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
-msgstr ""
+msgstr "بە %s بڕگەوە"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
 msgid "out of %s"
-msgstr ""
+msgstr "%s نەماوە"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
 #, python-format
 msgid "page %s"
-msgstr ""
+msgstr "لاپەڕەی %s"
 
 #. Translators: Indicates the section number in a document.
 #. %s will be replaced with the section number.
 #, python-format
 msgid "section %s"
-msgstr ""
+msgstr "بەشی %s"
 
 #. Translators: Indicates the text column number in a document.
 #. {0} will be replaced with the text column number.
 #. {1} will be replaced with the number of text columns.
 #, python-brace-format
 msgid "column {0} of {1}"
-msgstr ""
+msgstr "ستوونی {0} لە {1}"
 
 #. Translators: Indicates the text column number in a document.
 #. %s will be replaced with the number of text columns.
 #, python-format
 msgid "%s columns"
-msgstr ""
+msgstr "%s ستوون"
 
 #. Translators: Indicates the text column number in a document.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "column {columnNumber}"
-msgstr "ستوون{columnNumber}"
+msgstr "ستوونی {columnNumber}"
 
 msgid "continuous section break"
-msgstr ""
+msgstr "ناوبڕی بەشی بەردەوام"
 
 msgid "new column section break"
-msgstr ""
+msgstr "ناوبڕی بەشی ستوونی نوێ"
 
 msgid "new page section break"
-msgstr ""
+msgstr "ناوبڕی بەشی لاپەڕەی نوێ"
 
 msgid "even pages section break"
-msgstr ""
+msgstr "ناوبڕی بەشی لاپەڕە جووتەکان"
 
 msgid "odd pages section break"
-msgstr ""
+msgstr "ناوبڕی بەشی لاپەڕە تاکەکان"
 
 msgid "column break"
-msgstr ""
+msgstr "ناوبڕی ستوون"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
-msgstr ""
+msgstr "ئاستی سەردێڕی %d"
 
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
 #. %s will be replaced with the name of the style.
 #, python-format
 msgid "style %s"
-msgstr ""
+msgstr "شێوازی %s"
 
 #. Translators: Indicates that text has reverted to the default style.
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
-msgstr "شێوازی گریمانە"
+msgstr "شێوازی بنەڕەت"
 
 #. Translators: Indicates that cell does not have border lines.
 msgid "no border lines"
-msgstr ""
+msgstr "بێ هێڵی سنوور"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -10662,30 +10695,30 @@ msgstr ""
 #. {color2} will be replaced with the second background color.
 #, python-brace-format
 msgid "{color1} to {color2}"
-msgstr ""
+msgstr "{color1} بۆ {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
 #, python-brace-format
 msgid "{color} on {backgroundColor}"
-msgstr ""
+msgstr "{color} لەسەر {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
 #, python-brace-format
 msgid "{color}"
-msgstr ""
+msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
 #, python-brace-format
 msgid "{backgroundColor} background"
-msgstr ""
+msgstr "پاشبنەمای {backgroundColor}"
 
 #, python-brace-format
 msgid "background pattern {pattern}"
-msgstr ""
+msgstr "{pattern} شێوازی پاشبنەما"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
