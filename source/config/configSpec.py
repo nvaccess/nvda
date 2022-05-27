@@ -221,6 +221,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportFrames = boolean(default=true)
 	reportClickable = boolean(default=true)
 
+[paragraphNavigation]
+	paragraphStyle = option("application", "normal", "block", default="application")
+
 [reviewCursor]
 	simpleReviewMode = boolean(default=True)
 	followFocus = boolean(default=True)

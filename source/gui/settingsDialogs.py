@@ -5,7 +5,7 @@
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
 # Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony
+# jakubl7545, mltony, Rob Meredith
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -2531,6 +2531,34 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
+
+class ParagraphNavigationPanel(SettingsPanel):
+	# Translators: This is the label for the paragraph navigation settings panel.
+	title = _("Paragraph Navigation")
+	helpId = "ParagraphNavigation"
+	paragraphStyles = ("application", "normal", "block")
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: This is a label for the paragraph navigation style in the paragraph navigation dialog
+		paragraphStyleLabel = _("&Paragraph style:")
+		paragraphStyleChoices = [
+			# Translators: A choice in a combo box in the paragraph navigation dialog
+			# which specifies that the application handles paragraph navigation
+			_("Handled by application"),
+			# Translators: A choice in a combo box in the paragraph navigation dialog  to navigate by normal paragraphs
+			_("Normal style"),
+			# Translators: A choice in a combo box in the paragraph navigation dialog  to navigate by block paragraphs
+			_("Block style")
+		]
+		self.styleCombo = sHelper.addLabeledControl(paragraphStyleLabel, wx.Choice, choices=paragraphStyleChoices)
+		self.styleCombo.SetSelection(
+			self.paragraphStyles.index(config.conf["paragraphNavigation"]["paragraphStyle"]))
+
+	def onSave(self):
+		choice = self.styleCombo.GetSelection()
+		config.conf["paragraphNavigation"]["paragraphStyle"] = self.paragraphStyles[choice]
+
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
@@ -4000,6 +4028,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		ObjectPresentationPanel,
 		BrowseModePanel,
 		DocumentFormattingPanel,
+		ParagraphNavigationPanel,
 	]
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)

@@ -294,6 +294,27 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def script_caret_deleteWord(self, gesture):
 		self._deleteScriptHelper(textInfos.UNIT_WORD, gesture)
 
+	def _handleParagraphNavigation(self, gesture, next):
+		setting = config.conf["paragraphNavigation"]["paragraphStyle"]
+		if setting == "application":
+			self.script_caret_moveByParagraph(gesture)
+		elif setting == "normal":
+			from paragraphHelper import moveToParagraph
+			if not moveToParagraph(next=next, speakNew=not willSayAllResume(gesture)):
+				self.script_caret_moveByParagraph(gesture)
+		elif setting == "block":
+			from paragraphHelper import moveToBlockParagraph
+			if not moveToBlockParagraph(next=next, speakNew=not willSayAllResume(gesture)):
+				self.script_caret_moveByParagraph(gesture)
+
+	def script_caret_previousParagraph(self, gesture):
+		self._handleParagraphNavigation(gesture, False)
+	script_caret_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+
+	def script_caret_nextParagraph(self, gesture):
+		self._handleParagraphNavigation(gesture, True)
+	script_caret_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+	
 	__gestures = {
 		"kb:upArrow": "caret_moveByLine",
 		"kb:downArrow": "caret_moveByLine",
@@ -303,8 +324,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"kb:pageDown": "caret_moveByLine",
 		"kb:control+leftArrow": "caret_moveByWord",
 		"kb:control+rightArrow": "caret_moveByWord",
-		"kb:control+upArrow": "caret_moveByParagraph",
-		"kb:control+downArrow": "caret_moveByParagraph",
+		"kb:control+upArrow": "caret_previousParagraph",
+		"kb:control+downArrow": "caret_nextParagraph",
 		"kb:alt+upArrow": "caret_previousSentence",
 		"kb:alt+downArrow": "caret_nextSentence",
 		"kb:home": "caret_moveByCharacter",
