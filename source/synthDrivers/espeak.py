@@ -1,14 +1,12 @@
 # -*- coding: UTF-8 -*-
-#synthDrivers/espeak.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import os
 from collections import OrderedDict
 from . import _espeak
-import threading
 import languageHandler
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import speech
@@ -26,8 +24,8 @@ from speech.commands import (
 )
 
 
-# A mapping of commonly used language codes to e-speak languages.
-# These are used when e-speak doesn't support a given language code
+# A mapping of commonly used language codes to eSpeak languages.
+# These are used when eSpeak doesn't support a given language code
 # but a default alias is appropriate
 _defaultLangToLocaleMappings = {
 	"en": "en-us",
@@ -125,14 +123,14 @@ class SynthDriver(SynthDriver):
 				else:
 					# Check for other languages of a different dialect.
 					_lang = _langWithLocale.split('-')[0]
-					log.debugWarning(f"Unknown language to espeak: {item.lang} not in {self.availableLanguages}")
-					# Check from a list of known default mapping locales: e.g. en to en-us
+					log.debugWarning(f"Unknown language to eSpeak: {item.lang} not in {self.availableLanguages}")
+					# Check from a list of known default mapping locales: e.g. en to en-gb
 					_knownDefaultLang = _defaultLangToLocaleMappings.get(_lang, None)
-					# Check for any language where the language code matches, regardless of dialect: e.g. en-au to en-us
+					# Check for any language where the language code matches, regardless of dialect: e.g. en-au-tas to en-gb
 					_anyLocaleMatchingLang = next(filter(lambda l: l.split('-')[0] == _lang, self.availableLanguages), None)
 					if _knownDefaultLang is not None and _knownDefaultLang not in self.availableLanguages:
-						# This means espeak has changed and we need to update the mapping
-						log.error(f"Default mapping unknown to espeak {_knownDefaultLang} not in {self.availableLanguages}")
+						# This means eSpeak has changed and we need to update the mapping
+						log.error(f"Default mapping unknown to eSpeak {_knownDefaultLang} not in {self.availableLanguages}")
 						_knownDefaultLang = None
 					if _knownDefaultLang is not None:
 						_lang = _knownDefaultLang
