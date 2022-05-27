@@ -384,7 +384,7 @@ class JAB(Window):
 				return info
 
 		parent=self.parent
-		if isinstance(parent,JAB) and self.role in (controlTypes.Role.TREEVIEWITEM,controlTypes.Role.LISTITEM):
+		if isinstance(parent,JAB) and self.role in (controlTypes.Role.TREEVIEWITEM,controlTypes.Role.LISTITEM, controlTypes.Role.TAB):
 			index=self._JABAccContextInfo.indexInParent+1
 			childCount=parent._JABAccContextInfo.childrenCount
 			info['indexInGroup']=index
