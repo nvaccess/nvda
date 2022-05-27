@@ -397,7 +397,7 @@ class JAB(Window):
 	def _get_parent(self):
 		if not hasattr(self,'_parent'):
 			jabContext=self.jabContext.getAccessibleParentFromContext()
-			if jabContext:
+			if jabContext and self.indexInParent is not None:
 				self._parent=JAB(jabContext=jabContext)
 			else:
 				self._parent=super(JAB,self).parent
