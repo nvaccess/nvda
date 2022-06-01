@@ -506,10 +506,33 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def isGoodUIAWindow(self, hwnd):
+		currentWinVer = winVersion.getWinVer()
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
 		if (
-			winVersion.getWinVer() >= winVersion.WIN10_1903
+			currentWinVer >= winVersion.WIN10_1903
 			and winUser.getClassName(hwnd) == "ApplicationFrameWindow"
+		):
+			return True
+		# #13506: Windows 11 UI elements such as Taskbar should be reclassified as UIA windows,
+		# letting NVDA announce shell elements when navigating with mouse and/or touch,
+		# notably when interacting with windows labeled "DesktopWindowXamlSource".
+		# WORKAROUND UNTIL A PERMANENT FIX IS FOUND ACROSS APPS
+		if (
+			currentWinVer >= winVersion.WIN11
+			# Traverse parents until arriving at the top-level window with the below class names.
+			# This is more so for the shell root (first class name), and for others, class name check would work
+			# since they are top-level windows for windows shown on screen such as Task View.
+			# However, look for the ancestor for consistency.
+			and winUser.getClassName(winUser.getAncestor(hwnd, winUser.GA_ROOT)) in (
+				# Windows 11 shell UI root, housing various shell elements shown on screen if enabled.
+				"Shell_TrayWnd",  # Start, Search, Widgets, other shell elements
+				# Top-level window class names from Windows 11 shell features
+				"Shell_InputSwitchTopLevelWindow",  # Language switcher
+				"XamlExplorerHostIslandWindow",  # Task View and Snap Layouts
+			)
+			# #13717: on some systems, Windows 11 shell elements are reported as IAccessible,
+			# notably Start button, causing IAccessible handler to report attribute error when handling events.
+			and winUser.getClassName(hwnd) != "Start"
 		):
 			return True
 		return False

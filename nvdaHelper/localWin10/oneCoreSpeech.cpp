@@ -302,7 +302,7 @@ std::wstring createMarkersString_(IVectorView<IMediaMarker> markers) {
 			markersStr += L"|";
 		}
 		else {
-			firstComplete = false;
+			firstComplete = true;
 		}
 		markersStr += marker.Text();
 		markersStr += L":";
