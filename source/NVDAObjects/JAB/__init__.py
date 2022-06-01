@@ -101,9 +101,13 @@ re_simpleXmlTag = re.compile(r"(\<[^>]+\>)+")
 
 
 def _subHtmlTag(match: re.match) -> str:
+	""" Determines whether to replace the tag with a space or to just remove it. """
 	startIndex, endIndex = match.span()
-	return "" if startIndex == 0 or match.string[startIndex - 1].isspace() \
-	or endIndex == len(match.string) or match.string[endIndex].isspace() else " "
+	return "" if (
+		startIndex == 0 or match.string[startIndex - 1].isspace()
+		or endIndex == len(match.string) or match.string[endIndex].isspace()
+	) else " "
+
 
 def _processHtml(text: str) -> str:
 	""" Strips HTML tags from text if it is HTML """
