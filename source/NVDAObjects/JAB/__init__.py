@@ -100,7 +100,7 @@ JABStatesToNVDAStates={
 re_simpleXmlTag = re.compile(r"(\<[^>]+\>)+")
 
 
-def _subHtmlTag(match):
+def _subHtmlTag(match: re.match) -> str:
 	startIndex, endIndex = match.span()
 	return "" if startIndex == 0 or match.string[startIndex - 1].isspace() \
 	or endIndex == len(match.string) or match.string[endIndex].isspace() else " "
