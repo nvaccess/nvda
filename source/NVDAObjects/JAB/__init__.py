@@ -105,7 +105,7 @@ def _subHtmlTag(match: re.match) -> str:
 	return "" if startIndex == 0 or match.string[startIndex - 1].isspace() \
 	or endIndex == len(match.string) or match.string[endIndex].isspace() else " "
 
-def _processHtml(text):
+def _processHtml(text: str) -> str:
 	""" Strips HTML tags from text if it is HTML """
 	return re_simpleXmlTag.sub(_subHtmlTag, text) if text.startswith("<html>") else text
 
