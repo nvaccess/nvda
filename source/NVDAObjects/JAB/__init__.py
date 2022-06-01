@@ -340,12 +340,15 @@ class JAB(Window):
 		return stateSet
 
 	def _get_value(self):
-		if self.role not in [
-			controlTypes.Role.TOGGLEBUTTON, controlTypes.Role.CHECKBOX,
-			controlTypes.Role.MENU, controlTypes.Role.MENUITEM,
-			controlTypes.Role.RADIOBUTTON, controlTypes.Role.BUTTON] \
-		and self._JABAccContextInfo.accessibleValue \
-		and not self._JABAccContextInfo.accessibleText:
+		if (
+			self.role not in [
+				controlTypes.Role.TOGGLEBUTTON, controlTypes.Role.CHECKBOX,
+				controlTypes.Role.MENU, controlTypes.Role.MENUITEM,
+				controlTypes.Role.RADIOBUTTON, controlTypes.Role.BUTTON
+			]
+			and self._JABAccContextInfo.accessibleValue
+			and not self._JABAccContextInfo.accessibleText
+		):
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
