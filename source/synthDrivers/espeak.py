@@ -6,12 +6,15 @@
 
 import os
 from collections import OrderedDict
+from typing import List, Optional
+
 from . import _espeak
 import languageHandler
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import speech
 from logHandler import log
 
+from speech.types import SpeechSequence
 from speech.commands import (
 	IndexCommand,
 	CharacterModeCommand,
@@ -22,15 +25,6 @@ from speech.commands import (
 	VolumeCommand,
 	PhonemeCommand,
 )
-
-
-# A mapping of commonly used language codes to eSpeak languages.
-# These are used when eSpeak doesn't support a given language code
-# but a default alias is appropriate
-_defaultLangToLocaleMappings = {
-	"en": "en-gb",
-}
-
 
 class SynthDriver(SynthDriver):
 	name = "espeak"
@@ -56,6 +50,14 @@ class SynthDriver(SynthDriver):
 		PhonemeCommand,
 	}
 	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
+
+	# A mapping of commonly used language codes to eSpeak languages.
+	# Introduced due to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1200
+	# These are used when eSpeak doesn't support a given language code
+	# but a default alias is appropriate
+	_defaultLangToLocaleMappings = {
+		"en": "en-gb",
+	}
 
 	@classmethod
 	def check(cls):
@@ -97,8 +99,69 @@ class SynthDriver(SynthDriver):
 			0x5B: u" [", # [: [[ indicates phonemes
 		})
 
-	def speak(self,speechSequence):
-		defaultLanguage=self._language
+	def _determineLangFromCommand(self, command: LangChangeCommand) -> Optional[str]:
+		"""
+		Checks if a lang code given is compatible with eSpeak.
+		If not, check if a default mapping occurs in L{_defaultLangToLocaleMappings}.
+		Otherwise, checks if a language of a different dialect exists (e.g. ru-ru to ru).
+		Returns an eSpeak compatible lang code or None, which should be handled as
+		falling back to the default language.
+		"""
+		# Use default language if no command.lang is supplied
+		langWithLocale = command.lang if command.lang else self._language
+		langWithLocale = langWithLocale.lower().replace('_', '-')
+
+		langWithoutLocale: Optional[str] = langWithLocale.split('-')[0]
+
+		# Check for any language where the language code matches, regardless of dialect: e.g. ru-ru to ru
+		matchingLanguages = filter(lambda l: l.split('-')[0] == langWithoutLocale, self.availableLanguages)
+		anyLocaleMatchingLang = next(matchingLanguages, None)
+		
+		# Check from a list of known default mapping locales: e.g. en to en-gb
+		# Created due to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1200
+		knownDefaultLang = self._defaultLangToLocaleMappings.get(langWithoutLocale, None)
+		if knownDefaultLang is not None and knownDefaultLang not in self.availableLanguages:
+			# This means eSpeak has changed and we need to update the mapping
+			log.error(f"Default mapping unknown to eSpeak {knownDefaultLang} not in {self.availableLanguages}")
+			knownDefaultLang = None
+
+		if langWithLocale in self.availableLanguages:
+			eSpeakLang = langWithLocale
+		elif knownDefaultLang is not None:
+			eSpeakLang = knownDefaultLang
+		elif langWithoutLocale in self.availableLanguages:
+			eSpeakLang = langWithoutLocale
+		elif anyLocaleMatchingLang is not None:
+			eSpeakLang = anyLocaleMatchingLang
+		else:
+			log.debugWarning(f"Unable to find an eSpeak language for '{langWithLocale}'")
+			eSpeakLang = None
+		return eSpeakLang
+
+	def _handleLangChangeCommand(
+			self,
+			langChangeCommand: LangChangeCommand,
+			textList: List[str],
+			langChanged: bool,
+	) -> bool:
+		"""Append language xml tags to textList:
+			- if a language change has already been handled for this speech,
+			close the open voice tag.
+			- if the language is supported by eSpeak, switch to that language.
+			- otherwise, switch to the default synthesizer language.
+		"""
+		lang = self._determineLangFromCommand(langChangeCommand)
+		if langChanged:
+			textList.append("</voice>")
+		if lang is not None:
+			textList.append(f'<voice xml:lang="{lang}">')
+		else:
+			textList.append(f'<voice>')
+
+	# C901 'speak' is too complex
+	# Note: when working on speak, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def speak(self, speechSequence: SpeechSequence):  # noqa: C901
 		textList=[]
 		langChanged=False
 		prosody={}
@@ -113,35 +176,7 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, CharacterModeCommand):
 				textList.append("<say-as interpret-as=\"characters\">" if item.state else "</say-as>")
 			elif isinstance(item, LangChangeCommand):
-				_lang = None
-				if item.lang:
-					_langWithLocale = item.lang.lower().replace('_', '-')
-				else:
-					_langWithLocale = defaultLanguage.lower().replace('_', '-')
-				if _langWithLocale in self.availableLanguages:
-					_lang = _langWithLocale
-				else:
-					# Check for other languages of a different dialect.
-					_lang = _langWithLocale.split('-')[0]
-					log.debugWarning(f"Unknown language to eSpeak: {item.lang} not in {self.availableLanguages}")
-					# Check from a list of known default mapping locales: e.g. en to en-gb
-					_knownDefaultLang = _defaultLangToLocaleMappings.get(_lang, None)
-					# Check for any language where the language code matches, regardless of dialect: e.g. en-au-tas to en-gb
-					_anyLocaleMatchingLang = next(filter(lambda l: l.split('-')[0] == _lang, self.availableLanguages), None)
-					if _knownDefaultLang is not None and _knownDefaultLang not in self.availableLanguages:
-						# This means eSpeak has changed and we need to update the mapping
-						log.error(f"Default mapping unknown to eSpeak {_knownDefaultLang} not in {self.availableLanguages}")
-						_knownDefaultLang = None
-					if _knownDefaultLang is not None:
-						_lang = _knownDefaultLang
-					elif _anyLocaleMatchingLang is not None:
-						_lang = _anyLocaleMatchingLang
-				if langChanged:
-					textList.append("</voice>")
-				if _lang is not None:
-					textList.append(f'<voice xml:lang="{_lang}">')
-				else:
-					textList.append(f'<voice>')
+				self._handleLangChangeCommand(item, textList, langChanged)
 				langChanged = True
 			elif isinstance(item, BreakCommand):
 				textList.append('<break time="%dms" />' % item.time)
