@@ -55,7 +55,7 @@ class SynthDriver(SynthDriver):
 	# Introduced due to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1200
 	# These are used when eSpeak doesn't support a given language code
 	# but a default alias is appropriate
-	_defaultLangToLocaleMappings = {
+	_defaultLangToLocale = {
 		"en": "en-gb",
 	}
 
@@ -102,7 +102,7 @@ class SynthDriver(SynthDriver):
 	def _determineLangFromCommand(self, command: LangChangeCommand) -> Optional[str]:
 		"""
 		Checks if a lang code given is compatible with eSpeak.
-		If not, check if a default mapping occurs in L{_defaultLangToLocaleMappings}.
+		If not, check if a default mapping occurs in L{_defaultLangToLocale}.
 		Otherwise, checks if a language of a different dialect exists (e.g. ru-ru to ru).
 		Returns an eSpeak compatible lang code or None, which should be handled as
 		falling back to the default language.
@@ -119,7 +119,7 @@ class SynthDriver(SynthDriver):
 		
 		# Check from a list of known default mapping locales: e.g. en to en-gb
 		# Created due to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1200
-		knownDefaultLang = self._defaultLangToLocaleMappings.get(langWithoutLocale, None)
+		knownDefaultLang = self._defaultLangToLocale.get(langWithoutLocale, None)
 		if knownDefaultLang is not None and knownDefaultLang not in self.availableLanguages:
 			# This means eSpeak has changed and we need to update the mapping
 			log.error(f"Default mapping unknown to eSpeak {knownDefaultLang} not in {self.availableLanguages}")

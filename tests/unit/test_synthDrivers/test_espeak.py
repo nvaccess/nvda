@@ -10,17 +10,24 @@ import logging
 import unittest
 import logHandler
 from speech.commands import LangChangeCommand
-from synthDrivers.espeak import SynthDriver
+from source.synthDrivers.espeak import SynthDriver
 
 
 class FakeESpeakSynthDriver:
 	_language = "default"
-	_defaultLangToLocaleMappings = {"default": "en-gb"}
+	_defaultLangToLocale = {"default": "en-gb"}
 	availableLanguages = {"fr", "fr-fr", "en-gb", "ta-ta"}
 
 
 class TestSynthDriver(unittest.TestCase):
+	def setUp(self) -> None:
+		self._driver = SynthDriver()
+	
+	def tearDown(self) -> None:
+		self._driver.terminate()
+
 	def test_determineLangFromCommand(self):
+		"""Test cases for determining a supported eSpeak language from a LangChangeCommand."""
 		self.assertEqual(
 			"en-gb",
 			SynthDriver._determineLangFromCommand(FakeESpeakSynthDriver, LangChangeCommand(None)),
@@ -55,4 +62,22 @@ class TestSynthDriver(unittest.TestCase):
 		self.assertIn(
 			"Unable to find an eSpeak language for 'fake'",
 			logContext.output[0]
+		)
+
+	def test_defaultMappingAvailableLanguage(self):
+		"""Confirms language codes remapped by default are supported by eSpeak via integration testing"""
+		mappedDefaultLanguages = set(self._driver._defaultLangToLocale.values())
+		unexpectedUnsupportedDefaultLanguages = mappedDefaultLanguages.difference(self._driver.availableLanguages)
+		self.assertEqual(
+			set(),
+			unexpectedUnsupportedDefaultLanguages,
+			msg=f"Languages mapped by defaults are no longer supported by eSpeak {unexpectedUnsupportedDefaultLanguages}"
+		)
+
+		expectedUnsupportedMappedLanguages = set(self._driver._defaultLangToLocale.keys())
+		unexpectedSupportedMappedLanguages = expectedUnsupportedMappedLanguages.intersection(self._driver.availableLanguages)
+		self.assertEqual(
+			set(),
+			unexpectedSupportedMappedLanguages,
+			msg=f"Languages mapped to eSpeak defaults are now supported by eSpeak: {unexpectedSupportedMappedLanguages}"
 		)
