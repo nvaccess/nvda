@@ -217,7 +217,10 @@ class List(List):
 	def _get_rowCount(self):
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
 
-	def _get_columnCount(self):
+	columnCount: int
+	"""Typing information for auto-property: _get_columnCount"""
+
+	def _get_columnCount(self) -> int:
 		if not self.isMultiColumn:
 			return 0
 		headerHwnd= watchdog.cancellableSendMessage(self.windowHandle,LVM_GETHEADER,0,0)
@@ -288,14 +291,13 @@ class List(List):
 		return self._getColumnOrderArrayRawInProc(columnCount)
 
 	def _getColumn(self, column: int) -> Optional[int]:
+		if column == 1 and self.columnCount == 1:
+			# Use an implied default column mapping for single column list views
+			return 0
 		columnOrderArray = self._getColumnOrderArrayRaw(self.columnCount)
 		if columnOrderArray is None:
-			if column == 1:
-				log.debug("Using an implied default column mapping for single column list views")
-				return 0
-			else:
-				log.error("Cannot fetch column as column order array is unknown")
-				return None
+			log.error("Cannot fetch column as column order array is unknown")
+			return None
 		return columnOrderArray[column - 1]
 
 
