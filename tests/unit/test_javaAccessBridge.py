@@ -25,8 +25,8 @@ class TestJavaAccessBridge(unittest.TestCase):
 		self.assertEqual(regexStr, JAB._processHtml(regexStr))
 
 	def test_htmlStringHasTagsRemoved(self):
-		htmlStr = "<html><body><p>Some <b>bold</b> text.</p></body></html>"
-		expected = "   Some  bold  text.   "
+		htmlStr = "<html><body><p>Some <b>bold</b> <i>text</i>.</p></body></html>"
+		expected = "Some bold text ."
 		self.assertEqual(expected, JAB._processHtml(htmlStr))
 
 
