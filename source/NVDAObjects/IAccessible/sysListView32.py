@@ -287,10 +287,16 @@ class List(List):
 			return self._getColumnOrderArrayRawOutProc(columnCount)
 		return self._getColumnOrderArrayRawInProc(columnCount)
 
-	_columnOrderArray: Optional[ctypes.Array]
-
-	def _get__columnOrderArray(self) -> Optional[ctypes.Array]:
-		return self._getColumnOrderArrayRaw(self.columnCount)
+	def _getColumn(self, column: int) -> Optional[int]:
+		columnOrderArray = self._getColumnOrderArrayRaw(self.columnCount)
+		if columnOrderArray is None:
+			if column == 1:
+				log.debug("Using an implied default column mapping for single column list views")
+				return 0
+			else:
+				log.error("Cannot fetch column as column order array is unknown")
+				return None
+		return columnOrderArray[column - 1]
 
 
 class GroupingItem(Window):
@@ -454,10 +460,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
 	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
-		if self.parent._columnOrderArray is None:
-			log.debugWarning("Cannot fetch column location as column order array is unknown")
+		mappedColumn = self.parent._getColumn(column)
+		if mappedColumn is None:
 			return None
-		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
+		return self._getColumnLocationRaw(mappedColumn)
 
 	def _getColumnContentRawInProc(self, index: int) -> Optional[str]:
 		"""Retrieves text for a given column.
@@ -510,10 +516,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnContentRawInProc(index)
 
 	def _getColumnContent(self, column: int) -> Optional[str]:
-		if self.parent._columnOrderArray is None:
-			log.debugWarning("Cannot fetch column content as column order array is unknown")
+		mappedColumn = self.parent._getColumn(column)
+		if mappedColumn is None:
 			return None
-		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
+		return self._getColumnContentRaw(mappedColumn)
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle
@@ -530,10 +536,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return item.iImage
 
 	def _getColumnImageID(self, column):
-		if self.parent._columnOrderArray is None:
-			log.debugWarning("Cannot fetch column image ID as column order array is unknown")
+		mappedColumn = self.parent._getColumn(column)
+		if mappedColumn is None:
 			return None
-		return self._getColumnImageIDRaw(self.parent._columnOrderArray[column - 1])
+		return self._getColumnImageIDRaw(mappedColumn)
 
 	def _getColumnHeaderRawOutProc(self, index: int) -> Optional[str]:
 		"""Retrieves text of the header for the given column.
@@ -584,10 +590,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnHeaderRawInProc(index)
 
 	def _getColumnHeader(self, column: int) -> Optional[str]:
-		if self.parent._columnOrderArray is None:
-			log.debugWarning("Cannot fetch column header as column order array is unknown")
+		mappedColumn = self.parent._getColumn(column)
+		if mappedColumn is None:
 			return None
-		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
+		return self._getColumnHeaderRaw(mappedColumn)
 
 	def _get_name(self):
 		parent = self.parent
