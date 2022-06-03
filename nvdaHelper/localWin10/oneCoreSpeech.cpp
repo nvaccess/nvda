@@ -63,6 +63,7 @@ void __stdcall ocSpeech_speak(OcSpeech* instance, char16 *text) {
 	auto markersStr = make_shared<wstring>();
 	task<SpeechSynthesisStream ^>  speakTask;
 	try {
+		LOG_ERROR(L"OneCore Speech Speak: " << textStr);
 		speakTask = create_task(instance->synth->SynthesizeSsmlToStreamAsync(textStr));
 	} catch (Platform::Exception ^e) {
 		LOG_ERROR(L"Error " << e->HResult << L": " << e->Message->Data());

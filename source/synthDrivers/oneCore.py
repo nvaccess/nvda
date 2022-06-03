@@ -7,7 +7,6 @@
 """
 
 import os
-import sys
 from collections import OrderedDict
 import ctypes
 import winreg
@@ -30,6 +29,8 @@ import speechXml
 import languageHandler
 import winVersion
 import NVDAHelper
+
+from typing import Optional
 
 from speech.commands import (
 	IndexCommand,
@@ -74,8 +75,9 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 		# Therefore, we don't use it.
 		return None
 
-	def convertLangChangeCommand(self, command):
+	def convertLangChangeCommand(self, command: LangChangeCommand) -> Optional[speechXml.SetAttrCommand]:
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
+		log.error(f"OneCore LangChangeCommand LCID: {lcid}, Command lang: {command.lang}")
 		if lcid is languageHandler.LCID_NONE:
 			log.debugWarning(f"Invalid language: {command.lang}")
 			return None
@@ -362,6 +364,8 @@ class SynthDriver(SynthDriver):
 		log.error("OneCore synthesizer failed to speak")  # so a warning beep is played when speech fails
 		try:
 			self._processQueue()
+		except Exception as e:
+			log.exception(f"Failed to process speech queue: {e}")
 		finally:
 			self._consecutiveSpeechFailures += 1
 			if self._consecutiveSpeechFailures >= self.MAX_CONSECUTIVE_SPEECH_FAILURES:
