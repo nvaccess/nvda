@@ -67,7 +67,8 @@ fire_and_forget OcSpeech::speak(hstring text) {
 	// as an unhandled exception causes std::terminate to get called, resulting in a crash.
 	// See https://devblogs.microsoft.com/oldnewthing/20190320-00/?p=102345
 	try {
-		LOG_ERROR(L"OneCore Speech Speak: " << text);
+		wstring logString{text};
+		LOG_ERROR(L"OneCore Speech Speak: " << logString);
 		// Ensure that work is performed on a background thread.
 		co_await resume_background();
 
