@@ -3,6 +3,108 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2 =
+
+== Novas Características ==
+- Soporte para interactuar con Microsoft Loop Components en productos de Microsoft Office. (#13617)
+- Engadíronse novas ordes de navegación por táboas. (#957)
+ - ``control+alt+inicio/fin`` para saltar á primeira/última columna.
+ - ``control+alt+repáx/avpáx`` para saltar á primeira/última fila.
+ -
+- Engadiuse un script sen asignar para moverse circularmente entre cambio de modos de lingua e de dialecto. (#10253)
+-
+
+== Cambios ==
+- NSIS actualizouse á versión 3.08. (#9134)
+- CLDR actualizouse á versión 41.0. (#13582)
+- Engadiuse un novo rol para controis "indicador ocupado". (#10644)
+- O NVDA agora anuncia cando non se poda realizar unha acción. (#13500)
+  - Esto inclúe cando:
+    - Se use a versión do NVDA da Tenda de Windows.
+    - Nun contexto seguro.
+    - Esperando pola resposta dun diálogo modal.
+    -
+  -
+-
+
+
+== Arranxo de Fallos ==
+- O instalador de NVDA agora pode executarse dende directorios con caracteres especiais. (#13270)
+- En Firefox, o NVDA xa non falla ao anunciar elementos en páxinas web onde os atributos aria-rowindex, aria-colindex, aria-rowcount ou aria-colcount sexan inválidos. (#13405)
+- O cursor xa non cambia de fila ou de columna ao se usar a navegación de táboas para navegar polas celdas fusionadas. (#7278)
+- Ao ler PDFs non interactivos en Adobe Reader, o tipo e estado dos campos de formulario (como caixas de verificación e botóns de opción) agora anúncianse. (#13285)
+- "Reiniciar a configuración aos valores predeterminados de fábrica" agora é acesible no menú de NVDA durante o modo seguro. (#13547)
+- Calquera tecla de rato bloqueada desbloquearase cando se saia do NVDA, anteriormente o botón do rato seguía bloqueado. (#13410)
+- Visual Studio agora anuncia os números de liña. (#13604)
+  - Ten en conta que para que funcione o anunciado de números de liña, debe estar habilitado o amosado de números de liña en Visual Studio e en NVDA.
+  -
+- Visual Studio agora anuncia correctamente a sangría de liñas. (#13574)
+- Arranxos para aplicacións baseadas en Java:
+  - O NVDA agora anunciará o estado de só lectura. (#13692)
+  - O NVDA agora anunciará o estado deshabilitado/habilitado correctamente. (#10993)
+  - O NVDA agora anunciará atallos de teclado de teclas de función. (#13643)
+  - O NVDA agora pode pitar ou falar en barras de progreso. (#13594)
+  - O NVDA xa non eliminará texto incorrectamente de widgets ao amosalos ao usuario. (#13102)
+  -
+- O NVDA anunciará de novo unha vez os detalles dos resultados da procura do menú Inicio en versións recentes de Windows 10 e 11. (#13544)
+- Na versión 10.1908 e superior da calculadora en Windows 10 e 11, O NVDA anunciará resultados cando se pulsen máis ordes, coma ordes do modo científico. (#13386)
+- Arranxada a saída braille ao navegar por certo texto en controis de edición enriquecidos de Mozilla, como redactar unha mensaxe en Thunderbird. (#12542)
+- En Windows 11 é posible de novo navegar e interactuar con elementos da interface de usuario como Barra de tarefas e visualizador de Tarefas usando interación de rato e tactil. (#13508)
+- O texto oculto xa non se anuncia en Wordpad e outros controis ``enriquecidos``. (#13618)
+- O NVDA anunciará o contido da barra de estado en Notepad en Windows 11. (#13386)
+-
+
+
+== Cambios para Desenvolvedores ==
+- Agora admítese compilar as dependencias do NVDA con Visual Studio 2022 (17.0). aínda se usa Visual Studio 2019 para compilacións de desenvolvemento e de lanzamento. (#13033)
+- Cando se recupera a conta dos fillos selecionados a través de accSelection, o caso se un ID de fillo negativo ou se devolve un IDispatch por IAccessible::get_accSelection agora manéxase apropriadamente. (#13276)
+- Novas funcións convintes ``registerExecutableWithAppModule`` e ``unregisterExecutable`` engadíronse ao módulo ``appModuleHandler``.
+Poden usarse para usar un so App Module con varios executables. (#13366)
+-
+
+=== Obsolescencias ===
+Estos son os cambios de ruptura de API propostos.
+A parte obsoleta da API continuará estando dispoñible ate a versión especificada.
+Se non se especifica unha versión, o plan para a eliminación non foi determinado.
+Nota, a folla de ruta para a eliminación é 'o maior dos esforzos' e pode estar suxeito a cambios.
+Por favor proba a nova API e proporciona retroalimentación.
+Para autores de complementos, por favor abre un comentario de GitHub se estos cambios alonxan a API das túas necesidades.
+
+
+- ``gui.quit`` foi posto como obsoleto para borralo en 2023.1. (#13498)
+  - Usa ``wx.CallAfter(mainFrame.onExitCommand, None)`` directamente a cambio.
+  -
+% Inserta novos elementos de listaxe aquí coma o alias appModule a táboa debería permanecer na parte inferior desta listaxe
+- Algúns alias appModules márcanse coma obsoletos e borraranse en 2023.1.
+O código que se importe dende un deles, debería importarse dende o m´`módulo reemplazado a cambio.  (#13366)
+-
+
+|| Nome do módulo eliminado | Módulo de reemprazo |
+| azuredatastudio | code |
+| azuredatastudio-insiders | code |
+| calculatorapp | calculator |
+| code - insiders | code |
+| commsapps | hxmail |
+| dbeaver | eclipse |
+| digitaleditionspreview | digitaleditions |
+| esybraille | esysuite |
+| hxoutlook | hxmail |
+| miranda64 | miranda32 |
+| mpc-hc | mplayerc |
+| mpc-hc64 | mplayerc |
+| notepad++ | notepadPlusPlus |
+| searchapp | searchui |
+| searchhost | searchui |
+| springtoolsuite4 | eclipse |
+| sts | eclipse |
+| teamtalk3 | teamtalk4classic |
+| textinputhost | windowsinternal_composableshell_experiences_textinput_inputapp |
+| totalcmd64 | totalcmd |
+| win32calc | calc |
+| winmail | msimn |
+| zend-eclipse-php | eclipse |
+| zendstudio | eclipse |
+
 2022.1 =
 Esta versión inclúe grandes melloras para o soporte UIA con MS Office.
 Para Microsoft Office 16.0.15000 e superiores en Windows 11, o NVDA usará UI Automation para aceder a documentos de Microsoft Word por defecto.
