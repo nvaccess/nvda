@@ -10,8 +10,9 @@ import logging
 import unittest
 import logHandler
 from speech.commands import LangChangeCommand
-from source.synthDrivers.espeak import SynthDriver
+from synthDrivers.espeak import SynthDriver
 import nvwave
+
 
 class FakeESpeakSynthDriver:
 	_language = "default"
