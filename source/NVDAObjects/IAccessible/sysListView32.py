@@ -290,15 +290,24 @@ class List(List):
 			return self._getColumnOrderArrayRawOutProc(columnCount)
 		return self._getColumnOrderArrayRawInProc(columnCount)
 
-	def _getColumn(self, column: int) -> Optional[int]:
-		if column == 1 and self.columnCount == 1:
+	def _getMappedColumn(self, presentationIndex: int) -> Optional[int]:
+		"""
+		Multi-column SysListViews can have their columns re-ordered.
+		To keep a consistent internal mapping, a column order array is used
+		to map a presentation index to a consistent internal index.
+		For single-column SysListViews, the mapping is not necessary.
+
+		If the column order array cannot be fetched from a multi-column SysListView ,
+		returns None as a mapped column cannot be determined.
+		"""
+		if presentationIndex == 1 and self.columnCount == 1:
 			# Use an implied default column mapping for single column list views
 			return 0
 		columnOrderArray = self._getColumnOrderArrayRaw(self.columnCount)
 		if columnOrderArray is None:
 			log.error("Cannot fetch column as column order array is unknown")
 			return None
-		return columnOrderArray[column - 1]
+		return columnOrderArray[presentationIndex - 1]
 
 
 class GroupingItem(Window):
@@ -462,7 +471,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
 	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
-		mappedColumn = self.parent._getColumn(column)
+		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None
 		return self._getColumnLocationRaw(mappedColumn)
@@ -518,7 +527,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnContentRawInProc(index)
 
 	def _getColumnContent(self, column: int) -> Optional[str]:
-		mappedColumn = self.parent._getColumn(column)
+		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None
 		return self._getColumnContentRaw(mappedColumn)
@@ -538,7 +547,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return item.iImage
 
 	def _getColumnImageID(self, column):
-		mappedColumn = self.parent._getColumn(column)
+		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None
 		return self._getColumnImageIDRaw(mappedColumn)
@@ -592,7 +601,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnHeaderRawInProc(index)
 
 	def _getColumnHeader(self, column: int) -> Optional[str]:
-		mappedColumn = self.parent._getColumn(column)
+		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None
 		return self._getColumnHeaderRaw(mappedColumn)
