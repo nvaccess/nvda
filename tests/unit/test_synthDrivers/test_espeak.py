@@ -11,7 +11,7 @@ import unittest
 import logHandler
 from speech.commands import LangChangeCommand
 from source.synthDrivers.espeak import SynthDriver
-
+import nvwave
 
 class FakeESpeakSynthDriver:
 	_language = "default"
@@ -64,10 +64,15 @@ class TestSynthDriver_Integration(unittest.TestCase):
 	"""Perform integration testing for the eSpeak synth driver."""
 
 	def setUp(self) -> None:
+		# Prevent NVWave from causing an exception
+		# when running unit tests in AppVeyor
+		self._nvwaveOpenOld = nvwave.WavePlayer.open
+		nvwave.WavePlayer.open = lambda self: None
 		self._driver = SynthDriver()
 	
 	def tearDown(self) -> None:
 		self._driver.terminate()
+		nvwave.WavePlayer.open = self._nvwaveOpenOld
 
 	def test_defaultMappingAvailableLanguage(self):
 		"""Confirms language codes remapped by default are supported by eSpeak via integration testing"""
