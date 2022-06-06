@@ -6,7 +6,7 @@
 
 import os
 from collections import OrderedDict
-from typing import List, Optional
+from typing import Optional
 
 from . import _espeak
 import languageHandler
@@ -99,13 +99,12 @@ class SynthDriver(SynthDriver):
 			0x5B: u" [", # [: [[ indicates phonemes
 		})
 
-	def _determineLangFromCommand(self, command: LangChangeCommand) -> Optional[str]:
+	def _normalizeLangCommand(self, command: LangChangeCommand) -> LangChangeCommand:
 		"""
-		Checks if a lang code given is compatible with eSpeak.
-		If not, check if a default mapping occurs in L{_defaultLangToLocale}.
-		Otherwise, checks if a language of a different dialect exists (e.g. ru-ru to ru).
-		Returns an eSpeak compatible lang code or None, which should be handled as
-		falling back to the default language.
+		Checks if a LangChangeCommand language is compatible with eSpeak.
+		If not, find a default mapping occurs in L{_defaultLangToLocale}.
+		Otherwise, finds a language of a different dialect exists (e.g. ru-ru to ru).
+		Returns an eSpeak compatible LangChangeCommand.
 		"""
 		# Use default language if no command.lang is supplied
 		langWithLocale = command.lang if command.lang else self._language
@@ -114,7 +113,7 @@ class SynthDriver(SynthDriver):
 		langWithoutLocale: Optional[str] = langWithLocale.split('-')[0]
 
 		# Check for any language where the language code matches, regardless of dialect: e.g. ru-ru to ru
-		matchingLanguages = filter(lambda l: l.split('-')[0] == langWithoutLocale, self.availableLanguages)
+		matchingLanguages = filter(lambda lang: lang.split('-')[0] == langWithoutLocale, self.availableLanguages)
 		anyLocaleMatchingLang = next(matchingLanguages, None)
 		
 		# Check from a list of known default mapping locales: e.g. en to en-gb
@@ -136,27 +135,31 @@ class SynthDriver(SynthDriver):
 		else:
 			log.debugWarning(f"Unable to find an eSpeak language for '{langWithLocale}'")
 			eSpeakLang = None
-		return eSpeakLang
+		return LangChangeCommand(eSpeakLang)
 
 	def _handleLangChangeCommand(
 			self,
 			langChangeCommand: LangChangeCommand,
-			textList: List[str],
 			langChanged: bool,
-	) -> bool:
-		"""Append language xml tags to textList:
+	) -> str:
+		"""Get language xml tags needed to handle a lang change command.
 			- if a language change has already been handled for this speech,
 			close the open voice tag.
 			- if the language is supported by eSpeak, switch to that language.
 			- otherwise, switch to the default synthesizer language.
 		"""
-		lang = self._determineLangFromCommand(langChangeCommand)
+		langChangeCommand = self._normalizeLangCommand(langChangeCommand)
+		voiceChangeXML = ""
 		if langChanged:
-			textList.append("</voice>")
-		if lang is not None:
-			textList.append(f'<voice xml:lang="{lang}">')
+			# Close existing voice tag
+			voiceChangeXML += "</voice>"
+		if langChangeCommand.lang is not None:
+			# Open new voice tag using eSpeak compatible language
+			voiceChangeXML += f'<voice xml:lang="{langChangeCommand.lang}">'
 		else:
-			textList.append(f'<voice>')
+			# Open new voice tag using default voice
+			voiceChangeXML += "<voice>"
+		return voiceChangeXML
 
 	# C901 'speak' is too complex
 	# Note: when working on speak, look for opportunities to simplify
@@ -176,7 +179,8 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, CharacterModeCommand):
 				textList.append("<say-as interpret-as=\"characters\">" if item.state else "</say-as>")
 			elif isinstance(item, LangChangeCommand):
-				self._handleLangChangeCommand(item, textList, langChanged)
+				langChangeXML = self._handleLangChangeCommand(item, langChanged)
+				textList.append(langChangeXML)
 				langChanged = True
 			elif isinstance(item, BreakCommand):
 				textList.append('<break time="%dms" />' % item.time)

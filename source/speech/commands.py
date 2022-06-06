@@ -144,6 +144,11 @@ class LangChangeCommand(SynthParamCommand):
 	def __repr__(self):
 		return "LangChangeCommand (%r)"%self.lang
 
+	def __eq__(self, __o: object) -> bool:
+		if isinstance(__o, LangChangeCommand):
+			return self.lang == __o.lang
+		return super().__eq__(__o)
+
 class BreakCommand(SynthCommand):
 	"""Insert a break between words.
 	"""

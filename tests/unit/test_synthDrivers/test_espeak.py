@@ -19,44 +19,39 @@ class FakeESpeakSynthDriver:
 	availableLanguages = {"fr", "fr-fr", "en-gb", "ta-ta"}
 
 
-class TestSynthDriver(unittest.TestCase):
-	def setUp(self) -> None:
-		self._driver = SynthDriver()
-	
-	def tearDown(self) -> None:
-		self._driver.terminate()
-
-	def test_determineLangFromCommand(self):
+class TestSynthDriver_Logic(unittest.TestCase):
+	"""Testing of internal logic for the eSpeak driver."""
+	def test_normalizeLangCommand(self):
 		"""Test cases for determining a supported eSpeak language from a LangChangeCommand."""
 		self.assertEqual(
-			"en-gb",
-			SynthDriver._determineLangFromCommand(FakeESpeakSynthDriver, LangChangeCommand(None)),
+			LangChangeCommand("en-gb"),
+			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand(None)),
 			msg="Default language used if language code not provided"
 		)
 		self.assertEqual(
-			"fr-fr",
-			SynthDriver._determineLangFromCommand(FakeESpeakSynthDriver, LangChangeCommand("fr_FR")),
+			LangChangeCommand("fr-fr"),
+			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("fr_FR")),
 			msg="Language with locale used when available"
 		)
 		self.assertEqual(
-			"en-gb",
-			SynthDriver._determineLangFromCommand(FakeESpeakSynthDriver, LangChangeCommand("default")),
+			LangChangeCommand("en-gb"),
+			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("default")),
 			msg="Default eSpeak language mappings used"
 		)
 		self.assertEqual(
-			"fr",
-			SynthDriver._determineLangFromCommand(FakeESpeakSynthDriver, LangChangeCommand("fr_FAKE")),
+			LangChangeCommand("fr"),
+			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("fr_FAKE")),
 			msg="Language without locale used when available"
 		)
 		self.assertEqual(
-			"ta-ta",
-			SynthDriver._determineLangFromCommand(FakeESpeakSynthDriver, LangChangeCommand("ta-gb")),
+			LangChangeCommand("ta-ta"),
+			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("ta-gb")),
 			msg="Language with any locale used when available"
 		)
 		with self.assertLogs(logHandler.log, level=logging.DEBUG) as logContext:
 			self.assertEqual(
-				None,
-				SynthDriver._determineLangFromCommand(FakeESpeakSynthDriver, LangChangeCommand("fake")),
+				LangChangeCommand(None),
+				SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("fake")),
 				msg="No matching available language returns None"
 			)
 		self.assertIn(
@@ -64,20 +59,37 @@ class TestSynthDriver(unittest.TestCase):
 			logContext.output[0]
 		)
 
+
+class TestSynthDriver_Integration(unittest.TestCase):
+	"""Perform integration testing for the eSpeak synth driver."""
+
+	def setUp(self) -> None:
+		self._driver = SynthDriver()
+	
+	def tearDown(self) -> None:
+		self._driver.terminate()
+
 	def test_defaultMappingAvailableLanguage(self):
 		"""Confirms language codes remapped by default are supported by eSpeak via integration testing"""
+		eSpeakAvailableLangs = self._driver.availableLanguages
 		mappedDefaultLanguages = set(self._driver._defaultLangToLocale.values())
-		unexpectedUnsupportedDefaultLanguages = mappedDefaultLanguages.difference(self._driver.availableLanguages)
+		unexpectedUnsupportedDefaultLanguages = mappedDefaultLanguages.difference(eSpeakAvailableLangs)
 		self.assertEqual(
 			set(),
 			unexpectedUnsupportedDefaultLanguages,
-			msg=f"Languages mapped by defaults are no longer supported by eSpeak {unexpectedUnsupportedDefaultLanguages}"
+			msg=(
+				"Languages mapped by default are no longer supported by eSpeak: "
+				f"{unexpectedUnsupportedDefaultLanguages}"
+			)
 		)
 
 		expectedUnsupportedMappedLanguages = set(self._driver._defaultLangToLocale.keys())
-		unexpectedSupportedMappedLanguages = expectedUnsupportedMappedLanguages.intersection(self._driver.availableLanguages)
+		unexpectedSupportedMappedLanguages = expectedUnsupportedMappedLanguages.intersection(eSpeakAvailableLangs)
 		self.assertEqual(
 			set(),
 			unexpectedSupportedMappedLanguages,
-			msg=f"Languages mapped to eSpeak defaults are now supported by eSpeak: {unexpectedSupportedMappedLanguages}"
+			msg=(
+				"Languages mapped to eSpeak defaults are now supported by eSpeak: "
+				f"{unexpectedSupportedMappedLanguages}"
+			)
 		)
