@@ -11,6 +11,7 @@ import unittest
 import logHandler
 from speech.commands import LangChangeCommand
 from synthDrivers.espeak import SynthDriver
+from synthDrivers._espeak import _setVoiceByLanguage
 import nvwave
 
 
@@ -98,4 +99,29 @@ class TestSynthDriver_Integration(unittest.TestCase):
 				"Languages mapped to eSpeak defaults are now supported by eSpeak: "
 				f"{unexpectedSupportedMappedLanguages}"
 			)
+		)
+
+	def test_availableLanguagesWithoutLocale(self):
+		"""
+		Confirms that eSpeak can manually be switched to all of its supported languages, with the locale removed.
+		This doesn't test automatic language switching.
+		"""
+		availableLanguagesWithoutLocale = set(lang.split("-")[0] for lang in self._driver.availableLanguages)
+		for langWithoutLocale in availableLanguagesWithoutLocale:
+			_setVoiceByLanguage(langWithoutLocale)
+			self.assertEqual(
+				langWithoutLocale,
+				self._driver.voice.split("\\")[-1],  # Language code is the last item
+				msg="Language without locale not supported by eSpeak"
+			)
+
+	def test_fallbackToBritishEnglish(self):
+		"""
+		Confirms that eSpeak falls back to en-gb when manually switching to an unknown language
+		"""
+		_setVoiceByLanguage("fake-lang")
+		self.assertEqual(
+			"gmw\\en",
+			self._driver.voice,
+			msg="Language without locale not supported by eSpeak"
 		)
