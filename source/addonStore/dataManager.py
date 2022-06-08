@@ -6,6 +6,7 @@ import dataclasses
 import enum
 import json
 import os
+import shutil
 from datetime import datetime, timedelta
 
 from logHandler import log
@@ -14,10 +15,11 @@ import requests
 import addonAPIVersion
 from typing import (
 	Optional,
+	List,
 )
 from .models import (
-	AvailableAddonsModel,
 	_createModelFromData,
+	AddonDetailsModel,
 )
 
 
@@ -40,7 +42,7 @@ def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
 
 @dataclasses.dataclass
 class CachedAddonModel:
-	availableAddons: AvailableAddonsModel
+	availableAddons: List[AddonDetailsModel]
 	cachedAt: datetime
 
 
@@ -52,6 +54,7 @@ class DataManager:
 		self._lang = "en"
 		self._preferredChannel = Channel.ALL
 		self._cacheFile = os.path.join(cacheDirLocation, DataManager._cacheFilename)
+		self._addonDownloadCacheDir = cacheDirLocation
 		self._availableAddonCache: Optional[CachedAddonModel] = self._getCachedAddonData()
 
 	def _getLatestAvailableAddonsData(self) -> Optional[bytes]:
@@ -92,7 +95,7 @@ class DataManager:
 			cachedAt=fetchTime,
 		)
 
-	def getLatestAvailableAddons(self) -> AvailableAddonsModel:
+	def getLatestAvailableAddons(self) -> List[AddonDetailsModel]:
 		shouldRefreshData = (
 			not self._availableAddonCache
 			or DataManager._cachePeriod < (datetime.now() - self._availableAddonCache.cachedAt)
@@ -108,3 +111,23 @@ class DataManager:
 					cachedAt=fetchTime,
 				)
 		return self._availableAddonCache.availableAddons
+
+	def _getCacheFilenameForAddon(self, addonData: AddonDetailsModel) -> str:
+		return f"{addonData.addonId}-{addonData.versionName}.nvda-addon"
+
+	def downloadAddonFile(self, addonData: AddonDetailsModel):
+		localFilePath = os.path.join(
+			self._addonDownloadCacheDir,
+			self._getCacheFilenameForAddon(addonData)
+		)
+		try:
+			with requests.get(addonData.addonURL, stream=True) as r:
+				with open(localFilePath, 'wb') as f:
+					shutil.copyfileobj(r.raw, f)
+		except requests.exceptions.RequestException as e:
+			log.debugWarning(f"Unable to download addon file: {e}")
+			return None
+		except OSError as e:
+			log.debugWarning(f"Unable to save addon file ({localFilePath}): {e}")
+			return None
+		return localFilePath

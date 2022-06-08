@@ -2,11 +2,12 @@
 # Copyright (C) 2022 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
+import functools
 from typing import (
 	List,
 	Optional,
 	Callable,
+	Dict,
 )
 
 import wx
@@ -18,15 +19,13 @@ from gui import guiHelper, nvdaControls, DpiScalingHelperMixinWithoutInit
 from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
-from addonStore.dataManager import (
-	DataManager,
-)
-
 from .viewModels import (
 	AddonListVM,
 	AddonDetailsVM,
-	AddonDetailsModel,
+	AddonListItemVM,
 	AddonStoreVM,
+	AddonActionVM,
+	TranslatedError,
 )
 
 
@@ -39,7 +38,7 @@ class AddonVirtualList(
 		DpiScalingHelperMixinWithoutInit,
 ):
 
-	def __init__(self, parent, addonsListVM: AddonListVM):
+	def __init__(self, parent, addonsListVM: AddonListVM, actionVMList: List[AddonActionVM]):
 		super().__init__(
 			parent,
 			style=(
@@ -53,8 +52,6 @@ class AddonVirtualList(
 		)
 
 		self.SetMinSize(self.scaleSize((400, 600)))
-		self._addonsListVM = addonsListVM
-		self.SetItemCount(addonsListVM.getCount())
 
 		# Translators: The name of the column that contains names of addons. In the add-on store dialog.
 		self.InsertColumn(0, pgettext("addonStore", "Name"))
@@ -62,24 +59,75 @@ class AddonVirtualList(
 		self.InsertColumn(1, pgettext("addonStore", "Version"))
 		# Translators: The name of the column that contains the addons publisher. In the add-on store dialog.
 		self.InsertColumn(2, pgettext("addonStore", "Publisher"))
+		# Translators: The name of the column that contains the status of the addon (E.G. available, downloading
+		# installing). In the add-on store dialog.
+		self.InsertColumn(3, pgettext("addonStore", "Status"))
 
 		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
 		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
 		self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
 		self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
 
+		self._addonsListVM = addonsListVM
+		self._actionVMList = actionVMList
+		self._contextMenu = wx.Menu()
+		self._actionMenuItemMap = {}
+		self.Bind(event=wx.EVT_CONTEXT_MENU, handler=self._popupContextMenu)
+		for action in self._actionVMList:
+			menuItem: wx.MenuItem = self._contextMenu.Append(id=-1, item=action.displayName)
+			self._actionMenuItemMap[action] = menuItem
+			action.updated.register(self._updateContextMenuItem)
+			self.Bind(
+				event=wx.EVT_MENU,
+				handler=functools.partial(self._menuItemClicked, actionVM=action),
+				source=menuItem,
+			)
+			self._updateContextMenuItem(action)
+
+		self.SetItemCount(addonsListVM.getCount())
 		selIndex = self._addonsListVM.getSelectedIndex()
 		if selIndex is not None:
 			self.Select(selIndex)
 			self.Focus(selIndex)
+		self._addonsListVM.itemUpdated.register(self._itemDataUpdated)
+		self._addonsListVM.updated.register(self._doRefresh)
+
+	def _popupContextMenu(self, evt: wx.ContextMenuEvent):
+		position = evt.GetPosition()
+		firstSelectedIndex: int = self.GetFirstSelected()
+		if firstSelectedIndex == -1:
+			# context menu only valid on an item.
+			return
+		if position == wx.DefaultPosition:
+			# keyboard triggered context menu (due to "applications" key)
+			# don't have position set. It must be fetched from the selected item.
+			itemRect: wx.Rect = self.GetItemRect(firstSelectedIndex)
+			position: wx.Position = itemRect.GetBottomLeft()
+			self.PopupMenu(self._contextMenu, position)
+		else:
+			# Mouse (right click) triggered context menu.
+			# In this case the menu is positioned better with GetPopupMenuSelectionFromUser.
+			self.GetPopupMenuSelectionFromUser(self._contextMenu)
+
+	def _menuItemClicked(self, evt: wx.CommandEvent, actionVM: AddonActionVM):
+		selectedAddon: AddonListItemVM = self._addonsListVM.getSelection()
+		log.debug(f"evt {evt}, actionVM: {actionVM}, selectedAddon: {selectedAddon}")
+		actionVM.actionHandler(selectedAddon)
+
+	def _itemDataUpdated(self, index: int):
+		log.debug(f"index: {index}")
+		self.RefreshItem(index)
 
 	def OnItemSelected(self, evt: wx.ListEvent):
 		newIndex = evt.GetIndex()
 		log.debug(f"item selected: {newIndex}")
-		addonItem = self._addonsListVM.setSelection(index=newIndex)
-		evt.SetClientObject(addonItem)
-		evt.Skip()  # Let other handlers know about the change in selection.
+		self._addonsListVM.setSelection(index=newIndex)
 
+	def _updateContextMenuItem(self, addonActionVM: AddonActionVM):
+		menuItem = self._actionMenuItemMap[addonActionVM]
+		menuItem.Enable(enable=addonActionVM.isValid)
+
+	# noinspection PyMethodMayBeStatic
 	def OnItemActivated(self, evt: wx.ListEvent):
 		activatedIndex = evt.GetIndex()
 		log.debug(f"item activated: {activatedIndex}")
@@ -87,8 +135,6 @@ class AddonVirtualList(
 	def OnItemDeselected(self, evt: wx.ListEvent):
 		log.debug(f"item deselected")
 		self._addonsListVM.setSelection(None)
-		evt.SetClientObject(None)
-		evt.Skip()  # Let other handlers know about the deselection.
 
 	def OnGetItemText(self, itemIndex: int, colIndex: int):
 		dataItem = self._addonsListVM.getAddonAttrText(
@@ -101,9 +147,8 @@ class AddonVirtualList(
 		colIndex = evt.GetColumn()
 		log.debug(f"col clicked: {colIndex}")
 		self._addonsListVM.setSortField(AddonListVM.presentedAttributes[colIndex])
-		self.doRefresh()
 
-	def doRefresh(self):
+	def _doRefresh(self):
 		with guiHelper.autoThaw(self):
 			newCount = self._addonsListVM.getCount()
 			self.SetItemCount(newCount)
@@ -191,8 +236,9 @@ class AddonDetails(
 	# In the add-on store dialog.
 	_descriptionLabelText: str = pgettext("addonStore", "Description:")
 
-	def __init__(self, parent, detailsVM: AddonDetailsVM):
-		self.detailsVM = detailsVM
+	def __init__(self, parent, actionVMList: List[AddonActionVM], detailsVM: AddonDetailsVM):
+		self._detailsVM: AddonDetailsVM = detailsVM
+		self._actionVMList = actionVMList
 		wx.Panel.__init__(
 			self,
 			parent,
@@ -248,6 +294,11 @@ class AddonDetails(
 			)
 		)
 		self.contents.Add(self.descriptionTextCtrl, flag=wx.EXPAND)
+		self.contents.Add(wx.StaticLine(self), flag=wx.EXPAND)
+
+		self._actionButtonMap: Dict[AddonActionVM, wx.Button] = {}
+		self._actionsSizer = self._createActionButtons()
+		self.contents.Add(self._actionsSizer)
 
 		self.contents.Add(wx.StaticLine(self), flag=wx.EXPAND)
 		self.contents.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -280,6 +331,7 @@ class AddonDetails(
 		self._urlQueue: List[Callable] = []
 		self.contents.Add(self.otherDetailsTextCtrl, flag=wx.EXPAND, proportion=1)
 		self._refresh()  # ensure that the visual state matches.
+		self._detailsVM.updated.register(self._updatedListItem)
 
 	def _createRichTextStyles(self):
 		# Set up the text styles for the "other details" (which contains several fields)
@@ -314,19 +366,13 @@ class AddonDetails(
 	def updateAddonName(self, displayName: str):
 		self.addonNameCtrl.SetLabelText(displayName)
 
-	def setAddonDetail(self, detailsVM: AddonDetailsVM):
-		log.debug(f"Setting addon: {detailsVM.getAddonId()}")
-		if (
-			self.detailsVM == detailsVM  # both may be same ref or None
-			or self.detailsVM.getAddonId() == detailsVM.getAddonId()  # confirm with addonId
-		):
-			# already set, exit early
-			return
-		self.detailsVM = detailsVM
+	def _updatedListItem(self, addonDetailsVM: AddonDetailsVM):
+		log.debug(f"Setting listItem: {addonDetailsVM.listItem}")
+		assert self._detailsVM.listItem == addonDetailsVM.listItem
 		self._refresh()
 
 	def _refresh(self):
-		details = self.detailsVM.display
+		details = None if not self._detailsVM.listItem else self._detailsVM.listItem.model
 
 		with guiHelper.autoThaw(self):
 			# AppendText is used to build up the details so that formatting can be set as text is added, via
@@ -416,42 +462,56 @@ class AddonDetails(
 			detailsTextCtrl.AppendText(labelSpace)
 			detailsTextCtrl.AppendText(value)
 
+	def _createActionButtons(self) -> wx.BoxSizer:
+		_actionsSizer = wx.BoxSizer(orient=wx.HORIZONTAL)
+
+		def _makeButtonClickedEventHandler(_action: AddonActionVM) -> Callable[[wx.CommandEvent, ], None]:
+			"""Get around python binding to the latest value in a for loop, create a new lambda
+			for each value with an explicit binding to the addon details.
+			"""
+			# evt: wx.CommandEvent
+			return lambda evt: _action.actionHandler(self._detailsVM.listItem)
+
+		for action in self._actionVMList:
+			button = wx.Button(parent=self, label=action.displayName)
+			_actionsSizer.Add(button)
+
+			button.Bind(
+				event=wx.EVT_BUTTON,
+				handler=_makeButtonClickedEventHandler(action)
+			)
+			button.Enable(enable=action.isValid)
+			action.updated.register(self._actionVmChanged)
+			self._actionButtonMap[action] = button
+		return _actionsSizer
+
+	def _actionVmChanged(self, addonActionVM: AddonActionVM):
+		self._actionButtonMap[addonActionVM].Enable(enable=addonActionVM.isValid)
+
+
+def displayError(error: TranslatedError):
+	gui.messageBox(
+		error.displayMessage,
+		# Translators: The title of a dialog presented when an error occurs.
+		pgettext("addonStore", "Error"),
+		wx.OK | wx.ICON_ERROR
+	)
+
 
 class AddonStoreDialog(SettingsDialog):
 	# Translators: The title of the addonStore dialog where the user can find and download add-ons
 	title = pgettext("addonStore", "Add-on Store")
 	helpId = "addonStore"
 
-	def _getAddonsInBG(self):
-		log.debug("getting addons in the background")
-		storeVM = AddonStoreVM(
-			self._addonDataManager.getLatestAvailableAddons()
-		)
-		log.debug("completed getting addons in the background")
-		wx.CallAfter(self._refresh, storeVM)
-
-	def _refresh(self, storeVM: AddonStoreVM):
-		log.debug("called refresh")
+	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
-		self.addonListVM.refreshAddonsModel(self._storeVM.availableAddonsModel)
-		self.addonListView.doRefresh()
-		self.addonDetailsView.setAddonDetail(
-			AddonDetailsVM(display=self.addonListVM.getSelection())
-		)
-		log.debug("completed refresh")
-
-	def __init__(self, parent: wx.Window, addonDataManager: DataManager):
-		self._addonDataManager = addonDataManager
-		self._storeVM = AddonStoreVM(
-			availableAddonsModel={}
-		)
-		import threading
-		threading.Thread(target=self._getAddonsInBG, name="getAddonData").start()
+		self._storeVM.hasError.register(displayError)
 		super().__init__(parent, resizeable=True)
 
 	def makeSettings(self, settingsSizer):
 		# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 		filterLabel = wx.StaticText(self, label=pgettext("addonStore", "&Filter by:"))
+		# noinspection PyAttributeOutsideInit
 		self.filterCtrl = filterCtrl = wx.TextCtrl(self)
 		filterCtrl.Bind(wx.EVT_TEXT, self.onFilterChange, filterCtrl)
 
@@ -463,6 +523,7 @@ class AddonStoreDialog(SettingsDialog):
 
 		settingsSizer.AddSpacer(5)
 
+		# noinspection PyAttributeOutsideInit
 		self.contentsSizer = wx.BoxSizer(wx.HORIZONTAL)
 		settingsSizer.Add(self.contentsSizer, flag=wx.EXPAND, proportion=1)
 
@@ -478,27 +539,19 @@ class AddonStoreDialog(SettingsDialog):
 		)
 		listLabel.Show(False)
 
-		self.addonListVM = AddonListVM(
-			addonsModel=self._storeVM.availableAddonsModel
-		)
+		# noinspection PyAttributeOutsideInit
 		self.addonListView = AddonVirtualList(
 			parent=self,
-			addonsListVM=self.addonListVM
-		)
-		self.Bind(
-			wx.EVT_LIST_ITEM_SELECTED,
-			lambda evt: self.onAddonSelect(evt.GetClientObject()),
-		)
-		self.Bind(
-			wx.EVT_LIST_ITEM_DESELECTED,
-			lambda evt: self.onAddonSelect(evt.GetClientObject()),
+			addonsListVM=self._storeVM.listVM,
+			actionVMList=self._storeVM.actionVMList,
 		)
 		self.contentsSizer.Add(self.addonListView, flag=wx.EXPAND)
 		self.contentsSizer.AddSpacer(5)
-		self.addonDetailsVM = AddonDetailsVM(display=self.addonListVM.getSelection())
+		# noinspection PyAttributeOutsideInit
 		self.addonDetailsView = AddonDetails(
 			parent=self,
-			detailsVM=self.addonDetailsVM
+			actionVMList=self._storeVM.actionVMList,
+			detailsVM=self._storeVM.detailsVM,
 		)
 		self.contentsSizer.Add(self.addonDetailsView, flag=wx.EXPAND, proportion=1)
 
@@ -513,9 +566,4 @@ class AddonStoreDialog(SettingsDialog):
 		self.filter(filterText)
 
 	def filter(self, filterText: str):
-		self.addonListVM.applyFilter(filterText)
-		self.addonListView.doRefresh()
-
-	def onAddonSelect(self, addonModel: AddonDetailsModel):
-		log.debug(f"selected: {addonModel}")
-		self.addonDetailsView.setAddonDetail(AddonDetailsVM(display=addonModel))
+		self._storeVM.listVM.applyFilter(filterText)

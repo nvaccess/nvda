@@ -266,9 +266,16 @@ def getAvailableAddons(
 			_availableAddons[addon.path] = addon
 	return (addon for addon in _availableAddons.values() if not filterFunc or filterFunc(addon))
 
-def installAddonBundle(bundle):
-	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
-	addonPath = os.path.join(globalVars.appArgs.configPath, "addons",bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
+
+def installAddonBundle(bundle: "AddonBundle") -> "Addon":
+	""" Extracts an Addon bundle in to a unique subdirectory of the user addons directory,
+	marking the addon as needing 'install completion' on NVDA restart.
+	"""
+	addonPath = os.path.join(
+		globalVars.appArgs.configPath,
+		"addons",
+		bundle.manifest['name'] + ADDON_PENDINGINSTALL_SUFFIX
+	)
 	bundle.extract(addonPath)
 	addon=Addon(addonPath)
 	# #2715: The add-on must be added to _availableAddons here so that

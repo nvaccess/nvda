@@ -7,8 +7,10 @@ import json
 import typing
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
 class AddonDetailsModel:
+	"""Typing for information from API
+	"""
 	addonId: str
 	displayName: str
 	description: str
@@ -19,21 +21,19 @@ class AddonDetailsModel:
 	licenseName: str
 	licenseUrl: str
 	sourceUrl: str
+	addonURL: str
+	fileSHA: str
 
 
-AvailableAddonsModel = typing.Dict[str, AddonDetailsModel]
-"""Map addonId to AddonDetailsModel"""
-
-
-def _createModelFromData(jsonData: str) -> AvailableAddonsModel:
+def _createModelFromData(jsonData: str) -> typing.List[AddonDetailsModel]:
 	"""Use json string to construct a listing of available addons.
 	See https://github.com/nvaccess/addon-datastore#api-data-generation-details
 	for details of the data.
 	"""
 	data = json.loads(jsonData)
 
-	return {
-		addon["addonId"]: AddonDetailsModel(
+	return [
+		AddonDetailsModel(
 			addonId=addon["addonId"],
 			displayName=addon["displayName"],
 			description=addon["description"],
@@ -44,6 +44,8 @@ def _createModelFromData(jsonData: str) -> AvailableAddonsModel:
 			licenseName=addon["license"],
 			licenseUrl=addon["licenseURL"],
 			sourceUrl=addon["sourceURL"],
+			addonURL=addon["URL"],
+			fileSHA=addon["sha256"],
 		)
 		for addon in data
-	}
+	]

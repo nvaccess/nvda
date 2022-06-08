@@ -343,7 +343,12 @@ class MainFrame(wx.Frame):
 		from addonStore import dataManager
 		addonDataManager = dataManager.DataManager(globalVars.appArgs.configPath)
 		from .addonStoreGui import AddonStoreDialog
-		d = AddonStoreDialog(mainFrame, addonDataManager)
+		from .addonStoreGui.viewModels import AddonStoreVM
+		_storeVM = AddonStoreVM(
+			dataManager=addonDataManager
+		)
+		d = AddonStoreDialog(mainFrame, _storeVM)
+		_storeVM.refresh()
 		d.Show()
 		self.postPopup()
 
