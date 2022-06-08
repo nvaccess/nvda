@@ -86,7 +86,7 @@ def __getattr__(attrName: str) -> Any:
 	The module level variable `NVDAProcessID` is deprecated
 	and usages should be replaced with `globalVars.appPid`.
 	We cannot simply assign the value from `globalVars` to the old attribute
-	since add-ons arre initialized before `appModuleHandler`
+	since add-ons are initialized before `appModuleHandler`
 	and when `appModuleHandler` was not yet initialized the variable was set to `None`.
 	"""
 	if attrName == "NVDAProcessID":
