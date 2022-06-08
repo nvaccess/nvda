@@ -101,6 +101,18 @@ class TestSynthDriver_Integration(unittest.TestCase):
 			)
 		)
 
+		supportedLanguagesWithLocaleStripped = set(lang.split("-")[0] for lang in eSpeakAvailableLangs)
+		unsupportedLanguagesWithoutLocale = supportedLanguagesWithLocaleStripped.difference(eSpeakAvailableLangs)
+		self.assertEqual(
+			expectedUnsupportedMappedLanguages,
+			unsupportedLanguagesWithoutLocale,
+			msg=(
+				"eSpeak has a language with locale supported"
+				"but the language without locale is unsupported."
+				"Update _defaultLangToLocale to include a new mapping."
+			)
+		)
+
 	def test_availableLanguagesWithoutLocale(self):
 		"""
 		Confirms that eSpeak can manually be switched to all of its supported languages, with the locale removed.
