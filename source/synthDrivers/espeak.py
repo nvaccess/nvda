@@ -54,9 +54,14 @@ class SynthDriver(SynthDriver):
 	# A mapping of commonly used language codes to eSpeak languages.
 	# Introduced due to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1200
 	# These are used when eSpeak doesn't support a given language code
-	# but a default alias is appropriate
+	# but a default alias is appropriate.
 	_defaultLangToLocale = {
+		# Languages without locale that aren't supported in eSpeak 7e5457f91e10,
+		# with a language with locale that is supported.
+		# Found via: set(lang.split("-")[0] for lang in self.availableLanguages).difference(self.availableLanguages)
 		"en": "en-gb",
+		"chr": "chr-US-Qaaa-x-west",
+		"fr": "fr-fr",
 	}
 
 	availableLanguages: Set[Optional[str]]
@@ -239,6 +244,7 @@ class SynthDriver(SynthDriver):
 		Otherwise, finds a language of a different dialect exists (e.g. ru-ru to ru).
 		Returns an eSpeak compatible LangChangeCommand.
 		"""
+		lowerCaseAvailableLangs = set(lang.lower() for lang in self.availableLanguages)
 		# Use default language if no command.lang is supplied
 		langWithLocale = command.lang if command.lang else self._language
 		langWithLocale = langWithLocale.lower().replace('_', '-')
@@ -246,8 +252,8 @@ class SynthDriver(SynthDriver):
 		langWithoutLocale: Optional[str] = langWithLocale.split('-')[0]
 
 		# Check for any language where the language code matches, regardless of dialect: e.g. ru-ru to ru
-		matchingLanguages = filter(lambda lang: lang.split('-')[0] == langWithoutLocale, self.availableLanguages)
-		anyLocaleMatchingLang = next(matchingLanguages, None)
+		matchingLangs = filter(lambda lang: lang.split('-')[0] == langWithoutLocale, lowerCaseAvailableLangs)
+		anyLocaleMatchingLang = next(matchingLangs, None)
 		
 		# Check from a list of known default mapping locales: e.g. en to en-gb
 		# Created due to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1200
@@ -257,11 +263,11 @@ class SynthDriver(SynthDriver):
 			log.error(f"Default mapping unknown to eSpeak {knownDefaultLang} not in {self.availableLanguages}")
 			knownDefaultLang = None
 
-		if langWithLocale in self.availableLanguages:
+		if langWithLocale in lowerCaseAvailableLangs:
 			eSpeakLang = langWithLocale
 		elif knownDefaultLang is not None:
 			eSpeakLang = knownDefaultLang
-		elif langWithoutLocale in self.availableLanguages:
+		elif langWithoutLocale in lowerCaseAvailableLangs:
 			eSpeakLang = langWithoutLocale
 		elif anyLocaleMatchingLang is not None:
 			eSpeakLang = anyLocaleMatchingLang
