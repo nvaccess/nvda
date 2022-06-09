@@ -77,7 +77,7 @@ class TestSynthDriver_Integration(unittest.TestCase):
 		nvwave.WavePlayer.open = self._nvwaveOpenOld
 
 	def test_defaultMappingAvailableLanguage(self):
-		"""Confirms language codes remapped by default are supported by eSpeak via integration testing"""
+		"""Confirms language codes remapped by default are supported by eSpeak and are comprehensive."""
 		eSpeakAvailableLangs = self._driver.availableLanguages
 		mappedDefaultLanguages = set(self._driver._defaultLangToLocale.values())
 		unexpectedUnsupportedDefaultLanguages = mappedDefaultLanguages.difference(eSpeakAvailableLangs)
