@@ -7,7 +7,16 @@
 """
 
 import os
-from typing import Any, Callable, Generator, List, Optional, Set, Tuple, Union
+from typing import (
+	Any,
+	Callable,
+	Generator,
+	List,
+	Optional,
+	Set,
+	Tuple,
+	Union
+)
 from collections import OrderedDict
 import ctypes
 import winreg
@@ -53,6 +62,14 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			defaultLanguage: str,
 			availableLanguages: Set[str],
 	):
+		"""
+		Used for newer OneCore installations (OneCore API > 5)
+		where supportsProsodyOptions is True.
+		This allows for changing rate, volume and pitch after initialization.
+
+		@param defaultLanguage: language with locale, installed by OneCore (e.g. 'en_US')
+		@param availableLanguages: languages with locale, installed by OneCore (e.g. 'zh_HK', 'en_US')
+		"""
 		self.lowerCaseAvailableLanguages = {language.lower() for language in availableLanguages}
 		self.availableLanguagesWithoutLocale = {
 			language.split("_")[0] for language in self.lowerCaseAvailableLanguages
@@ -112,6 +129,18 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 			pitch: float,
 			volume: float,
 	):
+		"""
+		Used for older OneCore installations (OneCore API < 5),
+		where supportsProsodyOptions is False.
+		This means we must initially set a good default for rate, volume and pitch,
+		as this can't be changed after initialization.
+
+		@param defaultLanguage: language with locale, installed by OneCore (e.g. 'en_US')
+		@param availableLanguages: languages with locale, installed by OneCore (e.g. 'zh_HK', 'en_US')
+		@param rate: from 0-100
+		@param pitch: from 0-100
+		@param volume: from 0-100
+		"""
 		super().__init__(defaultLanguage, availableLanguages)
 		self._rate = rate
 		self._pitch = pitch
@@ -163,9 +192,6 @@ class OneCoreSynthDriver(SynthDriver):
 	}
 	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
 
-	_ocSpeechToken: Optional[ctypes.POINTER]
-	_queuedSpeech: List[Union[str, Tuple[Callable[[ctypes.POINTER, float], None], float]]]
-
 	@classmethod
 	def check(cls):
 		# Only present this as an available synth if this is Windows 10.
@@ -208,12 +234,13 @@ class OneCoreSynthDriver(SynthDriver):
 
 		self._earlyExitCB = False
 		self._callbackInst = ocSpeech_Callback(self._callback)
-		self._ocSpeechToken = self._dll.ocSpeech_initialize(self._callbackInst)
+		self._ocSpeechToken: Optional[ctypes.POINTER] = self._dll.ocSpeech_initialize(self._callbackInst)
 		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player= None
 		# Initialize state.
-		self._queuedSpeech = []
+		self._queuedSpeech: List[Union[str, Tuple[Callable[[ctypes.POINTER, float], None], float]]] = []
+
 		self._wasCancelled = False
 		self._isProcessing = False
 		# Initialize the voice to a sane default
