@@ -54,7 +54,9 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			availableLanguages: Set[str],
 	):
 		self.lowerCaseAvailableLanguages = {language.lower() for language in availableLanguages}
-		self.availableLanguagesWithoutLocale = {language.split("_")[0] for language in self.lowerCaseAvailableLanguages}
+		self.availableLanguagesWithoutLocale = {
+			language.split("_")[0] for language in self.lowerCaseAvailableLanguages
+		}
 		super().__init__(defaultLanguage)
 
 	def _convertProsody(self, command, attr, default, base=None):
@@ -488,18 +490,22 @@ class OneCoreSynthDriver(SynthDriver):
 		@returns: True if the voice is valid, False otherwise.
 
 		OneCore keeps specific registry caches of OneCore for AT applications.
-		NVDA's OneCore cache is: `HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Isolated\Ny37kw9G-o42UiJ1z6Qc_sszEKkCNywTlrTOG0QKVB4`.
-		The caches contain a subtree which is meant to mirror the path `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\*`.
+		NVDA's OneCore cache is:
+		`HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Isolated\Ny37kw9G-o42UiJ1z6Qc_sszEKkCNywTlrTOG0QKVB4`.
+		The caches contain a subtree which is meant to mirror the path
+		`HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\*`.
 
 		For example
 		`HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Isolated\Ny37kw9G-o42UiJ1z6Qc_sszEKkCNywTlrTOG0QKVB4\
 		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens\MSTTS_V110_enUS_MarkM`
 		refers to `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens\MSTTS_V110_enUS_MarkM`.
 
-		Languages which have been used by an installed copy of NVDA, but uninstalled from the system are kept in the cache.
+		Languages which have been used by an installed copy of NVDA,
+		but uninstalled from the system are kept in the cache.
 		OneCore will still attempt to use these languages, so we must check if they are valid first.
 
-		Refer to https://github.com/nvaccess/nvda/issues/13732#issuecomment-1149386711 for more information.
+		For more information, refer to:
+		https://github.com/nvaccess/nvda/issues/13732#issuecomment-1149386711
 		"""
 		IDParts = ID.split('\\')
 		rootKey = getattr(winreg, IDParts[0])
