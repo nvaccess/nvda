@@ -7,7 +7,7 @@
 """
 
 import os
-import sys
+from typing import Any, Callable, Generator, List, Optional, Set, Tuple, Union
 from collections import OrderedDict
 import ctypes
 import winreg
@@ -25,6 +25,7 @@ from logHandler import log
 import config
 import nvwave
 import queueHandler
+from speech.types import SpeechSequence
 import speech
 import speechXml
 import languageHandler
@@ -47,6 +48,13 @@ HUNDRED_NS_PER_SEC = 10000000 # 1000000000 ns per sec / 100 ns
 ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
 
 class _OcSsmlConverter(speechXml.SsmlConverter):
+	def __init__(
+			self,
+			defaultLanguage: str,
+			availableLanguages: Set[str],
+	):
+		self.lowerCaseAvailableLanguages = {language.lower() for language in availableLanguages}
+		super().__init__(defaultLanguage)
 
 	def _convertProsody(self, command, attr, default, base=None):
 		if base is None:
@@ -74,23 +82,35 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 		# Therefore, we don't use it.
 		return None
 
-	def convertLangChangeCommand(self, command):
+	def convertLangChangeCommand(self, command: LangChangeCommand) -> Optional[speechXml.SetAttrCommand]:
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
 		if lcid is languageHandler.LCID_NONE:
 			log.debugWarning(f"Invalid language: {command.lang}")
 			return None
+
+		if command.lang.lower().replace("-", "_") not in self.lowerCaseAvailableLanguages:
+			log.warning(f"Language {command.lang} not supported ({self.availableLanguages})")
+			return None
+
 		return super().convertLangChangeCommand(command)
 
 class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 
-	def __init__(self, defaultLanguage, rate, pitch, volume):
-		super(_OcPreAPI5SsmlConverter, self).__init__(defaultLanguage)
+	def __init__(
+			self,
+			defaultLanguage: str,
+			availableLanguages: Set[str],
+			rate: float,
+			pitch: float,
+			volume: float,
+	):
+		super().__init__(defaultLanguage, availableLanguages)
 		self._rate = rate
 		self._pitch = pitch
 		self._volume = volume
 
-	def generateBalancerCommands(self, speechSequence):
-		commands = super(_OcPreAPI5SsmlConverter, self).generateBalancerCommands(speechSequence)
+	def generateBalancerCommands(self, speechSequence: SpeechSequence) -> Generator[Any, None, None]:
+		commands = super().generateBalancerCommands(speechSequence)
 		# The EncloseAllCommand from SSML must be first.
 		yield next(commands)
 		# OneCore didn't provide a way to set base prosody values before API version 5.
@@ -134,6 +154,9 @@ class OneCoreSynthDriver(SynthDriver):
 		PhonemeCommand,
 	}
 	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
+
+	_ocSpeechToken: Optional[ctypes.POINTER]
+	_queuedSpeech: List[Union[str, Tuple[Callable[[ctypes.POINTER, float], None], float]]]
 
 	@classmethod
 	def check(cls):
@@ -235,11 +258,17 @@ class OneCoreSynthDriver(SynthDriver):
 		if self._player:
 			self._player.stop()
 
-	def speak(self, speechSequence):
+	def speak(self, speechSequence: SpeechSequence) -> None:
 		if self.supportsProsodyOptions:
-			conv = _OcSsmlConverter(self.language)
+			conv = _OcSsmlConverter(self.language, self.availableLanguages)
 		else:
-			conv = _OcPreAPI5SsmlConverter(self.language, self._rate, self._pitch, self._volume)
+			conv = _OcPreAPI5SsmlConverter(
+				self.language,
+				self.availableLanguages,
+				self._rate,
+				self._pitch,
+				self._volume
+			)
 		text = conv.convertToXml(speechSequence)
 		# #7495: Calling WaveOutOpen blocks for ~100 ms if called from the callback
 		# when the SSML includes marks.
@@ -249,7 +278,7 @@ class OneCoreSynthDriver(SynthDriver):
 			self._player.open()
 		self._queueSpeech(text)
 
-	def _queueSpeech(self, item):
+	def _queueSpeech(self, item: str) -> None:
 		self._queuedSpeech.append(item)
 		# We only process the queue here if it isn't already being processed.
 		if not self._isProcessing:
