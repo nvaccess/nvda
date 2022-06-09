@@ -298,7 +298,7 @@ class List(List):
 		For single-column SysListViews, the mapping is not necessary.
 		If the column order array cannot be fetched from a multi-column SysListView,
 		this returns None.
-	
+
 		@param presentationIndex: One based index for the column as presented to the user.
 		@return: The internal / logical column zero based index for the column.
 		None if the mapped column cannot be determined.
