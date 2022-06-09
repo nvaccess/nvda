@@ -469,7 +469,7 @@ class OneCoreSynthDriver(SynthDriver):
 
 	def _getAvailableVoices(self):
 		voices = OrderedDict()
-		# Fetch the full list of voices that Onecore speech knows about.
+		# Fetch the full list of voices that OneCore speech knows about.
 		# Note that it may give back voices that are uninstalled or broken.
 		# Refer to _isVoiceValid for information on uninstalled or broken voices.
 		voicesStr = self._dll.ocSpeech_getVoices(self._ocSpeechToken).split('|')
@@ -490,19 +490,22 @@ class OneCoreSynthDriver(SynthDriver):
 		@returns: True if the voice is valid, False otherwise.
 
 		OneCore keeps specific registry caches of OneCore for AT applications.
-		NVDA's OneCore cache is:
+		Installed copies of NVDA have a OneCore cache in:
 		`HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Isolated\Ny37kw9G-o42UiJ1z6Qc_sszEKkCNywTlrTOG0QKVB4`.
-		The caches contain a subtree which is meant to mirror the path
+		The caches contain a subtree which is meant to mirror the path:
 		`HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\*`.
 
-		For example
+		For example:
 		`HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Isolated\Ny37kw9G-o42UiJ1z6Qc_sszEKkCNywTlrTOG0QKVB4\
 		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens\MSTTS_V110_enUS_MarkM`
 		refers to `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens\MSTTS_V110_enUS_MarkM`.
 
 		Languages which have been used by an installed copy of NVDA,
 		but uninstalled from the system are kept in the cache.
-		OneCore will still attempt to use these languages, so we must check if they are valid first.
+		For installed copies of NVDA, OneCore will still attempt to use these languages,
+		so we must check if they are valid first.
+		For portable copies, the cache is bypassed and `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\`
+		is read directly.
 
 		For more information, refer to:
 		https://github.com/nvaccess/nvda/issues/13732#issuecomment-1149386711
