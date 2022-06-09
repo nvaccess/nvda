@@ -64,6 +64,8 @@ If you wish to test eSpeak-ng directly, perhaps to create steps to reproduce whe
 
 The [espeak docs](https://github.com/espeak-ng/espeak-ng/blob/master/docs/index.md) are worth reading.
 They describe the various [(espeak-ng) command line arguments](https://github.com/espeak-ng/espeak-ng/blob/master/src/espeak-ng.1.ronn) (note also [speak-ng command line](https://github.com/espeak-ng/espeak-ng/blob/master/src/speak-ng.1.ronn)), and [insturctions to build](https://github.com/espeak-ng/espeak-ng/blob/master/docs/building.md#windows) an `.exe` from a commit of eSpeak, locally on Windows.
+However, historically the Windows build for espeak-ng hasn't been well maintained, with periods of build failures.
+It is also different from the build approach within NVDA.
 
 
 1. Install an (x86) release: https://github.com/espeak-ng/espeak-ng/releases
