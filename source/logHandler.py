@@ -293,7 +293,7 @@ class RemoteHandler(logging.Handler):
 	def emit(self, record):
 		msg = self.format(record)
 		try:
-			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
+			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, globalVars.appPid, msg)
 		except WindowsError:
 			pass
 

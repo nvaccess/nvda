@@ -79,6 +79,7 @@ Please test the new API and provide feedback.
 For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
 
 
+- ``appModuleHandler.NVDAProcessID`` is deprecated - use ``globalVars.appPid`` instead. (#13646)
 - ``gui.quit`` has been deprecated for removal in 2023.1. (#13498)
   - Use ``wx.CallAfter(mainFrame.onExitCommand, None)`` directly instead.
   -
