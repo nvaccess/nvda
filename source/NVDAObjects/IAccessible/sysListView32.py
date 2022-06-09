@@ -296,9 +296,12 @@ class List(List):
 		To keep a consistent internal mapping, a column order array is used
 		to map a presentation index to a consistent internal index.
 		For single-column SysListViews, the mapping is not necessary.
-
-		If the column order array cannot be fetched from a multi-column SysListView ,
-		returns None as a mapped column cannot be determined.
+		If the column order array cannot be fetched from a multi-column SysListView,
+		this returns None.
+	
+		@param presentationIndex: One based index for the column as presented to the user.
+		@return: The internal / logical column zero based index for the column.
+		None if the mapped column cannot be determined.
 		"""
 		if presentationIndex == 1 and self.columnCount == 1:
 			# Use an implied default column mapping for single column list views
