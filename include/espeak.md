@@ -2,6 +2,9 @@
 
 The submodule contained in the espeak directory is a cross platform open source speech synthesizer.
 
+## Building
+NVDA has a custom build of ESpeak because not all components are required.
+
 ### Background
 The main authority on build requirements should be `<nvda repo root>/include/espeak/Makefile.am`.
 The `*.vcxproj` files in `<nvda repo root>/include/espeak/src/windows/` can also be considered,
@@ -12,7 +15,7 @@ Modifications will need to be made in `<nvda repo root>/nvdaHelper/espeak`
 * `sconscript` for the build process.
 * `config.h` to set the eSpeak-ng version that NVDA outputs to the log file.
 
-### Doing the update
+### Updating the version used by NVDA
 
 1. Start from a clean branch off of NVDA `master`
    1. Check out the latest NVDA `origin/master` and create a new branch.
@@ -41,7 +44,7 @@ Modifications will need to be made in `<nvda repo root>/nvdaHelper/espeak`
 1. Run NVDA (set eSpeak-ng as the synthesizer) and test.
 1. Ensure that the log file contains the new version number for eSpeak-NG
 
-### Troubleshooting
+### Troubleshooting Build failures
 
 If python crashes while building, check the log.
 If the last thing is compiling some dictionary try excluding it.
@@ -55,3 +58,24 @@ any changes in our `sconscript` file.
 Due to problems with emoji support (causing crashes), emoji dictionary files are being excluded
 from the build, they are deleted prior to compiling the dictionaries in the
 `<nvda repo root>/nvdaHelper/espeak/sconscript` file.
+
+## Manually testing Espeak-ng
+If you wish to test Espeak-ng directly, perhaps to create steps to reproduce when raising an issue for the espeak-ng project.
+Consider feeding SSML directly to the executable provided by the project:
+
+The [espeak docs](https://github.com/espeak-ng/espeak-ng/blob/master/docs/index.md) can be helpful.
+
+1. Install an (x86) release: https://github.com/espeak-ng/espeak-ng/releases
+   `espeak.exe` is in `C:/Program Files (x86)/espeak-ng/`
+   Adding it to your path temporarily will make the following easier.
+1. Write out some SSML that demonstrates the problem.
+   ```
+   $ cat /c/work/test-espeak-ssml.txt
+   <prosody pitch="+100">I am now speaking at an extra high pitch.</prosody>
+   <break time="1s"/>
+   <prosody pitch="1">I am now speaking at the default pitch.</prosody>
+   ```
+1. Feed the SSML into `espeak-ng.exe`
+   ```
+   $ cat /c/work/test-espeak-ssml.txt | ./espeak-ng.exe --stdin -m
+   ```
