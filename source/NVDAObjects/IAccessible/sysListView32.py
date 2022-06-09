@@ -217,7 +217,10 @@ class List(List):
 	def _get_rowCount(self):
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
 
-	def _get_columnCount(self):
+	columnCount: int
+	"""Typing information for auto-property: _get_columnCount"""
+
+	def _get_columnCount(self) -> int:
 		if not self.isMultiColumn:
 			return 0
 		headerHwnd= watchdog.cancellableSendMessage(self.windowHandle,LVM_GETHEADER,0,0)
@@ -287,10 +290,27 @@ class List(List):
 			return self._getColumnOrderArrayRawOutProc(columnCount)
 		return self._getColumnOrderArrayRawInProc(columnCount)
 
-	_columnOrderArray: Optional[ctypes.Array]
+	def _getMappedColumn(self, presentationIndex: int) -> Optional[int]:
+		"""
+		Multi-column SysListViews can have their columns re-ordered.
+		To keep a consistent internal mapping, a column order array is used
+		to map a presentation index to a consistent internal index.
+		For single-column SysListViews, the mapping is not necessary.
+		If the column order array cannot be fetched from a multi-column SysListView,
+		this returns None.
 
-	def _get__columnOrderArray(self) -> Optional[ctypes.Array]:
-		return self._getColumnOrderArrayRaw(self.columnCount)
+		@param presentationIndex: One based index for the column as presented to the user.
+		@return: The internal / logical column zero based index for the column.
+		None if the mapped column cannot be determined.
+		"""
+		if presentationIndex == 1 and self.columnCount == 1:
+			# Use an implied default column mapping for single column list views
+			return 0
+		columnOrderArray = self._getColumnOrderArrayRaw(self.columnCount)
+		if columnOrderArray is None:
+			log.error("Cannot fetch column as column order array is unknown")
+			return None
+		return columnOrderArray[presentationIndex - 1]
 
 
 class GroupingItem(Window):
@@ -454,10 +474,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
 	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
-		if self.parent._columnOrderArray is None:
-			log.debugWarning("Cannot fetch column location as column order array is unknown")
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
 			return None
-		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
+		return self._getColumnLocationRaw(mappedColumn)
 
 	def _getColumnContentRawInProc(self, index: int) -> Optional[str]:
 		"""Retrieves text for a given column.
@@ -510,10 +530,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnContentRawInProc(index)
 
 	def _getColumnContent(self, column: int) -> Optional[str]:
-		if self.parent._columnOrderArray is None:
-			log.debugWarning("Cannot fetch column content as column order array is unknown")
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
 			return None
-		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
+		return self._getColumnContentRaw(mappedColumn)
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle
@@ -530,10 +550,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return item.iImage
 
 	def _getColumnImageID(self, column):
-		if self.parent._columnOrderArray is None:
-			log.debugWarning("Cannot fetch column image ID as column order array is unknown")
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
 			return None
-		return self._getColumnImageIDRaw(self.parent._columnOrderArray[column - 1])
+		return self._getColumnImageIDRaw(mappedColumn)
 
 	def _getColumnHeaderRawOutProc(self, index: int) -> Optional[str]:
 		"""Retrieves text of the header for the given column.
@@ -584,10 +604,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnHeaderRawInProc(index)
 
 	def _getColumnHeader(self, column: int) -> Optional[str]:
-		if self.parent._columnOrderArray is None:
-			log.debugWarning("Cannot fetch column header as column order array is unknown")
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
 			return None
-		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
+		return self._getColumnHeaderRaw(mappedColumn)
 
 	def _get_name(self):
 		parent = self.parent
