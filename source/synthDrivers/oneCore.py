@@ -54,6 +54,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			availableLanguages: Set[str],
 	):
 		self.lowerCaseAvailableLanguages = {language.lower() for language in availableLanguages}
+		self.availableLanguagesWithoutLocale = {language.split("_")[0] for language in self.lowerCaseAvailableLanguages}
 		super().__init__(defaultLanguage)
 
 	def _convertProsody(self, command, attr, default, base=None):
@@ -88,8 +89,13 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			log.debugWarning(f"Invalid language: {command.lang}")
 			return None
 
-		if command.lang.lower().replace("-", "_") not in self.lowerCaseAvailableLanguages:
-			log.warning(f"Language {command.lang} not supported ({self.availableLanguages})")
+		normalizedLanguage = command.lang.lower().replace("-", "_")
+		normalizedLanguageWithoutLocale = normalizedLanguage.split("_")[0]
+		if (
+			normalizedLanguage not in self.lowerCaseAvailableLanguages
+			and normalizedLanguageWithoutLocale not in self.availableLanguagesWithoutLocale
+		):
+			log.warning(f"Language {command.lang} not supported ({self.lowerCaseAvailableLanguages})")
 			return None
 
 		return super().convertLangChangeCommand(command)
