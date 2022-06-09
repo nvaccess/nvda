@@ -60,22 +60,23 @@ from the build, they are deleted prior to compiling the dictionaries in the
 `<nvda repo root>/nvdaHelper/espeak/sconscript` file.
 
 ## Manually testing Espeak-ng
-If you wish to test Espeak-ng directly, perhaps to create steps to reproduce when raising an issue for the espeak-ng project.
-Consider feeding SSML directly to the executable provided by the project:
+If you wish to test eSpeak-ng directly, perhaps to create steps to reproduce when raising an issue for the eSpeak-ng project, consider feeding SSML directly to the executable provided by the project.
 
-The [espeak docs](https://github.com/espeak-ng/espeak-ng/blob/master/docs/index.md) can be helpful.
+The [espeak docs](https://github.com/espeak-ng/espeak-ng/blob/master/docs/index.md) are worth reading.
+They describe the various [(espeak-ng) command line arguments](https://github.com/espeak-ng/espeak-ng/blob/master/src/espeak-ng.1.ronn) (note also [speak-ng command line](https://github.com/espeak-ng/espeak-ng/blob/master/src/speak-ng.1.ronn)), and [insturctions to build](https://github.com/espeak-ng/espeak-ng/blob/master/docs/building.md#windows) an `.exe` from a commit of eSpeak, locally on Windows.
+
 
 1. Install an (x86) release: https://github.com/espeak-ng/espeak-ng/releases
    `espeak.exe` is in `C:/Program Files (x86)/espeak-ng/`
    Adding it to your path temporarily will make the following easier.
-1. Write out some SSML that demonstrates the problem.
-   ```
+1. Write out [some SSML](https://github.com/espeak-ng/espeak-ng/blob/master/docs/markup.md) that demonstrates the problem.
+   ```sh
    $ cat /c/work/test-espeak-ssml.txt
    <prosody pitch="+100">I am now speaking at an extra high pitch.</prosody>
    <break time="1s"/>
    <prosody pitch="1">I am now speaking at the default pitch.</prosody>
    ```
 1. Feed the SSML into `espeak-ng.exe`
-   ```
+   ```sh
    $ cat /c/work/test-espeak-ssml.txt | ./espeak-ng.exe --stdin -m
    ```
