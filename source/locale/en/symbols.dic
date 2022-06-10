@@ -16,6 +16,9 @@ complexSymbols:
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+# Unicode braille sequences
+braille sequence start	(?<=[^\s\u2800-\u28FF])(?=[\u2800-\u28FF])
+braille sequence end	(?<=[\u2800-\u28FF])(?=[^\s\u2800-\u28FF])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -358,6 +361,10 @@ _	line	most
 ⌘	mac Command key	none
 
 # Unicode braille
+## complex sequence bookends
+braille sequence start	start Unicode braille	all	always
+braille sequence end	end Unicode braille	all	always
+
 ## 6-dot cell
 ### note: the character on the next line is U+2800 (braille space), not U+0020 (ASCII space)
 ⠀	space
