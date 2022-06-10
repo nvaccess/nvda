@@ -3,17 +3,30 @@
 # Copyright (C) 2018 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
+from typing_extensions import Protocol  # Python 3.8 adds native support
 import addonAPIVersion
 
-def hasAddonGotRequiredSupport(addon, currentAPIVersion=addonAPIVersion.CURRENT):
+
+class SupportsVersionCheck(Protocol):
+	""" Examples implementing this protocol include:
+	- addonHandler.AddonBundle
+	- addonStore.models.AddonDetailsModel
+	"""
+	minimumNVDAVersion: addonAPIVersion.AddonApiVersionT
+	lastTestedNVDAVersion: addonAPIVersion.AddonApiVersionT
+
+
+def hasAddonGotRequiredSupport(
+		addon: SupportsVersionCheck,
+		currentAPIVersion=addonAPIVersion.CURRENT
+):
 	"""True if NVDA provides the add-on with an API version high enough to meet the add-on's minimum requirements
 	"""
 	minVersion = addon.minimumNVDAVersion
 	return minVersion <= currentAPIVersion
 
 
-def isAddonTested(addon, backwardsCompatToVersion=addonAPIVersion.BACK_COMPAT_TO):
+def isAddonTested(addon: SupportsVersionCheck, backwardsCompatToVersion=addonAPIVersion.BACK_COMPAT_TO):
 	"""True if this add-on is tested for the given API version.
 	By default, the current version of NVDA is evaluated.
 	"""
@@ -21,7 +34,7 @@ def isAddonTested(addon, backwardsCompatToVersion=addonAPIVersion.BACK_COMPAT_TO
 
 
 def isAddonCompatible(
-		addon,
+		addon: SupportsVersionCheck,
 		currentAPIVersion=addonAPIVersion.CURRENT,
 		backwardsCompatToVersion=addonAPIVersion.BACK_COMPAT_TO
 ):

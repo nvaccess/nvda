@@ -10,13 +10,20 @@ import unittest
 import addonAPIVersion
 from addonHandler import AddonBase
 from addonHandler import addonVersionCheck
+from addonHandler import AddonManifest
 
 latestVersionTuple = (2018, 2, 0)
 nextVersionTuple = (2018, 3, 0)
 previousVersionTuple = (2018, 1, 0)
 oldVersionTuple = (2017, 1, 0)
 
+
 class mockAddon(AddonBase):
+	@property
+	def manifest(self) -> AddonManifest:
+		"""Satisfy abstract base class requirements"""
+		raise NotImplementedError("Not expected to be required for unit tests")
+
 	def __init__(
 			self,
 			minAPIVersion,
@@ -45,6 +52,7 @@ class mockAddon(AddonBase):
 	@AddonBase.lastTestedNVDAVersion.getter
 	def lastTestedNVDAVersion(self):
 		return self._lastTestedAPIVersion
+
 
 class TestAddonVersionCheck(unittest.TestCase):
 	"""Tests that the addon version check works as expected."""

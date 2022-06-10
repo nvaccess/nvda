@@ -3,7 +3,8 @@
 # Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
+import enum
+from abc import abstractmethod, ABC
 import sys
 import os.path
 import gettext
@@ -51,15 +52,32 @@ _blockedAddons=set()
 isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
 
 
-class AddonsState(collections.UserDict):
-	"""Subclasses `collections.UserDict` to preserve backwards compatibility."""
+class AddonStateCategory(str, enum.Enum):
+	""" For backwards compatibility, the enums must remain functionally a string.
+	I.E. the following must be true:
+	> assert isinstance(AddonStateCategory.PENDING_REMOVE, str)
+	> assert AddonStateCategory.PENDING_REMOVE == "pendingRemovesSet"
+	"""
+	PENDING_REMOVE = "pendingRemovesSet"
+	PENDING_INSTALL = "pendingInstallsSet"
+	DISABLED = "disabledAddons"
+	PENDING_ENABLE = "pendingEnableSet"
+	PENDING_DISABLE = "pendingDisableSet"
 
-	_DEFAULT_STATE_CONTENT = {
-		"pendingRemovesSet": set(),
-		"pendingInstallsSet": set(),
-		"disabledAddons": set(),
-		"pendingEnableSet": set(),
-		"pendingDisableSet": set(),
+
+class AddonsState(collections.UserDict):
+	"""
+	Subclasses `collections.UserDict` to preserve backwards compatibility.
+	self: typing.Dict[AddonStateCategory, typing.Set[str]]
+	AddonStateCategory string enums mapped to a set of the add-on "name/id" currently in that state.
+	"""
+
+	_DEFAULT_STATE_CONTENT: typing.Dict[AddonStateCategory, typing.Set[str]] = {
+		AddonStateCategory.PENDING_REMOVE: set(),
+		AddonStateCategory.PENDING_INSTALL: set(),
+		AddonStateCategory.DISABLED: set(),
+		AddonStateCategory.PENDING_ENABLE: set(),
+		AddonStateCategory.PENDING_DISABLE: set(),
 	}
 
 	@property
@@ -120,14 +138,16 @@ class AddonsState(collections.UserDict):
 state = AddonsState()
 
 
-def getRunningAddons():
+def getRunningAddons() -> typing.Generator["Addon", None, None]:
 	""" Returns currently loaded add-ons.
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
+
 def getIncompatibleAddons(
 		currentAPIVersion=addonAPIVersion.CURRENT,
-		backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO):
+		backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO
+) -> typing.Generator["Addon", None, None]:
 	""" Returns a generator of the add-ons that are not compatible.
 	"""
 	return getAvailableAddons(
@@ -295,29 +315,45 @@ def installAddonBundle(bundle: "AddonBundle") -> "Addon":
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
 
-class AddonBase(object):
+
+class AddonBase(ABC):
 	"""The base class for functionality that is available both for add-on bundles and add-ons on the file system.
 	Subclasses should at least implement L{manifest}.
 	"""
 
 	@property
-	def name(self):
+	def name(self) -> str:
+		"""A unique name, the id of the add-on.
+		"""
 		return self.manifest['name']
 
 	@property
-	def version(self):
+	def version(self) -> str:
+		"""A display version. Not necessarily semantic
+		"""
 		return self.manifest['version']
 
 	@property
-	def minimumNVDAVersion(self):
+	def minimumNVDAVersion(self) -> typing.Tuple[int, int, int]:
 		return self.manifest.get('minimumNVDAVersion')
 
 	@property
-	def lastTestedNVDAVersion(self):
+	def lastTestedNVDAVersion(self) -> typing.Tuple[int, int, int]:
 		return self.manifest.get('lastTestedNVDAVersion')
+
+	@property
+	@abstractmethod
+	def manifest(self) -> "AddonManifest":
+		...
+
 
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
+
+	@property
+	def manifest(self) -> "AddonManifest":
+		return self._manifest
+
 	def __init__(self, path):
 		""" Constructs an L{Addon} from.
 		@param path: the base directory for the addon data.
@@ -334,7 +370,7 @@ class Addon(AddonBase):
 					log.debug("Using manifest translation from %s", p)
 					translatedInput = open(p, 'rb')
 					break
-			self.manifest = AddonManifest(f, translatedInput)
+			self._manifest = AddonManifest(f, translatedInput)
 			if self.manifest.errors is not None:
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
@@ -655,9 +691,8 @@ class AddonBundle(AddonBase):
 				z.extract(info, addonPath)
 
 	@property
-	def manifest(self):
+	def manifest(self) -> "AddonManifest":
 		""" Gets the manifest for the represented Addon.
-		@rtype: AddonManifest
 		"""
 		return self._manifest
 
@@ -747,7 +782,7 @@ docFileName = string(default=None)
 		"""
 		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
 		self._errors = None
-		val = Validator({"apiVersion":validate_apiVersionString})
+		val = Validator({"apiVersion": validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
 		if result != True:
 			self._errors = result
@@ -773,7 +808,8 @@ docFileName = string(default=None)
 		minRequiredVersion = self.get("minimumNVDAVersion")
 		return minRequiredVersion <= lastTested
 
-def validate_apiVersionString(value):
+
+def validate_apiVersionString(value) -> typing.Tuple[int, int, int]:
 	from configobj.validate import ValidateError
 	if not value or value == "None":
 		return (0, 0, 0)

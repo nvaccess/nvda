@@ -39,6 +39,10 @@ class AvailableAddonStatus(DisplayStringEnum):
 	# noinspection PyArgumentList
 	AVAILABLE = enum.auto()
 	# noinspection PyArgumentList
+	UPDATE = enum.auto()
+	# noinspection PyArgumentList
+	INCOMPATIBLE = enum.auto()
+	# noinspection PyArgumentList
 	DOWNLOADING = enum.auto()
 	# noinspection PyArgumentList
 	DOWNLOAD_FAILED = enum.auto()
@@ -47,19 +51,42 @@ class AvailableAddonStatus(DisplayStringEnum):
 	# noinspection PyArgumentList
 	INSTALL_FAILED = enum.auto()
 	# noinspection PyArgumentList
-	INSTALLED = enum.auto()
+	INSTALLED = enum.auto()  # installed, requires restart
+	# noinspection PyArgumentList
+	ENABLED = enum.auto()  # enabled after restart
+	# noinspection PyArgumentList
+	RUNNING = enum.auto()  # enabled / active.
 
 	@property
 	def _displayStringLabels(self) -> Dict[Enum, str]:
 		_labels = {
+			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.AVAILABLE: _("Available"),
+			# Translators: Status for addons shown in the add-on store dialog
+			AvailableAddonStatus.UPDATE: _("Update Available"),
+			# Translators: Status for addons shown in the add-on store dialog
+			AvailableAddonStatus.INCOMPATIBLE: _("Incompatible"),
+			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.DOWNLOADING: _("Downloading"),
+			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.DOWNLOAD_FAILED: _("Download failed"),
+			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.INSTALLING: _("Installing"),
+			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.INSTALL_FAILED: _("Install failed"),
+			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.INSTALLED: _("Installed, restart required"),
+			# Translators: Status for addons shown in the add-on store dialog
+			AvailableAddonStatus.ENABLED: _("Enabled after restart"),
+			# Translators: Status for addons shown in the add-on store dialog
+			AvailableAddonStatus.RUNNING: _("Enabled"),
 		}
 		return _labels
+
+
+addonStoreStateToAddonHandlerState: Dict[AvailableAddonStatus, addonHandler.AddonStateCategory] = {
+	AvailableAddonStatus.INSTALLED: addonHandler.AddonStateCategory.PENDING_INSTALL,
+}
 
 
 class AddonListItemVM:
@@ -381,16 +408,62 @@ class AddonActionVM:
 		self._notify()
 
 
+def getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
+	# This is inefficient, addonHandler will iterate all addons every time.
+	# However, addonHandler should remain the "source of truth" for addonStatus.
+	localAddons: Dict[str, addonHandler.Addon] = {
+		addon.name: addon  # Note: addon.name should match Id from add-on store.
+		for addon in addonHandler.getAvailableAddons()
+	}
+	if not addonHandler.isAddonCompatible(model):
+		return AvailableAddonStatus.INCOMPATIBLE
+	if model.addonId not in localAddons:
+		return AvailableAddonStatus.AVAILABLE
+	localAddon = localAddons[model.addonId]
+	# ideally a numeric version would be compared, however the manifest only has a version string.
+	versionMatches = localAddon.version == model.versionName
+	if versionMatches:
+		if localAddon.isRunning:
+			return AvailableAddonStatus.RUNNING
+
+		for storeState, handlerStateCategory in addonStoreStateToAddonHandlerState.items():
+			if model.addonId in addonHandler.state[handlerStateCategory]:
+				return storeState
+	else:
+		# todo:
+		#  Handle update available, perhaps 'sideloaded' add-ons can't get updates (because numeric version
+		#  isn't available in the manifest). This will require tracking information from the add-on store.
+		# This may show "update available" for older add-on versions.
+		return AvailableAddonStatus.UPDATE
+
+	log.debugWarning(f"Addon in unknown state: {model.addonId}")
+	return None
+
+
+def _createListItemVMs(
+		addonModelList: List[AddonDetailsModel],
+		statusFilter: List[typing.Union[None, AvailableAddonStatus]]
+) -> List[AddonListItemVM]:
+	addonsWithStatus = (
+		(model, getStatus(model))
+		for model in addonModelList
+	)
+	return [
+		AddonListItemVM(model=model, status=status)
+		for model, status in addonsWithStatus
+		if status not in statusFilter
+	]
+
+
 class AddonStoreVM:
 	def __init__(self, dataManager: DataManager):
 		self._dataManager: DataManager = dataManager
 		self.hasError = extensionPoints.Action()
 		self._addons: List[AddonDetailsModel] = []
+		self._filteredStatuses = [None, AvailableAddonStatus.RUNNING]
+
 		self.listVM: AddonListVM = AddonListVM(
-			addons=[
-				AddonListItemVM(model=a, status=AvailableAddonStatus.AVAILABLE)
-				for a in self._addons
-			]
+			addons=_createListItemVMs(self._addons, self._filteredStatuses)
 		)
 		self.detailsVM: AddonDetailsVM = AddonDetailsVM(
 			listItem=self.listVM.getSelection()
@@ -408,7 +481,10 @@ class AddonStoreVM:
 	def isInstallActionValid(self, listItemVM: Optional[AddonListItemVM]) -> bool:
 		return (
 			listItemVM is not None
-			and listItemVM.status == AvailableAddonStatus.AVAILABLE
+			and listItemVM.status in (
+				AvailableAddonStatus.AVAILABLE,
+				AvailableAddonStatus.UPDATE,
+			)
 		)
 
 	def _makeActionsList(self):
@@ -470,12 +546,7 @@ class AddonStoreVM:
 			log.debug("no change in addons")
 			return
 		self._addons = addons
-		self.listVM.resetListItems([
-			AddonListItemVM(
-				model=addon,
-				status=AvailableAddonStatus.AVAILABLE
-			) for addon in addons
-		])
+		self.listVM.resetListItems(_createListItemVMs(self._addons, self._filteredStatuses))
 		self.detailsVM.listItem = self.listVM.getSelection()
 		log.debug("completed refresh")
 
