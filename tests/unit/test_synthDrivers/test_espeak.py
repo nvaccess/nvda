@@ -8,6 +8,8 @@
 
 import logging
 import unittest
+
+from languageHandler import stripLocaleFromLangCode
 import logHandler
 from speech.commands import LangChangeCommand
 from synthDrivers.espeak import SynthDriver
@@ -101,7 +103,7 @@ class TestSynthDriver_Integration(unittest.TestCase):
 			)
 		)
 
-		supportedLanguagesWithLocaleStripped = set(lang.split("-")[0] for lang in eSpeakAvailableLangs)
+		supportedLanguagesWithLocaleStripped = set(stripLocaleFromLangCode(lang) for lang in eSpeakAvailableLangs)
 		unsupportedLanguagesWithoutLocale = supportedLanguagesWithLocaleStripped.difference(eSpeakAvailableLangs)
 		self.assertEqual(
 			expectedUnsupportedMappedLanguages,
@@ -115,15 +117,15 @@ class TestSynthDriver_Integration(unittest.TestCase):
 
 	def test_availableLanguagesWithoutLocale(self):
 		"""
-		Confirms that eSpeak can manually be switched to all of its supported languages, with the locale removed.
+		Confirms that eSpeak can manually be switched to all of its supported languages with the locale removed.
 		This doesn't test automatic language switching.
 		"""
-		availableLanguagesWithoutLocale = set(lang.split("-")[0] for lang in self._driver.availableLanguages)
-		for langWithoutLocale in availableLanguagesWithoutLocale:
+		availableLangsWithoutLocale = set(stripLocaleFromLangCode(lang) for lang in self._driver.availableLanguages)
+		for langWithoutLocale in availableLangsWithoutLocale:
 			_setVoiceByLanguage(langWithoutLocale)
 			self.assertEqual(
 				langWithoutLocale,
-				self._driver.voice.split("\\")[-1],  # Language code is the last item
+				self._driver.voice.split("\\")[-1],  # Language code is the last item, e.g. (gmw\en, roa\fr-CH)
 				msg="Language without locale not supported by eSpeak"
 			)
 

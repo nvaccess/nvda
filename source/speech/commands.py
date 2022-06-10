@@ -145,6 +145,10 @@ class LangChangeCommand(SynthParamCommand):
 		return "LangChangeCommand (%r)"%self.lang
 
 	def __eq__(self, __o: object) -> bool:
+		if __o is self:
+			# __o is a reference to the same object.
+			# Check performed first for performance reasons.
+			return True
 		if isinstance(__o, LangChangeCommand):
 			return self.lang == __o.lang
 		return super().__eq__(__o)

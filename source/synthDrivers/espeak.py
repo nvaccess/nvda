@@ -9,7 +9,10 @@ from collections import OrderedDict
 from typing import Optional, Set
 
 from . import _espeak
-import languageHandler
+from languageHandler import (
+	getLanguage,
+	stripLocaleFromLangCode,
+)
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import speech
 from logHandler import log
@@ -58,7 +61,8 @@ class SynthDriver(SynthDriver):
 	_defaultLangToLocale = {
 		# Languages without locale that aren't supported in eSpeak 7e5457f91e10,
 		# with a language with locale that is supported.
-		# Found via: set(lang.split("-")[0] for lang in self.availableLanguages).difference(self.availableLanguages)
+		# Found via:
+		# set(stripLocaleFromLangCode(lang) for lang in self.availableLanguages).difference(self.availableLanguages)
 		"en": "en-gb",
 		"chr": "chr-US-Qaaa-x-west",
 		"fr": "fr-fr",
@@ -204,7 +208,7 @@ class SynthDriver(SynthDriver):
 	def __init__(self):
 		_espeak.initialize(self._onIndexReached)
 		log.info("Using eSpeak NG version %s" % _espeak.info())
-		lang=languageHandler.getLanguage()
+		lang = getLanguage()
 		_espeak.setVoiceByLanguage(lang)
 		self._language=lang
 		self._variantDict=_espeak.getVariantDict()
@@ -249,10 +253,13 @@ class SynthDriver(SynthDriver):
 		langWithLocale = command.lang if command.lang else self._language
 		langWithLocale = langWithLocale.lower().replace('_', '-')
 
-		langWithoutLocale: Optional[str] = langWithLocale.split('-')[0]
+		langWithoutLocale: Optional[str] = stripLocaleFromLangCode(langWithLocale)
 
 		# Check for any language where the language code matches, regardless of dialect: e.g. ru-ru to ru
-		matchingLangs = filter(lambda lang: lang.split('-')[0] == langWithoutLocale, lowerCaseAvailableLangs)
+		matchingLangs = filter(
+			lambda lang: stripLocaleFromLangCode(lang) == langWithoutLocale,
+			lowerCaseAvailableLangs
+		)
 		anyLocaleMatchingLang = next(matchingLangs, None)
 		
 		# Check from a list of known default mapping locales: e.g. en to en-gb
