@@ -17,6 +17,9 @@ What's New in NVDA
 == Changes ==
 - NSIS has been updated to version 3.08. (#9134)
 - CLDR has been updated to version 41.0. (#13582)
+- Updated liblouis braille translator to [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - New braille table: German grade 2 (detailed)
+  -
 - Added new role for "busy indicator" controls. (#10644)
 - NVDA now announces when an NVDA action cannot be performed. (#13500)
   - This includes when:
@@ -60,7 +63,9 @@ What's New in NVDA
 - Hidden text is no longer announced in Wordpad and other ``richEdit`` controls. (#13618)
 - NVDA will announce status bar content in Windows 11 Notepad. (#13386)
 - Navigator object highlighting now shows up immediately upon activation of the feature. (#13641)
-- Fix automatic language switching failing with OneCore when trying to switch to a formerly installed language. (#13732)
+- Fix reading single column list view items. (#13659, #13735)
+- Fix eSpeak automatic language switching for English and French falling back to British English and French (France). (#13727)
+- Fix OneCore automatic language switching when trying to switch to a formerly installed language. (#13732)
 -
 
 
@@ -80,6 +85,7 @@ Please test the new API and provide feedback.
 For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
 
 
+- ``appModuleHandler.NVDAProcessID`` is deprecated - use ``globalVars.appPid`` instead. (#13646)
 - ``gui.quit`` has been deprecated for removal in 2023.1. (#13498)
   - Use ``wx.CallAfter(mainFrame.onExitCommand, None)`` directly instead.
   -
