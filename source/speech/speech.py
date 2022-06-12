@@ -812,7 +812,6 @@ def speak(  # noqa: C901
 
 	if not speechSequence:  # Pointless - nothing to speak
 		return
-	# cancel any delaied phonetic description if exists.
 	cancelPhoneticDescriptionTimer()
 	import speechViewer
 	if speechViewer.isActive:
