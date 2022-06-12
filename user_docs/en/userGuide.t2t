@@ -1256,11 +1256,10 @@ If you are having problems with the pronunciation of individual characters, try 
 When this setting is checked, NVDA will say the phonetic description when you move by characters, after an user defined pause.
 Default delay setting is 1000 ms (1 sec).
 
-The phonetic description delay will be cancelled if another text is spoken during that time or if you press control key.
-
 For example, if you review this line by characters, when you read the letter "b", NVDA will say "Bravo" after the defined pause.
+This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
 
-This can be useful if your current speech synthesizer pronounces some characters in a similar way. Also, can be useful if you have some degree of deafness. In this case, could be a good idea to set NVDA to use small delays.
+The phonetic description will be cancelled if other text is spoken during that time, or if you press the control key.
 
 ==== Time for delayed phonetic descriptions (ms) ====[delayedPhoneticDescriptionsTimeoutMs]
 Specify the delay time in milliseconds (ms) to say the phonetic description when you move by characters.
