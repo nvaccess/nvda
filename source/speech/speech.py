@@ -2611,7 +2611,7 @@ def clearTypedWordBuffer() -> None:
 	_curWordChars.clear()
 
 
-def cancelPhoneticDescriptionTimer() -> None:
+def cancelDelayedPhoneticDescriptionIfPending() -> None:
 	"""
 	Stops the timer used for delayed phonetic descriptions.
 	This should be called when a new sentence is sent or the user cancels the speech.
