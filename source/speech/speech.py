@@ -2613,9 +2613,9 @@ def clearTypedWordBuffer() -> None:
 
 def cancelPhoneticDescriptionTimer() -> None:
 	"""
-	this stops the timer used for delaied phonetic descriptions.
-	This should be called when a new sentence is send or the user stops the synth.
-	E.G, by pressing control key.
+	Stops the timer used for delayed phonetic descriptions.
+	This should be called when a new sentence is sent or the user cancels the speech.
+	e.g, by pressing control key.
 	"""
 	global phoneticDescriptionTimer
 	if phoneticDescriptionTimer and phoneticDescriptionTimer.IsRunning():
