@@ -2647,4 +2647,5 @@ def speakDelayedDescription(info: _FakeTextInfo):
 				curLang = k.field.get('language', curLang)
 	_, description = getCharDescListFromText(info.text, locale=curLang)[0]
 	if description:
+		# We can't call spellTextInfo directly because we need to check if the description is available first.
 		spellTextInfo(info, useCharacterDescriptions=True)
