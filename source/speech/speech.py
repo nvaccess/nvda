@@ -2623,7 +2623,7 @@ def cancelPhoneticDescriptionTimer() -> None:
 		phoneticDescriptionTimer = None
 
 
-class _FakeTextInfo():
+class _DelayedPhoneticDescriptionTextInfo():
 	"""
 	this class is used to preserve the information of the old object that contain the text.
 	It's useful to use with delayed descriptions.
