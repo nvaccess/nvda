@@ -2638,10 +2638,6 @@ class _DelayedPhoneticDescriptionTextInfo():
 
 
 def speakDelayedDescription(info: _FakeTextInfo):
-	"""
-	this function is used to announce the delayed descriptions.
-	We can't call spellTextInfo directly because we need to check if the description is available first.
-	"""
 	if info.text.strip() == "":
 		return
 	curLang = getCurrentLanguage()
