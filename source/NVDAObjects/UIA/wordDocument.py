@@ -102,7 +102,14 @@ def getCommentInfoFromPosition(position):
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
 		# Use Annotation Type Comment if available
 		if typeID == UIAHandler.AnnotationType_Comment:
-			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
+			# Newer versions of Word present the comment text in the FullDescription property
+			try:
+				comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA.UIA_FullDescriptionPropertyId)
+			except COMError:
+				comment = None
+			if not comment:
+				# Fall back to the name of the UIAElement
+				comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA.UIA_NamePropertyId)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
 			return dict(comment=comment, author=author, date=date)
