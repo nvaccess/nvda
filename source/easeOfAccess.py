@@ -7,7 +7,7 @@
 """
 
 from enum import Enum, IntEnum
-from typing import List
+from typing import Any, List
 
 import globalVars
 from logHandler import log
@@ -21,6 +21,20 @@ canConfigTerminateOnDesktopSwitch: bool = winVersion.getWinVer() >= winVersion.W
 _APP_KEY_NAME = "nvda_nvda_v1"
 
 
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "ROOT_KEY" and globalVars._allowDeprecatedAPI:
+		log.warning("ROOT_KEY is deprecated, use RegistryKey.ROOT instead.")
+		return RegistryKey.ROOT.value
+	if attrName == "APP_KEY_PATH" and globalVars._allowDeprecatedAPI:
+		log.warning("APP_KEY_PATH is deprecated, use RegistryKey.APP instead.")
+		return RegistryKey.APP.value
+	if attrName == "APP_KEY_NAME" and globalVars._allowDeprecatedAPI:
+		log.warning("APP_KEY_NAME is deprecated.")
+		return _APP_KEY_NAME
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 class RegistryKey(str, Enum):
 	ROOT = r"Software\Microsoft\Windows NT\CurrentVersion\Accessibility"
 	TEMP = r"Software\Microsoft\Windows NT\CurrentVersion\AccessibilityTemp"
@@ -31,21 +45,6 @@ class AutoStartContext(IntEnum):
 	"""Registry HKEY used for tracking when NVDA starts automatically"""
 	ON_LOGON_SCREEN = winreg.HKEY_LOCAL_MACHINE
 	AFTER_LOGON = winreg.HKEY_CURRENT_USER
-
-
-if globalVars._useDeprecatedAPI:
-	ROOT_KEY = RegistryKey.ROOT.value
-	"""
-	Deprecated, use L{RegistryKey.ROOT} instead.
-	"""
-
-	APP_KEY_NAME = _APP_KEY_NAME
-	"""Deprecated for removal"""
-
-	APP_KEY_PATH = RegistryKey.APP.value
-	"""
-	Deprecated, use L{RegistryKey.APP} instead.
-	"""
 
 
 def isRegistered() -> bool:

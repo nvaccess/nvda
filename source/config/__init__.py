@@ -59,6 +59,18 @@ post_configSave = extensionPoints.Action()
 pre_configReset = extensionPoints.Action()
 post_configReset = extensionPoints.Action()
 
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "NVDA_REGKEY" and globalVars._allowDeprecatedAPI:
+		log.warning("NVDA_REGKEY is deprecated, use RegistryKey.NVDA instead.")
+		return RegistryKey.NVDA.value
+	if attrName == "RUN_REGKEY" and globalVars._allowDeprecatedAPI:
+		log.warning("RUN_REGKEY is deprecated, use RegistryKey.RUN instead.")
+		return RegistryKey.RUN.value
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 def initialize():
 	global conf
 	conf = ConfigManager()
@@ -83,18 +95,6 @@ class RegistryKey(str, Enum):
 	The name of the registry key stored under HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 	Note that NVDA is a 32-bit application, so on X64 systems,
 	this will evaluate to `r"SOFTWARE\WOW6432Node\nvda"`
-	"""
-
-
-if globalVars._useDeprecatedAPI:
-	RUN_REGKEY = RegistryKey.RUN.value
-	"""
-	Deprecated, use L{RegistryKey.RUN} instead.
-	"""
-
-	NVDA_REGKEY = RegistryKey.NVDA.value
-	"""
-	Deprecated, use L{RegistryKey.NVDA} instead.
 	"""
 
 

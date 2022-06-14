@@ -48,7 +48,7 @@ import winUser
 import api
 
 
-if globalVars._useDeprecatedAPI:
+if globalVars._allowDeprecatedAPI:
 	def quit():
 		"""
 		Deprecated, use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
