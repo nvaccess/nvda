@@ -701,37 +701,40 @@ def internal_hasFocus(sourceContext):
 @AccessBridge_PropertyNameChangeFP
 def event_nameChange(vmID,event,source,oldVal,newVal):
 	jabContext=JABContext(vmID=vmID,accContext=source)
-	focus=api.getFocusObject()
-	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-		obj = focus
-	else:
-		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
-	if obj:
-		eventHandler.queueEvent("nameChange", obj)
+	if jabContext.hwnd:
+		focus = api.getFocusObject()
+		if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
+			obj = focus
+		else:
+			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			eventHandler.queueEvent("nameChange", obj)
 	bridgeDll.releaseJavaObject(vmID,event)
 
 @AccessBridge_PropertyDescriptionChangeFP
 def event_descriptionChange(vmID,event,source,oldVal,newVal):
 	jabContext=JABContext(vmID=vmID,accContext=source)
-	focus=api.getFocusObject()
-	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-		obj = focus
-	else:
-		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
-	if obj:
-		eventHandler.queueEvent("descriptionChange", obj)
+	if jabContext.hwnd:
+		focus = api.getFocusObject()
+		if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
+			obj = focus
+		else:
+			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			eventHandler.queueEvent("descriptionChange", obj)
 	bridgeDll.releaseJavaObject(vmID,event)
 
 @AccessBridge_PropertyValueChangeFP
 def event_valueChange(vmID,event,source,oldVal,newVal):
 	jabContext=JABContext(vmID=vmID,accContext=source)
-	focus=api.getFocusObject()
-	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-		obj = focus
-	else:
-		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
-	if obj:
-		eventHandler.queueEvent("valueChange", obj)
+	if jabContext.hwnd:
+		focus = api.getFocusObject()
+		if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
+			obj = focus
+		else:
+			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			eventHandler.queueEvent("valueChange", obj)
 	bridgeDll.releaseJavaObject(vmID,event)
 
 @AccessBridge_PropertyStateChangeFP
@@ -741,6 +744,8 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 
 def event_stateChange(vmID,accContext,oldState,newState):
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
+	if not jabContext.hwnd:
+		return
 	focus=api.getFocusObject()
 	#For broken tabs and menus, we need to watch for things being selected and pretend its a focus change
 	stateList=newState.split(',')
@@ -770,14 +775,16 @@ def internal_event_caretChange(vmID, event,source,oldPos,newPos):
 
 def event_caret(vmID, accContext, hwnd):
 	jabContext = JABContext(hwnd=hwnd, vmID=vmID, accContext=accContext)
-	focus = api.getFocusObject()
-	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-		obj = focus
-	else:
-		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
-		if not obj:
-			return
-	eventHandler.queueEvent("caret", obj)
+	if jabContext.hwnd:
+		focus = api.getFocusObject()
+		if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
+			obj = focus
+		else:
+			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+			if not obj:
+				return
+		eventHandler.queueEvent("caret", obj)
+
 
 def event_enterJavaWindow(hwnd):
 	internalQueueFunction(enterJavaWindow_helper,hwnd)
