@@ -6,9 +6,10 @@
 """Utilities for working with the Windows Ease of Access Center.
 """
 
-from buildVersion import version_year
 from enum import Enum, IntEnum
 from typing import List
+
+import globalVars
 from logHandler import log
 import winreg
 import winUser
@@ -32,20 +33,18 @@ class AutoStartContext(IntEnum):
 	AFTER_LOGON = winreg.HKEY_CURRENT_USER
 
 
-if version_year < 2023:
+if globalVars._useDeprecatedAPI:
 	ROOT_KEY = RegistryKey.ROOT.value
 	"""
-	Deprecated, for removal in 2023.
-	Use L{RegistryKey.ROOT} instead.
+	Deprecated, use L{RegistryKey.ROOT} instead.
 	"""
 
 	APP_KEY_NAME = _APP_KEY_NAME
-	"""Deprecated, for removal in 2023"""
+	"""Deprecated for removal"""
 
 	APP_KEY_PATH = RegistryKey.APP.value
 	"""
-	Deprecated, for removal in 2023.
-	Use L{RegistryKey.APP} instead.
+	Deprecated, use L{RegistryKey.APP} instead.
 	"""
 
 

@@ -46,14 +46,12 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
-from buildVersion import version_year
 
 
-if version_year < 2023:
+if globalVars._useDeprecatedAPI:
 	def quit():
 		"""
-		Deprecated, for removal in 2023.1.
-		Use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
+		Deprecated, use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
 		"""
 		log.debugWarning("Deprecated function called: gui.quit", stack_info=True)
 		wx.CallAfter(mainFrame.onExitCommand, None)

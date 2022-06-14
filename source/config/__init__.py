@@ -10,8 +10,6 @@ In addition, this module provides three actions: profile switch notifier, an act
 For the latter two actions, one can perform actions prior to and/or after they take place.
 """
 
-
-from buildVersion import version_year
 from enum import Enum
 import globalVars
 import winreg
@@ -88,17 +86,15 @@ class RegistryKey(str, Enum):
 	"""
 
 
-if version_year < 2023:
+if globalVars._useDeprecatedAPI:
 	RUN_REGKEY = RegistryKey.RUN.value
 	"""
-	Deprecated, for removal in 2023.
-	Use L{RegistryKey.RUN} instead.
+	Deprecated, use L{RegistryKey.RUN} instead.
 	"""
 
 	NVDA_REGKEY = RegistryKey.NVDA.value
 	"""
-	Deprecated, for removal in 2023.
-	Use L{RegistryKey.NVDA} instead.
+	Deprecated, use L{RegistryKey.NVDA} instead.
 	"""
 
 

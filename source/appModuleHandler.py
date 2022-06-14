@@ -89,7 +89,7 @@ def __getattr__(attrName: str) -> Any:
 	since add-ons are initialized before `appModuleHandler`
 	and when `appModuleHandler` was not yet initialized the variable was set to `None`.
 	"""
-	if attrName == "NVDAProcessID":
+	if attrName == "NVDAProcessID" and globalVars._useDeprecatedAPI:
 		log.warning("appModuleHandler.NVDAProcessID is deprecated, use globalVars.appPid instead.")
 		if initialize._alreadyInitialized:
 			return globalVars.appPid
@@ -112,12 +112,14 @@ def _warnDeprecatedAliasAppModule() -> None:
 	except KeyError:
 		raise RuntimeError("This function can be executed only inside an alias App Module.") from None
 	else:
-		log.warning(
-			(
-				f"Importing from appModules.{currModName} is deprecated,"
-				f" you should import from appModules.{replacementModName}."
-			)
+		importFailMsg = (
+			f"Importing appModules.{currModName} is deprecated,"
+			f" instead, import appModules.{replacementModName}."
 		)
+		if globalVars._useDeprecatedAPI:
+			log.warning(importFailMsg)
+		else:
+			raise ImportError(importFailMsg)
 
 
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
