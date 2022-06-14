@@ -90,7 +90,7 @@ class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self) -> typing.Type["TreeInterceptor"]:
 		shouldLoadVBufOnBusyFeatureFlag = bool(
-			config.conf["virtualBuffers"]["loadChromiumVbufOnBusyState"]
+			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"]
 		)
 		vBufUnavailableStates = {  # if any of these are in states, don't return ChromeVBuf
 			controlTypes.State.EDITABLE,
