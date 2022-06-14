@@ -4,6 +4,12 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2022.2 =
+This release includes many bug fixes.
+Notably, there are siginifcant improvements for Java based applications, braille displays and Windows features.
+
+New table navigation commands have been introduced.
+Unicode CLDR has been updated.
+Liblouis has been updated, which includes a new German braille table.
 
 == New Features ==
 - Support for interacting with Microsoft Loop Components in Microsoft Office products. (#13617)
@@ -44,7 +50,8 @@ What's New in NVDA
   -
 - Braille fixes:
   - Fix braille output when navigating certain text in Mozilla rich edit controls, such as drafting a message in Thunderbird. (#12542)
-  - When braille is tethered automatically and the mouse is moved with mouse tracking enabled, text review commands now update the braille display with the spoken content. (#11519)
+  - When braille is tethered automatically and the mouse is moved with mouse tracking enabled
+   text review commands now update the braille display with the spoken content. (#11519)
   - It is now possible to pan the braille display through content after use of the text review commands. (#8682)
   -
 - The NVDA installer can now run from directories with special characters. (#13270)
@@ -58,8 +65,10 @@ What's New in NVDA
   -
 - Visual Studio now correctly reports line indentation. (#13574)
 - NVDA will once again announce Start menu search result details in recent Windows 10 and 11 releases. (#13544)
-- In Windows 10 and 11 Calculator version 10.1908 and later, NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13386)
-- In Windows 11, it is again possible to navigate and interact with user interface elements such as Taskbar and Task View using mouse and touch interaction. (#13508)
+- In Windows 10 and 11 Calculator version 10.1908 and later,
+NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13386)
+- In Windows 11, it is again possible to navigate and interact with user interface elements,
+such as Taskbar and Task View using mouse and touch interaction. (#13508)
 - Hidden text is no longer announced in Wordpad and other ``richEdit`` controls. (#13618)
 - NVDA will announce status bar content in Windows 11 Notepad. (#13386)
 - Navigator object highlighting now shows up immediately upon activation of the feature. (#13641)
@@ -70,8 +79,10 @@ What's New in NVDA
 
 
 == Changes for Developers ==
-- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
-- When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
+- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported.
+For development and release builds, Visual Studio 2019 is still used. (#13033)
+- When retrieving the count of selected children via accSelection,
+the case where a negative child ID or an IDispatch is returned by ``IAccessible::get_accSelection`` is now handled properly. (#13276)
 - New convenience functions ``registerExecutableWithAppModule`` and ``unregisterExecutable`` were added to the ``appModuleHandler`` module.
 They can be used to use a single App Module with multiple executables. (#13366)
 -
