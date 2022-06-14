@@ -8,7 +8,7 @@
 # jakubl7545, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
+import collections
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -17,6 +17,7 @@ from enum import IntEnum
 
 import typing
 import wx
+
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -25,6 +26,9 @@ import logHandler
 import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
+from config.featureFlag import (
+	FeatureFlagValues,
+)
 import languageHandler
 import speech
 import gui
@@ -2892,6 +2896,31 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Virtual Buffers")
+		vbufSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		vbufGroup = guiHelper.BoxSizerHelper(vbufSizer, sizer=vbufSizer)
+		sHelper.addItem(vbufGroup)
+
+		self.loadChromeVbufWhenBusyCombo: nvdaControls.FeatureFlagCombo = vbufGroup.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a checkbox in the Advanced settings panel.
+				"Load Chromium virtual buffer when document busy."
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "loadChromiumVbufOnBusyState"],
+			conf=config.conf,
+			translatedOptions=collections.OrderedDict({
+				# Translators: Label for option in the 'Load Chromium virtual buffer when document busy.'
+				# combobox in the Advanced settings panel.
+				FeatureFlagValues.ENABLED: _("Yes"),
+				# Translators: Label for option in the 'Load Chromium virtual buffer when document busy.'
+				# combobox in the Advanced settings panel.
+				FeatureFlagValues.DISABLED: _("No"),
+			})
+		)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Editable Text")
 		editableSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		editableTextGroup = guiHelper.BoxSizerHelper(editableSizer, sizer=editableSizer)
@@ -3016,6 +3045,7 @@ class AdvancedPanelControls(
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
+			and self.loadChromeVbufWhenBusyCombo.isValueConfigSpecDefault()
 			and True  # reduce noise in diff when the list is extended.
 		)
 
@@ -3036,6 +3066,7 @@ class AdvancedPanelControls(
 		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
+		self.loadChromeVbufWhenBusyCombo.resetToConfigSpecDefault()
 		self._defaultsRestored = True
 
 	def onSave(self):
@@ -3063,6 +3094,7 @@ class AdvancedPanelControls(
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
+		self.loadChromeVbufWhenBusyCombo.saveCurrentValueToConf()
 
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)

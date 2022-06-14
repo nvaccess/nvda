@@ -3,10 +3,20 @@
 # Copyright (C) 2016-2021 NV Access Limited, Derek Riemer
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+import collections
+from typing import (
+	List,
+	OrderedDict,
+)
 
 import wx
 from wx.lib import scrolledpanel
 from wx.lib.mixins import listctrl as listmix
+
+from config.featureFlag import (
+	FeatureFlag,
+	FeatureFlagValues,
+)
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import guiHelper
 import winUser
@@ -391,3 +401,125 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 		finally:
 			# ensure child.GetRect is reset properly even if super().ScrollChildIntoView throws an exception
 			child.GetRect = oldChildGetRectFunction
+
+
+class FeatureFlagCombo(wx.Choice):
+	"""Creates a combobox (wx.Choice) with a list of feature flags.
+	"""
+	def __init__(
+			self,
+			parent: wx.Window,
+			keyPath: List[str],
+			conf,
+			translatedOptions: OrderedDict[FeatureFlagValues, str],
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=0,
+			validator=wx.DefaultValidator,
+			name=wx.ChoiceNameStr,
+	):
+		"""
+		:param parent: The parent window.
+		:param keyPath: The list of keys required to get to the config value.
+		:param conf: The config.conf object.
+		:param translatedOptions: A dictionary of translated options, for each feature flag value. Note, the
+		FeatureFlagValues.default value should not be included in this dictionary. See L{
+		FeatureFlagCombo._setDefaultOptionLabel}.
+		:param pos: The position of the control. Forwarded to wx.Choice
+		:param size: The size of the control. Forwarded to wx.Choice
+		:param style: The style of the control. Forwarded to wx.Choice
+		:param validator: The validator for the control. Forwarded to wx.Choice
+		:param name: The name of the control. Forwarded to wx.Choice
+		"""
+		self._confPath = keyPath
+		self._conf = conf
+		if FeatureFlagValues.DEFAULT in translatedOptions:
+			raise ValueError(
+				f"The translatedOptions dictionary should not contain the key {FeatureFlagValues.DEFAULT!r}"
+				" It will be added automatically. See _setDefaultOptionLabel"
+			)
+		self._translatedOptions = self._createOptionsDict(translatedOptions)
+		choices = list(self._translatedOptions.values())
+		super(FeatureFlagCombo, self).__init__(
+			parent,
+			choices=choices,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=0,
+			validator=wx.DefaultValidator,
+			name=wx.ChoiceNameStr,
+		)
+
+		self.SetSelection(self._getChoiceIndex(self._getConfigValue().value))
+		self.defaultValue = self._getConfSpecDefaultValue()
+		"""The default value of the config spec. Not the "behavior of default".
+		This is provided to maintain compatibility with other controls in the
+		advanced settings dialog.
+		"""
+
+	def _getChoiceIndex(self, value: FeatureFlagValues) -> int:
+		return list(self._translatedOptions.keys()).index(value)
+
+	def _getConfSpecDefaultValue(self) -> FeatureFlagValues:
+		defaultValueFromSpec = self._conf.getConfigValidation(self._confPath).default
+		if not isinstance(defaultValueFromSpec, FeatureFlag):
+			raise ValueError(f"Default spec value is not a str, but {type(defaultValueFromSpec)}")
+		return defaultValueFromSpec.value
+
+	def _getConfigValue(self) -> FeatureFlag:
+		keyPath = self._confPath
+		if not keyPath or len(keyPath) < 1:
+			raise ValueError("Key path not provided")
+
+		conf = self._conf
+		for nextKey in keyPath:
+			conf = conf[nextKey]
+
+		if not isinstance(conf, FeatureFlag):
+			raise ValueError(f"Config value is not a FeatureFlag, but a {type(conf)}")
+		return conf
+
+	def isValueConfigSpecDefault(self) -> bool:
+		"""Does the current value of the control match the default value from the config spec?
+		This is not the same as the "behaviour of default".
+		"""
+		return self.GetSelection() == self.defaultValue
+
+	def resetToConfigSpecDefault(self) -> None:
+		"""Set the value of the control to the default value from the config spec.
+		"""
+		self.SetSelection(self._getChoiceIndex(self.defaultValue))
+
+	def saveCurrentValueToConf(self) -> None:
+		""" Set the config value to the current value of the control.
+		"""
+		flagValue: FeatureFlagValues = list(self._translatedOptions.keys())[self.GetSelection()]
+		keyPath = self._confPath
+		if not keyPath or len(keyPath) < 1:
+			raise ValueError("Key path not provided")
+		lastIndex = len(keyPath) - 1
+
+		conf = self._conf
+		for index, nextKey in enumerate(keyPath):
+			if index == lastIndex:
+				conf[nextKey] = flagValue.name
+				return
+			else:
+				conf = conf[nextKey]
+
+	def _createOptionsDict(
+			self,
+			translatedOptions: OrderedDict[FeatureFlagValues, str]
+	) -> OrderedDict[FeatureFlagValues, str]:
+		behaviorOfDefault = self._getConfigValue().behaviorOfDefault
+		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
+		# Translators: Label for option in the 'Load Chromium virtual buffer when document busy.'
+		# combobox in the Advanced settings panel. {} is replaced with the label of the option
+		# that describes the current behavior in NVDA. EG "Default (Yes)".
+		defaultOptionLabel: str = _("Default ({})").format(
+			translatedStringForBehaviorOfDefault
+		)
+		return collections.OrderedDict({
+			FeatureFlagValues.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
+			**translatedOptions
+		})

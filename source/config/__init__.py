@@ -9,7 +9,6 @@ The heart of NVDA's configuration is Configuration Manager, which records curren
 In addition, this module provides three actions: profile switch notifier, an action to be performed when NVDA saves settings, and action to be performed when NVDA is asked to reload configuration from disk or reset settings to factory defaults.
 For the latter two actions, one can perform actions prior to and/or after they take place.
 """
-
 from enum import Enum
 import globalVars
 import winreg
@@ -34,6 +33,10 @@ from fileUtils import FaultTolerantFile
 import extensionPoints
 from . import profileUpgrader
 from .configSpec import confspec
+from .featureFlag import (
+	_transformSpec_AddFeatureFlagDefault,
+	_validateConfig_featureFlag,
+)
 from typing import Any, Dict, List, Optional, Set
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
@@ -496,6 +499,21 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	pathList.extend(module.__path__)
 	module.__path__=pathList
 
+
+def _transformSpec(spec: ConfigObj):
+	"""To make the spec less verbose, transform the spec:
+	- Add default="default" to all featureFlag items. This is required so that the key can be read,
+	even if it is missing from the config.
+	-
+	"""
+	spec.configspec = spec
+	spec.validate(
+		Validator({
+			"featureFlag": _transformSpec_AddFeatureFlagDefault,
+		}), preserve_errors=True,
+	)
+
+
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
 	In addition to the base configuration, there can be multiple active configuration profiles.
@@ -517,13 +535,16 @@ class ConfigManager(object):
 
 	def __init__(self):
 		self.spec = confspec
+		_transformSpec(self.spec)
 		#: All loaded profiles by name.
 		self._profileCache: Optional[Dict[Optional[str], ConfigObj]] = {}
 		#: The active profiles.
 		self.profiles: List[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
-		self.validator: Validator = Validator()
+		self.validator: Validator = Validator({
+			"featureFlag": _validateConfig_featureFlag
+		})
 		self.rootSection: Optional[AggregatedSection] = None
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
