@@ -114,12 +114,12 @@ def _warnDeprecatedAliasAppModule() -> None:
 	else:
 		importFailMsg = (
 			f"Importing appModules.{currModName} is deprecated,"
-			f" instead, import appModules.{replacementModName}."
+			f" instead import appModules.{replacementModName}."
 		)
 		if globalVars._useDeprecatedAPI:
 			log.warning(importFailMsg)
 		else:
-			raise ImportError(importFailMsg)
+			raise ModuleNotFoundError(importFailMsg)
 
 
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
