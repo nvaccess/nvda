@@ -26,6 +26,7 @@ else:
 
 # #2391: some functions may still require the current directory to be set to NVDA's app dir
 os.chdir(globalVars.appDir)
+globalVars.appPid = os.getpid()
 
 
 import gettext

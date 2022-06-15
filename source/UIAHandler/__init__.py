@@ -35,6 +35,7 @@ from config import (
 import api
 import appModuleHandler
 import controlTypes
+import globalVars
 import winKernel
 import winUser
 import winVersion
@@ -747,7 +748,7 @@ class UIAHandler(COMObject):
 	def _isUIAWindowHelper(self,hwnd):
 		# UIA in NVDA's process freezes in Windows 7 and below
 		processID=winUser.getWindowThreadProcessID(hwnd)[0]
-		if windll.kernel32.GetCurrentProcessId()==processID:
+		if globalVars.appPid == processID:
 			return False
 		import NVDAObjects.window
 		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
@@ -921,12 +922,13 @@ class UIAHandler(COMObject):
 
 	def isNativeUIAElement(self,UIAElement):
 		#Due to issues dealing with UIA elements coming from the same process, we do not class these UIA elements as usable.
-		#It seems to be safe enough to retreave the cached processID, but using tree walkers or fetching other properties causes a freeze.
+		# It seems to be safe enough to retrieve the cached processID,
+		# but using tree walkers or fetching other properties causes a freeze.
 		try:
 			processID=UIAElement.cachedProcessId
 		except COMError:
 			return False
-		if processID==windll.kernel32.GetCurrentProcessId():
+		if processID == globalVars.appPid:
 			return False
 		# Whether this is a native element depends on whether its window natively supports UIA.
 		windowHandle=self.getNearestWindowHandle(UIAElement)
