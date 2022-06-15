@@ -65,3 +65,7 @@ unknownAppArgs: typing.List[str] = []
 settingsRing = None
 speechDictionaryProcessing=True
 exitCode=0
+
+appPid: int = 0
+"""The process ID of NVDA itself.
+"""

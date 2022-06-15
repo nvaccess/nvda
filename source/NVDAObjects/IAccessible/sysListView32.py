@@ -217,7 +217,10 @@ class List(List):
 	def _get_rowCount(self):
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
 
-	def _get_columnCount(self):
+	columnCount: int
+	"""Typing information for auto-property: _get_columnCount"""
+
+	def _get_columnCount(self) -> int:
 		if not self.isMultiColumn:
 			return 0
 		headerHwnd= watchdog.cancellableSendMessage(self.windowHandle,LVM_GETHEADER,0,0)
@@ -257,6 +260,9 @@ class List(List):
 		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			winKernel.writeProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+			# The meaning of the return value depends on the message sent, for LVM_GETCOLUMNORDERARRAY,
+			# it returns nonzero if successful, or 0 otherwise.
+			# https://docs.microsoft.com/en-us/windows/win32/controls/lvm-getcolumnorderarray#return-value
 			res = watchdog.cancellableSendMessage(
 				self.windowHandle,
 				LVM_GETCOLUMNORDERARRAY,
@@ -266,7 +272,11 @@ class List(List):
 			if res:
 				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
 			else:
-				log.debugWarning("LVM_GETCOLUMNORDERARRAY failed for list")
+				coa = None
+				log.debugWarning(
+					f"LVM_GETCOLUMNORDERARRAY failed for list. "
+					f"Windows Error: {ctypes.GetLastError()}, Handle: {self.windowHandle}"
+				)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
 		return coa
@@ -274,14 +284,33 @@ class List(List):
 	def _getColumnOrderArrayRaw(self, columnCount: int) -> Optional[ctypes.Array]:
 		"""Retrieves an array of column indexes for a given list.
 		The indexes are placed in order in which columns are displayed on screen from left to right.
-		Note that when columns are reordered the indexes remain  the same - only their ordder differs.
+		Note that when columns are reordered the indexes remain the same - only their order differs.
 		"""
-		if not self.appModule.helperLocalBindingHandle:
+		if self.appModule.helperLocalBindingHandle is None:
 			return self._getColumnOrderArrayRawOutProc(columnCount)
 		return self._getColumnOrderArrayRawInProc(columnCount)
 
-	def _get__columnOrderArray(self) -> Optional[ctypes.Array]:
-		return self._getColumnOrderArrayRaw(self.columnCount)
+	def _getMappedColumn(self, presentationIndex: int) -> Optional[int]:
+		"""
+		Multi-column SysListViews can have their columns re-ordered.
+		To keep a consistent internal mapping, a column order array is used
+		to map a presentation index to a consistent internal index.
+		For single-column SysListViews, the mapping is not necessary.
+		If the column order array cannot be fetched from a multi-column SysListView,
+		this returns None.
+
+		@param presentationIndex: One based index for the column as presented to the user.
+		@return: The internal / logical column zero based index for the column.
+		None if the mapped column cannot be determined.
+		"""
+		if presentationIndex == 1 and self.columnCount == 1:
+			# Use an implied default column mapping for single column list views
+			return 0
+		columnOrderArray = self._getColumnOrderArrayRaw(self.columnCount)
+		if columnOrderArray is None:
+			log.error("Cannot fetch column as column order array is unknown")
+			return None
+		return columnOrderArray[presentationIndex - 1]
 
 
 class GroupingItem(Window):
@@ -362,6 +391,7 @@ class ListItemWithoutColumnSupport(IAccessible):
 
 
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
+	parent: List
 
 	def _getColumnLocationRawInProc(self, index: int) -> ctypes.wintypes.RECT:
 		"""Retrieves rectangle containing coordinates for a given column.
@@ -444,7 +474,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
 	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
-		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
+			return None
+		return self._getColumnLocationRaw(mappedColumn)
 
 	def _getColumnContentRawInProc(self, index: int) -> Optional[str]:
 		"""Retrieves text for a given column.
@@ -497,7 +530,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnContentRawInProc(index)
 
 	def _getColumnContent(self, column: int) -> Optional[str]:
-		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
+			return None
+		return self._getColumnContentRaw(mappedColumn)
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle
@@ -514,7 +550,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return item.iImage
 
 	def _getColumnImageID(self, column):
-		return self._getColumnImageIDRaw(self.parent._columnOrderArray[column - 1])
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
+			return None
+		return self._getColumnImageIDRaw(mappedColumn)
 
 	def _getColumnHeaderRawOutProc(self, index: int) -> Optional[str]:
 		"""Retrieves text of the header for the given column.
@@ -565,7 +604,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnHeaderRawInProc(index)
 
 	def _getColumnHeader(self, column: int) -> Optional[str]:
-		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
+			return None
+		return self._getColumnHeaderRaw(mappedColumn)
 
 	def _get_name(self):
 		parent = self.parent

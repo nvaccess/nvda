@@ -36,12 +36,11 @@ Nota:
 - Añadidas órdenes para conmutar varios modificadores simultáneamente con una pantalla braille (#13152)
 - El diálogo diccionarios del habla ahora implementa un botón "Eliminar todo" para ayudar a borrar  un diccionario entero. (#11802)
 - Añadido el soporte para la Calculadora de Windows 11. (#13212)
-- En Microsoft Word con UI Automation habilitado en Windows 11,  los números de línea, de sección y de diseño de columna ahora pueden anunciarse.  (#13283)
+- En Microsoft Word con UI Automation habilitado en Windows 11,  ahora pueden anunciarse los números de línea y de sección.  (#13283, #13515)
 - Para Microsoft Office 16.0.15000 y superiores en Windows 11, NVDA utilizará UI Automation para acceder a documentos de Microsoft Word por defecto, proporcionando una significativa mejora de rendimiento sobre el acceso al antiguo modelo de objetos. (#13437)
  - Esto incluye documentos en el propio Microsoft Word y también en el lector y redactor de mensajes en Microsoft Outlook. 
  -
 -
-
 
 == Cambios ==
 - Espeak-ng se ha actualizado a 1.51-dev commit ``7e5457f91e10``. (#12950)
@@ -88,13 +87,15 @@ Nota:
 - Adobe Reader ya no se cuelga al arrancar si el modo protegido de Adobe Reader está habilitado. (#11568)
 - Corregido un fallo donde al seleccionar el controlador de la pantalla braille Papenmeier provocaba que NVDA se colgase. (#13348)
 - En Microsoft word con UIA: el número de página y otros formatos ya no se anuncian inapropiadamente al moverse desde una celda de tabla en blanco a una celda con contenido, o desde el final del documento a un contenido existente. (#13458, #13459)
+- NVDA ya no falla al anunciar el título de página y al comenzar la lectura automática cuando se cargue una página en Google chrome 100. (#13571)
+- NVDA ya no se bloquea al reiniciar la configuración de NVDA a los valores predeterminados de fábrica mientras verbalizar teclas de órdenes esté activado. (#13634)
 -
 
 == Cambios para Desarrolladores ==
 - Nota: esta es una versión que rompe la compatibilidad con la API de los complementos. Los complementos tendrán que volver a probarse y actualizar su manifiesto.
 - Aunque NVDA sigue requiriendo Visual Studio 2019, las compilaciones ya no deberían fallar si se instala una versión más reciente de Visual Studio (por ejemplo, 2022) junto con 2019. (#13033, #13387)
 - Actualizado SCons a la versión 4.3.0. (#13033)
-- Actualizado py2exe a la versión 0.11.0.1. (#12357, #13066)
+- Actualizado py2exe a la versión 0.11.0.1.0 (#13510)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` se ha eliminado. Utiliza ``apiLevel`` en su lugar. (#12955, #12660)
 - ``TVItemStruct`` se ha eliminado de ``sysTreeView32``. (#12935)
 - ``MessageItem`` se ha eliminado del appModule Outlook. (#12935)
@@ -157,24 +158,28 @@ Esto puede reducir dramáticamente los tiempos de compilación en sistemas multi
 -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` se ha movido a ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
 - El booleano ``gui.isInMessageBox`` se eliminó, por favor utiliza la función ``gui.message.isModalMessageBoxActive`` en su lugar. (#12984, #13376)
-- ``controlTypes`` se ha separado en varios submodules. (#12510)
+- ``controlTypes`` se ha separado en varios submodules. (#12510, #13588)
   - ``ROLE_*`` y ``STATE_*`` se han reemplazado por ``Role.*`` y ``State.*``.
-  - ``roleLabels``, ``stateLabels`` y ``negativeStateLabels`` se han eliminado.
-  Usos como ``roleLabels[ROLE_*]`` deberían reemplazarse por sus equivalentes ``Role.*.displayString`` o ``State.*.negativeDisplayString``.
-  - ``processPositiveStates`` y ``processNegativeStates`` se han eliminado.
-  -
-- Los valores enum ``controlTypes.Role`` y ``controlTypes.State`` ya no se arreglaron/codificaron y han cambiado. (#13414)
-  - Los miembros ``controlTypes.State`` ya no son banderas de bit, los estados no deberían determinarse utilizando operaciones bit a bit.
-  - Hay mapeos para ``IAccessible``, ``IAccessible2`` y ``UIA``:
-    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
-    - ``UIAHandler.UIAControlTypesToNVDARoles``
+  - Aunque todavía están disponibles, las siguientes deben considerarse obsoletas:
+    - ``ROLE_*`` y ``STATE_*``, utiliza ``Role.*`` y ``State.*`` en su lugar.
+    - ``roleLabels``, ``stateLabels`` y ``negativeStateLabels``, usos como ``roleLabels[ROLE_*]`` deberían reemplazarse por sus equivalencias ``Role.*.displayString`` o ``State.*.negativeDisplayString``.
+    - ``processPositiveStates`` y ``processNegativeStates`` deberían utilizar ``processAndLabelStates`` en su lugar.
     -
   -
-+- Las constantes de celda de Excel (``NVSTATE_*``) ahora son valores en el enum ``NvCellState``, reflejadas en la enum ``NvCellState`` en ``NVDAObjects/window/excel.py`` y mapeadas en ``controlTypes.State`` a través de _nvCellStatesToStates. (#13465)
+- Las constantes de celda de Excel (``NVSTATE_*``) ahora son valores en el enum ``NvCellState``, reflejadas en la enum ``NvCellState`` en ``NVDAObjects/window/excel.py`` y mapeadas en ``controlTypes.State`` a través de _nvCellStatesToStates. (#13465)
 - El mienbro de la estructura ``EXCEL_CELLINFO`` ``state`` ahora es ``nvCellStates``.
 - ``mathPres.ensureInit`` se ha eliminado, MathPlayer ahora se inicializa cuando NVDA arranca. (#13486)
+-
+
+
+= 2021.3.5 =
+Esta es una versión menor para corregir un problema de seguridad.
+Por favor, comunica responsablemente los fallos de seguridad a info@nvaccess.org.
+
+== Correcciones de Seguridad ==
+- Se ha corregido el aviso de seguridad ``GHSA-xc5m-v23f-pgr7``.
+  - El diálogo pronunciación de símbolos ahora se deshabilita en modo seguro.
+  -
 -
 
 

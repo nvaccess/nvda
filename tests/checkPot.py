@@ -116,7 +116,7 @@ def checkPot(fileName):
 	expectedErrors = 0
 	unexpectedSuccesses = 0
 	foundMessagesWithOutComments: Set[str] = set()
-	with open(fileName, "rt") as pot:
+	with open(fileName, "rt", encoding="utf-8") as pot:
 		passedHeader = False
 		for line in pot:
 			line = line.rstrip()

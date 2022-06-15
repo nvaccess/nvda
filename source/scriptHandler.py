@@ -72,7 +72,7 @@ def findScript(gesture):
 
 	globalMapScripts = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
-	globalMap = braille.handler.display.gestureMap
+	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
 		globalMaps.append(globalMap)
 	for globalMap in globalMaps:
@@ -100,17 +100,21 @@ def findScript(gesture):
 			return func
 
 	# Braille display level
-	if isinstance(braille.handler.display, baseObject.ScriptableObject):
+	if (
+		braille.handler
+		and isinstance(braille.handler.display, baseObject.ScriptableObject)
+	):
 		func = _getObjScript(braille.handler.display, gesture, globalMapScripts)
 		if func:
 			return func
 
 	# Vision enhancement provider level
-	for provider in vision.handler.getActiveProviderInstances():
-		if isinstance(provider, baseObject.ScriptableObject):
-			func = _getObjScript(provider, gesture, globalMapScripts)
-			if func:
-				return func
+	if vision.handler:
+		for provider in vision.handler.getActiveProviderInstances():
+			if isinstance(provider, baseObject.ScriptableObject):
+				func = _getObjScript(provider, gesture, globalMapScripts)
+				if func:
+					return func
 
 	# Tree interceptor level.
 	treeInterceptor = focus.treeInterceptor
