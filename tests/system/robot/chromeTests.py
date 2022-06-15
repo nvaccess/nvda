@@ -311,7 +311,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght cmnt cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght has cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Read line with details.",
 	)
 	# this word has no details attached
@@ -323,7 +323,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght cmnt cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght has cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word without details",
 	)
 
@@ -348,7 +348,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght cmnt cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght has cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word with details",
 	)
 	# read the details summary
@@ -468,7 +468,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"The word  hlght cmnt cat hlght end  has a comment tied to it.",
+		"The word  hlght has cmnt cat hlght end  has a comment tied to it.",
 		message="Focus mode: report content editable with details",
 	)
 
@@ -502,7 +502,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		expected="The word  hlght cmnt cat hlght end  has a comment tied to it.",
+		expected="The word  hlght has cmnt cat hlght end  has a comment tied to it.",
 		message="Focus mode: Move by word to word with details",
 	)
 
