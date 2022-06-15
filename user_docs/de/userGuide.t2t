@@ -27,7 +27,7 @@ Zu den wichtigsten Funktionen gehören:
 - Einfache Bedienung während der Installation mit Unterstützung durch die Sprachausgabe.
 - Übersetzt in mehr als 54 Sprachen.
 - Unterstützung für moderne Windows-Betriebssysteme (32- und 64-Bit).
-- Lauffähig während der Windows-Anmeldung und bei Sicherheitsmeldungen.
+- Lauffähig während der Windows-Anmeldung und [anderen Sicherheitsmeldungen #SecureScreens].
 - Unterstützung für Touchscreens.
 - Unterstützung gängiger Schnittstellen zur Barrierefreiheit wie Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UIA.
 - Unterstützung für die Windows-Eingabeaufforderung und -Konsolenanwendungen.
@@ -81,7 +81,7 @@ Wenn Sie die soeben heruntergeladene Datei ausführen, wird NVDA temporär entpa
 Sie werden dann gefragt, ob Sie NVDA installieren, eine portable Version erstellen oder nur temporär weiter verwenden möchten.
 
 Falls Sie vorhaben, NVDA auf dem Computer dauerhaft einzusetzen, sollten Sie NVDA installieren.
-Eine solche installierte NVDA-Version hat gegenüber einer portablen Version Vorteile wie den automatischen Start während und nach der Anmeldung, die Erstellung von Verknüpfungen auf dem Desktop und im Startmenü oder die Windows-Anmeldung und Sicherheitsmeldungen auszulesen. Dies ist mit einer portablen oder temporären Version nicht möglich.
+Die Installation von NVDA hat den Vorteil, dass zusätzliche Funktionen wie den automatischen Start nach der Anmeldung, das Auslesen bei der Windows-Anmeldung und [anderen Sicherheitsmeldungen #SecureScreens] (was bei portablen und temporären Versionen nicht möglich ist) sowie die Erstellung von Startmenü- und Desktop-Verknüpfungen.
 Mit Hilfe einer installierten Version können Sie auch jederzeit eine portable Version erstellen.
 
 Falls Sie NVDA auf einem USB-Stick oder einem anderen Datenträger mitnehmen möchten, können Sie eine portable Version erstellen.
@@ -118,7 +118,7 @@ Weitere Informationen zu dieser Schaltfläche finden Sie im Abschnitt [Inkompati
 
 +++ NVDA bei der Windows-Anmeldung verwenden +++[StartAtWindowsLogon]
 Mit dieser Option können Sie entscheiden, ob NVDA automatisch gestartet werden soll, während Sie sich in der Windows-Anmeldung befinden, bevor Sie ein Passwort eingegeben haben.
-Dies betrifft auch die Benutzerkontensteuerung und andere Sicherheitsmeldungen.
+Dies betrifft auch die Benutzerkontensteuerung und [andere Sicherheitsmeldungen #SecureScreens].
 Diese Option ist standardmäßig während einer Neuinstallation aktiviert.
 
 +++ Desktop-Verknüpfung erstellen (Strg+Alt+N) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ Wenn diese Verknüpfung erstellt wird, wird ihr auch eine Tastenkombination (Str
 
 +++ Portable Konfiguration in das aktuelle Benutzerkonto kopieren +++[CopyPortableConfigurationToCurrentUserAccount]
 Hiermit legen Sie fest, ob NVDA die Konfiguration der momentan laufenden NVDA-Instanz in das Konfigurationsverzeichnis des aktuell angemeldeten Benutzers kopieren soll.
-Dadurch wird weder die Konfiguration für andere Benutzer dieses Systems noch die Systemkonfiguration für die Verwendung während der Windows-Anmeldung und anderer Sicherheitsmeldungen kopiert.
+Dadurch wird weder die Konfiguration für andere Benutzer dieses Systems noch die Systemkonfiguration für die Verwendung während der Windows-Anmeldung und [anderer Sicherheitsmeldungen #SecureScreens] kopiert.
 Diese Option ist nur verfügbar, wenn NVDA aus einer portablen Version heraus installiert wird - nicht jedoch beim Ausführen einer heruntergeladenen Version.
 
 ++ Erstellen einer portablen Version ++[CreatingAPortableCopy]
@@ -152,7 +152,7 @@ Sie können auch einige [Kommandozeilenparameter #CommandLineOptions] übergeben
 
 Bei installierten NVDA-Versionen werden die Konfigurationsdateien normalerweise im Roaming-Verzeichnis des aktuell angemeldeten Benutzers gespeichert (z. B. "C:\Users\<Benutzer>\AppData\Roaming").
 Sie können NVDA jedoch so einstellen, dass die Konfigurationsdateien stattdessen im Lokalen Verzeichnis des aktuellen Benutzers gespeichert werden.
-Weitere Informationen dazu finden Sie im Abschnitt [Systemparameter #SystemWideParameters].
+Weitere Informationen dazu finden Sie im Abschnitt [System-Parameter #SystemWideParameters].
 
 Um die portable NVDA-Version zu starten, wechseln Sie in den Ordner, in welchem Sie die Dateien entpackt haben und starten anschließend die Datei "NVDA.exe" mit der Eingabetaste oder mit einem Doppelklick.
 Wenn NVDA bereits ausgeführt wurde, wird es automatisch gestoppt, bevor die portable Version gestartet wird.
@@ -342,6 +342,10 @@ Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügu
 | Zur nächsten Spalte navigieren | Strg+Alt+Pfeiltaste nach rechts | Zieht den System-Cursor zur nächsten Spalte in der gleichen Zeile. |
 | Zur vorherigen Zeile navigieren | Strg+Alt+Pfeiltaste nach oben | Zieht den System-Cursor zur vorherigen Zeile in der gleichen Spalte. |
 | Zur nächsten Zeile navigieren | Strg+Alt+Pfeiltaste nach unten | Zieht den System-Cursor zur nächsten Zeile in der gleichen Spalte. |
+| Zur ersten Spalte springen | Strg+Alt+Pos1 | Zieht den System-Cursor in die erste Spalte (bleibt in der gleichen Zeile) |
+| Zur letzten Spalte springen | Strg+Alt+Ende | Zieht den System-Cursor in die letzte Spalte (bleibt in der gleichen Zeile) |
+| Zur ersten Zeile springen | Strg+Alt+Seite nach oben | Zieht den System-Cursor in die erste Zeile (bleibt in gleichen Spalte) |
+| Zur letzten Zeile springen | Strg+Alt+Seite nach unten | Zieht den System-Cursor in die letzte Zeile (bleibt in gleichen  Spalte) |
 %kc:endInclude
 
 ++ Die Objekt-Navigation ++[ObjectNavigation]
@@ -617,8 +621,11 @@ NVDA unterstützt die folgenden mathematischen Inhalte:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer und Google Chrome.
 - Moderne mathematische Gleichungen über UIA in Microsoft Word 365:
 NVDA ist in der Lage, mathematische Gleichungen in Microsoft Word 365 / 2016 Build 14326 und neuer auszulesen und mit diesen zu interagieren.
-Beachten Sie jedoch, dass alle zuvor erstellten MathType-Gleichungen zunächst in Office Math konvertiert werden müssen, indem Sie sie markieren und im Kontextmenü Gleichungsoptionen -> In Office Math konvertieren auswählen. Vergewissern Sie sich, dass Ihre Version von MathType die neueste Version ist, bevor Sie dies tun.
-Microsoft Word bietet dabei auch eine auf Linear-Symbolen basierende Navigation durch die Gleichungen selbst und unterstützt die Eingabe von mathematischen Formeln mit verschiedener Syntax, einschließlich LaTeX. Weitere Einzelheiten finden Sie unter [Linear formatierte Gleichungen mit UnicodeMath und LaTeX in Microsoft Word https://support.microsoft.com/de-de/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8].
+Beachten Sie jedoch, dass alle zuvor erstellten MathType-Gleichungen zunächst in Office Math konvertiert werden müssen.
+Dazu markieren Sie die einzelnen Elemente und wählen im Kontextmenü "Gleichungsoptionen" und dann "In Office-Mathematik umwandeln".
+Vergewissern Sie sich, dass Ihre Version von MathType aktuell ist, bevor Sie dies tun.
+Microsoft Word bietet eine lineare, symbolbasierte Navigation durch die Gleichungen selbst und unterstützt die Eingabe von mathematischen Werten mit verschiedener Syntax, einschließlich LaTeX.
+Weitere Einzelheiten finden Sie unter [Linear formatierte Gleichungen mit UnicodeMath und LaTeX in Word https://support.microsoft.com/de-de/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8].
 - Microsoft PowerPoint und ältere Versionen von Microsoft Word: 
 NVDA kann MathType-Gleichungen sowohl in Microsoft Powerpoint als auch in Microsoft Word lesen und darin navigieren.
 Damit dies funktioniert, muss MathType installiert sein.
@@ -704,7 +711,8 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | mnüsltr | Menüschalter |
 | mnüe | Menüeintrag |
 | strg | Steuerung |
-| fortschritt | Fortschrittsanzeige |
+| fsb | Fortschrittsbalken |
+| besch | Beschäftigt-Status |
 | as | Auswahlschalter |
 | rb | Rollbalken |
 | abs | Abschnitt |
@@ -785,7 +793,8 @@ Sie können diese Zuweisungen ändern oder neue emulierte Tasten über den [Dial
 
 Während dieser Ansatz für häufig gedrückte oder eindeutige Tasten (z. B. Tabulator) nützlich ist, möchten Sie vielleicht nicht jedem Tastaturkürzel einen eindeutigen Satz von Tasten zuweisen.
 Zur Emulation von Tastendrücken bei gedrückten Sondertasten bietet NVDA Befehle zum Umschalten der Strg-, Alt-, Umschalt-, Windows- und NVDA-Tasten sowie Befehle für einige Kombinationen dieser Tasten.
-Um diese Umschalttasten zu verwenden, drücken Sie zunächst den Befehl (oder die Befehlsfolge) für die NVDA-Taste, die Sie drücken möchten, und geben Sie dann das Zeichen ein, das Teil des gewünschten Tastaturkürzels ist.
+Um diese Umschalttasten zu verwenden, drücken Sie zunächst den Befehl (oder die Befehlsfolge) für die Modifikatortasten, die Sie drücken möchten.
+Drücken Sie dann den Buchstaben, welches Teil des gewünschten Tastaturkürzels ist.
 Um z. B. Strg+F zu erzeugen, verwenden Sie den Befehl "Strg-Taste umschalten" und geben dann ein F ein, und um Strg+Alt+T einzugeben, verwenden Sie entweder die Befehle "Strg-Taste umschalten" und "Alt-Taste umschalten" in beliebiger Reihenfolge oder den Befehl "Strg- und Alt-Tasten umschalten" und geben dann ein T ein.
 
 Wenn Sie versehentlich die Modifikatortasten umschalten, können Sie den Befehl "Umschalten" erneut ausführen, um die Modifikatoren wieder zu entfernen.
@@ -1125,7 +1134,7 @@ Wenn Sie sich bei Windows mit Ihrem Benutzernamen und Ihrem Passwort anmelden, b
 Diese Option ist nur in der installierten Version verfügbar!
 
 ==== Aktuell gespeicherte Einstellungen  für die Windows-Anmeldung und bei Sicherheitsmeldungen verwenden (erfordert Administrationsberechtigungen!) ====[GeneralSettingsCopySettings]
-Mit diesem Schalter wird Ihre aktuell gespeicherte NVDA-Benutzerkonfiguration in das Systemkonfigurationsverzeichnis von NVDA kopiert, so dass NVDA sie während der Anmeldung und beim Ausführen der Benutzerkontensteuerung und anderer Sicherheitsmeldungen unterstützt.
+Mit dieser Schaltfläche wird die aktuell gespeicherte NVDA-Benutzerkonfiguration in das Systemkonfigurationsverzeichnis von NVDA kopiert, sodass NVDA sie bei der Anmeldung und bei der Benutzerkontensteuerung und [anderen Sicherheitsmeldungen #SecureScreens] verwendet.
 Speichern Sie zuvor Ihre Konfiguration, um sicherzustellen, dass auch tatsächlich all Ihre Einstellungen übernommen wurden. Sie können dies im NVDA-Menü oder mit der Tastenkombination NVDA+Strg+C vornehmen.
 Diese Option ist nur in der installierten Version verfügbar!
 
@@ -1708,8 +1717,12 @@ Wenn gleich der Lesemodus keine wirklichen Seiten hat, können Sie jedoch hier f
 ==== Bildschirm-Layout verwenden ====[BrowseModeSettingsScreenLayout]
 Tastenkombination: NVDA+V
 
-Mit dieser Option können Sie festlegen, ob der Lesemodus anklickbare Inhalte (Links, Schaltflächen und Steuerelemente) separat in einer eigenen Zeile platziert werden soll oder ob sie im Textfluss erscheinen sollen, wie sie visuell angezeigt werden. Beachten Sie, dass diese Option nicht für Microsoft Office-Anwendungen wie Outlook und Word gilt, die immer das Bildschirm-Layout verwenden.
-Wenn der Bildschirm-Layout aktiviert ist, bleiben die Seitenelemente so, wie sie visuell dargestellt werden. Zum Beispiel wird eine Zeile visuell mit mehreren Links in Sprache und Braille als mehrere Links in derselben Zeile dargestellt. Wenn die Funktion deaktiviert ist, werden die Seitenelemente separat in eigenen Zeilen dargestellt, was bei der zeilenweisen Seiten-Navigation leichter zu verstehen ist und die Interaktion mit den Elementen für Benutzer erleichtert.
+Mit dieser Option können Sie festlegen, ob der Lesemodus anklickbare Inhalte (Links, Schaltflächen und Felder) in einer eigenen Zeile darstellen soll oder ob sie innerhalb des Textes bleiben sollen, wie sie visuell angezeigt werden.
+Beachten Sie, dass diese Option nicht für Microsoft Office-Anwendungen wie Outlook und Word gilt, die immer das Bildschirm-Layout verwenden.
+Wenn das Bildschirm-Layout aktiviert ist, bleiben die Seitenelemente so, wie sie visuell dargestellt werden.
+Zum Beispiel wird eine visuelle Zeile mit mehreren Links in Sprache und Braille als mehrere Links auf derselben Zeile dargestellt.
+Wenn sie deaktiviert ist, werden die Seitenelemente in einer separaten Zeilen dargestellt.
+Dies kann bei Bedarf die zeilenweise Seitennavigation übersichtlicher gestalten und die Interaktion mit den Elementen für einige Benutzer erleichtern.
 
 ==== Lesemodus beim Laden von Webseiten verwenden ====[BrowseModeSettingsEnableOnPageLoad]
 Mit diesem Kontrollkästchen legen Sie fest, ob der Lesemodus beim Laden einer Webseite aktiviert werden soll.
@@ -3308,6 +3321,34 @@ Im Folgenden sind die aktuellen Tastenbelegungen für diese Anzeigen aufgeführt
  
 + Erweiterte Themen +[AdvancedTopics]
 
+++ Geschützter Modus ++[SecureMode]
+NVDA kann im sicheren Modus mit der [Kommandozeilenoption #CommandLineOptions] ``-s`` gestartet werden.
+NVDA läuft im geschützten Modus, wenn es bei [geschützten Sicherheitsmeldungen #SecureScreens] ausgeführt wird, es sei denn, der [System-Parameter #SystemWideParameters] ``serviceDebug`` ist aktiviert.
+
+Im geschützten Modus sind folgende Dinge deaktiviert:
+
+- Speichern der Konfiguration und anderer Einstellungen auf dem Speichermedium
+- Speichern der Tastenbefehle auf dem Speichermedium
+- Aktionen im Dialogfeld für die [Konfigurationsprofile #ConfigurationProfiles] wie z. B. Erstellen, Löschen, Profile umbenennen, etc.
+- Aktualisieren von NVDA und Erstellen portabler Versionen
+- Die [Python-Konsole #PythonConsole]
+- Der [Protokoll-Betrachter #LogViewer] und die Protokollierung
+-
+
+++ Geschützte Sicherheitsmeldungen ++[SecureScreens]
+NVDA läuft im [geschützten Modus #SecureMode], wenn es auf sicheren Bildschirmen ausgeführt wird, es sei denn, der [System-Parameter #SystemWideParameters] ``serviceDebug`` ist aktiviert.
+
+Wenn NVDA über einen geschützten Bereich ausgeführt wird, verwendet es ein Systemprofil für die Einstellungen.
+NVDA-Benutzereinstellungen können kopiert werden [zur Verwendung in geschützten Sicherheitsmeldungen #GeneralSettingsCopySettings].
+
+Zu den geschützten Sicherheitsmeldungen gehören:
+
+- Der Fenster der Windows-Anmeldung
+- Das Dialogfeld der Benutzerkontensteuerung, welches angezeigt wird, wenn eine Aktion als Administrator ausgeführt wird
+  - Dazu gehört die Installation von Programmen
+  -
+-
+
 ++ Befehlszeilenoptionen ++[CommandLineOptions]
 Mit Hilfe von Befehlszeilenoptionen können Sie das Verhalten von NVDA beeinflussen.
 Sie können beliebig viele Optionen angeben.
@@ -3341,7 +3382,7 @@ Folgende Kommandozeilenoptionen gibt es:
 | -c Konfigurationspfad | --config-path=KonfigurationsPfad | Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
 | Keine | --lang=SPRACHE | Setzen Sie die konfigurierte NVDA-Sprache außer Kraft. Setzen Sie "Windows" als Standard für den aktuellen Benutzer, "de" für Deutsch, etc. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
-| -s | --secure | Sicherer Modus: Deaktiviert die Python-Konsole, Profil-Funktionen wie Erstellen, Löschen, Umbenennen von Profilen, etc., Update-Check, einige Kontrollkästchen im Willkommensdialog und in der Kategorie "Allgemein" (z. B. NVDA nach der Anmeldung starten, Konfiguration nach dem Beenden speichern, etc.) sowie im Protokoll-Betrachter- und Funktionen zur Protokollierung (werden oft in Sicherheitsmeldungen verwendet). Beachten Sie auch, dass dieser Befehl die Möglichkeit zum Speichern von Einstellungen in der Systemkonfiguration deaktiviert und die Tastenbefehle nicht gespeichert werden. |
+| -s | --secure | Startet NVDA im [geschützten Modus #SecureMode] |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
 | Keine | --debug-logging | Aktivieren Sie die Protokollierung nur für diesen Lauf. Diese Einstellung überschreibt alle anderen Argumente der Protokollebene ( ""--loglevel"", -l), einschließlich der Option keine Protokollierung. |
 | Keine | --no-logging | Deaktivieren Sie die Protokollierung vollständig, während Sie NVDA verwenden. Diese Einstellung kann überschrieben werden, wenn eine Protokollebene ("--loglevel"", -l) von der Kommandozeile aus angegeben wird oder wenn die Debug-Protokollierung eingeschaltet ist. |
@@ -3354,7 +3395,7 @@ Folgende Kommandozeilenoptionen gibt es:
 | Keine | --create-portable-silent | Erstellt eine neue portable NVDA-Version, ohne diese zu starten. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
 | Keine | --portable-path=Ordner | Gibt den Ordner an, in dem die portable Version erstellt werden soll. |
 
-++ Systemparameter ++[SystemWideParameters]
+++ System-Parameter ++[SystemWideParameters]
 Sie können einige Werte in der Registrierungsdatenbank von Windows verwenden, um das Verhalten von NVDA zu beeinflussen.
 Diese Werte werden unter einem der folgenden Schlüssel gespeichert:
 - Für 32-Bit-Systeme: "HKEY_LOCAL_MACHINE\SOFTWARE\NVDA"
@@ -3364,7 +3405,7 @@ Diese Werte werden unter einem der folgenden Schlüssel gespeichert:
 Die folgenden Werte können geändert werden:
 || Name | Typ | Mögliche Werte | Beschreibung |
 | configInLocalAppData | DWORD | 0 (Standard) zum Deaktivieren, 1 zum Aktivieren | Wenn diese Einstellung aktiviert ist, werden die Konfigurationsdateien im lokalen Verzeichnis des aktuell angemeldeten Benutzers gespeichert. Standardmäßig werden sie im Roaming-Verzeichnis gespeichert. |
-| serviceDebug | DWORD | 0 (Standard) zum Deaktivieren, 1 zum Aktivieren | Das Aktivieren dieser Einstellung wird nicht empfohlen. Diese Einstellung deaktiviert den sicheren Modus in der Windows-Anmeldung. Gleichzeitig wird der Protokollbetrachter und die Python-Konsole aktiviert. |
+| serviceDebug | DWORD | 0 (Standard) zum Deaktivieren, 1 zum Aktivieren | Wenn aktiviert, wird der [geschützten Modus #SecureMode] bei [Sicherheitsmeldungen #SecureScreens] deaktiviert. Aufgrund mehrerer wichtiger Sicherheitsaspekte wird von der Verwendung dieser Option dringend abgeraten. |
 
 + Weitere Informationen +[FurtherInformation]
 Wenn Sie weitere Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die NVDA-Homepage unter NVDA_URL.

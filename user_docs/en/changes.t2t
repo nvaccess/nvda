@@ -27,6 +27,12 @@ For add-on authors, please open a GitHub issue if these changes stop the API fro
 
 
 = 2022.2 =
+This release includes many bug fixes.
+Notably, there are significant improvements for Java based applications, braille displays and Windows features.
+
+New table navigation commands have been introduced.
+Unicode CLDR has been updated.
+LibLouis has been updated, which includes a new German braille table.
 
 == New Features ==
 - Support for interacting with Microsoft Loop Components in Microsoft Office products. (#13617)
@@ -40,7 +46,7 @@ For add-on authors, please open a GitHub issue if these changes stop the API fro
 == Changes ==
 - NSIS has been updated to version 3.08. (#9134)
 - CLDR has been updated to version 41.0. (#13582)
-- Updated liblouis braille translator to [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+- Updated LibLouis braille translator to [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
   - New braille table: German grade 2 (detailed)
   -
 - Added new role for "busy indicator" controls. (#10644)
@@ -67,7 +73,8 @@ For add-on authors, please open a GitHub issue if these changes stop the API fro
   -
 - Braille fixes:
   - Fix braille output when navigating certain text in Mozilla rich edit controls, such as drafting a message in Thunderbird. (#12542)
-  - When braille is tethered automatically and the mouse is moved with mouse tracking enabled, text review commands now update the braille display with the spoken content. (#11519)
+  - When braille is tethered automatically and the mouse is moved with mouse tracking enabled,
+   text review commands now update the braille display with the spoken content. (#11519)
   - It is now possible to pan the braille display through content after use of the text review commands. (#8682)
   -
 - The NVDA installer can now run from directories with special characters. (#13270)
@@ -81,8 +88,10 @@ For add-on authors, please open a GitHub issue if these changes stop the API fro
   -
 - Visual Studio now correctly reports line indentation. (#13574)
 - NVDA will once again announce Start menu search result details in recent Windows 10 and 11 releases. (#13544)
-- In Windows 10 and 11 Calculator version 10.1908 and later, NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13386)
-- In Windows 11, it is again possible to navigate and interact with user interface elements such as Taskbar and Task View using mouse and touch interaction. (#13508)
+- In Windows 10 and 11 Calculator version 10.1908 and later,
+NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13386)
+- In Windows 11, it is again possible to navigate and interact with user interface elements,
+such as Taskbar and Task View using mouse and touch interaction. (#13508)
 - Hidden text is no longer announced in Wordpad and other ``richEdit`` controls. (#13618)
 - NVDA will announce status bar content in Windows 11 Notepad. (#13386)
 - Navigator object highlighting now shows up immediately upon activation of the feature. (#13641)
@@ -93,8 +102,10 @@ For add-on authors, please open a GitHub issue if these changes stop the API fro
 
 
 == Changes for Developers ==
-- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
-- When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
+- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported.
+For development and release builds, Visual Studio 2019 is still used. (#13033)
+- When retrieving the count of selected children via accSelection,
+the case where a negative child ID or an IDispatch is returned by ``IAccessible::get_accSelection`` is now handled properly. (#13276)
 - New convenience functions ``registerExecutableWithAppModule`` and ``unregisterExecutable`` were added to the ``appModuleHandler`` module.
 They can be used to use a single App Module with multiple executables. (#13366)
 -
@@ -108,12 +119,11 @@ Please test the new API and provide feedback.
 For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
 
 
-- ``appModuleHandler.NVDAProcessID`` is deprecated - use ``globalVars.appPid`` instead. (#13646)
-- ``gui.quit`` has been deprecated for removal in 2023.1. (#13498)
-  - Use ``wx.CallAfter(mainFrame.onExitCommand, None)`` directly instead.
+- ``appModuleHandler.NVDAProcessID`` is deprecated, use ``globalVars.appPid`` instead. (#13646)
+- ``gui.quit`` is deprecated, use ``wx.CallAfter(mainFrame.onExitCommand, None)`` instead. (#13498)
   -
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
-- Some alias appModules are marked as deprecated and will be removed in 2023.1.
+- Some alias appModules are marked as deprecated.
 Code which imports from one of them, should instead import from the replacement module.  (#13366)
 -
 
