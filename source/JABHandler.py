@@ -691,22 +691,18 @@ def internal_hasFocus(sourceContext):
 	focus = api.getFocusObject()
 	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == sourceContext:
 		return True
-	ancestors = api.getFocusAncestors()
-	for ancestor in reversed(ancestors):
-		if isinstance(ancestor, NVDAObjects.JAB.JAB) and ancestor.jabContext == sourceContext:
-			return True
-	return False
+	ancestors = reversed(api.getFocusAncestors())
+	return any((isinstance(x, NVDAObjects.JAB.JAB) and x.jabContext == sourceContext for x in ancestors))
 
 
 @AccessBridge_PropertyNameChangeFP
 def event_nameChange(vmID,event,source,oldVal,newVal):
-	jabContext=JABContext(vmID=vmID,accContext=source)
+	jabContext = JABContext(vmID=vmID, accContext=source)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()
-		if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-			obj = focus
-		else:
-			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+		obj = focus if (
+			isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+		) else NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if obj:
 			eventHandler.queueEvent("nameChange", obj)
 	else:
@@ -715,13 +711,12 @@ def event_nameChange(vmID,event,source,oldVal,newVal):
 
 @AccessBridge_PropertyDescriptionChangeFP
 def event_descriptionChange(vmID,event,source,oldVal,newVal):
-	jabContext=JABContext(vmID=vmID,accContext=source)
+	jabContext = JABContext(vmID=vmID, accContext=source)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()
-		if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-			obj = focus
-		else:
-			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+		obj = focus if (
+			isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+		) else NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if obj:
 			eventHandler.queueEvent("descriptionChange", obj)
 	else:
@@ -730,13 +725,12 @@ def event_descriptionChange(vmID,event,source,oldVal,newVal):
 
 @AccessBridge_PropertyValueChangeFP
 def event_valueChange(vmID,event,source,oldVal,newVal):
-	jabContext=JABContext(vmID=vmID,accContext=source)
+	jabContext = JABContext(vmID=vmID, accContext=source)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()
-		if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-			obj = focus
-		else:
-			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+		obj = focus if (
+			isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+		) else NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if obj:
 			eventHandler.queueEvent("valueChange", obj)
 	else:
@@ -749,27 +743,25 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_stateChange(vmID,accContext,oldState,newState):
-	jabContext=JABContext(vmID=vmID,accContext=accContext)
+	jabContext = JABContext(vmID=vmID, accContext=accContext)
 	if not jabContext.hwnd:
 		log.debugWarning("Unable to obtain window handle for accessible context")
 		return
-	focus=api.getFocusObject()
+	focus = api.getFocusObject()
 	#For broken tabs and menus, we need to watch for things being selected and pretend its a focus change
-	stateList=newState.split(',')
+	stateList = newState.split(',')
 	if "focused" in stateList or "selected" in stateList:
-		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if not obj:
 			return
 		if focus!=obj and eventHandler.lastQueuedFocusObject!=obj and obj.role in (controlTypes.Role.MENUITEM,controlTypes.Role.TAB,controlTypes.Role.MENU):
 			eventHandler.queueEvent("gainFocus",obj)
 			return
-	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:
-		obj=focus
-	else:
-		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-		if not obj:
-			return
-	eventHandler.queueEvent("stateChange",obj)
+	obj = focus if (
+		isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+	) else NVDAObjects.JAB.JAB(jabContext=jabContext)
+	if obj:
+		eventHandler.queueEvent("stateChange", obj)
 
 @AccessBridge_PropertyCaretChangeFP
 def internal_event_caretChange(vmID, event,source,oldPos,newPos):
@@ -784,10 +776,9 @@ def event_caret(vmID, accContext, hwnd):
 	jabContext = JABContext(hwnd=hwnd, vmID=vmID, accContext=accContext)
 	if jabContext.hwnd:
 		focus = api.getFocusObject()
-		if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-			obj = focus
-		else:
-			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+		obj = focus if (
+			isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+		) else NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if obj:
 			eventHandler.queueEvent("caret", obj)
 	else:
