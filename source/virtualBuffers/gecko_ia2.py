@@ -23,6 +23,8 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
+from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
+
 
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
 	valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
@@ -163,7 +165,32 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs['level']=level
 		if landmark:
 			attrs["landmark"]=landmark
-		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
+
+		detailsRole = attrs.get('detailsRole')
+		if detailsRole is not None:
+			attrs['detailsRole'] = self._normalizeDetailsRole(detailsRole)
+		return super()._normalizeControlField(attrs)
+
+	def _normalizeDetailsRole(self, detailsRole: str) -> typing.Optional[controlTypes.Role]:
+		"""
+		The attribute has been added directly to the buffer as a string, either as a role string or a role integer.
+		Ensures the returned role is a fully supported by the details-roles attribute.
+		Braille and speech needs consistent normalization for translation and reporting.
+		"""
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"detailsRole: {repr(detailsRole)}")
+
+		if detailsRole.isdigit():
+			# get a role, but it may be unsupported
+			detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(int(detailsRole))
+			# return a supported details role
+			if detailsRole not in supportedAriaDetailsRoles.values():
+				detailsRole = None
+		else:
+			# return a supported details role
+			detailsRole = supportedAriaDetailsRoles.get(detailsRole)
+
+		return detailsRole
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)

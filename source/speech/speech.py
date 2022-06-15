@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
 """High-level functions to speak information.
@@ -1691,8 +1691,8 @@ def getPropertiesSpeech(  # noqa: C901
 	# are there further details
 	hasDetails = propertyValues.get('hasDetails', False)
 	if hasDetails:
-		detailsRole = aria.normalizeDetailsRole(propertyValues.get("detailsRole"))
-		if detailsRole != controlTypes.Role.UNKNOWN:
+		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
+		if detailsRole is not None:
 			textList.append(
 				# Translators: Speaks when there are further details/annotations that can be fetched manually.
 				# %s specifies the type of details (e.g. comment, suggestion)
@@ -1804,7 +1804,7 @@ def getControlFieldSpeech(  # noqa: C901
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	hasDetails = attrs.get('hasDetails', False)
-	detailsRole = aria.normalizeDetailsRole(attrs.get("detailsRole"))
+	detailsRole: Optional[controlTypes.Role] = attrs.get("detailsRole")
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 

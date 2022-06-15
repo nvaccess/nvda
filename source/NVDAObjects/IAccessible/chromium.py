@@ -1,19 +1,34 @@
-#NVDAObjects/IAccessible/chromium.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-# Copyright (C) 2010-2013 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2022 NV Access Limited
 
 """NVDAObjects for the Chromium browser project
 """
 
 from comtypes import COMError
-import oleacc
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
 from logHandler import log
+
+
+# details-roles attribute is only defined in Chrome as of May 2022
+# Refer to ComputeDetailsRoles
+# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
+supportedAriaDetailsRoles = {
+	"comment": controlTypes.Role.COMMENT,
+	"doc-footnote": controlTypes.Role.FOOTNOTE,
+	# These roles are current unsupported by IAccessible2,
+	# and as such, have not been fully implemented in NVDA.
+	# They can only be fetched via the IA2Attribute "details-roles",
+	# which is only supported in Chrome.
+	# Currently maps to the IA2 role ROLE_LIST_ITEM
+	# "doc-endnote": controlTypes.Role.ENDNOTE,
+	# Currently maps to the IA2 role ROLE_GENERIC
+	# "definition": controlTypes.Role.DEFINITION,
+}
 
 
 class ChromeVBufTextInfo(GeckoVBufTextInfo):

@@ -2,11 +2,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner
 
-import aria
 import IAccessibleHandler
 from comInterfaces import IAccessible2Lib as IA2
+import config
 import oleacc
 import winUser
 import controlTypes
@@ -83,9 +83,14 @@ class Mozilla(ia2Web.Ia2Web):
 			return None
 		for target in detailsRelations:
 			# just take the first for now.
-			log.debugWarning(f"FireFox aria details info {target.devInfo}")
-			# TODO: check for alternatives to keep the input a string to match ia2Web
-			return aria.normalizeDetailsRoleFocusMode(target.IAccessibleRole)
+			from .chromium import supportedAriaDetailsRoles
+			detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(target.IAccessibleRole)
+			# return a supported details role
+			if config.conf["debugLog"]["annotations"]:
+				log.debug(f"detailsRole: {repr(detailsRole)}")
+			if detailsRole in supportedAriaDetailsRoles.values():
+				return detailsRole
+			return None
 
 	@property
 	def hasDetails(self) -> bool:

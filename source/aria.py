@@ -3,55 +3,9 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Dict, Union
+from typing import Dict
 from enum import Enum
 import controlTypes
-from logHandler import log
-
-
-def normalizeDetailsRole(detailsRole: Union[str, controlTypes.Role, None]) -> controlTypes.Role:
-	"""
-	The attribute detailsRole is determined in a number of cases.
-	With focus mode, detailsRole is normalized on the NVDAObject level to controlType.Role.
-	With browse mode, the attribute is added directly to the buffer as a string,
-	either as a role string or a role integer.
-	Braille and speech needs consistent normalization for translation and reporting.
-	"""
-	if detailsRole is None or detailsRole == controlTypes.Role.UNKNOWN:
-		return controlTypes.Role.UNKNOWN
-
-	if isinstance(detailsRole, str):
-		if detailsRole.isdigit():
-			from IAccessibleHandler import IAccessibleRolesToNVDARoles
-			# get a role, but it may be unsupported
-			detailsRole = IAccessibleRolesToNVDARoles.get(int(detailsRole), controlTypes.Role.UNKNOWN)
-		else:
-			# return a supported details role
-			return supportedAriaDetailsRoles.get(detailsRole, controlTypes.Role.UNKNOWN)
-
-	if isinstance(detailsRole, controlTypes.Role):
-		if detailsRole in supportedAriaDetailsRoles.values():
-			return detailsRole
-
-	log.debug(f"Unexpected detailsRole: {type(detailsRole)}, value {repr(detailsRole)}")
-	return controlTypes.Role.UNKNOWN
-
-
-# Currently only defined in Chrome as of May 2022
-# Refer to ComputeDetailsRoles
-# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
-supportedAriaDetailsRoles = {
-	"comment": controlTypes.Role.COMMENT,
-	"doc-footnote": controlTypes.Role.FOOTNOTE,
-	# These roles are current unsupported by IAccessible2,
-	# and as such, have not been fully implemented in NVDA.
-	# They can only be fetched via the IA2Attribute "details-roles",
-	# which is only supported in Chrome.
-	# Currently maps to the IA2 role ROLE_LIST_ITEM
-	# "doc-endnote": controlTypes.Role.ENDNOTE,
-	# Currently maps to the IA2 role ROLE_GENERIC
-	# "definition": controlTypes.Role.DEFINITION,
-}
 
 
 ariaRolesToNVDARoles: Dict[str, controlTypes.Role] = {

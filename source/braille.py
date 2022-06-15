@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2021 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import itertools
 import os
@@ -40,7 +40,6 @@ import bdDetect
 import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
-import aria
 
 
 roleLabels: typing.Dict[controlTypes.Role, str] = {
@@ -553,11 +552,11 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(description)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
-		detailsRole = aria.normalizeDetailsRole(propertyValues.get("detailsRole"))
-		if detailsRole != controlTypes.Role.UNKNOWN:
+		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
+		log.debugWarning(f"Braille getProp details role {detailsRole} {type(detailsRole)} ifobm")
+		if detailsRole is not None:
 			detailsRoleLabel = roleLabels.get(detailsRole, detailsRole.displayString)
-			# TODO: should this be `_("has %s") % detailsRoleLabel`?
-			textList.append(detailsRoleLabel)
+			textList.append(_("has %s") % detailsRoleLabel)
 		else:
 			textList.append(
 				# Translators: Braille when there are further details/annotations that can be fetched manually.
@@ -738,7 +737,8 @@ def getControlFieldBraille(  # noqa: C901
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
-	detailsRole = aria.normalizeDetailsRole(field.get('detailsRole'))
+	detailsRole: Optional[controlTypes.Role] = field.get('detailsRole')
+	log.debugWarning(f"Braille getControlField details role {detailsRole} {type(detailsRole)} ifobm")
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
