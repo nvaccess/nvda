@@ -23,7 +23,6 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
-from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
 
 
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
@@ -177,6 +176,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		Ensures the returned role is a fully supported by the details-roles attribute.
 		Braille and speech needs consistent normalization for translation and reporting.
 		"""
+		# Can't import at module level as chromium imports from this module
+		from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
 		if config.conf["debugLog"]["annotations"]:
 			log.debug(f"detailsRole: {repr(detailsRole)}")
 

@@ -25,9 +25,9 @@ supportedAriaDetailsRoles = {
 	# They can only be fetched via the IA2Attribute "details-roles",
 	# which is only supported in Chrome.
 	# Currently maps to the IA2 role ROLE_LIST_ITEM
-	# "doc-endnote": controlTypes.Role.ENDNOTE,
+	"doc-endnote": None,  # controlTypes.Role.ENDNOTE
 	# Currently maps to the IA2 role ROLE_GENERIC
-	# "definition": controlTypes.Role.DEFINITION,
+	"definition": None,  # controlTypes.Role.DEFINITION
 }
 
 

@@ -553,7 +553,6 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
 		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
-		log.debugWarning(f"Braille getProp details role {detailsRole} {type(detailsRole)} ifobm")
 		if detailsRole is not None:
 			detailsRoleLabel = roleLabels.get(detailsRole, detailsRole.displayString)
 			textList.append(_("has %s") % detailsRoleLabel)
@@ -737,8 +736,11 @@ def getControlFieldBraille(  # noqa: C901
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
-	detailsRole: Optional[controlTypes.Role] = field.get('detailsRole')
-	log.debugWarning(f"Braille getControlField details role {detailsRole} {type(detailsRole)} ifobm")
+	if config.conf["annotations"]["reportDetails"]:
+		detailsRole: Optional[controlTypes.Role] = field.get('detailsRole')
+	else:
+		detailsRole = None
+
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:

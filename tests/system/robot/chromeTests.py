@@ -172,23 +172,23 @@ def test_mark_aria_details_role():
 		# The role "list item" is used instead
 		"has details",
 		"doc endnote,",
-		"",
+		"",  # space between spans
 		"has foot note",
 		"doc footnote,",
-		"",
+		"",  # space between spans
 		"has comment",
 		"comment,",
-		"",
+		"",  # space between spans
 		# the role doc-endnote is unsupported as an IA2 role
 		# The role "generic" is used instead
 		"has details",
 		"definition,",
-		"",
+		"",  # space between spans
 		# the role doc-endnote is unsupported as an IA2 role
 		# The role "generic" is used instead
 		"has details",
 		"definition,",
-		"",
+		"",  # space between spans
 		# The role "form" is deliberately unsupported
 		"has details",
 		"form",
