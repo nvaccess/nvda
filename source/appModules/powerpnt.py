@@ -929,6 +929,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if formatConfig['reportFontName']:
 			formatField['font-name']=font.name
 		if formatConfig['reportFontSize']:
+			# Translators: Abbreviation for points, a measurement of font size.
 			formatField['font-size']= _("%d pt") % int(font.size)
 		if formatConfig['reportFontAttributes']:
 			formatField['bold']=bool(font.bold)

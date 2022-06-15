@@ -2209,6 +2209,8 @@ def getFormatFieldSpeech(  # noqa: C901
 		fontSize=attrs.get("font-size")
 		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
 		if fontSize and fontSize!=oldFontSize:
+			if "pt" not in fontSize:
+				log.error("pt not reporting in font size", stack_info=True)
 			textList.append(fontSize)
 	if  formatConfig["reportColor"]:
 		color=attrs.get("color")
