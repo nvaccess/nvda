@@ -362,59 +362,64 @@ CComPtr<IAccessible2> getTextBoxInComboBox(
 }
 
 
-void fillRole(IAccessible2* pacc, VARIANT* varChild, long* role, BSTR* roleString) {
-	if (pacc->role(role) != S_OK) {
-		*role = IA2_ROLE_UNKNOWN;
+std::tuple<long, BSTR> getRoleLongRoleString(CComPtr<IAccessible2> pacc, VARIANT* varChild) {
+	long role = 0;
+	BSTR roleString = NULL;
+	if (pacc->role(&role) != S_OK) {
+		role = IA2_ROLE_UNKNOWN;
 	}
 	VARIANT varRole;
 	VariantInit(&varRole);
-	if (*role == 0) {
+	if (role == 0) {
 		if (pacc->get_accRole(*varChild, &varRole) != S_OK) {
 			LOG_DEBUG(L"accRole failed");
 		}
 		if (varRole.vt == VT_I4) {
-			*role = varRole.lVal;
+			role = varRole.lVal;
 		}
 		else if (varRole.vt == VT_BSTR) {
-			*roleString = varRole.bstrVal;
+			roleString = varRole.bstrVal;
 		}
 	}
 	VariantClear(&varRole);
+	return std::make_tuple(role, roleString);
 }
 
 
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
 
+
 void GeckoVBufBackend_t::fillVBufAriaDetails(
 	int docHandle,
-	IAccessible2* pacc,
+	CComPtr<IAccessible2> pacc,
 	VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode,
-	std::wstring roleAttr
+	std::wstring& roleAttr
 ){
 	/* Set the details role by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
 	of the nodes in the relationship will not be in the buffer yet */
 	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
 	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
 	VBufStorage_controlFieldNode_t* detailsParentNode;
-	std::wstring detailsRole;
+	std::optional<std::wstring> detailsRole;
 	if (detailsId.has_value()) {
 		parentNode->addAttribute(L"hasDetails", L"true");
 		detailsParentNode = parentNode;
 		auto detailsChildNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
 		if (detailsChildNode != nullptr) {
-			detailsChildNode->getAttribute(L"role", &detailsRole);
+			detailsRole = detailsChildNode->getAttribute(L"role");
 		}
 	}
 	if (detailsForId.has_value()) {
 		detailsParentNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
-		detailsRole.assign(roleAttr);
+		detailsRole = roleAttr;
 	}
-	if (detailsParentNode != nullptr && !detailsRole.empty()) {
-		detailsParentNode->addAttribute(L"detailsRole", detailsRole);
+	if (detailsParentNode != nullptr && detailsRole.has_value() && !detailsRole.value().empty()) {
+		detailsParentNode->addAttribute(L"detailsRole", detailsRole.value());
 	}
 }
+
 
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	IAccessible2* pacc,
@@ -430,6 +435,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	nhAssert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
 	nhAssert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
 	VBufStorage_fieldNode_t* tempNode;
+	CComPtr<IAccessible2> smartPacc = CComQIPtr<IAccessible2>(pacc);
 	//all IAccessible methods take a variant for childID, get one ready
 	VARIANT varChild;
 	varChild.vt=VT_I4;
@@ -491,7 +497,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	//Get role -- IAccessible2 role
 	long role = 0;
 	BSTR roleString = NULL;
-	fillRole(pacc, &varChild, &role, &roleString);
+	std::tie(role, roleString) = getRoleLongRoleString(smartPacc, &varChild);
 
 	// Specifically force the role of ARIA treegrids from outline to table.
 	// We do this very early on in the rendering so that all our table logic applies.
@@ -502,9 +508,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	if (roleString) {
-		roleAttr.assign(roleString);
+		roleAttr = roleString;
 	} else {
-		roleAttr.assign(std::to_wstring(role));
+		roleAttr = std::to_wstring(role);
 	}
 
 	parentNode->addAttribute(L"IAccessible::role", roleAttr);
@@ -1192,7 +1198,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	if (descriptionIsContent){
 		parentNode->addAttribute(L"descriptionIsContent", L"true");
 	}
-	fillVBufAriaDetails(docHandle, pacc, buffer, parentNode, roleAttr);
+
+	fillVBufAriaDetails(
+		docHandle,
+		smartPacc,
+		buffer,
+		parentNode,
+		roleAttr
+	);
 
 	// Clean up.
 	if(name)

@@ -35,10 +35,10 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	void fillVBufAriaDetails(
 		int docHandle,
-		IAccessible2* pacc,
+		CComPtr<IAccessible2> pacc,
 		VBufStorage_buffer_t* buffer,
 		VBufStorage_controlFieldNode_t* parentNode,
-		std::wstring roleAttr
+		std::wstring& roleAttr
 	);
 
 	void versionSpecificInit(IAccessible2* pacc);

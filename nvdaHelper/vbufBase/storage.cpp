@@ -23,6 +23,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <optional>
 #include <common/xml.h>
 #include <common/log.h>
 #include "utils.h"
@@ -321,15 +322,14 @@ bool VBufStorage_fieldNode_t::addAttribute(const std::wstring& name, const std::
 	return true;
 }
 
-bool VBufStorage_fieldNode_t::getAttribute(const std::wstring& name, std::wstring* value) {
+std::optional<std::wstring> VBufStorage_fieldNode_t::getAttribute(const std::wstring& name) {
 	LOG_DEBUG(L"Getting attribute " << name);
-	VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(name);
+	auto foundAttrib = attributes.find(name);
 	if (foundAttrib != attributes.end()) {
-		value->assign(foundAttrib->second);
-		return true;
+		return foundAttrib->second;
 	}
 	LOG_ERROR(L"Couldn't find attribute " << name);
-	return false;
+	return std::nullopt;
 }
 
 std::wstring VBufStorage_fieldNode_t::getAttributesString() const {
