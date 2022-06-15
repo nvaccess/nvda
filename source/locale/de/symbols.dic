@@ -16,6 +16,9 @@ complexSymbols:
 Dezimaltrennzeichen	(?<![^\d -])\,(?=\d)
 ' im Wort	(?<=[^\W_])['’]
 - im Wort	(?<=[^\W_])[-]
+* im Wort	(?<=[^\W_])[\*]
+: im Wort	(?<=[^\W_])[\:]
+/ im Wort	(?<=[^\W_])[/]
 Negative Ziffer	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 Tausendertrennzeichen	(?<![^\d -])\.(?=\d{3}(\D|$))
 Datumstrennzeichen	(?<=\d\d)\.(?=\d\d)
@@ -31,6 +34,9 @@ symbols:
 : phrase ending	Doppelpunkt	most	always
 Dezimaltrennzeichen		none	always
 ' im Wort	Apostroph	all	norep
+* im Wort		none	norep
+: im Wort		none	norep
+/ im Wort		none	norep
 Negative Ziffer	Minus	none	norep
 - im Wort	Bindestrich	all	norep
 ... sentence ending	Auslassungspunkte	all	always

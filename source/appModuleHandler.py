@@ -17,6 +17,7 @@ import os
 import sys
 from types import ModuleType
 from typing import (
+	Any,
 	Dict,
 	List,
 	Optional,
@@ -42,12 +43,12 @@ import appModules
 import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
+import globalVars
+
 
 _KNOWN_IMPORTERS_T = Union[importlib.machinery.FileFinder, zipimport.zipimporter]
 # Dictionary of processID:appModule pairs used to hold the currently running modules
 runningTable: Dict[int, AppModule] = {}
-#: The process ID of NVDA itself.
-NVDAProcessID=None
 _CORE_APP_MODULES_PATH: os.PathLike = appModules.__path__[0]
 _importers: Optional[List[_KNOWN_IMPORTERS_T]] = None
 _getAppModuleLock=threading.RLock()
@@ -80,6 +81,22 @@ class processEntry32W(ctypes.Structure):
 	]
 
 
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility.
+	The module level variable `NVDAProcessID` is deprecated
+	and usages should be replaced with `globalVars.appPid`.
+	We cannot simply assign the value from `globalVars` to the old attribute
+	since add-ons are initialized before `appModuleHandler`
+	and when `appModuleHandler` was not yet initialized the variable was set to `None`.
+	"""
+	if attrName == "NVDAProcessID" and globalVars._allowDeprecatedAPI:
+		log.warning("appModuleHandler.NVDAProcessID is deprecated, use globalVars.appPid instead.")
+		if initialize._alreadyInitialized:
+			return globalVars.appPid
+		return None
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 def _warnDeprecatedAliasAppModule() -> None:
 	"""This function should be executed at the top level of an alias App Module,
 	to log a deprecation warning when the module is imported.
@@ -95,12 +112,13 @@ def _warnDeprecatedAliasAppModule() -> None:
 	except KeyError:
 		raise RuntimeError("This function can be executed only inside an alias App Module.") from None
 	else:
-		log.warning(
-			(
-				f"Importing from appModules.{currModName} is deprecated,"
-				f" you should import from appModules.{replacementModName}."
-			)
+		deprecatedImportWarning = (
+			f"Importing appModules.{currModName} is deprecated,"
+			f" instead import appModules.{replacementModName}."
 		)
+		log.warning(deprecatedImportWarning)
+		if not globalVars._allowDeprecatedAPI:
+			raise ModuleNotFoundError(deprecatedImportWarning)
 
 
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
@@ -195,7 +213,7 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	C{False} to exclude it.
 	@returns: application name
 	"""
-	if processID==NVDAProcessID:
+	if processID == globalVars.appPid:
 		return "nvda.exe" if includeExt else "nvda"
 	FSnapshotHandle = winKernel.kernel32.CreateToolhelp32Snapshot (2,0)
 	FProcessEntry32 = processEntry32W()
@@ -345,13 +363,19 @@ def reloadAppModules():
 		# Fetch and cache right away; the process could die any time.
 		obj.appModule
 
+
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	global NVDAProcessID,_importers
-	NVDAProcessID=os.getpid()
+	global _importers
 	config.addConfigDirsToPythonPackagePath(appModules)
 	_importers=list(pkgutil.iter_importers("appModules.__init__"))
+	if not initialize._alreadyInitialized:
+		initialize._alreadyInitialized = True
+
+
+initialize._alreadyInitialized = False
+
 
 def terminate():
 	for processID, app in runningTable.items():
