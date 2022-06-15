@@ -709,6 +709,8 @@ def event_nameChange(vmID,event,source,oldVal,newVal):
 			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if obj:
 			eventHandler.queueEvent("nameChange", obj)
+	else:
+		log.debugWarning("Unable to obtain window handle for accessible context")
 	bridgeDll.releaseJavaObject(vmID,event)
 
 @AccessBridge_PropertyDescriptionChangeFP
@@ -722,6 +724,8 @@ def event_descriptionChange(vmID,event,source,oldVal,newVal):
 			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if obj:
 			eventHandler.queueEvent("descriptionChange", obj)
+	else:
+		log.debugWarning("Unable to obtain window handle for accessible context")
 	bridgeDll.releaseJavaObject(vmID,event)
 
 @AccessBridge_PropertyValueChangeFP
@@ -735,6 +739,8 @@ def event_valueChange(vmID,event,source,oldVal,newVal):
 			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if obj:
 			eventHandler.queueEvent("valueChange", obj)
+	else:
+		log.debugWarning("Unable to obtain window handle for accessible context")
 	bridgeDll.releaseJavaObject(vmID,event)
 
 @AccessBridge_PropertyStateChangeFP
@@ -745,6 +751,7 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 def event_stateChange(vmID,accContext,oldState,newState):
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
 	if not jabContext.hwnd:
+		log.debugWarning("Unable to obtain window handle for accessible context")
 		return
 	focus=api.getFocusObject()
 	#For broken tabs and menus, we need to watch for things being selected and pretend its a focus change
@@ -781,9 +788,10 @@ def event_caret(vmID, accContext, hwnd):
 			obj = focus
 		else:
 			obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
-			if not obj:
-				return
-		eventHandler.queueEvent("caret", obj)
+		if obj:
+			eventHandler.queueEvent("caret", obj)
+	else:
+		log.debugWarning("Unable to obtain window handle for accessible context")
 
 
 def event_enterJavaWindow(hwnd):
