@@ -7,6 +7,5 @@ foreach ($syms in
 	"source\lib64\*.dll", "source\lib64\*.exe", "source\lib64\*.pdb",
 	"source\synthDrivers\*.dll", "source\synthDrivers\*.pdb"
 ) {
-	# https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/symstore-command-line-options
-	& $env:symstore add /f $syms /s symbols /t NVDA /compress
+	& $env:symstore add -:NOREFS /s symbols /compress /t NVDA /f $syms
 }
