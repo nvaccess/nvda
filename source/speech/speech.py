@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
 """High-level functions to speak information.
@@ -2206,11 +2206,9 @@ def getFormatFieldSpeech(  # noqa: C901
 		if fontName and fontName!=oldFontName:
 			textList.append(fontName)
 	if  formatConfig["reportFontSize"]:
-		fontSize=attrs.get("font-size")
-		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
-		if fontSize and fontSize!=oldFontSize:
-			if "pt" not in fontSize:
-				log.error("pt not reporting in font size", stack_info=True)
+		fontSize = attrs.get("font-size")
+		oldFontSize = attrsCache.get("font-size") if attrsCache is not None else None
+		if fontSize and fontSize != oldFontSize:
 			textList.append(fontSize)
 	if  formatConfig["reportColor"]:
 		color=attrs.get("color")

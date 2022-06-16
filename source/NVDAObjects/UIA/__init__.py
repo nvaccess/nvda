@@ -223,7 +223,7 @@ class UIATextInfo(textInfos.TextInfo):
 			val=fetcher.getValue(UIAHandler.UIA_FontSizeAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val, numbers.Number):
 				# Translators: Abbreviation for points, a measurement of font size.
-				formatField['font-size'] = _("%g pt") % float(val)
+				formatField['font-size'] = pgettext("font size", "%s pt") % float(val)
 		if formatConfig["reportFontAttributes"]:
 			val=fetcher.getValue(UIAHandler.UIA_FontWeightAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):

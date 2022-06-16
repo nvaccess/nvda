@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Joseph Lee
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Joseph Lee
 
 import ctypes
 from ctypes import *
@@ -448,7 +448,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		fontSize = field.get("font-size")
 		if fontSize is not None:
 			# Translators: Abbreviation for points, a measurement of font size.
-			field["font-size"] = _("%s pt") % fontSize
+			field["font-size"] = pgettext("font size", "%s pt") % fontSize
 
 	def _getOffsetFromPoint(self, x, y):
 		# Accepts physical coordinates.

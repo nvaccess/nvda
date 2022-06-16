@@ -898,7 +898,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		fontSize = field.get("font-size")
 		if fontSize is not None:
 			# Translators: Abbreviation for points, a measurement of font size.
-			field["font-size"] = _("%s pt") % fontSize
+			field["font-size"] = pgettext("font size", "%s pt") % fontSize
 		return field
 
 	def expand(self,unit):
@@ -1475,8 +1475,8 @@ class WordDocument(Window):
 				# Translators: a measurement in Microsoft Word
 				return _("{offset:.3g} millimeters").format(offset=offset)
 			elif unit==wdPoints:
-				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} points").format(offset=offset)
+				# Translators: a measurement in Microsoft Word (points)
+				return _("{offset:.3g} pt").format(offset=offset)
 			elif unit==wdPicas:
 				offset=offset/12.0
 				# Translators: a measurement in Microsoft Word

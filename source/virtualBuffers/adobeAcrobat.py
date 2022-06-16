@@ -3,7 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2009-2022 NV Access Limited, Aleksey Sadovoy
 
-from typing import Dict
 from . import VirtualBuffer, VirtualBufferTextInfo
 import browseMode
 import controlTypes
@@ -83,7 +82,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 		fontSize = attrs.get("font-size")
 		if fontSize is not None:
 			# Translators: Abbreviation for points, a measurement of font size.
-			attrs["font-size"] = _("%s pt") % fontSize
+			attrs["font-size"] = pgettext("font size", "%s pt") % fontSize
 		return attrs
 
 class AdobeAcrobat(VirtualBuffer):

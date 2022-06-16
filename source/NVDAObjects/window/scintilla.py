@@ -129,7 +129,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if formatConfig["reportFontSize"]:
 			fontSize = watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_STYLEGETSIZE, style, 0)
 			# Translators: Abbreviation for points, a measurement of font size.
-			formatField["font-size"] = _("%s pt") % fontSize
+			formatField["font-size"] = pgettext("font size", "%s pt") % fontSize
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportFontAttributes"]:
