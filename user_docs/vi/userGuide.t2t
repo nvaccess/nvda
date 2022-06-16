@@ -27,7 +27,7 @@ Một số tính năng nổi bật bao gồm:
 - Dễ dàng cài đặt với gói cài đặt có hỗ trợ tiếng nói
 - Được dịch sang 54 ngôn ngữ
 - Hỗ trợ các hệ điều hành Windows mới, bao gồm cả  32bit và 64 bit
-- Có khả năng chạy trong cửa sổ đăng nhập của Windows và  các màn hình bảo vệ khác
+- Có khả năng chạy trong cửa sổ đăng nhập của Windows và  [các màn hình bảo vệ khác #SecureScreens].
 - Thông báo các điều khiển và văn bản khi dùng thao tác trên màn hình cảm ứng
 - Hỗ trợ các giao diện tiếp cận phổ biến như Microsoft Active Accessibility, Java Access Bridge, IAccessible2 và UI Automation
 - Hỗ trợ đọc trong các cửa sổ console như dòng lệnh Windows (Windows Command Prompt) và những ứng dụng console khác
@@ -81,7 +81,7 @@ Chạy tập tin vừa tải về sẽ khởi động chương trình NVDA tạm
 Tiếp theo, bạn sẽ được hỏi là muốn cài đặt NVDA vào máy, tạo bản chạy trực tiếp hay tiếp tục sử dụng phiên bản tạm thời đó.
 
 Nếu bạn có dự định dùng NVDA luôn trên máy này, bạn nên chọn cài đặt vào máy.
-Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và các màn hình bảo vệ (không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) và tạo biểu tượng trên Start Menu và desktop.
+Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và [các màn hình bảo vệ #SecureScreens] (không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) và tạo biểu tượng trên Start Menu và desktop.
 Bạn có thể tạo bản chạy trực tiếp sau khi cài đặt NVDA vào máy.
 
 Nếu muốn dùng NVDA từ ổ USB hay các phương tiện lưu trữ khác, bạn có thể chọn chức năng tạo bản chạy trực tiếp.
@@ -118,7 +118,7 @@ Xem phần [hộp thoại các add-on không tương thích #incompatibleAddonsM
 
 +++ Dùng NVDA trong khi đăng nhập +++[StartAtWindowsLogon]
 Tùy chọn này cho phép NVDA chạy  hoặc không chạy tự động tại màn hình đăng nhập của Windows, trước khi bạn nhập mật khẩu.
-Tùy chọn này cũng áp dụng cho màn hình User Account và các màn hình bảo vệ khác.
+Tùy chọn này cũng áp dụng cho màn hình User Account và [các màn hình bảo vệ khác #SecureScreens].
 Tùy chọn này mặc định được bật cho các bản cài đặt mới.
 
 +++ Tạo biểu tượng trên Desktop và phím tắt (Ctrl + alt + n) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ Nếu  được tạo, biểu tượng này cũng được gán phím tắt Ctrl
 
 +++ Chép thư mục cấu hình bản chạy trực tiếp vào thư mục người dùng hiện tại +++[CopyPortableConfigurationToCurrentUserAccount]
 Tùy chọn này sẽ chép thư mục cấu hình của bản NVDA chạy trực tiếp sang thư mục cấu hình của người dùng hiện tại (cho bản cài đặt).
-Nó sẽ không chép thư mục cấu hình của các tài khoản người dùng khác trên máy hay tới phần cấu hình hệ thống liên quan đến việc cho phép chạy ở màn hình đăng nhập của Windows cũng như các màn hình bảo vệ khác.
+Tùy chọn này sẽ không chép thư mục cấu hình của các tài khoản người dùng khác trên máy hay tới phần cấu hình hệ thống liên quan đến việc cho phép chạy ở màn hình đăng nhập của Windows cũng như [các màn hình bảo vệ khác #SecureScreens].
 Tùy chọn này chỉ có trong quá trình cài đặt NVDA từ bản chạy trực tiếp, không có trong gói cài đặt được tải về.
 
 ++ Tạo bản NVDA chạy trực tiếp ++[CreatingAPortableCopy]
@@ -342,6 +342,10 @@ Khi ở trong bảng thì dùng các phím tắt sau để thao tác:
 | Chuyển sang cột kế tiếp | control+alt+mũi tên phải | Đưa con trỏ sang cột kế tiếp (vẫn ở trên cùng dòng) |
 | Chuyển lên dòng trên | control+alt+mũi tên lên | Đưa con trỏ lên dòng trên ( vẫn ở trong cùng cột) |
 | Chuyển xuống dòng bên dưới | control+alt+mũi tên xuống | Đưa con trỏ xuống dòng bên dưới (vẫn ở trong cùng cột) |
+| Chuyển đến cột đầu tiên | control+alt+home | Chuyển dấu nháy hệ thống đến cột đầu tiên (giữ nguyên vị trí dòng) |
+| Chuyển đến cột cuối cùng | control+alt+end | Chuyển dấu nháy hệ thống đến cột cuối cùng (giữ nguyên vị trí dòng) |
+| Chuyển đến dòng đầu tiên | control+alt+pageUp | Chuyển dấu nháy hệ thống đến dòng đầu tiên (giữ nguyên vị trí cột) |
+| Chuyển đến dòng cuối cùng | control+alt+pageDown | Chuyển dấu nháy hệ thống đến dòng cuối cùng (giữ nguyên vị trí cột) |
 %kc:endInclude
 
 ++ Phương pháp duyệt đối tượng ++[ObjectNavigation]
@@ -617,8 +621,11 @@ NVDA hỗ trợ một số nội dung toán học sau đây:
 - Chương trình MathML chạy trên Mozilla Firefox, Microsoft Internet Explorer và Google Chrome.
 - Công thức toán mới của Microsoft Word 365 thông qua UI automation:
 NVDA đã có khả năng đọc và tương tác với các công thức toán trong Microsoft Word 365/2016 bản dựng 14326 trở lên.
-Dù vậy, lưu ý rằng các công thức toán được tạo trước đây bằng MathType, trước tiên phải được chuyển thành công thức toán của  (Office Math) bằng cách chọn mỗi công thức và chọn Equation Options -> Convert to Office Math trong trình đơn ngữ cảnh. Hãy chắc rằng bạn đang dùng phiên bản mới nhất của MathType trước khi làm điều này.
-Microsoft Word giờ đây cũng cung cấp phương pháp điều hướng theo dòng kí hiệu thông qua chính các công thức, và hỗ trợ nhập nội dung toán sử dụng vài cú pháp, bao gồm LateX. Để có thêm thông tin, vui lòng xem [Các công thức định dạng tuyến tính sử dụng UnicodeMath và LaTeX trong Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+Dù vậy, lưu ý rằng các công thức toán được tạo trước đây bằng MathType, trước tiên phải được chuyển thành công thức toán của  Office (Office Math).
+Điều Này có thể thực hiện bằng cách chọn mỗi công thức và chọn Equation Options -> Convert to Office Math trong trình đơn ngữ cảnh.
+Hãy chắc rằng bạn đang dùng phiên bản mới nhất của MathType trước khi làm điều này.
+Microsoft Word  cung cấp phương pháp điều hướng theo dòng kí hiệu thông qua chính các công thức, và hỗ trợ nhập nội dung toán sử dụng vài cú pháp, bao gồm LateX.
+Để có thêm thông tin, vui lòng xem [Các công thức định dạng tuyến tính sử dụng UnicodeMath và LaTeX trong Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint và các phiên bản cũ của Microsoft Word: 
 NVDA có thể đọc và duyệt các công thức của MathType trong cả Microsoft Powerpoint và Microsoft word.
 Cần phải cài MathType để chức năng này hoạt động.
@@ -704,6 +711,7 @@ Bạn có thể cấu hình màn hình nổi với phân loại [Chữ nổi #Br
 | mnuitem | menu item (thành phần trong trình đơn) |
 | pnl | panel (bảng) |
 | prgbar | progress bar (thanh tiến độ) |
+| bsyind | busy indicator (chỉ báo bận) |
 | rbtn | radio button (nút radio) |
 | scrlbar | scroll bar (thanh cuộn) |
 | sect | section (phần) |
@@ -784,7 +792,8 @@ Bạn có thể gán lại chúng hoặc thêm các phím mô phỏng mới từ
 
 Trong khi phương pháp này hữu ích cho thao tác bấm phím phổ biến hoặc các phím riêng biệt (Tab chẳng hạn), bạn có thể sẽ không muốn gán một nhóm phím tắt riêng biệt cho mỗi phím lệnh.
 Để cho phép bấm các phím mô phỏng trong khi giữ phím bổ trợ, NVDA cung cấp các lệnh để bật / tắt các phím control, alt, shift, windows và NVDA, kèm theo các phím lệnh cho vài kết hợp với những phím này.
-Để bật / tắt các phím này, trước tiên, bấm lệnh (hoặc trình tự các lệnh) cho các phím lệnh bạn muốn bấm, rồi nhập kí tự là phần phím tắt bạn muốn nhập.
+Để bật / tắt các phím này, trước tiên, bấm lệnh (hoặc trình tự các lệnh) cho các phím lệnh bạn muốn bấm.
+Tiếp theo, nhập kí tự là phần phím tắt bạn muốn nhập.
 Ví dụ, để bấm control+f, dùng lệnh "bật / tắt phím control" rồi gõ f,
 và để nhập control+alt+t, dùng lệnh  "Bật / tắt phím control" và "Bật / tắt phím alt" theo trình tự, hoặc "Bật / tắt các phím control và alt", tiếp sau đó gõ t.
 
@@ -966,30 +975,30 @@ Khi bạn chuyển đến một biểu mẫu ở chế độ duyệt, tùy theo 
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
-| bật tắt chế độ đọc chú thích của slide | control+shift+s | bật tắt chế độ đọc chú thích của slide, nó chỉ có tác dụng đọc chứ không hiển thị lên slide khi trình diễn | 
+| Bật / tắt chế độ đọc chú thích của slide | control+shift+s | Khi đang trình chiếu một slide, lệnh này có tác dụng chuyển giữa chú thích của slide cho diễn giả và nội dung của slide. Điều này chỉ  ảnh hưởng tới việc đọc của NVDA, không ảnh hưởng đến việc trình chiếu trên màn hình. | 
 %kc:endInclude
 
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
-| Thông báo thời gian còn lại | control+shift+r | thông báo thời gian còn lại của track đang phát |
-| Thông báo thời gian đã qua | control+shift+e | thông báo thời gian đã phát của  track đang phát |
-| Thông báo độ dài | control+shift+t | thông báo độ dài của track đang phát |
+| Thông báo thời gian còn lại | control+shift+r | Thông báo thời gian còn lại của track đang phát. |
+| Thông báo thời gian đã qua | control+shift+e | Thông báo thời gian đã phát của  track đang phát. |
+| Thông báo độ dài | control+shift+t | Thông báo độ dài của track đang phát. |
 %kc:endInclude
 
-Chú ý: các phím tắt trên chỉ hoạt động với định dạng mặc định cho dòng trạng thái của foobar
+Lưu ý: các phím tắt trên chỉ hoạt động với định dạng mặc định cho dòng trạng thái của foobar
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
-| thông báo các tin nhắn gần đây | NVDA+control+1-4 | thông báo các tin nhắn gần đây, số tin nhắn chính là số bạn bấm |
+| Thông báo các tin nhắn gần đây | NVDA+control+1-4 | Thông báo các tin nhắn gần đây, dựa trên số bạn bấm. Ví dụ: NVDA+control+2 đọc tin nhắn thứ hai. |
 %kc:endInclude
 
 ++ Poedit ++[Poedit]
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
-| Thông báo chú thích | control+shift+c | Thông báo chú thích |
-| Thông báo chú thích cho người dịch | control+shift+a | Thông báo chú thích cho người dịch |
+| Thông báo chú thích | control+shift+c | Thông báo chú thích. |
+| Thông báo chú thích cho người phiên dịch | control+shift+a | Thông báo chú thích cho người phiên dịch. |
 %kc:endInclude
 
 ++ Kindle cho PC ++[Kindle]
@@ -1000,7 +1009,7 @@ Chế độ duyệt được dùng để đọc sách.
 Nó được tự động bật khi mở sách hoặc đưa focus đến phần nội dung sách.
 Trang sách sẽ tự động được lật khi di chuyển con trỏ hoặc thực hiện lệnh đọc toàn bộ.
 %kc:beginInclude
-Bạn có thể di chuyển bằng tay đến trang kế với phím trang sau và trở về bằng phím trang trước
+Bạn có thể di chuyển bằng tay đến trang kế với phím trang sau và trở về bằng phím trang trước.
 %kc:endInclude
 
 Kí tự di chuyển đơn được hỗ trợ cho các liên kết và hình ảnh, nhưng chỉ giới hạn ở trang hiện tại.
@@ -1013,7 +1022,7 @@ Kí tự di chuyển đơn được hỗ trợ cho các liên kết và hình �
 Kindle cho phép bạn thực hiện nhiều thao tác trên văn bản được chọn, bao gồm lấy định nghĩa từ điển, thêm ghi chú và đánh dấu, sao chép văn bản vào bộ nhớ tạm và tìm kiếm trên web.
  Để làm điều đó, trước tiên, hãy chọn văn bản một cách bình thường như bạn vẫn làm ở chế độ duyệt; ví dụ: dùng shift và các phím di chuyển con trỏ.
 %kc:beginInclude
-Sau khi chọn nội dung, bạn bấm phím application hoặc shift+f10 để xem các tùy chọn hiện có.
+Sau khi chọn nội dung, bấm phím Application hoặc Shift+F10 để xem các tùy chọn hiện có.
 %kc:endInclude
 Nếu bạn thực hiện bước trên khi không có nội dung nào được chọn thì nó sẽ hiển thị các tùy chọn cho từ tại vị trí con trỏ.
 
@@ -1035,8 +1044,8 @@ NVDA sẽ xem những ghi chú này như lời bình / chú thích khi đọc �
 %kc:beginInclude
 Khi ở trong bảng xem các sách đã thêm vào:
 || Tên | Phím tắt | Mô tả |
-| Enter | enter | mở quyển sách được chọn. |
-| Trình đơn ngữ cảnh| applications | Mở trình đơn ngữ cảnh cho quyển sách được chọn. |
+| Enter | Enter | Mở quyển sách được chọn. |
+| Trình đơn ngữ cảnh| Applications | Mở trình đơn ngữ cảnh cho quyển sách được chọn. |
 %kc:endInclude
 
 ++ Windows Console ++[WinConsole]
@@ -1049,7 +1058,7 @@ Vậy nên, cần phải cuộn cửa sổ console để đọc các nội dung 
 Các phím tắt có sẵn sau đây của Windows Console  có thể hữu ích khi [duyệt nội dung #ReviewingText] với NVDA:
 || Tên | Phím | Mô tả |
 | Cuộn lên | control+mũi tên lên | Cuộn cửa sổ console lên để đọc các nội dung phía trên. |
-| Cuộn xuống | control+mũi tên xuống | Cuộn cửa sổ console xuống để đọc các nội dung bên dứi. |
+| Cuộn xuống | control+mũi tên xuống | Cuộn cửa sổ console xuống để đọc các nội dung bên dưới. |
 | Cuộn về đầu | control+home | Cuộn cửa sổ console về đầu màn hình. |
 | Cuộn về cuối | control+end | Cuộn cửa sổ console về cuối màn hình. |
 %kc:endInclude
@@ -1068,7 +1077,7 @@ Hộp thoại cài đặt NVDA có thể dùng để thay đổi nhiều tham s�
 Hộp thoại này có một danh sách với vài phân loại cấu hình để người dùng lựa chọn.
 Khi bạn chọn một phân loại, hộp thoại sẽ hiển thị  vài thiết lập liên quan đến phân loại đó.
 Các thiết lập này có thể được áp dụng bằng cách bấm nút Áp dụng. trường hợp này, hộp thoại không bị đóng lại.
-Nếu muốn lưu thiết lập và đóng hộp thoại cấu hình NVDA, bạn có thể dùng nút Đồng ý.
+Nếu muốn lưu thiết lập và đóng hộp thoại cấu hình NVDA, bạn có thể bấm nút Đồng ý.
 
 Một số phân loại có phím tắt để mở.
 Nếu bấm phím tắt, hộp thoại cấu hình NVDA sẽ được mở và con trỏ sẽ đi đến phân loại đó.
@@ -1079,14 +1088,14 @@ Dưới đây là các phân loại trong hộp thoại cấu hình NVDA:
 
 +++ Thiết lập chung (NVDA+control+g) +++[GeneralSettings]
 Phân loại thiết lập chung trong hộp thoại cấu hình NVDA cho phép thực hiện các thiết lập tổng thể như ngôn ngữ giao diện, có kiểm tra cập nhật phiên bản mới hay không.
-Phân loại này có các mục sau:
+Phân loại này có các tùy chọn sau:
 
 ==== Ngôn ngữ ====[GeneralSettingsLanguage]
 Đây là một hộp xổ (combo box) cho phép bạn chọn ngôn ngữ hiển thị cho giao diện, các thông báo hay tài liệu hướng dẫn.
 Có nhiều ngôn ngữ. Tuy nhiên, giá trị mặc định là "mặc định của người dùng, (sử dụng ngôn ngữ đang chọn của Windows)".
 NVDA sẽ sử dụng ngôn ngữ mà hệ điều hành đang sử dụng.
 
-Chú ý là NVDA cần được khởi động lại để có hiệu lực khi bạn thay đổi ngôn ngữ.
+Lưu ý là NVDA cần được khởi động lại để có hiệu lực khi bạn thay đổi ngôn ngữ.
 Khi xuất hiện hộp thoại xác nhận, chọn "khởi động lại ngay" hoặc "khởi động lại sau", tương ứng với việc muốn dùng ngôn ngữ mới ngay hay dùng sau vào một thời điểm khác. Nếu chọn "khởi động lại sau", cấu hình phải được lưu lại (bất kể là lưu thủ công hay dùng tính năng lưu cấu hình khi tắt NVDA).
 
 ==== Lưu cấu hình khi tắt NVDA ====[GeneralSettingsSaveConfig]
@@ -1125,7 +1134,7 @@ Nếu đăng nhập vào Windows bằng cách cung cấp tên truy cập và m�
 Tùy chọn này chỉ có trong phiên bản cài đặt của NVDA.
 
 ==== Sử dụng cấu hình hiện tại trong khi đăng nhập và các màn hình bảo vệ (yêu cầu quyền quản trị) ====[GeneralSettingsCopySettings]
-Bấm nút này để sao chép cấu hình hiện tại tới thư mục cấu hình hệ thống của NVDA. Lúc này, NVDA sẽ sử dụng các cấu hình đó trong khi  đăng nhập và khi chạy trong màn hình UAC hay các màn hình bảo vệ khác.
+Bấm nút này để sao chép cấu hình hiện tại tới thư mục cấu hình hệ thống của NVDA. Lúc này, NVDA sẽ sử dụng các cấu hình đó trong khi  đăng nhập và khi chạy trong màn hình UAC hay các [màn hình bảo vệ khác #SecureScreens].
 Để chắc chắn việc sao chép tất cả các thiết lập hiện tại, trước hết, hãy lưu chúng bằng control+NVDA+c hoặc chọn lưu cấu hình từ trình đơn của NVDA.
 Tùy chọn này chỉ có trong phiên bản cài đặt của NVDA.
 
@@ -1136,11 +1145,11 @@ Khi kiểm tra cập nhật thủ công hay tự động, cần cho phép NVDA g
 Các thông tin được gửi đi bao gồm:
 - Phiên bản NVDA hiện tại
 - Phiên bản hệ điều hành
-- Hệ điều hành 32 hay 64 bit
+- Kiểu hệ điều hành là 32 hay 64 bit
 
 
 ==== Cho phép dự án NVDA thu thập thống kê sử dụng NVDA ====[GeneralSettingsGatherUsageStats]
-Nếu được chọn, NV Access sẽ dùng các thông tin từ việc kiểm tra cập nhật để theo dõi số người dùng NVDA, bao gồm các thông tin cụ thể phiên bản hệ điều hành và quốc gia của bạn.
+Nếu bật tùy  chọn này, NV Access sẽ dùng các thông tin từ việc kiểm tra cập nhật để theo dõi số người dùng NVDA, bao gồm các thông tin cụ thể phiên bản hệ điều hành và quốc gia của bạn.
 Lưu ý rằng cho dù địa chỉ IP sẽ được dùng  để lấy số liệu thống kê tại quốc gia của bạn khi kiểm tra cập nhật, nhưng nó không bao giờ được lưu giữ.
 Ngoài những thông tin bắt buộc cho việc kiểm tra cập nhật, các thông tin sau đây cũng được gửi đi:
 - Ngôn ngữ giao diện của NVDA
@@ -1213,7 +1222,7 @@ Ví dụ, nếu bạn chọn tất cả thì tất cả các dấu và ký hiệ
 Tùy chọn này áp dụng cho tất cả các bộ đọc chứ không chỉ riêng cho bộ đọc hiện tại.
 
 ==== Sử dụng giọng đọc của ngôn ngữ để xử lý kí hiệu và ký tự ====[SpeechSettingsTrust]
-Mặc định, tùy chọn này được bật, để chọn có thể sử dụng giọng đọc để đọc các ký tự và ký hiệu hay không.
+Mặc định, tùy chọn này được bật, cho NVDA biết rằng có thể sử dụng ngôn ngữ của giọng đọc hiện tại để đọc các ký tự và ký hiệu hay không.
 Nếu bạn thấy NVDA đọc dấu câu không đúng cho một ngôn ngữ với bộ đọc hoặc giọng đọc đang dùng, bạn có thể tắt tùy chọn này để NVDA dùng các thiết lập ngôn ngữ chung.
 
 ==== Tích hợp dữ liệu của Unicode Consortium (bao gồm biểu tượng cảm xúc) khi xử lý kí hiệu và kí tự ====[SpeechSettingsCLDR]
@@ -1229,14 +1238,14 @@ Bạn có thể thêm, sửa hay xóa các mô tả kí hiệu trong [hộp tho�
 Để bật / tắt việc bao gồm dữ liệu Unicode Consortium ở bất cứ đâu, hãy gán một thao tác / phím tắt thông qua [Hộp thoại quản lý thao tác #InputGestures].
 
 ==== Phần trăm thay đổi độ cao cho chữ hoa ====[SpeechSettingsCapPitchChange]
-Trường nhập liệu này cho phép bạn nhập phần trăm độ cao sẽ thay đổi khi đọc các chữ cái in hoa.
+Trường nhập liệu này cho phép bạn nhập giá trị độ cao sẽ thay đổi khi đọc các chữ cái in hoa.
 Đây là giá trị phần trăm, giá trị số âm sẽ giảm độ cao và ngược lại.
 Nếu không muốn  thay đổi cao độ thì bạn có thể thiết lập là 0.
 Thông thường, NVDA sẽ tăng độ cao của giọng đọc cho các chữ viết hoa, nhưng vài bộ đọc hỗ trợ chưa tốt tính năng này.
-Trường họp này, hãy cân nhắc sử dụng tính năng [thông báo chữ hoa #SpeechSettingsSayCapBefore] hoặc [ Beep cho chữ hoa #SpeechSettingsBeepForCaps] để thay thế.
+Trường hợp này, hãy cân nhắc sử dụng tính năng [thông báo chữ hoa #SpeechSettingsSayCapBefore] hoặc [ Beep cho chữ hoa #SpeechSettingsBeepForCaps] để thay thế.
 
 ==== Thông báo chữ hoa ====[SpeechSettingsSayCapBefore]
-Bật tùy chọn này sẽ cho phép NVDA đọc thông báo chữ in hoa khi đứng trước chữ in hoa hoặc khi đánh vần
+Bật tùy chọn này sẽ cho phép NVDA đọc thông báo "hoa" khi đứng trước chữ in hoa hoặc khi đánh vần.
 
 ==== Beep cho chữ hoa ====[SpeechSettingsBeepForCaps]
 Nếu được chọn, NVDA sẽ báo tiếng beep khi đứng trước chữ in hoa.
@@ -1317,7 +1326,7 @@ Nếu màn hình nổi có bàn phím Perkins nhưng không hỗ trợ phần nh
 Tùy chọn này cho phép từ dưới vị trí con trỏ được hiển thị đầy đủ theo chữ nổi máy tính.
 
 ==== Hiển Thị Con Trỏ ====[BrailleSettingsShowCursor]
-Tùy chọn này dùng để chọn hiển thị hoặc không hiển thị con trỏ trên màn hình nổi.
+Tùy chọn này cho phép hiển thị hoặc không hiển thị con trỏ trên màn hình nổi.
 Nó có hiệu lực đối với dấu nháy hệ thống và con trỏ duyệt nhưng không có tác dụng với dấu báo vùng chọn.
 
 ==== Nhấp Nháy Con Trỏ ====[BrailleSettingsBlinkCursor]
@@ -1421,11 +1430,11 @@ Vui lòng xem phần [Các màn hình nổi được hỗ trợ #SupportedBraill
 Tùy chọn này, nếu có, cho phép bạn chọn cổng hoặc loại kết nối sử dụng để giao tiếp với màn hình nổi được chọn.
 Nó là một hộp xổ gồm các lựa chọn có sẵn cho màn hình nổi đó.
 
-Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là việc kết nối màn hình nổi với máy tính sẽ được tự động thiết lập bằng cách chương trình tự quét cổng USB và bluetooth trên hệ thống.
+Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là việc kết nối màn hình nổi với máy tính sẽ được tự động thiết lập bằng việc tự quét cổng USB và bluetooth trên hệ thống.
 Tuy nhiên, với một số màn hình nổi, bạn có thể chỉ định cổng kết nối cho nó.
 Một số lựa chọn thường gặp là: "tự động" (yêu cầu NVDA tự động hóa quá trình nhận dạng và kết nối), "USB", "bluetooth" và giao tiếp qua cổng serial nếu màn hình nổi bạn có hỗ trợ kiểu giao tiếp này.
 
-3Tùy chọn này sẽ không hiển thị nếu màn hình nổi của bạn chỉ hỗ trợ tự động nhận dạng cổng.
+Tùy chọn này sẽ không hiển thị nếu màn hình nổi của bạn chỉ hỗ trợ tự động nhận dạng cổng.
 
 Bạn nên tham khảo tài liệu của màn hình nổi tại phần [Các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để kiểm tra các phương thức nào được hỗ trợ cho dòng màn hình chữ nổi của bạn.
 
@@ -1456,7 +1465,7 @@ Nếu bạn chỉ muốn làm nổi focus mà không chọn các hộp kiểm đ
 Bạn có thể bật tính năng [Che Màn Hình #VisionScreenCurtain] bằng cách chọn hộp kiểm "Làm đen màn hình (ngay lập tức)".
 Sẽ có một cảnh báo rằng màn hình của bạn sẽ trở nên đen sau khi kích hoạt.
 Trước khi tiếp tục (chọn "Có"), hãy chắc rằng bạn đã bật tiếng nói / chữ nổi và có thể điều khiển  máy tính của mình mà không cần đến màn hình.
-Chọn "Không" nếu thấy không còn muốn che màn hình nữa.
+Chọn "Không" nếu muốn tắt chế độ che màn hình.
 Nếu đã chắc chắn, bạn có thể bấm nút có để bật che màn hình.
 Nếu không muốn hiển thị thông điệp cảnh báo này nữa, bạn có thể cấu hình trong hộp thoại hiển thị nó.
 Bạn cũng có thể bật lại thông điệp cảnh báo bằng cách chọn hộp kiểm "Luôn hiện cảnh báo khi bật che màn hình" ở kế bên hộp kiểm "Làm đen màn hình".
@@ -1486,7 +1495,7 @@ Các hộp kiểm trong danh sách này điều khiển việc có thể dùng p
 -
 
 Nếu không chọn phím nào làm phím bổ trợ thì NVDA không thể sử dụng được một số   lệnh nhất định.
-Vậy nên, NVDA sẽ hiển thị thông báo lỗi nếu không chọn phím nào hết mà bấm nút Đồng ý hay Áp dụng.
+Vậy nên, NVDA sẽ hiển thị thông báo lỗi nếu không chọn phím nào mà lại bấm nút Đồng ý hay Áp dụng.
 Sau khi bỏ qua bảng báo lỗi, bạn phải chọn ít nhất một phím làm phím bổ trợ.
 
 %kc:setting
@@ -1531,7 +1540,7 @@ Nó được bật mặc định. Do vậy, một số người dùng nhất đ�
 
 +++ Thiết Lập Chuột(NVDA+control+m) +++[MouseSettings]
 Phân loại chuột trong hộp thoại cấu hình của NVDA cho phép NVDA theo dõi chuột, phát tiếng beep theo tọa độ chuột và thiết lập các tùy chọn khác.
-Phân loại này gồm các mục sau:
+Phân loại này gồm các tùy chọn sau:
 
 ==== Thông báo khi chuột thay đổi hình dạng ====[MouseSettingsShape]
 Nếu chọn, NVDA sẽ thông báo khi hình dạng của chuột thay đổi.
@@ -1547,15 +1556,15 @@ Nếu được chọn, NVDA sẽ đọc những nội dung dưới con trỏ chu
 Nếu NVDA được thiết lập để đọc nội dung tại vị trí chuột khi di chuyển, tùy chọn này cho phép bạn chọn lượng nội dung sẽ được đọc khi chuột đi qua một đối tượng.
 Các giá trị cho tùy chọn này là: ký tự, từ, dòng hay đoạn.
 
-Để bật / tắt tùy chọn lượng nội dung từ bất cứ đâu, hãy gán một thao tác thông qua [hộp thoại Quản lý thao tác #InputGestures].
+Để bật / tắt tùy chọn đọc  nội dung tại vị trí chuột từ bất cứ đâu, hãy gán một thao tác thông qua [hộp thoại Quản lý thao tác #InputGestures].
 
 ==== Thông báo vai trò đối tượng tại vị trí chuột ====[MouseSettingsRole]
-Nếu được chọn thì NVDA sẽ thông báo vai trò (loại) của đối tượng khi chuột đi qua nó.
+Nếu được chọn, NVDA sẽ thông báo vai trò (loại) của đối tượng khi chuột đi qua nó.
 
 ==== Phát tọa độ âm thanh khi chuột di chuyển ====[MouseSettingsAudio]
 Tùy chọn này sẽ phát ra âm thanh theo tọa độ của chuột để người dùng có thể thao tác với chuột bất kỳ nơi nào theo tọa độ màn hình.
 Chuột ở vị trí cao thì cao độ của âm thanh cũng cao hơn.
-Di chuyển chuột sang trái hoặc phải, âm thanh sẽ phát ra loa theo hướng trái hoặc phải (yêu cầu sử dụng loa hoặc tai nghe hỗ trợ âm thanh hai chiều).
+Di chuyển chuột sang trái hoặc phải, âm thanh sẽ phát ra loa theo hướng trái hoặc phải (yêu cầu sử dụng loa hoặc tai nghe hỗ trợ âm thanh hai chiều - stereo).
 
 ==== Độ sáng kiểm soát âm lượng của tọa độ âm thanh ====[MouseSettingsBrightness]
 Nếu chọn "Phát tọa độ âm thanh khi chuột di chuyển" và chọn hộp kiểm này thì âm lượng của tọa độ âm thanh sẽ được kiểm soát bởi độ sáng màn hình tại vị trí chuột.
@@ -1583,7 +1592,7 @@ Nếu không đánh dấu chọn, bạn cần phải chạm hai lần để bấ
 
 +++ Con Trỏ Duyệt +++[ReviewCursorSettings]
 Phân loại con trỏ duyệt trong hộp thoại cấu hình NVDA được dùng để cấu hình cách thức hoạt động của con trỏ duyệt trong NVDA.
-Phân loại này có các mục sau:
+Phân loại này có các tùy chọn sau:
 
 %kc:setting
 ==== Theo focus hệ thống ====[ReviewCursorFollowFocus]
@@ -1622,7 +1631,7 @@ Khi chọn hộp kiểm này, NVDA sẽ đọc các thông báo trợ giúp (hel
 
 ==== Thông báo phím tắt của đối tượng ====[ObjectPresentationShortcutKeys]
 Nếu được chọn, NVDA sẽ thông báo phím tắt của đối tượng (nếu có).
-Ví dụ trình đơn File có phím tắt là Alt + F.
+Ví dụ trình đơn File (tệp tin) có phím tắt là Alt + F.
 
 ==== Thông Báo Thông Tin Vị Trí Đối Tượng ====[ObjectPresentationPositionInfo]
 Tùy chọn này cho phép NVDA thông báo vị trí của đối tượng, ví dụ như 1 của 4 khi di chuyển đến đối tượng bằng focus hoặc khi duyệt các đối tượng.
@@ -1643,9 +1652,9 @@ Cho phép bạn chọn cách thông báo trạng thái của thanh tiến độ.
 
 Có các lựa chọn như sau:
 - Tắt: Không thông báo gì cả.
-- Đọc: đọc giá trị phần trăm của thanh tiến trình.
-- Beep: Thông báo trạng thái của thanh tiến trình qua tiếng beep.
-- Đọc và beep: Vừa đọc và beep khi cập nhật trạng thái thanh tiến trình
+- Đọc: đọc giá trị phần trăm của thanh tiến độ. NVDA sẽ đọc mỗi khi giá trị trên thanh tiến độ có thay đổi.
+- Beep: Thông báo bằng tiếng beep mỗi khi có thay đổi trên thanh tiến độ. Tiếng beep càng cao thì thanh tiến độ càng gần với vạch đích.
+- Đọc và beep: Vừa đọc và beep khi cập nhật trạng thái thanh tiến độ.
 -
 
 ==== Thông báo các thanh tiến độ ngầm ====[ObjectPresentationReportBackgroundProgressBars]
@@ -1688,7 +1697,7 @@ Tùy chọn này có thể hữu ích cho phương thức nhập của tiếng H
 Một số phương thức nhập như Chinese New Phonetic và New ChangJie có chuỗi dựng sẵn.
  Bạn có thể chọn NVDA đọc các ký tự mới được nhập vào chuỗi dựng sẵn.
 Tùy chọn này mặc định được bật.
-Lưu ý, một số phương thức nhập cũ như Chinese ChangJie có thể không dùng các chuỗi dựng sẵn để chứa các ký tự, thay vì vậy, nó sử dụng trực tiếp các chuỗi tổ hợp. Vui lòng xem tùy chọn kế để cấu hình thông báo chuỗi tổ hợp.
+Lưu ý, một số phương thức nhập cũ như Chinese ChangJie có thể không dùng các chuỗi dựng sẵn để chứa các ký tự, thay vì vậy, nó sử dụng trực tiếp các chuỗi tổ hợp. Vui lòng xem tùy chọn kế tiếp để cấu hình thông báo chuỗi tổ hợp.
 
 ==== Thông báo thay đổi cho chuỗi tổ hợp" ====[InputCompositionCompositionStringChanges]
 Sau khi dữ liệu dựng sẵn được kết hợp thành một ký hiệu tượng hình hợp lệ, hầu hết các phương thức nhập đều để ký hiệu đó vào một chuỗi tổ hợp để lưu tạm cùng với những ký hiệu được kết hợp trước đó rồi mới chèn vào tài liệu.
@@ -1697,7 +1706,7 @@ Tùy chọn này mặc định được bật.
 
 +++ Chế Độ Duyệt (NVDA+control+b) +++[BrowseModeSettings]
 Phân loại Chế Độ Duyệt trong hộp thoại cấu hình NVDA  dùng để thiết lập cách vận hành của NVDA  khi bạn đọc và di chuyển trên các tài liệu phức tạp như là các trang web.
-Phân loại này có các mục sau:
+Phân loại này có các tùy chọn sau:
 
 ==== Số ký tự tối đa trên một dòng ====[BrowseModeSettingsMaxLength]
 Ô này cho phép thiết lập số ký tự tối đa trên một dòng ở chế độ duyệt.
@@ -1709,7 +1718,12 @@ Phân loại này có các mục sau:
 ==== Sử dụng kiểu trình bày theo màn hình ====[BrowseModeSettingsScreenLayout]
 Phím bật/tắt: NVDA+v
 
-Tùy chọn này cho phép bạn thiết lập nội dung dạng có thể kích hoạt (liên kết, nút bấm và biểu mẫu) ở chế độ duyệt trên một dòng riêng biệt, hoặc trình bày như nó hiển thị trên màn hình. Lưu ý là tùy chọn này không dùng cho các ứng dụng trong bộ Microsoft Office như Outlook và Word, vốn dĩ luôn dùng kiểu trình bày theo màn hình.
+Tùy chọn này cho phép bạn thiết lập nội dung dạng có thể kích hoạt (liên kết, nút bấm và biểu mẫu) ở chế độ duyệt trên một dòng riêng biệt, hoặc trình bày như nó hiển thị trên màn hình.
+Lưu ý là tùy chọn này không dùng cho các ứng dụng trong bộ Microsoft Office như Outlook và Word, vốn dĩ luôn dùng kiểu trình bày theo màn hình.
+Khi bật tùy chọn trình bày theo màn hình, các thành phần của trang sẽ vẫn hiển thị trực quan như đã thiết kế.
+Ví dụ, một dòng có nhiều liên kết   sẽ được thể hiện trong cả tiếng nói và chữ nổi ở dạng nhiều liên kết trên cùng một dòng.
+Nếu tắt tùy chọn, các thành phần của trang sẽ thể hiện trên từng dòng riêng biệt.
+Điều này có thể giúp dễ hiểu hơn khi di chuyển từng dòng trên trang và giúp một số người dùng dễ tương tác hơn với các thành phần.
 Khi bật tùy chọn này, các thành phần của trang sẽ thể hiện như nó đang hiển thị một cách trực quan. Ví dụ, một dòng có nhiều liên kết đang hiển thị trực quan cũng sẽ được thể hiện trong tiếng nói và chữ nổi là dòng có nhiều liên kết. Khi tắt tùy chọn này, các thành phần của trang sẽ được thể hiện trên từng dòng riêng biệt, có thể dễ hiểu hơn khi điều hướng qua từng dòng, và cũng khiến việc tương tác với các thành phần trở nên dễ hơn với một số người dùng.
 
 ==== Bật chế độ duyệt khi tải trang ====[BrowseModeSettingsEnableOnPageLoad]
@@ -1815,7 +1829,7 @@ Nếu được chọn, NVDA sẽ tìm và phân tích các thông tin định d�
 
 Mặc định thì NVDA sẽ dò tìm thông tin định dạng của nội dung tại vị trí con trỏ nháy hay con trỏ duyệt và trong một vài trường hợp thì nó cũng sẽ dò tìm thông tin cho phần còn lại của dòng văn bản nhưng chỉ khi điều đó không làm NVDA chạy chậm.
 
-Bật chức năng này sẽ giúp bạn trong việc đọc và duyệt tài liệu trong những ứng dụng như WordPad và khi định dạng của tài liệu đó truyền tải một ý nghĩa hữu ích.
+Bật tùy chọn này sẽ giúp bạn trong việc đọc và duyệt tài liệu trong những ứng dụng như WordPad và khi định dạng của tài liệu đó truyền tải một ý nghĩa hữu ích.
 
 ==== Thông Báo Thụt Lề Dòng ====[DocumentFormattingSettingsLineIndentation]
 Tùy chọn này cho phép bạn chọn cách NVDA thông báo lề của dòng.
@@ -1844,14 +1858,14 @@ Chỉ nên thực hiện các thay đổi thiết lập nếu chắc rằng bạ
 
 ==== Khôi phục về cài đặt mặc định ====[AdvancedSettingsRestoringDefaults]
 Nút bấm này sẽ khôi phục về giá trị mặc định cho các thiết lập, kể cả khi hộp kiểm xác nhận không được đánh dấu chọn.
-Sau khi thay đổi các cài đặt, có thể bạn muôn quay trở lại với các giá trị mặc định.
+Sau khi thay đổi các cài đặt, có thể bạn muốn quay trở lại với các giá trị mặc định.
 Cũng có thể dùng trong trường hợp mà bạn không chắc là các cài đặt có bị thay đổi hay chưa.
 
 ==== Cho phép gọi mã nguồn từ thư mục Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Khi phát triển các add-on cho NVDA, sẽ rất tiện lợi nếu có thể chạy thử mã nguồn trong khi đang viết ra nó.
 Việc bật tùy chọn này sẽ cho phép NVDA gọi các Module ứng dụng, Plugins toàn cục, chữ nổi và các trình điều khiển bộ đọc đã tùy chỉnh từ thư mục đặc biệt tên scratchpad trong thư mục cấu hình người dùng NVDA của bạn.
 Trước đây, NVDA gọi các mã nguồn đã tùy chỉnh trực tiếp từ thư mục cấu hình người dùng, và không có cách nào để vô hiệu.
-Mặc định, tùy chọn này bị tắt để đảm bảo rằng không có những đoạn mã chưa được kiểm nghiệm được gọi chạy trong NVDA mà người dùng không có thông tin rõ ràng.
+Mặc định, tùy chọn này bị tắt để đảm bảo rằng không có những đoạn mã chưa được kiểm nghiệm chạy trong NVDA mà người dùng không có thông tin rõ ràng.
 Nếu muốn chia sẻ mã nguồn cho người khác, bạn nên đóng gói nó thành một NVDA add-on.
 
 ==== Mở thư mục scratchpad ====[AdvancedSettingsOpenScratchpadDir]
@@ -1862,7 +1876,7 @@ Nút này chỉ xuất hiện nếu NVDA được cấu hình để gọi mã ng
 Tùy chọn này thay đổi việc NVDA đăng kí các sự kiện nổ ra bởi Microsoft UI Automation accessibility API.
 Khi tắt tùy chọn này, NVDA đăng kí cho nhiều sự kiện UIA được xử lý và loại bỏ trong chính NVDA.
 Điều này có một tác dụng tiêu cực không nhỏ đến sự vận hành, đặc biệt là trong các ứng dụng như Microsoft Visual Studio.
-Vậy nên, khi bật tùy chọn này, NVDA sẽ giới hạn các sự kiện đăng kí cho focus hệ thống cho hầu hết các sự kiện.
+Vậy nên, khi bật tùy chọn này, NVDA sẽ giới hạn các sự kiện đăng kí với focus hệ thống cho hầu hết các sự kiện.
 Nếu bạn thấy mệt mỏi với việc vận hành của một hay vài ứng dụng, chúng tôi khuyên bạn thử dùng tính năng này để cải thiện khả năng vận hành.
 
 ==== Sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word ====[MSWordUIA]
@@ -1975,13 +1989,13 @@ Bạn có thể mở cửa sổ này từ trình đơn tùy chọn của NVDA, t
 Có ba loại từ điển.
 Bao gồm:
 - Từ điển mặc định: Từ điển sẽ được sử dụng bởi tất cả các bộ đọc.
-- Từ điển cho giọng đọc: từ điển chỉ dùng cho một giọng đọc hiện tại.
+- Từ điển cho giọng đọc: từ điển chỉ dùng cho giọng đọc hiện đang được sử dụng.
 - Từ điển tạm thời: Từ điển cho tất cả các bộ đọc nhưng chỉ có tác dụng trong phiên làm việc hiện tại, nó sẽ bị mất khi khởi động lại NVDA.
 -
 
 Bạn cần gán thao tác / phím tắt qua [hộp thoại Quản lý thao tác #InputGestures] nếu muốn mở chúng ở bất cứ đâu.
 
-Các cửa sổ định nghĩa từ điển đều chứa các nguyên tắc cho việc định nghĩa các phát âm cho từ hoặc cụm từ
+Các cửa sổ định nghĩa từ điển đều chứa các nguyên tắc cho việc định nghĩa cách phát âm cho từ hoặc cụm từ
 Ngoài ra, còn có các nút Thêm, Sửa, xóa và Xóa tất cả từ trong từ điển.
 
 Để thêm từ vào trong từ điển, chọn nút Thêm từ và điền thông tin vào các ô nhập liệu rồi bấm Đồng ý.
@@ -1994,7 +2008,7 @@ Ví dụ như bạn có thể đọc từ VN thành "Việt Nam".
 Bạn cũng có thể thêm chú thích cho các từ ở phần chú thích. Ví dụ: Thay đổi VN thành Việt Nam.
 
 Việc định nghĩa từ điển trong NVDA không đơn giản là thay thế các ký tự.
-Mà trong cửa sổ định nghĩa từ, bạn còn có thể lựa chọn chức năng phân biệt chữ hoa và chữ thường, theo đó NVDA sẽ kiểm tra các ký tự xem là chữ hoa hay chữ thường.
+Trong cửa sổ định nghĩa từ, bạn còn có thể lựa chọn chức năng phân biệt chữ hoa và chữ thường, theo đó NVDA sẽ kiểm tra các ký tự xem là chữ hoa hay chữ thường.
 Mặc định, NVDA không phân biệt chữ hoa và chữ thường.
 
 Cuối cùng, có một nhóm nút radio cho phép bạn thiết lập để NVDA kiểm tra nơi từ mẫu bị trùng, như trùng cả từ hay xem như một biểu thức phổ thông.
@@ -2019,7 +2033,7 @@ Bạn có thể lọc các kí hiệu bằng cách nhập kí hiệu hay một p
 - Sử dụng mục Cấp độ, bạn có thể điều chỉnh cấp độ kí hiệu thấp nhất mà kí hiệu này phải được đọc.
 - Mục Gửi ký hiệu gốc đến bộ đọc quy định khi nào thì tự kí hiệu đó (tương ứng với sự thay thế của nó) sẽ được gửi đến bộ đọc.
 Điều này sẽ hữu ích khi ký hiệu có nhiệm vụ làm bộ đọc ngưng nghỉ hoặc thay đổi ngữ điệu.
-Ví dụ, bộ đọc sẽ ngưng khi gặp dấu phẩy.
+Ví dụ, bộ đọc sẽ ngưng khi gặp dấu phảy.
 Có ba lựa chọn:
  - Không bao giờ: không gửi ký hiệu gốc đến bộ đọc.
  - Luôn luôn: luôn luôn gửi ký hiệu gốc đến bộ đọc.
@@ -2058,8 +2072,7 @@ Một trình đơn sẽ xuất hiện cho phép bạn chọn các kiểu bàn ph
 Để xóa thao tác cho một lệnh, chọn thao tác đó rồi bấm nút Xóa.
 
 Phân loại Phím mô phỏng bàn phím hệ thống có các lệnh của NVDA  mô phỏng các phím trên bàn phím hệ thống.
-Các phím mô phỏng bàn phím hệ thống này có thể dùng để điều khiển bàn phím hệ thống từ màn hình chữ nổi cMột thao tác với các phím bổ trợ có thể không gán được vào thao tác mô phỏng mà không có phím bổ trợ
-ủa bạn.
+Các phím mô phỏng bàn phím hệ thống này có thể dùng để điều khiển bàn phím hệ thống từ màn hình chữ nổi của bạn.
 Để thêm một thao tác /phím tắt mô phỏng, chọn phân loại phím mô phỏng bàn phím hệ thống và bấm nút thêm.
 Tiếp theo, bấm một phím trên bàn phím mà bạn muốn mô phỏng.
 Sau đó, phím này sẽ có trong  phân loại các phím mô phỏng bàn phím hệ thống và bạn sẽ gán được thao tác / phím tắt cho nó như đã nói ở trên.
@@ -2078,7 +2091,7 @@ Mặc định thì NVDA sẽ tự động lưu lại các thay đổi cấu hìn
 Nhưng điều này có thể bị thay đổi trong hộp thoại thiết lập chung.
 Để lưu các thiết lập bất cứ lúc nào, chọn mục Lưu cấu hình từ trình đơn của NVDA.
 
-Nếu bạn có nhầm lẫn trong quá trình thay đổi cấu hình, bạn có thể quay lại cấu hình trước đó bằng cách chọn mục "Phục hồi lại cấu hình đã lưu" có trong trình đơn của NVDA.
+Nếu bạn có nhầm lẫn trong quá trình thay đổi cấu hình, hãy quay lại cấu hình trước đó bằng cách chọn mục "Phục hồi lại cấu hình đã lưu" có trong trình đơn của NVDA.
 Bạn cũng có thể quay lại các thiết lập nguyên thủy của nhà sản xuất bằng cách chọn mục khôi phục về cấu hình mặc định cũng có trong trình đơn của NVDA.
 
 Dưới đây là một số phím tắt cho việc lưu cấu hình:
@@ -2103,7 +2116,7 @@ Chúng cũng có thể được kích hoạt tự động bằng tác nhân tron
 Bạn mở cửa sổ quản lý các hồ sơ cấu hình bằng cách chọn mục "Hồ sơ cấu hình" trong trình đơn NVDA.
 Hoặc cũng có thể sử dụng phím tắt:
 %kc:beginInclude
-- NVDA+control+p: Mở cửa sổ hộp thoại Hồ sơ cấu hình.
+- NVDA+control+p: Mở hộp thoại Hồ sơ cấu hình.
 -
 %kc:endInclude
 
@@ -2157,7 +2170,7 @@ Cuối cùng, nếu không có hồ sơ thủ công hay tự động nào đang 
 Để sửa một hồ sơ chỉ định với chức năng đọc tất cả tài liệu thì bạn cần [Kích hoạt thủ công #ConfigProfileManual] hồ sơ đó.
 
 +++ Tạm thời tắt tác nhân +++[ConfigProfileDisablingTriggers]
-Đôi khi, bạn cần tạm tắt các tác nhân.
+Đôi khi, bạn sẽ cần tạm tắt các tác nhân.
 Ví dụ bạn muốn sửa một hồ sơ kích hoạt thủ công hoặc hồ sơ thông thường.
 Bạn có thể làm điều đó bằng cách chọn hộp kiểm "tạm thời tắt hồ sơ cấu hình tự động" trong hộp thoại Hồ sơ cấu hình.
 
@@ -2171,7 +2184,7 @@ Mỗi hồ sơ sẽ tồn tại trong phân loại hồ sơ cấu hình.
 Khi bạn đổi tên một hồ sơ, các thao tác được gán trước đó vẫn hoạt động.
 Việc xóa một hồ sơ sẽ tự xóa luôn thao tác đã gán cho nó.
 
-++ Nơi luu tập tin cấu hình ++[LocationOfConfigurationFiles]
+++ Nơi lưu tập tin cấu hình ++[LocationOfConfigurationFiles]
 Ở bản NVDA chạy trực tiếp, tất cả các thông tin cấu hình và các add-on đều được lưu trong thư mục userConfig, trong thư mục NVDA.
 
 Còn với bản NVDA cài đặt thì tất cả các thông tin đó được lưu trong một thư mục đặc biệt của NVDA, trong thư mục hồ sơ người dùng của Windows.
@@ -2229,7 +2242,7 @@ Cái này thường được dùng để di chuyển dấu nháy hoặc gọi ho
 Phải giữ chuột đến khi ô chữ nổi chuyển sang màu xanh lá.
 Ô chữ nổi sẽ bắt đầu bằng một màu vàng nhạt, chuyển sang màu cam rồi trở thành màu xanh lá.
 
-Để bật / tắt trình xem chữ nổi ở bật cứ đâu, vui lòng gán thao tác / phim tắt thông qua [hộp thoại Quản lí các thao tác #InputGestures].
+Để bật / tắt trình xem chữ nổi ở bật cứ đâu, vui lòng gán thao tác / phím tắt thông qua [hộp thoại Quản lí các thao tác #InputGestures].
 
 ++ Python Console ++[PythonConsole]
 Python console được tìm thấy trong trình đơn công cụ của trình đơn NVDA, là một công cụ phát triển, hữu dụng trong việc sửa lỗi, kiểm tra tổng quan cấu trúc lõi của NVDA hay kiểm tra cấp bậc của tính tiếp cận cho một ứng dụng.
@@ -2239,43 +2252,43 @@ Python console được tìm thấy trong trình đơn công cụ của trình �
 Bạn có thể mở hộp thoại này từ trình đơn công cụ của NVDA, nó cho phép bạn cài đặt hay gỡ bỏ các Add on của NVDA.
 Các Add on này thường được phát triển bởi cộng đồng nhằm hỗ trợ và bổ sung các tính năng cho NVDA cũng như hỗ trợ cho các ứng dụng, các thiết bị màn hình nổi hay các bộ tổng hợp tiếng nói.
 
-Trong hộp thoại này có một danh sách các Add on đã được cài vào thư mục cấu hình người dùng 
+Trong hộp thoại này có một danh sách các Add on đã được cài vào thư mục cấu hình người dùng.
 Các thông tin như tên Add on, tác giả, phiên bản cũng được hiển thị. Các thông tin khác như mô tả, URL v...v... bạn có thể xem được khi kích hoạt nút "Thông tin về Add on".
 Nếu như  Add-on có phần trợ giúp, bạn có thể mở xem bằng cách bấm nút Trợ giúp Add-on
 
 Để tìm và tải các Add on từ internet, bấm nút "Xem và Tải Add on".
 Nút này sẽ mở trang web Add on của NVDA https://addons.nvda-project.org/].
-Nếu như NVDA được cài trong máy của bạn thì bạn có thể duyệt đến Add on trên trang web và cài đặt nó theo hướng dẫn dưới đây.
+Nếu NVDA đã được cài trên máy, bạn có thể mở add on trực tiếp từ trình duyệt và cài đặt nó theo hướng dẫn bên dưới.
 Ngược lại, lưu gói add-on và theo hướng dẫn dưới đây.
 
-Để cài đặt Add on, bạn chọn nút Cài đặt.
-Cửa sổ này cho phép bạn tìm đến Add on mà bạn muốn cài đặt (.nvda-addon) từ máy tính hay trong hệ thống mạng.
+Để cài đặt Add on, bấm vào nút Cài đặt.
+Cửa sổ này cho phép bạn tìm đến một gói add on (tệp tin .nvda-addon) từ máy tính hay trong hệ thống mạng.
 Khi bạn chọn nút Open, quá trình cài đặt sẽ được bắt đầu.
 
-Trước khi cài đặt, NVDA sẽ hỏi xem bạn có chắc chắn muốn cài đặt Add on đó hay không.
+Trước khi cài đặt, NVDA sẽ yêu cầu bạn xác nhận muốn cài đặt Add on đó.
 Vì chức năng của các add-on trong NVDA không bị hạn chế, do vậy, trên lý thuyết, các add-on có thể truy cập các dữ liệu cá nhân cũng như có thể truy cập toàn bộ hệ thống máy tính của bạn. Nếu NVDA được cài đặt, bạn nên chọn cài đặt các add-on từ các nguồn đáng tin cậy.
-Để add-on hoạt động sau khi cài đặt, cần phải khởi động lại NVDA. 
+Để add-on hoạt động sau khi cài đặt, cần phải khởi động lại NVDA.
 Khi cài xong thì Add on vừa cài sẽ có trạng thái là "đã cài" và xuất hiện trong danh sách các Add on.
 
 Để gỡ bỏ Add on, chọn Add on đó trong danh sách và bấm nút "Gỡ bỏ".
-NVDA cũng sẽ hỏi xem bạn chắc chắn muốn gỡ bỏ không.
-Giống như phần cài đặt, NVDA phải khởi động lại để loại bỏ hoàn toàn các add-on
+NVDA cũng sẽ yêu cầu bạn xác nhận muốn làm điều đó.
+Giống như khi cài đặt, phải khởi động lại NVDA để loại bỏ hoàn toàn các add-on.
 Khi gỡ bỏ xong thì trạng thái của Add on sẽ là "đã gỡ bỏ".
 
-Kích hoạt nút Tắt add-on để tắt add-on đang chọn.
-Kích hoạt nút Bật để bật một add-on đã tắt trước đó.
+Bấm nút Tắt add-on để tắt add-on đang chọn.
+Bấm nút Bật để bật một add-on đã tắt trước đó.
 Bạn có thể chọn tắt add-on nếu trạng thái add-on đang bật và ngược lại.
-Mỗi khi tắt hoặc bật một add-on, trạng thái của add-on sẽ thay đổi để cho người dùng biết điều gì sẽ xảy ra sau khi bạn khởi động lại NVDA.
+Mỗi khi tắt hoặc bật một add-on, trạng thái của add-on sẽ thay đổi để cho người dùng biết điều gì sẽ xảy ra sau khi khởi động lại NVDA.
 Nếu add-on đã được tắt trước đó, trạng thái sẽ hiển thị "bật sau khi khởi động lại".
 Nếu add-on được "bật" trước đó, trạng thái sẽ hiển thị "tắt sau khi khởi động lại".
-Cũng giống như khi bạn cài đặt hoặc gỡ bỏ add-on, bạn cần khởi động lại NVDA để các thay đổi có hiệu lực.
+Cũng giống như khi cài đặt hoặc gỡ bỏ add-on, bạn cần khởi động lại NVDA để các thay đổi có hiệu lực.
 
 Trình quản lý cũng có nút Đóng để đóng hộp thoại lại.
-Nếu bạn có cài đặt, gỡ bỏ hoặc thay đổi trạng thái của add-on, khi đóng hộp thoại, NVDA sẽ hỏi bạn có muốn khởi động lại NVDA để các thay đổi có hiệu lực không.
+Nếu bạn có cài đặt, gỡ bỏ hoặc thay đổi trạng thái của add-on, NVDA sẽ yêu cầu bạn  khởi động lại NVDA để các thay đổi có hiệu lực.
 
 Vài add-on cũ có thể không tương thích với phiên bản NVDA bạn đang có.
 Khi dùng một phiên bản NVDA cũ, vài add-on mới cũng có thể không tương thích.
-Việc cố gắng cài đặt một add-on không tương thích sẽ xuất hiện một thông điểp báo lỗi giải thích tại sao add-on lại được coi là không tương thích.
+Việc cố gắng cài đặt một add-on không tương thích sẽ xuất hiện một thông điệp báo lỗi giải thích tại sao add-on lại được coi là không tương thích.
 Để xem xét các add-on không tương thích, bạn có thể dùng nút "xem các add-on không tương thích" để chạy trình quản lý các add-on không tương thích.
 
 Để mở trình quản lý add-on ở bất cứ đâu, hãy gán phím tắt/thao tác cho nó trong hộp thoại [Quản lý thao tác #InputGestures].
@@ -2287,20 +2300,20 @@ Trình quản lý các add-on không tương thích có một thông điệp ng�
 Các add-on không tương thích được trình bày trong một danh sách với các cột sau:
 + Gói, tên của add-on
 + Phiên bản, phiên bản của add-on
-+ Lý do không tương thích, giải thích vì sao addon được coi là không tương thích
++ Lý do không tương thích, giải thích vì sao add-on được coi là không tương thích
 +
 
 Trình quản lý các add-on không tương thích cũng có nút "Thông tin về Add  - on...".
 Hộp thoại này cho bạn biết đầy đủ các chi tiết của add-on, hữu ích khi liên lạc với tác giả của add-on.
 
 ++ Tạo bản chạy trực tiếp ++[CreatePortableCopy]
-Tùy chọn này sẽ mở một hộp thoại cho phép bạn tạo một bản chạy trực tiếp của NVDA.
+Tùy chọn này sẽ mở một hộp thoại để bạn tạo một bản chạy trực tiếp từ bản NVDA đang được cài đặt.
 Tương tự, khi đang dùng một bản NVDA chạy trực tiếp, mục này sẽ có tên là "cài đặt NVDA vào máy tính này" thay vì "tạo bản chạy trực tiếp".
 
 Hộp thoại tạo bản NVDA chạy trực tiếp hay cài đặt NVDA vào máy sẽ yêu cầu bạn chọn đường dẫn đến thư mục để tạo bản chạy trực tiếp hay cài đặt NVDA.
 
 Trong hộp thoại này, bạn có thể bật hay tắt các tùy chọn sau:
-- Sao chép cấu hình người dùng hiện tại (bao gồm các tập tin trong %appdata%\roaming\NVDA hay trong thư mục cấu hình người dùng của bản chạy trực tiếp và cũng bao gồm addons  và các module khác)
+- Sao chép cấu hình người dùng hiện tại (bao gồm các tập tin trong %appdata%\roaming\NVDA hay trong thư mục cấu hình người dùng của bản chạy trực tiếp và cũng bao gồm addon và các module khác)
 - Khởi động bản chạy trực tiếp mới sau khi tạo hoặc chạy NVDA sau khi cài đặt (Chạy NVDA sau khi cài đặt hoặc tạo bản chạy trực tiếp)
 -
 
@@ -2327,14 +2340,14 @@ Phần này có các thông tin về các bộ đọc mà NVDA hỗ trợ.
 Để biết thêm thông tin về các bộ đọc miễn phí và thương mại mà bạn có thể mua và tải về dùng với NVDA, vui lòng xem tại trang [Thêm các giọng đọc https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG++[eSpeakNG]
-Bộ đọc [eSpeak NG https://github.com/espeak-ng/espeak-ng] được tích hợp trực tiếp với NVDA và nó không cần cài thêm bất kỳ trình điều khiển hoặc gói dữ liệu nào.
+Bộ đọc [eSpeak NG https://github.com/espeak-ng/espeak-ng] được tích hợp trực tiếp vào NVDA và không cần cài thêm bất kì trình điều khiển hoặc gói dữ liệu nào.
 Trên Windows 7, 8 và 8.1, NVDA mặc định dùng bộ đọc  eSpeak NG ([bộ đọc Windows OneCore #OneCore] mặc định được dùng cho Windows 10) trở lên.
 Vì được tích hợp sẵn trong NVDA nên nó có thể là lựa chọn tuyệt vời cho bản NVDA chạy trực tiếp từ USB.
 
 Mỗi giọng trong eSpeak NG tương ứng với một ngôn ngữ khác nhau.
-Nó hỗ trợ hơn  43 ngôn ngữ khác nhau.
+eSpeak NG hỗ trợ hơn  43 ngôn ngữ khác nhau.
 
-Cũng có khá nhiều giọng khác nhau để bạn lựa chọn.
+Cũng có khá nhiều biến thể để bạn lựa chọn.
 
 ++ Microsoft Speech API phiên bản 4 (SAPI 4) ++
 SAPI 4 là một chuẩn cũ của các bộ tổng hợp tiếng nói của Microsoft.
@@ -2363,7 +2376,7 @@ Các giọng đọc này cũng có thể được sử dụng với NVDA.
 
 ++ Giọng Windows OneCore ++[OneCore]
 Windows 10 trở lên đi kèm với những giọng đọc mới, được gọi là OneCore hoặc còn gọi là "Mobil voices" (giọng Mobile).
-Những giọng đọc mới hỗ trợ cho khá nhiều ngôn ngữ khác nhau và  phản hồi nhanh hơn so với những giọng theo chuân SAPI-5.
+Những giọng đọc mới hỗ trợ cho khá nhiều ngôn ngữ khác nhau và  phản hồi nhanh hơn so với những giọng theo chuẩn SAPI-5.
 Trên Windows 10 trở lên, NVDA mặc định dùng các giọng Windows OneCore ([eSpeak NG #eSpeakNG] thì dùng cho các bản phát hành khác).
 
 Để thêm các giọng đọc Windows OneCore mới, truy cập vào "Speech Settings" trong Windows system settings. 
@@ -2403,7 +2416,7 @@ Các màn hình nổi sau đây có hỗ trợ chức năng tự nhận biết.
 Tất cả màn hình Focus và PAC Mate của hãng [Freedom Scientific https://www.freedomscientific.com/] đều được hỗ  trợ khi kết nối qua cổng USB hay bluetooth.
 Máy tính của bạn cần phải cài trình điều khiển màn hình nổi của Freedom Scientific.
 Bạn có thể tải chúng về từ trang https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver.
-Trên trang này chỉ thông báo cho dòng Focus Blue nhưng nó có thể sử dụng cho cả dòng Focus và Pacmate của Freedom Scientific.
+Trên trang này chỉ thông báo cho dòng Focus Blue nhưng trình điều khiển có thể sử dụng cho cả dòng Focus và Pacmate của Freedom Scientific.
 
 Mặc định, NVDA có thể tự nhận các thiết bị này khi nó được kết nối qua cổng USB và bluetooth.
 Tuy nhiên, khi cấu hình màn hình, bạn hoàn toàn có thể chọn cổng "USB" hoặc "bluetooth" để chỉ định cụ thể kiểu kết nối nào sẽ được sử dụng.
@@ -2460,7 +2473,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Đọc dòng hiện tại | brailleSpaceBar+dot1+dot4 |
 | Trình đơn NVDA | brailleSpaceBar+dot1+dot3+dot4+dot5 |
 
-Những mẫu mới của Focus có thêm các phím rocker bar (focus 40, focus 80 and focus blue):
+Những mẫu mới của Focus có thêm các phím rocker bar (focus 40, focus 80 và focus blue):
 || Tên | Phím |
 | Đi đến dòng trước | leftRockerBarUp, rightRockerBarUp |
 | Đi đến dòng kế | leftRockerBarDown, rightRockerBarDown |
@@ -2549,7 +2562,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Phím mũi tên lên | joystickUp |
 | Phím mũi tên xuống | joystickDown |
 | Phím mũi tên trái | joystickLeft |
-| Phím ũi tên phải | joystickRight |
+| Phím mũi tên phải | joystickRight |
 | Trình đơn NVDA | b2+b4+b5+b6 |
 | Bật tắt con trỏ nổi đi theo | b2 |
 | Bật tắt con trỏ nổi | b1 |
@@ -2558,7 +2571,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-Đã hỗ trợ màn hình nổi Lilli của [MDV https://www.mdvbologna.it/].
+Màn hình nổi Lilli của [MDV https://www.mdvbologna.it/] đã được hỗ trợ.
 Bạn không cần cài bất kỳ trình điều khiển nào khi sử dụng màn hình nổi này với NVDA.
 Chỉ kết nối và cấu hình NVDA để sử dụng.
 
@@ -2719,15 +2732,15 @@ Sau đây là danh sách các phím được gán của mẫu màn hình nổi n
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
 %kc:beginInclude
 || Tên | Phím |
-| Cuộn về trước | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
-| Cuộn tới | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
-| Chuyển về dòng trước | leftSideScrollUp+rightSideScrollUp |
-| Move braille display to next line | leftSideScrollDown+rightSideScrollDown |
-| Chuyển đến dòng trước | rightSideUpArrow |
-| Chuyển đến dòng kế | rightSideDownArrow |
-| Chuyển đến kí tự trước | rightSideLeftArrow |
-| Chuyển đến kí tự kế | rightSideRightArrow |
-| Rút về ô chữ nổi | routing |
+| Chuyển đến ô chữ nổi | routing |
+| Cuộn màn hình lùi | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| Cuộn màn hình tới | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Chuyển màn hình về dòng trước | leftSideScrollUp+rightSideScrollUp |
+| Chuyển màn hình đến dòng kế | leftSideScrollDown+rightSideScrollDown |
+| Chuyển đến dòng trước trong chế độ duyệt | rightSideUpArrow |
+| Chuyển đến dòng kế trong chế độ duyệt | rightSideDownArrow |
+| Chuyển đến kí tự trước trong chế độ duyệt | rightSideLeftArrow |
+| Chuyển đến kí tự kế trong chế độ duyệt | rightSideRightArrow |
 | Chuyển đến focus hiện tại | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
 | Phím control | smartbeetle:f1, brailleedge:f3 |
 | Phím windows | f7, smartbeetle:f2 |
@@ -2876,7 +2889,7 @@ Dòng sản phẩm Live chỉ có một dòng phím routing và mỗi chiều c�
 Bước thứ hai có thể thực hiện bằng cách bấm một phím routing và bấm EAB theo chiều tương ứng.
 Bấm, giữ phím lên, xuống, trái, phải (hoặc EAB) sẽ lập lại thao tác tương ứng. 
 
-Sau đây là các phím có trên những màn hình nổi này:%kc:beginInclude
+Sau đây là các phím có trên những màn hình nổi này:
 || Tên | Phím |
 | l1 | Phím trái trước |
 | l2 | Phím trái sau |
@@ -2942,11 +2955,11 @@ Các màn hình nổi sau đây được hỗ trợ:
 
 Lưu ý, những màn hình này chỉ kết nối qua cổng serial.
 Vì vậy, các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
-Bạn cần phải chọn đúng cổng trong [hộp thoại chọn màn hình nổi #SelectBrailleDisplay] sau khi cài driver.
+Bạn cần phải chọn đúng cổng trong [hộp thoại chọn màn hình nổi #SelectBrailleDisplay] sau khi cài trình điều khiển.
 
 Một số mẫu màn hình sẽ có thanh tiện ích (EAB) giúp truy xuất tiện lợi và nhanh hơn.
 EAB có thể di chuyển qua 4 chiều và mỗi chiều có hai switch.
-Bấm và giữ phím lên, xuống, trái, phải (hoặc EAB) sẽ lập lại thao tác tương ứng.
+Bấm và giữ phím lên, xuống, trái, phải (hoặc EAB) sẽ lặp lại thao tác tương ứng.
 Những dòng cũ hơn không có EAB, dùng các phím phía trên bàn phím chữ nổi để thay thế.
 
 Sau đây là các phím lệnh trên màn hình nổi:
@@ -3019,7 +3032,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA hỗ trợ máy tính màn hình nổi BrailleNote tại [Humanware https://www.humanware.com] khi chức năng của nó được kết nối như một màn hình cho trình đọc màn hình.
+NVDA hỗ trợ các máy tính màn hình nổi (note takers) BrailleNote tại [Humanware https://www.humanware.com] khi chức năng của nó được kết nối như một màn hình cho trình đọc màn hình.
 Sau đây là các dòng sản phẩm được hỗ trợ:
 - BrailleNote Classic (chỉ kết nối qua cổng serial)
 - BrailleNote PK (kết nối qua bluetooth và serial)
@@ -3063,7 +3076,7 @@ Vui lòng xem tài liệu hướng dẫn mô tả các phím để biết vị t
 | Mũi tên phải | space+dot6 |
 | Phím trang trước | space+dot1+dot3 |
 | Phím trang kế | space+dot4+dot6 |
-| Phím hoem | space+dot1+dot2 |
+| Phím home | space+dot1+dot2 |
 | Phím end | space+dot4+dot5 |
 | Control+home | space+dot1+dot2+dot3 |
 | Control+end | space+dot4+dot5+dot6 |
@@ -3122,7 +3135,7 @@ Sau đây là các mẫu màn hình được hỗ trợ:
 Ở [hộp thoại chọn màn hình nổi #SelectBrailleDisplay] của NVDA, bạn có thể thiết lập cổng serial cho màn hình được kết nối.
 Các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
-Sau đây là các lệnh của các màn hình nổi EcoBraille.
+Sau đây là các lệnh cho màn hình nổi EcoBraille.
 Vui lòng xem [Tài Liệu của EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] cho phần mô tả vị trí các phím. 
 
 %kc:beginInclude
@@ -3131,11 +3144,11 @@ Vui lòng xem [Tài Liệu của EcoBraille ftp://ftp.once.es/pub/utt/bibliotecn
 | Cuộn tới  | T4 |
 | Chuyển về dòng trước | T1 |
 | Chuyển đến dòng kế | T5 |
-| Rút về ô hữ nổi | Routing |
+| Rút về ô chữ nổi | Routing |
 | Kích hoạt đối tượng điều hướng hiện tại | T3 |
 | Chuyển qua chế độ duyệt kế tiếp | F1 |
 | Chuyển đến đối tượng cha | F2 |
-| Chuyển về chế độ duyết trước đó | F3 |
+| Chuyển về chế độ duyệt trước đó | F3 |
 | Chuyển về đối tượng trước | F4 |
 | Thông báo đối tượng hiện tại | F5 |
 | Chuyển đến đối tượng kế | F6 |
@@ -3164,7 +3177,7 @@ Các màn hình Iris chỉ có thể kết nối được qua một cổng seria
 Vậy nên, với những màn hình này, bạn nên chọn cổng để kết nối sau khi chọn trình điều khiển cho nó trong hộp thoại cài đặt chữ nổi..
 
 Các Màn hình Iris và Esys có bàn phím chữ nổi 10 phím.
-Có hai phím giống như khoảng trắng, phím bến trái tương ứng với phím xóa và phím bên phải là khoảng trắng.
+Có hai phím giống như khoảng trắng, phím bên trái tương ứng với phím xóa và phím bên phải là khoảng trắng.
 
 Sau đây là các lệnh của màn hình nổi này được gán cho NVDA.
 Vui lòng xem Tài Liệu của màn hình cho phần mô tả vị trí các phím. 
@@ -3245,7 +3258,7 @@ NVDA Hỗ trợ các màn hình của [Nattiq Technologies https://www.nattiq.co
 Windows 10 trở lên tự nhận màn hình khi được kết nối, có thể bạn cần phải cài trình điều khiển USB nếu dùng các phiên bản windows cũ (thấp hơn Win10).
 Bạn có thể tải chúng từ trang web của nhà sản xuất.
 
-Sau đây là các phím tắt gán cho các màn hình của Nattiq Technologies với NVDA.
+Sau đây là các phím tắt gán cho màn hình của Nattiq Technologies với NVDA.
 Vui lòng xem Tài Liệu của màn hình cho phần mô tả vị trí các phím.
 %kc:beginInclude
 || Tên | Phím |
@@ -3262,7 +3275,7 @@ Vui lòng xem Tài Liệu của màn hình cho phần mô tả vị trí các ph
 Bạn nên tải và cài phiên bản mới nhất. Tập tin cài đặt sẽ có tên đại khái brltty-win-4.2-2.exe.
 Khi cấu hình cổng và màn hình để sử dụng, bạn hãy đọc kỹ hướng dẫn, đặc biệt khi bạn dùng màn hình nổi với kết nối USB và trình điều khiển đã được cài trên máy trước đó.
 
-Đối với những màn hình có bàn phím chữ nổi, hiện BRLTTY bản thân nó cũng hỗ trợ nhập liệu kiểu chữ nổi.
+Đối với những màn hình có bàn phím chữ nổi, bản thân BRLTTY hiện cũng hỗ trợ nhập liệu kiểu chữ nổi.
 Vì vậy, sẽ không cần bảng mã chữ nổi đầu vào của NVDA.
 
 BRLTTY không được bao gồm trong tính năng  ngầm tự nhận biết màn hình của NVDA.
@@ -3284,7 +3297,7 @@ Niềm hi vọng là tất cả các mẫu màn hình nổi trong tương lai t�
 
 Tính năng tự nhận màn hình nổi của NVDA cũng sẽ nhận các màn hình có hỗ trợ giao thức này.
  
-Sau đây là các phím hiện được gán cho những màn hình nổi này.
+Sau đây là các phím hiện được gán cho những màn hình nổi nói trên.
 %kc:beginInclude
 || Tên | Phím |
 | Cuộn màn hình nổi về trước | pan left hoặc rocker up |
@@ -3311,6 +3324,34 @@ Sau đây là các phím hiện được gán cho những màn hình nổi này.
 + 
 + Chủ Đề Nâng Cao +[AdvancedTopics]
 
+++ Chế độ an toàn ++[SecureMode]
+Có thể chạy NVDA ở chế độ an toàn với [tùy chọn dòng lệnh #CommandLineOptions] ``-s``.
+NVDA chạy ở chế độ bảo vệ khi được gọi chạy ở [các màn hình bảo vệ #SecureScreens], cho đến khi [tham số hệ thống #SystemWideParameters] ``serviceDebug`` được bật.
+
+Chế độ bảo vệ sẽ vô hiệu:
+
+- Lưu cấu hình và các thiết lập khác xuống đĩa
+- Lưu gesture map xuống đĩa
+- Các tính năng của [Hồ Sơ Cấu Hình #ConfigurationProfiles] như tạo, xóa, đổi tên hồ sơ.
+- Cập nhật NVDA và tạo bản chạy trực tiếp
+- [Python console #PythonConsole]
+- [Trình xem log #LogViewer] và ghi log
+-
+
+++ Các Màn Hình Bảo Vệ ++[SecureScreens]
+NVDA chạy ở chế độ bảo vệ khi được gọi chạy ở các màn hình bảo vệ, cho đến khi [tham số hệ thống #SystemWideParameters] ``serviceDebug`` được bật.
+
+Khi chạy ở một màn hình bảo vệ, NVDA sử dụng một hồ sơ hệ thống cho các tùy chọn.
+Có thể chép các tùy chọn của người dùng cho NVDA để [dùng trong các màn hình bảo vẹ #GeneralSettingsCopySettings].
+
+Màn hình bảo vệ bao gồm:
+
+- Màn hình đăng nhập Windows
+- Hộp thoại User Access Control, xuất hiện khi thực hiện một hành động với tư cách quản trị
+  - Điều này bao gồm cả việc cài đặt các chương trình
+  -
+-
+
 ++ Các Tùy Chọn Cho Dòng Lệnh ++[CommandLineOptions]
 NVDA có thể nhận một hoặc nhiều các tùy chọn để thay đổi các tính năng của nó khi khởi động
 Bạn có thể đưa vào một cách không giới hạn những tùy chọn mà bạn thấy cần.
@@ -3323,8 +3364,8 @@ Một ví dụ khác, bạn có thể đóng bản NVDA đang chạy bằng các
 
 nvda -q
 
-Có một số tùy chọn có cả phần viết tắt và đầy đủ; trong khi một số khác chỉ có phần ghi đầy đủ.
-Đối với những tùy chọn có phần viết tắt, bạn có thể kết hợp và ghi như sau:
+Một số tùy chọn có cả phiên bản viết ngắn và viết dài; trong khi một số khác chỉ có phiên bản viết dài.
+Đối với những tùy chọn có phiên bản viết ngắn, bạn có thể kết hợp và ghi như sau:
 | nvda -mc CONFIGPATH | Sẽ khởi động NVDA với âm thanh và thông điệp khởi động bị vô hiệu, và định sẵn cấu hình |
 | nvda -mc CONFIGPATH --disable-addons | Giống như trên, nhưng vô hiệu hóa các add-on |
 
@@ -3344,7 +3385,7 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | -c CONFIGPATH | --config-path=CONFIGPATH | Đường dẫn để lưu tất cả cấu hình của NVDA |
 | Không có | --lang=LANGUAGE | Bỏ qua ngôn ngữ đã cấu hình của NVDA. Thiết lập là "Windows" cho ngôn ngữ mặc định của người dùng hiện tại, "en" là tiếng Anh, v...v.... |
 | -m | --minimal | Không âm thanh, không giao diện, không thông báo bắt đầu, v...v... |
-| -s | --secure | Chế độ an toàn: tắt Python console, các tính năng của hồ sơ như tạo, xóa, đổi tên hồ sơ, v...v..., kiểm tra cập nhật, vài hộp kiểm trong hộp thoại chào mừng và phân loại thiết lập chung (ví dụ: dùng NVDA trong khi đăng nhập, lưu cấu hình sau khi thoát, v...v...),  cũng như trình xem log và tính năng ghi log (thường dùng ở màn hình bảo vệ). Lưu ý rằng lệnh này cũng sẽ vô hiệu hóa việc lưu thiết lập trong cấu hình hệ thống và hệ thống thao tác sẽ không được lưu xuống đĩa. |
+| -s | --secure | Khởi động NVDA trong [Chế Độ An Toàn #SecureMode] |
 | Không có | --disable-addons | Các add-on không có hiệu lực |
 | Không có | --debug-logging | Bật cấp độ bản ghi dò lỗi cho lần chạy này. Thiết lập này được ghi đè lên các cấp độ bản ghi khác ( ""--loglevel"", -l) tham số được cung cấp, bao gồm tùy chọn tắt log. |
 | Không có | --no-logging | Tắt log hoàn toàn khi dùng NVDA. Thiết lập này có thể bị ghi đè nếu một cấp độ log ( ""--loglevel"", -l) được chỉ định từ dòng lệnh hoặc bản ghi dò lỗi đã được bật. |
@@ -3367,7 +3408,7 @@ Những khóa chứa các giá trị này trong registry bao gồm:
 Sau đây là những giá trị có thể thiết lập cho khóa nói trên:
 || Tên | Kiểu | Giá trị có thể dùng | Mô tả |
 | configInLocalAppData | DWORD | 0 (mặc định) để tắt, 1 để bật | Nếu bật, sẽ lưu cấu hình người dùng trong thư mục local application data, thay vì roaming application data |
-| serviceDebug | DWORD | 0 (mặc định) để tắt, 1 để bật | Nếu bật, sẽ tắt chế độ bảo vệ của màn hình bảo vệ Windows, cho phép sử dụng Python console và trình xem bản ghi. Do một số lý do an toàn cho máy tính, chức năng này không được khuyến khích sử dụng. |
+| serviceDebug | DWORD | 0 (mặc định) để tắt, 1 để bật | Nếu bật, sẽ tắt [Chế Độ An Toàn #SecureMode] của [các màn hình bảo vệ #SecureScreens]. Windows. Vì một số lý do an toàn cho máy tính, chức năng này không được khuyến khích sử dụng. |
 
 + Thông Tin Thêm +[FurtherInformation]
 Nếu bạn cần thêm thông tin hoặc trợ giúp liên quan đến NVDA, vui lòng xem trang web của NVDA tại NVDA_URL.

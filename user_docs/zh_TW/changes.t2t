@@ -87,7 +87,7 @@ Note:
 - Added commands for toggling multiple modifiers simultaneously with a Braille display (#13152)
 - The Speech Dictionary dialog now features a "Remove all" button to help clear a whole dictionary. (#11802)
 - Added support for Windows 11 Calculator. (#13212)
-- In Microsoft Word with UI Automation enabled on Windows 11, line numbers, section numbers and layout column numbers can now be reported. (#13283)
+- In Microsoft Word with UI Automation enabled on Windows 11, line numbers and section numbers can now be reported. (#13283, #13515)
 - For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default, providing a significant performance improvement over the old Object model access. (#13437)
  - This includes documents in Microsoft Word itself, and also the message reader and composer in Microsoft Outlook. 
  -
@@ -139,13 +139,15 @@ Note:
 - Adobe Reader no longer crashes on startup if Adobe Reader's protected mode is enabled. (#11568)
 - Fixed a bug where selecting the Papenmeier Braille Display Driver caused NVDA to crash. (#13348)
 - In Microsoft word with UIA: page number and other formatting is no longer inappropriately announced when moving from a blank table cell to a cell with content, or from the end of the document into existing content. (#13458, #13459)
+- NVDA will no longer fail to report the page title and start automatically reading, when a page loads in Google chrome 100. (#13571)
+- NVDA no longer crashes when resetting the NVDA configuration to factory defaults while speak command keys is on. (#13634)
 -
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 - Although NVDA still requires Visual Studio 2019, Builds should no longer fail if a newer version of Visual Studio (E.g. 2022) is installed along side 2019. (#13033, #13387)
 - Updated SCons to version 4.3.0. (#13033)
-- Updated py2exe to version 0.11.0.1. (#12357, #13066)
+- Updated py2exe to version 0.11.1.0. (#13510)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
 - ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
 - ``MessageItem`` has been removed from the Outlook appModule. (#12935)
@@ -207,24 +209,28 @@ This can dramatically decrease build times on multi core systems. (#13226, #1337
   -
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` has moved to ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
 - Boolean ``gui.isInMessageBox`` is removed, please use the function ``gui.message.isModalMessageBoxActive`` instead. (#12984, #13376)
-- ``controlTypes`` has been split up into various submodules. (#12510)
+- ``controlTypes`` has been split up into various submodules. (#12510, #13588)
   - ``ROLE_*`` and ``STATE_*`` have been replaced with ``Role.*`` and ``State.*``.
-  - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels`` has been removed.
-  Usages like ``roleLabels[ROLE_*]`` should be replaced to their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
-  - ``processPositiveStates`` and ``processNegativeStates`` have been removed.
-  -
-- The ``controlTypes.Role`` and ``controlTypes.State`` enum values are no longer fixed/hardcoded and have changed. (#13414)
-  - The ``controlTypes.State`` members are no longer bit flags, states should not be determined using bitwise operations.
-  - There are mappings for ``IAccessible``, ``IAccessible2`` and ``UIA``:
-    - ``IAccessibleHandler.IAccessible2StatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleStatesToNVDAStates``
-    - ``IAccessibleHandler.IAccessibleRolesToNVDARoles``
-    - ``UIAHandler.UIAControlTypesToNVDARoles``
+  - Although still available, the following should be considered deprecated:
+    - ``ROLE_*`` and ``STATE_*``, use ``Role.*`` and ``State.*`` instead.
+    - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels``, usages like ``roleLabels[ROLE_*]`` should be replaced with their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+    - ``processPositiveStates`` and ``processNegativeStates`` should use ``processAndLabelStates`` instead.
     -
   -
 - Excel cell state constants (``NVSTATE_*``) are now values in the ``NvCellState`` enum, mirrored in the ``NvCellState`` enum in ``NVDAObjects/window/excel.py`` and mapped to ``controlTypes.State`` via _nvCellStatesToStates. (#13465)
 - ``EXCEL_CELLINFO`` struct member ``state`` is now ``nvCellStates``.
 - ``mathPres.ensureInit`` has been removed, MathPlayer is now initialized when NVDA starts. (#13486)
+-
+
+
+= 2021.3.5 =
+This is a minor release to fix a security issue.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Addressed security advisory ``GHSA-xc5m-v23f-pgr7``.
+  - The symbol pronunciation dialog is now disabled in secure mode.
+  -
 -
 
 
@@ -278,16 +284,6 @@ This is a minor release to fix several issues in 2021.3.
 == Bug Fixes ==
 - Landmark is once again abbreviated in braille. #13158
 - Fixed unstable braille display auto detection for Humanware Brailliant and APH Mantis Q40 braille displays when using Bluetooth. (#13153)
--
-
-== 重要新功能摘譯 ==
-- 新增用於切換讀出儲存格框線樣式的輸入手勢。 (#10408)
-- 支援新的 HID 點字規格，用來使點顯器支援標準化。支援此規格的裝置能夠讓 NVDA 自動偵測。
-- 使用任何版本的 NVDA 時都可以在進階設定中啟用錯誤通知。(#12672)
-- 在 Windows 10 及更高版本中，當輸入搜尋字詞時，NVDA 將讀出自動建議的數量，如在設定及 Microsoft Store 等應用程式中。(#7330、#12758、#12790)
-- 如果安裝的 OneCore 語音語言不支援 NVDA 的偏好語言，則 NVDA 將預設使用 eSpeak。
-- 如果 OneCore 語音持續無法使用，合成器將回復為 eSpeak。 (#11544)
-- 當開啟一個已經開啟的設定對話框時，NVDA 會將焦點移到現有對話框上，而不會顯示錯誤。 (#5383)
 -
 
 
@@ -380,18 +376,6 @@ They are still available at the module level but are deprecated and to be remove
 -
 
 
-= 2021.2 中文摘譯內容 =
-此版本更新初步支援 Windows 11，雖然 Windows 11 尚未正式發佈，此版本的 NVDA 已在 Windows 11 的預覽版本中經過測試。
-此次更新包含了螢幕簾幕的修正 (參考以下第一點摘譯內容)。現在，COM 註冊修復工具能夠解決更多 NVDA 在執行上所遇到的問題；此外，合成器及點字表也有進行更新；以及一些錯誤的修正與改進。
-
-== 新版重點 ==
-- 由於 Windows 放大 API 的變更，螢幕簾幕亦需要更新才能支援最新版的 Windows。使用 NVDA 2021.2 搭配 Windows 10 21H2 (10.0.19044) 或更新版本，當要啟用螢幕簾幕時，為安全起見，請在視覺上確認螢幕簾幕功能有讓整個螢幕變黑。
-- 在 Windows 10 版本 1909 及以後 (含 Windows 11)，NVDA 會提示在檔案總管中搜尋檔案時所搜尋到的結果數量。(#10341, #12628)
-- 在 Microsoft Word 中，當按下縮排或凸排的快速鍵時，NVDA 會讀出執行結果。(#6269)
-- Windows 10 OCR 被更名為 Windows OCR。(#12690)
--
-
-
 = 2021.2 =
 This release introduces preliminary Windows 11 support.
 While Windows 11 is yet to be released, this release has been tested on preview versions of Windows 11.
@@ -457,41 +441,6 @@ For security purposes, when using a new version of Windows, get visual confirmat
 - On Windows 10 Version 1511 and later (including Insider Preview builds), the current Windows feature update release name is obtained from Windows Registry. (#12509)
 - Deprecated: ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` will be removed in 2022.1, there is no direct replacement. (#12544)
 -
-
-
-= 2021.1 中文摘譯內容 =
-此版本包括新增了在 Excel 和 Chromium 瀏覽器中對 UIA 的可選擇性支援，對一些語言和點字的錯誤進行修復，也對 Unicode CLDR 和數學符號、eSpeak-NG 語音和 LibLouis 都有更新。
-此外，也包括許多錯誤修正與改進，包括在 Office、Visual Studio 和一些語言上的支援均有改善。
-
-注意：
- - 此版本可能導致舊的附加元件不相容，在更新附加元件前必須事先測試。
- - 此版本放棄了對Adobe Flash的支援。
- -
- 
-
-== 新版重點 ==
-- 初步支援在以 Chromium 為基礎的瀏覽器（如 Edge）中使用 UIA。
-- 可選擇的實驗性功能，在微軟 Excel 中使用 UIA。只推薦使用微軟 Excel 16.0.13522.10000 或更高版本的使用者啟用。
-- 在 NVDA Python 主控台的輸出窗格更容易瀏覽。
-  - 按 Alt+上/下方向鍵來跳至上/下一個輸出結果；若要選取則加上 Shift。
-  - Ctrl+L 可清除輸出窗格中的內容。
-- NVDA現在會報讀 Microsoft Outlook中的約會類別，如果有的話。 (#11598)
-- 在瀏覽模式中，可以使用點顯器上的游標定位鍵，在元件描述的地方按下來啟用項目，（如：在表示連結的符號 lnk 上按定位鍵來啟用連結），這很適合用在沒有標籤文字的核取方塊。 (#7447)
-- 如果啟用了螢幕簾幕，NVDA 會防止使用者執行Windows 10 光學字元辨識。 (#11911)
-- 更新 Unicode 常用表情符號資料庫（CLDR）至39.0。 (#11943)
-- 在標點符號讀音字庫中新增了更多數學符號。 (#11467)
-- 用戶指南、新版資訊和指令快速參考表有了新的外觀。(#12027)
-- 當試圖在不支援螢幕實際配置的應用程式（如微軟 Word）中切換螢幕實際配置時，現在將報讀「不支援」。 (#7297)
-- 進階設定中的「嘗試將已過期焦點事件的語音取消」選項現在預設啟用。 (#10885)
-  - 若要停用該設定可將它取消勾選。
-  - 當在網頁應用程式（如Gmail）中快速移動焦點時，將不再報讀焦點已過期的資訊。
-- 更新 liblouis 點字轉譯對照表至版本3.17.0。 (#12137)
-  - 新增點字表。白俄羅斯文點字，白俄羅斯文電腦點字，烏爾都文1級點字，烏爾都文二級點字。
-- 由於 Adobe 目前已不再建議使用 Flash，NVDA 取消了對 Adobe Flash 內容的支援。 (#11131)
-- NVDA 即使在視窗開啟的情況下也會結束，結束過程現在會關閉所有NVDA視窗和對話框。 (#1740)
-- 報讀內容檢視器現在可以用 Alt+F4 來關閉，並同時在畫面上有一個標準的「關閉」按鈕，以方便使用滑鼠點擊。 (#12330)
-- 點字檢視器現在可以用 Alt+F4 來關閉，並同時在畫面上有一個標準的「關閉」按鈕，以方便使用滑鼠點擊。 (#12328)
-- 在元件清單對話框中，「啟用」按鈕上的便捷鍵在某些地方已被移除，以避免與單選鈕元件類型的便捷鍵發生衝突。當可用時，該啟動按鈕仍然是對話框的預設值，因此仍然可以簡單地在元件清單中按下 Enter 來啟用。 (#6167)
 
 
 = 2021.1 =
@@ -735,7 +684,8 @@ Plus many other important bug fixes and improvements.
 
 
 = 2020.3 =
-此版本大幅改進了對於微軟 Office 應用程式的操作穩定性及效能。除了增加切換觸控互動支援與圖片報讀的選項外，在瀏覽器中也可報讀標記或強調文字。並新增了德文點字表。
+This release includes several large improvements to stability and performance particularly in Microsoft Office applications. There are new settings to toggle touchscreen support and graphics reporting.
+The existence of marked (highlighted) content can be reported in browsers, and there are new German braille tables.
 
 == New Features ==
 - You can now toggle reporting of graphics from NVDA's document formatting settings. Note that disabling this option will still read the alternative texts of graphics. (#4837)

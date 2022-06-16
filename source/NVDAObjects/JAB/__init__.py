@@ -18,6 +18,7 @@ from logHandler import log
 from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
 
+
 JABRolesToNVDARoles={
 	"alert":controlTypes.Role.DIALOG,
 	"column header":controlTypes.Role.TABLECOLUMNHEADER,
@@ -95,12 +96,22 @@ JABStatesToNVDAStates={
 	"editable":controlTypes.State.EDITABLE,
 }
 
-re_simpleXmlTag=re.compile(r"\<[^>]+\>")
+
+re_simpleXmlTag = re.compile(r"(\<[^>]+\>)+")
 
 
-def _processHtml(text):
+def _subHtmlTag(match: re.match) -> str:
+	""" Determines whether to replace the tag with a space or to just remove it. """
+	startIndex, endIndex = match.span()
+	return "" if (
+		startIndex == 0 or match.string[startIndex - 1].isspace()
+		or endIndex == len(match.string) or match.string[endIndex].isspace()
+	) else " "
+
+
+def _processHtml(text: str) -> str:
 	""" Strips HTML tags from text if it is HTML """
-	return re_simpleXmlTag.sub(" ", text) if text.startswith("<html>") else text
+	return re_simpleXmlTag.sub(_subHtmlTag, text) if text.startswith("<html>") else text
 
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -268,18 +279,23 @@ class JAB(Window):
 		for index in range(bindings.keyBindingsCount):
 			binding=bindings.keyBindingInfo[index]
 			# We don't support these modifiers
-			if binding.modifiers&(JABHandler.ACCESSIBLE_META_KEYSTROKE|JABHandler.ACCESSIBLE_ALT_GRAPH_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON1_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON2_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON3_KEYSTROKE):
+			if binding.modifiers & (
+				JABHandler.AccessibleKeystroke.META
+				| JABHandler.AccessibleKeystroke.ALT_GRAPH
+				| JABHandler.AccessibleKeystroke.BUTTON1
+				| JABHandler.AccessibleKeystroke.BUTTON2
+				| JABHandler.AccessibleKeystroke.BUTTON3
+			):
 				continue
-			keyList=[]
+			modifiers = binding.modifiers
 			# We assume alt  if there are no modifiers at all and its not a menu item as this is clearly a nmonic
-			if (binding.modifiers&JABHandler.ACCESSIBLE_ALT_KEYSTROKE) or (not binding.modifiers and self.role!=controlTypes.Role.MENUITEM):
-				keyList.append(keyLabels.localizedKeyLabels['alt'])
-			if binding.modifiers&JABHandler.ACCESSIBLE_CONTROL_KEYSTROKE:
-				keyList.append(keyLabels.localizedKeyLabels['control'])
-			if binding.modifiers&JABHandler.ACCESSIBLE_SHIFT_KEYSTROKE:
-				keyList.append(keyLabels.localizedKeyLabels['shift'])
-			keyList.append(binding.character)
-		shortcutsList.append("+".join(keyList))
+			if not modifiers and self.role != controlTypes.Role.MENUITEM:
+				modifiers |= JABHandler.AccessibleKeystroke.ALT
+			keyList = [
+				keyLabels.localizedKeyLabels.get(l, l)
+				for l in JABHandler._getKeyLabels(modifiers, binding.character)
+			]
+			shortcutsList.append("+".join(keyList))
 		return ", ".join(shortcutsList)
 
 	def _get_name(self):
@@ -312,16 +328,31 @@ class JAB(Window):
 		for state in stateStrings:
 			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
+		if self.role is controlTypes.Role.TOGGLEBUTTON and controlTypes.State.CHECKED in stateSet:
+			stateSet.discard(controlTypes.State.CHECKED)
+			stateSet.add(controlTypes.State.PRESSED)
+		if "editable" not in stateStrings and self._JABAccContextInfo.accessibleText:
+			stateSet.add(controlTypes.State.READONLY)
 		if "visible" not in stateStrings:
 			stateSet.add(controlTypes.State.INVISIBLE)
 		if "showing" not in stateStrings:
 			stateSet.add(controlTypes.State.OFFSCREEN)
 		if "expandable" not in stateStrings:
 			stateSet.discard(controlTypes.State.COLLAPSED)
+		if "enabled" not in stateStrings:
+			stateSet.add(controlTypes.State.UNAVAILABLE)
 		return stateSet
 
 	def _get_value(self):
-		if self.role not in [controlTypes.Role.CHECKBOX,controlTypes.Role.MENU,controlTypes.Role.MENUITEM,controlTypes.Role.RADIOBUTTON,controlTypes.Role.BUTTON] and self._JABAccContextInfo.accessibleValue and not self._JABAccContextInfo.accessibleText:
+		if (
+			self.role not in [
+				controlTypes.Role.TOGGLEBUTTON, controlTypes.Role.CHECKBOX,
+				controlTypes.Role.MENU, controlTypes.Role.MENUITEM,
+				controlTypes.Role.RADIOBUTTON, controlTypes.Role.BUTTON
+			]
+			and self._JABAccContextInfo.accessibleValue
+			and not self._JABAccContextInfo.accessibleText
+		):
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
@@ -360,7 +391,14 @@ class JAB(Window):
 				return info
 
 		parent=self.parent
-		if isinstance(parent,JAB) and self.role in (controlTypes.Role.TREEVIEWITEM,controlTypes.Role.LISTITEM):
+		if (
+			isinstance(parent, JAB)
+			and self.role in (
+				controlTypes.Role.TREEVIEWITEM,
+				controlTypes.Role.LISTITEM,
+				controlTypes.Role.TAB
+			)
+		):
 			index=self._JABAccContextInfo.indexInParent+1
 			childCount=parent._JABAccContextInfo.childrenCount
 			info['indexInGroup']=index
@@ -377,7 +415,7 @@ class JAB(Window):
 	def _get_parent(self):
 		if not hasattr(self,'_parent'):
 			jabContext=self.jabContext.getAccessibleParentFromContext()
-			if jabContext:
+			if jabContext and self.indexInParent is not None:
 				self._parent=JAB(jabContext=jabContext)
 			else:
 				self._parent=super(JAB,self).parent
