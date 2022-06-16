@@ -78,7 +78,7 @@ sys.path.append("source")
 import versionInfo
 del sys.path[-1]
 
-makensis = "miscDeps\\tools\\NSIS\\makensis"
+makensis = os.path.abspath(os.path.join("include", "nsis", "NSIS", "makensis.exe"))
 
 # Get the path to xgettext.
 XGETTEXT = os.path.abspath(os.path.join("miscDeps", "tools", "xgettext.exe"))
@@ -121,11 +121,6 @@ env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"doxygen",
 	"recursiveInstall"
 ])
-
-# Specifically request to use Visual Studio 2019 (MSVC 14.2).
-# This will ensure that this specific version is selected if there are multiple versions installed,
-# And fail the build if this version is not installed at all.
-env.SetDefault(MSVC_VERSION='14.2')
 
 # speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
@@ -475,7 +470,7 @@ def makePot(target, source, env):
 	# Tweak the headers.
 	potFn = str(target[0])
 	tmpFn = "%s.tmp" % potFn
-	with open(potFn, "rt") as inp, open(tmpFn, "wt") as out:
+	with open(potFn, "rt", encoding="utf-8") as inp, open(tmpFn, "wt", encoding="utf-8") as out:
 		for lineNum, line in enumerate(inp):
 			if lineNum == 1:
 				line = "# %s\n" % versionInfo.copyright

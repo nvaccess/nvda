@@ -28,9 +28,14 @@ import threading
 import time
 import IAccessibleHandler.internalWinEventHandler
 import config
+from config import (
+	AllowUiaInChromium,
+	AllowUiaInMSWord,
+)
 import api
 import appModuleHandler
 import controlTypes
+import globalVars
 import winKernel
 import winUser
 import winVersion
@@ -222,18 +227,35 @@ for id in UIAEventIdsToNVDAEventNames.keys():
 	ignoreWinEventsMap[id] = [0]
 
 
-class AllowUiaInChromium(Enum):
-	_DEFAULT = 0  # maps to 'when necessary'
-	WHEN_NECESSARY = 1  # the current default
-	YES = 2
-	NO = 3
-
-	@staticmethod
-	def getConfig() -> 'AllowUiaInChromium':
-		allow = AllowUiaInChromium(config.conf['UIA']['allowInChromium'])
-		if allow == AllowUiaInChromium._DEFAULT:
-			return AllowUiaInChromium.WHEN_NECESSARY
-		return allow
+def shouldUseUIAInMSWord(appModule: appModuleHandler.AppModule) -> bool:
+	allow = AllowUiaInMSWord.getConfig()
+	if allow == AllowUiaInMSWord.ALWAYS:
+		log.debug("User has requested UIA in MS Word always")
+		return True
+	canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
+	if not canUseOlderInProcessApproach:
+		log.debug("Using UIA in MS Word as no alternative object model available")
+		return True
+	if winVersion.getWinVer() < winVersion.WIN11:
+		log.debug("Not using UIA in MS Word on pre Windows 11 OS due to missing custom extensions")
+		return False
+	if allow != AllowUiaInMSWord.WHERE_SUITABLE:
+		log.debug("User does not want UIA in MS Word unless necessary")
+		return False
+	isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
+	if not isOfficeApp:
+		log.debug(f"Unknown Office app: {appModule.productName}")
+		return False
+	try:
+		officeVersion = tuple(int(x) for x in appModule.productVersion.split('.')[:3])
+	except Exception:
+		log.debugWarning(f"Unable to parse office version: {appModule.productVersion}", exc_info=True)
+		return False
+	if officeVersion < (16, 0, 15000):
+		log.debug(f"MS word too old for suitable UIA, Office version: {officeVersion}")
+		return False
+	log.debug(f"Using UIA due to suitable Office version: {officeVersion}")
+	return True
 
 
 class UIAHandler(COMObject):
@@ -726,7 +748,7 @@ class UIAHandler(COMObject):
 	def _isUIAWindowHelper(self,hwnd):
 		# UIA in NVDA's process freezes in Windows 7 and below
 		processID=winUser.getWindowThreadProcessID(hwnd)[0]
-		if windll.kernel32.GetCurrentProcessId()==processID:
+		if globalVars.appPid == processID:
 			return False
 		import NVDAObjects.window
 		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
@@ -765,25 +787,16 @@ class UIAHandler(COMObject):
 		# Ask the window if it supports UIA natively
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
-			# The window does support UIA natively, but MS Word documents now
-			# have a fairly usable UI Automation implementation.
-			# However, builds of MS Office 2016 before build 9000 or so had bugs which
-			# we cannot work around.
-			# And even current builds of Office 2016 are still missing enough info from
-			# UIA that it is still impossible to switch to UIA completely.
-			# Therefore, if we can inject in-process, refuse to use UIA and instead
-			# fall back to the MS Word object model.
 			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
-			if (
-				# An MS Word document window 
-				windowClass == MS_WORD_DOCUMENT_WINDOW_CLASS
-				# Disabling is only useful if we can inject in-process (and use our older code)
-				and canUseOlderInProcessApproach
-				# Allow the user to explicitly force UIA support for MS Word documents
-				# no matter the Office version
-				and not config.conf['UIA']['useInMSWordWhenAvailable']
-			):
-				return False
+			if windowClass == MS_WORD_DOCUMENT_WINDOW_CLASS:
+				# The window does support UIA natively, but MS Word documents now
+				# have a fairly usable UI Automation implementation.
+				# However, builds of MS Office 2016 before build 15000 or so had bugs which
+				# we cannot work around.
+				# Therefore, if we can inject in-process, refuse to use UIA and instead
+				# fall back to the MS Word object model.
+				if not shouldUseUIAInMSWord(appModule):
+					return False
 			# MS Excel spreadsheets now have a fairly usable UI Automation implementation.
 			# However, builds of MS Office 2016 before build 9000 or so had bugs which we
 			# cannot work around.
@@ -909,12 +922,13 @@ class UIAHandler(COMObject):
 
 	def isNativeUIAElement(self,UIAElement):
 		#Due to issues dealing with UIA elements coming from the same process, we do not class these UIA elements as usable.
-		#It seems to be safe enough to retreave the cached processID, but using tree walkers or fetching other properties causes a freeze.
+		# It seems to be safe enough to retrieve the cached processID,
+		# but using tree walkers or fetching other properties causes a freeze.
 		try:
 			processID=UIAElement.cachedProcessId
 		except COMError:
 			return False
-		if processID==windll.kernel32.GetCurrentProcessId():
+		if processID == globalVars.appPid:
 			return False
 		# Whether this is a native element depends on whether its window natively supports UIA.
 		windowHandle=self.getNearestWindowHandle(UIAElement)

@@ -53,6 +53,7 @@ def _processPositiveStates(
 	positiveStates.discard(State.FOCUSED)
 	positiveStates.discard(State.OFFSCREEN)
 	positiveStates.discard(State.INVISIBLE)
+	positiveStates.discard(State.INDETERMINATE)
 	if reason != OutputReason.CHANGE:
 		positiveStates.discard(State.LINKED)
 		if role in (

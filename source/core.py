@@ -476,6 +476,9 @@ def main():
 	import speech
 	log.debug("Initializing speech")
 	speech.initialize()
+	import mathPres
+	log.debug("Initializing MathPlayer")
+	mathPres.initialize()
 	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
 		# Translators: This is spoken when NVDA is starting.
@@ -863,13 +866,22 @@ def requestPump():
 	import wx
 	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
 
+
+class NVDANotInitializedError(Exception):
+	pass
+
+
 def callLater(delay, callable, *args, **kwargs):
 	"""Call a callable once after the specified number of milliseconds.
 	As the call is executed within NVDA's core queue, it is possible that execution will take place slightly after the requested time.
 	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
-	This function can be safely called from any thread.
+	This function can be safely called from any thread once NVDA has been initialized.
 	"""
 	import wx
+	if wx.GetApp() is None:
+		# If NVDA has not fully initialized yet, the wxApp may not be initialized.
+		# wx.CallLater and wx.CallAfter requires the wxApp to be initialized.
+		raise NVDANotInitializedError("Cannot schedule callable, wx.App is not initialized")
 	if threading.get_ident() == mainThreadId:
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:

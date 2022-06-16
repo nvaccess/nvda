@@ -54,6 +54,7 @@ else:
 appDir = os.path.abspath(appDir)
 os.chdir(appDir)
 globalVars.appDir = appDir
+globalVars.appPid = os.getpid()
 
 
 import locale

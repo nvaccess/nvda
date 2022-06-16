@@ -1060,10 +1060,13 @@ Tries to force this object to take the focus.
 		log.debug("Potential unimplemented child class: %r" %self)
 		return None
 
-	def _get_landmark(self):
+	landmark: typing.Optional[str]
+	"""Typing information for auto property _get_landmark
+	"""
+
+	def _get_landmark(self) -> typing.Optional[str]:
 		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
 		@return: ARIA landmark role else None
-		@rtype: String or None
 		"""
 		return None
 
@@ -1325,25 +1328,11 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("value: %s" % ret)
 		try:
-			ret = repr(self.appModule)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule: %s" % ret)
-		try:
-			ret = repr(self.appModule.productName)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule.productName: %s" % ret)
-		try:
-			ret = repr(self.appModule.productVersion)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule.productVersion: %s" % ret)
-		try:
 			ret = repr(self.TextInfo)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("TextInfo: %s" % ret)
+		info.extend(self.appModule.devInfo)
 		return info
 
 	def _get_sleepMode(self):
