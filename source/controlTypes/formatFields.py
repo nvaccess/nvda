@@ -97,5 +97,5 @@ class FontSize:
 			measurementUnit = fontSizeMeasurement.group(2)
 			if measurementUnit in FontSize._unitToTranslatableString:
 				return FontSize._unitToTranslatableString[measurementUnit] % measurement
-		log.debugWarning(f"Unknown font-size value, can't translate {fontSize}")
+		log.debugWarning(f"Unknown font-size value, can't translate '{fontSize}'")
 		return fontSize

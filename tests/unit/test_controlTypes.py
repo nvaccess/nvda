@@ -6,10 +6,14 @@
 """Unit tests for the controlTypes module.
 """
 import enum
+import logging
 import unittest
+
 import controlTypes
 from . import PlaceholderNVDAObject
 from controlTypes.processAndLabelStates import _processNegativeStates, _processPositiveStates
+from controlTypes.formatFields import FontSize
+import logHandler
 
 
 class TestLabels(unittest.TestCase):
@@ -204,3 +208,32 @@ class TestBackCompat(unittest.TestCase):
 				old.value,
 				msg=f"Can't construct from integer value: {new.name}"
 			)
+
+
+class Test_FontSize(unittest.TestCase):
+	def test_translateFromAttribute(self):
+		with self.assertLogs(logHandler.log, level=logging.DEBUG) as logContext:
+			# We want to assert there are no logs, but the 'assertLogs' method does not support that.
+			# 'assertNoLogs' has been added in Python 3.10
+			# Therefore, we are adding a canary warning, and then we will assert it is the only warning.
+			logHandler.log.debug("Canary warning")
+			# Ensure keyword sizes parse to a translatable version of themselves
+			self.assertEqual(FontSize.translateFromAttribute("smaller"), "smaller")
+			# Ensure measurement sizes parse to a translatable version of themselves
+			self.assertEqual(FontSize.translateFromAttribute("13.0pt"), "13.0 pt")
+			self.assertEqual(FontSize.translateFromAttribute("11px"), "11 px")
+			self.assertEqual(FontSize.translateFromAttribute("23.3%"), "23.3%")
+		
+		self.assertEqual(
+			["DEBUG:nvda:Canary warning"],
+			logContext.output,
+			msg="Font size parsing failed, failure was logged"
+		)
+
+		with self.assertLogs(logHandler.log, level=logging.DEBUG) as logContext:
+			self.assertEqual(FontSize.translateFromAttribute("unsupported"), "unsupported")
+		self.assertIn(
+			"Unknown font-size value, can't translate 'unsupported'",
+			logContext.output[0],
+			msg="Parsing attempt for unknown font-size value did not fail as expected"
+		)
