@@ -6,6 +6,7 @@
 """NVDAObjects for the Chromium browser project
 """
 
+from typing import Dict, Optional
 from comtypes import COMError
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
@@ -14,7 +15,7 @@ from . import ia2Web
 from logHandler import log
 
 
-supportedAriaDetailsRoles = {
+supportedAriaDetailsRoles: Dict[str, Optional[controlTypes.Role]] = {
 	"comment": controlTypes.Role.COMMENT,
 	"doc-footnote": controlTypes.Role.FOOTNOTE,
 	# These roles are current unsupported by IAccessible2,
@@ -27,8 +28,8 @@ supportedAriaDetailsRoles = {
 	"definition": None,  # controlTypes.Role.DEFINITION
 }
 """
-details-roles attribute is only defined in Chrome as of May 2022
-Refer to ComputeDetailsRoles
+details-roles attribute is only defined in Chrome as of May 2022.
+Refer to ComputeDetailsRoles:
 https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
 """
 

@@ -82,7 +82,9 @@ class Mozilla(ia2Web.Ia2Web):
 		if not detailsRelations:
 			return None
 		for target in detailsRelations:
-			# just take the first for now.
+			# just take the first target for now.
+			# details-roles is currently only defined in Chromium
+			# this may diverge in Firefox in future.
 			from .chromium import supportedAriaDetailsRoles
 			detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(target.IAccessibleRole)
 			# return a supported details role
