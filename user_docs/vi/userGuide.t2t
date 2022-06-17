@@ -27,7 +27,7 @@ Một số tính năng nổi bật bao gồm:
 - Dễ dàng cài đặt với gói cài đặt có hỗ trợ tiếng nói
 - Được dịch sang 54 ngôn ngữ
 - Hỗ trợ các hệ điều hành Windows mới, bao gồm cả  32bit và 64 bit
-- Có khả năng chạy trong cửa sổ đăng nhập của Windows và  các màn hình bảo vệ khác
+- Có khả năng chạy trong cửa sổ đăng nhập của Windows và  [các màn hình bảo vệ khác #SecureScreens].
 - Thông báo các điều khiển và văn bản khi dùng thao tác trên màn hình cảm ứng
 - Hỗ trợ các giao diện tiếp cận phổ biến như Microsoft Active Accessibility, Java Access Bridge, IAccessible2 và UI Automation
 - Hỗ trợ đọc trong các cửa sổ console như dòng lệnh Windows (Windows Command Prompt) và những ứng dụng console khác
@@ -81,7 +81,7 @@ Chạy tập tin vừa tải về sẽ khởi động chương trình NVDA tạm
 Tiếp theo, bạn sẽ được hỏi là muốn cài đặt NVDA vào máy, tạo bản chạy trực tiếp hay tiếp tục sử dụng phiên bản tạm thời đó.
 
 Nếu bạn có dự định dùng NVDA luôn trên máy này, bạn nên chọn cài đặt vào máy.
-Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và các màn hình bảo vệ (không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) và tạo biểu tượng trên Start Menu và desktop.
+Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và [các màn hình bảo vệ #SecureScreens] (không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) và tạo biểu tượng trên Start Menu và desktop.
 Bạn có thể tạo bản chạy trực tiếp sau khi cài đặt NVDA vào máy.
 
 Nếu muốn dùng NVDA từ ổ USB hay các phương tiện lưu trữ khác, bạn có thể chọn chức năng tạo bản chạy trực tiếp.
@@ -118,7 +118,7 @@ Xem phần [hộp thoại các add-on không tương thích #incompatibleAddonsM
 
 +++ Dùng NVDA trong khi đăng nhập +++[StartAtWindowsLogon]
 Tùy chọn này cho phép NVDA chạy  hoặc không chạy tự động tại màn hình đăng nhập của Windows, trước khi bạn nhập mật khẩu.
-Tùy chọn này cũng áp dụng cho màn hình User Account và các màn hình bảo vệ khác.
+Tùy chọn này cũng áp dụng cho màn hình User Account và [các màn hình bảo vệ khác #SecureScreens].
 Tùy chọn này mặc định được bật cho các bản cài đặt mới.
 
 +++ Tạo biểu tượng trên Desktop và phím tắt (Ctrl + alt + n) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ Nếu  được tạo, biểu tượng này cũng được gán phím tắt Ctrl
 
 +++ Chép thư mục cấu hình bản chạy trực tiếp vào thư mục người dùng hiện tại +++[CopyPortableConfigurationToCurrentUserAccount]
 Tùy chọn này sẽ chép thư mục cấu hình của bản NVDA chạy trực tiếp sang thư mục cấu hình của người dùng hiện tại (cho bản cài đặt).
-Nó sẽ không chép thư mục cấu hình của các tài khoản người dùng khác trên máy hay tới phần cấu hình hệ thống liên quan đến việc cho phép chạy ở màn hình đăng nhập của Windows cũng như các màn hình bảo vệ khác.
+Tùy chọn này sẽ không chép thư mục cấu hình của các tài khoản người dùng khác trên máy hay tới phần cấu hình hệ thống liên quan đến việc cho phép chạy ở màn hình đăng nhập của Windows cũng như [các màn hình bảo vệ khác #SecureScreens].
 Tùy chọn này chỉ có trong quá trình cài đặt NVDA từ bản chạy trực tiếp, không có trong gói cài đặt được tải về.
 
 ++ Tạo bản NVDA chạy trực tiếp ++[CreatingAPortableCopy]
@@ -342,6 +342,10 @@ Khi ở trong bảng thì dùng các phím tắt sau để thao tác:
 | Chuyển sang cột kế tiếp | control+alt+mũi tên phải | Đưa con trỏ sang cột kế tiếp (vẫn ở trên cùng dòng) |
 | Chuyển lên dòng trên | control+alt+mũi tên lên | Đưa con trỏ lên dòng trên ( vẫn ở trong cùng cột) |
 | Chuyển xuống dòng bên dưới | control+alt+mũi tên xuống | Đưa con trỏ xuống dòng bên dưới (vẫn ở trong cùng cột) |
+| Chuyển đến cột đầu tiên | control+alt+home | Chuyển dấu nháy hệ thống đến cột đầu tiên (giữ nguyên vị trí dòng) |
+| Chuyển đến cột cuối cùng | control+alt+end | Chuyển dấu nháy hệ thống đến cột cuối cùng (giữ nguyên vị trí dòng) |
+| Chuyển đến dòng đầu tiên | control+alt+pageUp | Chuyển dấu nháy hệ thống đến dòng đầu tiên (giữ nguyên vị trí cột) |
+| Chuyển đến dòng cuối cùng | control+alt+pageDown | Chuyển dấu nháy hệ thống đến dòng cuối cùng (giữ nguyên vị trí cột) |
 %kc:endInclude
 
 ++ Phương pháp duyệt đối tượng ++[ObjectNavigation]
@@ -617,8 +621,11 @@ NVDA hỗ trợ một số nội dung toán học sau đây:
 - Chương trình MathML chạy trên Mozilla Firefox, Microsoft Internet Explorer và Google Chrome.
 - Công thức toán mới của Microsoft Word 365 thông qua UI automation:
 NVDA đã có khả năng đọc và tương tác với các công thức toán trong Microsoft Word 365/2016 bản dựng 14326 trở lên.
-Dù vậy, lưu ý rằng các công thức toán được tạo trước đây bằng MathType, trước tiên phải được chuyển thành công thức toán của  (Office Math) bằng cách chọn mỗi công thức và chọn Equation Options -> Convert to Office Math trong trình đơn ngữ cảnh. Hãy chắc rằng bạn đang dùng phiên bản mới nhất của MathType trước khi làm điều này.
-Microsoft Word giờ đây cũng cung cấp phương pháp điều hướng theo dòng kí hiệu thông qua chính các công thức, và hỗ trợ nhập nội dung toán sử dụng vài cú pháp, bao gồm LateX. Để có thêm thông tin, vui lòng xem [Các công thức định dạng tuyến tính sử dụng UnicodeMath và LaTeX trong Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+Dù vậy, lưu ý rằng các công thức toán được tạo trước đây bằng MathType, trước tiên phải được chuyển thành công thức toán của  Office (Office Math).
+Điều Này có thể thực hiện bằng cách chọn mỗi công thức và chọn Equation Options -> Convert to Office Math trong trình đơn ngữ cảnh.
+Hãy chắc rằng bạn đang dùng phiên bản mới nhất của MathType trước khi làm điều này.
+Microsoft Word  cung cấp phương pháp điều hướng theo dòng kí hiệu thông qua chính các công thức, và hỗ trợ nhập nội dung toán sử dụng vài cú pháp, bao gồm LateX.
+Để có thêm thông tin, vui lòng xem [Các công thức định dạng tuyến tính sử dụng UnicodeMath và LaTeX trong Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint và các phiên bản cũ của Microsoft Word: 
 NVDA có thể đọc và duyệt các công thức của MathType trong cả Microsoft Powerpoint và Microsoft word.
 Cần phải cài MathType để chức năng này hoạt động.
@@ -704,6 +711,7 @@ Bạn có thể cấu hình màn hình nổi với phân loại [Chữ nổi #Br
 | mnuitem | menu item (thành phần trong trình đơn) |
 | pnl | panel (bảng) |
 | prgbar | progress bar (thanh tiến độ) |
+| bsyind | busy indicator (chỉ báo bận) |
 | rbtn | radio button (nút radio) |
 | scrlbar | scroll bar (thanh cuộn) |
 | sect | section (phần) |
@@ -784,7 +792,8 @@ Bạn có thể gán lại chúng hoặc thêm các phím mô phỏng mới từ
 
 Trong khi phương pháp này hữu ích cho thao tác bấm phím phổ biến hoặc các phím riêng biệt (Tab chẳng hạn), bạn có thể sẽ không muốn gán một nhóm phím tắt riêng biệt cho mỗi phím lệnh.
 Để cho phép bấm các phím mô phỏng trong khi giữ phím bổ trợ, NVDA cung cấp các lệnh để bật / tắt các phím control, alt, shift, windows và NVDA, kèm theo các phím lệnh cho vài kết hợp với những phím này.
-Để bật / tắt các phím này, trước tiên, bấm lệnh (hoặc trình tự các lệnh) cho các phím lệnh bạn muốn bấm, rồi nhập kí tự là phần phím tắt bạn muốn nhập.
+Để bật / tắt các phím này, trước tiên, bấm lệnh (hoặc trình tự các lệnh) cho các phím lệnh bạn muốn bấm.
+Tiếp theo, nhập kí tự là phần phím tắt bạn muốn nhập.
 Ví dụ, để bấm control+f, dùng lệnh "bật / tắt phím control" rồi gõ f,
 và để nhập control+alt+t, dùng lệnh  "Bật / tắt phím control" và "Bật / tắt phím alt" theo trình tự, hoặc "Bật / tắt các phím control và alt", tiếp sau đó gõ t.
 
@@ -1125,7 +1134,7 @@ Nếu đăng nhập vào Windows bằng cách cung cấp tên truy cập và m�
 Tùy chọn này chỉ có trong phiên bản cài đặt của NVDA.
 
 ==== Sử dụng cấu hình hiện tại trong khi đăng nhập và các màn hình bảo vệ (yêu cầu quyền quản trị) ====[GeneralSettingsCopySettings]
-Bấm nút này để sao chép cấu hình hiện tại tới thư mục cấu hình hệ thống của NVDA. Lúc này, NVDA sẽ sử dụng các cấu hình đó trong khi  đăng nhập và khi chạy trong màn hình UAC hay các màn hình bảo vệ khác.
+Bấm nút này để sao chép cấu hình hiện tại tới thư mục cấu hình hệ thống của NVDA. Lúc này, NVDA sẽ sử dụng các cấu hình đó trong khi  đăng nhập và khi chạy trong màn hình UAC hay các [màn hình bảo vệ khác #SecureScreens].
 Để chắc chắn việc sao chép tất cả các thiết lập hiện tại, trước hết, hãy lưu chúng bằng control+NVDA+c hoặc chọn lưu cấu hình từ trình đơn của NVDA.
 Tùy chọn này chỉ có trong phiên bản cài đặt của NVDA.
 
@@ -1709,7 +1718,12 @@ Phân loại này có các tùy chọn sau:
 ==== Sử dụng kiểu trình bày theo màn hình ====[BrowseModeSettingsScreenLayout]
 Phím bật/tắt: NVDA+v
 
-Tùy chọn này cho phép bạn thiết lập nội dung dạng có thể kích hoạt (liên kết, nút bấm và biểu mẫu) ở chế độ duyệt trên một dòng riêng biệt, hoặc trình bày như nó hiển thị trên màn hình. Lưu ý là tùy chọn này không dùng cho các ứng dụng trong bộ Microsoft Office như Outlook và Word, vốn dĩ luôn dùng kiểu trình bày theo màn hình.
+Tùy chọn này cho phép bạn thiết lập nội dung dạng có thể kích hoạt (liên kết, nút bấm và biểu mẫu) ở chế độ duyệt trên một dòng riêng biệt, hoặc trình bày như nó hiển thị trên màn hình.
+Lưu ý là tùy chọn này không dùng cho các ứng dụng trong bộ Microsoft Office như Outlook và Word, vốn dĩ luôn dùng kiểu trình bày theo màn hình.
+Khi bật tùy chọn trình bày theo màn hình, các thành phần của trang sẽ vẫn hiển thị trực quan như đã thiết kế.
+Ví dụ, một dòng có nhiều liên kết   sẽ được thể hiện trong cả tiếng nói và chữ nổi ở dạng nhiều liên kết trên cùng một dòng.
+Nếu tắt tùy chọn, các thành phần của trang sẽ thể hiện trên từng dòng riêng biệt.
+Điều này có thể giúp dễ hiểu hơn khi di chuyển từng dòng trên trang và giúp một số người dùng dễ tương tác hơn với các thành phần.
 Khi bật tùy chọn này, các thành phần của trang sẽ thể hiện như nó đang hiển thị một cách trực quan. Ví dụ, một dòng có nhiều liên kết đang hiển thị trực quan cũng sẽ được thể hiện trong tiếng nói và chữ nổi là dòng có nhiều liên kết. Khi tắt tùy chọn này, các thành phần của trang sẽ được thể hiện trên từng dòng riêng biệt, có thể dễ hiểu hơn khi điều hướng qua từng dòng, và cũng khiến việc tương tác với các thành phần trở nên dễ hơn với một số người dùng.
 
 ==== Bật chế độ duyệt khi tải trang ====[BrowseModeSettingsEnableOnPageLoad]
@@ -3310,6 +3324,34 @@ Sau đây là các phím hiện được gán cho những màn hình nổi nói 
 + 
 + Chủ Đề Nâng Cao +[AdvancedTopics]
 
+++ Chế độ an toàn ++[SecureMode]
+Có thể chạy NVDA ở chế độ an toàn với [tùy chọn dòng lệnh #CommandLineOptions] ``-s``.
+NVDA chạy ở chế độ bảo vệ khi được gọi chạy ở [các màn hình bảo vệ #SecureScreens], cho đến khi [tham số hệ thống #SystemWideParameters] ``serviceDebug`` được bật.
+
+Chế độ bảo vệ sẽ vô hiệu:
+
+- Lưu cấu hình và các thiết lập khác xuống đĩa
+- Lưu gesture map xuống đĩa
+- Các tính năng của [Hồ Sơ Cấu Hình #ConfigurationProfiles] như tạo, xóa, đổi tên hồ sơ.
+- Cập nhật NVDA và tạo bản chạy trực tiếp
+- [Python console #PythonConsole]
+- [Trình xem log #LogViewer] và ghi log
+-
+
+++ Các Màn Hình Bảo Vệ ++[SecureScreens]
+NVDA chạy ở chế độ bảo vệ khi được gọi chạy ở các màn hình bảo vệ, cho đến khi [tham số hệ thống #SystemWideParameters] ``serviceDebug`` được bật.
+
+Khi chạy ở một màn hình bảo vệ, NVDA sử dụng một hồ sơ hệ thống cho các tùy chọn.
+Có thể chép các tùy chọn của người dùng cho NVDA để [dùng trong các màn hình bảo vẹ #GeneralSettingsCopySettings].
+
+Màn hình bảo vệ bao gồm:
+
+- Màn hình đăng nhập Windows
+- Hộp thoại User Access Control, xuất hiện khi thực hiện một hành động với tư cách quản trị
+  - Điều này bao gồm cả việc cài đặt các chương trình
+  -
+-
+
 ++ Các Tùy Chọn Cho Dòng Lệnh ++[CommandLineOptions]
 NVDA có thể nhận một hoặc nhiều các tùy chọn để thay đổi các tính năng của nó khi khởi động
 Bạn có thể đưa vào một cách không giới hạn những tùy chọn mà bạn thấy cần.
@@ -3343,7 +3385,7 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | -c CONFIGPATH | --config-path=CONFIGPATH | Đường dẫn để lưu tất cả cấu hình của NVDA |
 | Không có | --lang=LANGUAGE | Bỏ qua ngôn ngữ đã cấu hình của NVDA. Thiết lập là "Windows" cho ngôn ngữ mặc định của người dùng hiện tại, "en" là tiếng Anh, v...v.... |
 | -m | --minimal | Không âm thanh, không giao diện, không thông báo bắt đầu, v...v... |
-| -s | --secure | Chế độ an toàn: tắt Python console, các tính năng của hồ sơ như tạo, xóa, đổi tên hồ sơ, v...v..., kiểm tra cập nhật, vài hộp kiểm trong hộp thoại chào mừng và phân loại thiết lập chung (ví dụ: dùng NVDA trong khi đăng nhập, lưu cấu hình sau khi thoát, v...v...),  cũng như trình xem log và tính năng ghi log (thường dùng ở màn hình bảo vệ). Lưu ý rằng lệnh này cũng sẽ vô hiệu hóa việc lưu thiết lập trong cấu hình hệ thống và hệ thống thao tác sẽ không được lưu xuống đĩa. |
+| -s | --secure | Khởi động NVDA trong [Chế Độ An Toàn #SecureMode] |
 | Không có | --disable-addons | Các add-on không có hiệu lực |
 | Không có | --debug-logging | Bật cấp độ bản ghi dò lỗi cho lần chạy này. Thiết lập này được ghi đè lên các cấp độ bản ghi khác ( ""--loglevel"", -l) tham số được cung cấp, bao gồm tùy chọn tắt log. |
 | Không có | --no-logging | Tắt log hoàn toàn khi dùng NVDA. Thiết lập này có thể bị ghi đè nếu một cấp độ log ( ""--loglevel"", -l) được chỉ định từ dòng lệnh hoặc bản ghi dò lỗi đã được bật. |
@@ -3366,7 +3408,7 @@ Những khóa chứa các giá trị này trong registry bao gồm:
 Sau đây là những giá trị có thể thiết lập cho khóa nói trên:
 || Tên | Kiểu | Giá trị có thể dùng | Mô tả |
 | configInLocalAppData | DWORD | 0 (mặc định) để tắt, 1 để bật | Nếu bật, sẽ lưu cấu hình người dùng trong thư mục local application data, thay vì roaming application data |
-| serviceDebug | DWORD | 0 (mặc định) để tắt, 1 để bật | Nếu bật, sẽ tắt chế độ bảo vệ của màn hình bảo vệ Windows, cho phép sử dụng Python console và trình xem bản ghi. Do một số lý do an toàn cho máy tính, chức năng này không được khuyến khích sử dụng. |
+| serviceDebug | DWORD | 0 (mặc định) để tắt, 1 để bật | Nếu bật, sẽ tắt [Chế Độ An Toàn #SecureMode] của [các màn hình bảo vệ #SecureScreens]. Windows. Vì một số lý do an toàn cho máy tính, chức năng này không được khuyến khích sử dụng. |
 
 + Thông Tin Thêm +[FurtherInformation]
 Nếu bạn cần thêm thông tin hoặc trợ giúp liên quan đến NVDA, vui lòng xem trang web của NVDA tại NVDA_URL.

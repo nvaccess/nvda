@@ -69,3 +69,13 @@ exitCode=0
 appPid: int = 0
 """The process ID of NVDA itself.
 """
+
+_allowDeprecatedAPI: bool = True
+"""
+Used for marking code as deprecated.
+This should never be False in released code.
+
+Making this False may be useful for testing if code is compliant without using deprecated APIs.
+Note that deprecated code may be imported at runtime,
+and as such, this value cannot be changed at runtime to test compliance.
+"""

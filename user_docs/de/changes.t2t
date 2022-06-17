@@ -3,6 +3,108 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2 =
+
+== Neue Features ==
+- Unterstützung für die Interaktion mit Microsoft Loop-Komponenten in Microsoft Office-Produkten. (#13617)
+- Es wurden neue Befehle für die Tabellen-Navigation hinzugefügt. (#957)
+ - ``Strg+Alt+Pos1/Ende``, um zur ersten/letzten Spalte zu springen.
+ - ``Strg+Alt+Seite nach oben/unten``, um zur ersten/letzten Zeile zu springen.
+ -
+- Ein nicht zugewiesenes Skript zum Durchlaufen der Sprach- und Dialektwechselmodi wurde hinzugefügt. (#10253)
+-
+
+== Änderungen ==
+- NSIS wurde auf Version 3.08 aktualisiert. (#9134)
+- CLDR wurde auf Version 41.0 aktualisiert. (#13582)
+- Neue Rolle für Steuerelemente "Beschäftigt-Status" hinzugefügt. (#10644)
+- NVDA teilt nun mit, sobald eine Aktion in NVDA nicht ausgeführt werden konnte. (#13500)
+  - Dies gilt auch, beim:
+    - Verwenden der NVDA Windows-Store-Version.
+    - Lesen in einem geschützt Kontext.
+    - Warten auf eine Antwort auf einen modales Dialogfeld.
+    -
+  -
+-
+
+
+== Fehlerbehebungen ==
+- Das NVDA-Installationsprogramm kann jetzt von Verzeichnissen mit Sonderzeichen aus gestartet werden. (#13270)
+- In Firefox teilt NVDA keine Elemente auf Webseiten mehr mit, wenn die Attribute aria-rowindex, aria-colindex, aria-rowcount oder aria-colcount ungültig sind. (#13405)
+- Der Cursor wechselt nicht mehr die Zeile oder Spalte, wenn Sie die Tabellennavigation verwenden, um durch zusammengeführte Zellen zu navigieren. (#7278)
+- Beim Lesen nicht-interaktiver PDFs in Adobe Reader werden nun Typ und Zustand von Formularfeldern (z. B. Kontrollkästchen und Optionsfelder) mitgeteilt. (#13285)
+- Die Funktion "Konfiguration auf Standard-Einstellungen zurücksetzen" ist nun im NVDA-Menü im geschützten Modus verfügbar. (#13547)
+- Gesperrte Maus-Tasten werden beim Beenden von NVDA wieder entsperrt, vorher blieb die Maus-Taste gesperrt. (#13410)
+- In Visual Studio werden nun Zeilennummern mitgeteilt. (#13604)
+  - Beachten Sie, dass die Anzeige von Zeilennummern in Visual Studio und NVDA aktiviert sein muss, damit die Zeilennummernanzeige funktioniert.
+  -
+- In Visual Studio werden die Zeileneinrückung nun korrekt mitgeteilt. (#13574)
+- Korrekturen für Java-basierte Anwendungen:
+  - NVDA teilt nun den schreibgeschützten Zustand mit. (#13692)
+  - NVDA teilt nun den deaktivierten/aktivierten Status korrekt mit. (#10993)
+  - NVDA zeigt nun Funktionstastenkombinationen an. (#13643)
+  - NVDA teilt nun die Fortschrittsbalken entweder durch Signaltöne oder über die Sprachausgabe mit. (#13594)
+  - NVDA entfernt nicht mehr fälschlicherweise Text aus Widgets, wenn diese dem Benutzer angezeigt werden. (#13102)
+  -
+- NVDA teilt in den neuen Versionen von Windows 10 und 11 erneut Details zu den Suchergebnissen im Startmenü mit. (#13544)
+- Im Taschenrechner Version 10.1908 und neuer in Windows 10 und 11 teilt NVDA Ergebnisse mit, wenn weitere Befehle gedrückt werden, wie z. B. Befehle aus dem wissenschaftlichen Modus. (#13386)
+- Korrektur der Braille-Ausgabe beim Navigieren in bestimmten Texten in Mozilla Rich Edit Controls, z. B. beim Verfassen einer Nachricht in Thunderbird. (#12542)
+- In Windows 11 ist es wieder möglich, mit Elementen der Benutzeroberfläche wie der Taskleiste und der Task-Ansicht zu navigieren und zu interagieren, indem man die Maus und die Touch-Interaktion nutzt. (#13508)
+- Ausgeblendeter Text wird in Wordpad und anderen Steuerelementen (``richEdit``) nicht mehr angezeigt. (#13618)
+- NVDA zeigt den Inhalt der Statusleiste in Windows 11 Notepad an. (#13386)
+-
+
+
+== Änderungen für Entwickler ==
+- Die Kompilierung von NVDA-Abhängigkeiten mit Visual Studio 2022 (17.0) wird nun unterstützt. Für Entwicklungs- und Release-Builds wird weiterhin Visual Studio 2019 verwendet. (#13033)
+- Wenn die Anzahl der ausgewählten Kinder über accSelection abgerufen wird, wird der Fall, dass eine negative Kind-ID oder ein IDispatch von IAccessible::get_accSelection zurückgegeben wird, nun korrekt behandelt. (#13276)
+- Neue praktische Funktionen ``registerExecutableWithAppModule`` und ``unregisterExecutable`` wurden dem Modul ``appModuleHandler`` hinzugefügt.
+Sie können verwendet werden, um ein einzelnes App-Modul mit mehreren ausführbaren Dateien zu verwenden. (#13366)
+-
+
+=== Veraltete Funktionen ===
+Es handelt sich um vorgeschlagene API-Änderungen.
+Der veraltete  Teil der API wird bis zur angegebenen Version weiterhin verfügbar sein.
+Wenn keine Freigabe angegeben ist, wurde der Plan für die Entfernung noch nicht festgelegt.
+Beachten Sie, dass die Roadmap für Umzüge nach bestem Wissen und Gewissen erstellt wurde und sich noch ändern kann.
+Bitte testen Sie die neue API und geben Sie uns Feedback.
+Autoren von Erweiterungen sollten bitte einen Problem auf GitHub einreichen, falls diese Änderungen dazu führen, dass die API nicht mehr Ihren Anforderungen entspricht.
+
+
+- ``gui.quit`` ist veraltet und wird in 2023.1 entfernt. (#13498)
+  - Verwenden Sie stattdessen direkt ``wx.CallAfter(mainFrame.onExitCommand, None)``.
+  -
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- Einige alias appModules sind als veraltet gekennzeichnet und werden in 2023.1 entfernt.
+Code, der von einem dieser Module importiert, sollte stattdessen von dem Ersatzmodul importiert werden. (#13366)
+-
+
+|| Entfernter Modulname | Ersatzmodul |
+| azuredatastudio | code |
+| azuredatastudio-insiders | code |
+| calculatorapp | calculator |
+| code - insiders | code |
+| commsapps | hxmail |
+| dbeaver | eclipse |
+| digitaleditionspreview | digitaleditions |
+| esybraille | esysuite |
+| hxoutlook | hxmail |
+| miranda64 | miranda32 |
+| mpc-hc | mplayerc |
+| mpc-hc64 | mplayerc |
+| notepad++ | notepadPlusPlus |
+| searchapp | searchui |
+| searchhost | searchui |
+| springtoolsuite4 | eclipse |
+| sts | eclipse |
+| teamtalk3 | teamtalk4classic |
+| textinputhost | windowsinternal_composableshell_experiences_textinput_inputapp |
+| totalcmd64 | totalcmd |
+| win32calc | calc |
+| winmail | msimn |
+| zend-eclipse-php | eclipse |
+| zendstudio | eclipse |
+
 = 2022.1 =
 Diese Version enthält wichtige Verbesserungen der UIA-Unterstützung für Microsoft Office.
 Für Microsoft Office 16.0.15000 und neuer unter Windows 11 verwendet NVDA standardmäßig UIA für den Zugriff in Dokumente in Microsoft Word.
