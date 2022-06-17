@@ -508,7 +508,7 @@ the NVDAObject for IAccessible
 				from .winword import SpellCheckErrorField
 				clsList.append(SpellCheckErrorField)
 			else:
-				from .winword import WordDocument_WwN
+				from NVDAObjects.window.winword import WordDocument_WwN
 				clsList.append(WordDocument_WwN)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
