@@ -111,7 +111,7 @@ Additionally, the following build time dependencies are included in the miscDeps
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
-* To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
+* To generate [developer documentation for nvdaHelper](#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 * When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
 	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
@@ -211,6 +211,8 @@ scons devDocs
 ```
 
 The documentation will be placed in the `NVDA` folder in the output directory.
+
+#### Building nvdaHelper developer documentation
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
