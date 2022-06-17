@@ -555,6 +555,8 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
 		if detailsRole is not None:
 			detailsRoleLabel = roleLabels.get(detailsRole, detailsRole.displayString)
+			# Translators: Braille when there are further details/annotations that can be fetched manually.
+			# %s specifies the type of details (e.g. comment, suggestion)
 			textList.append(_("has %s") % detailsRoleLabel)
 		else:
 			textList.append(

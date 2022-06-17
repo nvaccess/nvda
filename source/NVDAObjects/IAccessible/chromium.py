@@ -14,9 +14,6 @@ from . import ia2Web
 from logHandler import log
 
 
-# details-roles attribute is only defined in Chrome as of May 2022
-# Refer to ComputeDetailsRoles
-# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
 supportedAriaDetailsRoles = {
 	"comment": controlTypes.Role.COMMENT,
 	"doc-footnote": controlTypes.Role.FOOTNOTE,
@@ -29,6 +26,11 @@ supportedAriaDetailsRoles = {
 	# Currently maps to the IA2 role ROLE_GENERIC
 	"definition": None,  # controlTypes.Role.DEFINITION
 }
+"""
+details-roles attribute is only defined in Chrome as of May 2022
+Refer to ComputeDetailsRoles
+https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
+"""
 
 
 class ChromeVBufTextInfo(GeckoVBufTextInfo):

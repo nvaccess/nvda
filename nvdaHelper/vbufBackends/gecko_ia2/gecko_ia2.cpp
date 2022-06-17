@@ -362,16 +362,15 @@ CComPtr<IAccessible2> getTextBoxInComboBox(
 }
 
 
-std::tuple<long, BSTR> getRoleLongRoleString(CComPtr<IAccessible2> pacc, VARIANT* varChild) {
+std::tuple<long, CComBSTR> getRoleLongRoleString(CComPtr<IAccessible2> pacc, CComVariant varChild) {
 	long role = 0;
-	BSTR roleString = NULL;
+	CComBSTR roleString;
+	CComVariant varRole;
 	if (pacc->role(&role) != S_OK) {
 		role = IA2_ROLE_UNKNOWN;
 	}
-	VARIANT varRole;
-	VariantInit(&varRole);
 	if (role == 0) {
-		if (pacc->get_accRole(*varChild, &varRole) != S_OK) {
+		if (pacc->get_accRole(varChild, &varRole) != S_OK) {
 			LOG_DEBUG(L"accRole failed");
 		}
 		if (varRole.vt == VT_I4) {
@@ -381,7 +380,6 @@ std::tuple<long, BSTR> getRoleLongRoleString(CComPtr<IAccessible2> pacc, VARIANT
 			roleString = varRole.bstrVal;
 		}
 	}
-	VariantClear(&varRole);
 	return std::make_tuple(role, roleString);
 }
 
@@ -393,9 +391,9 @@ const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles
 void GeckoVBufBackend_t::fillVBufAriaDetails(
 	int docHandle,
 	CComPtr<IAccessible2> pacc,
-	VBufStorage_buffer_t* buffer,
-	VBufStorage_controlFieldNode_t* parentNode,
-	std::wstring& roleAttr
+	VBufStorage_buffer_t& buffer,
+	VBufStorage_controlFieldNode_t& parentNode,
+	const std::wstring& roleAttr
 ){
 	/* Set the details role by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
 	of the nodes in the relationship will not be in the buffer yet */
@@ -404,18 +402,18 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 	VBufStorage_controlFieldNode_t* detailsParentNode;
 	std::optional<std::wstring> detailsRole;
 	if (detailsId.has_value()) {
-		parentNode->addAttribute(L"hasDetails", L"true");
-		detailsParentNode = parentNode;
-		auto detailsChildNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
+		parentNode.addAttribute(L"hasDetails", L"true");
+		detailsParentNode = &parentNode;
+		auto detailsChildNode = buffer.getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
 		if (detailsChildNode != nullptr) {
 			detailsRole = detailsChildNode->getAttribute(L"role");
 		}
 	}
 	if (detailsForId.has_value()) {
-		detailsParentNode = buffer->getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
+		detailsParentNode = buffer.getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
 		detailsRole = roleAttr;
 	}
-	if (detailsParentNode != nullptr && detailsRole.has_value() && !detailsRole.value().empty()) {
+	if (detailsParentNode != nullptr && detailsRole.has_value()) {
 		detailsParentNode->addAttribute(L"detailsRole", detailsRole.value());
 	}
 }
@@ -435,7 +433,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	nhAssert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
 	nhAssert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
 	VBufStorage_fieldNode_t* tempNode;
-	CComPtr<IAccessible2> smartPacc = CComQIPtr<IAccessible2>(pacc);
 	//all IAccessible methods take a variant for childID, get one ready
 	VARIANT varChild;
 	varChild.vt=VT_I4;
@@ -496,8 +493,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 
 	//Get role -- IAccessible2 role
 	long role = 0;
-	BSTR roleString = NULL;
-	std::tie(role, roleString) = getRoleLongRoleString(smartPacc, &varChild);
+	CComBSTR roleString;
+	CComPtr<IAccessible2> smartPacc = CComQIPtr<IAccessible2>(pacc);
+	CComVariant smartVariant = CComVariant(&varChild);
+	std::tie(role, roleString) = getRoleLongRoleString(smartPacc, smartVariant);
 
 	// Specifically force the role of ARIA treegrids from outline to table.
 	// We do this very early on in the rendering so that all our table logic applies.
@@ -1202,8 +1201,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	fillVBufAriaDetails(
 		docHandle,
 		smartPacc,
-		buffer,
-		parentNode,
+		*buffer,
+		*parentNode,
 		roleAttr
 	);
 
