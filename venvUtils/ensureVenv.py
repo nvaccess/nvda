@@ -96,6 +96,9 @@ def createVenvAndPopulate():
 	)
 	with open(venv_python_version_path, "w") as f:
 		f.write(sys.version)
+
+def createVenvAndPopulate():
+	createVenv()
 	populate()
 
 
@@ -139,9 +142,8 @@ def ensureVenvAndRequirements():
 			"with those used in automated builds. "
 			"Would you like to continue recreating the environment?"
 		):
-			return createVenvAndPopulate()
-		else:
-			return populate()
+			return createVenv()
+		return populate()
 
 
 if __name__ == '__main__':
