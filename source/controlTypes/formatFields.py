@@ -50,7 +50,7 @@ class FontSize:
 		"rem": pgettext("font size", "%s rem"),
 		# Translators: Abbreviation for points, a measurement of font size.
 		"pt": pgettext("font size", "%s pt"),
-		# Translators: Font size measured in percentaged
+		# Translators: Font size measured as a percentage
 		"%": pgettext("font size", "%s%%"),
 	}
 
