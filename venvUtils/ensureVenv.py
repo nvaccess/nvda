@@ -79,9 +79,9 @@ def populate():
 	shutil.copy(requirements_path, venv_orig_requirements_path)
 
 
-def createVenvAndPopulate():
+def createVenv():
 	"""
-	Creates the NVDA build system's Python virtual environment and installs all required packages.
+	Creates the NVDA build system's Python virtual environment.
 	This function will overwrite any existing virtual environment found at c{venv_path}.
 	"""
 	print("Creating virtual environment...", flush=True)
@@ -96,6 +96,7 @@ def createVenvAndPopulate():
 	)
 	with open(venv_python_version_path, "w") as f:
 		f.write(sys.version)
+
 
 def createVenvAndPopulate():
 	createVenv()
@@ -142,7 +143,7 @@ def ensureVenvAndRequirements():
 			"with those used in automated builds. "
 			"Would you like to continue recreating the environment?"
 		):
-			return createVenv()
+			return createVenvAndPopulate()
 		return populate()
 
 
