@@ -219,6 +219,7 @@ scons devDocs_nvdaHelper
 ```
 
 The documentation will be placed in the `devDocs\nvdaHelper` folder in the output directory.
+This requires having Doxygen installed.
 
 ### Generate debug symbols archive
 To generate an archive of debug symbols for the various dll/exe binaries, type:
