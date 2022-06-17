@@ -28,7 +28,7 @@ Belangrijke functies en mogelijkheden:
 - Eenvoudige installatie dankzij gesproken ondersteuning
 - In 54 talen beschikbaar
 - Ondersteuning van moderne Windows besturingssystemen met inbegrip van 32- en 64-bit versies
-- kan gebruikt worden voor Windows-aanmelding en beveiligde schermen
+- kan gebruikt worden tijdens Windows-aanmelding en [voor andere beveiligde schermen #SecureScreens].
 - Besturingselementen en tekst worden gemeld bij gebruik van aanraakgebaren
 - Ondersteuning van gangbare toegankelijkheidsinterfaces zoals Microsoft Active Accessibility, Java Access Bridge, Iaccessible 2 en UI Automation
 - Ondersteuning voor Windows commandoprompts en consoletoepassingen.
@@ -84,7 +84,7 @@ Door het bestand dat u zojuist heeft gedownload uit te voeren wordt er een tijde
 Vervolgens wordt u gevraagd of u NVDA wilt installeren, een draagbare kopie wilt aanmaken of de tijdelijke kopie wilt blijven gebruiken.
 
 Als u van plan bent NVDA altijd op deze computer te gebruiken, kiest u voor installeren.
-Een geïnstalleerde versie biedt extra functionaliteit, zoals het automatisch starten van het programma na aanmelding bij Windows en de mogelijkheid het Windows Aanmeldvenster en Beveiligingsschermen van Windows uit te lezen, wat met een draagbare of tijdelijke kopie niet mogelijk is.
+Een geïnstalleerde versie biedt extra functionaliteit, zoals het automatisch starten van het programma na aanmelding bij Windows en de mogelijkheid het Windows Aanmeldvenster en [Beveiligingsschermen #SecureScreens] uit te lezen, wat met een draagbare of tijdelijke kopie niet mogelijk is.
 Ook kunt u er snelkoppelingen mee aanmaken voor het Menu Start en het bureaublad. 
 Met de geïnstalleerde versie van NVDA kunt u te allen tijde een draagbare kopie aanmaken.
 
@@ -123,7 +123,7 @@ Raadpleeg het dialoogvenster [incompatibele add-ons van #incompatibleAddonsManag
 
 +++ Gebruik NVDA bij het aanmelden +++[StartAtWindowsLogon]
 Met deze optie bepaalt u of NVDA automatisch moet worden opgestart wanneer u zich in het Aanmeldscherm bevindt nog voordat u een wachtwoord hebt ingevoerd. 
-Dit geldt ook voor Gebruikersaccountbeheer en andere beveiligde schermen.
+Dit geldt ook voor Gebruikersaccountbeheer en [voor andere beveiligde schermen #SecureScreens]
 In geval van een nieuwe (of her-)installatie is deze optie standaard ingeschakeld.
 
 +++ Snelkoppeling voor het bureaublad aanmaken (ctrl+alt+n) +++[CreateDesktopShortcut]
@@ -132,7 +132,7 @@ Als u ervoor kiest de snelkoppeling aan te maken, dient deze tevens als sneltoet
 
 +++ De Draagbare Configuratie naar Account van Huidige Gebruiker kopiëren +++[CopyPortableConfigurationToCurrentUserAccount]
 Met deze optie kunt u bepalen of de gebruikte instellingen van de NVDA kopie die momenteel actief is, moeten worden gekopieerd naar de configuratie van momenteel aangemelde gebruiker van de geïnstalleerde versie van NVDA. 
-Als u kiest voor kopiëren van de configuratie geldt dit niet voor eventuele andere gebruikers van het systeem en ook niet voor de systeemconfiguratie ten behoeve van aanmelding bij Windows  en bij andere beveiligde schermen. 
+Als u kiest voor kopiëren van de configuratie geldt dit niet voor eventuele andere gebruikers van het systeem en ook niet voor de systeemconfiguratie ten behoeve van aanmelding bij Windows  en bij [andere beveiligde schermen #SecureScreens]. 
 Deze optie is alleen beschikbaar wanneer de installatie wordt uitgevoerd vanuit een draagbare kopie en niet wanneer u de installatie direct vanuit het downloadbestand uitvoert.
 
 ++ Een draagbare Kopie aanmaken ++[CreatingAPortableCopy]
@@ -347,10 +347,14 @@ U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navi
 
 Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 || Naam | Toets | Beschrijving |
-| Ga naar vorige kolom | control+alt+pijl links | Verplaatst tekstcursor naar vorige kolom(van dezelfde rij) |
-| Ga naar volgende kolom | control+alt+pijl rechts | Verplaatst tekstcursor naar volgende kolom(van dezelfde rij) |
-| Ga een rij naar boven | control+alt+pijl omhoog | Verplaatst de tekstcursor een rij omhoog(van dezelfde kolom) |
-| Ga een rij omlaag | control+alt+pijl omlaag | Verplaatst de tekstcursor een rij omlaag(van dezelfde kolom) |
+| Ga naar vorige kolom | control+alt+pijl links | Verplaatst systeemcursor naar vorige kolom(van dezelfde rij) |
+| Ga naar volgende kolom | control+alt+pijl rechts | Verplaatst systeemcursor naar volgende kolom(van dezelfde rij) |
+| Ga een rij naar boven | control+alt+pijl omhoog | Verplaatst de systeemcursor een rij omhoog(van dezelfde kolom) |
+| Ga een rij omlaag | control+alt+pijl omlaag | Verplaatst de systeemcursor een rij omlaag(van dezelfde kolom) |
+| Ga naar eerste kolom | control+alt+home | Verplaatst systeemcursor naar de eerste kolom (van dezelfde rij ) |
+| Ga naar laatste kolom | control+alt+end | Verplaatst de systeemcursor naar de laatste kolom (van dezelfde rij) |
+| Ga naar eerste rij | control+alt+pageUp | Verplaatst de systeemcursor naar de eerste rij (van dezelfde kolom) |
+| Ga naar laatste rij | control+alt+pageDown | Verplaatst de systeemcursor naar de laatste rij (van dezelfde kolom) |
 %kc:endInclude
 
 ++ Objectnavigatie ++[ObjectNavigation]
@@ -627,8 +631,11 @@ NVDA ondersteunt de volgende types wiskundige inhoud:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
  - Microsoft Word 365 Modern Math Equations via UI automation:
 NVDA kan wiskundige vergelijkingen in Microsoft Word 365/2016 build 14326 en hoger lezen  en er interactief mee omgaan.
-Merk evenwel op dat eerder gemaakte MathType-vergelijkingen eerst omgezet moeten worden naar Office Math door elk van de vergelijkingen te selecteren om vervolgens in het contextmenu van de opties voor vergelijkingen te kiezen voor -> naar Office Math omzetten . Vergewis u ervan dat u over de nieuwste versie van MathType beschikt voordat u dit doet.
-Microsoft Word biedt nu ook de mogelijkheid lineaire symbool-gebaseerde navigatie door de  vergelijkingen zelf, en ondersteunt wiskundige invoer waarbij gebruik wordt gemaakt van syntaxis van uiteenlopende aard, waaronder LateX. Verdere details, vindt u onder [Linear format equations using UnicodeMath and LaTeX in Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+Merk evenwel op dat eerder gemaakte MathType-vergelijkingen eerst omgezet moeten worden naar Office Math. 
+Dit kunt u doendoor elk van de vergelijkingen te selecteren om vervolgens in het contextmenu van de opties voor vergelijkingen te kiezen  en dan 'Omzetten naar Office Math'. 
+Vergewis u ervan dat u over de nieuwste versie van MathType beschikt voordat u dit doet.
+Microsoft Word biedt nu ook de mogelijkheid van lineaire symbool-gebaseerde navigatie door de  vergelijkingen zelf, en ondersteunt wiskundige invoer waarbij gebruik wordt gemaakt van syntaxis van uiteenlopende aard, waaronder LateX. 
+Verdere details, vindt u onder [Linear format equations using UnicodeMath and LaTeX in Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint, en oudere versies van Microsoft Word: 
 In zowel Microsoft Powerpoint als in  Microsoft Word kunt u met NVDA MathType-vergelijkingen lezen en er in navigeren. 
 MathType moet worden geïnstalleerd anders werkt dit niet. 
@@ -718,6 +725,9 @@ Om zoveel mogelijk informatie op een brailleleesregel te krijgen zijn de volgend
 | mnukn | menuknop |
 | ortp | oriëntatiepunt |
 | pnl | paneel |
+ | vsgbalk | Voortgangsbalk |
+| bzgind | bezig-indicator |
+ | rknp | radio-knop (rondje) |
 | schfbalk | schuifbalk |
 | sect | sectie |
 | slv | selectievakje |
@@ -794,7 +804,8 @@ U kunt deze toewijzingen aanpassen of er nieuwe geëmuleerde toetsen aan toevoeg
 
 Hoewel deze aanpak goed bruikbaar isvoor algemeen gebruikte of unieke toetsen zoals Tab), wilt u misschien geen unieke set toetsen toewijzen aan elke sneltoets.
 Om het emuleren van het indrukken van een toets mogelijk te maken waarbij  een functiewisseltoets ingedrukt gehouden moet worden, beschikt u in NVDA over commando's om te schakelen met control, alt, shift, windows, en de NVDA-toetsen, alsmede over commando's voor enkele  combinaties van die toetsen.
-Om deze schakeltoetsen te gebruiken drukt u eerst op het commando (of de commandocombinatie) voor de functiewisseltoetsen die ingedrukt moeten worden, voer dan het karakter (teken) in dat deel uitmaakt van de sneltoets  die u wilt instellen.
+Om deze schakeltoetsen te gebruiken drukt u eerst op het commando (of de commandocombinatie) voor de functiewisseltoetsen die ingedrukt moeten worden. 
+Voer dan het karakter (teken) in dat deel uitmaakt van de sneltoets  die u wilt instellen.
 Als u bijvoorbeeld control+f wilt bewerkstelligen, gebruikt u  control " als funtiewisseltoetsd en dan typt u een f,
 en om control+alt+t, in te stellen gebruikt u of, de control-toets" en  de alt-toets" als de commandotoetsen, in willekeurige volgorde, of de control- en alt-toetsen" om vervolgens een t te typen.
 
@@ -1135,7 +1146,7 @@ Als u zich bij Windows aanmeldt met een gebruikersnaam en een wachtwoord, dan za
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
 ==== Huidige instellingen van NVDA gebruiken bij windows-aanmelding (administrative rechten vereist) ====[GeneralSettingsCopySettings]
-Met deze knop kopieert u uw huidige opgeslagen configuratie naar de systeemconfiguratiemap van NVDA, zodat de instellingen worden gebruikt bij het aanmeldscherm, gebruikersaccountbeheerscherm (UAC) en andere beveiligde Windowsschermen.
+Met deze knop kopieert u uw huidige opgeslagen configuratie naar de systeemconfiguratiemap van NVDA, zodat de instellingen worden gebruikt bij het aanmeldscherm, gebruikersaccountbeheerscherm (UAC) en andere [beveiligde Windowsschermen #SecureScreens].
 Om ervoor te zorgen dat alle instellingen worden overgezet, moet u erop letten dat u eerst uw configuratie hebt opgeslagen met control+NVDA+c, of Configuratie Opslaan in het NVDA-menu.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
@@ -1726,8 +1737,12 @@ Hoewel er in bladermodus eigenlijk geen echte pagina-indeling bestaat, kunt u hi
 ==== Schermlay-out gebruiken ====[BrowseModeSettingsScreenLayout]
 Toets: NVDA+v
 
-Hiermee kunt u bepalen hoe de klikbare inhoud (links, knoppen en velden)van een document in bladermodus moet worden weergegeven. Wilt u dat de klikbare items op een aparte regel komen te staan of moet alles blijven staan zoals het wordt getoond. Merk op dat deze optie niet geldt voor  Microsoft Office apps zoals Outlook en Word die altijd gebruik maken  van scherm-layout.  
-Wanneer  scherm-layout is ingeschakeld staan de elementen op de pagina zoals deze visueel worden weergegeven. Een regel waarop meerdere  links te zien zijn wordt in gesproken vorm en in braille gepresenteerd als inhoud van een en dezelfde regel. Als de optie uitgeschakeld is, dan komen elementen op de pagima elk op een eigen regel te staan wat het begrijpen ervan vergemakkelijkt bij het navigeren per regel op de pagina, en kan voor sommige gebruikers de interactie met deze items gemakkelijker worden.
+Hiermee kunt u bepalen hoe de klikbare inhoud (links, knoppen en velden)van een document in bladermodus moet worden weergegeven. Wilt u dat de klikbare items op een aparte regel komen te staan of moet alles blijven staan zoals het wordt getoond. 
+Merk op dat deze optie niet geldt voor  Microsoft Office apps zoals Outlook en Word die altijd gebruik maken  van scherm-layout.  
+Wanneer  scherm-layout is ingeschakeld staan de elementen op de pagina zoals deze visueel worden weergegeven. 
+Een regel waarop meerdere  links te zien zijn wordt in gesproken vorm en in braille gepresenteerd als inhoud van een en dezelfde regel. 
+Als de optie uitgeschakeld is, dan komen elementen op de pagima elk op een eigen regel te staan. 
+Dat kan het begrijpen ervan vergemakkelijken bij het navigeren per regel op de pagina, en kan voor sommige gebruikers de interactie met deze items gemakkelijker maken.
 
 ==== Bladermodus inschakelen bij laden van pagina ====[BrowseModeSettingsEnableOnPageLoad]
 Met dit selectievakje kunt u bepalen of bladermodus automatisch wordt ingeschakeld bij het laden van een pagina.
@@ -3328,6 +3343,34 @@ Hieronder volgen de momenteel geldende toetsen met hun funftie voor deze leesreg
  
 + Geavanceerde Onderwerpen +[AdvancedTopics]
 
+++ Veilige Modus ++[SecureMode]
+U kunt NVDA in veilige modus starten met de ``-s`` [commandoregel-optie #CommandLineOptions].
+NVDA draait in veilige modus wanneer u de opdracht uitvoert met betrekking tot  [beveiligde schermen #SecureScreens], tenzij de ``serviceDebug`` [systeem-brede parameter #SystemWideParameters] gebruikt is.
+
+In veilige modus is het niet mogelijk om:
+
+- De configuratie en andere instellingen op schijf op te slaan
+- De map Invoerhandelingen op schijf op te slaan
+- aanpassingen t.a.v. het [Configuratieprofiel #ConfigurationProfiles] aan te brengen zoals het aanmaken, verwijderen, hernoemen van profielen e.t.c.
+- NVDA bij te werken en draagbare versies aan te maken
+- te werken met de[Python console #PythonConsole]
+- te werken met de [Log Viewer #LogViewer] en om te loggen
+
+
+++ Beveiligde Schermen ++[SecureScreens]
+NVDA draait in [veilige modus #SecureMode] wanneer het programma wordt uitgevoerd met betrekking tot beveiligde schermen tenzij de ``serviceDebug`` [systeem-brede parameter #SystemWideParameters] gebruikt is.
+
+Wanneer NVDA gedraaid wordt vanaf een beveiligd scherm, maakt het programma gebruik van een systeemprofiel met daarbij behorende voorkeursinstellingen.
+De gebruikersvoorkeuren in NVDA kunnen gekopieerd worden [voor gebruik in beveiligde schermen #GeneralSettingsCopySettings].
+
+Onder beveiligde schermen vallen:
+
+- Het Windows-aanmeldscherm
+- Het dialoogvenster  User Access Control (UAC) dat actief is wanneer u een handeling als beheerder uitvoert
+  - Het installeren van programma's is hierbij inbegrepen
+  
+  
+  
 ++ Commandoregelopties ++[CommandLineOptions]
 Aan het commando'NVDA starten' kunnenextra opties worden toegevoegd die van invloed zijn op het opstartgedrag. U kunt zoveel opties opgeven als u nodig hebt. 
 Deze opties kunnen worden opgegeven in het dialoogvenster Eigenschappen van de snelkoppeling waarmee NVDA wordt gestart, het venster Uitvoeren (Windows-toets + r) of via de Windows-opdrachtprompt.
@@ -3360,7 +3403,7 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | -c CONFIGPATH | --config-path=CONFIGPATH | Het pad waar alle instellingen voor NVDA worden opgeslagen. |
 | Geen | --lang=LANGUAGE | de ingestelde  NVDA-taal overschrijven. Instellen naar "Windows-standaardtaal voor huidige gebruiker, "en" voor het Engels, etc. |
 | -m | --minimal | Geen geluiden, geen interface, geen opstartbericht etc. |
-| -s | --secure | Veilige modus: schakelt Python consool-eigenschappen  uit zoals profielen voor aanmaken, verwijderen, hernoemen etc., op update controleren, een selectievakje in het Welkomsscherm en in Instellingen in de categorie Algemeen, (bijv. NVDA gebruiken bij aanmelden, Configuratie opslaan bij afsluiten) alsmede     logviewer en log-eigenschappen vaak gebruikt in beveiligde schermen. Merk ook op  dat dit commando het onmogelijk maakt  instellingen  in system config op te slaan en de map Handelingen wordt niet op schijf bewaard. |
+| -s | --secure | Start NVDA in [Veilige Modus #SecureMode] |
 | Geen | --disable-addons | Add-ons buiten werking gesteld. |
 | geen | --debug-logging | Loggen op Debug niveau alleen voor deze sessie inschakelen. Met deze instelling wordt elk ander niveau van loggen buiten werking gesteld ( ""--loglevel"", -l) gegeven argument, optie niet loggen inbegrepen. |
 | Geen | --no-logging | loggen volledig uitschakelen terwijl NVDA in gebruik is. Deze instelling kan onderdrukt worden als een logniveau ( ""--loglevel"", -l) wordt gespecifieerd vanuit commandoregel of als debug-loggen wordt ingeschakeld. |
@@ -3383,7 +3426,7 @@ Deze waarden worden in het register onder een van de volgende sleutels opgeslage
 De volgende waarden kunnen onder deze registersleutel worden ingesteld:
 || Naam | Type | Mogelijke waarden | Beschrijving |
 | configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | Indien ingeschakeld (enabled), wordt de NVDA gebruikersconfiguratie in de lokale application data opgeslagen in plaats van de roaming application data |
-| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | Indien ingeschakeld (enabled), wordt veilige modus voor windows secure desktops, die gebruik van Python consool en Log viewer moglijk maakt, buiten werking gesteld. Aangezien dit een aantal belangrijke veiligheidsrisico's met zich meebrent,wordt gebruik van deze optie ten zeerste afgeraden |
+| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | Indien ingeschakeld (enabled), wordt [Veilige Modus #SecureMode] mbt [beveilige schermen #SecureScreens] buiten werking gesteld. Aangezien dit een aantal belangrijke veiligheidsrisico's met zich meebrent,wordt gebruik van deze optie ten zeerste afgeraden |
 
 + Verdere informatie +[FurtherInformation]
 Voor nadere informatie over NVDA of voor hulp kunt u terecht op de website NVDA_URL.
