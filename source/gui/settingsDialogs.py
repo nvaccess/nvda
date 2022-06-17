@@ -2688,7 +2688,9 @@ class AdvancedPanelControls(
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA determine its Windows Console implementation
 			# automatically.
-			# This option is currently equivalent to "legacy", but in a future version of NVDA, UIA will be used in known good implementations when this option is selected.
+			# This option is currently equivalent to "legacy", but in a future
+			# version of NVDA, UIA will be used in known good implementations
+			# when this option is selected.
 			_("Automatic (legacy)"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA use UIA in the Windows Console when available.
