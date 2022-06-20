@@ -24,7 +24,7 @@ supportedAriaDetailsRoles: Dict[str, Optional[controlTypes.Role]] = {
 	# which is only supported in Chrome.
 	# Currently maps to the IA2 role ROLE_LIST_ITEM
 	"doc-endnote": None,  # controlTypes.Role.ENDNOTE
-	# Currently maps to the IA2 role ROLE_GENERIC
+	# Currently maps to the IA2 role ROLE_PARAGRAPH
 	"definition": None,  # controlTypes.Role.DEFINITION
 }
 """

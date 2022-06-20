@@ -148,8 +148,7 @@ def test_mark_aria_details_role():
 				<span aria-details="endnote-details">doc-endnote,</span>
 				<span aria-details="footnote-details">doc-footnote,</span>
 				<span aria-details="comment-details">comment,</span>
-				<span aria-details="definition-details-as-role">definition,</span>
-				<span aria-details="definition-details-as-tag">definition,</span>
+				<span aria-details="definition-details-as-role" role="term">definition,</span>
 				<span aria-details="unknown-details">form</span>
 			</p>
 		</div>
@@ -160,7 +159,6 @@ def test_mark_aria_details_role():
 				<div id="footnote-details" role="doc-footnote">details with role doc-footnote</div>
 				<div id="comment-details" role="comment">details with role comment</div>
 				<div id="definition-details-as-role" role="definition">details with role definition</div>
-				<dfn id="definition-details-as-tag">details with tag dfn</dfn>
 				<!-- Included as "form" is not supported by Chrome attribute details-roles -->
 				<div id="unknown-details" role="form">details with role form</div>
 			</p>
@@ -186,17 +184,12 @@ def test_mark_aria_details_role():
 		"has details",
 		"definition,",
 		"",  # space between spans
-		# the role doc-endnote is unsupported as an IA2 role
-		# The role "generic" is used instead
-		"has details",
-		"definition,",
-		"",  # space between spans
 		# The role "form" is deliberately unsupported
 		"has details",
 		"form",
 	])
 
-	# TODO: fix known bug with braille not announcing details
+	# TODO: fix known bug with braille not announcing details #13815
 	expectedBraille = " ".join([  # noqa: F841
 		"mln",
 		"edit",
@@ -208,10 +201,6 @@ def test_mark_aria_details_role():
 		"doc footnote,",
 		"has cmnt",
 		"comment,",
-		# the role doc-endnote is unsupported as an IA2 role
-		# The role "generic" is used instead
-		"details",
-		"definition,",
 		# the role doc-endnote is unsupported as an IA2 role
 		# The role "generic" is used instead
 		"details",
@@ -231,9 +220,9 @@ def test_mark_aria_details_role():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		# TODO: fix known bug with braille not announcing details
+		# TODO: fix known bug with braille not announcing details #13815
 		# expectedBraille,
-		"mln edt doc-endnote, doc-footnote, comment, definition, definition, form edt end",
+		"mln edt doc-endnote, doc-footnote, comment, definition, form edt end",
 		message="Browse mode braille: Read line with different aria details roles.",
 	)
 	
@@ -265,9 +254,9 @@ def test_mark_aria_details_role():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		# TODO: fix known bug with braille not announcing details
+		# TODO: fix known bug with braille not announcing details #13815
 		# expectedBraille,
-		"doc-endnote, doc-footnote, comment, definition, definition, form",
+		"doc-endnote, doc-footnote, comment, definition, form",
 		message="Focus mode braille: Read line with different aria details roles",
 	)
 

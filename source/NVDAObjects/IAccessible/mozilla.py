@@ -65,7 +65,7 @@ class Mozilla(ia2Web.Ia2Web):
 
 	def _get_detailsSummary(self) -> Optional[str]:
 		# Unlike base Ia2Web implementation, the details-roles
-		# IA2 attribute is not exposed in FireFox.
+		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
 		detailsRelations = self.detailsRelations
 		if not detailsRelations:
@@ -76,7 +76,7 @@ class Mozilla(ia2Web.Ia2Web):
 
 	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
 		# Unlike base Ia2Web implementation, the details-roles
-		# IA2 attribute is not exposed in FireFox.
+		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
 		detailsRelations = self.detailsRelations
 		if not detailsRelations:
@@ -97,7 +97,7 @@ class Mozilla(ia2Web.Ia2Web):
 	@property
 	def hasDetails(self) -> bool:
 		# Unlike base Ia2Web implementation, the details-roles
-		# IA2 attribute is not exposed in FireFox.
+		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
 		return bool(self.detailsRelations)
 

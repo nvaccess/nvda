@@ -399,7 +399,7 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 	of the nodes in the relationship will not be in the buffer yet */
 	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
 	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
-	VBufStorage_controlFieldNode_t* detailsParentNode;
+	VBufStorage_controlFieldNode_t* detailsParentNode = nullptr;
 	std::optional<std::wstring> detailsRole;
 	if (detailsId.has_value()) {
 		parentNode.addAttribute(L"hasDetails", L"true");
@@ -495,8 +495,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	long role = 0;
 	CComBSTR roleString;
 	CComPtr<IAccessible2> smartPacc = CComQIPtr<IAccessible2>(pacc);
-	CComVariant smartVariant = CComVariant(&varChild);
-	std::tie(role, roleString) = getRoleLongRoleString(smartPacc, smartVariant);
+	std::tie(role, roleString) = getRoleLongRoleString(smartPacc, CComVariant(&varChild));
 
 	// Specifically force the role of ARIA treegrids from outline to table.
 	// We do this very early on in the rendering so that all our table logic applies.
