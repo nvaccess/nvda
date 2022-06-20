@@ -1,0 +1,28 @@
+Import([
+	"thirdPartyEnv"
+])
+
+import typing
+
+thirdPartyEnv: Environment = thirdPartyEnv
+env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
+
+detoursPath=Dir('#include/detours')
+detoursSrcPath = detoursPath.Dir('src')
+
+env.Prepend(CPPPATH=[detoursSrcPath])
+
+sourceFiles=[
+	'detours.cpp',
+	'disasm.cpp',
+	'modules.cpp',
+]
+
+objs = [env.Object(f"{f}.obj", detoursSrcPath.File(f)) for f in sourceFiles]
+
+detoursLib=env.Library(
+	target='detours',
+	source=objs
+)
+
+Return('detoursLib')

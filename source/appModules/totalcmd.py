@@ -41,8 +41,8 @@ class TCList(IAccessible):
 	def reportFocus(self):
 		if self.name:
 			speakList=[]
-			if controlTypes.STATE_SELECTED in self.states:
-				speakList.append(controlTypes.stateLabels[controlTypes.STATE_SELECTED])
+			if controlTypes.State.SELECTED in self.states:
+				speakList.append(controlTypes.State.SELECTED.displayString)
 			speakList.append(self.name.split("\\")[-1])
 			speech.speakMessage(" ".join(speakList))
 		else:

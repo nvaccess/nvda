@@ -81,8 +81,13 @@ VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeF
 	* @param siid the service iid
 	*/
 template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, const IID& siid, toInterface** pIface) {
+	if (pIface == nullptr) {
+		LOG_DEBUG(L"pIface should not be a nullptr");
+		constexpr unsigned int CUSTOMER_FLAG = 1;
+		return MAKE_HRESULT(SEVERITY_ERROR, CUSTOMER_FLAG, 0);
+	}
 	HRESULT hRes;
-	IServiceProvider* pServProv=NULL;
+	IServiceProvider* pServProv = nullptr;
 	hRes=pUnknown->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
 	if(hRes!=S_OK||!pServProv) {
 		LOG_DEBUG(L"Could not queryInterface to IServiceProvider");
@@ -90,9 +95,9 @@ template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, c
 	}
 	hRes=pServProv->QueryService(siid,__uuidof(toInterface),(void**)pIface);
 	pServProv->Release();
-	if(hRes!=S_OK||!pIface) {
+	if( hRes != S_OK || *pIface == nullptr) {
 		LOG_DEBUG(L"Could not get requested interface");
-		*pIface=NULL;
+		*pIface = nullptr;  // if hres is not ok
 		return hRes;
 	}
 	return hRes;

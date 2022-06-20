@@ -6,16 +6,16 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s\],;:»]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s\]!,;:»\.!]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s\]\?,;:»\.!]|$)
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -58,17 +58,12 @@ $	dollari	all	norep
 (	aperta parentesi	most	always
 )	chiusa parentesi	most	always
 *	asterisco	some
-+	più	some
-−	meno	some
 ,	virgola	all	always
 -	trattino	most
 .	punto	some
 /	barra	some
 :	due punti	most	norep
 ;	punto e virgola	most
-<	minore di	some
->	maggiore di	some
-=	uguale	some
 ?	punto di domanda	all
 @	chiocciola	some
 [	aperta quadra	most
@@ -113,7 +108,7 @@ _	sottolineato	most
 ‏	marcatore da destra a sinistra	char
 ¶	indicatore di paragrafo	most
 ■	quadrato nero	some
-▪	quadrattino nero	some
+▪	quadratino nero	some
 ◾	Quadrato nero	some
 □	Quadrato bianco	some
 ◦	Punto elenco bianco	some
@@ -131,8 +126,6 @@ _	sottolineato	most
 «	aperte doppie virgolette
 »	chiuse doppie virgolette
 µ	micro	some
-º	ordinale maschile	char	always
-ª	ordinale femminile	char	always
 ⁰	apice 0	some
 ¹	apice 1	some
 ²	apice 2	some
@@ -167,9 +160,6 @@ _	sottolineato	most
 ®	registered	some
 ™	Trademark	some
 ©	Copyright	some
-±	Più o Meno	most
-×	per	most
-÷	diviso per	most
 ←	freccia sinistra	some
 ↑	freccia su	some
 →	freccia destra	some
@@ -182,51 +172,151 @@ _	sottolineato	most
 ‣	Puntato triangolare	none
 ✗	Puntato a X	none
 
-#Mathematical Operators U+2200 to U+220F
-∀	per ogni 	none
-∁	Complemento	none
+#Arithmetic operators
++	più	some
+−	meno	some
+×	per	some
+⋅	per	some
+⨯	per	none
+∕	diviso	some
+⁄	diviso	some
+÷	diviso	some
+∓	meno o più	some
+±	più o meno	some
+
+#Set operations
+∖	meno none
+⊍	unione disgiunta di	none
+𝒫	insieme delle parti di	none
+𝔓	insieme potenza di	none
+℘	potenza dell'insieme	none
+∁	insieme complementare di	none
+
+#Set relations and set constructions
+∅	Insieme vuoto	none
+⊂	sottoinsieme proprio di	none
+⊄	non è un sottoinsieme di	none
+⊃	sovrainsieme proprio di	none
+⊅	non è un sovrainsieme di	none
+⊆	sottoinsieme di o uguale a	none
+⊈	né un sottoinsieme di né uguale a	none
+⊇	sovrainsieme di o uguale a	none
+⊉	né un sovrainsieme di né uguale a	none
+⊌	insieme multiplo	none
+
+#Equality signs
+=	uguale	some
+≃	asintoticamente uguale a	none
+≄	non asintoticamente uguale a	none
+≅	approssimativamente uguale a	none
+≆	approssimativamente ma non realmente uguale a	none
+≈	quasi uguale a	none
+≌	tutto uguale a	none
+≍	equivalente a	none
+≭	non equivalente a	none
+≎	geometricamente equivalente a	none
+≑	geometricamente uguale a	none
+≚	equiangolare a	none
+≬	tra	none
+≠	non uguale a	none
+≡	congruente a 	none
+≣	strettamente congruente a	none
+≢	non congruente a	none
+∼	simile a	none
+≙	è stimato	none
+≟	è equivalente a? (domanda)	none
+
+#comparison signs
+<	minore di	some
+>	maggiore di	some
+≤	minore o uguale a	none
+≦	minore o uguale a	none
+≪	molto più piccolo di	none
+≥	maggiore o uguale a	none
+≧	maggiore o uguale a	none
+≫	molto più grande di	none
+≶	minore o maggiore di	none
+≷	maggiore o minore di	none
+≮	non minore di 	none
+≯	non maggiore di	none
+
+#Functions
+⁻	funzione inversa	some
+∘	composta	none
 ∂	derivata parziale	none
+∇	gradiente di	none
+
+#Geometry and linear Algebra
+⃗	vettore tra	none
+△	triangolo	none
+▭	rettangolo	none
+∟	angolo retto	none
+∠	angolo	none
+∥	parallelo a	none
+∦	non parallelo a	none
+⊥	perpendicolare a	none
+⟂	ortogonale a	none
+‖	norma del vettore	none
+̂	normalizza	none
+∿	onda sinusoidale	none
+∡	Angolo misurato	none
+∢	angolo sferico	none
+
+#Logical operators
+∀	per ogni	none
 ∃	esiste	none
 ∄	non esiste	none
-∅	Insieme Vuoto	none
-∆	incremento	none
-∇	nabla	none
-∈	appartenente a	none
-∉	non appartiene	none
-∊	piccolo simbolo di appartenenza	none
-∋	contiene come membro	none
-∌	non contiene come membro	none
-∍	piccolo contiene come membro	none
-∎	fine della dimostrazione	none
-∏	prodotto n-ario	none
+⇏	non implica	none
+⇐	è implicato da	none
 
-# Miscellaneous Mathematical Operators
-∑	sommatoria n-aria	none
+#Other mathematical Operators
+∈	appartenente a	none
+∉	non appartiene a	none
+∊	piccolo simbolo di appartenenza	none
+∋	contiene come elemento	none
+∌	non contiene come elemento	none
+∍	piccolo contiene come elemento	none
+∎	fine dimostrazione	none
+∏	prodotto n-ario	none
+∐	coprodotto n-ario	none
+∑	sommatoria	none
 √	radice quadrata	none
-∛	RADICE CUBICA	none
-∜	RADICE QUARTA	none
-∝	PROPORZIONALE A	none
-∞	INFINITO	none
-∟	ANGOLO RETTO	none
-∠	ANGOLO	none
-∥	PARALLELO A	none
-∦	NON PARALLELO A	none
-∧	AND LOGICO	none
-∨	OR LOGICO	none
-¬	not logico	none
-∩	INTERSEZIONE	none
-∪	UNIONE	none
-∫	INTEGRALE	none
-∴	IMPLICA	none
+∛	radice cubica	none
+∜	radice quarta	none
+∝	proporzionale a	none
+∞	infinito	none
+∧	e	none
+∨	o	none
+¬	not	none
+∩	intersezione	none
+∪	unione	none
+∫	integrale	none
+∬	integrale doppio	none
+∭	integrale triplo	none
+∮	integrale di contorno	none
+∯	integrale di superficie	none
+∰	integrale triplo	none
+∱	integrale in senso orario	none
+∲	integrale di contorno in senso orario	none
+∳	integrale di contorno in senso antiorario	none
+∴	perciò	none
 ∵	perché	none
-∶	STA A	none
-∷	PROPORZIONE	none
-≤	MINORE O UGUALE di	none
-≥	MAGGIORE O UGUALE di	none
-⊂	Sottoinsieme di	none
-⊃	sovrainsieme di	none
-⊆	Contenuto o uguale a	none
-⊇	sovrainsieme di o uguale a	none
+∶	tale che	none
+∷	proporzione	none
+∹	eccede	none
+∺	proporzione geometrica	none
+≀	prodotto corona	none
+≏	differenza fra	none
+≐	si avvicina al limite	none
+∙	punto	none
+∣	tale che	none
+∤	non tale che	none
+≔	è uguale per definizione a	none
+≕	è uguale per definizione a 	none
+≺	non è preferito a	none
+≻	è preferito a none
+⊀	non precede	none
+⊁	non succede a	none
 
 # Vulgur Fractions U+2150 to U+215E
 ¼	un quarto	none
@@ -248,5 +338,19 @@ _	sottolineato	most
 ⅝	cinque ottavi	none
 ⅞	sette ottavi	none
 
+#Number sets
+𝔸	numeri algebrici	none
+ℂ	numeri complessi	none
+ℑ	parte immaginaria di un numero complesso	none
+ℍ	quaternioni	none
+ℕ	numeri naturali	none
+𝕁	numeri non negativi (interi)	none
+ℚ	numeri razionali	none
+ℝ	numeri reali	none
+ℜ	parte reale del numero complesso	none
+ℤ	numeri interi	none
+ℵ	Numero aleph	none
+ℶ	Numero beth	none
+
 # Miscellaneous Technical
-⌘	tasto Command Mac	none
+⌘	mac Command key	none

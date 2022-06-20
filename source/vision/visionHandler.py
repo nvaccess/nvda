@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2018-2022 NV Access Limited, Babbage B.V., Cyrille Bougot
 
 """Module containing the vision handler.
 
@@ -283,6 +283,14 @@ class VisionHandler(AutoPropertyObject):
 			# We should handle this more gracefully, since this is no reason
 			# to stop a provider from loading successfully.
 			log.debugWarning("Error in initial focus after provider load", exc_info=True)
+		try:
+			self.initialNavigatorObject()
+		except Exception:
+			# initialNavigatorObject might fail in case NVDA's current navigator object is an object
+			# for which property fetching raises an exception.
+			# We should handle this more gracefully, since this is no reason
+			# to stop a provider from loading successfully.
+			log.debugWarning("Error in initial navigator object after provider load", exc_info=True)
 
 	def terminate(self) -> None:
 		self.extensionPoints = None
@@ -344,7 +352,19 @@ class VisionHandler(AutoPropertyObject):
 				)
 
 	def initialFocus(self) -> None:
+		"""Handles the current focus when the provider is initialized.
+		This function notifies one or more extension points; thus it can raise any type of exception.
+		"""
 		if not api.getDesktopObject():
 			# focus/review hasn't yet been initialized.
 			return
 		self.handleGainFocus(api.getFocusObject())
+	
+	def initialNavigatorObject(self) -> None:
+		"""Handles the current navigator object when the provider is initialized.
+		This function notifies an extension point; thus it can raise any type of exception.
+		"""
+		if not api.getDesktopObject():
+			# focus/review hasn't yet been initialized.
+			return
+		self.handleReviewMove(context=Context.REVIEW)

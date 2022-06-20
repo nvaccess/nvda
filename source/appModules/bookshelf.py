@@ -35,5 +35,5 @@ class EnhancedPane(Window):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_PANE:
+		if obj.role == controlTypes.Role.PANE:
 			clsList.insert(0, EnhancedPane)

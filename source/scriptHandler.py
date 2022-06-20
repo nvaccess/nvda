@@ -3,15 +3,16 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import List, Optional
+from typing import (
+	Optional,
+	Iterator,
+	List,
+)
 import time
 import weakref
-import inspect
 import types
 import config
-import speech
 from speech import sayAll
-import appModuleHandler
 import api
 import queueHandler
 from logHandler import log
@@ -19,7 +20,6 @@ import inputCore
 import globalPluginHandler
 import braille
 import vision
-import keyLabels
 import baseObject
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
@@ -72,7 +72,7 @@ def findScript(gesture):
 
 	globalMapScripts = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
-	globalMap = braille.handler.display.gestureMap
+	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
 		globalMaps.append(globalMap)
 	for globalMap in globalMaps:
@@ -100,17 +100,21 @@ def findScript(gesture):
 			return func
 
 	# Braille display level
-	if isinstance(braille.handler.display, baseObject.ScriptableObject):
+	if (
+		braille.handler
+		and isinstance(braille.handler.display, baseObject.ScriptableObject)
+	):
 		func = _getObjScript(braille.handler.display, gesture, globalMapScripts)
 		if func:
 			return func
 
 	# Vision enhancement provider level
-	for provider in vision.handler.getActiveProviderInstances():
-		if isinstance(provider, baseObject.ScriptableObject):
-			func = _getObjScript(provider, gesture, globalMapScripts)
-			if func:
-				return func
+	if vision.handler:
+		for provider in vision.handler.getActiveProviderInstances():
+			if isinstance(provider, baseObject.ScriptableObject):
+				func = _getObjScript(provider, gesture, globalMapScripts)
+				if func:
+					return func
 
 	# Tree interceptor level.
 	treeInterceptor = focus.treeInterceptor
@@ -248,7 +252,7 @@ def script(
 		description: str = "",
 		category: Optional[str] = None,
 		gesture: Optional[str] = None,
-		gestures: Optional[List[str]] = None,
+		gestures: Optional[Iterator[str]] = None,
 		canPropagate: bool = False,
 		bypassInputHelp: bool = False,
 		allowInSleepMode: bool = False,
@@ -256,11 +260,11 @@ def script(
 ):
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
-	It can only decorate methods which name start swith "script_"
+	It can only decorate methods which have a name starting with "script_"
 	@param description: A short translatable description of the script to be used in the gesture editor, etc.
 	@param category: The category of the script displayed in the gesture editor.
 	@param gesture: A gesture associated with this script.
-	@param gestures: A list of gestures associated with this script
+	@param gestures: A collection of gestures associated with this script
 	@param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
 	@param bypassInputHelp: Whether this script should run when input help is active.
 	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
@@ -268,7 +272,13 @@ def script(
 	One of the C{sayAll.CURSOR_*} constants.
 	"""
 	if gestures is None:
-		gestures = []
+		gestures: List[str] = []
+	else:
+		# A tuple may have been used, however, the collection of gestures may need to be
+		# extended (via append) with the value of the 'gesture' string (in-case both are provided in the
+		# decorator).
+		gestures: List[str] = list(gestures)
+
 	def script_decorator(decoratedScript):
 		# Decoratable scripts are functions, not bound instance methods.
 		if not isinstance(decoratedScript, types.FunctionType):

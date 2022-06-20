@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2020 NV Access Limited, Joseph Lee, Babbage B.V.
+# Copyright (C) 2012-2021 NV Access Limited, Joseph Lee, Babbage B.V.
 
 """handles touchscreen interaction (Windows 8 and later).
 Used to provide input gestures for touchscreens, touch modes and other support facilities.
@@ -14,18 +14,15 @@ from ctypes.wintypes import *
 import re
 import gui
 import winVersion
-import globalPluginHandler
 import config
 import winUser
-import speech
-import api
-import ui
 import inputCore
 import screenExplorer
 from logHandler import log
 import touchTracker
-import gui
 import core
+import systemUtils
+
 
 availableTouchModes=['text','object']
 
@@ -310,6 +307,10 @@ def touchSupported(debugLog: bool = False):
 	if maxTouches<=0:
 		if debugLog:
 			log.debugWarning("No touch devices found")
+		return False
+	if not systemUtils.hasUiAccess():
+		if debugLog:
+			log.debugWarning("NVDA doesn't have UI Access so touch isn't supported.")
 		return False
 	return True
 

@@ -19,7 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <rpc.h>
 #include <sddl.h>
 #include <common/log.h>
-#include "nvdaControllerInternal.h"
+#include <local/nvdaControllerInternal.h>
 #include "nvdaHelperLocal.h"
 #include "dllImportTableHooks.h"
 #include "rpcsrv.h"
@@ -158,7 +158,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 			uTimeout = 10000;
 		// SMTO_ABORTIFHUNG only aborts if the window is already hung,
 		// not if the window hangs while sending.
-		LRESULT ret;
+		LRESULT ret = 0;
 		for (UINT remainingTimeout = uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
 			if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
 				// Note that cancellation is based on whether the *main* thread is alive.

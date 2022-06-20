@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
 from .speech import (
@@ -15,14 +15,10 @@ from .speech import (
 	_manager,
 	_objectSpeech_calculateAllowedProps,
 	_suppressSpeakTypedCharacters,
-	_suppressSpeakTypedCharactersNumber,
-	_suppressSpeakTypedCharactersTime,
-	beenCanceled,
 	BLANK_CHUNK_CHARS,
 	cancelSpeech,
 	CHUNK_SEPARATOR,
 	clearTypedWordBuffer,
-	curWordChars,
 	FIRST_NONCONTROL_CHAR,
 	getCharDescListFromText,
 	getControlFieldSpeech,
@@ -34,26 +30,21 @@ from .speech import (
 	getPreselectedTextSpeech,
 	getPropertiesSpeech,
 	getSpellingSpeech,
+	getState,
 	getTableInfoSpeech,
 	getTextInfoSpeech,
 	IDT_BASE_FREQUENCY,
 	IDT_MAX_SPACES,
 	IDT_TONE_DURATION,
 	isBlank,
-	isPaused,
 	LANGS_WITH_CONJUNCT_CHARS,
-	oldColumnNumber,
-	oldColumnSpan,
-	oldRowNumber,
-	oldRowSpan,
-	oldTableID,
-	oldTreeLevel,
 	pauseSpeech,
 	processText,
 	PROTECTED_CHAR,
 	RE_CONVERT_WHITESPACE,
 	RE_INDENTATION_CONVERT,
 	RE_INDENTATION_SPLIT,
+	setSpeechMode,
 	speak,
 	speakMessage,
 	speakObject,
@@ -64,13 +55,10 @@ from .speech import (
 	speakSpelling,
 	speakText,
 	speakTextInfo,
+	SpeakTextInfoState,
 	speakTextSelected,
 	speakTypedCharacters,
-	speechMode,
-	speechMode_beeps,
-	speechMode_beeps_ms,
-	speechMode_off,
-	speechMode_talk,
+	SpeechMode,
 	spellTextInfo,
 	splitTextIndentation,
 )
@@ -105,14 +93,10 @@ __all__ = [
 	"_manager",
 	"_objectSpeech_calculateAllowedProps",
 	"_suppressSpeakTypedCharacters",
-	"_suppressSpeakTypedCharactersNumber",
-	"_suppressSpeakTypedCharactersTime",
-	"beenCanceled",
 	"BLANK_CHUNK_CHARS",
 	"cancelSpeech",
 	"CHUNK_SEPARATOR",
 	"clearTypedWordBuffer",
-	"curWordChars",
 	"FIRST_NONCONTROL_CHAR",
 	"getCharDescListFromText",
 	"getControlFieldSpeech",
@@ -124,26 +108,21 @@ __all__ = [
 	"getPreselectedTextSpeech",
 	"getPropertiesSpeech",
 	"getSpellingSpeech",
+	"getState",
 	"getTableInfoSpeech",
 	"getTextInfoSpeech",
 	"IDT_BASE_FREQUENCY",
 	"IDT_MAX_SPACES",
 	"IDT_TONE_DURATION",
 	"isBlank",
-	"isPaused",
 	"LANGS_WITH_CONJUNCT_CHARS",
-	"oldColumnNumber",
-	"oldColumnSpan",
-	"oldRowNumber",
-	"oldRowSpan",
-	"oldTableID",
-	"oldTreeLevel",
 	"pauseSpeech",
 	"processText",
 	"PROTECTED_CHAR",
 	"RE_CONVERT_WHITESPACE",
 	"RE_INDENTATION_CONVERT",
 	"RE_INDENTATION_SPLIT",
+	"setSpeechMode",
 	"speak",
 	"speakMessage",
 	"speakObject",
@@ -154,25 +133,33 @@ __all__ = [
 	"speakSpelling",
 	"speakText",
 	"speakTextInfo",
+	"SpeakTextInfoState",
 	"speakTextSelected",
 	"speakTypedCharacters",
-	"speechMode",
-	"speechMode_beeps",
-	"speechMode_beeps_ms",
-	"speechMode_off",
-	"speechMode_talk",
+	"SpeechMode",
 	"spellTextInfo",
 	"splitTextIndentation",
 ]
 
 import synthDriverHandler
 import config
+from .speech import initialize as speechInitialize
+from .sayAll import initialize as sayAllInitialize
 
 
 def initialize():
-	"""Loads and sets the synth driver configured in nvda.ini."""
+	""" Loads and sets the synth driver configured in nvda.ini.
+	Initializes the state of speech and initializes the sayAllHandler
+	"""
 	synthDriverHandler.initialize()
 	synthDriverHandler.setSynth(config.conf["speech"]["synth"])
+	speechInitialize()
+	sayAllInitialize(
+		speak,
+		speakObject,
+		getTextInfoSpeech,
+		SpeakTextInfoState,
+	)
 
 
 def terminate():

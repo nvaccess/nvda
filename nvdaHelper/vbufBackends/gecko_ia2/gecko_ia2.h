@@ -28,7 +28,6 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 		VBufStorage_buffer_t* buffer,
 		VBufStorage_controlFieldNode_t* parentNode,
 		VBufStorage_fieldNode_t* previousNode,
-		IAccessibleTable* paccTable=NULL,
 		IAccessibleTable2* paccTable2=NULL,
 		long tableID=0, const wchar_t* parentPresentationalRowNumber=NULL,
 		bool ignoreInteractiveUnlabelledGraphics=false
@@ -40,8 +39,9 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	std::wstring toolkitName;
 
+	std::optional<int> getRelationId(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2);
 	std::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);
-	CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element);
+	CComPtr<IAccessible2> getRelationElement(LPCOLESTR ia2TargetRelation, IAccessible2_2* element);
 	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
 		const std::map<std::wstring, std::wstring>& attribs);
 

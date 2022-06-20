@@ -9,6 +9,7 @@ output during system tests.
 Note: The name of this module must match the name of the synth driver, and the configured synthesizer
 in the `tests/system/nvdaSettingsFiles/*.ini` files.
 """
+from logHandler import log
 
 import synthDriverHandler
 import extensionPoints
@@ -35,11 +36,16 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 	}
 
 	def speak(self, speechSequence):
+		log.debug(f"Start of Speak: {speechSequence}")
 		for item in speechSequence:
 			if isinstance(item, IndexCommand):
+				log.debug(f"index reached: {item.index}")
 				synthDriverHandler.synthIndexReached.notify(synth=self, index=item.index)
+		log.debug("done speaking")
 		synthDriverHandler.synthDoneSpeaking.notify(synth=self)
+		log.debug("post_speech notify start")
 		post_speech.notify(speechSequence=speechSequence)
+		log.debug("post_speech notify complete")
 
 	def cancel(self):
 		pass

@@ -1,13 +1,17 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-from typing import Optional, Dict
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+from typing import (
+	Optional,
+	Dict,
+)
 
 from comtypes import COMError
 from comtypes.hresult import S_OK
 import appModuleHandler
 import speech
+import textUtils
 from speech import sayAll
 import api
 from scriptHandler import willSayAllResume, isScriptWaiting
@@ -126,10 +130,8 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				return
 			log.debug("Double clicking")
 			winUser.setCursorPos(p.x, p.y)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+			mouseHandler.doPrimaryClick()
+			mouseHandler.doPrimaryClick()
 			return
 
 		# The user makes a selection using browse mode virtual selection.
@@ -174,9 +176,9 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				yield subObj
 
 	NODE_TYPES_TO_ROLES = {
-		"link": {controlTypes.ROLE_LINK, controlTypes.ROLE_FOOTNOTE},
-		"graphic": {controlTypes.ROLE_GRAPHIC},
-		"table": {controlTypes.ROLE_TABLE},
+		"link": {controlTypes.Role.LINK, controlTypes.Role.FOOTNOTE},
+		"graphic": {controlTypes.Role.GRAPHIC},
+		"table": {controlTypes.Role.TABLE},
 	}
 
 	def _iterNodesByType(self, nodeType, direction="next", pos=None):
@@ -185,7 +187,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		obj = pos.innerTextInfo._startObj
 		if nodeType=="container":
 			while obj!=self.rootNVDAObject:
-				if obj.role==controlTypes.ROLE_TABLE:
+				if obj.role==controlTypes.Role.TABLE:
 					ti=self.makeTextInfo(obj)
 					yield browseMode.TextInfoQuickNavItem(nodeType, self, ti)
 					return
@@ -199,13 +201,13 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		offset = pos.innerTextInfo._start._startOffset
 		if direction == "next":
 			text = obj.IAccessibleTextObject.text(offset + 1, obj.IAccessibleTextObject.nCharacters)
-			embed = text.find(u"\uFFFC")
+			embed = text.find(textUtils.OBJ_REPLACEMENT_CHAR)
 			if embed != -1:
 				embed += offset + 1
 		else:
 			if offset > 0:
 				text = obj.IAccessibleTextObject.text(0, offset)
-				embed = text.rfind(u"\uFFFC")
+				embed = text.rfind(textUtils.OBJ_REPLACEMENT_CHAR)
 			else:
 				# We're at the start; we can't go back any further.
 				embed = -1
@@ -261,7 +263,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			text+=", "+_("Page {pageNumber}").format(pageNumber=pageNumber)
 		return text
 
-	def getTextWithFields(self, formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		items = super(BookPageViewTextInfo, self).getTextWithFields(formatConfig=formatConfig)
@@ -347,7 +349,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 
 	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
 		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
-		if field and field["role"] == controlTypes.ROLE_MATH:
+		if field and field["role"] == controlTypes.Role.MATH:
 			try:
 				field["mathMl"] = obj.mathMl
 			except LookupError:
@@ -419,7 +421,7 @@ class AppModule(appModuleHandler.AppModule):
 				or (hasattr(obj,'IAccessibleTextObject') and obj.name=="Book Page View")
 			):
 				clsList.insert(0,BookPageView)
-			elif obj.role == controlTypes.ROLE_MATH:
+			elif obj.role == controlTypes.Role.MATH:
 				clsList.insert(0, Math)
 		return clsList
 
@@ -427,8 +429,8 @@ class AppModule(appModuleHandler.AppModule):
 		if (
 			isinstance(obj, IAccessible)
 			and isinstance(obj.IAccessibleObject, IA2.IAccessible2)
-			and obj.role == controlTypes.ROLE_LINK
+			and obj.role == controlTypes.Role.LINK
 		):
 			xRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
 			if "kindle-footnoteref" in xRoles:
-				obj.role = controlTypes.ROLE_FOOTNOTE
+				obj.role = controlTypes.Role.FOOTNOTE

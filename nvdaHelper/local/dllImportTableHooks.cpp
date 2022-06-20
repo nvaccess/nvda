@@ -66,6 +66,10 @@ BOOL DllImportTableHooks::hookFunctions() {
 }
 
 void* DllImportTableHooks::requestFunctionHook(const char* moduleName, const char* functionName, void* newHookProc) {
+	if (!moduleName) {
+		LOG_ERROR(L"apiHook_requestFunctionHook: nullptr given for moduleName\n");
+		return nullptr;
+	}
 	HMODULE moduleHandle=GetModuleHandleA(moduleName);
 	if(!moduleHandle) {
 		LOG_ERROR(L"apiHook_requestFunctionHook: module " << moduleName << L" not loaded\n");

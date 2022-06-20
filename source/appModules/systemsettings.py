@@ -1,14 +1,12 @@
-# appModules/systemsettings.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019 NV Access Limited, Joseph Lee
+# Copyright (C) 2019-2022 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""App module for Windows 10 Settings app (aka Immersive Control Panel)."""
+"""App module for Settings app on Windows 10 and later (aka Immersive Control Panel)."""
 
 import appModuleHandler
-from NVDAObjects.UIA import UIA
-from NVDAObjects.behaviors import ProgressBar
+from NVDAObjects.UIA import UIA, ProgressBar
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -21,10 +19,10 @@ class AppModule(appModuleHandler.AppModule):
 				# the progress bar's sibling might not be a UIA object at all.
 				try:
 					if (
-						obj.next.UIAElement.cachedAutomationID.startswith(
+						obj.next.UIAAutomationId.startswith(
 							"SystemSettings_Audio_Output_VolumeValue_"
 						)
-						or obj.simplePrevious.UIAElement.cachedAutomationID.startswith(
+						or obj.simplePrevious.UIAAutomationId.startswith(
 							"SystemSettings_Audio_Input_VolumeValue_"
 						)
 					):

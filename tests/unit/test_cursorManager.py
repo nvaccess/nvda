@@ -28,6 +28,9 @@ class TestMove(unittest.TestCase):
 		# the logic is now executed, and the following dependencies need to be met.
 		assert synthDriverHandler.setSynth("silence")
 		assert synthDriverHandler.getSynth()
+		# Ensure the state management for speech is set up
+		from speech import speechInitialize
+		speechInitialize()
 
 	def test_nextChar(self):
 		cm = CursorManager(text="abc") # Caret at "a"
