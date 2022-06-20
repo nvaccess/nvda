@@ -4,6 +4,12 @@
 %!includeconf: ../changes.t2tconf
 
 = 2022.2 =
+Bản phát hành này bao gồm nhiều lỗi dược sửa.
+Đáng chú ý, có những cải tiến đáng kể cho các ứng dụng trên nền Java, màn hình nổi và các tính năng của Windows.
+
+Đã trình làng những lệnh điều hướng mới trong bảng.
+Đã cập nhật Unicode CLDR.
+Đã cập nhật LibLouis, bao gồm thêm bảng chữ nổi tiếng Đức.
 
 == Tính năng mới ==
 - Hỗ trợ tương tác với Microsoft Loop Components trong Microsoft Office products. (#13617)
@@ -17,6 +23,9 @@
 == Các thay đổi ==
 - Đã cập nhật NSIS lên phiên bản 3.08. (#9134)
 - Đã cập nhật CLDR lên phiên bản 41.0. (#13582)
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - Bảng chữ nổi mới: tiếng Đức cấp 2 (chi tiết)
+  -
 - Thêm vai trò mới cho điều khiển "busy indicator". (#10644)
 - NVDA giờ đây sẽ thông báo khi không thể thực hiện một hành động của NVDA. (#13500)
   - Điều này bao gồm khi:
@@ -29,6 +38,21 @@
 
 
 == Sửa lỗi ==
+- Sửa lỗi cho các ứng dụng trên nền Java:
+  - NVDA giờ đây sẽ thông báo trạng thái chỉ đọc (readonly). (#13692)
+  - NVDA sẽ thông báo trạng thái tắt (disabled)/bật (enabled) một cách chính xác. (#10993)
+  - NVDA giờ đây sẽ thông báo phím tắt cho các tính năng. (#13643)
+  - NVDA giờ đây đã có thể phát tiếng beep hoặc đọc thông tin trên thanh trạng thái. (#13594)
+  - NVDA sẽ không còn gỡ bỏ văn bản từ widgets một cách không chính xác khi  trình bày đến người dùng. (#13102)
+  - NVDA giờ đây sẽ thông báo trạng thái của các nút bật / tắt. (#9728)
+  - NVDA giờ đây sẽ nhận dạng cửa sổ trong một ứng dụng Java  với nhiều cửa sổ. (#9184)
+  - NVDA giờ đây sẽ thông báo thông tin vị trí cho các điều khiển tab. (#13744)
+  -
+- Sửa lỗi cho chữ nổi:
+  - Sửa lỗi đầu ra chữ nổi khi điều hướng qua một số văn bản nhất định trong các điều khiển rich edit của Mozilla, như là soạn thư nháp trong Thunderbird chẳng hạn. (#12542)
+  - Khi chữ nổi tự đi theo và  chuột cũng di chuyển với chế độ theo dõi chuột được bật, các lệnh duyệt văn bản giờ đây cập nhật trên màn hình chữ nổi với nổi dung được đọc. (#11519)
+  - Giờ đây đã có thể kéo màn hình chữ nổi qua nội dung sau khi dùng các lệnh duyệt văn bản. (#8682)
+  -
 - Bộ cài NVDA giờ đây đã có thể gọi chạy từ một thư mục với các kí tự đặc biệt. (#13270)
 - Trong Firefox, NVDA không còn bị lỗi không thông báo được thành phần trong các trang web khi các thuộc tính aria-rowindex, aria-colindex, aria-rowcount hoặc aria-colcount không hợp lệ. (#13405)
 - Con trỏ không còn chuyển dòng hay cột khi dùng các lệnh di  chuyển trong bảng để điều hướng tới các ô được trộn. (#7278)
@@ -39,19 +63,15 @@
   - Lưu ý là để tính năng này hoạt động, tùy chọn hiển thị dòng phải được bật trong Visual Studio và NVDA.
   -
 - Visual Studio giờ đây đã đọc chính xác thụt lề dòng. (#13574)
-- Sữa lỗi cho các ứng dụng dựa trên Java:
-  - NVDA giờ đây sẽ thông báo trạng thái chỉ đọc. (#13692)
-  - NVDA giờ đây sẽ thông báo chính xác trạng thái bật / tắt. (#10993)
-  - NVDA giờ đây sẽ thông báo các phím chức năng. (#13643)
-  - NVDA giờ đây có thể phát tiếng beep hoặc đọc các thanh tiến độ. (#13594)
-  - NVDA sẽ không còn gỡ văn bản một cách không chính xác từ widgets khi trình bày cho người dùng. (#13102)
-  -
 - NVDA sẽ lại một lần nữa thông báo các chi tiết kết quả tìm kiếm của Start menu trong các bản phát hành gần đây của Windows 10 và 11. (#13544)
 - Trong Calculator ở Windows 10 và 11 phiên bản 10.1908 trở lên, NVDA sẽ thông báo kết quả nhiều lệnh được bấm, lệnh từ chế độ chế độ khoa học (scientific) chẳng hạn. (#13386)
-- Sửa lỗi đầu ra chữ nổi khi điều hướng trong một số văn bản nhất định trong các điều khiển rich edit của Mozilla, soạn một thư nháp trong Thunderbird chẳng hạn. (#12542)
 - Trong Windows 11, lại có thể điều hướng và tương tác với các thành phần trên giao diện người dùng như  Taskbar và Task View, sử dụng chuột và tương tác cảm ứng. (#13508)
 - Các văn bản bị ẩn không còn bị đọc lên trong Wordpad và các điều khiển ``richEdit``. (#13618)
 - NVDA sẽ thông báo nội dung thanh trạng thái trong Notepad của Windows 11. (#13386)
+- Làm nổi đối tượng điều hướng giờ đây đã hiển thị ngay khi kích hoạt tính năng. (#13641)
+- Sửa lỗi đọc các thành phần trong danh sách trong các cột đơn. (#13659, #13735)
+- Sửa lỗi tự chuyển ngôn ngữ  của eSpeak cho tiếng Anh và Pháp quay trở lại tiếng Anh của người Anh và tiếng Pháp của ngừi Pháp. (#13727)
+- Sửa lỗi tự chuyển ngôn ngữ của  OneCore khi nỗ lực chuyển qua một ngôn ngữ được cài trước đây. (#13732)
 -
 
 
