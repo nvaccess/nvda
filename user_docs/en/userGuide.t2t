@@ -1894,9 +1894,14 @@ It does not affect the modern Windows Terminal.
 In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
 In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
 The Windows Console support combo box has three options:
-- Automatic: This option is currently equivalent to "legacy". However, with this option selected, NVDA will begin using UI Automation in consoles automatically in a future version once it has become stable and suitable for wider use.
-- UIA when available: Uses UI Automation in consoles if available, even for versions with incomplete or buggy implementations. Though not yet fully stable, UI Automation may provide a superior user experience in some scenarios, especially in the Windows 11 Sun Valley 2 (22H2) update.
-- Legacy: UI Automation in the Windows Console will be completely disabled, so the legacy fallback will always be used even in situations where UI Automation would provide a superior user experience. Therefore, selecting this option is not recommended unless you know what you are doing.
+- Automatic: This option is currently equivalent to "legacy".
+However, with this option selected, NVDA will begin using UI Automation in consoles automatically in a future version once it has become stable and suitable for wider use.
+- UIA when available: Uses UI Automation in consoles if available.
+This will include Console versions which have incomplete or buggy UI Automation implementations.
+Though not yet fully stable, UI Automation may provide a superior user experience in some scenarios, especially in the Windows 11 Sun Valley 2 (22H2) update.
+- Legacy: UI Automation in the Windows Console will be completely disabled.
+The legacy fallback will always be used even in situations where UI Automation would provide a superior user experience.
+Therefore, selecting this option is not recommended unless you know what you are doing.
 -
 
 ==== Use UIA with Microsoft Edge and other Chromium based browsers when available ====[ChromiumUIA]
