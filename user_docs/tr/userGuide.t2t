@@ -332,6 +332,7 @@ Sistem düzenleme imleciyle ilişkili olarak NVDA aşağıdaki tuş komutların�
 | Bulunulan satırı okuma | NVDA+yukarı yön tuşu | NVDA+l | Sistem imlecinin o an üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. Üç kez basılırsa, harfler karakter tanımlarıyla seslendirilir. |
 | Seçili metnin okunması | NVDA+shift+Yukarı yön tuşu | NVDA+Şift+s | o an seçili olan metni okur |
 | Metin biçimlendirmesini bildir | NVDA+f | NVDA+f | İmlecin o anda bulunduğu metnin biçim bilgisini bildirir. İki kez basılırsa bilgileri tarama modunda gösterir |
+| İmleç konumunu bildir | NVDA+numaratörSil | NVDA+sil | yok | Sistem imleci bulunduğu pozisyondaki metin veya nesnenin konumuyla ilgili bilgileri raporlar. Örneğin, bu, belgede yüzdelik cinsinden konumu, sayfanın kenarından olan mesafeyi veya tam ekran konumunu içerebilir. İki kez basmak daha fazla ayrıntı sunabilir. |
 | sonrakiCümle | alt+aşağıOk | alt+aşağıOk | sonraki cümleye gider ve okur. (Yalnızca Microsoft Word ve Outlook için desteklenmektedir) |
 | öncekiCümle | alt+yukarıOk | alt+yukarıOk | Önceki cümleye gider ve okur. (Yalnızca Microsoft Word ve outlook için desteklenmektedir) |
 
@@ -380,7 +381,7 @@ Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 | Odaktaki nesneye git | NVDA+numaratörMinus | NVDA+GeriSil | yok | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya taşır |
 | Üzerinde bulunulan nesneyi etkinleştir | NVDA+numaratörEnter | NVDA+enter | çift dokunma | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
 | Sistem odağını nesne sunucusuna taşı | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | yok | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
-| İnceleme imleci konumunu bildir | NVDA+numaratörSil | NVDA+Sil | yok | İnceleme imlecinin konumundaki nesnenin belgenin neresinde ya da sayfanın solundan ya da üstünden ne kadar uzakta olduğuyla ilgili bilgi verir. İki kez basılırsa daha ayrıntılı bilgi sunulabilir |
+| İnceleme imleci konumunu bildir | NVDA+şift+numaratörSil | NVDA+şift+Sil | yok | İnceleme imlecinin konumundaki nesnenin belgenin neresinde ya da sayfanın solundan ya da üstünden ne kadar uzakta olduğuyla ilgili bilgi verir. İki kez basılırsa daha ayrıntılı bilgi sunulabilir |
 | İnceleme imlecini durum çubuğuna taşı | Yok | Yok | Yok | NVDA  bulabilirse Durum Çubuğunu bildirir. Ayrıca nesne sunucusunu bu konuma taşır. |
 %kc:endInclude
 
@@ -526,7 +527,6 @@ Tarama ve odak kipleri arasında manuel olarak da geçiş yapabilirsiniz ve Odak
 | Metin ara | NVDA+kontrol+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar Daha fazla bilgi için [metin arama #SearchingForText] bölümüne bakın. |
 | Sonrakini bul | NVDA+f3 | metni belgenin sonraki kısmında arar |
 | Öncekini bul | NVDA+şift+f3 | metni belgenin önceki kısmında arar |
-| uzun tarifi aç | NVDA+d | Eğer varsa, üzerinde bulunulan ögeyle ilgili uzun bir açıklamanın bulunduğu yeni bir pencere açar. | 
 %kc:endInclude
 
 ++ Tek Tuşla Dolaşım ++[SingleLetterNavigation]
@@ -610,17 +610,24 @@ Gömülü nesneyi barındıran sayfaya geri dönmek için bir kısayol tuşu tan
 + Matematiksel İçerik Okuma +[ReadingMath]
 Design Science tarafından geliştirilen MathPlayer 4 kullanarak, NVDA desteklenen maatematiksel içerik üzerinde dolaşıp okumanızı sağlar.
 Bu, bilgisayarda MathPlayer 4'un kurulu olmasını gerektirir.
-MathPlayer uygulamasını aşağıdan ücretsiz olarak indirebilirsiniz: https://www.dessci.com/en/products/mathplayer/
+MathPlayer uygulamasını aşağıdan ücretsiz olarak indirebilirsiniz: https://www.dessci.com/en/products/mathplayer/.
+MathPlayer'ı kurduktan sonra NVDA'yı yeniden başlatın.
 
 NVDA aşağıdaki matematiksel içerik türlerini destekler:
 - Mozilla Firefox, Microsoft Internet Explorer ve Google Chrome MathML.
-- Microsoft Word ve PowerPoint'de, Design Science MathType.
+- UI otomasyonu aracılığıyla Microsoft Word 365 Modern Matematik Denklemleri:
+NVDA, Microsoft Word 365/2016 build 14326 ve üzeri sürümlerde matematik denklemlerini okuyabilir ve bunlarla etkileşim kurabilir.
+Bununla birlikte, önceden oluşturulmuş MathType denklemlerinin önce her birini seçip bağlam menüsünde Denklem Seçenekleri -> Office Math'a Dönüştür'ü seçerek Office Math'a dönüştürülmesi gerektiğini unutmayın. Bunu yapmadan önce MathType sürümünüzün en son sürüm olduğundan emin olun.
+Microsoft Word ayrıca denklemlerin kendisinde doğrusal sembol tabanlı gezinme sağlar ve LateX dahil olmak üzere çeşitli sözdizimlerini kullanarak matematik girişini destekler. Daha fazla ayrıntı için lütfen [Word'de UnicodeMath ve LaTeX kullanan doğrusal biçimli denklemler https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8] makalesine bakın
+- Microsoft Powerpoint ve Microsoft Word'ün eski sürümleri:
+NVDA, MathType denklemlerini hem Microsoft Powerpoint hem de Microsoft word'de okuyabilir ve içlerinde dolaşılmasını sağlayabilir.
 Bunun çalışabilmesi için MathType'ın kurulu olması gerekir.
 Deneme sürümü yeterlidir.
-ŞUradan  https://www.dessci.com/en/products/mathtype/  indirilebilir.
-- Adobe Reader'de MathML.
+Şuradan https://www.dessci.com/en/products/mathtype/  indirilebilir.
+- Adobe Reader:
 Bunun henüz resmi bir standart olmadığını not edin, dolayısıyla şu anda bu içeriği üretebilen hiçbir kamuya açık yazılım bulunmamaktadır.
-- PC için Kindle'de, erişilebilir matematik kitapları için.
+- Kindle Reader for PC:
+NVDA, erişilebilir matematik içeren kitaplar için Kindle for PC'de Math'ı okuyabilir ve bu kitaplarda dolaşılmasını sağlayabilir.
 -
 
 Bir belgeyi okurken, NVDA desteklenen herhangi bir matematiksel içeriği seslendirecektir.
@@ -766,6 +773,26 @@ Mesela, rakam işaretiyle başlayıp girdiğiniz bazı rakamlardan sonra geri si
 8. nokta braille girişi çevirir ve enter tuşuna basar.
 7. ve 8. noktalara birlikte basarsanız aralık ya da enter tuşuna basılmaksızın braille girişi metne çevrilir.
 %kc:endInclude
+
++++ Klavye kısayolları girişi +++[BrailleKeyboardShortcuts]
+NVDA, klavye kısayollarının girilmesini ve braille ekranını kullanarak tuşlaran taklit edilmeisni destekler.
+Taklit iki şekilde gelir: bir tuşa doğrudan bir Braille girdisi atamak ve sanal değiştirici tuşları kullanmak.
+
+Ok tuşları veya menülere ulaşmak için Alt tuşuna basmak gibi yaygın olarak kullanılan tuşlar, doğrudan Braille girişlerine eşlenebilir.
+Her bir Braille ekranının sürücüsü, bu görevlerden bazılarıyla önceden donatılmış olarak gelir.
+[Girdi Hareketleri iletişim kutusu #InputGestures] altından bu atamaları değiştirebilir veya yeni taklit  tuşlar ekleyebilirsiniz.
+
+Bu yaklaşım, yaygın olarak basılan veya biricik tuşlar (Tab gibi) için kullanışlı olsa da, her klavye kısayoluna biricik bir tuş takımı atamak istemeyebilirsiniz.
+NVDA, değiştirici tuşların basılı tutulduğu durumlarda tuş basmalarının taklit edilmesini sağlamak için kontrol, alt, shift, windows ve NVDA tuşlarının  ayrı ayrı , bu tuşların bazı kombinasyonlarının birlikte kullanılması için çeşitli komutlar sunar.
+Bu geçişleri kullanmak için önce basılmasını istediğiniz değiştirici tuşlar için komuta (veya komut dizisine) basın, ardından girmek istediğiniz klavye kısayolunun parçası olan karakteri girin.
+Örneğin, kontrol+f kısayol tuşunu kullanmak için "Kontrol tuşunu aç" komutunu kullanın ve ardından f yazın,
+ve kontrol+alt+t'yi girmek için, sırası fark etmez, "Kontrol tuşunu aç" ve "Alt tuşunu aç" komutlarını veya "Kontrol+alt tuşlarını aç" komutunu kullanın ve ardından t yazın.
+
+Değiştirici tuşları yanlışlıkla açarsanız, geçiş komutunu tekrar çalıştırmak değiştiriciyi kaldıracaktır.
+
+Kısaltmalı Braille'de yazarken, değiştirici tuşlarını açıp kapatmak, girişinizin tıpkı 7+8 noktalarına basmışsınız gibi çevrilmesine neden olur.
+Ayrıca, taklit edilen tuş girişi, değiştirici tuşa basılmadan önce girilen Braille kodu yansıtamaz.
+Bu, rakam işareti kullanan bir Braille koduyla alt+2 basmak için önce Alt'ı açmanız ve ardından bir rakam işareti girmeniz gerektiği anlamına gelir.
 
 + Görsellik +[Vision]
 NVDA öncelikli olarak kör ve az gören kişilere bir bilgisayarı çalıştırmak için öncelikle konuşma ve / veya braille kullanma olanağı  sunarken, ekranın içeriğini değiştirmek için yerleşik olanaklar da sağlar.
@@ -1680,10 +1707,10 @@ Bu değer, önceki sayfa ve sonraki sayfa tuşlarıyla tarama kipinde gösterile
 
 %kc:setting
 ==== Destekleniyorsa Ekran Düzenini Kullan ====[BrowseModeSettingsScreenLayout]
-Kısayol tuşu: NVDA+v
+Tuş: NVDA+v
 
-Bu seçenek, tarama kipindeki bağlantı ve metin gibi içeriklerin her birinin ayrı satırlarda gösterilmesi ya da ekranda görsel olarak nasıl görünüyorsa o biçimde aktarılması seçenekleri arasında tercih yapmanızı sağlar.
-Etkinleştirilirse, ekrandaki içerik görsel olarak nasıl görünüyorsa öyle sergilenir. ancak devre dışı bırakılırsa, her alan ayrı satırlara yerleştirilir.
+Bu seçenek, tarama kipinin tıklanabilir içeriği (bağlantılar, düğmeler ve alanlar) ayrı satırlara  mı yerleştirmesi yoksa görsel olarak ekranda görüldüğü gibi metin akışında mı tutması gerektiğini belirlemenizi sağlar. Bu seçeneğin, her zaman ekran düzenini kullanan Outlook ve Word gibi Microsoft Office uygulamaları için geçerli olmadığını unutmayın.
+Ekran düzeni etkinleştirildiğinde, sayfa öğeleri görsel olarak gösterildiği gibi kalacaktır. Örneğin, birden çok bağlantının gösterildiği bir satır, konuşmaya ve braille'e de aynı şekilde aktarılır. Devre dışı bırakılırsa, öğeler ayrı satırlara yerleştirilecektir; bu, satır satır dolaşılırken  öğeler arasındaki farkı daha anlaşılabilir kılar ve bazı kullanıcılar için öğelerle etkileşimi kolaylaştırabilir.
 
 ==== Sayfa yüklendiğinde tarama kipini etkinleştir ====[BrowseModeSettingsEnableOnPageLoad]
 Bu onay kutusu, bir sayfa yüklendiğinde tarama kipinin otomatik olarak etkinleştirilip etkinleştirilmeyeceğini belirler.
@@ -1725,6 +1752,7 @@ Bu seçenek varsayılan olarak etkindir ve NVDA komutu olarak kullanılmayan tu�
 Etkinleştirildiğinde, örneğin ş harfine basılırsa, bu tuş ne NVDA komutu ne de aktif uygulama komutu olarak kullanıldığı için , tuşun belgeye ulaşması engellenecektir.
 Bu durumda NVDA, Windows’a bu türden  bir tuşa basıldığında varsayılan bir ses çalmasını söyler.
 
+%kc:setting
 ==== Sistem Odağı Tarama Kipi İmlecini Takip Etsin ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tuş: NVDA+8
 
@@ -1751,6 +1779,7 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
  - Renkler
 - Belge Bilgileri
  - Açıklamalar
+ - Yer imleri
  - Editör düzenlemeleri
  - Yazım hataları
 - Sayfalar ve Aralık
@@ -1836,18 +1865,18 @@ Bunun, özellikle Microsoft Visual Studio gibi uygulamalarda performans üzerind
 Bu nedenle, bu seçenek etkinleştirildiğinde, NVDA çoğu olay için olay kaydını sistem odağıyla sınırlayacaktır.
 Bir veya daha fazla uygulamada performans sorunları yaşıyorsanız, performansın iyileşip iyileşmediğini görmek için bu işlevi denemenizi öneririz.
 
-==== Uygunsa Microsoft Word belge kontrollerine erişmek için UI otomasyonunu kullan ====[AdvancedSettingsUseUiaForWord]
-Bu seçenek etkinleştirildiğinde, NVDA, Microsoft Word belge kontrollerinden bilgi almak için Microsoft UI Otomasyonu erişilebilirlik API'sini kullanmayı deneyecektir.
-Buna, Microsoft Word’ün yanı sıra,  Microsoft Outlook mesaj görüntüleyicisi ve oluşturucusu dahildir.
- Windows 10 ve sonraki sürümlerde çalışan Microsoft Office 2016/365'in en son sürümleri için, UI Otomasyonu desteği, Microsoft Word belgelerine neredeyse NVDA'nın mevcut Microsoft Word desteğine eşit erişim sağlayacak kadar eksiksizdir ve yanıt hızının büyük ölçüde artması avantajını da beraberinde getirir.
-Ancak, Microsoft Office'in bazı sürümlerinde gösterilmeyen veya yanlış gösterilen bazı bilgiler olabilir; bu, UI otomasyon desteğine her zaman güvenilemeyeceği anlamına gelir.
-Office 2016/365 kullanıcılarının bu özelliği test etmesini ve geri bildirimde bulunmasını memnuniyetle karşılarız, bununla birlikte kullanıcıların çoğunluğunun bunu varsayılan olarak açmasını önermiyoruz.
+==== Microsoft Word belge kontrollerine erişmek için UI otomasyonunu kullan ====[MSWordUIA]
+NVDA'nın Microsoft Word belgelerine erişmek için eski Microsoft Word nesne modeli yerine UI Otomasyonu erişilebilirlik API'sini kullanıp kullanmayacağını belirler.
+Bu, Microsoft word'ün kendisindeki belgeler ve Microsoft Outlook'taki mesajlar için geçerlidir.
+Bu ayar aşağıdaki değerleri içerir:
+- Varsayılan (uygun olduğunda)
+- Sadece gerektiğinde: Microsoft Word nesne modelinin hiç mevcut olmadığı durumlarda
+- Uygun olduğunda: Microsoft Word sürüm 16.0.15000 veya üzeri veya Microsoft Word nesne modelinin kullanılamadığı durumlarda
+- Her zaman: UI otomasyonunun Microsoft word'de olduğu her yerde (tamamlanmamış olsa bile).
+-
 
 ==== Windows Konsoluna erişmek için mevcut olduğunda UI Otomasyonunu kullan ====[AdvancedSettingsConsoleUIA]
 Bu seçenek etkinleştirildiğinde, NVDA, [Microsoft tarafından yapılan erişilebilirlik geliştirmelerinin https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Windows Konsolu desteğinden yararlanan yeni ve devam eden bir çalışmadan faydalanacaktır. Bu özellik oldukça deneyseldir ve hala eksiktir, bu nedenle kullanımı henüz tavsiye edilmez. Ancak tamamlandığında, bu yeni desteğin varsayılan olacağı ve NVDA'nın Windows komut konsollarındaki performansını ve kararlılığını artıracağı tahmin edilmektedir.
-
-==== UIA konsollarında şifreleri seslendir ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Bu ayar ekranın güncellenmediği durumlarda (şifre girişi gibi) UI otomasyon desteği etkin Windows Konsolu'nda [yazılan karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] veya [yazılan sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] ayrlarına bağlı olarak karakterlerin seslendirilip seslendirilmeyeceğini belirler. Güvenlik nedeniyle, bu ayar devre dışı bırakılmalıdır. Bununla birlikte, NVDA'nın yeni deneysel konsol desteğini kullanırken yazılan karakter ve / veya kelime bildiriminde performans sorunları veya kararsızlık yaşıyorsanız etkinleştirmek isteyebilirsiniz.
 
 ==== Microsoft Edge ve diğer Chromium tabanlı tarayıcılar'la uygun olduğunda UIA kullan ====[ChromiumUIA]
 Microsoft Edge gibi Chromium tabanlı tarayıcılarda mevcut olduğunda UIA'nın ne zaman kullanılacağını belirlemenize izin verir.
@@ -1862,9 +1891,13 @@ Seçim kutusunda aşağıdaki seçenekler vardır:
 ==== Bİlgi notları ====[Annotations]
 Bu seçenek grubu, ARIA bilgi notları için deneysel destek ekleyen özellikleri etkinleştirmek için kullanılır.
 Bu özelliklerden bazıları eksik sunuluyor olabilir.
+
+%kc:beginInclude
+"sistem imleci konumundaki Tüm ek açıklama ayrıntılarının özetinin bildirimi" için, NVDA+d'ye basın.
+%kc:endInclude
+
 Aşağıdaki seçenekler mevcuttur: 
-- "Tarama kipinde ayrıntıları bildir": Varsa,tarama kipinde üzerine bulunulan nesne ayrıntıları gösterilir.
-Bu ayrıntıların özeti [girdi hareketleri iletişim kutusu #InputGestures] altından atanabilecek bir kısayol tuşu ile de alınabilir.
+- "Rapor, yapılandırılmış ek açıklamalar için 'ayrıntılara sahiptir'": metin veya kontrolde daha fazla ayrıntı varsa, raporlamayı etkinleştirir.
 - "Aria açıklamasını her zaman bildir":
   ``accDescription`` kaynağı aria-description olduğunda, açıklama aktarılır.
   Bu, web'deki ek açıklamalar için kullanışlıdır.
@@ -1884,8 +1917,13 @@ Bununla birlikte, temel elektronik tablo gezinme / düzenleme işlemleri için b
 Kullanıcıların çoğunun bunu varsayılan olarak açmasını önermemekle birlikte, Microsoft Excel'in 16.0.13522.10000 veya sonraki sürümlerini kullananların bu özelliği test etmelerini ve geri bildirimde bulunmalarını memnuniyetle karşılarız.
 Microsoft Excel'in UI otomasyon uygulaması sürekli değişiyor ve Microsoft Office'in 16.0.13522.10000'den daha eski sürümleri, bu seçeneğin herhangi bir şekilde kullanılması için yeterli bilgiyi sunmayabilir.
 
-==== Mevcutsa Windows Konsolu'nda yeni yazılan karakter desteğini kullan ====[AdvancedSettingsKeyboardSupportInLegacy]
-Bu seçenek, Windows komut konsollarında yazılan karakterleri algılamak için alternatif bir yöntem sunar.
+==== Tüm gelişmiş terminallerde parolaları söyle ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Bu ayar  [yazılan karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] veya [yazılan sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] UI otomasyon desteği etkinleştirilmiş Windows Konsolu ve Mintty gibi bazı terminal programlarında ekranın güncellenmediği (şifre girişi gibi) durumlarda karakterlerin söylenip söylenmeyeceğini kontrol eder.
+Güvenlik düşünülerek bu ayar devre dışı bırakılmalıdır.
+Ancak konsollarda yazılan karakter ve/veya sözcük seslendirmelerinde performans sorunları veya kararsızlık yaşıyorsanız veya güvenilir ortamlarda çalışıyorsanız ve parola bildirimini tercih ediyorsanız etkinleştirmeyi isteyebilirsiniz.
+
+==== Mevcut olduğunda eski Windows Konsolunda geliştirilmiş yazılı karakter desteğini kullan ====[AdvancedSettingsKeyboardSupportInLegacy]
+Bu seçenek, eski Windows konsollarında yazılan karakterleri algılamak için alternatif bir yöntem sağlar.
 Performansı artırıp bazı konsol çıktılarının hecelenmesini engellerken, bazı terminal programlarıyla uyumlu olmayabilir.
 Bu özellik varsayılan olarak etkindir, Windows 10 1607 ve sonraki sürümlerde ve UI Automation kullanılamadığında veya devre dışı bırakıldığında kullanılabilir.
 Dikkat: bu seçenek etkin durumdayken, şifreler gibi ekranda görünmeyen yazılan karakterler gizlenmez.
@@ -1894,14 +1932,14 @@ Güvensiz ortamlarda, parola girerken [karakterleri seslendir #KeyboardSettingsS
 ==== Diff algoritması ====[DiffAlgo]
 Bu ayar, NVDA'nın terminallerde  yeni metni nasıl konuşacağını kontrol eder.
 diff algoritması seçim kutusunda üç seçenek vardır:
-- Otomatik: NVDA 2021.2'den itibaren, bu seçenek "Diff Match Patch'e izin ver" ile eş değerdir.
-- Diff Match Patch'e izin ver: Bu seçenek, NVDA'nın terminal metnindeki değişiklikleri karakter karakter hesaplamasına neden olur.
+- Otomatik: Bu seçenek, NVDA'nın çoğu durumda Diff Match Patch'i tercih etmesine, ancak Windows Konsolu ve Mintty'nin eski sürümleri gibi sorunlu uygulamalarda Difflib'e geri dönmesine neden olur.
+- Diff Match Patch: Bu seçenek, NVDA'nın, tavsiye edilmediği durumlarda bile, terminal metnindeki değişiklikleri karakter bazında hesaplamasına neden olur.
 Konsola büyük hacimlerde metin girildiğinde  performansı artırabilir ve satırların ortasında yapılan değişikliklerin daha doğru raporlanmasına olanak tanır.
-Ancak bazı uygulamalarla uyumsuz olabilir, bu nedenle Diff Match Patch her zaman kullanılmaz.
-Bu özellik, Windows 10'un 1607 ve sonraki sürümlerinde Windows Konsolunda desteklenir.
-Ek olarak, önceki Windows sürümlerindeki diğer terminallerde de mevcut olabilir.
-- Difflib'e zorla: bu seçenek NVDA'nın terminal metnindeki değişiklikleri satır satır hesaplamasına neden olur.
+Ancak, bazı uygulamalarda yeni metnin okunması dalgalı veya tutarsız olabilir.
+- Difflib: bu seçenek, NVDA'nın, tavsiye edilmediği durumlarda bile, terminal metnindeki değişiklikleri satır satır hesaplamasına neden olur.
 NVDA'nın 2020.4 ve daha önceki sürümlerindeki davranışıyla aynıdır.
+Bu ayar, bazı uygulamalarda gelen metnin okunmasını kararlı kılabilir.
+Ancak, terminallerde, bir satırın ortasına bir karakter eklerken veya silerken, imleçten sonraki metin okunacaktır.
 -
 
 ==== Süresi dolmuş odak etkinlikleri için konuşmayı iptal etmeyi dene ====[CancelExpiredFocusSpeech]
@@ -1944,7 +1982,7 @@ bunlar:
 Herhangi bir yerden bu sözlüklerle ilgili iletişim kutularını açabilmek için [Girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel kısayol tuşları atamanız gerekir.
 
 Tüm sözlük iletişim kutularında konuşma işlemlerinde kullanılacak kuralların bir listesi bulunmaktadır.
-İletişim kutularında ayrıca, Kural Ekle, Düzenle ve Sil düğmeleri de mevcuttur.
+İletişim kutularında ayrıca, Kural Ekle, Düzenle, kaldır ve tümünü kaldır düğmeleri de mevcuttur.
 
 Sözlüğe yeni bir kural eklemek için önce ekle düğmesine basın, iletişim kutusundaki alanları doldurun ve tamam düğmesine basın.
 bundan sonra kural listesinde eklediğiniz yeni kuralı da göreceksiniz.
@@ -2190,6 +2228,8 @@ Bu, NVDA'NIN Braille hücresinden a haritasını doğru bir şekilde tersine çe
 Hücre yeşile dönene kadar fare üzerinde olmalıdır.
 Hücre açık sarı renkte başlar, turuncuya geçer, sonra aniden yeşile döner.
 
+Braille görüntüleyiciyi herhangi bir yerden açıp kapatmak  için, lütfen [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir hareket atayın.
++
 ++ Python Konsolu ++[PythonConsole]
 NVDA menüsündeki Araçlar altında bulunan NVDA Python konsolu, hata ayıklama, NVDA dahili bileşenlerinin genel denetimi veya bir uygulamanın erişilebilirlik hiyerarşisinin denetimi için yararlı olan bir geliştirme aracıdır.
 Daha fazla bilgi için lütfen [NVDA Geliştirici Kılavuzuna https://www.nvaccess.org/files/nvda/documentation/developerGuide.html] bakın.
@@ -2344,7 +2384,6 @@ Daha geniş  bir dil (İngilizce veya Fransızca gibi) arayın, ardından alt se
 İstediğiniz dilleri seçin ve eklemek için "ekle" düğmesini kullanın.
 Ekledikten sonra NVDA'yı yeniden başlatın.
 
-
 Lütfen kullanılabilen sesler ve yükleme talimatları için bu Microsoft makalesine bakın: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Desteklenen braille ekranlar +[SupportedBrailleDisplays]
@@ -2365,7 +2404,8 @@ Aşağıdaki ekranlar otomatik algılama işlevini destekler.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
-- Any Display that supports the Standard HID Braille protocol
+- Seika Notetaker: MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)
+- Standart HID Braille protokolünü destekleyen herhangi bir Ekran
 -
 
 ++ Freedom Scientific Focus/PAC Mate Serisi ++[FreedomScientificFocus]
@@ -2414,6 +2454,17 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | escape key | brailleSpaceBar+dot1+dot5 |
 | windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
 | space key | brailleSpaceBar |
+| Toggle control key | brailleSpaceBar+dot3+dot8 |
+| Toggle alt key | brailleSpaceBar+dot6+dot8 |
+| Toggle windows key | brailleSpaceBar+dot4+dot8 |
+| Toggle NVDA key | brailleSpaceBar+dot5+dot8 |
+| Toggle shift key | brailleSpaceBar+dot7+dot8 |
+| Toggle control and shift keys | brailleSpaceBar+dot3+dot7+dot8 |
+| Toggle alt and shift keys | brailleSpaceBar+dot6+dot7+dot8 |
+| Toggle windows and shift keys | brailleSpaceBar+dot4+dot7+dot8 |
+| Toggle NVDA and shift keys | brailleSpaceBar+dot5+dot7+dot8 |
+| Toggle control and alt keys | brailleSpaceBar+dot3+dot6+dot8 |
+| Toggle control, alt, and shift keys | brailleSpaceBar+dot3+dot6+dot7+dot8 |
 | windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
 | Report Current Line | brailleSpaceBar+dot1+dot4 |
 | NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
@@ -2741,13 +2792,21 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 %kc:endInclude
 
 ++ Seika Braille Displays ++[Seika]
-[Nippon Telesoft https://www.nippontelesoft.com/] tarafından üretilen Seika sürüm 3, 4 ve 5 (40 hücreli) ve Seika80 (80 hücreli) braille ekranlar desteklenmektedir.
- https://en.seika-braille.com/down/index.html adresinde bu ekranlar hakkında daha fazla bilgi bulabilirsiniz.
-Önce üretici tarafından sağlanan USB sürücülerini kurmalısınız.
+Nippon Telesoft'un aşağıdaki Seika Braille ekranları, farklı işlevlere sahip iki grupta desteklenir:
+- [Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) #SeikaBrailleDisplays]
+- [MiniSeika (16, 24 cells), V6, and V6Pro (40 cells) #SeikaNotetaker]
+-
+Ekranlar hakkında daha fazla bilgiyi şurada bulabilirsiniz: https://en.seika-braille.com/down/index.html.
 
-Bu ekranlar henüz NVDA'nın otomatik arka plan braille görüntü algılama işlevini desteklememektedir.
 
-Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
++++ Seika Versiyon 3, 4 ve 5 (40 hücre), Seika80 (80 hücre) +++[SeikaBrailleDisplays]
+- Bu ekranlar henüz NVDA'nın otomatik arka plan braille ekran algılama işlevini desteklememektedir.
+- Manuel olarak yapılandırmak için "Seika Braille Ekranları"nı seçin
+- Seika v3/4/5/80'i kullanmadan önce bir aygıt sürücüsü kurulmalıdır.
+[üretici tarafından sağlanan https://en.seika-braille.com/down/index.html] sürücüler.
+-
+
+Seika Braille Ekran tuş atamaları aşağıdaki gibidir.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 %kc:beginInclude
 || Ad | Kısayol tuşu |
@@ -2764,6 +2823,48 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Route to braille cell | routing |
 %kc:endInclude
 
+
++++ MiniSeika (16, 24 hücre), V6 ve V6Pro (40 hücre) +++[SeikaNotetaker]
+- NVDA'nın otomatik arka plan braille ekranı algılama işlevi, USB ve Bluetooth aracılığıyla desteklenir.
+- Yapılandırmak için "Seika Notetaker" veya "auto" öğesini seçin.
+- Seika Notetaker braille ekranı kullanırken ek bir  sürücü gerekmez.
+-
+
+Seika Notetaker tuş atamaları aşağıdaki gibidir.
+Bu tuşların nerede bulunabileceğinin açıklamaları için lütfen ekranın belgelerine bakın.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Say all | space+Backspace |
+| NVDA Menu | Left+Right |
+| Move braille display to previous line | LJ up |
+| Move braille display to next line | LJ down |
+| Toggle braille tethered to | LJ center |
+| tab | LJ right |
+| shift+tab | LJ left |
+| upArrow key | RJ up |
+| downArrow key | RJ down |
+| leftArrow key | RJ left |
+| rightArrow key | RJ right |
+| Route to braille cell | routing |
+| shift+upArrow key | Space+RJ up, Backspace+RJ up |
+| shift+downArrow key | Space+RJ down, Backspace+RJ down |
+| shift+leftArrow key | Space+RJ left, Backspace+RJ left |
+| shift+rightArrow key | Space+RJ right, Backspace+RJ right |
+| enter key | RJ center, dot8
+| escape key | Space+RJ center |
+| windows key | Backspace+RJ center |
+| space key | Space, Backspace |
+| backspace key | dot7 |
+| pageup key | space+LJ right |
+| pagedown key | space+LJ left |
+| home key | space+LJ up |
+| end key | space+LJ down |
+| control+home key | backspace+LJ up |
+| control+end key | backspace+LJ down |
+
+
 ++ Papenmeier BRAILLEX Yeni Modelleri ++[Papenmeier]
 Aşağıdaki Braille ekranlar desteklenmektedir: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
@@ -2773,10 +2874,6 @@ Aşağıdaki Braille ekranlar desteklenmektedir:
 -
 
 Bu ekranlar henüz NVDA'nın otomatik arka plan braille görüntü algılama işlevini desteklememektedir.
-
-If BrxCom is installed, NVDA will use BrxCom.
-BrxCom is a tool that allows keyboard input from the braille display to function independently from a screen reader.
-Keyboard input is possible with the Trio and BRAILLEX Live models.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
@@ -3254,6 +3351,7 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | -f LOGFILENAME | --log-file=LOGFILENAME | Günlük mesajlarının tutulacağı dosya |
 | -l LOGLEVEL | --log-level=LOGLEVEL | Günlüğü tutulacak en düşük seviye (debug 10, giriş çıkış 12, hata ayıklama uyarısı 15, bilgi 20, uyarı 30, hata 40, kritik 50, devre dışı 100), varsayılan, uyarı'dır |
 | -c CONFIGPATH | --config-path=CONFIGPATH | NVDA ile ilgili tüm ayarların kaydedileceği adres |
+| None | --lang=LANGUAGE | Yapılandırılmış NVDA dilini geçersiz kılın. Geçerli kullanıcı varsayılanı için "Windows", İngilizce için "en" vb. olarak ayarlayın. |
 | -m | --minimal | Ses, arayüz, başlangıç mesajı vb olmaz |
 | -s | --secure | Güvenli mod: Python konsolunu, oluşturma, silme, profilleri yeniden adlandırma vb. gibi profil özelliklerini, güncelleme kontrolünü, hoş geldiniz iletişim kutusundaki ve genel ayarlar kategorisindeki bazı onay kutularını (örneğin oturum açtıktan sonra NVDA'yı başlat, çıkıştan sonra yapılandırmayı kaydet vb.) devre dışı bırakır. logviewer ve log özellikleri olarak (sıklıkla güvenli ekranlarda kullanılır). Ayrıca, bu komutun sistem yapılandırmasında ayarları kaydetme olasılığını devre dışı bırakacağını ve hareket haritasının diske kaydedilmeyeceğini unutmayın. |
 | None | --disable-addons | Eklentiler etkisizdir |

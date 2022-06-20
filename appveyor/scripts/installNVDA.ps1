@@ -12,19 +12,19 @@ $installerProcess=start-process -FilePath "$nvdaLauncherFile" -ArgumentList "--i
 try {
 	$installerProcess | wait-process -Timeout 180 -ErrorAction Stop
 	$errorCode=$installerProcess.ExitCode
-	$installlerLogFilePathToUpload = $installerLogFilePath
+	$installerLogFilePathToUpload = $installerLogFilePath
 } catch {
 	echo "NVDA installer process timed out"
 	$errorCode=1
 	Add-AppveyorMessage "Unable to install NVDA prior to tests."
 	# Since installer failed to exit in the specified timeout the log file is still in use.
-	# Unforturnately `Push-AppveyorArtifact` is unable to upload a file which is  locked
+	# Unfortunately `Push-AppveyorArtifact` is unable to upload a file which is  locked
 	# as a work around create a copy of the log and upload that instead.
 	$installerLogFileCopiedPath = "nvda_install_copy.log"
 	Copy-Item $installerLogFilePath $installerLogFileCopiedPath
-	$installlerLogFilePathToUpload = $installerLogFileCopiedPath
+	$installerLogFilePathToUpload = $installerLogFileCopiedPath
 }
-Push-AppveyorArtifact $installlerLogFilePathToUpload -FileName "nvda_install.log"
+Push-AppveyorArtifact $installerLogFilePathToUpload -FileName "nvda_install.log"
 $crashDump = "$outputDir\nvda_crash.dmp"
 if (Test-Path -Path $crashDump){
 	Push-AppveyorArtifact $crashDump -FileName "nvda_install_crash.dmp"

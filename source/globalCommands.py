@@ -216,14 +216,10 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:shift+numpadDivide", "kb(laptop):NVDA+control+[")
 	)
 	def script_toggleLeftMouseButton(self,gesture):
-		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
-			# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-			ui.message(_("Left mouse button unlock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		if mouseHandler.isLeftMouseButtonLocked():
+			mouseHandler.unlockLeftMouseButton()
 		else:
-			# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-			ui.message(_("Left mouse button lock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+			mouseHandler.lockLeftMouseButton()
 
 	@script(
 		# Translators: Input help mode message for right mouse lock/unlock command.
@@ -232,14 +228,10 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:shift+numpadMultiply", "kb(laptop):NVDA+control+]")
 	)
 	def script_toggleRightMouseButton(self,gesture):
-		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
-			# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-			ui.message(_("Right mouse button unlock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
+		if mouseHandler.isRightMouseButtonLocked():
+			mouseHandler.unlockRightMouseButton()
 		else:
-			# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-			ui.message(_("Right mouse button lock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
+			mouseHandler.lockRightMouseButton()
 
 	@script(
 		description=_(
@@ -907,6 +899,32 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		description=_(
+			# Translators: Input help mode message for cycle through automatic language switching mode command.
+			"Cycles through speech modes for automatic language switching: "
+			"off, language only and language and dialect."
+		),
+		category=SCRCAT_SPEECH,
+	)
+	def script_cycleSpeechAutomaticLanguageSwitching(self, gesture):
+		if config.conf["speech"]["autoLanguageSwitching"]:
+			if config.conf["speech"]["autoDialectSwitching"]:
+				# Translators: A message reported when executing the cycle automatic language switching mode command.
+				state = _("Automatic language switching off")
+				config.conf["speech"]["autoLanguageSwitching"] = False
+				config.conf["speech"]["autoDialectSwitching"] = False
+			else:
+				# Translators: A message reported when executing the cycle automatic language switching mode command.
+				state = _("Automatic language and dialect switching on")
+				config.conf["speech"]["autoDialectSwitching"] = True
+		else:
+			# Translators: A message reported when executing the cycle automatic language switching mode command.
+			state = _("Automatic language switching on")
+			config.conf["speech"]["autoLanguageSwitching"] = True
+			config.conf["speech"]["autoDialectSwitching"] = False
+		ui.message(state)
+
+	@script(
 		# Translators: Input help mode message for cycle speech symbol level command.
 		description=_("Cycles through speech symbol levels which determine what symbols are spoken"),
 		category=SCRCAT_SPEECH,
@@ -1383,7 +1401,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
 		# Explicitly tether here
-		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
+		braille.handler.handleReviewMove(shouldAutoTether=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
@@ -1460,7 +1478,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_WORD)
 		# Explicitly tether here
-		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
+		braille.handler.handleReviewMove(shouldAutoTether=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_WORD)
@@ -1548,7 +1566,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		# Explicitly tether here
-		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
+		braille.handler.handleReviewMove(shouldAutoTether=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
@@ -1757,7 +1775,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+q"
 	)
 	def script_quit(self,gesture):
-		gui.quit()
+		wx.CallAfter(gui.mainFrame.onExitCommand, None)
 
 	@script(
 		# Translators: Input help mode message for restart NVDA command.
@@ -1962,6 +1980,7 @@ class GlobalCommands(ScriptableObject):
 			self.script_showFormattingAtCaret(gesture)
 
 	@script(
+		gesture="kb:NVDA+d",
 		description=_(
 			# Translators: the description for the reportDetailsSummary script.
 			"Report summary of any annotation details at the system caret."
@@ -1988,7 +2007,8 @@ class GlobalCommands(ScriptableObject):
 			return
 		caret.expand(textInfos.UNIT_CHARACTER)
 		nvdaObject: NVDAObject = caret.NVDAObjectAtStart
-		log.debug(f"Trying with nvdaObject : {nvdaObject}")
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"Trying with nvdaObject : {nvdaObject}")
 
 		annotation: Optional[str] = nvdaObject.detailsSummary
 		if annotation:
@@ -2000,13 +2020,16 @@ class GlobalCommands(ScriptableObject):
 			# There may still be an object with focus that has details.
 			# There isn't a known test case for this, however there isn't a known downside to attempt this.
 			focus = api.getFocusObject()
-			log.debug(f"Trying focus object: {focus}")
+			if config.conf["debugLog"]["annotations"]:
+				log.debug(f"Trying focus object: {focus}")
 			annotation = focus.detailsSummary
 			if annotation:
-				log.debug("focus object has details, able to proceed")
+				if config.conf["debugLog"]["annotations"]:
+					log.debug("focus object has details, able to proceed")
 
 		if not annotation:
-			log.debug("no details annotation found")
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("no details annotation found")
 			# Translators: message given when there is no annotation details for the reportDetailsSummary script.
 			ui.message(_("No additional details"))
 			return
@@ -2245,6 +2268,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_TOOLS
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_startWxInspectionTool(self, gesture):
 		import wx.lib.inspection
 		wx.lib.inspection.InspectionTool().Show()
@@ -2260,6 +2284,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+f1"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_navigatorObject_devInfo(self,gesture):
 		obj=api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
@@ -2277,9 +2302,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+control+shift+f1"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_log_markStartThenCopy(self, gesture):
-		if globalVars.appArgs.secure:
-			return
 		if log.fragmentStart is None:
 			if log.markFragmentStart():
 				# Translators: Message when marking the start of a fragment of the log file for later copy
@@ -2308,9 +2332,8 @@ class GlobalCommands(ScriptableObject):
 		description=_("Opens NVDA configuration directory for the current user."),
 		category=SCRCAT_TOOLS
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_openUserConfigurationDirectory(self, gesture):
-		if globalVars.appArgs.secure:
-			return
 		import systemUtils
 		systemUtils.openUserConfigurationDirectory()
 
@@ -2674,9 +2697,11 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+control+z"
 	)
+	@gui.blockAction.when(
+		gui.blockAction.Context.WINDOWS_STORE_VERSION,
+		gui.blockAction.Context.SECURE_MODE
+	)
 	def script_activatePythonConsole(self,gesture):
-		if globalVars.appArgs.secure or config.isAppX:
-			return
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()
