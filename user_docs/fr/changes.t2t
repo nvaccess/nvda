@@ -19,10 +19,10 @@ Quoi de Neuf dans NVDA
 - Le CLDR a été mis à jour à la version 41.0. (#13582)
 - Ajout d'un nouveau rôle de contrôles "indicateur d'occupation". (#10644)
 - NVDA annonce maintenant quand une action NVDA ne peut être réalisée. (#13500)
-  - Cela inclut :
+  - Cela peut se produire :
     - Lors de l'utilisation de la version Windows Store
     - Lors de l'utilisation dans un contexte sécurisé.
-    - L'attente d'une réponse à une boîte de dialogue modale.
+    - lors de l'attente d'une réponse à une boîte de dialogue modale.
     -
   -
 -
@@ -57,29 +57,29 @@ Quoi de Neuf dans NVDA
 
 == Changements pour les développeurs ==
 - La compilation des dépendances de NVDA avec Visual Studio 2022 (17.0) est maintenant supportée. Pour le développement et les versions de production, Visual Studio 2019 est toujours utilisé. (#13033)
-- When retrieving the count of selected children via accSelection, the case where a negative child ID or an IDispatch is returned by IAccessible::get_accSelection is now handled properly. (#13276)
-- New convenience functions ``registerExecutableWithAppModule`` and ``unregisterExecutable`` were added to the ``appModuleHandler`` module.
-They can be used to use a single App Module with multiple executables. (#13366)
+- Lors de la récupération du nombre d'enfants sélectionnés via accSelection, le cas où un ID d'enfant négatif ou un IDispatch est renvoyé par IAccessible::get_accSelection est désormais correctement géré. (#13276)
+- De nouvelles fonctions pratiques ``registerExecutableWithAppModule`` et ``unregisterExecutable`` ont été ajoutées au module ``appModuleHandler``.
+Elles peuvent être utilisées pour utiliser un seul module d'application avec plusieurs exécutables. (#13366)
 -
 
-=== Deprecations ===
-These are proposed API breaking changes.
-The deprecated part of the API will continue to be available until the specified release.
-If no release is specified, the plan for removal has not been determined.
-Note, the roadmap for removals is 'best effort' and may be subject to change.
-Please test the new API and provide feedback.
-For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+=== Dépréciations ===
+Voici des propositions de changements de rupture d'API.
+La partie obsolète de l'API restera disponible jusqu'à la version spécifiée.
+Si aucune version n'est spécifiée, le plan de suppression n'a pas été déterminé.
+Notez que la feuille de route pour les suppressions est « au mieux » et peut être sujette à modification.
+Veuillez tester la nouvelle API et fournir des commentaires.
+Pour les auteurs d'extensions, veuillez ouvrir un problème GitHub si ces modifications empêchent l'API de répondre à vos besoins.
 
 
-- ``gui.quit`` has been deprecated for removal in 2023.1. (#13498)
-  - Use ``wx.CallAfter(mainFrame.onExitCommand, None)`` directly instead.
+- ``gui.quit`` est obsolète pour être supprimé en 2023.1. (#13498)
+  - Utilisez ``wx.CallAfter(mainFrame.onExitCommand, None)`` directement à la place.
   -
-% Insert new list items here as the alias appModule table should be kept at the bottom of this list
-- Some alias appModules are marked as deprecated and will be removed in 2023.1.
-Code which imports from one of them, should instead import from the replacement module.  (#13366)
+% Insérez de nouveaux éléments de liste ici car la table alias appModule doit être conservée au bas de cette liste
+- Certains alias appModules sont marqués comme obsolètes et seront supprimés en 2023.1.
+Si votre code importe de l'un d'eux, il devra plutôt importer du module de remplacement. (#13366)
 -
 
-|| Removed module name | Replacement module |
+|| Nom du module supprimé | Module de remplacement |
 | azuredatastudio | code |
 | azuredatastudio-insiders | code |
 | calculatorapp | calculator |
